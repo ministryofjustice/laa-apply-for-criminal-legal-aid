@@ -1,0 +1,12 @@
+# Simplify running the application inside a container locally.
+# Usage: `docker-compose up`
+#
+# Do not use docker-compose in production environments.
+#
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "9292:9292"
