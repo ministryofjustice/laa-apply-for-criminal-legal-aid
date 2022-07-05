@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  labels:
+    app: apply-for-criminal-legal-aid-web-staging
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: 9292
+  selector:
+    app: apply-for-criminal-legal-aid-web-staging

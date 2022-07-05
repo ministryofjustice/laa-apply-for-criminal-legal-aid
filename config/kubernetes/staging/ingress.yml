@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-laa-apply-for-criminal-legal-aid-staging-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location = /.well-known/security.txt {
+        return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
+      }
+spec:
+  tls:
+  - hosts:
+    - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
+  rules:
+  - host: laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: service-staging
+            port:
+              number: 80

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+data:
+  RACK_ENV: production
+  RAILS_ENV: production
