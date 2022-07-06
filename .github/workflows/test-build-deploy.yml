@@ -1,0 +1,93 @@
+name: CI and CD
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Note, at the moment there are no tests really, but leaving this job prepared
+  # as soon we will have at least a basic test, and code linters, etc.
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Store current date
+        run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          docker build \
+            --label build.git.sha=${{ github.sha }} \
+            --label build.git.branch=${{ github.ref }} \
+            --label build.date=${{ env.BUILD_DATE }} \
+            --build-arg APP_BUILD_DATE=${{ env.BUILD_DATE }} \
+            --build-arg APP_BUILD_TAG=${{ github.ref }} \
+            --build-arg APP_GIT_COMMIT=${{ github.sha }} \
+            -t app .
+
+      - name: Push to ECR
+        id: ecr
+        uses: jwalton/gh-ecr-push@v1.3.5
+        with:
+          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
+          region: eu-west-2
+          local-image: app
+          image: ${{ secrets.ECR_NAME }}:${{ github.sha }}, ${{ secrets.ECR_NAME }}:staging.latest
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_STAGING_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_STAGING_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_STAGING_CLUSTER }}
+          KUBE_NAMESPACE: ${{ secrets.KUBE_STAGING_NAMESPACE }}
+        run: |
+          echo "${KUBE_CERT}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Update deployment image
+        env:
+          ECR_URL: ${{ secrets.ECR_URL }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: envsubst < config/kubernetes/staging/deployment.tpl > config/kubernetes/staging/deployment.yml
+
+      - name: Apply manifest files
+        run: kubectl apply -f config/kubernetes/staging
