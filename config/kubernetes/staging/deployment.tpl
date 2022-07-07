@@ -58,3 +58,5 @@ spec:
         envFrom:
           - configMapRef:
               name: configmap-staging
+          - secretRef:
+              name: secrets-staging
