@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Store current date
         run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -54,7 +54,7 @@ jobs:
 
       - name: Push to ECR
         id: ecr
-        uses: jwalton/gh-ecr-push@v1.3.5
+        uses: jwalton/gh-ecr-push@3197046958514d9f2b97073bb797ca426db8061f
         with:
           access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
@@ -68,7 +68,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Unlock git-crypt secrets
+        uses: sliteteam/github-action-git-crypt-unlock@8b1fa3ccc81e322c5c45fbab261eee46513fd3f8
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
 
       - name: Authenticate to the cluster
         env:
