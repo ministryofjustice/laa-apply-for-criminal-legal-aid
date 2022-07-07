@@ -9,6 +9,6 @@ spec:
   ports:
   - port: 80
     name: http
-    targetPort: 9292
+    targetPort: 3000
   selector:
     app: apply-for-criminal-legal-aid-web-staging

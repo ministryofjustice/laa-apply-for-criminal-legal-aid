@@ -25,7 +25,7 @@ spec:
         image: ${ECR_URL}:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
-          - containerPort: 9292
+          - containerPort: 3000
         resources:
           requests:
             cpu: 125m
@@ -36,7 +36,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /
-            port: 9292
+            port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
                 value: https
@@ -47,7 +47,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: 9292
+            port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
                 value: https
