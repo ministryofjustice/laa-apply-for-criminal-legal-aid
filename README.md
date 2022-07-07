@@ -41,6 +41,14 @@ echo -n "new-string" | base64
 echo "bmV3LXN0cmluZw==" | base64 --decode
 ```
 
+The `secrets.yml` manifest files are git-crypted so we can commit these to the repository. 
+Follow the [instructions](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/git-crypt-setup.html#git-crypt) 
+on how to setup `git-crypt` locally and ask any existing collaborator to add your GPG key to the repo to be able to read/write secrets.
+
+In the deploy pipeline we use a symmetric key exported as a repository secret `GIT_CRYPT_KEY` and a 
+[github action](https://github.com/marketplace/actions/github-action-to-unlock-git-crypt-secrets) to unlock the secrets 
+and apply them automatically as part of each deploy.  
+
 ### Applying the configuration
 
 Configuration is applied automatically as part of each deploy. You can also apply configuration manually, for example:
