@@ -6,3 +6,4 @@ metadata:
 data:
   RACK_ENV: production
   RAILS_ENV: production
+  RAILS_SERVE_STATIC_FILES: enabled
