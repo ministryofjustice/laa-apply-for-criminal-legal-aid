@@ -1,0 +1,4 @@
+*secrets* filter=git-crypt diff=git-crypt
+
+# This is a Rails file, not to be encrypted
+config/secrets.yml !filter !diff
