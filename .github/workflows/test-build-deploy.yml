@@ -19,6 +19,18 @@ jobs:
     env:
       RACK_ENV: test
       RAILS_ENV: test
+      DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/laa-apply-for-criminal-legal-aid-test"
+
+    services:
+      postgres:
+        image: postgres:13.7-alpine
+        env:
+          POSTGRES_DB: laa-apply-for-criminal-legal-aid-test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Checkout code
@@ -28,6 +40,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Setup test database
+        run: bin/rails db:prepare
 
   build:
     runs-on: ubuntu-latest

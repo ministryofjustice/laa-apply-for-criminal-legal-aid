@@ -8,5 +8,10 @@ version: '3'
 services:
   web:
     build: .
+    environment:
+      SECRET_KEY_BASE: f22760a0bd78a9191ba4c247e23a281cb251461cdba6b5215043ca11b694d734
+      RAILS_SERVE_STATIC_FILES: "1"
+      DATABASE_SSLMODE: disable
+      DISABLE_HTTPS: "1"
     ports:
-      - "9292:9292"
+      - "3000:3000"
