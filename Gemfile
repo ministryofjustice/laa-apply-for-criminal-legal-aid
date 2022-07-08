@@ -13,12 +13,6 @@ gem "sprockets-rails"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
-
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
-
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

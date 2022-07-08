@@ -30,6 +30,10 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore Brewfile lock file as it is intended for debugging
+Brewfile.lock.json
+
 # Ignore user's individual .env files
-.env
-.env.test
+.env.development.local
+.env.test.local
+.env.local
