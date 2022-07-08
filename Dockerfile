@@ -3,8 +3,6 @@ MAINTAINER LAA Crime Apply Team
 
 RUN apk --no-cache add --virtual build-deps \
   build-base \
-  libxml2-dev \
-  libxslt-dev \
   postgresql-dev \
   git \
   bash \
@@ -50,7 +48,14 @@ ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/rds-combined-ca-bundle.pem
 ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem $RDS_COMBINED_CA_BUNDLE
 RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
-ENV RACK_ENV production
+ARG APP_BUILD_DATE
+ENV APP_BUILD_DATE ${APP_BUILD_DATE}
+
+ARG APP_BUILD_TAG
+ENV APP_BUILD_TAG ${APP_BUILD_TAG}
+
+ARG APP_GIT_COMMIT
+ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 
 ENV APPUID 1000
 USER $APPUID

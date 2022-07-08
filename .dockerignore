@@ -3,6 +3,7 @@ log/
 tmp/
 Dockerfile
 docker-compose.yml
+Brewfile
 README.md
 .env*
 

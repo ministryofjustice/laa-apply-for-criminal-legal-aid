@@ -60,3 +60,10 @@ spec:
               name: configmap-staging
           - secretRef:
               name: secrets-staging
+        env:
+          # secrets created by terraform
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: rds-instance
+                key: url

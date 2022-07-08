@@ -6,12 +6,20 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:13.7-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+
   web:
     build: .
     environment:
+      DATABASE_URL: postgresql://postgres@db/laa-apply-for-criminal-legal-aid
       SECRET_KEY_BASE: f22760a0bd78a9191ba4c247e23a281cb251461cdba6b5215043ca11b694d734
       RAILS_SERVE_STATIC_FILES: "1"
       DATABASE_SSLMODE: disable
       DISABLE_HTTPS: "1"
     ports:
       - "3000:3000"
+    depends_on:
+      - db
