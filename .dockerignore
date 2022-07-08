@@ -27,6 +27,8 @@ config/master.key
 node_modules
 public/assets
 public/packs
+/app/assets/builds/*
+!/app/assets/builds/.keep
 
 # Ignore k8s manifests, these are only needed in the deploy pipeline
 config/kubernetes
