@@ -4,6 +4,41 @@
 
 A service to apply for criminal legal aid
 
+## Getting Started
+
+Clone the repository, and follow these steps in order.  
+The instructions assume you have [Homebrew](https://brew.sh) installed in your machine, as well as use some ruby version manager, usually [rbenv](https://github.com/rbenv/rbenv). If not, please install all this first.
+
+**1. Pre-requirements**
+
+* `brew bundle`
+* `gem install bundler`
+* `bundle install`
+
+**2. Configuration**
+
+* Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
+* Copy `.env.test` to `.env.test.local` and modify with suitable values for your local machine
+
+After you've defined your DB configuration in the above files, run the following:
+
+* `bin/rails db:prepare` (for the development database)
+* `RAILS_ENV=test bin/rails db:prepare` (for the test database)
+
+**3. GOV.UK Frontend (styles, javascript and other assets)**
+
+* `yarn`
+
+**4. Run the app locally**
+
+Once all the above is done, you should be able to run the application as follow:
+
+a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
+b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
+
+You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
+
+If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
 ## Docker
 
