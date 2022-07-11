@@ -1,0 +1,7 @@
+// GOV.UK Frontend
+//
+$govuk-new-link-styles: true;
+$govuk-global-styles: true;
+$govuk-assets-path: 'govuk-frontend/govuk/assets/';
+
+@import "govuk-frontend/govuk/all";

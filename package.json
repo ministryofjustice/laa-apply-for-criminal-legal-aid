@@ -1,0 +1,7 @@
+{
+  "name": "laa-apply-for-criminal-legal-aid",
+  "private": "true",
+  "dependencies": {
+    "govuk-frontend": "^4.2.0"
+  }
+}

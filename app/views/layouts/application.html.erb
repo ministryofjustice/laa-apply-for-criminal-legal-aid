@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>LaaApplyForCriminalLegalAid</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<% content_for?(:page_title) ? yield(:page_title) : 'Apply for criminal legal aid' %>
 
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_importmap_tags %>
-  </head>
+<% content_for(:head) do %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+<% end %>
 
-  <body>
-    <%= yield %>
-  </body>
-</html>
+<% content_for(:service_name) do %>
+  <%= link_to 'Apply for criminal legal aid', root_path,
+              class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
+<% end %>
+
+<% content_for(:phase_banner) do %>
+  <%= render partial: 'layouts/phase_banner' %>
+<% end %>
+
+<% content_for(:content) do %>
+  <%= yield %>
+<% end %>
+
+<% content_for(:footer_links) do %>
+  <% render partial: 'layouts/footer_links' %>
+<% end %>
+
+<%= render template: 'layouts/govuk_template', layout: false %>

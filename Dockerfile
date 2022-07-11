@@ -12,7 +12,14 @@ RUN apk --no-cache add --virtual build-deps \
   shared-mime-info \
   linux-headers \
   xz-libs \
-  tzdata
+  tzdata \
+  yarn
+
+# Alpine does not have a glibc, and this is needed for dart-sass
+# Refer to: https://github.com/sgerrand/alpine-pkg-glibc
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.34-r0/glibc-2.34-r0.apk
+RUN apk add glibc-2.34-r0.apk
 
 # add non-root user and group with alpine first available uid, 1000
 RUN addgroup -g 1000 -S appgroup && \
@@ -34,6 +41,14 @@ RUN gem install bundler && \
     bundle install --jobs 2 --retry 3
 
 COPY . .
+
+# The following are ENV variables that need to be present by the time
+# the assets pipeline run, but doesn't matter their value.
+#
+ENV SECRET_KEY_BASE replace_this_at_build_time
+
+RUN yarn install --pure-lockfile
+RUN RAILS_ENV=production rails assets:precompile --trace
 
 # tidy up installation
 RUN apk del build-deps && rm -rf /tmp/*
