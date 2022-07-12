@@ -31,14 +31,28 @@ After you've defined your DB configuration in the above files, run the following
 
 **4. Run the app locally**
 
-Once all the above is done, you should be able to run the application as follow:
+Once all the above is done, you should be able to run the application as follows:
 
-a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
+a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.  
 b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
 
 You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
+
+## Running the tests
+
+You can run all the code linters and tests with:
+
+* `rake`
+
+The tasks run by default when using `rake`, are defined in the `Rakefile`.
+
+Or you can run them individually:
+
+* `rake spec`
+* `rake rubocop`
+* `rake brakeman`
 
 ## Docker
 

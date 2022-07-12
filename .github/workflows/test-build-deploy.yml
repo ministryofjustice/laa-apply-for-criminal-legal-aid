@@ -11,8 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Note, at the moment there are no tests really, but leaving this job prepared
-  # as soon we will have at least a basic test, and code linters, etc.
   test:
     runs-on: ubuntu-latest
 
@@ -41,8 +39,27 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Find yarn cache location
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: JS package cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install packages with yarn
+        run: |
+          yarn install --pure-lockfile
+
       - name: Setup test database
         run: bin/rails db:prepare
+
+      - name: Run linters and tests
+        run: bundle exec rake
 
   build:
     runs-on: ubuntu-latest
