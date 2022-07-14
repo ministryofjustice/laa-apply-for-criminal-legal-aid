@@ -1,4 +1,4 @@
-enabled_features:
+feature_flags:
   test_on:
     Local: true
     Host-staging: true

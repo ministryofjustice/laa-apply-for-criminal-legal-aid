@@ -116,6 +116,45 @@ All this is done through **github actions**.
 The secrets needed for these actions are created automatically as part of the **terraforming**. You can read more about 
 it in [this document](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/github-actions-continuous-deployment.html#automating-the-deployment-process).
 
+## Feature Flags
+
+Feature flags can be set so that functionality can be enabled and disabled depending on the environment that an the application is running in. Currently there are two meaningful environments:
+- Local (i.e. your local dev / test environment)
+- Staging
+
+As and when more environments are added, the `FeatureFlags` and `HostEnv` classes will be amended to incorporate them.
+
+### Setting a new feature flag
+
+Set a new feature flag in the `config/settings.yml` under the heading `feature_flags` like so:
+
+```
+# config/settings.yml
+feature_flags:
+  your_new_feature:
+    Local: true
+    staging: false
+```
+
+### Using the feature flag API
+
+To check a feature is enabled / disabled use:
+
+```
+FeatureFlags.your_new_feature.enabled?
+
+# or
+
+FeatureFlags.your_new_feature.disabled?
+```
+
+You can then enable / disable features in your code:
+
+```
+if FeatureFlags.your_new_feature.enabled?
+  puts "Wow you can see a new feature!"
+end
+```
 
 ## Architectural decision records
 

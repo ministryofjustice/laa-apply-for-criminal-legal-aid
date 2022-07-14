@@ -2,13 +2,13 @@
 #
 # usage (for e.g. feature :test_enable):
 #
-#   FeatureSet.sars.enabled?
-#   FeatureSet.sars.disable!
-#   FeatureSet.sars.enable!
+#   FeatureFlags.sars.enabled?
+#   FeatureFlags.sars.disable!
+#   FeatureFlags.sars.enable!
 #
 #
 
-class FeatureSet
+class FeatureFlags
   include Singleton
 
   class EnabledFeature
@@ -36,11 +36,11 @@ class FeatureSet
   end
 
   def initialize
-    @config = Settings.enabled_features
+    @config = Settings.feature_flags
   end
 
 
-  # so that we can write FeatureSet.test_enable, etc.
+  # so that we can write FeatureFlags.test_enable, etc.
   def self.method_missing(meth)
     efs = instance
     efs.send(meth)
