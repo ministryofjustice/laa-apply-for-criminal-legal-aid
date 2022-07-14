@@ -1,5 +1,4 @@
 class HostEnv
-
   # Update as more K8s environments are added
   def self.staging?
     ENV['ENV'] == 'staging'
@@ -18,10 +17,10 @@ class HostEnv
   end
 
   def self.host_env
-    if ENV['ENV'].nil? && ( Rails.env.development? || Rails.env.test? )
+    if ENV['ENV'].nil? && (Rails.env.development? || Rails.env.test?)
       'Local'
     else
-      "Host-#{ENV['ENV']}"
+      "Host-#{ENV.fetch('ENV', nil)}"
     end
   end
 end

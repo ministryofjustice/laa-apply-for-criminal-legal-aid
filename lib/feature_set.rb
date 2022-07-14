@@ -12,7 +12,6 @@ class FeatureFlags
   include Singleton
 
   class EnabledFeature
-
     def initialize(config)
       @env_config = config
       @host_env = HostEnv.host_env
@@ -39,7 +38,6 @@ class FeatureFlags
     @config = Settings.feature_flags
   end
 
-
   # so that we can write FeatureFlags.test_enable, etc.
   def self.method_missing(meth)
     efs = instance
@@ -62,5 +60,4 @@ class FeatureFlags
   def respond_to_missing?(meth, _include_private = false)
     meth.in?(@config.keys) ? true : super
   end
-
 end
