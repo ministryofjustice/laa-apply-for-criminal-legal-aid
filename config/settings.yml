@@ -1,0 +1,10 @@
+enabled_features:
+  test_local:
+    Local: true
+    Host-staging: false
+  test_staging:
+    Local: false
+    Host-staging: true
+  test_all_envs:
+    Local: true
+    Host-staging: true

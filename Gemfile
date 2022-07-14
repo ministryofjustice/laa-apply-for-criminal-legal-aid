@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
+gem 'config'
+
 gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
@@ -17,6 +19,7 @@ gem 'importmap-rails'
 gem 'bootsnap', require: false
 
 gem 'dartsass-rails', '~> 0.4.0'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
