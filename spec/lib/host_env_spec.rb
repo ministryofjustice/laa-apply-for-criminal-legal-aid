@@ -3,12 +3,8 @@ require 'rails_helper'
 describe HostEnv do
   describe 'local machine environment' do
     context 'local development rails environment' do
-      before(:each) do
-        ENV['RAILS_ENV'] = 'development'
-      end
-
-      after(:each) do
-        ENV['RAILS_ENV'] = 'test'
+      before do
+        allow(Rails.env).to receive(:development?).and_return(true)
       end
 
       describe 'HostEnv.staging?' do
@@ -37,9 +33,9 @@ describe HostEnv do
         end
       end
 
-      describe '.test?' do
+      describe '.production?' do
         it 'returns true' do
-          expect(HostEnv.test?).to be true
+          expect(HostEnv.production?).to be false
         end
       end
 
@@ -51,42 +47,46 @@ describe HostEnv do
     end
   end
 
-  describe 'Cloud Platform infrastructure environments' do
-    before(:each) do
-      k8s_settings = YAML.load_file("config/kubernetes/#{namespace}/config_map.yml")
-      @envvars = k8s_settings.dig('data')
+  describe 'ENV_NAME variable is set in production envs' do
+    before do
+      allow(Rails).to receive(:env).and_return('production'.inquiry)
+      allow(ENV).to receive(:fetch).with('ENV_NAME').and_return(env_name)
     end
 
-    context 'Staging server' do
-      let(:namespace) { 'staging' }
+    context 'staging host' do
+      let(:env_name) { HostEnv::STAGING }
 
-      before(:each) do
-        ENV['ENV'] = 'staging'
-        ENV['RACK_ENV'] = 'production'
-        ENV['RAILS_ENV'] = 'production'
-      end
+      it { expect(HostEnv.local?).to eq(false) }
+      it { expect(HostEnv.staging?).to eq(true) }
+      it { expect(HostEnv.production?).to eq(false) }
+    end
 
-      after(:each) do
-        ENV['ENV'] = nil
-        ENV['RACK_ENV'] = nil
-        ENV['RAILS_ENV'] = 'test'
-      end
+    context 'production host' do
+      let(:env_name) { HostEnv::PRODUCTION }
 
-      it 'is a staging server environment' do
-        expect(HostEnv.staging?).to be true
-        expect_k8s_settings
-      end
+      it { expect(HostEnv.local?).to eq(false) }
+      it { expect(HostEnv.staging?).to eq(false) }
+      it { expect(HostEnv.production?).to eq(true) }
+    end
 
-      it 'is not another environment' do
-        expect(HostEnv.local?).to be false
-        expect(HostEnv.production?).to be false
-      end
+    context 'unknown host' do
+      let(:env_name) { 'foobar' }
 
-      def expect_k8s_settings
-        expect(@envvars['ENV']).to eq ENV['ENV']
-        expect(@envvars['RACK_ENV']).to eq ENV['RACK_ENV']
-        expect(@envvars['RAILS_ENV']).to eq ENV['RAILS_ENV']
-      end
+      it { expect(HostEnv.local?).to eq(false) }
+      it { expect(HostEnv.staging?).to eq(false) }
+      it { expect(HostEnv.production?).to eq(false) }
+    end
+  end
+
+  describe 'when is a production env and the ENV_NAME variable is not set' do
+    before do
+      allow(Rails).to receive(:env).and_return('production'.inquiry)
+    end
+
+    it 'raises an exception so we are fully aware' do
+      expect {
+        HostEnv.production?
+      }.to raise_exception(KeyError)
     end
   end
 end

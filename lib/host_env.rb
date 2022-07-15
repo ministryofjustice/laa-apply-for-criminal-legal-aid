@@ -1,26 +1,24 @@
-class HostEnv
-  # Update as more K8s environments are added
-  def self.staging?
-    ENV['ENV'] == 'staging'
-  end
+module HostEnv
+  # Update if more environments are needed
+  NAMED_ENVIRONMENTS = [
+    LOCAL = 'local'.freeze,
+    STAGING = 'staging'.freeze,
+    PRODUCTION = 'production'.freeze,
+  ].freeze
 
-  def self.production?
-    ENV['ENV'] == 'prod'
-  end
+  class << self
+    NAMED_ENVIRONMENTS.each { |name| delegate "#{name}?", to: :inquiry }
 
-  def self.test?
-    Rails.env.test?
-  end
+    def env_name
+      return LOCAL if Rails.env.development? || Rails.env.test?
 
-  def self.local?
-    host_env == 'Local'
-  end
+      ENV.fetch('ENV_NAME')
+    end
 
-  def self.host_env
-    if ENV['ENV'].nil? && (Rails.env.development? || Rails.env.test?)
-      'Local'
-    else
-      "Host-#{ENV.fetch('ENV', nil)}"
+    private
+
+    def inquiry
+      env_name.inquiry
     end
   end
 end
