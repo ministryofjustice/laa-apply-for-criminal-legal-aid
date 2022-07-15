@@ -44,7 +44,3 @@ Brewfile.lock.json
 .env.development.local
 .env.test.local
 .env.local
-
-config/settings.local.yml
-config/settings/*.local.yml
-config/environments/*.local.yml
