@@ -5,3 +5,14 @@
     </h1>
   </div>
 </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if FeatureFlags.test_on.enabled? %>
+      <p>Features are enableable!</p>
+    <% end %>
+
+    <% if FeatureFlags.test_off.disabled? %>
+      <p>Features are disableable!</p>
+    <% end %>
+  </div>
+</div>

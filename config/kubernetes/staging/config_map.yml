@@ -4,6 +4,7 @@ metadata:
   name: configmap-staging
   namespace: laa-apply-for-criminal-legal-aid-staging
 data:
+  ENV_NAME: staging
   RACK_ENV: production
   RAILS_ENV: production
   RAILS_SERVE_STATIC_FILES: enabled
