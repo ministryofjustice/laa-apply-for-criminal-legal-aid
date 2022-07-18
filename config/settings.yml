@@ -1,7 +1,7 @@
 feature_flags:
   test_on:
-    Local: true
-    Host-staging: true
+    local: true
+    staging: true
   test_off:
-    Local: false
-    Host-staging: false
+    local: false
+    staging: false
