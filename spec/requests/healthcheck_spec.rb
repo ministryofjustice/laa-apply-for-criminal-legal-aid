@@ -6,9 +6,8 @@ RSpec.describe "Healthcheck endpoint" do
 
   describe 'healthchecks' do
     it "can report a success" do
-      allow(ApplicationRecord.connection).to receive(:select_value)
-        .with('SELECT 1')
-        .and_return(1)
+      allow(ActiveRecord::Base.connection).to receive(:active?)
+        .and_return(true)
 
       get "/health"
       expect(response.body).to eq(success_response)
@@ -16,8 +15,7 @@ RSpec.describe "Healthcheck endpoint" do
     end
 
     it "can report a failure" do
-      allow(ApplicationRecord.connection).to receive(:select_value)
-        .with('SELECT 1')
+      allow(ActiveRecord::Base.connection).to receive(:active?)
         .and_raise(StandardError)
 
       get "/health"

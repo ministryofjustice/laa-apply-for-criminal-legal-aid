@@ -21,7 +21,7 @@ class HealthcheckController < ActionController::Base
   end
 
   def database_connected?
-    ApplicationRecord.connection.select_value('SELECT 1') == 1
+    ActiveRecord::Base.connection.active?
   rescue StandardError
     false
   end
