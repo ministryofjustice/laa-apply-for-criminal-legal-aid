@@ -1,4 +1,4 @@
-<% content_for?(:page_title) ? yield(:page_title) : 'Apply for criminal legal aid' %>
+<% content_for?(:page_title) ? yield(:page_title) : service_name %>
 
 <% content_for(:head) do %>
   <%= csrf_meta_tags %>
@@ -6,7 +6,7 @@
 <% end %>
 
 <% content_for(:service_name) do %>
-  <%= link_to 'Apply for criminal legal aid', root_path,
+  <%= link_to service_name, root_path,
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
