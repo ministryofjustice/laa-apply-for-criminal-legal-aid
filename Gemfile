@@ -7,6 +7,8 @@ gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
 
+gem 'govuk_design_system_formbuilder', '~> 3.1.0'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 

@@ -20,6 +20,9 @@ AllCops:
 ## Customization for this project ##
 ####################################
 
+# Disabled cops
+###############
+
 Style/Documentation:
   Enabled: false
 
@@ -37,3 +40,14 @@ Style/TrailingCommaInArrayLiteral:
 
 Layout/HashAlignment:
   Enabled: false
+
+# Enabled but tweaked cops
+##########################
+
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/BlockForwarding
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
