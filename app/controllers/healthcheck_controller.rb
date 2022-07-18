@@ -1,5 +1,4 @@
-# rubocop:disable Rails/ApplicationController
-class HealthcheckController < ActionController::Base
+class HealthcheckController < BareApplicationController
   def show
     render json: { healthcheck: healthcheck_result }, status: http_status
   end
@@ -26,4 +25,3 @@ class HealthcheckController < ActionController::Base
     false
   end
 end
-# rubocop:enable Rails/ApplicationController
