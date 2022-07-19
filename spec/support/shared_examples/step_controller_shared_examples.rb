@@ -62,6 +62,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
         it 'asks the decision tree for the next destination and redirects there' do
           expect(decision_tree_class).to receive(:new).and_return(decision_tree)
           put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          expect(response).to have_http_status(:redirect)
           expect(subject).to redirect_to('/expected_destination')
         end
       end
@@ -73,7 +74,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 
         it 'renders the question page again' do
           put :update, params: expected_params, session: { crime_application_id: existing_case.id }
-          expect(subject).to render_template(:edit)
+          expect(response).to have_http_status(:ok)
         end
       end
     end

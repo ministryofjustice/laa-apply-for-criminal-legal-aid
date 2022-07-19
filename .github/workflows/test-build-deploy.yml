@@ -52,8 +52,10 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install packages with yarn
-        run: |
-          yarn install --pure-lockfile
+        run: yarn install --pure-lockfile
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
 
       - name: Setup test database
         run: bin/rails db:prepare
