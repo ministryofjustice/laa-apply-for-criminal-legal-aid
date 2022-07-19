@@ -35,18 +35,7 @@ spec:
             memory: 1Gi
         readinessProbe:
           httpGet:
-            path: /
-            port: 3000
-            httpHeaders:
-              - name: X-Forwarded-Proto
-                value: https
-              - name: X-Forwarded-Ssl
-                value: "on"
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /
+            path: /health
             port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
@@ -54,6 +43,17 @@ spec:
               - name: X-Forwarded-Ssl
                 value: "on"
           initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+            httpHeaders:
+              - name: X-Forwarded-Proto
+                value: https
+              - name: X-Forwarded-Ssl
+                value: "on"
+          initialDelaySeconds: 30
           periodSeconds: 10
         envFrom:
           - configMapRef:
