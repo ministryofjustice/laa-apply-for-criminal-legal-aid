@@ -61,6 +61,13 @@ jobs:
       - name: Run linters and tests
         run: bundle exec rake
 
+      - name: Upload rspec coverage (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: rspec-coverage
+          path: coverage/*
+
   build:
     runs-on: ubuntu-latest
     needs: test

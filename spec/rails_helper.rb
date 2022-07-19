@@ -13,6 +13,8 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+Dir['./spec/support/**/*.rb'].each { |f| require f }
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -26,6 +28,9 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+
+  config.include(ViewSpecHelpers, type: :helper)
+  config.before(:each, type: :helper) { initialize_view_helpers(helper) }
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
