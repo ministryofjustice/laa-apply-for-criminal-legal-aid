@@ -1,0 +1,7 @@
+---
+en:
+  errors:
+    format: "%{message}"
+    page_title_prefix: "Error: "
+    error_summary:
+      heading: There is a problem on this page
