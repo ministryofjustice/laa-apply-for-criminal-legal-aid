@@ -1,7 +1,24 @@
 ---
 en:
+  helpers/dictionary:
+    YESNO: &YESNO
+      'yes': 'Yes'
+      'no': 'No'
+
   helpers:
     back_link: Back
     submit:
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
+
+    legend:
+      steps_client_has_partner_form:
+        client_has_partner: Does your client have a partner?
+
+    hint:
+      steps_client_has_partner_form:
+        client_has_partner: By partner we mean someone they are married to, in a civil partnership with, cohabit with or otherwise share finances.
+
+    label:
+      steps_client_has_partner_form:
+        client_has_partner_options: *YESNO

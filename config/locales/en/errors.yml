@@ -5,3 +5,11 @@ en:
     page_title_prefix: "Error: "
     error_summary:
       heading: There is a problem on this page
+
+  activemodel:
+    errors:
+      models:
+        steps/client/has_partner_form:
+          attributes:
+            client_has_partner:
+              inclusion: Select yes if your client has a partner

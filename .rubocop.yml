@@ -51,3 +51,8 @@ Style/HashSyntax:
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/BlockForwarding
 Naming/BlockForwarding:
   EnforcedStyle: explicit
+
+# https://rubydoc.info/gems/rubocop/0.82.0/RuboCop/Cop/Naming/MethodParameterName
+Naming/MethodParameterName:
+  AllowedNames:
+    - as
