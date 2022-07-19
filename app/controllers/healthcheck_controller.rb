@@ -3,6 +3,10 @@ class HealthcheckController < BareApplicationController
     render json: { healthcheck: healthcheck_result }, status: http_status
   end
 
+  def ping
+    render json: build_args, status: :ok
+  end
+
   private
 
   def healthcheck_result
@@ -10,7 +14,7 @@ class HealthcheckController < BareApplicationController
   end
 
   def http_status
-    green? ? 200 : 503
+    green? ? :ok : :service_unavailable
   end
 
   def green?
@@ -23,5 +27,14 @@ class HealthcheckController < BareApplicationController
     ActiveRecord::Base.connection.active?
   rescue StandardError
     false
+  end
+
+  # Build information exposed in the Dockerfile
+  def build_args
+    {
+      build_date: ENV.fetch('APP_BUILD_DATE', nil),
+      build_tag:  ENV.fetch('APP_BUILD_TAG',  nil),
+      commit_id:  ENV.fetch('APP_GIT_COMMIT', nil),
+    }.freeze
   end
 end
