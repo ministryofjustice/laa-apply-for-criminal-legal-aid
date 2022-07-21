@@ -1,0 +1,15 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+        <%= f.govuk_collection_radio_buttons :client_has_partner, @form_object.choices,
+                                             :value, nil, inline: true %>
+
+        <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

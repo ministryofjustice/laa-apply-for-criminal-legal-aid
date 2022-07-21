@@ -1,0 +1,7 @@
+---
+en:
+  steps:
+    client:
+      has_partner:
+        edit:
+          page_title: Does your client have a partner?
