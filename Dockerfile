@@ -42,13 +42,8 @@ RUN gem install bundler && \
 
 COPY . .
 
-# The following are ENV variables that need to be present by the time
-# the assets pipeline run, but doesn't matter their value.
-#
-ENV SECRET_KEY_BASE replace_this_at_build_time
-
 RUN yarn install --pure-lockfile
-RUN RAILS_ENV=production rails assets:precompile --trace
+RUN RAILS_ENV=production ENV_NAME= rails assets:precompile --trace
 
 # tidy up installation
 RUN apk del build-deps && rm -rf /tmp/*
