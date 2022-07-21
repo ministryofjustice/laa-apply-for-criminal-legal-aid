@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ErrorHandling
   include StepsHelper
 
   def current_crime_application

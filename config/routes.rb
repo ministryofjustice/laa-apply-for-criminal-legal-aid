@@ -16,6 +16,13 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  resource :errors, only: [] do
+    get :application_not_found
+    get :invalid_session
+    get :unhandled
+    get :not_found
+  end
+
   # Just for demo purposes, to be removed
   get 'home/selected_yes'
   get 'home/selected_no'
@@ -25,4 +32,10 @@ Rails.application.routes.draw do
       edit_step :has_partner
     end
   end
+
+  # catch-all route
+  # :nocov:
+  match '*path', to: 'errors#not_found', via: :all, constraints:
+    lambda { |_request| !Rails.application.config.consider_all_requests_local }
+  # :nocov:
 end

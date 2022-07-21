@@ -9,8 +9,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      # TODO: implement error handling
-      xit 'redirects to the invalid session error page' do
+      it 'redirects to the invalid session error page' do
         get :edit
         expect(response).to redirect_to(invalid_session_errors_path)
       end
@@ -38,8 +37,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      # TODO: implement error handling
-      xit 'redirects to the invalid session error page' do
+      it 'redirects to the invalid session error page' do
         put :update, params: expected_params
         expect(response).to redirect_to(invalid_session_errors_path)
       end
@@ -142,8 +140,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      # TODO: implement error handling
-      xit 'redirects to the invalid session error page' do
+      it 'redirects to the invalid session error page' do
         put :update, params: expected_params
         expect(response).to redirect_to(invalid_session_errors_path)
       end
