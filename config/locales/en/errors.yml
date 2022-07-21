@@ -12,4 +12,4 @@ en:
         steps/client/has_partner_form:
           attributes:
             client_has_partner:
-              inclusion: Select yes if your client has a partner
+              inclusion: Select whether you have a partner or not
