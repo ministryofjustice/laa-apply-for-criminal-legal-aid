@@ -1,0 +1,12 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t '.heading' %></h1>
+
+    <p class="govuk-body-l"><%=t '.lead_text' %></p>
+    <p class="govuk-body"><%=t '.more_text' %></p>
+
+    <%= link_button t('helpers.start_again'), root_path, class: 'govuk-!-margin-top-2' %>
+  </div>
+</div>
