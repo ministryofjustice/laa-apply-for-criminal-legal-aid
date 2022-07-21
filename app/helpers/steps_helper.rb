@@ -39,4 +39,20 @@ module StepsHelper
       f.govuk_error_summary t('errors.error_summary.heading')
     end
   end
+
+  def link_button(name, href, options = {})
+    html_options = {
+      class: 'govuk-button', role: 'button', draggable: false, data: { module: 'govuk-button' },
+    }.merge(options) do |_key, old_value, new_value|
+      if new_value.is_a?(String) || new_value.is_a?(Array)
+        # For strings or array attributes, merge (union) both values
+        Array(old_value) | Array(new_value)
+      else
+        # For other attributes do not merge, override (i.e. draggable and data)
+        new_value
+      end
+    end
+
+    link_to name, href, html_options
+  end
 end

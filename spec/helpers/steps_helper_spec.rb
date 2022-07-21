@@ -116,4 +116,18 @@ RSpec.describe StepsHelper, type: :helper do
       end
     end
   end
+
+  describe '#link_button' do
+    it 'builds the link markup styled as a button' do
+      expect(
+        helper.link_button('Continue', root_path)
+      ).to eq('<a class="govuk-button" role="button" draggable="false" data-module="govuk-button" href="/">Continue</a>')
+    end
+
+    it 'appends to the default attributes where possible, otherwise overwrite them' do
+      expect(
+        helper.link_button('Continue', root_path, class: 'ga-pageLink', draggable: true, data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
+      ).to eq('<a class="govuk-button ga-pageLink" role="button" draggable="true" data-module="govuk-button" data-ga-category="category" data-ga-label="label" href="/">Continue</a>')
+    end
+  end
 end
