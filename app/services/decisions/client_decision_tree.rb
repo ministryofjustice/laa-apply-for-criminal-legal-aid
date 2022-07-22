@@ -4,6 +4,8 @@ module Decisions
       case step_name
       when :has_partner
         after_has_partner
+      when :details
+        show('/home', action: :index)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -15,7 +17,7 @@ module Decisions
       if form_object.client_has_partner.yes?
         show('/home', action: :selected_yes)
       else
-        show('/home', action: :selected_no)
+        edit(:details)
       end
     end
   end
