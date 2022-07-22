@@ -5,3 +5,8 @@ en:
       has_partner:
         edit:
           page_title: Does your client have a partner?
+      details:
+        edit:
+          page_title: Enter your client’s details
+          heading: Enter your client’s details
+          full_name_legend: Full name

@@ -19,7 +19,13 @@ en:
     hint:
       steps_client_has_partner_form:
         client_has_partner: By partner we mean someone they are married to, in a civil partnership with, cohabit with or otherwise share finances.
+      steps_client_details_form:
+        other_names: This includes aliases, nicknames or other names your client may be known as.
 
     label:
       steps_client_has_partner_form:
         client_has_partner_options: *YESNO
+      steps_client_details_form:
+        first_name: First name
+        last_name: Last name
+        other_names: Other names (optional)
