@@ -1,10 +1,21 @@
 module Steps
   class BaseStepController < ApplicationController
     before_action :check_crime_application_presence
-
-    # rubocop:disable Rails/LexicallyScopedActionFilter
     before_action :update_navigation_stack, only: [:show, :edit]
-    # rubocop:enable  Rails/LexicallyScopedActionFilter
+
+    # :nocov:
+    def show
+      raise 'implement this action, if needed, in subclasses'
+    end
+
+    def edit
+      raise 'implement this action, if needed, in subclasses'
+    end
+
+    def update
+      raise 'implement this action, if needed, in subclasses'
+    end
+    # :nocov:
 
     private
 

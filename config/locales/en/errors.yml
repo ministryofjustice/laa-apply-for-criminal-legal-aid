@@ -30,3 +30,9 @@ en:
           attributes:
             client_has_partner:
               inclusion: Select whether you have a partner or not
+        steps/client/details_form:
+          attributes:
+            first_name:
+              blank: First name can’t be blank
+            last_name:
+              blank: Last name can’t be blank

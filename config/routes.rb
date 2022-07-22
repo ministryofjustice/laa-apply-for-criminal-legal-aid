@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   namespace :steps do
     namespace :client do
       edit_step :has_partner
+      edit_step :details
     end
   end
 
