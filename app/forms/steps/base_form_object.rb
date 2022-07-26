@@ -2,6 +2,7 @@ module Steps
   class BaseFormObject
     include ActiveModel::Model
     include ActiveModel::Attributes
+    include ActiveRecord::AttributeAssignment
 
     attr_accessor :crime_application,
                   :record

@@ -43,22 +43,8 @@ module Steps
     def permitted_params(form_class)
       params
         .fetch(form_class.model_name.singular, {})
-        .permit(form_attribute_names(form_class))
+        .permit(form_class.attribute_names)
     end
-
-    def form_attribute_names(form_class)
-      form_class.attribute_types.map do |(attr_name, primitive)|
-        primitive.is_a?(ActiveModel::Type::Date) ? date_params(attr_name) : attr_name
-      end.flatten
-    end
-
-    # TODO: migrate to new format:
-    # {'dob(1i)' => '2008', 'dob(2i)' => '11', 'dob(3i)' => '22'}
-    # :nocov:
-    def date_params(attr_name)
-      %W[#{attr_name}_dd #{attr_name}_mm #{attr_name}_yyyy]
-    end
-    # :nocov:
 
     def update_navigation_stack
       return unless current_crime_application
