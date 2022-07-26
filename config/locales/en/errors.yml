@@ -36,6 +36,16 @@ en:
               blank: First name can’t be blank
             last_name:
               blank: Last name can’t be blank
+            date_of_birth:
+              blank: Enter date of birth
+              invalid: Date of birth must be a real date
+              invalid_day: Date of birth day is not valid
+              invalid_month: Date of birth month is not valid
+              invalid_year: Date of birth year is not valid
+              year_too_late: Date of birth is too far in the future
+              year_too_early: Date of birth is too far in the past
+              past_not_allowed: Date of birth must be in the future
+              future_not_allowed: Date of birth must be in the past
         steps/client/has_nino_form:
           attributes:
             has_nino:
