@@ -1,0 +1,20 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :has_nino do %>
+        <%= f.govuk_radio_button :has_nino, YesNoAnswer::YES, link_errors: true do %>
+          <%= f.govuk_text_field :nino, width: 'three-quarters' %>
+        <% end %>
+
+        <%= f.govuk_radio_button :has_nino, YesNoAnswer::NO %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
