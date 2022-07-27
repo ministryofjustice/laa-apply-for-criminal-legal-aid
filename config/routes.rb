@@ -27,10 +27,14 @@ Rails.application.routes.draw do
   get 'home/selected_yes'
   get 'home/selected_no'
 
+  get 'home/nino_yes'
+  get 'home/nino_no'
+
   namespace :steps do
     namespace :client do
       edit_step :has_partner
       edit_step :details
+      edit_step :has_nino
     end
   end
 

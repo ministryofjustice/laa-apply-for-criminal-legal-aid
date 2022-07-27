@@ -36,3 +36,9 @@ en:
               blank: First name can’t be blank
             last_name:
               blank: Last name can’t be blank
+        steps/client/has_nino_form:
+          attributes:
+            has_nino:
+              inclusion: Select whether you have a National Insurance Number or not
+            nino: 
+              invalid: Please enter a valid National Insurance number
