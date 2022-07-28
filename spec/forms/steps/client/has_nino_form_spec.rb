@@ -88,5 +88,16 @@ RSpec.describe Steps::Client::HasNinoForm do
         expect(subject.errors.of_kind?(:nino, :invalid)).to eq(true)
       end
     end
+
+    context 'when validations pass' do
+      let(:has_nino) { 'yes' }
+      let(:nino) { 'AB123456C' }
+      it_behaves_like 'a has-one-association form',
+                      association_name: :applicant_details,
+                      expected_attributes: {
+                        'has_nino' => YesNoAnswer::YES,
+                        'nino' => "AB123456C"
+                      }
+    end
   end
 end
