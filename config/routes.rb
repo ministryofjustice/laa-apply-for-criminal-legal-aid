@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     get :not_found
   end
 
+  resource :session, only: [:destroy] do
+    member do
+      post :bypass_to_client_details
+    end
+  end
+
   # Just for demo purposes, to be removed
   get 'home/selected_yes'
   get 'home/selected_no'
