@@ -84,7 +84,7 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
   end
 
   context 'when year is invalid (too old)' do
-    let(:date) { { 3 => 25, 2 => 12, 1 => 1919 } }
+    let(:date) { { 3 => 25, 2 => 12, 1 => 1899 } }
 
     it 'has a validation error on the field' do
       expect(subject).to_not be_valid

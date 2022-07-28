@@ -1,18 +1,30 @@
 require 'rails_helper'
 
-RSpec.describe MultiparamDate do
+RSpec.describe Type::MultiparamDate do
   subject { described_class.new }
 
   let(:coerced_value) { subject.cast(value) }
 
-  describe 'when value is already a date' do
-    let(:value) { Date.yesterday }
-    it { expect(coerced_value).to eq(value) }
+  describe 'registry' do
+    it 'is registered with type `:multiparam_date`' do
+      expect(
+        ActiveModel::Type.lookup(:multiparam_date).is_a?(described_class)
+      ).to eq(true)
+    end
+
+    it 'has an underlying type of `:date`' do
+      expect(subject.type).to eq(:date)
+    end
   end
 
   describe 'when value is `nil`' do
     let(:value) { nil }
     it { expect(coerced_value).to be_nil }
+  end
+
+  describe 'when value is already a date' do
+    let(:value) { Date.yesterday }
+    it { expect(coerced_value).to eq(value) }
   end
 
   describe 'when value is a multi parameter hash' do

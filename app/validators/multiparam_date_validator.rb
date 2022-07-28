@@ -2,7 +2,7 @@ class MultiparamDateValidator < ActiveModel::EachValidator
   DATE_STRUCT = Struct.new('DateStruct', :day, :month, :year, keyword_init: true)
 
   DEFAULT_OPTIONS = {
-    earliest_year: 1920,
+    earliest_year: 1900,
     latest_year: 2050,
     allow_past: true,
     allow_future: false,
