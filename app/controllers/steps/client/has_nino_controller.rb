@@ -10,12 +10,6 @@ module Steps
       def update
         update_and_advance(HasNinoForm, as: :has_nino)
       end
-
-      private
-
-      def decision_tree_class
-        Decisions::ClientDecisionTree
-      end
     end
   end
 end
