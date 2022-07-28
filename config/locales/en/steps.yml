@@ -10,3 +10,6 @@ en:
           page_title: Enter your client’s details
           heading: Enter your client’s details
           full_name_legend: Full name
+      has_nino:
+        edit:
+          page_title: Enter your client’s NINO

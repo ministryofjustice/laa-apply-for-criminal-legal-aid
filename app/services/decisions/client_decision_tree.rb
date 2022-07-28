@@ -5,7 +5,9 @@ module Decisions
       when :has_partner
         after_has_partner
       when :details
-        show('/home', action: :index)
+        edit(:has_nino)
+      when :has_nino
+        after_has_nino
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -18,6 +20,14 @@ module Decisions
         show('/home', action: :selected_yes)
       else
         edit(:details)
+      end
+    end
+
+    def after_has_nino
+      if form_object.has_nino.yes?
+        show('/home', action: :nino_yes)
+      else
+        show('/home', action: :nino_no)
       end
     end
   end

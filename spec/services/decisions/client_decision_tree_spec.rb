@@ -24,6 +24,21 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    it { is_expected.to have_destination('/home', :index) }
+    it { is_expected.to have_destination(:has_nino, :edit) }
+  end
+
+  context 'when the step is `has_nino`' do
+    let(:form_object) { double('FormObject', has_nino: has_nino) }
+    let(:step_name) { :has_nino}
+
+    context 'and answer is `no`' do
+      let(:has_nino) { YesNoAnswer::NO }
+      it { is_expected.to have_destination('/home', :nino_no) }
+    end
+
+    context 'and answer is `yes`' do
+      let(:has_nino) { YesNoAnswer::YES }
+      it { is_expected.to have_destination('/home', :nino_yes) }
+    end
   end
 end
