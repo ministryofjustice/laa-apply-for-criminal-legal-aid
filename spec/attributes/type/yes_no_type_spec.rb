@@ -1,9 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe YesNoType do
+RSpec.describe Type::YesNoType do
   subject { described_class.new }
 
   let(:coerced_value) { subject.cast(value) }
+
+  describe 'registry' do
+    it 'is registered with type `:yes_no`' do
+      expect(
+        ActiveModel::Type.lookup(:yes_no).is_a?(described_class)
+      ).to eq(true)
+    end
+
+    it 'has an underlying type of `:string`' do
+      expect(subject.type).to eq(:string)
+    end
+  end
 
   describe 'when value is `nil`' do
     let(:value) { nil }
