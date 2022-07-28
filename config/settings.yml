@@ -1,7 +1,5 @@
 feature_flags:
-  test_on:
+  developer_tools:
     local: true
     staging: true
-  test_off:
-    local: false
-    staging: false
+    production: false
