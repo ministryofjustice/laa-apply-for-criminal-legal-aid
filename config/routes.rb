@@ -31,7 +31,6 @@ Rails.application.routes.draw do
 
   # Just for demo purposes, to be removed
   get 'home/selected_yes'
-  get 'home/selected_no'
 
   get 'home/nino_yes'
   get 'home/nino_no'
