@@ -28,7 +28,7 @@ RSpec.describe Steps::Client::DetailsForm do
 
     context 'when validations pass' do
       it_behaves_like 'a has-one-association form',
-                      association_name: :applicant_details,
+                      association_name: :applicant,
                       expected_attributes: {
                         'first_name' => 'John',
                         'last_name' => 'Doe',
