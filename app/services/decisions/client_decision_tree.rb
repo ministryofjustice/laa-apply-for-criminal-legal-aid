@@ -25,7 +25,7 @@ module Decisions
 
     def after_has_nino
       if form_object.has_nino.yes?
-        show('/home', action: :nino_yes)
+        edit('/steps/contact/home_address')
       else
         show('/home', action: :nino_no)
       end
