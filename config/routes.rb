@@ -41,6 +41,8 @@ Rails.application.routes.draw do
       edit_step :has_partner
       edit_step :details
       edit_step :has_nino
+
+      show_step :nino_exit
     end
 
     namespace :contact do

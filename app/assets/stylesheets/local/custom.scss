@@ -1,2 +1,69 @@
 // App-specific custom styles and overrides
 //
+
+.flash-card {
+  padding: 30px;
+  background: #005EA5;
+  color: #FFF;
+
+  header {
+    background-color: inherit;
+  }
+
+  p, ul, h2, a, h1 {
+    color: #FFF;
+  }
+
+  .govuk-button {
+    background: #FFF;
+    &:visited {
+      color: #005EA5;
+    }
+  }
+
+  ul {
+
+    h2 {
+      margin: 0;
+      margin-bottom: 0;
+      padding: 0;
+      font-size: 28px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+  }
+
+  h1 {
+    &:first-of-type {
+      margin-top: 0 !important;
+    }
+  }
+
+  a {
+    &:visited, &:hover, &:active {
+      color: #FFF;
+    }
+    &:hover {
+      opacity: 80%;
+    }
+  }
+  details {
+    // margin-bottom: 1em;
+    summary {
+      color: #FFF;
+    }
+    .panel {
+      border-left-color: #FFF;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .flash-card {
+    margin-top: 0em;
+    padding: 60px 60px;
+  }
+}
+
