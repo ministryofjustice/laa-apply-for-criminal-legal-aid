@@ -25,3 +25,7 @@ en:
         edit:
           page_title: Client’s home address
           heading: Enter your client’s home address
+      details:
+        edit:
+          page_title: Client’s contact details
+          heading: Enter your client's contact details

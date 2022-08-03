@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
     namespace :contact do
       edit_step :home_address
+      edit_step :details
     end
   end
 
