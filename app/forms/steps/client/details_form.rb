@@ -3,7 +3,7 @@ module Steps
     class DetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
 
-      has_one_association :applicant_details
+      has_one_association :applicant
 
       attribute :first_name, :string
       attribute :last_name, :string
@@ -18,7 +18,7 @@ module Steps
       private
 
       def persist!
-        applicant_details.update(
+        applicant.update(
           attributes
         )
       end

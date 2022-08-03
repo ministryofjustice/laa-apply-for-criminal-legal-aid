@@ -9,7 +9,7 @@ module Steps
       attribute :has_nino, :yes_no
       attribute :nino, :string
 
-      has_one_association :applicant_details
+      has_one_association :applicant
 
       validates_inclusion_of :has_nino, in: :choices
       validates :nino, format: { with: NINO_REGEXP }, if: -> { has_nino&.yes? }
@@ -21,7 +21,7 @@ module Steps
       private
 
       def persist!
-        applicant_details.update(
+        applicant.update(
           attributes
         )
       end

@@ -11,12 +11,9 @@ RSpec.describe Steps::Client::HasNinoForm do
   } }
 
   let(:crime_application) { 
-    instance_double(CrimeApplication, 
-      applicant_details: applicant_details
-    )
+    instance_double(CrimeApplication)
   }
 
-  let(:applicant_details) {instance_double(ApplicantDetails, :update)}
   let(:has_nino) { nil }
   let(:nino) { nil }
 
@@ -55,20 +52,6 @@ RSpec.describe Steps::Client::HasNinoForm do
       end
     end
 
-    context 'when `has_nino` is valid' do
-      let(:has_nino) { 'yes' }
-      let(:nino) { 'AB123456C' }
-
-      it 'saves the record' do
-        expect(crime_application.applicant_details).to receive(:update).with(
-          'has_nino' => YesNoAnswer::YES,
-          'nino' => 'AB123456C'
-        ).and_return(true)
-
-        expect(subject.save).to be(true)
-      end
-    end
-
     context 'when `nino` is blank' do
       let(:has_nino) { 'yes' }
       let(:nino) { '' }
@@ -93,7 +76,7 @@ RSpec.describe Steps::Client::HasNinoForm do
       let(:has_nino) { 'yes' }
       let(:nino) { 'AB123456C' }
       it_behaves_like 'a has-one-association form',
-                      association_name: :applicant_details,
+                      association_name: :applicant,
                       expected_attributes: {
                         'has_nino' => YesNoAnswer::YES,
                         'nino' => "AB123456C"
