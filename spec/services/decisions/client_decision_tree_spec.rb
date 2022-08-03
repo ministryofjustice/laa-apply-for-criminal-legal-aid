@@ -38,7 +38,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'and answer is `yes`' do
       let(:has_nino) { YesNoAnswer::YES }
-      it { is_expected.to have_destination('/steps/contact/home_address', :edit) }
+      it { is_expected.to have_destination('/steps/contact/postcode_lookup', :edit) }
     end
   end
 end

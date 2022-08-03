@@ -28,6 +28,8 @@ en:
         date_of_birth: For example, 27 3 2007
       steps_client_has_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
+      steps_contact_postcode_lookup_form:
+        home_postcode: This must be a valid UK postcode.
 
     label:
       steps_client_has_partner_form:
@@ -39,6 +41,8 @@ en:
       steps_client_has_nino_form:
         has_nino_options: *YESNO
         nino: Enter their National Insurance number
+      steps_contact_postcode_lookup_form:
+        home_postcode: Postcode
       steps_contact_home_address_form:
         home_address_line_one: Address line 1
         home_address_line_two: Address line 2 (optional)

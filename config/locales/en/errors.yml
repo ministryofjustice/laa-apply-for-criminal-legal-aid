@@ -52,6 +52,11 @@ en:
               inclusion: Select whether you have a National Insurance Number or not
             nino: 
               invalid: Please enter a valid National Insurance number
+        steps/contact/postcode_lookup_form:
+          attributes:
+            home_postcode:
+              blank: Enter postcode
+
         steps/contact/home_address_form:
           attributes:
             home_address_line_one:

@@ -5,6 +5,13 @@ RSpec.describe Decisions::ContactDecisionTree do
 
   it_behaves_like 'a decision tree'
 
+  context 'when the step is `postcode_lookup`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :postcode_lookup }
+
+    it { is_expected.to have_destination(:home_address, :edit) }
+  end
+
   context 'when the step is `home_address`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :home_address }

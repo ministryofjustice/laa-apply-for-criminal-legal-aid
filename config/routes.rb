@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     end
 
     namespace :contact do
+      edit_step :postcode_lookup
       edit_step :home_address
     end
   end
