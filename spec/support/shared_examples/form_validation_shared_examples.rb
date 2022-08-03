@@ -3,7 +3,21 @@ RSpec.shared_examples 'a has-one-association form' do |options|
   let(:expected_attributes) { options[:expected_attributes] }
   let(:build_method_name) { "build_#{association_name}".to_sym }
 
-  let(:association_double) { instance_double(association_name.to_s.camelize.constantize) }
+  let(:association_double) { instance_double(associated_class_name.camelize.constantize) }
+
+  def associated_class_name
+    reflection = CrimeApplication.reflect_on_association(association_name)
+
+    if reflection.is_a?(ActiveRecord::Reflection::HasOneReflection)
+      # For an `association_name` of `:applicant` it will return `applicant`
+      reflection.name.to_s
+    elsif reflection.is_a?(ActiveRecord::Reflection::ThroughReflection)
+      # For an `association_name` of `:applicant_contact_details` it will return `contact_details`
+      reflection.source_reflection_name.to_s
+    else
+      raise 'Unknown reflection. Shared examples may need adjustments.'
+    end
+  end
 
   context 'for valid details' do
     context 'when record does not exist' do

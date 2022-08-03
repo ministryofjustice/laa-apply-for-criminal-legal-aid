@@ -42,6 +42,10 @@ Rails.application.routes.draw do
       edit_step :details
       edit_step :has_nino
     end
+
+    namespace :contact do
+      edit_step :home_address
+    end
   end
 
   # catch-all route

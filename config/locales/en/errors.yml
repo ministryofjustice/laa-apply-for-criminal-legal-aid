@@ -52,3 +52,11 @@ en:
               inclusion: Select whether you have a National Insurance Number or not
             nino: 
               invalid: Please enter a valid National Insurance number
+        steps/contact/home_address_form:
+          attributes:
+            home_address_line_one:
+              blank: Enter first line of home address
+            home_city:
+              blank: Enter home address city
+            home_postcode:
+              blank: Enter home address postcode

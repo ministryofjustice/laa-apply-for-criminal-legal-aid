@@ -39,3 +39,9 @@ en:
       steps_client_has_nino_form:
         has_nino_options: *YESNO
         nino: Enter their National Insurance number
+      steps_contact_home_address_form:
+        home_address_line_one: Address line 1
+        home_address_line_two: Address line 2 (optional)
+        home_city: Town or city
+        home_county: County (optional)
+        home_postcode: Postcode

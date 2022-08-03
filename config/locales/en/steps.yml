@@ -13,3 +13,9 @@ en:
       has_nino:
         edit:
           page_title: Enter your client’s NINO
+
+    contact:
+      home_address:
+        edit:
+          page_title: Client’s home address
+          heading: Enter your client’s home address

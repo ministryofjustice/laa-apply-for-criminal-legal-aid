@@ -15,8 +15,12 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
       end
     end
 
+    # NOTE: for now it is ok to assume we just have the applicant, but when we
+    # integrate the partner steps, this will have to either be passed as configuration
+    # to the shared examples, or to also create the partner associated record.
+    #
     context 'when a case exists in the session' do
-      let!(:existing_case) { CrimeApplication.create }
+      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
 
       it 'responds with HTTP success' do
         get :edit, session: { crime_application_id: existing_case.id }
