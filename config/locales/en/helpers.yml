@@ -11,6 +11,7 @@ en:
     submit:
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
+      find_address: Find address
 
     legend:
       steps_client_has_partner_form:
@@ -28,6 +29,8 @@ en:
         date_of_birth: For example, 27 3 2007
       steps_client_has_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
+      steps_address_lookup_form:
+        postcode: This must be a valid UK postcode. For example, SW1A 2AA.
 
     label:
       steps_client_has_partner_form:

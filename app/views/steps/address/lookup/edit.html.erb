@@ -10,11 +10,15 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
 
-      <p class="govuk-body govuk-!-margin-bottom-8">
+      <p class="govuk-body">
         <%= link_to t('.manual_entry'), edit_steps_address_details_path(@form_object.record) %>
       </p>
 
-      <%= f.continue_button %>
+      <p class="govuk-body govuk-!-margin-bottom-6">
+        <%= link_to t('.no_address'), root_path %>
+      </p>
+
+      <%= f.continue_button(primary: :find_address) %>
     <% end %>
   </div>
 </div>
