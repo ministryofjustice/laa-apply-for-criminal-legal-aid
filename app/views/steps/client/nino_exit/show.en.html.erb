@@ -1,0 +1,22 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text">Use eForms for this application</h1>
+
+    <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
+
+    <ul class="govuk-list govuk-list--bullet app-inverted-text app-inverted-narrow-width">
+      <li>has a partner</li>
+      <li>does not have a National Insurance number </li>
+      <li>does not receive a passporting benefit based on DWP records, including Universal Credits</li>
+      <li>is employed, including self-employed, business partner, company director or shareholder</li>
+    </ul>
+
+    <div class="govuk-button-group govuk-!-margin-top-6">
+      <%= link_button 'Apply in eForms', 'https://portal.legalservices.gov.uk', class: 'govuk-button app-button--inverted' %>
+    </div>
+    <%= link_to 'Back to your applications', '/todo_route_to_applications', class: 'app-link--inverted' %>
+  </div>
+</div>

@@ -1,5 +1,25 @@
 require 'rails_helper'
 
+RSpec.shared_examples 'a show step controller' do
+  describe '#show' do
+    context 'when no case exists in the session' do
+      it 'redirects to the invalid session error page' do
+        get :show
+        expect(response).to redirect_to(invalid_session_errors_path)
+      end
+    end
+
+    context 'when a case exists in the session' do
+      let(:existing_case) { CrimeApplication.create }
+
+      it 'responds with HTTP success' do
+        get :show, session: { crime_application_id: existing_case.id }
+        expect(response).to be_successful
+      end
+    end
+  end
+end
+
 RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_class|
   describe '#edit' do
     context 'when no case exists in the session yet' do
