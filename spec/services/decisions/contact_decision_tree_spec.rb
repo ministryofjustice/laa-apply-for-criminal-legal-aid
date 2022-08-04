@@ -9,6 +9,6 @@ RSpec.describe Decisions::ContactDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :home_address }
 
-    it { is_expected.to have_destination('/home', :index) }
+    it { is_expected.to have_destination('/steps/client/contact_details', :edit) }
   end
 end

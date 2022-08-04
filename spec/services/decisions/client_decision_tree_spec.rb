@@ -41,4 +41,11 @@ RSpec.describe Decisions::ClientDecisionTree do
       it { is_expected.to have_destination('/steps/contact/home_address', :edit) }
     end
   end
+
+  context 'when the step is `contact_details`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :contact_details }
+
+    it { is_expected.to have_destination('/home', :index) }
+  end
 end

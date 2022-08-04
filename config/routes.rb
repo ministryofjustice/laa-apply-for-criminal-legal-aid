@@ -34,14 +34,13 @@ Rails.application.routes.draw do
       edit_step :has_partner
       edit_step :details
       edit_step :has_nino
-
       show_step :nino_exit
       show_step :partner_exit
+      edit_step :contact_details
     end
 
     namespace :contact do
       edit_step :home_address
-      edit_step :details
     end
   end
 
