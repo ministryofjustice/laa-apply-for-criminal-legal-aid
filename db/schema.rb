@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_073015) do
     t.string "address_line_one"
     t.string "address_line_two"
     t.string "city"
-    t.string "county"
+    t.string "country"
     t.string "postcode"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true

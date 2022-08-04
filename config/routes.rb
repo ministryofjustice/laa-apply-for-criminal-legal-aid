@@ -6,7 +6,7 @@ def edit_step(name, opts = {}, &block)
 end
 
 def crud_step(name, opts = {})
-  edit_step name, opts do
+  edit_step name, only: [] do
     resources only: opts.fetch(:only, [:edit, :update, :destroy]),
               controller: name,
               path_names: { edit: '' }

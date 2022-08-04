@@ -16,6 +16,6 @@ RSpec.describe Decisions::AddressDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    it { is_expected.to have_destination('/home', :index) }
+    it { is_expected.to have_destination('/steps/client/contact_details', :edit) }
   end
 end

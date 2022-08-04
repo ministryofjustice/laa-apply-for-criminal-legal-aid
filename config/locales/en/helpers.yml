@@ -49,5 +49,5 @@ en:
         address_line_one: Address line 1
         address_line_two: Address line 2 (optional)
         city: Town or city
-        county: County (optional)
+        country: Country
         postcode: Postcode

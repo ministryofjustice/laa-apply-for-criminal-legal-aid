@@ -60,8 +60,10 @@ en:
         steps/address/details_form:
           attributes:
             address_line_one:
-              blank: Enter first line of home address
+              blank: Enter first line of the address
             city:
-              blank: Enter home address city
+              blank: Enter address city
+            country:
+              blank: Enter address country
             postcode:
-              blank: Enter home address postcode
+              blank: Enter address postcode

@@ -5,7 +5,7 @@ module Decisions
       when :lookup
         edit(:details)
       when :details
-        show('/home', action: :index)
+        edit('/steps/client/contact_details')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

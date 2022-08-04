@@ -7,7 +7,7 @@ RSpec.describe Steps::Address::DetailsForm do
     address_line_one: 'Address line 1',
     address_line_two: 'Address line 2',
     city: 'City',
-    county: 'County',
+    country: 'Country',
     postcode: 'Postcode',
   } }
 
@@ -19,10 +19,10 @@ RSpec.describe Steps::Address::DetailsForm do
   describe 'validations' do
     it { should validate_presence_of(:address_line_one) }
     it { should validate_presence_of(:city) }
+    it { should validate_presence_of(:country) }
     it { should validate_presence_of(:postcode) }
 
     it { should_not validate_presence_of(:address_line_two) }
-    it { should_not validate_presence_of(:county) }
   end
 
   describe '#save' do
@@ -32,7 +32,7 @@ RSpec.describe Steps::Address::DetailsForm do
           'address_line_one' => 'Address line 1',
           'address_line_two' => 'Address line 2',
           'city' => 'City',
-          'county' => 'County',
+          'country' => 'Country',
           'postcode' => 'Postcode',
         ).and_return(true)
 

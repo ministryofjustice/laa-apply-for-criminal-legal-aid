@@ -9,7 +9,7 @@ class AddAddressesTable < ActiveRecord::Migration[7.0]
       t.string :address_line_one
       t.string :address_line_two
       t.string :city
-      t.string :county
+      t.string :country
       t.string :postcode
     end
 

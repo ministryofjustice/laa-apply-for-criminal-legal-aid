@@ -113,7 +113,7 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
       end
 
       it 'redirects to the invalid session error page' do
-        get :edit
+        get :edit, params: { id: '123' }
         expect(response).to redirect_to(invalid_session_errors_path)
       end
     end
