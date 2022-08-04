@@ -17,7 +17,7 @@ module Decisions
 
     def after_has_partner
       if form_object.client_has_partner.yes?
-        show('/home', action: :selected_yes)
+        show(:partner_exit)
       else
         edit(:details)
       end

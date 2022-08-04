@@ -29,13 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Just for demo purposes, to be removed
-  get 'home/selected_yes'
-  get 'home/selected_no'
-
-  get 'home/nino_yes'
-  get 'home/nino_no'
-
   namespace :steps do
     namespace :client do
       edit_step :has_partner
@@ -43,6 +36,7 @@ Rails.application.routes.draw do
       edit_step :has_nino
 
       show_step :nino_exit
+      show_step :partner_exit
     end
 
     namespace :contact do
