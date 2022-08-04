@@ -4,7 +4,7 @@ module Steps
       include Steps::HasOneAssociation
 
       # taken from Civil Apply
-      NINO_REGEXP = /\A[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{1}\Z/
+      NINO_REGEXP = /\A(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)(?:[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z])(?:\s*\d\s*){6}([A-DFM]|\s)\Z/
 
       attribute :nino, :string
 
