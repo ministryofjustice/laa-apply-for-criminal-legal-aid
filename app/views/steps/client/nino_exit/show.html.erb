@@ -1,29 +1,27 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-<div class="flash-card">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <header>
-        <h1 class="govuk-heading-l"><%= t('.heading') %></h1>
-      </header>
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text"><%= t('.heading') %></h1>
 
-      <p>You cannot use this service if your client:</p>
+    <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>has a partner</li>
-        <li>does not have a National Insurance number </li>
-        <li>does not receive a passporting benefit based on DWP records, including Universal Credits</li>
-        <li>is employed, including self-employed, business partner, company director or shareholder</li>
-      </ul>
+    <ul class="govuk-list govuk-list--bullet app-inverted-text app-inverted-narrow-width">
+      <li>has a partner</li>
+      <li>does not have a National Insurance number </li>
+      <li>does not receive a passporting benefit based on DWP records, including Universal Credits</li>
+      <li>is employed, including self-employed, business partner, company director or shareholder</li>
+    </ul>
 
-      <div>
-        <%= link_button t('.eforms_apply'), t('.eforms_url'), class: 'govuk-button' %>
+    <div class="govuk-grid-row ">
+      <div class="govuk-grid-column-full">
       </div>
-
-      <%= link_to t('.back_to_apps'), '#' %>
     </div>
+
+    <div class="govuk-button-group govuk-!-margin-top-6">
+      <%= link_button t('.eforms_apply'), t('.eforms_url'), class: 'govuk-button app-button--inverted' %>
+    </div>
+    <%= link_to t('.back_to_apps'), '/todo_route_to_applications', class: 'app-link--inverted' %>
   </div>
 </div>
-
-
