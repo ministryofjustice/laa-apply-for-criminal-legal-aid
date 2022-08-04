@@ -16,10 +16,6 @@ en:
       nino_exit:
         show:
           page_title: Use eForms for this application
-          heading: Use eForms for this application
-          back_to_apps: Back to your applications
-          eforms_apply: Apply in eForms
-          eforms_url: https://portal.legalservices.gov.uk/
 
     contact:
       home_address:

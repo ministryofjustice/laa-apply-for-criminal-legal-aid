@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row app-inverted--card app-inverted-text">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l app-inverted-text"><%= t('.heading') %></h1>
+    <h1 class="govuk-heading-l app-inverted-text">Use eForms for this application</h1>
 
     <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
 
@@ -14,14 +14,9 @@
       <li>is employed, including self-employed, business partner, company director or shareholder</li>
     </ul>
 
-    <div class="govuk-grid-row ">
-      <div class="govuk-grid-column-full">
-      </div>
-    </div>
-
     <div class="govuk-button-group govuk-!-margin-top-6">
-      <%= link_button t('.eforms_apply'), t('.eforms_url'), class: 'govuk-button app-button--inverted' %>
+      <%= link_button 'Apply in eForms', 'https://portal.legalservices.gov.uk', class: 'govuk-button app-button--inverted' %>
     </div>
-    <%= link_to t('.back_to_apps'), '/todo_route_to_applications', class: 'app-link--inverted' %>
+    <%= link_to 'Back to your applications', '/todo_route_to_applications', class: 'app-link--inverted' %>
   </div>
 </div>
