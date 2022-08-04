@@ -24,8 +24,13 @@ en:
           page_title: Client’s contact details
           heading: Enter your client's contact details
 
-    contact:
-      home_address:
+    address:
+      lookup:
+        edit:
+          page_title: Client’s postcode
+          heading: Enter your client’s postcode
+          manual_entry: Enter address manually
+      details:
         edit:
           page_title: Client’s home address
           heading: Enter your client’s home address

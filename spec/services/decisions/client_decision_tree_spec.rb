@@ -28,8 +28,8 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `has_nino`' do
-    let(:form_object) { double('FormObject', has_nino: has_nino) }
-    let(:step_name) { :has_nino}
+    let(:form_object) { double('FormObject', applicant: 'applicant', has_nino: has_nino) }
+    let(:step_name) { :has_nino }
 
     context 'and answer is `no`' do
       let(:has_nino) { YesNoAnswer::NO }
@@ -38,7 +38,14 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'and answer is `yes`' do
       let(:has_nino) { YesNoAnswer::YES }
-      it { is_expected.to have_destination('/steps/contact/home_address', :edit) }
+
+      before do
+        allow(
+          HomeAddress
+        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+      end
+
+      it { expect(subject.destination).to eq(controller: '/steps/address/lookup', action: :edit, id: 'address') }
     end
   end
 

@@ -1,8 +1,16 @@
-def edit_step(name, &block)
+def edit_step(name, opts = {}, &block)
   resource name,
-           only: [:edit, :update],
+           only: opts.fetch(:only, [:edit, :update]),
            controller: name,
            path_names: { edit: '' } do; block.call if block_given?; end
+end
+
+def crud_step(name, opts = {})
+  edit_step name, opts do
+    resources only: opts.fetch(:only, [:edit, :update, :destroy]),
+              controller: name,
+              path_names: { edit: '' }
+  end
 end
 
 def show_step(name)
@@ -37,6 +45,11 @@ Rails.application.routes.draw do
       show_step :nino_exit
       show_step :partner_exit
       edit_step :contact_details
+    end
+
+    namespace :address do
+      crud_step :lookup, only: [:edit, :update]
+      crud_step :details, only: [:edit, :update]
     end
 
     namespace :contact do

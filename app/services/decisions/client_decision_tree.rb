@@ -29,10 +29,15 @@ module Decisions
 
     def after_has_nino
       if form_object.has_nino.yes?
-        edit('/steps/contact/home_address')
+        start_address_journey(HomeAddress, form_object.applicant)
       else
         show(:nino_exit)
       end
+    end
+
+    def start_address_journey(address_class, person)
+      address = address_class.find_or_create_by(person: person)
+      edit('/steps/address/lookup', id: address)
     end
   end
 end

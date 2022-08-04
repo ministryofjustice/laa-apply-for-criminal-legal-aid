@@ -1,0 +1,2 @@
+class CorrespondenceAddress < Address
+end
