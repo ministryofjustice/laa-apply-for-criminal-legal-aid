@@ -16,7 +16,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'and answer is `yes`' do
       let(:client_has_partner) { YesNoAnswer::YES }
-      it { is_expected.to have_destination('/home', :selected_yes) }
+      it { is_expected.to have_destination(:partner_exit, :show) }
     end
   end
 

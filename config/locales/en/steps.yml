@@ -16,6 +16,9 @@ en:
       nino_exit:
         show:
           page_title: Use eForms for this application
+      partner_exit:
+        show:
+          page_title: Use eForms for this application
 
     contact:
       home_address:
