@@ -21,7 +21,6 @@
   background-color: govuk-colour("blue");
 }
 
-
 // Inverted button styles from
 // https://github.com/alphagov/govuk-design-system/blob/master/src/stylesheets/components/_inverted-button.scss
 $button-shadow-size: $govuk-border-width-form-element;
@@ -29,6 +28,17 @@ $app-button-inverted-background-colour: govuk-colour("white");
 $app-button-inverted-foreground-colour: govuk-colour("blue");
 $app-button-inverted-shadow-colour: govuk-shade($app-button-inverted-foreground-colour, 30%);
 $app-button-inverted-hover-background-colour: govuk-tint($app-button-inverted-foreground-colour, 90%);
+
+.app-button--m {
+  // Below styles from govuk-button--start
+  @include govuk-typography-weight-bold;
+  @include govuk-typography-responsive($size: 19, $override-line-height: 1);
+
+  min-height: auto;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
 .app-button--inverted,
 .app-button--inverted:link,
