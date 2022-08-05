@@ -1,0 +1,50 @@
+{
+  "header": {
+    "uri": "https://api.os.uk/search/places/v1/postcode?postcode=GY11AA&lr=EN",
+    "query": "postcode=GY11AA",
+    "offset": 0,
+    "totalresults": 1,
+    "format": "JSON",
+    "dataset": "DPA",
+    "lr": "EN",
+    "maxresults": 100,
+    "epoch": "94",
+    "output_srs": "EPSG:27700"
+  },
+  "results": [
+    {
+      "DPA": {
+        "UPRN": "10095202020",
+        "UDPRN": "10379928",
+        "ADDRESS": "GUERNSEY POST OFFICE HEADQUARTERS, ENVOY HOUSE, LA VRANGUE, ST. PETER PORT, GUERNSEY, GY1 1AA",
+        "ORGANISATION_NAME": "GUERNSEY POST OFFICE HEADQUARTERS",
+        "BUILDING_NAME": "ENVOY HOUSE",
+        "THOROUGHFARE_NAME": "LA VRANGUE",
+        "DEPENDENT_LOCALITY": "ST. PETER PORT",
+        "POST_TOWN": "GUERNSEY",
+        "POSTCODE": "GY1 1AA",
+        "RPC": "2",
+        "X_COORDINATE": 0,
+        "Y_COORDINATE": 0,
+        "STATUS": "APPROVED",
+        "LOGICAL_STATUS_CODE": "1",
+        "CLASSIFICATION_CODE": "C",
+        "CLASSIFICATION_CODE_DESCRIPTION": "Commercial",
+        "LOCAL_CUSTODIAN_CODE": 8205,
+        "LOCAL_CUSTODIAN_CODE_DESCRIPTION": "GUERNSEY",
+        "COUNTRY_CODE": "L",
+        "COUNTRY_CODE_DESCRIPTION": "This record is within the Channel Islands",
+        "POSTAL_ADDRESS_CODE": "D",
+        "POSTAL_ADDRESS_CODE_DESCRIPTION": "A record which is linked to PAF",
+        "BLPU_STATE_CODE_DESCRIPTION": "Unknown/Not applicable",
+        "PARENT_UPRN": "10095202019",
+        "LAST_UPDATE_DATE": "17/05/2019",
+        "ENTRY_DATE": "21/11/2007",
+        "LANGUAGE": "EN",
+        "MATCH": 1,
+        "MATCH_DESCRIPTION": "EXACT",
+        "DELIVERY_POINT_SUFFIX": "1A"
+      }
+    }
+  ]
+}
