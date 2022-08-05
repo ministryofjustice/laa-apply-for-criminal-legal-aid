@@ -44,6 +44,10 @@ Layout/HashAlignment:
 # Enabled but tweaked cops
 ##########################
 
+# To be tweaked until we find the right balance
+Metrics/MethodLength:
+  Max: 12
+
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   EnforcedShorthandSyntax: either
