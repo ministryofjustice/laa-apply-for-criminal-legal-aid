@@ -28,11 +28,39 @@ RSpec.describe Steps::Client::HasNinoForm do
     end
 
     context 'when `nino` is invalid' do
-      let(:nino) { 'not a NINO' }
+      context 'with a random string' do
+        let(:nino) { 'not a NINO' }
 
-      it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:nino, :invalid)).to eq(true)
+        it 'has a validation error on the field' do
+          expect(subject).to_not be_valid
+          expect(subject.errors.of_kind?(:nino, :invalid)).to eq(true)
+        end
+      end
+
+      context 'with an unused prefix' do
+        let(:nino) { 'BG123456C' }
+
+        it 'has a validation error on the field' do
+          expect(subject).to_not be_valid
+          expect(subject.errors.of_kind?(:nino, :invalid)).to eq(true)
+        end
+      end
+    end
+
+    context 'when `nino` is valid' do
+      context 'with spaces between numbers' do
+        let(:nino) { 'AB 12 34 56 C' }
+        it 'passes validation' do
+          expect(subject).to be_valid
+          expect(subject.errors.of_kind?(:nino, :invalid)).to eq(false)
+        end
+      end
+      context 'with trailing spaces' do
+        let(:nino) { ' AB 1234 56C ' }
+        it 'passed validation' do
+          expect(subject).to be_valid
+          expect(subject.errors.of_kind?(:nino, :invalid)).to eq(false)
+        end
       end
     end
 
