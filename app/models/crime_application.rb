@@ -4,7 +4,4 @@ class CrimeApplication < ApplicationRecord
 
   has_many :people, dependent: :destroy
   has_many :addresses, through: :people
-
-  # Must be included after people relationships
-  include HasContactDetailsThroughPeople
 end

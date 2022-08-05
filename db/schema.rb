@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_04_073015) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_05_103536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -27,15 +27,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_073015) do
     t.string "postcode"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
-  end
-
-  create_table "contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "person_id", null: false
-    t.jsonb "home_address", default: {}
-    t.jsonb "correspondence_address", default: {}
-    t.index ["person_id"], name: "index_contact_details_on_person_id", unique: true
   end
 
   create_table "crime_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -60,6 +51,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_04_073015) do
   end
 
   add_foreign_key "addresses", "people"
-  add_foreign_key "contact_details", "people"
   add_foreign_key "people", "crime_applications"
 end

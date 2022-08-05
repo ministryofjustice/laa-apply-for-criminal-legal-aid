@@ -51,10 +51,6 @@ Rails.application.routes.draw do
       crud_step :lookup, only: [:edit, :update]
       crud_step :details, only: [:edit, :update]
     end
-
-    namespace :contact do
-      edit_step :home_address
-    end
   end
 
   # catch-all route
