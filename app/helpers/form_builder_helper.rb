@@ -3,9 +3,9 @@
 # form helpers so can be coupled to application business and logic.
 #
 module FormBuilderHelper
-  def continue_button
-    submit_button(:save_and_continue) do
-      submit_button(:save_and_come_back_later, secondary: true, name: 'commit_draft') if show_secondary_button?
+  def continue_button(primary: :save_and_continue, secondary: :save_and_come_back_later)
+    submit_button(primary) do
+      submit_button(secondary, secondary: true, name: 'commit_draft') if show_secondary_button?
     end
   end
 

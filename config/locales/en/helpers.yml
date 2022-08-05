@@ -11,6 +11,7 @@ en:
     submit:
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
+      find_address: Find address
 
     legend:
       steps_client_has_partner_form:
@@ -28,6 +29,8 @@ en:
         date_of_birth: For example, 27 3 2007
       steps_client_has_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
+      steps_address_lookup_form:
+        postcode: This must be a valid UK postcode. For example, SW1A 2AA.
 
     label:
       steps_client_has_partner_form:
@@ -39,9 +42,12 @@ en:
       steps_client_has_nino_form:
         has_nino_options: *YESNO
         nino: Enter their National Insurance number
-      steps_contact_home_address_form:
-        home_address_line_one: Address line 1
-        home_address_line_two: Address line 2 (optional)
-        home_city: Town or city
-        home_county: County (optional)
-        home_postcode: Postcode
+
+      steps_address_lookup_form:
+        postcode: Postcode
+      steps_address_details_form:
+        address_line_one: Address line 1
+        address_line_two: Address line 2 (optional)
+        city: Town or city
+        country: Country
+        postcode: Postcode

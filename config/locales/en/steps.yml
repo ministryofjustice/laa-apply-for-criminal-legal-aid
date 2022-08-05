@@ -24,8 +24,14 @@ en:
           page_title: Client’s contact details
           heading: Enter your client's contact details
 
-    contact:
-      home_address:
+    address:
+      lookup:
+        edit:
+          page_title: Client’s home address
+          heading: Enter your client’s home address
+          manual_entry: Enter address manually
+          no_address: My client does not have a home address
+      details:
         edit:
           page_title: Client’s home address
           heading: Enter your client’s home address

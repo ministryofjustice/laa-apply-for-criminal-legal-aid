@@ -43,5 +43,18 @@ RSpec.describe FormBuilderHelper, type: :helper do
         ).to eq(expected_markup)
       end
     end
+
+    context 'button text can be customised' do
+      let(:draftable) { false }
+      let(:expected_markup) {
+        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Find address</button>'
+      }
+
+      it 'outputs only the continue button' do
+        expect(
+          builder.continue_button(primary: :find_address)
+        ).to eq(expected_markup)
+      end
+    end
   end
 end

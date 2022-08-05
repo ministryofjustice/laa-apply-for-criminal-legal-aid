@@ -103,6 +103,92 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   end
 end
 
+RSpec.shared_examples 'an address step controller' do |form_class, decision_tree_class|
+  describe '#edit' do
+    context 'when no case exists in the session yet' do
+      before do
+        # Needed because some specs that include these examples stub current_crime_application,
+        # which is undesirable for this particular test
+        allow(controller).to receive(:current_crime_application).and_return(nil)
+      end
+
+      it 'redirects to the invalid session error page' do
+        get :edit, params: { id: '123' }
+        expect(response).to redirect_to(invalid_session_errors_path)
+      end
+    end
+
+    context 'when a case exists in the session' do
+      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
+
+      it 'responds with HTTP success' do
+        get :edit, params: { id: existing_address.id }, session: { crime_application_id: existing_case.id }
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
+    let(:form_class_params_name) { form_class.name.underscore }
+
+    context 'when there is no case in the session' do
+      let(:expected_params) { { id: '1234', form_class_params_name => { foo: 'bar' } } }
+
+      before do
+        # Needed because some specs that include these examples stub current_crime_application,
+        # which is undesirable for this particular test
+        allow(controller).to receive(:current_crime_application).and_return(nil)
+      end
+
+      it 'redirects to the invalid session error page' do
+        put :update, params: expected_params
+        expect(response).to redirect_to(invalid_session_errors_path)
+      end
+    end
+
+    context 'when a case in progress is in the session' do
+      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
+
+      let(:expected_params) { { id: existing_address.id, form_class_params_name => { foo: 'bar' } } }
+
+      before do
+        allow(form_class).to receive(:new).and_return(form_object)
+      end
+
+      context 'when the form saves successfully' do
+        before do
+          expect(form_object).to receive(:save).and_return(true)
+        end
+
+        let(:decision_tree) { instance_double(decision_tree_class, destination: '/expected_destination') }
+
+        it 'asks the decision tree for the next destination and redirects there' do
+          expect(decision_tree_class).to receive(:new).and_return(decision_tree)
+
+          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+
+          expect(response).to have_http_status(:redirect)
+          expect(subject).to redirect_to('/expected_destination')
+        end
+      end
+
+      context 'when the form fails to save' do
+        before do
+          expect(form_object).to receive(:save).and_return(false)
+        end
+
+        it 'renders the question page again' do
+          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+  end
+end
+
 RSpec.shared_examples 'a starting point step controller' do
   describe '#edit' do
     context 'when no case exists in the session yet' do
