@@ -7,7 +7,7 @@ module Decisions
       when :details
         edit(:has_nino)
       when :has_nino
-        after_has_nino
+        start_address_journey(HomeAddress, form_object.applicant)
       when :contact_details
         show('/home', action: :index)
       else
@@ -22,14 +22,6 @@ module Decisions
         show(:partner_exit)
       else
         edit(:details)
-      end
-    end
-
-    def after_has_nino
-      if form_object.has_nino.yes?
-        start_address_journey(HomeAddress, form_object.applicant)
-      else
-        show(:nino_exit)
       end
     end
 
