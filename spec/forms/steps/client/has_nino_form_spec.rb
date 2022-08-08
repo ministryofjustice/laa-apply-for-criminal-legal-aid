@@ -54,6 +54,9 @@ RSpec.describe Steps::Client::HasNinoForm do
           expect(subject).to be_valid
           expect(subject.errors.of_kind?(:nino, :invalid)).to eq(false)
         end
+        it 'removes spaces from input' do
+          expect(subject.nino).to eq('AB123456C')
+        end
       end
       context 'with trailing spaces' do
         let(:nino) { ' AB 1234 56C ' }
