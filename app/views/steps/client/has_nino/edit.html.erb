@@ -5,16 +5,18 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :has_nino do %>
-        <%= f.govuk_radio_button :has_nino, YesNoAnswer::YES, link_errors: true do %>
-          <%= f.govuk_text_field :nino, width: 'three-quarters' %>
-        <% end %>
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
-        <%= f.govuk_radio_button :has_nino, YesNoAnswer::NO %>
-      <% end %>
+    <%= step_form @form_object do |f| %>
+
+      <%= f.govuk_text_field :nino, width: 'three-quarters' %>
+
+      <div class='govuk-body' >
+        <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>
+      </div>
 
       <%= f.continue_button %>
+
     <% end %>
   </div>
 </div>

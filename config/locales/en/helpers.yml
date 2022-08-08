@@ -18,8 +18,6 @@ en:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
         date_of_birth: Date of birth
-      steps_client_has_nino_form:
-        has_nino: Do you have your client's National Insurance number?
 
     hint:
       steps_client_has_partner_form:
@@ -31,6 +29,7 @@ en:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
+        nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
 
     label:
       steps_client_has_partner_form:
@@ -40,7 +39,6 @@ en:
         last_name: Last name
         other_names: Other names (optional)
       steps_client_has_nino_form:
-        has_nino_options: *YESNO
         nino: Enter their National Insurance number
 
       steps_address_lookup_form:
