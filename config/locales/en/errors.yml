@@ -52,7 +52,10 @@ en:
               inclusion: Select whether you have a National Insurance Number or not
             nino: 
               invalid: Please enter a valid National Insurance number
-
+        steps/client/contact_details_form:
+          attributes:
+            telephone_number:
+              blank: Telephone number can’t be blank
         steps/address/lookup_form:
           attributes:
             postcode:

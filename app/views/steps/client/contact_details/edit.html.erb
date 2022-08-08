@@ -7,5 +7,10 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :telephone_number, autocomplete: 'off', width: 'one-third', label: { size: 'm' } %>
+
+      <%= f.continue_button %>
+    <% end %>
   </div>
 </div>
