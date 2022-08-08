@@ -1,6 +1,5 @@
 module Decisions
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :has_partner
@@ -14,7 +13,6 @@ module Decisions
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
-      # rubocop:enable Metrics/MethodLength
     end
 
     private
