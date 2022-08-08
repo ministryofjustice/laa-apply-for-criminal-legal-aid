@@ -13,7 +13,7 @@ en:
       has_nino:
         edit:
           page_title: Enter your client’s NINO
-          heading: Do you have your client's National Insurance number?
+          heading: Enter your client's National Insurance number
           eforms_link: My client does not have a National Insurance number or can't find it
       nino_exit:
         show:
