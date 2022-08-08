@@ -9,7 +9,7 @@
 
     <%= step_form @form_object do |f| %>
 
-      <%= f.govuk_text_field :nino, width: 'three-quarters' %>
+      <%= f.govuk_text_field :nino, width: 'three-quarters', label: nil %>
 
       <div class='govuk-body' >
         <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>

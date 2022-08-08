@@ -38,9 +38,6 @@ en:
         first_name: First name
         last_name: Last name
         other_names: Other names (optional)
-      steps_client_has_nino_form:
-        nino: Enter their National Insurance number
-
       steps_address_lookup_form:
         postcode: Postcode
       steps_address_details_form:
@@ -49,3 +46,9 @@ en:
         city: Town or city
         country: Country
         postcode: Postcode
+      steps_contact_home_address_form:
+        home_address_line_one: Address line 1
+        home_address_line_two: Address line 2 (optional)
+        home_city: Town or city
+        home_county: County (optional)
+        home_postcode: Postcode
