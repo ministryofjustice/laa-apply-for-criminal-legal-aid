@@ -3,14 +3,17 @@ module Steps
     class HasNinoForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
 
-      # taken from Civil Apply
-      NINO_REGEXP = /\A[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{1}\Z/
+      NINO_REGEXP = /\A(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z][0-9]{6}([A-DFM])\Z/
 
       attribute :nino, :string
 
       has_one_association :applicant
 
       validates :nino, format: { with: NINO_REGEXP }
+
+      def nino=(str)
+        super(str.upcase.delete(' ')) if str
+      end
 
       private
 
