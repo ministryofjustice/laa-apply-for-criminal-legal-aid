@@ -26,7 +26,9 @@ en:
         other_names: This includes aliases, nicknames or other names your client may be known as.
         date_of_birth: For example, 27 3 2007
       steps_client_has_nino_form:
-        nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’. 
+        nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+      steps_client_contact_details_form:
+        telephone_number: We'll use this to chase your client if they don't pay towards their legal aid.
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
 
@@ -39,6 +41,8 @@ en:
         other_names: Other names (optional)
       steps_client_has_nino_form:
         nino: Enter their National Insurance number
+      steps_client_contact_details_form:
+        telephone_number: UK telephone number
       steps_address_lookup_form:
         postcode: Postcode
       steps_address_details_form:
