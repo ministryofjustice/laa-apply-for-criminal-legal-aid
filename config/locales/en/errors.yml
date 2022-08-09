@@ -56,6 +56,7 @@ en:
           attributes:
             telephone_number:
               blank: Telephone number can’t be blank
+              invalid: Please enter a valid UK telephone number
         steps/address/lookup_form:
           attributes:
             postcode:
