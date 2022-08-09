@@ -8,7 +8,7 @@ RSpec.describe Steps::Address::LookupForm do
   } }
 
   let(:crime_application) { instance_double(CrimeApplication) }
-  let(:address_record) { instance_double(Address) }
+  let(:address_record) { Address.new }
 
   subject { described_class.new(arguments) }
 
@@ -27,12 +27,34 @@ RSpec.describe Steps::Address::LookupForm do
     end
 
     context 'for valid details' do
-      it 'updates the record' do
-        expect(address_record).to receive(:update).with(
-          'postcode' => 'SW1H 9AJ',
-        ).and_return(true)
+      before do
+        allow(address_record).to receive(:postcode).and_return(previous_postcode)
+      end
 
-        expect(subject.save).to be(true)
+      context 'when the postcode has changed' do
+        let(:previous_postcode) { 'SW1A 1AA' }
+
+        it 'updates the record' do
+          expect(address_record).to receive(:update).with(
+            'postcode' => 'SW1H 9AJ',
+            address_line_one: nil,
+            address_line_two: nil,
+            city: nil,
+            country: nil,
+            lookup_id: nil
+          ).and_return(true)
+
+          expect(subject.save).to be(true)
+        end
+      end
+
+      context 'when the postcode is the same as in the persisted record' do
+        let(:previous_postcode) { 'SW1H 9AJ' }
+
+        it 'does not save the record but returns true' do
+          expect(address_record).not_to receive(:update)
+          expect(subject.save).to be(true)
+        end
       end
     end
   end

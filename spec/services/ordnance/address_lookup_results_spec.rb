@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ordnance::AddressLookupResults do
+RSpec.describe OrdnanceSurvey::AddressLookupResults do
   let(:results) { [] }
   subject { described_class.call(results) }
 
@@ -10,13 +10,14 @@ RSpec.describe Ordnance::AddressLookupResults do
       let(:results) { parsed_body['results'] }
 
       it 'retrieves the address return by api' do
-        expect(subject.size).to eq(3) # NOTE: fixture has reduced results
+        expect(subject.size).to eq(1)
 
-        expect(subject[0].address_line_one).to eq('APARTMENT 1001, 4, WIVERTON TOWER')
-        expect(subject[0].address_line_two).to eq('NEW DRUM STREET')
+        expect(subject[0].address_line_one).to eq('1, POST OFFICE')
+        expect(subject[0].address_line_two).to eq('BROADWAY')
         expect(subject[0].city).to eq('LONDON')
         expect(subject[0].country).to eq('UNITED KINGDOM')
-        expect(subject[0].postcode).to eq('E1 7AS')
+        expect(subject[0].postcode).to eq('SW1H 0AX')
+        expect(subject[0].lookup_id).to eq('23749191')
       end
 
       context '`Address` struct convenience methods' do
@@ -24,13 +25,13 @@ RSpec.describe Ordnance::AddressLookupResults do
 
         context '#address_lines' do
           it 'returns only the address lines' do
-            expect(result.address_lines).to eq('APARTMENT 1001, 4, WIVERTON TOWER, NEW DRUM STREET')
+            expect(result.address_lines).to eq('1, POST OFFICE, BROADWAY')
           end
         end
 
-        context '#tokenized_value' do
-          it 'returns all address details in a tokenized string' do
-            expect(result.tokenized_value).to eq('APARTMENT 1001, 4, WIVERTON TOWER|NEW DRUM STREET|LONDON|UNITED KINGDOM|E1 7AS')
+        context '#lookup_id' do
+          it 'returns the UDPRN identifier' do
+            expect(result.lookup_id).to eq('23749191')
           end
         end
       end

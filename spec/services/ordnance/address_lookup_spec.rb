@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ordnance::AddressLookup do
+RSpec.describe OrdnanceSurvey::AddressLookup do
   subject(:service) { described_class.new(postcode) }
 
   let(:query_params) do
@@ -35,12 +35,11 @@ RSpec.describe Ordnance::AddressLookup do
 
       it 'returns the collection of addresses' do
         expect(service).to be_success
-        expect(service.call).to all(be_an(Ordnance::AddressLookupResults::Address))
-        expect(service.call.size).to eq(3)
+        expect(service.call).to all(be_an(OrdnanceSurvey::AddressLookupResults::Address))
+        expect(service.call.size).to eq(1)
       end
 
       context 'but the response does not contain any results' do
-        let(:postcode) { 'W1A1AA' }
         let(:stubbed_json_body) { file_fixture('address_lookups/no_results.json') }
 
         it 'has a successful outcome' do
@@ -50,7 +49,6 @@ RSpec.describe Ordnance::AddressLookup do
       end
 
       context 'the response cannot be parsed (`header` not found)' do
-        let(:postcode) { 'W1A1AA' }
         let(:stubbed_json_body) { "{\"unknown\":\"keys\"}" }
 
         it 'has an unsuccessful outcome' do
@@ -61,7 +59,6 @@ RSpec.describe Ordnance::AddressLookup do
       end
 
       context 'the response cannot be parsed (`totalresults` not found)' do
-        let(:postcode) { 'W1A1AA' }
         let(:stubbed_json_body) { "{\"header\":{\"foo\":\"bar\"}}" }
 
         it 'has an unsuccessful outcome' do
@@ -72,7 +69,6 @@ RSpec.describe Ordnance::AddressLookup do
       end
 
       context 'the response cannot be parsed (invalid json)' do
-        let(:postcode) { 'W1A1AA' }
         let(:stubbed_json_body) { 'not_json' }
 
         it 'has an unsuccessful outcome' do
@@ -116,7 +112,7 @@ RSpec.describe Ordnance::AddressLookup do
       it 'has an unsuccessful outcome' do
         expect(service).not_to be_success
         expect(service.call).to eq([])
-        expect(service.last_exception).to be_a(Ordnance::AddressLookup::UnsuccessfulLookupError)
+        expect(service.last_exception).to be_a(OrdnanceSurvey::AddressLookup::UnsuccessfulLookupError)
         expect(service.last_exception.message).to eq('{"error":{"statuscode":400,"message":"Parameter postcode cannot be empty."}}')
       end
     end

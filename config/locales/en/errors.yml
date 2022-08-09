@@ -61,6 +61,10 @@ en:
           attributes:
             postcode:
               blank: Enter postcode
+        steps/address/results_form:
+          attributes:
+            lookup_id:
+              inclusion: Select an address from the list
         steps/address/details_form:
           attributes:
             address_line_one:

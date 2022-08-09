@@ -35,6 +35,14 @@ module Steps
       false
     end
 
+    # Intended to quickly verify if form attribute values have changed
+    # compared to those in the persisted DB record. This will mostly work
+    # for simple hashes { attr: value }, but complex structures will require
+    # their custom, more in-deep change method, overriding this one.
+    def changed?
+      !record.slice(attribute_names).eql?(attributes)
+    end
+
     def to_key
       # Intentionally returns nil so the form builder picks up only
       # the class name to generate the HTML attributes

@@ -1,17 +1,13 @@
-module Ordnance
+module OrdnanceSurvey
   class AddressLookupResults
     LINE_ONE_PARTS = %w[SUB_BUILDING_NAME BUILDING_NUMBER BUILDING_NAME DEPARTMENT_NAME ORGANISATION_NAME].freeze
     LINE_TWO_PARTS = %w[DEPENDENT_THOROUGHFARE_NAME THOROUGHFARE_NAME].freeze
     DEFAULT_COUNTRY = 'UNITED KINGDOM'.freeze
     OTHER_TERRITORIES = ['ISLE OF MAN', 'JERSEY', 'GUERNSEY'].freeze
 
-    Address = Struct.new(:address_line_one, :address_line_two, :city, :country, :postcode) do
+    Address = Struct.new(:address_line_one, :address_line_two, :city, :country, :postcode, :lookup_id) do
       def address_lines
         [address_line_one, address_line_two].compact_blank.join(', ')
-      end
-
-      def tokenized_value
-        values.join('|')
       end
     end
 
@@ -28,8 +24,13 @@ module Ordnance
           address_line(result.slice(*LINE_TWO_PARTS).values),
           postal_town(result),
           country_name(result),
-          postcode(result)
+          postcode(result),
+          lookup_id(result)
         )
+      end
+
+      def lookup_id(result)
+        result.fetch('UDPRN')
       end
 
       def postcode(result)

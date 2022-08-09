@@ -1,4 +1,4 @@
-module Ordnance
+module OrdnanceSurvey
   class AddressLookup
     class UnsuccessfulLookupError < StandardError; end
 

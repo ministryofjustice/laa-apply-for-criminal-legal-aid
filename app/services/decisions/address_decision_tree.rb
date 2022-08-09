@@ -3,6 +3,8 @@ module Decisions
     def destination
       case step_name
       when :lookup
+        edit(:results)
+      when :results
         edit(:details)
       when :details
         edit('/steps/client/contact_details')

@@ -15,8 +15,13 @@ module Steps
       private
 
       def persist!
+        return true unless changed?
+
         record.update(
-          attributes
+          attributes.merge(
+            # The following are dependent attributes that need to be reset
+            lookup_id: nil
+          )
         )
       end
     end

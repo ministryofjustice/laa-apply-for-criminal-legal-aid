@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
     namespace :address do
       crud_step :lookup, only: [:edit, :update]
+      crud_step :results, only: [:edit, :update]
       crud_step :details, only: [:edit, :update]
     end
   end
