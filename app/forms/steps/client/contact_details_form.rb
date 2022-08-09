@@ -8,12 +8,24 @@ module Steps
 
       attribute :telephone_number, :string
 
+      attribute :correspondence_address_type, :correspondence_address_type
+
       has_one_association :applicant
 
-      validates :telephone_number, format: { with: TEL_REGEXP }, presence: true
+      validates :telephone_number,
+                format: { with: TEL_REGEXP },
+                presence: true
+
+      validates :correspondence_address_type,
+                inclusion: { in: :choices },
+                presence: true
 
       def telephone_number=(str)
         super(str.delete(' ')) if str
+      end
+
+      def choices
+        CorrespondenceTypeAnswer.values
       end
 
       private
