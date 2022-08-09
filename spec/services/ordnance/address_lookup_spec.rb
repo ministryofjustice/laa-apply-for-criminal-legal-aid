@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ordnance::AddressLookup do
+RSpec.describe OrdnanceSurvey::AddressLookup do
   subject(:service) { described_class.new(postcode) }
 
   let(:query_params) do
@@ -35,7 +35,7 @@ RSpec.describe Ordnance::AddressLookup do
 
       it 'returns the collection of addresses' do
         expect(service).to be_success
-        expect(service.call).to all(be_an(Ordnance::AddressLookupResults::Address))
+        expect(service.call).to all(be_an(OrdnanceSurvey::AddressLookupResults::Address))
         expect(service.call.size).to eq(1)
       end
 
@@ -112,7 +112,7 @@ RSpec.describe Ordnance::AddressLookup do
       it 'has an unsuccessful outcome' do
         expect(service).not_to be_success
         expect(service.call).to eq([])
-        expect(service.last_exception).to be_a(Ordnance::AddressLookup::UnsuccessfulLookupError)
+        expect(service.last_exception).to be_a(OrdnanceSurvey::AddressLookup::UnsuccessfulLookupError)
         expect(service.last_exception.message).to eq('{"error":{"statuscode":400,"message":"Parameter postcode cannot be empty."}}')
       end
     end

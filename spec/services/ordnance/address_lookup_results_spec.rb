@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ordnance::AddressLookupResults do
+RSpec.describe OrdnanceSurvey::AddressLookupResults do
   let(:results) { [] }
   subject { described_class.call(results) }
 

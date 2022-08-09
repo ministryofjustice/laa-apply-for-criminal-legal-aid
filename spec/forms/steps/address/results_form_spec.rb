@@ -11,15 +11,15 @@ RSpec.describe Steps::Address::ResultsForm do
   let(:address_record) { instance_double(Address, postcode: 'SW1H 0AX') }
   let(:lookup_id) { '23749191' }
 
-  let(:lookup_service) { instance_double(Ordnance::AddressLookup, call: lookup_results) }
-  let(:lookup_results) { Ordnance::AddressLookupResults.call(json_results) }
+  let(:lookup_service) { instance_double(OrdnanceSurvey::AddressLookup, call: lookup_results) }
+  let(:lookup_results) { OrdnanceSurvey::AddressLookupResults.call(json_results) }
 
   let(:json_results) { JSON.parse(file_fixture('address_lookups/success.json').read)['results'] }
 
   subject { described_class.new(arguments) }
 
   before do
-    allow(Ordnance::AddressLookup).to receive(:new).and_return(lookup_service)
+    allow(OrdnanceSurvey::AddressLookup).to receive(:new).and_return(lookup_service)
   end
 
   describe '.addresses' do

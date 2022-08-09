@@ -31,7 +31,7 @@ module Steps
       end
 
       def lookup_service
-        @lookup_service ||= Ordnance::AddressLookup.new(
+        @lookup_service ||= OrdnanceSurvey::AddressLookup.new(
           record.postcode
         )
       end
