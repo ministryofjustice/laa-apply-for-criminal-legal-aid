@@ -33,6 +33,19 @@ en:
           heading: Enter your client’s home address
           manual_entry: Enter address manually
           no_address: My client does not have a home address
+      results:
+        edit:
+          page_title: Client’s home address selection
+          heading: Enter your client’s home address
+          current_postcode: Postcode
+          change_postcode: Change
+          address_not_listed: I can’t find the address in the list
+          results_count:
+            one: "%{count} address found"
+            other: "%{count} addresses found"
+          no_results:
+            info: We cannot find any addresses for the postcode you entered. This can happen sometimes if it’s a very new or old postcode.
+            manual_entry: Enter address manually
       details:
         edit:
           page_title: Client’s home address

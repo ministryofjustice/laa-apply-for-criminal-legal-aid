@@ -45,6 +45,8 @@ en:
         telephone_number: UK telephone number
       steps_address_lookup_form:
         postcode: Postcode
+      steps_address_results_form:
+        lookup_id: Select an address
       steps_address_details_form:
         address_line_one: Address line 1
         address_line_two: Address line 2 (optional)

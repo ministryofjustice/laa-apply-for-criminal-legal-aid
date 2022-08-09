@@ -9,6 +9,13 @@ RSpec.describe Decisions::AddressDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :lookup }
 
+    it { is_expected.to have_destination(:results, :edit) }
+  end
+
+  context 'when the step is `results`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :results }
+
     it { is_expected.to have_destination(:details, :edit) }
   end
 

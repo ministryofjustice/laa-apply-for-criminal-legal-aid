@@ -1,0 +1,42 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<% record = @form_object.record %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <p class="govuk-label">
+      <%=t '.current_postcode' %>
+    </p>
+
+    <p class="govuk-body">
+      <strong><%= record.postcode %></strong>
+      <%= link_to t('.change_postcode'), edit_steps_address_lookup_path(record), class: 'govuk-link govuk-!-margin-left-4' %>
+    </p>
+
+    <% if @form_object.addresses.any? %>
+
+      <%= step_form @form_object do |f| %>
+        <%= f.govuk_collection_select :lookup_id, @form_object.addresses, :lookup_id, :address_lines %>
+
+        <p class="govuk-body govuk-!-margin-bottom-8">
+          <%= link_to t('.address_not_listed'), edit_steps_address_details_path(record) %>
+        </p>
+
+        <%= f.continue_button %>
+      <% end %>
+
+    <% else %>
+
+      <p class="govuk-body-l">
+        <%=t '.no_results.info' %>
+      </p>
+
+      <%= link_button t('.no_results.manual_entry'), edit_steps_address_details_path(record) %>
+    <% end %>
+  </div>
+</div>
