@@ -4,11 +4,12 @@ RSpec.describe Steps::Address::LookupForm do
   let(:arguments) { {
     crime_application: crime_application,
     record: address_record,
-    postcode: 'SW1H 9AJ',
+    postcode: postcode,
   } }
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:address_record) { Address.new }
+  let(:postcode) { 'SW1H 9AJ' }
 
   subject { described_class.new(arguments) }
 
@@ -17,12 +18,23 @@ RSpec.describe Steps::Address::LookupForm do
   end
 
   describe '#save' do
-    context 'when the attribute is given but is not a valid postcode' do
-      let(:postcode) { 'SE1' }
+    context 'UK postcode validation' do
+      context 'when postcode is incomplete' do
+        let(:postcode) { 'SE1' }
 
-      xit 'adds an `invalid` error on the attribute' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.added?(:postcode, :invalid)).to eq(true)
+        it 'adds an `invalid` error on the attribute' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.added?(:postcode, :invalid)).to eq(true)
+        end
+      end
+
+      context 'when postcode is not valid' do
+        let(:postcode) { 'SZ123A' }
+
+        it 'adds an `invalid` error on the attribute' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.added?(:postcode, :invalid)).to eq(true)
+        end
       end
     end
 

@@ -264,6 +264,7 @@ GEM
     timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    uk_postcode (2.1.8)
     unicode-display_width (2.2.0)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -311,6 +312,7 @@ DEPENDENCIES
   sentry-ruby
   simplecov
   sprockets-rails
+  uk_postcode
   web-console
   webdrivers
   webmock

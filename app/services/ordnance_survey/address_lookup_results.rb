@@ -6,8 +6,8 @@ module OrdnanceSurvey
     OTHER_TERRITORIES = ['ISLE OF MAN', 'JERSEY', 'GUERNSEY'].freeze
 
     Address = Struct.new(:address_line_one, :address_line_two, :city, :country, :postcode, :lookup_id) do
-      def address_lines
-        [address_line_one, address_line_two].compact_blank.join(', ')
+      def compact_address
+        [address_line_one, address_line_two, city].compact_blank.join(', ')
       end
     end
 

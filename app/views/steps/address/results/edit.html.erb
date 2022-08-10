@@ -21,7 +21,7 @@
     <% if @form_object.addresses.any? %>
 
       <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_select :lookup_id, @form_object.addresses, :lookup_id, :address_lines %>
+        <%= f.govuk_collection_select :lookup_id, @form_object.addresses, :lookup_id, :compact_address %>
 
         <p class="govuk-body govuk-!-margin-bottom-8">
           <%= link_to t('.address_not_listed'), edit_steps_address_details_path(record) %>

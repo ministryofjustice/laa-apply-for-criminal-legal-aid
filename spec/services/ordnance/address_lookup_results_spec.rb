@@ -23,9 +23,9 @@ RSpec.describe OrdnanceSurvey::AddressLookupResults do
       context '`Address` struct convenience methods' do
         let(:result) { subject[0] }
 
-        context '#address_lines' do
-          it 'returns only the address lines' do
-            expect(result.address_lines).to eq('1, POST OFFICE, BROADWAY')
+        context '#compact_address' do
+          it 'returns a shorter version of the full address' do
+            expect(result.compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
           end
         end
 
