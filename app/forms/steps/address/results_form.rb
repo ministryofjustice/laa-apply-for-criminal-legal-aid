@@ -24,7 +24,7 @@ module Steps
 
       def address_count_item
         Struct.new(:results_size, :lookup_id) do
-          def address_lines
+          def compact_address
             I18n.translate!(:results_count, count: results_size, scope: 'steps.address.results.edit')
           end
         end.new(addresses.size)

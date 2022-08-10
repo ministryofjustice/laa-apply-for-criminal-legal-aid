@@ -30,12 +30,12 @@ RSpec.describe Steps::Address::ResultsForm do
 
       it 'contains an addresses count item' do
         expect(subject.addresses[0].lookup_id).to be_nil
-        expect(subject.addresses[0].address_lines).to eq('1 address found')
+        expect(subject.addresses[0].compact_address).to eq('1 address found')
       end
 
       it 'contains the addresses' do
         expect(subject.addresses[1].lookup_id).to eq('23749191')
-        expect(subject.addresses[1].address_lines).to eq('1, POST OFFICE, BROADWAY')
+        expect(subject.addresses[1].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
       end
     end
 
@@ -48,16 +48,16 @@ RSpec.describe Steps::Address::ResultsForm do
 
       it 'contains an addresses count item' do
         expect(subject.addresses[0].lookup_id).to be_nil
-        expect(subject.addresses[0].address_lines).to eq('2 addresses found')
+        expect(subject.addresses[0].compact_address).to eq('2 addresses found')
       end
 
       # They are dupes but this is ok for this test scenario
       it 'contains the addresses' do
         expect(subject.addresses[1].lookup_id).to eq('23749191')
-        expect(subject.addresses[1].address_lines).to eq('1, POST OFFICE, BROADWAY')
+        expect(subject.addresses[1].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
 
         expect(subject.addresses[2].lookup_id).to eq('23749191')
-        expect(subject.addresses[2].address_lines).to eq('1, POST OFFICE, BROADWAY')
+        expect(subject.addresses[2].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
       end
     end
 

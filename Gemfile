@@ -7,6 +7,7 @@ gem 'faraday', '~> 2.4'
 gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
+gem 'uk_postcode'
 
 gem 'govuk_design_system_formbuilder', '~> 3.1.0'
 

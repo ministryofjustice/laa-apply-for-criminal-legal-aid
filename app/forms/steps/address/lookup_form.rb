@@ -2,7 +2,7 @@ module Steps
   module Address
     class LookupForm < Steps::BaseFormObject
       attribute :postcode, :string
-      validates :postcode, presence: true
+      validates :postcode, presence: true, uk_postcode: true
 
       private
 
