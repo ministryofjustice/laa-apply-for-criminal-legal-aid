@@ -31,7 +31,7 @@ module Steps
       private
 
       def string_choices
-        choices.map { |choice| choice.value.to_s }
+        choices.map(&:to_s)
       end
 
       def persist!
