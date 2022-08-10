@@ -46,12 +46,12 @@ en:
         last_name: Last name
         other_names: Other names (optional)
       steps_client_has_nino_form:
-        nino: Enter their National Insurance number
+        nino: Enter your client’s National Insurance number
       steps_client_contact_details_form:
         telephone_number: UK telephone number
         correspondence_address_type_options: *CORRESPONDENCE_ADDRESS_TYPE
       steps_address_lookup_form:
-        postcode: Postcode
+        postcode: Enter your client’s home address
       steps_address_results_form:
         lookup_id: Select an address
       steps_address_details_form:
