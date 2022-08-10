@@ -57,6 +57,10 @@ en:
             telephone_number:
               blank: Telephone number can’t be blank
               invalid: Please enter a valid UK telephone number
+            correspondence_address_type:
+              blank: Correspondence address can’t be blank
+              inclusion: Select a correspondence address option 
+
         steps/address/lookup_form:
           attributes:
             postcode:

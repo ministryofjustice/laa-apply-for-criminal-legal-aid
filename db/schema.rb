@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_09_073216) do
     t.string "has_nino"
     t.string "nino"
     t.string "telephone_number"
+    t.string "correspondence_address_type"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
