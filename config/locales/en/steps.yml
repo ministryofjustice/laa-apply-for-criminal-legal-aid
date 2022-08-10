@@ -12,7 +12,6 @@ en:
           full_name_legend: Full name
       has_nino:
         edit:
-          heading: Enter your client's National Insurance number 
           page_title: Enter your client’s NINO
           eforms_link: My client does not have a National Insurance number or can't find it
       nino_exit:
@@ -24,13 +23,12 @@ en:
       contact_details:
         edit:
           page_title: Client’s contact details
-          heading: Enter your client's contact details
+          heading: Enter your client’s contact details
 
     address:
       lookup:
         edit:
           page_title: Client’s home address
-          heading: Enter your client’s home address
           manual_entry: Enter address manually
           no_address: My client does not have a home address
       results:

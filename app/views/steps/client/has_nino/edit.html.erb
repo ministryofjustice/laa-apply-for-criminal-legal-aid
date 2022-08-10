@@ -5,14 +5,12 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :nino, width: 'two-thirds', label: { hidden: true } %>
+      <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third', label: { tag: 'h1', size: 'xl' } %>
 
-      <div class='govuk-body' >
+      <p class='govuk-body govuk-!-margin-bottom-6'>
         <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>
-      </div>
+      </p>
 
       <%= f.continue_button %>
     <% end %>

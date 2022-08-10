@@ -10,8 +10,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_phone_field :telephone_number, autocomplete: 'off', width: 'one-third', label: { size: 'm' } %>
 
-      
-      <%= f.govuk_collection_radio_buttons :correspondence_address_type, 
+      <%= f.govuk_collection_radio_buttons :correspondence_address_type,
                                             @form_object.choices,
                                             :value %>
 

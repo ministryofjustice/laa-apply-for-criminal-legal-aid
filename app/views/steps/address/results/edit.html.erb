@@ -1,7 +1,10 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-<% record = @form_object.record %>
+<%
+  record = @form_object.record
+  addresses = @form_object.addresses
+%>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -18,12 +21,12 @@
       <%= link_to t('.change_postcode'), edit_steps_address_lookup_path(record), class: 'govuk-link govuk-!-margin-left-4' %>
     </p>
 
-    <% if @form_object.addresses.any? %>
+    <% if addresses.any? %>
 
       <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_select :lookup_id, @form_object.addresses, :lookup_id, :compact_address %>
+        <%= f.govuk_collection_select :lookup_id, addresses, :lookup_id, :compact_address %>
 
-        <p class="govuk-body govuk-!-margin-bottom-8">
+        <p class="govuk-body govuk-!-margin-bottom-6">
           <%= link_to t('.address_not_listed'), edit_steps_address_details_path(record) %>
         </p>
 
