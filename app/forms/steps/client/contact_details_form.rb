@@ -8,7 +8,7 @@ module Steps
 
       attribute :telephone_number, :string
 
-      attribute :correspondence_address_type, :correspondence_address_type
+      attribute :correspondence_address_type, :string
 
       has_one_association :applicant
 
@@ -17,7 +17,7 @@ module Steps
                 presence: true
 
       validates :correspondence_address_type,
-                inclusion: { in: :choices },
+                inclusion: { in: :string_choices },
                 presence: true
 
       def telephone_number=(str)
@@ -29,6 +29,10 @@ module Steps
       end
 
       private
+
+      def string_choices
+        choices.map { |choice| choice.value.to_s }
+      end
 
       def persist!
         applicant.update(
