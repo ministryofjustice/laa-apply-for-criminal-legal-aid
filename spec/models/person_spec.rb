@@ -12,7 +12,6 @@ RSpec.describe Person, type: :model do
     )
   }
 
-
   before do
     allow(subject).to receive(:home_address).and_return(mock_home_address)
   end
