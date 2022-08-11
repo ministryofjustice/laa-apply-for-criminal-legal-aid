@@ -61,6 +61,11 @@ Naming/MethodParameterName:
   AllowedNames:
     - as
 
+# Rubocop mistakenly consider `#values` method as being called on a Hash
+Style/HashEachMethods:
+  Exclude:
+    - app/value_objects/value_object.rb
+
 Naming/PredicateName:
   AllowedMethods:
     - has_one_association

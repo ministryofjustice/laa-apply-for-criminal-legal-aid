@@ -19,4 +19,24 @@ class ValueObject
   def hash
     [ValueObject, self.class, value].hash
   end
+
+  class << self
+    def inherited(subclass)
+      TracePoint.trace(:end) do
+        # Define inquiry methods for each value in the value object,
+        # i.e. `#coffee?` returns true for value `:coffee`, false for `:tea`
+        # :nocov:
+        subclass.values.each do |value|
+          define_method("#{value}?") { value.eql?(self) }
+        end
+        # :nocov:
+      end
+
+      super
+    end
+
+    def values
+      const_defined?(:VALUES) ? self::VALUES : []
+    end
+  end
 end
