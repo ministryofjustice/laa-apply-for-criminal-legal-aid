@@ -23,7 +23,7 @@ RSpec.describe Person, type: :model do
       let(:address_line_one) { '1 North Pole' }
 
       it 'returns true when a home address has values' do
-        expect(subject.has_home_address?).to be(true)
+        expect(subject.home_address?).to be(true)
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe Person, type: :model do
       let(:address_line_one) { nil }
 
       it 'returns false when a home address does not have values' do
-        expect(subject.has_home_address?).to be(false)
+        expect(subject.home_address?).to be(false)
       end
     end
   end

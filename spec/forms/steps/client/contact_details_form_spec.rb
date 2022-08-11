@@ -4,7 +4,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   let(:arguments) { {
     crime_application: crime_application,
     telephone_number: telephone_number,
-    correspondence_address_type: correspondence_address_type,
+    correspondence_address_type: correspondence_address_type
   } }
 
   let(:crime_application) { instance_double(CrimeApplication) }

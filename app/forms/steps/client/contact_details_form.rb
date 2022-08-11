@@ -1,5 +1,3 @@
-require 'pry'
-
 module Steps
   module Client
     class ContactDetailsForm < Steps::BaseFormObject
@@ -30,8 +28,8 @@ module Steps
         if applicant_has_home_address?
           CorrespondenceTypeAnswer.values
         else
-          CorrespondenceTypeAnswer.values.reject do |val| 
-            val.value == :home_address 
+          CorrespondenceTypeAnswer.values.reject do |val|
+            val.value == :home_address
           end
         end
       end
@@ -39,7 +37,7 @@ module Steps
       private
 
       def applicant_has_home_address?
-        applicant.has_home_address?
+        applicant.home_address?
       end
 
       def string_choices
