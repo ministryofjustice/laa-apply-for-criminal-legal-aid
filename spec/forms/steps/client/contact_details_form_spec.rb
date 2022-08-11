@@ -11,15 +11,18 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
   let(:telephone_number) { nil }
   let(:correspondence_address_type) { nil }
-  let(:has_home_address) { nil }
 
   subject { described_class.new(arguments) }
 
-  before do
-    allow(subject).to receive(:applicant_has_home_address?).and_return(has_home_address)
-  end
-
   describe '#choices' do
+    # A bit more extensive testing of the chain of calls, so coverage passes
+    let(:applicant_double) { instance_double(Applicant) }
+
+    before do
+      allow(subject).to receive(:applicant).and_return(applicant_double)
+      allow(applicant_double).to receive(:home_address?).and_return(has_home_address)
+    end
+
     context 'when applicant has home address' do
       let(:has_home_address) { true }
       it 'returns all correspondence address types' do
@@ -40,7 +43,11 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     end
   end
 
-  describe '#save' do
+  describe 'validations' do
+    before do
+      allow(subject).to receive(:applicant_has_home_address?)
+    end
+
     context 'when telephone_number is blank' do
       let(:telephone_number) { '' }
       let(:correspondence_address_type) { 'home_address' }
@@ -68,13 +75,6 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       it 'removes spaces from input' do
         expect(subject.telephone_number).to eq('07000000000')
       end
-
-      it_behaves_like 'a has-one-association form',
-                      association_name: :applicant,
-                      expected_attributes: {
-                        'telephone_number' => "07000000000",
-                        'correspondence_address_type' => 'other_address'
-                      }
     end
 
     context 'when correspondence_address_type is blank' do
@@ -95,5 +95,21 @@ RSpec.describe Steps::Client::ContactDetailsForm do
         expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to eq(true)
       end
     end
+  end
+
+  describe '#save' do
+    let(:telephone_number) { '07000 000 000' }
+    let(:correspondence_address_type) { 'other_address' }
+
+    before do
+      allow(subject).to receive(:applicant_has_home_address?)
+    end
+
+    it_behaves_like 'a has-one-association form',
+                    association_name: :applicant,
+                    expected_attributes: {
+                      'telephone_number' => "07000000000",
+                      'correspondence_address_type' => 'other_address'
+                    }
   end
 end
