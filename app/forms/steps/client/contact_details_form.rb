@@ -3,8 +3,8 @@ module Steps
     class ContactDetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
 
-      # Very basic validation to prevent alphabetic input
-      TEL_REGEXP = /\A([^A-Za-z]*)\Z/
+      # Very basic validation to allow numeric and common telephone number symbols
+      TEL_REGEXP = /\A[0-9+()-]{7,18}\Z/
 
       attribute :telephone_number, :string
 
