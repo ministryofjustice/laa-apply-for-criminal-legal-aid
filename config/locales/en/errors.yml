@@ -29,43 +29,40 @@ en:
         steps/client/has_partner_form:
           attributes:
             client_has_partner:
-              inclusion: Select whether you have a partner or not
+              inclusion: Select yes if your client has a partner
         steps/client/details_form:
           attributes:
             first_name:
-              blank: First name can’t be blank
+              blank: Enter a first name
             last_name:
-              blank: Last name can’t be blank
+              blank: Enter a last name
             date_of_birth:
-              blank: Enter date of birth
-              invalid: Date of birth must be a real date
-              invalid_day: Date of birth day is not valid
-              invalid_month: Date of birth month is not valid
-              invalid_year: Date of birth year is not valid
+              blank: Enter a date of birth
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
               year_too_late: Date of birth is too far in the future
               year_too_early: Date of birth is too far in the past
               past_not_allowed: Date of birth must be in the future
               future_not_allowed: Date of birth must be in the past
         steps/client/has_nino_form:
           attributes:
-            has_nino:
-              inclusion: Select whether you have a National Insurance Number or not
-            nino: 
-              invalid: Please enter a valid National Insurance number
+            nino:
+              blank: Enter a National Insurance number
+              invalid: Enter a National Insurance number in the correct format
         steps/client/contact_details_form:
           attributes:
             telephone_number:
-              blank: Telephone number can’t be blank
-              invalid: Please enter a valid UK telephone number
+              blank: Enter a UK telephone number
+              invalid: Enter a telephone number in the correct format
             correspondence_address_type:
-              blank: Correspondence address can’t be blank
-              inclusion: Select a correspondence address option 
-
+              inclusion: Select a correspondence address
         steps/address/lookup_form:
           attributes:
             postcode:
               blank: Enter postcode
-              invalid: Enter a valid UK postcode
+              invalid: Enter a postcode in the correct format
         steps/address/results_form:
           attributes:
             lookup_id:
@@ -75,8 +72,8 @@ en:
             address_line_one:
               blank: Enter first line of the address
             city:
-              blank: Enter address city
+              blank: Enter a city
             country:
-              blank: Enter address country
+              blank: Enter a country
             postcode:
-              blank: Enter address postcode
+              blank: Enter a postcode
