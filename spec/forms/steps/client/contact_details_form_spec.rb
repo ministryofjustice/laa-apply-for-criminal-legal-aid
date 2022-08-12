@@ -11,18 +11,18 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
   let(:telephone_number) { nil }
   let(:correspondence_address_type) { nil }
+  let(:has_home_address) { true }
 
   subject { described_class.new(arguments) }
 
+  let(:applicant_double) { instance_double(Applicant) }
+
+  before do
+    allow(subject).to receive(:applicant).and_return(applicant_double)
+    allow(applicant_double).to receive(:home_address?).and_return(has_home_address)
+  end
+
   describe '#choices' do
-    # A bit more extensive testing of the chain of calls, so coverage passes
-    let(:applicant_double) { instance_double(Applicant) }
-
-    before do
-      allow(subject).to receive(:applicant).and_return(applicant_double)
-      allow(applicant_double).to receive(:home_address?).and_return(has_home_address)
-    end
-
     context 'when applicant has home address' do
       let(:has_home_address) { true }
       it 'returns all correspondence address types' do
@@ -44,10 +44,6 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   end
 
   describe 'validations' do
-    before do
-      allow(subject).to receive(:applicant_has_home_address?)
-    end
-
     context 'when telephone_number is blank' do
       let(:telephone_number) { '' }
       let(:correspondence_address_type) { 'home_address' }
@@ -69,26 +65,27 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     end
 
     context 'when telephone_number is valid' do
-      let(:telephone_number) { '07000 000 000' }
+      let(:telephone_number) { '(+44) 55-55.555 #22' }
       let(:correspondence_address_type) { 'other_address' }
 
       it 'removes spaces from input' do
-        expect(subject.telephone_number).to eq('07000000000')
+        expect(subject.telephone_number).to eq('(+44)55-55.555#22')
       end
     end
 
     context 'when correspondence_address_type is blank' do
       let(:telephone_number) { '07000 000 000' }
+      let(:correspondence_address_type) { '' }
 
       it 'has a validation error on the field' do
         expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:correspondence_address_type, :blank)).to eq(true)
+        expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to eq(true)
       end
     end
 
     context 'when correspondence_address_type contains an incorrect value' do
       let(:telephone_number) { '07000 000 000' }
-      let(:telephone_number) { 'university_address' }
+      let(:correspondence_address_type) { 'university_address' }
 
       it 'has a validation error on the field' do
         expect(subject).to_not be_valid
@@ -101,8 +98,11 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     let(:telephone_number) { '07000 000 000' }
     let(:correspondence_address_type) { 'other_address' }
 
+    # We've tested validations above, here for simplicity we just assume
+    # the form is valid so we don't have to deal again with applicant home address.
     before do
-      allow(subject).to receive(:applicant_has_home_address?)
+      allow(subject).to receive(:valid?).and_return(true)
+      allow(subject).to receive(:applicant).and_call_original
     end
 
     it_behaves_like 'a has-one-association form',

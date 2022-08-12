@@ -17,28 +17,20 @@ module Steps
                 presence: true
 
       validates :correspondence_address_type,
-                inclusion: { in: :string_choices },
-                presence: true
+                inclusion: { in: :string_choices }
 
       def telephone_number=(str)
         super(str.delete(' ')) if str
       end
 
       def choices
-        if applicant_has_home_address?
-          CorrespondenceType.values
-        else
-          CorrespondenceType.values.reject do |val|
-            val.value == :home_address
-          end
-        end
+        values = CorrespondenceType.values.dup
+        values.delete(CorrespondenceType::HOME_ADDRESS) unless applicant.home_address?
+
+        values
       end
 
       private
-
-      def applicant_has_home_address?
-        applicant.home_address?
-      end
 
       def string_choices
         choices.map(&:to_s)
