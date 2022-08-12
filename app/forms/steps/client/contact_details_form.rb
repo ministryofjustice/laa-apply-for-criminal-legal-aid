@@ -4,7 +4,7 @@ module Steps
       include Steps::HasOneAssociation
 
       # Very basic validation to allow numeric and common telephone number symbols
-      TEL_REGEXP = /\A[0-9+()-]{7,18}\Z/
+      TEL_REGEXP = /\A[0-9#+()-.]{7,18}\Z/
 
       attribute :telephone_number, :string
 
