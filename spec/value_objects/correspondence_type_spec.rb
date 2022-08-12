@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CorrespondenceTypeAnswer do
+RSpec.describe CorrespondenceType do
   subject { described_class.new(value) }
 
   let(:value) { :foo }

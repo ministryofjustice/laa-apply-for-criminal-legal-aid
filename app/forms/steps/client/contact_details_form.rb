@@ -26,9 +26,9 @@ module Steps
 
       def choices
         if applicant_has_home_address?
-          CorrespondenceTypeAnswer.values
+          CorrespondenceType.values
         else
-          CorrespondenceTypeAnswer.values.reject do |val|
+          CorrespondenceType.values.reject do |val|
             val.value == :home_address
           end
         end
