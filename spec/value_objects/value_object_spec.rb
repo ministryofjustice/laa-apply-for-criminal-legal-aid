@@ -65,4 +65,27 @@ RSpec.describe ValueObject do
       expect(foo_one.to_sym).to eq(:one)
     end
   end
+
+  describe '.values' do
+    it 'returns an empty array for the superclass' do
+      expect(described_class.values).to eq([])
+    end
+  end
+
+  describe 'inquiry methods' do
+    Fruit = Class.new(ValueObject) do
+      const_set(:VALUES, [new(:apple), new(:banana)])
+    end
+
+    let(:fruit_one) { Fruit.new(:apple) }
+    let(:fruit_two) { Fruit.new(:banana) }
+
+    it 'defines inquiry methods for each of the values' do
+      expect(fruit_one.apple?).to eq(true)
+      expect(fruit_one.banana?).to eq(false)
+
+      expect(fruit_two.apple?).to eq(false)
+      expect(fruit_two.banana?).to eq(true)
+    end
+  end
 end
