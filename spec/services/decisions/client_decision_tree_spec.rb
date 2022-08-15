@@ -45,9 +45,24 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `contact_details`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', applicant: 'applicant', correspondence_address_type: correspondence_address_type) }
     let(:step_name) { :contact_details }
 
-    it { is_expected.to have_destination('/home', :index) }
+    context 'and answer is `other_address`' do
+      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS }
+
+      before do
+        allow(
+          CorrespondenceAddress
+        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+      end
+
+      it { expect(subject.destination).to eq(controller: '/steps/address/lookup', action: :edit, id: 'address') }
+    end
+
+    context 'and answer is any other thing' do
+      let(:correspondence_address_type) { 'whatever' }
+      it { is_expected.to have_destination('/home', :index) }
+    end
   end
 end
