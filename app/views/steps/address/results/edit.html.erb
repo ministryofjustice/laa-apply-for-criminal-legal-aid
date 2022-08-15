@@ -1,4 +1,6 @@
-<% title t('.page_title') %>
+<% @form_object = decorate(@form_object, AddressFormDecorator) %>
+
+<% title t(@form_object.page_title) %>
 <% step_header %>
 
 <%
@@ -10,7 +12,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+    <h1 class="govuk-heading-xl"><%=t @form_object.heading %></h1>
 
     <p class="govuk-label">
       <%=t '.current_postcode' %>
@@ -18,7 +20,7 @@
 
     <p class="govuk-body">
       <strong><%= record.postcode %></strong>
-      <%= link_to t('.change_postcode'), edit_steps_address_lookup_path(record), class: 'govuk-link govuk-!-margin-left-4' %>
+      <%= link_to t('.change_postcode_html'), edit_steps_address_lookup_path(record), class: 'govuk-link govuk-!-margin-left-4' %>
     </p>
 
     <% if addresses.any? %>

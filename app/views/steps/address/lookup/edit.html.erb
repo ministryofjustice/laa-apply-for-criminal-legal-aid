@@ -1,4 +1,6 @@
-<% title t('.page_title') %>
+<% @form_object = decorate(@form_object, AddressFormDecorator) %>
+
+<% title t(@form_object.page_title) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -6,14 +8,15 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third', label: { tag: 'h1', size: 'xl' } %>
+      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third',
+                             label: { tag: 'h1', size: 'xl', text: t(@form_object.heading) } %>
 
       <p class="govuk-body govuk-!-margin-bottom-2">
         <%= link_to t('.manual_entry'), edit_steps_address_details_path(@form_object.record) %>
       </p>
 
       <p class="govuk-body govuk-!-margin-bottom-6">
-        <%= link_to t('.no_address'), root_path %>
+        <%= link_to t('.no_address'), edit_steps_client_contact_details_path if @form_object.home_address? %>
       </p>
 
       <%= f.continue_button(primary: :find_address) %>

@@ -61,8 +61,8 @@ en:
         steps/address/lookup_form:
           attributes:
             postcode:
-              blank: Enter postcode
-              invalid: Enter a postcode in the correct format
+              blank: Enter a postcode
+              invalid: Enter a valid UK postcode
         steps/address/results_form:
           attributes:
             lookup_id:

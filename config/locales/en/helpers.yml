@@ -4,10 +4,6 @@ en:
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
-    CORRESPONDENCE_ADDRESS_TYPE: &CORRESPONDENCE_ADDRESS_TYPE
-      'home_address' : 'Same as home address'
-      'providers_office_address' : "Provider's office"
-      'other_address' : 'Somewhere else'
 
   helpers:
     back_link: Back
@@ -49,9 +45,10 @@ en:
         nino: Enter your client’s National Insurance number
       steps_client_contact_details_form:
         telephone_number: UK telephone number
-        correspondence_address_type_options: *CORRESPONDENCE_ADDRESS_TYPE
-      steps_address_lookup_form:
-        postcode: Enter your client’s home address
+        correspondence_address_type_options:
+          home_address: Same as home address
+          providers_office_address: Provider’s office
+          other_address: Somewhere else
       steps_address_results_form:
         lookup_id: Select an address
       steps_address_details_form:

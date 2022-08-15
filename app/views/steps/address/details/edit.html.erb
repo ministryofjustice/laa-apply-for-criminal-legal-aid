@@ -1,11 +1,13 @@
-<% title t('.page_title') %>
+<% @form_object = decorate(@form_object, AddressFormDecorator) %>
+
+<% title t(@form_object.page_title) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+    <h1 class="govuk-heading-xl"><%=t @form_object.heading %></h1>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :address_line_one, autocomplete: 'off' %>
