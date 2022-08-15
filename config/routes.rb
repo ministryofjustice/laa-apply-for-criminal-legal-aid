@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :crime_applications, except: [:new, :update]
+
   namespace :steps do
     namespace :client do
       edit_step :has_partner
