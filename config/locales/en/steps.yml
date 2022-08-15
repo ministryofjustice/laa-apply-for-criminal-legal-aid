@@ -28,15 +28,28 @@ en:
     address:
       lookup:
         edit:
-          page_title: Client’s home address
-          manual_entry: Enter address manually
+          page_title:
+            applicant:
+              home_address: Client’s home address
+              correspondence_address: Client’s correspondence address
+          heading:
+            applicant:
+              home_address: Enter your client’s home address
+              correspondence_address: Enter your client’s correspondence address
           no_address: My client does not have a home address
+          manual_entry: Enter address manually
       results:
         edit:
-          page_title: Client’s home address selection
-          heading: Enter your client’s home address
+          page_title:
+            applicant:
+              home_address: Client’s home address selection
+              correspondence_address: Client’s correspondence address selection
+          heading:
+            applicant:
+              home_address: Enter your client’s home address
+              correspondence_address: Enter your client’s correspondence address
           current_postcode: Postcode
-          change_postcode: Change
+          change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
           results_count:
             one: "%{count} address found"
@@ -46,5 +59,11 @@ en:
             manual_entry: Enter address manually
       details:
         edit:
-          page_title: Client’s home address
-          heading: Enter your client’s home address
+          page_title:
+            applicant:
+              home_address: Client’s home address
+              correspondence_address: Client’s correspondence address
+          heading:
+            applicant:
+              home_address: Enter your client’s home address
+              correspondence_address: Enter your client’s correspondence address
