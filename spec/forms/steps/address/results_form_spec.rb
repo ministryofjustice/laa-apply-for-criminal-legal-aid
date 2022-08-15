@@ -23,41 +23,20 @@ RSpec.describe Steps::Address::ResultsForm do
   end
 
   describe '.addresses' do
-    context 'when 1 address is returned by the service' do
+    context 'when results are returned by the service' do
+      let(:json_results) { super() * 2 }
+
       it 'returns an array of Address struct' do
         expect(subject.addresses).to contain_exactly(Struct, Struct)
       end
 
-      it 'contains an addresses count item' do
-        expect(subject.addresses[0].lookup_id).to be_nil
-        expect(subject.addresses[0].compact_address).to eq('1 address found')
-      end
-
-      it 'contains the addresses' do
-        expect(subject.addresses[1].lookup_id).to eq('23749191')
-        expect(subject.addresses[1].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
-      end
-    end
-
-    context 'when 2 or more addresses are returned by the service' do
-      let(:json_results) { super() * 2 }
-
-      it 'returns an array of Address struct' do
-        expect(subject.addresses).to contain_exactly(Struct, Struct, Struct)
-      end
-
-      it 'contains an addresses count item' do
-        expect(subject.addresses[0].lookup_id).to be_nil
-        expect(subject.addresses[0].compact_address).to eq('2 addresses found')
-      end
-
       # They are dupes but this is ok for this test scenario
       it 'contains the addresses' do
+        expect(subject.addresses[0].lookup_id).to eq('23749191')
+        expect(subject.addresses[0].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
+
         expect(subject.addresses[1].lookup_id).to eq('23749191')
         expect(subject.addresses[1].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
-
-        expect(subject.addresses[2].lookup_id).to eq('23749191')
-        expect(subject.addresses[2].compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
       end
     end
 

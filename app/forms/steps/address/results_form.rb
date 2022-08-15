@@ -2,33 +2,17 @@ module Steps
   module Address
     class ResultsForm < BaseFormObject
       attribute :lookup_id, :string
-      validates :lookup_id, inclusion: {
-        in: ->(this) { this.addresses.pluck(:lookup_id) }
-      }
+      validates :lookup_id, inclusion: { in: :address_ids }
 
       def addresses
-        @addresses ||= retrieve_addresses
+        @addresses ||= lookup_service.call
+      end
+
+      def address_ids
+        addresses.pluck(:lookup_id)
       end
 
       private
-
-      def retrieve_addresses
-        @addresses = lookup_service.call
-
-        # Add the number of results as the first element of the collection
-        # User has to select something, otherwise there is a validation error
-        addresses.unshift(address_count_item) if addresses.any?
-
-        addresses
-      end
-
-      def address_count_item
-        Struct.new(:results_size, :lookup_id) do
-          def compact_address
-            I18n.translate!(:results_count, count: results_size, scope: 'steps.address.results.edit')
-          end
-        end.new(addresses.size)
-      end
 
       def lookup_service
         @lookup_service ||= OrdnanceSurvey::AddressLookup.new(
