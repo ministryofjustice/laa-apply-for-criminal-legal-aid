@@ -1,0 +1,56 @@
+<% title t('.page_title') %>
+<% step_header(path: '/todo_sign_in_journey_path') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+  </div> 
+</div>
+  
+<div class="govuk-button-group">
+  <%= button_to '#',
+    class: 'govuk-button govuk-button--start',
+    data: { module: 'govuk-button' } do; t('.start_button'); end %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Name</th>
+          <th class="govuk-table__header">Start date</th>
+          <th class="govuk-table__header">LAA reference</th>
+          <th class="govuk-table__header">Status</th>
+          <th class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @applications.each do |app| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= link_to app.applicant.full_name, 
+                edit_crime_application_path(app), 
+                class: 'govuk-link' %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_formatted_date(app.created_at) %>
+            </td>
+            <td class="govuk-table__cell">
+              LAA-a1234b
+            </td>
+            <td class="govuk-table__cell">
+              <strong class="govuk-tag govuk-tag--blue">In progress</strong>
+            </td>
+            <td class="govuk-table__cell">
+              <%= button_to '#', method: :delete,
+                class: 'govuk-button govuk-button--secondary',
+                data: { module: 'govuk-button' } do; t('.delete_buttons'); end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+</div>

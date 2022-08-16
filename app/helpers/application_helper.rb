@@ -20,4 +20,8 @@ module ApplicationHelper
   def decorate(model, decorator_class = nil)
     (decorator_class || [model.class, :Decorator].join.demodulize.constantize).new(model)
   end
+
+  def govuk_formatted_date(date)
+    date.strftime('%d %B %Y')
+  end
 end
