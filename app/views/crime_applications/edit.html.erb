@@ -1,0 +1,66 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <!-- TODO: this will be implemented a bit later -->
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Application incomplete</h2>
+    <p class="govuk-body govuk-!-margin-bottom-7">You have completed 0 of 10 sections.</p>
+
+    <ol class="app-task-list">
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">1.</span> <%=t 'tasklist.heading.client_details' %>
+        </h2>
+        <ul class="app-task-list__items">
+          <%= TaskList::Task.render(self, name: :client_details) %>
+        </ul>
+      </li>
+
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">2.</span> <%=t 'tasklist.heading.case_details' %>
+        </h2>
+        <ul class="app-task-list__items">
+          <%= TaskList::Task.render(self, name: :case_details) %>
+          <%= TaskList::Task.render(self, name: :justification_for_legal_aid) %>
+        </ul>
+      </li>
+
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">3.</span> <%=t 'tasklist.heading.means_assessment' %>
+        </h2>
+        <ul class="app-task-list__items">
+          <%= TaskList::Task.render(self, name: :income_assessment) %>
+          <%= TaskList::Task.render(self, name: :capital_assessment) %>
+          <%= TaskList::Task.render(self, name: :check_your_answers) %>
+          <%= TaskList::Task.render(self, name: :check_assessment_result) %>
+        </ul>
+      </li>
+
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">4.</span> <%=t 'tasklist.heading.supporting_evidence' %>
+        </h2>
+        <ul class="app-task-list__items">
+          <%= TaskList::Task.render(self, name: :evidence_upload) %>
+        </ul>
+      </li>
+
+      <li>
+        <h2 class="app-task-list__section">
+          <span class="app-task-list__section-number">5.</span> <%=t 'tasklist.heading.review' %>
+        </h2>
+        <ul class="app-task-list__items">
+          <%= TaskList::Task.render(self, name: :application_review) %>
+          <%= TaskList::Task.render(self, name: :application_submission) %>
+        </ul>
+      </li>
+    </ol>
+
+    <%= link_button t('.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
+  </div>
+</div>
