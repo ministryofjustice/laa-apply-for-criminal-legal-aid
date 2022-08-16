@@ -26,7 +26,7 @@ RSpec.describe Person, type: :model do
       end
     end
 
-    context 'home address has is blank' do
+    context 'home address is blank' do
 
       let(:address_line_one) { nil }
 
