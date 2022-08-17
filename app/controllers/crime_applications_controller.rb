@@ -10,11 +10,28 @@ class CrimeApplicationsController < ApplicationController
     )
   end
 
+  def destroy
+    @application = CrimeApplication.find(delete_params[:id])
+    @full_name = @application.applicant.full_name
+
+    if request.get?
+      render :delete
+    else
+      @application.destroy
+      flash[:alert] = "#{@full_name}'s application has been permenantly deleted"
+      redirect_to crime_applications_path
+    end
+  end
+
   private
 
   # NOTE: once we have applications linked to each provider, this
   # needs to be scoped to the currently signed in provider
   def crime_application
     CrimeApplication.find(params.require(:id))
+  end
+
+  def delete_params
+    params.permit(:id)
   end
 end

@@ -6,6 +6,8 @@
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
   </div> 
 </div>
+
+<%= render partial: 'shared/flash_banner' %>
   
 <div class="govuk-button-group">
   <%= button_to '#',
@@ -43,7 +45,7 @@
               <strong class="govuk-tag govuk-tag--blue">In progress</strong>
             </td>
             <td class="govuk-table__cell">
-              <%= button_to '#', method: :delete,
+              <%= button_to confirm_application_deletion_path(app.id), method: :get,
                 class: 'govuk-button govuk-button--secondary',
                 data: { module: 'govuk-button' } do; t('.delete_button'); end %>
             </td>
