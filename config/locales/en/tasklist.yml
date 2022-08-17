@@ -26,6 +26,11 @@ en:
       not_applicable: Not applicable
 
   crime_applications:
+    index:
+      page_title: Your applications
+      heading: Your applications
+      start_button: Make a new application
+      delete_button: Delete
     edit:
       page_title: Applicaton task list
       heading: Make a new application
