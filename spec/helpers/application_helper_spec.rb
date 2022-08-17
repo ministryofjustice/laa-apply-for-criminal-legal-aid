@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  describe '#govuk_formatted_date' do
-    it 'returns a date in the correct formatt' do
-      datetime = Time.zone.local(2022, 8, 16, 15, 30, 45)
-      expect(helper.govuk_formatted_date(datetime)).to eq('16 August 2022')
-    end
-  end
-  
   describe '#title' do
     let(:title) { helper.content_for(:page_title) }
 
