@@ -4,6 +4,8 @@ class Person < ApplicationRecord
 
   has_one :home_address, dependent: :destroy, class_name: 'HomeAddress'
 
+  scope :with_name, -> { where.not(first_name: [nil, '']) }
+
   def home_address?
     home_address.address_line_one.present?
   end
