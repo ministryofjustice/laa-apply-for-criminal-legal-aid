@@ -1,19 +1,19 @@
 module TaskList
-  class ProgressTag < BaseTaskRenderer
+  class StatusTag < BaseRenderer
     attr_reader :status
 
     DEFAULT_CLASSES = %w[govuk-tag app-task-list__tag].freeze
 
     STATUSES = {
-      completed: nil,
-      in_progress: 'govuk-tag--blue',
-      not_started: 'govuk-tag--grey',
-      unreachable: 'govuk-tag--grey',
-      not_applicable: 'govuk-tag--grey',
+      TaskStatus::COMPLETED => nil,
+      TaskStatus::IN_PROGRESS => 'govuk-tag--blue',
+      TaskStatus::NOT_STARTED => 'govuk-tag--grey',
+      TaskStatus::UNREACHABLE => 'govuk-tag--grey',
+      TaskStatus::NOT_APPLICABLE => 'govuk-tag--grey',
     }.freeze
 
-    def initialize(view, name:, status:)
-      super(view, name: name)
+    def initialize(crime_application, name:, status:)
+      super(crime_application, name: name)
       @status = status
     end
 
