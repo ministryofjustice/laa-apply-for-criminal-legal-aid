@@ -32,8 +32,53 @@ RSpec.describe 'Dashboard' do
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a.govuk-link', count: 1, text: 'John Doe'
+          assert_select 'button.govuk-button', count: 1, text: 'Delete'
         end
       end
+    end
+
+  end
+
+  describe 'deleting applications' do
+    before :all do
+      # sets up a few test records
+      app = CrimeApplication.create
+
+      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
+
+      # sets up a valid session
+      get '/steps/client/has_partner'
+
+      # page actually under test
+      get '/crime_applications'
+    end
+
+    after :all do
+      CrimeApplication.destroy_all
+    end
+
+    it 'allows a user to check before deleting an application' do
+      applicant = Applicant.find_by(first_name: "Jane")
+      app = applicant.crime_application
+
+      get "/crime_applications/#{app.id}/delete"
+      expect(response.body).to include("Are you sure you want to delete #{applicant.full_name}&#39;s application?")
+      expect(response.body).to include("Yes, delete it")
+      expect(response.body).to include("No, do not delete it")
+    end
+
+
+    it 'can delete an application' do
+      applicant = Applicant.find_by(first_name: "Jane")
+      app = applicant.crime_application
+
+      apps_count = CrimeApplication.count
+
+      delete "/crime_applications/#{app.id}"
+
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(crime_applications_path)
+      expect(CrimeApplication.count).to eq(apps_count - 1)
     end
   end
 end
