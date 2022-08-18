@@ -5,12 +5,12 @@ en:
       client_details: About your client
       case_details: About the case
       means_assessment: Means assessment
-      supporting_evidence: Supporting evidence
-      review: Review and confirm
+      support_evidence: Supporting evidence
+      review_confirm: Review and confirm
     task:
       client_details: Client details
       case_details: Case details
-      justification_for_legal_aid: Justification for legal aid
+      ioj: Justification for legal aid
       income_assessment: Income assessment
       capital_assessment: Capital assessment
       check_your_answers: Check your answers
@@ -32,6 +32,8 @@ en:
       start_button: Make a new application
       delete_button: Delete
     edit:
-      page_title: Applicaton task list
+      page_title: Application task list
       heading: Make a new application
+      subheading: Application incomplete
+      progress_counter: You have completed %{completed} of %{total} sections.
       back_to_applications: Back to your applications
