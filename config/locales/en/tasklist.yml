@@ -1,0 +1,26 @@
+---
+en:
+  tasklist:
+    heading:
+      client_details: About your client
+      case_details: About the case
+      means_assessment: Means assessment
+      support_evidence: Supporting evidence
+      review_confirm: Review and confirm
+    task:
+      client_details: Client details
+      case_details: Case details
+      ioj: Justification for legal aid
+      income_assessment: Income assessment
+      capital_assessment: Capital assessment
+      check_your_answers: Check your answers
+      check_assessment_result: Check means assessment result
+      evidence_upload: Upload evidence
+      application_review: Review the application
+      application_submission: Confirm declaration and submit application
+    status:
+      completed: Completed
+      in_progress: In progress
+      not_started: Not started
+      unreachable: Cannot yet start
+      not_applicable: Not applicable
