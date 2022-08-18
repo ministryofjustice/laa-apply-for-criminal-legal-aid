@@ -16,7 +16,7 @@ class CrimeApplicationsController < ApplicationController
 
     if request.get?
       render :delete
-    else
+    elsif request.delete?
       @application.destroy
       flash[:alert] = "#{@full_name}'s application has been permenantly deleted"
       redirect_to crime_applications_path
