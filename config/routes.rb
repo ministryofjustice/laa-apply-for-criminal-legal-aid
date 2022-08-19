@@ -37,9 +37,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'crime_applications/:id/delete', to: 'crime_applications#destroy', as: :confirm_application_deletion
-
-  resources :crime_applications, except: [:new, :update]
+  resources :crime_applications, except: [:new, :update] do
+    get :confirm_destroy, on: :member
+  end
 
   namespace :steps do
     namespace :client do

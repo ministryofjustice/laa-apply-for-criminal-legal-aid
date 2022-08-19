@@ -1,4 +1,6 @@
 class CrimeApplicationsController < ApplicationController
+  before_action :crime_application_for_delete, only: [:destroy, :confirm_destroy]
+
   def index
     # TODO: scope will change as we know more
     @applications = CrimeApplication.joins(:people).includes(:applicant).merge(Applicant.with_name)
@@ -11,16 +13,13 @@ class CrimeApplicationsController < ApplicationController
   end
 
   def destroy
-    @application = CrimeApplication.find(delete_params[:id])
-    @full_name = @application.applicant.full_name
+    @application.destroy
+    flash[:alert] = "#{@full_name}'s application has been permenantly deleted"
+    redirect_to crime_applications_path
+  end
 
-    if request.get?
-      render :delete
-    elsif request.delete?
-      @application.destroy
-      flash[:alert] = "#{@full_name}'s application has been permenantly deleted"
-      redirect_to crime_applications_path
-    end
+  def confirm_destroy
+    render :confirm_destroy
   end
 
   private
@@ -29,6 +28,11 @@ class CrimeApplicationsController < ApplicationController
   # needs to be scoped to the currently signed in provider
   def crime_application
     CrimeApplication.find(params.require(:id))
+  end
+
+  def crime_application_for_delete
+    @application = CrimeApplication.find(delete_params[:id])
+    @full_name = @application.applicant.full_name
   end
 
   def delete_params

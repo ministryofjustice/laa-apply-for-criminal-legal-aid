@@ -45,7 +45,7 @@
               <strong class="govuk-tag govuk-tag--blue">In progress</strong>
             </td>
             <td class="govuk-table__cell">
-              <%= button_to confirm_application_deletion_path(app.id), method: :get,
+              <%= button_to confirm_destroy_crime_application_path(app.id), method: :get,
                 class: 'govuk-button govuk-button--secondary',
                 data: { module: 'govuk-button' } do; t('.delete_button'); end %>
             </td>
