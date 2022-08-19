@@ -7,23 +7,34 @@
   </div> 
 </div>
 
-<div class="govuk-body">
-  <p>This application has not been submitted yet</p>
-</div>
 
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    You cannot undo this action
-  </strong>
-</div>
-
-<%= form_with url: crime_application_path(@application.id), method: :delete do |f| %>
-  <div class="govuk-button-group">
-    <%= f.button t('.confirm_delete_button'), class: "govuk-button govuk-button--warning" %>
-    <%= link_to crime_applications_path,
-      class: 'govuk-button govuk-button--primary',
-      data: { module: 'govuk-button' } do; t('.cancel_delete_button'); end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">This application has not been submitted yet</p>
   </div>
-<% end %>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You cannot undo this action
+      </strong>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: crime_application_path(@application.id), method: :delete do |f| %>
+      <div class="govuk-button-group">
+        <%= f.button t('.confirm_delete_button'), class: "govuk-button govuk-button--warning" %>
+        <%= link_to crime_applications_path,
+          class: 'govuk-button govuk-button--primary',
+          data: { module: 'govuk-button' } do; t('.cancel_delete_button'); end %>
+      </div>
+    <% end %>
+  </div>
+</div>
