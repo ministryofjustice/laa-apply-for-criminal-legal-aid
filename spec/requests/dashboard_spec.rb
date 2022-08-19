@@ -72,13 +72,12 @@ RSpec.describe 'Dashboard' do
       applicant = Applicant.find_by(first_name: "Jane")
       app = applicant.crime_application
 
-      apps_count = CrimeApplication.count
-
-      delete "/crime_applications/#{app.id}"
+      expect {
+        delete "/crime_applications/#{app.id}"
+      }.to change { CrimeApplication.count }.by(-1)
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(crime_applications_path)
-      expect(CrimeApplication.count).to eq(apps_count - 1)
     end
   end
 end
