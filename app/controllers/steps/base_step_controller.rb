@@ -31,7 +31,7 @@ module Steps
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
         @form_object.save!
-        redirect_to root_path # TODO: this will go to the task list
+        redirect_to edit_crime_application_path(current_crime_application)
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination
       else

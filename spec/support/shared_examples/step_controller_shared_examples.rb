@@ -268,10 +268,9 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
           expect(form_object).to receive(:save!).and_return(true)
         end
 
-        # TODO: This will have to change once we decide where the secondary button goes
-        it 'redirects to the root path' do
+        it 'redirects to the application task list' do
           put :update, params: expected_params, session: { crime_application_id: existing_case.id }
-          expect(subject).to redirect_to(root_path)
+          expect(subject).to redirect_to(edit_crime_application_path(existing_case))
         end
       end
 
@@ -280,10 +279,9 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
           expect(form_object).to receive(:save!).and_return(false)
         end
 
-        # TODO: This will have to change once we decide where the secondary button goes
-        it 'redirects to the root path' do
+        it 'redirects to the application task list' do
           put :update, params: expected_params, session: { crime_application_id: existing_case.id }
-          expect(subject).to redirect_to(root_path)
+          expect(subject).to redirect_to(edit_crime_application_path(existing_case))
         end
       end
     end
