@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Dashboard' do
+  describe 'make a new application' do
+    it 'creates a new `crime_application` record' do
+      expect {
+        post crime_applications_path
+      }.to change { CrimeApplication.count }.by(1)
+
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(/has_partner/)
+    end
+  end
+
   describe 'list of applications' do
     before :all do
       # sets up a few test records
@@ -12,11 +23,8 @@ RSpec.describe 'Dashboard' do
       Applicant.create(crime_application: app2, first_name: '', last_name: '')
       Applicant.create(crime_application: app3)
 
-      # sets up a valid session
-      get '/steps/client/has_partner'
-
       # page actually under test
-      get '/crime_applications'
+      get crime_applications_path
     end
 
     after :all do

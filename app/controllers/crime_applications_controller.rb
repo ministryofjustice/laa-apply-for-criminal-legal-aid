@@ -1,5 +1,6 @@
 class CrimeApplicationsController < ApplicationController
-  before_action :crime_application_for_delete, only: [:destroy, :confirm_destroy]
+  before_action :check_crime_application_presence, except: [:index, :create]
+  before_action :set_applicant_name, only: [:destroy, :confirm_destroy]
 
   def index
     # TODO: scope will change as we know more
@@ -9,38 +10,31 @@ class CrimeApplicationsController < ApplicationController
                     .merge(Applicant.with_name)
   end
 
+  def create
+    initialize_crime_application do |crime_application|
+      redirect_to edit_steps_client_has_partner_path(crime_application)
+    end
+  end
+
   def edit
     @tasklist = TaskList::Collection.new(
-      view_context, crime_application: crime_application
+      view_context, crime_application: current_crime_application
     )
   end
 
   def destroy
-    @application.destroy
+    current_crime_application.destroy
     redirect_to crime_applications_path,
                 flash: {
-                  success: t('.success_flash', full_name: @full_name)
+                  success: t('.success_flash', applicant_name: @applicant_name)
                 }
   end
 
-  def confirm_destroy
-    render :confirm_destroy
-  end
+  def confirm_destroy; end
 
   private
 
-  # NOTE: once we have applications linked to each provider, this
-  # needs to be scoped to the currently signed in provider
-  def crime_application
-    CrimeApplication.find(params.require(:id))
-  end
-
-  def crime_application_for_delete
-    @application = CrimeApplication.find(delete_params[:id])
-    @full_name = @application.applicant.full_name
-  end
-
-  def delete_params
-    params.permit(:id)
+  def set_applicant_name
+    @applicant_name = current_crime_application.applicant.full_name
   end
 end

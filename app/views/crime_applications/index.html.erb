@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% step_header(path: '/todo_sign_in_journey_path') %>
+<% step_header(path: root_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -8,9 +8,9 @@
 </div>
 
 <%= render partial: 'shared/flash_banner' %>
-  
+
 <div class="govuk-button-group">
-  <%= button_to '#',
+  <%= button_to crime_applications_path,
     class: 'govuk-button govuk-button--start',
     data: { module: 'govuk-button' } do; t('.start_button'); end %>
 </div>
@@ -54,5 +54,4 @@
       </tbody>
     </table>
   </div>
-  
 </div>
