@@ -37,7 +37,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :crime_applications, except: [:new, :update]
+  resources :crime_applications, except: [:new, :update] do
+    get :confirm_destroy, on: :member
+  end
 
   namespace :steps do
     namespace :client do
