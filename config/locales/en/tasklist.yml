@@ -41,4 +41,4 @@ en:
       confirm_delete_button: Yes, delete it
       cancel_delete_button: No, do not delete it
     destroy:
-      success_flash: "%{full_name}'s application has been permenantly deleted"
+      success_flash: "%{full_name}'s application has been permanently deleted"
