@@ -14,7 +14,7 @@ class CrimeApplicationsController < ApplicationController
 
   def destroy
     @application.destroy
-    flash[:alert] = "#{@full_name}'s application has been permenantly deleted"
+    flash[:success] = "#{@full_name}'s application has been permenantly deleted"
     redirect_to crime_applications_path
   end
 
