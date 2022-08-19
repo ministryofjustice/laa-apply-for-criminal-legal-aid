@@ -3,7 +3,15 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
+  let(:crime_application) { instance_double(CrimeApplication) }
+
   it_behaves_like 'a decision tree'
+
+  before do
+    allow(
+      form_object
+    ).to receive(:crime_application).and_return(crime_application)
+  end
 
   context 'when the step is `has_partner`' do
     let(:form_object) { double('FormObject', client_has_partner: client_has_partner) }
@@ -11,12 +19,12 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'and answer is `no`' do
       let(:client_has_partner) { YesNoAnswer::NO }
-      it { is_expected.to have_destination(:details, :edit) }
+      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
     end
 
     context 'and answer is `yes`' do
       let(:client_has_partner) { YesNoAnswer::YES }
-      it { is_expected.to have_destination(:partner_exit, :show) }
+      it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
     end
   end
 
@@ -24,7 +32,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    it { is_expected.to have_destination(:has_nino, :edit) }
+    it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
   end
 
   context 'when the step is `has_nino`' do
@@ -40,7 +48,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
       end
 
-      it { expect(subject.destination).to eq(controller: '/steps/address/lookup', action: :edit, id: 'address') }
+      it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application, address_id: 'address') }
     end
   end
 
@@ -57,12 +65,12 @@ RSpec.describe Decisions::ClientDecisionTree do
         ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
       end
 
-      it { expect(subject.destination).to eq(controller: '/steps/address/lookup', action: :edit, id: 'address') }
+      it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application, address_id: 'address') }
     end
 
     context 'and answer is any other thing' do
       let(:correspondence_address_type) { 'whatever' }
-      it { is_expected.to have_destination('/home', :index) }
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end
   end
 end

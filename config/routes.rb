@@ -8,7 +8,7 @@ end
 def crud_step(name, opts = {})
   edit_step name, only: [] do
     resources only: opts.fetch(:only, [:edit, :update, :destroy]),
-              controller: name,
+              controller: name, param: opts.fetch(:param),
               path_names: { edit: '' }
   end
 end
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     get :confirm_destroy, on: :member
   end
 
-  namespace :steps do
+  scope module: :steps, path: 'steps/:id', as: :steps do
     namespace :client do
       edit_step :has_partner
       edit_step :details
@@ -52,9 +52,9 @@ Rails.application.routes.draw do
     end
 
     namespace :address do
-      crud_step :lookup, only: [:edit, :update]
-      crud_step :results, only: [:edit, :update]
-      crud_step :details, only: [:edit, :update]
+      crud_step :lookup,  param: :address_id, only: [:edit, :update]
+      crud_step :results, param: :address_id, only: [:edit, :update]
+      crud_step :details, param: :address_id, only: [:edit, :update]
     end
   end
 

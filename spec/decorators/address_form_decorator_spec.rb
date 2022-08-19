@@ -5,7 +5,7 @@ RSpec.describe AddressFormDecorator do
 
   let(:form_object) { double('FormObject', record: address_record) }
 
-  let(:address_record) { instance_double(Address, type: address_type, person: person_record) }
+  let(:address_record) { instance_double(Address, type: address_type, person: person_record, postcode: 'SW1A 2AA') }
   let(:person_record)  { instance_double(Person, type: person_type) }
 
   let(:address_type) { nil }
@@ -86,7 +86,14 @@ RSpec.describe AddressFormDecorator do
     end
   end
 
-  describe '.addresses' do
+  describe '#postcode' do
+    it 'delegates method to the address record' do
+      expect(address_record).to receive(:postcode)
+      expect(subject.postcode).to eq('SW1A 2AA')
+    end
+  end
+
+  describe '#addresses' do
     let(:form_object) { double('FormObject', addresses: addresses) }
 
     context 'when there is only 1 address in the collection' do

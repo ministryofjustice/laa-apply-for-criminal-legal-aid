@@ -21,7 +21,8 @@ module Decisions
       if form_object.client_has_partner.yes?
         show(:partner_exit)
       else
-        edit(:details)
+        # Task list
+        show('/crime_applications', action: :edit)
       end
     end
 
@@ -45,7 +46,7 @@ module Decisions
 
     def start_address_journey(address_class, person)
       address = address_class.find_or_create_by(person: person)
-      edit('/steps/address/lookup', id: address)
+      edit('/steps/address/lookup', address_id: address)
     end
   end
 end

@@ -1,7 +1,7 @@
 module Tasks
   class ClientDetails < BaseTask
     def path
-      '/steps/client/details'
+      edit_steps_client_details_path(crime_application)
     end
 
     def not_applicable?
