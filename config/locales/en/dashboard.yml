@@ -1,0 +1,14 @@
+---
+en:
+  crime_applications:
+    index:
+      page_title: Your applications
+      heading: Your applications
+      start_button: Make a new application
+      delete_button: Delete
+    edit:
+      page_title: Application task list
+      heading: Make a new application
+      subheading: Application incomplete
+      progress_counter: You have completed %{completed} of %{total} sections.
+      back_to_applications: Back to your applications
