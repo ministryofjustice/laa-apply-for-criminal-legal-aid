@@ -3,7 +3,10 @@ class CrimeApplicationsController < ApplicationController
 
   def index
     # TODO: scope will change as we know more
-    @applications = CrimeApplication.joins(:people).includes(:applicant).merge(Applicant.with_name)
+    @applications = CrimeApplication
+                    .joins(:people)
+                    .includes(:applicant)
+                    .merge(Applicant.with_name)
   end
 
   def edit
@@ -14,8 +17,10 @@ class CrimeApplicationsController < ApplicationController
 
   def destroy
     @application.destroy
-    flash[:success] = t('.success_flash', full_name: @full_name)
-    redirect_to crime_applications_path
+    redirect_to crime_applications_path,
+                flash: {
+                  success: t('.success_flash', full_name: @full_name)
+                }
   end
 
   def confirm_destroy
