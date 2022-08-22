@@ -6,8 +6,8 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
 
   enum status: {
-    newly_initialised: ApplicationStatus::NEWLY_INITIALISED,
-    in_progress: ApplicationStatus::IN_PROGRESS,
-    completed:   ApplicationStatus::COMPLETED
-  }, _default: :newly_initialised
+    newly_initialised: ApplicationStatus::NEWLY_INITIALISED.to_s,
+    in_progress: ApplicationStatus::IN_PROGRESS.to_s,
+    completed:   ApplicationStatus::COMPLETED.to_s
+  }, _default: ApplicationStatus::NEWLY_INITIALISED.to_s
 end
