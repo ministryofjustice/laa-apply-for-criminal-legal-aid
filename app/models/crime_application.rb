@@ -10,5 +10,4 @@ class CrimeApplication < ApplicationRecord
     in_progress: ApplicationStatus::IN_PROGRESS,
     completed:   ApplicationStatus::COMPLETED
   }, _default: :newly_initialised
-
 end

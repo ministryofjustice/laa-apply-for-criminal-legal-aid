@@ -53,6 +53,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
       it 'saves the record' do
         expect(crime_application).to receive(:update).with(
           'client_has_partner' => YesNoAnswer::YES,
+          status: ApplicationStatus::IN_PROGRESS,
         ).and_return(true)
 
         expect(subject.save).to be(true)

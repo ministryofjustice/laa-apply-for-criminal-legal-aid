@@ -13,7 +13,7 @@ module Steps
 
       def persist!
         crime_application.update(
-          attributes
+          attributes.merge(status: ApplicationStatus::IN_PROGRESS)
         )
       end
     end
