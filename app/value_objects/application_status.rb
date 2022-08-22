@@ -1,7 +1,7 @@
 class ApplicationStatus < ValueObject
   VALUES = [
-    INITIALISED = new(:initialised),
-    IN_PROGRESS = new(:in_progress),
-    COMPLETE = new(:complete),
+    NEWLY_INITIALISED = new(:newly_initialised),
+    IN_PROGRESS       = new(:in_progress),
+    COMPLETED         = new(:completed)
   ].freeze
 end
