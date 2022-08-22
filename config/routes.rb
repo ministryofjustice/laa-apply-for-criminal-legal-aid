@@ -37,24 +37,26 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :crime_applications, except: [:new, :update] do
+  resources :crime_applications, except: [:new, :update], path: 'applications' do
     get :confirm_destroy, on: :member
   end
 
-  scope module: :steps, path: 'steps/:id', as: :steps do
-    namespace :client do
-      edit_step :has_partner
-      edit_step :details
-      edit_step :has_nino
-      show_step :nino_exit
-      show_step :partner_exit
-      edit_step :contact_details
-    end
+  scope 'applications/:id' do
+    namespace :steps do
+      namespace :client do
+        edit_step :has_partner
+        edit_step :details
+        edit_step :has_nino
+        show_step :nino_exit
+        show_step :partner_exit
+        edit_step :contact_details
+      end
 
-    namespace :address do
-      crud_step :lookup,  param: :address_id, only: [:edit, :update]
-      crud_step :results, param: :address_id, only: [:edit, :update]
-      crud_step :details, param: :address_id, only: [:edit, :update]
+      namespace :address do
+        crud_step :lookup,  param: :address_id, only: [:edit, :update]
+        crud_step :results, param: :address_id, only: [:edit, :update]
+        crud_step :details, param: :address_id, only: [:edit, :update]
+      end
     end
   end
 
