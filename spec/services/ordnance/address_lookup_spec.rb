@@ -21,6 +21,7 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
 
   describe '#result' do
     before do
+      allow(ENV).to receive(:fetch) # any other fetches, like Faraday `http_proxy`
       allow(ENV).to receive(:fetch).with('ORDNANCE_SURVEY_API_KEY').and_return('test-token')
     end
 
