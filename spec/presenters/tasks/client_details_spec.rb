@@ -6,7 +6,7 @@ RSpec.describe Tasks::ClientDetails do
   let(:crime_application) { instance_double(CrimeApplication, to_param: '12345') }
 
   describe '#path' do
-    it { expect(subject.path).to eq('/steps/12345/client/details') }
+    it { expect(subject.path).to eq('/applications/12345/steps/client/details') }
   end
 
   describe '#not_applicable?' do
