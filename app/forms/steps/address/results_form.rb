@@ -2,7 +2,7 @@ module Steps
   module Address
     class ResultsForm < BaseFormObject
       attribute :lookup_id, :string
-      validates :lookup_id, inclusion: { in: :address_ids }
+      validates :lookup_id, inclusion: { in: :address_ids }, if: :changed?
 
       def addresses
         @addresses ||= lookup_service.call
@@ -25,6 +25,8 @@ module Steps
       end
 
       def persist!
+        return true unless changed?
+
         record.update(
           selected_address.to_h
         )

@@ -8,7 +8,7 @@ RSpec.describe Steps::Address::ResultsForm do
   } }
 
   let(:crime_application) { instance_double(CrimeApplication) }
-  let(:address_record) { instance_double(Address, postcode: 'SW1H 0AX') }
+  let(:address_record) { Address.new(postcode: 'SW1H 0AX') }
   let(:lookup_id) { '23749191' }
 
   let(:lookup_service) { instance_double(OrdnanceSurvey::AddressLookup, call: lookup_results) }
@@ -76,7 +76,13 @@ RSpec.describe Steps::Address::ResultsForm do
   end
 
   describe '#save' do
-    context 'for valid details' do
+    before do
+      allow(address_record).to receive(:lookup_id).and_return(previous_lookup_id)
+    end
+
+    context 'when the `lookup_id` has changed' do
+      let(:previous_lookup_id) { '99999' }
+
       it 'updates the record' do
         expect(address_record).to receive(:update).with(
           address_line_one: '1, POST OFFICE',
@@ -87,6 +93,16 @@ RSpec.describe Steps::Address::ResultsForm do
           lookup_id: '23749191',
         ).and_return(true)
 
+        expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when the `lookup_id` is the same as in the persisted record' do
+      let(:previous_lookup_id) { '23749191' }
+
+      it 'does not save the record but returns true' do
+        expect(address_record).not_to receive(:update)
+        expect(subject).not_to receive(:address_ids)
         expect(subject.save).to be(true)
       end
     end

@@ -4,10 +4,8 @@ module Decisions
       case step_name
       when :lookup
         edit(:results)
-      when :results
-        edit(:details)
-      when :details
-        after_details
+      when :results, :details
+        after_address_entered
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -15,7 +13,7 @@ module Decisions
 
     private
 
-    def after_details
+    def after_address_entered
       if form_object.record.is_a?(HomeAddress)
         edit('/steps/client/contact_details')
       else
