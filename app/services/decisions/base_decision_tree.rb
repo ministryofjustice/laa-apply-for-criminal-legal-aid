@@ -9,15 +9,19 @@ module Decisions
       @step_name = as
     end
 
+    def current_crime_application
+      form_object.crime_application
+    end
+
     private
 
     # :nocov:
     def show(step_controller, action: :show)
-      { controller: step_controller, action: action }
+      { controller: step_controller, action: action, id: current_crime_application }
     end
 
     def edit(step_controller, params = {})
-      { controller: step_controller, action: :edit }.merge(params)
+      { controller: step_controller, action: :edit, id: current_crime_application }.merge(params)
     end
     # :nocov:
   end

@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <h1 class="govuk-heading-xl"><%=t('.heading', applicant_name: @full_name) %></h1>
+    <h1 class="govuk-heading-xl"><%=t('.heading', applicant_name: @applicant_name) %></h1>
   </div> 
 </div>
 
@@ -28,7 +28,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with url: crime_application_path(@application.id), method: :delete do |f| %>
+    <%= form_with url: crime_application_path, method: :delete do |f| %>
       <div class="govuk-button-group">
         <%= f.button t('.confirm_delete_button'), class: "govuk-button govuk-button--warning" %>
         <%= link_to crime_applications_path,

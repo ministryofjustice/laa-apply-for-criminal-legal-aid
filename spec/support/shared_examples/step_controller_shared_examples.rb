@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.shared_examples 'a show step controller' do
   describe '#show' do
-    context 'when no case exists in the session' do
-      it 'redirects to the invalid session error page' do
-        get :show
-        expect(response).to redirect_to(invalid_session_errors_path)
+    context 'when application is not found' do
+      it 'redirects to the application not found error page' do
+        get :show, params: { id: '12345' }
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
-    context 'when a case exists in the session' do
+    context 'when application is found' do
       let(:existing_case) { CrimeApplication.create }
 
       it 'responds with HTTP success' do
-        get :show, session: { crime_application_id: existing_case.id }
+        get :show, params: { id: existing_case }
         expect(response).to be_successful
       end
     end
@@ -22,16 +22,16 @@ end
 
 RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_class|
   describe '#edit' do
-    context 'when no case exists in the session yet' do
+    context 'when application is not found' do
       before do
         # Needed because some specs that include these examples stub current_crime_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      it 'redirects to the invalid session error page' do
-        get :edit
-        expect(response).to redirect_to(invalid_session_errors_path)
+      it 'redirects to the application not found error page' do
+        get :edit, params: { id: '12345' }
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
@@ -39,11 +39,11 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     # integrate the partner steps, this will have to either be passed as configuration
     # to the shared examples, or to also create the partner associated record.
     #
-    context 'when a case exists in the session' do
+    context 'when application is found' do
       let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
 
       it 'responds with HTTP success' do
-        get :edit, session: { crime_application_id: existing_case.id }
+        get :edit, params: { id: existing_case }
         expect(response).to be_successful
       end
     end
@@ -52,22 +52,24 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { form_class_params_name => { foo: 'bar' } } }
+    let(:expected_params) { { id: existing_case, form_class_params_name => { foo: 'bar' } } }
 
-    context 'when there is no case in the session' do
+    context 'when application is not found' do
+      let(:existing_case) { '12345' }
+
       before do
         # Needed because some specs that include these examples stub current_crime_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      it 'redirects to the invalid session error page' do
+      it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(invalid_session_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
-    context 'when a case in progress is in the session' do
+    context 'when an application in progress is found' do
       let(:existing_case) { CrimeApplication.create }
 
       before do
@@ -83,7 +85,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 
         it 'asks the decision tree for the next destination and redirects there' do
           expect(decision_tree_class).to receive(:new).and_return(decision_tree)
-          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          put :update, params: expected_params
           expect(response).to have_http_status(:redirect)
           expect(subject).to redirect_to('/expected_destination')
         end
@@ -95,7 +97,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
         end
 
         it 'renders the question page again' do
-          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          put :update, params: expected_params
           expect(response).to have_http_status(:ok)
         end
       end
@@ -105,25 +107,25 @@ end
 
 RSpec.shared_examples 'an address step controller' do |form_class, decision_tree_class|
   describe '#edit' do
-    context 'when no case exists in the session yet' do
+    context 'when application is not found' do
       before do
         # Needed because some specs that include these examples stub current_crime_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      it 'redirects to the invalid session error page' do
-        get :edit, params: { id: '123' }
-        expect(response).to redirect_to(invalid_session_errors_path)
+      it 'redirects to the application not found error page' do
+        get :edit, params: { id: '12345', address_id: '123' }
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
-    context 'when a case exists in the session' do
+    context 'when application is found' do
       let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
       let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
 
       it 'responds with HTTP success' do
-        get :edit, params: { id: existing_address.id }, session: { crime_application_id: existing_case.id }
+        get :edit, params: { id: existing_case, address_id: existing_address }
         expect(response).to be_successful
       end
     end
@@ -132,9 +134,11 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
+    let(:expected_params) { { id: existing_case, address_id: existing_address, form_class_params_name => { foo: 'bar' } } }
 
-    context 'when there is no case in the session' do
-      let(:expected_params) { { id: '1234', form_class_params_name => { foo: 'bar' } } }
+    context 'when application is not found' do
+      let(:existing_case) { '12345' }
+      let(:existing_address) { '123' }
 
       before do
         # Needed because some specs that include these examples stub current_crime_application,
@@ -142,17 +146,15 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      it 'redirects to the invalid session error page' do
+      it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(invalid_session_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
-    context 'when a case in progress is in the session' do
+    context 'when an application in progress is found' do
       let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
       let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
-
-      let(:expected_params) { { id: existing_address.id, form_class_params_name => { foo: 'bar' } } }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
@@ -168,7 +170,7 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
         it 'asks the decision tree for the next destination and redirects there' do
           expect(decision_tree_class).to receive(:new).and_return(decision_tree)
 
-          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          put :update, params: expected_params
 
           expect(response).to have_http_status(:redirect)
           expect(subject).to redirect_to('/expected_destination')
@@ -189,74 +191,28 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
   end
 end
 
-RSpec.shared_examples 'a starting point step controller' do
-  describe '#edit' do
-    context 'when no case exists in the session yet' do
-      it 'responds with HTTP success' do
-        get :edit
-        expect(response).to be_successful
-      end
-
-      it 'creates a new case' do
-        expect { get :edit }.to change { CrimeApplication.count }.by(1)
-      end
-
-      it 'sets the case ID in the session' do
-        expect(session[:crime_application_id]).to be_nil
-        get :edit
-        expect(session[:crime_application_id]).not_to be_nil
-      end
-    end
-
-    context 'when a case exists in the session' do
-      let!(:existing_case) { CrimeApplication.create(navigation_stack: %w(/not /empty)) }
-
-      it 'does not create a new case' do
-        expect {
-          get :edit, session: { crime_application_id: existing_case.id }
-        }.to_not change { CrimeApplication.count }
-      end
-
-      it 'responds with HTTP success' do
-        get :edit, session: { crime_application_id: existing_case.id }
-        expect(response).to be_successful
-      end
-
-      it 'does not change the case ID in the session' do
-        get :edit, session: { crime_application_id: existing_case.id }
-        expect(session[:crime_application_id]).to eq(existing_case.id)
-      end
-
-      it 'clears the navigation stack in the session' do
-        get :edit, session: { crime_application_id: existing_case.id }
-        existing_case.reload
-
-        expect(existing_case.navigation_stack).to eq([controller.request.fullpath])
-      end
-    end
-  end
-end
-
 RSpec.shared_examples 'a step that can be drafted' do |form_class|
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { form_class_params_name => { foo: 'bar' }, commit_draft: '' } }
+    let(:expected_params) { { id: existing_case, form_class_params_name => { foo: 'bar' }, commit_draft: '' } }
 
-    context 'when there is no case in the session' do
+    context 'when application is not found' do
+      let(:existing_case) { '12345' }
+
       before do
         # Needed because some specs that include these examples stub current_crime_application,
         # which is undesirable for this particular test
         allow(controller).to receive(:current_crime_application).and_return(nil)
       end
 
-      it 'redirects to the invalid session error page' do
+      it 'redirects to the application not found error page' do
         put :update, params: expected_params
-        expect(response).to redirect_to(invalid_session_errors_path)
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
 
-    context 'when a case in progress is in the session' do
+    context 'when an application in progress is found' do
       let(:existing_case) { CrimeApplication.create }
 
       before do
@@ -269,7 +225,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
         end
 
         it 'redirects to the application task list' do
-          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          put :update, params: expected_params
           expect(subject).to redirect_to(edit_crime_application_path(existing_case))
         end
       end
@@ -280,7 +236,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
         end
 
         it 'redirects to the application task list' do
-          put :update, params: expected_params, session: { crime_application_id: existing_case.id }
+          put :update, params: expected_params
           expect(subject).to redirect_to(edit_crime_application_path(existing_case))
         end
       end

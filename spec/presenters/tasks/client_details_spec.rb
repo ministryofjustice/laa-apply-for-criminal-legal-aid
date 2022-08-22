@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Tasks::ClientDetails do
   subject { described_class.new(crime_application: crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, to_param: '12345') }
 
   describe '#path' do
-    it { expect(subject.path).to eq('/steps/client/details') }
+    it { expect(subject.path).to eq('/steps/12345/client/details') }
   end
 
   describe '#not_applicable?' do

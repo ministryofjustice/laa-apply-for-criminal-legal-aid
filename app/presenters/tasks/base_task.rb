@@ -1,5 +1,7 @@
 module Tasks
   class BaseTask
+    include Routing
+
     attr_accessor :crime_application
 
     def initialize(crime_application:)

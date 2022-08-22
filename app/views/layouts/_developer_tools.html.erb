@@ -18,17 +18,13 @@
                     class: 'govuk-button govuk-button--warning',
                     data: { module: 'govuk-button' } do; 'Destroy session'; end %>
 
-      <h4 class="govuk-heading-s">Bypass steps</h4>
-      <p>Speed up some common test scenarios by pre-filling some information</p>
+      <h4 class="govuk-heading-s">Quick access</h4>
+      <p>Speed up some common test scenarios</p>
 
       <div class="govuk-button-group">
-        <%= button_to edit_steps_client_has_partner_path, method: :get,
-                      class: 'govuk-button govuk-!-margin-right-1',
-                      data: { module: 'govuk-button' } do; 'Start application'; end %>
-
-        <%= button_to bypass_to_client_details_session_path,
+        <%= button_to crime_applications_path, method: :get,
                       class: 'govuk-button',
-                      data: { module: 'govuk-button' } do; 'Bypass to client details'; end %>
+                      data: { module: 'govuk-button' } do; 'Your applications'; end %>
       </div>
     </div>
   </details>

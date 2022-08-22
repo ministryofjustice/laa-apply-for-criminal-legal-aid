@@ -23,6 +23,6 @@ module ErrorHandling
   private
 
   def check_crime_application_presence
-    raise Errors::InvalidSession unless current_crime_application
+    raise Errors::ApplicationNotFound unless current_crime_application
   end
 end

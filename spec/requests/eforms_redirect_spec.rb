@@ -3,11 +3,16 @@ require 'rails_helper'
 RSpec.describe 'eForms redirect' do
   describe 'eForms redirect page' do
     before :all do
-      # sets up a valid session
-      get '/steps/client/has_partner'
+      # sets up a test record
+      app = CrimeApplication.create
 
       # page actually under test
-      get '/steps/client/nino_exit'
+      get steps_client_nino_exit_path(app)
+    end
+
+    after :all do
+      # do not leave left overs in the test database
+      CrimeApplication.destroy_all
     end
 
     it 'returns the correct with success' do

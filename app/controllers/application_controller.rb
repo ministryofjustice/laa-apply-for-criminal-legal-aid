@@ -4,16 +4,18 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :success
 
+  # NOTE: once we have applications linked to each provider, this
+  # needs to be scoped to the currently signed in provider
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.find_by(id: session[:crime_application_id])
+    @current_crime_application ||= CrimeApplication.find_by(id: params[:id])
   end
   helper_method :current_crime_application
 
   private
 
-  def initialize_crime_application(attributes = {})
+  def initialize_crime_application(attributes = {}, &block)
     CrimeApplication.create(attributes).tap do |crime_application|
-      session[:crime_application_id] = crime_application.id
+      yield(crime_application) if block
     end
   end
 end

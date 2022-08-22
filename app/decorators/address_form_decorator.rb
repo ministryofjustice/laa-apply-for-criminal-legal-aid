@@ -1,4 +1,6 @@
 class AddressFormDecorator < BaseDecorator
+  delegate :postcode, to: :record
+
   def page_title
     ".page_title.#{i18n_key}"
   end
