@@ -5,9 +5,6 @@ class CrimeApplication < ApplicationRecord
   has_many :people, dependent: :destroy
   has_many :addresses, through: :people
 
-  enum status: {
-    newly_initialised: ApplicationStatus::NEWLY_INITIALISED.to_s,
-    in_progress: ApplicationStatus::IN_PROGRESS.to_s,
-    completed:   ApplicationStatus::COMPLETED.to_s
-  }, _default: ApplicationStatus::NEWLY_INITIALISED.to_s
+  enum status: ApplicationStatus.enum_values,
+       _default: ApplicationStatus.enum_values[:initialised]
 end

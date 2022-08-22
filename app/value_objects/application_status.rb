@@ -1,7 +1,11 @@
 class ApplicationStatus < ValueObject
   VALUES = [
-    NEWLY_INITIALISED = new(:newly_initialised),
-    IN_PROGRESS       = new(:in_progress),
-    COMPLETED         = new(:completed)
+    INITIALISED = new(:initialised),
+    IN_PROGRESS = new(:in_progress),
+    SUBMITTED   = new(:submitted)
   ].freeze
+
+  def self.enum_values
+    values.to_h { |value| [value.to_sym, value.to_s] }
+  end
 end
