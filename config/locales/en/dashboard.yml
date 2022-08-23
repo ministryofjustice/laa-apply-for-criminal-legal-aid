@@ -6,6 +6,12 @@ en:
       heading: Your applications
       start_button: Make a new application
       delete_button: Delete
+      table_headings:
+        applicant_name: Name
+        created_at: Start date
+        reference: LAA reference
+        status: Status
+        action: Action
     edit:
       page_title: Application task list
       heading: Make a new application
