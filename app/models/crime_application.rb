@@ -6,5 +6,5 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
 
   enum status: ApplicationStatus.enum_values,
-       _default: ApplicationStatus.enum_values[:initialised]
+       _default: ApplicationStatus.enum_values[:in_progress]
 end

@@ -1,6 +1,5 @@
 class ApplicationStatus < ValueObject
   VALUES = [
-    INITIALISED = new(:initialised),
     IN_PROGRESS = new(:in_progress),
     SUBMITTED   = new(:submitted)
   ].freeze
