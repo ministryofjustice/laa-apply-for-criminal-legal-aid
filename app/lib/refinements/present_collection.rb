@@ -6,12 +6,6 @@ module Refinements
         yield presenter.new(obj)
       end
     end
-
-    def self.included(base)
-      refine base do
-        import_methods Refinements::PresentCollection
-      end
-    end
     # :nocov:
   end
 end
