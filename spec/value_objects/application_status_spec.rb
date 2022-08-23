@@ -20,4 +20,12 @@ RSpec.describe ApplicationStatus do
       ).to eq({ initialised: 'initialised', in_progress: 'in_progress', submitted: 'submitted' })
     end
   end
+
+  describe '.viewable_statuses' do
+    it 'returns a map of values, used as an enum definition' do
+      expect(
+        described_class.viewable_statuses
+      ).to eq(['in_progress', 'submitted'])
+    end
+  end
 end

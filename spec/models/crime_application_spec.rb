@@ -19,4 +19,9 @@ RSpec.describe CrimeApplication, type: :model do
   it 'has an initial status value of "initialised"' do
     expect(subject.status).to eq('initialised')
   end
+
+  it 'can output a pretty_status' do
+    subject.in_progress!
+    expect(subject.pretty_status).to eq('IN PROGRESS')
+  end
 end

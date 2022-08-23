@@ -37,7 +37,7 @@
               LAA-a1234b
             </td>
             <td class="govuk-table__cell">
-              <strong class="govuk-tag govuk-tag--blue">In progress</strong>
+              <strong class="govuk-tag govuk-tag--blue"><%= app.pretty_status %></strong>
             </td>
             <td class="govuk-table__cell">
               <%= button_to confirm_destroy_crime_application_path(app), method: :get,

@@ -40,13 +40,15 @@ RSpec.describe 'Dashboard' do
   describe 'list of applications' do
     before :all do
       # sets up a few test records
-      app1 = CrimeApplication.create
+      app1 = CrimeApplication.create(status: 'in_progress')
       app2 = CrimeApplication.create
       app3 = CrimeApplication.create
+      app4 = CrimeApplication.create(status: 'initialised')
 
       Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
       Applicant.create(crime_application: app2, first_name: '', last_name: '')
       Applicant.create(crime_application: app3)
+      Applicant.create(crime_application: app4, first_name: 'Jane', last_name: 'Doe')
 
       # page actually under test
       get crime_applications_path
@@ -66,15 +68,19 @@ RSpec.describe 'Dashboard' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
           assert_select 'button.govuk-button', count: 1, text: 'Delete'
+          assert_select 'strong.govuk-tag', count: 1, text: 'IN PROGRESS'
         end
       end
+
+      expect(response.body).to_not include('Jane Doe')
+      expect(response.body).to_not include('INITIALISED')
     end
   end
 
   describe 'deleting applications' do
     before :all do
       # sets up a few test records
-      app = CrimeApplication.create
+      app = CrimeApplication.create(status: 'in_progress')
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end
