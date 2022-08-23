@@ -14,24 +14,22 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table">
+    <table class="govuk-table app-dashboard-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header">Name</th>
-          <th class="govuk-table__header">Start date</th>
-          <th class="govuk-table__header">LAA reference</th>
-          <th class="govuk-table__header">Status</th>
-          <th class="govuk-table__header">Action</th>
+          <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.table_headings.created_at') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.table_headings.status') %></th>
+          <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         <% @applications.each do |app| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-              <%= link_to app.applicant.full_name, 
-                edit_crime_application_path(app), 
-                class: 'govuk-link' %>
-            </td>
+            <th scope="row" class="govuk-table__header">
+              <%= link_to app.applicant.full_name, edit_crime_application_path(app) %>
+            </th>
             <td class="govuk-table__cell">
               <%= l(app.created_at) %>
             </td>
