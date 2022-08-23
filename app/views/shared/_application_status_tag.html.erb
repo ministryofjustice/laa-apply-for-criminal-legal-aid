@@ -1,0 +1,6 @@
+<% if status_tag == 'in_progress' %>
+  <strong class="govuk-tag govuk-tag--blue"><%= t(".tag.#{status_tag}") %></strong>
+<% elsif status_tag == 'submitted' %>
+  <strong class="govuk-tag govuk-tag--green"><%= t(".tag.#{status_tag}") %></strong>
+<% end %>
+

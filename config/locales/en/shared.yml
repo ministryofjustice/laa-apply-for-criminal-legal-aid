@@ -1,0 +1,6 @@
+en:
+  shared:
+    application_status_tag:
+      tag:
+        in_progress: IN PROGRESS
+        submitted: SUBMITTED

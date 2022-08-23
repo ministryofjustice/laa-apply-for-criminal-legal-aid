@@ -43,12 +43,10 @@ RSpec.describe 'Dashboard' do
       app1 = CrimeApplication.create(status: 'in_progress')
       app2 = CrimeApplication.create
       app3 = CrimeApplication.create
-      app4 = CrimeApplication.create(status: 'initialised')
 
       Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
       Applicant.create(crime_application: app2, first_name: '', last_name: '')
       Applicant.create(crime_application: app3)
-      Applicant.create(crime_application: app4, first_name: 'Jane', last_name: 'Doe')
 
       # page actually under test
       get crime_applications_path
