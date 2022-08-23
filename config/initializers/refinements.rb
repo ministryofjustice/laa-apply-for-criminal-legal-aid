@@ -1,12 +1,7 @@
-require_relative '../../app/lib/refinements/decorate_collection'
-require_relative '../../app/lib/refinements/present_collection'
+Dir[File.expand_path('app/lib/refinements') + '/*.rb'].each { |f| require f }
 
-class Array
-  include Refinements::DecorateCollection
-  include Refinements::PresentCollection
-end
+Array.include Refinements::DecorateCollection,
+              Refinements::PresentCollection
 
-class ActiveRecord::Relation
-  include Refinements::DecorateCollection
-  include Refinements::PresentCollection
-end
+ActiveRecord::Relation.include Refinements::DecorateCollection,
+                               Refinements::PresentCollection
