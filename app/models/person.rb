@@ -9,8 +9,4 @@ class Person < ApplicationRecord
   def home_address?
     home_address.address_line_one.present?
   end
-
-  def full_name
-    "#{first_name} #{last_name}"
-  end
 end

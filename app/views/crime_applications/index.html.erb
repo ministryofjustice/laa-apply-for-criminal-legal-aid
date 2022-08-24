@@ -25,19 +25,19 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @applications.each do |app| %>
+        <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">
-              <%= link_to app.applicant.full_name, edit_crime_application_path(app) %>
+              <%= link_to app.applicant_name, edit_crime_application_path(app) %>
             </th>
             <td class="govuk-table__cell">
-              <%= l(app.created_at) %>
+              <%= app.start_date %>
             </td>
             <td class="govuk-table__cell">
               LAA-a1234b
             </td>
             <td class="govuk-table__cell">
-              <%= render 'shared/application_status_tag', status_tag: app.status %>
+              <%= app.status_tag %>
             </td>
             <td class="govuk-table__cell">
               <%= button_to confirm_destroy_crime_application_path(app), method: :get,

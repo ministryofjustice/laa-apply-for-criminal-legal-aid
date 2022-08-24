@@ -21,12 +21,6 @@ RSpec.describe Person, type: :model do
     allow(subject).to receive(:home_address).and_return(mock_home_address)
   end
 
-  describe '#full_name' do
-    it 'returns a full name' do 
-      expect(subject.full_name).to eq('Joe Bloggs')
-    end
-  end
-
   describe '#has_home_address?' do
     context 'home address is not blank' do
 

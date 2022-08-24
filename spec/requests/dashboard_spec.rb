@@ -66,7 +66,7 @@ RSpec.describe 'Dashboard' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
           assert_select 'button.govuk-button', count: 1, text: 'Delete'
-          assert_select 'strong.govuk-tag', count: 1, text: 'IN PROGRESS'
+          assert_select 'strong.govuk-tag', count: 1, text: 'In progress'
         end
       end
 
@@ -89,11 +89,11 @@ RSpec.describe 'Dashboard' do
 
     it 'allows a user to check before deleting an application' do
       applicant = Applicant.find_by(first_name: "Jane")
-      app = applicant.crime_application
+      app = CrimeApplicationPresenter.new(applicant.crime_application)
 
       get confirm_destroy_crime_application_path(app)
 
-      expect(response.body).to include("Are you sure you want to delete #{applicant.full_name}’s application?")
+      expect(response.body).to include("Are you sure you want to delete #{app.applicant_name}’s application?")
       expect(response.body).to include("Yes, delete it")
       expect(response.body).to include("No, do not delete it")
     end

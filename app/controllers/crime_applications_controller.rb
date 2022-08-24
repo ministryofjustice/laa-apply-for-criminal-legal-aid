@@ -35,6 +35,8 @@ class CrimeApplicationsController < ApplicationController
   private
 
   def set_applicant_name
-    @applicant_name = current_crime_application.applicant.full_name
+    @applicant_name = helpers
+                      .present(current_crime_application)
+                      .applicant_name
   end
 end
