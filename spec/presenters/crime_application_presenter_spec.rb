@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationPresenter do
+RSpec.describe CrimeApplicationPresenter do
   include ApplicationHelper
 
   let(:presented_application) { 
     present(
       CrimeApplication.new(
         status: 'in_progress', 
-        created_at: DateTime.new(2022, 01, 12)), 
-      ApplicationPresenter
+        created_at: DateTime.new(2022, 01, 12))
     ) 
   }
 

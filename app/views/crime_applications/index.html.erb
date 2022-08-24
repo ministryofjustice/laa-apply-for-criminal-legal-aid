@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @applications.present_each(ApplicationPresenter) do |app| %>
+        <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">
               <%= link_to app.full_name, edit_crime_application_path(app) %>

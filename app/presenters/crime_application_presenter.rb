@@ -1,4 +1,4 @@
-class ApplicationPresenter < BasePresenter
+class CrimeApplicationPresenter < BasePresenter
   DEFAULT_CLASSES = %w[govuk-tag].freeze
 
   STATUSES = {
