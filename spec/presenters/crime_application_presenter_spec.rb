@@ -18,28 +18,28 @@ RSpec.describe CrimeApplicationPresenter do
       allow(presented_application).to receive(:applicant).and_return(applicant)
 
       expect(applicant).to receive(:full_name)
-      expect(presented_application.full_name).to match('John Doe')
+      expect(presented_application.full_name).to eq('John Doe')
     end
 
     it 'can output the presented_application start date in the correct format' do
-      expect(presented_application.start_date).to match('12 January 2022')
+      expect(presented_application.start_date).to eq('12 January 2022')
     end
 
     it 'has an LAA an reference stubbed' do
-      expect(presented_application.laa_reference).to match('LAA-a1234b')
+      expect(presented_application.laa_reference).to eq('LAA-a1234b')
     end
 
     describe 'status tags' do
       it 'can output an in progress tag' do
         tag = '<strong class="govuk-tag govuk-tag--blue">In progress</strong>'
-        expect(presented_application.status_tag).to match(tag)
+        expect(presented_application.status_tag).to eq(tag)
       end
 
       it 'can output an in submitted tag' do
         allow(presented_application).to receive(:status).and_return('submitted')
         tag = '<strong class="govuk-tag govuk-tag--green">Submitted</strong>'
 
-        expect(presented_application.status_tag).to match(tag)
+        expect(presented_application.status_tag).to eq(tag)
       end
     end
   end
