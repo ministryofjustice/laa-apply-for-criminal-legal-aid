@@ -24,7 +24,7 @@ class CrimeApplicationPresenter < BasePresenter
 
   def status_tag
     tag.strong class: tag_classes do
-      t!(".shared.application_status_tag.tag.#{status}")
+      t!(".crime_applications.index.status.#{status}")
     end
   end
 
