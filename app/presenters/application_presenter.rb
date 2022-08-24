@@ -6,9 +6,7 @@ class ApplicationPresenter < BasePresenter
     'submitted'   => 'govuk-tag--green',
   }.freeze
 
-  def full_name
-    applicant.full_name
-  end
+  delegate :full_name, to: :applicant
 
   def start_date
     l(created_at)
