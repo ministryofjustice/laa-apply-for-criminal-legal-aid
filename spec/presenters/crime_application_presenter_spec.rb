@@ -9,14 +9,20 @@ RSpec.describe CrimeApplicationPresenter do
     ) 
   }
 
-  let(:applicant) { double(Applicant, full_name: 'John Doe') }
+  let(:applicant) { 
+    double(
+      Applicant, 
+      first_name: 'John', 
+      last_name: 'Doe') 
+  }
 
   describe 'when presenting CrimeApplications' do
     it 'delegates full name to applicant' do
       allow(subject).to receive(:applicant).and_return(applicant)
 
-      expect(applicant).to receive(:full_name)
-      expect(subject.full_name).to eq('John Doe')
+      expect(applicant).to receive(:first_name)
+      expect(applicant).to receive(:last_name)
+      expect(subject.applicant_name).to eq('John Doe')
     end
 
     it 'can output the subject start date in the correct format' do

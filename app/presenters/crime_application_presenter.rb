@@ -6,10 +6,14 @@ class CrimeApplicationPresenter < BasePresenter
     'submitted'   => 'govuk-tag--green',
   }.freeze
 
-  delegate :full_name, to: :applicant
+  delegate :first_name, :last_name, to: :applicant
 
   def start_date
     l(created_at)
+  end
+
+  def applicant_name
+    "#{first_name} #{last_name}"
   end
 
   # this is stubbed for now will implement
