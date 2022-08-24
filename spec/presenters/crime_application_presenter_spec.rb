@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CrimeApplicationPresenter do
-  subject { 
-    described_class.new(
-      CrimeApplication.new(
-        status: 'in_progress', 
-        created_at: DateTime.new(2022, 01, 12))
-    ) 
+  subject { described_class.new(crime_application) }
+
+  let(:crime_application) {
+    instance_double(CrimeApplication,
+                    id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
+                    created_at: DateTime.new(2022, 01, 12),
+                    status: 'in_progress',
+                    applicant: applicant)
   }
 
   let(:applicant) { 
@@ -18,8 +20,6 @@ RSpec.describe CrimeApplicationPresenter do
 
   describe 'when presenting CrimeApplications' do
     it 'delegates full name to applicant' do
-      allow(subject).to receive(:applicant).and_return(applicant)
-
       expect(applicant).to receive(:first_name)
       expect(applicant).to receive(:last_name)
       expect(subject.applicant_name).to eq('John Doe')

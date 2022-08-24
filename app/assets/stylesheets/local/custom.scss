@@ -7,3 +7,8 @@
     vertical-align: middle;
   }
 }
+
+.app-aside__bar--blue {
+  border-top: 2px solid govuk-colour("blue");
+  padding-top: govuk-spacing(2);
+}
