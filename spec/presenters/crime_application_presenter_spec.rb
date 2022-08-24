@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CrimeApplicationPresenter do
-  let(:subject) { 
+  subject { 
     described_class.new(
       CrimeApplication.new(
         status: 'in_progress', 
