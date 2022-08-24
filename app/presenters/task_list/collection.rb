@@ -1,5 +1,5 @@
 module TaskList
-  class Collection < ::BasePresenter
+  class Collection < SimpleDelegator
     attr_reader :view, :crime_application
 
     delegate :size, to: :all_tasks

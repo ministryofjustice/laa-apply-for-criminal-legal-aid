@@ -1,6 +1,6 @@
 class CrimeApplicationsController < ApplicationController
-  before_action :check_crime_application_presence, except: [:index, :create]
-  before_action :set_applicant_name, only: [:destroy, :confirm_destroy]
+  before_action :check_crime_application_presence,
+                :present_crime_application, except: [:index, :create]
 
   def index
     # TODO: scope will change as we know more
@@ -26,7 +26,7 @@ class CrimeApplicationsController < ApplicationController
     current_crime_application.destroy
     redirect_to crime_applications_path,
                 flash: {
-                  success: t('.success_flash', applicant_name: @applicant_name)
+                  success: t('.success_flash', applicant_name: @crime_application.applicant_name)
                 }
   end
 
@@ -34,9 +34,7 @@ class CrimeApplicationsController < ApplicationController
 
   private
 
-  def set_applicant_name
-    @applicant_name = helpers
-                      .present(current_crime_application)
-                      .applicant_name
+  def present_crime_application
+    @crime_application = helpers.present(current_crime_application)
   end
 end

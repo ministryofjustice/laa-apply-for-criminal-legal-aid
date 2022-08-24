@@ -19,7 +19,7 @@ class CrimeApplicationPresenter < BasePresenter
   # this is stubbed for now will implement
   # properly when there is the means to do so
   def laa_reference
-    'LAA-a1234b'
+    ['LAA', id[0..5]].join('-')
   end
 
   def status_tag
