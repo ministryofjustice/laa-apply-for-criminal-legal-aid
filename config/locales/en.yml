@@ -1,10 +1,20 @@
 en:
+  dictionary:
+    DATE_FORMATS: &DATE_FORMATS
+      default: '%-d %b %Y'  # 3 Jan 2019
+      compact: '%d/%m/%Y'   # 03/01/2019
+
   service:
     name: Apply for criminal legal aid
+
+  date:
+    formats:
+      <<: *DATE_FORMATS
   time:
     formats:
-      default: '%-d %B %Y'  # 3 January 2019
-      short: '%d/%m/%Y'     # 03/01/2019
+      <<: *DATE_FORMATS
+      datetime: '%-l:%M%P %-d %b %Y'  # 2:45pm 3 Jan 2019
+
   flash:
     success:
       title: Success

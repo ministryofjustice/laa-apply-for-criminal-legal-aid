@@ -20,8 +20,12 @@ en:
       heading: Make a new application
       subheading: Application incomplete
       progress_counter: You have completed %{completed} of %{total} sections.
-      reference: Reference number
       back_to_applications: Back to your applications
+      aside:
+        reference: Reference number
+        first_name: First name
+        last_name: Last name
+        date_of_birth: Date of birth
     confirm_destroy:
       page_title: Are you sure you want to delete this application?
       heading: "Are you sure you want to delete %{applicant_name}’s application?"

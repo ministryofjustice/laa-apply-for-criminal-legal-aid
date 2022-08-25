@@ -20,12 +20,35 @@
 
   <div class="govuk-grid-column-one-third app-grid-column--sticky">
     <aside class="app-aside__bar--blue" role="complementary">
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-0">
-        <%= t('.reference') %>
+      <h3 class="govuk-heading-s">
+        <%= t('.aside.reference') %>
       </h3>
       <p class="govuk-body">
         <%= @crime_application.laa_reference %>
       </p>
+
+      <% if @crime_application.applicant? %>
+        <h3 class="govuk-heading-s">
+          <%= t('.aside.first_name') %>
+        </h3>
+        <p class="govuk-body">
+          <%= @crime_application.first_name %>
+        </p>
+
+        <h3 class="govuk-heading-s">
+          <%= t('.aside.last_name') %>
+        </h3>
+        <p class="govuk-body">
+          <%= @crime_application.last_name %>
+        </p>
+
+        <h3 class="govuk-heading-s">
+          <%= t('.aside.date_of_birth') %>
+        </h3>
+        <p class="govuk-body">
+          <%= @crime_application.applicant_dob %>
+        </p>
+      <% end %>
     </aside>
   </div>
 </div>
