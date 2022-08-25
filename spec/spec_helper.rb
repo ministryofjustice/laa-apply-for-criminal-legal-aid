@@ -3,10 +3,12 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 SimpleCov.minimum_coverage 100
 
-SimpleCov.start do
+SimpleCov.start 'rails' do
   add_filter 'config/initializers'
   add_filter 'config/routes.rb'
   add_filter 'spec/'
+  add_filter 'app/mailers/application_mailer.rb'
+  add_filter 'app/jobs/application_job.rb'
 end
 
 RSpec.configure do |config|
