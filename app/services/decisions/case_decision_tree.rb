@@ -1,5 +1,6 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
+    # :nocov:
     def destination
       case step_name
       when :urn
@@ -12,6 +13,6 @@ module Decisions
     private
 
     def after_urn; end
+    # :nocov:
   end
-end
 end
