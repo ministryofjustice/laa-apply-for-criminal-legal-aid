@@ -1,7 +1,6 @@
 module Steps
   module Case
-    class HasUrnForm < Steps::BaseFormObject
-      include Steps::HasOneAssociation
+    class UrnForm < Steps::BaseFormObject
     end
   end
 end

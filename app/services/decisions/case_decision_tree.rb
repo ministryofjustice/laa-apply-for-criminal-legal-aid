@@ -2,8 +2,8 @@ module Decisions
   class CaseDecisionTree < BaseDecisionTree
     def destination
       case step_name
-      when :has_urn
-        after_has_urn
+      when :urn
+        after_urn
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -11,6 +11,7 @@ module Decisions
 
     private
 
-    def after_has_urn; end
+    def after_urn; end
   end
+end
 end

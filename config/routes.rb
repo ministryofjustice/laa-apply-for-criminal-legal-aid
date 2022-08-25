@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       end
 
       namespace :cases do
-        edit_step :has_urn
+        edit_step :urn
       end
 
       namespace :address do
