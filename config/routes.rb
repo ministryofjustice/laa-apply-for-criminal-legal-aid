@@ -52,6 +52,10 @@ Rails.application.routes.draw do
         edit_step :contact_details
       end
 
+      namespace :cases do
+        edit_step :urn
+      end
+
       namespace :address do
         crud_step :lookup,  param: :address_id, only: [:edit, :update]
         crud_step :results, param: :address_id, only: [:edit, :update]
