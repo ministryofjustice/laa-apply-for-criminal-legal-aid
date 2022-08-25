@@ -1,5 +1,6 @@
 class CrimeApplication < ApplicationRecord
   has_one :applicant, dependent: :destroy
+  has_one :case, dependent: :destroy
   has_one :partner, dependent: :destroy
 
   has_many :people, dependent: :destroy
