@@ -11,6 +11,10 @@
 .app-aside__bar--blue {
   border-top: 2px solid govuk-colour("blue");
   padding-top: govuk-spacing(2);
+
+  h3 {
+    margin-bottom: 0;
+  }
 }
 
 .app-grid-column--sticky {

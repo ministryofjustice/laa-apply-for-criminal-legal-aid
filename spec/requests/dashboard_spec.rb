@@ -17,7 +17,7 @@ RSpec.describe 'Dashboard' do
       # sets up a test record
       app = CrimeApplication.create
 
-      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
+      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe', date_of_birth: Date.new(1990, 02, 01))
     end
 
     after :all do
@@ -34,6 +34,21 @@ RSpec.describe 'Dashboard' do
 
       assert_select 'h1', 'Make a new application'
       assert_select 'h2', 'Application incomplete'
+
+      # aside details
+      assert_select 'div.govuk-grid-column-one-third aside', 1 do
+        assert_select 'h3:nth-of-type(1)', 'Reference number'
+        assert_select 'p:nth-of-type(1)', /^LAA-[[:alnum:]]{6}$/
+
+        assert_select 'h3:nth-of-type(2)', 'First name'
+        assert_select 'p:nth-of-type(2)', 'Jane'
+
+        assert_select 'h3:nth-of-type(3)', 'Last name'
+        assert_select 'p:nth-of-type(3)', 'Doe'
+
+        assert_select 'h3:nth-of-type(4)', 'Date of birth'
+        assert_select 'p:nth-of-type(4)', '1 Feb 1990'
+      end
     end
   end
 

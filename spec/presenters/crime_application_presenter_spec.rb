@@ -15,8 +15,21 @@ RSpec.describe CrimeApplicationPresenter do
     double(
       Applicant, 
       first_name: 'John', 
-      last_name: 'Doe') 
+      last_name: 'Doe',
+      date_of_birth: Date.new(1990, 02, 01),
+    )
   }
+
+  describe '#applicant?' do
+    context 'when there is an applicant record' do
+      it { expect(subject.applicant?).to eq(true) }
+    end
+
+    context 'when there is no applicant record' do
+      let(:applicant) { nil }
+      it { expect(subject.applicant?).to eq(false) }
+    end
+  end
 
   describe 'when presenting CrimeApplications' do
     it 'delegates full name to applicant' do
@@ -25,8 +38,12 @@ RSpec.describe CrimeApplicationPresenter do
       expect(subject.applicant_name).to eq('John Doe')
     end
 
+    it 'can output the applicant date of birth in the correct format' do
+      expect(subject.applicant_dob).to eq('1 Feb 1990')
+    end
+
     it 'can output the subject start date in the correct format' do
-      expect(subject.start_date).to eq('12 January 2022')
+      expect(subject.start_date).to eq('12 Jan 2022')
     end
 
     it 'has an LAA an reference stubbed' do
