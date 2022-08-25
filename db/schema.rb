@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_25_101437) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["crime_application_id"], name: "index_cases_on_crime_application_id"
+    t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 
   create_table "crime_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
