@@ -77,3 +77,7 @@ en:
               blank: Enter a country
             postcode:
               blank: Enter a postcode
+        steps/case/urn_form:
+          attributes:
+            urn:
+              invalid: Enter a valid URN

@@ -40,7 +40,7 @@ module Decisions
           form_object.applicant
         )
       else
-        show('/home', action: :index)
+        edit('/steps/case/urn')
       end
     end
 

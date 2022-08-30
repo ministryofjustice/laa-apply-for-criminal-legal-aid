@@ -33,6 +33,8 @@ en:
         telephone_number: For example, 01632 960 001 or +44 808 157 0192. We'll use this to chase your client if they don't pay towards their legal aid.
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
+      steps_case_urn_form:
+        urn: For example, ‘12 AB 3456789’.
 
     label:
       steps_client_has_partner_form:
@@ -57,3 +59,5 @@ en:
         city: Town or city
         country: Country
         postcode: Postcode
+      steps_case_urn_form:
+        urn: Enter the unique reference number (URN) for your client's case (optional)

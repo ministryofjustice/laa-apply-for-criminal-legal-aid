@@ -70,7 +70,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'and answer is any other thing' do
       let(:correspondence_address_type) { 'whatever' }
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 end
