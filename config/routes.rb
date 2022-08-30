@@ -60,7 +60,9 @@ Rails.application.routes.draw do
 
       namespace :case do
         edit_step :urn
+        edit_step :case_type
         edit_step :codefendants
+        crud_step :codefendants, param: :codefendant_id
       end
     end
   end
