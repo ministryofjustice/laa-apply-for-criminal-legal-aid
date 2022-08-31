@@ -19,7 +19,7 @@ module Decisions
     private
 
     def after_urn
-      show('/home', action: :index)
+      edit('/steps/case/case_type')
     end
 
     def edit_codefendants(add_blank:)

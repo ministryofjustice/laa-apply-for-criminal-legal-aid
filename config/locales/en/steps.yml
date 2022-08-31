@@ -77,11 +77,8 @@ en:
           heading: Enter the details of any co-defendants in the case
           codefendant_legend: Co-defendant %{index}
           add_button: Add another co-defendant
-<<<<<<< HEAD
           remove_button: Remove co-defendant
-=======
       case_type:
         edit:
           page_title: Enter the case type
           heading:  Enter the case type
->>>>>>> 3a4ba87 (Add routes / controller / blank page)

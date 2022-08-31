@@ -6,6 +6,6 @@ class CaseType < ValueObject
     ALREADY_CC_TRIAL = new(:already_cc_trial),
     COMMITTAL = new(:committal),
     CC_APPEAL = new(:cc_appeal),
-    CC_APPEAL_FIN_CHANGE = new(:cc_appeal_fin_change),
+    CC_APPEAL_FIN_CHANGE = new(:cc_appeal_fin_change)
   ].freeze
 end

@@ -5,9 +5,14 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-
     <%= step_form @form_object do |f| %>
+
+      <%= f.govuk_collection_radio_buttons :case_type, 
+        @form_object.choices, 
+        :value, 
+        legend: { tag: 'h1', size: 'xl' } %>
+
+      <%= f.continue_button %>
     <% end %>
   </div>
 </div>
