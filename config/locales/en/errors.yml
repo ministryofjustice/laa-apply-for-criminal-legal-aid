@@ -81,3 +81,14 @@ en:
           attributes:
             urn:
               invalid: Enter a valid URN
+        steps/case/codefendant_fieldset_form:
+          summary:
+            first_name:
+              blank: Enter first name of co-defendant %{index}
+            last_name:
+              blank: Enter last name of co-defendant %{index}
+          attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name

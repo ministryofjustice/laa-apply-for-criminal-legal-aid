@@ -61,3 +61,6 @@ en:
         postcode: Postcode
       steps_case_urn_form:
         urn: Enter the unique reference number (URN) for your client's case (optional)
+      steps_case_codefendants_form:
+        first_name: First name
+        last_name: Last name
