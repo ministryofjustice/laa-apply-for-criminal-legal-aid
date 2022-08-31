@@ -35,6 +35,21 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
+  context 'when the step is `has_codefendants`' do
+    let(:form_object) { double('FormObject', has_codefendants: has_codefendants) }
+    let(:step_name) { :has_codefendants }
+
+    context 'and answer is `no`' do
+      let(:has_codefendants) { YesNoAnswer::NO }
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+
+    context 'and answer is `yes`' do
+      let(:has_codefendants) { YesNoAnswer::YES }
+      it { is_expected.to have_destination(:codefendants, :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `add_codefendant`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :add_codefendant }

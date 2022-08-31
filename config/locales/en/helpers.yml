@@ -22,6 +22,8 @@ en:
         correspondence_address_type: Correspondence address
       steps_case_case_type_form:
         case_type: What is the case type?
+      steps_case_has_codefendants_form:
+        has_codefendants: Does your client have any co-defendants in this case?
       steps_case_codefendants_form:
         conflict_of_interest: Is there a conflict of interest with this co-defendant?
 
@@ -77,6 +79,8 @@ en:
         cc_appeal_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_details: Enter the details of what has changed
+      steps_case_has_codefendants_form:
+        has_codefendants_options: *YESNO
       steps_case_codefendants_form:
         first_name: First name
         last_name: Last name

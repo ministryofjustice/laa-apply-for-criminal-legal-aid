@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       namespace :case do
         edit_step :urn
         edit_step :case_type
+        edit_step :has_codefendants
         edit_step :codefendants
       end
     end

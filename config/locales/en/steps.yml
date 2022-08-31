@@ -75,6 +75,9 @@ en:
         edit:
           page_title: Enter the case type
           heading:  Enter the case type
+      has_codefendants:
+        edit:
+          page_title: Does your client have co-defendants?
       codefendants:
         edit:
           page_title: Details of co-defendants
