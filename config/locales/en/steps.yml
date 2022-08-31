@@ -67,3 +67,7 @@ en:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
+    case:
+      urn:
+        edit:
+          page_title: Enter your client’s URN

@@ -12,7 +12,9 @@ module Decisions
 
     private
 
-    def after_urn; end
+    def after_urn
+      show('/home', action: :index)
+    end
   end
 end
 # :nocov:
