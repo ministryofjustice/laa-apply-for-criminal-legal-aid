@@ -1,0 +1,28 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.fields_for :codefendants do |c| %>
+        <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', index: c.index + 1) } do %>
+          <%= c.govuk_text_field :first_name, label: { text: t("helpers.label.#{f.object_name}.first_name") },
+                                 autocomplete: 'off', width: 'three-quarters' %>
+
+          <%= c.govuk_text_field :last_name, label: { text: t("helpers.label.#{f.object_name}.last_name") },
+                                 autocomplete: 'off', width: 'three-quarters' %>
+        <% end %>
+      <% end %>
+
+      <%= f.button t('.add_button'), type: :submit, name: :add_codefendant,
+                   class: %w(govuk-button govuk-button--secondary govuk-!-margin-bottom-8),
+                   data: { module: 'govuk-button' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

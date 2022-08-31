@@ -14,7 +14,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `urn`' do
-    let(:form_object) { double('FormObject', case: 'case') }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
     context 'has correct next step' do
@@ -22,5 +22,25 @@ RSpec.describe Decisions::CaseDecisionTree do
 
       it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end
+  end
+
+  context 'when the step is `add_codefendant`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :add_codefendant }
+
+    it 'creates a blank co-defendant record and gets back to the codefendants page' do
+      expect(
+        form_object
+      ).to receive(:add_blank_codefendant).at_least(:once)
+
+      is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `codefendants_finished`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :codefendants_finished }
+
+    it { is_expected.to have_destination('/home', :index, id: crime_application) }
   end
 end

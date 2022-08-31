@@ -3,11 +3,9 @@ module Steps
   module Case
     class UrnForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      has_one_association :case
 
       URN_REGEXP = /\A[0-9]{2}[A-Z]{2}[0-9]{7}\Z/
-
-      has_one_association :case
-      alias kase case
 
       attribute :urn, :string
 

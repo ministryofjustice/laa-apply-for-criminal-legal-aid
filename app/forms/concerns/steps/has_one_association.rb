@@ -23,6 +23,8 @@ module Steps
         define_method(name) do
           @_assoc ||= self.class.associated_record(crime_application)
         end
+
+        alias_method :kase, :case if name == :case
       end
     end
   end

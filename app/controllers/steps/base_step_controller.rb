@@ -43,7 +43,13 @@ module Steps
     def permitted_params(form_class)
       params
         .fetch(form_class.model_name.singular, {})
-        .permit(form_class.attribute_names)
+        .permit(form_class.attribute_names + additional_permitted_params)
+    end
+
+    # Some form objects might contain complex attribute structures or nested params.
+    # Override in subclasses to declare any additional parameters that should be permitted.
+    def additional_permitted_params
+      []
     end
 
     def update_navigation_stack
