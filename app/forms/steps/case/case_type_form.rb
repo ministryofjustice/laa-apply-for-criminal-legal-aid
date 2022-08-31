@@ -4,6 +4,8 @@ module Steps
       include Steps::HasOneAssociation
 
       attribute :case_type
+      attribute :previous_maat_id
+      attribute :cc_appeal_fin_change_details
 
       validates :case_type, presence: true
 

@@ -6,12 +6,28 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:case_type, legend: { tag: 'h1', size: 'm'}) do %>
+        <% @form_object.choices.each do |choice| %>
+          <% if choice.value == :cc_appeal %>
 
-      <%= f.govuk_collection_radio_buttons :case_type, 
-        @form_object.choices, 
-        :value, 
-        legend: { tag: 'h1', size: 'xl' } %>
+            <%= f.govuk_radio_button :case_type, choice.value, link_errors: true do %>
+              <%= f.govuk_text_field :previous_maat_id, width: 'one-third', link_errors: true %>
+            <% end %>
 
+          <% elsif choice.value == :cc_appeal_fin_change %>
+
+            <%= f.govuk_radio_button :case_type, choice.value, link_errors: true do %>
+              <%= f.govuk_text_field :previous_maat_id, width: 'one-third', link_errors: true %>
+              <%= f.govuk_text_area :cc_appeal_fin_change_details, link_errors: true %>
+            <% end %>
+
+          <% else %>
+
+            <%= f.govuk_radio_button :case_type, choice.value, link_errors: true %>
+
+          <% end %>
+        <% end %>
+      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>
