@@ -14,7 +14,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `urn`' do
-    let(:form_object) { double('FormObject', case: 'case') }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
     context 'has correct next step' do
