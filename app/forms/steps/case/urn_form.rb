@@ -1,4 +1,3 @@
-# :nocov:
 module Steps
   module Case
     class UrnForm < Steps::BaseFormObject
@@ -25,4 +24,3 @@ module Steps
     end
   end
 end
-# :nocov:
