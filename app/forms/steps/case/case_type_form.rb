@@ -3,10 +3,10 @@ module Steps
     class CaseTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
 
-      attribute :case_type
-      attribute :cc_appeal_maat_id
-      attribute :cc_appeal_fin_change_maat_id
-      attribute :cc_appeal_fin_change_details
+      attribute :case_type, type: :string
+      attribute :cc_appeal_maat_id, type: :string
+      attribute :cc_appeal_fin_change_maat_id, type: :string
+      attribute :cc_appeal_fin_change_details, type: :string
 
       validates :case_type,
                 inclusion: { in: :string_choices }
