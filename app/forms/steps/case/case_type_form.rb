@@ -24,7 +24,6 @@ module Steps
                 if: -> { case_is_appeal_with_financial_change? }
 
       has_one_association :case
-      alias kase case
 
       def choices
         CaseType.values
