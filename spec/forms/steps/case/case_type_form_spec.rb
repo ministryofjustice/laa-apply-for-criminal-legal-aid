@@ -25,7 +25,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
       it 'has is a validation error on the field' do
         expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:case_type, :blank)).to eq(true)
+        expect(subject.errors.of_kind?(:case_type, :inclusion)).to eq(true)
       end
     end
 

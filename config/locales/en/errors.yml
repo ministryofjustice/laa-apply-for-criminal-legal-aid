@@ -85,7 +85,7 @@ en:
           attributes:
             case_type:
               invalid: Enter a valid case type
-              blank: Select a case type
+              inclusion: Select a case type
             previous_maat_id:
               present: Previous MAAT IDs are optional with appeal case types only
             cc_appeal_fin_change_details:

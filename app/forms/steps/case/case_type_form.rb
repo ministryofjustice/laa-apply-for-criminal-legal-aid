@@ -8,7 +8,6 @@ module Steps
       attribute :cc_appeal_fin_change_details
 
       validates :case_type,
-                presence: true,
                 inclusion: { in: :string_choices }
 
       validates :previous_maat_id,
