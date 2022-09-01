@@ -16,6 +16,15 @@
           <%= c.govuk_text_field :last_name, label: { text: t("helpers.label.#{f.object_name}.last_name") },
                                  autocomplete: 'off', width: 'three-quarters' %>
 
+          <%= c.govuk_collection_radio_buttons :conflict_of_interest, c.object.choices,
+                                               :value,
+                                               ->(option) { t("helpers.label.#{f.object_name}.conflict_of_interest_options.#{option}") },
+                                               inline: true,
+                                               legend: {
+                                                 text: t("helpers.legend.#{f.object_name}.conflict_of_interest"),
+                                                 class: 'govuk-fieldset__legend',
+                                               } %>
+
           <%= c.button t('.remove_button'), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
                        class: %w(govuk-button govuk-button--warning),
                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>

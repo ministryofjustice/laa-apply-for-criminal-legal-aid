@@ -20,6 +20,8 @@ en:
         date_of_birth: Date of birth
       steps_client_contact_details_form:
         correspondence_address_type: Correspondence address
+      steps_case_codefendants_form:
+        conflict_of_interest: Is there a conflict of interest with this co-defendant?
 
     hint:
       steps_client_has_partner_form:
@@ -64,3 +66,4 @@ en:
       steps_case_codefendants_form:
         first_name: First name
         last_name: Last name
+        conflict_of_interest_options: *YESNO

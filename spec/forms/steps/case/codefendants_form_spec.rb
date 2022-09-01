@@ -11,8 +11,8 @@ RSpec.describe Steps::Case::CodefendantsForm do
 
   let(:codefendants_attributes) {
     {
-      "0"=>{"first_name"=>"John", "last_name"=>"Doe"},
-      "1"=>{"first_name"=>"Jane", "last_name"=>"Doe"},
+      "0"=>{"first_name"=>"John", "last_name"=>"Doe", "conflict_of_interest"=>"no"},
+      "1"=>{"first_name"=>"Jane", "last_name"=>"Doe", "conflict_of_interest"=>"yes"},
     }
   }
 
@@ -43,9 +43,11 @@ RSpec.describe Steps::Case::CodefendantsForm do
 
         expect(subject.codefendants[0].first_name).to eq('John')
         expect(subject.codefendants[0].last_name).to eq('Doe')
+        expect(subject.codefendants[0].conflict_of_interest).to eq(YesNoAnswer::NO)
 
         expect(subject.codefendants[1].first_name).to eq('Jane')
         expect(subject.codefendants[1].last_name).to eq('Doe')
+        expect(subject.codefendants[1].conflict_of_interest).to eq(YesNoAnswer::YES)
       end
     end
   end
@@ -92,8 +94,8 @@ RSpec.describe Steps::Case::CodefendantsForm do
     context 'when there are errors in any of the codefendants' do
       let(:codefendants_attributes) {
         {
-          "0"=>{"first_name"=>"John", "last_name"=>""},
-          "1"=>{"first_name"=>"", "last_name"=>"Doe"},
+          "0"=>{"first_name"=>"John", "last_name"=>"", "conflict_of_interest"=>""},
+          "1"=>{"first_name"=>"", "last_name"=>"Doe", "conflict_of_interest"=>"yes"},
         }
       }
 
@@ -106,6 +108,9 @@ RSpec.describe Steps::Case::CodefendantsForm do
 
         expect(subject.errors.of_kind?('codefendants-attributes[0].last_name', :blank)).to eq(true)
         expect(subject.errors.messages_for('codefendants-attributes[0].last_name').first).to eq('Enter last name of co-defendant 1')
+
+        expect(subject.errors.of_kind?('codefendants-attributes[0].conflict_of_interest', :inclusion)).to eq(true)
+        expect(subject.errors.messages_for('codefendants-attributes[0].conflict_of_interest').first).to eq('Select yes if there is a conflict of interest with co-defendant 1')
 
         expect(subject.errors.of_kind?('codefendants-attributes[1].first_name', :blank)).to eq(true)
         expect(subject.errors.messages_for('codefendants-attributes[1].first_name').first).to eq('Enter first name of co-defendant 2')
