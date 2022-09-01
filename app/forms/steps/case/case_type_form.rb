@@ -13,7 +13,7 @@ module Steps
 
       validates :cc_appeal_fin_change_details,
                 presence: true,
-                if: -> { case_is_appeal_with_fin_change? }
+                if: -> { case_type.present? && CaseType.new(case_type).cc_appeal_fin_change? }
 
       has_one_association :case
 
@@ -22,18 +22,6 @@ module Steps
       end
 
       private
-
-      def case_is_appeal_with_fin_change?
-        return false if case_type.nil?
-
-        CaseType::CC_APPEAL_FIN_CHANGE.value == case_type.to_sym
-      end
-
-      def case_is_appeal?
-        return false if case_type.nil?
-
-        CaseType::CC_APPEAL.value == case_type.to_sym
-      end
 
       def string_choices
         choices.map(&:to_s)
@@ -54,15 +42,15 @@ module Steps
       end
 
       def appeal_maat_id
-        case_is_appeal? ? cc_appeal_maat_id : nil
+        CaseType.new(case_type).cc_appeal? ? cc_appeal_maat_id : nil
       end
 
       def appeal_fin_change_maat_id
-        case_is_appeal_with_fin_change? ? cc_appeal_fin_change_maat_id : nil
+        CaseType.new(case_type).cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
       end
 
       def appeal_fin_change_details
-        case_is_appeal_with_fin_change? ? cc_appeal_fin_change_details : nil
+        CaseType.new(case_type).cc_appeal_fin_change? ? cc_appeal_fin_change_details : nil
       end
     end
   end
