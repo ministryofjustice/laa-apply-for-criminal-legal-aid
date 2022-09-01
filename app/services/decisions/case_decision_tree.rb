@@ -5,7 +5,9 @@ module Decisions
       when :urn
         after_urn
       when :add_codefendant
-        edit_codefendants
+        edit_codefendants(add_blank: true)
+      when :delete_codefendant
+        edit_codefendants(add_blank: false)
       when :codefendants_finished
         # Next step when we have it
         show('/home', action: :index)
@@ -20,8 +22,8 @@ module Decisions
       show('/home', action: :index)
     end
 
-    def edit_codefendants
-      form_object.add_blank_codefendant
+    def edit_codefendants(add_blank:)
+      form_object.add_blank_codefendant if add_blank
       edit(:codefendants)
     end
   end

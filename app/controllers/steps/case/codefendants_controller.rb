@@ -14,7 +14,13 @@ module Steps
       private
 
       def step_name
-        params.key?('add_codefendant') ? :add_codefendant : :codefendants_finished
+        if params.key?('add_codefendant')
+          :add_codefendant
+        elsif params.to_s.include?('"_destroy"=>"1"')
+          :delete_codefendant
+        else
+          :codefendants_finished
+        end
       end
 
       def additional_permitted_params

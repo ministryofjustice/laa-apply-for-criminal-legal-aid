@@ -77,3 +77,4 @@ en:
           heading: Enter the details of any co-defendants in the case
           codefendant_legend: Co-defendant %{index}
           add_button: Add another co-defendant
+          remove_button: Remove co-defendant
