@@ -5,7 +5,8 @@ RSpec.describe Steps::Case::CaseTypeForm do
   let(:arguments) { {
     crime_application: crime_application,
     case_type: case_type,
-    previous_maat_id: previous_maat_id,
+    cc_appeal_maat_id: cc_appeal_maat_id,
+    cc_appeal_fin_change_maat_id: cc_appeal_fin_change_maat_id,
     cc_appeal_fin_change_details: cc_appeal_fin_change_details
   } }
 
@@ -14,7 +15,8 @@ RSpec.describe Steps::Case::CaseTypeForm do
   }
 
   let(:case_type) { nil }
-  let(:previous_maat_id) { nil }
+  let(:cc_appeal_maat_id) { nil }
+  let(:cc_appeal_fin_change_maat_id) { nil }
   let(:cc_appeal_fin_change_details) { nil }
 
   subject { described_class.new(arguments) }
@@ -47,26 +49,22 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
       context 'non-appeal case type' do
         context 'with a previous MAAT ID' do
-          let(:previous_maat_id) { '123456' }
-          it 'is invalid' do
-            expect(subject).to_not be_valid
-            expect(
-              subject.errors.of_kind?(
-                :previous_maat_id, 
-                :present)
-            ).to eq(true)
+          let(:cc_appeal_maat_id) { '123456' }
+          let(:cc_appeal_fin_change_maat_id) { '234567' }
+          it 'can make MAAT ID fields nil if case types do not require them' do
+            attributes = subject.send(:attributes_to_reset)
+            expect(subject).to be_valid
+            expect(attributes['cc_appeal_maat_id']).to be(nil)
+            expect(attributes['cc_appeal_fin_change_maat_id']).to be(nil)
           end
         end
 
         context 'with details of a change of financial circumstances' do
           let(:cc_appeal_fin_change_details) { 'These are the details' }
-          it 'is invalid' do
-            expect(subject).to_not be_valid
-            expect(
-              subject.errors.of_kind?(
-                :cc_appeal_fin_change_details, 
-                :present
-              )).to eq(true)
+          it 'can financial change details nil if case type doesnt require it' do
+            attributes = subject.send(:attributes_to_reset)
+            expect(subject).to be_valid
+            expect(attributes['cc_appeal_fin_change_details']).to be(nil)
           end
         end
       end
@@ -74,14 +72,19 @@ RSpec.describe Steps::Case::CaseTypeForm do
       context 'Appeal to crown court' do
         context 'with a previous MAAT ID' do
           let(:case_type) { 'cc_appeal' }
-          let(:previous_maat_id) { '123456' }
+          let(:cc_appeal_maat_id) { '123456' }
           it 'is valid' do
             expect(subject).to be_valid
             expect(
               subject.errors.of_kind?(
-                :previous_maat_id, 
+                :cc_appeal_maat_id, 
                 :present)
             ).to eq(false)
+          end
+
+          it 'cannot reset MAAT IDs as the are relevant to this case type' do
+            attributes = subject.send(:attributes_to_reset)
+            expect(attributes['cc_appeal_maat_id']).to be(cc_appeal_maat_id)
           end
         end
 
@@ -91,7 +94,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
             expect(subject).to be_valid
             expect(
               subject.errors.of_kind?(
-                :previous_maat_id, 
+                :cc_appeal_maat_id, 
                 :present)
             ).to eq(false)
           end
@@ -101,7 +104,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
       context 'Appeal to crown court with changes in financial circumstances' do
         context 'with details of what has changed' do
           let(:case_type) { 'cc_appeal_fin_change' }
-          let(:previous_maat_id) { '123456' }
+          let(:cc_appeal_fin_change_maat_id) { '123456' }
           let(:cc_appeal_fin_change_details) { 'These are the details' }
           it 'is valid' do
             expect(subject).to be_valid
@@ -111,11 +114,21 @@ RSpec.describe Steps::Case::CaseTypeForm do
                 :present)
             ).to eq(false)
           end
+
+          it 'cannot reset MAAT IDs as the are relevant to this case type' do
+            attributes = subject.send(:attributes_to_reset)
+            expect(attributes['cc_appeal_fin_change_maat_id']).to be(cc_appeal_fin_change_maat_id)
+          end
+
+          it 'cannot reset change details as the are relevant to this case type' do
+            attributes = subject.send(:attributes_to_reset)
+            expect(attributes['cc_appeal_fin_change_details']).to be(cc_appeal_fin_change_details)
+          end
         end
 
         context 'with no details of what has changed' do
           let(:case_type) { 'cc_appeal_fin_change' }
-          let(:previous_maat_id) { '123456' }
+          let(:cc_appeal_maat_id) { '123456' }
           it 'is invalid' do
             expect(subject).to_not be_valid
             expect(
@@ -134,7 +147,8 @@ RSpec.describe Steps::Case::CaseTypeForm do
                       association_name: :case,
                       expected_attributes: {
                         'case_type' => 'indictable',
-                        'previous_maat_id' => nil,
+                        'cc_appeal_maat_id' => nil,
+                        'cc_appeal_fin_change_maat_id' => nil,
                         'cc_appeal_fin_change_details' => nil
                       }
     end

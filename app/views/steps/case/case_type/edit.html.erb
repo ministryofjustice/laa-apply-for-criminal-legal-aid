@@ -11,13 +11,13 @@
           <% if choice.value == :cc_appeal %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :previous_maat_id, width: 'one-third' %>
+              <%= f.govuk_text_field :cc_appeal_maat_id, width: 'one-third' %>
             <% end %>
 
           <% elsif choice.value == :cc_appeal_fin_change %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :previous_maat_id, width: 'one-third' %>
+              <%= f.govuk_text_field :cc_appeal_fin_change_maat_id, width: 'one-third' %>
               <%= f.govuk_text_area :cc_appeal_fin_change_details %>
             <% end %>
 
