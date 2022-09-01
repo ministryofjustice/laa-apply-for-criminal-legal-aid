@@ -62,7 +62,6 @@ Rails.application.routes.draw do
         edit_step :urn
         edit_step :case_type
         edit_step :codefendants
-        crud_step :codefendants, param: :codefendant_id
       end
     end
   end
