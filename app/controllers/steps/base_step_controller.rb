@@ -19,7 +19,7 @@ module Steps
 
     private
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def update_and_advance(form_class, opts = {})
       hash = permitted_params(form_class).to_h
       record = opts[:record]
@@ -38,7 +38,7 @@ module Steps
         render opts.fetch(:render, :edit)
       end
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def permitted_params(form_class)
       params

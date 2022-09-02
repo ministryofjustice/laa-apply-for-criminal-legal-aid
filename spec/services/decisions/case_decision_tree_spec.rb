@@ -31,7 +31,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'has correct next step' do
       let(:case) { '12AA3456789' }
 
-      it { is_expected.to have_destination('/steps/case/codefendants', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/has_codefendants', :edit, id: crime_application) }
     end
   end
 

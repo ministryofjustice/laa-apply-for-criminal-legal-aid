@@ -46,7 +46,7 @@ Layout/HashAlignment:
 
 # To be tweaked until we find the right balance
 Metrics/MethodLength:
-  Max: 14
+  Max: 12
 
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
