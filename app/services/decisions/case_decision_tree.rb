@@ -1,5 +1,6 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :urn
@@ -17,6 +18,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
