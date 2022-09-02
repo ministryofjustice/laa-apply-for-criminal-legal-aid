@@ -25,7 +25,7 @@ module Decisions
     private
 
     def after_case_type
-      edit('/steps/case/codefendants')
+      edit('/steps/case/has_codefendants')
     end
 
     def after_urn
