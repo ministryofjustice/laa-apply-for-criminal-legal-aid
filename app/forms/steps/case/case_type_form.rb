@@ -42,11 +42,11 @@ module Steps
       end
 
       def appeal_maat_id
-        case_type_val.new(case_type).cc_appeal? ? cc_appeal_maat_id : nil
+        case_type_val.cc_appeal? ? cc_appeal_maat_id : nil
       end
 
       def appeal_fin_change_maat_id
-        case_type_val.new(case_type).cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
+        case_type_val.cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
       end
 
       def appeal_fin_change_details
