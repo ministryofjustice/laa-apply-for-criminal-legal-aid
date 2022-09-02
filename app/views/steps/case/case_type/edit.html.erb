@@ -7,7 +7,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:case_type, legend: {tag: 'h1', size: 'xl'}) do %>
-        <% @form_object.choices.each do |choice| %>
+        <% @form_object.choices.each_with_index do |choice, index| %>
           <% if choice.value == :cc_appeal %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
@@ -23,7 +23,7 @@
 
           <% else %>
 
-            <%= f.govuk_radio_button :case_type, choice.value, link_errors: true %>
+            <%= f.govuk_radio_button :case_type, choice.value, link_errors: index.zero? %>
 
           <% end %>
         <% end %>
