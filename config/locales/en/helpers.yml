@@ -20,10 +20,10 @@ en:
         date_of_birth: Date of birth
       steps_client_contact_details_form:
         correspondence_address_type: Correspondence address
-      steps_case_codefendants_form:
-        conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_case_type_form:
         case_type: What is the case type?
+      steps_case_codefendants_form:
+        conflict_of_interest: Is there a conflict of interest with this co-defendant?
 
     hint:
       steps_client_has_partner_form:
@@ -65,10 +65,6 @@ en:
         postcode: Postcode
       steps_case_urn_form:
         urn: Enter the unique reference number (URN) for your client's case (optional)
-      steps_case_codefendants_form:
-        first_name: First name
-        last_name: Last name
-        conflict_of_interest_options: *YESNO
       steps_case_case_type_form:
         case_type_options:
           summary_only: Summary only
@@ -81,3 +77,7 @@ en:
         cc_appeal_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_details: Enter the details of what has changed
+      steps_case_codefendants_form:
+        first_name: First name
+        last_name: Last name
+        conflict_of_interest_options: *YESNO

@@ -71,6 +71,10 @@ en:
       urn:
         edit:
           page_title: Enter your client’s URN
+      case_type:
+        edit:
+          page_title: Enter the case type
+          heading:  Enter the case type
       codefendants:
         edit:
           page_title: Details of co-defendants
@@ -78,7 +82,3 @@ en:
           codefendant_legend: Co-defendant %{index}
           add_button: Add another co-defendant
           remove_button: Remove co-defendant
-      case_type:
-        edit:
-          page_title: Enter the case type
-          heading:  Enter the case type
