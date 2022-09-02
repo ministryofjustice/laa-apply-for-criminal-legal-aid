@@ -88,6 +88,10 @@ en:
             cc_appeal_fin_change_details:
               blank: Add the details of what has changed
               present: Details of what has changed are required for Appeal to Crown Court with changes to financial circumstances only
+        steps/case/has_codefendants_form:
+          attributes:
+            has_codefendants:
+              inclusion: Select yes if your client has any co-defendants
         steps/case/codefendant_fieldset_form:
           summary:
             first_name:

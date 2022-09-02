@@ -31,7 +31,22 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'has correct next step' do
       let(:case) { '12AA3456789' }
 
-      it { is_expected.to have_destination('/steps/case/codefendants', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/has_codefendants', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `has_codefendants`' do
+    let(:form_object) { double('FormObject', has_codefendants: has_codefendants) }
+    let(:step_name) { :has_codefendants }
+
+    context 'and answer is `no`' do
+      let(:has_codefendants) { YesNoAnswer::NO }
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+
+    context 'and answer is `yes`' do
+      let(:has_codefendants) { YesNoAnswer::YES }
+      it { is_expected.to have_destination(:codefendants, :edit, id: crime_application) }
     end
   end
 

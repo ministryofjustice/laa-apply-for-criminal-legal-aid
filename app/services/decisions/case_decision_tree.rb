@@ -7,6 +7,8 @@ module Decisions
         after_urn
       when :case_type
         after_case_type
+      when :has_codefendants
+        after_has_codefendants
       when :add_codefendant
         edit_codefendants(add_blank: true)
       when :delete_codefendant
@@ -23,11 +25,19 @@ module Decisions
     private
 
     def after_case_type
-      edit('/steps/case/codefendants')
+      edit('/steps/case/has_codefendants')
     end
 
     def after_urn
       edit('/steps/case/case_type')
+    end
+
+    def after_has_codefendants
+      if form_object.has_codefendants.yes?
+        edit(:codefendants)
+      else
+        show('/home', action: :index)
+      end
     end
 
     def edit_codefendants(add_blank:)
