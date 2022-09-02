@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_26_083744) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_31_110636) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -35,6 +35,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_083744) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "case_type"
+    t.string "cc_appeal_maat_id"
+    t.string "cc_appeal_fin_change_maat_id"
+    t.text "cc_appeal_fin_change_details"
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 

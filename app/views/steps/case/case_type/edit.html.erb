@@ -1,0 +1,34 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:case_type, legend: {tag: 'h1', size: 'xl'}) do %>
+        <% @form_object.choices.each_with_index do |choice, index| %>
+          <% if choice.value == :cc_appeal %>
+
+            <%= f.govuk_radio_button :case_type, choice.value do %>
+              <%= f.govuk_text_field :cc_appeal_maat_id, width: 'one-third', autocomplete: 'off' %>
+            <% end %>
+
+          <% elsif choice.value == :cc_appeal_fin_change %>
+
+            <%= f.govuk_radio_button :case_type, choice.value do %>
+              <%= f.govuk_text_field :cc_appeal_fin_change_maat_id, width: 'one-third', autocomplete: 'off' %>
+              <%= f.govuk_text_area :cc_appeal_fin_change_details %>
+            <% end %>
+
+          <% else %>
+
+            <%= f.govuk_radio_button :case_type, choice.value, link_errors: index.zero? %>
+
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

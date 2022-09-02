@@ -1,9 +1,12 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :urn
         after_urn
+      when :case_type
+        after_case_type
       when :add_codefendant
         edit_codefendants(add_blank: true)
       when :delete_codefendant
@@ -15,11 +18,16 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
+    def after_case_type
+      edit('/steps/case/codefendants')
+    end
+
     def after_urn
-      show('/home', action: :index)
+      edit('/steps/case/case_type')
     end
 
     def edit_codefendants(add_blank:)
