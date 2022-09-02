@@ -78,5 +78,6 @@ en:
           committal: Committal for sentence
           cc_appeal: Appeal to Crown Court
           cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
-        previous_maat_id: Previous MAAT ID (optional)
+        cc_appeal_maat_id: Previous MAAT ID (optional)
+        cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_details: Enter the details of what has changed
