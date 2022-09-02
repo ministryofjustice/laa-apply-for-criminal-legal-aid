@@ -1,0 +1,30 @@
+---
+# https://github.com/Shopify/erb-lint#configuration
+#
+EnableDefaultLinters: false
+exclude:
+  - 'node_modules/**/*'
+  - 'lib/generators/**/*'
+  - 'vendor/**/*'
+
+linters:
+  ErbSafety:
+    enabled: true
+    better_html_config: .better-html.yml
+  Rubocop:
+    enabled: false
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      # There are some cops not suitable for ERB files,
+      # disable or tweak as needed below
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/LineLength:
+        Enabled: false
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false

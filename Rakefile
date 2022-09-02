@@ -10,4 +10,4 @@ task(:default).prerequisites.clear
 # The following tasks will run, in order, when running `rake` command.
 # Run them individually with `rake rubocop`, `rake spec` ...
 #
-task default: %i[brakeman rubocop spec]
+task default: %i[brakeman rubocop erblint spec]
