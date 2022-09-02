@@ -23,7 +23,7 @@ en:
       steps_case_codefendants_form:
         conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_case_type_form:
-        case_type: Enter the case type
+        case_type: What is the case type?
 
     hint:
       steps_client_has_partner_form:
@@ -76,7 +76,7 @@ en:
           indictable: Indictable
           already_cc_trial: Trial already in crown court
           committal: Committal for sentence
-          cc_appeal: Appeal to Crown Court
+          cc_appeal: Appeal to crown court
           cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
         cc_appeal_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)

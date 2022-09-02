@@ -84,10 +84,7 @@ en:
         steps/case/case_type_form:
           attributes:
             case_type:
-              invalid: Enter a valid case type
               inclusion: Select a case type
-            previous_maat_id:
-              present: Previous MAAT IDs are optional with appeal case types only
             cc_appeal_fin_change_details:
               blank: Add the details of what has changed
               present: Details of what has changed are required for Appeal to Crown Court with changes to financial circumstances only
