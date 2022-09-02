@@ -1,6 +1,7 @@
 module Steps
   module Case
     class CodefendantFieldsetForm < Steps::BaseFormObject
+      attribute :_destroy, :boolean
       attribute :id, :string
       attribute :first_name, :string
       attribute :last_name, :string

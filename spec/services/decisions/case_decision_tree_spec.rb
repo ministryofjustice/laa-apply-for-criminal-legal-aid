@@ -37,6 +37,15 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
+  context 'when the step is `delete_codefendant`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :delete_codefendant }
+
+    it 'gets back to the codefendants page' do
+      is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+    end
+  end
+
   context 'when the step is `codefendants_finished`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :codefendants_finished }
