@@ -1,6 +1,8 @@
 require:
   - rubocop-rails
   - rubocop-performance
+  # Add custom cops for this project below
+  - ./lib/rubocop/custom_cops/govuk_formbuilder/text_field_autocomplete.rb
 
 AllCops:
   TargetRubyVersion: 3.1
