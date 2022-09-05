@@ -1,13 +1,15 @@
 ---
 # https://github.com/Shopify/erb-lint#configuration
 #
-EnableDefaultLinters: false
+EnableDefaultLinters: true
 exclude:
   - 'node_modules/**/*'
   - 'lib/generators/**/*'
   - 'vendor/**/*'
 
 linters:
+  SpaceAroundErbTag:
+    enabled: false
   ErbSafety:
     enabled: true
     better_html_config: .better-html.yml
