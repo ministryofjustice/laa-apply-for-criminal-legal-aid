@@ -1,8 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
-    # TODO: update when we have the case details steps
     def path
-      ''
+      edit_steps_case_urn_path(crime_application)
     end
 
     def not_applicable?
@@ -15,12 +14,12 @@ module Tasks
       crime_application.applicant&.nino.present?
     end
 
-    # TODO: update when we have the case details steps
+    # If we have a `case` record we consider this in progress
     def in_progress?
-      false
+      crime_application.case.present?
     end
 
-    # TODO: update when we have the case details steps
+    # TODO: update when all case details steps are implemented
     def completed?
       false
     end
