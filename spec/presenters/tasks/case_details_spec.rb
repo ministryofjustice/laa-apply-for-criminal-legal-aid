@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Tasks::CaseDetails do
   subject { described_class.new(crime_application: crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, to_param: '12345') }
 
   describe '#path' do
-    it { expect(subject.path).to eq('') }
+    it { expect(subject.path).to eq('/applications/12345/steps/case/urn') }
   end
 
   describe '#not_applicable?' do
@@ -30,7 +30,19 @@ RSpec.describe Tasks::CaseDetails do
   end
 
   describe '#in_progress?' do
-    it { expect(subject.in_progress?).to eq(false) }
+    before do
+      allow(crime_application).to receive(:case).and_return(kase)
+    end
+
+    context 'when we have a case record' do
+      let(:kase) { double }
+      it { expect(subject.in_progress?).to eq(true) }
+    end
+
+    context 'when we do not have yet a case record' do
+      let(:kase) { nil }
+      it { expect(subject.in_progress?).to eq(false) }
+    end
   end
 
   describe '#completed?' do
