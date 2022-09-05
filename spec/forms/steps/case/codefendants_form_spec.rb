@@ -19,23 +19,15 @@ RSpec.describe Steps::Case::CodefendantsForm do
   subject { described_class.new(arguments) }
 
   describe '#codefendants' do
-    # TODO: temporary until we have previous step
     context 'there are no codefendants' do
       let(:codefendants_attributes) { {} }
 
-      it 'adds a blank one to the collection' do
-        expect(case_record.codefendants).to receive(:create!)
-        subject.codefendants
+      it 'returns an empty collection' do
+        expect(subject.codefendants).to eq([])
       end
     end
 
-    # TODO: temporary until we have previous step
     context 'there are existing codefendants' do
-      it 'does not add a blank one to the collection' do
-        expect(subject).not_to receive(:add_blank_codefendant)
-        subject.codefendants
-      end
-
       it 'builds a collection of `CodefendantFieldsetForm` instances' do
         expect(
           subject.codefendants

@@ -4,15 +4,15 @@ module Decisions
     def destination
       case step_name
       when :urn
-        after_urn
+        edit(:case_type)
       when :case_type
-        after_case_type
+        edit(:has_codefendants)
       when :has_codefendants
         after_has_codefendants
       when :add_codefendant
         edit_codefendants(add_blank: true)
       when :delete_codefendant
-        edit_codefendants(add_blank: false)
+        edit_codefendants
       when :codefendants_finished
         # Next step when we have it
         show('/home', action: :index)
@@ -24,24 +24,18 @@ module Decisions
 
     private
 
-    def after_case_type
-      edit('/steps/case/has_codefendants')
-    end
-
-    def after_urn
-      edit('/steps/case/case_type')
-    end
-
     def after_has_codefendants
       if form_object.has_codefendants.yes?
-        edit(:codefendants)
+        edit_codefendants
       else
         show('/home', action: :index)
       end
     end
 
-    def edit_codefendants(add_blank:)
-      form_object.add_blank_codefendant if add_blank
+    def edit_codefendants(add_blank: false)
+      codefendants = form_object.case.codefendants
+      codefendants.create! if add_blank || codefendants.empty?
+
       edit(:codefendants)
     end
   end

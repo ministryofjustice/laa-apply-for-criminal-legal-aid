@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::HasCodefendantsForm do
-  # Note: not using shared examples for form objects yet, to be added
-  # once we have some more form objects and some patterns emerge
-
   let(:arguments) { {
     crime_application: crime_application,
     has_codefendants: has_codefendants
@@ -48,13 +45,26 @@ RSpec.describe Steps::Case::HasCodefendantsForm do
     end
 
     context 'when `has_codefendants` is valid' do
-      let(:has_codefendants) { 'yes' }
+      context 'when answer is `yes`' do
+        let(:has_codefendants) { 'yes' }
 
-      it_behaves_like 'a has-one-association form',
-      association_name: :case,
-      expected_attributes: {
-        'has_codefendants' => YesNoAnswer::YES
-      }
+        it_behaves_like 'a has-one-association form',
+                        association_name: :case,
+                        expected_attributes: {
+                          'has_codefendants' => YesNoAnswer::YES
+                        }
+      end
+
+      context 'when answer is `no`' do
+        let(:has_codefendants) { 'no' }
+
+        it_behaves_like 'a has-one-association form',
+                        association_name: :case,
+                        expected_attributes: {
+                          'has_codefendants' => YesNoAnswer::NO,
+                          codefendants: [],
+                        }
+      end
     end
   end
 end
