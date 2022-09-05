@@ -12,7 +12,7 @@ linters:
     enabled: true
     better_html_config: .better-html.yml
   Rubocop:
-    enabled: false
+    enabled: true
     rubocop_config:
       inherit_from:
         - .rubocop.yml
@@ -25,6 +25,10 @@ linters:
       Layout/TrailingEmptyLines:
         Enabled: false
       Style/FrozenStringLiteralComment:
+        Enabled: false
+      Style/BlockDelimiters:
+        Enabled: false
+      Style/MultilineIfModifier:
         Enabled: false
       Lint/UselessAssignment:
         Enabled: false
