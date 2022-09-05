@@ -4,6 +4,8 @@ RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
+  let(:kase) { instance_double(Case, codefendants: codefendants_double) }
+  let(:codefendants_double) { double('codefendants_collection') }
 
   it_behaves_like 'a decision tree'
 
@@ -18,9 +20,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :urn }
 
     context 'has correct next step' do
-      let(:case) { '12AA3456789' }
-
-      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
     end
   end
 
@@ -29,14 +29,12 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :case_type }
 
     context 'has correct next step' do
-      let(:case) { '12AA3456789' }
-
-      it { is_expected.to have_destination('/steps/case/has_codefendants', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
     end
   end
 
   context 'when the step is `has_codefendants`' do
-    let(:form_object) { double('FormObject', has_codefendants: has_codefendants) }
+    let(:form_object) { double('FormObject', case: kase, has_codefendants: has_codefendants) }
     let(:step_name) { :has_codefendants }
 
     context 'and answer is `no`' do
@@ -46,29 +44,66 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'and answer is `yes`' do
       let(:has_codefendants) { YesNoAnswer::YES }
-      it { is_expected.to have_destination(:codefendants, :edit, id: crime_application) }
+
+      context 'and there are no other codefendants yet' do
+        let(:codefendants_double) { double('codefendants_collection', empty?: true) }
+
+        it 'creates a blank co-defendant record and redirects to the codefendants page' do
+          expect(
+            codefendants_double
+          ).to receive(:create!).at_least(:once)
+
+          is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+        end
+      end
+
+      context 'and there are existing codefendants' do
+        let(:codefendants_double) { double('codefendants_collection', empty?: false) }
+
+        it 'redirects to the codefendants page' do
+          is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+        end
+      end
     end
   end
 
   context 'when the step is `add_codefendant`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :add_codefendant }
 
-    it 'creates a blank co-defendant record and gets back to the codefendants page' do
+    it 'creates a blank co-defendant record and redirects to the codefendants page' do
       expect(
-        form_object
-      ).to receive(:add_blank_codefendant).at_least(:once)
+        codefendants_double
+      ).to receive(:create!).at_least(:once)
 
       is_expected.to have_destination(:codefendants, :edit, id: crime_application)
     end
   end
 
   context 'when the step is `delete_codefendant`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :delete_codefendant }
 
-    it 'gets back to the codefendants page' do
-      is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+    # Technically the interface will not allow this possibility as we don't allow
+    # deleting the last remaining record, but the test exists as a sanity check.
+    context 'and there are no other codefendants left' do
+      let(:codefendants_double) { double('codefendants_collection', empty?: true) }
+
+      it 'creates a blank co-defendant record and redirects to the codefendants page' do
+        expect(
+          codefendants_double
+        ).to receive(:create!).at_least(:once)
+
+        is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+      end
+    end
+
+    context 'and there are other codefendants left' do
+      let(:codefendants_double) { double('codefendants_collection', empty?: false) }
+
+      it 'redirects to the codefendants page' do
+        is_expected.to have_destination(:codefendants, :edit, id: crime_application)
+      end
     end
   end
 

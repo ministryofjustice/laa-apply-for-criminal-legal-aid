@@ -16,8 +16,14 @@ module Steps
 
       def persist!
         kase.update(
-          attributes
+          attributes.merge(
+            reset_codefendants_if_needed
+          )
         )
+      end
+
+      def reset_codefendants_if_needed
+        has_codefendants.no? ? { codefendants: [] } : {}
       end
     end
   end

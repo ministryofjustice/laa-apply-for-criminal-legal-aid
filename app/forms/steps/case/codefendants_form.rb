@@ -9,14 +9,10 @@ module Steps
       validates_with CodefendantsValidator, unless: :any_marked_for_destruction?
 
       def codefendants
-        @codefendants ||= begin
-          add_blank_codefendant if kase.codefendants.empty? # temporary until we have previous step
-
-          kase.codefendants.map do |codefendant|
-            CodefendantFieldsetForm.build(
-              codefendant, crime_application: crime_application
-            )
-          end
+        @codefendants ||= kase.codefendants.map do |codefendant|
+          CodefendantFieldsetForm.build(
+            codefendant, crime_application: crime_application
+          )
         end
       end
 
@@ -26,10 +22,6 @@ module Steps
 
       def show_destroy?
         codefendants.size > 1
-      end
-
-      def add_blank_codefendant
-        kase.codefendants.create!
       end
 
       private
