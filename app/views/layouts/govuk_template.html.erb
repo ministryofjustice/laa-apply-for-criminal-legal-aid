@@ -1,6 +1,6 @@
 <%= yield :top_of_page %>
 <!DOCTYPE html>
-<html lang="<%= content_for?(:html_lang) ? yield(:html_lang) : "en" %>" class="govuk-template">
+<html lang="<%= content_for?(:html_lang) ? yield(:html_lang) : 'en' %>" class="govuk-template">
 
 <head>
   <meta charset="utf-8"/>
@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon-152x152.png' %>">
   <link rel="apple-touch-icon" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon.png' %>">
 
-  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_importmap_tags %>
 
   <meta property="og:image" content="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-opengraph-image.png' %>">
