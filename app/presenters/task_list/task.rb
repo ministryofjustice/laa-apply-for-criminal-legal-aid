@@ -28,13 +28,11 @@ module TaskList
     end
 
     def status_tag
-      StatusTag.new(crime_application, name: name, status: status).render
+      StatusTag.new(crime_application, name:, status:).render
     end
 
     def task
-      @task ||= Tasks::BaseTask.build(
-        name, crime_application: crime_application
-      )
+      @task ||= Tasks::BaseTask.build(name, crime_application:)
     end
   end
 end
