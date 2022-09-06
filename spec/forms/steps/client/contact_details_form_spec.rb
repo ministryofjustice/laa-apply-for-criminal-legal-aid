@@ -109,7 +109,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
                     association_name: :applicant,
                     expected_attributes: {
                       'telephone_number' => "07000000000",
-                      'correspondence_address_type' => 'other_address'
+                      'correspondence_address_type' => CorrespondenceType::OTHER_ADDRESS
                     }
   end
 end

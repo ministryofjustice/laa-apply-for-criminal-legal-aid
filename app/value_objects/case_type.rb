@@ -2,7 +2,7 @@ class CaseType < ValueObject
   VALUES = [
     SUMMARY_ONLY = new(:summary_only),
     EITHER_WAY = new(:either_way),
-    INTICTABLE = new(:indictable),
+    INDICTABLE = new(:indictable),
     ALREADY_CC_TRIAL = new(:already_cc_trial),
     COMMITTAL = new(:committal),
     CC_APPEAL = new(:cc_appeal),

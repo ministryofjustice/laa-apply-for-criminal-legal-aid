@@ -1,7 +1,7 @@
 module Steps
   module Client
     class HasPartnerForm < Steps::BaseFormObject
-      attribute :client_has_partner, :yes_no
+      attribute :client_has_partner, :value_object, source: YesNoAnswer
 
       validates_inclusion_of :client_has_partner, in: :choices
 

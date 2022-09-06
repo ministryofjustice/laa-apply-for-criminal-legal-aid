@@ -2,30 +2,25 @@ module Steps
   module Case
     class CaseTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      has_one_association :case
 
-      attribute :case_type, type: :string
-      attribute :cc_appeal_maat_id, type: :string
-      attribute :cc_appeal_fin_change_maat_id, type: :string
-      attribute :cc_appeal_fin_change_details, type: :string
+      attribute :case_type, :value_object, source: CaseType
+      attribute :cc_appeal_maat_id, :string
+      attribute :cc_appeal_fin_change_maat_id, :string
+      attribute :cc_appeal_fin_change_details, :string
 
       validates :case_type,
-                inclusion: { in: :string_choices }
+                inclusion: { in: :choices }
 
       validates :cc_appeal_fin_change_details,
                 presence: true,
-                if: -> { case_type.present? && case_type_val.cc_appeal_fin_change? }
-
-      has_one_association :case
+                if: -> { case_type&.cc_appeal_fin_change? }
 
       def choices
         CaseType.values
       end
 
       private
-
-      def string_choices
-        choices.map(&:to_s)
-      end
 
       def persist!
         kase.update(
@@ -42,19 +37,15 @@ module Steps
       end
 
       def appeal_maat_id
-        case_type_val.cc_appeal? ? cc_appeal_maat_id : nil
+        case_type.cc_appeal? ? cc_appeal_maat_id : nil
       end
 
       def appeal_fin_change_maat_id
-        case_type_val.cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
+        case_type.cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
       end
 
       def appeal_fin_change_details
-        case_type_val.cc_appeal_fin_change? ? cc_appeal_fin_change_details : nil
-      end
-
-      def case_type_val
-        CaseType.new(case_type)
+        case_type.cc_appeal_fin_change? ? cc_appeal_fin_change_details : nil
       end
     end
   end

@@ -4,7 +4,7 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :case
 
-      attribute :has_codefendants, :yes_no
+      attribute :has_codefendants, :value_object, source: YesNoAnswer
 
       validates_inclusion_of :has_codefendants, in: :choices
 
