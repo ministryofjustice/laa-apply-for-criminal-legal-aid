@@ -1,23 +1,23 @@
 <%= yield :top_of_page %>
 <!DOCTYPE html>
-<html lang="<%= content_for?(:html_lang) ? yield(:html_lang) : "en" %>" class="govuk-template">
+<html lang="<%= content_for?(:html_lang) ? yield(:html_lang) : 'en' %>" class="govuk-template">
 
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8">
   <title><%= yield(:page_title) %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0b0c0c">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/favicon.ico' %>" type="image/x-icon"/>
+  <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/favicon.ico' %>" type="image/x-icon">
   <link rel="mask-icon" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-mask-icon.svg' %>" color="blue">
   <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon-180x180.png' %>">
   <link rel="apple-touch-icon" sizes="167x167" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon-167x167.png' %>">
   <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon-152x152.png' %>">
   <link rel="apple-touch-icon" href="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-apple-touch-icon.png' %>">
 
-  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_importmap_tags %>
 
   <meta property="og:image" content="<%= asset_path '/assets/govuk-frontend/govuk/assets/images/govuk-opengraph-image.png' %>">

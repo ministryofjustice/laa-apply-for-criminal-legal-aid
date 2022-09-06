@@ -26,13 +26,13 @@
                                                } %>
 
           <%= c.button t('.remove_button'), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
-                       class: %w(govuk-button govuk-button--warning),
+                       class: %w[govuk-button govuk-button--warning],
                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
         <% end %>
       <% end %>
 
       <%= f.button t('.add_button'), type: :submit, name: :add_codefendant,
-                   class: %w(govuk-button govuk-button--secondary govuk-!-margin-bottom-8),
+                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                    data: { module: 'govuk-button' } %>
 
       <%= f.continue_button %>
