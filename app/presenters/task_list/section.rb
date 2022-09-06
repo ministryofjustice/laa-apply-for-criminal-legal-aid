@@ -3,7 +3,7 @@ module TaskList
     attr_reader :tasks, :index
 
     def initialize(crime_application, name:, tasks:, index:)
-      super(crime_application, name: name)
+      super(crime_application, name:)
 
       @tasks = tasks
       @index = index
@@ -18,7 +18,7 @@ module TaskList
     end
 
     def items
-      @items ||= tasks.map { |name| Task.new(crime_application, name: name) }
+      @items ||= tasks.map { |name| Task.new(crime_application, name:) }
     end
 
     private

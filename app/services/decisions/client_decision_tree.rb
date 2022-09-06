@@ -45,7 +45,7 @@ module Decisions
     end
 
     def start_address_journey(address_class, person)
-      address = address_class.find_or_create_by(person: person)
+      address = address_class.find_or_create_by(person:)
       edit('/steps/address/lookup', address_id: address)
     end
   end

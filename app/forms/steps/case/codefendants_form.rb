@@ -11,7 +11,7 @@ module Steps
       def codefendants
         @codefendants ||= kase.codefendants.map do |codefendant|
           CodefendantFieldsetForm.build(
-            codefendant, crime_application: crime_application
+            codefendant, crime_application:
           )
         end
       end

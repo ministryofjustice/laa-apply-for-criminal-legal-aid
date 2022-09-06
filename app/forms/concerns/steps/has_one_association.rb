@@ -7,8 +7,7 @@ module Steps
 
       def build(crime_application)
         super(
-          associated_record(crime_application),
-          crime_application: crime_application
+          associated_record(crime_application), crime_application:
         )
       end
 

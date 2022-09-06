@@ -13,7 +13,7 @@ module TaskList
     }.freeze
 
     def initialize(crime_application, name:, status:)
-      super(crime_application, name: name)
+      super(crime_application, name:)
       @status = status
     end
 
