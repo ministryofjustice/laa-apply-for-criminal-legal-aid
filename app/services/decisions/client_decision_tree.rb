@@ -34,7 +34,7 @@ module Decisions
     end
 
     def after_contact_details
-      if CorrespondenceType.new(form_object.correspondence_address_type).other_address?
+      if form_object.correspondence_address_type.other_address?
         start_address_journey(
           CorrespondenceAddress,
           form_object.applicant

@@ -68,8 +68,13 @@ RSpec.describe Decisions::ClientDecisionTree do
       it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application, address_id: 'address') }
     end
 
-    context 'and answer is any other thing' do
-      let(:correspondence_address_type) { 'whatever' }
+    context 'and answer is `home_address`' do
+      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'and answer is `providers_office_address`' do
+      let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
