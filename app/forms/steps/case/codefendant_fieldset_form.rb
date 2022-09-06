@@ -5,7 +5,7 @@ module Steps
       attribute :id, :string
       attribute :first_name, :string
       attribute :last_name, :string
-      attribute :conflict_of_interest, :yes_no
+      attribute :conflict_of_interest, :value_object, source: YesNoAnswer
 
       validates_presence_of :first_name,
                             :last_name

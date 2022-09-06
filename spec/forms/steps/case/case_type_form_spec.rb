@@ -84,7 +84,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
           it 'cannot reset MAAT IDs as the are relevant to this case type' do
             attributes = subject.send(:attributes_to_reset)
-            expect(attributes['cc_appeal_maat_id']).to be(cc_appeal_maat_id)
+            expect(attributes['cc_appeal_maat_id']).to eq(cc_appeal_maat_id)
           end
         end
 
@@ -117,12 +117,12 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
           it 'cannot reset MAAT IDs as the are relevant to this case type' do
             attributes = subject.send(:attributes_to_reset)
-            expect(attributes['cc_appeal_fin_change_maat_id']).to be(cc_appeal_fin_change_maat_id)
+            expect(attributes['cc_appeal_fin_change_maat_id']).to eq(cc_appeal_fin_change_maat_id)
           end
 
           it 'cannot reset change details as the are relevant to this case type' do
             attributes = subject.send(:attributes_to_reset)
-            expect(attributes['cc_appeal_fin_change_details']).to be(cc_appeal_fin_change_details)
+            expect(attributes['cc_appeal_fin_change_details']).to eq(cc_appeal_fin_change_details)
           end
         end
 
@@ -146,7 +146,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         it_behaves_like 'a has-one-association form',
                       association_name: :case,
                       expected_attributes: {
-                        'case_type' => 'indictable',
+                        'case_type' => CaseType::INDICTABLE,
                         'cc_appeal_maat_id' => nil,
                         'cc_appeal_fin_change_maat_id' => nil,
                         'cc_appeal_fin_change_details' => nil
