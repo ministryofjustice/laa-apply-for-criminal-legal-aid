@@ -49,16 +49,6 @@ RSpec.describe Type::ValueObject do
     end
   end
 
-  describe '#type_cast_for_schema' do
-    let(:value) { YesNoAnswer::NO }
-
-    it 'casts a value for schema dumping' do
-      expect(
-        subject.type_cast_for_schema(value)
-      ).to eq('no')
-    end
-  end
-
   describe 'identity methods' do
     let(:type_one) { described_class.new(source: String) }
     let(:type_two) { described_class.new(source: String) }

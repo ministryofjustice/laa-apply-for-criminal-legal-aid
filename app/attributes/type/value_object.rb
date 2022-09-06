@@ -15,10 +15,6 @@ module Type
       value.to_s
     end
 
-    def type_cast_for_schema(value)
-      value.to_s
-    end
-
     def ==(other)
       self.class == other.class && source == other.source
     end
