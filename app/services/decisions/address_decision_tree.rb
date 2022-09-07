@@ -17,8 +17,7 @@ module Decisions
       if form_object.record.is_a?(HomeAddress)
         edit('/steps/client/contact_details')
       else
-        # TODO: link to next step when we have it
-        show('/home', action: :index)
+        edit('/steps/case/urn')
       end
     end
   end
