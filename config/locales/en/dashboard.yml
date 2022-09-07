@@ -36,4 +36,4 @@ en:
         title: Warning
         text: You cannot undo this action
     destroy:
-      success_flash: "%{applicant_name}’s application has been permanently deleted"
+      success_flash: "%{applicant_name}’s application has been deleted"

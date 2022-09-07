@@ -127,7 +127,7 @@ RSpec.describe 'Dashboard' do
 
       assert_select 'div.govuk-notification-banner--success', 1 do
         assert_select 'h2', 'Success'
-        assert_select 'p', 'Jane Doe’s application has been permanently deleted'
+        assert_select 'p', 'Jane Doe’s application has been deleted'
       end
     end
   end
