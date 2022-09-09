@@ -3,4 +3,6 @@ class Case < ApplicationRecord
 
   has_many :codefendants, dependent: :destroy
   accepts_nested_attributes_for :codefendants, allow_destroy: true
+
+  has_many :charges, dependent: :destroy
 end
