@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_02_095253) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_112104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,6 +43,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_02_095253) do
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 
+  create_table "charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "case_id", null: false
+    t.string "offence_id"
+    t.string "offence_name"
+    t.index ["case_id"], name: "index_charges_on_case_id"
+    t.index ["offence_id"], name: "index_charges_on_offence_id"
+  end
+
   create_table "codefendants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "case_id", null: false
     t.datetime "created_at", null: false
@@ -59,6 +69,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_02_095253) do
     t.datetime "updated_at", null: false
     t.string "client_has_partner"
     t.string "status"
+  end
+
+  create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "charge_id", null: false
+    t.date "date"
+    t.index ["charge_id"], name: "index_offence_dates_on_charge_id"
+  end
+
+  create_table "offences", id: :string, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.string "offence_class", null: false
+    t.string "offence_type", null: false
+    t.integer "rank"
+    t.integer "frequency", default: 0, null: false
   end
 
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -79,6 +107,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_02_095253) do
 
   add_foreign_key "addresses", "people"
   add_foreign_key "cases", "crime_applications"
+  add_foreign_key "charges", "cases"
+  add_foreign_key "charges", "offences"
   add_foreign_key "codefendants", "cases"
+  add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"
 end
