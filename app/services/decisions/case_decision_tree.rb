@@ -1,6 +1,6 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :urn
@@ -14,13 +14,15 @@ module Decisions
       when :delete_codefendant
         edit_codefendants
       when :codefendants_finished
+        after_codefendants
+      when :charges
         # Next step when we have it
         show('/home', action: :index)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -28,7 +30,7 @@ module Decisions
       if form_object.has_codefendants.yes?
         edit_codefendants
       else
-        show('/home', action: :index)
+        after_codefendants
       end
     end
 
@@ -37,6 +39,12 @@ module Decisions
       codefendants.create! if add_blank || codefendants.empty?
 
       edit(:codefendants)
+    end
+
+    # TODO: update when we have the 'basket' page
+    def after_codefendants
+      charge = form_object.case.charges.first_or_create
+      edit(:charges, charge_id: charge)
     end
   end
 end
