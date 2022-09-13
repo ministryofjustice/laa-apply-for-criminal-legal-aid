@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Offence, type: :model do
-  describe '.find' do
-    it 'is a short form of `find_by(code:)`' do
-      expect(described_class).to receive(:find_by).with(code: 'FA06001')
-      described_class.find('FA06001')
-    end
-  end
-
   describe '.find_by' do
     context 'can search by code' do
       subject { described_class.find_by(code: 'FA06001') }

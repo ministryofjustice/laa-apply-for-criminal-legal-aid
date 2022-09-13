@@ -3,9 +3,7 @@ require 'csv'
 module CsvQueryable
   extend ActiveSupport::Concern
 
-  included do
-    attr_reader :row
-  end
+  attr_reader :row
 
   def initialize(row:)
     @row = row
@@ -30,10 +28,6 @@ module CsvQueryable
       attrs.each do |name|
         define_method(name) { row[name.to_s].strip }
       end
-    end
-
-    def find(code)
-      find_by(code:)
     end
 
     def find_by(**query)
