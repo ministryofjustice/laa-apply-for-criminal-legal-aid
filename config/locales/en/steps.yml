@@ -85,3 +85,8 @@ en:
           codefendant_legend: Co-defendant %{index}
           add_button: Add another co-defendant
           remove_button: Remove co-defendant
+      charges:
+        edit:
+          page_title: What has your client been charged with?
+          heading: What has your client been charged with?
+          offence_name_legend: Offence name

@@ -4,8 +4,10 @@ RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
-  let(:kase) { instance_double(Case, codefendants: codefendants_double) }
+  let(:kase) { instance_double(Case, codefendants: codefendants_double, charges: charges_double) }
+
   let(:codefendants_double) { double('codefendants_collection') }
+  let(:charges_double) { double('charges_collection') }
 
   it_behaves_like 'a decision tree'
 
@@ -39,7 +41,14 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'and answer is `no`' do
       let(:has_codefendants) { YesNoAnswer::NO }
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+
+      before do
+        allow(
+          charges_double
+        ).to receive(:first_or_create).and_return('charge')
+      end
+
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
     end
 
     context 'and answer is `yes`' do
@@ -108,9 +117,25 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `codefendants_finished`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :codefendants_finished }
 
-    it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    before do
+      allow(
+        charges_double
+      ).to receive(:first_or_create).and_return('charge')
+    end
+
+    it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+  end
+
+  # TODO: update when we have the 'basket' page
+  context 'when the step is `charges`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :charges }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
   end
 end

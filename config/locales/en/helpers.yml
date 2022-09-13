@@ -41,6 +41,8 @@ en:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
         urn: For example, ‘12 AB 3456789’.
+      steps_case_charges_form:
+        offence_name: For example, robbery
 
     label:
       steps_client_has_partner_form:
@@ -85,3 +87,5 @@ en:
         first_name: First name
         last_name: Last name
         conflict_of_interest_options: *YESNO
+      steps_case_charges_form:
+        offence_name: Offence name

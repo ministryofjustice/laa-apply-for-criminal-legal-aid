@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         edit_step :case_type
         edit_step :has_codefendants
         edit_step :codefendants
+        crud_step :charges, param: :charge_id, only: [:edit, :update]
       end
     end
   end
