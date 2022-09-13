@@ -1,6 +1,8 @@
 class Charge < ApplicationRecord
   belongs_to :case
-  belongs_to :offence, optional: true
+
+  # This will potentially change to retrieve the offence from the CSV
+  # belongs_to :offence, optional: true
 
   has_many :offence_dates, dependent: :destroy
   accepts_nested_attributes_for :offence_dates, allow_destroy: true
