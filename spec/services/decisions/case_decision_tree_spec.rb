@@ -42,13 +42,15 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and answer is `no`' do
       let(:has_codefendants) { YesNoAnswer::NO }
 
-      before do
-        allow(
-          charges_double
-        ).to receive(:first_or_create).and_return('charge')
+      context 'and there are charges already' do
+        let(:charges_double) { double(any?: true) }
+        it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
       end
 
-      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+      context 'and there are no charges' do
+        let(:charges_double) { double(any?: false, create!: 'charge') }
+        it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+      end
     end
 
     context 'and answer is `yes`' do
@@ -120,21 +122,48 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :codefendants_finished }
 
-    before do
-      allow(
-        charges_double
-      ).to receive(:first_or_create).and_return('charge')
+    context 'and there are charges already' do
+      let(:charges_double) { double(any?: true) }
+      it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
     end
 
-    it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+    context 'and there are no charges' do
+      let(:charges_double) { double(any?: false, create!: 'charge') }
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+    end
   end
 
-  # TODO: update when we have the 'basket' page
   context 'when the step is `charges`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :charges }
 
     context 'has correct next step' do
+      it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `charges_summary`' do
+    let(:form_object) { double('FormObject', case: kase, add_offence: add_offence) }
+    let(:step_name) { :charges_summary }
+
+    context 'and answer is `yes`' do
+      let(:add_offence) { YesNoAnswer::YES }
+      let(:charges_double) { double(create!: 'charge') }
+
+      # No need to repeat this test, just once is enough as sanity check
+      it 'creates a blank new `charge` record, as well as a blank new associated `offence_date`' do
+        expect(
+          charges_double
+        ).to receive(:create!).with(offence_dates_attributes: { id: nil })
+
+        subject.destination
+      end
+
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+    end
+
+    context 'and answer is `no`' do
+      let(:add_offence) { YesNoAnswer::NO }
       it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end
   end

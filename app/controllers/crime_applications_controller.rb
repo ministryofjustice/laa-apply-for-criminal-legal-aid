@@ -8,6 +8,7 @@ class CrimeApplicationsController < ApplicationController
                     .joins(:people)
                     .includes(:applicant)
                     .merge(Applicant.with_name)
+                    .merge(CrimeApplication.order(created_at: :desc))
   end
 
   def create

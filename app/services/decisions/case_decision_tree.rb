@@ -16,8 +16,9 @@ module Decisions
       when :codefendants_finished
         after_codefendants
       when :charges
-        # Next step when we have it
-        show('/home', action: :index)
+        edit(:charges_summary)
+      when :charges_summary
+        after_charges_summary
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -41,10 +42,29 @@ module Decisions
       edit(:codefendants)
     end
 
-    # TODO: update when we have the 'basket' page
     def after_codefendants
-      charge = form_object.case.charges.first_or_create
+      return edit(:charges_summary) if case_charges.any?
+
+      edit_new_charge
+    end
+
+    def after_charges_summary
+      # TODO: update when we have next step
+      return show('/home', action: :index) if form_object.add_offence.no?
+
+      edit_new_charge
+    end
+
+    def edit_new_charge
+      charge = case_charges.create!(
+        offence_dates_attributes: { id: nil } # a blank, first date
+      )
+
       edit(:charges, charge_id: charge)
+    end
+
+    def case_charges
+      @case_charges ||= form_object.case.charges
     end
   end
 end
