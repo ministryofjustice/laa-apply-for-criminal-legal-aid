@@ -7,6 +7,8 @@ module Steps
       attribute :add_offence, :value_object, source: YesNoAnswer
       validates :add_offence, inclusion: { in: :choices }
 
+      delegate :charges, to: :kase
+
       def choices
         YesNoAnswer.values
       end
