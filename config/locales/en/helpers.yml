@@ -26,6 +26,8 @@ en:
         has_codefendants: Does your client have any co-defendants in this case?
       steps_case_codefendants_form:
         conflict_of_interest: Is there a conflict of interest with this co-defendant?
+      steps_case_charges_summary_form:
+        add_offence: Do you want to add another offence?
 
     hint:
       steps_client_has_partner_form:
@@ -89,3 +91,5 @@ en:
         conflict_of_interest_options: *YESNO
       steps_case_charges_form:
         offence_name: Offence name
+      steps_case_charges_summary_form:
+        add_offence_options: *YESNO

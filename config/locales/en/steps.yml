@@ -90,3 +90,6 @@ en:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
           offence_name_legend: Offence name
+      charges_summary:
+        edit:
+          page_title: Offences summary list
