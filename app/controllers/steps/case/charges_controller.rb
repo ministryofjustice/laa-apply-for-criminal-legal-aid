@@ -18,6 +18,8 @@ module Steps
       def step_name
         if params.key?('add_offence_date')
           :add_offence_date
+        elsif params.to_s.include?('"_destroy"=>"1"')
+          :delete_offence_date
         else
           :charges
         end

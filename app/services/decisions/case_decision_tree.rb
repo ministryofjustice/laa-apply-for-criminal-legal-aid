@@ -19,6 +19,8 @@ module Decisions
         edit(:charges_summary)
       when :add_offence_date
         after_add_offence_date
+      when :delete_offence_date
+        after_delete_offence_date
       when :charges_summary
         after_charges_summary
       else
@@ -52,9 +54,12 @@ module Decisions
 
     def after_add_offence_date
       charge = form_object.record
-      if charge.offence_dates.map(&:date).exclude?(nil)
-        charge.offence_dates << OffenceDate.new
-      end
+      charge.offence_dates << OffenceDate.new if blank_date_required?(charge)
+      edit(:charges, charge_id: charge)
+    end
+
+    def after_delete_offence_date
+      charge = form_object.record
       edit(:charges, charge_id: charge)
     end
 
@@ -75,6 +80,10 @@ module Decisions
 
     def case_charges
       @case_charges ||= form_object.case.charges
+    end
+
+    def blank_date_required?(charge)
+      charge.offence_dates.map(&:date).exclude?(nil)
     end
   end
 end

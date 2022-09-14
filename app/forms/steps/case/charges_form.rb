@@ -13,6 +13,10 @@ module Steps
         end
       end
 
+      def show_destroy?
+        offence_dates.size > 1
+      end
+
       private
 
       def persist!
