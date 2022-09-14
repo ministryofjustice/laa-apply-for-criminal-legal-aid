@@ -17,6 +17,8 @@ module Decisions
         after_codefendants
       when :charges
         edit(:charges_summary)
+      when :add_offence_date
+        after_add_offence_date
       when :charges_summary
         after_charges_summary
       else
@@ -46,6 +48,14 @@ module Decisions
       return edit(:charges_summary) if case_charges.any?
 
       edit_new_charge
+    end
+
+    def after_add_offence_date
+      charge = form_object.record
+      if charge.offence_dates.map(&:date).exclude?(nil)
+        charge.offence_dates << OffenceDate.new
+      end
+      edit(:charges, charge_id: charge)
     end
 
     def after_charges_summary

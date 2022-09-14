@@ -16,10 +16,9 @@ module Steps
       private
 
       def persist!
-        # record.update(
-        #   attributes
-        # )
-        record.save
+        record.update(
+          attributes
+        )
       end
     end
   end

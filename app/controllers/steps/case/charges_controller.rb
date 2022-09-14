@@ -9,11 +9,19 @@ module Steps
 
       def update
         update_and_advance(
-          ChargesForm, record: charge_record, as: :charges
+          ChargesForm, record: charge_record, as: step_name
         )
       end
 
       private
+
+      def step_name
+        if params.key?('add_offence_date')
+          :add_offence_date
+        else
+          :charges
+        end
+      end
 
       def charge_record
         @charge_record ||= case_charges.find(params[:charge_id])
