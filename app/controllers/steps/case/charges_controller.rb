@@ -22,6 +22,10 @@ module Steps
       def case_charges
         @case_charges ||= current_crime_application.case.charges
       end
+
+      def additional_permitted_params
+        [offence_dates_attributes: Steps::Case::OffenceDateFieldsetForm.attribute_names]
+      end
     end
   end
 end
