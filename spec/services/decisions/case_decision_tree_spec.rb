@@ -151,11 +151,8 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:charges_double) { double(create!: 'charge') }
 
       # No need to repeat this test, just once is enough as sanity check
-      it 'creates a blank new `charge` record, as well as a blank new associated `offence_date`' do
-        expect(
-          charges_double
-        ).to receive(:create!).with(offence_dates_attributes: { id: nil })
-
+      it 'creates a blank new `charge` record' do
+        expect(charges_double).to receive(:create!)
         subject.destination
       end
 

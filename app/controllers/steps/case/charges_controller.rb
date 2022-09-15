@@ -13,6 +13,25 @@ module Steps
         )
       end
 
+      def destroy
+        charge_record.destroy
+
+        if case_charges.reload.any?
+          redirect_to edit_steps_case_charges_summary_path,
+                      success: t('.success_flash')
+        else
+          # If this was the last remaining record, redirect
+          # to the charges page with a new blank one
+          charge = case_charges.create!
+          redirect_to edit_steps_case_charges_path(charge_id: charge),
+                      success: t('.success_flash')
+        end
+      end
+
+      def confirm_destroy
+        @charge = helpers.present(charge_record)
+      end
+
       private
 
       def step_name
