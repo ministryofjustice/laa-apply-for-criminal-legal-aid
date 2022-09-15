@@ -93,3 +93,11 @@ en:
       charges_summary:
         edit:
           page_title: Offences summary list
+          heading:
+            zero: You have not added offences yet
+            one: You have added %{count} offence
+            other: You have added %{count} offences
+          list:
+            offence_class: Class %{class}
+            change_link_html: Change <span class="govuk-visually-hidden">offence</span>
+            remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
