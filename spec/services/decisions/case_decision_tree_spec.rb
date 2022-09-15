@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, id: '10') }
   let(:kase) { instance_double(Case, codefendants: codefendants_double, charges: charges_double) }
 
   let(:codefendants_double) { double('codefendants_collection') }
@@ -165,6 +165,26 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and answer is `no`' do
       let(:add_offence) { YesNoAnswer::NO }
       it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `add_offence_date`' do
+    context 'has correct next step' do
+      let(:step_name) { :add_offence_date }
+      let(:offence_dates) { [ OffenceDate.new(date: '01, 02, 2000') ] }
+      let(:charge) { Charge.new(id: '20', offence_dates: offence_dates) }
+      let(:form_object) { double('FormObject', case: kase, record: charge) }
+      
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
+    end
+  end
+
+  context 'when the step is `delete_offence_date`' do
+    context 'has correct next step' do
+      let(:step_name) { :delete_offence_date }
+      let(:charge) { Charge.new(id: '20') }
+      let(:form_object) { double('FormObject', case: kase, record: charge) }
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
     end
   end
 end
