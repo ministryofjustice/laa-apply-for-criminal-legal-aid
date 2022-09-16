@@ -51,6 +51,7 @@ The tasks run by default when using `rake`, are defined in the `Rakefile`.
 Or you can run them individually:
 
 * `rake spec`
+* `rake erblint`
 * `rake rubocop`
 * `rake brakeman`
 
@@ -65,6 +66,29 @@ The application will be run in "production" mode, so will be as accurate as poss
 
 **NOTE:** never use `docker-compose` for a real production environment. This is only provided to test a local container. The 
 actual docker images used in the cluster are built as part of the deploy pipeline.
+
+
+## Feature Flags
+
+Feature flags can be set so that functionality can be enabled and disabled depending on the environment that the application is running in.
+
+Set a new feature flag in the `config/settings.yml` under the heading `feature_flags` like so:
+
+```yaml
+# config/settings.yml
+feature_flags:
+  your_new_feature:
+    local: true
+    staging: true
+    production: false
+```
+
+To check if a feature is enabled / disabled and run code accordingly, use:
+
+```ruby
+FeatureFlags.your_new_feature.enabled?
+FeatureFlags.your_new_feature.disabled?
+```
 
 
 ## Kubernetes deployment
@@ -83,7 +107,7 @@ Read [how to connect the cluster](https://user-guide.cloud-platform.service.just
 When dealing with secrets, they need to be encoded in Base64, do not use online services for this.
 
 ```bash
-# Encode:
+# Encode:
 echo -n "new-string" | base64
 
 # Decode:
@@ -116,45 +140,6 @@ All this is done through **github actions**.
 The secrets needed for these actions are created automatically as part of the **terraforming**. You can read more about 
 it in [this document](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/github-actions-continuous-deployment.html#automating-the-deployment-process).
 
-## Feature Flags
-
-Feature flags can be set so that functionality can be enabled and disabled depending on the environment that an the application is running in. Currently there are two meaningful environments:
-- Local (i.e. your local dev / test environment)
-- Staging
-
-As and when more environments are added, the `FeatureFlags` and `HostEnv` classes will be amended to incorporate them.
-
-### Setting a new feature flag
-
-Set a new feature flag in the `config/settings.yml` under the heading `feature_flags` like so:
-
-```
-# config/settings.yml
-feature_flags:
-  your_new_feature:
-    Local: true
-    staging: false
-```
-
-### Using the feature flag API
-
-To check a feature is enabled / disabled use:
-
-```
-FeatureFlags.your_new_feature.enabled?
-
-# or
-
-FeatureFlags.your_new_feature.disabled?
-```
-
-You can then enable / disable features in your code:
-
-```
-if FeatureFlags.your_new_feature.enabled?
-  puts "Wow you can see a new feature!"
-end
-```
 
 ## Architectural decision records
 
@@ -175,4 +160,3 @@ This will initialise new blank ADR with your title as a heading and increment th
 ### Further info
 
 For information on what ARDs are see [here](https://adr.github.io/).
-
