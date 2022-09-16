@@ -37,9 +37,7 @@ RSpec.describe Steps::Case::ChargesForm do
         OffenceDate.new(date: "11, 12, 2021")
       ]
 
-      subject.offence_dates.each do |form|
-        expect(form).to be_a(Steps::Case::OffenceDateFieldsetForm)
-      end
+      expect(subject.offence_dates).to all(be_a(Steps::Case::OffenceDateFieldsetForm))
       expect(subject.offence_dates.size).to be(3)
     end
   end
