@@ -5,11 +5,19 @@ RSpec.describe Steps::Case::ChargesForm do
     crime_application: crime_application,
     record: charge_record,
     offence_name: offence_name,
+    offence_dates_attributes: offence_dates_attributes
   } }
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:charge_record) { Charge.new }
   let(:offence_name) { 'Robbery' }
+  let(:offence_dates_attributes) {
+    {
+     '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
+     '1'=>{ 'date(3i)'=>'11', 'date(2i)'=>'07', 'date(1i)'=>'2010' },
+     '2'=>{ 'date(3i)'=>'10', 'date(2i)'=>'02', 'date(1i)'=>'2009' }
+    }
+  }
 
   subject { described_class.new(arguments) }
 
@@ -31,33 +39,33 @@ RSpec.describe Steps::Case::ChargesForm do
 
   describe '#offence_dates' do
     it 'returns a list of offence date fieldset forms' do
-      charge_record.offence_dates << [
-        OffenceDate.new(date: "02, 02, 2000"),
-        OffenceDate.new(date: "03, 10, 1998"),
-        OffenceDate.new(date: "11, 12, 2021")
-      ]
-
       expect(subject.offence_dates).to all(be_a(Steps::Case::OffenceDateFieldsetForm))
       expect(subject.offence_dates.size).to be(3)
     end
   end
 
   describe '#show_destroy?' do
-    it 'returns false if there are fewer than 2 offence dates' do
-      charge_record.offence_dates << [
-        OffenceDate.new(date: "11, 12, 2021")
-      ]
-
-      expect(subject.show_destroy?).to be(false)
+    context 'if there are fewer than two offence dates' do
+      let(:offence_dates_attributes) {
+        {
+         '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
+        }
+      }
+      it 'returns false' do
+        expect(subject.show_destroy?).to be(false)
+      end
     end
 
-    it 'returns true if there are more than 2 offence dates' do
-      charge_record.offence_dates << [
-        OffenceDate.new(date: "11, 12, 2021"),
-        OffenceDate.new(date: "03, 10, 1998")
-      ]
-
-      expect(subject.show_destroy?).to be(true)
+    context 'if there two or more offence dates' do
+      let(:offence_dates_attributes) {
+        {
+          '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
+          '1'=>{ 'date(3i)'=>'11', 'date(2i)'=>'07', 'date(1i)'=>'2010' }
+        }
+      }
+      it 'returns true' do
+        expect(subject.show_destroy?).to be(true)
+      end
     end
   end
 end
