@@ -51,7 +51,7 @@ RSpec.describe Steps::Case::ChargesForm do
       expect(subject.show_destroy?).to be(false)
     end
 
-    it 'returns true if there are fewer than 2 offence dates' do
+    it 'returns true if there are more than 2 offence dates' do
       charge_record.offence_dates << [
         OffenceDate.new(date: "11, 12, 2021"),
         OffenceDate.new(date: "03, 10, 1998")
