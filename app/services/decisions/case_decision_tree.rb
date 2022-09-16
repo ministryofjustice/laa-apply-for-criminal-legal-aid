@@ -17,6 +17,10 @@ module Decisions
         after_codefendants
       when :charges
         edit(:charges_summary)
+      when :add_offence_date
+        after_add_offence_date
+      when :delete_offence_date
+        after_delete_offence_date
       when :charges_summary
         after_charges_summary
       else
@@ -48,6 +52,15 @@ module Decisions
       edit_new_charge
     end
 
+    def after_add_offence_date
+      current_charge.offence_dates << OffenceDate.new if blank_date_required?
+      edit(:charges, charge_id: current_charge)
+    end
+
+    def after_delete_offence_date
+      edit(:charges, charge_id: current_charge)
+    end
+
     def after_charges_summary
       # TODO: update when we have next step
       return show('/home', action: :index) if form_object.add_offence.no?
@@ -65,6 +78,14 @@ module Decisions
 
     def case_charges
       @case_charges ||= form_object.case.charges
+    end
+
+    def current_charge
+      @current_charge ||= form_object.record
+    end
+
+    def blank_date_required?
+      current_charge.offence_dates.map(&:date).exclude?(nil)
     end
   end
 end
