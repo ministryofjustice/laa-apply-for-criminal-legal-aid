@@ -5,59 +5,59 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
   let(:decision_tree_class) { Decisions::CaseDecisionTree }
 
   let(:crime_application) { CrimeApplication.create }
-  let(:existing_case) { Case.create(crime_application: crime_application)}
-  let(:charge_record) { Charge.create(case: existing_case)}
 
-  context 'adding a new offence date' do
+  describe 'offence date actions' do
     let(:form_class_params_name) { form_class.name.underscore }
+    let(:existing_case) { Case.create(crime_application: crime_application)}
+    let(:charge_record) { Charge.create(case: existing_case)}
+    context 'when adding a date' do
+      it 'has the expected step name' do
+        expect(
+          subject
+        ).to receive(:update_and_advance).with(
+          form_class, 
+          record: charge_record, 
+          as: :add_offence_date
+        )
 
-    it 'has the expected step name' do
-      expect(
-        subject
-      ).to receive(:update_and_advance).with(
-        form_class, 
-        record: charge_record, 
-        as: :add_offence_date
-      )
-
-      put :update, params: { 
-        id: crime_application.id, 
-        charge_id: charge_record.id, 
-        add_offence_date: '' 
-      }
+        put :update, params: { 
+          id: crime_application.id, 
+          charge_id: charge_record.id, 
+          add_offence_date: '' 
+        }
+      end
     end
-  end
 
-  context 'deleting a offence date' do
-    let(:form_class_params_name) { form_class.name.underscore }
-    let(:offence_dates_attributes) { 
-      {
-        offence_dates_attributes: {
-          '0'=>{ 
-            'date(3i)'=>'10', 
-            'date(2i)'=>'10', 
-            'date(1i)'=>'2000', 
-            '_destroy'=>'1', 
-            'id'=> '123' 
+    context 'when deleting a date' do
+      let(:offence_dates_attributes) { 
+        {
+          offence_dates_attributes: {
+            '0'=>{ 
+              'date(3i)'=>'10', 
+              'date(2i)'=>'10', 
+              'date(1i)'=>'2000', 
+              '_destroy'=>'1', 
+              'id'=> '123' 
+            }
           }
         }
       }
-    }
 
-    it 'has the expected step name' do
-      expect(
-        subject
-      ).to receive(:update_and_advance).with(
-        form_class,
-        record: charge_record, 
-        as: :delete_offence_date
-      )
+      it 'has the expected step name' do
+        expect(
+          subject
+        ).to receive(:update_and_advance).with(
+          form_class,
+          record: charge_record, 
+          as: :delete_offence_date
+        )
 
-      put :update, params: { 
-        id: crime_application.id,
-        charge_id: charge_record.id, 
-        form_class_params_name => offence_dates_attributes 
-      }    
+        put :update, params: { 
+          id: crime_application.id,
+          charge_id: charge_record.id, 
+          form_class_params_name => offence_dates_attributes 
+        }    
+      end
     end
   end
 
