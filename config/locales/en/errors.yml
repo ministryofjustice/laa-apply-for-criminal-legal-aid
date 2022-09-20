@@ -107,6 +107,10 @@ en:
               blank: Enter a last name
             conflict_of_interest:
               inclusion: Select yes if there is a conflict of interest
+        steps/case/charges_form:
+          attributes:
+            offence_name:
+              blank: Enter or select an offence
         steps/case/charges_summary_form:
           attributes:
             add_offence:

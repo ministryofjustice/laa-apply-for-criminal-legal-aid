@@ -1,13 +1,9 @@
 class ChargePresenter < BasePresenter
-  # TODO: some methods produce mock data for now
+  delegate :code,
+           to: :offence, allow_nil: true, prefix: true
 
-  def offence_name
-    super || id
-  end
-
-  def offence_class
-    'H'
-  end
+  delegate :offence_class, :offence_type,
+           to: :offence, allow_nil: true, prefix: false
 
   def offence_dates
     super.pluck(:date).compact

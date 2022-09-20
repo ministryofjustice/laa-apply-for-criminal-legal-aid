@@ -10,7 +10,15 @@
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :offence_name, autocomplete: 'off' %>
+      <%= f.govuk_text_field :offence_name, label: { size: 'm' },
+                             autocomplete: 'off', list: :offences_list %>
+
+      <%= tag.datalist(
+            options_from_collection_for_select(
+              Offence.all, :name, ->(o) { t('.offence_class', class: o.offence_class) }
+            ),
+            id: :offences_list
+          ) %>
 
       <%= f.govuk_fieldset legend: { text: t('.offence_dates_fieldset_legend') } do %>
         <%= f.fields_for :offence_dates do |od| %>
