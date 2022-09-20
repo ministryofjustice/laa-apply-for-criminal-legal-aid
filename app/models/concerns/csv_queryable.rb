@@ -26,7 +26,7 @@ module CsvQueryable
 
     def csv_attributes(*attrs)
       attrs.each do |name|
-        define_method(name) { row[name.to_s].strip }
+        define_method(name) { row[name] }
       end
     end
 
@@ -44,7 +44,11 @@ module CsvQueryable
     attr_accessor :filepath
 
     def csv
-      CSV.read(@filepath, headers: true)
+      CSV.read(
+        @filepath,
+        headers: true, header_converters: :symbol,
+        converters: ->(field) { field&.strip }
+      )
     end
   end
 end

@@ -7,4 +7,8 @@ class Offence
                  :name,
                  :offence_class,
                  :offence_type
+
+  def self.find_by_name(name)
+    find_by(name:)
+  end
 end
