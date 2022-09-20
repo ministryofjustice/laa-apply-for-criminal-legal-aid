@@ -5,6 +5,8 @@ module Steps
 
       delegate :offence_dates_attributes=, to: :record
 
+      validates_with ChargesValidator 
+
       def offence_dates
         @offence_dates ||= record.offence_dates.map do |offence_date|
           OffenceDateFieldsetForm.build(

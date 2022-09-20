@@ -90,7 +90,7 @@ en:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
           offence_name_legend: Offence name
-          offence_date_legend: Offence date %{index}
+          offence_dates_legend: Offence date %{index}
           add_button: Add another date
           remove_button: Remove date
         confirm_destroy:

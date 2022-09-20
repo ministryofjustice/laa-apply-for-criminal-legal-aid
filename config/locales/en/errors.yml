@@ -111,3 +111,11 @@ en:
           attributes:
             add_offence:
               inclusion: Select yes if you want to add another offence
+        steps/case/offence_date_fieldset_form:
+          attributes:
+            date:
+              future_not_allowed: Offence date cannot be in the future
+          summary:
+            date:
+              blank: Offence dates cannot be blank
+              future_not_allowed: Offence dates cannot be in the future
