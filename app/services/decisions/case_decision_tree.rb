@@ -69,10 +69,7 @@ module Decisions
     end
 
     def edit_new_charge
-      charge = case_charges.create!(
-        offence_dates_attributes: { id: nil } # a blank, first date
-      )
-
+      charge = case_charges.create!
       edit(:charges, charge_id: charge)
     end
 

@@ -10,6 +10,8 @@ exclude:
 linters:
   SpaceAroundErbTag:
     enabled: false
+  PartialInstanceVariable:
+    enabled: true
   ErbSafety:
     enabled: true
     better_html_config: .better-html.yml

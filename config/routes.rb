@@ -7,9 +7,12 @@ end
 
 def crud_step(name, opts = {})
   edit_step name, only: [] do
-    resources only: opts.fetch(:only, [:edit, :update, :destroy]),
+    resources only: [:edit, :update, :destroy],
+              except: opts.fetch(:except, []),
               controller: name, param: opts.fetch(:param),
-              path_names: { edit: '' }
+              path_names: { edit: '' } do
+      get :confirm_destroy, on: :member if parent_resource.actions.include?(:destroy)
+    end
   end
 end
 
@@ -53,9 +56,9 @@ Rails.application.routes.draw do
       end
 
       namespace :address do
-        crud_step :lookup,  param: :address_id, only: [:edit, :update]
-        crud_step :results, param: :address_id, only: [:edit, :update]
-        crud_step :details, param: :address_id, only: [:edit, :update]
+        crud_step :lookup,  param: :address_id, except: [:destroy]
+        crud_step :results, param: :address_id, except: [:destroy]
+        crud_step :details, param: :address_id, except: [:destroy]
       end
 
       namespace :case do
@@ -63,7 +66,7 @@ Rails.application.routes.draw do
         edit_step :case_type
         edit_step :has_codefendants
         edit_step :codefendants
-        crud_step :charges, param: :charge_id, only: [:edit, :update]
+        crud_step :charges, param: :charge_id
         edit_step :charges_summary
       end
     end
