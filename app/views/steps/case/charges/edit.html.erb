@@ -14,13 +14,30 @@
       <%= f.govuk_text_field :offence_name, autocomplete: 'off' %>
 
       <%= f.fields_for :offence_dates do |od| %>
-        <%= od.govuk_fieldset legend: { text: t('.offence_dates_legend', index: od.index + 1) } do %>
-          <%= od.govuk_date_field :date, maxlength_enabled: true, legend: { size: 'm' } %>
-          <%= od.button t('.remove_button'), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
-                       class: %w[govuk-button govuk-button--warning],
-                       data: { module: 'govuk-button' } if @form_object.show_destroy? %>
-          <% end %>
+        <% if od.index.zero? %>
+          <%= od.govuk_fieldset legend: { text: t('.offence_dates_legend', index: od.index + 1), described_by: '#add-or-remove-date' } do %>
+            <div class='govuk-hint'>
+              <%= t('.offence_dates_hint') %>
+            </div>
+            <%= od.govuk_date_field :date, maxlength_enabled: true, legend: { size: 'm', hidden: true } %>
+            <%= od.button t('.remove_button'), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
+                         class: %w[govuk-button govuk-button--warning],
+                         data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+            <% end %>
+          <% else %>
+          <%= od.govuk_fieldset legend: { text: '', index: od.index + 1, described_by: '#add-or-remove-date' } do %>
+            <%= od.govuk_date_field :date, maxlength_enabled: true, legend: { size: 'm', hidden: true } %>
+            <%= od.button t('.remove_button'), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
+                         class: %w[govuk-button govuk-button--warning],
+                         data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+            <% end %>
         <% end %>
+      <% end %>
+
+      <p id="add-or-remove-date" hidden>
+         <%= t('.offence_date_description')%>
+      </p>
+
       <%= f.button t('.add_button'), type: :submit, name: :add_offence_date,
                    class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                    data: { module: 'govuk-button' } %>
