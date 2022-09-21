@@ -89,11 +89,8 @@ en:
         edit:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
-          offence_name_legend: Offence name
-          offence_dates_legend: Offence dates
-          offence_dates_hint: For example, 12 11 2007 
-          offence_date_description: Add or remove an offence date
-          add_button: Add another date 
+          offence_dates_fieldset_legend: Offence dates
+          add_button: Add another date
           remove_button: Remove date
         confirm_destroy:
           page_title: Delete offence confirmation
