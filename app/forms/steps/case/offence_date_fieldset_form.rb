@@ -5,6 +5,8 @@ module Steps
       attribute :id, :string
       attribute :date, :multiparam_date
 
+      validates :date, presence: true, multiparam_date: true
+
       # Needed for `#fields_for` to render the uuids as hidden fields
       def persisted?
         id.present?

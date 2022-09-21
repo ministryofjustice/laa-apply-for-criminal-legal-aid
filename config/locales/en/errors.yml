@@ -111,3 +111,22 @@ en:
           attributes:
             add_offence:
               inclusion: Select yes if you want to add another offence
+        steps/case/offence_date_fieldset_form:
+          attributes:
+            date:
+              blank: Offence date cannot be blank
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Offence date cannot be in the future
+          summary:
+            date:
+              blank: Offence dates cannot be blank
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Offence dates cannot be in the future

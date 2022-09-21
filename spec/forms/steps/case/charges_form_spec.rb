@@ -22,7 +22,28 @@ RSpec.describe Steps::Case::ChargesForm do
   subject { described_class.new(arguments) }
 
   describe 'validations' do
-    # TODO: validations
+    context 'offence dates' do
+      let(:offence_dates_attributes) {
+        {
+         '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'3000' },
+         '1'=>{ 'date(3i)'=>'', 'date(2i)'=>'', 'date(1i)'=>'' },
+        }
+      }
+
+      it 'returns false' do
+        expect(subject.save).to be(false)
+      end
+
+      it 'sets the errors with their index' do
+        expect(subject).to_not be_valid
+
+        expect(subject.errors.of_kind?('offence_dates-attributes[0].date', :future_not_allowed)).to eq(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[0].date').first).to eq('Offence dates cannot be in the future')
+
+        expect(subject.errors.of_kind?('offence_dates-attributes[1].date', :blank)).to eq(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[1].date').first).to eq('Offence dates cannot be blank')
+      end
+    end
   end
 
   describe '#save' do

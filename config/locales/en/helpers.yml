@@ -26,6 +26,8 @@ en:
         has_codefendants: Does your client have any co-defendants in this case?
       steps_case_codefendants_form:
         conflict_of_interest: Is there a conflict of interest with this co-defendant?
+      steps_case_charges_form:
+        date: Offence date %{index}
       steps_case_charges_summary_form:
         add_offence: Do you want to add another offence?
 
@@ -45,6 +47,7 @@ en:
         urn: For example, ‘12 AB 3456789’.
       steps_case_charges_form:
         offence_name: For example, robbery
+        date: For example, 12 11 2007
 
     label:
       steps_client_has_partner_form:
