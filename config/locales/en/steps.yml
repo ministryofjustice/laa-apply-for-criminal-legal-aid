@@ -1,6 +1,9 @@
 ---
 en:
   steps:
+    shared:
+      offence_class: Class %{class}
+
     client:
       has_partner:
         edit:
@@ -90,7 +93,6 @@ en:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
           offence_dates_fieldset_legend: Offence dates
-          offence_class: Class %{class}
           add_button: Add another date
           remove_button: Remove date
         confirm_destroy:
@@ -108,6 +110,5 @@ en:
             one: You have added %{count} offence
             other: You have added %{count} offences
         offence_details:
-          offence_class: Class %{class}
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
