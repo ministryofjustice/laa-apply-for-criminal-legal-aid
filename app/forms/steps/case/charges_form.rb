@@ -2,6 +2,7 @@ module Steps
   module Case
     class ChargesForm < Steps::BaseFormObject
       attribute :offence_name, :string
+      validates :offence_name, presence: true
 
       delegate :offence_dates_attributes=, to: :record
 

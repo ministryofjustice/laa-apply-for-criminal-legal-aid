@@ -31,6 +31,13 @@ RSpec.describe Offence, type: :model do
     end
   end
 
+  describe '.find_by_name' do
+    it 'is shorthand for `.find_by`' do
+      expect(described_class).to receive(:find_by).with(name: 'Foobar')
+      described_class.find_by_name('Foobar')
+    end
+  end
+
   describe '.all' do
     subject { described_class.all }
 

@@ -22,6 +22,8 @@ RSpec.describe Steps::Case::ChargesForm do
   subject { described_class.new(arguments) }
 
   describe 'validations' do
+    it { should validate_presence_of(:offence_name) }
+
     context 'offence dates' do
       let(:offence_dates_attributes) {
         {
