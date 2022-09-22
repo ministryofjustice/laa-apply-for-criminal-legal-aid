@@ -2,7 +2,7 @@ class BasePresenter < SimpleDelegator
   include ActionView::Helpers::TagHelper
   include ActionView::Context
 
-  delegate :t!, :l, to: I18n
+  delegate :t, :t!, :l, to: I18n
 
   def self.present(model)
     ApplicationController.helpers.present(model, self)
