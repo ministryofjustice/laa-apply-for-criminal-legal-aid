@@ -3,30 +3,28 @@ require 'rails_helper'
 RSpec.describe ChargePresenter do
   subject { described_class.new(charge) }
 
-  let(:charge) { Charge.new(offence_name: offence_name) }
-  let(:offence_name) { 'Common assault' }
+  let(:charge) { instance_double(Charge, offence: offence) }
+  let(:offence) { double(Offence, offence_class: 'XYZ', offence_type: 'Offence Type') }
 
   describe 'offence attributes delegation' do
     context 'when there is an offence instance' do
-      let(:offence) { charge.offence }
-
       context '#offence_class' do
         it 'delegates to the presented offence' do
-          expect(offence).to receive(:offence_class).and_call_original
-          expect(subject.offence_class).to eq('Class H')
+          expect(offence).to receive(:offence_class)
+          subject.offence_class
         end
       end
 
       context '#offence_type' do
         it 'delegates to the presented offence' do
-          expect(offence).to receive(:offence_type).and_call_original
-          expect(subject.offence_type).to eq('CS Summary Non-Motoring')
+          expect(offence).to receive(:offence_type)
+          subject.offence_type
         end
       end
     end
 
     context 'when offence instance is `nil`' do
-      let(:offence_name) { 'Foobar offence' }
+      let(:offence) { nil }
 
       context '#offence_class' do
         it { expect(subject.offence_class).to be_nil }
