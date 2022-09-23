@@ -6,6 +6,12 @@ module Refinements
         yield presenter.new(obj)
       end
     end
+
+    def presented_map(presenter)
+      map do |obj|
+        presenter.new(obj)
+      end
+    end
     # :nocov:
   end
 end
