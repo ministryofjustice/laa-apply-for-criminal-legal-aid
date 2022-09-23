@@ -29,4 +29,4 @@ en:
   shared:
     or_sentence:
       two_words_connector: " or "
-      last_word_connector: ", or "
+      last_word_connector: " or "

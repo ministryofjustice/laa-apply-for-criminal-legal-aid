@@ -23,7 +23,7 @@ RSpec.describe OffencePresenter do
 
     context 'for an offence with 3 classes' do
       let(:offence_class) { 'F/G/K' }
-      it { is_expected.to eq('Class F, G, or K') }
+      it { is_expected.to eq('Class F, G or K') }
     end
   end
 end
