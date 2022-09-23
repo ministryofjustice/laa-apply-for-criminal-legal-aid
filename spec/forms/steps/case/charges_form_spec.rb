@@ -27,8 +27,8 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'offence dates' do
       let(:offence_dates_attributes) {
         {
-         '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'3000' },
-         '1'=>{ 'date(3i)'=>'', 'date(2i)'=>'', 'date(1i)'=>'' },
+          '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'3000' },
+          '1'=>{ 'date(3i)'=>'', 'date(2i)'=>'', 'date(1i)'=>'' },
         }
       }
 
@@ -44,6 +44,48 @@ RSpec.describe Steps::Case::ChargesForm do
 
         expect(subject.errors.of_kind?('offence_dates-attributes[1].date', :blank)).to eq(true)
         expect(subject.errors.messages_for('offence_dates-attributes[1].date').first).to eq('Offence dates cannot be blank')
+      end
+    end
+
+    describe '#any_marked_for_destruction?' do
+      # NOTE: this scenario requires real DB records to exercise nested attributes
+      context 'there are offence dates marked for destruction' do
+        let(:application) { CrimeApplication.create }
+        let(:case_record) { Case.create(crime_application: application) }
+
+        let(:offence_dates) { [
+          OffenceDate.new(date: Date.new(2000,11,03)),
+          OffenceDate.new(date: Date.new(2009,05,01))
+        ] }
+
+        let(:charge_record) { Charge.create(case: case_record, offence_dates: offence_dates) }
+
+        let(:offence_dates_attributes) {
+          {
+            '0'=>{ 
+              'id'=>"#{offence_dates[0].id}",
+              'date(3i)'=>'03', 
+              'date(2i)'=>'11', 
+              'date(1i)'=>'2000', 
+              '_destroy'=>'1'},
+            '1'=>{ 
+              'id'=>"#{offence_dates[1].id}",
+              'date(3i)'=>'01', 
+              'date(2i)'=>'05', 
+              'date(1i)'=>'2009' 
+            }
+          }
+        }
+
+        it 'returns true' do
+          expect(subject.any_marked_for_destruction?).to eq(true)
+          expect(subject.offence_dates[0]._destroy).to eq(true)
+          expect(subject.offence_dates[1]._destroy).to eq(false)
+        end
+      end
+
+      context 'there are no offence_dates to be destroyed' do
+        it { expect(subject.any_marked_for_destruction?).to eq(false) }
       end
     end
   end
