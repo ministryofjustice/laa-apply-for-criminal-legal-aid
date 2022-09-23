@@ -29,6 +29,7 @@
   padding: 5px;
   border-bottom: solid #b1b4b6;
   border-width: 1px 0;
+  cursor: default; // [change: added cursor style]
 }
 
 .govuk-input__suggestion:focus {

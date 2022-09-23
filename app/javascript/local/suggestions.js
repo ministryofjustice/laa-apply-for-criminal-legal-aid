@@ -125,6 +125,12 @@ Input.prototype.updateSuggestionsWithOptions = function (options) {
 
 Input.prototype.handleSuggestionClicked = function (event) {
   var suggestionClicked = event.target
+
+  // [change: support captions]
+  if (suggestionClicked.tagName !== 'li') {
+    suggestionClicked = suggestionClicked.closest('li')
+  }
+
   this.selectSuggestion(suggestionClicked)
 }
 
