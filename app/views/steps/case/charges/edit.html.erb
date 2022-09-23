@@ -15,7 +15,7 @@
 
       <%= tag.datalist(
             options_from_collection_for_select(
-              Offence.all, :name, ->(o) { t('.offence_class', class: o.offence_class) }
+              Offence.all.presented_map(OffencePresenter), :name, :offence_class
             ),
             id: :offences_list
           ) %>

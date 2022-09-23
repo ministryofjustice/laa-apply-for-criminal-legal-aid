@@ -6,6 +6,12 @@ module Refinements
         yield decorator.new(obj)
       end
     end
+
+    def decorated_map(decorator)
+      map do |obj|
+        decorator.new(obj)
+      end
+    end
     # :nocov:
   end
 end

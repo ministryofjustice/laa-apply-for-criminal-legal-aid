@@ -18,3 +18,15 @@ en:
   flash:
     success:
       title: Success
+
+  support:
+    array:
+      # Defaults for `array.to_sentence`
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "
+
+  shared:
+    or_sentence:
+      two_words_connector: " or "
+      last_word_connector: " or "
