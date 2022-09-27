@@ -1,0 +1,18 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text">Your application has been date stamped</h1>
+
+    <div class="govuk-button-group">
+      <%= link_to '#',
+                  class: 'govuk-button app-button--m app-button--inverted',
+                  data: { module: 'govuk-button' } do; t('.continue'); end %>
+      <%= link_to '#',
+                  class: 'govuk-button govuk-button--secondary',
+                  data: { module: 'govuk-button' } do; t('.come_back_later'); end %>
+    </div>
+
+  </div>
+</div>

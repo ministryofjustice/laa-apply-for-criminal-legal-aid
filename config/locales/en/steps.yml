@@ -78,6 +78,11 @@ en:
         edit:
           page_title: Enter the case type
           heading:  Enter the case type
+      date_stamp:
+        show:
+          page_title: Your application has been date stampled
+          continue: Save and continue
+          come_back_later: Save and come back later
       has_codefendants:
         edit:
           page_title: Does your client have co-defendants?
