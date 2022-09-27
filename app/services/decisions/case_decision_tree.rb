@@ -6,7 +6,10 @@ module Decisions
       when :urn
         edit(:case_type)
       when :case_type
-        edit(:has_codefendants)
+       edit(:has_codefendants)
+      when :date_stamp
+       # todo in next PR - redirect to tasklist for now
+       show(:tasklist)
       when :has_codefendants
         after_has_codefendants
       when :add_codefendant

@@ -1,0 +1,12 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text">Your application has been date stamped</h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.inverted_continue_button %>
+    <% end %>
+  </div>
+</div>

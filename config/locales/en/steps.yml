@@ -78,6 +78,9 @@ en:
         edit:
           page_title: Enter the case type
           heading:  Enter the case type
+      date_stamp:
+        edit:
+          page_title: Your case has been date stamped
       has_codefendants:
         edit:
           page_title: Does your client have co-defendants?
