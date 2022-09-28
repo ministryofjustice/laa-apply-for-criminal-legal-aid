@@ -27,10 +27,18 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `case_type`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case_type: case_type) }
     let(:step_name) { :case_type }
 
-    context 'has correct next step' do
+    context 'if date stampable' do
+      let(:case_type) { CaseType::SUMMARY_ONLY }
+
+      it { is_expected.to have_destination(:date_stamp, :show, id: crime_application) }
+    end
+
+    context 'if not date stampable' do
+      let(:case_type) { CaseType::INDICTABLE }
+
       it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
     end
   end
