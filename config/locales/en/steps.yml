@@ -116,3 +116,7 @@ en:
         offence_details:
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
+      hearing_details:
+        edit:
+          page_title: Next hearing court details
+          heading: Enter the details of the next court hearing

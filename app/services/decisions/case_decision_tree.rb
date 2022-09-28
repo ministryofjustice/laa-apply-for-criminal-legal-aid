@@ -1,6 +1,6 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
       when :urn
@@ -23,11 +23,14 @@ module Decisions
         after_delete_offence_date
       when :charges_summary
         after_charges_summary
+      when :hearing_details
+        # TODO: update when we have next step
+        show('/home', action: :index)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
@@ -62,8 +65,7 @@ module Decisions
     end
 
     def after_charges_summary
-      # TODO: update when we have next step
-      return show('/home', action: :index) if form_object.add_offence.no?
+      return edit(:hearing_details) if form_object.add_offence.no?
 
       edit_new_charge
     end
