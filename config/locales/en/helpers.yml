@@ -30,6 +30,8 @@ en:
         date: Offence date %{index}
       steps_case_charges_summary_form:
         add_offence: Do you want to add another offence?
+      steps_case_hearing_details_form:
+        hearing_date: Date of next hearing
 
     hint:
       steps_client_has_partner_form:
@@ -48,6 +50,9 @@ en:
       steps_case_charges_form:
         offence_name: For example, robbery
         date: For example, 12 11 2007
+      steps_case_hearing_details_form:
+        hearing_court_name: For example, Cardiff
+        hearing_date: For example, 27 3 2024
 
     label:
       steps_client_has_partner_form:
@@ -96,3 +101,5 @@ en:
         offence_name: Offence name
       steps_case_charges_summary_form:
         add_offence_options: *YESNO
+      steps_case_hearing_details_form:
+        hearing_court_name: Court name

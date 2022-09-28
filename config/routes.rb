@@ -69,6 +69,7 @@ Rails.application.routes.draw do
         edit_step :codefendants
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
+        edit_step :hearing_details
       end
     end
   end

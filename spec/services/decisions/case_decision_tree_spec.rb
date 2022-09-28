@@ -161,7 +161,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'and answer is `no`' do
       let(:add_offence) { YesNoAnswer::NO }
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
     end
   end
 
@@ -182,6 +182,15 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:charge) { Charge.new(id: '20') }
       let(:form_object) { double('FormObject', case: kase, record: charge) }
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
+    end
+  end
+
+  context 'when the step is `hearing_details`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :hearing_details }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end
   end
 end
