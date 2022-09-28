@@ -6,7 +6,7 @@ module Decisions
       when :urn
         edit(:case_type)
       when :case_type
-        after_case_type        
+        after_case_type
       when :has_codefendants
         after_has_codefendants
       when :add_codefendant
@@ -32,7 +32,11 @@ module Decisions
     private
 
     def after_case_type
-      date_stamped = DateStamp.new(form_object).call
+      date_stamped = DateStamper.new(
+        form_object.crime_application,
+        form_object.case_type
+      ).call
+
       if date_stamped
         show(:date_stamp)
       else

@@ -35,11 +35,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_140335) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "has_codefendants"
     t.string "case_type"
     t.string "cc_appeal_maat_id"
     t.string "cc_appeal_fin_change_maat_id"
     t.text "cc_appeal_fin_change_details"
+    t.string "has_codefendants"
+    t.string "hearing_court_name"
+    t.date "hearing_date"
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 

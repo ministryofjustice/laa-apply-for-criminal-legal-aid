@@ -1,9 +1,7 @@
 module Steps
   module Case
     class DateStampController < Steps::CaseStepController
-      def show
-        binding.pry
-      end
+      def show; end
     end
   end
 end

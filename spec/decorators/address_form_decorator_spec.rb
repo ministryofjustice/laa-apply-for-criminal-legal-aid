@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AddressFormDecorator do
   subject { described_class.new(form_object) }
 
-   { double('FormObject', record: address_record) }
+  let(:form_object) { double('FormObject', record: address_record) }
 
   let(:address_record) { instance_double(Address, type: address_type, person: person_record, postcode: 'SW1A 2AA') }
   let(:person_record)  { instance_double(Person, type: person_type) }

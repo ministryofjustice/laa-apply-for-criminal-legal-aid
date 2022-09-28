@@ -15,6 +15,9 @@ RSpec.describe Decisions::CaseDecisionTree do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
+
+    allow(crime_application).to receive(:update).and_return(true)
+    allow(crime_application).to receive(:date_stamp).and_return(nil)
   end
 
   context 'when the step is `urn`' do
@@ -27,7 +30,13 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `case_type`' do
-    let(:form_object) { double('FormObject', case_type: case_type) }
+    let(:form_object) { 
+      double(
+        'FormObject', 
+        case_type: case_type, 
+        crime_application: crime_application)
+    }
+
     let(:step_name) { :case_type }
 
     context 'if date stampable' do
