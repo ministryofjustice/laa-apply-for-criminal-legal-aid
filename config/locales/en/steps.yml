@@ -78,6 +78,10 @@ en:
         edit:
           page_title: Enter the case type
           heading:  Enter the case type
+      date_stamp:
+        show:
+          page_title: Your application has been date stamped
+          heading: Your application has been date stamped
       has_codefendants:
         edit:
           page_title: Does your client have co-defendants?
