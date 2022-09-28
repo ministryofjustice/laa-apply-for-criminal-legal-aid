@@ -6,7 +6,7 @@ module Decisions
       when :urn
         edit(:case_type)
       when :case_type
-        edit(:has_codefendants)
+        after_case_type
       when :has_codefendants
         after_has_codefendants
       when :add_codefendant
@@ -30,6 +30,15 @@ module Decisions
     # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
+
+    def after_case_type
+      dates_stampable = [CaseType.new(:summary_only), CaseType.new(:either_way), CaseType.new(:committal), CaseType.new(:cc_appeal)]
+      if  dates_stampable.include?(form_object.case_type)
+        show(:date_stamp)
+      else
+        edit(:has_codefendants)
+      end
+    end
 
     def after_has_codefendants
       if form_object.has_codefendants.yes?
