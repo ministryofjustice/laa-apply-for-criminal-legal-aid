@@ -6,7 +6,7 @@ module Decisions
       when :urn
         edit(:case_type)
       when :case_type
-        after_case_type
+        after_case_type        
       when :has_codefendants
         after_has_codefendants
       when :add_codefendant
@@ -32,8 +32,8 @@ module Decisions
     private
 
     def after_case_type
-      dates_stampable = [CaseType.new(:summary_only), CaseType.new(:either_way), CaseType.new(:committal), CaseType.new(:cc_appeal)]
-      if  dates_stampable.include?(form_object.case_type)
+      date_stamped = DateStamp.new(form_object).call
+      if date_stamped
         show(:date_stamp)
       else
         edit(:has_codefendants)
