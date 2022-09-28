@@ -6,12 +6,8 @@
     <h1 class="govuk-heading-l app-inverted-text">Your application has been date stamped</h1>
 
     <div class="govuk-button-group">
-      <%= link_to '#',
-                  class: 'govuk-button app-button--m app-button--inverted',
-                  data: { module: 'govuk-button' } do; t('.continue'); end %>
-      <%= link_to '#',
-                  class: 'govuk-button govuk-button--secondary',
-                  data: { module: 'govuk-button' } do; t('.come_back_later'); end %>
+      <%= link_button t('helpers.submit.save_and_continue'), '#', class: 'app-button--m app-button--inverted' %>
+      <%= link_button t('helpers.submit.save_and_come_back_later'), '#', class: 'govuk-button--secondary' %>
     </div>
 
   </div>
