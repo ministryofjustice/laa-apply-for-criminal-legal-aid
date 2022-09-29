@@ -8,6 +8,7 @@ RSpec.describe CrimeApplicationPresenter do
                     id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
                     created_at: DateTime.new(2022, 01, 12),
                     status: 'in_progress',
+                    date_stamp: Date.new(2022, 02, 01),
                     applicant: applicant)
   }
 
@@ -40,6 +41,10 @@ RSpec.describe CrimeApplicationPresenter do
 
     it 'can output the applicant date of birth in the correct format' do
       expect(subject.applicant_dob).to eq('1 Feb 1990')
+    end
+
+    it 'can output the applicant date stamp in the correct format' do
+      expect(subject.pretty_date_stamp).to eq('1 Feb 2022')
     end
 
     it 'can output the subject start date in the correct format' do
