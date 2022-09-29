@@ -7,7 +7,7 @@ class DateStamper
   def call
     if @case_type.date_stampable? && @crime_app.date_stamp.nil?
       @crime_app.update(date_stamp: DateTime.now)
-    elsif !@case_type.date_stampable?
+    elsif !@case_type.date_stampable? && @crime_app.date_stamp.present?
       @crime_app.update(date_stamp: nil)
       false
     else

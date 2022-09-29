@@ -29,7 +29,7 @@ RSpec.describe DateStamper do
       context 'when case_type is not "date stampable"' do
         let(:case_type_sym) { :cc_appeal_fin_change }
 
-        it 'does reset the the crime applications date stamp' do
+        it 'resets the the crime applications date stamp' do
           expect(crime_app).to receive(:update).with({date_stamp: nil})
 
           result = subject.call
@@ -41,8 +41,21 @@ RSpec.describe DateStamper do
       context 'when case_type is "date stampable" and has already been date stamped' do
         let(:case_type_sym) { :cc_appeal_fin_change }
 
-        it 'does not update the crime applications date stamp' do
-          expect(crime_app).to receive(:update).with({date_stamp: instance_of(DateTime)})
+        it 'does not update the crime applications a date stamp' do
+          expect(crime_app).to receive(:update).with({date_stamp: nil})
+
+          result = subject.call
+
+          expect(result).to be(false)
+        end
+      end
+
+      context 'when case_type is not "date stampable" and has no date stamped' do
+        let(:case_type_sym) { :cc_appeal_fin_change }
+        let(:date) { nil }
+
+        it 'does not update the crime applications a date stamp' do
+          expect(crime_app).not_to receive(:update)
 
           result = subject.call
 
