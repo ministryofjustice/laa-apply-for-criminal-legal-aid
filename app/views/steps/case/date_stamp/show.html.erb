@@ -6,8 +6,13 @@
     <h1 class="govuk-heading-l app-inverted-text"><%= t('.heading')%></h1>
 
     <div class="govuk-button-group">
-      <%= link_button t('helpers.submit.save_and_continue'), '#', class: 'app-button--m app-button--inverted' %>
-      <%= link_button t('helpers.submit.save_and_come_back_later'), '#', class: 'govuk-button--secondary' %>
+      <%= link_button t('helpers.submit.save_and_continue'), 
+        edit_steps_case_has_codefendants_path(current_crime_application), 
+        class: 'app-button--m app-button--inverted' %>
+
+      <%= link_button t('helpers.submit.save_and_come_back_later'), 
+        edit_crime_application_path(current_crime_application), 
+        class: 'govuk-button--secondary' %>
     </div>
 
   </div>
