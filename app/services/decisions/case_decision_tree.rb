@@ -35,12 +35,7 @@ module Decisions
     private
 
     def after_case_type
-      date_stamped = DateStamper.new(
-        form_object.crime_application,
-        form_object.case_type
-      ).call
-
-      if date_stamped
+      if form_object.crime_application.date_stamp.present?
         show(:date_stamp)
       else
         edit(:has_codefendants)

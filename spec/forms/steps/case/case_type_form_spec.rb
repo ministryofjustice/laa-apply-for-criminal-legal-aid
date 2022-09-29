@@ -11,7 +11,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
   } }
 
   let(:crime_application) { 
-    instance_double(CrimeApplication)
+    instance_double(CrimeApplication, update: true, case: Case.new)
   }
 
   let(:case_type) { nil }
@@ -21,7 +21,42 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
   subject { described_class.new(arguments) }
 
+  describe 'date stamping' do
+    let(:crime_application) { 
+      instance_double(
+        CrimeApplication, 
+        update: true, 
+        case: Case.new,
+        date_stamp: nil
+      )
+    }
+
+    before do
+      subject.save
+    end
+
+    context 'when `case_type` is "date stampable"' do
+      let(:case_type) { 'summary_only' }
+
+      it 'date stamps the crime application' do
+        expect(subject).to be_valid
+        expect(crime_application).to have_received(:update)
+      end
+    end
+
+    context 'when `case_type` is not "date stampable"' do
+      let(:case_type) { 'indictable' }
+
+      it 'does not date stamp the crime application' do
+        expect(subject).to be_valid
+        expect(crime_application).to_not have_received(:update)
+      end
+    end
+  end
+
   describe '#save' do
+
+
     context 'when `case_type` is blank' do
       let(:case_type) { '' }
 

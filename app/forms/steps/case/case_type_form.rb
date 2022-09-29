@@ -16,6 +16,7 @@ module Steps
                 presence: true,
                 if: -> { case_type&.cc_appeal_fin_change? }
 
+
       def choices
         CaseType.values
       end
@@ -23,6 +24,7 @@ module Steps
       private
 
       def persist!
+        DateStamper.new(crime_application, case_type).call
         kase.update(
           attributes.merge(attributes_to_reset)
         )
