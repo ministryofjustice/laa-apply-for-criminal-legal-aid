@@ -30,24 +30,18 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `case_type`' do
-    let(:form_object) { 
-      double(
-        'FormObject', 
-        case_type: case_type, 
-        crime_application: crime_application
-      )
-    }
-
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :case_type }
 
-    context 'if "date stampable"' do
-      let(:case_type) { CaseType::SUMMARY_ONLY }
+    context 'if recently date stamped' do
+      before do
+        allow(crime_application).to receive(:date_stamp) { Date.today }
+      end
 
       it { is_expected.to have_destination(:date_stamp, :show, id: crime_application) }
     end
 
-    context 'if not "date stampable"' do
-      let(:case_type) { CaseType::INDICTABLE }
+    context 'if not recently date stamped' do
       it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
     end
   end
@@ -188,7 +182,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:offence_dates) { [ OffenceDate.new(date: '01, 02, 2000') ] }
       let(:charge) { Charge.new(id: '20', offence_dates: offence_dates) }
       let(:form_object) { double('FormObject', case: kase, record: charge) }
-      
+
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
     end
   end

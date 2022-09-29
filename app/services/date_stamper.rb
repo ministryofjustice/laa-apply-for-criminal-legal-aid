@@ -15,6 +15,8 @@ class DateStamper
     # TODO: what happens when we already have a date?
     if date_stampable?
       @crime_app.update(date_stamp: DateTime.now)
+    else
+      false
     end
   end
 

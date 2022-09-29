@@ -16,7 +16,6 @@ module Steps
                 presence: true,
                 if: -> { case_type&.cc_appeal_fin_change? }
 
-
       def choices
         CaseType.values
       end
