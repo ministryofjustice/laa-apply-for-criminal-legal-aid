@@ -16,6 +16,10 @@ class CrimeApplicationPresenter < BasePresenter
     l(date_of_birth)
   end
 
+  def pretty_date_stamp
+    l(date_stamp)
+  end
+
   def applicant_name
     "#{first_name} #{last_name}"
   end

@@ -48,6 +48,15 @@
         <p class="govuk-body">
           <%= @crime_application.applicant_dob %>
         </p>
+
+        <% if @crime_application.date_stamp.present? %>
+          <h3 class="govuk-heading-s">
+            <%= t('.aside.date_stamp') %>
+          </h3>
+          <p class="govuk-body">
+            <%= @crime_application.pretty_date_stamp %>
+          </p>
+        <% end %>
       <% end %>
     </aside>
   </div>
