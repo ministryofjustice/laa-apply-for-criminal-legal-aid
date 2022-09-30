@@ -23,10 +23,14 @@ module Steps
       private
 
       def persist!
+        # TODO: discuss wrapping in a transaction to prevent Case#update
+        # if DateStamper fails
+
+        return false unless kase.update(attributes.merge(attributes_to_reset))
+
         DateStamper.new(crime_application, case_type).call
-        kase.update(
-          attributes.merge(attributes_to_reset)
-        )
+
+        true
       end
 
       def attributes_to_reset
