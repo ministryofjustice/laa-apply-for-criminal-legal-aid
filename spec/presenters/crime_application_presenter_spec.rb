@@ -8,6 +8,8 @@ RSpec.describe CrimeApplicationPresenter do
                     id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
                     created_at: DateTime.new(2022, 01, 12),
                     status: 'in_progress',
+                    date_stamp: Date.new(2022, 02, 01),
+                    case: Case.new(case_type: CaseType.new(case_type)),
                     applicant: applicant)
   }
 
@@ -19,6 +21,20 @@ RSpec.describe CrimeApplicationPresenter do
       date_of_birth: Date.new(1990, 02, 01),
     )
   }
+
+  let(:case_type) { :indictable }
+
+  describe '#application_date_stamp' do
+    context 'when a case is date stampable' do
+      let(:case_type) { :summary_only }
+      it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
+    end
+
+    context 'when a case is not date stampable' do
+      let(:case_type) { :indictable }
+      it { expect(subject.application_date_stamp).to be(nil) }
+    end
+  end
 
   describe '#applicant?' do
     context 'when there is an applicant record' do

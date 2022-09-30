@@ -23,6 +23,7 @@ module Steps
       private
 
       def persist!
+        DateStamper.new(crime_application, case_type).call
         kase.update(
           attributes.merge(attributes_to_reset)
         )

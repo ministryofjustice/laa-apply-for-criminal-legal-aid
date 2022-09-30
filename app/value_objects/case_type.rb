@@ -8,4 +8,15 @@ class CaseType < ValueObject
     CC_APPEAL = new(:cc_appeal),
     CC_APPEAL_FIN_CHANGE = new(:cc_appeal_fin_change)
   ].freeze
+
+  DATE_STAMPABLE = [
+    :summary_only,
+    :either_way,
+    :committal,
+    :cc_appeal
+  ].freeze
+
+  def date_stampable?
+    DATE_STAMPABLE.include?(value)
+  end
 end
