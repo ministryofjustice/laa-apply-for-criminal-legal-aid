@@ -16,8 +16,8 @@ class CrimeApplicationPresenter < BasePresenter
     l(date_of_birth)
   end
 
-  def pretty_date_stamp
-    l(date_stamp)
+  def application_date_stamp
+    l(date_stamp) if case_type&.date_stampable?
   end
 
   def applicant_name
@@ -44,5 +44,11 @@ class CrimeApplicationPresenter < BasePresenter
 
   def tag_classes
     DEFAULT_CLASSES | Array(STATUSES.fetch(status))
+  end
+
+  def case_type
+    return unless self.case&.case_type
+
+    CaseType.new(self.case.case_type)
   end
 end

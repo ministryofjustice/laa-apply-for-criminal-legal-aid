@@ -9,6 +9,7 @@ RSpec.describe CrimeApplicationPresenter do
                     created_at: DateTime.new(2022, 01, 12),
                     status: 'in_progress',
                     date_stamp: Date.new(2022, 02, 01),
+                    case: Case.new(case_type: CaseType.new(case_type)),
                     applicant: applicant)
   }
 
@@ -20,6 +21,20 @@ RSpec.describe CrimeApplicationPresenter do
       date_of_birth: Date.new(1990, 02, 01),
     )
   }
+
+  let(:case_type) { :indictable }
+
+  describe '#application_date_stamp' do
+    context 'when a case is date stampable' do
+      let(:case_type) { :summary_only }
+      it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
+    end
+
+    context 'when a case is not date stampable' do
+      let(:case_type) { :indictable }
+      it { expect(subject.application_date_stamp).to be(nil) }
+    end
+  end
 
   describe '#applicant?' do
     context 'when there is an applicant record' do
@@ -41,10 +56,6 @@ RSpec.describe CrimeApplicationPresenter do
 
     it 'can output the applicant date of birth in the correct format' do
       expect(subject.applicant_dob).to eq('1 Feb 1990')
-    end
-
-    it 'can output the applicant date stamp in the correct format' do
-      expect(subject.pretty_date_stamp).to eq('1 Feb 2022')
     end
 
     it 'can output the subject start date in the correct format' do
