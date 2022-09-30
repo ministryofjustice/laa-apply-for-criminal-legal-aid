@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DateStamper do
-  let(:case_type_sym) { described_class::DATE_STAMPABLE.sample }
+  let(:case_type_sym) { CaseType::DATE_STAMPABLE.sample }
   let(:date) { DateTime.new(2022, 02, 02) }
   let(:case_type) { CaseType.new(case_type_sym) }
   let(:crime_app) {

@@ -34,18 +34,11 @@ module Decisions
 
     private
 
-    # TODO: determine logic on case type and date stamp
-    #   1. Should the date stamp be updated if the case_type changes
-    #      and the date_stamp is already set
-    #   2. What to do with the date_stamp if case_type changes from "stampable"
-    #   3, When should the date stamp page be shown?
-    #
-    # Holding logic:
-    # Do not update date stamp once it has been set.
-    # Only show date_stamp page if stamped today.
-
     def after_case_type
-      if form_object.crime_application.date_stamp == Time.zone.today
+      has_date_stamp = form_object.crime_application.date_stamp
+      is_date_stampable = form_object.case_type.date_stampable?
+
+      if is_date_stampable && has_date_stamp
         show(:date_stamp)
       else
         edit(:has_codefendants)

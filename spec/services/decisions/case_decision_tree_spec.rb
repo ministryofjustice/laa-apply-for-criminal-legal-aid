@@ -30,19 +30,38 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `case_type`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case_type: CaseType.new(case_type)) }
     let(:step_name) { :case_type }
 
-    context 'if recently date stamped' do
+    context 'and the application has a date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp) { Date.today }
       end
 
-      it { is_expected.to have_destination(:date_stamp, :show, id: crime_application) }
+      context 'and the case type is "date stampable"' do
+        let(:case_type) { CaseType::DATE_STAMPABLE.sample }
+        it { is_expected.to have_destination(:date_stamp, :show, id: crime_application) }
+      end
+
+      context 'and case type is not "date stampable"' do
+        let(:case_type) { :indictable }
+        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+      end
     end
 
-    context 'if not recently date stamped' do
-      it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+    context 'and the application has no date stamp' do
+      before do
+        allow(crime_application).to receive(:date_stamp) { nil }
+      end
+      context 'and the case type is "date stampable"' do
+        let(:case_type) { CaseType::DATE_STAMPABLE.sample }
+        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+      end
+
+      context 'and case type is not "date stampable"' do
+        let(:case_type) { :indictable }
+        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+      end
     end
   end
 
