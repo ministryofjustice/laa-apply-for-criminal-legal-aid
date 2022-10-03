@@ -1,24 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Client::DetailsForm do
-  let(:arguments) { {
-    crime_application: crime_application,
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application: crime_application,
     first_name: 'John',
     last_name: 'Doe',
     other_names: nil,
     date_of_birth: Date.yesterday,
-  } }
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
-  subject { described_class.new(arguments) }
-
   describe '#save' do
     context 'validations' do
-      it { should validate_presence_of(:first_name) }
-      it { should validate_presence_of(:last_name) }
-      it { should validate_presence_of(:date_of_birth) }
-      it { should_not validate_presence_of(:other_names) }
+      it { is_expected.to validate_presence_of(:first_name) }
+      it { is_expected.to validate_presence_of(:last_name) }
+      it { is_expected.to validate_presence_of(:date_of_birth) }
+      it { is_expected.not_to validate_presence_of(:other_names) }
     end
 
     context 'date_of_birth' do

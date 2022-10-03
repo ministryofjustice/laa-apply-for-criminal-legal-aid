@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Section do
-  subject { described_class.new(crime_application, name: name, tasks: tasks, index: index) }
+  subject { described_class.new(crime_application, name:, tasks:, index:) }
 
   let(:name) { :foobar_task }
   let(:tasks) { [:task_one, :task_two] }
@@ -32,9 +32,9 @@ RSpec.describe TaskList::Section do
       expect(
         subject.render
       ).to eq(
-        '<li>' +
-        '<h2 class="app-task-list__section"><span class="app-task-list__section-number">1.</span>Foo Bar Heading</h2>' +
-        '<ul class="app-task-list__items">[task_markup][task_markup]</ul>' +
+        '<li>' \
+        '<h2 class="app-task-list__section"><span class="app-task-list__section-number">1.</span>Foo Bar Heading</h2>' \
+        '<ul class="app-task-list__items">[task_markup][task_markup]</ul>' \
         '</li>'
       )
     end
@@ -45,7 +45,7 @@ RSpec.describe TaskList::Section do
       it 'renders the expected section HTML element' do
         expect(
           subject.render
-        ).to match(/<span class="app-task-list__section-number">3.<\/span>/)
+        ).to match(%r{<span class="app-task-list__section-number">3.</span>})
       end
     end
   end

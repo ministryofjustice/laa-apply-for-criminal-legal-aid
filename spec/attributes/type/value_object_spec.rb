@@ -11,7 +11,7 @@ RSpec.describe Type::ValueObject do
     it 'is registered with type `:value_object`' do
       expect(
         ActiveModel::Type.lookup(:value_object).is_a?(described_class)
-      ).to eq(true)
+      ).to be(true)
     end
 
     it 'has an underlying type of `:value_object`' do
@@ -21,21 +21,25 @@ RSpec.describe Type::ValueObject do
 
   describe 'when value is `nil`' do
     let(:value) { nil }
+
     it { expect(coerced_value).to be_nil }
   end
 
   describe 'when value is a symbol' do
     let(:value) { :yes }
+
     it { expect(coerced_value).to eq(YesNoAnswer::YES) }
   end
 
   describe 'when value is a string' do
     let(:value) { 'yes' }
+
     it { expect(coerced_value).to eq(YesNoAnswer::YES) }
   end
 
   describe 'when value is already a value-object' do
     let(:value) { YesNoAnswer::YES }
+
     it { expect(coerced_value).to eq(YesNoAnswer::YES) }
   end
 
@@ -60,7 +64,7 @@ RSpec.describe Type::ValueObject do
       end
 
       it 'considers same type/different source not equal' do
-        expect(type_one).to_not eq(type_three)
+        expect(type_one).not_to eq(type_three)
       end
     end
 
@@ -70,7 +74,7 @@ RSpec.describe Type::ValueObject do
       end
 
       it 'considers same type/different source not equal' do
-        expect(type_one.hash).to_not eq(type_three.hash)
+        expect(type_one.hash).not_to eq(type_three.hash)
       end
     end
   end

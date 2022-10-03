@@ -24,7 +24,7 @@ RSpec.describe DummyStepController, type: :controller do
 
     before do
       crime_application.update(
-        navigation_stack: navigation_stack
+        navigation_stack:
       )
 
       get :show, params: { id: crime_application }
@@ -48,7 +48,7 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'when the current page is not on the stack' do
-      let(:navigation_stack) { %w(/foo /bar /baz) }
+      let(:navigation_stack) { %w[/foo /bar /baz] }
 
       it 'adds it to the end of the stack' do
         expect(crime_application.navigation_stack).to eq(navigation_stack + [dummy_step_path])
@@ -57,7 +57,7 @@ RSpec.describe DummyStepController, type: :controller do
   end
 
   describe '#previous_step_path' do
-    let!(:crime_application) { CrimeApplication.create(navigation_stack: navigation_stack) }
+    let!(:crime_application) { CrimeApplication.create(navigation_stack:) }
 
     before do
       get :show, params: { id: crime_application }
@@ -72,7 +72,7 @@ RSpec.describe DummyStepController, type: :controller do
     end
 
     context 'when the stack has elements' do
-      let(:navigation_stack) { %w(/somewhere /over /the /rainbow) }
+      let(:navigation_stack) { %w[/somewhere /over /the /rainbow] }
 
       it 'returns the element before the current page' do
         # Not '/the', as we've performed a page load and thus added '/dummy_page' at the end

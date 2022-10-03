@@ -1,26 +1,26 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Healthcheck endpoint" do
+RSpec.describe 'Healthcheck endpoint' do
   let(:error_response)   { '{"healthcheck":"NOT OK"}' }
   let(:success_response) { '{"healthcheck":"OK"}' }
 
   describe 'healthchecks' do
-    it "can report a success" do
+    it 'can report a success' do
       allow(ActiveRecord::Base.connection).to receive(:active?)
         .and_return(true)
 
-      get "/health"
+      get '/health'
       expect(response.body).to eq(success_response)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
-    it "can report a failure" do
+    it 'can report a failure' do
       allow(ActiveRecord::Base.connection).to receive(:active?)
         .and_raise(StandardError)
 
-      get "/health"
+      get '/health'
       expect(response.body).to eq(error_response)
-      expect(response).to have_http_status(503)
+      expect(response).to have_http_status(:service_unavailable)
     end
   end
 

@@ -10,11 +10,13 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'for a blank value' do
       let(:value) { '' }
+
       it { expect(title).to eq('Apply for criminal legal aid - GOV.UK') }
     end
 
     context 'for a provided value' do
       let(:value) { 'Test page' }
+
       it { expect(title).to eq('Test page - Apply for criminal legal aid - GOV.UK') }
     end
   end
@@ -30,7 +32,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       ).to receive(:consider_all_requests_local).and_return(false)
     end
 
-    it 'should call #title with a blank value' do
+    it 'calls #title with a blank value' do
       expect(helper).to receive(:title).with('')
       helper.fallback_title
     end

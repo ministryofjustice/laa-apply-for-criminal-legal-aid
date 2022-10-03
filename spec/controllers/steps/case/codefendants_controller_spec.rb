@@ -17,20 +17,20 @@ RSpec.describe Steps::Case::CodefendantsController, type: :controller do
 
       context 'deleting a codefendant' do
         let(:form_class_params_name) { Steps::Case::CodefendantsForm.name.underscore }
-        let(:codefendant_attributes) {
+        let(:codefendant_attributes) do
           {
             codefendants_attributes: {
               '0' => { first_name: 'John', last_name: 'Doe', _destroy: '1', id: '12345' }
             }
           }
-        }
+        end
 
         it 'has the expected step name' do
           expect(
             subject
           ).to receive(:update_and_advance).with(Steps::Case::CodefendantsForm, as: :delete_codefendant)
 
-          put :update, params: { id: existing_case, form_class_params_name => codefendant_attributes }
+          put :update, params: { :id => existing_case, form_class_params_name => codefendant_attributes }
         end
       end
 

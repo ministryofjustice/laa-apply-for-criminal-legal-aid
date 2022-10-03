@@ -1,21 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Client::ContactDetailsForm do
-  let(:arguments) { {
-    crime_application: crime_application,
-    telephone_number: telephone_number,
-    correspondence_address_type: correspondence_address_type
-  } }
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application:,
+    telephone_number:,
+    correspondence_address_type:
+    }
+  end
+  let(:applicant_double) { instance_double(Applicant) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
   let(:telephone_number) { nil }
   let(:correspondence_address_type) { nil }
   let(:has_home_address) { true }
-
-  subject { described_class.new(arguments) }
-
-  let(:applicant_double) { instance_double(Applicant) }
 
   before do
     allow(subject).to receive(:applicant).and_return(applicant_double)
@@ -25,20 +26,24 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   describe '#choices' do
     context 'when applicant has home address' do
       let(:has_home_address) { true }
+
       it 'returns all correspondence address types' do
         expect(subject.choices.map(&:value)).to match(
-          [:home_address, 
+          [:home_address,
            :providers_office_address,
-           :other_address])
+           :other_address]
+        )
       end
     end
 
     context 'when applicant has no home address' do
       let(:has_home_address) { false }
+
       it 'returns all correspondence address types' do
         expect(subject.choices.map(&:value)).to match(
-           [:providers_office_address, 
-           :other_address])
+          [:providers_office_address,
+           :other_address]
+        )
       end
     end
   end
@@ -49,8 +54,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       let(:correspondence_address_type) { 'home_address' }
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:telephone_number, :blank)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:telephone_number, :blank)).to be(true)
       end
     end
 
@@ -59,8 +64,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       let(:correspondence_address_type) { 'other_address' }
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:telephone_number, :invalid)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:telephone_number, :invalid)).to be(true)
       end
     end
 
@@ -78,8 +83,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       let(:correspondence_address_type) { '' }
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to be(true)
       end
     end
 
@@ -88,8 +93,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       let(:correspondence_address_type) { 'university_address' }
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to be(true)
       end
     end
   end
@@ -108,7 +113,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     it_behaves_like 'a has-one-association form',
                     association_name: :applicant,
                     expected_attributes: {
-                      'telephone_number' => "07000000000",
+                      'telephone_number' => '07000000000',
                       'correspondence_address_type' => CorrespondenceType::OTHER_ADDRESS
                     }
   end

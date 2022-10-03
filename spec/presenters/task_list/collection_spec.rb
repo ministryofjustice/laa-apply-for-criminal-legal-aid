@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TaskList::Collection do
   include ActionView::TestCase::Behavior
 
-  subject { described_class.new(view, crime_application: crime_application) }
+  subject { described_class.new(view, crime_application:) }
 
   let(:name) { :foobar_task }
   let(:crime_application) { double }
@@ -24,7 +24,8 @@ RSpec.describe TaskList::Collection do
     it 'has the `means_assessment` section' do
       expect(subject[2].index).to eq(3)
       expect(subject[2].name).to eq(:means_assessment)
-      expect(subject[2].tasks).to eq([:income_assessment, :capital_assessment, :check_your_answers, :check_assessment_result])
+      expect(subject[2].tasks).to eq([:income_assessment, :capital_assessment, :check_your_answers,
+                                      :check_assessment_result])
     end
 
     it 'has the `support_evidence` section' do
@@ -66,7 +67,7 @@ RSpec.describe TaskList::Collection do
 
       expect(
         subject.render
-      ).to match(/<ol class="app-task-list">.*<\/ol>/)
+      ).to match(%r{<ol class="app-task-list">.*</ol>})
     end
   end
 end

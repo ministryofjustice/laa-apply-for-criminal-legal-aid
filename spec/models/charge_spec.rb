@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Charge, type: :model do
   subject { described_class.new(attributes) }
-  let(:attributes) {
-    { offence_name: offence_name }
-  }
+
+  let(:attributes) do
+    { offence_name: }
+  end
 
   let(:offence_name) { nil }
 
@@ -18,11 +19,13 @@ RSpec.describe Charge, type: :model do
 
     context 'for an unknown offence' do
       let(:offence_name) { 'Foobar offence' }
+
       it { expect(subject.offence).to be_nil }
     end
 
     context 'for a blank offence' do
       let(:offence_name) { '' }
+
       it { expect(subject.offence).to be_nil }
     end
   end

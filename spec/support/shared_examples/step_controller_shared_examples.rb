@@ -40,7 +40,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
 
       it 'responds with HTTP success' do
         get :edit, params: { id: existing_case }
@@ -52,7 +52,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { id: existing_case, form_class_params_name => { foo: 'bar' } } }
+    let(:expected_params) { { :id => existing_case, form_class_params_name => { foo: 'bar' } } }
 
     context 'when application is not found' do
       let(:existing_case) { '12345' }
@@ -121,8 +121,8 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
     end
 
     context 'when application is found' do
-      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
-      let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
 
       it 'responds with HTTP success' do
         get :edit, params: { id: existing_case, address_id: existing_address }
@@ -134,7 +134,9 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { id: existing_case, address_id: existing_address, form_class_params_name => { foo: 'bar' } } }
+    let(:expected_params) do
+      { :id => existing_case, :address_id => existing_address, form_class_params_name => { foo: 'bar' } }
+    end
 
     context 'when application is not found' do
       let(:existing_case) { '12345' }
@@ -153,8 +155,8 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
     end
 
     context 'when an application in progress is found' do
-      let!(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
-      let!(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
@@ -195,7 +197,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { id: existing_case, form_class_params_name => { foo: 'bar' }, commit_draft: '' } }
+    let(:expected_params) { { :id => existing_case, form_class_params_name => { foo: 'bar' }, :commit_draft => '' } }
 
     context 'when application is not found' do
       let(:existing_case) { '12345' }

@@ -3,47 +3,50 @@ require 'rails_helper'
 RSpec.describe CrimeApplicationPresenter do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
+  let(:crime_application) do
     instance_double(CrimeApplication,
                     id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
-                    created_at: DateTime.new(2022, 01, 12),
+                    created_at: DateTime.new(2022, 0o1, 12),
                     status: 'in_progress',
-                    date_stamp: Date.new(2022, 02, 01),
+                    date_stamp: Date.new(2022, 0o2, 0o1),
                     case: Case.new(case_type: CaseType.new(case_type)),
                     applicant: applicant)
-  }
+  end
 
-  let(:applicant) { 
+  let(:applicant) do
     double(
-      Applicant, 
-      first_name: 'John', 
+      Applicant,
+      first_name: 'John',
       last_name: 'Doe',
-      date_of_birth: Date.new(1990, 02, 01),
+      date_of_birth: Date.new(1990, 0o2, 0o1)
     )
-  }
+  end
 
   let(:case_type) { :indictable }
 
   describe '#application_date_stamp' do
     context 'when a case is date stampable' do
       let(:case_type) { :summary_only }
+
       it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
     end
 
     context 'when a case is not date stampable' do
       let(:case_type) { :indictable }
-      it { expect(subject.application_date_stamp).to be(nil) }
+
+      it { expect(subject.application_date_stamp).to be_nil }
     end
   end
 
   describe '#applicant?' do
     context 'when there is an applicant record' do
-      it { expect(subject.applicant?).to eq(true) }
+      it { expect(subject.applicant?).to be(true) }
     end
 
     context 'when there is no applicant record' do
       let(:applicant) { nil }
-      it { expect(subject.applicant?).to eq(false) }
+
+      it { expect(subject.applicant?).to be(false) }
     end
   end
 

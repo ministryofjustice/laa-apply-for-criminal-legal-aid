@@ -8,55 +8,60 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
 
   describe 'offence date actions' do
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:existing_case) { Case.create(crime_application: crime_application)}
-    let(:charge_record) { Charge.create(case: existing_case)}
-    context 'when adding a date' do
-      it 'has the expected step name' do
-        expect(
-          subject
-        ).to receive(:update_and_advance).with(
-          form_class, 
-          record: charge_record, 
-          as: :add_offence_date
-        )
+    let(:existing_case) { Case.create(crime_application:) }
+    let(:charge_record) { Charge.create(case: existing_case) }
 
-        put :update, params: { 
-          id: crime_application.id, 
-          charge_id: charge_record.id, 
-          add_offence_date: '' 
+    context 'when adding a date' do
+      after do
+        put :update, params: {
+          id: crime_application.id,
+          charge_id: charge_record.id,
+          add_offence_date: ''
         }
       end
-    end
-
-    context 'when deleting a date' do
-      let(:offence_dates_attributes) { 
-        {
-          offence_dates_attributes: {
-            '0'=>{ 
-              'date(3i)'=>'10', 
-              'date(2i)'=>'10', 
-              'date(1i)'=>'2000', 
-              '_destroy'=>'1', 
-              'id'=> '123' 
-            }
-          }
-        }
-      }
 
       it 'has the expected step name' do
         expect(
           subject
         ).to receive(:update_and_advance).with(
           form_class,
-          record: charge_record, 
+          record: charge_record,
+          as: :add_offence_date
+        )
+      end
+    end
+
+    context 'when deleting a date' do
+      let(:offence_dates_attributes) do
+        {
+          offence_dates_attributes: {
+            '0' => {
+              'date(3i)' => '10',
+              'date(2i)' => '10',
+              'date(1i)' => '2000',
+              '_destroy' => '1',
+              'id' => '123'
+            }
+          }
+        }
+      end
+
+      after do
+        put :update, params: {
+          :id => crime_application.id,
+          :charge_id => charge_record.id,
+          form_class_params_name => offence_dates_attributes
+        }
+      end
+
+      it 'has the expected step name' do
+        expect(
+          subject
+        ).to receive(:update_and_advance).with(
+          form_class,
+          record: charge_record,
           as: :delete_offence_date
         )
-
-        put :update, params: { 
-          id: crime_application.id,
-          charge_id: charge_record.id, 
-          form_class_params_name => offence_dates_attributes 
-        }    
       end
     end
   end
@@ -89,7 +94,9 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { id: existing_application, charge_id: existing_charge, form_class_params_name => { foo: 'bar' } } }
+    let(:expected_params) do
+      { :id => existing_application, :charge_id => existing_charge, form_class_params_name => { foo: 'bar' } }
+    end
 
     context 'when application is not found' do
       let(:existing_application) { '12345' }
@@ -108,10 +115,12 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
     end
 
     context 'when an application in progress is found' do
-      let!(:existing_application) { CrimeApplication.create(case: Case.new) }
-      let!(:existing_charge) { Charge.find_or_create_by(case: existing_application.case) }
+      let(:existing_application) { CrimeApplication.create(case: Case.new) }
+      let(:existing_charge) { Charge.find_or_create_by(case: existing_application.case) }
 
       before do
+        existing_application
+        existing_charge
         allow(form_class).to receive(:new).and_return(form_object)
       end
 

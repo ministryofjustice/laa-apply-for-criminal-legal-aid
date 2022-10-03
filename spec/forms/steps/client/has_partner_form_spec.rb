@@ -1,18 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Client::HasPartnerForm do
-  # Note: not using shared examples for form objects yet, to be added
+  # NOTE: not using shared examples for form objects yet, to be added
   # once we have some more form objects and some patterns emerge
 
-  let(:arguments) { {
-    crime_application: crime_application,
-    client_has_partner: client_has_partner,
-  } }
-
-  let(:crime_application) { instance_double(CrimeApplication, client_has_partner: client_has_partner) }
-  let(:client_has_partner) { nil }
-
   subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application:,
+    client_has_partner:,
+    }
+  end
+
+  let(:crime_application) { instance_double(CrimeApplication, client_has_partner:) }
+  let(:client_has_partner) { nil }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -29,8 +31,8 @@ RSpec.describe Steps::Client::HasPartnerForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:client_has_partner, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:client_has_partner, :inclusion)).to be(true)
       end
     end
 
@@ -42,8 +44,8 @@ RSpec.describe Steps::Client::HasPartnerForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:client_has_partner, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:client_has_partner, :inclusion)).to be(true)
       end
     end
 
@@ -52,7 +54,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
       it 'saves the record' do
         expect(crime_application).to receive(:update).with(
-          'client_has_partner' => YesNoAnswer::YES,
+          'client_has_partner' => YesNoAnswer::YES
         ).and_return(true)
 
         expect(subject.save).to be(true)

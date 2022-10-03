@@ -50,7 +50,7 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
       end
 
       context 'the response cannot be parsed (`header` not found)' do
-        let(:stubbed_json_body) { "{\"unknown\":\"keys\"}" }
+        let(:stubbed_json_body) { '{"unknown":"keys"}' }
 
         it 'has an unsuccessful outcome' do
           expect(service).not_to be_success
@@ -60,7 +60,7 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
       end
 
       context 'the response cannot be parsed (`totalresults` not found)' do
-        let(:stubbed_json_body) { "{\"header\":{\"foo\":\"bar\"}}" }
+        let(:stubbed_json_body) { '{"header":{"foo":"bar"}}' }
 
         it 'has an unsuccessful outcome' do
           expect(service).not_to be_success
@@ -114,7 +114,9 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
         expect(service).not_to be_success
         expect(service.call).to eq([])
         expect(service.last_exception).to be_a(OrdnanceSurvey::AddressLookup::UnsuccessfulLookupError)
-        expect(service.last_exception.message).to eq('{"error":{"statuscode":400,"message":"Parameter postcode cannot be empty."}}')
+        expect(service.last_exception.message).to eq(
+          '{"error":{"statuscode":400,"message":"Parameter postcode cannot be empty."}}'
+        )
       end
     end
 

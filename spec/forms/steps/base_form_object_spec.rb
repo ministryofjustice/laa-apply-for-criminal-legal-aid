@@ -2,18 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Steps::BaseFormObject do
   describe '.build' do
-    let(:favourite_meal_form) {
+    let(:favourite_meal_form) do
       Class.new(Steps::BaseFormObject) do
         attribute :favourite_meal, :string
       end
-    }
+    end
 
-    let(:foo_bar_record) {
+    let(:foo_bar_record) do
       Class.new(ApplicationRecord) do
         attr_accessor :favourite_meal
-        def self.load_schema!; @columns_hash = {}; end
+
+        def self.load_schema! = @columns_hash = {}
       end
-    }
+    end
 
     before do
       stub_const('FavouriteMealForm', favourite_meal_form)
@@ -22,9 +23,9 @@ RSpec.describe Steps::BaseFormObject do
 
     context 'for an non active record argument' do
       it 'raises an error' do
-        expect {
+        expect do
           FavouriteMealForm.build(:foobar)
-        }.to raise_exception(ArgumentError)
+        end.to raise_exception(ArgumentError)
       end
     end
 
@@ -64,7 +65,7 @@ RSpec.describe Steps::BaseFormObject do
       end
 
       it 'returns false' do
-        expect(subject.save).to eq(false)
+        expect(subject.save).to be(false)
       end
     end
   end
@@ -73,27 +74,27 @@ RSpec.describe Steps::BaseFormObject do
     context 'when raising exceptions' do
       it {
         expect(subject).to receive(:persist!).and_raise(NoMethodError)
-        expect(subject.save!).to eq(false)
+        expect(subject.save!).to be(false)
       }
     end
 
     context 'when there are no exceptions' do
       it {
         expect(subject).to receive(:persist!).and_return(true)
-        expect(subject.save!).to eq(true)
+        expect(subject.save!).to be(true)
       }
     end
   end
 
   describe '#persisted?' do
     it 'always returns false' do
-      expect(subject.persisted?).to eq(false)
+      expect(subject.persisted?).to be(false)
     end
   end
 
   describe '#new_record?' do
     it 'always returns true' do
-      expect(subject.new_record?).to eq(true)
+      expect(subject.new_record?).to be(true)
     end
   end
 

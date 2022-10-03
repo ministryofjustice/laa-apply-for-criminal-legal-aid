@@ -1,14 +1,18 @@
 require 'rails_helper'
 
+Fruit = Class.new(ValueObject) do
+  const_set(:VALUES, [new(:apple), new(:banana)])
+end
+
 RSpec.describe ValueObject do
+  subject { described_class.new(value) }
+
   before do
-    stub_const('FooValue', Class.new(ValueObject))
-    stub_const('BarValue', Class.new(ValueObject))
+    stub_const('FooValue', Class.new(described_class))
+    stub_const('BarValue', Class.new(described_class))
   end
 
   let(:value) { 'Hello!' }
-  subject     { described_class.new(value) }
-
   let(:foo_one)      { FooValue.new('one') }
   let(:also_foo_one) { FooValue.new('one') }
   let(:foo_two)      { FooValue.new('two') }
@@ -24,15 +28,15 @@ RSpec.describe ValueObject do
     end
 
     it 'considers same class/different value not equal' do
-      expect(foo_one).to_not eq(foo_two)
+      expect(foo_one).not_to eq(foo_two)
     end
 
     it 'considers different class/same value not equal' do
-      expect(foo_one).to_not eq(bar_one)
+      expect(foo_one).not_to eq(bar_one)
     end
 
     it 'considers different class/different value not equal' do
-      expect(foo_two).to_not eq(bar_one)
+      expect(foo_two).not_to eq(bar_one)
     end
   end
 
@@ -42,15 +46,15 @@ RSpec.describe ValueObject do
     end
 
     it 'considers same class/different value not equal' do
-      expect(foo_one.hash).to_not eq(foo_two.hash)
+      expect(foo_one.hash).not_to eq(foo_two.hash)
     end
 
     it 'considers different class/same value not equal' do
-      expect(foo_one.hash).to_not eq(bar_one.hash)
+      expect(foo_one.hash).not_to eq(bar_one.hash)
     end
 
     it 'considers different class/different value not equal' do
-      expect(foo_two.hash).to_not eq(bar_one.hash)
+      expect(foo_two.hash).not_to eq(bar_one.hash)
     end
   end
 
@@ -73,19 +77,15 @@ RSpec.describe ValueObject do
   end
 
   describe 'inquiry methods' do
-    Fruit = Class.new(ValueObject) do
-      const_set(:VALUES, [new(:apple), new(:banana)])
-    end
-
     let(:fruit_one) { Fruit.new(:apple) }
     let(:fruit_two) { Fruit.new(:banana) }
 
     it 'defines inquiry methods for each of the values' do
-      expect(fruit_one.apple?).to eq(true)
-      expect(fruit_one.banana?).to eq(false)
+      expect(fruit_one.apple?).to be(true)
+      expect(fruit_one.banana?).to be(false)
 
-      expect(fruit_two.apple?).to eq(false)
-      expect(fruit_two.banana?).to eq(true)
+      expect(fruit_two.apple?).to be(false)
+      expect(fruit_two.banana?).to be(true)
     end
   end
 end

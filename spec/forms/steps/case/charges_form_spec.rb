@@ -1,49 +1,56 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::ChargesForm do
-  let(:arguments) { {
-    crime_application: crime_application,
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application: crime_application,
     record: charge_record,
     offence_name: offence_name,
     offence_dates_attributes: offence_dates_attributes
-  } }
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:charge_record) { Charge.new }
   let(:offence_name) { 'Robbery' }
-  let(:offence_dates_attributes) {
+  let(:offence_dates_attributes) do
     {
-     '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
-     '1'=>{ 'date(3i)'=>'11', 'date(2i)'=>'07', 'date(1i)'=>'2010' },
-     '2'=>{ 'date(3i)'=>'10', 'date(2i)'=>'02', 'date(1i)'=>'2009' }
+      '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
+     '1' => { 'date(3i)' => '11', 'date(2i)' => '07', 'date(1i)' => '2010' },
+     '2' => { 'date(3i)' => '10', 'date(2i)' => '02', 'date(1i)' => '2009' }
     }
-  }
-
-  subject { described_class.new(arguments) }
+  end
 
   describe 'validations' do
-    it { should validate_presence_of(:offence_name) }
+    it { is_expected.to validate_presence_of(:offence_name) }
 
     context 'offence dates' do
-      let(:offence_dates_attributes) {
+      let(:offence_dates_attributes) do
         {
-          '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'3000' },
-          '1'=>{ 'date(3i)'=>'', 'date(2i)'=>'', 'date(1i)'=>'' },
+          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '3000' },
+          '1' => { 'date(3i)' => '', 'date(2i)' => '', 'date(1i)' => '' },
         }
-      }
+      end
 
       it 'returns false' do
         expect(subject.save).to be(false)
       end
 
       it 'sets the errors with their index' do
-        expect(subject).to_not be_valid
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?('offence_dates-attributes[0].date', :future_not_allowed)).to be(true)
 
-        expect(subject.errors.of_kind?('offence_dates-attributes[0].date', :future_not_allowed)).to eq(true)
-        expect(subject.errors.messages_for('offence_dates-attributes[0].date').first).to eq('Offence dates cannot be in the future')
+        expect(subject.errors.messages_for('offence_dates-attributes[0].date').first).to eq(
+          'Offence dates cannot be in the future'
+        )
 
-        expect(subject.errors.of_kind?('offence_dates-attributes[1].date', :blank)).to eq(true)
-        expect(subject.errors.messages_for('offence_dates-attributes[1].date').first).to eq('Offence dates cannot be blank')
+        expect(subject.errors.of_kind?('offence_dates-attributes[1].date', :blank)).to be(true)
+
+        expect(subject.errors.messages_for('offence_dates-attributes[1].date').first).to eq(
+          'Offence dates cannot be blank'
+        )
       end
     end
 
@@ -53,39 +60,42 @@ RSpec.describe Steps::Case::ChargesForm do
         let(:application) { CrimeApplication.create }
         let(:case_record) { Case.create(crime_application: application) }
 
-        let(:offence_dates) { [
-          OffenceDate.new(date: Date.new(2000,11,03)),
-          OffenceDate.new(date: Date.new(2009,05,01))
-        ] }
+        let(:offence_dates) do
+          [
+            OffenceDate.new(date: Date.new(2000, 11, 0o3)),
+            OffenceDate.new(date: Date.new(2009, 0o5, 0o1))
+          ]
+        end
 
         let(:charge_record) { Charge.create(case: case_record, offence_dates: offence_dates) }
 
-        let(:offence_dates_attributes) {
+        let(:offence_dates_attributes) do
           {
-            '0'=>{ 
-              'id'=>"#{offence_dates[0].id}",
-              'date(3i)'=>'03', 
-              'date(2i)'=>'11', 
-              'date(1i)'=>'2000', 
-              '_destroy'=>'1'},
-            '1'=>{ 
-              'id'=>"#{offence_dates[1].id}",
-              'date(3i)'=>'01', 
-              'date(2i)'=>'05', 
-              'date(1i)'=>'2009' 
+            '0' => {
+              'id' => offence_dates[0].id.to_s,
+              'date(3i)' => '03',
+              'date(2i)' => '11',
+              'date(1i)' => '2000',
+              '_destroy' => '1'
+            },
+            '1' => {
+              'id' => offence_dates[1].id.to_s,
+              'date(3i)' => '01',
+              'date(2i)' => '05',
+              'date(1i)' => '2009'
             }
           }
-        }
+        end
 
         it 'returns true' do
-          expect(subject.any_marked_for_destruction?).to eq(true)
-          expect(subject.offence_dates[0]._destroy).to eq(true)
-          expect(subject.offence_dates[1]._destroy).to eq(false)
+          expect(subject.any_marked_for_destruction?).to be(true)
+          expect(subject.offence_dates[0]._destroy).to be(true)
+          expect(subject.offence_dates[1]._destroy).to be(false)
         end
       end
 
       context 'there are no offence_dates to be destroyed' do
-        it { expect(subject.any_marked_for_destruction?).to eq(false) }
+        it { expect(subject.any_marked_for_destruction?).to be(false) }
       end
     end
   end
@@ -94,7 +104,7 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'for valid details' do
       it 'updates the record' do
         expect(charge_record).to receive(:update).with(
-          'offence_name' => 'Robbery',
+          'offence_name' => 'Robbery'
         ).and_return(true)
 
         expect(subject.save).to be(true)
@@ -111,23 +121,25 @@ RSpec.describe Steps::Case::ChargesForm do
 
   describe '#show_destroy?' do
     context 'if there are fewer than two offence dates' do
-      let(:offence_dates_attributes) {
+      let(:offence_dates_attributes) do
         {
-         '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
+          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
         }
-      }
+      end
+
       it 'returns false' do
         expect(subject.show_destroy?).to be(false)
       end
     end
 
     context 'if there two or more offence dates' do
-      let(:offence_dates_attributes) {
+      let(:offence_dates_attributes) do
         {
-          '0'=>{ 'date(3i)'=>'03', 'date(2i)'=>'11', 'date(1i)'=>'2000' },
-          '1'=>{ 'date(3i)'=>'11', 'date(2i)'=>'07', 'date(1i)'=>'2010' }
+          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
+          '1' => { 'date(3i)' => '11', 'date(2i)' => '07', 'date(1i)' => '2010' }
         }
-      }
+      end
+
       it 'returns true' do
         expect(subject.show_destroy?).to be(true)
       end

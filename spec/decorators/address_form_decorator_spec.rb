@@ -20,11 +20,13 @@ RSpec.describe AddressFormDecorator do
 
       context 'for a home address' do
         let(:address_type) { HomeAddress.to_s }
+
         it { expect(subject.page_title).to eq('.page_title.applicant.home_address') }
       end
 
       context 'for a correspondence address' do
         let(:address_type) { CorrespondenceAddress.to_s }
+
         it { expect(subject.page_title).to eq('.page_title.applicant.correspondence_address') }
       end
     end
@@ -34,11 +36,13 @@ RSpec.describe AddressFormDecorator do
 
       context 'for a home address' do
         let(:address_type) { HomeAddress.to_s }
+
         it { expect(subject.page_title).to eq('.page_title.partner.home_address') }
       end
 
       context 'for a correspondence address' do
         let(:address_type) { CorrespondenceAddress.to_s }
+
         it { expect(subject.page_title).to eq('.page_title.partner.correspondence_address') }
       end
     end
@@ -50,11 +54,13 @@ RSpec.describe AddressFormDecorator do
 
       context 'for a home address' do
         let(:address_type) { HomeAddress.to_s }
+
         it { expect(subject.heading).to eq('.heading.applicant.home_address') }
       end
 
       context 'for a correspondence address' do
         let(:address_type) { CorrespondenceAddress.to_s }
+
         it { expect(subject.heading).to eq('.heading.applicant.correspondence_address') }
       end
     end
@@ -64,11 +70,13 @@ RSpec.describe AddressFormDecorator do
 
       context 'for a home address' do
         let(:address_type) { HomeAddress.to_s }
+
         it { expect(subject.heading).to eq('.heading.partner.home_address') }
       end
 
       context 'for a correspondence address' do
         let(:address_type) { CorrespondenceAddress.to_s }
+
         it { expect(subject.heading).to eq('.heading.partner.correspondence_address') }
       end
     end
@@ -77,12 +85,14 @@ RSpec.describe AddressFormDecorator do
   describe '#home_address?' do
     context 'for a home address' do
       let(:address_record) { HomeAddress.new }
-      it { expect(subject.home_address?).to eq(true) }
+
+      it { expect(subject.home_address?).to be(true) }
     end
 
     context 'for a correspondence address' do
       let(:address_record) { CorrespondenceAddress.new }
-      it { expect(subject.home_address?).to eq(false) }
+
+      it { expect(subject.home_address?).to be(false) }
     end
   end
 
@@ -94,7 +104,7 @@ RSpec.describe AddressFormDecorator do
   end
 
   describe '#addresses' do
-    let(:form_object) { double('FormObject', addresses: addresses) }
+    let(:form_object) { double('FormObject', addresses:) }
 
     context 'when there is only 1 address in the collection' do
       let(:addresses) { [Struct] }

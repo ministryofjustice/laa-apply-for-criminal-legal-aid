@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Tasks::BaseTask do
-  subject { described_class.new(crime_application: crime_application) }
+  subject { described_class.new(crime_application:) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
   describe '.build' do
     context 'for a task with an implementation class' do
       it 'instantiate the implementation' do
-        task = described_class.build(:client_details, crime_application: crime_application)
+        task = described_class.build(:client_details, crime_application:)
 
         expect(task).to be_a(Tasks::ClientDetails)
         expect(task.crime_application).to eq(crime_application)
@@ -17,9 +17,9 @@ RSpec.describe Tasks::BaseTask do
 
     context 'for a task without an implementation class' do
       it 'instantiate the implementation' do
-        task = described_class.build(:foobar_task, crime_application: crime_application)
+        task = described_class.build(:foobar_task, crime_application:)
 
-        expect(task).to be_a(Tasks::BaseTask)
+        expect(task).to be_a(described_class)
         expect(task.crime_application).to eq(crime_application)
       end
     end
@@ -30,7 +30,7 @@ RSpec.describe Tasks::BaseTask do
   end
 
   describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to eq(true) }
+    it { expect(subject.not_applicable?).to be(true) }
   end
 
   describe '#status' do
@@ -48,6 +48,7 @@ RSpec.describe Tasks::BaseTask do
 
     context 'task is not applicable' do
       let(:not_applicable) { true }
+
       it { expect(subject.status).to eq(TaskStatus::NOT_APPLICABLE) }
     end
 
@@ -58,6 +59,7 @@ RSpec.describe Tasks::BaseTask do
     context 'task is completed' do
       let(:can_start) { true }
       let(:completed) { true }
+
       it { expect(subject.status).to eq(TaskStatus::COMPLETED) }
     end
 

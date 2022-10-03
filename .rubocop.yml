@@ -1,6 +1,7 @@
 require:
   - rubocop-rails
   - rubocop-performance
+  - rubocop-rspec
   # Add custom cops for this project below
   - ./lib/rubocop/custom_cops/govuk_formbuilder/text_field_autocomplete.rb
 
@@ -15,7 +16,6 @@ AllCops:
     - 'lib/tasks/**/*'
     - 'lib/generators/**/*'
     - 'features/**/*'
-    - 'spec/**/*'
     - 'vendor/**/*'
 
 ####################################
@@ -42,6 +42,42 @@ Style/TrailingCommaInArrayLiteral:
 
 Layout/HashAlignment:
   Enabled: false
+
+# TODO: fix and enable the following rspec cops
+#
+# CONTEXT: RubocopRspec was enabled part way though this codebase. The
+# following cops have been disabled with a view to enabling them when the
+# issues have been fixed. Ideally starting from the top of this list and
+# working down.
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/BeforeAfterAll:
+  Enabled: false
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
+
+
 
 # Enabled but tweaked cops
 ##########################
@@ -72,3 +108,16 @@ Style/HashEachMethods:
 Naming/PredicateName:
   AllowedMethods:
     - has_one_association
+
+# TODO: adjust these values towards the rubcop defaults
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 7
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ExampleLength:
+  Max: 13

@@ -8,10 +8,11 @@ RSpec.shared_examples 'a has-one-association form' do |options|
   def associated_class_name
     reflection = CrimeApplication.reflect_on_association(association_name)
 
-    if reflection.is_a?(ActiveRecord::Reflection::HasOneReflection)
+    case reflection
+    when ActiveRecord::Reflection::HasOneReflection
       # For an `association_name` of `:applicant` it will return `applicant`
       reflection.name.to_s
-    elsif reflection.is_a?(ActiveRecord::Reflection::ThroughReflection)
+    when ActiveRecord::Reflection::ThroughReflection
       # For an `association_name` of `:applicant_contact_details` it will return `contact_details`
       reflection.source_reflection_name.to_s
     else
@@ -65,8 +66,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 32, 2 => 12, 1 => 2020 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid_day)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid_day)).to be(true)
     end
   end
 
@@ -74,8 +75,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 2 => 12, 1 => 2020 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid_day)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid_day)).to be(true)
     end
   end
 
@@ -83,8 +84,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 25, 2 => 13, 1 => 2020 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid_month)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid_month)).to be(true)
     end
   end
 
@@ -92,8 +93,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 25, 1 => 2020 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid_month)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid_month)).to be(true)
     end
   end
 
@@ -101,8 +102,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 25, 2 => 12, 1 => 1899 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :year_too_early)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :year_too_early)).to be(true)
     end
   end
 
@@ -110,8 +111,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 25, 2 => 12, 1 => 2051 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :year_too_late)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :year_too_late)).to be(true)
     end
   end
 
@@ -119,8 +120,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 25, 2 => 12 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid_year)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid_year)).to be(true)
     end
   end
 
@@ -128,8 +129,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 'foo', 2 => 2, 1 => 'bar' } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid)).to be(true)
     end
   end
 
@@ -137,8 +138,8 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     let(:date) { { 3 => 29, 2 => 2, 1 => 2021 } }
 
     it 'has a validation error on the field' do
-      expect(subject).to_not be_valid
-      expect(subject.errors.added?(attribute_name, :invalid)).to eq(true)
+      expect(subject).not_to be_valid
+      expect(subject.errors.added?(attribute_name, :invalid)).to be(true)
     end
   end
 
@@ -149,12 +150,12 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     if options.fetch(:allow_future, false)
       it 'allows future dates' do
         expect(subject).to be_valid
-        expect(subject.errors.added?(attribute_name, :future_not_allowed)).to eq(false)
+        expect(subject.errors.added?(attribute_name, :future_not_allowed)).to be(false)
       end
     else
       it 'does not allow future dates' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.added?(attribute_name, :future_not_allowed)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.added?(attribute_name, :future_not_allowed)).to be(true)
       end
     end
   end
@@ -166,12 +167,12 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     if options.fetch(:allow_past, true)
       it 'allows past dates' do
         expect(subject).to be_valid
-        expect(subject.errors.added?(attribute_name, :past_not_allowed)).to eq(false)
+        expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(false)
       end
     else
       it 'does not allow past dates' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.added?(attribute_name, :past_not_allowed)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(true)
       end
     end
   end

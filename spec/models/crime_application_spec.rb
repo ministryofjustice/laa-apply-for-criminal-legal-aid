@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CrimeApplication, type: :model do
   subject { described_class.new(attributes) }
+
   let(:attributes) { {} }
 
   describe 'status enum' do
@@ -10,7 +11,7 @@ RSpec.describe CrimeApplication, type: :model do
         described_class.statuses
       ).to eq(
         'in_progress' => 'in_progress',
-        'submitted' => 'submitted',
+        'submitted' => 'submitted'
       )
     end
   end
