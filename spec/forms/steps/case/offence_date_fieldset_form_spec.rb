@@ -7,7 +7,7 @@ RSpec.describe Steps::Case::OffenceDateFieldsetForm do
     id: record_id
   } }
 
-  let(:record_id) { '123456' } 
+  let(:record_id) { '123456' }
   let(:crime_application) { instance_double(CrimeApplication) }
 
   subject { described_class.new(arguments) }
@@ -24,7 +24,7 @@ RSpec.describe Steps::Case::OffenceDateFieldsetForm do
     end
 
     context 'when form has no id' do
-      let(:record_id) { nil } 
+      let(:record_id) { nil }
       it 'it returns false' do
         expect(subject.persisted?).to be(false)
       end
