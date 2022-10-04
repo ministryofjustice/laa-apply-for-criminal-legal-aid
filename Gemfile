@@ -26,6 +26,9 @@ gem 'dartsass-rails', '~> 0.4.0'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 
+# gem 'hmcts_common_platform', '0.1.0', git: 'git@github.com:ministryofjustice/hmcts_common_platform'
+gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

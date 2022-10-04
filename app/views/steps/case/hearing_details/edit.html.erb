@@ -8,8 +8,8 @@
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :hearing_court_name, autocomplete: 'off',
-                             width: 'three-quarters', label: { size: 'm' } %>
+      <%= f.govuk_collection_select :hearing_court_name, Court.all, :name, :name,
+                                    options: { include_blank: true } %>
 
       <%= f.govuk_date_field :hearing_date, maxlength_enabled: true %>
 
