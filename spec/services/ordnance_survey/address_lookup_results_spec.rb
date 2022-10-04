@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe OrdnanceSurvey::AddressLookupResults do
-  let(:results) { [] }
   subject { described_class.call(results) }
 
-  context '#call' do
+  let(:results) { [] }
+
+  describe '#call' do
     context 'with results' do
       let(:parsed_body) { JSON.parse(file_fixture('address_lookups/success.json').read) }
       let(:results) { parsed_body['results'] }
@@ -23,13 +24,13 @@ RSpec.describe OrdnanceSurvey::AddressLookupResults do
       context '`Address` struct convenience methods' do
         let(:result) { subject[0] }
 
-        context '#compact_address' do
+        describe '#compact_address' do
           it 'returns a shorter version of the full address' do
             expect(result.compact_address).to eq('1, POST OFFICE, BROADWAY, LONDON')
           end
         end
 
-        context '#lookup_id' do
+        describe '#lookup_id' do
           it 'returns the UDPRN identifier' do
             expect(result.lookup_id).to eq('23749191')
           end
@@ -90,8 +91,8 @@ RSpec.describe OrdnanceSurvey::AddressLookupResults do
     end
   end
 
-  context '#address_line' do
-    let(:address) { ["", "address line 1", nil, "somewhere", ""]}
+  describe '#address_line' do
+    let(:address) { ['', 'address line 1', nil, 'somewhere', ''] }
 
     it 'returns a string with no blank sections' do
       expect(described_class.address_line(address)).to eq('address line 1, somewhere')

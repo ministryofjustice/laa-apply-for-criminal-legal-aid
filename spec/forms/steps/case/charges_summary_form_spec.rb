@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::ChargesSummaryForm do
-  let(:arguments) { {
-    crime_application: crime_application,
-    add_offence: add_offence
-  } }
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application:,
+    add_offence:
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:add_offence) { nil }
-
-  subject { described_class.new(arguments) }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -26,8 +28,8 @@ RSpec.describe Steps::Case::ChargesSummaryForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:add_offence, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:add_offence, :inclusion)).to be(true)
       end
     end
 
@@ -39,8 +41,8 @@ RSpec.describe Steps::Case::ChargesSummaryForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:add_offence, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:add_offence, :inclusion)).to be(true)
       end
     end
 

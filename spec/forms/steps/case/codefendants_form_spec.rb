@@ -1,22 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::CodefendantsForm do
-  let(:arguments) { {
-    crime_application: crime_application,
-    codefendants_attributes: codefendants_attributes,
-  } }
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application:,
+    codefendants_attributes:,
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication, case: case_record) }
   let(:case_record) { Case.new }
 
-  let(:codefendants_attributes) {
+  let(:codefendants_attributes) do
     {
-      "0"=>{"first_name"=>"John", "last_name"=>"Doe", "conflict_of_interest"=>"no"},
-      "1"=>{"first_name"=>"Jane", "last_name"=>"Doe", "conflict_of_interest"=>"yes"},
+      '0' => { 'first_name' => 'John', 'last_name' => 'Doe', 'conflict_of_interest' => 'no' },
+      '1' => { 'first_name' => 'Jane', 'last_name' => 'Doe', 'conflict_of_interest' => 'yes' },
     }
-  }
-
-  subject { described_class.new(arguments) }
+  end
 
   describe '#codefendants' do
     context 'there are no codefendants' do
@@ -51,61 +53,71 @@ RSpec.describe Steps::Case::CodefendantsForm do
       let(:case_record) { Case.create(crime_application: application) }
       let(:codefendant) { Codefendant.create(case: case_record, first_name: 'John', last_name: 'Doe') }
 
-      let(:codefendants_attributes) {
+      let(:codefendants_attributes) do
         {
           '0' => codefendant.slice(:first_name, :last_name, :id).merge(_destroy: '1'),
           '1' => { first_name: 'Jane', last_name: 'Doe' },
         }
-      }
+      end
 
       it 'returns true' do
-        expect(subject.any_marked_for_destruction?).to eq(true)
+        expect(subject.any_marked_for_destruction?).to be(true)
 
-        expect(subject.codefendants[0]._destroy).to eq(true)
-        expect(subject.codefendants[1]._destroy).to eq(false)
+        expect(subject.codefendants[0]._destroy).to be(true)
+        expect(subject.codefendants[1]._destroy).to be(false)
       end
     end
 
     context 'there are no records to be destroyed' do
-      it { expect(subject.any_marked_for_destruction?).to eq(false) }
+      it { expect(subject.any_marked_for_destruction?).to be(false) }
     end
   end
 
   describe '#show_destroy?' do
     context 'there is only 1 codefendant' do
-      let(:codefendants_attributes) { { "0"=>{"first_name"=>"John", "last_name"=>"Doe"} } }
-      it { expect(subject.show_destroy?).to eq(false) }
+      let(:codefendants_attributes) { { '0' => { 'first_name' => 'John', 'last_name' => 'Doe' } } }
+
+      it { expect(subject.show_destroy?).to be(false) }
     end
 
     context 'there are more than 1 codefendant' do
-      it { expect(subject.show_destroy?).to eq(true) }
+      it { expect(subject.show_destroy?).to be(true) }
     end
   end
 
   describe '#save' do
     context 'when there are errors in any of the codefendants' do
-      let(:codefendants_attributes) {
+      let(:codefendants_attributes) do
         {
-          "0"=>{"first_name"=>"John", "last_name"=>"", "conflict_of_interest"=>""},
-          "1"=>{"first_name"=>"", "last_name"=>"Doe", "conflict_of_interest"=>"yes"},
+          '0' => { 'first_name' => 'John', 'last_name' => '', 'conflict_of_interest' => '' },
+          '1' => { 'first_name' => '', 'last_name' => 'Doe', 'conflict_of_interest' => 'yes' },
         }
-      }
+      end
 
       it 'returns false' do
         expect(subject.save).to be(false)
       end
 
       it 'sets the errors with their index' do
-        expect(subject).to_not be_valid
+        expect(subject).not_to be_valid
 
-        expect(subject.errors.of_kind?('codefendants-attributes[0].last_name', :blank)).to eq(true)
-        expect(subject.errors.messages_for('codefendants-attributes[0].last_name').first).to eq('Enter last name of co-defendant 1')
+        expect(subject.errors.of_kind?('codefendants-attributes[0].last_name', :blank)).to be(true)
 
-        expect(subject.errors.of_kind?('codefendants-attributes[0].conflict_of_interest', :inclusion)).to eq(true)
-        expect(subject.errors.messages_for('codefendants-attributes[0].conflict_of_interest').first).to eq('Select yes if there is a conflict of interest with co-defendant 1')
+        expect(subject.errors.messages_for('codefendants-attributes[0].last_name').first).to eq(
+          'Enter last name of co-defendant 1'
+        )
 
-        expect(subject.errors.of_kind?('codefendants-attributes[1].first_name', :blank)).to eq(true)
-        expect(subject.errors.messages_for('codefendants-attributes[1].first_name').first).to eq('Enter first name of co-defendant 2')
+        expect(subject.errors.of_kind?('codefendants-attributes[0].conflict_of_interest', :inclusion)).to be(true)
+
+        expect(subject.errors.messages_for('codefendants-attributes[0].conflict_of_interest').first).to eq(
+          'Select yes if there is a conflict of interest with co-defendant 1'
+        )
+
+        expect(subject.errors.of_kind?('codefendants-attributes[1].first_name', :blank)).to be(true)
+
+        expect(subject.errors.messages_for('codefendants-attributes[1].first_name').first).to eq(
+          'Enter first name of co-defendant 2'
+        )
       end
 
       context 'but we are deleting a codefendant' do

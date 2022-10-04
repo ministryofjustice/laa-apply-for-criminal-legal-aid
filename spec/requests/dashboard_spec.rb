@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Dashboard' do
   describe 'make a new application' do
     it 'creates a new `crime_application` record' do
-      expect {
+      expect do
         post crime_applications_path
-      }.to change { CrimeApplication.count }.by(1)
+      end.to change(CrimeApplication, :count).by(1)
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(/has_partner/)
@@ -17,19 +17,22 @@ RSpec.describe 'Dashboard' do
       # sets up a test record
       app = CrimeApplication.create
 
-      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe', date_of_birth: Date.new(1990, 02, 01))
+      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe',
+                       date_of_birth: Date.new(1990, 2, 1))
     end
 
     after :all do
       CrimeApplication.destroy_all
     end
 
-    it 'shows the task list for the application' do
+    before do
       applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
 
       get edit_crime_application_path(app)
+    end
 
+    it 'shows the task list for the application' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Make a new application'
@@ -85,7 +88,7 @@ RSpec.describe 'Dashboard' do
         end
       end
 
-      expect(response.body).to_not include('Jane Doe')
+      expect(response.body).not_to include('Jane Doe')
     end
   end
 
@@ -102,23 +105,23 @@ RSpec.describe 'Dashboard' do
     end
 
     it 'allows a user to check before deleting an application' do
-      applicant = Applicant.find_by(first_name: "Jane")
+      applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
 
       get confirm_destroy_crime_application_path(app)
 
-      expect(response.body).to include("Are you sure you want to delete Jane Doe’s application?")
-      expect(response.body).to include("Yes, delete it")
-      expect(response.body).to include("No, do not delete it")
+      expect(response.body).to include('Are you sure you want to delete Jane Doe’s application?')
+      expect(response.body).to include('Yes, delete it')
+      expect(response.body).to include('No, do not delete it')
     end
 
     it 'can delete an application' do
-      applicant = Applicant.find_by(first_name: "Jane")
+      applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
 
-      expect {
+      expect do
         delete crime_application_path(app)
-      }.to change { CrimeApplication.count }.by(-1)
+      end.to change(CrimeApplication, :count).by(-1)
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(crime_applications_path)

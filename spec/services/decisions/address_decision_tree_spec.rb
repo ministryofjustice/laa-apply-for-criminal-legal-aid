@@ -5,13 +5,13 @@ RSpec.describe Decisions::AddressDecisionTree do
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
-  it_behaves_like 'a decision tree'
-
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
   end
+
+  it_behaves_like 'a decision tree'
 
   context 'when the step is `lookup`' do
     let(:form_object) { double('FormObject') }
@@ -26,11 +26,13 @@ RSpec.describe Decisions::AddressDecisionTree do
 
     context 'if we come from a home address sub-journey' do
       let(:address_record) { HomeAddress.new }
+
       it { is_expected.to have_destination('/steps/client/contact_details', :edit, id: crime_application) }
     end
 
     context 'if we come from a correspondence address sub-journey' do
       let(:address_record) { CorrespondenceAddress.new }
+
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
@@ -41,11 +43,13 @@ RSpec.describe Decisions::AddressDecisionTree do
 
     context 'if we come from a home address sub-journey' do
       let(:address_record) { HomeAddress.new }
+
       it { is_expected.to have_destination('/steps/client/contact_details', :edit, id: crime_application) }
     end
 
     context 'if we come from a correspondence address sub-journey' do
       let(:address_record) { CorrespondenceAddress.new }
+
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end

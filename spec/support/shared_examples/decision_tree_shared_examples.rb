@@ -4,9 +4,9 @@ RSpec.shared_examples 'a decision tree' do
     let(:step_name) { :foobar }
 
     it 'raises an error' do
-      expect {
+      expect do
         subject.destination
-      }.to raise_error(
+      end.to raise_error(
         Decisions::BaseDecisionTree::InvalidStep, "Invalid step 'foobar'"
       )
     end

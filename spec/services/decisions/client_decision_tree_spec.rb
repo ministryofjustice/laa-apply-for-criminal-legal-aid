@@ -5,25 +5,27 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
-  it_behaves_like 'a decision tree'
-
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
   end
 
+  it_behaves_like 'a decision tree'
+
   context 'when the step is `has_partner`' do
-    let(:form_object) { double('FormObject', client_has_partner: client_has_partner) }
+    let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }
 
     context 'and answer is `no`' do
       let(:client_has_partner) { YesNoAnswer::NO }
+
       it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
     end
 
     context 'and answer is `yes`' do
       let(:client_has_partner) { YesNoAnswer::YES }
+
       it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
     end
   end
@@ -48,12 +50,17 @@ RSpec.describe Decisions::ClientDecisionTree do
         ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
       end
 
-      it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application, address_id: 'address') }
+      it {
+        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+address_id: 'address')
+      }
     end
   end
 
   context 'when the step is `contact_details`' do
-    let(:form_object) { double('FormObject', applicant: 'applicant', correspondence_address_type: correspondence_address_type) }
+    let(:form_object) do
+      double('FormObject', applicant: 'applicant', correspondence_address_type: correspondence_address_type)
+    end
     let(:step_name) { :contact_details }
 
     context 'and answer is `other_address`' do
@@ -65,16 +72,21 @@ RSpec.describe Decisions::ClientDecisionTree do
         ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
       end
 
-      it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application, address_id: 'address') }
+      it {
+        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+address_id: 'address')
+      }
     end
 
     context 'and answer is `home_address`' do
       let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
+
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
 
     context 'and answer is `providers_office_address`' do
       let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
+
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end

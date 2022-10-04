@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::Task do
-  subject { described_class.new(crime_application, name: name) }
+  subject { described_class.new(crime_application, name:) }
 
   let(:name) { :foobar_task }
   let(:crime_application) { double }
@@ -14,13 +14,13 @@ RSpec.describe TaskList::Task do
       allow(
         Tasks::BaseTask
       ).to receive(:build).with(
-        name, crime_application: crime_application
+        name, crime_application:
       ).and_return(task_double)
     end
 
-    let(:task_double) {
+    let(:task_double) do
       instance_double(Tasks::BaseTask, status: status, path: '/steps/foobar')
-    }
+    end
 
     context 'for an enabled task' do
       let(:status) { TaskStatus::IN_PROGRESS }
@@ -29,9 +29,10 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-          '<li class="app-task-list__item">' +
-          '<span class="app-task-list__task-name"><a href="/steps/foobar" aria-describedby="foobar_task-status">Foo Bar Task Locale</a></span>' +
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--blue">In progress</strong>' +
+          '<li class="app-task-list__item">' \
+          '<span class="app-task-list__task-name"><a href="/steps/foobar" aria-describedby="foobar_task-status">' \
+          'Foo Bar Task Locale</a></span>' \
+          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--blue">In progress</strong>' \
           '</li>'
         )
       end
@@ -44,11 +45,12 @@ RSpec.describe TaskList::Task do
         expect(
           subject.render
         ).to eq(
-         '<li class="app-task-list__item">' +
-         '<span class="app-task-list__task-name">Foo Bar Task Locale</span>' +
-         '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">Cannot yet start</strong>' +
-         '</li>'
-       )
+          '<li class="app-task-list__item">' \
+          '<span class="app-task-list__task-name">Foo Bar Task Locale</span>' \
+          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
+          'Cannot yet start</strong>' \
+          '</li>'
+        )
       end
     end
   end

@@ -1,20 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Address::LookupForm do
-  let(:arguments) { {
-    crime_application: crime_application,
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application: crime_application,
     record: address_record,
     postcode: postcode,
-  } }
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:address_record) { Address.new }
   let(:postcode) { 'SW1H 9AJ' }
 
-  subject { described_class.new(arguments) }
-
   describe 'validations' do
-    it { should validate_presence_of(:postcode) }
+    it { is_expected.to validate_presence_of(:postcode) }
   end
 
   describe '#save' do
@@ -24,7 +26,7 @@ RSpec.describe Steps::Address::LookupForm do
 
         it 'adds an `invalid` error on the attribute' do
           expect(subject).not_to be_valid
-          expect(subject.errors.added?(:postcode, :invalid)).to eq(true)
+          expect(subject.errors.added?(:postcode, :invalid)).to be(true)
         end
       end
 
@@ -33,7 +35,7 @@ RSpec.describe Steps::Address::LookupForm do
 
         it 'adds an `invalid` error on the attribute' do
           expect(subject).not_to be_valid
-          expect(subject.errors.added?(:postcode, :invalid)).to eq(true)
+          expect(subject.errors.added?(:postcode, :invalid)).to be(true)
         end
       end
     end
@@ -49,11 +51,11 @@ RSpec.describe Steps::Address::LookupForm do
         it 'updates the record' do
           expect(address_record).to receive(:update).with(
             'postcode' => 'SW1H 9AJ',
-            address_line_one: nil,
-            address_line_two: nil,
-            city: nil,
-            country: nil,
-            lookup_id: nil
+            :address_line_one => nil,
+            :address_line_two => nil,
+            :city => nil,
+            :country => nil,
+            :lookup_id => nil
           ).and_return(true)
 
           expect(subject.save).to be(true)

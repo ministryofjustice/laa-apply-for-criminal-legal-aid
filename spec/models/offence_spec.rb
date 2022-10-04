@@ -27,6 +27,7 @@ RSpec.describe Offence, type: :model do
 
     context 'when no offence is found' do
       subject { described_class.find_by(code: 'XYZ123') }
+
       it { is_expected.to be_nil }
     end
   end
@@ -34,7 +35,7 @@ RSpec.describe Offence, type: :model do
   describe '.find_by_name' do
     it 'is shorthand for `.find_by`' do
       expect(described_class).to receive(:find_by).with(name: 'Foobar')
-      described_class.find_by_name('Foobar')
+      described_class.find_by(name: 'Foobar')
     end
   end
 
@@ -63,7 +64,7 @@ RSpec.describe Offence, type: :model do
       end
 
       it 'considers same type/different row not equal' do
-        expect(offence_one).to_not eq(offence_three)
+        expect(offence_one).not_to eq(offence_three)
       end
     end
 
@@ -73,7 +74,7 @@ RSpec.describe Offence, type: :model do
       end
 
       it 'considers same type/different row not equal' do
-        expect(offence_one.hash).to_not eq(offence_three.hash)
+        expect(offence_one.hash).not_to eq(offence_three.hash)
       end
     end
   end

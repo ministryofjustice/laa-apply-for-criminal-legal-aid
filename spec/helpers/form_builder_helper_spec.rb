@@ -14,9 +14,10 @@ RSpec.describe FormBuilderHelper, type: :helper do
 
   describe '#continue_button' do
     context 'when there is no secondary action' do
-      let(:expected_markup) {
-        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>'
-      }
+      let(:expected_markup) do
+        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" ' \
+          'data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>'
+      end
 
       it 'outputs only the continue button' do
         expect(
@@ -26,10 +27,14 @@ RSpec.describe FormBuilderHelper, type: :helper do
     end
 
     context 'when there is a secondary action' do
-      let(:expected_markup) {
-        '<div class="govuk-button-group"><button type="submit" formnovalidate="formnovalidate" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>' + \
-        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" name="commit_draft">Save and come back later</button></div>'
-      }
+      let(:expected_markup) do
+        '<div class="govuk-button-group">' \
+          '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" ' \
+          'data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>' \
+          '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" ' \
+          'data-module="govuk-button" data-prevent-double-click="true" name="commit_draft">' \
+          'Save and come back later</button></div>'
+      end
 
       it 'outputs the continue button together with a save draft button' do
         expect(
@@ -49,8 +54,8 @@ RSpec.describe FormBuilderHelper, type: :helper do
         html = builder.continue_button(primary: :find_address, secondary: :enter_manually)
         doc = Nokogiri::HTML.fragment(html)
 
-        assert_select(doc, 'button', attributes: { name: nil }, text: 'Find address' )
-        assert_select(doc, 'button', attributes: { name: 'commit_draft' }, text: 'Enter address manually' )
+        assert_select(doc, 'button', attributes: { name: nil }, text: 'Find address')
+        assert_select(doc, 'button', attributes: { name: 'commit_draft' }, text: 'Enter address manually')
       end
     end
   end

@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::HasCodefendantsForm do
-  let(:arguments) { {
-    crime_application: crime_application,
-    has_codefendants: has_codefendants
-  } }
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application:,
+    has_codefendants:
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:has_codefendants) { nil }
-
-  subject { described_class.new(arguments) }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -26,8 +28,8 @@ RSpec.describe Steps::Case::HasCodefendantsForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:has_codefendants, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:has_codefendants, :inclusion)).to be(true)
       end
     end
 
@@ -39,8 +41,8 @@ RSpec.describe Steps::Case::HasCodefendantsForm do
       end
 
       it 'has a validation error on the field' do
-        expect(subject).to_not be_valid
-        expect(subject.errors.of_kind?(:has_codefendants, :inclusion)).to eq(true)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:has_codefendants, :inclusion)).to be(true)
       end
     end
 
@@ -62,7 +64,7 @@ RSpec.describe Steps::Case::HasCodefendantsForm do
                         association_name: :case,
                         expected_attributes: {
                           'has_codefendants' => YesNoAnswer::NO,
-                          codefendants: [],
+                          :codefendants => [],
                         }
       end
     end

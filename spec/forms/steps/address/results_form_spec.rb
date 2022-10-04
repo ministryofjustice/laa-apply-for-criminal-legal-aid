@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Address::ResultsForm do
-  let(:arguments) { {
-    crime_application: crime_application,
+  subject { described_class.new(arguments) }
+
+  let(:arguments) do
+    {
+      crime_application: crime_application,
     record: address_record,
     lookup_id: lookup_id,
-  } }
+    }
+  end
 
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:address_record) { Address.new(postcode: 'SW1H 0AX') }
@@ -15,8 +19,6 @@ RSpec.describe Steps::Address::ResultsForm do
   let(:lookup_results) { OrdnanceSurvey::AddressLookupResults.call(json_results) }
 
   let(:json_results) { JSON.parse(file_fixture('address_lookups/success.json').read)['results'] }
-
-  subject { described_class.new(arguments) }
 
   before do
     allow(OrdnanceSurvey::AddressLookup).to receive(:new).and_return(lookup_service)
@@ -61,7 +63,7 @@ RSpec.describe Steps::Address::ResultsForm do
 
       it 'adds an `inclusion` error on the attribute' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:lookup_id, :inclusion)).to eq(true)
+        expect(subject.errors.of_kind?(:lookup_id, :inclusion)).to be(true)
       end
     end
 
@@ -70,7 +72,7 @@ RSpec.describe Steps::Address::ResultsForm do
 
       it 'adds an `inclusion` error on the attribute' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:lookup_id, :inclusion)).to eq(true)
+        expect(subject.errors.of_kind?(:lookup_id, :inclusion)).to be(true)
       end
     end
   end
@@ -90,7 +92,7 @@ RSpec.describe Steps::Address::ResultsForm do
           city: 'LONDON',
           country: 'UNITED KINGDOM',
           postcode: 'SW1H 0AX',
-          lookup_id: '23749191',
+          lookup_id: '23749191'
         ).and_return(true)
 
         expect(subject.save).to be(true)

@@ -7,7 +7,7 @@ RSpec.describe YesNoAnswer do
 
   describe '.values' do
     it 'returns all possible values' do
-      expect(described_class.values.map(&:to_s)).to eq(%w(yes no))
+      expect(described_class.values.map(&:to_s)).to eq(%w[yes no])
     end
   end
 end

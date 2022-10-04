@@ -8,7 +8,7 @@ RSpec.describe 'Charges/offences summary page' do
 
     kase.charges.create!(
       offence_name: 'Robbery',
-      offence_dates_attributes: { id: nil, date: Date.new(1990, 02, 01) }
+      offence_dates_attributes: { id: nil, date: Date.new(1990, 2, 1) }
     )
   end
 
@@ -71,9 +71,9 @@ RSpec.describe 'Charges/offences summary page' do
         # ensure we have at least an additional offence
         charge = crime_application.case.charges.create!
 
-        expect {
+        expect do
           delete steps_case_charges_path(id: crime_application, charge_id: charge)
-        }.to change { Charge.count }.by(-1)
+        end.to change(Charge, :count).by(-1)
 
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(edit_steps_case_charges_summary_path(crime_application))
@@ -89,9 +89,9 @@ RSpec.describe 'Charges/offences summary page' do
 
     context 'when there are no more offences' do
       it 'deletes the offence, creates a brand new one and redirects to the offence page' do
-        expect {
+        expect do
           delete steps_case_charges_path(id: crime_application, charge_id: charge)
-        }.not_to change { Charge.count }
+        end.not_to change(Charge, :count)
 
         new_charge = Charge.last
 

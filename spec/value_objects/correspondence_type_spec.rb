@@ -8,7 +8,7 @@ RSpec.describe CorrespondenceType do
   describe '.values' do
     it 'returns all possible values' do
       expect(described_class.values.map(&:to_s)).to eq(
-        %w(home_address providers_office_address other_address)
+        %w[home_address providers_office_address other_address]
       )
     end
   end

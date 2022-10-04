@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe DateStamper do
+  subject { described_class.new(crime_app, case_type) }
+
   let(:case_type_sym) { CaseType::DATE_STAMPABLE.sample }
-  let(:date) { DateTime.new(2022, 02, 02) }
+  let(:date) { DateTime.new(2022, 2, 2) }
   let(:case_type) { CaseType.new(case_type_sym) }
-  let(:crime_app) {
+  let(:crime_app) do
     instance_double(
       CrimeApplication,
       date_stamp: date
     )
-  }
-
-  subject { described_class.new(crime_app, case_type) }
+  end
 
   before do
     allow(crime_app).to receive(:update)
@@ -21,8 +21,8 @@ RSpec.describe DateStamper do
     context 'when case_type is "date stampable" and date_stamp is nil' do
       let(:date) { nil }
 
-      it 'it adds a date stamp to the crime app' do
-        expect(crime_app).to receive(:update).with({date_stamp: instance_of(DateTime)})
+      it 'adds a date stamp to the crime app' do
+        expect(crime_app).to receive(:update).with({ date_stamp: instance_of(DateTime) })
         subject.call
       end
     end
