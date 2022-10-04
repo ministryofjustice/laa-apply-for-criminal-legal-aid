@@ -18,7 +18,7 @@ RSpec.describe 'Dashboard' do
       app = CrimeApplication.create
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe',
-                       date_of_birth: Date.new(1990, 0o2, 0o1))
+                       date_of_birth: Date.new(1990, 2, 1))
     end
 
     after :all do

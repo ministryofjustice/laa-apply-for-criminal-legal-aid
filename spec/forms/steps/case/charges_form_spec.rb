@@ -62,8 +62,8 @@ RSpec.describe Steps::Case::ChargesForm do
 
         let(:offence_dates) do
           [
-            OffenceDate.new(date: Date.new(2000, 11, 0o3)),
-            OffenceDate.new(date: Date.new(2009, 0o5, 0o1))
+            OffenceDate.new(date: Date.new(2000, 11, 3)),
+            OffenceDate.new(date: Date.new(2009, 5, 1))
           ]
         end
 

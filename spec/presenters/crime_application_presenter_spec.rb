@@ -6,9 +6,9 @@ RSpec.describe CrimeApplicationPresenter do
   let(:crime_application) do
     instance_double(CrimeApplication,
                     id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
-                    created_at: DateTime.new(2022, 0o1, 12),
+                    created_at: DateTime.new(2022, 1, 12),
                     status: 'in_progress',
-                    date_stamp: Date.new(2022, 0o2, 0o1),
+                    date_stamp: Date.new(2022, 2, 1),
                     case: Case.new(case_type: CaseType.new(case_type)),
                     applicant: applicant)
   end
@@ -18,7 +18,7 @@ RSpec.describe CrimeApplicationPresenter do
       Applicant,
       first_name: 'John',
       last_name: 'Doe',
-      date_of_birth: Date.new(1990, 0o2, 0o1)
+      date_of_birth: Date.new(1990, 2, 1)
     )
   end
 

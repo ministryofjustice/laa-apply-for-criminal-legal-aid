@@ -4,7 +4,7 @@ RSpec.describe DateStamper do
   subject { described_class.new(crime_app, case_type) }
 
   let(:case_type_sym) { CaseType::DATE_STAMPABLE.sample }
-  let(:date) { DateTime.new(2022, 0o2, 0o2) }
+  let(:date) { DateTime.new(2022, 2, 2) }
   let(:case_type) { CaseType.new(case_type_sym) }
   let(:crime_app) do
     instance_double(
