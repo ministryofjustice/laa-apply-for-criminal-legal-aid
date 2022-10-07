@@ -51,7 +51,7 @@ en:
         offence_name: For example, robbery
         date: For example, 12 11 2007
       steps_case_hearing_details_form:
-        hearing_court_name: For example, Cardiff
+        hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
 
     label:

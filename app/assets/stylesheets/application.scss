@@ -7,5 +7,11 @@
 // https://github.com/alphagov/govuk-frontend/pull/2453
 @import "local/suggestions";
 
+// NOTE: accessible-autocomplete copied from:
+// https://github.com/alphagov/accessible-autocomplete/blob/main/src/autocomplete.css
+// commit:aff5a284dba8ed674706bb8db3b3c1b7752c1285
+// customised to include govuk styling in local/custom.scss
+@import "local/accessible-autocomplete";
+
 // App-specific custom styles and overrides
 @import "local/custom";

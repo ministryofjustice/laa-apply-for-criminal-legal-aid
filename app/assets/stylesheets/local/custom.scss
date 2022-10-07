@@ -22,3 +22,9 @@
   position: sticky;
   top: 1%;
 }
+
+// style accessible autocomplete
+.autocomplete__wrapper * {
+  @include govuk-typography-common();
+}
+
