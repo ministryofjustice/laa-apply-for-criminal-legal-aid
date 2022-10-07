@@ -14,3 +14,10 @@ if ($inputs) {
     new Input($inputs[i]).init()
   }
 }
+
+import accessibleAutocomplete from 'accessible-autocomplete'
+
+accessibleAutocomplete.enhanceSelectElement({
+  selectElement: document.querySelector('#steps-case-hearing-details-form-hearing-court-name-field'),
+  defaultValue: ''
+})
