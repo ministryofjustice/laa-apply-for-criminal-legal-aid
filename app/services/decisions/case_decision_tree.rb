@@ -7,14 +7,6 @@ module Decisions
         edit(:case_type)
       when :case_type
         after_case_type
-      when :has_codefendants
-        after_has_codefendants
-      when :add_codefendant
-        edit_codefendants(add_blank: true)
-      when :delete_codefendant
-        edit_codefendants
-      when :codefendants_finished
-        after_codefendants
       when :charges
         edit(:charges_summary)
       when :add_offence_date
@@ -23,6 +15,14 @@ module Decisions
         after_delete_offence_date
       when :charges_summary
         after_charges_summary
+      when :has_codefendants
+        after_has_codefendants
+      when :add_codefendant
+        edit_codefendants(add_blank: true)
+      when :delete_codefendant
+        edit_codefendants
+      when :codefendants_finished
+        edit(:hearing_details)
       when :hearing_details
         # TODO: update when we have next step
         show('/home', action: :index)
@@ -41,29 +41,10 @@ module Decisions
       if is_date_stampable && has_date_stamp
         show(:date_stamp)
       else
-        edit(:has_codefendants)
+        return edit(:charges_summary) if case_charges.any?
+
+        edit_new_charge
       end
-    end
-
-    def after_has_codefendants
-      if form_object.has_codefendants.yes?
-        edit_codefendants
-      else
-        after_codefendants
-      end
-    end
-
-    def edit_codefendants(add_blank: false)
-      codefendants = form_object.case.codefendants
-      codefendants.create! if add_blank || codefendants.empty?
-
-      edit(:codefendants)
-    end
-
-    def after_codefendants
-      return edit(:charges_summary) if case_charges.any?
-
-      edit_new_charge
     end
 
     def after_add_offence_date
@@ -76,9 +57,24 @@ module Decisions
     end
 
     def after_charges_summary
-      return edit(:hearing_details) if form_object.add_offence.no?
+      return edit(:has_codefendants) if form_object.add_offence.no?
 
       edit_new_charge
+    end
+
+    def after_has_codefendants
+      if form_object.has_codefendants.yes?
+        edit_codefendants
+      else
+        edit(:hearing_details)
+      end
+    end
+
+    def edit_codefendants(add_blank: false)
+      codefendants = form_object.case.codefendants
+      codefendants.create! if add_blank || codefendants.empty?
+
+      edit(:codefendants)
     end
 
     def edit_new_charge
