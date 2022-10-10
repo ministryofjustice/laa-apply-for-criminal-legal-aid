@@ -30,7 +30,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `case_type`' do
-    let(:form_object) { double('FormObject', case_type: CaseType.new(case_type)) }
+    let(:form_object) { double('FormObject', case: kase, case_type: CaseType.new(case_type)) }
     let(:step_name) { :case_type }
 
     context 'and the application has a date stamp' do
@@ -47,7 +47,17 @@ RSpec.describe Decisions::CaseDecisionTree do
       context 'and case type is not "date stampable"' do
         let(:case_type) { :indictable }
 
-        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+        context 'and there are no charges input yet' do
+          let(:charges_double) { double(any?: false, create!: 'charge') }
+
+          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+        end
+
+        context 'and there are already charges input' do
+          let(:charges_double) { double(any?: true) }
+
+          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
+        end
       end
     end
 
@@ -59,13 +69,33 @@ RSpec.describe Decisions::CaseDecisionTree do
       context 'and the case type is "date stampable"' do
         let(:case_type) { CaseType::DATE_STAMPABLE.sample }
 
-        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+        context 'and there are no charges input yet' do
+          let(:charges_double) { double(any?: false, create!: 'charge') }
+
+          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+        end
+
+        context 'and there are already charges input' do
+          let(:charges_double) { double(any?: true) }
+
+          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
+        end
       end
 
       context 'and case type is not "date stampable"' do
         let(:case_type) { :indictable }
 
-        it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+        context 'and there are no charges input yet' do
+          let(:charges_double) { double(any?: false, create!: 'charge') }
+
+          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+        end
+
+        context 'and there are already charges input' do
+          let(:charges_double) { double(any?: true) }
+
+          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
+        end
       end
     end
   end
@@ -77,17 +107,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and answer is `no`' do
       let(:has_codefendants) { YesNoAnswer::NO }
 
-      context 'and there are charges already' do
-        let(:charges_double) { double(any?: true) }
-
-        it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-      end
-
-      context 'and there are no charges' do
-        let(:charges_double) { double(any?: false, create!: 'charge') }
-
-        it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-      end
+      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
     end
 
     context 'and answer is `yes`' do
@@ -159,17 +179,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :codefendants_finished }
 
-    context 'and there are charges already' do
-      let(:charges_double) { double(any?: true) }
-
-      it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-    end
-
-    context 'and there are no charges' do
-      let(:charges_double) { double(any?: false, create!: 'charge') }
-
-      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-    end
+    it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
   end
 
   context 'when the step is `charges`' do
@@ -201,7 +211,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and answer is `no`' do
       let(:add_offence) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
     end
   end
 

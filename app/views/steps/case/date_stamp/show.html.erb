@@ -7,7 +7,7 @@
 
     <div class="govuk-button-group">
       <%= link_button t('helpers.submit.save_and_continue'),
-                      edit_steps_case_has_codefendants_path(current_crime_application),
+                      edit_steps_case_charges_path(charge_id: @charge),
                       class: 'app-button--m app-button--inverted' %>
 
       <%= link_button t('helpers.submit.save_and_come_back_later'),
