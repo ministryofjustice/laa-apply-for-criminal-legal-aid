@@ -5,6 +5,14 @@ GIT
   specs:
     hmcts_common_platform (0.1.0)
 
+GIT
+  remote: https://github.com/ministryofjustice/laa-crime-apply-dev-api.git
+  revision: 4c9e89f4b5147887beb46908a164a4322be5ecb7
+  specs:
+    laa-crime-apply-dev-api (0.1.0)
+      dry-struct (>= 1.0.0)
+      rails (>= 7.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -115,6 +123,24 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    dry-container (0.11.0)
+      concurrent-ruby (~> 1.0)
+    dry-core (0.8.1)
+      concurrent-ruby (~> 1.0)
+    dry-inflector (0.3.0)
+    dry-logic (1.2.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.5, >= 0.5)
+    dry-struct (1.4.0)
+      dry-core (~> 0.5, >= 0.5)
+      dry-types (~> 1.5)
+      ice_nine (~> 0.11)
+    dry-types (1.5.1)
+      concurrent-ruby (~> 1.0)
+      dry-container (~> 0.3)
+      dry-core (~> 0.5, >= 0.5)
+      dry-inflector (~> 0.1, >= 0.1.2)
+      dry-logic (~> 1.0, >= 1.0.2)
     erb_lint (0.2.0)
       activesupport
       better_html (>= 2.0.1)
@@ -139,6 +165,7 @@ GEM
       activesupport (>= 6.1.4.4)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     importmap-rails (1.1.5)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
@@ -330,6 +357,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder (~> 3.1.0)
   hmcts_common_platform!
   importmap-rails
+  laa-crime-apply-dev-api!
   pg (~> 1.4)
   pry
   puma
