@@ -17,6 +17,9 @@ en:
         edit:
           page_title: Enter your client’s NINO
           eforms_link: My client does not have a National Insurance number or cannot find it
+      benefit_check_result:
+        edit:
+          page_title: Benefit check result
       nino_exit:
         show:
           page_title: Use eForms for this application

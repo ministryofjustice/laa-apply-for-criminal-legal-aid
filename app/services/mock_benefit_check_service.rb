@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MockBenefitCheckService
   KNOWN = {
     'SMITH' => { nino: 'ZZ123459A', dob: '11-Jan-99' },

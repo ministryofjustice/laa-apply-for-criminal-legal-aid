@@ -44,6 +44,15 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'has correct next step' do
       let(:nino) { 'AA123245A' }
 
+      it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `benefit_check_result`' do
+    let(:form_object) { double('FormObject', applicant: 'applicant') }
+    let(:step_name) { :benefit_check_result }
+
+    context 'has correct next step' do
       before do
         allow(
           HomeAddress

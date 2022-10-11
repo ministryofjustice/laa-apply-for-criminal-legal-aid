@@ -1,0 +1,12 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p>Benefit check result: <%= @form_object.benefit_check_result[:benefit_checker_status] %></p>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
