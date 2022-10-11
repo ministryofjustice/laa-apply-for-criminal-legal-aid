@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         edit_step :has_partner
         edit_step :details
         edit_step :has_nino
+        edit_step :benefit_check_result
         show_step :nino_exit
         show_step :partner_exit
         edit_step :contact_details

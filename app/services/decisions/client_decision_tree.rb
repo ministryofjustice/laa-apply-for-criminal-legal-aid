@@ -1,5 +1,6 @@
 module Decisions
   class ClientDecisionTree < BaseDecisionTree
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :has_partner
@@ -7,13 +8,16 @@ module Decisions
       when :details
         edit(:has_nino)
       when :has_nino
-        after_has_nino
+        edit(:benefit_check_result)
+      when :benefit_check_result
+        after_benefit_check_result
       when :contact_details
         after_contact_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -26,7 +30,7 @@ module Decisions
       end
     end
 
-    def after_has_nino
+    def after_benefit_check_result
       start_address_journey(
         HomeAddress,
         form_object.applicant
