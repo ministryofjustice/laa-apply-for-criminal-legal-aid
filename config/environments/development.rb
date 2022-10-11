@@ -67,4 +67,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+
+  # Allow a host to be set in development
+  if ENV.fetch("CRIME_APPLY_HOST", false)
+    config.hosts << ENV['CRIME_APPLY_HOST']
+  end
 end
