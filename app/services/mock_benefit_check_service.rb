@@ -1,9 +1,9 @@
 class MockBenefitCheckService
   KNOWN = {
-    'SMITH' => { nino: 'ZZ123459A', dob: '11-Jan-99' },
-    'JONES' => { nino: 'ZZ123458A', dob: '1-Jun-80' },
-    'BLOGGS' => { nino: 'ZZ123457A', dob: '4-Jan-90' },
-    'WRINKLE' => { nino: 'ZZ010150A', dob: '01-Jan-50' },
+    'SMITH' => { nino: 'NC123459A', dob: '11-Jan-99' },
+    'JONES' => { nino: 'NC123458A', dob: '1-Jun-80' },
+    'BLOGGS' => { nino: 'NC123457A', dob: '4-Jan-90' },
+    'WRINKLE' => { nino: 'NC010150A', dob: '01-Jan-50' },
     'WALKER' => { nino: 'JA293483A', dob: '10-Jan-80' }, # Used in cucumber tests and specs
   }.freeze
 

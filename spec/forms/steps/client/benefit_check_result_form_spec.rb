@@ -14,7 +14,7 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
 
   let(:last_name) { 'Smith' }
   let(:date_of_birth) { '1999/01/11'.to_date }
-  let(:nino) { 'ZZ123459A' }
+  let(:nino) { 'NC123459A' }
   let(:crime_application) do
     instance_double(CrimeApplication,
                     applicant:)
