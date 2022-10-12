@@ -24,44 +24,6 @@ RSpec.describe Steps::Case::CaseTypeForm do
   let(:cc_appeal_fin_change_details) { nil }
 
   describe '#save' do
-    describe 'date stamping' do
-      let(:kase) { instance_double(Case) }
-
-      after { form.save }
-
-      context 'when case is valid' do
-        before { expect(kase).to receive(:update).and_return(true) }
-
-        context 'and `case_type` is "date stampable"' do
-          let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
-
-          it 'the crime application date stamp is set' do
-            expect(crime_application).to receive(:update).with(hash_including(:date_stamp))
-          end
-        end
-
-        context 'and `case_type` is not "date stampable"' do
-          let(:case_type) { CaseType::INDICTABLE.to_s }
-
-          it 'the crime application date stamp is not set' do
-            expect(crime_application).not_to receive(:update).with(hash_including(:date_stamp))
-          end
-        end
-      end
-
-      context 'when case_type is not valid' do
-        before { expect(kase).to receive(:update).and_return(false) }
-
-        context 'and `case_type` is "date stampable"' do
-          let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
-
-          it 'the crime application date stamp is not set' do
-            expect(crime_application).not_to receive(:update).with(hash_including(:date_stamp))
-          end
-        end
-      end
-    end
-
     context 'when `case_type` is blank' do
       let(:case_type) { '' }
 

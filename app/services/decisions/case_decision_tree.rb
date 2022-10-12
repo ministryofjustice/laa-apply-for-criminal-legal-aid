@@ -37,10 +37,7 @@ module Decisions
     private
 
     def after_case_type
-      has_date_stamp = current_crime_application.date_stamp
-      is_date_stampable = form_object.case_type.date_stampable?
-
-      if is_date_stampable && has_date_stamp
+      if DateStamper.new(form_object.crime_application, form_object.case.case_type).call
         edit(:date_stamp)
       else
         charges_summary_or_edit_new_charge
