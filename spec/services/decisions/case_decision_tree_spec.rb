@@ -33,53 +33,39 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject', case: kase, case_type: CaseType.new(case_type)) }
     let(:step_name) { :case_type }
 
-    context 'and the application has a date stamp' do
+    context 'and the application already has a date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp) { Time.zone.today }
+        allow(kase).to receive(:case_type).and_return(case_type)
       end
 
-      context 'and the case type is "date stampable"' do
-        let(:case_type) { CaseType::DATE_STAMPABLE.sample }
+      let(:case_type) { CaseType::VALUES.sample }
 
-        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
+      context 'and there are no charges input yet' do
+        let(:charges_double) { double(any?: false, create!: 'charge') }
+
+        it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
       end
 
-      context 'and case type is not "date stampable"' do
-        let(:case_type) { CaseType::INDICTABLE.to_s }
+      context 'and there are already charges input' do
+        let(:charges_double) { double(any?: true) }
 
-        context 'and there are no charges input yet' do
-          let(:charges_double) { double(any?: false, create!: 'charge') }
-
-          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-        end
-
-        context 'and there are already charges input' do
-          let(:charges_double) { double(any?: true) }
-
-          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
       end
     end
 
     context 'and the application has no date stamp' do
       before do
-        allow(crime_application).to receive(:date_stamp).and_return(nil)
+        allow(crime_application).to receive(:date_stamp)
+        allow(kase).to receive(:case_type).and_return(case_type)
       end
 
       context 'and the case type is "date stampable"' do
+        let(:charges_double) { double(any?: false, create!: 'charge') }
+
         let(:case_type) { CaseType::DATE_STAMPABLE.sample }
 
-        context 'and there are no charges input yet' do
-          let(:charges_double) { double(any?: false, create!: 'charge') }
-
-          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-        end
-
-        context 'and there are already charges input' do
-          let(:charges_double) { double(any?: true) }
-
-          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
       end
 
       context 'and case type is not "date stampable"' do
