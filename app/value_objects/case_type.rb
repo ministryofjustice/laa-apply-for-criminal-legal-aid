@@ -10,13 +10,13 @@ class CaseType < ValueObject
   ].freeze
 
   DATE_STAMPABLE = [
-    :summary_only,
-    :either_way,
-    :committal,
-    :cc_appeal
+    SUMMARY_ONLY,
+    EITHER_WAY,
+    COMMITTAL,
+    CC_APPEAL,
   ].freeze
 
   def date_stampable?
-    DATE_STAMPABLE.include?(value)
+    DATE_STAMPABLE.include?(self)
   end
 end

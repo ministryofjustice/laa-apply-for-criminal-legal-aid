@@ -33,7 +33,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         before { expect(kase).to receive(:update).and_return(true) }
 
         context 'and `case_type` is "date stampable"' do
-          let(:case_type) { 'summary_only' }
+          let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
           it 'the crime application date stamp is set' do
             expect(crime_application).to receive(:update).with(hash_including(:date_stamp))
@@ -41,7 +41,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         end
 
         context 'and `case_type` is not "date stampable"' do
-          let(:case_type) { 'indictable' }
+          let(:case_type) { CaseType::INDICTABLE.to_s }
 
           it 'the crime application date stamp is not set' do
             expect(crime_application).not_to receive(:update).with(hash_including(:date_stamp))
@@ -53,7 +53,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         before { expect(kase).to receive(:update).and_return(false) }
 
         context 'and `case_type` is "date stampable"' do
-          let(:case_type) { 'summary_only' }
+          let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
           it 'the crime application date stamp is not set' do
             expect(crime_application).not_to receive(:update).with(hash_including(:date_stamp))
@@ -81,7 +81,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
     end
 
     context 'when `case_type` is valid' do
-      let(:case_type) { 'indictable' }
+      let(:case_type) { CaseType::INDICTABLE.to_s }
 
       it { is_expected.to be_valid }
 
@@ -195,7 +195,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
     end
 
     context 'when validations pass' do
-      let(:case_type) { 'indictable' }
+      let(:case_type) { CaseType::INDICTABLE.to_s }
 
       it_behaves_like 'a has-one-association form',
                       association_name: :case,
