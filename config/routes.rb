@@ -65,11 +65,11 @@ Rails.application.routes.draw do
       namespace :case do
         edit_step :urn
         edit_step :case_type
-        show_step :date_stamp
-        edit_step :has_codefendants
-        edit_step :codefendants
+        edit_step :date_stamp
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
+        edit_step :has_codefendants
+        edit_step :codefendants
         edit_step :hearing_details
       end
     end

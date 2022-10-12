@@ -82,7 +82,7 @@ en:
           page_title: Enter the case type
           heading:  Enter the case type
       date_stamp:
-        show:
+        edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
       has_codefendants:
