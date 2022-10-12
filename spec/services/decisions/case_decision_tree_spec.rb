@@ -45,7 +45,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       end
 
       context 'and case type is not "date stampable"' do
-        let(:case_type) { :indictable }
+        let(:case_type) { CaseType::INDICTABLE.to_s }
 
         context 'and there are no charges input yet' do
           let(:charges_double) { double(any?: false, create!: 'charge') }
@@ -83,7 +83,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       end
 
       context 'and case type is not "date stampable"' do
-        let(:case_type) { :indictable }
+        let(:case_type) { CaseType::INDICTABLE.to_s }
 
         context 'and there are no charges input yet' do
           let(:charges_double) { double(any?: false, create!: 'charge') }

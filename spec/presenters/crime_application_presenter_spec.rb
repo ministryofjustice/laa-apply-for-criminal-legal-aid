@@ -9,7 +9,7 @@ RSpec.describe CrimeApplicationPresenter do
                     created_at: DateTime.new(2022, 1, 12),
                     status: 'in_progress',
                     date_stamp: Date.new(2022, 2, 1),
-                    case: Case.new(case_type: CaseType.new(case_type)),
+                    case: case_double,
                     applicant: applicant)
   end
 
@@ -22,17 +22,18 @@ RSpec.describe CrimeApplicationPresenter do
     )
   end
 
-  let(:case_type) { :indictable }
+  let(:case_double) { instance_double(Case, case_type:) }
+  let(:case_type) { nil }
 
   describe '#application_date_stamp' do
     context 'when a case is date stampable' do
-      let(:case_type) { :summary_only }
+      let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
       it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
     end
 
     context 'when a case is not date stampable' do
-      let(:case_type) { :indictable }
+      let(:case_type) { CaseType::INDICTABLE.to_s }
 
       it { expect(subject.application_date_stamp).to be_nil }
     end

@@ -3,9 +3,6 @@ require 'rails_helper'
 RSpec.describe DateStamper do
   subject { described_class.new(crime_app, case_type) }
 
-  let(:case_type_sym) { CaseType::DATE_STAMPABLE.sample }
-  let(:date) { DateTime.new(2022, 2, 2) }
-  let(:case_type) { CaseType.new(case_type_sym) }
   let(:crime_app) do
     instance_double(
       CrimeApplication,
@@ -19,6 +16,7 @@ RSpec.describe DateStamper do
 
   describe '#call' do
     context 'when case_type is "date stampable" and date_stamp is nil' do
+      let(:case_type) { CaseType::DATE_STAMPABLE.sample }
       let(:date) { nil }
 
       it 'adds a date stamp to the crime app' do
@@ -27,20 +25,9 @@ RSpec.describe DateStamper do
       end
     end
 
-    context 'when case_type is not "date stampable"' do
-      let(:case_type_sym) { :cc_appeal_fin_change }
-
-      it 'resets the the crime applications date stamp' do
-        expect(crime_app).not_to receive(:update)
-
-        result = subject.call
-
-        expect(result).to be(false)
-      end
-    end
-
     context 'when case_type is "date stampable" and has already been date stamped' do
-      let(:case_type_sym) { :cc_appeal_fin_change }
+      let(:case_type) { CaseType::DATE_STAMPABLE.sample }
+      let(:date) { DateTime.new(2022, 2, 2) }
 
       it 'does not update the crime applications a date stamp' do
         expect(crime_app).not_to receive(:update)
@@ -51,8 +38,8 @@ RSpec.describe DateStamper do
       end
     end
 
-    context 'when case_type is not "date stampable" and has no date stamped' do
-      let(:case_type_sym) { :cc_appeal_fin_change }
+    context 'when case_type is not "date stampable"' do
+      let(:case_type) { CaseType::CC_APPEAL_FIN_CHANGE }
       let(:date) { nil }
 
       it 'does not update the crime applications a date stamp' do
