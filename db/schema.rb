@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_29_082638) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_13_141243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -70,6 +70,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_082638) do
     t.string "client_has_partner"
     t.string "status"
     t.datetime "date_stamp"
+  end
+
+  create_table "ioj_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "types", default: [], array: true
+    t.text "loss_of_liberty_justification"
+    t.text "suspended_sentence_justification"
+    t.text "loss_of_livelyhood_justification"
+    t.text "reputation_justification"
+    t.text "question_of_law_justification"
+    t.text "understanding_justification"
+    t.text "witness_tracing_justification"
+    t.text "expert_examination_justification"
+    t.text "interest_of_another_justification"
+    t.text "other_justification"
+    t.uuid "case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_ioj_reasons_on_case_id", unique: true
   end
 
   create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
