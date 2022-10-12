@@ -41,7 +41,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       context 'and the case type is "date stampable"' do
         let(:case_type) { CaseType::DATE_STAMPABLE.sample }
 
-        it { is_expected.to have_destination(:date_stamp, :show, id: crime_application) }
+        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
       end
 
       context 'and case type is not "date stampable"' do
@@ -97,6 +97,23 @@ RSpec.describe Decisions::CaseDecisionTree do
           it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
         end
       end
+    end
+  end
+
+  context 'when the step is `date_stamp`' do
+    let(:form_object) { double('FormObject', case: kase) }
+    let(:step_name) { :date_stamp }
+
+    context 'and there are no charges yet' do
+      let(:charges_double) { double(any?: false, create!: 'charge') }
+
+      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+    end
+
+    context 'and there are already charges' do
+      let(:charges_double) { double(any?: true) }
+
+      it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
     end
   end
 
