@@ -32,8 +32,16 @@ module Steps
 
       def persist!
         applicant.update(
-          attributes
+          attributes.merge(
+            reset_address_if_needed
+          )
         )
+      end
+
+      def reset_address_if_needed
+        {}.tap do |attrs|
+          attrs.merge!(correspondence_address: nil) unless correspondence_address_type.other_address?
+        end
       end
     end
   end
