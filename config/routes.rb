@@ -72,6 +72,10 @@ Rails.application.routes.draw do
         edit_step :codefendants
         edit_step :hearing_details
       end
+
+      namespace :submission do
+        edit_step :review
+      end
     end
   end
 
