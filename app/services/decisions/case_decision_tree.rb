@@ -26,6 +26,8 @@ module Decisions
       when :codefendants_finished
         edit(:hearing_details)
       when :hearing_details
+        edit(:ioj)
+      when :ioj
         # TODO: update when we have next step
         show('/home', action: :index)
       else

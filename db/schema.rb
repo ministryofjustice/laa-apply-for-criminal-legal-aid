@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_141243) do
     t.datetime "date_stamp"
   end
 
-  create_table "ioj_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "types", default: [], array: true
     t.text "loss_of_liberty_justification"
     t.text "suspended_sentence_justification"
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_141243) do
     t.uuid "case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["case_id"], name: "index_ioj_reasons_on_case_id", unique: true
+    t.index ["case_id"], name: "index_iojs_on_case_id", unique: true
   end
 
   create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_141243) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
+  add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"
 end

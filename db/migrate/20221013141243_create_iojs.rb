@@ -1,6 +1,6 @@
-class CreateIojReasons < ActiveRecord::Migration[7.0]
+class CreateIojs < ActiveRecord::Migration[7.0]
   def change
-    create_table :ioj_reasons, id: :uuid do |t|
+    create_table :iojs, id: :uuid do |t|
       t.string :types, array: true, default: []
       t.text :loss_of_liberty_justification
       t.text :suspended_sentence_justification

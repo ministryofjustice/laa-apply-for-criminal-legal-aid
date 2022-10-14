@@ -85,16 +85,6 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
-      has_codefendants:
-        edit:
-          page_title: Does your client have co-defendants?
-      codefendants:
-        edit:
-          page_title: Details of co-defendants
-          heading: Enter the details of any co-defendants in the case
-          codefendant_legend: Co-defendant %{index}
-          add_button: Add another co-defendant
-          remove_button: Remove co-defendant
       charges:
         edit:
           page_title: What has your client been charged with?
@@ -120,10 +110,34 @@ en:
           incomplete_tag: Incomplete
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
+      has_codefendants:
+        edit:
+          page_title: Does your client have co-defendants?
+      codefendants:
+        edit:
+          page_title: Details of co-defendants
+          heading: Enter the details of any co-defendants in the case
+          codefendant_legend: Co-defendant %{index}
+          add_button: Add another co-defendant
+          remove_button: Remove co-defendant
       hearing_details:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+      ioj:
+        edit:
+          page_title: Why should your client get legal aid?
+          hint: Enter justification
+          loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them.
+          suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence.
+          loss_of_livelyhood: It is likely that they will lose their livelihood.
+          reputation: It is likely that they will suffer serious damage to their reputation.
+          question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).
+          understanding: They may not be able to understand the court proceedings or present their own case.
+          witness_tracing: Witnesses may need to be traced or interviewed on their behalf.
+          expert_examination: Witnesses may need to be traced or interviewed on their behalf.
+          interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
+          other: Other
     submission:
       review:
         edit:
