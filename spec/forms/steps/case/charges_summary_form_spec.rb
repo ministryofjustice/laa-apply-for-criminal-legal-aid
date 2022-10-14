@@ -6,7 +6,7 @@ RSpec.describe Steps::Case::ChargesSummaryForm do
   let(:arguments) do
     {
       crime_application:,
-    add_offence:
+      add_offence:
     }
   end
 
@@ -43,6 +43,45 @@ RSpec.describe Steps::Case::ChargesSummaryForm do
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:add_offence, :inclusion)).to be(true)
+      end
+    end
+
+    context 'when there are charges with missing details' do
+      let(:charges_collection) do
+        [
+          instance_double(Charge, complete?: true),
+          instance_double(Charge, complete?: false),
+        ]
+      end
+
+      before do
+        allow(subject).to receive(:charges).and_return(charges_collection)
+      end
+
+      context 'and `add_offence` is `yes`' do
+        let(:add_offence) { 'yes' }
+
+        it 'does not validate existing charges' do
+          expect(subject).not_to receive(:all_charges_have_details)
+          subject.save
+        end
+
+        it 'returns true' do
+          expect(subject.save).to be(true)
+        end
+      end
+
+      context 'and `add_offence` is `no`' do
+        let(:add_offence) { 'no' }
+
+        it 'has a validation error' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:add_offence, :missing_details)).to be(true)
+        end
+
+        it 'returns false' do
+          expect(subject.save).to be(false)
+        end
       end
     end
 

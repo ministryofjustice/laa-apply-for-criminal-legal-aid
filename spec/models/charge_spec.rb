@@ -29,4 +29,46 @@ RSpec.describe Charge, type: :model do
       it { expect(subject.offence).to be_nil }
     end
   end
+
+  describe '#complete?' do
+    before do
+      allow(subject).to receive(:offence_dates).and_return(offence_dates)
+    end
+
+    context 'for an offence with name and dates' do
+      let(:offence_name) { 'Foobar' }
+      let(:offence_dates) { [{ date: 'date' }, { date: nil }] }
+
+      it 'returns true' do
+        expect(subject.complete?).to be(true)
+      end
+    end
+
+    context 'for an offence with no name and dates' do
+      let(:offence_name) { '' }
+      let(:offence_dates) { [{ date: 'date' }, { date: nil }] }
+
+      it 'returns true' do
+        expect(subject.complete?).to be(false)
+      end
+    end
+
+    context 'for an offence with name but no dates' do
+      let(:offence_name) { 'Foobar' }
+      let(:offence_dates) { [{ date: nil }] }
+
+      it 'returns false' do
+        expect(subject.complete?).to be(false)
+      end
+    end
+
+    context 'for an offence with no name and no dates' do
+      let(:offence_name) { '' }
+      let(:offence_dates) { [{ date: nil }] }
+
+      it 'returns false' do
+        expect(subject.complete?).to be(false)
+      end
+    end
+  end
 end
