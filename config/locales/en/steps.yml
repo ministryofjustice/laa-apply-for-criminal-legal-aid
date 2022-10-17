@@ -124,3 +124,8 @@ en:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+    submission:
+      review:
+        edit:
+          page_title: Review the application
+          heading: Review the application
