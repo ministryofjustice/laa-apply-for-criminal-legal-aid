@@ -9,4 +9,8 @@ class Charge < ApplicationRecord
 
   composed_of :offence, mapping: %i[offence_name name],
               constructor: :find_by_name, allow_nil: true
+
+  def complete?
+    offence_name.present? && offence_dates.pluck(:date).any?
+  end
 end

@@ -115,6 +115,7 @@ en:
           attributes:
             add_offence:
               inclusion: Select yes if you want to add another offence
+              missing_details: You must complete all offence details in order to proceed
         steps/case/offence_date_fieldset_form:
           attributes:
             date:

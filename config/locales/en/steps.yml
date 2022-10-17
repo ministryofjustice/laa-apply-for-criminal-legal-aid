@@ -117,6 +117,7 @@ en:
             one: You have added %{count} offence
             other: You have added %{count} offences
         offence_details:
+          incomplete_tag: Incomplete
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
       hearing_details:
