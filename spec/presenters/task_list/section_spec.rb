@@ -33,8 +33,8 @@ RSpec.describe TaskList::Section do
         subject.render
       ).to eq(
         '<li>' \
-        '<h2 class="app-task-list__section"><span class="app-task-list__section-number">1.</span>Foo Bar Heading</h2>' \
-        '<ul class="app-task-list__items">[task_markup][task_markup]</ul>' \
+        '<h2 class="moj-task-list__section"><span class="moj-task-list__section-number">1.</span>Foo Bar Heading</h2>' \
+        '<ul class="moj-task-list__items">[task_markup][task_markup]</ul>' \
         '</li>'
       )
     end
@@ -45,7 +45,7 @@ RSpec.describe TaskList::Section do
       it 'renders the expected section HTML element' do
         expect(
           subject.render
-        ).to match(%r{<span class="app-task-list__section-number">3.</span>})
+        ).to match(%r{<span class="moj-task-list__section-number">3.</span>})
       end
     end
   end
