@@ -1,0 +1,30 @@
+en:
+  summary:
+    dictionary:
+      YESNO: &YESNO
+        'yes': 'Yes'
+        'no': 'No'
+
+    change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
+
+    sections:
+      client_details: Client details
+
+    questions:
+      # BEGIN client details section
+      first_name:
+        question: First name
+      last_name:
+        question: Last name
+      other_names:
+        question: Other names
+        absence_answer: None
+      date_of_birth:
+        question: Date of birth
+      nino:
+        question: National Insurance number
+      passporting:
+        question: Passporting benefit
+        answers:
+          <<: *YESNO
+      # END client details section

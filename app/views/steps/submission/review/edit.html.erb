@@ -2,10 +2,14 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
 
-    <%= step_form @form_object do |f| %>
+    <%= render @presenter.sections %>
+
+    <%= step_form @form_object, html: { class: 'govuk-!-padding-top-6' } do |f| %>
       <%= f.continue_button %>
     <% end %>
   </div>
