@@ -11,6 +11,7 @@ en:
     sections:
       client_details: Client details
       contact_details: Contact details
+      case_details: Case details
 
     questions:
       # BEGIN client details section
@@ -46,3 +47,19 @@ en:
       telephone_number:
         question: UK telephone number
       # END contact details section
+
+      # BEGIN case details section
+      case_urn:
+        question: Unique reference number
+        absence_answer: *absence_none
+      case_type:
+        question: Case type
+        answers:
+          summary_only: Summary only
+          either_way: Either way
+          indictable: Indictable
+          already_cc_trial: Trial already in crown court
+          committal: Committal for sentence
+          cc_appeal: Appeal to crown court
+          cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
+      # END case details section

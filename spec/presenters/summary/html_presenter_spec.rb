@@ -19,6 +19,7 @@ describe Summary::HtmlPresenter do
         [
           Summary::Sections::ClientDetails,
           Summary::Sections::ContactDetails,
+          Summary::Sections::CaseDetails,
         ]
       )
     end
