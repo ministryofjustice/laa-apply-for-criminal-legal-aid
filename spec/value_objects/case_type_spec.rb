@@ -29,6 +29,7 @@ RSpec.describe CaseType do
           either_way
           committal
           cc_appeal
+          cc_appeal_fin_change
         ]
       )
     end

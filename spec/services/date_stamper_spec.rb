@@ -39,7 +39,7 @@ RSpec.describe DateStamper do
     end
 
     context 'when case_type is not "date stampable"' do
-      let(:case_type) { CaseType::CC_APPEAL_FIN_CHANGE }
+      let(:case_type) { CaseType::INDICTABLE }
       let(:date) { nil }
 
       it 'does not update the crime applications a date stamp' do
