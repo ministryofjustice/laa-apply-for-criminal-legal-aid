@@ -14,6 +14,7 @@ class CaseType < ValueObject
     EITHER_WAY,
     COMMITTAL,
     CC_APPEAL,
+    CC_APPEAL_FIN_CHANGE,
   ].freeze
 
   def date_stampable?
