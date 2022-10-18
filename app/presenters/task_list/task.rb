@@ -4,7 +4,7 @@ module TaskList
     delegate :completed?, to: :status
 
     def render
-      tag.li class: 'app-task-list__item' do
+      tag.li class: 'moj-task-list__item' do
         safe_join(
           [task_name, status_tag]
         )

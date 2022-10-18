@@ -67,7 +67,7 @@ RSpec.describe TaskList::Collection do
 
       expect(
         subject.render
-      ).to match(%r{<ol class="app-task-list">.*</ol>})
+      ).to match(%r{<ol class="moj-task-list">.*</ol>})
     end
   end
 end
