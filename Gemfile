@@ -37,6 +37,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'laa_crime_apply_dev_api', github: 'ministryofjustice/laa-crime-apply-dev-api'
   gem 'web-console'
 end
 
