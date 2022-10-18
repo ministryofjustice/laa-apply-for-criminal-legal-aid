@@ -18,6 +18,7 @@ describe Summary::HtmlPresenter do
       ).to match_instances_array(
         [
           Summary::Sections::ClientDetails,
+          Summary::Sections::ContactDetails,
         ]
       )
     end

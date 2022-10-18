@@ -9,6 +9,7 @@ module Summary
     def sections
       [
         Sections::ClientDetails.new(crime_application),
+        Sections::ContactDetails.new(crime_application),
       ].select(&:show?)
     end
   end

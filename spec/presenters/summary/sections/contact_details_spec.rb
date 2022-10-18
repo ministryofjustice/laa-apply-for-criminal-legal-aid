@@ -1,0 +1,111 @@
+require 'rails_helper'
+
+describe Summary::Sections::ContactDetails do
+  subject { described_class.new(crime_application) }
+
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      to_param: '12345',
+      applicant: applicant,
+    )
+  end
+
+  let(:applicant) do
+    instance_double(
+      Applicant,
+      home_address: home_address,
+      correspondence_address: correspondence_address,
+      correspondence_address_type: correspondence_address_type,
+      telephone_number: '123456789',
+    )
+  end
+
+  let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
+
+  let(:home_address) do
+    HomeAddress.new(
+      id: 'ff53a8dd-43f3-4e82-acba-53b1c0ce2b4c',
+      address_line_one: 'Test',
+      address_line_two: 'Home',
+      postcode: 'Postcode',
+      city: 'City',
+      country: 'Country',
+    )
+  end
+
+  let(:correspondence_address) do
+    CorrespondenceAddress.new(
+      id: 'e77e4fa3-76f1-4db6-8b92-72b36c8b327a',
+      address_line_one: 'Test',
+      address_line_two: 'Correspondence',
+      postcode: 'Postcode',
+      city: 'City',
+      country: 'Country',
+    )
+  end
+
+  describe '#name' do
+    it { expect(subject.name).to eq(:contact_details) }
+  end
+
+  describe '#answers' do
+    let(:answers) { subject.answers }
+
+    it 'has the correct rows' do
+      expect(answers.count).to eq(4)
+
+      expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answers[0].question).to eq(:home_address)
+      expect(answers[0].change_path).to match('applications/12345/steps/address/details/ff53a8dd')
+      expect(answers[0].value).to eq("Test\r\nHome\r\nPostcode\r\nCity\r\nCountry")
+
+      expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
+      expect(answers[1].question).to eq(:correspondence_address_type)
+      expect(answers[1].change_path).to match('applications/12345/steps/client/contact_details')
+      expect(answers[1].value).to eq('other_address')
+
+      expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answers[2].question).to eq(:correspondence_address)
+      expect(answers[2].change_path).to match('applications/12345/steps/address/details/e77e4fa3')
+      expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nPostcode\r\nCity\r\nCountry")
+
+      expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answers[3].question).to eq(:telephone_number)
+      expect(answers[3].change_path).to match('applications/12345/steps/client/contact_details')
+      expect(answers[3].value).to eq('123456789')
+    end
+
+    context 'for `home_address` correspondence type' do
+      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS.to_s }
+      let(:correspondence_address) { nil }
+
+      it 'does not show the correspondence address' do
+        expect(answers.count).to eq(3)
+
+        expect(answers[0].question).to eq(:home_address)
+
+        expect(answers[1].question).to eq(:correspondence_address_type)
+        expect(answers[1].value).to eq('home_address')
+
+        expect(answers[2].question).to eq(:telephone_number)
+      end
+    end
+
+    context 'for `providers_office_address` correspondence type' do
+      let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS.to_s }
+      let(:correspondence_address) { nil }
+
+      it 'does not show the correspondence address' do
+        expect(answers.count).to eq(3)
+
+        expect(answers[0].question).to eq(:home_address)
+
+        expect(answers[1].question).to eq(:correspondence_address_type)
+        expect(answers[1].value).to eq('providers_office_address')
+
+        expect(answers[2].question).to eq(:telephone_number)
+      end
+    end
+  end
+end
