@@ -51,7 +51,7 @@ Rails.application.routes.draw do
         edit_step :details
         edit_step :has_nino
         edit_step :benefit_check_result
-        edit_step :confirm_nino_details
+        edit_step :confirm_details
         show_step :benefit_check_result_exit
         show_step :nino_exit
         show_step :partner_exit

@@ -105,23 +105,23 @@ RSpec.describe Decisions::ClientDecisionTree do
 
         context 'has correct next step' do
           it {
-            expect(subject).to have_destination(:confirm_nino_details, :edit, id: crime_application)
+            expect(subject).to have_destination(:confirm_details, :edit, id: crime_application)
           }
         end
       end
     end
   end
 
-  context 'when the step is `confirm_nino_details`' do
+  context 'when the step is `confirm_details`' do
     let(:form_object) { double('FormObject', applicant:) }
     let(:applicant) { double('Applicant') }
-    let(:step_name) { :confirm_nino_details }
+    let(:step_name) { :confirm_details }
 
     context 'when the caseworker confirms that the details are correct' do
       before do
         allow(
           form_object
-        ).to receive(:confirm_nino_details).and_return('Yes')
+        ).to receive(:confirm_details).and_return('Yes')
       end
 
       context 'has correct next step' do
@@ -135,7 +135,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       before do
         allow(
           form_object
-        ).to receive(:confirm_nino_details).and_return('No')
+        ).to receive(:confirm_details).and_return('No')
       end
 
       context 'has correct next step' do

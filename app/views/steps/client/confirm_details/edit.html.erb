@@ -52,7 +52,7 @@
   <div class="govuk-grid-column-full">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :confirm_nino_details, @form_object.choices, :value,
+      <%= f.govuk_collection_radio_buttons :confirm_details, @form_object.choices, :value,
                                            inline: false %>
       <%= f.continue_button %>
     <% end %>

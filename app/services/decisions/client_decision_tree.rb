@@ -11,8 +11,8 @@ module Decisions
         edit(:benefit_check_result)
       when :benefit_check_result
         after_benefit_check_result
-      when :confirm_nino_details
-        after_confirm_nino_details
+      when :confirm_details
+        after_confirm_details
       when :contact_details
         after_contact_details
       else
@@ -33,7 +33,7 @@ module Decisions
     end
 
     def after_benefit_check_result
-      return edit(:confirm_nino_details) if form_object.applicant.passporting_benefit.nil?
+      return edit(:confirm_details) if form_object.applicant.passporting_benefit.nil?
 
       if form_object.applicant.passporting_benefit.casecmp('yes').zero?
         start_address_journey(
@@ -45,8 +45,8 @@ module Decisions
       end
     end
 
-    def after_confirm_nino_details
-      if form_object.confirm_nino_details.casecmp('yes').zero?
+    def after_confirm_details
+      if form_object.confirm_details.casecmp('yes').zero?
         show(:benefit_check_result_exit)
       else
         edit(:details)

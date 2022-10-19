@@ -22,8 +22,8 @@ en:
         correspondence_address_type: Correspondence address
       steps_client_benefit_check_result_form:
         confirm_benefit_check_result: DWP records show that your client does not receive a passporting benefit - is this correct?
-      steps_client_confirm_nino_details_form:
-        confirm_nino_details: Are these details correct?
+      steps_client_confirm_details_form:
+        confirm_details: Are these details correct?
       steps_case_case_type_form:
         case_type: What is the case type?
       steps_case_has_codefendants_form:
@@ -71,8 +71,8 @@ en:
         confirm_benefit_check_result_options:
           'yes': 'Yes'
           'no': 'No, my client receives a passporting benefit'
-      steps_client_confirm_nino_details_form:
-        confirm_nino_details_options:
+      steps_client_confirm_details_form:
+        confirm_details_options:
           'yes': 'Yes'
           'no': 'No, I need to change these details'
       steps_client_contact_details_form:

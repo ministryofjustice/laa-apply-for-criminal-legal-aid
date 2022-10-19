@@ -27,7 +27,7 @@ en:
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application
-      confirm_nino_details:
+      confirm_details:
         edit:
           heading: Check your client’s details
           page_title: Confirm your client’s NINO
