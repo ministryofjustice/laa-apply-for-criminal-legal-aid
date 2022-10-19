@@ -9,7 +9,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :codefendants do |c| %>
-        <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', index: c.index + 1) } do %>
+        <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', index: c.index + 1) }, id: "codefendant_#{c.index + 1}" do %>
           <%= c.govuk_text_field :first_name, label: { text: t("helpers.label.#{f.object_name}.first_name") },
                                  autocomplete: 'off', width: 'three-quarters' %>
 
