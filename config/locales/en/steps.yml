@@ -18,8 +18,23 @@ en:
           page_title: Enter your client’s NINO
           eforms_link: My client does not have a National Insurance number or cannot find it
       benefit_check_result:
+        non_passported:
+          title: DWP records show that your client does not receive a passporting benefit - is this correct?
+        passported:
+          title: DWP records show that your client receives a passporting benefit
         edit:
           page_title: Benefit check result
+      benefit_check_result_exit:
+        show:
+          page_title: Use eForms for this application
+      confirm_nino_details:
+        edit:
+          heading: Check your client’s details
+          page_title: Confirm your client’s NINO
+          first_name: First name
+          last_name: Last name
+          dob: Date of birth
+          nino: National Insurance number
       nino_exit:
         show:
           page_title: Use eForms for this application

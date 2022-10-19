@@ -1,12 +1,18 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <p>Benefit check result: <%= @form_object.benefit_check_result[:benefit_checker_status] %></p>
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column app-inverted-text">
+
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.continue_button %>
+      <% if @form_object.benefit_check_result[:benefit_checker_status] == 'Yes' %>
+        <%= render 'passported' %>
+      <% else %>
+        <%= render partial: 'non_passported', locals: { f: f, form_object: @form_object } %>
+      <% end %>
+
+      <%= f.continue_button_inverted %>
     <% end %>
   </div>
 </div>

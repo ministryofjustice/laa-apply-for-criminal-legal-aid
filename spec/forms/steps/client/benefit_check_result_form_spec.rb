@@ -47,9 +47,57 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
     end
   end
 
+  describe '#choices' do
+    it 'returns the possible choices' do
+      expect(
+        subject.choices
+      ).to eq([YesNoAnswer::YES, YesNoAnswer::NO])
+    end
+  end
+
   describe '#save' do
-    it 'is expected to return true' do
-      expect(subject.save).to be(true)
+    context 'for a client with a passporting benefit' do
+      it 'is updates the record' do
+        expect(applicant).to receive(:update).with(
+          passporting_benefit: 'Yes'
+        ).and_return(true)
+
+        expect(subject.save).to be(true)
+      end
+
+      context 'for a client without a passporting benefit' do
+        let(:nino) { 'NC123459B' }
+
+        context 'where the caseworker confirms the result' do
+          before do
+            allow(subject).to receive(:confirm_benefit_check_result)
+              .and_return('Yes')
+          end
+
+          it 'is updates the record' do
+            expect(applicant).to receive(:update).with(
+              passporting_benefit: 'No'
+            ).and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
+
+        context 'where the caseworker does not confirm the result' do
+          before do
+            allow(subject).to receive(:confirm_benefit_check_result)
+              .and_return('No')
+          end
+
+          it 'is updates the record' do
+            expect(applicant).to receive(:update).with(
+              passporting_benefit: nil
+            ).and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
+      end
     end
   end
 end

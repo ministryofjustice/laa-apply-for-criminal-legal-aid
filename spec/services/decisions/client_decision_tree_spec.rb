@@ -49,20 +49,100 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `benefit_check_result`' do
-    let(:form_object) { double('FormObject', applicant: 'applicant') }
+    let(:form_object) { double('FormObject', applicant:) }
+    let(:applicant) { double('Applicant') }
     let(:step_name) { :benefit_check_result }
+    let(:confirm_benefit_check_result) { nil }
 
-    context 'has correct next step' do
+    context 'and the client has a passporting benefit' do
       before do
         allow(
-          HomeAddress
-        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+          applicant
+        ).to receive(:passporting_benefit).and_return('Yes')
       end
 
-      it {
-        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-address_id: 'address')
-      }
+      context 'has correct next step' do
+        before do
+          allow(
+            HomeAddress
+          ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+        end
+
+        it {
+          expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+  address_id: 'address')
+        }
+      end
+    end
+
+    context 'and the client does not have a passporting benefit' do
+      before do
+        allow(
+          applicant
+        ).to receive(:passporting_benefit).and_return('No')
+      end
+
+      context 'and the caseworker confirms the result' do
+        before do
+          allow(
+            form_object
+          ).to receive(:confirm_benefit_check_result).and_return('Yes')
+        end
+
+        context 'has correct next step' do
+          it {
+            expect(subject).to have_destination(:benefit_check_result_exit, :show, id: crime_application)
+          }
+        end
+      end
+
+      context 'and the caseworker does not confirm the result' do
+        before do
+          allow(
+            applicant
+          ).to receive(:passporting_benefit).and_return(nil)
+        end
+
+        context 'has correct next step' do
+          it {
+            expect(subject).to have_destination(:confirm_nino_details, :edit, id: crime_application)
+          }
+        end
+      end
+    end
+  end
+
+  context 'when the step is `confirm_nino_details`' do
+    let(:form_object) { double('FormObject', applicant:) }
+    let(:applicant) { double('Applicant') }
+    let(:step_name) { :confirm_nino_details }
+
+    context 'when the caseworker confirms that the details are correct' do
+      before do
+        allow(
+          form_object
+        ).to receive(:confirm_nino_details).and_return('Yes')
+      end
+
+      context 'has correct next step' do
+        it {
+          expect(subject).to have_destination(:benefit_check_result_exit, :show, id: crime_application)
+        }
+      end
+    end
+
+    context 'when the caseworker confirms that the details are incorrect' do
+      before do
+        allow(
+          form_object
+        ).to receive(:confirm_nino_details).and_return('No')
+      end
+
+      context 'has correct next step' do
+        it {
+          expect(subject).to have_destination(:details, :edit, id: crime_application)
+        }
+      end
     end
   end
 

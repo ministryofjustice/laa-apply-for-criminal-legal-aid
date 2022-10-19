@@ -1,0 +1,60 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <table class="govuk-table app-dashboard-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-third">
+            <%= t '.first_name' %>
+          </th>
+          <td class="govuk-table__cell">
+            <%= @form_object.applicant.first_name %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">
+            <%= t '.last_name' %>
+          </th>
+          <td class="govuk-table__cell">
+            <%= @form_object.applicant.last_name %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">
+            <%= t '.dob' %>
+          </th>
+          <td class="govuk-table__cell">
+            <%= @form_object.applicant.date_of_birth.strftime('%-d %B %Y') %>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">
+            <%= t '.nino' %>
+          </th>
+          <td class="govuk-table__cell">
+            <%= @form_object.applicant.nino %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :confirm_nino_details, @form_object.choices, :value,
+                                           inline: false %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

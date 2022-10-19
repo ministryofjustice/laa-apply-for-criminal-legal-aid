@@ -59,4 +59,21 @@ RSpec.describe FormBuilderHelper, type: :helper do
       end
     end
   end
+
+  describe '#continue_button_inverted' do
+    let(:expected_markup) do
+      '<div class="govuk-button-group">' \
+        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button app-button--inverted" ' \
+        'data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>' \
+        '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" ' \
+        'data-module="govuk-button" data-prevent-double-click="true" name="commit_draft">' \
+        'Save and come back later</button></div>'
+    end
+
+    it 'outputs the continue button together with a save draft button' do
+      expect(
+        builder.continue_button_inverted
+      ).to eq(expected_markup)
+    end
+  end
 end

@@ -10,6 +10,10 @@ module Steps
       def update
         update_and_advance(BenefitCheckResultForm, as: :benefit_check_result)
       end
+
+      def additional_permitted_params
+        %i[confirm_benefit_check_result]
+      end
     end
   end
 end
