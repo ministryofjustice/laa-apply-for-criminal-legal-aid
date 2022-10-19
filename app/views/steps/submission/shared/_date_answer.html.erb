@@ -1,0 +1,11 @@
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{date_answer.question}.question")
+  end
+
+  content_for(:row_answer, flush: true) do
+    l(date_answer.value)
+  end
+%>
+
+<%= render partial: 'steps/submission/shared/summary_row', locals: { row: date_answer } %>

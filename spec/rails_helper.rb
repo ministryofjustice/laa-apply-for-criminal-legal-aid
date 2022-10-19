@@ -31,7 +31,10 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include(ViewSpecHelpers, type: :helper)
+  config.include(ViewSpecHelpers, type: :view)
+
   config.before(:each, type: :helper) { initialize_view_helpers(helper) }
+  config.before(:each, type: :view) { initialize_view_helpers(view) }
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

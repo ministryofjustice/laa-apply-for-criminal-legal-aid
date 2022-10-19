@@ -7,6 +7,8 @@ module Decisions
         edit(:case_type)
       when :case_type
         after_case_type
+      when :date_stamp
+        charges_summary_or_edit_new_charge
       when :charges
         edit(:charges_summary)
       when :add_offence_date
@@ -35,16 +37,17 @@ module Decisions
     private
 
     def after_case_type
-      has_date_stamp = form_object.crime_application.date_stamp
-      is_date_stampable = form_object.case_type.date_stampable?
-
-      if is_date_stampable && has_date_stamp
-        show(:date_stamp)
+      if DateStamper.new(form_object.crime_application, form_object.case.case_type).call
+        edit(:date_stamp)
       else
-        return edit(:charges_summary) if case_charges.any?
-
-        edit_new_charge
+        charges_summary_or_edit_new_charge
       end
+    end
+
+    def charges_summary_or_edit_new_charge
+      return edit(:charges_summary) if case_charges.any?
+
+      edit_new_charge
     end
 
     def after_add_offence_date

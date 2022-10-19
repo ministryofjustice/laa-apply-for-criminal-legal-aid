@@ -2,7 +2,8 @@
   "name": "laa-apply-for-criminal-legal-aid",
   "private": "true",
   "dependencies": {
-    "govuk-frontend": "4.3.1"
+    "govuk-frontend": "4.3.1",
+    "@ministryofjustice/frontend": "1.6.0"
   },
   "scripts": {
     "postinstall": "bin/importmap pin govuk-frontend@4.3.1"

@@ -1,7 +1,9 @@
-// Components or full features
+// Design systems
 @import "local/govuk";
+@import "local/moj";
+
+// Custom components or features
 @import "local/info_card";
-@import "local/task_list";
 
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453

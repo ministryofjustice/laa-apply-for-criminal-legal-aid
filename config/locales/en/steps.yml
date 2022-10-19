@@ -97,7 +97,7 @@ en:
           page_title: Enter the case type
           heading:  Enter the case type
       date_stamp:
-        show:
+        edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
       has_codefendants:
@@ -132,9 +132,15 @@ en:
             one: You have added %{count} offence
             other: You have added %{count} offences
         offence_details:
+          incomplete_tag: Incomplete
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
       hearing_details:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+    submission:
+      review:
+        edit:
+          page_title: Review the application
+          heading: Review the application

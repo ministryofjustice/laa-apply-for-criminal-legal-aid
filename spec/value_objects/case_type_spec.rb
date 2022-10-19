@@ -21,29 +21,38 @@ RSpec.describe CaseType do
     end
   end
 
+  describe 'DATE_STAMPABLE' do
+    it 'returns date stampable values' do
+      expect(described_class::DATE_STAMPABLE.map(&:to_s)).to eq(
+        %w[
+          summary_only
+          either_way
+          committal
+          cc_appeal
+          cc_appeal_fin_change
+        ]
+      )
+    end
+  end
+
   describe '#date_stampable?' do
     context 'for date stampable case types' do
       it 'returns true' do
-        date_stampable_types = [
-          described_class.new(:summary_only).date_stampable?,
-          described_class.new(:either_way).date_stampable?,
-          described_class.new(:committal).date_stampable?,
-          described_class.new(:cc_appeal).date_stampable?
-        ]
+        date_stampable_types = described_class::DATE_STAMPABLE
 
-        expect(date_stampable_types).to all(be_truthy)
+        expect(
+          date_stampable_types.map(&:date_stampable?)
+        ).to all(be_truthy)
       end
     end
 
     context 'for non date stampable case types' do
       it 'returns false' do
-        date_stampable_types = [
-          described_class.new(:indictable).date_stampable?,
-          described_class.new(:already_cc_trial).date_stampable?,
-          described_class.new(:cc_appeal_fin_change).date_stampable?
-        ]
+        non_date_stampable_types = described_class.values - described_class::DATE_STAMPABLE
 
-        expect(date_stampable_types).to all(be_falsy)
+        expect(
+          non_date_stampable_types.map(&:date_stampable?)
+        ).to all(be_falsy)
       end
     end
   end

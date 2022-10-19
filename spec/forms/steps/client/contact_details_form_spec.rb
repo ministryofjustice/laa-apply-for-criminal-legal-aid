@@ -6,8 +6,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   let(:arguments) do
     {
       crime_application:,
-    telephone_number:,
-    correspondence_address_type:
+      telephone_number:,
+      correspondence_address_type:
     }
   end
   let(:applicant_double) { instance_double(Applicant) }
@@ -51,7 +51,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   describe 'validations' do
     context 'when telephone_number is blank' do
       let(:telephone_number) { '' }
-      let(:correspondence_address_type) { 'home_address' }
+      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS.to_s }
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
@@ -61,7 +61,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
     context 'when telephone_number contains letters' do
       let(:telephone_number) { 'not a telephone_number' }
-      let(:correspondence_address_type) { 'other_address' }
+      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
@@ -71,7 +71,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
     context 'when telephone_number is valid' do
       let(:telephone_number) { '(+44) 55-55.555 #22' }
-      let(:correspondence_address_type) { 'other_address' }
+      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
 
       it 'removes spaces from input' do
         expect(subject.telephone_number).to eq('(+44)55-55.555#22')
@@ -99,9 +99,9 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     end
   end
 
+  # rubocop:disable Style/HashSyntax
   describe '#save' do
     let(:telephone_number) { '07000 000 000' }
-    let(:correspondence_address_type) { 'other_address' }
 
     # We've tested validations above, here for simplicity we just assume
     # the form is valid so we don't have to deal again with applicant home address.
@@ -110,11 +110,42 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       allow(subject).to receive(:applicant).and_call_original
     end
 
-    it_behaves_like 'a has-one-association form',
-                    association_name: :applicant,
-                    expected_attributes: {
-                      'telephone_number' => '07000000000',
-                      'correspondence_address_type' => CorrespondenceType::OTHER_ADDRESS
-                    }
+    context 'for `home` address' do
+      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS.to_s }
+
+      it_behaves_like 'a has-one-association form',
+                      association_name: :applicant,
+                      expected_attributes: {
+                        'telephone_number' => '07000000000',
+                        'correspondence_address_type' => CorrespondenceType::HOME_ADDRESS,
+                        # destroy correspondence address record, as not applicable
+                        correspondence_address: nil,
+                      }
+    end
+
+    context 'for `providers office` address' do
+      let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS.to_s }
+
+      it_behaves_like 'a has-one-association form',
+                      association_name: :applicant,
+                      expected_attributes: {
+                        'telephone_number' => '07000000000',
+                        'correspondence_address_type' => CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
+                        # destroy correspondence address record, as not applicable
+                        correspondence_address: nil,
+                      }
+    end
+
+    context 'for `other` correspondence address' do
+      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
+
+      it_behaves_like 'a has-one-association form',
+                      association_name: :applicant,
+                      expected_attributes: {
+                        'telephone_number' => '07000000000',
+                        'correspondence_address_type' => CorrespondenceType::OTHER_ADDRESS
+                      }
+    end
   end
+  # rubocop:enable Style/HashSyntax
 end

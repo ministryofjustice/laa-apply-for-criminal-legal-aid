@@ -1,0 +1,65 @@
+en:
+  summary:
+    dictionary:
+      absence_none: &absence_none "None"
+      YESNO: &YESNO
+        'yes': 'Yes'
+        'no': 'No'
+
+    change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
+
+    sections:
+      client_details: Client details
+      contact_details: Contact details
+      case_details: Case details
+
+    questions:
+      # BEGIN client details section
+      first_name:
+        question: First name
+      last_name:
+        question: Last name
+      other_names:
+        question: Other names
+        absence_answer: *absence_none
+      date_of_birth:
+        question: Date of birth
+      nino:
+        question: National Insurance number
+      passporting:
+        question: Passporting benefit
+        answers:
+          <<: *YESNO
+      # END client details section
+
+      # BEGIN contact details section
+      home_address:
+        question: Home address
+        absence_answer: *absence_none
+      correspondence_address:
+        question: Correspondence address
+      correspondence_address_type:
+        question: Where to send correspondence
+        answers:
+          home_address: Same as home address
+          providers_office_address: Provider’s office
+          other_address: Somewhere else
+      telephone_number:
+        question: UK telephone number
+      # END contact details section
+
+      # BEGIN case details section
+      case_urn:
+        question: Unique reference number
+        absence_answer: *absence_none
+      case_type:
+        question: Case type
+        answers:
+          summary_only: Summary only
+          either_way: Either way
+          indictable: Indictable
+          already_cc_trial: Trial already in crown court
+          committal: Committal for sentence
+          cc_appeal: Appeal to crown court
+          cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
+      # END case details section

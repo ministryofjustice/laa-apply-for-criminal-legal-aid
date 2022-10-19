@@ -58,6 +58,23 @@ RSpec.describe FormBuilderHelper, type: :helper do
         assert_select(doc, 'button', attributes: { name: 'commit_draft' }, text: 'Enter address manually')
       end
     end
+
+    context 'custom attributes' do
+      it 'outputs the buttons with additional attributes' do
+        html = builder.continue_button(
+          primary_opts: { class: 'custom-class-primary', foo: 'bar' },
+          secondary_opts: { class: 'custom-class-secondary' }
+        )
+        doc = Nokogiri::HTML.fragment(html)
+
+        assert_select(
+          doc, 'button', attributes: { class: 'govuk-button custom-class-primary', foo: 'bar' }
+        )
+        assert_select(
+          doc, 'button', attributes: { class: 'govuk-button govuk-button--secondary custom-class-secondary' }
+        )
+      end
+    end
   end
 
   describe '#continue_button_inverted' do

@@ -15,6 +15,12 @@
         <%= l(date) %>
       </p>
     <% end %>
+
+    <% unless charge.complete? %>
+      <strong class="moj-badge moj-badge--red">
+        <%= t('.incomplete_tag') %>
+      </strong>
+    <% end %>
   </dd>
 
   <% if show_actions %>
