@@ -23,11 +23,6 @@
   top: 1%;
 }
 
-.app-dwp-check {
-  background-color: govuk-colour("blue");
-  color: govuk-colour("white");
-}
-
 // style accessible autocomplete
 .autocomplete__wrapper * {
   @include govuk-typography-common();
