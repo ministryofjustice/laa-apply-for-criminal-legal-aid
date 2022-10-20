@@ -59,7 +59,7 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
     context 'for a client with a passporting benefit' do
       it 'is updates the record' do
         expect(applicant).to receive(:update).with(
-          passporting_benefit: 'Yes'
+          passporting_benefit: true
         ).and_return(true)
 
         expect(subject.save).to be(true)
@@ -99,7 +99,7 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
 
           it 'updates the record' do
             expect(applicant).to receive(:update).with(
-              passporting_benefit: 'No'
+              passporting_benefit: false
             ).and_return(true)
 
             expect(subject.save).to be(true)

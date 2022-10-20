@@ -93,7 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_084746) do
     t.string "nino"
     t.string "telephone_number"
     t.string "correspondence_address_type"
-    t.string "passporting_benefit"
+    t.boolean "passporting_benefit"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

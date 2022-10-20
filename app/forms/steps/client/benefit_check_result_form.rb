@@ -28,7 +28,7 @@ module Steps
       def passporting_benefit_answer
         return nil if confirm_benefit_check_result&.downcase == 'no'
 
-        benefit_check_result[:benefit_checker_status]
+        benefit_check_result[:benefit_checker_status].casecmp('yes').zero?
       end
 
       def confirm_benefit_check_result_if_required
