@@ -107,6 +107,7 @@ Naming/MethodParameterName:
 Style/HashEachMethods:
   Exclude:
     - app/value_objects/value_object.rb
+    - app/forms/steps/case/ioj_form.rb
 
 Naming/PredicateName:
   AllowedMethods:

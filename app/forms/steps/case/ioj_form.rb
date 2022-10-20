@@ -1,59 +1,32 @@
 module Steps
   module Case
     class IojForm < Steps::BaseFormObject
+      include Steps::HasOneAssociation
+      has_one_association :ioj, through: :case
+
       attribute :types, array: true, default: []
-      attribute :loss_of_liberty_justification, :string
-      attribute :suspended_sentence_justification, :string
-      attribute :loss_of_livelyhood_justification, :string
-      attribute :reputation_justification, :string
-      attribute :question_of_law_justification, :string
-      attribute :understanding_justification, :string
-      attribute :witness_tracing_justification, :string
-      attribute :expert_examination_justification, :string
-      attribute :interest_of_another_justification, :string
-      attribute :other_justification, :string
+
+      IojReasonType.values.each do |ioj_type|
+        attribute ioj_type.justification_field_name, :string
+      end
 
       validate :validate_types
 
-      validates :loss_of_liberty_justification,
-                presence: true,
-                if: -> { types.include?('loss_of_liberty') }
-      validates :suspended_sentence_justification,
-                presence: true,
-                if: -> { types.include?('suspended_sentence') }
-      validates :loss_of_livelyhood_justification,
-                presence: true,
-                if: -> { types.include?('loss_of_livelyhood') }
-      validates :reputation_justification,
-                presence: true,
-                if: -> { types.include?('reputation') }
-      validates :question_of_law_justification,
-                presence: true,
-                if: -> { types.include?('question_of_law') }
-      validates :understanding_justification,
-                presence: true,
-                if: -> { types.include?('understanding') }
-      validates :witness_tracing_justification,
-                presence: true,
-                if: -> { types.include?('witness_tracing') }
-      validates :expert_examination_justification,
-                presence: true,
-                if: -> { types.include?('expert_examination') }
-      validates :interest_of_another_justification,
-                presence: true,
-                if: -> { types.include?('interest_of_another') }
-      validates :other_justification,
-                presence: true,
-                if: -> { types.include?('other') }
+      IojReasonType.values.each do |ioj_type|
+        validates ioj_type.justification_field_name,
+                  presence: true,
+                  if: -> { types.include?(ioj_type.to_s) }
+      end
 
       private
 
       def validate_types
         errors.add(:types, :invalid) if !types.is_a?(Array) || types.empty?
+        errors.add(:types, :invalid) if (types - IojReasonType.values.map(&:to_s)).any?
       end
 
       def persist!
-        record.update(
+        ioj.update(
           attributes.merge(attributes_to_reset)
         )
       end

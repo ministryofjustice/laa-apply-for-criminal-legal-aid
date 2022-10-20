@@ -5,54 +5,66 @@ RSpec.describe Steps::Case::IojForm do
 
   let(:arguments) do
     {
-      crime_application: crime_application,
-    record: ioj_record,
-    types: types,
-    loss_of_liberty_justification: loss_of_liberty_justification,
-    reputation_justification: reputation_justification
+      crime_application:,
+    types:,
+    other_justification:,
+    reputation_justification:
     }
   end
 
   let(:crime_application) { instance_double(CrimeApplication, case: kase) }
-  let(:kase) { Case.new }
-  let(:ioj_record) { Ioj.new }
+  let(:kase) { instance_double(Case, ioj:) }
+  let(:ioj) { instance_double(Ioj) }
   let(:types) { nil }
-  let(:loss_of_liberty_justification) { nil }
+  let(:other_justification) { nil }
   let(:reputation_justification) { nil }
 
   describe '#save' do
-    context 'when `types` is empty' do
-      let(:types) { [] }
+    context 'when `types` is invalid' do
+      context 'when `types` is empty' do
+        let(:types) { [] }
 
-      it 'has is a validation error on the field' do
-        expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:types, :invalid)).to be(true)
+        it 'has is a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:types, :invalid)).to be(true)
+        end
+      end
+
+      context 'when `types` selected is not a valid option' do
+        let(:types) { ['foo'] }
+
+        it 'has is a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:types, :invalid)).to be(true)
+        end
+      end
+
+      context 'when `types` selected has a valid and an invalid option' do
+        let(:types) { %w[foo other] }
+
+        it 'has is a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:types, :invalid)).to be(true)
+        end
       end
     end
 
     context 'when `types` is valid' do
       let(:types) { [IojReasonType::REPUTATION.to_s] }
 
-      context 'and justification text is added' do
+      context 'when text area needs resetting' do
         let(:reputation_justification) { 'This is a justification' }
+        let(:other_justification) { 'This is a different justification' }
 
         it { is_expected.to be_valid }
 
-        it 'does not reset justification area if still selected' do
-          attributes = form.send(:attributes_to_reset)
-          expect(attributes['reputation_justification']).to eq('This is a justification')
-        end
+        it 'can make justification area nil if ioj type deselected' do
+          expect(ioj).to receive(:update).with(
+            hash_including({ 'types' => ['reputation'], 'reputation_justification' => 'This is a justification',
+'other_justification' => nil })
+          ).and_return(true)
 
-        context 'when text area needs resetting' do
-          let(:reputation_justification) { 'This is a justification' }
-          let(:other_justification) { 'This is a different justification' }
-
-          it { is_expected.to be_valid }
-
-          it 'can make justification area nil if ioj type deselected' do
-            attributes = form.send(:attributes_to_reset)
-            expect(attributes['other_justification']).to be_nil
-          end
+          subject.save
         end
       end
 
@@ -66,7 +78,7 @@ RSpec.describe Steps::Case::IojForm do
     context 'when validations pass' do
       let(:types) { [IojReasonType::REPUTATION.to_s] }
       let(:reputation_justification) { 'A justification' }
-      let(:ioj_record_attributes) do
+      let(:ioj_attributes) do
         {
           'types' => ['reputation'],
           'expert_examination_justification' => nil,
@@ -83,8 +95,8 @@ RSpec.describe Steps::Case::IojForm do
       end
 
       it 'updates the record' do
-        expect(ioj_record).to receive(:update).with(
-          ioj_record_attributes
+        expect(ioj).to receive(:update).with(
+          ioj_attributes
         ).and_return(true)
 
         expect(subject.save).to be(true)

@@ -7,35 +7,10 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_check_boxes_fieldset :types, legend: { tag: 'h1', size: 'xl' } do %>
-        <%= f.govuk_check_box :types, IojReasonType::LOSS_OF_LIBERTY.to_s, label: { text: t('.loss_of_liberty') } do %>
-          <% f.govuk_text_area :loss_of_liberty_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::SUSPENDED_SENTENCE.to_s, label: { text: t('.suspended_sentence') } do %>
-          <% f.govuk_text_area :suspended_sentence_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::LOSS_OF_LIVELYHOOD.to_s, label: { text: t('.loss_of_livelyhood') } do %>
-          <% f.govuk_text_area :loss_of_livelyhood_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::REPUTATION.to_s, label: { text: t('.reputation') } do %>
-          <% f.govuk_text_area :reputation_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::QUESTION_OF_LAW.to_s, label: { text: t('.question_of_law') } do %>
-          <% f.govuk_text_area :question_of_law_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::UNDERSTANDING.to_s, label: { text: t('.understanding') } do %>
-          <% f.govuk_text_area :understanding_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::WITNESS_TRACING.to_s, label: { text: t('.witness_tracing') } do %>
-          <% f.govuk_text_area :witness_tracing_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::EXPERT_EXAMINATION.to_s, label: { text: t('.expert_examination') } do %>
-          <% f.govuk_text_area :expert_examination_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::INTEREST_OF_ANOTHER.to_s, label: { text: t('.interest_of_another') } do %>
-          <% f.govuk_text_area :interest_of_another_justification, label: { text: t('.hint') } %>
-        <% end %>
-        <%= f.govuk_check_box :types, IojReasonType::OTHER.to_s, label: { text: t('.other') } do %>
-          <% f.govuk_text_area :other_justification, label: { text: t('.hint') } %>
+        <% IojReasonType.values.each do |ioj_type| %>
+          <%= f.govuk_check_box :types, ioj_type.to_s do %>
+            <% f.govuk_text_area ioj_type.justification_field_name, label: { hidden: true } %>
+          <% end %>
         <% end %>
       <% end %>
       <%= f.continue_button %>

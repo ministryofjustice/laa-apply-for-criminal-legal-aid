@@ -127,17 +127,6 @@ en:
       ioj:
         edit:
           page_title: Why should your client get legal aid?
-          hint: Enter justification
-          loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them.
-          suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence.
-          loss_of_livelyhood: It is likely that they will lose their livelihood.
-          reputation: It is likely that they will suffer serious damage to their reputation.
-          question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).
-          understanding: They may not be able to understand the court proceedings or present their own case.
-          witness_tracing: Witnesses may need to be traced or interviewed on their behalf.
-          expert_examination: Witnesses may need to be traced or interviewed on their behalf.
-          interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
-          other: Other
     submission:
       review:
         edit:

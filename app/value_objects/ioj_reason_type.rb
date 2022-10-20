@@ -11,4 +11,8 @@ class IojReasonType < ValueObject
     INTEREST_OF_ANOTHER = new(:interest_of_another),
     OTHER = new(:other)
   ].freeze
+
+  def justification_field_name
+    [to_s, :justification].join('_').to_sym
+  end
 end
