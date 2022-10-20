@@ -23,6 +23,22 @@ describe Summary::Sections::CaseDetails do
     it { expect(subject.name).to eq(:case_details) }
   end
 
+  describe '#show?' do
+    context 'when there is a case' do
+      it 'shows this section' do
+        expect(subject.show?).to be(true)
+      end
+    end
+
+    context 'when there is no case' do
+      let(:kase) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
+      end
+    end
+  end
+
   describe '#answers' do
     let(:answers) { subject.answers }
 

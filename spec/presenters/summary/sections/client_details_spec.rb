@@ -27,6 +27,22 @@ describe Summary::Sections::ClientDetails do
     it { expect(subject.name).to eq(:client_details) }
   end
 
+  describe '#show?' do
+    context 'when there is an applicant' do
+      it 'shows this section' do
+        expect(subject.show?).to be(true)
+      end
+    end
+
+    context 'when there is no applicant' do
+      let(:applicant) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
+      end
+    end
+  end
+
   describe '#answers' do
     let(:answers) { subject.answers }
 

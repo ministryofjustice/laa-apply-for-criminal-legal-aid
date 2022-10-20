@@ -25,17 +25,34 @@ describe Summary::Sections::Offences do
     )
   end
 
+  let(:complete) { true }
+
+  before do
+    allow(charge).to receive(:complete?).and_return(complete)
+  end
+
   describe '#name' do
     it { expect(subject.name).to eq(:offences) }
   end
 
+  describe '#show?' do
+    context 'when there is a case' do
+      it 'shows this section' do
+        expect(subject.show?).to be(true)
+      end
+    end
+
+    context 'when there is no case' do
+      let(:kase) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
+      end
+    end
+  end
+
   describe '#answers' do
     let(:answers) { subject.answers }
-    let(:complete) { true }
-
-    before do
-      allow(charge).to receive(:complete?).and_return(complete)
-    end
 
     it 'has the correct rows' do
       expect(answers.count).to eq(1)

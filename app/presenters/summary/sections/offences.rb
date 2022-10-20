@@ -5,6 +5,10 @@ module Summary
         :offences
       end
 
+      def show?
+        crime_application.case.present? && super
+      end
+
       def answers
         charges.map.with_index(1) do |charge, index|
           Components::OffenceAnswer.new(
