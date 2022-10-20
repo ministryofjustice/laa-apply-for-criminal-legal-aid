@@ -12,6 +12,8 @@ en:
       client_details: Client details
       contact_details: Contact details
       case_details: Case details
+      offences: Offences
+      codefendants: Co-defendants
 
     questions:
       # BEGIN client details section
@@ -63,3 +65,19 @@ en:
           cc_appeal: Appeal to crown court
           cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
       # END case details section
+
+      # BEGIN offences section
+      offence_details:
+        question: "Offence %{index}"
+        unknown_class: Class not specified
+      # END offences section
+
+      # BEGIN codefendants section
+      has_codefendants:
+        question: Co-defendants
+        answers:
+          <<: *YESNO
+      codefendant_full_name:
+        question: "Co-defendant %{index}"
+      conflict_of_interest_html: <span class="govuk-caption-m">Has a conflict of interest</span>
+      # END codefendants section

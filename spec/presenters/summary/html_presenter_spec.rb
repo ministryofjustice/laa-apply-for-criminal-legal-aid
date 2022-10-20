@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Summary::HtmlPresenter do
   subject { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, case: double) }
 
   describe '#sections' do
     before do
@@ -20,6 +20,8 @@ describe Summary::HtmlPresenter do
           Summary::Sections::ClientDetails,
           Summary::Sections::ContactDetails,
           Summary::Sections::CaseDetails,
+          Summary::Sections::Offences,
+          Summary::Sections::Codefendants,
         ]
       )
     end

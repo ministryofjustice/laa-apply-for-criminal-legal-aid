@@ -11,6 +11,8 @@ module Summary
         Sections::ClientDetails.new(crime_application),
         Sections::ContactDetails.new(crime_application),
         Sections::CaseDetails.new(crime_application),
+        Sections::Offences.new(crime_application),
+        Sections::Codefendants.new(crime_application),
       ].select(&:show?)
     end
   end
