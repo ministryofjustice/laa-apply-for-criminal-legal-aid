@@ -31,37 +31,35 @@ RSpec.describe Steps::Case::IojForm do
     end
 
     context 'when `types` is valid' do
-      let(:types) { [IojReasonType::REPUTATION.to_s, IojReasonType::OTHER.to_s] }
+      let(:types) { [IojReasonType::REPUTATION.to_s] }
 
-      it { is_expected.to be_valid }
-
-      it 'passes validation' do
-        expect(form.errors.of_kind?(:types, :invalid)).to be(false)
-      end
-    end
-
-    context 'when adding justification text' do
-      let(:types) { ['loss_of_liberty'] }
-      let(:loss_of_liberty_justification) { 'This is a loss of liberty justification' }
-
-      it { is_expected.to be_valid }
-
-      it 'does not reset justification area if still selected' do
-        attributes = form.send(:attributes_to_reset)
-        expect(attributes['loss_of_liberty_justification']).to eq('This is a loss of liberty justification')
-      end
-
-      context 'when text area needs resetting' do
-        let(:types) { ['loss_of_liberty'] }
-        let(:loss_of_liberty_justification) { 'This is a loss of liberty justification' }
-        let(:other_justification) { 'This is a different justification' }
+      context 'and justification text is added' do
+        let(:reputation_justification) { 'This is a justification' }
 
         it { is_expected.to be_valid }
 
-        it 'can make justification area nil if ioj type deselected' do
+        it 'does not reset justification area if still selected' do
           attributes = form.send(:attributes_to_reset)
-          expect(attributes['other_justification']).to be_nil
+          expect(attributes['reputation_justification']).to eq('This is a justification')
         end
+
+        context 'when text area needs resetting' do
+          let(:reputation_justification) { 'This is a justification' }
+          let(:other_justification) { 'This is a different justification' }
+
+          it { is_expected.to be_valid }
+
+          it 'can make justification area nil if ioj type deselected' do
+            attributes = form.send(:attributes_to_reset)
+            expect(attributes['other_justification']).to be_nil
+          end
+        end
+      end
+
+      context 'and justification text is not added' do
+        let(:reputation_justification) { nil }
+
+        it { is_expected.not_to be_valid }
       end
     end
 

@@ -15,6 +15,37 @@ module Steps
 
       validate :validate_types
 
+      validates :loss_of_liberty_justification,
+                presence: true,
+                if: -> { types.include?('loss_of_liberty') }
+      validates :suspended_sentence_justification,
+                presence: true,
+                if: -> { types.include?('suspended_sentence') }
+      validates :loss_of_livelyhood_justification,
+                presence: true,
+                if: -> { types.include?('loss_of_livelyhood') }
+      validates :reputation_justification,
+                presence: true,
+                if: -> { types.include?('reputation') }
+      validates :question_of_law_justification,
+                presence: true,
+                if: -> { types.include?('question_of_law') }
+      validates :understanding_justification,
+                presence: true,
+                if: -> { types.include?('understanding') }
+      validates :witness_tracing_justification,
+                presence: true,
+                if: -> { types.include?('witness_tracing') }
+      validates :expert_examination_justification,
+                presence: true,
+                if: -> { types.include?('expert_examination') }
+      validates :interest_of_another_justification,
+                presence: true,
+                if: -> { types.include?('interest_of_another') }
+      validates :other_justification,
+                presence: true,
+                if: -> { types.include?('other') }
+
       private
 
       def validate_types
