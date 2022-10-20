@@ -7,12 +7,16 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <% if @form_object.benefit_check_result[:benefit_checker_status] == 'Yes' %>
-        <%= render 'passported' %>
+        <h1 class="govuk-heading-l app-inverted-text"><%= t '.heading' %></h1>
       <% else %>
-        <%= render partial: 'non_passported', locals: { f: f, form_object: @form_object } %>
+        <%= f.govuk_radio_buttons_fieldset(:confirm_benefit_check_result, legend: { tag: 'h1', size: 'l', class: 'govuk-fieldset__legend govuk-fieldset__legend--l app-inverted-text' }) do %>
+          <% @form_object.choices.each do |choice| %>
+            <%= f.govuk_radio_button :confirm_benefit_check_result, choice.value, label: { class: 'govuk-label govuk-radios__label app-inverted-text' } %>
+          <% end %>
+        <% end %>
       <% end %>
 
-      <%= f.continue_button_inverted %>
+      <%= f.continue_button primary_opts: { class: 'app-button--m app-button--inverted' } %>
     <% end %>
   </div>
 </div>

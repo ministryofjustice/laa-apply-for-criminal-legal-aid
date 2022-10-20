@@ -1,5 +1,0 @@
-<%= f.govuk_radio_buttons_fieldset(:confirm_benefit_check_result, legend: { tag: 'h1', size: 'l', class: 'govuk-fieldset__legend govuk-fieldset__legend--l app-inverted-text' }) do %>
-  <% form_object.choices.each do |choice| %>
-    <%= f.govuk_radio_button :confirm_benefit_check_result, choice.value, label: { class: 'govuk-label govuk-radios__label app-inverted-text' } %>
-  <% end %>
-<% end %>

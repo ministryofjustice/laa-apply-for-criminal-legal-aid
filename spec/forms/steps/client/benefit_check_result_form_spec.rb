@@ -65,8 +65,31 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
         expect(subject.save).to be(true)
       end
 
+      context 'when `confirm_benefit_check_result` is not provided' do
+        it 'does not have a validation error on the field' do
+          expect(subject).to be_valid
+          expect(subject.errors.of_kind?(:confirm_benefit_check_result, :inclusion)).to be(false)
+        end
+      end
+
       context 'for a client without a passporting benefit' do
         let(:nino) { 'NC123459B' }
+
+        context 'when `confirm_benefit_check_result` is not provided' do
+          before do
+            allow(subject).to receive(:confirm_benefit_check_result)
+              .and_return(nil)
+          end
+
+          it 'returns false' do
+            expect(subject.save).to be(false)
+          end
+
+          it 'has a validation error on the field' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:confirm_benefit_check_result, :inclusion)).to be(true)
+          end
+        end
 
         context 'where the caseworker confirms the result' do
           before do
@@ -74,7 +97,7 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
               .and_return('Yes')
           end
 
-          it 'is updates the record' do
+          it 'updates the record' do
             expect(applicant).to receive(:update).with(
               passporting_benefit: 'No'
             ).and_return(true)
@@ -89,7 +112,7 @@ RSpec.describe Steps::Client::BenefitCheckResultForm do
               .and_return('No')
           end
 
-          it 'is updates the record' do
+          it 'updates the record' do
             expect(applicant).to receive(:update).with(
               passporting_benefit: nil
             ).and_return(true)

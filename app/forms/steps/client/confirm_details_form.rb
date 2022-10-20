@@ -7,6 +7,8 @@ module Steps
 
       attr_accessor :confirm_details
 
+      validates_inclusion_of :confirm_details, in: :choices
+
       def choices
         YesNoAnswer.values
       end

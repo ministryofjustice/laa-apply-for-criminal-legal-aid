@@ -10,12 +10,6 @@ module FormBuilderHelper
     end
   end
 
-  def continue_button_inverted(primary: :save_and_continue, secondary: :save_and_come_back_later)
-    submit_button(primary, class: 'govuk-button app-button--inverted') do
-      submit_button(secondary, secondary: true, name: 'commit_draft') if secondary
-    end
-  end
-
   private
 
   def submit_button(i18n_key, opts = {}, &block)

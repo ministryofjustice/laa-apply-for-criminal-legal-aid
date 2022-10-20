@@ -38,8 +38,24 @@ RSpec.describe Steps::Client::ConfirmDetailsForm do
   end
 
   describe '#save' do
-    it 'is expected to return true' do
-      expect(subject.save).to be(true)
+    context 'when `confirm_details` is not provided' do
+      it 'returns false' do
+        expect(subject.save).to be(false)
+      end
+
+      it 'has a validation error on the field' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:confirm_details, :inclusion)).to be(true)
+      end
+    end
+
+    context 'when `confirm_details` is provided' do
+      it 'returns true' do
+        subject.choices.each do |choice|
+          subject.confirm_details = choice
+          expect(subject.save).to be(true)
+        end
+      end
     end
   end
 end
