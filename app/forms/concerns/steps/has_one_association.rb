@@ -3,7 +3,8 @@ module Steps
     extend ActiveSupport::Concern
 
     class_methods do
-      attr_accessor :association_name
+      attr_accessor :association_name,
+                    :through_association
 
       def build(crime_application)
         super(
@@ -12,12 +13,21 @@ module Steps
       end
 
       # Return the record if already exists, or initialise a blank one
-      def associated_record(parent)
+      def associated_record(crime_application)
+        parent = if through_association
+                   # :nocov: enable coverage once we use this in any form
+                   crime_application.public_send(through_association)
+                   # :nocov:
+                 else
+                   crime_application
+                 end
+
         parent.public_send(association_name) || parent.public_send("build_#{association_name}")
       end
 
-      def has_one_association(name)
+      def has_one_association(name, through: nil)
         self.association_name = name
+        self.through_association = through
 
         define_method(name) do
           @_assoc ||= self.class.associated_record(crime_application)
