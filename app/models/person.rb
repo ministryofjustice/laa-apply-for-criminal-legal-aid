@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  include PersonWithFullName
+
   belongs_to :crime_application
   has_many :addresses, dependent: :destroy
 
