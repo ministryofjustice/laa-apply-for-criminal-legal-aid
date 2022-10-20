@@ -22,6 +22,7 @@ describe Summary::HtmlPresenter do
           Summary::Sections::CaseDetails,
           Summary::Sections::Offences,
           Summary::Sections::Codefendants,
+          Summary::Sections::NextCourtHearing,
         ]
       )
     end
