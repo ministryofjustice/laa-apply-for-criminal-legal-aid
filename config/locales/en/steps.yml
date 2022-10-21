@@ -132,3 +132,6 @@ en:
         edit:
           page_title: Review the application
           heading: Review the application
+      declaration:
+        edit:
+          page_title: Declaration

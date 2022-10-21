@@ -171,3 +171,7 @@ en:
               blank: Enter more detail
             other_justification:
               blank: Enter more detail
+        steps/submission/declaration_form:
+          attributes:
+            declaration_signed:
+              blank: You must confirm that the information on this page is correct in order to submit the application

@@ -35,6 +35,8 @@ en:
         hearing_date: Date of next hearing
       steps_case_ioj_form:
         types: Why should your client get legal aid?
+      steps_submission_declaration_form:
+        declaration_signed: Confirm and submit application
 
     hint:
       steps_client_has_partner_form:
@@ -139,3 +141,6 @@ en:
           expert_examination: Witnesses may need to be traced or interviewed on their behalf.
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
           other: Other
+      steps_submission_declaration_form:
+        declaration_signed_options:
+          '1': I, the instructed legal representative, confirm the above is correct.
