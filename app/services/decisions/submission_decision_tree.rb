@@ -3,6 +3,8 @@ module Decisions
     def destination
       case step_name
       when :review
+        edit(:declaration)
+      when :declaration
         # TODO: update when we have next step
         show('/home', action: :index)
       else
