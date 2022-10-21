@@ -244,7 +244,16 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :hearing_details }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `ioj`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :ioj }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
   end
 end

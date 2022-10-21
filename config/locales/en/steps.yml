@@ -85,16 +85,6 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
-      has_codefendants:
-        edit:
-          page_title: Does your client have co-defendants?
-      codefendants:
-        edit:
-          page_title: Details of co-defendants
-          heading: Enter the details of any co-defendants in the case
-          codefendant_legend: Co-defendant %{index}
-          add_button: Add another co-defendant
-          remove_button: Remove co-defendant
       charges:
         edit:
           page_title: What has your client been charged with?
@@ -120,10 +110,23 @@ en:
           incomplete_tag: Incomplete
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
+      has_codefendants:
+        edit:
+          page_title: Does your client have co-defendants?
+      codefendants:
+        edit:
+          page_title: Details of co-defendants
+          heading: Enter the details of any co-defendants in the case
+          codefendant_legend: Co-defendant %{index}
+          add_button: Add another co-defendant
+          remove_button: Remove co-defendant
       hearing_details:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+      ioj:
+        edit:
+          page_title: Why should your client get legal aid?
     submission:
       review:
         edit:
