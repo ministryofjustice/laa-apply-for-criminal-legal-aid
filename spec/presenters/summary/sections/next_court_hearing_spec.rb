@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Summary::Sections::CaseDetails do
+describe Summary::Sections::NextCourtHearing do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -15,12 +15,13 @@ describe Summary::Sections::CaseDetails do
     instance_double(
       Case,
       urn: 'xyz',
-      case_type: 'foobar',
+      hearing_court_name: 'Court name',
+      hearing_date: Date.tomorrow,
     )
   end
 
   describe '#name' do
-    it { expect(subject.name).to eq(:case_details) }
+    it { expect(subject.name).to eq(:next_court_hearing) }
   end
 
   describe '#show?' do
@@ -46,14 +47,14 @@ describe Summary::Sections::CaseDetails do
       expect(answers.count).to eq(2)
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:case_urn)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/urn')
-      expect(answers[0].value).to eq('xyz')
+      expect(answers[0].question).to eq(:hearing_court_name)
+      expect(answers[0].change_path).to match('applications/12345/steps/case/hearing_details')
+      expect(answers[0].value).to eq('Court name')
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[1].question).to eq(:case_type)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/case_type')
-      expect(answers[1].value).to eq('foobar')
+      expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
+      expect(answers[1].question).to eq(:hearing_date)
+      expect(answers[1].change_path).to match('applications/12345/steps/case/hearing_details')
+      expect(answers[1].value).to eq(Date.tomorrow)
     end
   end
 end

@@ -1,8 +1,8 @@
 module Summary
   module Sections
-    class CaseDetails < Sections::BaseSection
+    class NextCourtHearing < Sections::BaseSection
       def name
-        :case_details
+        :next_court_hearing
       end
 
       def show?
@@ -12,13 +12,13 @@ module Summary
       def answers
         [
           Components::FreeTextAnswer.new(
-            :case_urn, kase.urn,
-            change_path: edit_steps_case_urn_path, show: true
+            :hearing_court_name, kase.hearing_court_name,
+            change_path: edit_steps_case_hearing_details_path
           ),
 
-          Components::ValueAnswer.new(
-            :case_type, kase.case_type,
-            change_path: edit_steps_case_case_type_path
+          Components::DateAnswer.new(
+            :hearing_date, kase.hearing_date,
+            change_path: edit_steps_case_hearing_details_path
           ),
         ].select(&:show?)
       end

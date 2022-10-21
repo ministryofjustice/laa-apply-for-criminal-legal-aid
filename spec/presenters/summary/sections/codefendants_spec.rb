@@ -80,13 +80,5 @@ describe Summary::Sections::Codefendants do
       expect(answers[2].value).to eq('Jane Doe')
       expect(answers[2].i18n_opts).to eq({ index: 2 })
     end
-
-    context 'there is no conflict of interest in any codefendant' do
-      let(:conflict_of_interest) { 'no' }
-
-      it 'does not show the conflict of interest row' do
-        expect(answers.count).to eq(3)
-      end
-    end
   end
 end
