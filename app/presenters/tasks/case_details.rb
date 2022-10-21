@@ -1,7 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
     def path
-      edit_steps_case_urn_path(crime_application)
+      edit_steps_case_urn_path
     end
 
     def not_applicable?
@@ -19,9 +19,10 @@ module Tasks
       crime_application.case.present?
     end
 
-    # TODO: update when all case details steps are implemented
     def completed?
-      false
+      crime_application.case.values_at(
+        :hearing_court_name, :hearing_date
+      ).all?(&:present?)
     end
   end
 end
