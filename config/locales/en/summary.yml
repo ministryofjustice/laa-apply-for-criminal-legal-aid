@@ -15,6 +15,7 @@ en:
       offences: Offences
       codefendants: Co-defendants
       next_court_hearing: Next court hearing
+      justification_for_legal_aid: Justification for legal aid
 
     questions:
       # BEGIN client details section
@@ -89,3 +90,8 @@ en:
       hearing_date:
         question: Date of next hearing
       # END next court hearing section
+
+      # BEGIN justification for legal aid section
+      ioj_justification:
+        question: "%{ioj_type}"
+      # END justification for legal aid section

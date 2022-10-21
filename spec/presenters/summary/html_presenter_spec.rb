@@ -25,6 +25,7 @@ describe Summary::HtmlPresenter do
           Summary::Sections::Offences,
           Summary::Sections::Codefendants,
           Summary::Sections::NextCourtHearing,
+          Summary::Sections::JustificationForLegalAid,
         ]
       )
     end
