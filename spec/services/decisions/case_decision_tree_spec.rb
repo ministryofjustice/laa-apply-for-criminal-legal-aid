@@ -253,7 +253,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :ioj }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
   end
 end

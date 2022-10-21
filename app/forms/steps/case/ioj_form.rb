@@ -21,8 +21,8 @@ module Steps
       private
 
       def validate_types
-        errors.add(:types, :invalid) if !types.is_a?(Array) || types.empty?
-        errors.add(:types, :invalid) if (types - IojReasonType.values.map(&:to_s)).any?
+        errors.add(:types, :invalid) if !types.is_a?(Array) || types.compact_blank.empty?
+        errors.add(:types, :invalid) if (types.compact_blank - IojReasonType.values.map(&:to_s)).any?
       end
 
       def persist!

@@ -21,4 +21,21 @@ RSpec.describe IojReasonType do
                                                        ])
     end
   end
+
+  describe '#justification_field_name' do
+    it 'returns justification symbols' do
+      expect(described_class.values.map(&:justification_field_name)).to eq([
+                                                                             :loss_of_liberty_justification,
+                                                                             :suspended_sentence_justification,
+                                                                             :loss_of_livelyhood_justification,
+                                                                             :reputation_justification,
+                                                                             :question_of_law_justification,
+                                                                             :understanding_justification,
+                                                                             :witness_tracing_justification,
+                                                                             :expert_examination_justification,
+                                                                             :interest_of_another_justification,
+                                                                             :other_justification
+                                                                           ])
+    end
+  end
 end
