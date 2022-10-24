@@ -5,8 +5,7 @@ module Decisions
       when :review
         edit(:declaration)
       when :declaration
-        # TODO: update when we have next step
-        show('/home', action: :index)
+        show(:confirmation)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
