@@ -13,7 +13,6 @@ describe Summary::HtmlPresenter do
 
   describe '#sections' do
     before do
-      allow(kase).to receive(:ioj).and_return(ioj)
       allow_any_instance_of(
         Summary::Sections::BaseSection
       ).to receive(:show?).and_return(true)

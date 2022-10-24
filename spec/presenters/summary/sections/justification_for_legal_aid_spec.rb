@@ -32,8 +32,18 @@ describe Summary::Sections::JustificationForLegalAid do
 
   describe '#show?' do
     context 'when there is a case' do
-      it 'shows this section' do
-        expect(subject.show?).to be(true)
+      context 'when there is no ioj' do
+        let(:ioj) { nil }
+
+        it 'shows this section' do
+          expect(subject.show?).to be(false)
+        end
+      end
+
+      context 'when there is an ioj' do
+        it 'shows this section' do
+          expect(subject.show?).to be(true)
+        end
       end
     end
 
@@ -56,13 +66,11 @@ describe Summary::Sections::JustificationForLegalAid do
       expect(answers[0].question).to be_a(IojReasonType)
       expect(answers[0].question).to have_attributes(value: :reputation)
       expect(answers[0].change_path).to match('applications/12345/steps/case/ioj#reputation')
-      expect(answers[0].i18n_opts).to eq(ioj_type: 'Reputation')
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[1].question).to be_a(IojReasonType)
       expect(answers[1].question).to have_attributes(value: :other)
       expect(answers[1].change_path).to match('applications/12345/steps/case/ioj#other')
-      expect(answers[1].i18n_opts).to eq(ioj_type: 'Other')
     end
   end
 end

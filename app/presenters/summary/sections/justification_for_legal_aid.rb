@@ -15,8 +15,7 @@ module Summary
             type = IojReasonType.new(ioj_type)
             Components::FreeTextAnswer.new(
               type, ioj[type.justification_field_name],
-              change_path: edit_steps_case_ioj_path(anchor: type),
-              i18n_opts: { ioj_type: ioj_type.humanize }
+              change_path: edit_steps_case_ioj_path(anchor: type)
             )
           end
         ].flatten.select(&:show?)
