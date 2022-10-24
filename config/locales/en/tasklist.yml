@@ -16,8 +16,8 @@ en:
       check_your_answers: Check your answers
       check_assessment_result: Check means assessment result
       evidence_upload: Upload evidence
-      application_review: Review the application
-      application_submission: Confirm declaration and submit application
+      review: Review the application
+      declaration: Confirm declaration and submit application
     status:
       completed: Completed
       in_progress: In progress

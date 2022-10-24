@@ -37,7 +37,7 @@ RSpec.describe TaskList::Collection do
     it 'has the `review_confirm` section' do
       expect(subject[4].index).to eq(5)
       expect(subject[4].name).to eq(:review_confirm)
-      expect(subject[4].tasks).to eq([:application_review, :application_submission])
+      expect(subject[4].tasks).to eq([:review, :declaration])
     end
   end
 
