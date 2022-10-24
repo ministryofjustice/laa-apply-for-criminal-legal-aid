@@ -1,0 +1,39 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
+      <h1 class="govuk-panel__title">
+        Application complete
+      </h1>
+      <div class="govuk-panel__body">
+        Your reference number<br>
+        <strong>
+          <%= present(current_crime_application).laa_reference %>
+        </strong>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">
+      What happens next
+    </h2>
+
+    <p class="govuk-body">
+      We’ll check your application to see if your client is entitled to legal aid.
+    </p>
+
+    <p class="govuk-body">
+      We’ll let you know our decision by email.
+    </p>
+
+    <p class="govuk-body">
+      <a href="#">Give feedback</a> to help us improve this service.
+    </p>
+
+    <div class="govuk-button-group govuk-!-margin-top-8">
+      <%= link_button t('.view_application'), crime_applications_path %>
+      <%= link_button t('.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
+    </div>
+  </div>
+</div>

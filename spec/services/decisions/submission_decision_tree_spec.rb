@@ -27,7 +27,7 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     let(:step_name) { :declaration }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination(:confirmation, :show, id: crime_application) }
     end
   end
 end
