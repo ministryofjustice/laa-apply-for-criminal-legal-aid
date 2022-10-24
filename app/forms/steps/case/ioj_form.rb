@@ -18,11 +18,14 @@ module Steps
                   if: -> { types.include?(ioj_type.to_s) }
       end
 
+      def types=(ary)
+        super(ary.compact_blank) if ary
+      end
+
       private
 
       def validate_types
-        errors.add(:types, :invalid) if !types.is_a?(Array) || types.compact_blank.empty?
-        errors.add(:types, :invalid) if (types.compact_blank - IojReasonType.values.map(&:to_s)).any?
+        errors.add(:types, :invalid) if types.empty? || (types - IojReasonType.values.map(&:to_s)).any?
       end
 
       def persist!

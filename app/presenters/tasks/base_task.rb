@@ -18,14 +18,22 @@ module Tasks
       end
     end
 
+    def fulfilled?(task_class)
+      task_class.new(crime_application:).status.completed?
+    end
+
+    # Used by the `Routing` module to build the urls
+    def default_url_options
+      { id: crime_application }
+    end
+
     def status
       return TaskStatus::NOT_APPLICABLE if not_applicable?
       return TaskStatus::UNREACHABLE unless can_start?
-
+      return TaskStatus::NOT_STARTED unless in_progress?
       return TaskStatus::COMPLETED if completed?
-      return TaskStatus::IN_PROGRESS if in_progress?
 
-      TaskStatus::NOT_STARTED
+      TaskStatus::IN_PROGRESS
     end
 
     def path
