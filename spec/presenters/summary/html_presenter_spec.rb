@@ -4,8 +4,12 @@ describe Summary::HtmlPresenter do
   subject { described_class.new(crime_application:) }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant: double, case: double)
+    instance_double(CrimeApplication, applicant: double, case: kase)
   end
+
+  let(:kase) { instance_double(Case, ioj:) }
+
+  let(:ioj) { instance_double(Ioj) }
 
   describe '#sections' do
     before do
@@ -25,6 +29,7 @@ describe Summary::HtmlPresenter do
           Summary::Sections::Offences,
           Summary::Sections::Codefendants,
           Summary::Sections::NextCourtHearing,
+          Summary::Sections::JustificationForLegalAid,
         ]
       )
     end

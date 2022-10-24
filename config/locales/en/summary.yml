@@ -15,6 +15,7 @@ en:
       offences: Offences
       codefendants: Co-defendants
       next_court_hearing: Next court hearing
+      justification_for_legal_aid: Justification for legal aid
 
     questions:
       # BEGIN client details section
@@ -89,3 +90,26 @@ en:
       hearing_date:
         question: Date of next hearing
       # END next court hearing section
+
+      # BEGIN justification for legal aid section
+      loss_of_liberty:
+        question: Loss of liberty
+      suspended_sentence:
+        question: Suspended sentence
+      loss_of_livelyhood:
+        question: Loss of livelyhood
+      reputation:
+        question: Reputation
+      question_of_law:
+        question: Question of law
+      understanding:
+        question: Understanding
+      witness_tracing:
+        question: Witness tracing
+      expert_examination:
+        question: Expert examination
+      interest_of_another:
+        question: Interest of another
+      other:
+        question: Other
+      # END justification for legal aid section
