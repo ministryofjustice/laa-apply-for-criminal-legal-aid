@@ -4,11 +4,16 @@ describe Summary::HtmlPresenter do
   subject { described_class.new(crime_application:) }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant: double, case: double)
+    instance_double(CrimeApplication, applicant: double, case: kase)
   end
+
+  let(:kase) { instance_double(Case, ioj:) }
+
+  let(:ioj) { instance_double(Ioj) }
 
   describe '#sections' do
     before do
+      allow(kase).to receive(:ioj).and_return(ioj)
       allow_any_instance_of(
         Summary::Sections::BaseSection
       ).to receive(:show?).and_return(true)

@@ -26,11 +26,6 @@ describe Summary::Sections::JustificationForLegalAid do
     )
   end
 
-  before do
-    allow(ioj).to receive('reputation_justification').and_return('A justification')
-    allow(ioj).to receive('other_justification').and_return('Another justification')
-  end
-
   describe '#name' do
     it { expect(subject.name).to eq(:justification_for_legal_aid) }
   end
@@ -58,13 +53,15 @@ describe Summary::Sections::JustificationForLegalAid do
       expect(answers.count).to eq(2)
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:ioj_justification)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/ioj')
+      expect(answers[0].question).to be_a(IojReasonType)
+      expect(answers[0].question).to have_attributes(value: :reputation)
+      expect(answers[0].change_path).to match('applications/12345/steps/case/ioj#reputation')
       expect(answers[0].i18n_opts).to eq(ioj_type: 'Reputation')
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[1].question).to eq(:ioj_justification)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/ioj')
+      expect(answers[1].question).to be_a(IojReasonType)
+      expect(answers[1].question).to have_attributes(value: :other)
+      expect(answers[1].change_path).to match('applications/12345/steps/case/ioj#other')
       expect(answers[1].i18n_opts).to eq(ioj_type: 'Other')
     end
   end
