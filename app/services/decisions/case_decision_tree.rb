@@ -26,8 +26,9 @@ module Decisions
       when :codefendants_finished
         edit(:hearing_details)
       when :hearing_details
-        # TODO: update when we have next step
-        show('/home', action: :index)
+        edit(:ioj)
+      when :ioj
+        edit('/steps/submission/review')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

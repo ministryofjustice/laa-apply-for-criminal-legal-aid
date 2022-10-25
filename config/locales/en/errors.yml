@@ -155,3 +155,31 @@ en:
               invalid_year: Enter a valid year
               year_too_late: Date of next hearing is too far in the future
               past_not_allowed: Date of next hearing must be in the future
+        steps/case/ioj_form:
+          attributes:
+            types:
+              invalid: Select a criteria
+            loss_of_liberty_justification:
+              blank: Enter more detail
+            suspended_sentence_justification:
+              blank: Enter more detail
+            loss_of_livelyhood_justification:
+              blank: Enter more detail
+            reputation_justification:
+              blank: Enter more detail
+            question_of_law_justification:
+              blank: Enter more detail
+            understanding_justification:
+              blank: Enter more detail
+            witness_tracing_justification:
+              blank: Enter more detail
+            expert_examination_justification:
+              blank: Enter more detail
+            interest_of_another_justification:
+              blank: Enter more detail
+            other_justification:
+              blank: Enter more detail
+        steps/submission/declaration_form:
+          attributes:
+            declaration_signed:
+              blank: You must confirm that the information on this page is correct in order to submit the application

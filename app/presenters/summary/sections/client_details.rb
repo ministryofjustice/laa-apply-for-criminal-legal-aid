@@ -5,6 +5,10 @@ module Summary
         :client_details
       end
 
+      def show?
+        applicant.present? && super
+      end
+
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         [

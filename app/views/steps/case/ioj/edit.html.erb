@@ -1,0 +1,20 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :types, legend: { tag: 'h1', size: 'xl' } do %>
+        <% IojReasonType.values.each_with_index do |ioj_type, index| %>
+          <span id="<%= ioj_type %>"></span>
+          <%= f.govuk_check_box :types, ioj_type.to_s, link_errors: index.zero? do %>
+            <% f.govuk_text_area ioj_type.justification_field_name, label: { hidden: true } %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -5,6 +5,10 @@ module Summary
         :case_details
       end
 
+      def show?
+        kase.present? && super
+      end
+
       def answers
         [
           Components::FreeTextAnswer.new(

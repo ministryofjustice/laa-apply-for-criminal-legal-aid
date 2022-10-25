@@ -3,8 +3,9 @@ module Decisions
     def destination
       case step_name
       when :review
-        # TODO: update when we have next step
-        show('/home', action: :index)
+        edit(:declaration)
+      when :declaration
+        show(:confirmation)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

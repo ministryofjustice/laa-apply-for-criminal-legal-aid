@@ -25,6 +25,30 @@ RSpec.describe Tasks::BaseTask do
     end
   end
 
+  describe '#fulfilled?' do
+    before do
+      allow_any_instance_of(
+        Tasks::ClientDetails
+      ).to receive(:status).and_return(status)
+    end
+
+    context 'for a completed task' do
+      let(:status) { TaskStatus::COMPLETED }
+
+      it 'returns true' do
+        expect(subject.fulfilled?(Tasks::ClientDetails)).to be(true)
+      end
+    end
+
+    context 'for an incomplete task' do
+      let(:status) { TaskStatus::IN_PROGRESS }
+
+      it 'returns false' do
+        expect(subject.fulfilled?(Tasks::ClientDetails)).to be(false)
+      end
+    end
+  end
+
   describe '#path' do
     it { expect(subject.path).to eq('') }
   end
@@ -59,6 +83,7 @@ RSpec.describe Tasks::BaseTask do
     context 'task is completed' do
       let(:can_start) { true }
       let(:completed) { true }
+      let(:in_progress) { true }
 
       it { expect(subject.status).to eq(TaskStatus::COMPLETED) }
     end

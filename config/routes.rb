@@ -79,10 +79,13 @@ Rails.application.routes.draw do
         edit_step :has_codefendants
         edit_step :codefendants
         edit_step :hearing_details
+        edit_step :ioj
       end
 
       namespace :submission do
         edit_step :review
+        edit_step :declaration
+        show_step :confirmation
       end
     end
   end

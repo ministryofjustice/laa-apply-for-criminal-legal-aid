@@ -1,7 +1,7 @@
 module Tasks
   class ClientDetails < BaseTask
     def path
-      edit_steps_client_details_path(crime_application)
+      edit_steps_client_details_path
     end
 
     def not_applicable?
@@ -23,7 +23,9 @@ module Tasks
     # NOTE: might be refined for the scenario the correspondence type
     # is `other_address` but there is no `CorrespondenceAddress` record
     def completed?
-      crime_application.applicant&.correspondence_address_type.present?
+      crime_application.applicant.values_at(
+        :telephone_number, :correspondence_address_type
+      ).all?(&:present?)
     end
   end
 end

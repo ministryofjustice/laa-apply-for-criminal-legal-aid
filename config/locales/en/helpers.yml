@@ -1,6 +1,7 @@
 ---
 en:
   helpers/dictionary:
+    ioj_justification_hint: &ioj_justification_hint 'Enter justification'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
@@ -26,16 +27,20 @@ en:
         confirm_details: Are these details correct?
       steps_case_case_type_form:
         case_type: What is the case type?
-      steps_case_has_codefendants_form:
-        has_codefendants: Does your client have any co-defendants in this case?
-      steps_case_codefendants_form:
-        conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_charges_form:
         date: Offence date %{index}
       steps_case_charges_summary_form:
         add_offence: Do you want to add another offence?
+      steps_case_has_codefendants_form:
+        has_codefendants: Does your client have any co-defendants in this case?
+      steps_case_codefendants_form:
+        conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_hearing_details_form:
         hearing_date: Date of next hearing
+      steps_case_ioj_form:
+        types: Why should your client get legal aid?
+      steps_submission_declaration_form:
+        declaration_signed: Confirm and submit application
 
     hint:
       steps_client_has_partner_form:
@@ -57,6 +62,17 @@ en:
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
+      steps_case_ioj_form:
+        loss_of_liberty_justification: *ioj_justification_hint
+        suspended_sentence_justification: *ioj_justification_hint
+        loss_of_livelyhood_justification: *ioj_justification_hint
+        reputation_justification: *ioj_justification_hint
+        question_of_law_justification: *ioj_justification_hint
+        understanding_justification: *ioj_justification_hint
+        witness_tracing_justification: *ioj_justification_hint
+        expert_examination_justification: *ioj_justification_hint
+        interest_of_another_justification: *ioj_justification_hint
+        other_justification: *ioj_justification_hint
 
     label:
       steps_client_has_partner_form:
@@ -103,15 +119,40 @@ en:
         cc_appeal_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_details: Enter the details of what has changed
+      steps_case_charges_form:
+        offence_name: Offence name
+      steps_case_charges_summary_form:
+        add_offence_options: *YESNO
       steps_case_has_codefendants_form:
         has_codefendants_options: *YESNO
       steps_case_codefendants_form:
         first_name: First name
         last_name: Last name
         conflict_of_interest_options: *YESNO
-      steps_case_charges_form:
-        offence_name: Offence name
-      steps_case_charges_summary_form:
-        add_offence_options: *YESNO
       steps_case_hearing_details_form:
         hearing_court_name: Court name
+      steps_case_ioj_form:
+        loss_of_liberty_justification: Loss of liberty justification
+        suspended_sentence_justification: Suspended sentence justification
+        loss_of_livelyhood_justification: Loss of livelyhood justification
+        reputation_justification: Reputation justification
+        question_of_law_justification: Question of law justification
+        understanding_justification: Understanding justification
+        witness_tracing_justification: Witness tracing justification
+        expert_examination_justification: Expert examination justification
+        interest_of_another_justification: Interest of another justification
+        other_justification: Other justification
+        types_options:
+          loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them.
+          suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence.
+          loss_of_livelyhood: It is likely that they will lose their livelihood.
+          reputation: It is likely that they will suffer serious damage to their reputation.
+          question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).
+          understanding: They may not be able to understand the court proceedings or present their own case.
+          witness_tracing: Witnesses may need to be traced or interviewed on their behalf.
+          expert_examination: Witnesses may need to be traced or interviewed on their behalf.
+          interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
+          other: Other
+      steps_submission_declaration_form:
+        declaration_signed_options:
+          '1': I, the instructed legal representative, confirm the above is correct.

@@ -1,0 +1,54 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl">
+      Confirm the following and submit application
+    </h1>
+
+    <p class="govuk-body">You agree that:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>you’ve obtained a signed declaration from my client</li>
+      <li>you’ve provided correct and complete information in this application</li>
+      <li>you’ll share a copy of the completed application with my client</li>
+    </ul>
+
+    <p class="govuk-body govuk-!-margin-top-8">Your client agrees that:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>they’ve instructed Hitchcock, Jones and King to represent them</li>
+      <li>they’ve read the <a href="#">LAA privacy policy</a></li>
+      <li>we can share their information with other government departments like the DWP and HMRC (as stated in our privacy policy)</li>
+      <li>we can check their details with bank and credit reference agencies</li>
+      <li>they may have to pay towards legal aid</li>
+      <li>they may have to repay the legal costs if they are found guilty on one or more offences at the end of the case (the 'statutory charge')</li>
+      <li>the information they’ve given is complete and correct</li>
+      <li>they’ll report any changes to their financial situation immediately</li>
+    </ul>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        If your client gives wrong or incomplete information, does not report changes, or is found to have committed benefit fraud, they may:
+        <ul class="govuk-list govuk-list--bullet govuk-!-font-weight-bold">
+          <li>be prosecuted</li>
+          <li>need to pay a financial penalty</li>
+          <li>have their legal aid stopped and have to pay back the costs</li>
+        </ul>
+      </strong>
+    </div>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :declaration_signed, multiple: false, legend: { hidden: true } do %>
+        <%= f.govuk_check_box :declaration_signed, 1, 0, multiple: false, link_errors: true %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -12,7 +12,7 @@ module TaskList
       [:case_details,     [:case_details, :ioj]],
       [:means_assessment, [:income_assessment, :capital_assessment, :check_your_answers, :check_assessment_result]],
       [:support_evidence, [:evidence_upload]],
-      [:review_confirm,   [:application_review, :application_submission]],
+      [:review_confirm,   [:review, :declaration]],
     ].freeze
 
     def initialize(view, crime_application:)
