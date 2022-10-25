@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get :health, to: 'healthcheck#show'
   get :ping,   to: 'healthcheck#ping'
 
+
   root 'home#index'
 
   resource :errors, only: [] do
@@ -40,8 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :about, only: [:show] do
-    get :privacy, to: 'about#privacy'
+  namespace :about do
+    get :privacy
   end
 
   resources :crime_applications, except: [:new, :update], path: 'applications' do
