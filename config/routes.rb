@@ -40,6 +40,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :about, only: [:show] do
+    get :privacy, to: 'about#privacy'
+  end
+
   resources :crime_applications, except: [:new, :update], path: 'applications' do
     get :confirm_destroy, on: :member
   end
