@@ -8,7 +8,7 @@ class UpdateBenefitCheckResultService
   end
 
   def call
-    passporting_benefit = BenefitCheckService.call(@applicant)[:benefit_checker_status].casecmp('yes').zero?
+    passporting_benefit = BenefitCheckService.call(@applicant)
 
     @applicant.update(passporting_benefit:)
   end

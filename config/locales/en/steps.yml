@@ -18,7 +18,6 @@ en:
           page_title: Enter your client’s NINO
           eforms_link: My client does not have a National Insurance number or cannot find it
       benefit_check_result:
-        title: DWP records show that your client does not receive a passporting benefit - is this correct?
         edit:
           heading: DWP records show that your client receives a passporting benefit
           page_title: Benefit check result

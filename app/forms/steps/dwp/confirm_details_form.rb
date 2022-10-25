@@ -1,10 +1,7 @@
 module Steps
   module Dwp
     class ConfirmDetailsForm < Steps::BaseFormObject
-      include Steps::HasOneAssociation
       attribute :confirm_details, :value_object, source: YesNoAnswer
-
-      has_one_association :applicant
 
       validates_inclusion_of :confirm_details, in: :choices
 

@@ -32,7 +32,7 @@
             <%= t '.dob' %>
           </th>
           <td class="govuk-table__cell">
-            <%= @form_object.applicant.date_of_birth.strftime('%-d %B %Y') %>
+            <%= l(@form_object.applicant.date_of_birth) %>
           </td>
         </tr>
         <tr class="govuk-table__row">

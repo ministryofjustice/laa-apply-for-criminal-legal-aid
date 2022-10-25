@@ -1,7 +1,11 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-  <%= govuk_error_summary(@form_object) %>
+<div class="govuk-grid-row">
+   <div class="govuk-grid-column-two-thirds">
+      <%= govuk_error_summary(@form_object) %>
+   </div>
+</div>
 
 <div class="govuk-grid-row app-inverted--card app-inverted-text">
   <div class="govuk-grid-column app-inverted-text">
@@ -11,11 +15,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:confirm_result, legend: { tag: 'h1', size: 'l' }) do %>
-        <% @form_object.choices.each do |choice| %>
-          <%= f.govuk_radio_button :confirm_result, choice.value %>
-        <% end %>
-      <% end %>
+      <%= f.govuk_collection_radio_buttons :confirm_result, @form_object.choices, :value,
+                                           inline: false %>
 
       <%= f.continue_button %>
     <% end %>

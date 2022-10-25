@@ -41,15 +41,16 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', applicant: applicant_double) }
     let(:applicant_double) { double(Applicant) }
     let(:step_name) { :has_nino }
+    let(:nino) { 'AA123245A' }
 
     before do
       allow(form_object).to receive(:applicant).and_return(applicant_double)
+      allow(UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
     end
 
     context 'when the applicant has a passporting benefit' do
       context 'has correct next step' do
-        let(:nino) { 'AA123245A' }
         let(:passporting_benefit) { true }
 
         it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
@@ -58,7 +59,6 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     context 'when the applicant does not have a passporting benefit' do
       context 'has correct next step' do
-        let(:nino) { 'AA123245A' }
         let(:passporting_benefit) { false }
 
         it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }

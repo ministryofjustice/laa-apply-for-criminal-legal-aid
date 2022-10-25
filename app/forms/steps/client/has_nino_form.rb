@@ -21,8 +21,6 @@ module Steps
         applicant.update(
           attributes
         )
-
-        UpdateBenefitCheckResultService.call(applicant)
       end
     end
   end

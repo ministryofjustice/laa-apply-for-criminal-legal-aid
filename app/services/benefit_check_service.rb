@@ -3,6 +3,6 @@ class BenefitCheckService
     # For now we will just use the mock benefit check service
     # and implement the full benefit check service functionality later
 
-    MockBenefitCheckService.call(applicant)
+    MockBenefitCheckService.passporting_benefit?(applicant)
   end
 end

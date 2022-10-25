@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MockBenefitCheckService do
-  subject { described_class.call(applicant) }
+  subject { described_class }
 
   let(:last_name) { 'Smith' }
   let(:date_of_birth) { '1999/01/11'.to_date }
@@ -18,22 +18,22 @@ RSpec.describe MockBenefitCheckService do
 
   describe '.call' do
     it 'returns confirmation_ref' do
-      expect(subject[:confirmation_ref]).to eq("mocked:#{described_class}")
+      expect(subject.call(applicant)[:confirmation_ref]).to eq("mocked:#{described_class}")
     end
 
     it "returns 'Yes' as in known data" do
-      expect(subject[:benefit_checker_status]).to eq('Yes')
+      expect(subject.call(applicant)[:benefit_checker_status]).to eq('Yes')
     end
 
     context 'with incorrect date' do
       let(:date_of_birth) { '2012/01/10'.to_date }
 
       it 'returns no' do
-        expect(subject[:benefit_checker_status]).to eq('No')
+        expect(subject.call(applicant)[:benefit_checker_status]).to eq('No')
       end
 
       it 'returns confirmation_ref' do
-        expect(subject[:confirmation_ref]).to eq("mocked:#{described_class}")
+        expect(subject.call(applicant)[:confirmation_ref]).to eq("mocked:#{described_class}")
       end
     end
 
@@ -41,7 +41,29 @@ RSpec.describe MockBenefitCheckService do
       let(:last_name) { 'Unknown' }
 
       it 'returns no' do
-        expect(subject[:benefit_checker_status]).to eq('No')
+        expect(subject.call(applicant)[:benefit_checker_status]).to eq('No')
+      end
+    end
+  end
+
+  describe '.passporting_benefit?' do
+    it 'returns true' do
+      expect(subject.passporting_benefit?(applicant)).to be(true)
+    end
+
+    context 'with incorrect date' do
+      let(:date_of_birth) { '2012/01/10'.to_date }
+
+      it 'returns true' do
+        expect(subject.passporting_benefit?(applicant)).to be(false)
+      end
+    end
+
+    context 'with unknown name' do
+      let(:last_name) { 'Unknown' }
+
+      it 'returns false' do
+        expect(subject.passporting_benefit?(applicant)).to be(false)
       end
     end
   end
