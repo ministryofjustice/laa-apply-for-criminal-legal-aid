@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe MockBenefitCheckService do
-  subject { described_class.call(crime_application) }
+  subject { described_class.call(applicant) }
 
   let(:last_name) { 'Smith' }
   let(:date_of_birth) { '1999/01/11'.to_date }
   let(:nino) { 'NC123459A' }
-  let(:crime_application) do
-    instance_double(CrimeApplication,
-                    applicant:)
-  end
 
   let(:applicant) do
     double(

@@ -13,11 +13,13 @@ RSpec.describe Steps::Client::HasNinoForm do
     }
   end
 
-  let(:crime_application) do
-    instance_double(CrimeApplication)
-  end
+  let(:crime_application) { instance_double(CrimeApplication, applicant: 'applicant') }
 
   let(:nino) { nil }
+
+  before do
+    allow(UpdateBenefitCheckResultService).to receive(:call).and_return(true)
+  end
 
   describe '#save' do
     context 'when `nino` is blank' do

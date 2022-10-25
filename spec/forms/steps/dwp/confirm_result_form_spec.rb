@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Client::ConfirmDetailsForm do
+RSpec.describe Steps::Dwp::ConfirmResultForm do
   # NOTE: not using shared examples for form objects yet, to be added
   # once we have some more form objects and some patterns emerge
 
@@ -38,21 +38,25 @@ RSpec.describe Steps::Client::ConfirmDetailsForm do
   end
 
   describe '#save' do
-    context 'when `confirm_details` is not provided' do
+    before do
+      allow(applicant).to receive(:update).with(passporting_benefit: nil).and_return(true)
+    end
+
+    context 'when `confirm_result` is not provided' do
       it 'returns false' do
         expect(subject.save).to be(false)
       end
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:confirm_details, :inclusion)).to be(true)
+        expect(subject.errors.of_kind?(:confirm_result, :inclusion)).to be(true)
       end
     end
 
-    context 'when `confirm_details` is provided' do
+    context 'when `confirm_result` is provided' do
       it 'returns true' do
         subject.choices.each do |choice|
-          subject.confirm_details = choice
+          subject.confirm_result = choice
           expect(subject.save).to be(true)
         end
       end

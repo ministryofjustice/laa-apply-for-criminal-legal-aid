@@ -11,13 +11,12 @@ class MockBenefitCheckService
     new(*args).call
   end
 
-  attr_reader :crime_application
+  attr_reader :applicant
 
-  delegate :applicant, to: :crime_application, allow_nil: true
   delegate :last_name, :nino, :date_of_birth, to: :applicant, allow_nil: true
 
-  def initialize(crime_application)
-    @crime_application = crime_application
+  def initialize(applicant)
+    @applicant = applicant
   end
 
   def call
