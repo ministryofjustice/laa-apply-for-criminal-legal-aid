@@ -30,7 +30,7 @@ gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', 
 
 # Temporary utitily to add a data api to apply.
 gem 'laa_crime_apply_dev_api', github: 'ministryofjustice/laa-crime-apply-dev-api',
-ref: 'ab62064cb64d2b6888eb2c18944ca815239ec2ce'
+ref: 'e484d1bf4c000a76602bced385883654018539d1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

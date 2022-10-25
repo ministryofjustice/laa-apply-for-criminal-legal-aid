@@ -7,8 +7,8 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-crime-apply-dev-api.git
-  revision: ab62064cb64d2b6888eb2c18944ca815239ec2ce
-  ref: ab62064cb64d2b6888eb2c18944ca815239ec2ce
+  revision: e484d1bf4c000a76602bced385883654018539d1
+  ref: e484d1bf4c000a76602bced385883654018539d1
   specs:
     laa_crime_apply_dev_api (0.2.0)
       dry-schema (>= 1.10)
