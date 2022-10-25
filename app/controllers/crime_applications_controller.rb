@@ -11,6 +11,12 @@ class CrimeApplicationsController < ApplicationController
                     .merge(CrimeApplication.order(created_at: :desc))
   end
 
+  def show
+    @presenter = Summary::HtmlPresenter.new(
+      crime_application: current_crime_application
+    )
+  end
+
   def create
     initialize_crime_application do |crime_application|
       redirect_to edit_steps_client_has_partner_path(crime_application)

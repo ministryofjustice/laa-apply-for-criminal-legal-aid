@@ -5,10 +5,18 @@ module Decisions
       when :review
         edit(:declaration)
       when :declaration
-        show(:confirmation)
+        submit_application
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
+    end
+
+    private
+
+    def submit_application
+      ApplicationSubmission.new(current_crime_application).call
+
+      show(:confirmation)
     end
   end
 end

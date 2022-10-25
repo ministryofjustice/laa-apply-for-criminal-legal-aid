@@ -15,12 +15,19 @@ en:
       status:
         in_progress: In progress
         submitted: Submitted
+    show:
+      page_title: Application certificate
+      heading: Application for criminal legal aid certificate
+      laa_reference: "LAA reference:"
+      date_stamp: "Date stamp:"
+      print_application: Print application
+      back_to_applications: Back to all applications
     edit:
       page_title: Application task list
       heading: Make a new application
       subheading: Application incomplete
       progress_counter: You have completed %{completed} of %{total} sections.
-      back_to_applications: Back to your applications
+      back_to_applications: Back to all applications
       aside:
         reference: Reference number
         first_name: First name

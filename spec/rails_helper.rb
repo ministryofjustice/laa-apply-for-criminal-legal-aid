@@ -30,6 +30,8 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
+  config.include ActiveSupport::Testing::TimeHelpers
+
   config.include(ViewSpecHelpers, type: :helper)
   config.include(ViewSpecHelpers, type: :view)
 
