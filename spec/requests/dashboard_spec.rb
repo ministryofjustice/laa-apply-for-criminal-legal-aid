@@ -12,6 +12,47 @@ RSpec.describe 'Dashboard' do
     end
   end
 
+  describe 'show an application certificate (once an application is completed)' do
+    before :all do
+      # sets up a test record
+      app = CrimeApplication.create(status: :submitted, submitted_at: Date.new(2022, 12, 31))
+
+      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
+    end
+
+    after :all do
+      CrimeApplication.destroy_all
+    end
+
+    before do
+      applicant = Applicant.find_by(first_name: 'Jane')
+      app = applicant.crime_application
+
+      get crime_application_path(app)
+    end
+
+    it 'shows the application' do
+      expect(response).to have_http_status(:success)
+
+      assert_select 'h1', 'Application for criminal legal aid certificate'
+
+      # client details section, no change links
+      assert_select 'h2', 'Client details'
+
+      assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
+        assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do
+          assert_select 'dt:nth-of-type(1)', 'First name'
+          assert_select 'dd:nth-of-type(1)', 'Jane'
+        end
+
+        assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(2)' do
+          assert_select 'dt:nth-of-type(1)', 'Last name'
+          assert_select 'dd:nth-of-type(1)', 'Doe'
+        end
+      end
+    end
+  end
+
   describe 'edit an application (aka task list)' do
     before :all do
       # sets up a test record

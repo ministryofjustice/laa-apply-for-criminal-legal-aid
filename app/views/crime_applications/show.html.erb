@@ -1,0 +1,24 @@
+<% title t('.page_title') %>
+<% step_header(path: :back) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
+
+    <p class="govuk-body govuk-!-margin-bottom-0">
+      <strong><%= t('.laa_reference') %></strong> <%= @crime_application.laa_reference %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <strong><%= t('.date_stamp') %></strong> <%= @crime_application.application_date_stamp %>
+    </p>
+
+    <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+
+    <%= render @presenter.sections %>
+
+    <div class="govuk-button-group govuk-!-margin-top-8">
+      <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+      <%= link_button t('.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
+    </div>
+  </div>
+</div>
