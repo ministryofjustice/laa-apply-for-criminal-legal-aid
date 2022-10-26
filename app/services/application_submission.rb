@@ -10,9 +10,13 @@ class ApplicationSubmission
   # submitted, to enable post-submission journeys.
   #
   def call
+    submitted_at = Time.current
+    date_stamp = crime_application.date_stamp || submitted_at
+
     crime_application.update!(
       status: ApplicationStatus::SUBMITTED.value,
-      submitted_at: Time.current,
+      submitted_at: submitted_at,
+      date_stamp: date_stamp,
     )
   end
 end

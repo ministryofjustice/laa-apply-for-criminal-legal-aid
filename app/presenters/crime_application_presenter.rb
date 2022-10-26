@@ -7,6 +7,7 @@ class CrimeApplicationPresenter < BasePresenter
   }.freeze
 
   delegate :first_name, :last_name, :date_of_birth, to: :applicant
+  delegate :case_type, to: :case, allow_nil: true
 
   def start_date
     l(created_at)
@@ -16,16 +17,30 @@ class CrimeApplicationPresenter < BasePresenter
     l(date_of_birth)
   end
 
-  def application_date_stamp
-    l(date_stamp) if case_type&.date_stampable?
-  end
-
   def applicant_name
     "#{first_name} #{last_name}"
   end
 
   def applicant?
     applicant.present?
+  end
+
+  # - If case type is “date stampable”, we use the date stamp value
+  # - If case type is non “date stampable”, and the application is submitted,
+  #   we use the submission date as the date stamp
+  #
+  def interim_date_stamp
+    date = if date_stampable?
+             date_stamp
+           elsif submitted?
+             submitted_at
+           end
+
+    l(date, format: :datetime) if date
+  end
+
+  def date_stampable?
+    CaseType.new(case_type.to_s).date_stampable?
   end
 
   # this is stubbed for now will implement
@@ -44,11 +59,5 @@ class CrimeApplicationPresenter < BasePresenter
 
   def tag_classes
     DEFAULT_CLASSES | Array(STATUSES.fetch(status))
-  end
-
-  def case_type
-    return unless self.case&.case_type
-
-    CaseType.new(self.case.case_type)
   end
 end

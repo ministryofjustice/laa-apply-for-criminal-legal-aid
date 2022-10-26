@@ -49,12 +49,12 @@
           <%= @crime_application.applicant_dob %>
         </p>
 
-        <% if @crime_application.application_date_stamp %>
+        <% if @crime_application.interim_date_stamp %>
           <h3 class="govuk-heading-s">
             <%= t('.aside.date_stamp') %>
           </h3>
           <p class="govuk-body">
-            <%= @crime_application.application_date_stamp %>
+            <%= @crime_application.interim_date_stamp %>
           </p>
         <% end %>
       <% end %>

@@ -15,7 +15,11 @@ RSpec.describe 'Dashboard' do
   describe 'show an application certificate (once an application is completed)' do
     before :all do
       # sets up a test record
-      app = CrimeApplication.create(status: :submitted, submitted_at: Date.new(2022, 12, 31))
+      app = CrimeApplication.create(
+        status: :submitted,
+        date_stamp: Date.new(2022, 12, 25),
+        submitted_at: Date.new(2022, 12, 31),
+      )
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end
@@ -31,15 +35,34 @@ RSpec.describe 'Dashboard' do
       get crime_application_path(app)
     end
 
-    it 'shows the application' do
+    it 'renders the certificate page' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Application for criminal legal aid certificate'
+    end
 
+    it 'has the application details' do
+      assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(1)' do
+          assert_select 'dt:nth-of-type(1)', 'LAA reference:'
+          assert_select 'dd:nth-of-type(1)', /^LAA-[[:alnum:]]{6}$/
+        end
+        assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
+          assert_select 'dt:nth-of-type(1)', 'Date stamp:'
+          assert_select 'dd:nth-of-type(1)', '25 December 2022 12:00am'
+        end
+        assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
+          assert_select 'dt:nth-of-type(1)', 'Date submitted:'
+          assert_select 'dd:nth-of-type(1)', '31 December 2022 12:00am'
+        end
+      end
+    end
+
+    it 'has a read only version of the check your answers' do
       # client details section, no change links
       assert_select 'h2', 'Client details'
 
-      assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
+      assert_select 'dl.govuk-summary-list:nth-of-type(2)' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do
           assert_select 'dt:nth-of-type(1)', 'First name'
           assert_select 'dd:nth-of-type(1)', 'Jane'

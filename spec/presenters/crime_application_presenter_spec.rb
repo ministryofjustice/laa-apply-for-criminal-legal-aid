@@ -4,13 +4,10 @@ RSpec.describe CrimeApplicationPresenter do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
-    instance_double(CrimeApplication,
-                    id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
-                    created_at: DateTime.new(2022, 1, 12),
-                    status: 'in_progress',
-                    date_stamp: Date.new(2022, 2, 1),
-                    case: case_double,
-                    applicant: applicant)
+    CrimeApplication.new(
+      id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
+      created_at: DateTime.new(2022, 1, 12),
+    )
   end
 
   let(:applicant) do
@@ -25,17 +22,50 @@ RSpec.describe CrimeApplicationPresenter do
   let(:case_double) { instance_double(Case, case_type:) }
   let(:case_type) { nil }
 
-  describe '#application_date_stamp' do
+  before do
+    allow(crime_application).to receive(:applicant).and_return(applicant)
+    allow(crime_application).to receive(:case).and_return(case_double)
+  end
+
+  describe '#interim_date_stamp' do
     context 'when a case is date stampable' do
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
-      it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
+      before do
+        allow(subject).to receive(:date_stamp).and_return(date_stamp)
+      end
+
+      context 'and it has a date_stamp' do
+        let(:date_stamp) { DateTime.new(2022, 2, 1) }
+
+        it { expect(subject.interim_date_stamp).to eq('1 February 2022 12:00am') }
+      end
+
+      context 'and it does not have yet a date_stamp' do
+        let(:date_stamp) { nil }
+
+        it { expect(subject.interim_date_stamp).to be_nil }
+      end
     end
 
     context 'when a case is not date stampable' do
       let(:case_type) { CaseType::INDICTABLE.to_s }
 
-      it { expect(subject.application_date_stamp).to be_nil }
+      context 'and the application is submitted' do
+        let(:crime_application) do
+          CrimeApplication.new(status: :submitted, submitted_at: DateTime.new(2022, 2, 15))
+        end
+
+        it 'uses the `submitted_at` date as the date stamp' do
+          expect(subject.interim_date_stamp).to eq('15 February 2022 12:00am')
+        end
+      end
+
+      context 'and the application is not yet submitted' do
+        it 'returns nil' do
+          expect(subject.interim_date_stamp).to be_nil
+        end
+      end
     end
   end
 

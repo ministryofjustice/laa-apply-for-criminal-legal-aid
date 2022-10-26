@@ -5,12 +5,32 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
 
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      <strong><%= t('.laa_reference') %></strong> <%= @crime_application.laa_reference %>
-    </p>
-    <p class="govuk-body govuk-!-margin-bottom-7">
-      <strong><%= t('.date_stamp') %></strong> <%= @crime_application.application_date_stamp %>
-    </p>
+    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-8 app-summary-list--compact">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.laa_reference') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @crime_application.laa_reference %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.date_stamp') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= l(@crime_application.date_stamp, format: :datetime) %>
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.date_submitted') %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= l(@crime_application.submitted_at, format: :datetime) %>
+        </dd>
+      </div>
+    </dl>
 
     <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
 

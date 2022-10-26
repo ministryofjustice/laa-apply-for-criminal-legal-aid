@@ -20,6 +20,7 @@ en:
       heading: Application for criminal legal aid certificate
       laa_reference: "LAA reference:"
       date_stamp: "Date stamp:"
+      date_submitted: "Date submitted:"
       print_application: Print application
       back_to_applications: Back to all applications
     edit:
