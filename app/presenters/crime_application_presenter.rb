@@ -25,14 +25,17 @@ class CrimeApplicationPresenter < BasePresenter
     applicant.present?
   end
 
-  def submitted_date
-    l(submitted_at, format: :datetime) if submitted_at
-  end
-
   # - If case type is “date stampable”, we use the date stamp value
-  # - If case type is non “date stampable”, we use the submission date as the date stamp
-  def application_date_stamp
-    date = date_stampable? ? date_stamp : submitted_at
+  # - If case type is non “date stampable”, and the application is submitted,
+  #   we use the submission date as the date stamp
+  #
+  def interim_date_stamp
+    date = if date_stampable?
+             date_stamp
+           elsif submitted?
+             submitted_at
+           end
+
     l(date, format: :datetime) if date
   end
 

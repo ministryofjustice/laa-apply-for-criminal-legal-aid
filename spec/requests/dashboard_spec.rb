@@ -15,7 +15,11 @@ RSpec.describe 'Dashboard' do
   describe 'show an application certificate (once an application is completed)' do
     before :all do
       # sets up a test record
-      app = CrimeApplication.create(status: :submitted, submitted_at: Date.new(2022, 12, 31))
+      app = CrimeApplication.create(
+        status: :submitted,
+        date_stamp: Date.new(2022, 12, 25),
+        submitted_at: Date.new(2022, 12, 31),
+      )
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end
@@ -45,7 +49,7 @@ RSpec.describe 'Dashboard' do
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp:'
-          assert_select 'dd:nth-of-type(1)', '31 December 2022 12:00am'
+          assert_select 'dd:nth-of-type(1)', '25 December 2022 12:00am'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
           assert_select 'dt:nth-of-type(1)', 'Date submitted:'
