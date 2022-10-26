@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get :health, to: 'healthcheck#show'
   get :ping,   to: 'healthcheck#ping'
 
+
   root 'home#index'
 
   resource :errors, only: [] do
@@ -38,6 +39,10 @@ Rails.application.routes.draw do
     member do
       post :bypass_to_client_details
     end
+  end
+
+  namespace :about do
+    get :privacy
   end
 
   resources :crime_applications, except: [:new, :update], path: 'applications' do
