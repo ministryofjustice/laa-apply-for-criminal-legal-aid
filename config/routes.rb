@@ -96,6 +96,10 @@ Rails.application.routes.draw do
   # catch-all route
   # :nocov:
   match '*path', to: 'errors#not_found', via: :all, constraints:
-    lambda { |_request| !Rails.application.config.consider_all_requests_local }
+    lambda { |request|
+      not_dev_api_request = !request.url['api/applications']
+      Rails.env.production? && not_dev_api_request
+    }
+
   # :nocov:
 end
