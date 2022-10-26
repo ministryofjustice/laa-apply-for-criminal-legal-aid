@@ -17,10 +17,6 @@ RSpec.describe Steps::Client::HasNinoForm do
 
   let(:nino) { nil }
 
-  before do
-    allow(UpdateBenefitCheckResultService).to receive(:call).and_return(true)
-  end
-
   describe '#save' do
     context 'when `nino` is blank' do
       let(:nino) { '' }
