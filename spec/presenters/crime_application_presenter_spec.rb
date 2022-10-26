@@ -7,8 +7,9 @@ RSpec.describe CrimeApplicationPresenter do
     instance_double(CrimeApplication,
                     id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
                     created_at: DateTime.new(2022, 1, 12),
+                    submitted_at: nil,
                     status: 'in_progress',
-                    date_stamp: Date.new(2022, 2, 1),
+                    date_stamp: DateTime.new(2022, 2, 1),
                     case: case_double,
                     applicant: applicant)
   end
@@ -29,13 +30,27 @@ RSpec.describe CrimeApplicationPresenter do
     context 'when a case is date stampable' do
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
-      it { expect(subject.application_date_stamp).to eq('1 Feb 2022') }
+      it { expect(subject.application_date_stamp).to eq('1 February 2022 12:00am') }
     end
 
     context 'when a case is not date stampable' do
       let(:case_type) { CaseType::INDICTABLE.to_s }
 
-      it { expect(subject.application_date_stamp).to be_nil }
+      context 'and the application is submitted' do
+        before do
+          allow(subject).to receive(:submitted_at).and_return(DateTime.new(2022, 2, 15))
+        end
+
+        it 'uses the `submitted_at` attribute as the date stamp' do
+          expect(subject.application_date_stamp).to eq('15 February 2022 12:00am')
+        end
+      end
+
+      context 'and the application is not yet submitted' do
+        it 'returns nil' do
+          expect(subject.application_date_stamp).to be_nil
+        end
+      end
     end
   end
 

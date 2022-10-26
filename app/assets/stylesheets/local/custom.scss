@@ -42,6 +42,13 @@
   }
 }
 
+.app-summary-list--compact {
+  dt, dd {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
 // style accessible autocomplete
 .autocomplete__wrapper * {
   @include govuk-typography-common();
