@@ -38,13 +38,31 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `has_nino`' do
-    let(:form_object) { double('FormObject', applicant: 'applicant') }
+    let(:form_object) { double('FormObject', applicant: applicant_double) }
+    let(:applicant_double) { double(Applicant) }
     let(:step_name) { :has_nino }
+    let(:nino) { 'AA123245A' }
 
-    context 'has correct next step' do
-      let(:nino) { 'AA123245A' }
+    before do
+      allow(form_object).to receive(:applicant).and_return(applicant_double)
+      allow(UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+      allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
+    end
 
-      it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+    context 'when the applicant has a passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { true }
+
+        it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the applicant does not have a passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { false }
+
+        it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+      end
     end
   end
 
@@ -52,18 +70,16 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', applicant: 'applicant') }
     let(:step_name) { :benefit_check_result }
 
-    context 'has correct next step' do
-      before do
-        allow(
-          HomeAddress
-        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
-      end
-
-      it {
-        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-address_id: 'address')
-      }
+    before do
+      allow(
+        Address
+      ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
     end
+
+    it {
+      expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+  address_id: 'address')
+    }
   end
 
   context 'when the step is `contact_details`' do

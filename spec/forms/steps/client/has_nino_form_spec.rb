@@ -13,9 +13,7 @@ RSpec.describe Steps::Client::HasNinoForm do
     }
   end
 
-  let(:crime_application) do
-    instance_double(CrimeApplication)
-  end
+  let(:crime_application) { instance_double(CrimeApplication, applicant: 'applicant') }
 
   let(:nino) { nil }
 
