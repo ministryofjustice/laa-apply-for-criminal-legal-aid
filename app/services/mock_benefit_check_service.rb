@@ -11,13 +11,16 @@ class MockBenefitCheckService
     new(*args).call
   end
 
-  attr_reader :crime_application
+  def self.passporting_benefit?(*args)
+    new(*args).call[:benefit_checker_status].casecmp('yes').zero?
+  end
 
-  delegate :applicant, to: :crime_application, allow_nil: true
+  attr_reader :applicant
+
   delegate :last_name, :nino, :date_of_birth, to: :applicant, allow_nil: true
 
-  def initialize(crime_application)
-    @crime_application = crime_application
+  def initialize(applicant)
+    @applicant = applicant
   end
 
   def call

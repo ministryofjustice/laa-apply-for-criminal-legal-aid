@@ -1,8 +1,8 @@
 class BenefitCheckService
-  def self.call(crime_application)
+  def self.call(applicant)
     # For now we will just use the mock benefit check service
     # and implement the full benefit check service functionality later
 
-    MockBenefitCheckService.call(crime_application)
+    MockBenefitCheckService.passporting_benefit?(applicant)
   end
 end

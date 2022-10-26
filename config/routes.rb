@@ -56,6 +56,12 @@ Rails.application.routes.draw do
         edit_step :contact_details
       end
 
+      namespace :dwp do
+        edit_step :confirm_result
+        edit_step :confirm_details
+        show_step :benefit_check_result_exit
+      end
+
       namespace :address do
         crud_step :lookup,  param: :address_id, except: [:destroy]
         crud_step :results, param: :address_id, except: [:destroy]

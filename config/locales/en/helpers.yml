@@ -21,6 +21,10 @@ en:
         date_of_birth: Date of birth
       steps_client_contact_details_form:
         correspondence_address_type: Correspondence address
+      steps_dwp_confirm_result_form:
+        confirm_result: Are the DWP records correct?
+      steps_dwp_confirm_details_form:
+        confirm_details: Are these details correct?
       steps_case_case_type_form:
         case_type: What is the case type?
       steps_case_charges_form:
@@ -85,6 +89,14 @@ en:
           home_address: Same as home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
+      steps_dwp_confirm_result_form:
+        confirm_result_options:
+          'yes': 'Yes'
+          'no': 'No, my client receives a passporting benefit'
+      steps_dwp_confirm_details_form:
+        confirm_details_options:
+          'yes': 'Yes'
+          'no': 'No, I need to change these details'
       steps_address_results_form:
         lookup_id: Select an address
       steps_address_details_form:

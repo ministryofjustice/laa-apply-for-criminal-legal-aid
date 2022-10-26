@@ -8,9 +8,12 @@ module Decisions
       when :details
         edit(:has_nino)
       when :has_nino
-        edit(:benefit_check_result)
+        after_has_nino
       when :benefit_check_result
-        after_benefit_check_result
+        start_address_journey(
+          HomeAddress,
+          form_object.applicant
+        )
       when :contact_details
         after_contact_details
       else
@@ -30,11 +33,14 @@ module Decisions
       end
     end
 
-    def after_benefit_check_result
-      start_address_journey(
-        HomeAddress,
-        form_object.applicant
-      )
+    def after_has_nino
+      UpdateBenefitCheckResultService.call(form_object.applicant)
+
+      if form_object.applicant.passporting_benefit?
+        edit(:benefit_check_result)
+      else
+        edit('steps/dwp/confirm_result')
+      end
     end
 
     def after_contact_details
