@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     get :confirm_destroy, on: :member
 
     scope :submitted, as: :submitted, controller: :submitted_applications do
+      get :index, on: :collection
       get :show, on: :member
     end
   end

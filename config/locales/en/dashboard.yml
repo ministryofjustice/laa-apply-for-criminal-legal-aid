@@ -39,6 +39,8 @@ en:
     destroy:
       success_flash: "%{applicant_name}’s application has been deleted"
   submitted_applications:
+    index:
+      page_title: Your applications
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
