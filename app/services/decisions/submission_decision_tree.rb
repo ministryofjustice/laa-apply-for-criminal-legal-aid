@@ -14,9 +14,15 @@ module Decisions
     private
 
     def submit_application
+      # Get it before we purge the local DB record
+      reference = CrimeApplicationPresenter.new(
+        current_crime_application
+      ).laa_reference
+
+      # TODO: this potentially will purge the record soon
       ApplicationSubmission.new(current_crime_application).call
 
-      show(:confirmation)
+      show(:confirmation, reference:)
     end
   end
 end

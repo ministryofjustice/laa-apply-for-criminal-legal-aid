@@ -15,14 +15,6 @@ en:
       status:
         in_progress: In progress
         submitted: Submitted
-    show:
-      page_title: Application certificate
-      heading: Application for criminal legal aid certificate
-      laa_reference: "LAA reference:"
-      date_stamp: "Date stamp:"
-      date_submitted: "Date submitted:"
-      print_application: Print application
-      back_to_applications: Back to all applications
     edit:
       page_title: Application task list
       heading: Make a new application
@@ -46,3 +38,18 @@ en:
         text: You cannot undo this action
     destroy:
       success_flash: "%{applicant_name}’s application has been deleted"
+  completed_applications:
+    index:
+      page_title: Your applications
+    show:
+      page_title: Application certificate
+      heading: Application for criminal legal aid certificate
+      laa_reference: "LAA reference:"
+      date_stamp: "Date stamp:"
+      date_submitted: "Date submitted:"
+      print_application: Print application
+      back_to_applications: Back to all applications
+      helpline:
+        intro: If you need to withdraw or update this application, contact the criminal applications helpline.
+        phone: 'Telephone: 0300 200 2020'
+        hours: 9am to 5pm, Monday to Friday (excluding bank holidays).

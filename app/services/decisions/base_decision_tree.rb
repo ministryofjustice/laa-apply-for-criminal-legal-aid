@@ -16,12 +16,16 @@ module Decisions
     private
 
     # :nocov:
-    def show(step_controller, action: :show)
-      { controller: step_controller, action: action, id: current_crime_application }
+    def show(step_controller, params = {})
+      url_options(step_controller, :show, params)
     end
 
     def edit(step_controller, params = {})
-      { controller: step_controller, action: :edit, id: current_crime_application }.merge(params)
+      url_options(step_controller, :edit, params)
+    end
+
+    def url_options(controller, action, params = {})
+      { controller: controller, action: action, id: current_crime_application }.merge(params)
     end
     # :nocov:
   end

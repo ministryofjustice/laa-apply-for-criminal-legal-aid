@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-8 app-summary-list--compact">
+    <dl class="govuk-summary-list govuk-summary-list--no-border app-summary-list--compact">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= t('.laa_reference') %>
@@ -31,6 +31,17 @@
         </dd>
       </div>
     </dl>
+
+    <div class="govuk-inset-text govuk-!-margin-bottom-8">
+      <p class="govuk-body">
+        <%= t('.helpline.intro') %>
+      </p>
+      <p class="govuk-body">
+        <%= t('.helpline.phone') %>
+        <br>
+        <%= t('.helpline.hours') %>
+      </p>
+    </div>
 
     <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
 

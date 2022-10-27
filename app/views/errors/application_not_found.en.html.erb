@@ -1,0 +1,22 @@
+<% title t('.page_title') %>
+<% step_header(path: :back) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Page not found
+    </h1>
+
+    <p class="govuk-body">
+      The web address you are trying to access cannot be found.
+    </p>
+
+    <p class="govuk-body">
+      This can happen if you’re trying to go back to an application that has already been submitted or does not exist.
+    </p>
+
+    <p class="govuk-body">
+      If you’re looking for a submitted application, go <%= link_to 'back to all applications', crime_applications_path %>.
+    </p>
+  </div>
+</div>

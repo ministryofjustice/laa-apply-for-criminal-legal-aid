@@ -32,7 +32,7 @@ RSpec.describe 'Dashboard' do
       applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
 
-      get crime_application_path(app)
+      get completed_crime_application_path(app)
     end
 
     it 'renders the certificate page' do
