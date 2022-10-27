@@ -1,4 +1,4 @@
-class CrimeApplicationsController < ApplicationController
+class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, except: [:index, :create]
 
@@ -32,10 +32,4 @@ class CrimeApplicationsController < ApplicationController
   end
 
   def confirm_destroy; end
-
-  private
-
-  def present_crime_application
-    @crime_application = helpers.present(current_crime_application)
-  end
 end

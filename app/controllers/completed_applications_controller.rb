@@ -1,4 +1,4 @@
-class SubmittedApplicationsController < ApplicationController
+class CompletedApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
 
@@ -12,9 +12,9 @@ class SubmittedApplicationsController < ApplicationController
     # `submitted` or `returned` to render one or the other list.
     #
     # Example of routes:
-    # - /submitted/applications (renders `submitted` status tab)
-    # - /submitted/applications?status=submitted (same as above)
-    # - /submitted/applications?status=returned (renders `returned` tab)
+    # - /completed/applications (renders `submitted` status tab)
+    # - /completed/applications?status=submitted (same as above)
+    # - /completed/applications?status=returned (renders `returned` tab)
     #
     # We don't have yet the `returned` status, and all this is really
     # a bit pointless as this controller will ONLY talk to the
@@ -35,9 +35,5 @@ class SubmittedApplicationsController < ApplicationController
   #
   def current_crime_application
     @current_crime_application ||= CrimeApplication.submitted.find_by(id: params[:id])
-  end
-
-  def present_crime_application
-    @crime_application = helpers.present(current_crime_application)
   end
 end

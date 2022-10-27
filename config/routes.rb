@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   resources :crime_applications, except: [:show, :new, :update], path: 'applications' do
     get :confirm_destroy, on: :member
 
-    scope :submitted, as: :submitted, controller: :submitted_applications do
+    scope :completed, as: :completed, controller: :completed_applications do
       get :index, on: :collection
       get :show, on: :member
     end
