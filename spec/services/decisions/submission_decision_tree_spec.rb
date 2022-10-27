@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::SubmissionDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, id: '123456789') }
 
   before do
     allow(
@@ -42,7 +42,7 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     end
 
     context 'has correct next step' do
-      it { is_expected.to have_destination(:confirmation, :show, id: crime_application) }
+      it { is_expected.to have_destination(:confirmation, :show, id: crime_application, reference: 'LAA-123456') }
     end
   end
 end

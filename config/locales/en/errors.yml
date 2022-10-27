@@ -11,9 +11,7 @@ en:
       lead_text: Your session automatically ends if you don’t use the service for XX minutes.
       more_text: We do this for your security. Any unsaved details will be deleted.
     application_not_found:
-      page_title: Application not found
-      heading: Sorry, this application no longer exists
-      lead_text: If you copied a web address, please check it’s correct.
+      page_title: Page not found
     not_found:
       page_title: Page not found
       heading: Page not found

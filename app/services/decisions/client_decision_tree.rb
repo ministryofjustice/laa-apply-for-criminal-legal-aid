@@ -29,7 +29,7 @@ module Decisions
         show(:partner_exit)
       else
         # Task list
-        show('/crime_applications', action: :edit)
+        edit('/crime_applications')
       end
     end
 
