@@ -20,4 +20,5 @@
   <% end %>
 <% end %>
 
-<%= render partial: 'steps/submission/shared/summary_row', locals: { row: offence_answer } %>
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: offence_answer, editable: editable } %>

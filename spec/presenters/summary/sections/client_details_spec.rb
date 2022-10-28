@@ -20,6 +20,7 @@ describe Summary::Sections::ClientDetails do
       other_names: '',
       date_of_birth: Date.new(1999, 1, 20),
       nino: '123456',
+      passporting_benefit: true,
     )
   end
 
@@ -77,7 +78,7 @@ describe Summary::Sections::ClientDetails do
       expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[5].question).to eq(:passporting)
       expect(answers[5].change_path).to be_nil
-      expect(answers[5].value).to eq(YesNoAnswer::YES)
+      expect(answers[5].value).to be(true)
     end
   end
 end

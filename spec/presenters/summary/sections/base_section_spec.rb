@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe Summary::Sections::BaseSection do
-  subject { described_class.new(crime_application) }
+  subject { described_class.new(crime_application, **arguments) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { CrimeApplication.new(status:) }
+  let(:status) { :in_progress }
+  let(:arguments) { {} }
 
   describe '#to_partial_path' do
     it 'returns the partial path' do
@@ -29,6 +31,46 @@ describe Summary::Sections::BaseSection do
 
       it 'returns true' do
         expect(subject.show?).to be(true)
+      end
+    end
+  end
+
+  describe '#editable?' do
+    context 'for an application `in_progress`' do
+      it 'returns true' do
+        expect(subject.editable?).to be(true)
+      end
+    end
+
+    context 'for an application `in_progress` but editable is overridden' do
+      let(:arguments) { { editable: false } }
+
+      it 'returns false' do
+        expect(subject.editable?).to be(false)
+      end
+    end
+
+    context 'for an application `submitted`' do
+      let(:status) { :submitted }
+
+      it 'returns false' do
+        expect(subject.editable?).to be(false)
+      end
+    end
+  end
+
+  describe '#headless?' do
+    context 'default value' do
+      it 'returns false' do
+        expect(subject.headless?).to be(false)
+      end
+    end
+
+    context 'when configured to be headless' do
+      let(:arguments) { { headless: true } }
+
+      it 'returns true' do
+        expect(subject.editable?).to be(true)
       end
     end
   end

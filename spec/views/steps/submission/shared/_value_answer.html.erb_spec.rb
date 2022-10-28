@@ -1,21 +1,18 @@
 require 'rails_helper'
 
 describe 'Rendering a summary row of type `ValueAnswer`' do
-  let(:crime_application) { CrimeApplication.new(status:) }
-
   let(:answer) do
     Summary::Components::ValueAnswer.new(
-      :passporting, :yes, change_path:
+      :case_type, CaseType::SUMMARY_ONLY, change_path:
     )
   end
 
   before do
-    allow(view).to receive(:current_crime_application).and_return(crime_application)
-    render answer
+    render answer, editable:
   end
 
-  context 'for an `in_progress` application' do
-    let(:status) { ApplicationStatus::IN_PROGRESS.to_s }
+  context 'for editable rows' do
+    let(:editable) { true }
 
     context 'with change link' do
       let(:change_path) { '/edit' }
@@ -24,9 +21,9 @@ describe 'Rendering a summary row of type `ValueAnswer`' do
         assert_select 'div.govuk-summary-list__row--no-actions', 0
 
         assert_select 'div.govuk-summary-list__row', 1 do
-          assert_select 'dt.govuk-summary-list__key', text: 'Passporting benefit'
-          assert_select 'dd.govuk-summary-list__value', text: 'Yes'
-          assert_select 'dd.govuk-summary-list__actions a', text: 'Change Passporting benefit'
+          assert_select 'dt.govuk-summary-list__key', text: 'Case type'
+          assert_select 'dd.govuk-summary-list__value', text: 'Summary only'
+          assert_select 'dd.govuk-summary-list__actions a', text: 'Change Case type'
         end
       end
     end
@@ -36,24 +33,24 @@ describe 'Rendering a summary row of type `ValueAnswer`' do
 
       it 'renders the expected row' do
         assert_select 'div.govuk-summary-list__row--no-actions', 1 do
-          assert_select 'dt.govuk-summary-list__key', text: 'Passporting benefit'
-          assert_select 'dd.govuk-summary-list__value', text: 'Yes'
+          assert_select 'dt.govuk-summary-list__key', text: 'Case type'
+          assert_select 'dd.govuk-summary-list__value', text: 'Summary only'
           assert_select 'dd.govuk-summary-list__actions', 0
         end
       end
     end
   end
 
-  context 'for a `submitted` application' do
-    let(:status) { ApplicationStatus::SUBMITTED.to_s }
+  context 'for non-editable rows' do
+    let(:editable) { false }
 
     context 'with change link' do
       let(:change_path) { '/edit' }
 
       it 'renders the expected row' do
         assert_select 'div.govuk-summary-list__row--no-actions', 1 do
-          assert_select 'dt.govuk-summary-list__key', text: 'Passporting benefit'
-          assert_select 'dd.govuk-summary-list__value', text: 'Yes'
+          assert_select 'dt.govuk-summary-list__key', text: 'Case type'
+          assert_select 'dd.govuk-summary-list__value', text: 'Summary only'
           assert_select 'dd.govuk-summary-list__actions', 0
         end
       end
@@ -64,8 +61,8 @@ describe 'Rendering a summary row of type `ValueAnswer`' do
 
       it 'renders the expected row' do
         assert_select 'div.govuk-summary-list__row--no-actions', 1 do
-          assert_select 'dt.govuk-summary-list__key', text: 'Passporting benefit'
-          assert_select 'dd.govuk-summary-list__value', text: 'Yes'
+          assert_select 'dt.govuk-summary-list__key', text: 'Case type'
+          assert_select 'dd.govuk-summary-list__value', text: 'Summary only'
           assert_select 'dd.govuk-summary-list__actions', 0
         end
       end
