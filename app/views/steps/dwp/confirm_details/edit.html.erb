@@ -2,58 +2,13 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-   <div class="govuk-grid-column-two-thirds">
-      <%= govuk_error_summary(@form_object) %>
-   </div>
-</div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-  </div>
-</div>
-
-<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t '.first_name' %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @form_object.applicant.first_name %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t '.last_name' %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @form_object.applicant.last_name %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t '.dob' %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= l(@form_object.applicant.date_of_birth) %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t '.nino' %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @form_object.applicant.nino %>
-        </dd>
-      </div>
-    </dl>
-  </div>
-</div>
+    <%= govuk_error_summary(@form_object) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
+
+    <%= render @client_details %>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :confirm_details, @form_object.choices, :value,
                                            inline: false %>

@@ -37,9 +37,8 @@ module Summary
             change_path: edit_steps_client_has_nino_path
           ),
 
-          # hardcoded for MVP, as we do screening
           Components::ValueAnswer.new(
-            :passporting, YesNoAnswer::YES
+            :passporting, applicant.passporting_benefit
           ),
         ].select(&:show?)
       end

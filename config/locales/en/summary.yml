@@ -33,7 +33,8 @@ en:
       passporting:
         question: Passporting benefit
         answers:
-          <<: *YESNO
+          'true': 'Yes'
+          'false': 'No'
       # END client details section
 
       # BEGIN contact details section

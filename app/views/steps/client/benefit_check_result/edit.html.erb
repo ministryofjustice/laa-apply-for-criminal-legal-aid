@@ -2,9 +2,7 @@
 <% step_header %>
 
 <div class="govuk-grid-row app-inverted--card app-inverted-text">
-  <div class="govuk-grid-column app-inverted-text">
-
-    <%= govuk_error_summary(@form_object) %>
+  <div class="govuk-grid-column-full">
     <%= step_form @form_object do |f| %>
       <h1 class="govuk-heading-l app-inverted-text"><%= t '.heading' %></h1>
 
