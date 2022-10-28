@@ -1,7 +1,8 @@
 class ApplicationStatus < ValueObject
   VALUES = [
     IN_PROGRESS = new(:in_progress),
-    SUBMITTED   = new(:submitted)
+    SUBMITTED   = new(:submitted),
+    RETURNED    = new(:returned),
   ].freeze
 
   def self.enum_values

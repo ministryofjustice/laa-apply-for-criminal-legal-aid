@@ -34,6 +34,6 @@ class CompletedApplicationsController < DashboardController
   # not purging applications on submission yet.
   #
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.submitted.find_by(id: params[:id])
+    @current_crime_application ||= CrimeApplication.not_in_progress.find_by(id: params[:id])
   end
 end
