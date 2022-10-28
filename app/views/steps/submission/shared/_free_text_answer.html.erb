@@ -11,4 +11,5 @@
   end
 %>
 
-<%= render partial: 'steps/submission/shared/summary_row', locals: { row: free_text_answer } %>
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: free_text_answer, editable: editable } %>

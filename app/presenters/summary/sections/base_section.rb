@@ -5,8 +5,10 @@ module Summary
 
       attr_reader :crime_application
 
-      def initialize(crime_application)
+      def initialize(crime_application, editable: true, headless: false)
         @crime_application = crime_application
+        @editable = editable
+        @headless = headless
       end
 
       # Used by Rails to determine which partial to render.
@@ -18,6 +20,16 @@ module Summary
       # May be overridden in subclasses to hide/show if appropriate
       def show?
         answers.any?
+      end
+
+      # If action links are allowed (i.e. `change` links)
+      def editable?
+        crime_application.in_progress? && @editable
+      end
+
+      # If this section shows the header or not
+      def headless?
+        @headless
       end
 
       # Used by the `Routing` module to build the `change` urls

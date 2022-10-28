@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe 'Rendering a summary row of type `DateAnswer`' do
-  let(:crime_application) { CrimeApplication.new(status: ApplicationStatus::IN_PROGRESS.to_s) }
-
   let(:answer) do
     Summary::Components::DateAnswer.new(
       :date_of_birth, Date.new(2008, 11, 22), change_path: '/edit'
@@ -10,11 +8,10 @@ describe 'Rendering a summary row of type `DateAnswer`' do
   end
 
   before do
-    allow(view).to receive(:current_crime_application).and_return(crime_application)
-    render answer
+    render answer, editable: true
   end
 
-  # No need to test again the application status or the change link,
+  # No need to test again the editable state or the change link,
   # as we tested it in `value_answer` and all these partials behave the same
   # because they render a common partial, where that logic resides.
 
