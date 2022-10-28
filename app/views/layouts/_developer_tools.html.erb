@@ -6,26 +6,33 @@
       </span>
     </summary>
     <div class="govuk-details__text app-util--inline-buttons">
-      <% if current_crime_application %>
-        <h4 class="govuk-heading-s">Current Application ID</h4>
-        <p><%= current_crime_application.id %></p>
-      <% end %>
-
-      <h4 class="govuk-heading-s">Destroy session</h4>
-      <p>Deletes all data entered in this session and lets you start a new application from scratch.</p>
-
-      <%= button_to session_path, method: :delete,
-                    class: 'govuk-button govuk-button--warning',
-                    data: { module: 'govuk-button' } do; 'Destroy session'; end %>
-
-      <h4 class="govuk-heading-s">Quick access</h4>
-      <p>Speed up some common test scenarios</p>
+      <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Current Application ID</h4>
+      <p><%= current_crime_application&.id || 'None' %></p>
 
       <div class="govuk-button-group">
         <%= button_to crime_applications_path, method: :get,
                       class: 'govuk-button',
                       data: { module: 'govuk-button' } do; 'Your applications'; end %>
       </div>
+
+      <% if current_crime_application %>
+        <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Quick actions</h4>
+        <p>Speed up some common application actions</p>
+
+        <div class="govuk-button-group">
+          <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
+                        class: 'govuk-button govuk-!-margin-right-1',
+                        data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
+
+          <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
+                        class: 'govuk-button govuk-!-margin-right-1',
+                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if current_crime_application.submitted? %>
+
+          <%= button_to developer_tools_crime_application_path, method: :delete,
+                        class: 'govuk-button govuk-button--warning',
+                        data: { module: 'govuk-button' } do; 'Destroy'; end %>
+        </div>
+      <% end %>
     </div>
   </details>
 <% end %>

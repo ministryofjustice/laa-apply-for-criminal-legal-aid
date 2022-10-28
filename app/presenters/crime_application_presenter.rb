@@ -4,6 +4,7 @@ class CrimeApplicationPresenter < BasePresenter
   STATUSES = {
     'in_progress' => 'govuk-tag--blue',
     'submitted'   => 'govuk-tag--green',
+    'returned'    => 'govuk-tag--yellow',
   }.freeze
 
   delegate :first_name, :last_name, :date_of_birth, to: :applicant
