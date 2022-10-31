@@ -2,6 +2,30 @@
 
 <ul class="govuk-footer__inline-list">
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Help', 'https://www.gov.uk/help', class: 'govuk-footer__link' %>
+    <%# Destination needs validating %>
+
+    <%= link_to 'Cookies', 'https://www.gov.uk/help/cookies', class: 'govuk-footer__link' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
+    <%= link_to 'Contact', about_contact_path, class: 'govuk-footer__link' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
+    <%= link_to 'Feedback', about_feedback_path, class: 'govuk-footer__link' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
+    <%= link_to 'Privacy policy', about_privacy_path, class: 'govuk-footer__link' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
+    <%= link_to 'Accessibility statement', about_accessibility_path, class: 'govuk-footer__link' %>
+  </li>
+
+  <li class="govuk-footer__inline-list-item">
+    <%# Destination needs validating %>
+
+    <%= link_to 'Terms and conditions', 'https://www.gov.uk/government/publications/laa-online-portal-help-and-information', class: 'govuk-footer__link' %>
   </li>
 </ul>
