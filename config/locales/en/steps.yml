@@ -41,10 +41,6 @@ en:
         edit:
           heading: Check your client’s details
           page_title: Confirm your client’s details
-          first_name: First name
-          last_name: Last name
-          dob: Date of birth
-          nino: National Insurance number
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application

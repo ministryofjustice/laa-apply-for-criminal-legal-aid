@@ -1,6 +1,8 @@
 module Steps
   module Dwp
     class ConfirmDetailsController < Steps::DwpStepController
+      before_action :set_presenter
+
       def edit
         @form_object = ConfirmDetailsForm.new(
           crime_application: current_crime_application
@@ -9,6 +11,14 @@ module Steps
 
       def update
         update_and_advance(ConfirmDetailsForm, as: :confirm_details)
+      end
+
+      private
+
+      def set_presenter
+        @client_details = Summary::Sections::ClientDetails.new(
+          current_crime_application, editable: false, headless: true
+        )
       end
     end
   end

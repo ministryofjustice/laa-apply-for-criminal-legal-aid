@@ -1,5 +1,5 @@
 <%
-  show_actions = current_crime_application.in_progress? && row.change_link?
+  show_actions = editable && row.change_link?
 
   div_classes = ['govuk-summary-list__row']
   div_classes << 'govuk-summary-list__row--no-actions' unless show_actions

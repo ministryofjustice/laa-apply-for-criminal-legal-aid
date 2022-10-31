@@ -8,4 +8,5 @@
   end
 %>
 
-<%= render partial: 'steps/submission/shared/summary_row', locals: { row: date_answer } %>
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: date_answer, editable: editable } %>
