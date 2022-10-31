@@ -48,7 +48,13 @@
     </div>
 
     <div class="govuk-button-group app-no-print">
-      <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+      <% if @crime_application.returned? %>
+        <%= button_to amend_completed_crime_application_path, method: :put,
+                      class: 'govuk-button app-button--blue',
+                      data: { module: 'govuk-button' } do; t('.amend_application'); end %>
+      <% else %>
+        <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+      <% end %>
     </div>
 
     <%= render @presenter.sections %>
