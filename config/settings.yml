@@ -3,3 +3,9 @@ feature_flags:
     local: true
     staging: true
     production: false
+
+# NOTE: consider if the setting you are adding here
+# should belong in the k8s `config_map`, which is
+# usually the case if it varies per environment.
+settings:
+  session_timeout_minutes: 60 # not used yet, just an example

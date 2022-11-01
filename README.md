@@ -91,6 +91,19 @@ FeatureFlags.your_new_feature.disabled?
 ```
 
 
+## Settings
+
+Similar to feature flags, the application can have settings. The same file `config/settings.yml` is used to define 
+settings, and these are not environment-aware. If your setting is supposed to change depending on the 
+environment (staging / production for example) then it probably belongs in the kubernetes `config_map` instead.
+
+To read a setting, use:
+
+```ruby
+Settings.setting_name
+```
+
+
 ## Kubernetes deployment
 
 ### To provision infrastructure
