@@ -144,6 +144,10 @@ RSpec.describe 'Dashboard' do
 
       assert_select 'h1', 'Your applications'
 
+      assert_select 'a.moj-sub-navigation__link', text: 'In progress (1)', 'aria-current': 'page'
+      assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
+      assert_select 'a.moj-sub-navigation__link', text: 'Returned'
+
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
@@ -181,6 +185,10 @@ RSpec.describe 'Dashboard' do
 
       assert_select 'h1', 'Your applications'
 
+      assert_select 'a.moj-sub-navigation__link', text: 'In progress'
+      assert_select 'a.moj-sub-navigation__link', text: 'Submitted (1)', 'aria-current': 'page'
+      assert_select 'a.moj-sub-navigation__link', text: 'Returned'
+
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
@@ -216,6 +224,10 @@ RSpec.describe 'Dashboard' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Your applications'
+
+      assert_select 'a.moj-sub-navigation__link', text: 'In progress'
+      assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
+      assert_select 'a.moj-sub-navigation__link', text: 'Returned (1)', 'aria-current': 'page'
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do

@@ -21,7 +21,11 @@ class CompletedApplicationsController < DashboardController
                         .merge(CrimeApplication.order(created_at: :desc))
                     end
 
-    @in_progress_applications_count = CrimeApplication.in_progress.count
+    @in_progress_applications_count = CrimeApplication.in_progress
+                                                      .joins(:people)
+                                                      .includes(:applicant)
+                                                      .merge(Applicant.with_name)
+                                                      .count
     @submitted_applications_count = CrimeApplication.submitted.count
     @returned_applications_count = CrimeApplication.returned.count
   end
