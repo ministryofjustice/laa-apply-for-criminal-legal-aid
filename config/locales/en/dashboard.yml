@@ -16,16 +16,6 @@ en:
         in_progress: In progress
         submitted: Submitted
         returned: Returned
-      sub_navigation:
-        in_progress: 
-          zero: In progress
-          one: In progress (1)
-          other: In progress (%{count})
-        submitted: Submitted
-        returned: 
-          zero: Returned
-          one: Returned (1)
-          other: Returned %{count}
     edit:
       page_title: Application task list
       heading: Make a new application
@@ -64,16 +54,6 @@ en:
       status:
         in_progress: In progress
         submitted: Submitted
-      sub_navigation:
-        in_progress:
-          zero: In progress
-          one: In progress (1)
-          other: In progress (%{count})
-        submitted: Submitted
-        returned:
-          zero: Returned
-          one: Returned (1)
-          other: Returned %{count}
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
@@ -97,4 +77,4 @@ en:
         returned:
           zero: Returned
           one: Returned (1)
-          other: Returned %{count}
+          other: Returned (%{count})
