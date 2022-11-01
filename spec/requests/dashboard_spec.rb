@@ -156,6 +156,78 @@ RSpec.describe 'Dashboard' do
     end
   end
 
+  describe 'list of submitted applications' do
+    before :all do
+      # sets up a few test records
+      app1 = CrimeApplication.create(status: 'submitted')
+      app2 = CrimeApplication.create
+      app3 = CrimeApplication.create
+
+      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
+      Applicant.create(crime_application: app2, first_name: '', last_name: '')
+      Applicant.create(crime_application: app3)
+
+      # page actually under test
+      get completed_crime_applications_path
+    end
+
+    after :all do
+      # do not leave left overs in the test database
+      CrimeApplication.destroy_all
+    end
+
+    it 'contains only applications having the applicant name entered' do
+      expect(response).to have_http_status(:success)
+
+      assert_select 'h1', 'Your applications'
+
+      assert_select 'tbody.govuk-table__body' do
+        assert_select 'tr.govuk-table__row', 1 do
+          assert_select 'a', count: 1, text: 'John Doe'
+          assert_select 'strong.govuk-tag', count: 1, text: 'Submitted'
+        end
+      end
+
+      expect(response.body).not_to include('Jane Doe')
+    end
+  end
+
+  describe 'list of returned applications' do
+    before :all do
+      # sets up a few test records
+      app1 = CrimeApplication.create(status: 'returned')
+      app2 = CrimeApplication.create
+      app3 = CrimeApplication.create
+
+      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
+      Applicant.create(crime_application: app2, first_name: '', last_name: '')
+      Applicant.create(crime_application: app3)
+
+      # page actually under test
+      get completed_crime_applications_path(q: 'returned')
+    end
+
+    after :all do
+      # do not leave left overs in the test database
+      CrimeApplication.destroy_all
+    end
+
+    it 'contains only applications having the applicant name entered' do
+      expect(response).to have_http_status(:success)
+
+      assert_select 'h1', 'Your applications'
+
+      assert_select 'tbody.govuk-table__body' do
+        assert_select 'tr.govuk-table__row', 1 do
+          assert_select 'a', count: 1, text: 'John Doe'
+          assert_select 'strong.govuk-tag', count: 1, text: 'Returned'
+        end
+      end
+
+      expect(response.body).not_to include('Jane Doe')
+    end
+  end
+
   describe 'deleting applications' do
     before :all do
       # sets up a few test records

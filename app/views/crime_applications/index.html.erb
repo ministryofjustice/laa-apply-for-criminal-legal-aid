@@ -12,6 +12,34 @@
   </div>
 </div>
 
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <% if @applications.size.zero? %>
+        <%= link_to(t('.sub_navigation.link_1', count: nil), crime_applications_path, class: 'moj-sub-navigation__link', 'aria-current': 'page') %>
+      <% else %>
+        <%= link_to(t('.sub_navigation.link_1', count: "(#{@applications.count})"), crime_applications_path, class: 'moj-sub-navigation__link', 'aria-current': 'page') %>
+      <% end %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <% if @submitted_applications_count.zero? %>
+        <%= link_to(t('.sub_navigation.link_2', count: nil), completed_crime_applications_path, class: 'moj-sub-navigation__link') %>
+      <% else %>
+        <%= link_to(t('.sub_navigation.link_2', count: "(#{@submitted_applications_count})"), completed_crime_applications_path, class: 'moj-sub-navigation__link') %>
+      <% end %>
+    </li>
+
+    <li class="moj-sub-navigation__item">
+      <% if @returned_applications_count.zero? %>
+          <%= link_to(t('.sub_navigation.link_3', count: nil), completed_crime_applications_path(q: 'returned'), class: 'moj-sub-navigation__link') %>
+      <% else %>
+        <%= link_to(t('.sub_navigation.link_3', count: "(#{@returned_applications_count})"), completed_crime_applications_path(q: 'returned'), class: 'moj-sub-navigation__link') %>
+      <% end %>
+    </li>
+  </ul>
+</nav>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <table class="govuk-table app-dashboard-table">

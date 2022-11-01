@@ -1,14 +1,18 @@
 class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
-                :present_crime_application, except: [:index, :create]
+                :present_crime_application, only: [:show, :edit, :destroy, :confirm_destroy]
 
   def index
     # TODO: scope will change as we know more
     @applications = CrimeApplication
+                    .in_progress
                     .joins(:people)
                     .includes(:applicant)
                     .merge(Applicant.with_name)
                     .merge(CrimeApplication.order(created_at: :desc))
+
+    @submitted_applications_count = CrimeApplication.submitted.count
+    @returned_applications_count = CrimeApplication.returned.count
   end
 
   def create
