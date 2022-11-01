@@ -6,7 +6,7 @@ module Decisions
       when :has_partner
         after_has_partner
       when :details
-        edit(:has_nino)
+        after_details
       when :has_nino
         after_has_nino
       when :benefit_check_result
@@ -31,6 +31,14 @@ module Decisions
         # Task list
         edit('/crime_applications')
       end
+    end
+
+    def after_details
+      if FeatureFlags.u18_ioj_passport.enabled? && form_object.crime_application.case&.ioj.present?
+        IojPassporter.new(form_object.crime_application.applicant, form_object.crime_application.case).call
+      end
+
+      edit(:has_nino)
     end
 
     def after_has_nino

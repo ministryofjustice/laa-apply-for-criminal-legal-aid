@@ -7,6 +7,8 @@ class IojPassporter
   def call
     if applicant_age(@applicant.date_of_birth) < 18
       @case.update(ioj: Ioj.new({ types: ['passported'] }))
+    elsif @case&.ioj&.types&.include?('passported')
+      @case.update(ioj: Ioj.new({}))
     else
       false
     end

@@ -10,6 +10,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
   let(:applicant_dob) { Date.new(1990, 1, 1) }
+  let(:ioj_double) { instance_double(Ioj, types: ['reputation']) }
 
   before do
     allow(
@@ -25,6 +26,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     allow(crime_application).to receive(:applicant).and_return(applicant_double)
     allow(applicant_double).to receive(:date_of_birth).and_return(applicant_dob)
     allow(kase).to receive(:update).and_return(true)
+    allow(kase).to receive(:ioj).and_return(ioj_double)
   end
 
   it_behaves_like 'a decision tree'
@@ -227,6 +229,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `add_offence_date`' do
     context 'has correct next step' do
       let(:step_name) { :add_offence_date }
@@ -237,6 +240,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `delete_offence_date`' do
     context 'has correct next step' do
