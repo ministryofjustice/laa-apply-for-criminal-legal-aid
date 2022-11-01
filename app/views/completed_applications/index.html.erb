@@ -75,7 +75,7 @@
         <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">
-              <%= link_to app.applicant_name, edit_crime_application_path(app),
+              <%= link_to app.applicant_name, completed_crime_application_path(app),
                           class: 'govuk-link--no-visited-state' %>
             </th>
             <td class="govuk-table__cell">
