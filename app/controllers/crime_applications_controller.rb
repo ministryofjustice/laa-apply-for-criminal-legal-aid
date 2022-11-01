@@ -1,6 +1,6 @@
 class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
-                :present_crime_application, only: [:show, :edit, :destroy, :confirm_destroy]
+                :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
 
   def index
     # TODO: scope will change as we know more
