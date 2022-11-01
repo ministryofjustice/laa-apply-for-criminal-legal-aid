@@ -2,24 +2,33 @@ class CompletedApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
 
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # TODO: Applications will change when we have the document store
+  # working so then we can use a nicer query that won't require
+  # disabling one of the cops.
   def index
-    # TODO: to be implemented.
-    #
-    # My suggestion is we use this action to render the `submitted`
-    # and `returned` listings. The default being `submitted` (we
-    # scope the collection `CrimeApplication.submitted`), and optional
-    # if a "status" query param is provided, we can filter by
-    # `submitted` or `returned` to render one or the other list.
-    #
-    # Example of routes:
-    # - /completed/applications (renders `submitted` status tab)
-    # - /completed/applications?status=submitted (same as above)
-    # - /completed/applications?status=returned (renders `returned` tab)
-    #
-    # We don't have yet the `returned` status, and all this is really
-    # a bit pointless as this controller will ONLY talk to the
-    # document store through an API, but we don't have any of that yet.
+    @applications = if params[:q] == 'returned'
+                      CrimeApplication
+                        .returned
+                        .joins(:people)
+                        .includes(:applicant)
+                        .merge(CrimeApplication.order(submitted_at: :desc))
+                    else
+                      CrimeApplication
+                        .submitted
+                        .joins(:people)
+                        .includes(:applicant)
+                        .merge(CrimeApplication.order(submitted_at: :desc))
+                    end
+
+    @in_progress_applications_count = CrimeApplication.in_progress
+                                                      .joins(:people)
+                                                      .includes(:applicant)
+                                                      .merge(Applicant.with_name)
+                                                      .count
+    @returned_applications_count = CrimeApplication.returned.count
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def show
     @presenter = Summary::HtmlPresenter.new(

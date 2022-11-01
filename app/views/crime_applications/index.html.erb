@@ -12,6 +12,8 @@
   </div>
 </div>
 
+<%= render partial: 'shared/subnavigation', locals: { in_progress_count: @applications.count, returned_applications_count: @returned_applications_count } %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <table class="govuk-table app-dashboard-table">
