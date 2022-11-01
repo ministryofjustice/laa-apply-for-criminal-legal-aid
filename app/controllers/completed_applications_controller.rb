@@ -12,13 +12,13 @@ class CompletedApplicationsController < DashboardController
                         .returned
                         .joins(:people)
                         .includes(:applicant)
-                        .merge(CrimeApplication.order(created_at: :desc))
+                        .merge(CrimeApplication.order(submitted_at: :desc))
                     else
                       CrimeApplication
                         .submitted
                         .joins(:people)
                         .includes(:applicant)
-                        .merge(CrimeApplication.order(created_at: :desc))
+                        .merge(CrimeApplication.order(submitted_at: :desc))
                     end
 
     @in_progress_applications_count = CrimeApplication.in_progress
