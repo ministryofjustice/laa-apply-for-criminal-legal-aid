@@ -26,7 +26,9 @@ module Decisions
       when :codefendants_finished
         edit(:hearing_details)
       when :hearing_details
-        edit(:ioj)
+        after_hearing_details
+      when :passport_on_ioj
+        after_passport_on_ioj
       when :ioj
         edit('/steps/submission/review')
       else
@@ -79,6 +81,19 @@ module Decisions
       codefendants.create! if add_blank || codefendants.empty?
 
       edit(:codefendants)
+    end
+
+    def after_hearing_details
+      if FeatureFlags.u18_ioj_passport.enabled? && IojPassporter.new(form_object.crime_application.applicant,
+                                                                     form_object.case).call
+        edit(:passport_on_ioj)
+      else
+        edit(:ioj)
+      end
+    end
+
+    def after_passport_on_ioj
+      edit('/steps/submission/review')
     end
 
     def edit_new_charge

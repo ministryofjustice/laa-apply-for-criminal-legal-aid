@@ -93,6 +93,7 @@ Rails.application.routes.draw do
         edit_step :has_codefendants
         edit_step :codefendants
         edit_step :hearing_details
+        edit_step :passport_on_ioj
         edit_step :ioj
       end
 

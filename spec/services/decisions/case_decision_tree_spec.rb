@@ -8,14 +8,23 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
+  let(:applicant_double) { double('applicant') }
+  let(:applicant_dob) { Date.new(1990, 1, 1) }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
+    allow(
+      form_object
+    ).to receive(:case).and_return(kase)
+
     allow(crime_application).to receive(:update).and_return(true)
     allow(crime_application).to receive(:date_stamp).and_return(nil)
+    allow(crime_application).to receive(:applicant).and_return(applicant_double)
+    allow(applicant_double).to receive(:date_of_birth).and_return(applicant_dob)
+    allow(kase).to receive(:update).and_return(true)
   end
 
   it_behaves_like 'a decision tree'
@@ -243,8 +252,23 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :hearing_details }
 
-    context 'has correct next step' do
+    context 'when the applicant is over 18' do
       it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
+    end
+
+    context 'when the applicant is under 18' do
+      let(:applicant_dob) { Time.zone.today }
+
+      it { is_expected.to have_destination(:passport_on_ioj, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `passport_on_ioj`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :passport_on_ioj }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
   end
 
