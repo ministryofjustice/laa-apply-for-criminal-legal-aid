@@ -106,9 +106,16 @@ RSpec.describe CrimeApplicationPresenter do
         expect(subject.status_tag).to eq(tag)
       end
 
-      it 'can output an in submitted tag' do
+      it 'can output a submitted tag' do
         allow(subject).to receive(:status).and_return('submitted')
         tag = '<strong class="govuk-tag govuk-tag--green">Submitted</strong>'
+
+        expect(subject.status_tag).to eq(tag)
+      end
+
+      it 'can output a returned tag' do
+        allow(subject).to receive(:status).and_return('returned')
+        tag = '<strong class="govuk-tag govuk-tag--yellow">Returned</strong>'
 
         expect(subject.status_tag).to eq(tag)
       end

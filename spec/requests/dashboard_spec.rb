@@ -12,7 +12,7 @@ RSpec.describe 'Dashboard' do
     end
   end
 
-  describe 'show an application certificate (once an application is completed)' do
+  describe 'show an application certificate (in `submitted` status)' do
     before :all do
       # sets up a test record
       app = CrimeApplication.create(
@@ -39,6 +39,14 @@ RSpec.describe 'Dashboard' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Application for criminal legal aid certificate'
+    end
+
+    it 'has appropriate CTA buttons' do
+      # There is no update button
+      assert_select 'button.govuk-button', count: 0, text: 'Update application'
+
+      # There are 2 print buttons, one above the summary, another in the bottom
+      assert_select 'a.govuk-button', count: 2, text: 'Print application'
     end
 
     it 'has the application details' do
@@ -73,6 +81,43 @@ RSpec.describe 'Dashboard' do
           assert_select 'dd:nth-of-type(1)', 'Doe'
         end
       end
+    end
+  end
+
+  # NOTE: this is almost identical to `submitted` state, only difference
+  # is there is an `Update application` button instead of a print button.
+  # No need to test everything again.
+  describe 'show an application certificate (in `returned` status)' do
+    before :all do
+      # sets up a test record
+      CrimeApplication.create(
+        status: :returned,
+        date_stamp: Date.new(2022, 12, 25),
+        submitted_at: Date.new(2022, 12, 31),
+      )
+    end
+
+    after :all do
+      CrimeApplication.destroy_all
+    end
+
+    before do
+      app = CrimeApplication.returned.first
+      get completed_crime_application_path(app)
+    end
+
+    it 'renders the certificate page' do
+      expect(response).to have_http_status(:success)
+
+      assert_select 'h1', 'Application for criminal legal aid certificate'
+    end
+
+    it 'has appropriate CTA buttons' do
+      # There is 1 update button
+      assert_select 'button.govuk-button', count: 1, text: 'Update application'
+
+      # There is 1 print button
+      assert_select 'a.govuk-button', count: 1, text: 'Print application'
     end
   end
 

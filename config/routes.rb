@@ -21,10 +21,8 @@ def show_step(name)
 end
 
 Rails.application.routes.draw do
-
   get :health, to: 'healthcheck#show'
   get :ping,   to: 'healthcheck#ping'
-
 
   root 'home#index'
 
@@ -36,13 +34,20 @@ Rails.application.routes.draw do
   end
 
   resource :session, only: [:destroy] do
-    member do
-      post :bypass_to_client_details
+  end
+
+  namespace :developer_tools, constraints: -> (_) { FeatureFlags.developer_tools.enabled? } do
+    resources :crime_applications, only: [:update, :destroy], path: 'applications' do
+      put :bypass_dwp, on: :member
+      put :mark_as_returned, on: :member
     end
   end
 
   namespace :about do
     get :privacy
+    get :contact
+    get :feedback
+    get :accessibility
   end
 
   resources :crime_applications, except: [:show, :new, :update], path: 'applications' do
@@ -51,6 +56,7 @@ Rails.application.routes.draw do
     scope :completed, as: :completed, controller: :completed_applications do
       get :index, on: :collection
       get :show, on: :member
+      put :amend, on: :member
     end
   end
 
@@ -105,6 +111,5 @@ Rails.application.routes.draw do
       not_dev_api_request = !request.url['api/applications']
       Rails.env.production? && not_dev_api_request
     }
-
   # :nocov:
 end

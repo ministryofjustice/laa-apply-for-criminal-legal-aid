@@ -37,6 +37,13 @@ class CompletedApplicationsController < DashboardController
     )
   end
 
+  def amend
+    ApplicationAmendment.new(current_crime_application).call
+
+    # Redirect to check your answers (review) page
+    redirect_to edit_steps_submission_review_path(current_crime_application)
+  end
+
   private
 
   # TODO: this will go to the document store when we have it.
@@ -44,6 +51,6 @@ class CompletedApplicationsController < DashboardController
   # not purging applications on submission yet.
   #
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.submitted.find_by(id: params[:id])
+    @current_crime_application ||= CrimeApplication.not_in_progress.find_by(id: params[:id])
   end
 end

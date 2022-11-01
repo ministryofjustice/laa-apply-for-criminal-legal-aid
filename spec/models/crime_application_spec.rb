@@ -12,7 +12,7 @@ RSpec.describe CrimeApplication, type: :model do
       ).to eq(
         'in_progress' => 'in_progress',
         'submitted' => 'submitted',
-        'returned'  => 'returned'
+        'returned' => 'returned',
       )
     end
   end

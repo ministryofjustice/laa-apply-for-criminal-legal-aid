@@ -49,8 +49,17 @@
   }
 }
 
+$app-blue-button-colour: govuk-colour("blue");
+.app-button--blue {
+  background-color: $app-blue-button-colour;
+  box-shadow: 0 $button-shadow-size 0 govuk-shade($app-blue-button-colour, 60%);
+
+  &:hover {
+    background-color: govuk-shade($app-blue-button-colour, 20%);
+  }
+}
+
 // style accessible autocomplete
 .autocomplete__wrapper * {
   @include govuk-typography-common();
 }
-
