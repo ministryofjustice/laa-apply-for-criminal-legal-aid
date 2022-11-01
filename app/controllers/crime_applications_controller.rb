@@ -11,7 +11,6 @@ class CrimeApplicationsController < DashboardController
                     .merge(Applicant.with_name)
                     .merge(CrimeApplication.order(created_at: :desc))
 
-    @submitted_applications_count = CrimeApplication.submitted.count
     @returned_applications_count = CrimeApplication.returned.count
   end
 

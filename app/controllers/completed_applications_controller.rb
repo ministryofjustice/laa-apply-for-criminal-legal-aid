@@ -26,7 +26,6 @@ class CompletedApplicationsController < DashboardController
                                                       .includes(:applicant)
                                                       .merge(Applicant.with_name)
                                                       .count
-    @submitted_applications_count = CrimeApplication.submitted.count
     @returned_applications_count = CrimeApplication.returned.count
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

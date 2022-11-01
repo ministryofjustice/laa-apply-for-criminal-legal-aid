@@ -17,17 +17,15 @@ en:
         submitted: Submitted
         returned: Returned
       sub_navigation:
-        link_1: In progress %{count}
-        link_2: Submitted %{count}
-        link_3: Returned %{count}
-    show:
-      page_title: Application certificate
-      heading: Application for criminal legal aid certificate
-      laa_reference: "LAA reference:"
-      date_stamp: "Date stamp:"
-      date_submitted: "Date submitted:"
-      print_application: Print application
-      back_to_applications: Back to all applications
+        in_progress: 
+          zero: In progress
+          one: In progress (1)
+          other: In progress (%{count})
+        submitted: Submitted
+        returned: 
+          zero: Returned
+          one: Returned (1)
+          other: Returned %{count}
     edit:
       page_title: Application task list
       heading: Make a new application
@@ -67,9 +65,15 @@ en:
         in_progress: In progress
         submitted: Submitted
       sub_navigation:
-        link_1: In progress %{count}
-        link_2: Submitted %{count}
-        link_3: Returned %{count}
+        in_progress:
+          zero: In progress
+          one: In progress (1)
+          other: In progress (%{count})
+        submitted: Submitted
+        returned:
+          zero: Returned
+          one: Returned (1)
+          other: Returned %{count}
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
@@ -83,3 +87,14 @@ en:
         intro: If you need to withdraw or update this application, contact the criminal applications helpline.
         phone: 'Telephone: 0300 200 2020'
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays).
+  shared:
+    subnavigation:
+        in_progress:
+          zero: In progress
+          one: In progress (1)
+          other: In progress (%{count})
+        submitted: Submitted
+        returned:
+          zero: Returned
+          one: Returned (1)
+          other: Returned %{count}

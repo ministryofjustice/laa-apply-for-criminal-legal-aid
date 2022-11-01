@@ -231,7 +231,7 @@ RSpec.describe 'Dashboard' do
       assert_select 'h1', 'Your applications'
 
       assert_select 'a.moj-sub-navigation__link', text: 'In progress'
-      assert_select 'a.moj-sub-navigation__link', text: 'Submitted (1)', 'aria-current': 'page'
+      assert_select 'a.moj-sub-navigation__link', text: 'Submitted', 'aria-current': 'page'
       assert_select 'a.moj-sub-navigation__link', text: 'Returned'
 
       assert_select 'tbody.govuk-table__body' do
