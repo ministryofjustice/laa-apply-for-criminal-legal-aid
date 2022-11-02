@@ -197,7 +197,6 @@ RSpec.describe 'Dashboard' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
           assert_select 'button.govuk-button', count: 1, text: 'Delete'
-          assert_select 'strong.govuk-tag', count: 1, text: 'In progress'
         end
       end
 
@@ -237,7 +236,6 @@ RSpec.describe 'Dashboard' do
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
-          assert_select 'strong.govuk-tag', count: 1, text: 'Submitted'
         end
       end
 
@@ -277,7 +275,6 @@ RSpec.describe 'Dashboard' do
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
-          assert_select 'strong.govuk-tag', count: 1, text: 'Returned'
         end
       end
 
