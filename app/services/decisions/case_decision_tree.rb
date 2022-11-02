@@ -27,9 +27,7 @@ module Decisions
         edit(:hearing_details)
       when :hearing_details
         after_hearing_details
-      when :passport_on_ioj
-        after_passport_on_ioj
-      when :ioj
+      when :ioj, :passport_on_ioj
         edit('/steps/submission/review')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -90,10 +88,6 @@ module Decisions
       else
         edit(:ioj)
       end
-    end
-
-    def after_passport_on_ioj
-      edit('/steps/submission/review')
     end
 
     def edit_new_charge
