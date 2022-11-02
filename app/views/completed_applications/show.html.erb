@@ -36,18 +36,20 @@
       </div>
     </dl>
 
-    <div class="govuk-inset-text govuk-!-margin-bottom-8">
-      <p class="govuk-body">
-        <%= t('.helpline.intro') %>
-      </p>
-      <p class="govuk-body">
-        <%= t('.helpline.phone') %>
-        <br>
-        <%= t('.helpline.hours') %>
-      </p>
-    </div>
+    <% unless @crime_application.returned? %>
+      <div class="govuk-inset-text">
+        <p class="govuk-body">
+          <%= t('.helpline.intro') %>
+        </p>
+        <p class="govuk-body">
+          <%= t('.helpline.phone') %>
+          <br>
+          <%= t('.helpline.hours') %>
+        </p>
+      </div>
+    <% end %>
 
-    <div class="govuk-button-group app-no-print">
+    <div class="govuk-!-margin-top-8 app-no-print">
       <% if @crime_application.returned? %>
         <%= button_to amend_completed_crime_application_path, method: :put,
                       class: 'govuk-button app-button--blue',
