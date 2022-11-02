@@ -1,6 +1,4 @@
 class CrimeApplicationPresenter < BasePresenter
-  DEFAULT_CLASSES = %w[govuk-tag].freeze
-
   delegate :first_name, :last_name, :date_of_birth, to: :applicant
   delegate :case_type, to: :case, allow_nil: true
 
