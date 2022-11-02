@@ -64,9 +64,9 @@ en:
       print_application: Print application
       back_to_applications: Back to all applications
       helpline:
-        intro: If you need to withdraw or update this application, contact the criminal applications helpline.
+        intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
         phone: 'Telephone: 0300 200 2020'
-        hours: 9am to 5pm, Monday to Friday (excluding bank holidays).
+        hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
   shared:
     subnavigation:
         in_progress:
