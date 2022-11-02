@@ -1,12 +1,6 @@
 class CrimeApplicationPresenter < BasePresenter
   DEFAULT_CLASSES = %w[govuk-tag].freeze
 
-  STATUSES = {
-    'in_progress' => 'govuk-tag--blue',
-    'submitted'   => 'govuk-tag--green',
-    'returned'    => 'govuk-tag--yellow',
-  }.freeze
-
   delegate :first_name, :last_name, :date_of_birth, to: :applicant
   delegate :case_type, to: :case, allow_nil: true
 
@@ -48,17 +42,5 @@ class CrimeApplicationPresenter < BasePresenter
   # properly when there is the means to do so
   def laa_reference
     ['LAA', id[0..5]].join('-')
-  end
-
-  def status_tag
-    tag.strong class: tag_classes do
-      t!(".crime_applications.index.status.#{status}")
-    end
-  end
-
-  private
-
-  def tag_classes
-    DEFAULT_CLASSES | Array(STATUSES.fetch(status))
   end
 end

@@ -99,26 +99,5 @@ RSpec.describe CrimeApplicationPresenter do
     it 'has an LAA an reference stubbed' do
       expect(subject.laa_reference).to eq('LAA-a1234b')
     end
-
-    describe 'status tags' do
-      it 'can output an in progress tag' do
-        tag = '<strong class="govuk-tag govuk-tag--blue">In progress</strong>'
-        expect(subject.status_tag).to eq(tag)
-      end
-
-      it 'can output a submitted tag' do
-        allow(subject).to receive(:status).and_return('submitted')
-        tag = '<strong class="govuk-tag govuk-tag--green">Submitted</strong>'
-
-        expect(subject.status_tag).to eq(tag)
-      end
-
-      it 'can output a returned tag' do
-        allow(subject).to receive(:status).and_return('returned')
-        tag = '<strong class="govuk-tag govuk-tag--yellow">Returned</strong>'
-
-        expect(subject.status_tag).to eq(tag)
-      end
-    end
   end
 end
