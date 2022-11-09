@@ -1,3 +1,4 @@
+# :nocov:
 class UsnSeqHelper
   # More details about USN, the sequence start, etc:
   # https://dsdmoj.atlassian.net/wiki/spaces/CRIMAP/pages/4210524301/USN
@@ -53,7 +54,7 @@ class UsnSeqHelper
     end
 
     def restart_sequence
-      puts "Restarting USN sequence with #{seq_start}..."
+      Rails.logger.info "Restarting USN sequence with #{seq_start}..."
 
       ActiveRecord::Base.connection.execute(
         "ALTER SEQUENCE IF EXISTS public.#{USN_SEQUENCE_NAME} RESTART WITH #{seq_start}"
@@ -63,7 +64,8 @@ class UsnSeqHelper
     private
 
     def seq_start
-      ENV.fetch('USN_SEQ_START', USN_SEQUENCE_START)
+      ENV.fetch('USN_SEQ_START', USN_SEQUENCE_START).to_i
     end
   end
 end
+# :nocov:
