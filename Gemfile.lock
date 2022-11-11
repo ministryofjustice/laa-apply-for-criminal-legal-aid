@@ -15,6 +15,13 @@ GIT
       jbuilder (>= 2.11)
       rails (>= 7.0)
 
+GIT
+  remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
+  revision: dfadddbf6cf01b81eac35dcb4e1286bad03d3569
+  specs:
+    laa-criminal-applications-datastore-api-client (0.0.1)
+      faraday (~> 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -364,6 +371,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder (~> 3.1.0)
   hmcts_common_platform!
   importmap-rails
+  laa-criminal-applications-datastore-api-client!
   laa_crime_apply_dev_api!
   pg (~> 1.4)
   pry

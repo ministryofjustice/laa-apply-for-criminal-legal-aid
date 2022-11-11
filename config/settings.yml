@@ -7,6 +7,10 @@ feature_flags:
     local: true
     staging: false
     production: false
+  datastore_submission:
+    local: false # if `true`, ensure the datastore service is running locally
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
