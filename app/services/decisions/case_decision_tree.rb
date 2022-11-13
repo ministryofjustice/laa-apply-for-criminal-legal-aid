@@ -27,7 +27,7 @@ module Decisions
         edit(:hearing_details)
       when :hearing_details
         after_hearing_details
-      when :ioj, :passport_on_ioj
+      when :ioj, :ioj_passport
         edit('/steps/submission/review')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -82,9 +82,8 @@ module Decisions
     end
 
     def after_hearing_details
-      if FeatureFlags.u18_ioj_passport.enabled? && IojPassporter.new(form_object.crime_application.applicant,
-                                                                     form_object.case).call
-        edit(:passport_on_ioj)
+      if IojPassporter.new(form_object.crime_application.applicant, form_object.case).call
+        edit(:ioj_passport)
       else
         edit(:ioj)
       end

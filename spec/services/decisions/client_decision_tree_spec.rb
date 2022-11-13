@@ -4,15 +4,11 @@ RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
-  let(:kase) { instance_double(Case) }
-  let(:ioj) { nil }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
-    allow(crime_application).to receive(:case).and_return(kase)
-    allow(kase).to receive(:ioj).and_return(ioj)
   end
 
   it_behaves_like 'a decision tree'
@@ -38,36 +34,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    context 'and there was a preexisting ioj' do
-      let(:ioj) { double('ioj') }
-      let(:ioj_passporter) { double('ioj_passporter') }
-      let(:applicant) { instance_double(Applicant, date_of_birth: Date.new(2007, 1, 7)) }
-
-      before do
-        allow(crime_application).to receive(:applicant).and_return(applicant)
-        allow(IojPassporter).to receive(:new).and_return(ioj_passporter)
-        allow(ioj_passporter).to receive(:call)
-      end
-
-      it 'calls ioj passporter and redirects to correct next step' do
-        ioj_passporter.should receive(:call)
-        expect(subject).to have_destination(:has_nino, :edit, id: crime_application)
-      end
-    end
-
-    context 'and there is no ioj set' do
-      let(:ioj_passporter) { double('ioj_passporter') }
-
-      before do
-        allow(IojPassporter).to receive(:new).and_return(ioj_passporter)
-        allow(ioj_passporter).to receive(:call)
-      end
-
-      it 'redirects to correct next step without calling ioj passporter' do
-        ioj_passporter.should_not receive(:call)
-        expect(subject).to have_destination(:has_nino, :edit, id: crime_application)
-      end
-    end
+    it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
   end
 
   context 'when the step is `has_nino`' do

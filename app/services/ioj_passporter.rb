@@ -5,16 +5,21 @@ class IojPassporter
   end
 
   def call
+    under_18_passporting_enabled?
+
     if applicant_age(@applicant.date_of_birth) < 18
-      @case.update(ioj: Ioj.new({ types: ['passported'] }))
-    elsif @case&.ioj&.types&.include?('passported')
-      @case.update(ioj: Ioj.new({}))
+      ioj_passport = @case.ioj_passport << IojPassportType.new('on_age_under18')
+      @case.update(ioj_passport:)
     else
       false
     end
   end
 
   private
+
+  def under_18_passporting_enabled?
+    return false unless FeatureFlags.u18_ioj_passport.enabled?
+  end
 
   # rubocop:disable Metrics/AbcSize
   def applicant_age(dob)

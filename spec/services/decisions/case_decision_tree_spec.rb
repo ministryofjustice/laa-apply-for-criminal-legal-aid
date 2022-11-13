@@ -10,7 +10,6 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
   let(:applicant_dob) { Date.new(1990, 1, 1) }
-  let(:ioj_double) { instance_double(Ioj, types: ['reputation']) }
 
   before do
     allow(
@@ -26,7 +25,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     allow(crime_application).to receive(:applicant).and_return(applicant_double)
     allow(applicant_double).to receive(:date_of_birth).and_return(applicant_dob)
     allow(kase).to receive(:update).and_return(true)
-    allow(kase).to receive(:ioj).and_return(ioj_double)
+    allow(kase).to receive(:ioj_passport).and_return([])
   end
 
   it_behaves_like 'a decision tree'
@@ -229,7 +228,6 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `add_offence_date`' do
     context 'has correct next step' do
       let(:step_name) { :add_offence_date }
@@ -240,7 +238,6 @@ RSpec.describe Decisions::CaseDecisionTree do
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `delete_offence_date`' do
     context 'has correct next step' do
@@ -256,20 +253,20 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :hearing_details }
 
-    context 'when the applicant is over 18' do
+    context 'and the applicant is over 18' do
       it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
     end
 
-    context 'when the applicant is under 18' do
+    context 'and the applicant is under 18' do
       let(:applicant_dob) { Time.zone.today }
 
-      it { is_expected.to have_destination(:passport_on_ioj, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
     end
   end
 
-  context 'when the step is `passport_on_ioj`' do
+  context 'when the step is `ioj_passport`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :passport_on_ioj }
+    let(:step_name) { :ioj_passport }
 
     context 'has correct next step' do
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }

@@ -138,7 +138,7 @@ en:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
-      passport_on_ioj:
+      ioj_passport:
         edit:
           page_title: Passported on IoJ
           heading: Based on the details you provided, you do not need to enter further justification for legal aid
