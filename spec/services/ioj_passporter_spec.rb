@@ -17,7 +17,7 @@ RSpec.describe IojPassporter do
       let(:applicant_dob) { Date.new(1990, 1, 1) }
 
       it 'does not add a passported type to the case ioj' do
-        expect(kase).not_to receive(:update)
+        expect(kase).to receive(:update).with({ ioj_passport: [] })
         subject.call
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe IojPassporter do
       let(:applicant_dob) { Time.zone.today }
 
       it 'adds a passported type to the case ioj' do
-        expect(kase).to receive(:update).with({ ioj_passport: instance_of(Array) })
+        expect(kase).to receive(:update).with({ ioj_passport: ['on_age_under18'] })
         subject.call
       end
     end

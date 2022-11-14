@@ -7,12 +7,13 @@ class IojPassporter
   def call
     return false unless under_18_passporting_enabled?
 
-    if applicant_age(@applicant.date_of_birth) < 18
-      ioj_passport = @case.ioj_passport << IojPassportType.new(IojPassportType::ON_AGE_UNDER18)
-      @case.update(ioj_passport:)
-    else
-      false
-    end
+    ioj_passport = if applicant_age(@applicant.date_of_birth) < 18
+                     @case.ioj_passport | [IojPassportType::ON_AGE_UNDER18.to_s]
+                   else
+                     @case.ioj_passport - [IojPassportType::ON_AGE_UNDER18.to_s]
+                   end
+    @case.update(ioj_passport:)
+    @case.ioj_passport.any?
   end
 
   private
