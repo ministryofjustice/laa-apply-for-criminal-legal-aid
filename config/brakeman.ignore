@@ -1,0 +1,52 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "8046755f7c588acdd693d8bacdedd11071aae2d899d7e43ab061461d60c86ed6",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/usn_seq_helper.rb",
+      "line": 59,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"ALTER SEQUENCE IF EXISTS public.#{\"crime_applications_usn_seq\"} RESTART WITH #{seq_start}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UsnSeqHelper",
+        "method": "restart_sequence"
+      },
+      "user_input": "seq_start",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "f526fe183df1efa4935c92739b663b43bdbc67c977fa1bad7b61bcb6b41f4fd1",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/lib/usn_seq_helper.rb",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"CREATE SEQUENCE IF NOT EXISTS #{\"crime_applications_usn_seq\"} AS integer START WITH #{seq_start}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UsnSeqHelper",
+        "method": "create_sequence"
+      },
+      "user_input": "seq_start",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2022-11-09 15:04:45 +0000",
+  "brakeman_version": "5.3.1"
+}
