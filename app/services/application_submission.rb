@@ -40,9 +40,10 @@ class ApplicationSubmission
   # :nocov:
   def application_payload
     crime_application.as_json(
-      only: [:id, :created_at, :submitted_at, :date_stamp, :status]
+      only: [:id, :usn, :status, :created_at, :submitted_at, :date_stamp]
     ).merge(
-      client_details: crime_application.applicant.as_json
+      client_details: crime_application.applicant.as_json,
+      schema_version: 1.0,
     )
   end
   # :nocov:
