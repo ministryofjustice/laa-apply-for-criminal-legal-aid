@@ -52,8 +52,8 @@ RSpec.describe 'Dashboard' do
     it 'has the application details' do
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
         assert_select 'div.govuk-summary-list__row:nth-of-type(1)' do
-          assert_select 'dt:nth-of-type(1)', 'LAA reference:'
-          assert_select 'dd:nth-of-type(1)', /^LAA-[[:alnum:]]{6}$/
+          assert_select 'dt:nth-of-type(1)', 'Reference number:'
+          assert_select 'dd:nth-of-type(1)', /[[:digit:]]/
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp:'
@@ -150,7 +150,7 @@ RSpec.describe 'Dashboard' do
       # aside details
       assert_select 'div.govuk-grid-column-one-third aside', 1 do
         assert_select 'h3:nth-of-type(1)', 'Reference number'
-        assert_select 'p:nth-of-type(1)', /^LAA-[[:alnum:]]{6}$/
+        assert_select 'p:nth-of-type(1)', /[[:digit:]]/
 
         assert_select 'h3:nth-of-type(2)', 'First name'
         assert_select 'p:nth-of-type(2)', 'Jane'

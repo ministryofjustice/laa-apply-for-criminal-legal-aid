@@ -36,9 +36,9 @@ class CrimeApplicationPresenter < BasePresenter
     CaseType.new(case_type.to_s).date_stampable?
   end
 
-  # this is stubbed for now will implement
-  # properly when there is the means to do so
+  # Keep this wrapper method in case we retract from
+  # using sequence USN to use any other ID/reference
   def laa_reference
-    ['LAA', id[0..5]].join('-')
+    usn
   end
 end

@@ -14,9 +14,8 @@ module Steps
 
       private
 
-      # Strip non alphanumeric chars, as a precaution, leave dashes
       def reference_param
-        params[:reference].gsub(/[^[[:alnum:]]-]/, '')
+        params[:reference].to_i
       end
     end
   end
