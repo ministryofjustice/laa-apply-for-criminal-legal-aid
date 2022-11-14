@@ -28,6 +28,12 @@ RSpec.describe CrimeApplicationPresenter do
     allow(crime_application).to receive(:case).and_return(case_double)
   end
 
+  describe '#to_param' do
+    it 'returns the ID of the application' do
+      expect(subject.to_param).to eq('a1234bcd-5dfb-4180-ae5e-91b0fbef468d')
+    end
+  end
+
   describe '#interim_date_stamp' do
     context 'when a case is date stampable' do
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }

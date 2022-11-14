@@ -2,33 +2,18 @@ class CompletedApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  # TODO: Applications will change when we have the document store
-  # working so then we can use a nicer query that won't require
-  # disabling one of the cops.
   def index
-    @applications = if params[:q] == 'returned'
-                      CrimeApplication
-                        .returned
-                        .joins(:people)
-                        .includes(:applicant)
-                        .merge(CrimeApplication.order(submitted_at: :desc))
-                    else
-                      CrimeApplication
-                        .submitted
-                        .joins(:people)
-                        .includes(:applicant)
-                        .merge(CrimeApplication.order(submitted_at: :desc))
-                    end
+    @applications = applications_from_datastore
 
     @in_progress_applications_count = CrimeApplication.in_progress
                                                       .joins(:people)
                                                       .includes(:applicant)
                                                       .merge(Applicant.with_name)
                                                       .count
+
+    # TODO: counter not yet coming from datastore
     @returned_applications_count = CrimeApplication.returned.count
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def show
     @presenter = Summary::HtmlPresenter.new(
@@ -44,6 +29,30 @@ class CompletedApplicationsController < DashboardController
   end
 
   private
+
+  def applications_from_datastore
+    if FeatureFlags.datastore_submission.enabled?
+      # :nocov:
+      DatastoreApi::Requests::ListApplications.new(
+        status: status_filter
+      ).call
+      # :nocov:
+    else
+      CrimeApplication
+        .where(status: status_filter)
+        .joins(:people)
+        .includes(:applicant)
+        .merge(CrimeApplication.order(submitted_at: :desc))
+    end
+  end
+
+  def status_filter
+    allowed_statuses = [
+      ApplicationStatus::SUBMITTED, ApplicationStatus::RETURNED
+    ].map(&:to_s)
+
+    allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
+  end
 
   # TODO: this will go to the document store when we have it.
   # For now we fake it, and get it from the local DB as we are
