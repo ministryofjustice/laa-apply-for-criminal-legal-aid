@@ -4,7 +4,7 @@ RSpec.describe Steps::Case::IojPassportForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do
-    { crime_application:, ioj_passport: }
+    { crime_application: }
   end
 
   let(:crime_application) do
@@ -12,7 +12,6 @@ RSpec.describe Steps::Case::IojPassportForm do
   end
 
   let(:kase) { Case.new }
-  let(:ioj_passport) { [] }
 
   describe '#save' do
     it_behaves_like 'a has-one-association form',

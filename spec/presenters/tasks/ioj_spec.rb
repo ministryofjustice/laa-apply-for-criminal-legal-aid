@@ -51,7 +51,7 @@ RSpec.describe Tasks::Ioj do
     context 'when we have an Ioj passport record' do
       let(:ioj_passport) { ['foobar'] }
 
-      it { expect(subject.in_progress?).to be(false) }
+      it { expect(subject.in_progress?).to be(true) }
     end
 
     context 'when we do not have an Ioj passport record' do

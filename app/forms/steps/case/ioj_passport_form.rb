@@ -4,8 +4,6 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :case
 
-      attribute :ioj_passport, :value_object, source: IojPassportType
-
       private
 
       def persist!

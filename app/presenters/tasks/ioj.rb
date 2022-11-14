@@ -13,9 +13,8 @@ module Tasks
     end
 
     def in_progress?
-      return false if crime_application.case.ioj_passport.any?
-
-      crime_application.case.ioj.present?
+      crime_application.case.ioj_passport.any? ||
+        crime_application.case.ioj.present?
     end
 
     def completed?

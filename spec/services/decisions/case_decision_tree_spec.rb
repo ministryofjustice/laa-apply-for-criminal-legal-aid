@@ -3,13 +3,12 @@ require 'rails_helper'
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, id: '10') }
+  let(:crime_application) { instance_double(CrimeApplication, id: '10', applicant: applicant_double) }
   let(:kase) { instance_double(Case, codefendants: codefendants_double, charges: charges_double) }
 
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
-  let(:applicant_dob) { Date.new(1990, 1, 1) }
 
   before do
     allow(
@@ -22,10 +21,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     allow(crime_application).to receive(:update).and_return(true)
     allow(crime_application).to receive(:date_stamp).and_return(nil)
-    allow(crime_application).to receive(:applicant).and_return(applicant_double)
-    allow(applicant_double).to receive(:date_of_birth).and_return(applicant_dob)
     allow(kase).to receive(:update).and_return(true)
-    allow(kase).to receive(:ioj_passport).and_return([])
   end
 
   it_behaves_like 'a decision tree'
@@ -254,11 +250,17 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :hearing_details }
 
     context 'and the applicant is over 18' do
+      before do
+        allow_any_instance_of(IojPassporter).to receive(:call).and_return(false)
+      end
+
       it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
     end
 
     context 'and the applicant is under 18' do
-      let(:applicant_dob) { Time.zone.today }
+      before do
+        allow_any_instance_of(IojPassporter).to receive(:call).and_return(true)
+      end
 
       it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
     end
