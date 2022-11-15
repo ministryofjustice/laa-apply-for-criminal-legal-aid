@@ -140,5 +140,13 @@ data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
         'data-ga-category="category" data-ga-label="label" href="/">Continue</a>'
       )
     end
+
+    it 'supports block for content' do
+      expect(
+        helper.link_button(nil, root_path, draggable: true) { 'Drag this' }
+      ).to eq(
+        '<a class="govuk-button" role="button" draggable="true" data-module="govuk-button" href="/">Drag this</a>'
+      )
+    end
   end
 end
