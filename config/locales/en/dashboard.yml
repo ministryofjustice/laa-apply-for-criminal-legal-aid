@@ -57,7 +57,7 @@ en:
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
-      laa_reference: "LAA reference:"
+      laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
       amend_application: Update application

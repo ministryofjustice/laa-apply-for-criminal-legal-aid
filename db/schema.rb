@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_08_112731) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_12_172446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_112731) do
     t.string "has_codefendants"
     t.string "hearing_court_name"
     t.date "hearing_date"
+    t.string "ioj_passport", default: [], array: true
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 

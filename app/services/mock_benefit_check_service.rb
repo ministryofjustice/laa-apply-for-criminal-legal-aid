@@ -5,6 +5,7 @@ class MockBenefitCheckService
     'BLOGGS' => { nino: 'NC123457A', dob: '4-Jan-1990' },
     'WRINKLE' => { nino: 'NC010150A', dob: '01-Jan-1950' },
     'WALKER' => { nino: 'JA293483A', dob: '10-Jan-1980' }, # Used in cucumber tests and specs
+    'POTTER' => { nino: 'NC010155A', dob: '01-Jan-2007' }, # For under 18 passported on IOJ testing
   }.freeze
 
   def self.call(*args)
