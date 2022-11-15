@@ -8,9 +8,11 @@ describe Summary::HtmlPresenter do
   end
 
   let(:kase) { instance_double(Case, ioj:) }
-
   let(:ioj) { instance_double(Ioj) }
 
+  # This test is just a high level, smoke test of the sections.
+  # It is not intended to test conditionality or complex rules,
+  # as that is tested individually in each of the sections specs.
   describe '#sections' do
     before do
       allow_any_instance_of(
@@ -18,42 +20,21 @@ describe Summary::HtmlPresenter do
       ).to receive(:show?).and_return(true)
     end
 
-    context 'when there is an ioj present' do
-      it 'has the right sections in the right order' do
-        expect(
-          subject.sections
-        ).to match_instances_array(
-          [
-            Summary::Sections::ClientDetails,
-            Summary::Sections::ContactDetails,
-            Summary::Sections::CaseDetails,
-            Summary::Sections::Offences,
-            Summary::Sections::Codefendants,
-            Summary::Sections::NextCourtHearing,
-            Summary::Sections::JustificationForLegalAid,
-          ]
-        )
-      end
-    end
-
-    context 'when there is no ioj present' do
-      let(:ioj) { nil }
-
-      it 'has the right sections in the right order' do
-        expect(
-          subject.sections
-        ).to match_instances_array(
-          [
-            Summary::Sections::ClientDetails,
-            Summary::Sections::ContactDetails,
-            Summary::Sections::CaseDetails,
-            Summary::Sections::Offences,
-            Summary::Sections::Codefendants,
-            Summary::Sections::NextCourtHearing,
-            Summary::Sections::PassportJustificationForLegalAid,
-          ]
-        )
-      end
+    it 'has the right sections in the right order' do
+      expect(
+        subject.sections
+      ).to match_instances_array(
+        [
+          Summary::Sections::ClientDetails,
+          Summary::Sections::ContactDetails,
+          Summary::Sections::CaseDetails,
+          Summary::Sections::Offences,
+          Summary::Sections::Codefendants,
+          Summary::Sections::NextCourtHearing,
+          Summary::Sections::JustificationForLegalAid,
+          Summary::Sections::PassportJustificationForLegalAid,
+        ]
+      )
     end
   end
 end

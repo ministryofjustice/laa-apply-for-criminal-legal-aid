@@ -6,18 +6,22 @@ module Summary
       end
 
       def show?
-        kase&.ioj.nil? && kase.present? && super
+        kase.present? && super
       end
 
       def answers
         [
           Components::ValueAnswer.new(
-            :passport, ioj_passport.any?
+            :passport, passport_triggered?
           ),
         ].select(&:show?)
       end
 
       private
+
+      def passport_triggered?
+        kase.ioj.nil? && ioj_passport.any?
+      end
 
       def kase
         @kase ||= crime_application.case
