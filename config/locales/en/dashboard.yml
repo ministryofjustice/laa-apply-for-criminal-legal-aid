@@ -9,7 +9,7 @@ en:
       table_headings:
         applicant_name: Name
         created_at: Start date
-        reference: LAA reference
+        reference: Reference number
         status: Status
         action: Action
       status:
@@ -48,7 +48,7 @@ en:
       table_headings:
         applicant_name: Name
         submitted_at: Submitted
-        reference: LAA reference
+        reference: Reference number
         status: Status
         action: Action
       status:
