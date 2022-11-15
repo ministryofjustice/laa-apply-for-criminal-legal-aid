@@ -4,9 +4,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
-
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :urn, autocomplete: 'off', width: 'one-third', label: { tag: 'h1', size: 'xl' } %>
+      <div class='govuk-form-group'>
+        <h1 class="govuk-label-wrapper">
+          <label for="steps-case-urn-form-urn-field" class="govuk-label govuk-label--xl">
+            <%= t('helpers.label.steps_case_urn_form.urn') %>
+          </label>
+        </h1>
+
+        <p><%= t('.urn_guidance') %></p>
+
+        <div class="govuk-hint" id="steps-case-urn-form-urn-hint"><%= t('helpers.hint.steps_case_urn_form.urn') %></div>
+
+        <%= f.text_field :urn, autocomplete: 'off', class: 'govuk-input govuk-!-width-one-third' %>
+      </div>
 
       <%= f.continue_button %>
     <% end %>
