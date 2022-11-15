@@ -12,4 +12,5 @@ feature_flags:
 # should belong in the k8s `config_map`, which is
 # usually the case if it varies per environment.
 settings:
+  eforms_url: https://portal.legalservices.gov.uk
   session_timeout_minutes: 60 # not used yet, just an example
