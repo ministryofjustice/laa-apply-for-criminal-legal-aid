@@ -138,6 +138,11 @@ en:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+      ioj_passport:
+        edit:
+          page_title: Passported on IoJ
+          heading: Based on the details you provided, you do not need to enter further justification for legal aid
+          info: You might still need to provide details of your client’s finances before legal aid can be granted
       ioj:
         edit:
           page_title: Why should your client get legal aid?

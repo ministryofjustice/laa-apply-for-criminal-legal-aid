@@ -26,8 +26,8 @@ module Decisions
       when :codefendants_finished
         edit(:hearing_details)
       when :hearing_details
-        edit(:ioj)
-      when :ioj
+        after_hearing_details
+      when :ioj, :ioj_passport
         edit('/steps/submission/review')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -79,6 +79,14 @@ module Decisions
       codefendants.create! if add_blank || codefendants.empty?
 
       edit(:codefendants)
+    end
+
+    def after_hearing_details
+      if IojPassporter.new(form_object.crime_application.applicant, form_object.case).call
+        edit(:ioj_passport)
+      else
+        edit(:ioj)
+      end
     end
 
     def edit_new_charge
