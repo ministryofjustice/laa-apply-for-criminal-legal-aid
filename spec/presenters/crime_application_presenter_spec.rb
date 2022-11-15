@@ -7,6 +7,7 @@ RSpec.describe CrimeApplicationPresenter do
     CrimeApplication.new(
       id: 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
       created_at: DateTime.new(2022, 1, 12),
+      usn: 123,
     )
   end
 
@@ -96,8 +97,8 @@ RSpec.describe CrimeApplicationPresenter do
       expect(subject.start_date).to eq('12 Jan 2022')
     end
 
-    it 'has an LAA an reference stubbed' do
-      expect(subject.laa_reference).to eq('LAA-a1234b')
+    it 'has a reference number' do
+      expect(subject.laa_reference).to eq(123)
     end
   end
 end
