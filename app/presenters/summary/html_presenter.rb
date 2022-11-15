@@ -6,6 +6,7 @@ module Summary
       @crime_application = crime_application
     end
 
+    # rubocop:disable Metrics/AbcSize
     def sections
       [
         Sections::ClientDetails.new(crime_application),
@@ -15,7 +16,9 @@ module Summary
         Sections::Codefendants.new(crime_application),
         Sections::NextCourtHearing.new(crime_application),
         Sections::JustificationForLegalAid.new(crime_application),
+        Sections::PassportJustificationForLegalAid.new(crime_application),
       ].select(&:show?)
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
