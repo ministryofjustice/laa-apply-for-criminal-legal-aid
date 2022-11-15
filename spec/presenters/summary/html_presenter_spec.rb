@@ -7,10 +7,9 @@ describe Summary::HtmlPresenter do
     instance_double(CrimeApplication, applicant: double, case: kase)
   end
 
-  let(:kase) { instance_double(Case, ioj:, ioj_passport:) }
+  let(:kase) { instance_double(Case, ioj:) }
 
   let(:ioj) { instance_double(Ioj) }
-  let(:ioj_passport) { nil }
 
   describe '#sections' do
     before do
@@ -37,9 +36,8 @@ describe Summary::HtmlPresenter do
       end
     end
 
-    context 'when there is an ioj_passport and no ioj present' do
+    context 'when there is no ioj present' do
       let(:ioj) { nil }
-      let(:ioj_passport) { ['foo'] }
 
       it 'has the right sections in the right order' do
         expect(
