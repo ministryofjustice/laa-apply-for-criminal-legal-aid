@@ -7,9 +7,10 @@ describe Summary::HtmlPresenter do
     instance_double(CrimeApplication, applicant: double, case: kase)
   end
 
-  let(:kase) { instance_double(Case, ioj:) }
+  let(:kase) { instance_double(Case, ioj:, ioj_passport:) }
 
   let(:ioj) { instance_double(Ioj) }
+  let(:ioj_passport) { ['foo'] }
 
   describe '#sections' do
     before do
@@ -30,6 +31,7 @@ describe Summary::HtmlPresenter do
           Summary::Sections::Codefendants,
           Summary::Sections::NextCourtHearing,
           Summary::Sections::JustificationForLegalAid,
+          Summary::Sections::PassportJustificationForLegalAid,
         ]
       )
     end
