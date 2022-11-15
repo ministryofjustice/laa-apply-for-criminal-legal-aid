@@ -6,7 +6,7 @@ module Summary
       end
 
       def show?
-        kase&.ioj_passport.present? && super
+        kase&.ioj.nil? && kase&.ioj_passport.present? && super
       end
 
       def answers

@@ -10,7 +10,7 @@ describe Summary::HtmlPresenter do
   let(:kase) { instance_double(Case, ioj:, ioj_passport:) }
 
   let(:ioj) { instance_double(Ioj) }
-  let(:ioj_passport) { ['foo'] }
+  let(:ioj_passport) { nil }
 
   describe '#sections' do
     before do
@@ -19,21 +19,43 @@ describe Summary::HtmlPresenter do
       ).to receive(:show?).and_return(true)
     end
 
-    it 'has the right sections in the right order' do
-      expect(
-        subject.sections
-      ).to match_instances_array(
-        [
-          Summary::Sections::ClientDetails,
-          Summary::Sections::ContactDetails,
-          Summary::Sections::CaseDetails,
-          Summary::Sections::Offences,
-          Summary::Sections::Codefendants,
-          Summary::Sections::NextCourtHearing,
-          Summary::Sections::JustificationForLegalAid,
-          Summary::Sections::PassportJustificationForLegalAid,
-        ]
-      )
+    context 'when there is an ioj present' do
+      it 'has the right sections in the right order' do
+        expect(
+          subject.sections
+        ).to match_instances_array(
+          [
+            Summary::Sections::ClientDetails,
+            Summary::Sections::ContactDetails,
+            Summary::Sections::CaseDetails,
+            Summary::Sections::Offences,
+            Summary::Sections::Codefendants,
+            Summary::Sections::NextCourtHearing,
+            Summary::Sections::JustificationForLegalAid,
+          ]
+        )
+      end
+    end
+
+    context 'when there is an ioj_passport and no ioj present' do
+      let(:ioj) { nil }
+      let(:ioj_passport) { ['foo'] }
+
+      it 'has the right sections in the right order' do
+        expect(
+          subject.sections
+        ).to match_instances_array(
+          [
+            Summary::Sections::ClientDetails,
+            Summary::Sections::ContactDetails,
+            Summary::Sections::CaseDetails,
+            Summary::Sections::Offences,
+            Summary::Sections::Codefendants,
+            Summary::Sections::NextCourtHearing,
+            Summary::Sections::PassportJustificationForLegalAid,
+          ]
+        )
+      end
     end
   end
 end

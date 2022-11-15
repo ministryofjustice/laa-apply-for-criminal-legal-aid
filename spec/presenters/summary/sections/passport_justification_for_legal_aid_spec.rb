@@ -14,11 +14,13 @@ describe Summary::Sections::PassportJustificationForLegalAid do
   let(:kase) do
     instance_double(
       Case,
+      ioj:,
       ioj_passport:
     )
   end
 
   let(:ioj_passport) { ['on_age_under18'] }
+  let(:ioj) { nil }
 
   describe '#name' do
     it { expect(subject.name).to eq(:passport_justification_for_legal_aid) }
@@ -26,17 +28,27 @@ describe Summary::Sections::PassportJustificationForLegalAid do
 
   describe '#show?' do
     context 'when there is a case' do
-      context 'when there is no ioj passport' do
-        let(:ioj_passport) { nil }
+      context 'when there is an ioj present' do
+        let(:ioj) { 'foo' }
 
         it 'does not show this section' do
           expect(subject.show?).to be(false)
         end
       end
 
-      context 'when there is an ioj passport' do
-        it 'shows this section' do
-          expect(subject.show?).to be(true)
+      context 'when there is no ioj present' do
+        context 'when there is no ioj passport' do
+          let(:ioj_passport) { nil }
+
+          it 'does not show this section' do
+            expect(subject.show?).to be(false)
+          end
+        end
+
+        context 'when there is an ioj passport' do
+          it 'shows this section' do
+            expect(subject.show?).to be(true)
+          end
         end
       end
     end
