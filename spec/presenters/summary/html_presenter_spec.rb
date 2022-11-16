@@ -8,9 +8,11 @@ describe Summary::HtmlPresenter do
   end
 
   let(:kase) { instance_double(Case, ioj:) }
-
   let(:ioj) { instance_double(Ioj) }
 
+  # This test is just a high level, smoke test of the sections.
+  # It is not intended to test conditionality or complex rules,
+  # as that is tested individually in each of the sections specs.
   describe '#sections' do
     before do
       allow_any_instance_of(
@@ -30,6 +32,7 @@ describe Summary::HtmlPresenter do
           Summary::Sections::Codefendants,
           Summary::Sections::NextCourtHearing,
           Summary::Sections::JustificationForLegalAid,
+          Summary::Sections::PassportJustificationForLegalAid,
         ]
       )
     end

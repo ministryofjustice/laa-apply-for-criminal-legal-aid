@@ -16,6 +16,7 @@ en:
       codefendants: Co-defendants
       next_court_hearing: Next court hearing
       justification_for_legal_aid: Justification for legal aid
+      passport_justification_for_legal_aid: Justification for legal aid
 
     questions:
       # BEGIN client details section
@@ -114,3 +115,10 @@ en:
       other:
         question: Other
       # END justification for legal aid section
+
+      # BEGIN passport justification for legal aid section
+      passport:
+        question: Passported
+        answers: 
+          'true': Details provided do not require further justification for legal aid
+      # END passport justification for legal aid section
