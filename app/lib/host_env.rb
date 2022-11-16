@@ -2,6 +2,7 @@ module HostEnv
   # Update if more environments are needed
   NAMED_ENVIRONMENTS = [
     LOCAL = 'local'.freeze,
+    TEST = 'test'.freeze,
     STAGING = 'staging'.freeze,
     PRODUCTION = 'production'.freeze,
   ].freeze
@@ -10,7 +11,8 @@ module HostEnv
     NAMED_ENVIRONMENTS.each { |name| delegate "#{name}?", to: :inquiry }
 
     def env_name
-      return LOCAL if Rails.env.development? || Rails.env.test?
+      return TEST  if Rails.env.test?
+      return LOCAL if Rails.env.development?
 
       ENV.fetch('ENV_NAME')
     end

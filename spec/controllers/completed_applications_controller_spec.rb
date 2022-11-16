@@ -9,14 +9,6 @@ RSpec.describe CompletedApplicationsController, type: :controller do
       allow(
         ApplicationAmendment
       ).to receive(:new).with(crime_application).and_return(amend_service)
-
-      # While we figure out if this is a sensible approach or not,
-      # we have the datastore submission behind a feature flag, and
-      # we are not investing time on tests for code that will surely
-      # change completely. Stub the feature flag to return `false`.
-      allow(
-        FeatureFlags
-      ).to receive(:datastore_submission).and_return(double(enabled?: false))
     end
 
     it 'triggers the amendment of an application' do

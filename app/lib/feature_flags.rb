@@ -10,17 +10,30 @@ class FeatureFlags
   attr_reader :config, :env_name
 
   class EnabledFeature
+    ENV_DEFAULTS = {
+      HostEnv::LOCAL => true,
+      HostEnv::TEST  => true,
+    }.freeze
+
     def initialize(config, env_name)
       @env_config = config
       @env_name = env_name
     end
 
     def enabled?
-      @env_config.fetch(@env_name, false)
+      @env_config.fetch(
+        @env_name, default_for(@env_name)
+      )
     end
 
     def disabled?
       !enabled?
+    end
+
+    private
+
+    def default_for(env)
+      ENV_DEFAULTS.fetch(env, false)
     end
   end
 
