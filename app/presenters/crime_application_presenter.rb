@@ -2,6 +2,12 @@ class CrimeApplicationPresenter < BasePresenter
   delegate :first_name, :last_name, :date_of_birth, to: :applicant
   delegate :case_type, to: :case, allow_nil: true
 
+  # To build RESTful urls with route helpers, even
+  # for applications coming from the datastore
+  def to_param
+    id
+  end
+
   def start_date
     l(created_at)
   end
