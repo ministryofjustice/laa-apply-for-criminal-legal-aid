@@ -99,10 +99,6 @@ RSpec.describe CrimeApplicationPresenter do
       expect(subject.applicant_dob).to eq('1 Feb 1990')
     end
 
-    it 'can output the subject start date in the correct format' do
-      expect(subject.start_date).to eq('12 Jan 2022')
-    end
-
     it 'has a reference number' do
       expect(subject.laa_reference).to eq(123)
     end

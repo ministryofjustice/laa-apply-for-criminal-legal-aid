@@ -8,10 +8,6 @@ class CrimeApplicationPresenter < BasePresenter
     id
   end
 
-  def start_date
-    l(created_at)
-  end
-
   def applicant_dob
     l(date_of_birth)
   end
