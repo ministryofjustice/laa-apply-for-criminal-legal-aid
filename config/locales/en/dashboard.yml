@@ -69,12 +69,16 @@ en:
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
   shared:
     subnavigation:
-        in_progress:
-          zero: In progress
-          one: In progress (1)
-          other: In progress (%{count})
-        submitted: Submitted
-        returned:
-          zero: Returned
-          one: Returned (1)
-          other: Returned (%{count})
+      in_progress:
+        zero: In progress
+        one: In progress (1)
+        other: In progress (%{count})
+      submitted: Submitted
+      returned:
+        zero: Returned
+        one: Returned (1)
+        other: Returned (%{count})
+    infinite_pagination:
+      start_link: Start
+      next_link: Next
+      page_counter: "%{current_page} of %{total_pages}"
