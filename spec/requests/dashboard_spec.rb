@@ -167,7 +167,7 @@ RSpec.describe 'Dashboard' do
   describe 'list of applications' do
     before :all do
       # sets up a few test records
-      app1 = CrimeApplication.create(status: 'in_progress')
+      app1 = CrimeApplication.create(status: 'in_progress', created_at: Date.new(2022, 10, 15))
       app2 = CrimeApplication.create
       app3 = CrimeApplication.create
 
@@ -196,7 +196,11 @@ RSpec.describe 'Dashboard' do
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
-          assert_select 'button.govuk-button', count: 1, text: 'Delete'
+          assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 Oct 2022'
+          assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
+          assert_select 'td.govuk-table__cell:nth-of-type(3)' do
+            assert_select 'button.govuk-button', count: 1, text: 'Delete'
+          end
         end
       end
 
@@ -207,7 +211,7 @@ RSpec.describe 'Dashboard' do
   describe 'list of submitted applications' do
     before :all do
       # sets up a few test records
-      app1 = CrimeApplication.create(status: 'submitted')
+      app1 = CrimeApplication.create(status: 'submitted', submitted_at: Date.new(2021, 12, 31))
       app2 = CrimeApplication.create
       app3 = CrimeApplication.create
 
@@ -237,6 +241,8 @@ RSpec.describe 'Dashboard' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
         end
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '31 Dec 2021'
+        assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
       end
 
       expect(response.body).not_to include('Jane Doe')
@@ -246,7 +252,7 @@ RSpec.describe 'Dashboard' do
   describe 'list of returned applications' do
     before :all do
       # sets up a few test records
-      app1 = CrimeApplication.create(status: 'returned')
+      app1 = CrimeApplication.create(status: 'returned', submitted_at: Date.new(2021, 12, 31))
       app2 = CrimeApplication.create
       app3 = CrimeApplication.create
 
@@ -276,6 +282,8 @@ RSpec.describe 'Dashboard' do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John Doe'
         end
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '31 Dec 2021'
+        assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
       end
 
       expect(response.body).not_to include('Jane Doe')
