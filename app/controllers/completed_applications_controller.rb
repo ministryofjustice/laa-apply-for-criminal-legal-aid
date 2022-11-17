@@ -30,12 +30,20 @@ class CompletedApplicationsController < DashboardController
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def applications_from_datastore
     if FeatureFlags.datastore_submission.enabled?
       # :nocov:
-      DatastoreApi::Requests::ListApplications.new(
-        status: status_filter
+      result = DatastoreApi::Requests::ListApplications.new(
+        status: status_filter, **pagination_params
       ).call
+
+      @paginator = InfinitePagination.new(
+        pagination: result.pagination,
+        params: params,
+      )
+
+      result
       # :nocov:
     else
       CrimeApplication
@@ -45,6 +53,7 @@ class CompletedApplicationsController < DashboardController
         .merge(CrimeApplication.order(submitted_at: :desc))
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def status_filter
     allowed_statuses = [
@@ -53,6 +62,16 @@ class CompletedApplicationsController < DashboardController
 
     allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
   end
+
+  # :nocov:
+  def pagination_params
+    {
+      limit: params[:limit],
+      sort: params[:sort],
+      page_token: params[:page_token],
+    }
+  end
+  # :nocov:
 
   # TODO: this will go to the document store when we have it.
   # For now we fake it, and get it from the local DB as we are
