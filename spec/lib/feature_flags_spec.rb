@@ -10,11 +10,16 @@ describe FeatureFlags do
       {
         enabled_foobar_feature: {
           local: true,
+          test: true,
           staging: true,
         },
         disabled_foobar_feature: {
           local: false,
+          test: false,
           staging: false,
+        },
+        feature_lacking_some_envs: {
+          production: true,
         }
       }.with_indifferent_access
     )
@@ -22,6 +27,10 @@ describe FeatureFlags do
 
   describe '#enabled?' do
     context 'test environment on local host' do
+      it 'has the expected HostEnv' do
+        expect(described_class.instance.env_name).to eq(HostEnv::TEST)
+      end
+
       it 'is enabled' do
         expect(described_class.enabled_foobar_feature.enabled?).to be true
         expect(described_class.enabled_foobar_feature.disabled?).to be false
@@ -31,11 +40,21 @@ describe FeatureFlags do
         expect(described_class.disabled_foobar_feature.enabled?).to be false
         expect(described_class.disabled_foobar_feature.disabled?).to be true
       end
+
+      it 'defaults to true when test env is not declared' do
+        expect(described_class.feature_lacking_some_envs.enabled?).to be true
+      end
     end
 
     context 'development environment on local host' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('development'))
+        allow(
+          described_class.instance
+        ).to receive(:env_name).and_return(HostEnv::LOCAL)
+      end
+
+      it 'has the expected HostEnv' do
+        expect(described_class.instance.env_name).to eq(HostEnv::LOCAL)
       end
 
       it 'is enabled' do
@@ -44,12 +63,22 @@ describe FeatureFlags do
 
       it 'is disabled' do
         expect(described_class.disabled_foobar_feature.enabled?).to be false
+      end
+
+      it 'defaults to true when local env is not declared' do
+        expect(described_class.feature_lacking_some_envs.enabled?).to be true
       end
     end
 
     context 'production environment on staging server' do
       before do
-        allow(HostEnv).to receive(:env_name).and_return(HostEnv::STAGING)
+        allow(
+          described_class.instance
+        ).to receive(:env_name).and_return(HostEnv::STAGING)
+      end
+
+      it 'has the expected HostEnv' do
+        expect(described_class.instance.env_name).to eq(HostEnv::STAGING)
       end
 
       it 'is enabled' do
@@ -58,6 +87,10 @@ describe FeatureFlags do
 
       it 'is disabled' do
         expect(described_class.disabled_foobar_feature.enabled?).to be false
+      end
+
+      it 'for an env not declared, defaults to false' do
+        expect(described_class.feature_lacking_some_envs.enabled?).to be false
       end
     end
   end

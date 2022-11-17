@@ -12,14 +12,6 @@ RSpec.describe ApplicationSubmission do
 
   before do
     allow(crime_application).to receive(:update!).and_return(true)
-
-    # While we figure out if this is a sensible approach or not,
-    # we have the datastore submission behind a feature flag, and
-    # we are not investing time on tests for code that will surely
-    # change completely. Stub the feature flag to return `false`.
-    allow(
-      FeatureFlags
-    ).to receive(:datastore_submission).and_return(double(enabled?: false))
   end
 
   describe '#call' do

@@ -79,9 +79,13 @@ Set a new feature flag in the `config/settings.yml` under the heading `feature_f
 feature_flags:
   your_new_feature:
     local: true
+    test: false
     staging: true
     production: false
 ```
+
+If not declared, `local` and `test` environments will default to `true` (feature flag enabled).  
+Any other envs, if not explicitly declared, will default to `false` (for instance `staging` or `production`).
 
 To check if a feature is enabled / disabled and run code accordingly, use:
 

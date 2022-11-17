@@ -5,15 +5,16 @@ describe HostEnv do
     context 'local development rails environment' do
       before do
         allow(Rails.env).to receive(:development?).and_return(true)
+        allow(Rails.env).to receive(:test?).and_return(false)
       end
 
-      describe 'HostEnv.staging?' do
+      describe '.staging?' do
         it 'returns false' do
           expect(described_class.staging?).to be false
         end
       end
 
-      describe 'HostEnv.production?' do
+      describe '.production?' do
         it 'returns false' do
           expect(described_class.production?).to be false
         end
@@ -24,10 +25,16 @@ describe HostEnv do
           expect(described_class.local?).to be true
         end
       end
+
+      describe '.test?' do
+        it 'returns false' do
+          expect(described_class.test?).to be false
+        end
+      end
     end
 
     context 'local test rails environment' do
-      describe 'HostEnv.staging?' do
+      describe '.staging?' do
         it 'returns false' do
           expect(described_class.staging?).to be false
         end
@@ -40,8 +47,14 @@ describe HostEnv do
       end
 
       describe '.local?' do
+        it 'returns false' do
+          expect(described_class.local?).to be false
+        end
+      end
+
+      describe '.test?' do
         it 'returns true' do
-          expect(described_class.local?).to be true
+          expect(described_class.test?).to be true
         end
       end
     end
