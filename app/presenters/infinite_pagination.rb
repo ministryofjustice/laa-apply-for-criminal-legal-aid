@@ -46,7 +46,7 @@ class InfinitePagination < BasePresenter
 
   def params
     @unfiltered_params.permit(
-      :q, :p, :limit, :sort, :page_token
+      :v, :q, :p, :limit, :sort, :page_token
     )
   end
 end
