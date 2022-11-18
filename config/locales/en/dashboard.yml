@@ -82,3 +82,7 @@ en:
       start_link: Start
       next_link: Next
       page_counter: "%{current_page} of %{total_pages}"
+    infinite_pagination_v2:
+      previous_link: Previous
+      next_link: Next
+      aria_page: Page %{page}

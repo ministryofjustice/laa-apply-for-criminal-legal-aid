@@ -30,7 +30,7 @@ class CompletedApplicationsController < DashboardController
 
   private
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def applications_from_datastore
     if FeatureFlags.datastore_submission.enabled?
       # :nocov:
@@ -38,10 +38,17 @@ class CompletedApplicationsController < DashboardController
         status: status_filter, **pagination_params
       ).call
 
-      @paginator = InfinitePagination.new(
-        pagination: result.pagination,
-        params: params,
-      )
+      @paginator = if params[:v] == '1'
+                     InfinitePagination.new(
+                       pagination: result.pagination,
+                       params: params,
+                     )
+                   else
+                     InfinitePaginationV2.new(
+                       pagination: result.pagination,
+                       params: params,
+                     )
+                   end
 
       result
       # :nocov:
@@ -53,7 +60,7 @@ class CompletedApplicationsController < DashboardController
         .merge(CrimeApplication.order(submitted_at: :desc))
     end
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   def status_filter
     allowed_statuses = [
