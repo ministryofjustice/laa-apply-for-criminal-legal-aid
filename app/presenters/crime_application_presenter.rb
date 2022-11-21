@@ -1,11 +1,8 @@
 class CrimeApplicationPresenter < BasePresenter
-  delegate :first_name, :last_name, :date_of_birth, to: :applicant
-  delegate :case_type, to: :case, allow_nil: true
-
-  # To build RESTful urls with route helpers, even
-  # for applications coming from the datastore
-  def to_param
-    id
+  def initialize(object)
+    super(
+      Adapters::BaseApplication.build(object)
+    )
   end
 
   def applicant_dob
@@ -36,11 +33,5 @@ class CrimeApplicationPresenter < BasePresenter
 
   def date_stampable?
     CaseType.new(case_type.to_s).date_stampable?
-  end
-
-  # Keep this wrapper method in case we retract from
-  # using sequence USN to use any other ID/reference
-  def laa_reference
-    usn
   end
 end
