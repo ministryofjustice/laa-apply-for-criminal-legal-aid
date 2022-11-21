@@ -49,6 +49,7 @@ module DeveloperTools
         record.update(
           first_name: record.first_name || 'Test',
           last_name: surname,
+          other_names: '',
           date_of_birth: details[:dob],
           has_nino: YesNoAnswer::YES,
           nino: details[:nino],

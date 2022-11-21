@@ -6,9 +6,11 @@ class InfinitePaginationV2 < BasePresenter
   def initialize(pagination:, params:)
     @unfiltered_params = params
 
+    # rubocop:disable Style/OpenStructUse
     super(
-      pagination
+      OpenStruct.new(pagination)
     )
+    # rubocop:enable Style/OpenStructUse
   end
 
   def to_partial_path

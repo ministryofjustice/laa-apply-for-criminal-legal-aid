@@ -12,4 +12,6 @@ class CrimeApplication < ApplicationRecord
 
   enum status: ApplicationStatus.enum_values,
        _default: ApplicationStatus.enum_values[:in_progress]
+
+  alias_attribute :reference, :usn
 end

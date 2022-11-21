@@ -37,13 +37,17 @@ class ApplicationSubmission
   # What we want eventually is a proper adapter to transform
   # the application record into the expected JSON document,
   # conforming to the agreed schema.
+  # https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas
   # :nocov:
   def application_payload
     crime_application.as_json(
-      only: [:id, :usn, :status, :created_at, :submitted_at, :date_stamp]
+      only: [:id, :status, :created_at, :submitted_at, :date_stamp]
     ).merge(
-      client_details: crime_application.applicant.as_json,
-      schema_version: 1.0,
+      client_details: {
+        applicant: crime_application.applicant.as_json
+      },
+      reference: crime_application.usn,
+      schema_version: 0.1,
     )
   end
   # :nocov:
