@@ -6,11 +6,11 @@ class CrimeApplicationPresenter < BasePresenter
   end
 
   def applicant_dob
-    l(date_of_birth)
+    l(applicant.date_of_birth)
   end
 
   def applicant_name
-    "#{first_name} #{last_name}"
+    "#{applicant.first_name} #{applicant.last_name}"
   end
 
   def applicant?
