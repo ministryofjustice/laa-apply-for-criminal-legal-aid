@@ -22,6 +22,14 @@ GIT
     laa-criminal-applications-datastore-api-client (0.0.1)
       faraday (~> 2.6)
 
+GIT
+  remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
+  revision: 52178cea9a43128a08cb8e3756b723bc60e92880
+  specs:
+    laa-criminal-legal-aid-schemas (0.1.0)
+      dry-struct
+      json-schema (~> 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -200,6 +208,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.2)
+    json-schema (3.0.0)
+      addressable (>= 2.8)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -372,13 +382,13 @@ DEPENDENCIES
   dartsass-rails (~> 0.4.0)
   debug
   dotenv-rails
-  dry-struct
   erb_lint
   faraday (~> 2.4)
   govuk_design_system_formbuilder (~> 3.1.0)
   hmcts_common_platform!
   importmap-rails
   laa-criminal-applications-datastore-api-client!
+  laa-criminal-legal-aid-schemas!
   laa_crime_apply_dev_api!
   pg (~> 1.4)
   pry
