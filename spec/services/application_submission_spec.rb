@@ -1,12 +1,33 @@
 require 'rails_helper'
+require 'laa_crime_schemas'
 
 RSpec.describe ApplicationSubmission do
   subject { described_class.new(crime_application) }
 
+  let(:applicant) do
+    instance_double(
+      Applicant,
+      first_name: 'Max',
+      last_name: 'Mustermann',
+      date_of_birth: Date.new(1990, 2, 1),
+      nino: 'AJ123456C',
+    )
+  end
+
+  let(:submitted_at) { nil }
+
+  let(:status) { nil }
+
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      date_stamp:,
+      id: '1',
+      created_at: DateTime.new(2022, 11, 20),
+      submitted_at: submitted_at,
+      status: status,
+      date_stamp: date_stamp,
+      applicant: applicant,
+      usn: 6_000_001,
     )
   end
 
@@ -47,6 +68,20 @@ RSpec.describe ApplicationSubmission do
 
         expect(subject.call).to be(true)
       end
+    end
+  end
+
+  describe '#application_payload' do
+    let(:submitted_at) { DateTime.new(2022, 12, 31) }
+    let(:date_stamp) { DateTime.new(2022, 12, 15) }
+    let(:status) { 'submitted' }
+
+    it 'presents the application data in a valid way for the api submission' do
+      payload = subject.send(:application_payload)
+
+      puts LaaCrimeSchemas::Validator.new(payload, version: 0.1).fully_validate
+
+      expect(LaaCrimeSchemas::Validator.new(payload).valid?).to be true
     end
   end
 end
