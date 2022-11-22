@@ -1,15 +1,12 @@
+require 'laa_crime_schemas'
+
 module Adapters
   class JsonApplication < BaseApplication
-    ApplicantStruct = Struct.new(:first_name, :last_name, keyword_init: true)
+    delegate :applicant, to: :client_details
 
-    def submitted_at
-      DateTime.iso8601(self['submitted_at'])
-    end
-
-    def applicant
-      ApplicantStruct.new(
-        first_name: dig('client_details', 'applicant', 'first_name'),
-        last_name: dig('client_details', 'applicant', 'last_name'),
+    def initialize(payload)
+      super(
+        LaaCrimeSchemas::Structs::CrimeApplication.new(payload)
       )
     end
   end

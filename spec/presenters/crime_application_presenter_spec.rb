@@ -108,28 +108,18 @@ RSpec.describe CrimeApplicationPresenter do
     subject { described_class.new(datastore_application) }
 
     let(:datastore_application) do
-      {
-        'id' => 'a1234bcd-5dfb-4180-ae5e-91b0fbef468d',
-        'reference' => 123,
-        'submitted_at' => '2022-11-21T12:00:28.000+00:00',
-        'client_details' => {
-          'applicant' => {
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-          }
-        }
-      }
+      JSON.parse(file_fixture('applications/application_v0.1.json').read)
     end
 
     describe '#to_param' do
       it 'returns the ID of the application' do
-        expect(subject.to_param).to eq('a1234bcd-5dfb-4180-ae5e-91b0fbef468d')
+        expect(subject.to_param).to eq('696dd4fd-b619-4637-ab42-a5f4565bcf4a')
       end
     end
 
     describe '#applicant_name' do
       it 'returns the full name of the applicant' do
-        expect(subject.applicant_name).to eq('John Doe')
+        expect(subject.applicant_name).to eq('Kit Pound')
       end
     end
 
@@ -141,7 +131,7 @@ RSpec.describe CrimeApplicationPresenter do
 
     describe '#laa_reference' do
       it 'returns the reference number' do
-        expect(subject.laa_reference).to eq(123)
+        expect(subject.laa_reference).to eq(6_000_001)
       end
     end
   end
