@@ -79,8 +79,6 @@ RSpec.describe ApplicationSubmission do
     it 'presents the application data in a valid way for the api submission' do
       payload = subject.send(:application_payload)
 
-      puts LaaCrimeSchemas::Validator.new(payload, version: 0.1).fully_validate
-
       expect(LaaCrimeSchemas::Validator.new(payload).valid?).to be true
     end
   end
