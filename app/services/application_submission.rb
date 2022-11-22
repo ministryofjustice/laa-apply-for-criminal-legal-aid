@@ -33,32 +33,7 @@ class ApplicationSubmission
 
   private
 
-  # Just a quick and dirty example.
-  # What we want eventually is a proper adapter to transform
-  # the application record into the expected JSON document,
-  # conforming to the agreed schema.
-  # https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas
   def application_payload
-    application_details.merge(client_details:).to_json
-  end
-
-  def application_details
-    details = { reference: crime_application.usn, schema_version: 0.1 }
-
-    %i[id status created_at submitted_at date_stamp].each do |attribute|
-      details[attribute] = crime_application.send(attribute)
-    end
-
-    details
-  end
-
-  def client_details
-    details = { applicant: {} }
-
-    %i[first_name last_name date_of_birth nino].each do |attribute|
-      details[:applicant][attribute] = crime_application.applicant.send(attribute)
-    end
-
-    details
+    Adapters::Submission::V0::V1::Application.new(crime_application).call
   end
 end
