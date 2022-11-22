@@ -78,7 +78,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
       context 'when Appeal to crown court' do
         context 'with a previous MAAT ID' do
-          let(:case_type) { 'cc_appeal' }
+          let(:case_type) { 'appeal_to_crown_court' }
           let(:cc_appeal_maat_id) { '123456' }
 
           it 'is valid' do
@@ -98,7 +98,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         end
 
         context 'without a previous MAAT ID' do
-          let(:case_type) { 'cc_appeal' }
+          let(:case_type) { 'appeal_to_crown_court' }
 
           it 'is also valid' do
             expect(form).to be_valid
@@ -114,7 +114,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
 
       context 'when Appeal to crown court with changes in financial circumstances' do
         context 'with details of what has changed' do
-          let(:case_type) { 'cc_appeal_fin_change' }
+          let(:case_type) { 'appeal_to_crown_court_with_changes' }
           let(:cc_appeal_fin_change_maat_id) { '123456' }
           let(:cc_appeal_fin_change_details) { 'These are the details' }
 
@@ -140,7 +140,7 @@ RSpec.describe Steps::Case::CaseTypeForm do
         end
 
         context 'with no details of what has changed' do
-          let(:case_type) { 'cc_appeal_fin_change' }
+          let(:case_type) { 'appeal_to_crown_court_with_changes' }
           let(:cc_appeal_maat_id) { '123456' }
 
           it 'is invalid' do
