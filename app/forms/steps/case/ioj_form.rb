@@ -38,7 +38,7 @@ module Steps
         {
           'loss_of_liberty_justification' => liberty_justification,
           'suspended_sentence_justification' => sentence_justification,
-          'loss_of_livelyhood_justification' => livelyhood_justification,
+          'loss_of_livelihood_justification' => livelihood_justification,
           'reputation_justification' => rep_justification,
           'question_of_law_justification' => law_justification,
           'understanding_justification' => understand_justification,
@@ -57,8 +57,8 @@ module Steps
         types.include?('suspended_sentence') ? suspended_sentence_justification : nil
       end
 
-      def livelyhood_justification
-        types.include?('loss_of_livelyhood') ? loss_of_livelyhood_justification : nil
+      def livelihood_justification
+        types.include?('loss_of_livelihood') ? loss_of_livelihood_justification : nil
       end
 
       def rep_justification

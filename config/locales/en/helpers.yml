@@ -65,7 +65,7 @@ en:
       steps_case_ioj_form:
         loss_of_liberty_justification: *ioj_justification_hint
         suspended_sentence_justification: *ioj_justification_hint
-        loss_of_livelyhood_justification: *ioj_justification_hint
+        loss_of_livelihood_justification: *ioj_justification_hint
         reputation_justification: *ioj_justification_hint
         question_of_law_justification: *ioj_justification_hint
         understanding_justification: *ioj_justification_hint
@@ -134,7 +134,7 @@ en:
       steps_case_ioj_form:
         loss_of_liberty_justification: Loss of liberty justification
         suspended_sentence_justification: Suspended sentence justification
-        loss_of_livelyhood_justification: Loss of livelyhood justification
+        loss_of_livelihood_justification: Loss of livelihood justification
         reputation_justification: Reputation justification
         question_of_law_justification: Question of law justification
         understanding_justification: Understanding justification
@@ -145,7 +145,7 @@ en:
         types_options:
           loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them.
           suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence.
-          loss_of_livelyhood: It is likely that they will lose their livelihood.
+          loss_of_livelihood: It is likely that they will lose their livelihood.
           reputation: It is likely that they will suffer serious damage to their reputation.
           question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).
           understanding: They may not be able to understand the court proceedings or present their own case.

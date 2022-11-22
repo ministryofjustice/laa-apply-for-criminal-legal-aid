@@ -84,7 +84,7 @@ RSpec.describe Steps::Case::IojForm do
           'expert_examination_justification' => nil,
           'interest_of_another_justification' => nil,
           'loss_of_liberty_justification' => nil,
-          'loss_of_livelyhood_justification' => nil,
+          'loss_of_livelihood_justification' => nil,
           'other_justification' => nil,
           'question_of_law_justification' => nil,
           'reputation_justification' => 'A justification',
