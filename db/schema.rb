@@ -81,7 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_12_172446) do
     t.string "types", default: [], array: true
     t.text "loss_of_liberty_justification"
     t.text "suspended_sentence_justification"
-    t.text "loss_of_livelyhood_justification"
+    t.text "loss_of_livelihood_justification"
     t.text "reputation_justification"
     t.text "question_of_law_justification"
     t.text "understanding_justification"
