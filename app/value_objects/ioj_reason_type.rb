@@ -2,7 +2,7 @@ class IojReasonType < ValueObject
   VALUES = [
     LOSS_OF_LIBERTY = new(:loss_of_liberty),
     SUSPENDED_SENTENCE = new(:suspended_sentence),
-    LOSS_OF_LIVELYHOOD = new(:loss_of_livelyhood),
+    LOSS_OF_LIVELIHOOD = new(:loss_of_livelihood),
     REPUTATION = new(:reputation),
     QUESTION_OF_LAW = new(:question_of_law),
     UNDERSTANDING = new(:understanding),

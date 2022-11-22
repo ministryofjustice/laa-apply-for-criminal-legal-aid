@@ -10,7 +10,7 @@ RSpec.describe IojReasonType do
       expect(described_class.values.map(&:to_s)).to eq(%w[
                                                          loss_of_liberty
                                                          suspended_sentence
-                                                         loss_of_livelyhood
+                                                         loss_of_livelihood
                                                          reputation
                                                          question_of_law
                                                          understanding
@@ -27,7 +27,7 @@ RSpec.describe IojReasonType do
       expect(described_class.values.map(&:justification_field_name)).to eq([
                                                                              :loss_of_liberty_justification,
                                                                              :suspended_sentence_justification,
-                                                                             :loss_of_livelyhood_justification,
+                                                                             :loss_of_livelihood_justification,
                                                                              :reputation_justification,
                                                                              :question_of_law_justification,
                                                                              :understanding_justification,
