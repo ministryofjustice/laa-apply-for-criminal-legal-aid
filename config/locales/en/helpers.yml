@@ -112,10 +112,10 @@ en:
           summary_only: Summary only
           either_way: Either way
           indictable: Indictable
-          already_cc_trial: Trial already in crown court
+          already_in_crown_court: Trial already in crown court
           committal: Committal for sentence
-          cc_appeal: Appeal to crown court
-          cc_appeal_fin_change: Appeal to crown court with changes in financial circumstances
+          appeal_to_crown_court: Appeal to crown court
+          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
         cc_appeal_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_maat_id: Previous MAAT ID (optional)
         cc_appeal_fin_change_details: Enter the details of what has changed
