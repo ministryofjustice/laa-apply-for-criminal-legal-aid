@@ -3,18 +3,18 @@ class CaseType < ValueObject
     SUMMARY_ONLY = new(:summary_only),
     EITHER_WAY = new(:either_way),
     INDICTABLE = new(:indictable),
-    ALREADY_CC_TRIAL = new(:already_cc_trial),
+    ALREADY_IN_CROWN_COURT = new(:already_in_crown_court),
     COMMITTAL = new(:committal),
-    CC_APPEAL = new(:cc_appeal),
-    CC_APPEAL_FIN_CHANGE = new(:cc_appeal_fin_change)
+    APPEAL_TO_CROWN_COURT = new(:appeal_to_crown_court),
+    APPEAL_TO_CROWN_COURT_WITH_CHANGES = new(:appeal_to_crown_court_with_changes),
   ].freeze
 
   DATE_STAMPABLE = [
     SUMMARY_ONLY,
     EITHER_WAY,
     COMMITTAL,
-    CC_APPEAL,
-    CC_APPEAL_FIN_CHANGE,
+    APPEAL_TO_CROWN_COURT,
+    APPEAL_TO_CROWN_COURT_WITH_CHANGES,
   ].freeze
 
   def date_stampable?

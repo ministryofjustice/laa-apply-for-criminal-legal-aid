@@ -12,10 +12,10 @@ RSpec.describe CaseType do
           summary_only
           either_way
           indictable
-          already_cc_trial
+          already_in_crown_court
           committal
-          cc_appeal
-          cc_appeal_fin_change
+          appeal_to_crown_court
+          appeal_to_crown_court_with_changes
         ]
       )
     end
@@ -28,8 +28,8 @@ RSpec.describe CaseType do
           summary_only
           either_way
           committal
-          cc_appeal
-          cc_appeal_fin_change
+          appeal_to_crown_court
+          appeal_to_crown_court_with_changes
         ]
       )
     end

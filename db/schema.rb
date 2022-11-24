@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_22_170409) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_23_104634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,9 +36,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_170409) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "case_type"
-    t.string "cc_appeal_maat_id"
-    t.string "cc_appeal_fin_change_maat_id"
-    t.text "cc_appeal_fin_change_details"
+    t.string "appeal_maat_id"
+    t.string "appeal_with_changes_maat_id"
+    t.text "appeal_with_changes_details"
     t.string "has_codefendants"
     t.string "hearing_court_name"
     t.date "hearing_date"

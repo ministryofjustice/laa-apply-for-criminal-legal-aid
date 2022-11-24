@@ -8,17 +8,17 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:case_type, legend: { tag: 'h1', size: 'xl' }) do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
-          <% if choice.value == :cc_appeal %>
+          <% if choice == CaseType::APPEAL_TO_CROWN_COURT %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :cc_appeal_maat_id, width: 'one-third', autocomplete: 'off' %>
+              <%= f.govuk_text_field :appeal_maat_id, width: 'one-third', autocomplete: 'off' %>
             <% end %>
 
-          <% elsif choice.value == :cc_appeal_fin_change %>
+          <% elsif choice == CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :cc_appeal_fin_change_maat_id, width: 'one-third', autocomplete: 'off' %>
-              <%= f.govuk_text_area :cc_appeal_fin_change_details %>
+              <%= f.govuk_text_field :appeal_with_changes_maat_id, width: 'one-third', autocomplete: 'off' %>
+              <%= f.govuk_text_area :appeal_with_changes_details %>
             <% end %>
 
           <% else %>

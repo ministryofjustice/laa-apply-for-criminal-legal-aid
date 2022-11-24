@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'laa_crime_schemas'
 
 RSpec.describe CrimeApplicationPresenter do
   subject { described_class.new(crime_application) }
@@ -108,7 +109,7 @@ RSpec.describe CrimeApplicationPresenter do
     subject { described_class.new(datastore_application) }
 
     let(:datastore_application) do
-      JSON.parse(file_fixture('applications/application_v0.1.json').read)
+      JSON.parse(LaaCrimeSchemas.fixture(1.0).read)
     end
 
     describe '#to_param' do

@@ -5,16 +5,16 @@ module Steps
       has_one_association :case
 
       attribute :case_type, :value_object, source: CaseType
-      attribute :cc_appeal_maat_id, :string
-      attribute :cc_appeal_fin_change_maat_id, :string
-      attribute :cc_appeal_fin_change_details, :string
+      attribute :appeal_maat_id, :string
+      attribute :appeal_with_changes_maat_id, :string
+      attribute :appeal_with_changes_details, :string
 
       validates :case_type,
                 inclusion: { in: :choices }
 
-      validates :cc_appeal_fin_change_details,
+      validates :appeal_with_changes_details,
                 presence: true,
-                if: -> { case_type&.cc_appeal_fin_change? }
+                if: -> { appeal_with_changes? }
 
       def choices
         CaseType.values
@@ -28,22 +28,18 @@ module Steps
 
       def attributes_to_reset
         {
-          'cc_appeal_maat_id' => appeal_maat_id,
-          'cc_appeal_fin_change_maat_id' => appeal_fin_change_maat_id,
-          'cc_appeal_fin_change_details' => appeal_fin_change_details
+          'appeal_maat_id' => (appeal_maat_id if appeal?),
+          'appeal_with_changes_maat_id' => (appeal_with_changes_maat_id if appeal_with_changes?),
+          'appeal_with_changes_details' => (appeal_with_changes_details if appeal_with_changes?),
         }
       end
 
-      def appeal_maat_id
-        case_type.cc_appeal? ? cc_appeal_maat_id : nil
+      def appeal?
+        case_type&.appeal_to_crown_court?
       end
 
-      def appeal_fin_change_maat_id
-        case_type.cc_appeal_fin_change? ? cc_appeal_fin_change_maat_id : nil
-      end
-
-      def appeal_fin_change_details
-        case_type.cc_appeal_fin_change? ? cc_appeal_fin_change_details : nil
+      def appeal_with_changes?
+        case_type&.appeal_to_crown_court_with_changes?
       end
     end
   end
