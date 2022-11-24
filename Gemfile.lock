@@ -387,6 +387,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder (~> 3.1.0)
   hmcts_common_platform!
   importmap-rails
+  jbuilder (~> 2.11.5)
   laa-criminal-applications-datastore-api-client!
   laa-criminal-legal-aid-schemas!
   laa_crime_apply_dev_api!
