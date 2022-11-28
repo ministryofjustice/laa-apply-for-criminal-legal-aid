@@ -22,11 +22,11 @@
         <div class="govuk-button-group">
           <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
                         class: 'govuk-button govuk-!-margin-right-1',
-                        data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
+                        data: { module: 'govuk-button' } do; 'Bypass DWP'; end if current_crime_application.try(:in_progress?) %>
 
           <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
                         class: 'govuk-button govuk-!-margin-right-1',
-                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if current_crime_application.submitted? %>
+                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if current_crime_application.try(:submitted?) %>
 
           <%= button_to developer_tools_crime_application_path, method: :delete,
                         class: 'govuk-button govuk-button--warning',

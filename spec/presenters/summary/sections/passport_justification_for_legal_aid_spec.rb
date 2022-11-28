@@ -8,6 +8,7 @@ describe Summary::Sections::PassportJustificationForLegalAid do
       CrimeApplication,
       to_param: '12345',
       case: kase,
+      ioj: ioj,
     )
   end
 
@@ -15,7 +16,6 @@ describe Summary::Sections::PassportJustificationForLegalAid do
     instance_double(
       Case,
       ioj_passport:,
-      ioj:,
     )
   end
 

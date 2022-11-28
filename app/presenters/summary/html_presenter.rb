@@ -3,7 +3,7 @@ module Summary
     attr_reader :crime_application
 
     def initialize(crime_application:)
-      @crime_application = crime_application
+      @crime_application = Adapters::BaseApplication.build(crime_application)
     end
 
     # rubocop:disable Metrics/AbcSize

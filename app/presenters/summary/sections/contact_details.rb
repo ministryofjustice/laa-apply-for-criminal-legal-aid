@@ -56,13 +56,11 @@ module Summary
       def full_address(address)
         return unless address
 
-        address.slice(
-          :address_line_one,
-          :address_line_two,
-          :postcode,
-          :city,
-          :country
-        ).values.compact_blank.join("\r\n")
+        # Address might not be an ActiveRecord instance, so
+        # do not rely on Rails methods like `slice`
+        address.attributes.symbolize_keys.values_at(
+          *Address::ADDRESS_ATTRIBUTES
+        ).compact_blank.join("\r\n")
       end
     end
   end
