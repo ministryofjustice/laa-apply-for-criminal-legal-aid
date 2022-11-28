@@ -7,6 +7,7 @@ class CrimeApplication < ApplicationRecord
   has_many :people, dependent: :destroy
 
   # Shortcuts through intermediate tables
+  has_one :ioj, through: :case
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 

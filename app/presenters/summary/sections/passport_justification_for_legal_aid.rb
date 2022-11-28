@@ -20,15 +20,11 @@ module Summary
       private
 
       def passport_triggered?
-        kase.ioj.nil? && ioj_passport.any?
+        crime_application.ioj.nil? && kase.ioj_passport.any?
       end
 
       def kase
         @kase ||= crime_application.case
-      end
-
-      def ioj_passport
-        @ioj_passport ||= kase.ioj_passport
       end
     end
   end

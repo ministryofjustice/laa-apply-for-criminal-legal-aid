@@ -5,6 +5,8 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'webmock/rspec'
 
+require 'laa_crime_schemas'
+
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
 begin

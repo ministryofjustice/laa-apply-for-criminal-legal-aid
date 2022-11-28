@@ -6,7 +6,7 @@ module Summary
       end
 
       def show?
-        kase&.ioj.present? && super
+        ioj.present? && super
       end
 
       def answers
@@ -23,12 +23,8 @@ module Summary
 
       private
 
-      def kase
-        @kase ||= crime_application.case
-      end
-
       def ioj
-        @ioj ||= kase.ioj
+        @ioj ||= crime_application.ioj
       end
     end
   end

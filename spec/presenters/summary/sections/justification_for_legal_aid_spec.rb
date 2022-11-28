@@ -7,14 +7,7 @@ describe Summary::Sections::JustificationForLegalAid do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      case: kase,
-    )
-  end
-
-  let(:kase) do
-    instance_double(
-      Case,
-      ioj:
+      ioj: ioj,
     )
   end
 
@@ -31,27 +24,17 @@ describe Summary::Sections::JustificationForLegalAid do
   end
 
   describe '#show?' do
-    context 'when there is a case' do
-      context 'when there is no ioj' do
-        let(:ioj) { nil }
+    context 'when there is no ioj' do
+      let(:ioj) { nil }
 
-        it 'shows this section' do
-          expect(subject.show?).to be(false)
-        end
-      end
-
-      context 'when there is an ioj' do
-        it 'shows this section' do
-          expect(subject.show?).to be(true)
-        end
+      it 'shows this section' do
+        expect(subject.show?).to be(false)
       end
     end
 
-    context 'when there is no case' do
-      let(:kase) { nil }
-
-      it 'does not show this section' do
-        expect(subject.show?).to be(false)
+    context 'when there is an ioj' do
+      it 'shows this section' do
+        expect(subject.show?).to be(true)
       end
     end
   end
