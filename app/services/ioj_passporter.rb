@@ -1,34 +1,27 @@
 class IojPassporter
-  def initialize(applicant, kase)
-    @applicant = applicant
-    @case = kase
+  attr_reader :crime_application
+
+  def initialize(crime_application)
+    @crime_application = crime_application
   end
 
   def call
-    return false unless under_18_passporting_enabled?
-
-    ioj_passport = if applicant_age(@applicant.date_of_birth) < 18
-                     @case.ioj_passport | [IojPassportType::ON_AGE_UNDER18.to_s]
+    ioj_passport = if applicant_under18_passport?
+                     crime_application.ioj_passport | [IojPassportType::ON_AGE_UNDER18.to_s]
                    else
-                     @case.ioj_passport - [IojPassportType::ON_AGE_UNDER18.to_s]
+                     crime_application.ioj_passport - [IojPassportType::ON_AGE_UNDER18.to_s]
                    end
-    @case.update(ioj_passport:)
-    @case.ioj_passport.any?
+
+    crime_application.update(ioj_passport:)
+    crime_application.ioj_passport.any?
   end
 
   private
 
-  def under_18_passporting_enabled?
-    FeatureFlags.u18_ioj_passport.enabled?
-  end
+  def applicant_under18_passport?
+    return false unless FeatureFlags.u18_ioj_passport.enabled?
 
-  # rubocop:disable Metrics/AbcSize
-  def applicant_age(dob)
-    years = Time.zone.now.year - dob.year
-    years -= 1 if Time.zone.now.month < dob.month
-    years -= 1 if Time.zone.now.month == dob.month && Time.zone.now.day < dob.day
-
-    years
+    dob = crime_application.applicant.date_of_birth
+    dob + 18.years > Time.zone.today
   end
-  # rubocop:enable Metrics/AbcSize
 end

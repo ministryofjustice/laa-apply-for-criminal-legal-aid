@@ -29,9 +29,8 @@ RSpec.describe Adapters::Structs::Applicant do
     end
   end
 
-  # FIXME: this needs to come from the datastore
   describe '#passporting_benefit' do
-    it 'returns true' do
+    it 'returns always true for MVP' do
       expect(subject.passporting_benefit).to be(true)
     end
   end

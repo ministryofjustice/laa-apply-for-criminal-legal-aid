@@ -5,10 +5,6 @@ module Summary
         :passport_justification_for_legal_aid
       end
 
-      def show?
-        kase.present? && super
-      end
-
       def answers
         [
           Components::ValueAnswer.new(
@@ -20,11 +16,7 @@ module Summary
       private
 
       def passport_triggered?
-        crime_application.ioj.nil? && kase.ioj_passport.any?
-      end
-
-      def kase
-        @kase ||= crime_application.case
+        crime_application.ioj.blank? && crime_application.ioj_passport.any?
       end
     end
   end
