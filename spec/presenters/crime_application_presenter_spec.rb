@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'laa_crime_schemas'
 
 RSpec.describe CrimeApplicationPresenter do
   subject { described_class.new(crime_application) }

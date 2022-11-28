@@ -80,11 +80,19 @@ class CompletedApplicationsController < DashboardController
   end
   # :nocov:
 
-  # TODO: this will go to the document store when we have it.
-  # For now we fake it, and get it from the local DB as we are
-  # not purging applications on submission yet.
-  #
+  # FIXME: Once we have datastore working properly,
+  # clean up code that talks to local database
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.not_in_progress.find_by(id: params[:id])
+    return if params[:id].blank?
+
+    @current_crime_application ||= if FeatureFlags.datastore_submission.enabled?
+                                     # :nocov:
+                                     DatastoreApi::Requests::GetApplication.new(
+                                       application_id: params[:id]
+                                     ).call
+                                     # :nocov:
+                                   else
+                                     CrimeApplication.not_in_progress.find_by(id: params[:id])
+                                   end
   end
 end
