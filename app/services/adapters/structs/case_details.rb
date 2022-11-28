@@ -1,9 +1,8 @@
 module Adapters
   module Structs
     class CaseDetails < BaseStructAdapter
-      # TODO: finalise this in a separate PR
       def charges
-        []
+        offences.map { |struct| Structs::Charge.new(struct) }
       end
 
       # rubocop:disable Naming/PredicateName
