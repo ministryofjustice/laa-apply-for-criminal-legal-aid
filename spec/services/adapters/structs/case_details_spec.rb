@@ -11,10 +11,9 @@ RSpec.describe Adapters::Structs::CaseDetails do
 
   let(:case_details) { application_struct.case }
 
-  # TODO: finalise this in a separate PR
   describe '#charges' do
-    it 'returns an offence collection' do
-      expect(subject.charges).to eq([])
+    it 'returns a charges collection' do
+      expect(subject.charges).to all(be_an(Adapters::Structs::Charge))
     end
   end
 
