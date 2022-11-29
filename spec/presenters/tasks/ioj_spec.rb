@@ -7,11 +7,11 @@ RSpec.describe Tasks::Ioj do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      case: kase
+      ioj_passport: ioj_passport,
+      ioj: ioj,
     )
   end
 
-  let(:kase) { instance_double(Case, ioj:, ioj_passport:) }
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
   let(:ioj_passport) { [] }
@@ -24,7 +24,6 @@ RSpec.describe Tasks::Ioj do
     allow(
       subject
     ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
-    allow(kase).to receive(:ioj_passport).and_return(ioj_passport)
   end
 
   describe '#path' do

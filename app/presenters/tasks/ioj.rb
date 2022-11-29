@@ -13,13 +13,13 @@ module Tasks
     end
 
     def in_progress?
-      crime_application.case.ioj_passport.any? ||
-        crime_application.case.ioj.present?
+      crime_application.ioj_passport.any? ||
+        crime_application.ioj.present?
     end
 
     def completed?
-      crime_application.case.ioj_passport.any? ||
-        crime_application.case.ioj.types.any?
+      crime_application.ioj_passport.any? ||
+        crime_application.ioj.types.any?
     end
   end
 end
