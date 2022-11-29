@@ -34,6 +34,6 @@ class ApplicationSubmission
   private
 
   def application_payload
-    Adapters::Submission::V0::V1::Application.new(crime_application).call
+    SubmissionSerializer::Application.new(crime_application).generate
   end
 end

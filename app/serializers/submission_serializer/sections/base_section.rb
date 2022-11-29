@@ -23,9 +23,11 @@ module SubmissionSerializer
       end
 
       # TODO: this in theory will come from a DB attribute
+      # :nocov:
       def current_version
         1.0
       end
+      # :nocov:
 
       # :nocov:
       def to_builder

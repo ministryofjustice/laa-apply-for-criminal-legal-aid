@@ -15,6 +15,8 @@ module SubmissionSerializer
         Sections::ApplicationDetails.new(crime_application),
         Sections::ProviderDetails.new(crime_application),
         Sections::ClientDetails.new(crime_application),
+        Sections::CaseDetails.new(crime_application),
+        Sections::IojDetails.new(crime_application),
       ].select(&:generate?)
     end
 

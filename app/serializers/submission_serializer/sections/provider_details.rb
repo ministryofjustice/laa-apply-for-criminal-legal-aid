@@ -7,6 +7,7 @@ module SubmissionSerializer
         1.1
       end
 
+      # :nocov:
       def to_builder
         Jbuilder.new do |json|
           json.provider_details do
@@ -16,6 +17,7 @@ module SubmissionSerializer
           end
         end
       end
+      # :nocov:
     end
   end
 end

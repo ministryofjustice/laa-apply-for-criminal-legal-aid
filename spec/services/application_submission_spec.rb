@@ -11,6 +11,7 @@ RSpec.describe ApplicationSubmission do
       last_name: 'Mustermann',
       date_of_birth: Date.new(1990, 2, 1),
       nino: 'AJ123456C',
+      home_address: nil,
     )
   end
 
@@ -27,7 +28,7 @@ RSpec.describe ApplicationSubmission do
       status: status,
       date_stamp: date_stamp,
       applicant: applicant,
-      usn: 6_000_001,
+      reference: 6_000_001,
     )
   end
 
@@ -68,18 +69,6 @@ RSpec.describe ApplicationSubmission do
 
         expect(subject.call).to be(true)
       end
-    end
-  end
-
-  describe '#application_payload' do
-    let(:submitted_at) { DateTime.new(2022, 12, 31) }
-    let(:date_stamp) { DateTime.new(2022, 12, 15) }
-    let(:status) { 'submitted' }
-
-    it 'presents the application data in a valid way for the api submission' do
-      payload = subject.send(:application_payload)
-
-      expect(LaaCrimeSchemas::Validator.new(payload).valid?).to be true
     end
   end
 end
