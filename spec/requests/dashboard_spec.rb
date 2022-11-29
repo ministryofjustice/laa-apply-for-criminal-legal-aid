@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Dashboard' do
-  describe 'make a new application' do
+  # Fixtures used to mock responses from the datastore
+  let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
+  let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
+  let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
+  let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
+  let(:pagination_fixture) { { limit: 20, total: 1, sort: 'desc', next_page_token: nil }.to_json }
+
+  describe 'start a new application' do
     it 'creates a new `crime_application` record' do
-      expect do
-        post crime_applications_path
-      end.to change(CrimeApplication, :count).by(1)
+      expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(/has_partner/)
@@ -13,26 +18,11 @@ RSpec.describe 'Dashboard' do
   end
 
   describe 'show an application certificate (in `submitted` status)' do
-    before :all do
-      # sets up a test record
-      app = CrimeApplication.create(
-        status: :submitted,
-        date_stamp: Date.new(2022, 12, 25),
-        submitted_at: Date.new(2022, 12, 31),
-      )
-
-      Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
-    end
-
-    after :all do
-      CrimeApplication.destroy_all
-    end
-
     before do
-      applicant = Applicant.find_by(first_name: 'Jane')
-      app = applicant.crime_application
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_fixture_id}")
+        .to_return(body: application_fixture)
 
-      get completed_crime_application_path(app)
+      get completed_crime_application_path(application_fixture_id)
     end
 
     it 'renders the certificate page' do
@@ -53,15 +43,15 @@ RSpec.describe 'Dashboard' do
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
         assert_select 'div.govuk-summary-list__row:nth-of-type(1)' do
           assert_select 'dt:nth-of-type(1)', 'Reference number:'
-          assert_select 'dd:nth-of-type(1)', /[[:digit:]]/
+          assert_select 'dd:nth-of-type(1)', '6000001'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp:'
-          assert_select 'dd:nth-of-type(1)', '25 December 2022 12:00am'
+          assert_select 'dd:nth-of-type(1)', '24 October 2022 9:50am'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
           assert_select 'dt:nth-of-type(1)', 'Date submitted:'
-          assert_select 'dd:nth-of-type(1)', '31 December 2022 12:00am'
+          assert_select 'dd:nth-of-type(1)', '24 October 2022 9:50am'
         end
       end
     end
@@ -73,37 +63,27 @@ RSpec.describe 'Dashboard' do
       assert_select 'dl.govuk-summary-list:nth-of-type(2)' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do
           assert_select 'dt:nth-of-type(1)', 'First name'
-          assert_select 'dd:nth-of-type(1)', 'Jane'
+          assert_select 'dd:nth-of-type(1)', 'Kit'
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(2)' do
           assert_select 'dt:nth-of-type(1)', 'Last name'
-          assert_select 'dd:nth-of-type(1)', 'Doe'
+          assert_select 'dd:nth-of-type(1)', 'Pound'
         end
       end
     end
   end
 
-  # NOTE: this is almost identical to `submitted` state, only difference
-  # is there is an `Update application` button instead of a print button.
-  # No need to test everything again.
   describe 'show an application certificate (in `returned` status)' do
-    before :all do
-      # sets up a test record
-      CrimeApplication.create(
-        status: :returned,
-        date_stamp: Date.new(2022, 12, 25),
-        submitted_at: Date.new(2022, 12, 31),
-      )
-    end
-
-    after :all do
-      CrimeApplication.destroy_all
-    end
+    # NOTE: this is almost identical to `submitted` state, only difference
+    # is there is an `Update application` button instead of a print button.
+    # No need to test everything again.
 
     before do
-      app = CrimeApplication.returned.first
-      get completed_crime_application_path(app)
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{returned_application_fixture_id}")
+        .to_return(body: returned_application_fixture)
+
+      get completed_crime_application_path(returned_application_fixture_id)
     end
 
     it 'renders the certificate page' do
@@ -121,7 +101,7 @@ RSpec.describe 'Dashboard' do
     end
   end
 
-  describe 'edit an application (aka task list)' do
+  describe 'edit an in progress application (aka task list)' do
     before :all do
       # sets up a test record
       app = CrimeApplication.create
@@ -164,7 +144,7 @@ RSpec.describe 'Dashboard' do
     end
   end
 
-  describe 'list of applications' do
+  describe 'list of in progress applications' do
     before :all do
       # sets up a few test records
       app1 = CrimeApplication.create(status: 'in_progress', created_at: Date.new(2022, 10, 15))
@@ -209,26 +189,23 @@ RSpec.describe 'Dashboard' do
   end
 
   describe 'list of submitted applications' do
-    before :all do
-      # sets up a few test records
-      app1 = CrimeApplication.create(status: 'submitted', submitted_at: Date.new(2021, 12, 31))
-      app2 = CrimeApplication.create
-      app3 = CrimeApplication.create
+    let(:collection_fixture) do
+      format(
+        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
+        pagination_fixture: pagination_fixture,
+        application_fixture: application_fixture.read
+      )
+    end
 
-      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-      Applicant.create(crime_application: app2, first_name: '', last_name: '')
-      Applicant.create(crime_application: app3)
+    before do
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+        .with(query: hash_including({ 'status' => 'submitted' }))
+        .to_return(body: collection_fixture)
 
-      # page actually under test
       get completed_crime_applications_path
     end
 
-    after :all do
-      # do not leave left overs in the test database
-      CrimeApplication.destroy_all
-    end
-
-    it 'contains only applications having the applicant name entered' do
+    it 'shows a list of submitted applications' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Your applications'
@@ -239,58 +216,52 @@ RSpec.describe 'Dashboard' do
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'John Doe'
+          assert_select 'a', count: 1, text: 'Kit Pound'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '31 Dec 2021'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '24 Oct 2022'
+        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000001'
       end
-
-      expect(response.body).not_to include('Jane Doe')
     end
   end
 
   describe 'list of returned applications' do
-    before :all do
-      # sets up a few test records
-      app1 = CrimeApplication.create(status: 'returned', submitted_at: Date.new(2021, 12, 31))
-      app2 = CrimeApplication.create
-      app3 = CrimeApplication.create
+    let(:collection_fixture) do
+      format(
+        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
+        pagination_fixture: pagination_fixture,
+        application_fixture: returned_application_fixture.read
+      )
+    end
 
-      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-      Applicant.create(crime_application: app2, first_name: '', last_name: '')
-      Applicant.create(crime_application: app3)
+    before do
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+        .with(query: hash_including({ 'status' => 'returned' }))
+        .to_return(body: collection_fixture)
 
-      # page actually under test
       get completed_crime_applications_path(q: 'returned')
     end
 
-    after :all do
-      # do not leave left overs in the test database
-      CrimeApplication.destroy_all
-    end
-
-    it 'contains only applications having the applicant name entered' do
+    it 'shows a list of returned applications' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Your applications'
 
+      # TODO: assert counters
       assert_select 'a.moj-sub-navigation__link', text: 'In progress'
       assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
-      assert_select 'a.moj-sub-navigation__link', text: 'Returned (1)', 'aria-current': 'page'
+      assert_select 'a.moj-sub-navigation__link', text: 'Returned', 'aria-current': 'page'
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'John Doe'
+          assert_select 'a', count: 1, text: 'John POTTER'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '31 Dec 2021'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
+        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
       end
-
-      expect(response.body).not_to include('Jane Doe')
     end
   end
 
-  describe 'deleting applications' do
+  describe 'deleting in progress applications' do
     before :all do
       # sets up a few test records
       app = CrimeApplication.create(status: 'in_progress')
