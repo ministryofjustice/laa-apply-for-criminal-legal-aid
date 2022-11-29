@@ -34,6 +34,9 @@ RSpec.describe ApplicationSubmission do
 
   before do
     allow(crime_application).to receive(:update!).and_return(true)
+
+    stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+      .to_return(status: 201, body: '{}')
   end
 
   describe '#call' do

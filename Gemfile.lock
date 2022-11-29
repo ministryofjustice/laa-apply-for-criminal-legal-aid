@@ -24,7 +24,7 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 2d674da813a0d2b14dc15a1581afad540c5060de
+  revision: 02fc72cc0ddebbb0529cd95b997d778b409110f0
   specs:
     laa-criminal-legal-aid-schemas (0.1.0)
       dry-struct

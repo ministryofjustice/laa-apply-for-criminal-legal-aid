@@ -9,6 +9,12 @@ RSpec.describe CompletedApplicationsController, type: :controller do
       allow(
         ApplicationAmendment
       ).to receive(:new).with(crime_application).and_return(amend_service)
+
+      # TODO: we don't know yet how the re-hydration will work
+      # Disabling the datastore feature in this spec for now
+      allow(
+        FeatureFlags
+      ).to receive(:datastore_submission).and_return(double(enabled?: false))
     end
 
     it 'triggers the amendment of an application' do

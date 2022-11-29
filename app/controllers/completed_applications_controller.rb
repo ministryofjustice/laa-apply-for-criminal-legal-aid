@@ -30,37 +30,30 @@ class CompletedApplicationsController < DashboardController
 
   private
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def applications_from_datastore
     if FeatureFlags.datastore_submission.enabled?
-      # :nocov:
       result = DatastoreApi::Requests::ListApplications.new(
         status: status_filter, **pagination_params
       ).call
 
-      @paginator = if params[:v] == '1'
-                     InfinitePagination.new(
-                       pagination: result.pagination,
-                       params: params,
-                     )
-                   else
-                     InfinitePaginationV2.new(
-                       pagination: result.pagination,
-                       params: params,
-                     )
-                   end
+      @paginator = InfinitePaginationV2.new(
+        pagination: result.pagination,
+        params: params,
+      )
 
       result
-      # :nocov:
     else
+      # :nocov:
       CrimeApplication
         .where(status: status_filter)
         .joins(:people)
         .includes(:applicant)
         .merge(CrimeApplication.order(submitted_at: :desc))
+      # :nocov:
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def status_filter
     allowed_statuses = [
@@ -70,7 +63,6 @@ class CompletedApplicationsController < DashboardController
     allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
   end
 
-  # :nocov:
   def pagination_params
     {
       limit: params[:limit],
@@ -78,7 +70,6 @@ class CompletedApplicationsController < DashboardController
       page_token: params[:page_token],
     }
   end
-  # :nocov:
 
   # FIXME: Once we have datastore working properly,
   # clean up code that talks to local database
@@ -86,11 +77,9 @@ class CompletedApplicationsController < DashboardController
     return if params[:id].blank?
 
     @current_crime_application ||= if FeatureFlags.datastore_submission.enabled?
-                                     # :nocov:
                                      DatastoreApi::Requests::GetApplication.new(
                                        application_id: params[:id]
                                      ).call
-                                     # :nocov:
                                    else
                                      CrimeApplication.not_in_progress.find_by(id: params[:id])
                                    end

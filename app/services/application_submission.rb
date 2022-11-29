@@ -19,13 +19,11 @@ class ApplicationSubmission
       date_stamp: date_stamp,
     )
 
-    # :nocov:
     if FeatureFlags.datastore_submission.enabled?
       DatastoreApi::Requests::CreateApplication.new(
-        payload: application_payload
+        payload: {}
       ).call
     end
-    # :nocov:
 
     true
   end
