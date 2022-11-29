@@ -9,7 +9,6 @@ feature_flags:
     production: false
   datastore_submission:
     local: false # if `true`, ensure the datastore service is running locally
-    test: false # enable once we start writing tests for the feature
     staging: false
     production: false
 

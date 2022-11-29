@@ -6,4 +6,7 @@ DatastoreApi.configure do |config|
   # Basic auth is only needed on staging
   config.basic_auth_username = ENV.fetch('DATASTORE_AUTH_USERNAME', nil)
   config.basic_auth_password = ENV.fetch('DATASTORE_AUTH_PASSWORD', nil)
+
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger::WARN
 end
