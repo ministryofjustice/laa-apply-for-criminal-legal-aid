@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::IojDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) { instance_double(CrimeApplication, ioj:) }
+
   let(:ioj) do
     Ioj.new(
       types: %w[reputation other],
@@ -25,10 +26,6 @@ RSpec.describe SubmissionSerializer::Sections::IojDetails do
         }
       ]
     }.as_json
-  end
-
-  before do
-    allow(crime_application).to receive(:ioj).and_return(ioj)
   end
 
   describe '#generate' do

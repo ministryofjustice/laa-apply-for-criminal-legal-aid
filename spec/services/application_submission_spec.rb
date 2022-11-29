@@ -1,54 +1,39 @@
 require 'rails_helper'
-require 'laa_crime_schemas'
 
 RSpec.describe ApplicationSubmission do
   subject { described_class.new(crime_application) }
 
-  let(:applicant) do
-    instance_double(
-      Applicant,
-      first_name: 'Max',
-      last_name: 'Mustermann',
-      date_of_birth: Date.new(1990, 2, 1),
-      nino: 'AJ123456C',
-      home_address: nil,
-    )
-  end
-
-  let(:submitted_at) { nil }
-
-  let(:status) { nil }
-
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      id: '1',
-      created_at: DateTime.new(2022, 11, 20),
-      submitted_at: submitted_at,
-      status: status,
-      date_stamp: date_stamp,
-      applicant: applicant,
-      reference: 6_000_001,
+      date_stamp:,
     )
   end
+
+  let(:submission_serializer) { instance_double(SubmissionSerializer::Application, generate: payload) }
+  let(:payload) { { 'foo' => 'bar' } }
 
   before do
     allow(crime_application).to receive(:update!).and_return(true)
 
+    allow(
+      SubmissionSerializer::Application
+    ).to receive(:new).with(crime_application).and_return(submission_serializer)
+
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+      .with(body: { application: payload })
       .to_return(status: 201, body: '{}')
   end
 
   describe '#call' do
     let(:submitted_date) { DateTime.new(2022, 12, 31) }
+    let(:date_stamp) { nil }
 
     before do
       travel_to submitted_date
     end
 
     context 'when `date_stamp` attribute is `nil`' do
-      let(:date_stamp) { nil }
-
       it 'marks the application as submitted, setting the `date_stamp` to the submission date' do
         expect(
           crime_application
@@ -71,6 +56,18 @@ RSpec.describe ApplicationSubmission do
         )
 
         expect(subject.call).to be(true)
+      end
+    end
+
+    context 'submission to the datastore' do
+      it 'calls the API and submits the serialized application' do
+        expect(subject.call).to be(true)
+
+        expect(
+          a_request(
+            :post, 'http://datastore-webmock/api/v1/applications'
+          ).with(body: { application: payload })
+        ).to have_been_made.once
       end
     end
   end

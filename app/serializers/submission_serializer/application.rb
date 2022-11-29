@@ -6,12 +6,9 @@ module SubmissionSerializer
       @crime_application = crime_application
     end
 
-    # TODO: For now we will skip this until we have provider details included fully
-    # :nocov:
     def generate
       to_builder.attributes!
     end
-    # :nocov:
 
     def sections
       [

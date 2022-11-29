@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+
   let(:applicant) do
     instance_double(
       Applicant,
@@ -17,7 +18,8 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   let(:date_of_birth) { DateTime.new(1950, 1, 1) }
 
   let(:home_address) do
-    HomeAddress.new(
+    instance_double(
+      HomeAddress,
       address_line_one: 'Test',
       address_line_two: 'Home',
       postcode: 'A11 1XX',
@@ -37,7 +39,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
             city: 'City',
             country: 'Country',
             postcode: 'A11 1XX',
-            lookup_id: '1',
+            lookup_id: 1,
           },
           date_of_birth: date_of_birth,
           first_name: 'Max',
@@ -45,10 +47,6 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
         }
       }
     }.as_json
-  end
-
-  before do
-    allow(crime_application).to receive(:applicant).and_return(applicant)
   end
 
   describe '#generate' do

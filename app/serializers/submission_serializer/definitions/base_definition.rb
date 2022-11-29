@@ -10,7 +10,11 @@ module SubmissionSerializer
       def generate
         return unless __getobj__
 
-        to_builder.attributes!
+        if respond_to?(:map)
+          map { |item| self.class.generate(item) }
+        else
+          to_builder.attributes!
+        end
       end
 
       # :nocov:

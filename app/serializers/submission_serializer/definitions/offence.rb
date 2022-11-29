@@ -5,7 +5,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.name offence.name
           json.offence_class offence.offence_class
-          json.dates offence_dates.map(&:date)
+          json.dates offence_dates.pluck(:date)
         end
       end
     end

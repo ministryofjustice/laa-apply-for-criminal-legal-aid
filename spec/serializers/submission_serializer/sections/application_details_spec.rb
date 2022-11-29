@@ -6,13 +6,13 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      id: 1,
-      reference: '60000001',
+      id: 'uuid',
+      reference: 6_000_001,
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
       status: 'submitted',
-      ioj_passport: [:on_case_type],
+      ioj_passport: ['on_case_type'],
     )
   end
 
@@ -22,9 +22,8 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
 
   let(:json_output) do
     {
-      id: 1,
-      application_type: '',
-      reference: '60000001',
+      id: 'uuid',
+      reference: 6_000_001,
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,

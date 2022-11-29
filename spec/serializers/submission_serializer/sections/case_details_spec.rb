@@ -3,24 +3,26 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, case: kase) }
 
   let(:kase) do
     instance_double(
       Case,
       urn: '12345',
+      case_type: 'Indictable',
       appeal_maat_id: 1,
       appeal_with_changes_maat_id: 2,
       appeal_with_changes_details: 'appeal changes',
       hearing_court_name: 'Court',
       hearing_date: hearing_date,
-      case_type: 'Indictable'
+      charges: [charge],
+      codefendants: [codefendant],
     )
   end
 
   let(:hearing_date) { DateTime.new(2023, 3, 2) }
 
-  let(:offence) do
+  let(:charge) do
     Charge.new(
       offence_name: 'Common assault',
     )
@@ -30,7 +32,7 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
     Codefendant.new(
       first_name: 'Max',
       last_name: 'Mustermann',
-      conflict_of_interest: 'Conflict of interest',
+      conflict_of_interest: 'yes',
     )
   end
 
@@ -38,24 +40,24 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
     {
       case_details: {
         urn: '12345',
+        case_type: 'Indictable',
         appeal_maat_id: 1,
         appeal_with_changes_maat_id: 2,
         appeal_with_changes_details: 'appeal changes',
         hearing_court_name: 'Court',
         hearing_date: hearing_date,
-        case_type: 'Indictable',
         offences: [
           {
             name: 'Common assault',
             offence_class: 'H',
-            dates: [],
+            dates: %w[Date1 Date2],
           }
         ],
         codefendants: [
           {
             first_name: 'Max',
             last_name: 'Mustermann',
-            conflict_of_interest: 'Conflict of interest',
+            conflict_of_interest: 'yes',
           }
         ]
       }
@@ -63,13 +65,7 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   end
 
   before do
-    allow(crime_application).to receive(:case).and_return(kase)
-
-    allow(kase).to receive(:charges).and_return([offence])
-
-    allow(offence).to receive(:offence_dates).and_return([])
-
-    allow(crime_application).to receive(:codefendants).and_return([codefendant])
+    allow(charge).to receive(:offence_dates).and_return([{ date: 'Date1' }, { date: 'Date2' }])
   end
 
   describe '#generate' do

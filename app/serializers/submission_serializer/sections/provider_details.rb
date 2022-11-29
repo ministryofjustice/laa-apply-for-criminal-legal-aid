@@ -1,13 +1,14 @@
 module SubmissionSerializer
   module Sections
     class ProviderDetails < Sections::BaseSection
-      # :nocov:
       def to_builder
         Jbuilder.new do |json|
-          json.provider_details nil
+          json.provider_details do
+            # We don't know yet the attributes, TBD.
+            json.merge!({})
+          end
         end
       end
-      # :nocov:
     end
   end
 end

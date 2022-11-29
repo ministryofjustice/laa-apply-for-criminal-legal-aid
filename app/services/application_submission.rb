@@ -21,7 +21,7 @@ class ApplicationSubmission
 
     if FeatureFlags.datastore_submission.enabled?
       DatastoreApi::Requests::CreateApplication.new(
-        payload: {}
+        payload: application_payload
       ).call
     end
 
@@ -31,9 +31,7 @@ class ApplicationSubmission
 
   private
 
-  # :nocov:
   def application_payload
     SubmissionSerializer::Application.new(crime_application).generate
   end
-  # :nocov:
 end

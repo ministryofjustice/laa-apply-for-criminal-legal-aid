@@ -1,11 +1,8 @@
 module SubmissionSerializer
   module Sections
     class CaseDetails < Sections::BaseSection
-      # rubocop:disable Metrics/MethodLength
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def to_builder
-        kase = crime_application.case
-
         Jbuilder.new do |json|
           json.case_details do
             json.urn kase.urn
@@ -15,17 +12,18 @@ module SubmissionSerializer
             json.appeal_with_changes_details kase.appeal_with_changes_details
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
-            json.offences(kase.charges.map { |charge| Definitions::Offence.generate(charge) })
 
-            json.codefendants(
-              crime_application.codefendants.map do |codefendant|
-                Definitions::Codefendant.generate(codefendant)
-              end
-            )
+            json.offences Definitions::Offence.generate(kase.charges)
+            json.codefendants Definitions::Codefendant.generate(kase.codefendants)
           end
         end
-        # rubocop:enable Metrics/MethodLength
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+      end
+
+      private
+
+      def kase
+        @kase ||= crime_application.case
       end
     end
   end
