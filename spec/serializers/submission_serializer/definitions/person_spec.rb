@@ -20,7 +20,7 @@ RSpec.describe SubmissionSerializer::Definitions::Person do
       first_name: 'Max',
       last_name: 'Mustermann',
       date_of_birth: date_of_birth,
-      address: nil,
+      home_address: nil,
     }.as_json
   end
 

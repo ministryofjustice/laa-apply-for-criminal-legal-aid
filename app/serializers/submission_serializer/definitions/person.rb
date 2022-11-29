@@ -7,7 +7,7 @@ module SubmissionSerializer
           json.last_name last_name
           json.date_of_birth date_of_birth
 
-          json.address Definitions::Address.generate(home_address)
+          json.home_address Definitions::Address.generate(home_address)
         end
       end
     end

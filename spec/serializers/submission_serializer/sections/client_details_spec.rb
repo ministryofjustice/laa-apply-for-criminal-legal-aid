@@ -23,6 +23,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       postcode: 'A11 1XX',
       city: 'City',
       country: 'Country',
+      lookup_id: 1,
     )
   end
 
@@ -30,12 +31,13 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
     {
       client_details: {
         applicant: {
-          address: {
+          home_address: {
             address_line_one: 'Test',
             address_line_two: 'Home',
             city: 'City',
             country: 'Country',
             postcode: 'A11 1XX',
+            lookup_id: '1',
           },
           date_of_birth: date_of_birth,
           first_name: 'Max',

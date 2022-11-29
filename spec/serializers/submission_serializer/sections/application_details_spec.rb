@@ -12,6 +12,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       submitted_at: submitted_at,
       date_stamp: date_stamp,
       status: 'submitted',
+      ioj_passport: [:on_case_type],
     )
   end
 
@@ -28,7 +29,8 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       submitted_at: submitted_at,
       date_stamp: date_stamp,
       schema_version: 1.0,
-      status: 'submitted'
+      status: 'submitted',
+      ioj_passport: ['on_case_type'],
     }.as_json
   end
 

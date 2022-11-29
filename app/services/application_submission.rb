@@ -33,7 +33,9 @@ class ApplicationSubmission
 
   private
 
+  # :nocov:
   def application_payload
     SubmissionSerializer::Application.new(crime_application).generate
   end
+  # :nocov:
 end

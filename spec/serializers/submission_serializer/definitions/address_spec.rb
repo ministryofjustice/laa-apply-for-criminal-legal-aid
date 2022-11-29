@@ -10,6 +10,7 @@ RSpec.describe SubmissionSerializer::Definitions::Address do
       city: 'City',
       country: 'Country',
       postcode: 'A11 1XX',
+      lookup_id: 1,
     )
   end
 
@@ -20,6 +21,7 @@ RSpec.describe SubmissionSerializer::Definitions::Address do
       city: 'City',
       country: 'Country',
       postcode: 'A11 1XX',
+      lookup_id: '1',
     }.as_json
   end
 

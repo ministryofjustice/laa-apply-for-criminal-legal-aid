@@ -3,10 +3,18 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Definitions::Offence do
   subject { described_class }
 
-  let(:offence) do
+  let(:charge) do
     instance_double(
       Charge,
-      offence_name: 'Common Assault',
+      offence_name: 'Common assault',
+    )
+  end
+
+  let(:offence) do
+    instance_double(
+      Offence,
+      name: 'Common assault',
+      offence_class: 'H',
     )
   end
 
@@ -28,17 +36,18 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
 
   let(:json_output) do
     {
-      name: 'Common Assault',
-      offence_class: nil,
+      name: 'Common assault',
+      offence_class: 'H',
       dates: dates,
     }.as_json
   end
 
   before do
-    allow(offence).to receive(:offence_dates).and_return([offence_date_one, offence_date_two])
+    allow(charge).to receive(:offence_dates).and_return([offence_date_one, offence_date_two])
+    allow(charge).to receive(:offence).and_return(offence)
   end
 
   describe '#generate' do
-    it { expect(subject.generate(offence)).to eq(json_output) }
+    it { expect(subject.generate(charge)).to eq(json_output) }
   end
 end

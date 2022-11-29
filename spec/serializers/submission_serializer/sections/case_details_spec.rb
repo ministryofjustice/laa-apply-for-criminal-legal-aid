@@ -22,7 +22,7 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
 
   let(:offence) do
     Charge.new(
-      offence_name: 'Common Assault',
+      offence_name: 'Common assault',
     )
   end
 
@@ -46,8 +46,8 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         case_type: 'Indictable',
         offences: [
           {
-            name: 'Common Assault',
-            offence_class: nil,
+            name: 'Common assault',
+            offence_class: 'H',
             dates: [],
           }
         ],

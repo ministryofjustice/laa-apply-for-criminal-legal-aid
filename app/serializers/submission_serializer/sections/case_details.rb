@@ -4,16 +4,18 @@ module SubmissionSerializer
       # rubocop:disable Metrics/MethodLength
       # rubocop:disable Metrics/AbcSize
       def to_builder
+        kase = crime_application.case
+
         Jbuilder.new do |json|
           json.case_details do
-            json.urn crime_application.case.urn
-            json.case_type crime_application.case.case_type
-            json.appeal_maat_id crime_application.case.appeal_maat_id
-            json.appeal_with_changes_maat_id crime_application.case.appeal_with_changes_maat_id
-            json.appeal_with_changes_details crime_application.case.appeal_with_changes_details
-            json.hearing_court_name crime_application.case.hearing_court_name
-            json.hearing_date crime_application.case.hearing_date
-            json.offences(crime_application.case.charges.map { |charge| Definitions::Offence.generate(charge) })
+            json.urn kase.urn
+            json.case_type kase.case_type
+            json.appeal_maat_id kase.appeal_maat_id
+            json.appeal_with_changes_maat_id kase.appeal_with_changes_maat_id
+            json.appeal_with_changes_details kase.appeal_with_changes_details
+            json.hearing_court_name kase.hearing_court_name
+            json.hearing_date kase.hearing_date
+            json.offences(kase.charges.map { |charge| Definitions::Offence.generate(charge) })
 
             json.codefendants(
               crime_application.codefendants.map do |codefendant|
