@@ -38,11 +38,4 @@ RSpec.describe Adapters::Structs::CaseDetails do
       end
     end
   end
-
-  # FIXME: this needs to come from the datastore
-  describe '#ioj_passport' do
-    it 'returns the IoJ passport' do
-      expect(subject.ioj_passport).to eq([])
-    end
-  end
 end

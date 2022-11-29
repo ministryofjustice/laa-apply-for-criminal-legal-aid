@@ -15,13 +15,8 @@ RSpec.describe Decisions::CaseDecisionTree do
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(
-      form_object
-    ).to receive(:case).and_return(kase)
-
     allow(crime_application).to receive(:update).and_return(true)
     allow(crime_application).to receive(:date_stamp).and_return(nil)
-    allow(kase).to receive(:update).and_return(true)
   end
 
   it_behaves_like 'a decision tree'
@@ -249,18 +244,18 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :hearing_details }
 
-    context 'and the applicant is over 18' do
-      before do
-        allow_any_instance_of(IojPassporter).to receive(:call).and_return(false)
-      end
+    before do
+      allow_any_instance_of(IojPassporter).to receive(:call).and_return(ioj_passported)
+    end
+
+    context 'and the IoJ passporter was not triggered' do
+      let(:ioj_passported) { false }
 
       it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
     end
 
-    context 'and the applicant is under 18' do
-      before do
-        allow_any_instance_of(IojPassporter).to receive(:call).and_return(true)
-      end
+    context 'and the IoJ passporter was triggered' do
+      let(:ioj_passported) { true }
 
       it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
     end

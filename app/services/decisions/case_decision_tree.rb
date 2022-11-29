@@ -82,7 +82,7 @@ module Decisions
     end
 
     def after_hearing_details
-      if IojPassporter.new(form_object.crime_application.applicant, form_object.case).call
+      if IojPassporter.new(current_crime_application).call
         edit(:ioj_passport)
       else
         edit(:ioj)
