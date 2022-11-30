@@ -10,8 +10,13 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       Applicant,
       first_name: 'Max',
       last_name: 'Mustermann',
+      other_names: '',
       date_of_birth: date_of_birth,
+      nino: 'AB123456A',
       home_address: home_address,
+      correspondence_address: nil,
+      telephone_number: '123456789',
+      correspondence_address_type: 'home_address',
     )
   end
 
@@ -33,6 +38,11 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
     {
       client_details: {
         applicant: {
+          first_name: 'Max',
+          last_name: 'Mustermann',
+          other_names: '',
+          date_of_birth: date_of_birth,
+          nino: 'AB123456A',
           home_address: {
             address_line_one: 'Test',
             address_line_two: 'Home',
@@ -41,9 +51,9 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
             postcode: 'A11 1XX',
             lookup_id: 1,
           },
-          date_of_birth: date_of_birth,
-          first_name: 'Max',
-          last_name: 'Mustermann'
+          correspondence_address: nil,
+          telephone_number: '123456789',
+          correspondence_address_type: 'home_address',
         }
       }
     }.as_json
