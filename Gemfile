@@ -29,10 +29,6 @@ gem 'sentry-ruby'
 
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
-# Temporary utitily to add a data api to apply.
-gem 'laa_crime_apply_dev_api', github: 'ministryofjustice/laa-crime-apply-dev-api',
-ref: '506d72ced64e96ee3e82369ef73b95e56bfa72e8'
-
 gem 'laa-criminal-applications-datastore-api-client',
     github: 'ministryofjustice/laa-criminal-applications-datastore-api-client'
 

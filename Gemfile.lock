@@ -6,16 +6,6 @@ GIT
     hmcts_common_platform (0.1.0)
 
 GIT
-  remote: https://github.com/ministryofjustice/laa-crime-apply-dev-api.git
-  revision: 506d72ced64e96ee3e82369ef73b95e56bfa72e8
-  ref: 506d72ced64e96ee3e82369ef73b95e56bfa72e8
-  specs:
-    laa_crime_apply_dev_api (0.2.0)
-      dry-schema (>= 1.10)
-      jbuilder (>= 2.11)
-      rails (>= 7.0)
-
-GIT
   remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
   revision: a6de65802b69e7501dbf5ce2f8dc8a2f4d2ff81c
   specs:
@@ -139,27 +129,15 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
-    dry-configurable (0.16.1)
-      dry-core (~> 0.6)
-      zeitwerk (~> 2.6)
     dry-container (0.11.0)
       concurrent-ruby (~> 1.0)
     dry-core (0.9.1)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     dry-inflector (0.3.0)
-    dry-initializer (3.1.1)
     dry-logic (1.3.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.9, >= 0.9)
-      zeitwerk (~> 2.6)
-    dry-schema (1.11.3)
-      concurrent-ruby (~> 1.0)
-      dry-configurable (~> 0.16, >= 0.16)
-      dry-core (~> 0.9, >= 0.9)
-      dry-initializer (~> 3.0)
-      dry-logic (~> 1.3)
-      dry-types (~> 1.6)
       zeitwerk (~> 2.6)
     dry-struct (1.5.2)
       dry-core (~> 0.9, >= 0.9)
@@ -204,9 +182,6 @@ GEM
     io-console (0.5.11)
     irb (1.4.2)
       reline (>= 0.3.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     json (2.6.2)
     json-schema (3.0.0)
       addressable (>= 2.8)
@@ -390,7 +365,6 @@ DEPENDENCIES
   jbuilder (~> 2.11.5)
   laa-criminal-applications-datastore-api-client!
   laa-criminal-legal-aid-schemas!
-  laa_crime_apply_dev_api!
   pg (~> 1.4)
   pry
   puma
