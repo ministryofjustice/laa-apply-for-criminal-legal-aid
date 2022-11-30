@@ -30,5 +30,12 @@ RSpec.describe SubmissionSerializer::Sections::IojDetails do
 
   describe '#generate' do
     it { expect(subject.generate).to eq(json_output) }
+
+    context 'when there is no IoJ record' do
+      let(:ioj) { nil }
+      let(:json_output) { { 'interests_of_justice' => [] } }
+
+      it { expect(subject.generate).to eq(json_output) }
+    end
   end
 end

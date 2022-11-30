@@ -5,9 +5,6 @@ class ApplicationSubmission
     @crime_application = crime_application
   end
 
-  # TODO: for now we don't really know how the submission will work,
-  # this is just a mock, and for now we just mark an application as
-  # submitted, to enable post-submission journeys.
   # rubocop:disable Metrics/MethodLength
   def call
     submitted_at = Time.current
@@ -29,9 +26,9 @@ class ApplicationSubmission
   end
   # rubocop:enable Metrics/MethodLength
 
-  private
-
   def application_payload
-    SubmissionSerializer::Application.new(crime_application).generate
+    SubmissionSerializer::Application.new(
+      crime_application
+    ).generate.as_json
   end
 end
