@@ -182,6 +182,9 @@ GEM
     io-console (0.5.11)
     irb (1.4.2)
       reline (>= 0.3.0)
+    jbuilder (2.11.5)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     json (2.6.2)
     json-schema (3.0.0)
       addressable (>= 2.8)
@@ -362,6 +365,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder (~> 3.1.0)
   hmcts_common_platform!
   importmap-rails
+  jbuilder (~> 2.11.5)
   laa-criminal-applications-datastore-api-client!
   laa-criminal-legal-aid-schemas!
   pg (~> 1.4)

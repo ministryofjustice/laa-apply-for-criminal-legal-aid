@@ -5,9 +5,6 @@ class ApplicationSubmission
     @crime_application = crime_application
   end
 
-  # TODO: for now we don't really know how the submission will work,
-  # this is just a mock, and for now we just mark an application as
-  # submitted, to enable post-submission journeys.
   # rubocop:disable Metrics/MethodLength
   def call
     submitted_at = Time.current
@@ -21,7 +18,7 @@ class ApplicationSubmission
 
     if FeatureFlags.datastore_submission.enabled?
       DatastoreApi::Requests::CreateApplication.new(
-        payload: {}
+        payload: application_payload
       ).call
     end
 
@@ -29,24 +26,9 @@ class ApplicationSubmission
   end
   # rubocop:enable Metrics/MethodLength
 
-  private
-
-  # Just a quick and dirty example.
-  # What we want eventually is a proper adapter to transform
-  # the application record into the expected JSON document,
-  # conforming to the agreed schema.
-  # https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas
-  # :nocov:
   def application_payload
-    crime_application.as_json(
-      only: [:id, :status, :created_at, :submitted_at, :date_stamp]
-    ).merge(
-      client_details: {
-        applicant: crime_application.applicant.as_json
-      },
-      reference: crime_application.usn,
-      schema_version: 0.1,
-    )
+    SubmissionSerializer::Application.new(
+      crime_application
+    ).generate.as_json
   end
-  # :nocov:
 end
