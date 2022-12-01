@@ -51,7 +51,7 @@ RSpec.describe SubmissionSerializer::Application do
           'ioj_passport' => [],
           'provider_details' => {},
           'client_details' => a_hash_including('applicant'),
-          'case_details' => a_hash_including('offences', 'codefendants'),
+          'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
         )
       )
