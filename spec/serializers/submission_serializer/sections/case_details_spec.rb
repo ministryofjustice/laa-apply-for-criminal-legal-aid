@@ -15,18 +15,15 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       appeal_with_changes_details: 'appeal changes',
       hearing_court_name: 'Court',
       hearing_date: hearing_date,
-      charges: [charge],
+      charges: [charge1, charge2],
       codefendants: [codefendant],
     )
   end
 
   let(:hearing_date) { DateTime.new(2023, 3, 2) }
 
-  let(:charge) do
-    Charge.new(
-      offence_name: 'Common assault',
-    )
-  end
+  let(:charge1) { Charge.new(offence_name: 'Common assault') }
+  let(:charge2) { Charge.new(offence_name: 'An unlisted offence') }
 
   let(:codefendant) do
     Codefendant.new(
@@ -51,7 +48,12 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
             name: 'Common assault',
             offence_class: 'H',
             dates: %w[Date1 Date2],
-          }
+          },
+          {
+            name: 'An unlisted offence',
+            offence_class: nil,
+            dates: %w[Date1],
+          },
         ],
         codefendants: [
           {
@@ -65,7 +67,8 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   end
 
   before do
-    allow(charge).to receive(:offence_dates).and_return([{ date: 'Date1' }, { date: 'Date2' }])
+    allow(charge1).to receive(:offence_dates).and_return([{ date: 'Date1' }, { date: 'Date2' }])
+    allow(charge2).to receive(:offence_dates).and_return([{ date: 'Date1' }])
   end
 
   describe '#generate' do
