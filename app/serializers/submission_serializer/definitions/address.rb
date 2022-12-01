@@ -1,8 +1,8 @@
 module SubmissionSerializer
   module Definitions
     class Address < Definitions::BaseDefinition
-      def blank?
-        super || address_line_one.blank?
+      def present?
+        super && address_line_one.present?
       end
 
       def to_builder
