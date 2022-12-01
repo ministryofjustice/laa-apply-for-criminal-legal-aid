@@ -1,6 +1,10 @@
 module SubmissionSerializer
   module Definitions
     class Address < Definitions::BaseDefinition
+      def blank?
+        super || address_line_one.blank?
+      end
+
       def to_builder
         Jbuilder.new do |json|
           json.lookup_id lookup_id

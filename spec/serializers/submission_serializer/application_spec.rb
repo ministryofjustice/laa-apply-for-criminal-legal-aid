@@ -32,13 +32,13 @@ RSpec.describe SubmissionSerializer::Application do
     # need to test again the output of a whole application,
     # we can use simplified doubles with the absolute minimum
     # and do a sanity check / smoke test on the result.
-    #
+    # There is a full serialization test with real DB records
+    # in spec `services/application_submission_spec.rb`
+
     let(:kase) { Case.new }
-    let(:ioj) { Ioj.new }
 
     before do
       allow(crime_application).to receive(:case).and_return(kase)
-      allow(crime_application).to receive(:ioj).and_return(ioj)
     end
 
     it 'generates a serialized version of the application' do
@@ -49,8 +49,10 @@ RSpec.describe SubmissionSerializer::Application do
           'schema_version' => 1.0,
           'status' => 'submitted',
           'ioj_passport' => [],
-          'client_details' => a_hash_including('applicant' => nil),
-          'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
+          'provider_details' => {},
+          'client_details' => a_hash_including('applicant'),
+          'case_details' => a_hash_including('offences', 'codefendants'),
+          'interests_of_justice' => [],
         )
       )
     end
