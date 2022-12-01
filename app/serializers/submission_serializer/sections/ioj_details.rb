@@ -4,26 +4,27 @@ module SubmissionSerializer
       def to_builder
         Jbuilder.new do |json|
           json.interests_of_justice do
-            if crime_application.ioj.present?
-              serialize_types(json)
-            else
-              json.merge!([])
-            end
+            json.merge! serialized_ioj_types
           end
         end
       end
 
       private
 
-      def serialize_types(json)
-        crime_application.ioj.types.each do |ioj_type|
-          json.child! do
-            type = IojReasonType.new(ioj_type)
+      def serialized_ioj_types
+        # IoJ record may be `nil` if any IoJ passport triggered
+        ioj_types = ioj&.types || []
 
-            json.type type.to_s
-            json.reason crime_application.ioj[type.justification_field_name]
-          end
+        ioj_types.map do |ioj_type|
+          type = IojReasonType.new(ioj_type)
+          reason = ioj[type.justification_field_name]
+
+          { type: type.to_s, reason: reason }.as_json
         end
+      end
+
+      def ioj
+        @ioj ||= crime_application.ioj
       end
     end
   end

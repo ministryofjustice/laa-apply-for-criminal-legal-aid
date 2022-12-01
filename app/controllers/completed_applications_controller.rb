@@ -21,39 +21,31 @@ class CompletedApplicationsController < DashboardController
     )
   end
 
+  # TODO: implement re-hydration with datastore, as this
+  # action was relying on existing local DB records.
+  # :nocov:
   def amend
     ApplicationAmendment.new(current_crime_application).call
 
     # Redirect to check your answers (review) page
     redirect_to edit_steps_submission_review_path(current_crime_application)
   end
+  # :nocov:
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def applications_from_datastore
-    if FeatureFlags.datastore_submission.enabled?
-      result = DatastoreApi::Requests::ListApplications.new(
-        status: status_filter, **pagination_params
-      ).call
+    result = DatastoreApi::Requests::ListApplications.new(
+      status: status_filter, **pagination_params
+    ).call
 
-      @paginator = InfinitePaginationV2.new(
-        pagination: result.pagination,
-        params: params,
-      )
+    @paginator = InfinitePaginationV2.new(
+      pagination: result.pagination,
+      params: params,
+    )
 
-      result
-    else
-      # :nocov:
-      CrimeApplication
-        .where(status: status_filter)
-        .joins(:people)
-        .includes(:applicant)
-        .merge(CrimeApplication.order(submitted_at: :desc))
-      # :nocov:
-    end
+    result
   end
-  # rubocop:enable Metrics/MethodLength
 
   def status_filter
     allowed_statuses = [
@@ -71,17 +63,11 @@ class CompletedApplicationsController < DashboardController
     }
   end
 
-  # FIXME: Once we have datastore working properly,
-  # clean up code that talks to local database
   def current_crime_application
     return if params[:id].blank?
 
-    @current_crime_application ||= if FeatureFlags.datastore_submission.enabled?
-                                     DatastoreApi::Requests::GetApplication.new(
-                                       application_id: params[:id]
-                                     ).call
-                                   else
-                                     CrimeApplication.not_in_progress.find_by(id: params[:id])
-                                   end
+    @current_crime_application ||= DatastoreApi::Requests::GetApplication.new(
+      application_id: params[:id]
+    ).call
   end
 end

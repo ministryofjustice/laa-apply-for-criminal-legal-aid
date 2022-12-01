@@ -30,9 +30,11 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :declaration }
 
+    let(:submission_success) { true }
+
     before do
       # We don't test its implementation as this is tested separately
-      allow_any_instance_of(ApplicationSubmission).to receive(:call).and_return(true)
+      allow_any_instance_of(ApplicationSubmission).to receive(:call).and_return(submission_success)
     end
 
     context 'submits the application' do
@@ -46,7 +48,17 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     end
 
     context 'has correct next step' do
-      it { is_expected.to have_destination(:confirmation, :show, id: crime_application, reference: 123) }
+      context 'when the submission was successful' do
+        let(:submission_success) { true }
+
+        it { is_expected.to have_destination(:confirmation, :show, id: crime_application, reference: 123) }
+      end
+
+      context 'when the submission was unsuccessful' do
+        let(:submission_success) { false }
+
+        it { is_expected.to have_destination('/errors', :unhandled, id: nil) }
+      end
     end
   end
 end

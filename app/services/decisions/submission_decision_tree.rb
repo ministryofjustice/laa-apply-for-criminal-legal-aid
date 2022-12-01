@@ -17,10 +17,13 @@ module Decisions
       # Get it before we purge the local DB record
       reference = current_crime_application.usn
 
-      # TODO: this potentially will purge the record soon
-      ApplicationSubmission.new(current_crime_application).call
-
-      show(:confirmation, reference:)
+      if ApplicationSubmission.new(current_crime_application).call
+        show(:confirmation, reference:)
+      else
+        # TODO: we need a more user-friendly unhappy path
+        # for when the submission or datastore fail
+        show('/errors', action: :unhandled, id: nil)
+      end
     end
   end
 end

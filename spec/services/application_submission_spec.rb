@@ -17,7 +17,6 @@ RSpec.describe ApplicationSubmission do
       status: 'in_progress',
       client_has_partner: 'no',
       declaration_signed: true,
-      date_stamp: nil,
     )
 
     client = Applicant.create(
@@ -77,6 +76,8 @@ RSpec.describe ApplicationSubmission do
   end
 
   before do
+    allow(crime_application).to receive(:destroy)
+
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       .to_return(status: 201, body: '{}')
   end
@@ -135,6 +136,37 @@ RSpec.describe ApplicationSubmission do
             :post, 'http://datastore-webmock/api/v1/applications'
           ).with(body: { application: payload })
         ).to have_been_made.once
+      end
+
+      it 'purges the application from the local database' do
+        expect(crime_application).to have_received(:destroy)
+      end
+    end
+
+    context 'handling of errors' do
+      before do
+        stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+          .to_raise(StandardError)
+
+        allow(Sentry).to receive(:capture_exception)
+
+        subject.call
+      end
+
+      it 'does not purge the application from the local database' do
+        expect(crime_application).not_to have_received(:destroy)
+      end
+
+      it 'does not change any attributes of the application' do
+        expect(crime_application.reload.date_stamp).to be_nil
+        expect(crime_application.reload.submitted_at).to be_nil
+        expect(crime_application.reload.status).to eq('in_progress')
+      end
+
+      it 'reports the exception, and redirect to the error page' do
+        expect(Sentry).to have_received(:capture_exception).with(
+          an_instance_of(StandardError)
+        )
       end
     end
   end

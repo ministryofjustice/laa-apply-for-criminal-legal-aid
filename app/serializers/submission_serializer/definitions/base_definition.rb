@@ -8,7 +8,7 @@ module SubmissionSerializer
       end
 
       def generate
-        return unless __getobj__
+        return if blank?
 
         if respond_to?(:map)
           map { |item| self.class.generate(item) }
