@@ -16,17 +16,21 @@
       </div>
 
       <% if current_crime_application %>
+        <% crime_application = present(current_crime_application, CrimeApplicationPresenter) %>
+
         <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Quick actions</h4>
         <p>Speed up some common application actions</p>
 
         <div class="govuk-button-group">
-          <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
-                        class: 'govuk-button govuk-!-margin-right-1',
-                        data: { module: 'govuk-button' } do; 'Bypass DWP'; end if current_crime_application.try(:in_progress?) %>
+          <% if crime_application.in_progress? && !crime_application.applicant&.passporting_benefit %>
+            <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
+                          class: 'govuk-button govuk-!-margin-right-1',
+                          data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
+          <% end %>
 
           <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
                         class: 'govuk-button govuk-!-margin-right-1',
-                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if current_crime_application.try(:submitted?) %>
+                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if crime_application.submitted? %>
 
           <%= button_to developer_tools_crime_application_path, method: :delete,
                         class: 'govuk-button govuk-button--warning',
