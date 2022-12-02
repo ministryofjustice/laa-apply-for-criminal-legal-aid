@@ -6,7 +6,11 @@ class Case < ApplicationRecord
   accepts_nested_attributes_for :codefendants, allow_destroy: true
 
   has_many :charges, dependent: :destroy,
-           before_add: [:initialise_dates]
+           before_add: [:initialise_dates] do
+    def complete
+      select(&:complete?)
+    end
+  end
 
   private
 
