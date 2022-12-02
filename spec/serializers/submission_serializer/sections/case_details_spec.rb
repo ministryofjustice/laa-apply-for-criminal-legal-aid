@@ -15,23 +15,12 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       appeal_with_changes_details: 'appeal changes',
       hearing_court_name: 'Court',
       hearing_date: hearing_date,
-      charges: [charge1, charge2],
-      codefendants: [codefendant],
+      charges: double(complete: []), # `charges` serialisation tested in `definitions/offence_spec.rb`
+      codefendants: [], # `codefendants` serialisation tested in `definitions/codefendant_spec.rb`
     )
   end
 
   let(:hearing_date) { DateTime.new(2023, 3, 2) }
-
-  let(:charge1) { Charge.new(offence_name: 'Common assault') }
-  let(:charge2) { Charge.new(offence_name: 'An unlisted offence') }
-
-  let(:codefendant) do
-    Codefendant.new(
-      first_name: 'Max',
-      last_name: 'Mustermann',
-      conflict_of_interest: 'yes',
-    )
-  end
 
   let(:json_output) do
     {
@@ -43,32 +32,10 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         appeal_with_changes_details: 'appeal changes',
         hearing_court_name: 'Court',
         hearing_date: hearing_date,
-        offences: [
-          {
-            name: 'Common assault',
-            offence_class: 'H',
-            dates: %w[Date1 Date2],
-          },
-          {
-            name: 'An unlisted offence',
-            offence_class: nil,
-            dates: %w[Date1],
-          },
-        ],
-        codefendants: [
-          {
-            first_name: 'Max',
-            last_name: 'Mustermann',
-            conflict_of_interest: 'yes',
-          }
-        ]
+        offences: [],
+        codefendants: []
       }
     }.as_json
-  end
-
-  before do
-    allow(charge1).to receive(:offence_dates).and_return([{ date: 'Date1' }, { date: 'Date2' }])
-    allow(charge2).to receive(:offence_dates).and_return([{ date: 'Date1' }])
   end
 
   describe '#generate' do

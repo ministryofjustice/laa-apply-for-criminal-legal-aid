@@ -13,7 +13,7 @@ module SubmissionSerializer
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
 
-            json.offences Definitions::Offence.generate(kase.charges)
+            json.offences Definitions::Offence.generate(kase.charges.complete)
             json.codefendants Definitions::Codefendant.generate(kase.codefendants)
           end
         end

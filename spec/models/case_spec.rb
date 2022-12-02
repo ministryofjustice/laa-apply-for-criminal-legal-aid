@@ -31,5 +31,10 @@ RSpec.describe Case, type: :model do
         charges.create
       end.to change(OffenceDate, :count).by(1)
     end
+
+    it 'has an association extension to return only complete charges' do
+      charges << Charge.new
+      expect(charges.complete).to be_empty
+    end
   end
 end

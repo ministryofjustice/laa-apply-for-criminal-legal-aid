@@ -56,6 +56,13 @@ RSpec.describe ApplicationSubmission do
       offence_dates: [OffenceDate.new(date: '01-02-2000')]
     )
 
+    # An incomplete charge (no dates), on purpose
+    # The serializer should filter/skip it
+    Charge.create(
+      case: kase,
+      offence_name: 'Common assault',
+    )
+
     Codefendant.create(
       case: kase,
       first_name: 'Jane',
