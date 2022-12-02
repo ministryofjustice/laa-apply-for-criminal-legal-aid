@@ -1,17 +1,32 @@
 # :nocov:
 module DeveloperTools
   class CrimeApplicationsController < ApplicationController
-    before_action :check_crime_application_presence
-
     def destroy
-      current_crime_application.destroy
+      if current_crime_application
+        current_crime_application.destroy
+      elsif current_remote_application
+        DatastoreApi::Requests::DeleteApplication.new(
+          application_id: params[:id]
+        ).call
+      end
+
       redirect_to crime_applications_path, flash: { success: 'Application has been deleted' }
+    end
+
+    def mark_as_returned
+      DatastoreApi::Requests::UpdateApplication.new(
+        application_id: params[:id],
+        payload: { status: ApplicationStatus::RETURNED }
+      ).call
+
+      redirect_to crime_applications_path, flash: { success: 'Application marked as returned' }
     end
 
     def bypass_dwp
       find_or_create_applicant
 
       crime_application.update(
+        client_has_partner: YesNoAnswer::NO,
         navigation_stack: [
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
@@ -23,17 +38,17 @@ module DeveloperTools
       redirect_to edit_steps_client_benefit_check_result_path(crime_application)
     end
 
-    def mark_as_returned
-      current_crime_application.returned!
-      redirect_to crime_applications_path, flash: { success: 'Application marked as returned' }
-    end
-
     private
 
-    # For developer tools we don't do any scoping, not that
-    # it matters once we purge applications anyways
+    # For developer tools we don't do any scoping by provider/firm
     def current_crime_application
-      @current_crime_application ||= CrimeApplication.find_by(id: params[:id])
+      @current_crime_application ||= CrimeApplication.in_progress.find_by(id: params[:id])
+    end
+
+    def current_remote_application
+      @current_remote_application ||= DatastoreApi::Requests::GetApplication.new(
+        application_id: params[:id]
+      ).call
     end
 
     def crime_application
