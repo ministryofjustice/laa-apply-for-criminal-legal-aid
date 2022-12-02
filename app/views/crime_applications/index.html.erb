@@ -1,16 +1,6 @@
 <% title t('.page_title') %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-    <%= render partial: 'shared/flash_banner' %>
-
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-
-    <%= button_to crime_applications_path,
-                  class: 'govuk-button govuk-button--start',
-                  data: { module: 'govuk-button' } do; t('.start_button'); end %>
-  </div>
-</div>
+<%= render partial: 'shared/dashboard_header' %>
 
 <%= render partial: 'shared/subnavigation', locals: { in_progress_count: @applications.count, returned_applications_count: @returned_applications_count } %>
 
