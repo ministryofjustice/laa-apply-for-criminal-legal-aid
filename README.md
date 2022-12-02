@@ -40,6 +40,22 @@ You can also compile assets manually with `rails dartsass:build` at any time, an
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
+**Note about the datastore service**
+
+Some functionality in this service relies on a [remote datastore](https://github.com/ministryofjustice/laa-criminal-applications-datastore) 
+being available to submit applications, and read these back again.
+
+Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running 
+to receive the submitted application.  
+Also, some functionality in the dashboard will make use of this datastore.
+
+To facilitate an end-to-end local setup without worrying about dependencies, instead of running the local datastore service, 
+you can rely on a shared remote datastore harness service, which is identical to the one running on staging, but can be used by developers as 
+if it was running locally.
+
+However, for active development, and to debug or diagnose issues, running the datastore service locally will always be 
+the recommended way. Also it is much easier to inspect the database, wipe it, run migrations, etc.
+
 ## Running the tests
 
 You can run all the code linters and tests with:
