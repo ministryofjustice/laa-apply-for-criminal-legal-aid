@@ -3,8 +3,6 @@ en:
   crime_applications:
     index:
       page_title: Your applications
-      heading: Your applications
-      start_button: Make a new application
       delete_button: Delete
       table_headings:
         applicant_name: Name
@@ -41,9 +39,7 @@ en:
       success_flash: "%{applicant_name}’s application has been deleted"
   completed_applications:
     index:
-      page_title: Your applications
-      heading: Your applications
-      start_button: Make a new application
+      page_title: Your submitted applications
       delete_button: Delete
       table_headings:
         applicant_name: Name
@@ -68,6 +64,9 @@ en:
         phone: 'Telephone: 0300 200 2020'
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
   shared:
+    dashboard_header:
+      heading: Your applications
+      create_button: Make a new application
     subnavigation:
       in_progress:
         zero: In progress

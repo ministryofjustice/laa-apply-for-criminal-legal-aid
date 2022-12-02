@@ -1,0 +1,15 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <%= render partial: 'shared/flash_banner' %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= button_to crime_applications_path, class: 'govuk-button govuk-button--start',
+                  data: { module: 'govuk-button' }, role: 'button', draggable: false do %>
+      <%= t('.create_button') %>
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+    <% end %>
+  </div>
+</div>
