@@ -19,6 +19,12 @@ en:
     success:
       title: Success
 
+  layouts:
+    login_menu:
+      your_applications: Your applications
+      sign_in: Sign in
+      sign_out: Sign out
+
   support:
     array:
       # Defaults for `array.to_sentence`

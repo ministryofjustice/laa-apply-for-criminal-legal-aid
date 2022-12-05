@@ -1,0 +1,16 @@
+<% if provider_signed_in? %>
+  <nav aria-label="Menu" class="govuk-header__navigation ">
+    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" hidden>Menu</button>
+    <ul id="navigation" class="govuk-header__navigation-list">
+      <li class="govuk-header__navigation-item <%= 'govuk-header__navigation-item--active' if current_page?(crime_applications_path) %>">
+        <%= link_to t('.your_applications'), crime_applications_path, class: 'govuk-header__link' %>
+      </li>
+      <li class="govuk-header__navigation-item">
+        <%= 'email@example.com' %>
+      </li>
+      <li class="govuk-header__navigation-item">
+        <%= button_to t('.sign_out'), session_path, class: 'govuk-header__link app-header__auth-link', method: :delete %>
+      </li>
+    </ul>
+  </nav>
+<% end %>

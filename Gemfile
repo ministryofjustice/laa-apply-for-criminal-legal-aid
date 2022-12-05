@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
+gem 'devise', '~> 4.8.1'
 gem 'faraday', '~> 2.4'
 gem 'jbuilder', '~> 2.11.5'
 gem 'pg', '~> 1.4'

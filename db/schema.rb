@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_102832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -77,6 +77,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
 
+  create_table "firms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "office_codes", default: [], null: false, array: true
+  end
+
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "types", default: [], array: true
     t.text "loss_of_liberty_justification"
@@ -120,6 +127,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
+  create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "firm_id", null: false
+    t.string "email", null: false
+    t.string "username", null: false
+    t.string "description", null: false
+    t.string "selected_office_code"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
+    t.index ["firm_id", "email"], name: "index_providers_on_firm_id_and_email", unique: true
+    t.index ["firm_id"], name: "index_providers_on_firm_id"
+  end
+
   add_foreign_key "addresses", "people"
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
@@ -127,4 +155,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"
+  add_foreign_key "providers", "firms"
 end

@@ -33,6 +33,15 @@ Rails.application.routes.draw do
     get :not_found
   end
 
+  devise_for :providers,
+             controllers: {
+               sessions: 'providers/logins'
+             },
+             path_names: {
+               sign_in: 'login',
+               sign_out: 'logout',
+             }
+
   resource :session, only: [:destroy] do
   end
 

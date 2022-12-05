@@ -10,11 +10,19 @@
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
+<% content_for(:header_navigation) do %>
+  <%= render partial: 'layouts/login_menu' %>
+<% end %>
+
 <% content_for(:phase_banner) do %>
   <% render partial: 'layouts/phase_banner' %>
 <% end %>
 
 <% content_for(:content) do %>
+  <%# Temporarily to see devise errors %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
   <%= yield %>
 <% end %>
 
