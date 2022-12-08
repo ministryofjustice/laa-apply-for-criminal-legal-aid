@@ -16,7 +16,7 @@ describe LaaPortalSetup do
     context 'when no metadata endpoint is declared' do
       it 'raises an exception' do
         expect { subject }.to raise_exception(
-          LaaPortalSetup::AuthSetupError, /key not found: "LAA_PORTAL_IDP_METADATA_URL"/
+          KeyError, /key not found: "LAA_PORTAL_IDP_METADATA_URL"/
         )
 
         expect(Sentry).to have_received(:capture_exception).with(
@@ -36,7 +36,7 @@ describe LaaPortalSetup do
 
       it 'raises an exception' do
         expect { subject }.to raise_exception(
-          LaaPortalSetup::AuthSetupError, /Execution expired parsing remote metadata: `url`/
+          StandardError, /Execution expired parsing remote metadata: `url`/
         )
 
         expect(Sentry).to have_received(:capture_exception).with(

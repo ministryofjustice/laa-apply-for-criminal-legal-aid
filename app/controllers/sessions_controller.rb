@@ -12,4 +12,8 @@ class SessionsController < ApplicationController
     warden.logout
     redirect_to root_path
   end
+
+  def failure
+    redirect_to root_path, flash: { notice: t('errors.omniauth.signin_failure') }
+  end
 end

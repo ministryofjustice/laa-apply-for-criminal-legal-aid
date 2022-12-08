@@ -34,5 +34,17 @@ RSpec.describe 'Error pages' do
       get '/errors/unauthorized'
       expect(response).to have_http_status(:ok)
     end
+
+    context 'when the sign in fails' do
+      before do
+        allow(OmniAuth.config).to receive(:test_mode).and_return(false)
+        allow_any_instance_of(LaaPortalSetup).to receive(:setup).and_raise(StandardError)
+      end
+
+      it 'redirects to the home' do
+        post saml_authorize_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 end

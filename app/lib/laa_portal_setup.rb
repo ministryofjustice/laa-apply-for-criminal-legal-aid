@@ -1,6 +1,4 @@
 class LaaPortalSetup
-  class AuthSetupError < StandardError; end
-
   def initialize(env)
     @env = env
     @request = ActionDispatch::Request.new(env)
@@ -27,8 +25,6 @@ class LaaPortalSetup
         office_codes: ['LAA_ACCOUNTS'],
       }
     )
-  rescue StandardError => e
-    raise AuthSetupError, e
   end
 
   # :nocov:
@@ -73,33 +69,11 @@ class LaaPortalSetup
       )
     end
 
-    Rails.logger.error(e)
     Sentry.capture_exception(e)
-
     raise(e) # re-raise exception
   end
 
   def metadata_url
     ENV.fetch('LAA_PORTAL_IDP_METADATA_URL')
   end
-
-  # This is a middleware class used to catch exceptions
-  # during the strategy `setup` phase, like metadata timeouts.
-  # :nocov:
-  class AuthSetupErrorCatcher
-    def initialize(app)
-      @app = app
-    end
-
-    def call(env)
-      @app.call(env)
-    rescue LaaPortalSetup::AuthSetupError => e
-      flash = ActionDispatch::Flash::FlashHash.new(notice: e.message)
-
-      Rack::Request.new(env).session['flash'] = flash.to_session_value
-
-      [302, { 'Location' => '/' }, []]
-    end
-  end
-  # :nocov:
 end
