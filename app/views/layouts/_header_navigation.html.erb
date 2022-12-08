@@ -1,0 +1,16 @@
+<% if signed_in? %>
+  <nav aria-label="Menu" class="govuk-header__navigation">
+    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" hidden>Menu</button>
+    <ul id="navigation" class="govuk-header__navigation-list">
+      <li class="govuk-header__navigation-item">
+        <%= link_to t('.your_applications'), crime_applications_path, class: 'govuk-header__link' %>
+      </li>
+      <li class="govuk-header__navigation-item">
+        <%= current_user.name %>
+      </li>
+      <li class="govuk-header__navigation-item">
+        <%= button_to t('.sign_out'), logout_path, method: :delete, class: 'govuk-header__link app-header__auth-link' %>
+      </li>
+    </ul>
+  </nav>
+<% end %>

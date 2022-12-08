@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
   describe '#destroy' do
-    it 'resets the session' do
-      expect(subject).to receive(:reset_session)
+    it 'logs out the user' do
+      expect(warden).to receive(:logout)
       delete :destroy
     end
 

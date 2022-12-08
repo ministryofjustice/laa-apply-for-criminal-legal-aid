@@ -10,3 +10,5 @@ data:
   RAILS_SERVE_STATIC_FILES: enabled
   # Datastore endpoint for staging
   DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.live.cloud-platform.service.justice.gov.uk
+  # LAA Portal metadata endpoint (for now, we use the dev mock)
+  LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata

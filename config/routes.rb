@@ -30,11 +30,15 @@ Rails.application.routes.draw do
     get :application_not_found
     get :invalid_session
     get :unhandled
+    get :unauthorized
     get :not_found
   end
 
-  resource :session, only: [:destroy] do
-  end
+  # Omniauth SAML
+  post 'auth/saml', as: :saml_authorize
+  post 'auth/saml/callback', to: 'sessions#create', as: :saml_authorize_callback
+  get 'auth/saml/callback', to: 'sessions#create', constraints: -> (_) { OmniAuth.config.test_mode }
+  delete 'logout', to: 'sessions#destroy'
 
   namespace :developer_tools, constraints: -> (_) { FeatureFlags.developer_tools.enabled? } do
     resources :crime_applications, only: [:update, :destroy], path: 'applications' do
