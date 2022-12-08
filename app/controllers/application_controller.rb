@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ErrorHandling
+  include AuthHandling
   include StepsHelper
 
   add_flash_types :success

@@ -1,7 +1,5 @@
 class HomeController < ApplicationController
-  def index; end
+  skip_before_action :authenticate_user!
 
-  # Just for demo purposes, to be removed
-  def selected_yes; end
-  def selected_no; end
+  def index; end
 end

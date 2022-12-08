@@ -4,13 +4,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').chomp
 
 gem 'faraday', '~> 2.4'
+gem 'govuk_design_system_formbuilder', '~> 3.1.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
 gem 'uk_postcode'
 
-gem 'govuk_design_system_formbuilder', '~> 3.1.0'
+# Authentication
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-saml', '~> 2.1.0'
+gem 'warden'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -57,6 +61,7 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
+  gem 'warden-rspec-rails' # if we move to Devise, we don't need this
   gem 'webdrivers'
   gem 'webmock'
 end

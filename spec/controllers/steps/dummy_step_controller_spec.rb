@@ -8,14 +8,39 @@ end
 
 RSpec.describe DummyStepController, type: :controller do
   before do
-    Rails.application.routes.draw do
-      get '/dummy_step/:id' => 'dummy_step#show'
-      root to: 'dummy_root#index'
+    Rails.application.routes.append do
+      get '/dummy_step/:id', to: 'dummy_step#show'
+      get '/dummy_step/:id/edit', to: 'dummy_step#edit'
+      put '/dummy_step/:id', to: 'dummy_step#update'
     end
+    Rails.application.reload_routes!
   end
 
-  after do
-    Rails.application.reload_routes!
+  describe 'authenticate_user!' do
+    before do
+      sign_out
+    end
+
+    describe '#show' do
+      it 'redirects to the unauthorized error page' do
+        get :show, params: { id: '12345' }
+        expect(response).to redirect_to(unauthorized_errors_path)
+      end
+    end
+
+    describe '#edit' do
+      it 'redirects to the unauthorized error page' do
+        get :edit, params: { id: '12345' }
+        expect(response).to redirect_to(unauthorized_errors_path)
+      end
+    end
+
+    describe '#update' do
+      it 'redirects to the unauthorized error page' do
+        put :update, params: { id: '12345' }
+        expect(response).to redirect_to(unauthorized_errors_path)
+      end
+    end
   end
 
   describe 'navigation stack' do

@@ -18,6 +18,14 @@ en:
   flash:
     success:
       title: Success
+    notice:
+      title: Notice
+
+  layouts:
+    header_navigation:
+      your_applications: Your applications
+      sign_in: Sign in
+      sign_out: Sign out
 
   support:
     array:

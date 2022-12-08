@@ -28,4 +28,11 @@ RSpec.describe 'Error pages' do
       expect(response).to have_http_status(:internal_server_error)
     end
   end
+
+  context 'unauthorized' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/unauthorized'
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

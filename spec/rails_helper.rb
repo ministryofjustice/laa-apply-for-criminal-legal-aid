@@ -34,11 +34,19 @@ RSpec.configure do |config|
 
   config.include ActiveSupport::Testing::TimeHelpers
 
+  config.include(Warden::Test::ControllerHelpers, type: :controller)
+  config.include(AuthenticationHelpers, type: :controller)
+
   config.include(ViewSpecHelpers, type: :helper)
   config.include(ViewSpecHelpers, type: :view)
 
   config.before(:each, type: :helper) { initialize_view_helpers(helper) }
   config.before(:each, type: :view) { initialize_view_helpers(view) }
+
+  # As a default, we assume a user is signed in all controllers.
+  # For specific scenarios, the user can be "signed off".
+  config.before(:each, type: :controller) { sign_in }
+  config.before(:all, type: :request) { get saml_authorize_callback_path }
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

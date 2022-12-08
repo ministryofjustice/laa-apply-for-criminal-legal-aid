@@ -1,16 +1,15 @@
 <% flash.each do |type, msg| %>
-  <% if type == 'success' %>
-    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-      <div class="govuk-notification-banner__header">
-        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          <%= t('flash.success.title') %>
-        </h2>
-      </div>
-      <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">
-          <%= msg %>
-        </p>
-      </div>
+  <div class="govuk-notification-banner govuk-notification-banner--<%= type %>" role="alert"
+       aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        <%= t(:title, scope: "flash.#{type}") %>
+      </h2>
     </div>
-  <% end %>
+    <div class="govuk-notification-banner__content">
+      <p class="govuk-notification-banner__heading">
+        <%= msg %>
+      </p>
+    </div>
+  </div>
 <% end %>

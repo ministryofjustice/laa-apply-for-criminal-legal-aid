@@ -10,6 +10,10 @@
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
+<% content_for(:header_navigation) do %>
+  <% render partial: 'layouts/header_navigation' %>
+<% end %>
+
 <% content_for(:phase_banner) do %>
   <% render partial: 'layouts/phase_banner' %>
 <% end %>
