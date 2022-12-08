@@ -32,7 +32,7 @@ RSpec.describe 'Error pages' do
   context 'unauthorized' do
     it 'renders the expected page and has expected status code' do
       get '/errors/unauthorized'
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:forbidden)
     end
 
     context 'when the sign in fails' do

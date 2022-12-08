@@ -15,7 +15,7 @@ class ErrorsController < ApplicationController
   end
 
   def unauthorized
-    respond_with_status(:ok)
+    respond_with_status(:forbidden)
   end
 
   def unhandled
