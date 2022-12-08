@@ -13,4 +13,4 @@ data:
   # LAA Portal metadata endpoint
   # (not accessible from inside CP it seems, using test mode for now)
   LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
-  OMNIAUTH_TEST_MODE: true
+  OMNIAUTH_TEST_MODE: "true"
