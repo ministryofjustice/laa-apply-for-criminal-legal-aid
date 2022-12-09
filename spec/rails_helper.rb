@@ -47,6 +47,9 @@ RSpec.configure do |config|
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
   config.before(:all, type: :request) { get saml_authorize_callback_path }
+
+  # Use the faster rack test by default for system specs
+  config.before(:each, type: :system) { driven_by :rack_test }
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
