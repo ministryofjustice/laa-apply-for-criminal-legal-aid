@@ -35,13 +35,8 @@ class LaaPortalSetup
       info: {
         name: 'test-user',
         email: 'test@example.com',
-      },
-      extra: {
-        raw_info: {
-          USER_EMAIL: 'test@example.com',
-          LAA_APP_ROLES: ['CCR_CCRGradeA1'],
-          LAA_ACCOUNTS: ['1A123B'],
-        }
+        roles: ['CCR_CCRGradeA1'],
+        office_codes: ['1A123B'],
       }
     )
   end
