@@ -22,6 +22,10 @@ module Warden
         attrs.name  ||= auth_env.uid
         attrs.email ||= auth_env.uid
 
+        # We get a comma-separated string, but want an array
+        attrs.roles = attrs.roles.split(',')
+        attrs.office_codes = attrs.office_codes.split(',')
+
         attrs
       end
     end
