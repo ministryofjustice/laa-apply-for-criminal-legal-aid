@@ -12,7 +12,7 @@ class CompletedApplicationsController < DashboardController
                                                       .count
 
     # TODO: counter not yet coming from datastore
-    @returned_applications_count = CrimeApplication.returned.count
+    @returned_applications_count = returned_applications_count
   end
 
   def show
@@ -39,10 +39,14 @@ class CompletedApplicationsController < DashboardController
       status: status_filter, **pagination_params
     ).call
 
-    @paginator = InfinitePaginationV2.new(
-      pagination: result.pagination,
-      params: params,
-    )
+    if DatastoreApi.configuration.api_path.include?('v1')
+      @paginator = InfinitePaginationV2.new(
+        pagination: result.pagination,
+        params: params,
+      )
+    end
+
+    @pagination = result.pagination if DatastoreApi.configuration.api_path.include?('v2')
 
     result
   end
@@ -57,11 +61,32 @@ class CompletedApplicationsController < DashboardController
 
   def pagination_params
     {
-      limit: params[:limit],
       sort: params[:sort],
-      page_token: params[:page_token],
-    }
+    }.merge(api_params)
   end
+
+  def api_params
+    if DatastoreApi.configuration.api_path.include?('v2')
+      return { page: params[:page],
+per_page: Kaminari.config.default_per_page }
+    end
+
+    { limit: params[:limit], page_token: params[:page_token] }
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def returned_applications_count
+    returned_params = { status: 'returned' }
+    returned_params[:limit] = 1 if DatastoreApi.configuration.api_path.include?('v1')
+    returned_params[:per_page] = 1 if DatastoreApi.configuration.api_path.include?('v2')
+
+    result = DatastoreApi::Requests::ListApplications.new(**returned_params).call
+
+    return result.pagination['total_count'] if DatastoreApi.configuration.api_path.include?('v2')
+
+    result.pagination['total']
+  end
+  # rubocop:enable Metrics/AbcSize
 
   def current_crime_application
     return if params[:id].blank?

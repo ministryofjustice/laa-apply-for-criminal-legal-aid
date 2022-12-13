@@ -39,6 +39,8 @@ gem 'laa-criminal-applications-datastore-api-client',
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas'
 
+gem 'kaminari'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

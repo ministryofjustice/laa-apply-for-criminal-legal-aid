@@ -4,14 +4,17 @@ class CrimeApplicationsController < DashboardController
 
   def index
     # TODO: scope will change as we know more
-    @applications = CrimeApplication
-                    .in_progress
-                    .joins(:people)
-                    .includes(:applicant)
-                    .merge(Applicant.with_name)
-                    .merge(CrimeApplication.order(created_at: :desc))
+    applications = CrimeApplication
+                   .in_progress
+                   .joins(:people)
+                   .includes(:applicant)
+                   .merge(Applicant.with_name)
+                   .merge(CrimeApplication.order(created_at: :desc))
 
-    @returned_applications_count = CrimeApplication.returned.count
+    @applications = applications.page params[:page]
+
+    @applications_count = applications.count
+    @returned_applications_count = returned_applications_count
   end
 
   def create
@@ -35,4 +38,20 @@ class CrimeApplicationsController < DashboardController
   end
 
   def confirm_destroy; end
+
+  private
+
+  # rubocop:disable Metrics/AbcSize
+  def returned_applications_count
+    returned_params = { status: 'returned' }
+    returned_params[:limit] = 1 if DatastoreApi.configuration.api_path.include?('v1')
+    returned_params[:per_page] = 1 if DatastoreApi.configuration.api_path.include?('v2')
+
+    result = DatastoreApi::Requests::ListApplications.new(**returned_params).call
+
+    return result.pagination['total_count'] if DatastoreApi.configuration.api_path.include?('v2')
+
+    result.pagination['total']
+  end
+  # rubocop:enable Metrics/AbcSize
 end

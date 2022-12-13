@@ -1,0 +1,3 @@
+<li class='<%= "govuk-pagination__item #{' govuk-pagination__item--current' if page == current_page}" %>'>
+  <%= link_to_unless page == current_page, page, completed_crime_applications_path(page:), { rel: page, 'aria-label': "Page #{page}", 'aria-current': ('page' if page == current_page).to_s } %>
+</li>

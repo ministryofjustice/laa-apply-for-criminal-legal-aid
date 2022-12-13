@@ -8,6 +8,12 @@ RSpec.describe 'Dashboard' do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
   let(:pagination_fixture) { { limit: 20, total: 1, sort: 'desc', next_page_token: nil }.to_json }
 
+  before do
+    stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+      .with(query: hash_including({ 'status' => 'returned', 'limit' => '1' }))
+      .to_return(body: { pagination: { total: 0 } }.to_json)
+  end
+
   describe 'start a new application' do
     it 'creates a new `crime_application` record' do
       expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
@@ -146,6 +152,10 @@ RSpec.describe 'Dashboard' do
 
   describe 'list of in progress applications' do
     before :all do
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+        .with(query: hash_including({ 'status' => 'returned', 'limit' => '1' }))
+        .to_return(body: { pagination: { total: 0 } }.to_json)
+
       # sets up a few test records
       app1 = CrimeApplication.create(status: 'in_progress', created_at: Date.new(2022, 10, 15))
       app2 = CrimeApplication.create
@@ -233,30 +243,75 @@ RSpec.describe 'Dashboard' do
       )
     end
 
-    before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: hash_including({ 'status' => 'returned' }))
-        .to_return(body: collection_fixture)
+    context 'with v1 datastore' do
+      before do
+        stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+          .with(query: hash_including({ 'status' => 'returned' }))
+          .to_return(body: collection_fixture)
 
-      get completed_crime_applications_path(q: 'returned')
+        get completed_crime_applications_path(q: 'returned')
+
+        stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+          .with(query: hash_including({ 'status' => 'returned' }))
+          .to_return(body: collection_fixture)
+
+        get completed_crime_applications_path(q: 'returned')
+      end
+
+      it 'shows a list of returned applications' do
+        expect(response).to have_http_status(:success)
+
+        assert_select 'h1', 'Your applications'
+
+        # TODO: assert counters
+        assert_select 'a.moj-sub-navigation__link', text: 'In progress'
+        assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
+        assert_select 'a.moj-sub-navigation__link', text: 'Returned (1)', 'aria-current': 'page'
+
+        assert_select 'tbody.govuk-table__body' do
+          assert_select 'tr.govuk-table__row', 1 do
+            assert_select 'a', count: 1, text: 'John POTTER'
+          end
+          assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
+          assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
+        end
+      end
     end
 
-    it 'shows a list of returned applications' do
-      expect(response).to have_http_status(:success)
+    context 'with v2 datastore' do
+      let(:pagination_fixture) { { per_page: 20, total_count: 1, total_pages: 1, sort: 'desc' }.to_json }
 
-      assert_select 'h1', 'Your applications'
+      before do
+        DatastoreApi.configuration.api_path = '/api/v2'
 
-      # TODO: assert counters
-      assert_select 'a.moj-sub-navigation__link', text: 'In progress'
-      assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
-      assert_select 'a.moj-sub-navigation__link', text: 'Returned', 'aria-current': 'page'
+        stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+          .with(query: hash_including({ 'status' => 'returned' }))
+          .to_return(body: collection_fixture)
 
-      assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'John POTTER'
+        get completed_crime_applications_path(q: 'returned')
+      end
+
+      after do
+        DatastoreApi.configuration.api_path = '/api/v1'
+      end
+
+      it 'shows a list of returned applications' do
+        expect(response).to have_http_status(:success)
+
+        assert_select 'h1', 'Your applications'
+
+        # TODO: assert counters
+        assert_select 'a.moj-sub-navigation__link', text: 'In progress'
+        assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
+        assert_select 'a.moj-sub-navigation__link', text: 'Returned (1)', 'aria-current': 'page'
+
+        assert_select 'tbody.govuk-table__body' do
+          assert_select 'tr.govuk-table__row', 1 do
+            assert_select 'a', count: 1, text: 'John POTTER'
+          end
+          assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
+          assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
       end
     end
   end
