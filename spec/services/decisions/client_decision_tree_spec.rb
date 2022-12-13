@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: 'applicant') }
 
   before do
     allow(
@@ -67,7 +67,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `benefit_check_result`' do
-    let(:form_object) { double('FormObject', applicant: 'applicant') }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :benefit_check_result }
 
     before do
@@ -83,9 +83,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `contact_details`' do
-    let(:form_object) do
-      double('FormObject', applicant: 'applicant', correspondence_address_type: correspondence_address_type)
-    end
+    let(:form_object) { double('FormObject', correspondence_address_type:) }
     let(:step_name) { :contact_details }
 
     context 'and answer is `other_address`' do
