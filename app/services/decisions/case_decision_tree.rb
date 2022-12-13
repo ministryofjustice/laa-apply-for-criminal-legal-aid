@@ -95,7 +95,7 @@ module Decisions
     end
 
     def case_charges
-      @case_charges ||= form_object.case.charges
+      @case_charges ||= current_crime_application.case.charges
     end
 
     def current_charge
