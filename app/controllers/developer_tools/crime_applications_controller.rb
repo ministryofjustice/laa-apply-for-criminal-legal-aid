@@ -59,7 +59,7 @@ module DeveloperTools
 
     def find_or_create_applicant
       Applicant.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
-        surname, details = MockBenefitCheckService::KNOWN.to_a.sample
+        surname, details = DWP::MockBenefitCheckService::KNOWN.to_a.sample
 
         record.update(
           first_name: record.first_name || 'Test',

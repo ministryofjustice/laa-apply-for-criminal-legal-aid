@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BenefitCheckService do
+RSpec.describe DWP::BenefitCheckService do
   subject { described_class.call(applicant) }
 
   let(:last_name) { 'Smith' }

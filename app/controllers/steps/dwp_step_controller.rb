@@ -1,9 +1,9 @@
 module Steps
-  class DwpStepController < BaseStepController
+  class DWPStepController < BaseStepController
     private
 
     def decision_tree_class
-      Decisions::DwpDecisionTree
+      Decisions::DWPDecisionTree
     end
   end
 end

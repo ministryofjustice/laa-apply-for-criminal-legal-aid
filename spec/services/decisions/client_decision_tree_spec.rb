@@ -45,7 +45,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
     before do
       allow(form_object).to receive(:applicant).and_return(applicant_double)
-      allow(UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
     end
 

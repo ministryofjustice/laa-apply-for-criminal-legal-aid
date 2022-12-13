@@ -34,7 +34,7 @@ module Decisions
     end
 
     def after_has_nino
-      UpdateBenefitCheckResultService.call(form_object.applicant)
+      DWP::UpdateBenefitCheckResultService.call(form_object.applicant)
 
       if form_object.applicant.passporting_benefit?
         edit(:benefit_check_result)

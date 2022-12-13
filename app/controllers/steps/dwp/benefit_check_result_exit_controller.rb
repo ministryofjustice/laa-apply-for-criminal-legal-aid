@@ -1,6 +1,6 @@
 module Steps
-  module Dwp
-    class BenefitCheckResultExitController < Steps::DwpStepController
+  module DWP
+    class BenefitCheckResultExitController < Steps::DWPStepController
       def show; end
     end
   end
