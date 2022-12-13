@@ -48,7 +48,7 @@
         <%= f.govuk_check_box :declaration_signed, 1, 0, multiple: false, link_errors: true %>
       <% end %>
 
-      <%= f.continue_button %>
+      <%= f.continue_button(primary: :save_and_submit) %>
     <% end %>
   </div>
 </div>

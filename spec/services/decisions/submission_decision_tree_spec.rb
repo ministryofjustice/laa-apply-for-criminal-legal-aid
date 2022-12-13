@@ -57,8 +57,18 @@ RSpec.describe Decisions::SubmissionDecisionTree do
       context 'when the submission was unsuccessful' do
         let(:submission_success) { false }
 
-        it { is_expected.to have_destination('/errors', :unhandled, id: nil) }
+        it { is_expected.to have_destination(:failure, :edit, id: crime_application) }
       end
+    end
+  end
+
+  context 'when the step is `submission_retry`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :submission_retry }
+
+    it 'retries the submission of the application' do
+      expect(subject).to receive(:submit_application)
+      subject.destination
     end
   end
 end

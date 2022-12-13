@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       namespace :submission do
         edit_step :review
         edit_step :declaration
+        edit_step :failure
         show_step :confirmation
       end
     end

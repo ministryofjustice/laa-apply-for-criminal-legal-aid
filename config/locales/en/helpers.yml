@@ -12,7 +12,9 @@ en:
     submit:
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
+      save_and_submit: Save and submit application
       find_address: Find address
+      try_again: Try again
 
     legend:
       steps_client_has_partner_form:
