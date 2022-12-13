@@ -1,5 +1,5 @@
 module Decisions
-  class DwpDecisionTree < BaseDecisionTree
+  class DWPDecisionTree < BaseDecisionTree
     def destination
       case step_name
       when :confirm_result

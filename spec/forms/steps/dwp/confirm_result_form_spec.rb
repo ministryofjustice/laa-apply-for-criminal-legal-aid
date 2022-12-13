@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Dwp::ConfirmResultForm do
+RSpec.describe Steps::DWP::ConfirmResultForm do
   # NOTE: not using shared examples for form objects yet, to be added
   # once we have some more form objects and some patterns emerge
 

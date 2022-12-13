@@ -10,10 +10,7 @@ module Decisions
       when :has_nino
         after_has_nino
       when :benefit_check_result
-        start_address_journey(
-          HomeAddress,
-          form_object.applicant
-        )
+        after_dwp_check
       when :contact_details
         after_contact_details
       else
@@ -34,7 +31,7 @@ module Decisions
     end
 
     def after_has_nino
-      UpdateBenefitCheckResultService.call(form_object.applicant)
+      DWP::UpdateBenefitCheckResultService.call(form_object.applicant)
 
       if form_object.applicant.passporting_benefit?
         edit(:benefit_check_result)
@@ -43,19 +40,22 @@ module Decisions
       end
     end
 
+    def after_dwp_check
+      start_address_journey(HomeAddress)
+    end
+
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
-        start_address_journey(
-          CorrespondenceAddress,
-          form_object.applicant
-        )
+        start_address_journey(CorrespondenceAddress)
       else
         edit('/steps/case/urn')
       end
     end
 
-    def start_address_journey(address_class, person)
+    def start_address_journey(address_class)
+      person = current_crime_application.applicant
       address = address_class.find_or_create_by(person:)
+
       edit('/steps/address/lookup', address_id: address)
     end
   end

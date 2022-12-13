@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, id: '10', applicant: applicant_double) }
+  let(:crime_application) { instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase) }
   let(:kase) { instance_double(Case, codefendants: codefendants_double, charges: charges_double) }
 
   let(:codefendants_double) { double('codefendants_collection') }
@@ -88,7 +88,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `date_stamp`' do
-    let(:form_object) { double('FormObject', case: kase) }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :date_stamp }
 
     context 'and there are no charges yet' do
