@@ -160,3 +160,11 @@ en:
           page_title: Application submitted
           view_application: View completed application
           back_to_applications: Back to all applications
+      failure:
+        edit:
+          page_title: Application submission failed
+          heading: Sorry, there is a problem with the service
+          lead_text: We cannot connect to our database. This means you cannot submit applications in progress, or view returned and submitted applications.
+          info_text: We have saved your latest application in progress.
+          contact_helpline_html: <a href="%{helpline_url}">Contact the criminal applications helpline</a> if you need to get an update on submitted applications.
+          back_to_applications: Back to all applications

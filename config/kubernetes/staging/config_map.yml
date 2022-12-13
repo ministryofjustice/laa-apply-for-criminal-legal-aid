@@ -12,5 +12,6 @@ data:
   DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.live.cloud-platform.service.justice.gov.uk
   # LAA Portal metadata endpoint
   # (not accessible from inside CP it seems, using test mode for now)
-  LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
-  OMNIAUTH_TEST_MODE: "true"
+  # LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
+  # OMNIAUTH_TEST_MODE: "true"
+  LAA_PORTAL_IDP_SSO_URL: https://samlmock.dev.legalservices.gov.uk/SingleSignOnService
