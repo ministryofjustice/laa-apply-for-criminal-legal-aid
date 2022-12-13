@@ -1,14 +1,12 @@
 module Steps
   module Case
     class DateStampController < Steps::CaseStepController
-      def edit
-        @form_object = DateStampForm.build(
-          current_crime_application
-        )
-      end
+      include Steps::NoOpAdvanceStep
 
-      def update
-        update_and_advance(DateStampForm, as: :date_stamp)
+      private
+
+      def advance_as
+        :date_stamp
       end
     end
   end
