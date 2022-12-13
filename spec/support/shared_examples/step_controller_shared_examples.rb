@@ -105,6 +105,77 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   end
 end
 
+RSpec.shared_examples 'a no-op advance step controller' do |step_name, decision_tree_class|
+  describe '#edit' do
+    context 'when application is not found' do
+      before do
+        # Needed because some specs that include these examples stub current_crime_application,
+        # which is undesirable for this particular test
+        allow(controller).to receive(:current_crime_application).and_return(nil)
+      end
+
+      it 'redirects to the application not found error page' do
+        get :edit, params: { id: '12345' }
+        expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
+
+    context 'when application is found' do
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+
+      it 'responds with HTTP success' do
+        get :edit, params: { id: existing_case }
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:form_class) { Steps::Shared::NoOpForm }
+    let(:form_object) { form_class.new }
+    let(:form_class_params_name) { form_class.name.underscore }
+    let(:expected_params) { { :id => existing_case, form_class_params_name => {} } }
+
+    context 'when application is not found' do
+      let(:existing_case) { '12345' }
+
+      before do
+        # Needed because some specs that include these examples stub current_crime_application,
+        # which is undesirable for this particular test
+        allow(controller).to receive(:current_crime_application).and_return(nil)
+      end
+
+      it 'redirects to the application not found error page' do
+        put :update, params: expected_params
+        expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
+
+    context 'when an application in progress is found' do
+      let(:existing_case) { CrimeApplication.create }
+
+      before do
+        allow(form_class).to receive(:new).and_return(form_object)
+      end
+
+      context 'no-op advance' do
+        let(:decision_tree) { instance_double(decision_tree_class, destination: '/expected_destination') }
+
+        it 'asks the decision tree for the next destination and redirects there' do
+          expect(
+            decision_tree_class
+          ).to receive(:new).with(form_object, as: step_name).and_return(decision_tree)
+
+          put :update, params: expected_params
+
+          expect(response).to have_http_status(:redirect)
+          expect(subject).to redirect_to('/expected_destination')
+        end
+      end
+    end
+  end
+end
+
 RSpec.shared_examples 'an address step controller' do |form_class, decision_tree_class|
   describe '#edit' do
     context 'when application is not found' do

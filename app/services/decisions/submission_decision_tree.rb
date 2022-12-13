@@ -4,7 +4,7 @@ module Decisions
       case step_name
       when :review
         edit(:declaration)
-      when :declaration
+      when :declaration, :submission_retry
         submit_application
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -20,9 +20,7 @@ module Decisions
       if ApplicationSubmission.new(current_crime_application).call
         show(:confirmation, reference:)
       else
-        # TODO: we need a more user-friendly unhappy path
-        # for when the submission or datastore fail
-        show('/errors', action: :unhandled, id: nil)
+        edit(:failure)
       end
     end
   end
