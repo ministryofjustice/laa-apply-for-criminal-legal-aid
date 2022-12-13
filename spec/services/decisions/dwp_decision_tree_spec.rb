@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Decisions::DwpDecisionTree do
+RSpec.describe Decisions::DWPDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) { instance_double(CrimeApplication) }

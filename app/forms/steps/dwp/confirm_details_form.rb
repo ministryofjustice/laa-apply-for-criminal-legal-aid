@@ -1,5 +1,5 @@
 module Steps
-  module Dwp
+  module DWP
     class ConfirmDetailsForm < Steps::BaseFormObject
       attribute :confirm_details, :value_object, source: YesNoAnswer
       validates :confirm_details, inclusion: { in: :choices }

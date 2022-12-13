@@ -1,5 +1,5 @@
 module Steps
-  module Dwp
+  module DWP
     class ConfirmResultForm < Steps::BaseFormObject
       attribute :confirm_result, :value_object, source: YesNoAnswer
 

@@ -1,6 +1,6 @@
 module Steps
-  module Dwp
-    class ConfirmDetailsController < Steps::DwpStepController
+  module DWP
+    class ConfirmDetailsController < Steps::DWPStepController
       before_action :set_presenter
 
       def edit
