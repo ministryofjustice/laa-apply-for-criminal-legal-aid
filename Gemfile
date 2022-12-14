@@ -11,6 +11,10 @@ gem 'puma'
 gem 'rails', '~> 7.0.3'
 gem 'uk_postcode'
 
+# Temporarily until 2.8.1 is released
+# https://github.com/mikel/mail/issues/1541
+gem 'mail', '< 2.8.0'
+
 # Authentication
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
