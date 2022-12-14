@@ -15,6 +15,10 @@ RSpec.describe 'Sign in user journey' do
 
   context 'user is signed in' do
     before do
+      allow_any_instance_of(
+        Datastore::ApplicationCounters
+      ).to receive_messages(submitted_count: 99, returned_count: 5)
+
       click_button 'Sign in with LAA Portal'
     end
 
