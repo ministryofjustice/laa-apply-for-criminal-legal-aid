@@ -18,7 +18,7 @@ class CompletedApplicationsController < DashboardController
   # action was relying on existing local DB records.
   # :nocov:
   def amend
-    ApplicationAmendment.new(current_crime_application).call
+    Datastore::ApplicationAmendment.new(current_crime_application).call
 
     # Redirect to check your answers (review) page
     redirect_to edit_steps_submission_review_path(current_crime_application)
