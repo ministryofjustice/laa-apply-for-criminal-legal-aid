@@ -80,7 +80,3 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
-    infinite_pagination_v2:
-      previous_link: Previous
-      next_link: Next
-      aria_page: Page %{page}
