@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
-  helper_method :in_progress_count, :submitted_count, :returned_count
-  delegate :submitted_count, :returned_count, to: :application_counters
+  helper_method :in_progress_count, :returned_count
+  delegate :returned_count, to: :application_counters
 
   def in_progress_count
     in_progress_scope.count

@@ -1,10 +1,7 @@
 module Datastore
   class ApplicationCounters
+    PER_PAGE_LIMIT = 1
     FALLBACK_COUNT = 0
-
-    def submitted_count
-      @submitted_count ||= count(ApplicationStatus::SUBMITTED)
-    end
 
     def returned_count
       @returned_count ||= count(ApplicationStatus::RETURNED)
@@ -14,7 +11,7 @@ module Datastore
 
     def count(status)
       result = DatastoreApi::Requests::ListApplications.new(
-        status: status.to_s, per_page: 1
+        status: status.to_s, per_page: PER_PAGE_LIMIT
       ).call
 
       result.pagination.fetch('total_count')
