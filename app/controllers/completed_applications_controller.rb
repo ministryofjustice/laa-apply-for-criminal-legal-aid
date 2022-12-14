@@ -3,7 +3,7 @@ class CompletedApplicationsController < DashboardController
                 :present_crime_application, only: [:show]
 
   def index
-    @applications = applications_from_datastore
+    @applications = applications_from_datastore.page(params[:page])
   end
 
   def show
@@ -30,7 +30,7 @@ class CompletedApplicationsController < DashboardController
       status: status_filter, **pagination_params
     ).call
 
-    Kaminari.paginate_array(result, total_count: result.pagination['total_count']).page(params[:page])
+    Kaminari.paginate_array(result, total_count: result.pagination['total_count'])
   end
 
   def status_filter
