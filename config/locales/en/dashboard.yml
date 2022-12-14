@@ -80,3 +80,9 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
+    errors:
+      datastore:
+        unavailable:
+          heading: Sorry, there is a problem with the service
+          explanation: We cannot connect to our database. This means that you cannot view submitted or returned applications.
+          contact_helpline_html: <a href="%{helpline_url}">Contact the criminal applications helpline</a> if you need to get an update on submitted applications.

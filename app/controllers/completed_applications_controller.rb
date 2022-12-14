@@ -4,7 +4,7 @@ class CompletedApplicationsController < DashboardController
 
   def index
     @applications = Datastore::GetApplications.new(
-      **pagination_params
+      status: params[:q], **pagination_params
     ).call&.page(params[:page])
   end
 
@@ -29,7 +29,6 @@ class CompletedApplicationsController < DashboardController
 
   def pagination_params
     {
-      status: params[:q],
       sort: params[:sort],
       page: params[:page],
       per_page: Kaminari.config.default_per_page,
