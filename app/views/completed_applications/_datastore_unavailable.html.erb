@@ -9,7 +9,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to t('errors.datastore.unavailable.contact_link'), '#' %> <%= t('errors.datastore.unavailable.contact_information') %>
+      <%= t('errors.datastore.unavailable.contact_helpline_html', helpline_url: about_contact_path) %>
     </p>
 
     <%= link_to t('helpers.submit.try_again'), completed_crime_applications_path(q: params[:q]), class: 'govuk-button govuk-button--secondary' %>
