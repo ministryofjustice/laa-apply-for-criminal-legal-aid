@@ -30,8 +30,6 @@ class CompletedApplicationsController < DashboardController
       status: status_filter, **pagination_params
     ).call
 
-    @pagination = result.pagination
-
     Kaminari.paginate_array(result, total_count: result.pagination['total_count']).page(params[:page])
   end
 
