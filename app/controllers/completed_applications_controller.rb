@@ -32,7 +32,7 @@ class CompletedApplicationsController < DashboardController
 
     @pagination = result.pagination
 
-    result
+    Kaminari.paginate_array(result, total_count: result.pagination['total_count']).page(params[:page])
   end
 
   def status_filter
