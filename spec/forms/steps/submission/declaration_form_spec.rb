@@ -29,7 +29,7 @@ RSpec.describe Steps::Submission::DeclarationForm do
   describe '#save' do
     it 'saves the record' do
       expect(crime_application).to receive(:update).with(
-        'declaration_signed' => true
+        { 'declaration_signed' => true }
       ).and_return(true)
 
       expect(subject.save).to be(true)
