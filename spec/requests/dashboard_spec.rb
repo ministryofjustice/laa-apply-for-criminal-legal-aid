@@ -6,7 +6,6 @@ RSpec.describe 'Dashboard' do
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
   let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
-  let(:pagination_fixture) { { limit: 20, total: 1, sort: 'desc', next_page_token: nil }.to_json }
 
   describe 'start a new application' do
     it 'creates a new `crime_application` record' do
@@ -144,123 +143,6 @@ RSpec.describe 'Dashboard' do
     end
   end
 
-  describe 'list of in progress applications' do
-    before :all do
-      # sets up a few test records
-      app1 = CrimeApplication.create(status: 'in_progress', created_at: Date.new(2022, 10, 15))
-      app2 = CrimeApplication.create
-      app3 = CrimeApplication.create
-
-      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-      Applicant.create(crime_application: app2, first_name: '', last_name: '')
-      Applicant.create(crime_application: app3)
-
-      # page actually under test
-      get crime_applications_path
-    end
-
-    after :all do
-      # do not leave left overs in the test database
-      CrimeApplication.destroy_all
-    end
-
-    it 'contains only applications having the applicant name entered' do
-      expect(response).to have_http_status(:success)
-
-      assert_select 'h1', 'Your applications'
-
-      assert_select 'a.moj-sub-navigation__link', text: 'In progress (1)', 'aria-current': 'page'
-      assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
-      assert_select 'a.moj-sub-navigation__link', text: 'Returned'
-
-      assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'John Doe'
-          assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 Oct 2022'
-          assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
-          assert_select 'td.govuk-table__cell:nth-of-type(3)' do
-            assert_select 'button.govuk-button', count: 1, text: 'Delete'
-          end
-        end
-      end
-
-      expect(response.body).not_to include('Jane Doe')
-    end
-  end
-
-  describe 'list of submitted applications' do
-    let(:collection_fixture) do
-      format(
-        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
-        pagination_fixture: pagination_fixture,
-        application_fixture: application_fixture.read
-      )
-    end
-
-    before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: hash_including({ 'status' => 'submitted' }))
-        .to_return(body: collection_fixture)
-
-      get completed_crime_applications_path
-    end
-
-    it 'shows a list of submitted applications' do
-      expect(response).to have_http_status(:success)
-
-      assert_select 'h1', 'Your applications'
-
-      assert_select 'a.moj-sub-navigation__link', text: 'In progress'
-      assert_select 'a.moj-sub-navigation__link', text: 'Submitted', 'aria-current': 'page'
-      assert_select 'a.moj-sub-navigation__link', text: 'Returned'
-
-      assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'Kit Pound'
-        end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '24 Oct 2022'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000001'
-      end
-    end
-  end
-
-  describe 'list of returned applications' do
-    let(:collection_fixture) do
-      format(
-        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
-        pagination_fixture: pagination_fixture,
-        application_fixture: returned_application_fixture.read
-      )
-    end
-
-    before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: hash_including({ 'status' => 'returned' }))
-        .to_return(body: collection_fixture)
-
-      get completed_crime_applications_path(q: 'returned')
-    end
-
-    it 'shows a list of returned applications' do
-      expect(response).to have_http_status(:success)
-
-      assert_select 'h1', 'Your applications'
-
-      # TODO: assert counters
-      assert_select 'a.moj-sub-navigation__link', text: 'In progress'
-      assert_select 'a.moj-sub-navigation__link', text: 'Submitted'
-      assert_select 'a.moj-sub-navigation__link', text: 'Returned', 'aria-current': 'page'
-
-      assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row', 1 do
-          assert_select 'a', count: 1, text: 'John POTTER'
-        end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
-      end
-    end
-  end
-
   describe 'deleting in progress applications' do
     before :all do
       # sets up a few test records
@@ -271,6 +153,12 @@ RSpec.describe 'Dashboard' do
 
     after :all do
       CrimeApplication.destroy_all
+    end
+
+    before do
+      allow_any_instance_of(
+        Datastore::ApplicationCounters
+      ).to receive_messages(submitted_count: 99, returned_count: 5)
     end
 
     it 'allows a user to check before deleting an application' do
