@@ -4,8 +4,8 @@ class CompletedApplicationsController < DashboardController
 
   def index
     @applications = Datastore::GetApplications.new(
-      status: status_filter, **pagination_params
-    ).call
+      **pagination_params
+    ).call&.page(params[:page])
   end
 
   def show
@@ -27,16 +27,9 @@ class CompletedApplicationsController < DashboardController
 
   private
 
-  def status_filter
-    allowed_statuses = [
-      ApplicationStatus::SUBMITTED, ApplicationStatus::RETURNED
-    ].map(&:to_s)
-
-    allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
-  end
-
   def pagination_params
     {
+      status: params[:q],
       sort: params[:sort],
       page: params[:page],
       per_page: Kaminari.config.default_per_page,

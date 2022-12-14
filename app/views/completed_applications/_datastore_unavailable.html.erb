@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l">
+      <%= t('errors.datastore.unavailable.heading') %>
+    </h2>
+
+    <p class="govuk-body">
+      <%= t('errors.datastore.unavailable.explanation') %>
+    </p>
+
+    <p class="govuk-body">
+      <%= link_to t('errors.datastore.unavailable.contact_link'), '#' %> <%= t('errors.datastore.unavailable.contact_information') %>
+    </p>
+
+    <%= link_to t('helpers.submit.try_again'), completed_crime_applications_path(q: params[:q]), class: 'govuk-button govuk-button--secondary' %>
+  </div>
+</div>
