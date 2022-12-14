@@ -1,0 +1,3 @@
+<li class='<%= "govuk-pagination__item #{' govuk-pagination__item--current' if page.current?} " %>'>
+  <%= link_to page, url, { remote: remote, rel: page.rel, 'aria-label': "Page #{page}", 'aria-current': ('page' if page.current?).to_s, class: 'govuk-link govuk-pagination__link govuk-link--no-visited-state' } %>
+</li>

@@ -85,7 +85,7 @@ RSpec.describe ApplicationSubmission do
   before do
     allow(crime_application).to receive(:destroy)
 
-    stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+    stub_request(:post, 'http://datastore-webmock/api/v2/applications')
       .to_return(status: 201, body: '{}')
   end
 
@@ -140,7 +140,7 @@ RSpec.describe ApplicationSubmission do
       it 'calls the API and submits the serialized application' do
         expect(
           a_request(
-            :post, 'http://datastore-webmock/api/v1/applications'
+            :post, 'http://datastore-webmock/api/v2/applications'
           ).with(body: { application: payload })
         ).to have_been_made.once
       end
@@ -152,7 +152,7 @@ RSpec.describe ApplicationSubmission do
 
     context 'handling of errors' do
       before do
-        stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+        stub_request(:post, 'http://datastore-webmock/api/v2/applications')
           .to_raise(StandardError)
 
         allow(Sentry).to receive(:capture_exception)

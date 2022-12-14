@@ -14,10 +14,10 @@ module Datastore
 
     def count(status)
       result = DatastoreApi::Requests::ListApplications.new(
-        status: status.to_s, limit: 1
+        status: status.to_s, per_page: 1
       ).call
 
-      result.pagination.fetch('total')
+      result.pagination.fetch('total_count')
     rescue StandardError => e
       Rails.logger.error(e)
       Sentry.capture_exception(e)

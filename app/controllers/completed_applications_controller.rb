@@ -3,7 +3,7 @@ class CompletedApplicationsController < DashboardController
                 :present_crime_application, only: [:show]
 
   def index
-    @applications = applications_from_datastore
+    @applications = applications_from_datastore.page(params[:page])
   end
 
   def show
@@ -30,12 +30,7 @@ class CompletedApplicationsController < DashboardController
       status: status_filter, **pagination_params
     ).call
 
-    @paginator = InfinitePaginationV2.new(
-      pagination: result.pagination,
-      params: params,
-    )
-
-    result
+    Kaminari.paginate_array(result, total_count: result.pagination['total_count'])
   end
 
   def status_filter
@@ -48,9 +43,9 @@ class CompletedApplicationsController < DashboardController
 
   def pagination_params
     {
-      limit: params[:limit],
       sort: params[:sort],
-      page_token: params[:page_token],
+      page: params[:page],
+      per_page: Kaminari.config.default_per_page,
     }
   end
 

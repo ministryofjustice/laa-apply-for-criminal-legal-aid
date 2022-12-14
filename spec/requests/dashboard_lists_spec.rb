@@ -5,7 +5,7 @@ RSpec.describe 'Dashboard' do
   let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
   let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
-  let(:pagination_fixture) { { limit: 20, total: 1, sort: 'desc', next_page_token: nil }.to_json }
+  let(:pagination_fixture) { { per_page: 20, total_count: 1, total_pages: 1, sort: 'desc' }.to_json }
 
   before do
     allow_any_instance_of(
@@ -68,7 +68,7 @@ RSpec.describe 'Dashboard' do
     end
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
         .with(query: hash_including({ 'status' => 'submitted' }))
         .to_return(body: collection_fixture)
 
@@ -104,7 +104,7 @@ RSpec.describe 'Dashboard' do
     end
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
+      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
         .with(query: hash_including({ 'status' => 'returned' }))
         .to_return(body: collection_fixture)
 

@@ -4,12 +4,12 @@ RSpec.describe Datastore::ApplicationCounters do
   subject { described_class.new }
 
   let(:datastore_result) do
-    '{"pagination":{"total":5},"records":[]}'
+    '{"pagination":{"total_count":5},"records":[]}'
   end
 
   before do
-    stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-      .with(query: { 'status' => status, 'limit' => 1 })
+    stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+      .with(query: { 'status' => status, 'per_page' => 1 })
       .to_return(body: datastore_result)
   end
 
@@ -33,8 +33,8 @@ RSpec.describe Datastore::ApplicationCounters do
     let(:status) { 'submitted' }
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: { 'status' => 'submitted', 'limit' => 1 })
+      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+        .with(query: { 'status' => 'submitted', 'per_page' => 1 })
         .to_raise(StandardError)
 
       allow(Sentry).to receive(:capture_exception)

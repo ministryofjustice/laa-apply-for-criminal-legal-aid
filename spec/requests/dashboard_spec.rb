@@ -18,7 +18,7 @@ RSpec.describe 'Dashboard' do
 
   describe 'show an application certificate (in `submitted` status)' do
     before do
-      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_fixture_id}")
+      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{application_fixture_id}")
         .to_return(body: application_fixture)
 
       get completed_crime_application_path(application_fixture_id)
@@ -79,7 +79,7 @@ RSpec.describe 'Dashboard' do
     # No need to test everything again.
 
     before do
-      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{returned_application_fixture_id}")
+      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{returned_application_fixture_id}")
         .to_return(body: returned_application_fixture)
 
       get completed_crime_application_path(returned_application_fixture_id)

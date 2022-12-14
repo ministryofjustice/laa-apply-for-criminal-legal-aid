@@ -5,7 +5,7 @@ class CrimeApplicationsController < DashboardController
   def index
     @applications = in_progress_scope.merge(
       CrimeApplication.order(created_at: :desc)
-    )
+    ).page params[:page]
   end
 
   def edit
