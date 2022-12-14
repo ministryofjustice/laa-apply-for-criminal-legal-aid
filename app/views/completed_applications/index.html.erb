@@ -4,34 +4,38 @@
 
 <%= render partial: 'shared/subnavigation' %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <table class="govuk-table app-dashboard-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-          <th scope="col" class="govuk-table__header"><%= t('.table_headings.submitted_at') %></th>
-          <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
+<% if @applications.nil? %>
+  <%= render partial: 'datastore_unavailable' %>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table app-dashboard-table">
+        <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">
-              <%= link_to app.applicant_name, completed_crime_application_path(app),
-                          class: 'govuk-link--no-visited-state' %>
-            </th>
-            <td class="govuk-table__cell">
-              <%= l(app.submitted_at) %>
-            </td>
-            <td class="govuk-table__cell">
-              <%= app.laa_reference %>
-            </td>
+            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.table_headings.submitted_at') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                <%= link_to app.applicant_name, completed_crime_application_path(app),
+                            class: 'govuk-link--no-visited-state' %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= l(app.submitted_at) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= app.laa_reference %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-    <%= paginate @applications %>
+      <%= paginate @applications %>
+    </div>
   </div>
-</div>
+<% end %>
