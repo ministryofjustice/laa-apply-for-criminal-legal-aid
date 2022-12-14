@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Sign in user journey' do
   before do
-    stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-      .with(query: hash_including({ 'status' => 'returned', 'limit' => '1' }))
-      .to_return(body: { pagination: { total: 0 } }.to_json)
-
     visit '/'
     click_on 'Start now'
   end

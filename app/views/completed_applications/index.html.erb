@@ -32,8 +32,6 @@
       </tbody>
     </table>
 
-    <%=  %>
-    <%= render @paginator if @paginator %>
     <%= render partial: 'pagination', locals: @pagination.symbolize_keys if @pagination && @pagination['total_pages'] >= 1 %>
   </div>
 </div>
