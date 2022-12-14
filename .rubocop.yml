@@ -46,12 +46,8 @@ Style/TrailingCommaInArguments:
 Layout/HashAlignment:
   Enabled: false
 
-# TODO: fix and enable the following rspec cops
-#
-# CONTEXT: RubocopRspec was enabled part way though this codebase. The
-# following cops have been disabled with a view to enabling them when the
-# issues have been fixed. Ideally starting from the top of this list and
-# working down.
+# Rspec cops
+############
 
 RSpec/SubjectStub:
   Enabled: false
@@ -83,6 +79,8 @@ RSpec/StubbedMock:
 RSpec/NoExpectationExample:
   Enabled: false
 
+RSpec/Rails/InferredSpecType:
+  Enabled: false
 
 # Enabled but tweaked cops
 ##########################

@@ -8,16 +8,16 @@ class CrimeApplicationsController < DashboardController
     ).page params[:page]
   end
 
-  def create
-    initialize_crime_application do |crime_application|
-      redirect_to edit_steps_client_has_partner_path(crime_application)
-    end
-  end
-
   def edit
     @tasklist = TaskList::Collection.new(
       view_context, crime_application: current_crime_application
     )
+  end
+
+  def create
+    initialize_crime_application do |crime_application|
+      redirect_to edit_steps_client_has_partner_path(crime_application)
+    end
   end
 
   def destroy

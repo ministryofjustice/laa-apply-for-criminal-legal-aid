@@ -17,13 +17,13 @@ RSpec.describe Adapters::Structs::Charge do
 
   describe 'delegated class' do
     it 'is a `Charge` ActiveRecord model' do
-      expect(subject.__getobj__).to be_a(::Charge)
+      expect(subject.__getobj__).to be_a(Charge)
     end
   end
 
   describe '#offence' do
     it 'returns the offence value object' do
-      expect(subject.offence).to be_an(::Offence)
+      expect(subject.offence).to be_an(Offence)
     end
   end
 
