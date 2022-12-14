@@ -72,7 +72,10 @@ en:
         zero: In progress
         one: In progress (1)
         other: In progress (%{count})
-      submitted: Submitted
+      submitted:
+        zero: Submitted
+        one: Submitted (1)
+        other: Submitted (%{count})
       returned:
         zero: Returned
         one: Returned (1)

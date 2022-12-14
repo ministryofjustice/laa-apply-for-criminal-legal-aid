@@ -3,18 +3,9 @@ class CrimeApplicationsController < DashboardController
                 :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
 
   def index
-    # TODO: scope will change as we know more
-    applications = CrimeApplication
-                   .in_progress
-                   .joins(:people)
-                   .includes(:applicant)
-                   .merge(Applicant.with_name)
-                   .merge(CrimeApplication.order(created_at: :desc))
-
-    @applications = applications.page params[:page]
-
-    @applications_count = applications.count
-    @returned_applications_count = CrimeApplication.returned.count
+    @applications = in_progress_scope.merge(
+      CrimeApplication.order(created_at: :desc)
+    ).page params[:page]
   end
 
   def create

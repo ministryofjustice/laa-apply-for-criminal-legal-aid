@@ -4,15 +4,6 @@ class CompletedApplicationsController < DashboardController
 
   def index
     @applications = applications_from_datastore
-
-    @in_progress_applications_count = CrimeApplication.in_progress
-                                                      .joins(:people)
-                                                      .includes(:applicant)
-                                                      .merge(Applicant.with_name)
-                                                      .count
-
-    # TODO: counter not yet coming from datastore
-    @returned_applications_count = CrimeApplication.returned.count
   end
 
   def show
