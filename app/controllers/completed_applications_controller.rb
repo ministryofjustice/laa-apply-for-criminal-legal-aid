@@ -3,7 +3,9 @@ class CompletedApplicationsController < DashboardController
                 :present_crime_application, only: [:show]
 
   def index
-    @applications = applications_from_datastore
+    @applications = Datastore::GetApplications.new(
+      status: status_filter, **pagination_params
+    ).call
   end
 
   def show
@@ -24,16 +26,6 @@ class CompletedApplicationsController < DashboardController
   # :nocov:
 
   private
-
-  def applications_from_datastore
-    result = DatastoreApi::Requests::ListApplications.new(
-      status: status_filter, **pagination_params
-    ).call
-
-    @pagination = result.pagination
-
-    Kaminari.paginate_array(result, total_count: result.pagination['total_count']).page(params[:page])
-  end
 
   def status_filter
     allowed_statuses = [
