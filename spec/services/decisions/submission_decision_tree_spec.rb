@@ -34,13 +34,13 @@ RSpec.describe Decisions::SubmissionDecisionTree do
 
     before do
       # We don't test its implementation as this is tested separately
-      allow_any_instance_of(ApplicationSubmission).to receive(:call).and_return(submission_success)
+      allow_any_instance_of(Datastore::ApplicationSubmission).to receive(:call).and_return(submission_success)
     end
 
     context 'submits the application' do
       it 'calls the submission service' do
         expect(
-          ApplicationSubmission
+          Datastore::ApplicationSubmission
         ).to receive(:new).with(crime_application).and_call_original
 
         subject.destination

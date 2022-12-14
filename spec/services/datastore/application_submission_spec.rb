@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationSubmission do
+RSpec.describe Datastore::ApplicationSubmission do
   #
   # NOTE: we are using real DB records here as a way of testing
   # an end to end full serialized application posted to the datastore.

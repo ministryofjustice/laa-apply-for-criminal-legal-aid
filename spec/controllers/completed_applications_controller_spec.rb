@@ -5,11 +5,11 @@ RSpec.describe CompletedApplicationsController, type: :controller do
   # the re-hydration etc. Disabling this spec for now.
   describe '#amend' do
     let(:crime_application) { CrimeApplication.create(status: :returned) }
-    let(:amend_service) { instance_double(ApplicationAmendment) }
+    let(:amend_service) { instance_double(Datastore::ApplicationAmendment) }
 
     before do
       allow(
-        ApplicationAmendment
+        Datastore::ApplicationAmendment
       ).to receive(:new).with(crime_application).and_return(amend_service)
     end
 

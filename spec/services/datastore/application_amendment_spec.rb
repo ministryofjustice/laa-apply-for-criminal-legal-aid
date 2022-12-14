@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationAmendment do
+RSpec.describe Datastore::ApplicationAmendment do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
