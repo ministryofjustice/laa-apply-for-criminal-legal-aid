@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CompletedApplicationsController, type: :controller do
   # TODO: now we are using datastore we have to figure out
   # the re-hydration etc. Disabling this spec for now.
-  xdescribe '#amend' do
+  describe '#amend' do
     let(:crime_application) { CrimeApplication.create(status: :returned) }
     let(:amend_service) { instance_double(ApplicationAmendment) }
 
@@ -14,6 +14,8 @@ RSpec.describe CompletedApplicationsController, type: :controller do
     end
 
     it 'triggers the amendment of an application' do
+      pending 're-hydration from datastore tbd'
+
       expect(amend_service).to receive(:call)
 
       put :amend, params: { id: crime_application.id }
