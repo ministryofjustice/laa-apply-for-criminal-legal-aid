@@ -6,8 +6,8 @@ RSpec.describe Steps::Address::LookupForm do
   let(:arguments) do
     {
       crime_application: crime_application,
-    record: address_record,
-    postcode: postcode,
+      record: address_record,
+      postcode: postcode,
     }
   end
 
@@ -50,12 +50,14 @@ RSpec.describe Steps::Address::LookupForm do
 
         it 'updates the record' do
           expect(address_record).to receive(:update).with(
-            'postcode' => 'SW1H 9AJ',
-            :address_line_one => nil,
-            :address_line_two => nil,
-            :city => nil,
-            :country => nil,
-            :lookup_id => nil
+            {
+              'postcode' => 'SW1H 9AJ',
+              :address_line_one => nil,
+              :address_line_two => nil,
+              :city => nil,
+              :country => nil,
+              :lookup_id => nil,
+            }
           ).and_return(true)
 
           expect(subject.save).to be(true)

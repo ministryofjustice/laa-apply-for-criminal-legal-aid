@@ -9,7 +9,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
   let(:arguments) do
     {
       crime_application:,
-    client_has_partner:,
+      client_has_partner:,
     }
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
       it 'saves the record' do
         expect(crime_application).to receive(:update).with(
-          'client_has_partner' => YesNoAnswer::YES
+          { 'client_has_partner' => YesNoAnswer::YES }
         ).and_return(true)
 
         expect(subject.save).to be(true)

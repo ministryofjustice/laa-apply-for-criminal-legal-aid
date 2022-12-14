@@ -6,9 +6,9 @@ RSpec.describe Steps::Case::ChargesForm do
   let(:arguments) do
     {
       crime_application: crime_application,
-    record: charge_record,
-    offence_name: offence_name,
-    offence_dates_attributes: offence_dates_attributes
+      record: charge_record,
+      offence_name: offence_name,
+      offence_dates_attributes: offence_dates_attributes
     }
   end
 
@@ -104,7 +104,7 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'for valid details' do
       it 'updates the record' do
         expect(charge_record).to receive(:update).with(
-          'offence_name' => 'Robbery'
+          { 'offence_name' => 'Robbery' }
         ).and_return(true)
 
         expect(subject.save).to be(true)
