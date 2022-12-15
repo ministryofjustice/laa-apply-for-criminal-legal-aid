@@ -14,6 +14,7 @@ en:
         in_progress: In progress
         submitted: Submitted
         returned: Returned
+      no_records: There are no applications in progress
     edit:
       page_title: Application task list
       heading: Make a new application
@@ -50,6 +51,7 @@ en:
       status:
         in_progress: In progress
         submitted: Submitted
+      no_records: There are no applications in progress
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
