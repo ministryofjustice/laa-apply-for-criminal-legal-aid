@@ -9,7 +9,7 @@ module Datastore
 
     def call
       result = DatastoreApi::Requests::ListApplications.new(
-        status: status_filter,
+        status: @status,
         page: @page,
         per_page: @per_page,
         sort: @sort
@@ -21,16 +21,6 @@ module Datastore
       Sentry.capture_exception(e)
 
       nil
-    end
-
-    private
-
-    def status_filter
-      allowed_statuses = [
-        ApplicationStatus::SUBMITTED, ApplicationStatus::RETURNED
-      ].map(&:to_s)
-
-      allowed_statuses.include?(@status) ? @status : allowed_statuses.first
     end
   end
 end

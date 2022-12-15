@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-full">
     <% if @applications.empty? %>
       <h2 class="govuk-heading-m">
-        <%= t('.no_records') %>
+        <%= t("shared.errors.no_records.#{status_filter}") %>
       </h2>
     <% else %>
       <table class="govuk-table app-dashboard-table">

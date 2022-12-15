@@ -1,9 +1,17 @@
 class DashboardController < ApplicationController
-  helper_method :in_progress_count, :returned_count
+  helper_method :in_progress_count, :returned_count, :status_filter
   delegate :returned_count, to: :application_counters
 
   def in_progress_count
     in_progress_scope.count
+  end
+
+  def status_filter
+    allowed_statuses = [
+      ApplicationStatus::SUBMITTED, ApplicationStatus::RETURNED
+    ].map(&:to_s)
+
+    allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
   end
 
   private

@@ -10,7 +10,7 @@
       <%= render partial: 'datastore_unavailable' %>
     <% elsif @applications.empty? %>
       <h2 class="govuk-heading-m">
-        <%= t('.no_records', status: (params[:q] ||= 'submitted')) %>
+        <%= t("shared.errors.no_records.#{status_filter}") %>
       </h2>
     <% else %>
       <table class="govuk-table app-dashboard-table">
