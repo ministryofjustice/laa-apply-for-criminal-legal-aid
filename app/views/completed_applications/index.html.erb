@@ -4,15 +4,15 @@
 
 <%= render partial: 'shared/subnavigation' %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <% if @applications.nil? %>
-        <%= render partial: 'datastore_unavailable' %>
-      <% elsif @applications.empty? %>
-        <h2 class="govuk-heading-m">
-          <%= t('.no_records') %>
-        </h2>
-      <% else %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if @applications.nil? %>
+      <%= render partial: 'datastore_unavailable' %>
+    <% elsif @applications.empty? %>
+      <h2 class="govuk-heading-m">
+        <%= t('.no_records', status: (params[:q] ||= 'submitted')) %>
+      </h2>
+    <% else %>
       <table class="govuk-table app-dashboard-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -32,14 +32,13 @@
                 <%= l(app.submitted_at) %>
               </td>
               <td class="govuk-table__cell">
-              <%= app.laa_reference %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= paginate @applications %>
-
+                <%= app.laa_reference %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @applications %>
     <% end %>
   </div>
 </div>

@@ -115,7 +115,7 @@ RSpec.describe 'Dashboard' do
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
-        assert_select 'h2', 'There are no applications in progress'
+        assert_select 'h2', 'There are no submitted applications'
       end
     end
   end
@@ -162,7 +162,7 @@ RSpec.describe 'Dashboard' do
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
-        assert_select 'h2', 'There are no applications in progress'
+        assert_select 'h2', 'There are no returned applications'
       end
     end
   end

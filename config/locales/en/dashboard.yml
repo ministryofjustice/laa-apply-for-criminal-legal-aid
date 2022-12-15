@@ -51,7 +51,7 @@ en:
       status:
         in_progress: In progress
         submitted: Submitted
-      no_records: There are no applications in progress
+      no_records: There are no %{status} applications
     show:
       page_title: Application certificate
       heading: Application for criminal legal aid certificate
