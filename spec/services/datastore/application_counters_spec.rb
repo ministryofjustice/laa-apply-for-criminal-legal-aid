@@ -13,14 +13,6 @@ RSpec.describe Datastore::ApplicationCounters do
       .to_return(body: datastore_result)
   end
 
-  describe '#submitted_count' do
-    let(:status) { 'submitted' }
-
-    it 'returns total submitted applications' do
-      expect(subject.submitted_count).to eq(5)
-    end
-  end
-
   describe '#returned_count' do
     let(:status) { 'returned' }
 
@@ -30,18 +22,18 @@ RSpec.describe Datastore::ApplicationCounters do
   end
 
   context 'handling of errors' do
-    let(:status) { 'submitted' }
+    let(:status) { 'returned' }
 
     before do
       stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-        .with(query: { 'status' => 'submitted', 'per_page' => 1 })
+        .with(query: { 'status' => status, 'per_page' => 1 })
         .to_raise(StandardError)
 
       allow(Sentry).to receive(:capture_exception)
     end
 
     it 'reports the exception, and returns 0 count' do
-      expect(subject.submitted_count).to eq(0)
+      expect(subject.returned_count).to eq(0)
 
       expect(Sentry).to have_received(:capture_exception).with(
         an_instance_of(StandardError)

@@ -10,7 +10,7 @@ RSpec.describe 'Dashboard' do
   before do
     allow_any_instance_of(
       Datastore::ApplicationCounters
-    ).to receive_messages(submitted_count: 99, returned_count: 5)
+    ).to receive_messages(returned_count: 5)
   end
 
   describe 'list of in progress applications' do
@@ -41,7 +41,7 @@ RSpec.describe 'Dashboard' do
         assert_select 'h1', 'Your applications'
 
         assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress (1)', 'aria-current': 'page'
-        assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted (99)'
+        assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted'
         assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)'
 
         assert_select 'tbody.govuk-table__body' do
@@ -91,7 +91,7 @@ RSpec.describe 'Dashboard' do
       assert_select 'h1', 'Your applications'
 
       assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress'
-      assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted (99)', 'aria-current': 'page'
+      assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted', 'aria-current': 'page'
       assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)'
 
       assert_select 'tbody.govuk-table__body' do
@@ -143,7 +143,7 @@ RSpec.describe 'Dashboard' do
       assert_select 'h1', 'Your applications'
 
       assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress'
-      assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted (99)'
+      assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted'
       assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)', 'aria-current': 'page'
 
       assert_select 'tbody.govuk-table__body' do
