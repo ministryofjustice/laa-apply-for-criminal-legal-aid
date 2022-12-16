@@ -4,9 +4,6 @@ en:
     format: "%{message}"
     page_title_prefix: "Error: "
 
-    omniauth:
-      signin_failure: There was a problem signing you in
-
     error_summary:
       heading: There is a problem on this page
     invalid_session:

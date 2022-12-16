@@ -16,33 +16,6 @@ RSpec.describe DummyStepController, type: :controller do
     Rails.application.reload_routes!
   end
 
-  describe 'authenticate_user!' do
-    before do
-      sign_out
-    end
-
-    describe '#show' do
-      it 'redirects to the unauthorized error page' do
-        get :show, params: { id: '12345' }
-        expect(response).to redirect_to(unauthorized_errors_path)
-      end
-    end
-
-    describe '#edit' do
-      it 'redirects to the unauthorized error page' do
-        get :edit, params: { id: '12345' }
-        expect(response).to redirect_to(unauthorized_errors_path)
-      end
-    end
-
-    describe '#update' do
-      it 'redirects to the unauthorized error page' do
-        put :update, params: { id: '12345' }
-        expect(response).to redirect_to(unauthorized_errors_path)
-      end
-    end
-  end
-
   describe 'navigation stack' do
     let!(:crime_application) { CrimeApplication.create }
     let(:dummy_step_path) { "/dummy_step/#{crime_application.to_param}" }

@@ -20,6 +20,8 @@ en:
       title: Success
     notice:
       title: Notice
+    alert:
+      title: Alert
 
   layouts:
     header_navigation:

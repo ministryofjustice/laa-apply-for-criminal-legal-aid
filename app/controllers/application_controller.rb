@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   include ErrorHandling
-  include AuthHandling
   include StepsHelper
+
+  prepend_before_action :authenticate_provider!
 
   add_flash_types :success
 
@@ -18,5 +19,10 @@ class ApplicationController < ActionController::Base
     CrimeApplication.create(attributes).tap do |crime_application|
       yield(crime_application) if block
     end
+  end
+
+  # Where we take the user after sign in
+  def signed_in_root_path(_)
+    crime_applications_path
   end
 end

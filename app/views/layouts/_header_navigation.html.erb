@@ -6,10 +6,10 @@
         <%= link_to t('.your_applications'), crime_applications_path, class: 'govuk-header__link' %>
       </li>
       <li class="govuk-header__navigation-item app-header__auth-user">
-        <%= current_user.name %>
+        <%= current_provider.display_name %>
       </li>
       <li class="govuk-header__navigation-item">
-        <%= button_to t('.sign_out'), logout_path, method: :delete, class: 'govuk-header__link app-header__auth-link' %>
+        <%= button_to t('.sign_out'), providers_logout_path, method: :delete, class: 'govuk-header__link app-header__auth-link' %>
       </li>
     </ul>
   </nav>

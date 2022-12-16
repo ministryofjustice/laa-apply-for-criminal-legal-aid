@@ -42,8 +42,8 @@ RSpec.describe 'Error pages' do
       end
 
       it 'redirects to the home' do
-        post saml_authorize_path
-        expect(response).to redirect_to(root_path)
+        post provider_saml_omniauth_authorize_path
+        expect(response).to redirect_to(new_provider_session_path)
       end
     end
   end
