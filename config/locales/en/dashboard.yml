@@ -14,7 +14,6 @@ en:
         in_progress: In progress
         submitted: Submitted
         returned: Returned
-      no_records: There are no applications in progress
     edit:
       page_title: Application task list
       heading: Make a new application
