@@ -4,7 +4,7 @@ class CompletedApplicationsController < DashboardController
 
   def index
     @applications = Datastore::GetApplications.new(
-      status: params[:q], **pagination_params
+      status: status_filter, **pagination_params
     ).call&.page(params[:page])
   end
 
