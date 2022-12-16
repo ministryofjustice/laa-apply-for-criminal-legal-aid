@@ -7,8 +7,8 @@ RSpec.describe 'Sign in user journey' do
   end
 
   context 'user is not signed in' do
-    it 'redirects to the unauthorized page' do
-      expect(current_url).to match('/errors/unauthorized')
+    it 'redirects to the login page' do
+      expect(current_url).to match('/login')
       expect(page).to have_content('Access restricted')
     end
   end

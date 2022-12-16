@@ -33,9 +33,8 @@ class LaaPortalSetup
   def self.mock_auth
     OmniAuth::AuthHash.new(
       provider: 'saml',
-      uid: 'test-uid',
+      uid: 'test-user',
       info: {
-        name: 'test-user',
         email: 'test@example.com',
         roles: 'CCR_CCRGradeA1,CCLF_BillManager',
         office_codes: '1A123B,2A555X',

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_15_104649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -118,6 +118,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_154645) do
     t.string "correspondence_address_type"
     t.boolean "passporting_benefit"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+  end
+
+  create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "auth_provider", null: false
+    t.string "uid", null: false
+    t.string "email"
+    t.string "description"
+    t.string "roles", default: [], null: false, array: true
+    t.string "office_codes", default: [], null: false, array: true
+    t.jsonb "settings", default: {}, null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
+    t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
   end
 
   add_foreign_key "addresses", "people"

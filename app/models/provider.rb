@@ -1,12 +1,19 @@
-class Provider
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class Provider < ApplicationRecord
+  devise :lockable, :timeoutable, :trackable,
+         :omniauthable, omniauth_providers: %i[saml]
 
-  attribute :name, :string
-  attribute :email, :string
-  attribute :first_name, :string
-  attribute :last_name, :string
+  def self.from_omniauth(auth)
+    find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|
+      record.update(
+        email: auth.info.email,
+        description: auth.info.description,
+        roles: auth.info.roles.split(','),
+        office_codes: auth.info.office_codes.split(','),
+      )
+    end
+  end
 
-  attribute :roles, array: true, default: -> { [] }
-  attribute :office_codes, array: true, default: -> { [] }
+  def display_name
+    uid
+  end
 end

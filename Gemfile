@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').chomp
 gem 'faraday', '~> 2.7'
 gem 'govuk_design_system_formbuilder', '~> 3.1.0'
 gem 'jbuilder', '~> 2.11.5'
+gem 'kaminari'
 gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
@@ -16,9 +17,9 @@ gem 'uk_postcode'
 gem 'mail', '< 2.8.0'
 
 # Authentication
+gem 'devise', '~> 4.8'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
-gem 'warden'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -43,8 +44,6 @@ gem 'laa-criminal-applications-datastore-api-client',
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas'
 
-gem 'kaminari'
-
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -67,7 +66,6 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'warden-rspec-rails' # if we move to Devise, we don't need this
   gem 'webdrivers'
   gem 'webmock'
 end

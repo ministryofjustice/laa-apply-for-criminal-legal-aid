@@ -34,11 +34,19 @@ Rails.application.routes.draw do
     get :not_found
   end
 
-  # Omniauth SAML
-  post 'auth/saml', as: :saml_authorize
-  post 'auth/saml/callback', to: 'sessions#create', as: :saml_authorize_callback
-  get 'auth/saml/callback', to: 'sessions#create', constraints: -> (_) { OmniAuth.config.test_mode }
-  delete 'logout', to: 'sessions#destroy'
+  devise_for :providers,
+             skip: [:all],
+             controllers: {
+               omniauth_callbacks: 'providers/omniauth_callbacks'
+             }
+
+  devise_scope :provider do
+    get 'login', to: 'errors#unauthorized', as: :new_provider_session
+
+    namespace :providers do
+      delete 'logout', to: 'sessions#destroy', as: :logout
+    end
+  end
 
   namespace :developer_tools, constraints: -> (_) { FeatureFlags.developer_tools.enabled? } do
     resources :crime_applications, only: [:update, :destroy], path: 'applications' do
