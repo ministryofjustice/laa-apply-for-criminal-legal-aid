@@ -4,6 +4,12 @@ en:
     shared:
       offence_class: Class %{class}
 
+    provider:
+      confirm_office:
+        edit:
+          page_title: Confirm office account number
+          current_office_legend: Is %{office_code} your office account number?
+
     client:
       has_partner:
         edit:
@@ -31,7 +37,7 @@ en:
         edit:
           page_title: Client’s contact details
           heading: Enter your client’s contact details
-    
+
     dwp:
       confirm_result:
         edit:

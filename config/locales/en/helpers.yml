@@ -77,6 +77,10 @@ en:
         other_justification: *ioj_justification_hint
 
     label:
+      steps_provider_confirm_office_form:
+        is_current_office_options:
+          'yes': 'Yes'
+          'no': 'No, another office is handling this application'
       steps_client_has_partner_form:
         client_has_partner_options: *YESNO
       steps_client_details_form:

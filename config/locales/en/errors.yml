@@ -30,6 +30,10 @@ en:
   activemodel:
     errors:
       models:
+        steps/provider/confirm_office_form:
+          attributes:
+            is_current_office:
+              inclusion: Select yes if this is your office account number
         steps/client/has_partner_form:
           attributes:
             client_has_partner:

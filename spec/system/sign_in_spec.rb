@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Sign in user journey' do
+  # Do not leave left overs, as this test will persist
+  # a mock provider to the database
+  before(:all) do
+    Provider.destroy_all
+  end
+
+  after(:all) do
+    Provider.destroy_all
+  end
+
   before do
     visit '/'
     click_on 'Start now'
