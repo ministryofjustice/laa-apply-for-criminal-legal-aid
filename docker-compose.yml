@@ -21,6 +21,7 @@ services:
       RAILS_SERVE_STATIC_FILES: "1"
       DATABASE_SSLMODE: disable
       DISABLE_HTTPS: "1"
+      OMNIAUTH_TEST_MODE: "true"
     ports:
       - "3000:3000"
     depends_on:
