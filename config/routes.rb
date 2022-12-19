@@ -72,6 +72,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :steps do
+    namespace :provider do
+      edit_step :confirm_office
+    end
+  end
+
   scope 'applications/:id' do
     namespace :steps do
       namespace :client do
