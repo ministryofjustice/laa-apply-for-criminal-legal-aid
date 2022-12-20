@@ -20,9 +20,4 @@ class ApplicationController < ActionController::Base
       yield(crime_application) if block
     end
   end
-
-  # Where we take the user after sign in
-  def signed_in_root_path(_)
-    crime_applications_path
-  end
 end

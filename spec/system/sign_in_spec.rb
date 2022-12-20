@@ -12,6 +12,10 @@ RSpec.describe 'Sign in user journey' do
   end
 
   before do
+    allow_any_instance_of(
+      Datastore::ApplicationCounters
+    ).to receive_messages(returned_count: 5)
+
     visit '/'
     click_on 'Start now'
   end
@@ -23,12 +27,8 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed in' do
+  context 'user is signed in, has multiple accounts' do
     before do
-      allow_any_instance_of(
-        Datastore::ApplicationCounters
-      ).to receive_messages(returned_count: 5)
-
       click_button 'Sign in with LAA Portal'
     end
 
@@ -60,6 +60,20 @@ RSpec.describe 'Sign in user journey' do
 
       expect(current_url).to match(root_path)
       expect(page).not_to have_css('nav.govuk-header__navigation')
+    end
+  end
+
+  context 'user is signed in, only has one account' do
+    before do
+      allow_any_instance_of(
+        Provider
+      ).to receive(:office_codes).and_return(['A1'])
+
+      click_button 'Sign in with LAA Portal'
+    end
+
+    it 'authenticates the user and redirects to the dashboard' do
+      expect(current_url).to match(crime_applications_path)
     end
   end
 end
