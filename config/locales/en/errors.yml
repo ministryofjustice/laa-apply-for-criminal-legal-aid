@@ -34,6 +34,10 @@ en:
           attributes:
             is_current_office:
               inclusion: Select yes if this is your office account number
+        steps/provider/select_office_form:
+          attributes:
+            office_code:
+              inclusion: Select an office account number from the list
         steps/client/has_partner_form:
           attributes:
             client_has_partner:

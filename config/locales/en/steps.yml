@@ -9,6 +9,9 @@ en:
         edit:
           page_title: Confirm office account number
           current_office_legend: Is %{office_code} your office account number?
+      select_office:
+        edit:
+          page_title: Select office account number
 
     client:
       has_partner:

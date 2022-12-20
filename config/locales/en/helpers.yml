@@ -17,6 +17,8 @@ en:
       try_again: Try again
 
     legend:
+      steps_provider_select_office_form:
+        office_code: Select your office account number
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:

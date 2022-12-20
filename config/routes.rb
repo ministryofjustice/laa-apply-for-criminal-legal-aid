@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   namespace :steps do
     namespace :provider do
       edit_step :confirm_office
+      edit_step :select_office
     end
   end
 
