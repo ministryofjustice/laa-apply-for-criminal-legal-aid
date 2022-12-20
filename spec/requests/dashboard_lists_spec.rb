@@ -21,13 +21,13 @@ RSpec.describe 'Dashboard' do
     context 'when there are records to return' do
       before :all do
         # sets up a few test records
-        app1 = CrimeApplication.create(status: 'in_progress', created_at: Date.new(2022, 10, 15))
-        app2 = CrimeApplication.create
-        app3 = CrimeApplication.create
+        app1 = create_test_application(created_at: Date.new(2022, 10, 15))
+        app2 = create_test_application(office_code: 'XYZ') # a different office
+        app3 = create_test_application
 
         Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-        Applicant.create(crime_application: app2, first_name: '', last_name: '')
-        Applicant.create(crime_application: app3)
+        Applicant.create(crime_application: app2, first_name: 'Jane', last_name: 'Doe')
+        Applicant.create(crime_application: app3, first_name: '', last_name: '')
       end
 
       after :all do

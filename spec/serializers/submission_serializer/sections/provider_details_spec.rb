@@ -6,12 +6,15 @@ RSpec.describe SubmissionSerializer::Sections::ProviderDetails do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
+      office_code: 'XYZ',
     )
   end
 
   let(:json_output) do
     {
-      provider_details: {}
+      provider_details: {
+        office_code: 'XYZ',
+      }
     }.as_json
   end
 

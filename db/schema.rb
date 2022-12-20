@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_15_104649) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_20_114547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -74,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_15_104649) do
     t.datetime "submitted_at"
     t.serial "usn", null: false
     t.string "ioj_passport", default: [], null: false, array: true
+    t.string "office_code"
+    t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
 

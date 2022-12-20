@@ -40,11 +40,6 @@ module DeveloperTools
 
     private
 
-    # For developer tools we don't do any scoping by provider/firm
-    def current_crime_application
-      @current_crime_application ||= CrimeApplication.in_progress.find_by(id: params[:id])
-    end
-
     def current_remote_application
       @current_remote_application ||= DatastoreApi::Requests::GetApplication.new(
         application_id: params[:id]

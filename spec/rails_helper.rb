@@ -34,6 +34,7 @@ RSpec.configure do |config|
 
   config.include ActiveSupport::Testing::TimeHelpers
 
+  config.include(FactoryHelpers)
   config.include(AuthenticationHelpers, type: :controller)
 
   config.include(ViewSpecHelpers, type: :helper)
