@@ -49,7 +49,7 @@ RSpec.describe SubmissionSerializer::Application do
           'schema_version' => 1.0,
           'status' => 'submitted',
           'ioj_passport' => [],
-          'provider_details' => {},
+          'provider_details' => a_hash_including('office_code'),
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],

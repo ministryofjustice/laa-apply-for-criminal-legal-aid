@@ -9,12 +9,6 @@
       <h4 class="govuk-heading-s govuk-!-margin-bottom-0">Current Application ID</h4>
       <p><%= current_crime_application&.id || 'None' %></p>
 
-      <div class="govuk-button-group">
-        <%= button_to crime_applications_path, method: :get,
-                      class: 'govuk-button',
-                      data: { module: 'govuk-button' } do; 'Your applications'; end %>
-      </div>
-
       <% if current_crime_application %>
         <% crime_application = present(current_crime_application, CrimeApplicationPresenter) %>
 

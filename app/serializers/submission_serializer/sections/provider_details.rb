@@ -4,8 +4,7 @@ module SubmissionSerializer
       def to_builder
         Jbuilder.new do |json|
           json.provider_details do
-            # We don't know yet the attributes, TBD.
-            json.merge!({})
+            json.office_code crime_application.office_code
           end
         end
       end

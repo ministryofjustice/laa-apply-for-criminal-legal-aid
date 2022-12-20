@@ -16,9 +16,8 @@ class DashboardController < ApplicationController
 
   private
 
-  # TODO: filter by provider's office code
   def in_progress_scope
-    CrimeApplication.in_progress
+    CrimeApplication.where(office_code: current_office_code)
                     .joins(:people)
                     .includes(:applicant)
                     .merge(Applicant.with_name)

@@ -146,7 +146,7 @@ RSpec.describe 'Dashboard' do
   describe 'deleting in progress applications' do
     before :all do
       # sets up a few test records
-      app = CrimeApplication.create(status: 'in_progress')
+      app = CrimeApplication.create
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end

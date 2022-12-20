@@ -12,9 +12,8 @@ RSpec.describe Datastore::ApplicationSubmission do
 
   before :all do
     # create all neccessary records
-    app = CrimeApplication.create(
+    app = create_test_application(
       usn: 123,
-      status: 'in_progress',
       client_has_partner: 'no',
       declaration_signed: true,
     )
