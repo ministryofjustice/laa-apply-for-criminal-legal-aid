@@ -29,8 +29,4 @@ class CrimeApplicationsController < DashboardController
   end
 
   def confirm_destroy; end
-
-  def status_filter
-    'in_progress'
-  end
 end

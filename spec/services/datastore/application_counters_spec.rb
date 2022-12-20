@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::ApplicationCounters do
-  subject { described_class.new }
+  subject { described_class.new(office_code: 'XYZ') }
+
+  let(:expected_query) do
+    { 'status' => status, 'office_code' => 'XYZ', 'per_page' => 1 }
+  end
 
   let(:datastore_result) do
     '{"pagination":{"total_count":5},"records":[]}'
@@ -9,7 +13,7 @@ RSpec.describe Datastore::ApplicationCounters do
 
   before do
     stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-      .with(query: { 'status' => status, 'per_page' => 1 })
+      .with(query: expected_query)
       .to_return(body: datastore_result)
   end
 
@@ -26,7 +30,7 @@ RSpec.describe Datastore::ApplicationCounters do
 
     before do
       stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-        .with(query: { 'status' => status, 'per_page' => 1 })
+        .with(query: expected_query)
         .to_raise(StandardError)
 
       allow(Sentry).to receive(:capture_exception)

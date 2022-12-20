@@ -1,18 +1,16 @@
 module Datastore
   class GetApplications
-    def initialize(status: nil, page: nil, per_page: nil, sort: nil)
+    attr_reader :status, :office_code, :pagination
+
+    def initialize(status:, office_code:, **pagination)
       @status = status
-      @page = page
-      @per_page = per_page
-      @sort = sort
+      @office_code = office_code
+      @pagination = pagination
     end
 
     def call
       result = DatastoreApi::Requests::ListApplications.new(
-        status: @status,
-        page: @page,
-        per_page: @per_page,
-        sort: @sort
+        status:, office_code:, **pagination
       ).call
 
       Kaminari.paginate_array(result, total_count: result.pagination['total_count'])
