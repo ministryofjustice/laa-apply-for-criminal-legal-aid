@@ -12,6 +12,10 @@ RSpec.describe 'Sign in user journey' do
   end
 
   before do
+    allow_any_instance_of(
+      Datastore::ApplicationCounters
+    ).to receive_messages(returned_count: 5)
+
     visit '/'
     click_on 'Start now'
   end
@@ -23,16 +27,25 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed in' do
+  context 'user is signed in, has multiple accounts' do
     before do
-      allow_any_instance_of(
-        Datastore::ApplicationCounters
-      ).to receive_messages(returned_count: 5)
-
       click_button 'Sign in with LAA Portal'
     end
 
-    it 'authenticates the user and redirect to the dashboard' do
+    it 'authenticates the user and redirects to the office account confirmation page' do
+      expect(current_url).to match(edit_steps_provider_confirm_office_path)
+      expect(page).to have_content('Is 1A123B your office account number?')
+
+      choose('No, another office is handling this application')
+      click_button 'Save and continue'
+
+      expect(current_url).to match(edit_steps_provider_select_office_path)
+
+      expect(page).to have_css('.govuk-radios__label', text: '1A123B')
+      expect(page).to have_css('.govuk-radios__label', text: '2A555X')
+
+      choose('2A555X')
+      click_button 'Save and continue'
       expect(current_url).to match(crime_applications_path)
     end
 
@@ -47,6 +60,20 @@ RSpec.describe 'Sign in user journey' do
 
       expect(current_url).to match(root_path)
       expect(page).not_to have_css('nav.govuk-header__navigation')
+    end
+  end
+
+  context 'user is signed in, only has one account' do
+    before do
+      allow_any_instance_of(
+        Provider
+      ).to receive(:office_codes).and_return(['A1'])
+
+      click_button 'Sign in with LAA Portal'
+    end
+
+    it 'authenticates the user and redirects to the dashboard' do
+      expect(current_url).to match(crime_applications_path)
     end
   end
 end
