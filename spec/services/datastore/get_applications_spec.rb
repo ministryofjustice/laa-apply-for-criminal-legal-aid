@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::GetApplications do
-  subject { described_class.new(status:, per_page:, page:) }
+  subject { described_class.new(status:, office_code:, per_page:, page:) }
 
   let(:status) { 'submitted' }
+  let(:office_code) { 'XYZ' }
   let(:per_page) { 1 }
   let(:page) { 1 }
+
+  let(:expected_query) do
+    { 'status' => status, 'office_code' => office_code, 'per_page' => per_page, 'page' => page }
+  end
 
   let(:datastore_result) do
     '{"pagination":{"total_count":5},"records":[]}'
@@ -13,7 +18,7 @@ RSpec.describe Datastore::GetApplications do
 
   before do
     stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-      .with(query: { 'status' => status, 'per_page' => per_page, 'page' => page, 'sort' => nil })
+      .with(query: expected_query)
       .to_return(body: datastore_result)
   end
 
@@ -26,7 +31,7 @@ RSpec.describe Datastore::GetApplications do
   context 'handling of errors' do
     before do
       stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-        .with(query: { 'status' => status, 'per_page' => per_page, 'page' => page, 'sort' => nil })
+        .with(query: expected_query)
         .to_raise(StandardError)
 
       allow(Sentry).to receive(:capture_exception)
