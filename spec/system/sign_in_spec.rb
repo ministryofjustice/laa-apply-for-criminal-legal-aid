@@ -32,7 +32,20 @@ RSpec.describe 'Sign in user journey' do
       click_button 'Sign in with LAA Portal'
     end
 
-    it 'authenticates the user and redirect to the dashboard' do
+    it 'authenticates the user and redirects to the office account confirmation page' do
+      expect(current_url).to match(edit_steps_provider_confirm_office_path)
+      expect(page).to have_content('Is 1A123B your office account number?')
+
+      choose('No, another office is handling this application')
+      click_button 'Save and continue'
+
+      expect(current_url).to match(edit_steps_provider_select_office_path)
+
+      expect(page).to have_css('.govuk-radios__label', text: '1A123B')
+      expect(page).to have_css('.govuk-radios__label', text: '2A555X')
+
+      choose('2A555X')
+      click_button 'Save and continue'
       expect(current_url).to match(crime_applications_path)
     end
 

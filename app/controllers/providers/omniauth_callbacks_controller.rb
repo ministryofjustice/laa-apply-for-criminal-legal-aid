@@ -12,6 +12,14 @@ module Providers
 
     private
 
+    def after_sign_in_path_for(_)
+      if current_provider.multiple_offices?
+        edit_steps_provider_confirm_office_path
+      else
+        crime_applications_path
+      end
+    end
+
     def after_omniauth_failure_path_for(_)
       new_provider_session_path
     end
