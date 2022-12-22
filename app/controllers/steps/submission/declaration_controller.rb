@@ -18,13 +18,13 @@ module Steps
       private
 
       def default_values
-        first_name = current_crime_application.legal_rep_first_name.presence ||
+        first_name = current_crime_application.legal_rep_first_name ||
                      current_provider.legal_rep_first_name
 
-        last_name = current_crime_application.legal_rep_last_name.presence ||
+        last_name = current_crime_application.legal_rep_last_name ||
                     current_provider.legal_rep_last_name
 
-        telephone = current_crime_application.legal_rep_telephone.presence ||
+        telephone = current_crime_application.legal_rep_telephone ||
                     current_provider.legal_rep_telephone
 
         {

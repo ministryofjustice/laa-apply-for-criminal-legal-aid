@@ -14,6 +14,9 @@ RSpec.describe Datastore::ApplicationSubmission do
     # create all neccessary records
     app = create_test_application(
       usn: 123,
+      legal_rep_first_name: 'John',
+      legal_rep_last_name: 'Doe',
+      legal_rep_telephone: '123456789',
     )
 
     client = Applicant.create(

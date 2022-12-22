@@ -5,6 +5,9 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.provider_details do
             json.office_code crime_application.office_code
+            json.legal_rep_first_name crime_application.legal_rep_first_name
+            json.legal_rep_last_name crime_application.legal_rep_last_name
+            json.legal_rep_telephone crime_application.legal_rep_telephone
           end
         end
       end
