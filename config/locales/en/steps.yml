@@ -164,6 +164,7 @@ en:
       declaration:
         edit:
           page_title: Declaration
+          legal_representative_legend: Legal representative
       confirmation:
         show:
           page_title: Application submitted

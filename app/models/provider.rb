@@ -2,7 +2,11 @@ class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :trackable,
          :omniauthable, omniauth_providers: %i[saml]
 
-  store_accessor :settings, :selected_office_code
+  store_accessor :settings,
+                 :selected_office_code,
+                 :legal_rep_first_name,
+                 :legal_rep_last_name,
+                 :legal_rep_telephone
 
   def display_name
     uid
