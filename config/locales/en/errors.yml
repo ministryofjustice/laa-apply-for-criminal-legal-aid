@@ -193,5 +193,10 @@ en:
               blank: Enter more detail
         steps/submission/declaration_form:
           attributes:
-            declaration_signed:
-              blank: You must confirm that the information on this page is correct in order to submit the application
+            legal_rep_first_name:
+              blank: Enter a first name
+            legal_rep_last_name:
+              blank: Enter a last name
+            legal_rep_telephone:
+              blank: Enter a telephone number
+              invalid: Enter a telephone number in the correct format

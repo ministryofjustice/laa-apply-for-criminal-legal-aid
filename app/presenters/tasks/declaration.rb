@@ -12,13 +12,12 @@ module Tasks
       fulfilled?(Ioj)
     end
 
-    # Once the Ioj task is fulfilled, this is always true
     def in_progress?
-      true
+      !!crime_application.legal_rep_first_name
     end
 
     def completed?
-      !!crime_application.declaration_signed
+      crime_application.submitted?
     end
   end
 end

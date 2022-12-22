@@ -19,7 +19,6 @@ module Datastore
         status: ApplicationStatus::IN_PROGRESS.value,
         # we reset some values
         navigation_stack: [],
-        declaration_signed: nil,
         submitted_at: nil,
       )
     end

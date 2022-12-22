@@ -9,15 +9,7 @@
       Confirm the following and submit application
     </h1>
 
-    <p class="govuk-body">You agree that:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>you’ve obtained a signed declaration from my client</li>
-      <li>you’ve provided correct and complete information in this application</li>
-      <li>you’ll share a copy of the completed application with my client</li>
-    </ul>
-
-    <p class="govuk-body govuk-!-margin-top-8">Your client agrees that:</p>
+    <p class="govuk-body">Your client agrees that:</p>
 
     <ul class="govuk-list govuk-list--bullet">
       <li>they’ve instructed Hitchcock, Jones and King to represent them</li>
@@ -30,7 +22,7 @@
       <li>they’ll report any changes to their financial situation immediately</li>
     </ul>
 
-    <div class="govuk-warning-text">
+    <div class="govuk-warning-text govuk-!-margin-bottom-0">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
@@ -43,9 +35,19 @@
       </strong>
     </div>
 
+    <p class="govuk-body">You agree that:</p>
+
+    <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+      <li>you’ve obtained a signed declaration from your client</li>
+      <li>you’ve provided correct and complete information in this application</li>
+      <li>you’ll share a copy of the completed application with your client</li>
+    </ul>
+
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :declaration_signed, multiple: false, legend: { hidden: true } do %>
-        <%= f.govuk_check_box :declaration_signed, 1, 0, multiple: false, link_errors: true %>
+      <%= f.govuk_fieldset legend: { text: t('.legal_representative_legend') } do %>
+        <%= f.govuk_text_field :legal_rep_first_name, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :legal_rep_last_name, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :legal_rep_telephone, autocomplete: 'off', width: 'three-quarters' %>
       <% end %>
 
       <%= f.continue_button(primary: :save_and_submit) %>

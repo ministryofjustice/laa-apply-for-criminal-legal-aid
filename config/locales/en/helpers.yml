@@ -43,8 +43,6 @@ en:
         hearing_date: Date of next hearing
       steps_case_ioj_form:
         types: Why should your client get legal aid?
-      steps_submission_declaration_form:
-        declaration_signed: Confirm and submit application
 
     hint:
       steps_client_has_partner_form:
@@ -77,6 +75,8 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_submission_declaration_form:
+        legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
     label:
       steps_provider_confirm_office_form:
@@ -162,5 +162,6 @@ en:
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
           other: Other
       steps_submission_declaration_form:
-        declaration_signed_options:
-          '1': I, the instructed legal representative, confirm the above is correct.
+        legal_rep_first_name: First name
+        legal_rep_last_name: Last name
+        legal_rep_telephone: Telephone number

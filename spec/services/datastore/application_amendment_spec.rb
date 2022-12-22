@@ -20,7 +20,6 @@ RSpec.describe Datastore::ApplicationAmendment do
       ).to receive(:update!).with(
         status: :in_progress,
         navigation_stack: [],
-        declaration_signed: nil,
         submitted_at: nil,
       )
 

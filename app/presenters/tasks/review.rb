@@ -18,7 +18,9 @@ module Tasks
     end
 
     def completed?
-      fulfilled?(Declaration)
+      crime_application.values_at(
+        :legal_rep_first_name, :legal_rep_last_name, :legal_rep_telephone
+      ).any?
     end
   end
 end

@@ -4,10 +4,19 @@ RSpec.describe Tasks::Review do
   subject { described_class.new(crime_application:) }
 
   let(:crime_application) do
-    instance_double(
-      CrimeApplication,
-      to_param: '12345',
+    CrimeApplication.new(
+      legal_rep_first_name:,
+      legal_rep_last_name:,
+      legal_rep_telephone:,
     )
+  end
+
+  let(:legal_rep_first_name) { nil }
+  let(:legal_rep_last_name) { nil }
+  let(:legal_rep_telephone) { nil }
+
+  before do
+    allow(crime_application).to receive(:id).and_return('12345')
   end
 
   describe '#path' do
@@ -45,23 +54,13 @@ RSpec.describe Tasks::Review do
   end
 
   describe '#completed?' do
-    # We assume the completeness of the Declaration here, as
-    # their statuses are tested in its own spec, no need to repeat
-    before do
-      allow(
-        subject
-      ).to receive(:fulfilled?).with(Tasks::Declaration).and_return(declaration_fulfilled)
-    end
-
-    context 'when the Declaration task has been completed' do
-      let(:declaration_fulfilled) { true }
+    context 'when the Declaration task has some value' do
+      let(:legal_rep_first_name) { 'John' }
 
       it { expect(subject.completed?).to be(true) }
     end
 
-    context 'when the Declaration task has not been completed yet' do
-      let(:declaration_fulfilled) { false }
-
+    context 'when the Declaration task has no values yet' do
       it { expect(subject.completed?).to be(false) }
     end
   end

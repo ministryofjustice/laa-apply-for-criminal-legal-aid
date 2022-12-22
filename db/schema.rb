@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_20_114547) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_22_105608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -70,11 +70,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_20_114547) do
     t.string "client_has_partner"
     t.string "status"
     t.datetime "date_stamp"
-    t.boolean "declaration_signed"
     t.datetime "submitted_at"
     t.serial "usn", null: false
     t.string "ioj_passport", default: [], null: false, array: true
     t.string "office_code"
+    t.string "legal_rep_first_name"
+    t.string "legal_rep_last_name"
+    t.string "legal_rep_telephone"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
