@@ -28,13 +28,16 @@ class Provider < ApplicationRecord
 
     private
 
-    # If `selected_office_code` is nil or unknown, it defaults
-    # to the first office code from the returned ones.
+    # If `selected_office_code` is nil or unknown, and there is
+    # only one office returned, it defaults to that office.
+    # If there are more offices, the provider will choose one.
     def ensure_default_office(record)
       return if record.office_codes.include?(record.selected_office_code)
 
       record.update(
-        selected_office_code: record.office_codes.first
+        selected_office_code: (
+          record.office_codes.first unless record.multiple_offices?
+        )
       )
     end
   end

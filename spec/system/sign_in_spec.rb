@@ -29,6 +29,10 @@ RSpec.describe 'Sign in user journey' do
 
   context 'user is signed in, has multiple accounts' do
     before do
+      allow_any_instance_of(
+        Provider
+      ).to receive(:selected_office_code).and_return('1A123B')
+
       click_button 'Sign in with LAA Portal'
     end
 
