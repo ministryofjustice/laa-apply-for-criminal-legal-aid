@@ -13,11 +13,7 @@ module Providers
     private
 
     def after_sign_in_path_for(_)
-      if current_provider.multiple_offices?
-        edit_steps_provider_confirm_office_path
-      else
-        crime_applications_path
-      end
+      ProviderOfficeRouter.call(current_provider)
     end
 
     def after_omniauth_failure_path_for(_)

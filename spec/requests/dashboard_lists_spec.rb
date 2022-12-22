@@ -11,6 +11,12 @@ RSpec.describe 'Dashboard' do
     allow_any_instance_of(
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
+
+    # Assume we have a signed in Provider,
+    # with a selected office account
+    allow_any_instance_of(
+      Provider
+    ).to receive(:selected_office_code).and_return('1A123B')
   end
 
   describe 'list of in progress applications' do
@@ -79,7 +85,7 @@ RSpec.describe 'Dashboard' do
 
     before do
       stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-        .with(query: hash_including({ 'status' => 'submitted' }))
+        .with(query: hash_including({ 'status' => 'submitted', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 
       get completed_crime_applications_path
@@ -131,7 +137,7 @@ RSpec.describe 'Dashboard' do
 
     before do
       stub_request(:get, 'http://datastore-webmock/api/v2/applications')
-        .with(query: hash_including({ 'status' => 'returned' }))
+        .with(query: hash_including({ 'status' => 'returned', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 
       get completed_crime_applications_path(q: 'returned')
