@@ -28,8 +28,9 @@ module Steps
           attributes
         )
 
+        # Update the signed in provider settings
         record.update(
-          attributes
+          attributes.compact_blank
         )
       end
     end

@@ -53,16 +53,41 @@ RSpec.describe Steps::Submission::DeclarationForm do
       end
 
       context 'when the details have changed' do
-        it 'saves the record' do
+        it 'saves the application record' do
+          allow(provider_record).to receive(:update).and_return(true)
+
           expect(crime_application).to receive(:update).with(
             expected_attrs
           ).and_return(true)
+
+          expect(subject.save).to be(true)
+        end
+
+        it 'saves the provider settings' do
+          allow(crime_application).to receive(:update).and_return(true)
 
           expect(provider_record).to receive(:update).with(
             expected_attrs
           ).and_return(true)
 
           expect(subject.save).to be(true)
+        end
+
+        context 'when saving a draft' do
+          let(:legal_rep_telephone) { '' }
+
+          it 'saves to the provider settings attributes that are not blank' do
+            allow(crime_application).to receive(:update).and_return(true)
+
+            expect(provider_record).to receive(:update).with(
+              {
+                'legal_rep_first_name' => 'John',
+                'legal_rep_last_name' => 'Doe',
+              }
+            ).and_return(true)
+
+            expect(subject.save!).to be(true)
+          end
         end
       end
 

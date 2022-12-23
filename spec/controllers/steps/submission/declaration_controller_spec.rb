@@ -32,7 +32,7 @@ RSpec.describe Steps::Submission::DeclarationController, type: :controller do
           {
             legal_rep_first_name: 'John',
             legal_rep_last_name: 'Doe',
-            legal_rep_telephone: '123456789',
+            legal_rep_telephone: '',
           }
         end
 
