@@ -95,7 +95,7 @@ RSpec.describe Steps::Submission::DeclarationForm do
         let(:rep_details_attrs) { expected_attrs }
 
         it 'does not save the record but returns true' do
-          expect(crime_application).not_to receive(:update)
+          expect(crime_application).to receive(:update)
           expect(provider_record).not_to receive(:update)
           expect(subject.save).to be(true)
         end

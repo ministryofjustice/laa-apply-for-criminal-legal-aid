@@ -22,11 +22,11 @@ module Steps
       private
 
       def persist!
-        return true unless changed?
-
         crime_application.update(
           attributes
         )
+
+        return true unless changed?
 
         # Update the signed in provider settings
         record.update(
