@@ -107,11 +107,11 @@ RSpec.describe StepsHelper, type: :helper do
         expect(
           helper.govuk_error_summary(form_object)
         ).to eq(
-          '<div class="govuk-error-summary" role="alert" data-module="govuk-error-summary" ' \
-          'aria-labelledby="error-summary-title"><h2 id="error-summary-title" class="govuk-error-summary__title">' \
-          'There is a problem on this page</h2><div class="govuk-error-summary__body">' \
-          '<ul class="govuk-list govuk-error-summary__list"><li><a data-turbo="false" ' \
-          'href="#steps-base-form-object-base-field-error">can&#39;t be blank</a></li></ul></div></div>'
+          '<div class="govuk-error-summary" data-module="govuk-error-summary">' \
+          '<div role="alert"><h2 class="govuk-error-summary__title">There is a problem on this page</h2>' \
+          '<div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list">' \
+          '<li><a data-turbo="false" href="#steps-base-form-object-base-field-error">can&#39;t be blank</a></li>' \
+          '</ul></div></div></div>'
         )
       end
 
