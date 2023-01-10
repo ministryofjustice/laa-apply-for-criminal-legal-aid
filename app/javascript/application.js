@@ -17,7 +17,12 @@ if ($inputs) {
 
 import accessibleAutocomplete from 'accessible-autocomplete'
 
-accessibleAutocomplete.enhanceSelectElement({
-  selectElement: document.querySelector('#steps-case-hearing-details-form-hearing-court-name-field'),
-  defaultValue: ''
-})
+const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
+if ($acElements) {
+  for (let i = 0; i < $acElements.length; i++) {
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: $acElements[i],
+      defaultValue: ''
+    })
+  }
+}

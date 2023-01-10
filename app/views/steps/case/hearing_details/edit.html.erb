@@ -9,6 +9,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_select :hearing_court_name, Court.all, :name, :name,
+                                    data: { module: 'accessible-autocomplete' },
                                     options: { include_blank: true }, label: { size: 'm' } %>
 
       <%= f.govuk_date_field :hearing_date, maxlength_enabled: true %>
