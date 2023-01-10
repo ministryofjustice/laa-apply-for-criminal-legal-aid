@@ -6,7 +6,7 @@
 
 <% content_for(:row_answer, flush: true) do %>
   <p class="govuk-body govuk-!-margin-bottom-1">
-    <%= offence_answer.offence_name %>
+    <%= offence_answer.offence_name || t("summary.questions.#{offence_answer.question}.unknown_name") %>
   </p>
 
   <p class="govuk-caption-m">
@@ -17,6 +17,12 @@
     <p class="govuk-body govuk-!-margin-bottom-0">
       <%= l(date) %>
     </p>
+  <% end %>
+
+  <% unless offence_answer.complete? %>
+    <strong class="moj-badge moj-badge--red">
+      <%= t("summary.questions.#{offence_answer.question}.incomplete_tag") %>
+    </strong>
   <% end %>
 <% end %>
 

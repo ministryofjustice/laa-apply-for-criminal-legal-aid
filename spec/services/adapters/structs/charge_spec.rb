@@ -31,7 +31,7 @@ RSpec.describe Adapters::Structs::Charge do
     it 'returns the mapped dates' do
       expect(
         subject.offence_dates
-      ).to match_array([{ date: kind_of(Date) }, { date: kind_of(Date) }])
+      ).to match_array([{ date_from: kind_of(Date) }, { date_from: kind_of(Date) }])
     end
   end
 

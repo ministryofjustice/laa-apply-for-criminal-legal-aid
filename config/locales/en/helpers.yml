@@ -32,7 +32,14 @@ en:
       steps_case_case_type_form:
         case_type: What is the case type?
       steps_case_charges_form:
-        date: Offence date %{index}
+        date_from:
+          zero: Start date
+          one: Start date
+          other: Start date %{count}
+        date_to:
+          zero: End date (optional)
+          one: End date (optional)
+          other: End date %{count} (optional)
       steps_case_charges_summary_form:
         add_offence: Do you want to add another offence?
       steps_case_has_codefendants_form:
@@ -60,7 +67,7 @@ en:
         urn: For example, ‘12 AB 3456789’.
       steps_case_charges_form:
         offence_name: For example, robbery
-        date: For example, 12 11 2007
+        date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024

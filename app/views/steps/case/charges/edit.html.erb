@@ -24,14 +24,19 @@
 
       <%= f.govuk_fieldset legend: { text: t('.offence_dates_fieldset_legend') } do %>
         <%= f.fields_for :offence_dates do |od| %>
-          <%= od.govuk_date_field :date, maxlength_enabled: true,
+          <%= od.govuk_date_field :date_from, maxlength_enabled: true,
                                   legend: {
-                                    text: t("helpers.legend.#{f.object_name}.date", index: od.index + 1),
-                                    hidden: true
+                                    text: t("helpers.legend.#{f.object_name}.date_from", count: od.index + 1),
+                                    size: 's'
+                                  } %>
+
+          <%= od.govuk_date_field :date_to, maxlength_enabled: true,
+                                  legend: {
+                                    text: t("helpers.legend.#{f.object_name}.date_to", count: od.index + 1),
+                                    size: 's'
                                   },
                                   hint: {
-                                    text: t("helpers.hint.#{f.object_name}.date"),
-                                    hidden: !od.index.zero?
+                                    text: t("helpers.hint.#{f.object_name}.date_to")
                                   } %>
 
           <%= od.button t('.remove_button'), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),

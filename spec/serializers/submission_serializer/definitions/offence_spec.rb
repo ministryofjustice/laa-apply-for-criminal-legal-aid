@@ -24,8 +24,8 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
   end
 
   before do
-    allow(charge1).to receive(:offence_dates).and_return([{ date: 'Date1' }, { date: 'Date2' }])
-    allow(charge2).to receive(:offence_dates).and_return([{ date: 'Date1' }])
+    allow(charge1).to receive(:offence_dates).and_return([{ date_from: 'Date1' }, { date_from: 'Date2' }])
+    allow(charge2).to receive(:offence_dates).and_return([{ date_from: 'Date1' }])
   end
 
   describe '#generate' do

@@ -8,7 +8,7 @@ RSpec.describe 'Charges/offences summary page' do
 
     kase.charges.create!(
       offence_name: 'Robbery',
-      offence_dates_attributes: { id: nil, date: Date.new(1990, 2, 1) }
+      offence_dates_attributes: { id: nil, date_from: Date.new(1990, 2, 1) }
     )
   end
 
