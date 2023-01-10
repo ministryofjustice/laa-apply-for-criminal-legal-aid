@@ -4,8 +4,8 @@ class CrimeApplicationsController < DashboardController
 
   def index
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(created_at: :desc)
-    ).page params[:page]
+      CrimeApplication.joins(:applicant)
+    ).order(**sorting_params).page params[:page]
   end
 
   def edit
@@ -29,4 +29,26 @@ class CrimeApplicationsController < DashboardController
   end
 
   def confirm_destroy; end
+
+  private
+
+  def order_param
+    return 'created_at' unless ordering_param_allowed?
+
+    return 'people.last_name' if params[:order] == 'applicant_name'
+
+    params[:order]
+  end
+
+  def ordering_param_allowed?
+    %w[created_at applicant_name].include? params[:order]
+  end
+
+  def sort_param
+    params[:sort]&.to_sym || :desc
+  end
+
+  def sorting_params
+    { order_param => sort_param }
+  end
 end

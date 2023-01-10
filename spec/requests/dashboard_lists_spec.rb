@@ -6,6 +6,7 @@ RSpec.describe 'Dashboard' do
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
   let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
   let(:pagination_fixture) { { per_page: 20, total_count: 1, total_pages: 1, sort: 'desc' }.to_json }
+  let(:order) { nil }
 
   before do
     allow_any_instance_of(
@@ -21,7 +22,7 @@ RSpec.describe 'Dashboard' do
 
   describe 'list of in progress applications' do
     before do
-      get crime_applications_path
+      get crime_applications_path, params: { order: }
     end
 
     context 'when there are records to return' do
@@ -29,11 +30,13 @@ RSpec.describe 'Dashboard' do
         # sets up a few test records
         app1 = create_test_application(created_at: Date.new(2022, 10, 15))
         app2 = create_test_application(office_code: 'XYZ') # a different office
-        app3 = create_test_application
+        app3 = create_test_application(created_at: Date.new(2022, 10, 12))
+        app4 = create_test_application
 
         Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
         Applicant.create(crime_application: app2, first_name: 'Jane', last_name: 'Doe')
-        Applicant.create(crime_application: app3, first_name: '', last_name: '')
+        Applicant.create(crime_application: app3, first_name: 'John', last_name: 'Zebra')
+        Applicant.create(crime_application: app4, first_name: '', last_name: '')
       end
 
       after :all do
@@ -46,22 +49,58 @@ RSpec.describe 'Dashboard' do
 
         assert_select 'h1', 'Your applications'
 
-        assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress (1)', 'aria-current': 'page'
+        assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress (2)', 'aria-current': 'page'
         assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted'
         assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)'
 
         assert_select 'tbody.govuk-table__body' do
-          assert_select 'tr.govuk-table__row', 1 do
+          assert_select 'tr.govuk-table__row', 2 do
             assert_select 'a', count: 1, text: 'John Doe'
             assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 Oct 2022'
             assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
             assert_select 'td.govuk-table__cell:nth-of-type(3)' do
-              assert_select 'button.govuk-button', count: 1, text: 'Delete'
+              assert_select 'button.govuk-button', count: 2, text: 'Delete'
             end
           end
         end
 
         expect(response.body).not_to include('Jane Doe')
+      end
+
+      context 'when the list is sorted by applicant name' do
+        let(:order) { 'applicant_name' }
+
+        it 'lists the applications by applicant name' do
+          assert_select 'tbody.govuk-table__body' do
+            assert_select 'tr.govuk-table__row:nth-of-type(1)' do
+              assert_select 'a', count: 1, text: 'John Zebra'
+            end
+          end
+        end
+      end
+
+      context 'when the list is sorted by created_at' do
+        let(:order) { 'created_at' }
+
+        it 'lists the applications by applicant name' do
+          assert_select 'tbody.govuk-table__body' do
+            assert_select 'tr.govuk-table__row:nth-of-type(1)' do
+              assert_select 'a', count: 1, text: 'John Doe'
+            end
+          end
+        end
+      end
+
+      context 'when the list is sorted by a non-allowed parameter' do
+        let(:order) { 'bad_param' }
+
+        it 'defaults to created_at' do
+          assert_select 'tbody.govuk-table__body' do
+            assert_select 'tr.govuk-table__row:nth-of-type(1)' do
+              assert_select 'a', count: 1, text: 'John Doe'
+            end
+          end
+        end
       end
     end
 

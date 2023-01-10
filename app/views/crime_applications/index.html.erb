@@ -11,11 +11,11 @@
         <%= t("shared.errors.no_records.#{status_filter}") %>
       </h2>
     <% else %>
-      <table class="govuk-table app-dashboard-table">
+      <table class="govuk-table app-dashboard-table" data-module="moj-sortable-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.created_at') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.table_headings.applicant_name') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.table_headings.created_at') %></th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
           </tr>
