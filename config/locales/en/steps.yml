@@ -115,7 +115,7 @@ en:
           heading: What has your client been charged with?
           offence_dates_fieldset_legend: Offence dates
           add_button: Add another date
-          remove_button: Remove date
+          remove_button: Remove date %{index}
         confirm_destroy:
           page_title: Delete offence confirmation
           heading: Are you sure you want to delete this offence?
