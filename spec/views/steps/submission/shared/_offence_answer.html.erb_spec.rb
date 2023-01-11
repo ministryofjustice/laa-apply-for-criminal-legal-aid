@@ -50,8 +50,8 @@ describe 'Rendering a summary row of type `OffenceAnswer`' do
   context 'when the offence has no class' do
     let(:offence_class) { nil }
 
-    it 'shows a placeholder copy' do
-      assert_select 'dd.govuk-summary-list__value p.govuk-caption-m', 'Class not specified'
+    it 'skips the class paragraph' do
+      assert_select 'dd.govuk-summary-list__value p.govuk-caption-m', false
     end
   end
 

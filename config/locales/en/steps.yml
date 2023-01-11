@@ -3,6 +3,9 @@ en:
   steps:
     shared:
       offence_class: Class %{class}
+      charge:
+        unknown_name: Name not entered
+        incomplete_tag: Incomplete
 
     provider:
       confirm_office:
@@ -131,7 +134,6 @@ en:
             one: You have added %{count} offence
             other: You have added %{count} offences
         offence_details:
-          incomplete_tag: Incomplete
           change_link_html: Change <span class="govuk-visually-hidden">offence</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">offence</span>
       has_codefendants:

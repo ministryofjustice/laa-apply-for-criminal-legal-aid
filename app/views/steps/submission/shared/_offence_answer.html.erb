@@ -5,25 +5,7 @@
 %>
 
 <% content_for(:row_answer, flush: true) do %>
-  <p class="govuk-body govuk-!-margin-bottom-1">
-    <%= offence_answer.offence_name || t("summary.questions.#{offence_answer.question}.unknown_name") %>
-  </p>
-
-  <p class="govuk-caption-m">
-    <%= offence_answer.offence_class || t("summary.questions.#{offence_answer.question}.unknown_class") %>
-  </p>
-
-  <% offence_answer.offence_dates.map do |date| %>
-    <p class="govuk-body govuk-!-margin-bottom-0">
-      <%= l(date) %>
-    </p>
-  <% end %>
-
-  <% unless offence_answer.complete? %>
-    <strong class="moj-badge moj-badge--red">
-      <%= t("summary.questions.#{offence_answer.question}.incomplete_tag") %>
-    </strong>
-  <% end %>
+  <%= render partial: 'steps/shared/charge', locals: { charge: offence_answer } %>
 <% end %>
 
 <%= render partial: 'steps/submission/shared/summary_row',

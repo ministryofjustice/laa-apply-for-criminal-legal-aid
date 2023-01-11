@@ -73,9 +73,6 @@ en:
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
-        unknown_name: Name not entered
-        unknown_class: Class not specified
-        incomplete_tag: Incomplete
       # END offences section
 
       # BEGIN codefendants section
