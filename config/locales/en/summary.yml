@@ -73,7 +73,6 @@ en:
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
-        unknown_class: Class not specified
       # END offences section
 
       # BEGIN codefendants section

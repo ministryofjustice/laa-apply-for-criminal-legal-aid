@@ -138,23 +138,39 @@ en:
               missing_details: You must complete all offence details in order to proceed
         steps/case/offence_date_fieldset_form:
           attributes:
-            date:
-              blank: Offence date cannot be blank
-              invalid: Enter a valid date
+            date_from:
+              blank: Offence start date cannot be blank
+              invalid: Enter a valid start date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
-              future_not_allowed: Offence date cannot be in the future
+              future_not_allowed: Offence start date cannot be in the future
+            date_to:
+              invalid: Enter a valid end date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Offence end date cannot be in the future
+              before_date_from: Offence end date cannot be before start date
           summary:
-            date:
-              blank: Offence dates cannot be blank
+            date_from:
+              blank: Offence start date cannot be blank
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
-              future_not_allowed: Offence dates cannot be in the future
+              future_not_allowed: Offence start date cannot be in the future
+            date_to:
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Offence end date cannot be in the future
+              before_date_from: Offence end date cannot be before start date
         steps/case/hearing_details_form:
           attributes:
             hearing_court_name:

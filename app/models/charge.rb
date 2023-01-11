@@ -14,6 +14,6 @@ class Charge < ApplicationRecord
            to: :offence, allow_nil: true
 
   def complete?
-    offence_name.present? && offence_dates.pluck(:date).any?
+    offence_name.present? && offence_dates.pluck(:date_from).any?
   end
 end

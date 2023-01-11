@@ -222,7 +222,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   context 'when the step is `add_offence_date`' do
     context 'has correct next step' do
       let(:step_name) { :add_offence_date }
-      let(:offence_dates) { [OffenceDate.new(date: '01, 02, 2000')] }
+      let(:offence_dates) { [OffenceDate.new(date_from: '01, 02, 2000')] }
       let(:charge) { Charge.new(id: '20', offence_dates: offence_dates) }
       let(:form_object) { double('FormObject', case: kase, record: charge) }
 

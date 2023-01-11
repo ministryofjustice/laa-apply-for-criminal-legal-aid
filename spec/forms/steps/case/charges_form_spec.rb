@@ -17,9 +17,9 @@ RSpec.describe Steps::Case::ChargesForm do
   let(:offence_name) { 'Robbery' }
   let(:offence_dates_attributes) do
     {
-      '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
-     '1' => { 'date(3i)' => '11', 'date(2i)' => '07', 'date(1i)' => '2010' },
-     '2' => { 'date(3i)' => '10', 'date(2i)' => '02', 'date(1i)' => '2009' }
+      '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
+      '1' => { 'date_from(3i)' => '11', 'date_from(2i)' => '07', 'date_from(1i)' => '2010' },
+      '2' => { 'date_from(3i)' => '10', 'date_from(2i)' => '02', 'date_from(1i)' => '2009' }
     }
   end
 
@@ -29,8 +29,11 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'offence dates' do
       let(:offence_dates_attributes) do
         {
-          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '3000' },
-          '1' => { 'date(3i)' => '', 'date(2i)' => '', 'date(1i)' => '' },
+          '0' => {
+            'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '3000',
+            'date_to(3i)' => '03', 'date_to(2i)' => '11', 'date_to(1i)' => '2022'
+          },
+          '1' => { 'date_from(3i)' => '', 'date_from(2i)' => '', 'date_from(1i)' => '' },
         }
       end
 
@@ -40,16 +43,20 @@ RSpec.describe Steps::Case::ChargesForm do
 
       it 'sets the errors with their index' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?('offence_dates-attributes[0].date', :future_not_allowed)).to be(true)
 
-        expect(subject.errors.messages_for('offence_dates-attributes[0].date').first).to eq(
-          'Offence dates cannot be in the future'
+        expect(subject.errors.of_kind?('offence_dates-attributes[0].date_from', :future_not_allowed)).to be(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[0].date_from').first).to eq(
+          'Offence start date cannot be in the future'
         )
 
-        expect(subject.errors.of_kind?('offence_dates-attributes[1].date', :blank)).to be(true)
+        expect(subject.errors.of_kind?('offence_dates-attributes[0].date_to', :before_date_from)).to be(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[0].date_to').first).to eq(
+          'Offence end date cannot be before start date'
+        )
 
-        expect(subject.errors.messages_for('offence_dates-attributes[1].date').first).to eq(
-          'Offence dates cannot be blank'
+        expect(subject.errors.of_kind?('offence_dates-attributes[1].date_from', :blank)).to be(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[1].date_from').first).to eq(
+          'Offence start date cannot be blank'
         )
       end
     end
@@ -62,8 +69,8 @@ RSpec.describe Steps::Case::ChargesForm do
 
         let(:offence_dates) do
           [
-            OffenceDate.new(date: Date.new(2000, 11, 3)),
-            OffenceDate.new(date: Date.new(2009, 5, 1))
+            OffenceDate.new(date_from: Date.new(2000, 11, 3)),
+            OffenceDate.new(date_from: Date.new(2009, 5, 1))
           ]
         end
 
@@ -73,16 +80,16 @@ RSpec.describe Steps::Case::ChargesForm do
           {
             '0' => {
               'id' => offence_dates[0].id.to_s,
-              'date(3i)' => '03',
-              'date(2i)' => '11',
-              'date(1i)' => '2000',
+              'date_from(3i)' => '03',
+              'date_from(2i)' => '11',
+              'date_from(1i)' => '2000',
               '_destroy' => '1'
             },
             '1' => {
               'id' => offence_dates[1].id.to_s,
-              'date(3i)' => '01',
-              'date(2i)' => '05',
-              'date(1i)' => '2009'
+              'date_from(3i)' => '01',
+              'date_from(2i)' => '05',
+              'date_from(1i)' => '2009'
             }
           }
         end
@@ -123,7 +130,7 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'if there are fewer than two offence dates' do
       let(:offence_dates_attributes) do
         {
-          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
+          '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
         }
       end
 
@@ -135,8 +142,8 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'if there two or more offence dates' do
       let(:offence_dates_attributes) do
         {
-          '0' => { 'date(3i)' => '03', 'date(2i)' => '11', 'date(1i)' => '2000' },
-          '1' => { 'date(3i)' => '11', 'date(2i)' => '07', 'date(1i)' => '2010' }
+          '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
+          '1' => { 'date_from(3i)' => '11', 'date_from(2i)' => '07', 'date_from(1i)' => '2010' }
         }
       end
 

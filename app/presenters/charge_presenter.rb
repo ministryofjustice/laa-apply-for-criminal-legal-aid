@@ -7,6 +7,6 @@ class ChargePresenter < BasePresenter
   end
 
   def offence_dates
-    super.pluck(:date).compact
+    super.pluck(:date_from).compact
   end
 end

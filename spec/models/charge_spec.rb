@@ -37,25 +37,25 @@ RSpec.describe Charge, type: :model do
 
     context 'for an offence with name and dates' do
       let(:offence_name) { 'Foobar' }
-      let(:offence_dates) { [{ date: 'date' }, { date: nil }] }
+      let(:offence_dates) { [{ date_from: 'date' }, { date_from: nil }] }
 
       it 'returns true' do
         expect(subject.complete?).to be(true)
       end
     end
 
-    context 'for an offence with no name and dates' do
+    context 'for an offence with dates but no name' do
       let(:offence_name) { '' }
-      let(:offence_dates) { [{ date: 'date' }, { date: nil }] }
+      let(:offence_dates) { [{ date_from: 'date' }, { date_from: nil }] }
 
-      it 'returns true' do
+      it 'returns false' do
         expect(subject.complete?).to be(false)
       end
     end
 
     context 'for an offence with name but no dates' do
       let(:offence_name) { 'Foobar' }
-      let(:offence_dates) { [{ date: nil }] }
+      let(:offence_dates) { [{ date_from: nil }] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
@@ -64,7 +64,7 @@ RSpec.describe Charge, type: :model do
 
     context 'for an offence with no name and no dates' do
       let(:offence_name) { '' }
-      let(:offence_dates) { [{ date: nil }] }
+      let(:offence_dates) { [{ date_from: nil }] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
