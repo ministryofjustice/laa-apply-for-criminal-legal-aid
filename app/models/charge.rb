@@ -14,6 +14,14 @@ class Charge < ApplicationRecord
            to: :offence, allow_nil: true
 
   def complete?
-    offence_name.present? && offence_dates.pluck(:date_from).any?
+    offence_name.present? && valid_dates?
+  end
+
+  # NOTE: we use `pluck` in several places instead of ActiveRecord,
+  # as to make these methods compatible with JSON responses received
+  # from the datastore (submitted applications).
+  def valid_dates?
+    dates = offence_dates.pluck(:date_from)
+    dates.any? && dates.all?
   end
 end
