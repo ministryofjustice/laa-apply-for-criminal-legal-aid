@@ -7,6 +7,8 @@ class ChargePresenter < BasePresenter
   end
 
   def offence_dates
-    super.pluck(:date_from).compact
+    return [] unless valid_dates?
+
+    super.pluck(:date_from, :date_to)
   end
 end

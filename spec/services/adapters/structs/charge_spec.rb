@@ -31,13 +31,21 @@ RSpec.describe Adapters::Structs::Charge do
     it 'returns the mapped dates' do
       expect(
         subject.offence_dates
-      ).to match_array([{ date_from: kind_of(Date) }, { date_from: kind_of(Date) }])
+      ).to match_array(
+        [{ date_from: kind_of(Date), date_to: nil }, { date_from: kind_of(Date), date_to: nil }]
+      )
     end
   end
 
   describe '#complete?' do
     it 'returns always true' do
       expect(subject.complete?).to be(true)
+    end
+  end
+
+  describe '#valid_dates?' do
+    it 'returns always true' do
+      expect(subject.valid_dates?).to be(true)
     end
   end
 end

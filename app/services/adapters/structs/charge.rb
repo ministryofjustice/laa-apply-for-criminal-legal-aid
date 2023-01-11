@@ -14,13 +14,17 @@ module Adapters
         )
       end
 
-      # TODO: update once the JSON schema has been changed
       def offence_dates
-        @dates.map { |date| { date_from: date } }
+        @dates.map { |date_from, date_to| { date_from:, date_to: } }
       end
 
-      # For a datastore application, this is always true
+      # For a submitted datastore application, following methods
+      # are assumed to be always true (schema is enforced).
       def complete?
+        true
+      end
+
+      def valid_dates?
         true
       end
     end

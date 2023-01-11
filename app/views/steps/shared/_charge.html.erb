@@ -13,9 +13,9 @@
   </p>
 <% end %>
 
-<% charge.offence_dates.each do |date| %>
+<% charge.offence_dates.each do |date_from, date_to| %>
   <p class="govuk-body govuk-!-margin-bottom-0">
-    <%= l(date) %>
+    <%= date_to ? [l(date_from), l(date_to)].join(' – ') : l(date_from) %>
   </p>
 <% end %>
 
