@@ -13,19 +13,32 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
       {
         name: 'Common assault',
         offence_class: 'H',
-        dates: %w[Date1 Date2],
+        dates: [
+          { date_from: 'date_from_1', date_to: 'date_to_1' }, { date_from: 'date_from_2', date_to: nil }
+        ],
       },
       {
         name: 'An unlisted offence',
         offence_class: nil,
-        dates: %w[Date1],
+        dates: [
+          { date_from: 'date_from_1', date_to: nil }
+        ]
       },
     ].as_json
   end
 
   before do
-    allow(charge1).to receive(:offence_dates).and_return([{ date_from: 'Date1' }, { date_from: 'Date2' }])
-    allow(charge2).to receive(:offence_dates).and_return([{ date_from: 'Date1' }])
+    allow(charge1).to receive(:offence_dates).and_return(
+      [
+        { date_from: 'date_from_1', date_to: 'date_to_1' },
+        { date_from: 'date_from_2', date_to: nil }
+      ]
+    )
+    allow(charge2).to receive(:offence_dates).and_return(
+      [
+        { date_from: 'date_from_1', date_to: nil }
+      ]
+    )
   end
 
   describe '#generate' do

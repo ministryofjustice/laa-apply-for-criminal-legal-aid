@@ -4,7 +4,10 @@ module Adapters
       # {
       #   "name": "Attempt robbery",
       #   "offence_class": "Class C",
-      #   "dates": ["2020-05-11", "2020-08-11"]
+      #   "dates": [
+      #     { "date_from": "2020-05-11", "date_to": "2020-05-12" },
+      #     { "date_from": "2020-08-11", "date_to": null }
+      #   ]
       # }
       def initialize(offence_struct)
         @dates = offence_struct.dates
@@ -15,7 +18,7 @@ module Adapters
       end
 
       def offence_dates
-        @dates.map { |date_from, date_to| { date_from:, date_to: } }
+        @dates.map { |obj| { date_from: obj.date_from, date_to: obj.date_to } }
       end
 
       # For a submitted datastore application, following methods
