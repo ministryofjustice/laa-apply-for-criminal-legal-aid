@@ -16,8 +16,24 @@
       <table class="govuk-table app-dashboard-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.submitted_at') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('applicant_name') %>">
+              <%=
+                link_to(
+                  t('.table_headings.applicant_name'),
+                  completed_crime_applications_path(q: params[:q], order: 'applicant_name', sort: sort_direction_name),
+                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                )
+              %>
+            </th>
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort(params[:q] || 'submitted_at') %>">
+            <%=
+                link_to(
+                  t('.table_headings.submitted_at'),
+                  completed_crime_applications_path(q: params[:q], order: 'submitted_at', sort: sort_direction_submitted_at),
+                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                )
+            %>
+            </th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
           </tr>
         </thead>

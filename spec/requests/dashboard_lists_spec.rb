@@ -179,7 +179,7 @@ RSpec.describe 'Dashboard' do
         .with(query: hash_including({ 'status' => 'returned', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 
-      get completed_crime_applications_path(q: 'returned')
+      get completed_crime_applications_path(q: 'returned', sort: 'desc')
     end
 
     it 'shows a list of returned applications' do

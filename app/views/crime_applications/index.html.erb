@@ -11,11 +11,27 @@
         <%= t("shared.errors.no_records.#{status_filter}") %>
       </h2>
     <% else %>
-      <table class="govuk-table app-dashboard-table" data-module="moj-sortable-table">
+      <table class="govuk-table app-dashboard-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header" aria-sort="ascending"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="none"><%= t('.table_headings.created_at') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('applicant_name') %>">
+              <%=
+                link_to(
+                  t('.table_headings.applicant_name'),
+                  crime_applications_path(order: 'applicant_name', sort: sort_direction_name),
+                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                )
+              %>
+            </th>
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('created_at') %>">
+              <%=
+                link_to(
+                  t('.table_headings.created_at'),
+                  crime_applications_path(order: 'created_at', sort: sort_direction_created_at),
+                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                )
+              %>
+            </th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
           </tr>
