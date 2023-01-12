@@ -14,13 +14,14 @@ describe Summary::Sections::ContactDetails do
   let(:applicant) do
     instance_double(
       Applicant,
-      home_address: home_address,
-      correspondence_address: correspondence_address,
-      correspondence_address_type: correspondence_address_type,
-      telephone_number: '123456789',
+      home_address:,
+      correspondence_address:,
+      correspondence_address_type:,
+      telephone_number:,
     )
   end
 
+  let(:telephone_number) { '123456789' }
   let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
 
   let(:home_address) do
@@ -121,6 +122,17 @@ describe Summary::Sections::ContactDetails do
         expect(answers[1].value).to eq('providers_office_address')
 
         expect(answers[2].question).to eq(:telephone_number)
+      end
+    end
+
+    context 'when there is no telephone number' do
+      let(:telephone_number) { '' }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(4)
+
+        expect(answers[3].question).to eq(:telephone_number)
+        expect(answers[3].value).to eq('')
       end
     end
   end
