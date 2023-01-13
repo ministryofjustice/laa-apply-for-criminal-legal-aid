@@ -66,7 +66,6 @@ en:
         steps/client/contact_details_form:
           attributes:
             telephone_number:
-              blank: Enter a UK telephone number
               invalid: Enter a telephone number in the correct format
             correspondence_address_type:
               inclusion: Select a correspondence address

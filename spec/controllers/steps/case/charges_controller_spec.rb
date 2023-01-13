@@ -26,7 +26,8 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
         ).to receive(:update_and_advance).with(
           form_class,
           record: charge_record,
-          as: :add_offence_date
+          as: :add_offence_date,
+          flash: nil
         )
       end
     end
@@ -60,7 +61,8 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
         ).to receive(:update_and_advance).with(
           form_class,
           record: charge_record,
-          as: :delete_offence_date
+          as: :delete_offence_date,
+          flash: { success: 'The offence date has been deleted' }
         )
       end
     end

@@ -52,6 +52,7 @@ en:
           other_address: Somewhere else
       telephone_number:
         question: UK telephone number
+        absence_answer: *absence_none
       # END contact details section
 
       # BEGIN case details section
@@ -68,6 +69,11 @@ en:
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+      previous_maat_id:
+        question: Previous MAAT ID
+        absence_answer: *absence_none
+      appeal_with_changes_details:
+        question: Change details
       # END case details section
 
       # BEGIN offences section

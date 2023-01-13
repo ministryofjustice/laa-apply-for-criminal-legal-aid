@@ -3,13 +3,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
     <%= step_form @form_object do |f| %>
       <%= f.fields_for :codefendants do |c| %>
-        <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', index: c.index + 1) }, id: "codefendant_#{c.index + 1}" do %>
+        <% index = c.index + 1 %>
+
+        <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', index:) }, id: "codefendant_#{index}" do %>
           <%= c.govuk_text_field :first_name, label: { text: t("helpers.label.#{f.object_name}.first_name") },
                                  autocomplete: 'off', width: 'three-quarters' %>
 
@@ -25,7 +29,7 @@
                                                  class: 'govuk-fieldset__legend',
                                                } %>
 
-          <%= c.button t('.remove_button'), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
+          <%= c.button t('.remove_button', index:), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
                        class: %w[govuk-button govuk-button--warning],
                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
         <% end %>

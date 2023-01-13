@@ -8,7 +8,9 @@ module Steps
       end
 
       def update
-        update_and_advance(CodefendantsForm, as: step_name)
+        update_and_advance(
+          CodefendantsForm, as: step_name, flash: flash_msg
+        )
       end
 
       private
@@ -21,6 +23,10 @@ module Steps
         else
           :codefendants_finished
         end
+      end
+
+      def flash_msg
+        { success: t('.edit.deleted_flash') } if step_name.eql?(:delete_codefendant)
       end
 
       def additional_permitted_params

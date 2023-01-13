@@ -32,7 +32,7 @@ RSpec.describe Adapters::Structs::Charge do
       expect(
         subject.offence_dates
       ).to match_array(
-        [{ date_from: kind_of(Date), date_to: nil }, { date_from: kind_of(Date), date_to: nil }]
+        [{ date_from: kind_of(Date), date_to: kind_of(Date) }, { date_from: kind_of(Date), date_to: nil }]
       )
     end
   end
