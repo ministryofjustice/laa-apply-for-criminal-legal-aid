@@ -33,7 +33,7 @@ module Steps
         @form_object.save!
         redirect_to edit_crime_application_path(current_crime_application)
       elsif @form_object.save
-        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination
+        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
       else
         render opts.fetch(:render, :edit)
       end

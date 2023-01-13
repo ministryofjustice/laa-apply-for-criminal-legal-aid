@@ -119,6 +119,7 @@ en:
           offence_dates_fieldset_legend: Offence dates
           add_button: Add another date
           remove_button: Remove date %{index}
+          deleted_flash: The offence date has been deleted
         confirm_destroy:
           page_title: Delete offence confirmation
           heading: Are you sure you want to delete this offence?
@@ -145,7 +146,8 @@ en:
           heading: Enter the details of any co-defendants in the case
           codefendant_legend: Co-defendant %{index}
           add_button: Add another co-defendant
-          remove_button: Remove co-defendant
+          remove_button: Remove co-defendant %{index}
+          deleted_flash: The co-defendant has been deleted
       hearing_details:
         edit:
           page_title: Next hearing court details
