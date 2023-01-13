@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').chomp
 
 gem 'faraday', '~> 2.7'
-gem 'govuk_design_system_formbuilder', '~> 3.1.0'
+gem 'govuk_design_system_formbuilder', '~> 3.3.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
 gem 'pg', '~> 1.4'

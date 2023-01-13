@@ -12,7 +12,7 @@ module Steps
 
       validates :telephone_number,
                 format: { with: TEL_REGEXP },
-                presence: true
+                allow_blank: true
 
       validates :correspondence_address_type,
                 inclusion: { in: :choices }

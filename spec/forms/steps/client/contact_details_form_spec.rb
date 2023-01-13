@@ -51,12 +51,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   describe 'validations' do
     context 'when telephone_number is blank' do
       let(:telephone_number) { '' }
-      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS.to_s }
 
-      it 'has a validation error on the field' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:telephone_number, :blank)).to be(true)
-      end
+      it { is_expected.not_to validate_presence_of(:telephone_number) }
     end
 
     context 'when telephone_number contains letters' do

@@ -12,21 +12,6 @@ describe Summary::Components::OffenceAnswer do
     end
   end
 
-  describe '#value?' do
-    it 'calls `#complete?` on the value' do
-      expect(value).to receive(:complete?)
-      subject.value?
-    end
-
-    context 'when there is no value' do
-      let(:value) { nil }
-
-      it 'returns false' do
-        expect(subject.value?).to be(false)
-      end
-    end
-  end
-
   describe 'methods delegation' do
     it 'delegates `offence_name`' do
       expect(value).to receive(:offence_name)
@@ -41,6 +26,11 @@ describe Summary::Components::OffenceAnswer do
     it 'delegates `offence_dates`' do
       expect(value).to receive(:offence_dates)
       subject.offence_dates
+    end
+
+    it 'delegates `complete?`' do
+      expect(value).to receive(:complete?)
+      subject.complete?
     end
   end
 end

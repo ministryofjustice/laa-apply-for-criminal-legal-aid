@@ -53,7 +53,7 @@ RSpec.describe Datastore::ApplicationSubmission do
     Charge.create(
       case: kase,
       offence_name: 'Robbery',
-      offence_dates: [OffenceDate.new(date: '01-02-2000')]
+      offence_dates: [OffenceDate.new(date_from: '01-02-2000')]
     )
 
     # An incomplete charge (no dates), on purpose

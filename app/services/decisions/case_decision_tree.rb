@@ -103,7 +103,7 @@ module Decisions
     end
 
     def blank_date_required?
-      current_charge.offence_dates.map(&:date).exclude?(nil)
+      current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
   end
 end

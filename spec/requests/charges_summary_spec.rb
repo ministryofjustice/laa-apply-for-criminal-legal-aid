@@ -6,9 +6,9 @@ RSpec.describe 'Charges/offences summary page' do
     app = CrimeApplication.create
     kase = Case.create(crime_application: app)
 
-    kase.charges.create!(
-      offence_name: 'Robbery',
-      offence_dates_attributes: { id: nil, date: Date.new(1990, 2, 1) }
+    charge = kase.charges.create!(offence_name: 'Robbery')
+    charge.offence_dates.first.update(
+      date_from: Date.new(1990, 2, 1), date_to: Date.new(1990, 2, 5)
     )
   end
 
@@ -33,7 +33,7 @@ RSpec.describe 'Charges/offences summary page' do
         assert_select 'div.govuk-summary-list__row', 1 do
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C or B'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990'
+          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
 
           assert_select 'dd.govuk-summary-list__actions:nth-of-type(1) a', count: 1, text: 'Change offence'
           assert_select 'dd.govuk-summary-list__actions:nth-of-type(2) a', count: 1, text: 'Remove offence'
@@ -55,7 +55,7 @@ RSpec.describe 'Charges/offences summary page' do
         assert_select 'div.govuk-summary-list__row', 1 do
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C or B'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990'
+          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
 
           assert_select 'dd.govuk-summary-list__actions', count: 0
         end

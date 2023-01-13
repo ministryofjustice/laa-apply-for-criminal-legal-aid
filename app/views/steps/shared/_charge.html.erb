@@ -1,0 +1,26 @@
+<%#
+  This partial is shared between the `offences summary` page
+  and the `check your answers` page.
+%>
+
+<p class="govuk-body govuk-!-margin-bottom-1">
+  <%= charge.offence_name.presence || t('.unknown_name') %>
+</p>
+
+<% if charge.offence_class %>
+  <p class="govuk-caption-m govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+    <%= charge.offence_class %>
+  </p>
+<% end %>
+
+<% charge.offence_dates.each do |date_from, date_to| %>
+  <p class="govuk-body govuk-!-margin-bottom-0">
+    <%= date_to ? [l(date_from), l(date_to)].join(' – ') : l(date_from) %>
+  </p>
+<% end %>
+
+<% unless charge.complete? %>
+  <strong class="moj-badge moj-badge--red">
+    <%= t('.incomplete_tag') %>
+  </strong>
+<% end %>
