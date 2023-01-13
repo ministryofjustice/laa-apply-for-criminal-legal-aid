@@ -28,7 +28,7 @@ module Summary
           ),
 
           Components::FreeTextAnswer.new(
-            :telephone_number, applicant.telephone_number,
+            :telephone_number, applicant.telephone_number, show: true,
             change_path: edit_steps_client_contact_details_path
           ),
         ].select(&:show?)
