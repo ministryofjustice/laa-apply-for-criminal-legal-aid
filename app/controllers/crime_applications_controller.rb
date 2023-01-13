@@ -4,8 +4,8 @@ class CrimeApplicationsController < DashboardController
 
   def index
     @applications = in_progress_scope.merge(
-      CrimeApplication.joins(:applicant)
-    ).order(**sorting_params).page params[:page]
+      CrimeApplication.order(**sorting_params)
+    ).page params[:page]
   end
 
   def edit
