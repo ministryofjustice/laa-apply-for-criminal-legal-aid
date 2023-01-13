@@ -35,13 +35,11 @@ class CrimeApplicationsController < DashboardController
   def order_param
     return 'created_at' unless ordering_param_allowed?
 
-    return 'people.last_name' if params[:order] == 'applicant_name'
-
     params[:order]
   end
 
   def ordering_param_allowed?
-    %w[created_at applicant_name].include? params[:order]
+    %w[created_at].include? params[:order]
   end
 
   def sort_param

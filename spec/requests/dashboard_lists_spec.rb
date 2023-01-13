@@ -7,6 +7,7 @@ RSpec.describe 'Dashboard' do
   let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
   let(:pagination_fixture) { { per_page: 20, total_count: 1, total_pages: 1, sort: 'desc' }.to_json }
   let(:order) { nil }
+  let(:sort) { nil }
 
   before do
     allow_any_instance_of(
@@ -22,20 +23,20 @@ RSpec.describe 'Dashboard' do
 
   describe 'list of in progress applications' do
     before do
-      get crime_applications_path, params: { order: }
+      get crime_applications_path, params: { order:, sort: }
     end
 
     context 'when there are records to return' do
       before :all do
         # sets up a few test records
         app1 = create_test_application(created_at: Date.new(2022, 10, 15))
-        app2 = create_test_application(office_code: 'XYZ') # a different office
-        app3 = create_test_application(created_at: Date.new(2022, 10, 12))
+        app2 = create_test_application(created_at: Date.new(2022, 10, 12)) # Different date
+        app3 = create_test_application(office_code: 'XYZ') # a different office
         app4 = create_test_application
 
         Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-        Applicant.create(crime_application: app2, first_name: 'Jane', last_name: 'Doe')
-        Applicant.create(crime_application: app3, first_name: 'John', last_name: 'Zebra')
+        Applicant.create(crime_application: app2, first_name: 'John', last_name: 'Last')
+        Applicant.create(crime_application: app3, first_name: 'Jane', last_name: 'Doe')
         Applicant.create(crime_application: app4, first_name: '', last_name: '')
       end
 
@@ -67,25 +68,14 @@ RSpec.describe 'Dashboard' do
         expect(response.body).not_to include('Jane Doe')
       end
 
-      context 'when the list is sorted by applicant name' do
-        let(:order) { 'applicant_name' }
-
-        it 'lists the applications by applicant name' do
-          assert_select 'tbody.govuk-table__body' do
-            assert_select 'tr.govuk-table__row:nth-of-type(1)' do
-              assert_select 'a', count: 1, text: 'John Zebra'
-            end
-          end
-        end
-      end
-
       context 'when the list is sorted by created_at' do
         let(:order) { 'created_at' }
+        let(:sort) { 'asc' }
 
         it 'lists the applications by applicant name' do
           assert_select 'tbody.govuk-table__body' do
             assert_select 'tr.govuk-table__row:nth-of-type(1)' do
-              assert_select 'a', count: 1, text: 'John Doe'
+              assert_select 'a', count: 1, text: 'John Last'
             end
           end
         end

@@ -32,7 +32,6 @@ class CompletedApplicationsController < DashboardController
       sort: sort_direction,
       page: params[:page],
       per_page: Kaminari.config.default_per_page,
-      order: sort_column,
     }
   end
 
@@ -48,12 +47,6 @@ class CompletedApplicationsController < DashboardController
     ].map(&:to_s)
 
     allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
-  end
-
-  def sort_column
-    sortable_columns = ['applicant_name']
-
-    sortable_columns.include?(params[:order]) ? params[:order] : nil
   end
 
   def current_crime_application
