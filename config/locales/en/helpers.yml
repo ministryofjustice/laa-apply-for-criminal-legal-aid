@@ -47,7 +47,10 @@ en:
 
     hint:
       steps_client_has_partner_form:
-        client_has_partner: By partner we mean someone they are married to, in a civil partnership with, cohabit with or otherwise share finances.
+        client_has_partner_html: 'A partner is someone your client is:
+                                  <ul><li>Married to</li><li>in a civil partnership with</li>
+                                  <li>living with as if they were married or in a civil partnership</li>
+                                  <li>not permanently separated from</li></ul>'
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.
         date_of_birth: For example, 27 3 2007
