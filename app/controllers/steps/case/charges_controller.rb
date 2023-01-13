@@ -9,7 +9,7 @@ module Steps
 
       def update
         update_and_advance(
-          ChargesForm, record: charge_record, as: step_name
+          ChargesForm, record: charge_record, as: step_name, flash: flash_msg
         )
       end
 
@@ -42,6 +42,10 @@ module Steps
         else
           :charges
         end
+      end
+
+      def flash_msg
+        { success: t('.edit.deleted_flash') } if step_name.eql?(:delete_offence_date)
       end
 
       def charge_record
