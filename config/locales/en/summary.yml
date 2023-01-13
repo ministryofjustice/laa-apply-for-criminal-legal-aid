@@ -51,7 +51,7 @@ en:
           providers_office_address: Provider’s office
           other_address: Somewhere else
       telephone_number:
-        question: UK telephone number
+        question: Telephone number
         absence_answer: *absence_none
       # END contact details section
 
