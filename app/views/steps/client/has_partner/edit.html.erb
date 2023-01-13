@@ -6,7 +6,15 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
         <%= f.govuk_collection_radio_buttons :client_has_partner, @form_object.choices,
-                                             :value, inline: false, legend: { tag: 'h1', size: 'xl' } %>
+                                             :value, inline: false, legend: { tag: 'h1', size: 'xl' } do %>
+          <p><%= t('.partner_definitions.intro') %></p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li><%= t('.partner_definitions.definition_1') %></li>
+            <li><%= t('.partner_definitions.definition_2') %></li>
+            <li><%= t('.partner_definitions.definition_3') %></li>
+            <li><%= t('.partner_definitions.definition_4') %></li>
+          </ul>
+        <% end %>
 
         <%= f.continue_button(secondary: false) %>
     <% end %>
