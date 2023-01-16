@@ -34,4 +34,56 @@ RSpec.describe Adapters::Structs::Applicant do
       expect(subject.passporting_benefit).to be(true)
     end
   end
+
+  describe '#has_nino' do
+    it 'returns always `yes` for MVP' do
+      expect(subject.has_nino).to be(YesNoAnswer::YES)
+    end
+  end
+
+  describe '#home_address' do
+    it 'returns an `Address` instance if there is an address' do
+      expect(subject.home_address).to be_an(Address)
+    end
+  end
+
+  describe '#correspondence_address' do
+    it 'returns nil if there is no address' do
+      expect(subject.correspondence_address).to be_nil
+    end
+  end
+
+  describe '#serializable_hash' do
+    it 'returns a serializable hash, including relationships' do
+      expect(
+        subject.serializable_hash
+      ).to match(
+        a_hash_including(
+          'has_nino' => YesNoAnswer::YES,
+          'passporting_benefit' => true,
+          'home_address' => an_instance_of(HomeAddress),
+          'correspondence_address' => nil,
+        )
+      )
+    end
+
+    it 'contains all required attributes' do
+      expect(
+        subject.serializable_hash.keys
+      ).to match_array(
+        %w[
+          has_nino
+          passporting_benefit
+          first_name
+          last_name
+          date_of_birth
+          nino
+          correspondence_address_type
+          telephone_number
+          home_address
+          correspondence_address
+        ]
+      )
+    end
+  end
 end

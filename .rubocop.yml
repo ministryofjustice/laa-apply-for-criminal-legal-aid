@@ -111,6 +111,8 @@ Style/HashEachMethods:
 
 Naming/PredicateName:
   AllowedMethods:
+    - has_nino
+    - has_codefendants
     - has_one_association
 
 # TODO: adjust these values towards the rubocop defaults

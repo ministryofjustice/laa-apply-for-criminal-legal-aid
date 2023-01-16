@@ -98,6 +98,31 @@ RSpec.describe 'Dashboard' do
       # There is 1 print button
       assert_select 'a.govuk-button', count: 1, text: 'Print application'
     end
+
+    it 're-creates the application and renders the check your answers page' do
+      expect do
+        put recreate_completed_crime_application_path(returned_application_fixture_id)
+      end.to change(CrimeApplication, :count).by(1)
+
+      expect(response).to have_http_status(:redirect)
+      follow_redirect!
+
+      # Basic smoke test, no need to test everything,
+      # as that's done as unit tests already
+      assert_select 'h1', 'Review the application'
+
+      assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
+        assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(1)' do
+          assert_select 'dt:nth-of-type(1)', 'First name'
+          assert_select 'dd:nth-of-type(1)', 'John'
+        end
+
+        assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(2)' do
+          assert_select 'dt:nth-of-type(1)', 'Last name'
+          assert_select 'dd:nth-of-type(1)', 'POTTER'
+        end
+      end
+    end
   end
 
   describe 'edit an in progress application (aka task list)' do
