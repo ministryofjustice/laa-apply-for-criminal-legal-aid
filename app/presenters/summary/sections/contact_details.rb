@@ -50,15 +50,13 @@ module Summary
       end
 
       def address_path(address)
-        edit_steps_address_details_path(address) if address
+        edit_steps_address_details_path(address) if address.try(:to_param)
       end
 
       def full_address(address)
         return unless address
 
-        # Address might not be an ActiveRecord instance, so
-        # do not rely on Rails methods like `slice`
-        address.attributes.symbolize_keys.values_at(
+        address.values_at(
           *Address::ADDRESS_ATTRIBUTES
         ).compact_blank.join("\r\n")
       end

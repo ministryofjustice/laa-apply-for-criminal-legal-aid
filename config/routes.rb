@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     scope :completed, as: :completed, controller: :completed_applications do
       get :index, on: :collection
       get :show, on: :member
-      put :amend, on: :member
+      put :recreate, on: :member
     end
   end
 

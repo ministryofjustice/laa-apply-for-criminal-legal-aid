@@ -50,9 +50,9 @@
 
     <div class="govuk-!-margin-top-8 app-no-print">
       <% if @crime_application.returned? %>
-        <%= button_to amend_completed_crime_application_path, method: :put,
+        <%= button_to recreate_completed_crime_application_path, method: :put,
                       class: 'govuk-button app-button--blue',
-                      data: { module: 'govuk-button' } do; t('.amend_application'); end %>
+                      data: { module: 'govuk-button' } do; t('.recreate_application'); end %>
       <% else %>
         <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
       <% end %>

@@ -14,14 +14,22 @@ class CompletedApplicationsController < DashboardController
     )
   end
 
-  # TODO: implement re-hydration with datastore, as this
-  # action was relying on existing local DB records.
+  # TODO: this is WIP, can be tested by manually setting
+  # an application in the `returned` status.
   # :nocov:
-  def amend
-    Datastore::ApplicationAmendment.new(current_crime_application).call
+  def recreate
+    usn = current_crime_application.reference
 
-    # Redirect to check your answers (review) page
-    redirect_to edit_steps_submission_review_path(current_crime_application)
+    # There can only be one application in progress with same USN
+    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
+
+    Datastore::ApplicationRehydration.new(
+      crime_application, parent: current_crime_application
+    ).call
+
+    # Redirect to the check your answers (review) page
+    # of the newly created application
+    redirect_to edit_steps_submission_review_path(crime_application)
   end
   # :nocov:
 
