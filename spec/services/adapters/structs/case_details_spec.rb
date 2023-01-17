@@ -13,25 +13,27 @@ RSpec.describe Adapters::Structs::CaseDetails do
 
   describe '#charges' do
     it 'returns a charges collection' do
-      expect(subject.charges).to all(be_an(Adapters::Structs::Charge))
+      expect(subject.charges).to all(be_an(Charge))
+    end
+  end
+
+  describe '#codefendants' do
+    it 'returns a codefendants collection' do
+      expect(subject.codefendants).to all(be_an(Codefendant))
     end
   end
 
   describe '#has_codefendants' do
-    before do
-      allow(case_details).to receive(:codefendants).and_return(codefendants)
-    end
-
     context 'when there are codefendants' do
-      let(:codefendants) { [Object, Object] }
-
       it 'returns `yes`' do
         expect(subject.has_codefendants).to eq(YesNoAnswer::YES)
       end
     end
 
     context 'when there are not codefendants' do
-      let(:codefendants) { [] }
+      before do
+        allow(case_details).to receive(:codefendants).and_return([])
+      end
 
       it 'returns `no`' do
         expect(subject.has_codefendants).to eq(YesNoAnswer::NO)

@@ -12,8 +12,10 @@ module Datastore
 
       crime_application.update!(
         client_has_partner: YesNoAnswer::NO,
+        date_stamp: parent.date_stamp,
         ioj_passport: parent.ioj_passport,
         applicant: applicant,
+        case: kase,
       )
     end
 
@@ -25,6 +27,10 @@ module Datastore
 
     def applicant
       Applicant.new(parent.applicant.serializable_hash)
+    end
+
+    def kase
+      Case.new(parent.case.serializable_hash)
     end
   end
 end
