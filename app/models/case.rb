@@ -15,6 +15,6 @@ class Case < ApplicationRecord
   private
 
   def initialise_dates(charge)
-    charge.offence_dates.build  # a blank, first date
+    charge.offence_dates.first_or_initialize
   end
 end

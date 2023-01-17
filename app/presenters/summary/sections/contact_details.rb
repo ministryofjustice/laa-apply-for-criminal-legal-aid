@@ -14,7 +14,7 @@ module Summary
         [
           Components::FreeTextAnswer.new(
             :home_address, full_address(home_address), show: true,
-            change_path: address_path(home_address)
+            change_path: change_path(home_address)
           ),
 
           Components::ValueAnswer.new(
@@ -24,7 +24,7 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :correspondence_address, full_address(correspondence_address),
-            change_path: address_path(correspondence_address)
+            change_path: change_path(correspondence_address)
           ),
 
           Components::FreeTextAnswer.new(
@@ -49,7 +49,7 @@ module Summary
         applicant.correspondence_address
       end
 
-      def address_path(address)
+      def change_path(address)
         edit_steps_address_details_path(address) if address.try(:to_param)
       end
 
