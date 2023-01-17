@@ -85,5 +85,18 @@ RSpec.describe Adapters::Structs::Applicant do
         ]
       )
     end
+
+    context 'home_address relationship' do
+      it 'has the expected address from the fixture' do
+        address = subject.serializable_hash['home_address']
+
+        expect(address.lookup_id).to be_nil
+        expect(address.address_line_one).to eq('1 Road')
+        expect(address.address_line_two).to eq('Village')
+        expect(address.city).to eq('Some nice city')
+        expect(address.country).to eq('United Kingdom')
+        expect(address.postcode).to eq('SW1A 2AA')
+      end
+    end
   end
 end
