@@ -22,9 +22,9 @@ describe Summary::Sections::CaseDetails do
     )
   end
 
-  let(:appeal_maat_id) { '' }
-  let(:appeal_with_changes_maat_id) { '' }
-  let(:appeal_with_changes_details) { '' }
+  let(:appeal_maat_id) { nil }
+  let(:appeal_with_changes_maat_id) { nil }
+  let(:appeal_with_changes_details) { nil }
 
   describe '#name' do
     it { expect(subject.name).to eq(:case_details) }
@@ -63,7 +63,7 @@ describe Summary::Sections::CaseDetails do
       expect(answers[1].value).to eq('foobar')
     end
 
-    context 'for appeal cases' do
+    context 'for appeal to crown court' do
       context 'with previous MAAT ID' do
         let(:appeal_maat_id) { '123' }
 
@@ -77,8 +77,8 @@ describe Summary::Sections::CaseDetails do
         end
       end
 
-      context 'with previous MAAT ID (financial changes)' do
-        let(:appeal_with_changes_maat_id) { '345' }
+      context 'without previous MAAT ID (field is optional)' do
+        let(:appeal_maat_id) { '' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(3)
@@ -86,13 +86,17 @@ describe Summary::Sections::CaseDetails do
           expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answers[2].question).to eq(:previous_maat_id)
           expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[2].value).to eq('345')
+          expect(answers[2].value).to eq('')
+          expect(answers[2].show).to be(true)
         end
       end
+    end
 
-      context 'with financial changes details' do
+    context 'for appeal to crown court with changes in financial circumstances' do
+      let(:appeal_with_changes_details) { 'details' }
+
+      context 'with previous MAAT ID' do
         let(:appeal_with_changes_maat_id) { '345' }
-        let(:appeal_with_changes_details) { 'details' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(4)
@@ -101,6 +105,25 @@ describe Summary::Sections::CaseDetails do
           expect(answers[2].question).to eq(:previous_maat_id)
           expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
           expect(answers[2].value).to eq('345')
+
+          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answers[3].question).to eq(:appeal_with_changes_details)
+          expect(answers[3].change_path).to match('applications/12345/steps/case/case_type')
+          expect(answers[3].value).to eq('details')
+        end
+      end
+
+      context 'without previous MAAT ID (field is optional)' do
+        let(:appeal_with_changes_maat_id) { '' }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(4)
+
+          expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answers[2].question).to eq(:previous_maat_id)
+          expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
+          expect(answers[2].value).to eq('')
+          expect(answers[2].show).to be(true)
 
           expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answers[3].question).to eq(:appeal_with_changes_details)
