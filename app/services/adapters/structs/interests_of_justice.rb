@@ -1,24 +1,38 @@
 module Adapters
   module Structs
     class InterestsOfJustice < BaseStructAdapter
+      # [
+      #   {
+      #     "type": "loss_of_liberty",
+      #     "reason": "More details about loss of liberty."
+      #   },
+      #   ...
+      # ]
+      #
       def initialize(collection)
-        super(collection)
+        ioj = Ioj.new(types: collection.pluck(:type))
 
-        collection.each do |item|
-          ioj = IojReasonType.new(item.type)
-
-          instance_variable_set(
-            :"@#{ioj.justification_field_name}", item.reason
-          )
+        ioj.attributes = {}.tap do |attrs|
+          collection.each do |item|
+            attrs.merge!(
+              IojReasonType.new(item.type).justification_field_name => item.reason
+            )
+          end
         end
+
+        # For re-hydration and summary page, we don't really want
+        # a "blank" instance of the IoJ, so we `nil` in those cases
+        ioj = nil if ioj.types.empty?
+
+        super(ioj)
       end
 
-      def types
-        pluck(:type)
-      end
-
-      def [](attr_name)
-        instance_variable_get("@#{attr_name}".to_sym)
+      def serializable_hash(options = {})
+        super(
+          options.merge(
+            only: [:types] + IojReasonType.justification_attrs
+          )
+        )
       end
     end
   end
