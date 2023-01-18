@@ -15,7 +15,7 @@ module Datastore
         date_stamp: parent.date_stamp,
         ioj_passport: parent.ioj_passport,
         applicant: applicant,
-        case: kase,
+        case: case_with_ioj,
       )
     end
 
@@ -29,8 +29,14 @@ module Datastore
       Applicant.new(parent.applicant.serializable_hash)
     end
 
-    def kase
-      Case.new(parent.case.serializable_hash)
+    def ioj
+      Ioj.new(parent.ioj.serializable_hash) if parent.ioj.present?
+    end
+
+    def case_with_ioj
+      Case.new(
+        parent.case.serializable_hash.merge('ioj' => ioj)
+      )
     end
   end
 end

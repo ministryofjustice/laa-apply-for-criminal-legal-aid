@@ -12,6 +12,10 @@ class IojReasonType < ValueObject
     OTHER = new(:other)
   ].freeze
 
+  def self.justification_attrs
+    values.map(&:justification_field_name)
+  end
+
   def justification_field_name
     [to_s, :justification].join('_').to_sym
   end
