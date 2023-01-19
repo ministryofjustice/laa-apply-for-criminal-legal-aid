@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install packages with yarn
-        run: yarn install --pure-lockfile
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Precompile assets
         run: bin/rails assets:precompile
