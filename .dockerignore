@@ -16,9 +16,8 @@ vendor/bundle/
 .github
 
 .byebug_history
-/coverage/*
-tags
-.ctags_exclude
+coverage/
+.git-crypt/
 
 # Ignore master key for decrypting credentials
 config/master.key
