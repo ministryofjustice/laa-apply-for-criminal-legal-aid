@@ -23,7 +23,9 @@ module Steps
 
       def persist!
         crime_application.update(
-          attributes
+          attributes.merge(
+            additional_attributes
+          )
         )
 
         return true unless changed?
@@ -32,6 +34,12 @@ module Steps
         record.update(
           attributes.compact_blank
         )
+      end
+
+      # Any other non user-editable attributes required
+      # before the final submission
+      def additional_attributes
+        { provider_email: record.email }
       end
     end
   end

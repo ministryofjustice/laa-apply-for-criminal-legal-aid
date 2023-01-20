@@ -10,7 +10,6 @@ module SubmissionSerializer
           json.created_at crime_application.created_at
           json.submitted_at crime_application.submitted_at
           json.date_stamp crime_application.date_stamp
-          json.status crime_application.status
           json.ioj_passport crime_application.ioj_passport
         end
       end
