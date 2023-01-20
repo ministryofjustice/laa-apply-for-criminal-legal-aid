@@ -35,7 +35,7 @@ class LaaPortalSetup
       provider: 'saml',
       uid: 'test-user',
       info: {
-        email: 'test@example.com',
+        email: 'provider@example.com',
         roles: 'CCR_CCRGradeA1,CCLF_BillManager',
         office_codes: '1A123B,2A555X',
       }

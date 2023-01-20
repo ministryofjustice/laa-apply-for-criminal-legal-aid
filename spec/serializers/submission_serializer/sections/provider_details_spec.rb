@@ -7,6 +7,7 @@ RSpec.describe SubmissionSerializer::Sections::ProviderDetails do
     instance_double(
       CrimeApplication,
       office_code: 'XYZ',
+      provider_email: 'foo@bar.com',
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: '123456789',
@@ -17,6 +18,7 @@ RSpec.describe SubmissionSerializer::Sections::ProviderDetails do
     {
       provider_details: {
         office_code: 'XYZ',
+        provider_email: 'foo@bar.com',
         legal_rep_first_name: 'John',
         legal_rep_last_name: 'Doe',
         legal_rep_telephone: '123456789',

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Application do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { CrimeApplication.new(status: :submitted) }
+  let(:crime_application) { CrimeApplication.new }
 
   describe '#sections' do
     before do
@@ -47,11 +47,8 @@ RSpec.describe SubmissionSerializer::Application do
       ).to match(
         a_hash_including(
           'schema_version' => 1.0,
-          'status' => 'submitted',
           'ioj_passport' => [],
-          'provider_details' => a_hash_including(
-            'office_code', 'legal_rep_first_name', 'legal_rep_last_name', 'legal_rep_telephone'
-          ),
+          'provider_details' => be_a(Hash),
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],

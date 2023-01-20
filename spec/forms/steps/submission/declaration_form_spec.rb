@@ -14,9 +14,10 @@ RSpec.describe Steps::Submission::DeclarationForm do
   end
 
   let(:legal_rep_telephone) { '123456789' }
-  let(:provider_record) { Provider.new(rep_details_attrs) }
+  let(:provider_record) { Provider.new(provider_attrs.merge(rep_details_attrs)) }
   let(:crime_application) { instance_double(CrimeApplication) }
 
+  let(:provider_attrs) { { email: 'provider@example.com' } }
   let(:rep_details_attrs) { {} }
 
   describe '#save' do
@@ -57,7 +58,7 @@ RSpec.describe Steps::Submission::DeclarationForm do
           allow(provider_record).to receive(:update).and_return(true)
 
           expect(crime_application).to receive(:update).with(
-            expected_attrs
+            expected_attrs.merge(provider_email: 'provider@example.com')
           ).and_return(true)
 
           expect(subject.save).to be(true)
@@ -94,7 +95,7 @@ RSpec.describe Steps::Submission::DeclarationForm do
       context 'when the details have not changed' do
         let(:rep_details_attrs) { expected_attrs }
 
-        it 'does not save the record but returns true' do
+        it 'saves the record, but not the provider settings, and returns true' do
           expect(crime_application).to receive(:update)
           expect(provider_record).not_to receive(:update)
           expect(subject.save).to be(true)
