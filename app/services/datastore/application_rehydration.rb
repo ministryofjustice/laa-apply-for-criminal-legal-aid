@@ -12,6 +12,7 @@ module Datastore
 
       crime_application.update!(
         client_has_partner: YesNoAnswer::NO,
+        parent_id: parent.id,
         date_stamp: parent.date_stamp,
         ioj_passport: parent.ioj_passport,
         applicant: applicant,

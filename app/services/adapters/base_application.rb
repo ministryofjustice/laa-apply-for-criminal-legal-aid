@@ -18,11 +18,5 @@ module Adapters
     def status
       ApplicationStatus.new(super)
     end
-
-    # Keep this wrapper method in case we retract from
-    # using sequence USN to use any other ID/reference
-    def laa_reference
-      reference
-    end
   end
 end
