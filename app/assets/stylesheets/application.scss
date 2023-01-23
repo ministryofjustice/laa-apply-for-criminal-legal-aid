@@ -15,8 +15,8 @@
 // customised to include govuk styling in local/custom.scss
 @import "local/accessible-autocomplete";
 
-// App-specific custom styles and overrides
-@import "local/custom";
-
 // Sorting styles for table headers
 @import "local/sorting";
+
+// App-specific custom styles and overrides
+@import "local/custom";
