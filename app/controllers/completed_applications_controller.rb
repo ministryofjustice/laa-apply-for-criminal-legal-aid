@@ -37,16 +37,10 @@ class CompletedApplicationsController < DashboardController
 
   def pagination_params
     {
-      sort: sort_direction,
+      sort: params[:sort],
       page: params[:page],
       per_page: Kaminari.config.default_per_page,
     }
-  end
-
-  def sort_direction
-    return nil if params[:sort].blank?
-
-    "#{params[:sort]}ending"
   end
 
   def status_filter
