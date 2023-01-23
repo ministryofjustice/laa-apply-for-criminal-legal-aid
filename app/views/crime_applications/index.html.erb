@@ -15,7 +15,15 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.created_at') %></th>
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('created_at') %>">
+              <%=
+                link_to(
+                  t('.table_headings.created_at'),
+                  crime_applications_path(order: 'created_at', sort: sort_direction),
+                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                )
+              %>
+            </th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
           </tr>

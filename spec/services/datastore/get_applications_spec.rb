@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::GetApplications do
-  subject { described_class.new(status:, office_code:, per_page:, page:) }
+  subject { described_class.new(status:, office_code:, per_page:, page:, sort:) }
 
   let(:status) { 'submitted' }
   let(:office_code) { 'XYZ' }
   let(:per_page) { 1 }
   let(:page) { 1 }
+  let(:sort) { 'asc' }
 
   let(:expected_query) do
-    { 'status' => status, 'office_code' => office_code, 'per_page' => per_page, 'page' => page }
+    { 'status' => status, 'office_code' => office_code, 'per_page' => per_page, 'page' => page, 'sort' => 'ascending' }
   end
 
   let(:datastore_result) do

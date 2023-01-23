@@ -15,7 +15,7 @@
     <li class="moj-sub-navigation__item">
       <%= link_to t('.returned', count: returned_count), completed_crime_applications_path(q: 'returned'),
                   class: 'moj-sub-navigation__link',
-                  'aria-current': ('page' if current_page?(controller: 'completed_applications', action: 'index', q: 'returned')).to_s %>
+                  'aria-current': ('page' if current_page?(controller: 'completed_applications', action: 'index') && params[:q] == 'returned').to_s %>
     </li>
   </ul>
 </nav>
