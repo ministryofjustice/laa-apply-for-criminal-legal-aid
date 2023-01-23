@@ -89,6 +89,10 @@ RSpec/Rails/InferredSpecType:
 Metrics/MethodLength:
   Max: 12
 
+# To be tweaked until we find the right balance
+Metrics/AbcSize:
+  Max: 18
+
 # https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys
@@ -111,6 +115,8 @@ Style/HashEachMethods:
 
 Naming/PredicateName:
   AllowedMethods:
+    - has_nino
+    - has_codefendants
     - has_one_association
 
 # TODO: adjust these values towards the rubocop defaults

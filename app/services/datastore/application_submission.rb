@@ -12,10 +12,9 @@ module Datastore
       date_stamp = crime_application.date_stamp || submitted_at
 
       CrimeApplication.transaction do
-        crime_application.update!(
-          status: ApplicationStatus::SUBMITTED.value,
-          submitted_at: submitted_at,
-          date_stamp: date_stamp,
+        crime_application.assign_attributes(
+          submitted_at:,
+          date_stamp:,
         )
 
         DatastoreApi::Requests::CreateApplication.new(

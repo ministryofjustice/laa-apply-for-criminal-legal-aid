@@ -14,6 +14,7 @@ RSpec.describe Datastore::ApplicationSubmission do
     # create all neccessary records
     app = create_test_application(
       usn: 123,
+      provider_email: 'foo@bar.com',
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: '123456789',
@@ -97,11 +98,12 @@ RSpec.describe Datastore::ApplicationSubmission do
     end
 
     context 'when `date_stamp` attribute is `nil`' do
-      it 'marks the application as submitted, setting the `date_stamp` to the submission date' do
+      it 'sets the `date_stamp` as the value of the submission date' do
         expect(
           crime_application
-        ).to receive(:update!).with(
-          status: :submitted, submitted_at: submitted_date, date_stamp: submitted_date
+        ).to receive(:assign_attributes).with(
+          submitted_at: submitted_date,
+          date_stamp: submitted_date,
         )
 
         expect(subject.call).to be(true)
@@ -115,11 +117,12 @@ RSpec.describe Datastore::ApplicationSubmission do
         allow(crime_application).to receive(:date_stamp).and_return(date_stamp)
       end
 
-      it 'marks the application as submitted, do not change the `date_stamp`' do
+      it 'does not change the `date_stamp` value' do
         expect(
           crime_application
-        ).to receive(:update!).with(
-          status: :submitted, submitted_at: submitted_date, date_stamp: date_stamp
+        ).to receive(:assign_attributes).with(
+          submitted_at: submitted_date,
+          date_stamp: date_stamp,
         )
 
         expect(subject.call).to be(true)

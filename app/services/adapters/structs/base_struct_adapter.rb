@@ -1,10 +1,12 @@
 module Adapters
   module Structs
     class BaseStructAdapter < SimpleDelegator
-      NIL_UUID = '00000000-0000-0000-0000-000000000000'.freeze
+      include ActiveModel::Serialization
 
-      def to_param
-        NIL_UUID
+      # Used by `serializable_hash`
+      # For consistency we want all attribute keys as strings
+      def attributes
+        __getobj__ ? super.stringify_keys : {}
       end
     end
   end

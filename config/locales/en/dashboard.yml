@@ -57,7 +57,7 @@ en:
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
-      amend_application: Update application
+      recreate_application: Update application
       print_application: Print application
       back_to_applications: Back to all applications
       helpline:

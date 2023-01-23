@@ -15,4 +15,10 @@ class CrimeApplication < ApplicationRecord
        _default: ApplicationStatus.enum_values[:in_progress]
 
   alias_attribute :reference, :usn
+
+  store_accessor :provider_details,
+                 :provider_email,
+                 :legal_rep_first_name,
+                 :legal_rep_last_name,
+                 :legal_rep_telephone
 end

@@ -1,29 +1,42 @@
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.1.2-alpine3.16 AS base
 MAINTAINER LAA Crime Apply Team
 
-RUN apk --no-cache add --virtual build-deps \
-  build-base \
+# dependencies required both at runtime and build time
+RUN apk add --update \
   postgresql-dev \
-  git \
-  bash \
-  curl \
-&& apk --no-cache add \
-  postgresql-client \
-  shared-mime-info \
-  linux-headers \
-  xz-libs \
   tzdata \
   yarn
 
 # Alpine does not have a glibc, and this is needed for dart-sass
 # Refer to: https://github.com/sgerrand/alpine-pkg-glibc
+ARG GLIBC_VERSION=2.34-r0
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.34-r0/glibc-2.34-r0.apk
-RUN apk add glibc-2.34-r0.apk
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/glibc-$GLIBC_VERSION.apk
+RUN apk add --force-overwrite glibc-$GLIBC_VERSION.apk
+
+
+FROM base AS dependencies
+
+# system dependencies required to build some gems
+RUN apk add --update \
+  build-base \
+  git
+
+COPY Gemfile* .ruby-version package.json yarn.lock ./
+
+RUN bundle config set frozen 'true' && \
+    bundle config set without test:development && \
+    bundle install --jobs 5 --retry 3
+
+RUN yarn install --frozen-lockfile --ignore-scripts
+
+
+FROM base
 
 # add non-root user and group with alpine first available uid, 1000
-RUN addgroup -g 1000 -S appgroup && \
-    adduser -u 1000 -S appuser -G appgroup
+ENV APPUID 1000
+RUN addgroup -g $APPUID -S appgroup && \
+    adduser -u $APPUID -S appuser -G appgroup
 
 # create some required directories
 RUN mkdir -p /usr/src/app && \
@@ -33,28 +46,24 @@ RUN mkdir -p /usr/src/app && \
 
 WORKDIR /usr/src/app
 
-COPY Gemfile* .ruby-version ./
+# copy over gems from the dependencies stage
+COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
 
-RUN gem install bundler && \
-    bundle config set frozen 'true' && \
-    bundle config without test:development && \
-    bundle install --jobs 2 --retry 3
+# copy over npm packages from the dependencies stage
+COPY --from=dependencies /node_modules/ node_modules/
 
+# copy over the remaning files and code
 COPY . .
 
-# The following are ENV variables that need to be present by the time
+# Some ENV variables need to be present by the time
 # the assets pipeline run, but doesn't matter their value.
-ENV SECRET_KEY_BASE=needed_for_assets_precompile
-ENV ENV_NAME=needed_for_assets_precompile
+RUN SECRET_KEY_BASE=needed_for_assets_precompile \
+    RAILS_ENV=production \
+    ENV_NAME=production \
+    rails assets:precompile --trace
 
-RUN yarn install --pure-lockfile
-RUN RAILS_ENV=production rails assets:precompile --trace
-
-# tidy up installation
-RUN apk del build-deps && rm -rf /tmp/*
-
-# non-root/appuser should own only what they need to
-RUN chown -R appuser:appgroup log tmp db
+# non-root user should own these directories
+RUN chown -R appuser:appgroup log tmp
 
 # Download RDS certificates bundle -- needed for SSL verification
 # We set the path to the bundle in the ENV, and use it in `/config/database.yml`
@@ -72,7 +81,7 @@ ENV APP_BUILD_TAG ${APP_BUILD_TAG}
 ARG APP_GIT_COMMIT
 ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 
-ENV APPUID 1000
+# switch to non-root user
 USER $APPUID
 
 ENV PORT 3000

@@ -4,10 +4,14 @@ RSpec.describe Charge, type: :model do
   subject { described_class.new(attributes) }
 
   let(:attributes) do
-    { offence_name: }
+    { offence_name:, offence_dates_attributes: }
   end
 
   let(:offence_name) { nil }
+  let(:offence_dates_attributes) { [] }
+
+  let(:date1) { 1.year.ago.to_date }
+  let(:date2) { 3.months.ago.to_date }
 
   describe '#offence' do
     context 'for a known offence' do
@@ -31,13 +35,9 @@ RSpec.describe Charge, type: :model do
   end
 
   describe '#complete?' do
-    before do
-      allow(subject).to receive(:offence_dates).and_return(offence_dates)
-    end
-
     context 'for an offence with name and dates' do
       let(:offence_name) { 'Foobar' }
-      let(:offence_dates) { [{ date_from: 'date1' }, { date_from: 'date2' }] }
+      let(:offence_dates_attributes) { [{ date_from: date1 }, { date_from: date2 }] }
 
       it 'returns true' do
         expect(subject.complete?).to be(true)
@@ -46,7 +46,7 @@ RSpec.describe Charge, type: :model do
 
     context 'for an offence with dates but no name' do
       let(:offence_name) { '' }
-      let(:offence_dates) { [{ date_from: 'date' }, { date_from: nil }] }
+      let(:offence_dates_attributes) { [{ date_from: date1 }, { date_from: nil }] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
@@ -55,7 +55,6 @@ RSpec.describe Charge, type: :model do
 
     context 'for an offence with name but no dates' do
       let(:offence_name) { 'Foobar' }
-      let(:offence_dates) { [] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
@@ -64,16 +63,16 @@ RSpec.describe Charge, type: :model do
 
     context 'for an offence with name but some `date_from` missing' do
       let(:offence_name) { 'Foobar' }
-      let(:offence_dates) { [{ date_from: 'date' }, { date_from: nil, date_to: 'date' }] }
+      let(:offence_dates_attributes) { [{ date_from: date1 }, { date_from: nil, date_to: date2 }] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
       end
     end
 
-    context 'for an offence with no name and no dates' do
+    context 'for an offence with no name and no valid dates' do
       let(:offence_name) { '' }
-      let(:offence_dates) { [{ date_from: nil }] }
+      let(:offence_dates_attributes) { [{ date_from: nil }] }
 
       it 'returns false' do
         expect(subject.complete?).to be(false)
