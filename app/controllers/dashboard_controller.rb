@@ -19,12 +19,6 @@ class DashboardController < ApplicationController
                     .merge(Applicant.with_name)
   end
 
-  def present_crime_application
-    @crime_application = helpers.present(
-      current_crime_application, CrimeApplicationPresenter
-    )
-  end
-
   def application_counters
     @application_counters ||= Datastore::ApplicationCounters.new(
       office_code: current_office_code

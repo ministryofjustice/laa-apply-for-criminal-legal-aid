@@ -5,7 +5,8 @@ RSpec.describe Decisions::SubmissionDecisionTree do
 
   let(:crime_application) do
     instance_double(
-      CrimeApplication, id: 'uuid', usn: 123,
+      CrimeApplication,
+      id: 'uuid',
     )
   end
 
@@ -51,7 +52,7 @@ RSpec.describe Decisions::SubmissionDecisionTree do
       context 'when the submission was successful' do
         let(:submission_success) { true }
 
-        it { is_expected.to have_destination(:confirmation, :show, id: crime_application, reference: 123) }
+        it { is_expected.to have_destination(:confirmation, :show, id: crime_application) }
       end
 
       context 'when the submission was unsuccessful' do

@@ -100,11 +100,11 @@ RSpec.describe CrimeApplicationPresenter do
     end
 
     it 'has a reference number' do
-      expect(subject.laa_reference).to eq(123)
+      expect(subject.reference).to eq(123)
     end
   end
 
-  describe 'for a completed application (API response)' do
+  describe 'for a submitted application (API response)' do
     subject { described_class.new(datastore_application) }
 
     let(:datastore_application) do
@@ -129,9 +129,9 @@ RSpec.describe CrimeApplicationPresenter do
       end
     end
 
-    describe '#laa_reference' do
+    describe '#reference' do
       it 'returns the reference number' do
-        expect(subject.laa_reference).to eq(6_000_001)
+        expect(subject.reference).to eq(6_000_001)
       end
     end
   end

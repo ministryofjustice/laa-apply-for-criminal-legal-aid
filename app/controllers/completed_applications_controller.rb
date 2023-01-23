@@ -1,4 +1,6 @@
 class CompletedApplicationsController < DashboardController
+  include DatastoreApplicationConsumer
+
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
 
@@ -49,13 +51,5 @@ class CompletedApplicationsController < DashboardController
     ].map(&:to_s)
 
     allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
-  end
-
-  def current_crime_application
-    return if params[:id].blank?
-
-    @current_crime_application ||= DatastoreApi::Requests::GetApplication.new(
-      application_id: params[:id]
-    ).call
   end
 end

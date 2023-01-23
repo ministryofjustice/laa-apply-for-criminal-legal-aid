@@ -1,22 +1,14 @@
 module Steps
   module Submission
     class ConfirmationController < Steps::SubmissionStepController
-      # This action is special, as soon we will not have
-      # a DB record after the application is submitted.
-      # Ensure there is nothing in the view using the DB.
-      #
-      skip_before_action :check_crime_application_presence,
-                         :update_navigation_stack
+      include DatastoreApplicationConsumer
 
-      def show
-        @reference = reference_param
-      end
+      skip_before_action :update_navigation_stack
 
-      private
+      before_action :check_crime_application_presence,
+                    :present_crime_application, only: [:show]
 
-      def reference_param
-        params[:reference].to_i
-      end
+      def show; end
     end
   end
 end

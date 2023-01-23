@@ -23,6 +23,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         crime_application
       ).to receive(:update!).with(
         client_has_partner: YesNoAnswer::NO,
+        parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         date_stamp: an_instance_of(DateTime),
         ioj_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),

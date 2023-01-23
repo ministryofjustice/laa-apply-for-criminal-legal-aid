@@ -25,4 +25,10 @@ class ApplicationController < ActionController::Base
       yield(crime_application) if block
     end
   end
+
+  def present_crime_application
+    @crime_application = helpers.present(
+      current_crime_application, CrimeApplicationPresenter
+    )
+  end
 end

@@ -5,12 +5,16 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        Application complete
+        <% if @crime_application.resubmission? %>
+          Application updated
+        <% else %>
+          Application complete
+        <% end %>
       </h1>
       <div class="govuk-panel__body">
         Your reference number<br>
         <strong>
-          <%= @reference %>
+          <%= @crime_application.reference %>
         </strong>
       </div>
     </div>

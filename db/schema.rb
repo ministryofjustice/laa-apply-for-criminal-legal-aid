@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_163611) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_111219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_163611) do
     t.string "ioj_passport", default: [], null: false, array: true
     t.string "office_code"
     t.jsonb "provider_details", default: {}, null: false
+    t.uuid "parent_id"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end

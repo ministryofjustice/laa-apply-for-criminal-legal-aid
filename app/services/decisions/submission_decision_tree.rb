@@ -14,11 +14,8 @@ module Decisions
     private
 
     def submit_application
-      # Get it before we purge the local DB record
-      reference = current_crime_application.usn
-
       if Datastore::ApplicationSubmission.new(current_crime_application).call
-        show(:confirmation, reference:)
+        show(:confirmation)
       else
         edit(:failure)
       end
