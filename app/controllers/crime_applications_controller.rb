@@ -43,7 +43,13 @@ class CrimeApplicationsController < DashboardController
   end
 
   def sort_param
-    params[:sort]&.to_sym || :desc
+    return :desc unless sorting_param_allowed?
+
+    params[:sort]&.to_sym
+  end
+
+  def sorting_param_allowed?
+    %w[asc desc].include? params[:sort]
   end
 
   def sorting_params
