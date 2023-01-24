@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include ErrorHandling
-  include StepsHelper
+  helper StepsHelper
 
   prepend_before_action :authenticate_provider!
 

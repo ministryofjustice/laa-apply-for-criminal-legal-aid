@@ -29,6 +29,9 @@ module LaaApplyForCriminalLegalAid
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Do not autoload all helpers in all controllers
+    config.action_controller.include_all_helpers = false
+
     # This automatically adds id: :uuid to create_table in all future migrations
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid

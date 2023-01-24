@@ -77,6 +77,30 @@ RSpec.describe StepsHelper, type: :helper do
     end
   end
 
+  describe '#previous_step_path' do
+    let(:current_crime_application) { instance_double(CrimeApplication, navigation_stack:) }
+
+    before do
+      allow(view).to receive(:current_crime_application).and_return(current_crime_application)
+    end
+
+    context 'when the stack is empty' do
+      let(:navigation_stack) { [] }
+
+      it 'returns the root path' do
+        expect(helper.previous_step_path).to eq('/')
+      end
+    end
+
+    context 'when the stack has elements' do
+      let(:navigation_stack) { %w[/somewhere /over /the /rainbow] }
+
+      it 'returns the element before the last page' do
+        expect(helper.previous_step_path).to eq('/the')
+      end
+    end
+  end
+
   describe '#govuk_error_summary' do
     context 'when no form object is given' do
       let(:form_object) { nil }

@@ -6,7 +6,7 @@ class CompletedApplicationsController < DashboardController
 
   def index
     @applications = Datastore::GetApplications.new(
-      status: status_filter, office_code: current_office_code, **pagination_params
+      filtering: filtering_params, sorting: sorting_params, pagination: pagination_params
     ).call&.page(params[:page])
   end
 
@@ -37,19 +37,28 @@ class CompletedApplicationsController < DashboardController
 
   private
 
+  def sortable_columns
+    %w[submitted_at]
+  end
+
+  def sorting_params
+    {
+      sort_by: helpers.sort_by,
+      sort_direction: helpers.sort_direction
+    }
+  end
+
   def pagination_params
     {
-      sort: params[:sort],
       page: params[:page],
       per_page: Kaminari.config.default_per_page,
     }
   end
 
-  def status_filter
-    allowed_statuses = [
-      ApplicationStatus::SUBMITTED, ApplicationStatus::RETURNED
-    ].map(&:to_s)
-
-    allowed_statuses.include?(params[:q]) ? params[:q] : allowed_statuses.first
+  def filtering_params
+    {
+      status: helpers.status_filter,
+      office_code: current_office_code,
+    }
   end
 end

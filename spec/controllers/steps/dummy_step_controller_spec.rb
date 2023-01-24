@@ -53,29 +53,4 @@ RSpec.describe DummyStepController, type: :controller do
       end
     end
   end
-
-  describe '#previous_step_path' do
-    let!(:crime_application) { CrimeApplication.create(navigation_stack:) }
-
-    before do
-      get :show, params: { id: crime_application }
-    end
-
-    context 'when the stack is empty' do
-      let(:navigation_stack) { [] }
-
-      it 'returns the root path' do
-        expect(subject.previous_step_path).to eq('/')
-      end
-    end
-
-    context 'when the stack has elements' do
-      let(:navigation_stack) { %w[/somewhere /over /the /rainbow] }
-
-      it 'returns the element before the current page' do
-        # Not '/the', as we've performed a page load and thus added '/dummy_page' at the end
-        expect(subject.previous_step_path).to eq('/rainbow')
-      end
-    end
-  end
 end
