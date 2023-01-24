@@ -1,19 +1,16 @@
 module Datastore
   class GetApplications
-    attr_reader :status, :office_code, :pagination
+    attr_reader :filtering, :sorting, :pagination
 
-    SORT_DIRECTIONS = { asc: 'ascending', desc: 'descending' }.freeze
-
-    def initialize(status:, office_code:, **pagination)
-      @status = status
-      @office_code = office_code
+    def initialize(filtering:, sorting:, pagination:)
+      @filtering = filtering
+      @sorting = sorting
       @pagination = pagination
-      @pagination[:sort] = SORT_DIRECTIONS[pagination[:sort]&.to_sym]
     end
 
     def call
       result = DatastoreApi::Requests::ListApplications.new(
-        status:, office_code:, **pagination
+        **filtering, **sorting, **pagination
       ).call
 
       Kaminari.paginate_array(result, total_count: result.pagination['total_count'])

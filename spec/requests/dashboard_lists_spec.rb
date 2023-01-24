@@ -5,9 +5,9 @@ RSpec.describe 'Dashboard' do
   let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
   let(:returned_application_fixture) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned') }
-  let(:pagination_fixture) { { per_page: 20, total_count: 1, total_pages: 1, sort: 'desc' }.to_json }
-  let(:order) { nil }
-  let(:sort) { nil }
+  let(:pagination_fixture) do
+    { per_page: 20, total_count: 1, total_pages: 1, sort_by: 'submitted_at', sort_direction: 'desc' }.to_json
+  end
 
   before do
     allow_any_instance_of(
@@ -22,8 +22,11 @@ RSpec.describe 'Dashboard' do
   end
 
   describe 'list of in progress applications' do
+    let(:sort_by) { nil }
+    let(:sort_direction) { nil }
+
     before do
-      get crime_applications_path, params: { order:, sort: }
+      get crime_applications_path, params: { sort_by:, sort_direction: }
     end
 
     context 'when there are records to return' do
@@ -68,9 +71,9 @@ RSpec.describe 'Dashboard' do
         expect(response.body).not_to include('Jane Doe')
       end
 
-      context 'when the list is sorted by created_at' do
-        let(:order) { 'created_at' }
-        let(:sort) { 'asc' }
+      context 'when the list is sorted by created_at asc' do
+        let(:sort_by) { 'created_at' }
+        let(:sort_direction) { 'asc' }
 
         it 'lists the applications by applicant name' do
           assert_select 'tbody.govuk-table__body' do
@@ -81,8 +84,8 @@ RSpec.describe 'Dashboard' do
         end
       end
 
-      context 'when the list is sorted by a non-allowed parameter' do
-        let(:order) { 'bad_param' }
+      context 'when the list is sorted by a non-allowed column' do
+        let(:sort_by) { 'date_stamp' }
 
         it 'defaults to created_at' do
           assert_select 'tbody.govuk-table__body' do
@@ -145,7 +148,7 @@ RSpec.describe 'Dashboard' do
           pagination_fixture:,
         )
       end
-      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0, sort: 'desc' }.to_json }
+      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0 }.to_json }
 
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
@@ -169,7 +172,7 @@ RSpec.describe 'Dashboard' do
         .with(query: hash_including({ 'status' => 'returned', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 
-      get completed_crime_applications_path(q: 'returned', sort: 'desc')
+      get completed_crime_applications_path(q: 'returned', sort_by: 'submitted_at', sort_direction: 'desc')
     end
 
     it 'shows a list of returned applications' do
@@ -191,7 +194,7 @@ RSpec.describe 'Dashboard' do
     end
 
     context 'when there are no records to return' do
-      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0, sort: 'desc' }.to_json }
+      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0 }.to_json }
       let(:application_fixture) { nil }
 
       it 'informs the user that there are no applications' do

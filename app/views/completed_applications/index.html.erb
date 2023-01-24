@@ -17,11 +17,11 @@
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort(params[:order] || 'submitted_at') %>">
+            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('submitted_at') %>">
             <%=
                 link_to(
                   t('.table_headings.submitted_at'),
-                  completed_crime_applications_path(q: params[:q], order: 'submitted_at', sort: sort_direction),
+                  completed_crime_applications_path(q: params[:q], sort_by: 'submitted_at', sort_direction: flipped_sort_direction),
                   class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
                 )
             %>

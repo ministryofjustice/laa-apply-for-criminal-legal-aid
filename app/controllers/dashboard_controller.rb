@@ -1,15 +1,18 @@
 class DashboardController < ApplicationController
-  helper_method :in_progress_count, :returned_count, :status_filter
+  helper_method :in_progress_count, :returned_count, :sortable_columns
   delegate :returned_count, to: :application_counters
 
   private
 
+  # Implement in sub-controllers to narrow down allowed columns
+  # :nocov:
+  def sortable_columns
+    []
+  end
+  # :nocov:
+
   def in_progress_count
     in_progress_scope.count
-  end
-
-  def status_filter
-    ApplicationStatus::IN_PROGRESS.to_s
   end
 
   def in_progress_scope
