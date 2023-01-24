@@ -44,12 +44,12 @@
   font-size: 0.5em;
 }
 
-[aria-sort="asc"] .sorting:before,
-[aria-sort="desc"] .sorting:before {
+[aria-sort="ascending"] .sorting:before,
+[aria-sort="descending"] .sorting:before {
   content: none;
 }
 
-[aria-sort="asc"] .sorting:after {
+[aria-sort="ascending"] .sorting:after {
   content: " \25b2";
   font-size: .8em;
   position: absolute;
@@ -57,7 +57,7 @@
   top: 2px;
 }
 
-[aria-sort="desc"] .sorting:after {
+[aria-sort="descending"] .sorting:after {
   content: " \25bc";
   font-size: .8em;
   position: absolute;

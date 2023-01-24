@@ -31,8 +31,13 @@ module DashboardHelper
     sort_direction == 'asc' ? 'desc' : 'asc'
   end
 
+  # https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort
   def aria_sort(column)
-    sort_by == column ? sort_direction : 'none'
+    if sort_by == column
+      { 'asc' => 'ascending', 'desc' => 'descending' }.fetch(sort_direction)
+    else
+      'none'
+    end
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
