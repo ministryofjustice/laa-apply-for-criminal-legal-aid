@@ -2,13 +2,7 @@
 module DeveloperTools
   class CrimeApplicationsController < ApplicationController
     def destroy
-      if current_crime_application
-        current_crime_application.destroy
-      elsif current_remote_application
-        DatastoreApi::Requests::DeleteApplication.new(
-          application_id: params[:id]
-        ).call
-      end
+      current_crime_application.destroy
 
       redirect_to crime_applications_path, flash: { success: 'Application has been deleted' }
     end
@@ -16,10 +10,17 @@ module DeveloperTools
     def mark_as_returned
       DatastoreApi::Requests::UpdateApplication.new(
         application_id: params[:id],
-        payload: { status: ApplicationStatus::RETURNED }
+        member: :return,
+        payload: {
+          return_details: {
+            reason: :provider_request,
+            details: 'Application returned through Apply developer tools.',
+          }
+        }
       ).call
 
-      redirect_to crime_applications_path, flash: { success: 'Application marked as returned' }
+      redirect_to completed_crime_applications_path(q: :returned),
+                  flash: { success: 'Application marked as returned' }
     end
 
     def bypass_dwp
