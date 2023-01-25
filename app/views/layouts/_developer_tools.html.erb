@@ -22,13 +22,17 @@
                           data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
           <% end %>
 
-          <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
-                        class: 'govuk-button govuk-!-margin-right-1',
-                        data: { module: 'govuk-button' } do; 'Mark as returned'; end if crime_application.submitted? %>
+          <% if crime_application.in_progress? %>
+            <%= button_to developer_tools_crime_application_path, method: :delete,
+                          class: 'govuk-button govuk-button--warning',
+                          data: { module: 'govuk-button' } do; 'Destroy'; end %>
+          <% end %>
 
-          <%= button_to developer_tools_crime_application_path, method: :delete,
-                        class: 'govuk-button govuk-button--warning',
-                        data: { module: 'govuk-button' } do; 'Destroy'; end %>
+          <% if crime_application.submitted? %>
+            <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
+                          class: 'govuk-button govuk-!-margin-right-1',
+                          data: { module: 'govuk-button' } do; 'Return application'; end %>
+          <% end %>
         </div>
       <% end %>
     </div>
