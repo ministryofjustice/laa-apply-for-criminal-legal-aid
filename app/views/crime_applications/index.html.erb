@@ -17,10 +17,10 @@
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
             <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('created_at') %>">
               <%=
-                link_to(
+                button_to(
                   t('.table_headings.created_at'),
-                  crime_applications_path(sort_by: 'created_at', sort_direction: flipped_sort_direction),
-                  class: 'govuk-link--no-visited-state govuk-link--no-underline sorting'
+                  crime_applications_path, method: :get,
+                  params: { sort_by: 'created_at', sort_direction: flipped_sort_direction }
                 )
               %>
             </th>

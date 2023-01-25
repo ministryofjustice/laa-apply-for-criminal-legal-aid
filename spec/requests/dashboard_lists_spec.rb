@@ -48,6 +48,14 @@ RSpec.describe 'Dashboard' do
         CrimeApplication.destroy_all
       end
 
+      it 'defaults to sort by created at desc' do
+        assert_select 'thead.govuk-table__head' do
+          assert_select 'th.govuk-table__header[aria-sort="descending"]' do
+            assert_select 'button', count: 1, text: 'Start date'
+          end
+        end
+      end
+
       it 'contains only applications having the applicant name entered' do
         expect(response).to have_http_status(:success)
 
@@ -75,10 +83,39 @@ RSpec.describe 'Dashboard' do
         let(:sort_by) { 'created_at' }
         let(:sort_direction) { 'asc' }
 
+        it 'renders the correct sort indicator in the column' do
+          assert_select 'thead.govuk-table__head' do
+            assert_select 'th.govuk-table__header[aria-sort="ascending"]' do
+              assert_select 'button', count: 1, text: 'Start date'
+            end
+          end
+        end
+
         it 'lists the applications by applicant name' do
           assert_select 'tbody.govuk-table__body' do
             assert_select 'tr.govuk-table__row:nth-of-type(1)' do
               assert_select 'a', count: 1, text: 'John Last'
+            end
+          end
+        end
+      end
+
+      context 'when the list is sorted by created_at desc' do
+        let(:sort_by) { 'created_at' }
+        let(:sort_direction) { 'desc' }
+
+        it 'renders the correct sort indicator in the column' do
+          assert_select 'thead.govuk-table__head' do
+            assert_select 'th.govuk-table__header[aria-sort="descending"]' do
+              assert_select 'button', count: 1, text: 'Start date'
+            end
+          end
+        end
+
+        it 'lists the applications by applicant name' do
+          assert_select 'tbody.govuk-table__body' do
+            assert_select 'tr.govuk-table__row:nth-of-type(1)' do
+              assert_select 'a', count: 1, text: 'John Doe'
             end
           end
         end
