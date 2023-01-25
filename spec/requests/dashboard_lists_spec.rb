@@ -51,7 +51,7 @@ RSpec.describe 'Dashboard' do
       it 'defaults to sort by created at desc' do
         assert_select 'thead.govuk-table__head' do
           assert_select 'th.govuk-table__header[aria-sort="descending"]' do
-            assert_select 'a', count: 1, text: 'Start date'
+            assert_select 'button', count: 1, text: 'Start date'
           end
         end
       end
@@ -86,7 +86,7 @@ RSpec.describe 'Dashboard' do
         it 'renders the correct sort indicator in the column' do
           assert_select 'thead.govuk-table__head' do
             assert_select 'th.govuk-table__header[aria-sort="ascending"]' do
-              assert_select 'a', count: 1, text: 'Start date'
+              assert_select 'button', count: 1, text: 'Start date'
             end
           end
         end
@@ -107,7 +107,7 @@ RSpec.describe 'Dashboard' do
         it 'renders the correct sort indicator in the column' do
           assert_select 'thead.govuk-table__head' do
             assert_select 'th.govuk-table__header[aria-sort="descending"]' do
-              assert_select 'a', count: 1, text: 'Start date'
+              assert_select 'button', count: 1, text: 'Start date'
             end
           end
         end
