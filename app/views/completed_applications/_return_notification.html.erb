@@ -1,0 +1,28 @@
+<div class="govuk-notification-banner" role="alert" aria-labelledby="govuk-notification-banner-title"
+     data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      <%= t('.title') %>
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <h3 class="govuk-notification-banner__heading">
+      <%= t('.heading') %>
+    </h3>
+
+    <p class="govuk-body">
+      <%= t('.reason', reason_type: t(return_details.reason, scope: 'shared.reason_types')) %>
+    </p>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t('.view_details') %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <%= simple_format(return_details.details, { class: 'govuk-body' }) %>
+      </div>
+    </details>
+  </div>
+</div>

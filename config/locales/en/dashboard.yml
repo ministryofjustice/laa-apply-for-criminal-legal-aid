@@ -64,6 +64,11 @@ en:
         intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
         phone: 'Telephone: 0300 200 2020'
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
+    return_notification:
+      title: Important
+      heading: You need to update this application
+      reason: "The application has been returned because: %{reason_type}."
+      view_details: View details
   shared:
     dashboard_header:
       heading: Your applications
@@ -78,6 +83,12 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
+    reason_types:
+      clarification_required: Clarification required
+      evidence_issue: Evidence issue
+      duplicate_application: Duplicate application
+      case_concluded: Case has already concluded
+      provider_request: Provider request
     errors:
       datastore:
         unavailable:

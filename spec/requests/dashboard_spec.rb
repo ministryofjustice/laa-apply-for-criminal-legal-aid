@@ -75,7 +75,8 @@ RSpec.describe 'Dashboard' do
 
   describe 'show an application certificate (in `returned` status)' do
     # NOTE: this is almost identical to `submitted` state, only difference
-    # is there is an `Update application` button instead of a print button.
+    # is there is an `Update application` button instead of a print button,
+    # and a notification banner with the return details.
     # No need to test everything again.
 
     before do
@@ -89,6 +90,18 @@ RSpec.describe 'Dashboard' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Application for criminal legal aid certificate'
+    end
+
+    it 'has a notification banner with the return details' do
+      assert_select 'div.govuk-notification-banner' do
+        assert_select 'h2', 'Important'
+        assert_select 'div.govuk-notification-banner__content' do
+          assert_select 'h3', 'You need to update this application'
+          assert_select 'p.govuk-body:nth-of-type(1)',
+                        'The application has been returned because: Clarification required.'
+          assert_select 'div.govuk-details__text', 'Further information regarding IoJ required'
+        end
+      end
     end
 
     it 'has appropriate CTA buttons' do

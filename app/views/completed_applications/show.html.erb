@@ -7,7 +7,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'return_notification',
+               locals: { return_details: @crime_application.return_details } if @crime_application.returned? %>
+
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
+
     <dl class="govuk-summary-list govuk-summary-list--no-border app-summary-list--compact">
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
