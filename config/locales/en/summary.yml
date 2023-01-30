@@ -17,6 +17,7 @@ en:
       next_court_hearing: Next court hearing
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
+      legal_representative_details: Legal representative details
 
     questions:
       # BEGIN client details section
@@ -127,3 +128,16 @@ en:
         answers: 
           'true': Details provided do not require further justification for legal aid
       # END passport justification for legal aid section
+
+      # BEGIN legal representative details section
+      office_code:
+        question: Office account number
+      provider_email:
+        question: Email address
+      legal_rep_first_name:
+        question: First name
+      legal_rep_last_name:
+        question: Last name
+      legal_rep_telephone:
+        question: Telephone
+      # END legal representative details section
