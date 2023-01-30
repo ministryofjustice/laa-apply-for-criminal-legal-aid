@@ -59,6 +59,10 @@ class LaaPortalSetup
     ENV.fetch('LAA_PORTAL_IDP_METADATA_FILE', nil)
   end
 
+  def idp_metadata_parser
+    OneLogin::RubySaml::IdpMetadataParser.new
+  end
+
   def parse_metadata_and_merge(config = {})
     @env['omniauth.strategy'].options.merge!(
       metadata_config.merge(config)
@@ -90,12 +94,12 @@ class LaaPortalSetup
     # An explicit timeout is set, as the gem parser does not have one,
     # which means it hangs for a very long time if URL is not reachable.
     Timeout.timeout(3) do
-      OneLogin::RubySaml::IdpMetadataParser.new.parse_remote_to_hash(metadata_url)
+      idp_metadata_parser.parse_remote_to_hash(metadata_url)
     end
   end
 
   def metadata_from_file
-    OneLogin::RubySaml::IdpMetadataParser.new.parse_to_hash(
+    idp_metadata_parser.parse_to_hash(
       Rails.root.join(metadata_file).read
     )
   end
