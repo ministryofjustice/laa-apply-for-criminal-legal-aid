@@ -16,7 +16,7 @@ describe Summary::HtmlPresenter do
 
     context 'for a database application' do
       let(:crime_application) do
-        instance_double(CrimeApplication, applicant: double, case: double, ioj: double, provider_details: nil)
+        instance_double(CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress)
       end
 
       it 'has the right sections in the right order' do

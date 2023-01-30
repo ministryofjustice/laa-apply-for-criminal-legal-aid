@@ -6,7 +6,7 @@ module Summary
       end
 
       def show?
-        provider_details.present? && super
+        !crime_application.in_progress? && super
       end
 
       # rubocop:disable Metrics/MethodLength
