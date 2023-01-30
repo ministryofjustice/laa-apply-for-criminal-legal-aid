@@ -23,7 +23,7 @@ en:
     questions:
       # BEGIN overview section
       reference:
-        question: LAA Reference
+        question: LAA reference number
       date_stamp:
         question: Date stamp
       date_submitted:

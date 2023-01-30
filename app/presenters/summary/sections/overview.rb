@@ -16,11 +16,11 @@ module Summary
             :reference, crime_application.reference.to_s,
           ),
 
-          Components::DateAnswer.new(
+          Components::DateTimeAnswer.new(
             :date_stamp, crime_application.date_stamp,
           ),
 
-          Components::DateAnswer.new(
+          Components::DateTimeAnswer.new(
             :date_submitted, crime_application.submitted_at,
           ),
 

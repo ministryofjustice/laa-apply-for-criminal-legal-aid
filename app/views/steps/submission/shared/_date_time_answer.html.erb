@@ -1,0 +1,12 @@
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{date_time_answer.question}.question")
+  end
+
+  content_for(:row_answer, flush: true) do
+    l(date_time_answer.value, format: :datetime)
+  end
+%>
+
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: date_time_answer, editable: editable } %>
