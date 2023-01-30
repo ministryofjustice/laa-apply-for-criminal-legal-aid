@@ -8,10 +8,18 @@ data:
   RACK_ENV: production
   RAILS_ENV: production
   RAILS_SERVE_STATIC_FILES: enabled
+
   # Datastore endpoint for staging
   DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.live.cloud-platform.service.justice.gov.uk
-  # LAA Portal metadata endpoint
-  # (not accessible from inside CP it seems, using test mode for now)
-  # LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
+
+  # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
-  LAA_PORTAL_IDP_SSO_URL: https://samlmock.dev.legalservices.gov.uk/SingleSignOnService
+
+  # LAA Portal metadata endpoint or file
+  # (endpoint not accessible from inside CP, using locally stored file)
+  #
+  # Important: make sure whatever Portal env is declared here, uses the
+  # corresponding certificates, if required (in `certificates.yml` file)
+  #
+  # LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
+  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/samlmock.xml

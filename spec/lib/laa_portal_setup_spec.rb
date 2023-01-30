@@ -8,6 +8,7 @@ describe LaaPortalSetup do
   end
 
   let(:metadata_url) { nil }
+  let(:metadata_file) { nil }
 
   before do
     allow(Sentry).to receive(:capture_exception)
@@ -17,8 +18,7 @@ describe LaaPortalSetup do
       'ENV',
       ENV.to_h.merge(
         'LAA_PORTAL_IDP_METADATA_URL' => metadata_url,
-        'LAA_PORTAL_IDP_SSO_URL' => 'https://test.com/sso',
-        'LAA_PORTAL_IDP_CERT' => '<idp_certificate>',
+        'LAA_PORTAL_IDP_METADATA_FILE' => metadata_file,
         'LAA_PORTAL_SP_CERT' => nil,
         'LAA_PORTAL_SP_PRIVATE_KEY' => nil,
       )
@@ -26,15 +26,37 @@ describe LaaPortalSetup do
   end
 
   describe '.setup' do
-    context 'when no metadata endpoint is declared' do
-      it 'uses a manual override config' do
-        expect(subject).to match(
-          a_hash_including(
-            idp_cert: '<idp_certificate>',
-            idp_sso_service_url: 'https://test.com/sso',
-            idp_sso_service_binding: :redirect,
-            assertion_consumer_service_binding: :post,
-          )
+    context 'when no metadata endpoint and no local file are declared' do
+      it 'raises an exception' do
+        expect { subject }.to raise_exception(
+          RuntimeError, /Either metadata URL or metadata file must be configured/
+        )
+
+        expect(Sentry).to have_received(:capture_exception).with(
+          an_instance_of(RuntimeError)
+        )
+      end
+    end
+
+    context 'when a local metadata file is declared' do
+      let(:metadata_file) { 'path/to/metadata.xml' }
+      let(:metadata_result) { { foo: 'bar' } }
+
+      before do
+        allow_any_instance_of(
+          OneLogin::RubySaml::IdpMetadataParser
+        ).to receive(:parse_to_hash).with('dummy_config').and_return(metadata_result)
+      end
+
+      it 'uses a locally stored metadata file' do
+        expect(
+          Rails.root
+        ).to receive(:join).with(metadata_file).and_return(double(read: 'dummy_config'))
+
+        expect(
+          subject
+        ).to match(
+          a_hash_including(foo: 'bar')
         )
       end
     end
@@ -80,9 +102,15 @@ describe LaaPortalSetup do
             certificate: nil,
             private_key: nil,
             security: {
+              digest_method: XMLSecurity::Document::SHA256,
+              signature_method: XMLSecurity::Document::RSA_SHA256,
               authn_requests_signed: true,
               want_assertions_signed: true,
+              want_assertions_encrypted: true,
+              check_idp_cert_expiration: true,
+              check_sp_cert_expiration: true,
             },
+            name_identifier_format: nil,
             request_attributes: {},
             attribute_statements: {
               email: ['USER_EMAIL'],
