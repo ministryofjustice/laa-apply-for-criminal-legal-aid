@@ -106,17 +106,17 @@ en:
       loss_of_livelihood:
         question: Loss of livelihood
       reputation:
-        question: Reputation
+        question: Damage to reputation
       question_of_law:
         question: Question of law
       understanding:
-        question: Understanding
+        question: Unable to represent themselves
       witness_tracing:
         question: Witness tracing
       expert_examination:
-        question: Expert examination
+        question: Expert cross-examination
       interest_of_another:
-        question: Interest of another
+        question: Interest of another person
       other:
         question: Other
       # END justification for legal aid section
