@@ -9,6 +9,7 @@ en:
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
     sections:
+      overview: Overview
       client_details: Client details
       contact_details: Contact details
       case_details: Case details
@@ -20,6 +21,19 @@ en:
       legal_representative_details: Legal representative details
 
     questions:
+      # BEGIN overview section
+      reference:
+        question: LAA Reference
+      date_stamp:
+        question: Date stamp
+      date_submitted:
+        question: Date submitted
+      provider_email:
+        question: Submitted by
+      office_code:
+        question: Office account number
+      # END overview section
+
       # BEGIN client details section
       first_name:
         question: First name
@@ -130,10 +144,6 @@ en:
       # END passport justification for legal aid section
 
       # BEGIN legal representative details section
-      office_code:
-        question: Office account number
-      provider_email:
-        question: Email address
       legal_rep_first_name:
         question: First name
       legal_rep_last_name:

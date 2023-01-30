@@ -9,6 +9,7 @@ module Summary
     # rubocop:disable Metrics/AbcSize
     def sections
       [
+        Sections::Overview.new(crime_application),
         Sections::ClientDetails.new(crime_application),
         Sections::ContactDetails.new(crime_application),
         Sections::CaseDetails.new(crime_application),

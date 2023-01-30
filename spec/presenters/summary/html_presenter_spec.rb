@@ -47,6 +47,7 @@ describe Summary::HtmlPresenter do
           subject.sections
         ).to match_instances_array(
           [
+            Summary::Sections::Overview,
             Summary::Sections::ClientDetails,
             Summary::Sections::ContactDetails,
             Summary::Sections::CaseDetails,

@@ -9,17 +9,8 @@ module Summary
         !crime_application.in_progress? && super
       end
 
-      # rubocop:disable Metrics/MethodLength
       def answers
         [
-          Components::FreeTextAnswer.new(
-            :office_code, provider_details.office_code,
-          ),
-
-          Components::FreeTextAnswer.new(
-            :provider_email, provider_details.provider_email,
-          ),
-
           Components::FreeTextAnswer.new(
             :legal_rep_first_name, provider_details.legal_rep_first_name,
           ),
@@ -33,7 +24,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
