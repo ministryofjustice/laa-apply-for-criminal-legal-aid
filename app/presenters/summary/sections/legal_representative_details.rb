@@ -29,7 +29,7 @@ module Summary
           ),
 
           Components::FreeTextAnswer.new(
-            :legal_rep_telephone, provider_details.legal_rep_telephone, show: true,
+            :legal_rep_telephone, provider_details.legal_rep_telephone,
           ),
         ].select(&:show?)
       end
