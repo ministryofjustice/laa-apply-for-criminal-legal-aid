@@ -5,7 +5,7 @@ class CompletedApplicationsController < DashboardController
                 :present_crime_application, only: [:show]
 
   def index
-    @applications = Datastore::GetApplications.new(
+    @applications = Datastore::ListApplications.new(
       filtering: filtering_params, sorting: sorting_params, pagination: pagination_params
     ).call&.page(params[:page])
   end

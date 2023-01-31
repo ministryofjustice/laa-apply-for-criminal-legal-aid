@@ -3,8 +3,7 @@ require 'rails_helper'
 describe Summary::Sections::BaseSection do
   subject { described_class.new(crime_application, **arguments) }
 
-  let(:crime_application) { CrimeApplication.new(status:) }
-  let(:status) { :in_progress }
+  let(:crime_application) { CrimeApplication.new }
   let(:arguments) { {} }
 
   describe '#to_partial_path' do
@@ -50,8 +49,10 @@ describe Summary::Sections::BaseSection do
       end
     end
 
-    context 'for an application `submitted`' do
-      let(:status) { :submitted }
+    context 'for an application other than `in_progress`' do
+      let(:crime_application) do
+        Adapters::BaseApplication.build(build_struct_application)
+      end
 
       it 'returns false' do
         expect(subject.editable?).to be(false)

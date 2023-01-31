@@ -11,8 +11,6 @@ RSpec.describe CrimeApplication, type: :model do
         described_class.statuses
       ).to eq(
         'in_progress' => 'in_progress',
-        'submitted' => 'submitted',
-        'returned' => 'returned',
       )
     end
   end

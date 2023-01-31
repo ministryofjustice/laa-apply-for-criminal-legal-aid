@@ -21,13 +21,19 @@ class ValueObject
   end
 
   class << self
+    # Define inquiry methods for each value in the value object,
+    # i.e. `#coffee?` returns true for value `:coffee`, false for `:tea`
     def inherited(subclass)
-      TracePoint.trace(:end) do
-        # Define inquiry methods for each value in the value object,
-        # i.e. `#coffee?` returns true for value `:coffee`, false for `:tea`
+      TracePoint.trace(:end) do |trace|
         # :nocov:
-        subclass.values.each do |value|
-          define_method("#{value}?") { value.eql?(self) }
+        if subclass == trace.self
+          subclass.const_set(
+            :INQUIRY_METHODS, subclass.values.map { |value| "#{value}?".to_sym }
+          )
+
+          subclass.values.each do |value|
+            subclass.define_method("#{value}?") { value.eql?(self) }
+          end
         end
         # :nocov:
       end

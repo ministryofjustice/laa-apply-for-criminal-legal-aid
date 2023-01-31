@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Datastore::GetApplications do
+RSpec.describe Datastore::ListApplications do
   subject { described_class.new(filtering:, sorting:, pagination:) }
 
   let(:filtering) do

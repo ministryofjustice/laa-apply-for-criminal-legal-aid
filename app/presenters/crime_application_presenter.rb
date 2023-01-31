@@ -21,18 +21,16 @@ class CrimeApplicationPresenter < BasePresenter
     applicant.present?
   end
 
+  # This is used in the task list (applications in progress)
+  #
   # - If case type is “date stampable”, we use the date stamp value
-  # - If case type is non “date stampable”, and the application is submitted,
-  #   we use the submission date as the date stamp
+  # - If case type is non “date stampable”, we just return `nil`
+  #
+  # We have to check if it is date stampable, instead of blindly
+  # using `date_stamp` value, as provider might change case types
   #
   def interim_date_stamp
-    date = if date_stampable?
-             date_stamp
-           elsif submitted?
-             submitted_at
-           end
-
-    l(date, format: :datetime) if date
+    l(date_stamp, format: :datetime) if date_stampable? && date_stamp.present?
   end
 
   def date_stampable?
