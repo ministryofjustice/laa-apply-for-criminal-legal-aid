@@ -8,7 +8,7 @@ describe Summary::Sections::Overview do
       CrimeApplication,
       to_param: '12345',
       status: status,
-      reference: 'LAA-1',
+      reference: 12_345,
       date_stamp: Date.new(2023, 1, 20),
       submitted_at: Date.new(2023, 1, 21),
       provider_details: provider_details,
@@ -56,7 +56,7 @@ describe Summary::Sections::Overview do
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[0].question).to eq(:reference)
-      expect(answers[0].value).to eq('LAA-1')
+      expect(answers[0].value).to eq('12345')
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[1].question).to eq(:date_stamp)
