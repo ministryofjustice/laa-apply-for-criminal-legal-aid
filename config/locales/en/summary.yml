@@ -18,7 +18,7 @@ en:
       next_court_hearing: Next court hearing
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
-      legal_representative_details: Legal representative details
+      legal_representative_details: Legal representative
 
     questions:
       # BEGIN overview section

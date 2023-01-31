@@ -16,12 +16,14 @@ module Summary
             :reference, crime_application.reference.to_s,
           ),
 
-          Components::DateTimeAnswer.new(
+          Components::DateAnswer.new(
             :date_stamp, crime_application.date_stamp,
+            i18n_opts: { format: :datetime },
           ),
 
-          Components::DateTimeAnswer.new(
+          Components::DateAnswer.new(
             :date_submitted, crime_application.submitted_at,
+            i18n_opts: { format: :datetime },
           ),
 
           Components::FreeTextAnswer.new(
