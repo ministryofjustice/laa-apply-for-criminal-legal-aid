@@ -21,7 +21,7 @@ module Datastore
     private
 
     def superseded?(app)
-      ApplicationStatus.new(app.fetch('status')).superseded?
+      ApplicationStatus.new(app.status).superseded?
     end
   end
 end
