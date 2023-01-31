@@ -1,7 +1,6 @@
 class LaaPortalSetup
   def initialize(env)
     @env = env
-    @request = ActionDispatch::Request.new(env)
   end
 
   def self.call(env)
@@ -17,9 +16,15 @@ class LaaPortalSetup
       certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
       private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
       security: {
+        digest_method: XMLSecurity::Document::SHA256,
+        signature_method: XMLSecurity::Document::RSA_SHA256,
         authn_requests_signed: true,
         want_assertions_signed: true,
+        want_assertions_encrypted: true,
+        check_idp_cert_expiration: true,
+        check_sp_cert_expiration: true,
       },
+      name_identifier_format: nil,
       request_attributes: {},
       attribute_statements: {
         email: ['USER_EMAIL'],
@@ -50,19 +55,28 @@ class LaaPortalSetup
     ENV.fetch('LAA_PORTAL_IDP_METADATA_URL', nil)
   end
 
+  def metadata_file
+    ENV.fetch('LAA_PORTAL_IDP_METADATA_FILE', nil)
+  end
+
+  def idp_metadata_parser
+    OneLogin::RubySaml::IdpMetadataParser.new
+  end
+
   def parse_metadata_and_merge(config = {})
     @env['omniauth.strategy'].options.merge!(
       metadata_config.merge(config)
     )
   end
 
+  # rubocop:disable Metrics/MethodLength
   def metadata_config
-    return manual_override_config if metadata_url.blank?
-
-    # An explicit timeout is set, as the gem parser does not have one,
-    # which means it hangs for a very long time if URL is not reachable.
-    Timeout.timeout(3) do
-      OneLogin::RubySaml::IdpMetadataParser.new.parse_remote_to_hash(metadata_url)
+    if metadata_url.present?
+      metadata_from_server
+    elsif metadata_file.present?
+      metadata_from_file
+    else
+      raise 'Either metadata URL or metadata file must be configured'
     end
   rescue StandardError => e
     if e.is_a?(Timeout::Error)
@@ -74,13 +88,19 @@ class LaaPortalSetup
     Sentry.capture_exception(e)
     raise(e) # re-raise exception
   end
+  # rubocop:enable Metrics/MethodLength
 
-  def manual_override_config
-    {
-      idp_cert: ENV.fetch('LAA_PORTAL_IDP_CERT'),
-      idp_sso_service_url: ENV.fetch('LAA_PORTAL_IDP_SSO_URL'),
-      idp_sso_service_binding: :redirect,
-      assertion_consumer_service_binding: :post,
-    }
+  def metadata_from_server
+    # An explicit timeout is set, as the gem parser does not have one,
+    # which means it hangs for a very long time if URL is not reachable.
+    Timeout.timeout(3) do
+      idp_metadata_parser.parse_remote_to_hash(metadata_url)
+    end
+  end
+
+  def metadata_from_file
+    idp_metadata_parser.parse_to_hash(
+      Rails.root.join(metadata_file).read
+    )
   end
 end
