@@ -12,33 +12,6 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border app-summary-list--compact">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.laa_reference') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @crime_application.reference %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.date_stamp') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= l(@crime_application.date_stamp, format: :datetime) %>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t('.date_submitted') %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= l(@crime_application.submitted_at, format: :datetime) %>
-        </dd>
-      </div>
-    </dl>
-
     <% unless @crime_application.returned? %>
       <div class="govuk-inset-text">
         <p class="govuk-body">

@@ -4,7 +4,7 @@
   end
 
   content_for(:row_answer, flush: true) do
-    l(date_answer.value)
+    l(date_answer.value, **date_answer.i18n_opts)
   end
 %>
 

@@ -3,6 +3,7 @@ en:
     DATE_FORMATS: &DATE_FORMATS
       default: '%-d %b %Y'  # 3 Jan 2019
       compact: '%d/%m/%Y'   # 03/01/2019
+      datetime: '%-d %B %Y %-l:%M%P'  # 3 January 2019 2:45pm
 
   service:
     name: Apply for criminal legal aid
@@ -13,7 +14,6 @@ en:
   time:
     formats:
       <<: *DATE_FORMATS
-      datetime: '%-d %B %Y %-l:%M%P'  # 3 January 2019 2:45pm
 
   flash:
     success:
