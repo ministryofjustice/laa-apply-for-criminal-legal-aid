@@ -35,16 +35,16 @@ RSpec.describe CrimeApplicationPresenter do
   end
 
   describe '#interim_date_stamp' do
+    before do
+      allow(subject).to receive(:date_stamp).and_return(date_stamp)
+    end
+
+    let(:date_stamp) { DateTime.new(2022, 2, 1) }
+
     context 'when a case is date stampable' do
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
-      before do
-        allow(subject).to receive(:date_stamp).and_return(date_stamp)
-      end
-
       context 'and it has a date_stamp' do
-        let(:date_stamp) { DateTime.new(2022, 2, 1) }
-
         it { expect(subject.interim_date_stamp).to eq('1 February 2022 12:00am') }
       end
 
@@ -56,22 +56,14 @@ RSpec.describe CrimeApplicationPresenter do
     end
 
     context 'when a case is not date stampable' do
-      let(:case_type) { CaseType::INDICTABLE.to_s }
-
-      context 'and the application is submitted' do
-        let(:crime_application) do
-          CrimeApplication.new(status: :submitted, submitted_at: DateTime.new(2022, 2, 15))
-        end
-
-        it 'uses the `submitted_at` date as the date stamp' do
-          expect(subject.interim_date_stamp).to eq('15 February 2022 12:00am')
-        end
+      context 'and a date_stamp was set previously' do
+        it { expect(subject.interim_date_stamp).to be_nil }
       end
 
-      context 'and the application is not yet submitted' do
-        it 'returns nil' do
-          expect(subject.interim_date_stamp).to be_nil
-        end
+      context 'and a date_stamp was not set' do
+        let(:date_stamp) { nil }
+
+        it { expect(subject.interim_date_stamp).to be_nil }
       end
     end
   end

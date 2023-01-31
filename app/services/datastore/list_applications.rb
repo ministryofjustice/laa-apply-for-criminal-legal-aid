@@ -1,5 +1,5 @@
 module Datastore
-  class GetApplications
+  class ListApplications
     attr_reader :filtering, :sorting, :pagination
 
     def initialize(filtering:, sorting:, pagination:)

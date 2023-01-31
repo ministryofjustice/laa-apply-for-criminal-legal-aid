@@ -11,8 +11,7 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 
-  enum status: ApplicationStatus.enum_values,
-       _default: ApplicationStatus.enum_values[:in_progress]
+  enum status: ApplicationStatus.enum_values
 
   alias_attribute :reference, :usn
 

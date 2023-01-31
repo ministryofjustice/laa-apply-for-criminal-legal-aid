@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Adapters::Structs::CrimeApplication do
-  subject { described_class.new(datastore_application) }
-
-  let(:datastore_application) do
-    JSON.parse(LaaCrimeSchemas.fixture(1.0).read)
-  end
+  subject { build_struct_application }
 
   describe '#applicant' do
     it 'returns the applicant struct' do

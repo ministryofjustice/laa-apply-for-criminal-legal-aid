@@ -9,7 +9,7 @@ module DeveloperTools
 
     def mark_as_returned
       DatastoreApi::Requests::UpdateApplication.new(
-        application_id: params[:id],
+        application_id: application_id,
         member: :return,
         payload: {
           return_details: {
@@ -40,12 +40,6 @@ module DeveloperTools
     end
 
     private
-
-    def current_remote_application
-      @current_remote_application ||= DatastoreApi::Requests::GetApplication.new(
-        application_id: params[:id]
-      ).call
-    end
 
     def crime_application
       @crime_application ||= current_crime_application || initialize_crime_application(

@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe Adapters::Structs::InterestsOfJustice do
   subject { application_struct.ioj }
 
-  let(:application_struct) do
-    Adapters::Structs::CrimeApplication.new(
-      JSON.parse(LaaCrimeSchemas.fixture(1.0).read)
-    )
-  end
+  let(:application_struct) { build_struct_application }
 
   describe '#types' do
     it 'returns the IoJ types' do

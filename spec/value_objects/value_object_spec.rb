@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-Fruit = Class.new(ValueObject) do
-  const_set(:VALUES, [new(:apple), new(:banana)])
-end
-
 RSpec.describe ValueObject do
   subject { described_class.new(value) }
 
@@ -77,15 +73,21 @@ RSpec.describe ValueObject do
   end
 
   describe 'inquiry methods' do
-    let(:fruit_one) { Fruit.new(:apple) }
-    let(:fruit_two) { Fruit.new(:banana) }
+    let(:yes_answer) { YesNoAnswer.new(:yes) }
+    let(:no_answer)  { YesNoAnswer.new(:no) }
+
+    it 'has a constant with the inquiry methods' do
+      expect(
+        YesNoAnswer::INQUIRY_METHODS
+      ).to match_array(%i[yes? no?])
+    end
 
     it 'defines inquiry methods for each of the values' do
-      expect(fruit_one.apple?).to be(true)
-      expect(fruit_one.banana?).to be(false)
+      expect(yes_answer.yes?).to be(true)
+      expect(yes_answer.no?).to be(false)
 
-      expect(fruit_two.apple?).to be(false)
-      expect(fruit_two.banana?).to be(true)
+      expect(no_answer.yes?).to be(false)
+      expect(no_answer.no?).to be(true)
     end
   end
 end

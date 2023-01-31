@@ -1,6 +1,6 @@
 module Adapters
   class BaseApplication < SimpleDelegator
-    delegate :in_progress?, :submitted?, :returned?, to: :status
+    delegate(*ApplicationStatus::INQUIRY_METHODS, to: :status)
     delegate :case_type, to: :case, allow_nil: true
 
     def self.build(object)

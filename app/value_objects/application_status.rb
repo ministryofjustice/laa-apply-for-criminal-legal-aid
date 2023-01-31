@@ -3,9 +3,14 @@ class ApplicationStatus < ValueObject
     IN_PROGRESS = new(:in_progress),
     SUBMITTED   = new(:submitted),
     RETURNED    = new(:returned),
+    SUPERSEDED  = new(:superseded),
+  ].freeze
+
+  LOCALLY_PERSISTED_STATUSES = [
+    IN_PROGRESS,
   ].freeze
 
   def self.enum_values
-    values.to_h { |value| [value.to_sym, value.to_s] }
+    LOCALLY_PERSISTED_STATUSES.map(&:value).index_with(&:to_s)
   end
 end

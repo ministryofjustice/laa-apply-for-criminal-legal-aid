@@ -6,12 +6,10 @@ RSpec.describe Tasks::Declaration do
   let(:crime_application) do
     CrimeApplication.new(
       legal_rep_first_name:,
-      status:,
     )
   end
 
   let(:legal_rep_first_name) { nil }
-  let(:status) { ApplicationStatus::IN_PROGRESS.to_s }
 
   before do
     allow(crime_application).to receive(:id).and_return('12345')
@@ -66,14 +64,6 @@ RSpec.describe Tasks::Declaration do
   end
 
   describe '#completed?' do
-    context 'when application is submitted' do
-      let(:status) { ApplicationStatus::SUBMITTED.to_s }
-
-      it { expect(subject.completed?).to be(true) }
-    end
-
-    context 'when application is in_progress' do
-      it { expect(subject.completed?).to be(false) }
-    end
+    it { expect(subject.completed?).to be(false) }
   end
 end

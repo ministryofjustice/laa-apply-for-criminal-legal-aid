@@ -16,8 +16,10 @@ module Tasks
       !!crime_application.legal_rep_first_name
     end
 
+    # `in_progress` applications will never have this task
+    # marked as completed, as the completion means submitting it
     def completed?
-      crime_application.submitted?
+      false
     end
   end
 end

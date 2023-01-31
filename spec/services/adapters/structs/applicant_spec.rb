@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe Adapters::Structs::Applicant do
   subject { application_struct.applicant }
 
-  let(:application_struct) do
-    Adapters::Structs::CrimeApplication.new(
-      JSON.parse(LaaCrimeSchemas.fixture(1.0).read)
-    )
-  end
+  let(:application_struct) { build_struct_application }
 
   describe '#first_name' do
     it 'returns the applicant first name' do
