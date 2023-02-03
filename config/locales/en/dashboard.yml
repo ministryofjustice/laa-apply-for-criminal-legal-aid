@@ -57,7 +57,6 @@ en:
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
-      recreate_application: Update application
       print_application: Print application
       back_to_applications: Back to all applications
       helpline:
@@ -66,9 +65,14 @@ en:
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
     return_notification:
       title: Important
-      heading: You need to update this application
-      reason: "The application has been returned because: %{reason_type}."
-      view_details: View details
+      heading: LAA have returned this application %{reason}
+      reasons:
+        clarification_required: because further clarification is needed
+        evidence_issue: because there was an issue with the evidence that was sent
+        duplicate_application: because it is a duplicated application
+        case_concluded: because the case has already concluded
+        provider_request: at your request
+      update_application: Update application
   shared:
     dashboard_header:
       heading: Your applications
@@ -83,12 +87,6 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
-    reason_types:
-      clarification_required: Clarification required
-      evidence_issue: Evidence issue
-      duplicate_application: Duplicate application
-      case_concluded: Case has already concluded
-      provider_request: Provider request
     errors:
       datastore:
         unavailable:
