@@ -7,22 +7,13 @@
   </div>
   <div class="govuk-notification-banner__content">
     <h3 class="govuk-notification-banner__heading">
-      <%= t('.heading') %>
+      <%= t('.heading', reason: t(".reasons.#{return_details.reason}", default: '')) %>
     </h3>
 
-    <p class="govuk-body">
-      <%= t('.reason', reason_type: t(return_details.reason, scope: 'shared.reason_types')) %>
-    </p>
+    <%= simple_format(return_details.details, { class: 'govuk-body' }) %>
 
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          <%= t('.view_details') %>
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <%= simple_format(return_details.details, { class: 'govuk-body' }) %>
-      </div>
-    </details>
+    <%= button_to recreate_completed_crime_application_path, method: :put,
+                  class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
+                  data: { module: 'govuk-button' } do; t('.update_application'); end %>
   </div>
 </div>
