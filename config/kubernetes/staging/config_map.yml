@@ -19,7 +19,7 @@ data:
   # (endpoint not accessible from inside CP, using locally stored file)
   #
   # Important: make sure whatever Portal env is declared here, uses the
-  # corresponding certificates, if required (in `certificates.yml` file)
+  # corresponding certificates, if required (in `deployment.tpl` file)
   #
   # LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
   LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/samlmock.xml
