@@ -19,6 +19,10 @@ RSpec.describe DWP::BenefitCheckService do
     )
   end
 
+  before do
+    stub_const('BenefitCheckService::USE_MOCK', false)
+  end
+
   describe '.call', :vcr do
     let(:expected_params) do
       hash_including(
@@ -114,7 +118,6 @@ RSpec.describe DWP::BenefitCheckService do
   describe '.passporting_benefit?' do
     describe 'behaviour without mock' do
       before do
-        stub_const('BenefitCheckService::USE_MOCK', false)
         allow_any_instance_of(described_class).to receive(:call).and_return({ benefit_checker_status: 'Yes' })
       end
 
