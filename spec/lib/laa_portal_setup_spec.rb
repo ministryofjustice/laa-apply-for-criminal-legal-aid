@@ -104,6 +104,7 @@ describe LaaPortalSetup do
             security: {
               digest_method: XMLSecurity::Document::SHA256,
               signature_method: XMLSecurity::Document::RSA_SHA256,
+              metadata_signed: true,
               authn_requests_signed: true,
               want_assertions_signed: true,
               want_assertions_encrypted: true,

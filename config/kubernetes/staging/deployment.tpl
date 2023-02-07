@@ -60,10 +60,23 @@ spec:
               name: configmap-staging
           - secretRef:
               name: secrets-staging
-          - secretRef:
-              name: portal-certificates-staging
         env:
-          # secrets created by terraform
+          #
+          # secrets created by `certificates.yml`
+          #
+          - name: LAA_PORTAL_SP_CERT
+            valueFrom:
+              secretKeyRef:
+                name: portal-sp-certificate-dev
+                key: tls.crt
+          - name: LAA_PORTAL_SP_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: portal-sp-certificate-dev
+                key: tls.key
+          #
+          # secrets created by `terraform`
+          #
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:

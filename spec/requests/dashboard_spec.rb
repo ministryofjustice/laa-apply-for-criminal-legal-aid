@@ -30,12 +30,12 @@ RSpec.describe 'Dashboard' do
       assert_select 'h1', 'Application for criminal legal aid certificate'
     end
 
-    it 'has appropriate CTA buttons' do
-      # There is no update button
-      assert_select 'button.govuk-button', count: 0, text: 'Update application'
-
-      # There are 2 print buttons, one above the summary, another in the bottom
+    it 'has print buttons' do
       assert_select 'a.govuk-button', count: 2, text: 'Print application'
+    end
+
+    it 'does not have an update application button' do
+      assert_select 'button.govuk-button', count: 0, text: 'Update application'
     end
 
     # rubocop:disable RSpec/ExampleLength
@@ -85,8 +85,7 @@ RSpec.describe 'Dashboard' do
 
   describe 'show an application certificate (in `returned` status)' do
     # NOTE: this is almost identical to `submitted` state, only difference
-    # is there is an `Update application` button instead of a print button,
-    # and a notification banner with the return details.
+    # is there is a notification banner with the return details and CTA button.
     # No need to test everything again.
 
     before do
@@ -106,20 +105,11 @@ RSpec.describe 'Dashboard' do
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
-          assert_select 'h3', 'You need to update this application'
-          assert_select 'p.govuk-body:nth-of-type(1)',
-                        'The application has been returned because: Clarification required.'
-          assert_select 'div.govuk-details__text', 'Further information regarding IoJ required'
+          assert_select 'h3', 'LAA have returned this application because further clarification is needed'
+          assert_select 'p.govuk-body', 'Further information regarding IoJ required'
+          assert_select 'button.govuk-button', count: 1, text: 'Update application'
         end
       end
-    end
-
-    it 'has appropriate CTA buttons' do
-      # There is 1 update button
-      assert_select 'button.govuk-button', count: 1, text: 'Update application'
-
-      # There is 1 print button
-      assert_select 'a.govuk-button', count: 1, text: 'Print application'
     end
 
     it 're-creates the application and renders the check your answers page' do
