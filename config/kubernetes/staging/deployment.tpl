@@ -60,8 +60,6 @@ spec:
               name: configmap-staging
           - secretRef:
               name: secrets-staging
-          - secretRef:
-              name: portal-certificates-staging
         env:
           #
           # secrets created by `certificates.yml`
