@@ -27,7 +27,7 @@ http_interactions:
       message: ''
     headers:
       Date:
-      - Tue, 07 Feb 2023 15:45:41 GMT
+      - Tue, 07 Feb 2023 16:13:22 GMT
       Content-Type:
       - text/xml;charset=utf-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Trace-Id:
-      - Root=1-63e27225-390094ee0bd0d47a13284559;
+      - Root=1-63e278a2-0f1a356847c0bea12038fb13;
       Vary:
       - Accept-Encoding
     body:
@@ -45,6 +45,6 @@ http_interactions:
         xmlns="https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check"><ns1:originalClientRef
         xmlns:ns1="http://lsc.gov.uk/benefitchecker/data/1.0">x123</ns1:originalClientRef><ns2:benefitCheckerStatus
         xmlns:ns2="http://lsc.gov.uk/benefitchecker/data/1.0">Yes</ns2:benefitCheckerStatus><ns3:confirmationRef
-        xmlns:ns3="http://lsc.gov.uk/benefitchecker/data/1.0">T1675784741504</ns3:confirmationRef></benefitCheckerResponse></soapenv:Body></soapenv:Envelope>
-  recorded_at: Tue, 07 Feb 2023 15:45:41 GMT
+        xmlns:ns3="http://lsc.gov.uk/benefitchecker/data/1.0">T1675786402666</ns3:confirmationRef></benefitCheckerResponse></soapenv:Body></soapenv:Envelope>
+  recorded_at: Tue, 07 Feb 2023 16:13:22 GMT
 recorded_with: VCR 6.1.0
