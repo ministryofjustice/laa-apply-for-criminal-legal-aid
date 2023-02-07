@@ -50,7 +50,7 @@ en:
           page_title: Client’s contact details
           heading: Enter your client’s contact details
       retry_benefit_check:
-        show:
+        edit:
           page_title: Unable to connect to DWP
           heading: Sorry there was a problem connecting to DWP
           explanation: We cannot connect to the DWP service to check if your client receives a passporting benefit. 

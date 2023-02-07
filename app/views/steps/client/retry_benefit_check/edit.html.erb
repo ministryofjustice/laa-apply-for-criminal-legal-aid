@@ -24,7 +24,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.continue_button %>
+      <%= f.continue_button(primary: :try_again, secondary: :apply_in_eforms) %>
     <% end %>
   </div>
 </div>
