@@ -45,28 +45,4 @@ RSpec.describe DWP::MockBenefitCheckService do
       end
     end
   end
-
-  describe '.passporting_benefit?' do
-    subject { described_class }
-
-    it 'returns true' do
-      expect(subject.passporting_benefit?(applicant)).to be(true)
-    end
-
-    context 'with incorrect date' do
-      let(:date_of_birth) { '2012/01/10'.to_date }
-
-      it 'returns true' do
-        expect(subject.passporting_benefit?(applicant)).to be(false)
-      end
-    end
-
-    context 'with unknown name' do
-      let(:last_name) { 'Unknown' }
-
-      it 'returns false' do
-        expect(subject.passporting_benefit?(applicant)).to be(false)
-      end
-    end
-  end
 end

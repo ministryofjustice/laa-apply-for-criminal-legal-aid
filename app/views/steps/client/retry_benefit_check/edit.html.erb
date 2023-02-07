@@ -1,0 +1,30 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t('.heading') %>
+    </h1>
+
+    <p class="govuk-body">
+      <%= t('.explanation') %>
+    </p>
+
+    <p class="govuk-body">
+      <%= t('.use_eforms') %>
+    </p>
+
+    <p class="govuk-body">
+      <%= t('.saved_answers') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= step_form @form_object do |f| %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

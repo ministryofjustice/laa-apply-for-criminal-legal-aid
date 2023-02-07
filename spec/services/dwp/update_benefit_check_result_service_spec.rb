@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DWP::UpdateBenefitCheckResultService do
   before do
-    allow(DWP::BenefitCheckService).to receive(:call).with(applicant).and_return(passporting_benefit)
+    allow(DWP::BenefitCheckService).to receive(:passporting_benefit?).with(applicant).and_return(passporting_benefit)
     allow(applicant).to receive(:update).and_return(true)
   end
 

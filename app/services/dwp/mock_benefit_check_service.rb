@@ -13,10 +13,6 @@ module DWP
       new(*args).call
     end
 
-    def self.passporting_benefit?(*args)
-      new(*args).call[:benefit_checker_status].casecmp('yes').zero?
-    end
-
     attr_reader :applicant
 
     delegate :last_name, :nino, :date_of_birth, to: :applicant, allow_nil: true

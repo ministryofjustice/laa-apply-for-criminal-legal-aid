@@ -47,6 +47,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(form_object).to receive(:applicant).and_return(applicant_double)
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
+      allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
     end
 
     context 'when the applicant has a passporting benefit' do
@@ -62,6 +63,14 @@ RSpec.describe Decisions::ClientDecisionTree do
         let(:passporting_benefit) { false }
 
         it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the benefit checker cannot check on the status of the passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { nil }
+
+        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
       end
     end
   end

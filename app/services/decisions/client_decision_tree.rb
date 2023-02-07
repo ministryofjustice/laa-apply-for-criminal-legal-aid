@@ -7,7 +7,7 @@ module Decisions
         after_has_partner
       when :details
         edit(:has_nino)
-      when :has_nino
+      when :has_nino, :retry_benefit_check
         after_has_nino
       when :benefit_check_result
         after_dwp_check
@@ -33,7 +33,9 @@ module Decisions
     def after_has_nino
       DWP::UpdateBenefitCheckResultService.call(form_object.applicant)
 
-      if form_object.applicant.passporting_benefit?
+      if form_object.applicant.passporting_benefit.nil?
+        edit(:retry_benefit_check)
+      elsif form_object.applicant.passporting_benefit?
         edit(:benefit_check_result)
       else
         edit('steps/dwp/confirm_result')
