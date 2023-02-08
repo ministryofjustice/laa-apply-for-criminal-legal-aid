@@ -7,15 +7,15 @@ RSpec.describe DWP::BenefitCheckService do
   let(:last_name) { 'Walker' }
   let(:date_of_birth) { '1980/01/10'.to_date }
   let(:nino) { 'JA293483A' }
-  let(:crime_application_id) { 'x123' }
+  let(:id) { '123' }
 
   let(:applicant) do
     double(
       Applicant,
+      id:,
       last_name:,
       date_of_birth:,
       nino:,
-      crime_application_id:,
     )
   end
 
@@ -27,7 +27,7 @@ RSpec.describe DWP::BenefitCheckService do
     let(:expected_params) do
       hash_including(
         message: hash_including(
-          clientReference: applicant.crime_application_id,
+          clientReference: applicant.id,
           surname: applicant.last_name.strip.upcase,
           dateOfBirth: applicant.date_of_birth.strftime('%Y%m%d'),
         ),

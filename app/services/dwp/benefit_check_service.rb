@@ -35,7 +35,7 @@ module DWP
 
     def benefit_checker_params
       {
-        clientReference: applicant.crime_application_id,
+        clientReference: applicant.id,
         nino: applicant.nino,
         surname: applicant.last_name.strip.upcase,
         dateOfBirth: applicant.date_of_birth.strftime('%Y%m%d'),
