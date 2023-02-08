@@ -25,8 +25,6 @@ gem 'omniauth-saml', '~> 2.1.0'
 
 gem 'savon'
 
-gem 'nesty'
-
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 

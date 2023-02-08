@@ -88,30 +88,6 @@ RSpec.describe DWP::BenefitCheckService do
           expect(subject.passporting_benefit?(applicant)).to be_nil
         end
       end
-
-      context 'and raises a SOAPFault error' do
-        before do
-          stub_request(:post, ENV.fetch('BC_WSDL_URL', nil))
-            .to_return(response)
-        end
-
-        let(:fixture) { File.read('spec/fixtures/files/soap/fault.xml') }
-        let(:response) { { status: 500, headers: {}, body: fixture } }
-        let(:exception) do
-          DWP::BenefitCheckService::ApiError.new(
-            'HTTP 500, {:fault=>{:faultcode=>"soap:Server", :faultstring=>"Fault occurred while processing."}}'
-          )
-        end
-
-        it 'captures error' do
-          expect(Sentry).to receive(:capture_exception).with(exception)
-          subject.passporting_benefit?(applicant)
-        end
-
-        it 'returns nil' do
-          expect(subject.passporting_benefit?(applicant)).to be_nil
-        end
-      end
     end
   end
 

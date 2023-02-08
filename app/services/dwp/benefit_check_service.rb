@@ -4,10 +4,6 @@ module DWP
     USE_MOCK = ActiveModel::Type::Boolean.new.cast(ENV.fetch('BC_USE_DEV_MOCK', nil))
     REQUEST_TIMEOUT = 30.seconds
 
-    class ApiError < StandardError
-      include Nesty::NestedError
-    end
-
     def initialize(applicant)
       @applicant = applicant
     end
@@ -27,10 +23,6 @@ module DWP
 
     def call
       soap_client.call(:check, message: benefit_checker_params).body[:benefit_checker_response]
-    rescue Savon::SOAPFault => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(ApiError.new("HTTP #{e.http.code}, #{e.to_hash}"))
-      nil
     rescue StandardError => e
       Rails.logger.error(e)
       Sentry.capture_exception(e)

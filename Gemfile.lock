@@ -225,7 +225,6 @@ GEM
     mini_portile2 (2.8.1)
     minitest (5.17.0)
     msgpack (1.6.0)
-    nesty (1.0.2)
     net-imap (0.3.4)
       date
       net-protocol
@@ -436,7 +435,6 @@ DEPENDENCIES
   laa-criminal-applications-datastore-api-client!
   laa-criminal-legal-aid-schemas!
   mail (< 2.8.0)
-  nesty
   omniauth-rails_csrf_protection
   omniauth-saml (~> 2.1.0)
   pg (~> 1.4)
