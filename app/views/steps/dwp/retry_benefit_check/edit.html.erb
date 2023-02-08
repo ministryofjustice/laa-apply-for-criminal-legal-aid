@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">
+    <h1 class="govuk-heading-xl">
       <%= t('.heading') %>
     </h1>
 
@@ -24,7 +24,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.continue_button(primary: :try_again, secondary: :apply_in_eforms) %>
+      <div class="govuk-button-group">
+        <%= f.continue_button(primary: :try_again, secondary: nil) %>
+        <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url, class: 'govuk-button--secondary' %>
+      </div>
     <% end %>
   </div>
 </div>

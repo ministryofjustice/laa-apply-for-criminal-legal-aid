@@ -89,13 +89,13 @@ Rails.application.routes.draw do
         show_step :nino_exit
         show_step :partner_exit
         edit_step :contact_details
-        edit_step :retry_benefit_check
       end
 
       namespace :dwp do
         edit_step :confirm_result
         edit_step :confirm_details
         show_step :benefit_check_result_exit
+        edit_step :retry_benefit_check
       end
 
       namespace :address do

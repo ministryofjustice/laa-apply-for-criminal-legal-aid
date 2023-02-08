@@ -70,7 +70,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'has correct next step' do
         let(:passporting_benefit) { nil }
 
-        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/dwp/retry_benefit_check', :edit, id: crime_application) }
       end
     end
   end

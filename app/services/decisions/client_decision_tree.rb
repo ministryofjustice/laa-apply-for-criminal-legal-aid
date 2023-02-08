@@ -34,7 +34,7 @@ module Decisions
       DWP::UpdateBenefitCheckResultService.call(form_object.applicant)
 
       if form_object.applicant.passporting_benefit.nil?
-        edit(:retry_benefit_check)
+        edit('steps/dwp/retry_benefit_check')
       elsif form_object.applicant.passporting_benefit?
         edit(:benefit_check_result)
       else
