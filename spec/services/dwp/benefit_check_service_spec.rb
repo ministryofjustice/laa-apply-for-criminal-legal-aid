@@ -20,7 +20,7 @@ RSpec.describe DWP::BenefitCheckService do
   end
 
   before do
-    stub_const('BenefitCheckService::USE_MOCK', false)
+    Rails.configuration.x.benefit_checker.use_mock = false
   end
 
   describe '.call', :vcr do
@@ -103,7 +103,7 @@ RSpec.describe DWP::BenefitCheckService do
     end
 
     describe 'behaviour with mock' do
-      before { stub_const('DWP::BenefitCheckService::USE_MOCK', true) }
+      before { Rails.configuration.x.benefit_checker.use_mock = true }
 
       it 'returns the right parameters' do
         expect(subject.passporting_benefit?(applicant)).to be(true)

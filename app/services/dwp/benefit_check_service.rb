@@ -1,7 +1,6 @@
 module DWP
   class BenefitCheckService
     BENEFIT_CHECKER_NAMESPACE = 'https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check'.freeze
-    USE_MOCK = ActiveModel::Type::Boolean.new.cast(ENV.fetch('BC_USE_DEV_MOCK', nil))
     REQUEST_TIMEOUT = 30.seconds
 
     def initialize(applicant)
@@ -9,7 +8,7 @@ module DWP
     end
 
     def self.call(applicant)
-      return MockBenefitCheckService.call(applicant) if USE_MOCK
+      return MockBenefitCheckService.call(applicant) if use_mock?
 
       new(applicant).call
     end
@@ -19,6 +18,10 @@ module DWP
       return result if result.nil?
 
       result[:benefit_checker_status].casecmp('yes').zero?
+    end
+
+    def self.use_mock?
+      ActiveModel::Type::Boolean.new.cast(Rails.configuration.x.benefit_checker.use_mock)
     end
 
     def call

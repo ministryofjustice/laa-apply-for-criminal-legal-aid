@@ -36,5 +36,7 @@ module LaaApplyForCriminalLegalAid
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    config.x.benefit_checker.use_mock = ENV.fetch('BC_USE_DEV_MOCK', false)
   end
 end
