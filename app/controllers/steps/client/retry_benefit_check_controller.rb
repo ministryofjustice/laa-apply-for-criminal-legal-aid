@@ -1,6 +1,6 @@
 module Steps
-  module DWP
-    class RetryBenefitCheckController < Steps::DWPStepController
+  module Client
+    class RetryBenefitCheckController < Steps::ClientStepController
       include Steps::NoOpAdvanceStep
 
       private

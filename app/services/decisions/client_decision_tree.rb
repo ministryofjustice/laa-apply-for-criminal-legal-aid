@@ -31,11 +31,11 @@ module Decisions
     end
 
     def after_has_nino
-      DWP::UpdateBenefitCheckResultService.call(form_object.applicant)
+      DWP::UpdateBenefitCheckResultService.call(current_crime_application.applicant)
 
-      if form_object.applicant.passporting_benefit.nil?
-        edit('steps/dwp/retry_benefit_check')
-      elsif form_object.applicant.passporting_benefit?
+      if current_crime_application.applicant.passporting_benefit.nil?
+        edit(:retry_benefit_check)
+      elsif current_crime_application.applicant.passporting_benefit?
         edit(:benefit_check_result)
       else
         edit('steps/dwp/confirm_result')

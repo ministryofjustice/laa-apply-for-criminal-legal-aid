@@ -38,13 +38,13 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `has_nino`' do
-    let(:form_object) { double('FormObject', applicant: applicant_double) }
+    let(:form_object) { double('FormObject') }
     let(:applicant_double) { double(Applicant) }
     let(:step_name) { :has_nino }
     let(:nino) { 'AA123245A' }
 
     before do
-      allow(form_object).to receive(:applicant).and_return(applicant_double)
+      allow(crime_application).to receive(:applicant).and_return(applicant_double)
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
       allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
@@ -70,7 +70,44 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'has correct next step' do
         let(:passporting_benefit) { nil }
 
-        it { is_expected.to have_destination('steps/dwp/retry_benefit_check', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `retry_benefit_check`' do
+    let(:form_object) { double('FormObject') }
+    let(:applicant_double) { double(Applicant) }
+    let(:step_name) { :retry_benefit_check }
+
+    before do
+      allow(crime_application).to receive(:applicant).and_return(applicant_double)
+      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+      allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
+      allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
+    end
+
+    context 'when the applicant has a passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { true }
+
+        it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the applicant does not have a passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { false }
+
+        it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the benefit checker cannot check on the status of the passporting benefit' do
+      context 'has correct next step' do
+        let(:passporting_benefit) { nil }
+
+        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
       end
     end
   end
