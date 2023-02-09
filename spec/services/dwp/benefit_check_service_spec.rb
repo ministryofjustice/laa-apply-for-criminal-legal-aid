@@ -19,9 +19,12 @@ RSpec.describe DWP::BenefitCheckService do
     )
   end
 
+  let(:use_mock) { false }
+
   before do
-    Rails.configuration.x.benefit_checker.use_mock = false
-    Rails.configuration.x.benefit_checker.wsdl_url = 'http://benefit-checker/?wsdl'
+    allow(Rails.configuration.x.benefit_checker)
+      .to receive(:use_mock)
+      .and_return(use_mock)
   end
 
   describe '.call' do
@@ -40,7 +43,7 @@ RSpec.describe DWP::BenefitCheckService do
       )
     end
 
-    let(:benefit_checker_fixture) { File.read('spec/fixtures/benefit_checker_responses/successful.xml') }
+    let(:benefit_checker_fixture) { file_fixture('benefit_checker_responses/successful.xml').read }
 
     context 'when the call is successful' do
       it 'returns the right parameters' do
@@ -113,7 +116,7 @@ RSpec.describe DWP::BenefitCheckService do
     end
 
     describe 'behaviour with mock' do
-      before { Rails.configuration.x.benefit_checker.use_mock = true }
+      let(:use_mock) { true }
 
       it 'returns the right parameters' do
         expect(subject.passporting_benefit?(applicant)).to be(true)
