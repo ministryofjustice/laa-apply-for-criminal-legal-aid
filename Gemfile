@@ -21,6 +21,10 @@ gem 'devise', '~> 4.8'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
 
+# Accessing soap apis
+
+gem 'savon'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
