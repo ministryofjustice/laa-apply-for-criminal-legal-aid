@@ -18,11 +18,6 @@ jobs:
       RACK_ENV: test
       RAILS_ENV: test
       DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1/laa-apply-for-criminal-legal-aid-test"
-      BC_LSC_SERVICE_NAME: ${{ secrets.BC_LSC_SERVICE_NAME }}
-      BC_CLIENT_ORG_ID: ${{ secrets.BC_CLIENT_ORG_ID }}
-      BC_CLIENT_USER_ID: ${{ secrets.BC_CLIENT_USER_ID }}
-      BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
-      BC_USE_DEV_MOCK: false
 
     services:
       postgres:

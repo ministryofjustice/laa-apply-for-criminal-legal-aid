@@ -5,6 +5,7 @@ module DWP
 
     def initialize(applicant)
       @applicant = applicant
+      @config = Rails.configuration.x.benefit_checker
     end
 
     def self.call(applicant)
@@ -34,7 +35,7 @@ module DWP
 
     private
 
-    attr_reader :applicant
+    attr_reader :applicant, :config
 
     def benefit_checker_params
       {
@@ -48,15 +49,15 @@ module DWP
 
     def credential_params
       {
-        lscServiceName: ENV.fetch('BC_LSC_SERVICE_NAME', nil),
-        clientOrgId: ENV.fetch('BC_CLIENT_ORG_ID', nil),
-        clientUserId: ENV.fetch('BC_CLIENT_USER_ID', nil),
+        lscServiceName: config.lsc_service_name,
+        clientOrgId: config.client_org_id,
+        clientUserId: config.client_user_id,
       }
     end
 
     def soap_client
       @soap_client ||= Savon.client(
-        endpoint: ENV.fetch('BC_WSDL_URL', nil),
+        endpoint: config.wsdl_url,
         open_timeout: REQUEST_TIMEOUT,
         read_timeout: REQUEST_TIMEOUT,
         namespace: BENEFIT_CHECKER_NAMESPACE,
