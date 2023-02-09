@@ -386,7 +386,6 @@ GEM
       concurrent-ruby (~> 1.0)
     uk_postcode (2.1.8)
     unicode-display_width (2.4.2)
-    vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     wasabi (3.8.0)
@@ -453,7 +452,6 @@ DEPENDENCIES
   simplecov
   sprockets-rails
   uk_postcode
-  vcr
   web-console
   webdrivers
   webmock

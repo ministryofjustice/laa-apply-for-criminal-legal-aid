@@ -21,9 +21,15 @@ RSpec.describe DWP::BenefitCheckService do
 
   before do
     Rails.configuration.x.benefit_checker.use_mock = false
+    Rails.configuration.x.benefit_checker.wsdl_url = 'http://benefit-checker/?wsdl'
   end
 
-  describe '.call', :vcr do
+  describe '.call' do
+    before do
+      stub_request(:post, 'http://benefit-checker/?wsdl')
+        .to_return(body: benefit_checker_fixture)
+    end
+
     let(:expected_params) do
       hash_including(
         message: hash_including(
@@ -34,7 +40,9 @@ RSpec.describe DWP::BenefitCheckService do
       )
     end
 
-    context 'when the call is successful', vcr: { cassette_name: 'benefit_check_service/successful_call' } do
+    let(:benefit_checker_fixture) { File.read('spec/fixtures/benefit_checker_responses/successful.xml') }
+
+    context 'when the call is successful' do
       it 'returns the right parameters' do
         result = subject.new(applicant).call
         expect(result[:benefit_checker_status]).to eq('Yes')
@@ -73,8 +81,10 @@ RSpec.describe DWP::BenefitCheckService do
     context 'calling API fails' do
       context 'and raises a standard error' do
         before do
-          stub_request(:post, ENV.fetch('BC_WSDL_URL', nil))
-            .to_raise(exception)
+          allow_any_instance_of(Savon::Client)
+            .to receive(:call)
+            .with(:check, expected_params)
+            .and_raise(exception)
         end
 
         let(:exception) { StandardError.new('boom!') }
@@ -110,11 +120,12 @@ RSpec.describe DWP::BenefitCheckService do
       end
 
       context 'with matching data' do
-        let(:date_of_birth) { '1955/01/11'.to_date }
-        let(:nino) { 'ZZ123456A' }
+        let(:last_name) { 'Smith' }
+        let(:date_of_birth) { '1999/01/11'.to_date }
+        let(:nino) { 'NC123459A' }
 
         it 'returns true' do
-          expect(subject.passporting_benefit?(applicant)).to be(false)
+          expect(subject.passporting_benefit?(applicant)).to be(true)
         end
       end
     end
