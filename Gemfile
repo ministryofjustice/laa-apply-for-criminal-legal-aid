@@ -45,6 +45,11 @@ gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', 
 gem 'laa-criminal-applications-datastore-api-client',
     github: 'ministryofjustice/laa-criminal-applications-datastore-api-client'
 
+# Gem is not published to rubygems. If published, then we will not need this,
+# as it can be loaded via the `datastore-api-client` gem instead
+gem 'simple-jwt-auth',
+    github: 'ministryofjustice/simple-jwt-auth'
+
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas'
 
