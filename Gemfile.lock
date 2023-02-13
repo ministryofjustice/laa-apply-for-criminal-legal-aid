@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
-  revision: edddba0959c9b71655aa4349c38548a9d5aa18b0
+  revision: d6926f1b19a8642022a68fb84659e23f8371eae1
   specs:
     laa-criminal-applications-datastore-api-client (0.0.1)
       faraday (~> 2.6)
@@ -19,6 +19,14 @@ GIT
     laa-criminal-legal-aid-schemas (0.1.1)
       dry-struct
       json-schema (~> 3.0.0)
+
+GIT
+  remote: https://github.com/ministryofjustice/simple-jwt-auth.git
+  revision: 174ad91cd1d9ba13e990ab98be2e9db21dc8b625
+  specs:
+    simple-jwt-auth (0.0.1)
+      json
+      jwt
 
 GEM
   remote: https://rubygems.org/
@@ -201,6 +209,7 @@ GEM
     json (2.6.3)
     json-schema (3.0.0)
       addressable (>= 2.8)
+    jwt (2.7.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -449,6 +458,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-rails
   sentry-ruby
+  simple-jwt-auth!
   simplecov
   sprockets-rails
   uk_postcode
