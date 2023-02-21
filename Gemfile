@@ -7,6 +7,8 @@ gem 'faraday', '~> 2.7'
 gem 'govuk_design_system_formbuilder', '~> 3.3.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
+gem 'lograge'
+gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
 gem 'rails', '~> 7.0.3'
@@ -22,7 +24,6 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
 
 # Accessing soap apis
-
 gem 'savon'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
