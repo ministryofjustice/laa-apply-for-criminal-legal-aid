@@ -18,7 +18,7 @@ Rails.application.configure do
       host: request.host,
       request_id: request.request_id,
       user_agent: request.user_agent,
-      params: request.params.except(
+      params: request.filtered_parameters.except(
         *%w[controller action format id]
       ),
     }.compact_blank
