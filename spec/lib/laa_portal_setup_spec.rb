@@ -99,7 +99,7 @@ describe LaaPortalSetup do
           {
             foo: 'bar',
             sp_entity_id: 'crime-apply',
-            idp_sso_service_binding: :redirect,
+            idp_sso_service_binding: :post,
             certificate: nil,
             private_key: nil,
             security: {
