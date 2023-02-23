@@ -27,7 +27,9 @@ class Provider < ApplicationRecord
           email: auth.info.email.presence || FALLBACK_EMAIL,
           description: auth.info.description,
           roles: auth.info.roles.split(','),
-          office_codes: auth.info.office_codes.split(','),
+          # SAMLmock returns comma-separated values, however other
+          # Portal envs (dev, staging, production) use colons
+          office_codes: auth.info.office_codes.split(/[:,]/),
         )
 
         ensure_default_office(record)

@@ -1,4 +1,6 @@
 class LaaPortalSetup
+  SP_ENTITY_ID = 'crime-apply'.freeze
+
   def initialize(env)
     @env = env
   end
@@ -12,16 +14,15 @@ class LaaPortalSetup
   # rubocop:disable Metrics/MethodLength
   def setup
     parse_metadata_and_merge(
-      sp_entity_id: 'crime-apply',
+      sp_entity_id: SP_ENTITY_ID,
+      idp_sso_service_binding: :redirect,
       certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
       private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
       security: {
         digest_method: XMLSecurity::Document::SHA256,
         signature_method: XMLSecurity::Document::RSA_SHA256,
-        metadata_signed: true,
         authn_requests_signed: true,
         want_assertions_signed: true,
-        want_assertions_encrypted: true,
         check_idp_cert_expiration: true,
         check_sp_cert_expiration: true,
       },
