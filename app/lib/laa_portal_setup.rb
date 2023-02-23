@@ -15,7 +15,7 @@ class LaaPortalSetup
   def setup
     parse_metadata_and_merge(
       sp_entity_id: SP_ENTITY_ID,
-      idp_sso_service_binding: :post,
+      idp_sso_service_binding: :redirect,
       certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
       private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
       security: {
@@ -23,6 +23,7 @@ class LaaPortalSetup
         signature_method: XMLSecurity::Document::RSA_SHA256,
         authn_requests_signed: true,
         want_assertions_signed: true,
+        want_assertions_encrypted: true,
         check_idp_cert_expiration: true,
         check_sp_cert_expiration: true,
       },

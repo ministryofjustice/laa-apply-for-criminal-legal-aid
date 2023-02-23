@@ -99,7 +99,7 @@ describe LaaPortalSetup do
           {
             foo: 'bar',
             sp_entity_id: 'crime-apply',
-            idp_sso_service_binding: :post,
+            idp_sso_service_binding: :redirect,
             certificate: nil,
             private_key: nil,
             security: {
@@ -107,6 +107,7 @@ describe LaaPortalSetup do
               signature_method: XMLSecurity::Document::RSA_SHA256,
               authn_requests_signed: true,
               want_assertions_signed: true,
+              want_assertions_encrypted: true,
               check_idp_cert_expiration: true,
               check_sp_cert_expiration: true,
             },
