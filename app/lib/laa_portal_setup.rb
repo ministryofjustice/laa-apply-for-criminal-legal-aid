@@ -15,7 +15,7 @@ class LaaPortalSetup
   def setup
     parse_metadata_and_merge(
       sp_entity_id: SP_ENTITY_ID,
-      idp_sso_service_binding: :redirect,
+      idp_sso_service_binding: :post,
       certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
       private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
       security: {
