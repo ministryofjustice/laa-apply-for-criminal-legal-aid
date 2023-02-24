@@ -136,40 +136,35 @@ en:
               inclusion: Select yes if you want to add another offence
               missing_details: You must complete all offence details in order to proceed
         steps/case/offence_date_fieldset_form:
+          shared_date_errors: &shared_date_errors
+            blank: Date cannot be blank
+            invalid: Enter a valid date
+            invalid_day: Enter a valid day
+            invalid_month: Enter a valid month
+            invalid_year: Enter a valid year
+            year_too_early: Date is too far in the past
+            future_not_allowed: Date cannot be in the future
+            before_date_from: End date cannot be before start date
           attributes:
-            date_from:
-              blank: Offence start date cannot be blank
-              invalid: Enter a valid start date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date is too far in the past
-              future_not_allowed: Offence start date cannot be in the future
-            date_to:
-              invalid: Enter a valid end date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date is too far in the past
-              future_not_allowed: Offence end date cannot be in the future
-              before_date_from: Offence end date cannot be before start date
+            date_from: *shared_date_errors
+            date_to: *shared_date_errors
           summary:
             date_from:
-              blank: Offence start date cannot be blank
-              invalid: Enter a valid date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date is too far in the past
-              future_not_allowed: Offence start date cannot be in the future
+              blank: Start date %{index} cannot be blank
+              invalid: Enter a valid start date %{index}
+              invalid_day: Enter a valid start date %{index} day
+              invalid_month: Enter a valid start date %{index} month
+              invalid_year: Enter a valid start date %{index} year
+              year_too_early: Start date %{index} is too far in the past
+              future_not_allowed: Start date %{index} cannot be in the future
             date_to:
-              invalid: Enter a valid date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date is too far in the past
-              future_not_allowed: Offence end date cannot be in the future
-              before_date_from: Offence end date cannot be before start date
+              invalid: Enter a valid end date %{index}
+              invalid_day: Enter a valid end date %{index} day
+              invalid_month: Enter a valid end date %{index} month
+              invalid_year: Enter a valid end date %{index} year
+              year_too_early: End date %{index} is too far in the past
+              future_not_allowed: End date %{index} cannot be in the future
+              before_date_from: End date %{index} cannot be before start date %{index}
         steps/case/hearing_details_form:
           attributes:
             hearing_court_name:
@@ -185,27 +180,27 @@ en:
         steps/case/ioj_form:
           attributes:
             types:
-              invalid: Select a criteria
+              invalid: Select why your client should get legal aid
             loss_of_liberty_justification:
-              blank: Enter more detail
+              blank: Enter details on why it is likely they will lose their liberty if any matter in the proceedings is decided against them
             suspended_sentence_justification:
-              blank: Enter more detail
+              blank: Enter details on why they have been given a sentence that is suspended or non-custodial
             loss_of_livelihood_justification:
-              blank: Enter more detail
+              blank: Enter details on why it is likely they will lose their livelihood
             reputation_justification:
-              blank: Enter more detail
+              blank: Enter details on why it is likely they will suffer serious damage to their reputation
             question_of_law_justification:
-              blank: Enter more detail
+              blank: Enter details on why a substantial question of law may be involved
             understanding_justification:
-              blank: Enter more detail
+              blank: Enter details on why they may not be able to understand the court proceedings or present their own case
             witness_tracing_justification:
-              blank: Enter more detail
+              blank: Enter details on why witnesses may need to be traced or interviewed
             expert_examination_justification:
-              blank: Enter more detail
+              blank: Enter details on why the proceedings may involve expert cross-examination of a prosecution witness
             interest_of_another_justification:
-              blank: Enter more detail
+              blank: Enter details on why it is in the interest of another person that your client is represented
             other_justification:
-              blank: Enter more detail
+              blank: Enter details on why your client should get legal aid
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:

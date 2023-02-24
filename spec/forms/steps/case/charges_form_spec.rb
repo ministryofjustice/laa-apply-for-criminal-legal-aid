@@ -46,17 +46,17 @@ RSpec.describe Steps::Case::ChargesForm do
 
         expect(subject.errors.of_kind?('offence_dates-attributes[0].date_from', :future_not_allowed)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[0].date_from').first).to eq(
-          'Offence start date cannot be in the future'
+          'Start date 1 cannot be in the future'
         )
 
         expect(subject.errors.of_kind?('offence_dates-attributes[0].date_to', :before_date_from)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[0].date_to').first).to eq(
-          'Offence end date cannot be before start date'
+          'End date 1 cannot be before start date 1'
         )
 
         expect(subject.errors.of_kind?('offence_dates-attributes[1].date_from', :blank)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[1].date_from').first).to eq(
-          'Offence start date cannot be blank'
+          'Start date 2 cannot be blank'
         )
       end
     end

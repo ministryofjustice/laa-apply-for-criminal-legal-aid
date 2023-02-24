@@ -129,7 +129,7 @@ en:
         edit:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
-          offence_dates_fieldset_legend: Offence dates
+          offence_dates_fieldset_legend: When did the offence happen?
           add_button: Add another date
           remove_button: Remove date %{index}
           deleted_flash: The offence date has been deleted
