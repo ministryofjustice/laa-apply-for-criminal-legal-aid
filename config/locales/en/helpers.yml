@@ -59,7 +59,7 @@ en:
       steps_case_urn_form:
         urn: For example, ‘12 AB 3456789’.
       steps_case_charges_form:
-        offence_name: For example, robbery
+        offence_name: Add one offence at a time, for example, robbery. You can add more later.
         date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
@@ -128,7 +128,7 @@ en:
         appeal_with_changes_maat_id: Previous MAAT ID (optional)
         appeal_with_changes_details: Enter the details of what has changed
       steps_case_charges_form:
-        offence_name: Offence name
+        offence_name: Offence
       steps_case_charges_summary_form:
         add_offence_options: *YESNO
       steps_case_has_codefendants_form:
@@ -151,15 +151,15 @@ en:
         interest_of_another_justification: Interest of another justification
         other_justification: Other justification
         types_options:
-          loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them.
-          suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence.
-          loss_of_livelihood: It is likely that they will lose their livelihood.
-          reputation: It is likely that they will suffer serious damage to their reputation.
-          question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law).
-          understanding: They may not be able to understand the court proceedings or present their own case.
-          witness_tracing: Witnesses may need to be traced or interviewed on their behalf.
-          expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not).
-          interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented.
+          loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them
+          suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence
+          loss_of_livelihood: It is likely that they will lose their livelihood
+          reputation: It is likely that they will suffer serious damage to their reputation
+          question_of_law: A substantial question of law may be involved (whether arising from legislation, judicial authority or other source of law)
+          understanding: They may not be able to understand the court proceedings or present their own case
+          witness_tracing: Witnesses may need to be traced or interviewed on their behalf
+          expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not)
+          interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
       steps_submission_declaration_form:
         legal_rep_first_name: First name
