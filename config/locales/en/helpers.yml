@@ -143,12 +143,12 @@ en:
         loss_of_liberty_justification: Loss of liberty justification
         suspended_sentence_justification: Suspended sentence justification
         loss_of_livelihood_justification: Loss of livelihood justification
-        reputation_justification: Reputation justification
+        reputation_justification: Damage to reputation justification
         question_of_law_justification: Question of law justification
-        understanding_justification: Understanding justification
+        understanding_justification: Unable to represent themselves justification
         witness_tracing_justification: Witness tracing justification
-        expert_examination_justification: Expert examination justification
-        interest_of_another_justification: Interest of another justification
+        expert_examination_justification: Expert cross-examination justification
+        interest_of_another_justification: Interest of another person justification
         other_justification: Other justification
         types_options:
           loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them
