@@ -11,7 +11,7 @@ data:
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
 
   # Datastore endpoint for staging
-  DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.live.cloud-platform.service.justice.gov.uk
+  DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.cloud-platform.service.justice.gov.uk
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
