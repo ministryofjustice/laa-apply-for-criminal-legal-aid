@@ -9,6 +9,9 @@ metadata:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: secrets-staging
     nginx.ingress.kubernetes.io/server-snippet: |
+      if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk') {
+        return 301 https://laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk;
+      }
       location = /.well-known/security.txt {
         auth_basic off;
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
@@ -18,8 +21,19 @@ spec:
   tls:
   - hosts:
     - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
+    - laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk
   rules:
   - host: laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: service-staging
+            port:
+              number: 80
+  - host: laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk
     http:
       paths:
       - path: /
