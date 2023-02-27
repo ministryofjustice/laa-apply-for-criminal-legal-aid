@@ -26,6 +26,11 @@ Input.prototype.init = function () {
     this.$suggestionsHeader.textContent = this.$module.getAttribute('data-suggestions-header') || 'Suggestions'
     this.$suggestionsHeader.hidden = true
 
+    // [change: suggestions counter and aria attrs]
+    this.$suggestionsHeader.setAttribute('role', 'status')
+    this.$suggestionsHeader.setAttribute('aria-live', 'polite')
+    this.$suggestionsHeader.appendChild(document.createElement('span'))
+
     this.$ul = document.createElement('ul')
     this.$ul.setAttribute('id', this.$module.getAttribute('id') + '-suggestions')
     this.$ul.addEventListener('click', this.handleSuggestionClicked.bind(this))
@@ -96,6 +101,9 @@ Input.prototype.updateSuggestions = function () {
 Input.prototype.updateSuggestionsWithOptions = function (options) {
   // Remove all the existing suggestions
   this.$ul.textContent = ''
+
+  // [change: suggestions counter]
+  this.$suggestionsHeader.querySelector('span').textContent = ' (' + options.length + ' found)'
 
   for (var option of options) {
     var li = document.createElement('li')
