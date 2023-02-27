@@ -49,12 +49,8 @@ Mainly, the service can be fully used without any external dependencies up until
 to receive the submitted application.  
 Also, some functionality in the dashboard will make use of this datastore.
 
-To facilitate an end-to-end local setup without worrying about dependencies, instead of running the local datastore service, 
-you can rely on a shared remote datastore harness service, which is identical to the one running on staging, but can be used by developers as 
-if it was running locally.
-
-However, for active development, and to debug or diagnose issues, running the datastore service locally will always be 
-the recommended way. Also it is much easier to inspect the database, wipe it, run migrations, etc.
+For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is 
+the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
 ## Running the tests
 
