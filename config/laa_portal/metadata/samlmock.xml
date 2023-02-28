@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_415ca934-b9a3-4d04-8f88-b8feda265ac5"
                      entityID="http://mock-idp" validUntil="2023-01-28T16:02:31.873Z">
   <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">

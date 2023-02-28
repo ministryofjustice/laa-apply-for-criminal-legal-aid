@@ -22,6 +22,5 @@ data:
   # Important: make sure whatever Portal env is declared here, uses the
   # corresponding certificates, if required (in `deployment.tpl` file)
   #
-  # LAA_PORTAL_IDP_METADATA_URL: https://samlmock.dev.legalservices.gov.uk/metadata
-  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/samlmock.xml
-  # LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/dev.xml
+  # LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/samlmock.xml
+  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
