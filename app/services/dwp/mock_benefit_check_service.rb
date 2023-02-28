@@ -1,12 +1,12 @@
 module DWP
   class MockBenefitCheckService
     KNOWN = {
-      'SMITH' => { nino: 'NC123459A', dob: '11-Jan-1999' },
-      'JONES' => { nino: 'NC123458A', dob: '1-Jun-1980' },
-      'BLOGGS' => { nino: 'NC123457A', dob: '4-Jan-1990' },
-      'WRINKLE' => { nino: 'NC010150A', dob: '01-Jan-1950' },
-      'WALKER' => { nino: 'JA293483A', dob: '10-Jan-1980' }, # Used in cucumber tests and specs
-      'POTTER' => { nino: 'NC010155A', dob: '01-Jan-2007' }, # For under 18 passported on IOJ testing
+      'SMITH'   => { nino: 'NC123459A', dob: '11-01-1999' },
+      'JONES'   => { nino: 'NC123458A', dob: '01-06-1980' },
+      'BLOGGS'  => { nino: 'NC123457A', dob: '04-01-1990' },
+      'WRINKLE' => { nino: 'NC010150A', dob: '01-01-1950' },
+      'WALKER'  => { nino: 'JA293483A', dob: '10-01-1980' },
+      'POTTER'  => { nino: 'NC010155A', dob: '01-01-2007' }, # For under 18 passported on IOJ testing
     }.freeze
 
     def self.call(*args)
@@ -32,17 +32,16 @@ module DWP
       known? ? 'Yes' : 'No'
     end
 
-    def known?
-      key = last_name.to_s.upcase
-      return unless KNOWN.key?(key)
+    private
 
-      KNOWN[key] == applicant_data
+    def known?
+      KNOWN.fetch(last_name.to_s.upcase, nil) == applicant_data
     end
 
     def applicant_data
       {
         nino: nino,
-        dob: date_of_birth&.strftime('%d-%b-%Y'),
+        dob: date_of_birth&.strftime('%d-%m-%Y'),
       }
     end
   end
