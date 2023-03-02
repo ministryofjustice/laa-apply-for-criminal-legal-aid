@@ -47,8 +47,8 @@ class LaaPortalSetup
       uid: 'test-user',
       info: {
         email: 'provider@example.com',
-        roles: 'CCR_CCRGradeA1,CCLF_BillManager',
-        office_codes: '1A123B,2A555X',
+        roles: 'EFORMS,EFORMS_eFormsAuthor,CRIMEAPPLY',
+        office_codes: '1A123B:2A555X',
       }
     )
   end
