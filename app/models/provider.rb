@@ -13,7 +13,7 @@ class Provider < ApplicationRecord
                  :legal_rep_telephone
 
   def display_name
-    uid
+    email
   end
 
   def multiple_offices?

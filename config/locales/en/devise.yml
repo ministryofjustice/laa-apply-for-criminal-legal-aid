@@ -15,6 +15,8 @@ en:
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
+      provider_gatekeeper:
+        no_office_codes: "Your account cannot use this service as it does not have any office codes."
     sessions:
       signed_in: ""
       signed_out: ""

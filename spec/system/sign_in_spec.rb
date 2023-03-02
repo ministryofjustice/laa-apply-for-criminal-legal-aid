@@ -27,6 +27,23 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
+  context 'user signs in but is not allowed to use the service' do
+    before do
+      allow(
+        OmniAuth.config
+      ).to receive(:mock_auth).and_return(
+        saml: OmniAuth::AuthHash.new(info: { office_codes: '' })
+      )
+
+      click_button 'Sign in with LAA Portal'
+    end
+
+    it 'redirects to the home page with a flash alert' do
+      expect(current_url).to eq(root_url)
+      expect(page).to have_content('Your account cannot use this service as it does not have any office codes.')
+    end
+  end
+
   context 'user is signed in, has multiple accounts' do
     before do
       allow_any_instance_of(
@@ -55,7 +72,7 @@ RSpec.describe 'Sign in user journey' do
 
     it 'renders the user menu in the header' do
       expect(page).to have_css('nav.govuk-header__navigation')
-      expect(page).to have_css('.app-header__auth-user', text: 'test-user')
+      expect(page).to have_css('.app-header__auth-user', text: 'provider@example.com')
       expect(page).to have_button('Sign out')
     end
 
