@@ -1,8 +1,10 @@
 class LaaPortalSetup
   SP_ENTITY_ID = 'crime-apply'.freeze
+  NAME_ID_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'.freeze
 
   def initialize(env)
     @env = env
+    @request = ActionDispatch::Request.new(env)
   end
 
   def self.call(env)
@@ -15,9 +17,11 @@ class LaaPortalSetup
   def setup
     parse_metadata_and_merge(
       sp_entity_id: SP_ENTITY_ID,
+      name_identifier_format: NAME_ID_FORMAT,
       idp_sso_service_binding: :redirect,
       certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
       private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
+      single_logout_service_url: sp_single_logout_url,
       security: {
         digest_method: XMLSecurity::Document::SHA256,
         signature_method: XMLSecurity::Document::RSA_SHA256,
@@ -27,7 +31,6 @@ class LaaPortalSetup
         check_idp_cert_expiration: true,
         check_sp_cert_expiration: true,
       },
-      name_identifier_format: nil,
       request_attributes: {},
       attribute_statements: {
         email: ['USER_EMAIL'],
@@ -53,6 +56,10 @@ class LaaPortalSetup
   # rubocop:enable Metrics/MethodLength
 
   private
+
+  def sp_single_logout_url
+    "#{@request.base_url}/providers/auth/saml/slo"
+  end
 
   def metadata_url
     ENV.fetch('LAA_PORTAL_IDP_METADATA_URL', nil)

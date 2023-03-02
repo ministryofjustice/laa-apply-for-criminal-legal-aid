@@ -4,7 +4,11 @@ describe LaaPortalSetup do
   subject { described_class.call(env) }
 
   let(:env) do
-    { 'omniauth.strategy' => double(options: {}) }
+    {
+      'omniauth.strategy' => double(options: {}),
+      'rack.url_scheme' => 'http',
+      'HTTP_HOST' => 'example.com',
+    }
   end
 
   let(:metadata_url) { nil }
@@ -99,9 +103,11 @@ describe LaaPortalSetup do
           {
             foo: 'bar',
             sp_entity_id: 'crime-apply',
+            name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
             idp_sso_service_binding: :redirect,
             certificate: nil,
             private_key: nil,
+            single_logout_service_url: 'http://example.com/providers/auth/saml/slo',
             security: {
               digest_method: XMLSecurity::Document::SHA256,
               signature_method: XMLSecurity::Document::RSA_SHA256,
@@ -111,7 +117,6 @@ describe LaaPortalSetup do
               check_idp_cert_expiration: true,
               check_sp_cert_expiration: true,
             },
-            name_identifier_format: nil,
             request_attributes: {},
             attribute_statements: {
               email: ['USER_EMAIL'],
