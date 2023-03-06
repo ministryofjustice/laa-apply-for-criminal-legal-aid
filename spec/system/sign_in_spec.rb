@@ -27,12 +27,12 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user signs in but is not allowed to use the service' do
+  context 'user signs in but does not have any office codes' do
     before do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        saml: OmniAuth::AuthHash.new(info: { office_codes: '' })
+        saml: OmniAuth::AuthHash.new(info: { office_codes: [] })
       )
 
       click_button 'Sign in with LAA Portal'

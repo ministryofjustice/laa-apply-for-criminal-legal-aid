@@ -14,7 +14,7 @@ module Providers
     private
 
     def after_sign_in_path_for(_)
-      ProviderOfficeRouter.call(current_provider)
+      Providers::OfficeRouter.call(current_provider)
     end
 
     def after_omniauth_failure_path_for(_)
@@ -26,7 +26,7 @@ module Providers
     end
 
     def check_provider_is_allowed
-      gatekeeper = ProviderGatekeeper.new(auth_hash.info)
+      gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
 
       return if gatekeeper.access_allowed?
 

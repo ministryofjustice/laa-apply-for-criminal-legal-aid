@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProviderOfficeRouter do
+RSpec.describe Providers::OfficeRouter do
   include Rails.application.routes.url_helpers
 
   subject { described_class.call(provider) }

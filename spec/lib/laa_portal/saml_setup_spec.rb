@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe LaaPortalSetup do
+describe LaaPortal::SamlSetup do
   subject { described_class.call(env) }
 
   let(:env) do
