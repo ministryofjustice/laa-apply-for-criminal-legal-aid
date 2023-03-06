@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get :invalid_session
     get :unhandled
     get :unauthorized
+    get :not_enrolled
     get :not_found
   end
 

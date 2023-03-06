@@ -26,6 +26,8 @@ en:
       heading: Access restricted
       lead_text: This page requires you to be signed in to LAA Portal. You will be redirected back to this service after you sign in.
       sign_in_button: Sign in with LAA Portal
+    not_enrolled:
+      page_title: Account not enrolled
 
   activemodel:
     errors:

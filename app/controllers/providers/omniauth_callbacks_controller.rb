@@ -1,7 +1,7 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
-    before_action :check_provider_is_allowed, only: [:saml]
+    before_action :check_provider_is_enrolled, only: [:saml]
 
     def saml
       provider = Provider.from_omniauth(auth_hash)
@@ -25,17 +25,12 @@ module Providers
       request.env['omniauth.auth']
     end
 
-    def check_provider_is_allowed
+    def check_provider_is_enrolled
       gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
 
-      return if gatekeeper.access_allowed?
+      return if gatekeeper.provider_enrolled?
 
-      set_flash_message(
-        :alert, gatekeeper.reason,
-        scope: [:devise, :omniauth_callbacks, :provider_gatekeeper],
-      )
-
-      redirect_to root_path
+      redirect_to not_enrolled_errors_path
     end
   end
 end

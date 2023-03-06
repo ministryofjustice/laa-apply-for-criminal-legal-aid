@@ -15,6 +15,10 @@ class ErrorsController < ApplicationController
   end
 
   def unauthorized
+    respond_with_status(:unauthorized)
+  end
+
+  def not_enrolled
     respond_with_status(:forbidden)
   end
 

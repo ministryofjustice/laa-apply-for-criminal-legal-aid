@@ -1,26 +1,28 @@
 module Providers
   class Gatekeeper
-    attr_reader :auth_info, :reason
+    attr_reader :auth_info
 
     def initialize(auth_info)
       @auth_info = auth_info
     end
 
-    # NOTE: this method will be refactored to include some more
-    # rules for allowing or not access to providers depending
-    # if they've been onboarded into our private MVP, based on
-    # office codes, or email address, etc.
-    # Until we know more, we just do a very high level check.
-    #
-    def access_allowed?
-      @reason = :no_office_codes if office_codes.blank?
-      @reason.blank?
+    def provider_enrolled?
+      email_enrolled? || office_enrolled?
+    end
+
+    def office_enrolled?
+      allowed_office_codes.intersect?(auth_info.office_codes)
+    end
+
+    # TODO: implement separately once decided if this is required
+    def email_enrolled?
+      false
     end
 
     private
 
-    def office_codes
-      auth_info.office_codes
+    def allowed_office_codes
+      Rails.configuration.x.gatekeeper.office_codes
     end
   end
 end

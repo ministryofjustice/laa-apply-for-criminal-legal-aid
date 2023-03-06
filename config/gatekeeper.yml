@@ -1,0 +1,19 @@
+# List of providers (office codes and/or emails)
+# who can use the service (phased private MVP access).
+#
+# If a provider has more than one office code, then
+# access is granted if any code is allowed.
+#
+localhost:
+  office_codes:
+    - 1A123B # samlmock and tests
+    - 1K022G # temporarily, portal stg
+
+staging:
+  office_codes:
+    - 1A123B # samlmock and tests
+    - 1K022G
+    - 0Z981E
+
+production:
+  office_codes: []
