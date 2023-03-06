@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProviderGatekeeper do
+RSpec.describe Providers::Gatekeeper do
   subject { described_class.new(auth_info) }
 
   let(:auth_info) do

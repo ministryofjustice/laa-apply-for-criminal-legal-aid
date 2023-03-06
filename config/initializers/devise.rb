@@ -2,7 +2,8 @@
 
 Devise.setup do |config|
   require 'devise/orm/active_record'
-  require 'laa_portal_setup'
+  require 'laa_portal/saml_strategy'
+  require 'laa_portal/saml_setup'
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -49,5 +50,8 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :saml, setup: LaaPortalSetup
+  config.omniauth :saml,
+                  name: 'saml',
+                  setup: LaaPortal::SamlSetup,
+                  strategy_class: LaaPortal::SamlStrategy
 end
