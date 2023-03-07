@@ -29,10 +29,17 @@ RSpec.describe 'Error pages' do
     end
   end
 
+  context 'not_enrolled' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/not_enrolled'
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
   context 'unauthorized' do
     it 'renders the expected page and has expected status code' do
       get '/errors/unauthorized'
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     context 'when the sign in fails' do

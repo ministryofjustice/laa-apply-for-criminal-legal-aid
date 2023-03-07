@@ -42,5 +42,9 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
+
+    config.x.gatekeeper= config_for(
+      :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
+    )
   end
 end

@@ -6,29 +6,42 @@ RSpec.describe Providers::Gatekeeper do
   let(:auth_info) do
     double(
       email:,
-      roles:,
       office_codes:,
     )
   end
 
   let(:email) { 'test@example.com' }
-  let(:roles) { 'role1,role2' }
-  let(:office_codes) { 'code1:code2' }
+  let(:office_codes) { %w[1A123B 2A555X] }
 
-  describe '#access_allowed?' do
-    context 'when there are office codes' do
-      it 'allows the access' do
-        expect(subject.access_allowed?).to be(true)
-        expect(subject.reason).to be_nil
+  describe '#provider_enrolled?' do
+    before do
+      allow(subject).to receive(:email_enrolled?).and_return(false)
+      allow(subject).to receive(:office_enrolled?).and_return(false)
+    end
+
+    it 'checks if the email is enrolled' do
+      expect(subject).to receive(:email_enrolled?)
+      subject.provider_enrolled?
+    end
+
+    it 'checks if any office codes are enrolled' do
+      expect(subject).to receive(:office_enrolled?)
+      subject.provider_enrolled?
+    end
+  end
+
+  describe '#office_enrolled?' do
+    context 'when any of the office codes are in the allow list' do
+      it 'returns true' do
+        expect(subject.office_enrolled?).to be(true)
       end
     end
 
-    context 'when there are no office codes' do
-      let(:office_codes) { '' }
+    context 'when no office codes are in the allow list' do
+      let(:office_codes) { %w[1X000X] }
 
-      it 'disallows the access' do
-        expect(subject.access_allowed?).to be(false)
-        expect(subject.reason).to be(:no_office_codes)
+      it 'returns false' do
+        expect(subject.office_enrolled?).to be(false)
       end
     end
   end

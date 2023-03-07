@@ -27,20 +27,20 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user signs in but does not have any office codes' do
+  context 'user signs in but is not yet enrolled' do
     before do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        saml: OmniAuth::AuthHash.new(info: { office_codes: [] })
+        saml: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
       )
 
       click_button 'Sign in with LAA Portal'
     end
 
-    it 'redirects to the home page with a flash alert' do
-      expect(current_url).to eq(root_url)
-      expect(page).to have_content('Your account cannot use this service as it does not have any office codes.')
+    it 'redirects to the error page' do
+      expect(current_url).to match(not_enrolled_errors_path)
+      expect(page).to have_content('Your account cannot use this service yet')
     end
   end
 
