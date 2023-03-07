@@ -104,9 +104,10 @@ describe LaaPortal::SamlSetup do
             foo: 'bar',
             sp_entity_id: 'crime-apply',
             name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
-            idp_sso_service_binding: :redirect,
             certificate: nil,
             private_key: nil,
+            idp_sso_service_binding: :redirect,
+            idp_slo_service_binding: :post,
             single_logout_service_url: 'http://example.com/providers/auth/saml/slo',
             security: {
               digest_method: XMLSecurity::Document::SHA256,
