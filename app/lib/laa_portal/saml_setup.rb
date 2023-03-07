@@ -19,9 +19,10 @@ module LaaPortal
       parse_metadata_and_merge(
         sp_entity_id: SP_ENTITY_ID,
         name_identifier_format: NAME_ID_FORMAT,
-        idp_sso_service_binding: :redirect,
         certificate: ENV.fetch('LAA_PORTAL_SP_CERT', nil),
         private_key: ENV.fetch('LAA_PORTAL_SP_PRIVATE_KEY', nil),
+        idp_sso_service_binding: :redirect,
+        idp_slo_service_binding: :post,
         single_logout_service_url: sp_single_logout_url,
         security: {
           digest_method: XMLSecurity::Document::SHA256,
