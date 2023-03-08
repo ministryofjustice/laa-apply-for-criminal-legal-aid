@@ -8,9 +8,8 @@ data:
   RACK_ENV: production
   RAILS_ENV: production
   RAILS_SERVE_STATIC_FILES: enabled
+  RAILS_LOG_TO_STDOUT: enabled
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
-
-  # Datastore endpoint for staging
   DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.cloud-platform.service.justice.gov.uk
 
   # If this is uncommented, authentication will be mocked
@@ -22,5 +21,4 @@ data:
   # Important: make sure whatever Portal env is declared here, uses the
   # corresponding certificates, if required (in `deployment.tpl` file)
   #
-  # LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/samlmock.xml
   LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
