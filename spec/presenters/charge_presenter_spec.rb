@@ -53,7 +53,7 @@ RSpec.describe ChargePresenter do
       end
 
       it 'retrieves the date pairs from the collection' do
-        expect(subject.offence_dates).to match_array([[date1, date2], [date2, nil]])
+        expect(subject.offence_dates).to contain_exactly([date1, date2], [date2, nil])
       end
     end
 
