@@ -78,6 +78,7 @@ en:
       heading: Your applications
       create_button: Make a new application
     subnavigation:
+      nav_aria_label: Applications by status
       in_progress:
         zero: In progress
         one: In progress (1)
@@ -97,3 +98,13 @@ en:
         in_progress: There are no applications in progress
         submitted: There are no submitted applications
         returned: There are no returned applications
+
+  kaminari:
+    paginator:
+      nav_aria_label: Results
+    prev_page:
+      previous: Previous
+    next_page:
+      next: Next
+    page:
+      page: Page %{page}

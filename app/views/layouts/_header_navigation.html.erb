@@ -1,6 +1,8 @@
 <% if signed_in? %>
-  <nav aria-label="Menu" class="govuk-header__navigation">
-    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" hidden>Menu</button>
+  <nav aria-label="<%= t('.nav_aria_label') %>" class="govuk-header__navigation">
+    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="<%= t('.button_aria_label') %>" hidden>
+      <%= t('.menu_button') %>
+    </button>
     <ul id="navigation" class="govuk-header__navigation-list">
       <li class="govuk-header__navigation-item">
         <%= link_to t('.your_applications'), crime_applications_path, class: 'govuk-header__link' %>
