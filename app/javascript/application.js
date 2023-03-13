@@ -26,3 +26,10 @@ if ($acElements) {
     })
   }
 }
+
+// Avoid flickering header menu on small screens
+// Refer to `stylesheets/local/custom.scss`
+const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-load')
+if ($headerNavigation) {
+  $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
+}

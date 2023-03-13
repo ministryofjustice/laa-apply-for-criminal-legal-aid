@@ -12,6 +12,20 @@
   background-color: transparent;
 }
 
+// Avoid flickering header menu on small screens, where on page load
+// the header menu briefly shows before being hidden. This makes it
+// visually hidden from the start, and a bit of javascript removes
+// the class as soon as the page has loaded.
+// If javascript is disabled, the menu shows expanded on page load.
+// Refer to `app/javascript/application.js`
+body.js-enabled {
+  ul.app-header-menu-hidden-on-load {
+    @include govuk-media-query($until: desktop) {
+      display: none;
+    }
+  }
+}
+
 .app-header__auth-link {
   // 1. Remove any button styling
   @include app-button-reset;
