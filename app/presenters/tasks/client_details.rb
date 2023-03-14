@@ -15,17 +15,33 @@ module Tasks
 
     # If we have an `applicant` record we consider this in progress
     def in_progress?
-      crime_application.applicant.present?
+      applicant.present?
     end
 
     # The last step of the applicant details task is the contact details
+    # Only `correspondence_address_type` is mandatory, `telephone_number`
+    # is not mandatory and can be left blank.
     #
-    # NOTE: might be refined for the scenario the correspondence type
-    # is `other_address` but there is no `CorrespondenceAddress` record
+    # Depending on the selected `correspondence_address_type`, we check
+    # if the address record exists.
+    #
     def completed?
-      crime_application.applicant.values_at(
-        :telephone_number, :correspondence_address_type
-      ).all?(&:present?)
+      case applicant.correspondence_address_type
+      when CorrespondenceType::HOME_ADDRESS.to_s
+        applicant.home_address?
+      when CorrespondenceType::OTHER_ADDRESS.to_s
+        applicant.correspondence_address?
+      when CorrespondenceType::PROVIDERS_OFFICE_ADDRESS.to_s
+        true
+      else
+        false
+      end
+    end
+
+    private
+
+    def applicant
+      @applicant ||= crime_application.applicant
     end
   end
 end

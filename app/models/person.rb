@@ -10,6 +10,10 @@ class Person < ApplicationRecord
   scope :with_name, -> { where.not(first_name: [nil, '']) }
 
   def home_address?
-    home_address.address_line_one.present?
+    home_address&.address_line_one.present?
+  end
+
+  def correspondence_address?
+    correspondence_address&.address_line_one.present?
   end
 end
