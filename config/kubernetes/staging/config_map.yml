@@ -13,7 +13,7 @@ data:
   DATASTORE_API_ROOT: https://criminal-applications-datastore-staging.apps.cloud-platform.service.justice.gov.uk
 
   # If this is uncommented, authentication will be mocked
-  # OMNIAUTH_TEST_MODE: "true"
+  OMNIAUTH_TEST_MODE: "true"
 
   # LAA Portal metadata endpoint or file
   # (endpoint not accessible from inside CP, using locally stored file)
