@@ -34,29 +34,40 @@ RSpec.describe Steps::Case::ChargesForm do
             'date_to(3i)' => '03', 'date_to(2i)' => '11', 'date_to(1i)' => '2022'
           },
           '1' => { 'date_from(3i)' => '', 'date_from(2i)' => '', 'date_from(1i)' => '' },
+          '2' => { 'date_from(3i)' => '03', 'date_from(2i)' => '13', 'date_from(1i)' => '2020' },
         }
       end
 
-      it 'returns false' do
+      before do
+        expect(subject).not_to be_valid
         expect(subject.save).to be(false)
       end
 
-      it 'sets the errors with their index' do
-        expect(subject).not_to be_valid
-
+      it 'has errors when the start date is in the future' do
         expect(subject.errors.of_kind?('offence_dates-attributes[0].date_from', :future_not_allowed)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[0].date_from').first).to eq(
           'Start date 1 cannot be in the future'
         )
+      end
 
+      it 'has errors when the end date is before the start date' do
         expect(subject.errors.of_kind?('offence_dates-attributes[0].date_to', :before_date_from)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[0].date_to').first).to eq(
           'End date 1 cannot be before start date 1'
         )
+      end
 
+      it 'has errors when the start date is blank' do
         expect(subject.errors.of_kind?('offence_dates-attributes[1].date_from', :blank)).to be(true)
         expect(subject.errors.messages_for('offence_dates-attributes[1].date_from').first).to eq(
           'Start date 2 cannot be blank'
+        )
+      end
+
+      it 'has errors when date is invalid' do
+        expect(subject.errors.of_kind?('offence_dates-attributes[2].date_from', :invalid)).to be(true)
+        expect(subject.errors.messages_for('offence_dates-attributes[2].date_from').first).to eq(
+          'Enter a valid start date 3 month'
         )
       end
     end
@@ -111,7 +122,10 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'for valid details' do
       it 'updates the record' do
         expect(charge_record).to receive(:update).with(
-          { 'offence_name' => 'Robbery' }
+          {
+            'offence_name' => 'Robbery',
+            :offence_dates_attributes => offence_dates_attributes,
+          }
         ).and_return(true)
 
         expect(subject.save).to be(true)

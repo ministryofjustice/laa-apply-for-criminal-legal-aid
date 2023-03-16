@@ -1,7 +1,7 @@
 module Steps
   module Case
     class OffenceDateFieldsetForm < Steps::BaseFormObject
-      attribute :_destroy, :boolean
+      attribute :_destroy, :boolean, default: false
       attribute :id, :string
       attribute :date_from, :multiparam_date
       attribute :date_to, :multiparam_date
