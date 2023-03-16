@@ -4,15 +4,14 @@ module Steps
       attribute :offence_name, :string
       validates :offence_name, presence: true
 
-      delegate :offence_dates_attributes=, to: :record
+      # transient attribute
+      attr_accessor :offence_dates_attributes
 
       validates_with ChargesValidator, unless: :any_marked_for_destruction?
 
       def offence_dates
-        @offence_dates ||= record.offence_dates.map do |offence_date|
-          OffenceDateFieldsetForm.build(
-            offence_date, crime_application:
-          )
+        @offence_dates ||= offence_dates_collection.map do |offence_date|
+          OffenceDateFieldsetForm.new(offence_date)
         end
       end
 
@@ -26,9 +25,23 @@ module Steps
 
       private
 
+      def offence_dates_collection
+        if offence_dates_attributes
+          # This is a params hash in the format:
+          # { "0"=>{"date_from(3i)"=>"21", ...}, "1"=>{"date_from(3i)"=>"21", ...} }
+          offence_dates_attributes.values
+        else
+          record.offence_dates.map do |od|
+            od.slice(:id, :date_from, :date_to)
+          end
+        end
+      end
+
       def persist!
         record.update(
-          attributes
+          attributes.merge(
+            offence_dates_attributes:
+          )
         )
       end
     end
