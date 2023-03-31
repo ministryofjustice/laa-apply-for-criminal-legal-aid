@@ -34,8 +34,8 @@ RSpec.describe 'Dashboard' do
       assert_select 'a.govuk-button', count: 2, text: 'Print application'
     end
 
-    it 'does not have an update application button' do
-      assert_select 'button.govuk-button', count: 0, text: 'Update application'
+    it 'does not have an add justification information button' do
+      assert_select 'button.govuk-button', count: 0, text: 'Add justification information'
     end
 
     # rubocop:disable RSpec/ExampleLength
@@ -107,7 +107,7 @@ RSpec.describe 'Dashboard' do
         assert_select 'div.govuk-notification-banner__content' do
           assert_select 'h3', 'LAA have returned this application because further clarification is needed'
           assert_select 'p.govuk-body', 'Further information regarding IoJ required'
-          assert_select 'button.govuk-button', count: 1, text: 'Update application'
+          assert_select 'button.govuk-button', count: 1, text: 'Add justification information'
         end
       end
     end
