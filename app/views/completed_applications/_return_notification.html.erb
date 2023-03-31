@@ -12,6 +12,10 @@
 
     <%= simple_format(return_details.details, { class: 'govuk-body' }) %>
 
+    <% if return_details.reason.downcase == 'split_case' %>
+      <%= simple_format(t('.split_case_meaning', default: ''), { class: 'govuk-body' }) %>
+    <% end %>
+
     <%= button_to recreate_completed_crime_application_path, method: :put,
                   class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
                   data: { module: 'govuk-button' } do; t('.update_application'); end %>

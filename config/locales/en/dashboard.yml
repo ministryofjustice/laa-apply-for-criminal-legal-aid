@@ -72,8 +72,9 @@ en:
         duplicate_application: because it is a duplicated application
         case_concluded: because the case has already concluded
         provider_request: at your request
-        split_case: because the case has been split
+        split_case: because the case has now been split and we require IOJ justification for all offences
       update_application: Update application
+      split_case_meaning: Cases are split when the CPS decide not to try all the offences at the same time
   shared:
     dashboard_header:
       heading: Your applications
