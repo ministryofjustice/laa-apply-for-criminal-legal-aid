@@ -13,8 +13,10 @@ GIT
       faraday (~> 2.6)
       moj-simple-jwt-auth (= 0.0.1)
 
-PATH
-  remote: /Users/mohammed.seedat/development/laa-criminal-legal-aid-schemas
+GIT
+  remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
+  revision: 4e09367dd4c6f874c6fdc8d8838491714bcd9ccd
+  tag: v0.1.4
   specs:
     laa-criminal-legal-aid-schemas (0.1.4)
       dry-struct
