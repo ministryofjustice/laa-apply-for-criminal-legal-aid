@@ -72,8 +72,14 @@ en:
         duplicate_application: because it is a duplicated application
         case_concluded: because the case has already concluded
         provider_request: at your request
-        split_case: because the case has now been split and we require IOJ justification for all offences
-      update_application: Update application
+      notes: 'The caseworker who returned this application says: %{reason}'
+      action: Update application
+      split_case_heading: You need to tell us why your client should get legal aid
+      split_case_action: Add justification
+      split_case_explanation: |-
+        We've returned your application because you need to add justification for all offences. This is because the case has been 'split'.
+
+        A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.
   shared:
     dashboard_header:
       heading: Your applications
