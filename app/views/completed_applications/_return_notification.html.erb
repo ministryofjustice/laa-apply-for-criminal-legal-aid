@@ -6,11 +6,21 @@
     </h2>
   </div>
   <div class="govuk-notification-banner__content">
+    <%
+      is_split_case = return_details.reason.downcase == 'split_case'
+    %>
+
     <h3 class="govuk-notification-banner__heading">
-      <%= t('.heading', reason: t(".reasons.#{return_details.reason}", default: '')) %>
+      <% if is_split_case %>
+        <%= t('.split_case_heading') %>
+      <% else %>
+        <%= t('.heading', reason: t(".reasons.#{return_details.reason}", default: '')) %>
+      <% end %>
     </h3>
 
-    <%= simple_format(return_details.details, { class: 'govuk-body' }) %>
+    <%= simple_format(t('.split_case_explanation'), { class: 'govuk-body' }) if is_split_case %>
+
+    <%= simple_format(t('.notes', reason: return_details.details), { class: 'govuk-body' }) %>
 
     <% if return_details.reason.downcase == 'split_case' %>
       <%= simple_format(t('.split_case_meaning', default: ''), { class: 'govuk-body' }) %>
@@ -18,6 +28,6 @@
 
     <%= button_to recreate_completed_crime_application_path, method: :put,
                   class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
-                  data: { module: 'govuk-button' } do; t('.update_application'); end %>
+                  data: { module: 'govuk-button' } do; is_split_case ? t('.split_case_action') : t('.action'); end %>
   </div>
 </div>

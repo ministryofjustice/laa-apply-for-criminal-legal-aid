@@ -83,6 +83,37 @@ RSpec.describe 'Dashboard' do
     end
   end
 
+  describe 'show split case return reason notification banner' do
+    # NOTE: the return reason notification banner has different wording for
+    # returned applications marked as split_case
+
+    let(:app_split_case_id) { '5d7d6320-98cb-40e2-b200-ccc10b75d96f' }
+    let(:app_split_case) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case') }
+
+    before do
+      puts "returned_application_fixture: #{returned_application_fixture.inspect}"
+      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{app_split_case_id}")
+        .to_return(body: app_split_case)
+
+      get completed_crime_application_path(app_split_case_id)
+    end
+
+    # rubocop:disable Layout/LineLength
+    it 'has a notification banner with the return details' do
+      assert_select 'div.govuk-notification-banner' do
+        assert_select 'h2', 'Important'
+        assert_select 'div.govuk-notification-banner__content' do
+          assert_select 'h3', 'You need to tell us why your client should get legal aid'
+          assert_select 'p.govuk-body', "We've returned your application because you need to add justification for all offences. This is because the case has been 'split'."
+          assert_select 'p.govuk-body', 'A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.'
+          assert_select 'p.govuk-body', 'The caseworker who returned this application says: Offense 1 reason requires more detail'
+          assert_select 'button.govuk-button', count: 1, text: 'Add justification'
+        end
+      end
+    end
+    # rubocop:enable Layout/LineLength
+  end
+
   describe 'show an application certificate (in `returned` status)' do
     # NOTE: this is almost identical to `submitted` state, only difference
     # is there is a notification banner with the return details and CTA button.
@@ -101,16 +132,18 @@ RSpec.describe 'Dashboard' do
       assert_select 'h1', 'Application for criminal legal aid certificate'
     end
 
+    # rubocop:disable Layout/LineLength
     it 'has a notification banner with the return details' do
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
           assert_select 'h3', 'LAA have returned this application because further clarification is needed'
-          assert_select 'p.govuk-body', 'Further information regarding IoJ required'
+          assert_select 'p.govuk-body', 'The caseworker who returned this application says: Further information regarding IoJ required'
           assert_select 'button.govuk-button', count: 1, text: 'Update application'
         end
       end
     end
+    # rubocop:enable Layout/LineLength
 
     it 're-creates the application and renders the check your answers page' do
       expect do
