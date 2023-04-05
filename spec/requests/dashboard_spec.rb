@@ -91,7 +91,6 @@ RSpec.describe 'Dashboard' do
     let(:app_split_case) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case') }
 
     before do
-      puts "returned_application_fixture: #{returned_application_fixture.inspect}"
       stub_request(:get, "http://datastore-webmock/api/v2/applications/#{app_split_case_id}")
         .to_return(body: app_split_case)
 
