@@ -7,7 +7,7 @@
   </div>
   <div class="govuk-notification-banner__content">
     <%
-      is_split_case = return_details.reason.downcase == 'split_case'
+      is_split_case = return_details.reason.casecmp('split_case').zero?
     %>
 
     <h3 class="govuk-notification-banner__heading">
@@ -22,9 +22,7 @@
 
     <%= simple_format(t('.notes', reason: return_details.details), { class: 'govuk-body' }) %>
 
-    <% if return_details.reason.downcase == 'split_case' %>
-      <%= simple_format(t('.split_case_meaning', default: ''), { class: 'govuk-body' }) %>
-    <% end %>
+    <%= simple_format(t('.split_case_meaning', default: ''), { class: 'govuk-body' }) if is_split_case %>
 
     <%= button_to recreate_completed_crime_application_path, method: :put,
                   class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
