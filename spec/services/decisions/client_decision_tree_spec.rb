@@ -33,8 +33,40 @@ RSpec.describe Decisions::ClientDecisionTree do
   context 'when the step is `details`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
+    let(:ioj_passporter_double) { instance_double(IojPassporter) }
 
-    it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    before do
+      allow(
+        IojPassporter
+      ).to receive(:new).and_return(ioj_passporter_double)
+    end
+
+    context 'and client is under 18' do
+      before do
+        allow(
+          ioj_passporter_double
+        ).to receive(:applicant_under18_passport?).and_return(true)
+
+        allow(
+          Address
+        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+      end
+
+      it {
+        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+          address_id: 'address')
+      }
+    end
+
+    context 'and client is over 18' do
+      before do
+        allow(
+          ioj_passporter_double
+        ).to receive(:applicant_under18_passport?).and_return(false)
+      end
+
+      it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `has_nino`' do

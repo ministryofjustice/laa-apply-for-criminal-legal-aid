@@ -16,8 +16,6 @@ class IojPassporter
     crime_application.ioj_passport.any?
   end
 
-  private
-
   def applicant_under18_passport?
     return false unless FeatureFlags.u18_ioj_passport.enabled?
 

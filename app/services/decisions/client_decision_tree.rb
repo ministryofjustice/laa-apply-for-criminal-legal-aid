@@ -6,7 +6,7 @@ module Decisions
       when :has_partner
         after_has_partner
       when :details
-        edit(:has_nino)
+        after_client_details
       when :has_nino, :retry_benefit_check
         after_has_nino
       when :benefit_check_result
@@ -27,6 +27,14 @@ module Decisions
       else
         # Task list
         edit('/crime_applications')
+      end
+    end
+
+    def after_client_details
+      if IojPassporter.new(form_object).applicant_under18_passport?
+        start_address_journey(HomeAddress)
+      else
+        edit(:has_nino)
       end
     end
 
