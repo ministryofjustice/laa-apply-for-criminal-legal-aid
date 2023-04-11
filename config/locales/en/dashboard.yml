@@ -65,21 +65,26 @@ en:
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
     return_notification:
       title: Important
-      heading: LAA have returned this application %{reason}
-      reasons:
-        clarification_required: because further clarification is needed
-        evidence_issue: because there was an issue with the evidence that was sent
-        duplicate_application: because it is a duplicated application
-        case_concluded: because the case has already concluded
-        provider_request: at your request
-      notes: 'The caseworker who returned this application says: %{reason}'
-      action: Update application
-      split_case_heading: You need to tell us why your client should get legal aid
-      split_case_action: Add justification
-      split_case_explanation: |-
-        We've returned your application because you need to add justification for all offences. This is because the case has been 'split'.
-
-        A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.
+      heading:
+        clarification_required: LAA have returned this application because further clarification is needed
+        evidence_issue: LAA have returned this application because there was an issue with the evidence that was sent
+        duplicate_application: LAA have returned this application because it is a duplicated application
+        case_concluded: LAA have returned this application because the case has already concluded
+        provider_request: LAA have returned this application at your request
+        split_case: You need to tell us why your client should get legal aid
+      explanation:
+        default_html: ""
+        split_case_html: |
+          <p class="govuk-body">
+            We've returned your application because you need to add justification for all offences. This is because the case has been 'split'.
+          </p>
+          <p class="govuk-body">
+            A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.
+          </p>
+      caseworker_details: 'The caseworker who returned this application says: %{details}'
+      action:
+        default: Update application
+        split_case: Add justification
   shared:
     dashboard_header:
       heading: Your applications
