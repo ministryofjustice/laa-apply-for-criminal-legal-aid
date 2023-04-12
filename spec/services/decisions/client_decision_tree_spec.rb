@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: 'applicant') }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:applicant) { 'applicant' }
 
   before do
     allow(
@@ -33,8 +34,41 @@ RSpec.describe Decisions::ClientDecisionTree do
   context 'when the step is `details`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
+    let(:age_calculator_double) { instance_double(AgeCalculator) }
+    let(:applicant_double) { instance_double(Applicant, date_of_birth: 'dob') }
 
-    it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    before do
+      allow(
+        AgeCalculator
+      ).to receive(:new).and_return(age_calculator_double)
+    end
+
+    context 'and client is under 18' do
+      before do
+        allow(
+          age_calculator_double
+        ).to receive(:under18?).and_return(true)
+
+        allow(
+          Address
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+      end
+
+      it {
+        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+          address_id: 'address')
+      }
+    end
+
+    context 'and client is over 18' do
+      before do
+        allow(
+          age_calculator_double
+        ).to receive(:under18?).and_return(false)
+      end
+
+      it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `has_nino`' do

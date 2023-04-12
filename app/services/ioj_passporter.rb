@@ -16,12 +16,9 @@ class IojPassporter
     crime_application.ioj_passport.any?
   end
 
-  private
-
   def applicant_under18_passport?
     return false unless FeatureFlags.u18_ioj_passport.enabled?
 
-    dob = crime_application.applicant.date_of_birth
-    dob + 18.years > Time.zone.today
+    AgeCalculator.new(crime_application.applicant).under18?
   end
 end
