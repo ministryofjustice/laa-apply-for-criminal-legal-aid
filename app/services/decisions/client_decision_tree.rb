@@ -31,7 +31,7 @@ module Decisions
     end
 
     def after_client_details
-      if IojPassporter.new(form_object).applicant_under18_passport?
+      if AgeCalculator.new(current_crime_application).applicant_under18?
         start_address_journey(HomeAddress)
       else
         edit(:has_nino)

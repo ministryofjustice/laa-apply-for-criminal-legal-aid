@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: 'applicant') }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:applicant) { 'applicant' }
 
   before do
     allow(
@@ -33,23 +34,24 @@ RSpec.describe Decisions::ClientDecisionTree do
   context 'when the step is `details`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
-    let(:ioj_passporter_double) { instance_double(IojPassporter) }
+    let(:age_calculator_double) { instance_double(AgeCalculator) }
+    let(:applicant) { instance_double(Applicant, date_of_birth: 'dob') }
 
     before do
       allow(
-        IojPassporter
-      ).to receive(:new).and_return(ioj_passporter_double)
+        AgeCalculator
+      ).to receive(:new).and_return(age_calculator_double)
     end
 
     context 'and client is under 18' do
       before do
         allow(
-          ioj_passporter_double
-        ).to receive(:applicant_under18_passport?).and_return(true)
+          age_calculator_double
+        ).to receive(:applicant_under18?).and_return(true)
 
         allow(
           Address
-        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
       end
 
       it {
@@ -61,8 +63,8 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'and client is over 18' do
       before do
         allow(
-          ioj_passporter_double
-        ).to receive(:applicant_under18_passport?).and_return(false)
+          age_calculator_double
+        ).to receive(:applicant_under18?).and_return(false)
       end
 
       it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
