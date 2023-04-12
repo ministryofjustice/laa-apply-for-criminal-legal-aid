@@ -19,6 +19,6 @@ class IojPassporter
   def applicant_under18_passport?
     return false unless FeatureFlags.u18_ioj_passport.enabled?
 
-    AgeCalculator.new(crime_application).applicant_under18?
+    AgeCalculator.new(crime_application.applicant).under18?
   end
 end

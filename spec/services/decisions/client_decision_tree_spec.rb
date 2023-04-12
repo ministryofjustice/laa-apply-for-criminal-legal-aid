@@ -35,7 +35,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
     let(:age_calculator_double) { instance_double(AgeCalculator) }
-    let(:applicant) { instance_double(Applicant, date_of_birth: 'dob') }
+    let(:applicant_double) { instance_double(Applicant, date_of_birth: 'dob') }
 
     before do
       allow(
@@ -47,7 +47,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       before do
         allow(
           age_calculator_double
-        ).to receive(:applicant_under18?).and_return(true)
+        ).to receive(:under18?).and_return(true)
 
         allow(
           Address
@@ -64,7 +64,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       before do
         allow(
           age_calculator_double
-        ).to receive(:applicant_under18?).and_return(false)
+        ).to receive(:under18?).and_return(false)
       end
 
       it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }

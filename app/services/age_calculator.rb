@@ -1,12 +1,12 @@
 class AgeCalculator
-  attr_reader :crime_application
+  attr_reader :person
 
-  def initialize(crime_application)
-    @crime_application = crime_application
+  def initialize(person)
+    @person = person
   end
 
-  def applicant_under18?
-    dob = crime_application.applicant.date_of_birth
+  def under18?
+    dob = person.date_of_birth
     dob + 18.years > Time.zone.today
   end
 end

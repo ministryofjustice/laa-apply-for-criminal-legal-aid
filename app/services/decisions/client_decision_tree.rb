@@ -31,7 +31,7 @@ module Decisions
     end
 
     def after_client_details
-      if AgeCalculator.new(current_crime_application).applicant_under18?
+      if AgeCalculator.new(current_crime_application.applicant).under18?
         start_address_journey(HomeAddress)
       else
         edit(:has_nino)
