@@ -5,7 +5,7 @@ feature_flags:
     production: false
   u18_ioj_passport:
     local: true
-    staging: false
+    staging: true
     production: false
 
 # NOTE: consider if the setting you are adding here
