@@ -141,6 +141,10 @@ en:
         question: Passported
         answers: 
           'true': Details provided do not require further justification for legal aid
+      passport_override:
+        question: Passported
+        answers:
+          'true': The case has been ‘split’ and you need to add justification for all offences
       # END passport justification for legal aid section
 
       # BEGIN legal representative details section

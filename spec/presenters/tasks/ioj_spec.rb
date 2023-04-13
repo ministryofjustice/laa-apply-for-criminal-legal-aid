@@ -67,13 +67,27 @@ RSpec.describe Tasks::Ioj do
   end
 
   describe '#completed?' do
-    context 'when we have set an Ioj passport' do
-      let(:ioj_passport) { ['foo'] }
+    let(:passporter_double) { instance_double(IojPassporter, call: passporter_result) }
+
+    before do
+      allow(IojPassporter).to receive(:new).with(crime_application).and_return(passporter_double)
+    end
+
+    context 'when the application is Ioj passported (and there is no override)' do
+      let(:passporter_result) { true }
 
       it { expect(subject.completed?).to be(true) }
     end
 
-    context 'when we have not set an Ioj passport' do
+    context 'when the application is not Ioj passported (or there is override)' do
+      let(:passporter_result) { false }
+
+      context 'and there is no Ioj record yet' do
+        let(:ioj) { nil }
+
+        it { expect(subject.completed?).to be(false) }
+      end
+
       context 'and we have completed the Ioj details' do
         let(:ioj_types) { ['bar'] }
 
