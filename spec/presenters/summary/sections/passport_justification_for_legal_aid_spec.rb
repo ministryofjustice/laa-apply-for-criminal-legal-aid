@@ -19,32 +19,6 @@ describe Summary::Sections::PassportJustificationForLegalAid do
     it { expect(subject.name).to eq(:passport_justification_for_legal_aid) }
   end
 
-  describe '#show?' do
-    context 'when there is an ioj present' do
-      let(:ioj) { 'foo' }
-
-      it 'does not show this section' do
-        expect(subject.show?).to be(false)
-      end
-    end
-
-    context 'when there is no ioj present' do
-      context 'when there is no ioj passport' do
-        let(:ioj_passport) { [] }
-
-        it 'does not show this section' do
-          expect(subject.show?).to be(false)
-        end
-      end
-
-      context 'when there is an ioj passport' do
-        it 'shows this section' do
-          expect(subject.show?).to be(true)
-        end
-      end
-    end
-  end
-
   describe '#answers' do
     let(:answers) { subject.answers }
 
@@ -62,6 +36,35 @@ describe Summary::Sections::PassportJustificationForLegalAid do
 
       it 'has the correct rows' do
         expect(answers.count).to eq(0)
+      end
+    end
+
+    context 'when there is ioj passport override' do
+      let(:ioj) do
+        instance_double(
+          Ioj,
+          types: ioj_types,
+          passport_override: true,
+        )
+      end
+
+      context 'and no justification has been provided yet' do
+        let(:ioj_types) { [] }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(1)
+          expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[0].question).to eq(:passport_override)
+          expect(answers[0].show?).to be(true)
+        end
+      end
+
+      context 'and some justification has been provided already' do
+        let(:ioj_types) { [:foobar] }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(0)
+        end
       end
     end
   end

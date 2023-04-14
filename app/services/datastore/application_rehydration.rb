@@ -26,12 +26,20 @@ module Datastore
       crime_application.applicant.present?
     end
 
+    def split_case?
+      parent.return_details.reason.inquiry.split_case?
+    end
+
     def applicant
       Applicant.new(parent.applicant.serializable_hash)
     end
 
     def ioj
-      Ioj.new(parent.ioj.serializable_hash) if parent.ioj.present?
+      if parent.ioj.present?
+        Ioj.new(parent.ioj.serializable_hash)
+      elsif split_case?
+        Ioj.new(passport_override: true)
+      end
     end
 
     def case_with_ioj

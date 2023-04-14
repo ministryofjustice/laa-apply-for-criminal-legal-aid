@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_161415) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_155225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_161415) do
     t.uuid "case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "passport_override", default: false
     t.index ["case_id"], name: "index_iojs_on_case_id", unique: true
   end
 

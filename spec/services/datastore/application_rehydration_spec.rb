@@ -18,6 +18,12 @@ RSpec.describe Datastore::ApplicationRehydration do
   end
 
   describe '#call' do
+    let(:parent_ioj) { Ioj.new(types: ['foobar']) }
+
+    before do
+      allow(subject.parent).to receive(:ioj).and_return(parent_ioj)
+    end
+
     it 're-hydrates the new application using the parent details' do
       expect(
         crime_application
@@ -30,7 +36,28 @@ RSpec.describe Datastore::ApplicationRehydration do
         case: an_instance_of(Case),
       )
 
+      expect(
+        Ioj
+      ).to receive(:new).with(
+        hash_including('types' => ['foobar'])
+      ).and_call_original
+
       expect(subject.call).to be(true)
+    end
+
+    context 'for a split case passported application' do
+      let(:parent) { JSON.parse(LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case').read) }
+      let(:parent_ioj) { nil }
+
+      it 'sets the `passport_override` flag on the Ioj record' do
+        expect(
+          Ioj
+        ).to receive(:new).with(
+          passport_override: true
+        )
+
+        expect(subject.call).to be(true)
+      end
     end
 
     context 'for an already re-hydrated application' do
