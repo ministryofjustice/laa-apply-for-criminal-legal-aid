@@ -56,7 +56,6 @@ module DeveloperTools
           last_name: surname,
           other_names: '',
           date_of_birth: details[:dob],
-          has_nino: YesNoAnswer::YES,
           nino: details[:nino],
           passporting_benefit: true,
         )

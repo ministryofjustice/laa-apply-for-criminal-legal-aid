@@ -17,7 +17,7 @@ module Passporting
     private
 
     def benefit_check_passed?
-      !!applicant.passporting_benefit
+      applicant.passporting_benefit.present?
     end
   end
 end

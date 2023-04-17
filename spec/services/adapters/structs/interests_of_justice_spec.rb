@@ -26,7 +26,6 @@ RSpec.describe Adapters::Structs::InterestsOfJustice do
   end
 
   describe '#serializable_hash' do
-    # rubocop:disable RSpec/ExampleLength
     it 'has the expected attributes from the fixture' do
       expect(
         subject.serializable_hash
@@ -46,6 +45,5 @@ RSpec.describe Adapters::Structs::InterestsOfJustice do
         }
       )
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

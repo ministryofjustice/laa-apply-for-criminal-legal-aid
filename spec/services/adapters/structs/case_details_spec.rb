@@ -78,7 +78,7 @@ RSpec.describe Adapters::Structs::CaseDetails do
       end
     end
 
-    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+    # rubocop:disable RSpec/MultipleExpectations
     context 'charges relationship' do
       it 'has the expected charges from the fixture' do
         charges = subject.serializable_hash['charges']
@@ -106,6 +106,6 @@ RSpec.describe Adapters::Structs::CaseDetails do
         expect(dates1.date_to).to be_nil
       end
     end
-    # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations
+    # rubocop:enable RSpec/MultipleExpectations
   end
 end

@@ -22,7 +22,7 @@ module Passporting
     end
 
     def ioj_passport_override?
-      !!ioj.try(:passport_override)
+      ioj&.passport_override.present?
     end
   end
 end

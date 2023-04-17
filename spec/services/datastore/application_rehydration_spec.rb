@@ -32,6 +32,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         date_stamp: an_instance_of(DateTime),
         ioj_passport: an_instance_of(Array),
+        means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),
         case: an_instance_of(Case),
       )

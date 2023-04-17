@@ -15,6 +15,7 @@ module Datastore
         parent_id: parent.id,
         date_stamp: parent.date_stamp,
         ioj_passport: parent.ioj_passport,
+        means_passport: parent.means_passport,
         applicant: applicant,
         case: case_with_ioj,
       )
