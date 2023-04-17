@@ -28,7 +28,7 @@ module Decisions
       when :hearing_details
         after_hearing_details
       when :ioj, :ioj_passport
-        edit('/steps/submission/review')
+        after_ioj
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -82,12 +82,32 @@ module Decisions
     end
 
     def after_hearing_details
-      if IojPassporter.new(current_crime_application).call
+      if Passporting::IojPassporter.new(current_crime_application).call
         edit(:ioj_passport)
       else
         edit(:ioj)
       end
     end
+
+    # NOTE: for MVP, this is the last step of the application,
+    # however post-MVP there will be means assessment steps,
+    # unless the applicant has been passported. As this is not
+    # yet implemented, and for MVP we only let means passported
+    # applicants, raise an exception (this should NOT happen but
+    # in case it happens, we get alerted).
+    #
+    # rubocop:disable Style/GuardClause
+    def after_ioj
+      if Passporting::MeansPassporter.new(current_crime_application).call
+        edit('/steps/submission/review')
+      else
+        # TODO: post-MVP implement means assessment steps
+        # For MVP, this branch should not be reachable, and if
+        # we end up here, we want to know about it (Sentry)
+        raise InvalidStep, 'application is not means-passported'
+      end
+    end
+    # rubocop:enable Style/GuardClause
 
     def edit_new_charge
       charge = case_charges.create!

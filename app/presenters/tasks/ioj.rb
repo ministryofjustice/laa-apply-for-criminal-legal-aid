@@ -13,21 +13,19 @@ module Tasks
     end
 
     def in_progress?
-      crime_application.ioj_passport.any? ||
-        crime_application.ioj.present?
+      crime_application.ioj_passport.any? || ioj.present?
     end
 
     def completed?
       return true if ioj_passported?
 
-      crime_application.ioj.present? &&
-        crime_application.ioj.types.any?
+      ioj.present? && ioj.types.any?
     end
 
     private
 
     def ioj_passported?
-      IojPassporter.new(crime_application).call
+      Passporting::IojPassporter.new(crime_application).passported?
     end
   end
 end

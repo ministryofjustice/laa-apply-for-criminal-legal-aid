@@ -46,7 +46,7 @@ en:
         question: Date of birth
       nino:
         question: National Insurance number
-      passporting:
+      means_passporting:
         question: Passporting benefit
         answers:
           'true': 'Yes'
@@ -144,7 +144,7 @@ en:
       passport_override:
         question: Passported
         answers:
-          'true': The case has been ‘split’ and you need to add justification for all offences
+          'true': The case has been split, so you need to add justification for all offences
       # END passport justification for legal aid section
 
       # BEGIN legal representative details section

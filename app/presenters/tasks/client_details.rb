@@ -37,11 +37,5 @@ module Tasks
         false
       end
     end
-
-    private
-
-    def applicant
-      @applicant ||= crime_application.applicant
-    end
   end
 end

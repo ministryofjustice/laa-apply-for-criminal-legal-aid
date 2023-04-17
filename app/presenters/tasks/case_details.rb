@@ -8,10 +8,9 @@ module Tasks
       false
     end
 
-    # Case details can start once the DWP check passes
-    # TODO: update when we have the real check
     def can_start?
-      crime_application.applicant&.nino.present?
+      applicant.present? &&
+        (applicant.under18? || applicant.passporting_benefit?)
     end
 
     # If we have a `case` record we consider this in progress

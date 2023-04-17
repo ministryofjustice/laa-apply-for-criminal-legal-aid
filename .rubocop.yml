@@ -113,6 +113,11 @@ Style/HashEachMethods:
     - app/value_objects/value_object.rb
     - app/forms/steps/case/ioj_form.rb
 
+# Allow expectations with block syntax in tests, for improved readability
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
 Naming/PredicateName:
   AllowedMethods:
     - has_nino
