@@ -38,7 +38,7 @@ module Summary
           ),
 
           Components::ValueAnswer.new(
-            :passporting, applicant.passporting_benefit
+            :means_passporting, means_passported?
           ),
         ].select(&:show?)
       end
@@ -48,6 +48,11 @@ module Summary
 
       def applicant
         @applicant ||= crime_application.applicant
+      end
+
+      # TODO: change once JSON schema is updated
+      def means_passported?
+        true
       end
     end
   end

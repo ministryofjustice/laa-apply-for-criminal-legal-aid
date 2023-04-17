@@ -67,10 +67,12 @@ RSpec.describe Tasks::Ioj do
   end
 
   describe '#completed?' do
-    let(:passporter_double) { instance_double(IojPassporter, call: passporter_result) }
+    let(:passporter_double) { instance_double(Passporting::IojPassporter, passported?: passporter_result) }
 
     before do
-      allow(IojPassporter).to receive(:new).with(crime_application).and_return(passporter_double)
+      allow(
+        Passporting::IojPassporter
+      ).to receive(:new).with(crime_application).and_return(passporter_double)
     end
 
     context 'when the application is Ioj passported (and there is no override)' do

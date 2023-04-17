@@ -4,7 +4,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) { instance_double(CrimeApplication, applicant:) }
-  let(:applicant) { 'applicant' }
+  let(:applicant) { instance_double(Applicant) }
 
   before do
     allow(
@@ -34,21 +34,15 @@ RSpec.describe Decisions::ClientDecisionTree do
   context 'when the step is `details`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
-    let(:age_calculator_double) { instance_double(AgeCalculator) }
-    let(:applicant_double) { instance_double(Applicant, date_of_birth: 'dob') }
 
     before do
-      allow(
-        AgeCalculator
-      ).to receive(:new).and_return(age_calculator_double)
+      allow(applicant).to receive(:under18?).and_return(under18)
     end
 
     context 'and client is under 18' do
-      before do
-        allow(
-          age_calculator_double
-        ).to receive(:under18?).and_return(true)
+      let(:under18) { true }
 
+      before do
         allow(
           Address
         ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
@@ -61,11 +55,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
 
     context 'and client is over 18' do
-      before do
-        allow(
-          age_calculator_double
-        ).to receive(:under18?).and_return(false)
-      end
+      let(:under18) { false }
 
       it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
     end
@@ -153,7 +143,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     before do
       allow(
         Address
-      ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+      ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
     end
 
     it {
@@ -172,7 +162,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       before do
         allow(
           CorrespondenceAddress
-        ).to receive(:find_or_create_by).with(person: 'applicant').and_return('address')
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
       end
 
       it {

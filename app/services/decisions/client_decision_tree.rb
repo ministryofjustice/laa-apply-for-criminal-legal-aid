@@ -31,7 +31,7 @@ module Decisions
     end
 
     def after_client_details
-      if AgeCalculator.new(current_crime_application.applicant).under18?
+      if applicant.under18?
         start_address_journey(HomeAddress)
       else
         edit(:has_nino)
@@ -39,11 +39,11 @@ module Decisions
     end
 
     def after_has_nino
-      DWP::UpdateBenefitCheckResultService.call(current_crime_application.applicant)
+      DWP::UpdateBenefitCheckResultService.call(applicant)
 
-      if current_crime_application.applicant.passporting_benefit.nil?
+      if applicant.passporting_benefit.nil?
         edit(:retry_benefit_check)
-      elsif current_crime_application.applicant.passporting_benefit?
+      elsif applicant.passporting_benefit?
         edit(:benefit_check_result)
       else
         edit('steps/dwp/confirm_result')
@@ -63,10 +63,13 @@ module Decisions
     end
 
     def start_address_journey(address_class)
-      person = current_crime_application.applicant
-      address = address_class.find_or_create_by(person:)
+      address = address_class.find_or_create_by(person: applicant)
 
       edit('/steps/address/lookup', address_id: address)
+    end
+
+    def applicant
+      @applicant ||= current_crime_application.applicant
     end
   end
 end

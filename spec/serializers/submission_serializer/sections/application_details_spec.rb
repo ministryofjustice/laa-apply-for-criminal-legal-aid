@@ -12,7 +12,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
-      ioj_passport: ['on_case_type'],
+      ioj_passport: ['on_age_under18'],
     )
   end
 
@@ -29,7 +29,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
-      ioj_passport: ['on_case_type'],
+      ioj_passport: ['on_age_under18'],
     }.as_json
   end
 

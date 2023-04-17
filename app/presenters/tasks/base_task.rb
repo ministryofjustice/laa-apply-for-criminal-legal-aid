@@ -4,6 +4,8 @@ module Tasks
 
     attr_accessor :crime_application
 
+    delegate :applicant, :ioj, to: :crime_application
+
     def initialize(crime_application:)
       @crime_application = crime_application
     end

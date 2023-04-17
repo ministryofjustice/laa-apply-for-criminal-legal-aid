@@ -245,7 +245,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :hearing_details }
 
     before do
-      allow_any_instance_of(IojPassporter).to receive(:call).and_return(ioj_passported)
+      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(ioj_passported)
     end
 
     context 'and the IoJ passporter was not triggered' do
@@ -265,7 +265,25 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :ioj_passport }
 
-    context 'has correct next step' do
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported)
+    end
+
+    context 'and the means passporter was not triggered' do
+      let(:means_passported) { false }
+
+      it 'raises an error' do
+        expect {
+          subject.destination
+        }.to raise_error(
+          Decisions::BaseDecisionTree::InvalidStep, 'application is not means-passported'
+        )
+      end
+    end
+
+    context 'and the means passporter was triggered' do
+      let(:means_passported) { true }
+
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
   end
@@ -274,7 +292,25 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :ioj }
 
-    context 'has correct next step' do
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported)
+    end
+
+    context 'and the means passporter was not triggered' do
+      let(:means_passported) { false }
+
+      it 'raises an error' do
+        expect {
+          subject.destination
+        }.to raise_error(
+          Decisions::BaseDecisionTree::InvalidStep, 'application is not means-passported'
+        )
+      end
+    end
+
+    context 'and the means passporter was triggered' do
+      let(:means_passported) { true }
+
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
   end
