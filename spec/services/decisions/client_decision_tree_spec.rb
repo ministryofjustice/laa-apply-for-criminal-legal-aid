@@ -36,11 +36,11 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:step_name) { :details }
 
     before do
-      allow(applicant).to receive(:under18?).and_return(under18)
+      allow(crime_application).to receive(:age_passported?).and_return(age_passported)
     end
 
-    context 'and client is under 18' do
-      let(:under18) { true }
+    context 'and client is age passported' do
+      let(:age_passported) { true }
 
       before do
         allow(
@@ -54,8 +54,8 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
 
-    context 'and client is over 18' do
-      let(:under18) { false }
+    context 'and client is not age passported' do
+      let(:age_passported) { false }
 
       it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
     end
@@ -72,67 +72,53 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
       allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
+
+      allow(crime_application).to receive(:benefit_check_passported?).and_return(benefit_check_passported)
     end
 
-    context 'when the applicant has a passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { true }
+    context 'when application has been already passported on benefit check' do
+      let(:benefit_check_passported) { true }
+      let(:passporting_benefit) { nil }
 
-        it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+    end
+
+    context 'when application does not have an existing passporting on benefit check' do
+      let(:benefit_check_passported) { false }
+
+      context 'when the applicant has a passporting benefit' do
+        context 'has correct next step' do
+          let(:passporting_benefit) { true }
+
+          it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
+        end
       end
-    end
 
-    context 'when the applicant does not have a passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { false }
+      context 'when the applicant does not have a passporting benefit' do
+        context 'has correct next step' do
+          let(:passporting_benefit) { false }
 
-        it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+          it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+        end
       end
-    end
 
-    context 'when the benefit checker cannot check on the status of the passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { nil }
+      context 'when the benefit checker cannot check on the status of the passporting benefit' do
+        context 'has correct next step' do
+          let(:passporting_benefit) { nil }
 
-        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+          it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+        end
       end
     end
   end
 
   context 'when the step is `retry_benefit_check`' do
     let(:form_object) { double('FormObject') }
-    let(:applicant_double) { double(Applicant) }
     let(:step_name) { :retry_benefit_check }
 
-    before do
-      allow(crime_application).to receive(:applicant).and_return(applicant_double)
-      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
-      allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
-      allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
-    end
-
-    context 'when the applicant has a passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { true }
-
-        it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
-      end
-    end
-
-    context 'when the applicant does not have a passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { false }
-
-        it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
-      end
-    end
-
-    context 'when the benefit checker cannot check on the status of the passporting benefit' do
-      context 'has correct next step' do
-        let(:passporting_benefit) { nil }
-
-        it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
-      end
+    it 'runs the same logic as the `has_nino` step' do
+      expect(subject).to receive(:after_has_nino)
+      subject.destination
     end
   end
 

@@ -17,15 +17,9 @@ module Tasks
     end
 
     def completed?
-      return true if ioj_passported?
+      return true if crime_application.ioj_passported?
 
       ioj.present? && ioj.types.any?
-    end
-
-    private
-
-    def ioj_passported?
-      Passporting::IojPassporter.new(crime_application).passported?
     end
   end
 end

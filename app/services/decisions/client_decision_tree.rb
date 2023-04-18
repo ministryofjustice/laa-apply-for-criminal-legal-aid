@@ -31,7 +31,7 @@ module Decisions
     end
 
     def after_client_details
-      if applicant.under18?
+      if current_crime_application.age_passported?
         start_address_journey(HomeAddress)
       else
         edit(:has_nino)
@@ -39,6 +39,8 @@ module Decisions
     end
 
     def after_has_nino
+      return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
+
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?

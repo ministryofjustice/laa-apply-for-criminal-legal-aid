@@ -20,6 +20,10 @@ module Passporting
 
     private
 
+    def resubmission?
+      crime_application.parent_id.present?
+    end
+
     def applicant_under18?
       applicant.under18?
     end
