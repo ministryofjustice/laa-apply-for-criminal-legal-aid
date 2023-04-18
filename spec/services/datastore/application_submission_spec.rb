@@ -25,7 +25,6 @@ RSpec.describe Datastore::ApplicationSubmission do
       first_name: 'John',
       last_name: 'Doe',
       date_of_birth: 25.years.ago,
-      has_nino: 'yes',
       nino: 'AB123456A',
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
