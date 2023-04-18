@@ -9,6 +9,7 @@ describe Summary::Sections::ClientDetails do
       to_param: '12345',
       client_has_partner: 'no',
       applicant: applicant,
+      means_passport: means_passport,
     )
   end
 
@@ -22,6 +23,8 @@ describe Summary::Sections::ClientDetails do
       nino: '123456',
     )
   end
+
+  let(:means_passport) { ['foobar'] }
 
   describe '#name' do
     it { expect(subject.name).to eq(:client_details) }
@@ -78,6 +81,14 @@ describe Summary::Sections::ClientDetails do
       expect(answers[5].question).to eq(:means_passporting)
       expect(answers[5].change_path).to be_nil
       expect(answers[5].value).to be(true)
+    end
+
+    context 'when there is no means passporting' do
+      let(:means_passport) { [] }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(5)
+      end
     end
   end
 end

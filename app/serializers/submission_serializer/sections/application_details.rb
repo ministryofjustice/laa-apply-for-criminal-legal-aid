@@ -12,6 +12,7 @@ module SubmissionSerializer
           json.submitted_at crime_application.submitted_at
           json.date_stamp crime_application.date_stamp
           json.ioj_passport crime_application.ioj_passport
+          json.means_passport crime_application.means_passport
         end
       end
       # rubocop:enable Metrics/AbcSize

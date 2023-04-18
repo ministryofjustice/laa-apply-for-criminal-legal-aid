@@ -50,9 +50,8 @@ module Summary
         @applicant ||= crime_application.applicant
       end
 
-      # TODO: change once JSON schema is updated
       def means_passported?
-        true
+        crime_application.means_passport.any?
       end
     end
   end

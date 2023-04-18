@@ -47,7 +47,8 @@ RSpec.describe SubmissionSerializer::Application do
       ).to match(
         a_hash_including(
           'schema_version' => 1.0,
-          'ioj_passport' => [],
+          'ioj_passport' => be_an(Array),
+          'means_passport' => be_an(Array),
           'provider_details' => be_a(Hash),
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),

@@ -137,6 +137,6 @@ RSpec/NestedGroups:
   Max: 5
 
 RSpec/ExampleLength:
-  Max: 16
+  Max: 18
   Exclude:
     - spec/presenters/summary/sections/*

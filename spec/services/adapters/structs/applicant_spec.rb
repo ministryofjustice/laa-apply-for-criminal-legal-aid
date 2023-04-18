@@ -23,18 +23,6 @@ RSpec.describe Adapters::Structs::Applicant do
     end
   end
 
-  describe '#passporting_benefit' do
-    it 'returns always true for MVP' do
-      expect(subject.passporting_benefit).to be(true)
-    end
-  end
-
-  describe '#has_nino' do
-    it 'returns always `yes` for MVP' do
-      expect(subject.has_nino).to be(YesNoAnswer::YES)
-    end
-  end
-
   describe '#home_address' do
     it 'returns an `Address` instance if there is an address' do
       expect(subject.home_address).to be_an(Address)
@@ -53,8 +41,6 @@ RSpec.describe Adapters::Structs::Applicant do
         subject.serializable_hash
       ).to match(
         a_hash_including(
-          'has_nino' => YesNoAnswer::YES,
-          'passporting_benefit' => true,
           'home_address' => an_instance_of(HomeAddress),
           'correspondence_address' => nil,
         )
@@ -66,8 +52,6 @@ RSpec.describe Adapters::Structs::Applicant do
         subject.serializable_hash.keys
       ).to match_array(
         %w[
-          has_nino
-          passporting_benefit
           first_name
           last_name
           date_of_birth
