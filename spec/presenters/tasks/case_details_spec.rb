@@ -29,37 +29,22 @@ RSpec.describe Tasks::CaseDetails do
     end
 
     context 'when there is an applicant record' do
-      let(:applicant) do
-        instance_double(
-          Applicant,
-          under18?: under18,
-          passporting_benefit?: passporting_benefit,
-        )
+      let(:applicant) { double }
+
+      before do
+        allow(crime_application).to receive(:means_passported?).and_return(means_passported)
       end
 
-      let(:under18) { nil }
-      let(:passporting_benefit) { nil }
-
-      context 'when applicant is under 18' do
-        let(:under18) { true }
+      context 'when applicant is means passported' do
+        let(:means_passported) { true }
 
         it { expect(subject.can_start?).to be(true) }
       end
 
-      context 'when applicant is over 18' do
-        let(:under18) { false }
+      context 'when applicant is not means passported' do
+        let(:means_passported) { false }
 
-        context 'and DWP check was successful' do
-          let(:passporting_benefit) { true }
-
-          it { expect(subject.can_start?).to be(true) }
-        end
-
-        context 'and DWP check failed' do
-          let(:passporting_benefit) { false }
-
-          it { expect(subject.can_start?).to be(false) }
-        end
+        it { expect(subject.can_start?).to be(false) }
       end
     end
   end

@@ -9,8 +9,7 @@ module Tasks
     end
 
     def can_start?
-      applicant.present? &&
-        (applicant.under18? || applicant.passporting_benefit?)
+      applicant.present? && crime_application.means_passported?
     end
 
     # If we have a `case` record we consider this in progress

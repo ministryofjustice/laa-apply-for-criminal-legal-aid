@@ -265,26 +265,9 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :ioj_passport }
 
-    before do
-      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported)
-    end
-
-    context 'and the means passporter was not triggered' do
-      let(:means_passported) { false }
-
-      it 'raises an error' do
-        expect {
-          subject.destination
-        }.to raise_error(
-          Decisions::BaseDecisionTree::InvalidStep, 'application is not means-passported'
-        )
-      end
-    end
-
-    context 'and the means passporter was triggered' do
-      let(:means_passported) { true }
-
-      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+    it 'runs the same logic as the `ioj` step' do
+      expect(subject).to receive(:after_ioj)
+      subject.destination
     end
   end
 

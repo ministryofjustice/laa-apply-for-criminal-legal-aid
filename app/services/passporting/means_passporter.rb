@@ -1,6 +1,8 @@
 module Passporting
   class MeansPassporter < BasePassporter
     def call
+      return passported? if resubmission?
+
       means_passport = []
       means_passport << MeansPassportType::ON_AGE_UNDER18   if applicant_under18?
       means_passport << MeansPassportType::ON_BENEFIT_CHECK if benefit_check_passed?
@@ -11,13 +13,33 @@ module Passporting
     end
 
     def passported?
-      crime_application.means_passport.any?
+      age_passported? || benefit_check_passported?
+    end
+
+    def age_passported?
+      return passported_on?(MeansPassportType::ON_AGE_UNDER18) if resubmission?
+
+      applicant_under18?
+    end
+
+    def benefit_check_passported?
+      return passported_on?(MeansPassportType::ON_BENEFIT_CHECK) if resubmission?
+
+      benefit_check_passed?
     end
 
     private
 
+    def applicant_under18?
+      FeatureFlags.u18_means_passport.enabled? && super
+    end
+
     def benefit_check_passed?
       applicant.passporting_benefit.present?
+    end
+
+    def passported_on?(kind)
+      crime_application.means_passport.include?(kind.to_s)
     end
   end
 end
