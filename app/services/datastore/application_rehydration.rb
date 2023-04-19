@@ -13,7 +13,7 @@ module Datastore
       crime_application.update!(
         client_has_partner: YesNoAnswer::NO,
         parent_id: parent.id,
-        date_stamp: parent.date_stamp,
+        date_stamp: date_stamp,
         ioj_passport: parent.ioj_passport,
         means_passport: parent.means_passport,
         applicant: applicant,
@@ -29,6 +29,13 @@ module Datastore
 
     def split_case?
       parent.return_details.reason.inquiry.split_case?
+    end
+
+    # For re-hydration of returned applications, we keep the original
+    # date stamp if the parent case type was date-stampable, otherwise
+    # we leave it `nil`, so a new date is applied on resubmission.
+    def date_stamp
+      parent.date_stamp if CaseType.new(parent.case.case_type).date_stampable?
     end
 
     def applicant

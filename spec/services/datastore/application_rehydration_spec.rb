@@ -61,6 +61,44 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
     end
 
+    context 'date stamp' do
+      let(:parent) do
+        super().deep_merge('case_details' => { 'case_type' => case_type })
+      end
+
+      context 'for a parent with a date-stampable case type' do
+        let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
+
+        it 'inherits the existing date stamp' do
+          expect(
+            crime_application
+          ).to receive(:update!).with(
+            hash_including(
+              date_stamp: an_instance_of(DateTime)
+            )
+          )
+
+          subject.call
+        end
+      end
+
+      context 'for a parent with a non date-stampable case type' do
+        let(:case_type) { CaseType::INDICTABLE.to_s }
+
+        it 'leaves the date stamp `nil`' do
+          expect(
+            crime_application
+          ).to receive(:update!).with(
+            hash_including(
+              date_stamp: nil
+            )
+          )
+
+          subject.call
+        end
+      end
+    end
+
     context 'for an already re-hydrated application' do
       let(:applicant) { 'something' }
 
