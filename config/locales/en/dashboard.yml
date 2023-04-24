@@ -52,8 +52,8 @@ en:
         submitted: Submitted
       no_records: There are no %{status} applications
     show:
-      page_title: Application certificate
-      heading: Application for criminal legal aid certificate
+      page_title: Application representation order
+      heading: Application for a criminal legal aid representation order
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"

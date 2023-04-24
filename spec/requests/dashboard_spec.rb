@@ -16,7 +16,7 @@ RSpec.describe 'Dashboard' do
     end
   end
 
-  describe 'show an application certificate (in `submitted` status)' do
+  describe 'show an application representation order (in `submitted` status)' do
     before do
       stub_request(:get, "http://datastore-webmock/api/v2/applications/#{application_fixture_id}")
         .to_return(body: application_fixture)
@@ -24,10 +24,10 @@ RSpec.describe 'Dashboard' do
       get completed_crime_application_path(application_fixture_id)
     end
 
-    it 'renders the certificate page' do
+    it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for criminal legal aid certificate'
+      assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
     it 'has print buttons' do
@@ -113,7 +113,7 @@ RSpec.describe 'Dashboard' do
     # rubocop:enable Layout/LineLength
   end
 
-  describe 'show an application certificate (in `returned` status)' do
+  describe 'show an application representation order (in `returned` status)' do
     # NOTE: this is almost identical to `submitted` state, only difference
     # is there is a notification banner with the return details and CTA button.
     # No need to test everything again.
@@ -125,10 +125,10 @@ RSpec.describe 'Dashboard' do
       get completed_crime_application_path(returned_application_fixture_id)
     end
 
-    it 'renders the certificate page' do
+    it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for criminal legal aid certificate'
+      assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
     # rubocop:disable Layout/LineLength
