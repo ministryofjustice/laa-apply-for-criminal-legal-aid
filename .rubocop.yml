@@ -76,6 +76,9 @@ RSpec/ContextWording:
 RSpec/StubbedMock:
   Enabled: false
 
+RSpec/IndexedLet:
+  Enabled: false
+
 RSpec/NoExpectationExample:
   Enabled: false
 

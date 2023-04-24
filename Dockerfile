@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine3.16 AS base
+FROM ruby:3.2.2-alpine3.17 AS base
 MAINTAINER LAA Crime Apply Team
 
 # dependencies required both at runtime and build time
