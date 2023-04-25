@@ -44,3 +44,6 @@ Brewfile.lock.json
 .env.development.local
 .env.test.local
 .env.local
+
+# Ignore IntelliJ IDE project-specific settings
+.idea/
