@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload rspec coverage (if failure)
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rspec-coverage
           path: coverage/*
@@ -113,29 +113,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Unlock git-crypt secrets
-        uses: sliteteam/github-action-git-crypt-unlock@8b1fa3ccc81e322c5c45fbab261eee46513fd3f8
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+      - name: Deploy staging
+        uses: ./.github/actions/deploy
+        with:
+          environment-name: staging
+          git-crypt-key: ${{ secrets.GIT_CRYPT_KEY }}
+          ecr-url: ${{ secrets.ECR_URL }}
+          kube-cert: ${{ secrets.KUBE_STAGING_CERT }}
+          kube-token: ${{ secrets.KUBE_STAGING_TOKEN }}
+          kube-cluster: ${{ secrets.KUBE_STAGING_CLUSTER }}
+          kube-namespace: ${{ secrets.KUBE_STAGING_NAMESPACE }}
 
-      - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_STAGING_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_STAGING_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_STAGING_CLUSTER }}
-          KUBE_NAMESPACE: ${{ secrets.KUBE_STAGING_NAMESPACE }}
-        run: |
-          echo "${KUBE_CERT}" > ca.crt
-          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
-          kubectl config use-context ${KUBE_CLUSTER}
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    environment: production
 
-      - name: Update deployment image
-        env:
-          ECR_URL: ${{ secrets.ECR_URL }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: envsubst < config/kubernetes/staging/deployment.tpl > config/kubernetes/staging/deployment.yml
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Apply manifest files
-        run: kubectl apply -f config/kubernetes/staging
+      - name: Deploy production
+        uses: ./.github/actions/deploy
+        with:
+          environment-name: production
+          git-crypt-key: ${{ secrets.GIT_CRYPT_KEY }}
+          ecr-url: ${{ secrets.ECR_URL }}
+          kube-cert: ${{ secrets.KUBE_PRODUCTION_CERT }}
+          kube-token: ${{ secrets.KUBE_PRODUCTION_TOKEN }}
+          kube-cluster: ${{ secrets.KUBE_PRODUCTION_CLUSTER }}
+          kube-namespace: ${{ secrets.KUBE_PRODUCTION_NAMESPACE }}
