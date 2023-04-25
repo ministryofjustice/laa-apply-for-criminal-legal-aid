@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-staging
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  name: deployment-production
+  namespace: laa-apply-for-criminal-legal-aid-production
 spec:
-  replicas: 2
+  replicas: 4
   revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate
@@ -13,11 +13,11 @@ spec:
       maxSurge: 100%
   selector:
     matchLabels:
-      app: apply-for-criminal-legal-aid-web-staging
+      app: apply-for-criminal-legal-aid-web-production
   template:
     metadata:
       labels:
-        app: apply-for-criminal-legal-aid-web-staging
+        app: apply-for-criminal-legal-aid-web-production
         tier: frontend
     spec:
       containers:
@@ -57,9 +57,9 @@ spec:
           periodSeconds: 10
         envFrom:
           - configMapRef:
-              name: configmap-staging
+              name: configmap-production
           - secretRef:
-              name: secrets-staging
+              name: secrets-production
         env:
           #
           # secrets created by `certificates.yml`
@@ -67,12 +67,12 @@ spec:
           - name: LAA_PORTAL_SP_CERT
             valueFrom:
               secretKeyRef:
-                name: portal-sp-certificate-staging
+                name: portal-sp-certificate-production
                 key: tls.crt
           - name: LAA_PORTAL_SP_PRIVATE_KEY
             valueFrom:
               secretKeyRef:
-                name: portal-sp-certificate-staging
+                name: portal-sp-certificate-production
                 key: tls.key
           #
           # secrets created by `terraform`

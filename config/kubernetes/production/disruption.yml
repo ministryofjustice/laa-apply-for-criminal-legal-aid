@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pdb-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+spec:
+  maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: apply-for-criminal-legal-aid-web-production

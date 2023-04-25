@@ -40,8 +40,6 @@ spec:
 
 ---
 # [LAA Portal STAGING] -- https://portal.stg.legalservices.gov.uk/oamfed/idp/metadata
-# NOTE: Once the onboarding is complete, this is the certificate that
-# should be used, so Apply Staging authenticates against Portal Staging
 #
 apiVersion: cert-manager.io/v1
 kind: Certificate

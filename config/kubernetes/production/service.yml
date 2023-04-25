@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+  labels:
+    app: apply-for-criminal-legal-aid-web-production
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: 3000
+  selector:
+    app: apply-for-criminal-legal-aid-web-production

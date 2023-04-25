@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+data:
+  ENV_NAME: production
+  RACK_ENV: production
+  RAILS_ENV: production
+  RAILS_SERVE_STATIC_FILES: enabled
+  RAILS_LOG_TO_STDOUT: enabled
+  DATASTORE_API_ROOT: http://service-production.laa-criminal-applications-datastore-production.svc.cluster.local
+  BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
+  LAA_PORTAL_IDP_METADATA_URL: https://portal.legalservices.gov.uk/oamfed/idp/metadata
