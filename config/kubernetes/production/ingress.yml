@@ -22,6 +22,9 @@ spec:
   - hosts:
     - laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
     - laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
+  - hosts:
+    - apply-for-criminal-legal-aid.service.justice.gov.uk
+    secretName: domain-tls-certificate-production
   rules:
   - host: laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
     http:
@@ -34,6 +37,16 @@ spec:
             port:
               number: 80
   - host: laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: service-production
+            port:
+              number: 80
+  - host: apply-for-criminal-legal-aid.service.justice.gov.uk
     http:
       paths:
       - path: /
