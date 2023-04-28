@@ -12,6 +12,9 @@ metadata:
       if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk') {
         return 301 https://laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk;
       }
+      if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk') {
+        return 301 https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk;
+      }
       location = /.well-known/security.txt {
         auth_basic off;
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
@@ -22,6 +25,9 @@ spec:
   - hosts:
     - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
     - laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk
+  - hosts:
+    - staging.apply-for-criminal-legal-aid.service.justice.gov.uk
+    secretName: domain-tls-certificate-staging
   rules:
   - host: laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
     http:
@@ -34,6 +40,16 @@ spec:
             port:
               number: 80
   - host: laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: service-staging
+            port:
+              number: 80
+  - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
     http:
       paths:
       - path: /
