@@ -12,7 +12,7 @@ RSpec.describe Datastore::ApplicationCounters do
   end
 
   before do
-    stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+    stub_request(:get, 'http://datastore-webmock/api/v1/applications')
       .with(query: expected_query)
       .to_return(body: datastore_result)
   end
@@ -29,7 +29,7 @@ RSpec.describe Datastore::ApplicationCounters do
     let(:status) { 'returned' }
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
         .with(query: expected_query)
         .to_raise(StandardError)
 

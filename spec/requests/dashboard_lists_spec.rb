@@ -153,7 +153,7 @@ RSpec.describe 'Dashboard' do
     end
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
         .with(query: hash_including({ 'status' => 'submitted', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 
@@ -205,7 +205,7 @@ RSpec.describe 'Dashboard' do
     end
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v2/applications')
+      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
         .with(query: hash_including({ 'status' => 'returned', 'office_code' => '1A123B' }))
         .to_return(body: collection_fixture)
 

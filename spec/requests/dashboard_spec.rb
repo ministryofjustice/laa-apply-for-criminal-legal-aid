@@ -18,7 +18,7 @@ RSpec.describe 'Dashboard' do
 
   describe 'show an application representation order (in `submitted` status)' do
     before do
-      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{application_fixture_id}")
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_fixture_id}")
         .to_return(body: application_fixture)
 
       get completed_crime_application_path(application_fixture_id)
@@ -91,7 +91,7 @@ RSpec.describe 'Dashboard' do
     let(:app_split_case) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case') }
 
     before do
-      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{app_split_case_id}")
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{app_split_case_id}")
         .to_return(body: app_split_case)
 
       get completed_crime_application_path(app_split_case_id)
@@ -119,7 +119,7 @@ RSpec.describe 'Dashboard' do
     # No need to test everything again.
 
     before do
-      stub_request(:get, "http://datastore-webmock/api/v2/applications/#{returned_application_fixture_id}")
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{returned_application_fixture_id}")
         .to_return(body: returned_application_fixture)
 
       get completed_crime_application_path(returned_application_fixture_id)
