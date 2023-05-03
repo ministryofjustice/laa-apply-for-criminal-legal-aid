@@ -12,6 +12,9 @@ metadata:
       if ($host = 'laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk') {
         return 301 https://laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk;
       }
+      if ($host = 'laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk') {
+        return 301 https://apply-for-criminal-legal-aid.service.justice.gov.uk;
+      }
       location = /.well-known/security.txt {
         auth_basic off;
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
