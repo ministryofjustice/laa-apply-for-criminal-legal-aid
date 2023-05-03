@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Datastore::GetApplication do
   subject { described_class.new('12345') }
 
-  let(:endpoint) { 'http://datastore-webmock/api/v2/applications/12345' }
+  let(:endpoint) { 'http://datastore-webmock/api/v1/applications/12345' }
   let(:datastore_result) { '{"status":"submitted"}' }
 
   before do
