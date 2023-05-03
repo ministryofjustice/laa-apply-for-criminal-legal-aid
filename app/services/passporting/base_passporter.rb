@@ -16,6 +16,10 @@ module Passporting
     def passported?
       raise 'implement in subclasses'
     end
+
+    def passport_types_collection
+      raise 'implement in subclasses'
+    end
     # :nocov:
 
     private
@@ -26,6 +30,10 @@ module Passporting
 
     def applicant_under18?
       applicant.under18?
+    end
+
+    def passported_on?(kind)
+      passport_types_collection.include?(kind.to_s)
     end
   end
 end
