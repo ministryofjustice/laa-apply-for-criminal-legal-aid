@@ -12,7 +12,8 @@
     </ul>
 
     <div class="govuk-button-group govuk-!-margin-top-6">
-      <%= link_button 'Apply in eForms', Settings.eforms_url, class: 'app-button--m app-button--inverted' %>
+      <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
+                      class: 'app-button--m app-button--inverted' %>
     </div>
 
     <%= link_to 'Back to all applications', crime_applications_path, class: 'app-link--inverted govuk-!-font-size-19' %>

@@ -1,13 +1,30 @@
 <% title t('.page_title') %>
+<% step_header(path: Settings.portal_url) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
-      Your account cannot use this service yet
+<div class="govuk-grid-row app-inverted--card app-inverted-text">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text">
+      You need to apply using eForms
     </h1>
 
-    <p class="govuk-body">
-      Copy TBD.
+    <p class="govuk-body app-inverted-text">
+      You do not have access to the ‘<%= service_name %>’ service yet. This is because it is only available to some
+      providers while we test and improve it.
     </p>
+
+    <p class="govuk-body app-inverted-text">
+      You should apply using eForms for now.
+    </p>
+
+    <p class="govuk-body app-inverted-text">
+      Your law firm can register interest to use an early version of the service by emailing
+      <%= mail_to Settings.onboarding_email, class: 'app-link--inverted' %>. Otherwise, we’ll
+      contact you when you’re able to use it.
+    </p>
+
+    <div class="govuk-button-group govuk-!-margin-top-6">
+      <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
+                      class: 'app-button--m app-button--inverted' %>
+    </div>
   </div>
 </div>
