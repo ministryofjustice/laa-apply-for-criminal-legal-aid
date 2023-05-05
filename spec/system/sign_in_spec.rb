@@ -40,7 +40,7 @@ RSpec.describe 'Sign in user journey' do
 
     it 'redirects to the error page' do
       expect(current_url).to match(not_enrolled_errors_path)
-      expect(page).to have_content('Your account cannot use this service yet')
+      expect(page).to have_content('You need to apply using eForms')
     end
   end
 
