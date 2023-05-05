@@ -13,6 +13,8 @@ RSpec.describe Provider, type: :model do
 
   let(:office_codes) { %w[A1 B2 C3] }
 
+  it_behaves_like 'a reauthable model'
+
   describe '#display_name' do
     it { expect(subject.display_name).to eq('provider@example.com') }
   end

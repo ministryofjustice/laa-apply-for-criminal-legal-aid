@@ -43,7 +43,13 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
 
+    # Time after which a user's session will expire if they
+    # haven’t interacted with the service.
     config.x.session.timeout_in = ENV.fetch('SESSION_TIMEOUT_MINUTES', 60).to_i.minutes
+
+    # Time after which a user will be required to sign in again,
+    # regardless of their activity (session lifespan).
+    config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 1440).to_i.minutes
 
     config.x.gatekeeper= config_for(
       :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')

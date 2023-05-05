@@ -2,6 +2,7 @@
 
 Devise.setup do |config|
   require 'devise/orm/active_record'
+  require 'devise/models/reauthable'
   require 'laa_portal/saml_strategy'
   require 'laa_portal/saml_setup'
 
@@ -9,6 +10,11 @@ Devise.setup do |config|
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
   config.timeout_in = Rails.configuration.x.session.timeout_in
+
+  # ==> Configuration for :reauthable
+  # The time you want to timeout the user session after their last sign in,
+  # regardless of their activity.
+  config.reauthenticate_in = Rails.configuration.x.session.reauthenticate_in
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
