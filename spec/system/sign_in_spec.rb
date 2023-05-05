@@ -97,4 +97,22 @@ RSpec.describe 'Sign in user journey' do
       expect(current_url).to match(crime_applications_path)
     end
   end
+
+  context 'user is signed out if session lifespan is exceeded' do
+    before do
+      allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
+      allow(Provider).to receive(:reauthenticate_in).and_return(5.minutes)
+
+      click_button 'Sign in with LAA Portal'
+    end
+
+    it 'signs out the user after `reauthenticate_in` time has passed' do
+      travel 6.minutes
+
+      click_link 'Your applications'
+
+      expect(current_url).to match('/login')
+      expect(page).to have_content('Your Portal session expired. Please sign in again to continue.')
+    end
+  end
 end

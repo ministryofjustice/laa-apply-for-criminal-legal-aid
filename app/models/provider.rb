@@ -1,5 +1,5 @@
 class Provider < ApplicationRecord
-  devise :lockable, :timeoutable, :trackable,
+  devise :lockable, :timeoutable, :reauthable, :trackable,
          :omniauthable, omniauth_providers: %i[saml]
 
   store_accessor :settings,
