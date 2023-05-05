@@ -28,6 +28,10 @@ module Passporting
       benefit_check_passed?
     end
 
+    def passport_types_collection
+      crime_application.means_passport
+    end
+
     private
 
     def applicant_under18?
@@ -36,10 +40,6 @@ module Passporting
 
     def benefit_check_passed?
       applicant.passporting_benefit.present?
-    end
-
-    def passported_on?(kind)
-      crime_application.means_passport.include?(kind.to_s)
     end
   end
 end
