@@ -3,6 +3,7 @@ module Passporting
     def call
       ioj_passport = []
       ioj_passport << IojPassportType::ON_AGE_UNDER18 if age_passported?
+      ioj_passport << IojPassportType::ON_OFFENCE     if offence_passported?
 
       crime_application.update(ioj_passport:)
 
@@ -23,11 +24,20 @@ module Passporting
       applicant_under18?
     end
 
+    def offence_passported?
+      FeatureFlags.offence_ioj_passport.enabled? &&
+        offences.any?(&:ioj_passport)
+    end
+
     def passport_types_collection
       crime_application.ioj_passport
     end
 
     private
+
+    def offences
+      crime_application.case.charges.filter_map(&:offence)
+    end
 
     def applicant_under18?
       FeatureFlags.u18_ioj_passport.enabled? && super

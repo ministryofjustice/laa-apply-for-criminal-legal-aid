@@ -6,7 +6,8 @@ class Offence
   csv_attributes :code,
                  :name,
                  :offence_class,
-                 :offence_type
+                 :offence_type,
+                 :ioj_passport
 
   def self.find_by_name(name)
     find_by(name:)
