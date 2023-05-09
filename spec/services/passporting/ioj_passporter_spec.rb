@@ -13,36 +13,64 @@ RSpec.describe Passporting::IojPassporter do
   let(:charges) { [] }
 
   before do
-    allow(crime_application).to receive(:update)
     allow(crime_application).to receive(:ioj_passport).and_return([])
   end
 
   describe '#call' do
-    context 'IoJ passporting on age' do
-      it 'calls #age_passported? method' do
-        # we test this method logic more in deep separately
-        expect(subject).to receive(:age_passported?)
-        subject.call
-      end
+    before do
+      # we test this method logic more in deep separately
+      allow(subject).to receive(:offence_passported?).and_return(offence_passport)
+    end
 
-      context 'when applicant is over 18' do
-        let(:under18) { false }
+    context 'when applicant is over 18' do
+      let(:under18) { false }
 
-        it 'does not add an age passported type to the array' do
-          expect(crime_application).to receive(:update).with(ioj_passport: [])
+      context 'and none of the offences are passported' do
+        let(:offence_passport) { false }
+
+        it 'does not add any passport type to the array' do
+          expect(crime_application).to receive(:update).with(
+            ioj_passport: []
+          )
 
           subject.call
         end
       end
 
-      context 'when applicant is under 18' do
-        let(:under18) { true }
+      context 'and at least one of the offences is passported' do
+        let(:offence_passport) { true }
 
-        it 'adds an age passported type to the array' do
-          expect(
-            crime_application
-          ).to receive(:update).with(
+        it 'saves the offence passport type in the array' do
+          expect(crime_application).to receive(:update).with(
+            ioj_passport: [IojPassportType::ON_OFFENCE]
+          )
+
+          subject.call
+        end
+      end
+    end
+
+    context 'when applicant is under 18' do
+      let(:under18) { true }
+
+      context 'and none of the offences are passported' do
+        let(:offence_passport) { false }
+
+        it 'saves the age passport type in the array' do
+          expect(crime_application).to receive(:update).with(
             ioj_passport: [IojPassportType::ON_AGE_UNDER18]
+          )
+
+          subject.call
+        end
+      end
+
+      context 'and at least one of the offences is passported' do
+        let(:offence_passport) { true }
+
+        it 'saves the age passport and the offence passport types in the array' do
+          expect(crime_application).to receive(:update).with(
+            ioj_passport: [IojPassportType::ON_AGE_UNDER18, IojPassportType::ON_OFFENCE]
           )
 
           subject.call
