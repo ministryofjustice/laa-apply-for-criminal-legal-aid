@@ -8,6 +8,7 @@ en:
 
   helpers:
     back_link: Back
+    back_to_portal: Back to the LAA Online Portal
     start_again: Start again
     submit:
       save_and_continue: Save and continue
@@ -15,7 +16,7 @@ en:
       save_and_submit: Save and submit application
       find_address: Find address
       try_again: Try again
-      apply_in_eforms: Apply in eForms
+      apply_in_eforms: Apply using eForms
 
     legend:
       steps_provider_select_office_form:
