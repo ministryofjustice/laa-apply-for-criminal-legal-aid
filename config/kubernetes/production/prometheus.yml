@@ -1,0 +1,101 @@
+# Prometheus Alerts
+#
+# https://user-guide.cloud-platform.service.justice.gov.uk/documentation/monitoring-an-app/how-to-create-alarms.html
+#
+# Note: we are using a regex in the namespace to filter and trigger alerts
+# in both, staging and production environments.
+#
+# To see the current alerts in this namespace:
+#   kubectl describe prometheusrule -n laa-apply-for-criminal-legal-aid-production
+#
+# Alerts will be sent to the slack channel: #laa-crime-apply-alerts
+#
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+  labels:
+    role: alert-rules
+    prometheus: cloud-platform
+spec:
+  groups:
+  - name: application-rules
+    rules:
+    - alert: CrimeApply-NamespaceMissing
+      expr: >-
+        absent(kube_namespace_created{namespace=~"^laa-apply-for-criminal-legal-aid.*"})
+      for: 1m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Namespace `{{ $labels.namespace }}` is missing.
+
+    - alert: CrimeApply-DeploymentReplicasMismatch
+      expr: >-
+        kube_deployment_spec_replicas{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
+        != kube_deployment_status_replicas_available{job="kube-state-metrics"}
+      for: 15m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Deployment `{{ $labels.deployment }}` has not matched the expected number of replicas for more than 15m.
+
+    - alert: CrimeApply-KubePodCrashLooping
+      expr: >-
+        rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0
+      for: 1m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Pod `{{ $labels.pod }}` has been restarting in `{{ $labels.namespace }}` for the last 5m.
+
+    - alert: CrimeApply-KubeQuotaExceeded
+      expr: >-
+        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace=~"^laa-apply-for-criminal-legal-aid.*"} 
+        / ignoring(instance, job, type) (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0) > 90
+      for: 5m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Namespace `{{ $labels.namespace }}` is using {{ printf "%0.0f" $value}}% of its {{ $labels.resource }} quota.
+
+    - alert: CrimeApply-KubePodNotReady
+      expr: >-
+        sum by (namespace, pod) (kube_pod_status_phase{namespace=~"^laa-apply-for-criminal-legal-aid.*", job="kube-state-metrics", phase=~"Pending|Unknown"}) > 0
+      for: 1h
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Pod `{{ $labels.pod }}` in `{{ $labels.namespace }}` has been in a non-ready state for longer than 1h.
+
+    - alert: CrimeApply-SlowResponses
+      expr: >-
+        avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m])
+        / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0) 
+        by (exported_namespace) > 3
+      for: 1m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Namespace `{{ $labels.exported_namespace }}` is serving slow responses.
+
+    - alert: CrimeApply-Ingress4XX
+      expr: >-
+        avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[1m]) * 60 > 0) 
+        by (exported_namespace)
+      for: 1m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Namespace `{{ $labels.exported_namespace }}` is serving 4XX responses.
+
+    - alert: CrimeApply-Ingress5XX
+      expr: >-
+        avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[1m]) * 60 > 0) 
+        by (exported_namespace)
+      for: 1m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Namespace `{{ $labels.exported_namespace }}` is serving 5XX responses.
