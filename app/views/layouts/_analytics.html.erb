@@ -1,0 +1,7 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= analytics_tracking_id %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', <%== analytics_tracking_id.to_json %>, { 'anonymize_ip': true, 'allow_google_signals': false });
+</script>

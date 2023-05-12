@@ -37,6 +37,8 @@ module LaaApplyForCriminalLegalAid
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
+
     config.x.benefit_checker.use_mock = ENV.fetch('BC_USE_DEV_MOCK', false)
     config.x.benefit_checker.wsdl_url = ENV.fetch('BC_WSDL_URL', nil)
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
