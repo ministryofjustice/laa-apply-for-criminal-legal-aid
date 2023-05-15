@@ -38,6 +38,8 @@ module LaaApplyForCriminalLegalAid
     end
 
     config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
+    config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
+    config.x.analytics.cookies_consent_expiration = 6.months
 
     config.x.benefit_checker.use_mock = ENV.fetch('BC_USE_DEV_MOCK', false)
     config.x.benefit_checker.wsdl_url = ENV.fetch('BC_WSDL_URL', nil)
