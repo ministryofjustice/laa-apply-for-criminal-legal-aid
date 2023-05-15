@@ -25,7 +25,8 @@
 
     <dd class="govuk-summary-list__actions">
       <%= link_to t('summary.change_link_html', a11y_question:), row.change_path,
-                  class: 'govuk-link--no-visited-state' %>
+                  class: 'govuk-link--no-visited-state ga-pageLink',
+                  data: { ga_category: 'check your answers', ga_label: "change #{row.question}" } %>
     </dd>
   <% end %>
 </div>

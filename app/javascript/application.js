@@ -33,3 +33,8 @@ const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-l
 if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
 }
+
+// Google analytics additional tracking
+// Keep this at the bottom of this file
+import GAEvents from "local/ga-events"
+new GAEvents(window).init()
