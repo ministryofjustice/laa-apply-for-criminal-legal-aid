@@ -1,5 +1,6 @@
 class CookiesController < ApplicationController
   def show; end
+class CookiesController < UnauthenticatedController
 
   def update
     result = Cookies::SettingsForm.new(

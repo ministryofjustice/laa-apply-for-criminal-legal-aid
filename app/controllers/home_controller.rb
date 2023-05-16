@@ -1,5 +1,3 @@
-class HomeController < ApplicationController
-  skip_before_action :authenticate_provider!
-
+class HomeController < UnauthenticatedController
   def index; end
 end

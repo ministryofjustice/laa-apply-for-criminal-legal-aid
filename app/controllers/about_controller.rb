@@ -1,6 +1,4 @@
-class AboutController < ApplicationController
-  skip_before_action :authenticate_provider!
-
+class AboutController < UnauthenticatedController
   def privacy; end
   def contact; end
   def feedback; end
