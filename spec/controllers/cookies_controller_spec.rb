@@ -2,7 +2,15 @@ require 'rails_helper'
 
 RSpec.describe CookiesController do
   describe '#show' do
+    before do
+      allow(controller.helpers).to receive(:analytics_consent_cookie).and_return('foobar')
+    end
+
     it 'renders the expected page' do
+      expect(
+        Cookies::SettingsForm
+      ).to receive(:build).with('foobar').and_call_original
+
       get :show
       expect(response).to have_http_status(:ok)
     end
@@ -20,7 +28,7 @@ RSpec.describe CookiesController do
         cookies: an_instance_of(ActionDispatch::Cookies::CookieJar),
       ).and_call_original
 
-      post :update, params: { cookies: param_value }
+      post :update, params: { cookies_settings_form: { consent: param_value } }
 
       expect(flash[:cookies_consent_updated]).to eq(param_value)
       expect(response).to redirect_to(root_path)

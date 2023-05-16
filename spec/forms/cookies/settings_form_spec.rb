@@ -5,6 +5,13 @@ RSpec.describe Cookies::SettingsForm do
 
   let(:cookies_double) { {} }
 
+  describe '.build' do
+    it 'initialises the form object with the existing cookie value' do
+      expect(described_class).to receive(:new).with(consent: 'foobar')
+      described_class.build('foobar')
+    end
+  end
+
   describe '#save' do
     context 'for an `accept` value' do
       let(:consent_value) { described_class::CONSENT_ACCEPT }
@@ -26,6 +33,15 @@ RSpec.describe Cookies::SettingsForm do
 
     context 'for an unknown value' do
       let(:consent_value) { 'foobar' }
+
+      it 'sets the cookie and defaults to `reject` consent' do
+        expect(subject.save).to eq('reject')
+        expect(cookies_double['crime_apply_cookies_consent']).to eq({ expires: 6.months, value: 'reject' })
+      end
+    end
+
+    context 'for a nil value' do
+      let(:consent_value) { nil }
 
       it 'sets the cookie and defaults to `reject` consent' do
         expect(subject.save).to eq('reject')

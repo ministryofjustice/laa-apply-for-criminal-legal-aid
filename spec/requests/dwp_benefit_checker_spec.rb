@@ -30,7 +30,7 @@ RSpec.describe 'DWP passporting sub journey' do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Check your client’s details'
-      assert_select 'h2.govuk-heading-m', false # the summary is headless
+      assert_select 'h2.govuk-heading-m', { text: 'Client details', count: 0 } # the summary is headless
 
       assert_select 'dl.govuk-summary-list' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do

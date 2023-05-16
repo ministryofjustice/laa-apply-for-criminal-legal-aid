@@ -15,6 +15,16 @@
   <% render partial: 'layouts/header_navigation' %>
 <% end %>
 
+<% content_for(:cookie_banner) do %>
+  <% unless analytics_consent_cookie.present? %>
+    <%= render partial: 'layouts/cookie_banner' %>
+  <% end %>
+
+  <% if flash['cookies_consent_updated'] %>
+    <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+  <% end %>
+<% end %>
+
 <% content_for(:phase_banner) do %>
   <% render partial: 'layouts/phase_banner' %>
 <% end %>
