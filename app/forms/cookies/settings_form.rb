@@ -9,6 +9,10 @@ module Cookies
       CONSENT_REJECT = 'reject'.freeze,
     ].freeze
 
+    def self.build(consent)
+      new(consent:)
+    end
+
     def save
       cookies[cookie_name] = {
         expires: expiration,

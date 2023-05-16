@@ -8,6 +8,12 @@ en:
   service:
     name: Apply for criminal legal aid
 
+  cookies:
+    show:
+      settings_updated:
+        accept: You’ve accepted analytics cookies.
+        reject: You’ve rejected analytics cookies.
+
   date:
     formats:
       <<: *DATE_FORMATS
@@ -22,15 +28,6 @@ en:
       title: Notice
     alert:
       title: Alert
-
-  layouts:
-    header_navigation:
-      menu_button: Menu
-      nav_aria_label: Menu
-      button_aria_label: Show or hide menu
-      your_applications: Your applications
-      sign_in: Sign in
-      sign_out: Sign out
 
   support:
     array:

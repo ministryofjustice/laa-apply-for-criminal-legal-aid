@@ -4,6 +4,14 @@
 import { initAll } from 'govuk-frontend'
 initAll()
 
+// Cookie banner
+// https://design-system.service.gov.uk/components/cookie-banner/
+import CookieBanner from "local/cookie-banner"
+const $cookieBanner = document.querySelector('[data-module="govuk-cookie-banner"]')
+if ($cookieBanner) {
+  new CookieBanner($cookieBanner).init()
+}
+
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453
 import Input from "local/suggestions"

@@ -1,4 +1,5 @@
 <% flash.each do |type, msg| %>
+  <% next unless %w[success notice alert].include?(type.to_s) %>
   <% next unless msg.is_a?(String) %>
 
   <div class="govuk-notification-banner govuk-notification-banner--<%= type %>" role="alert"

@@ -1,0 +1,32 @@
+<div class="govuk-cookie-banner" data-nosnippet role="region"
+     aria-label="<%= t('.title', service_name:) %>" data-module="govuk-cookie-banner">
+  <div class="govuk-cookie-banner__message govuk-width-container" role="alert">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+          <%= t('.title', service_name:) %>
+        </h2>
+
+        <div class="govuk-cookie-banner__content">
+          <p class="govuk-body"><%= t('.content_line1') %></p>
+          <p class="govuk-body"><%= t('.content_line2') %></p>
+        </div>
+      </div>
+    </div>
+
+    <%= form_with url: cookies_path, method: :put do %>
+      <div class="govuk-button-group">
+        <button value="accept" type="submit" name="cookies_settings_form[consent]" class="govuk-button" data-module="govuk-button">
+          <%= t('.accept_button') %>
+        </button>
+
+        <button value="reject" type="submit" name="cookies_settings_form[consent]" class="govuk-button" data-module="govuk-button">
+          <%= t('.reject_button') %>
+        </button>
+
+        <%= link_to t('.cookies_link'), cookies_path, class: 'govuk-link ga-pageLink',
+                    data: { ga_category: 'cookie banner', ga_label: 'view cookies' } %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -14,11 +14,14 @@ en:
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
       save_and_submit: Save and submit application
+      save_cookie_settings: Save cookie settings
       find_address: Find address
       try_again: Try again
       apply_in_eforms: Apply using eForms
 
     legend:
+      cookies_settings_form:
+        consent: Do you want to accept analytics cookies?
       steps_provider_select_office_form:
         office_code: Select your office account number
       steps_client_has_partner_form:
@@ -80,6 +83,10 @@ en:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
     label:
+      cookies_settings_form:
+        consent_options:
+          accept: 'Yes'
+          reject: 'No'
       steps_provider_confirm_office_form:
         is_current_office_options:
           'yes': 'Yes'

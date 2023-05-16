@@ -1,29 +1,29 @@
-<h2 class="govuk-visually-hidden">Support links</h2>
+<h2 class="govuk-visually-hidden"><%= t('.header') %></h2>
 
 <ul class="govuk-footer__inline-list">
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Cookies', cookies_path, class: 'govuk-footer__link' %>
+    <%= link_to t('.cookies'), cookies_path, class: 'govuk-footer__link' %>
   </li>
 
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Contact', about_contact_path, class: 'govuk-footer__link' %>
+    <%= link_to t('.contact'), about_contact_path, class: 'govuk-footer__link' %>
   </li>
 
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Feedback', about_feedback_path, class: 'govuk-footer__link' %>
+    <%= link_to t('.feedback'), about_feedback_path, class: 'govuk-footer__link' %>
   </li>
 
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Privacy policy', about_privacy_path, class: 'govuk-footer__link' %>
+    <%= link_to t('.privacy'), about_privacy_path, class: 'govuk-footer__link' %>
   </li>
 
   <li class="govuk-footer__inline-list-item">
-    <%= link_to 'Accessibility statement', about_accessibility_path, class: 'govuk-footer__link' %>
+    <%= link_to t('.accessibility'), about_accessibility_path, class: 'govuk-footer__link' %>
   </li>
 
   <li class="govuk-footer__inline-list-item">
     <%# Destination needs validating %>
 
-    <%= link_to 'Terms and conditions', 'https://www.gov.uk/government/publications/laa-online-portal-help-and-information', class: 'govuk-footer__link' %>
+    <%= link_to t('.terms_and_conditions'), 'https://www.gov.uk/government/publications/laa-online-portal-help-and-information', class: 'govuk-footer__link' %>
   </li>
 </ul>

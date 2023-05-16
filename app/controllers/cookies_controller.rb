@@ -1,5 +1,9 @@
 class CookiesController < UnauthenticatedController
-  def show; end
+  def show
+    @form_object = Cookies::SettingsForm.build(
+      helpers.analytics_consent_cookie
+    )
+  end
 
   def update
     result = Cookies::SettingsForm.new(
@@ -13,6 +17,6 @@ class CookiesController < UnauthenticatedController
   private
 
   def consent_param
-    params.require(:cookies)
+    params.require(:cookies_settings_form).fetch(:consent)
   end
 end
