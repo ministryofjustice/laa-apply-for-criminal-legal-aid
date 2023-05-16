@@ -63,6 +63,9 @@ Rails.application.routes.draw do
     get :accessibility
   end
 
+  # Handle the cookies consent
+  resource :cookies, only: [:show, :update]
+
   resources :crime_applications, except: [:show, :new, :update], path: 'applications' do
     get :confirm_destroy, on: :member
 
