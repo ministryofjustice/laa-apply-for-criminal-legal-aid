@@ -12,6 +12,22 @@
   background-color: transparent;
 }
 
+// Differentiate the header in non-production envs by
+// overriding the color of the header and phase tag
+.app-body {
+  &--staging,
+  &--local {
+    $colour: govuk-colour("orange");
+
+    .govuk-header__container {
+      border-bottom-color: $colour;
+    }
+    .govuk-tag.govuk-phase-banner__content__tag {
+      background-color: $colour;
+    }
+  }
+}
+
 // Avoid flickering header menu on small screens, where on page load
 // the header menu briefly shows before being hidden. This makes it
 // visually hidden from the start, and a bit of javascript removes

@@ -1,6 +1,13 @@
 ---
 en:
   layouts:
+    phase_banner:
+      text: This is an MVP. Some things may not work as expected.
+      tag:
+        local: local
+        staging: staging
+        production: alpha
+
     header_navigation:
       menu_button: Menu
       nav_aria_label: Menu
