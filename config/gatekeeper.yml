@@ -6,12 +6,12 @@
 #
 localhost:
   office_codes:
-    - 1A123B # samlmock and tests
-    - 1K022G # temporarily, portal stg
+    - 1A123B # mock and tests
+    - 1K022G # portal dev/stg test user
 
 staging:
   office_codes:
-    - 1A123B # samlmock and tests
+    - 1A123B # mock and tests
     - 1K022G
     - 0Z981E
 

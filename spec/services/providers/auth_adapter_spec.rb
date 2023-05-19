@@ -13,25 +13,13 @@ RSpec.describe Providers::AuthAdapter do
     )
   end
 
-  let(:email) { nil }
+  let(:email) { 'test@example.com' }
   let(:roles) { 'EFORMS,EFORMS_eFormsAuthor,CRIMEAPPLY' }
-  let(:office_codes) { nil }
+  let(:office_codes) { '1A123B:2A555X' }
 
   describe 'email attribute' do
-    context 'when the email attribute is present' do
-      let(:email) { 'test@example.com' }
-
-      it 'returns the email' do
-        expect(subject.info).to match(a_hash_including(email: 'test@example.com'))
-      end
-    end
-
-    context 'when the email attribute is not present or blank' do
-      let(:email) { nil }
-
-      it 'returns a fallback mock email' do
-        expect(subject.info).to match(a_hash_including(email: 'provider@example.com'))
-      end
+    it 'returns the email' do
+      expect(subject.info).to match(a_hash_including(email: 'test@example.com'))
     end
   end
 
@@ -42,22 +30,8 @@ RSpec.describe Providers::AuthAdapter do
   end
 
   describe '#office_codes' do
-    let(:codes_array) { %w[1A123B 2A555X] }
-
-    context 'when codes are tokenized with commas' do
-      let(:office_codes) { codes_array.join(',') }
-
-      it 'returns the account description' do
-        expect(subject.info).to match(a_hash_including(office_codes: codes_array))
-      end
-    end
-
-    context 'when codes are tokenized with colons' do
-      let(:office_codes) { codes_array.join(':') }
-
-      it 'returns the account description' do
-        expect(subject.info).to match(a_hash_including(office_codes: codes_array))
-      end
+    it 'returns the account description' do
+      expect(subject.info).to match(a_hash_including(office_codes: %w[1A123B 2A555X]))
     end
   end
 end
