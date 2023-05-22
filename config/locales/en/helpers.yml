@@ -65,6 +65,7 @@ en:
       steps_case_charges_form:
         offence_name: Add one offence at a time, for example, robbery. You can add more later.
         date_to: Leave blank if the offence happened on a single date
+        date_from: For example, 27 3 2007
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
