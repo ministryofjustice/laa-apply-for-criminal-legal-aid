@@ -20,7 +20,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :confirm_result, @form_object.choices, :value,
                                            inline: false,
-                                           legend: { aria_describedby: 'dwp-confirm-result-desc' }%>
+                                           legend: { 'aria-describedby': 'dwp-confirm-result-desc' }%>
 
       <%= f.continue_button %>
     <% end %>
