@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row app-inverted--card app-inverted-text govuk-!-margin-bottom-5">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0">
+    <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0" id="dwp-desc">
       <%= t '.heading' %>
     </h1>
   </div>
@@ -19,7 +19,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :confirm_result, @form_object.choices, :value,
-                                           inline: false %>
+                                           inline: false,
+                                           legend: { aria_describedby: 'dwp-desc' }%>
 
       <%= f.continue_button %>
     <% end %>
