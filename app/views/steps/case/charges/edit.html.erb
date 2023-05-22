@@ -30,7 +30,10 @@
                                   legend: {
                                     text: t("helpers.legend.#{f.object_name}.date_from", index:),
                                     size: 's'
-                                  } %>
+                                  },
+                                  hint: {
+                                    text: t("helpers.hint.#{f.object_name}.date_from")
+                                  }%>
 
           <%= od.govuk_date_field :date_to, maxlength_enabled: true,
                                   legend: {
