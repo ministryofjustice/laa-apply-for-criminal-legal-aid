@@ -7,10 +7,9 @@ spec:
   selfSigned: {}
 
 ---
-# [LAA Portal SAML MOCK] -- https://samlmock.dev.legalservices.gov.uk/metadata
 # [LAA Portal DEV] -- https://portal.dev.legalservices.gov.uk/oamfed/idp/metadata
 # NOTE: We don't have a corresponding Apply DEV, but we can use this cert for
-# localhost tests, and also for saml mock (although mock will ignore them)
+# localhost tests
 #
 apiVersion: cert-manager.io/v1
 kind: Certificate
