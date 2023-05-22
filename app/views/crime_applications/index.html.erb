@@ -44,7 +44,7 @@
               <td class="govuk-table__cell">
                 <%= button_to confirm_destroy_crime_application_path(app), method: :get,
                   class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0',
-                  'aria-label': "Delete #{app.applicant_name}'s application",
+                  'aria-label': t('.delete_button_a11y', applicant_name: app.applicant_name),
                   data: { module: 'govuk-button' } do; t('.delete_button'); end %>
               </td>
             </tr>
