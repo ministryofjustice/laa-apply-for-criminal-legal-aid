@@ -4,6 +4,7 @@ en:
     index:
       page_title: Your applications
       delete_button: Delete
+      delete_button_a11y: Delete %{applicant_name}'s application
       table_headings:
         applicant_name: Name
         created_at: Start date
