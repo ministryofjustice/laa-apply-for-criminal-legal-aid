@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">
+    <h1 class="govuk-heading-xl" id='charges-confirm-destroy-desc'>
       <%=t '.heading' %>
     </h1>
 
@@ -16,10 +16,12 @@
       <div class="govuk-button-group">
         <%= f.button t('.confirm_delete_button'),
                      class: 'govuk-button govuk-button--warning',
+                     'aria-labelledby': 'charges-confirm-destroy-desc',
                      data: { module: 'govuk-button' } %>
 
         <%= link_to edit_steps_case_charges_summary_path,
                     class: 'govuk-button govuk-button--primary',
+                    'aria-labelledby': 'charges-confirm-destroy-desc',
                     data: { module: 'govuk-button' } do; t('.cancel_delete_button'); end %>
       </div>
     <% end %>
