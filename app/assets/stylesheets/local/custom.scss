@@ -112,3 +112,11 @@ $app-blue-button-colour: govuk-colour("blue");
 .autocomplete__wrapper * {
   @include govuk-typography-common();
 }
+
+// The tabs are focusable with JS but not through normal
+// keyboard navigation. We remove the outline when focused.
+.moj-sub-navigation__item {
+  &:focus {
+    outline: none;
+  }
+}

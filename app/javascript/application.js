@@ -35,6 +35,13 @@ if ($acElements) {
   }
 }
 
+// Keep focus on the sub-navigation
+// This improves accessibility when navigating with
+// keyboard or screen readers
+import SubNavigation from 'local/subnavigation'
+const $subNavigation = document.querySelector('nav.moj-sub-navigation')
+new SubNavigation($subNavigation).init()
+
 // Avoid flickering header menu on small screens
 // Refer to `stylesheets/local/custom.scss`
 const $headerNavigation = document.querySelector('ul.app-header-menu-hidden-on-load')
