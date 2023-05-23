@@ -115,6 +115,7 @@ en:
   kaminari:
     paginator:
       nav_aria_label: Results
+      nav_page_a11y: page of applications
     prev_page:
       previous: Previous
     next_page:
