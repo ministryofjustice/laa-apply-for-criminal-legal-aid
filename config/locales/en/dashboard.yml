@@ -116,8 +116,8 @@ en:
     paginator:
       nav_aria_label: Results
     prev_page:
-      previous: Previous
+      previous_html: Previous <span class="govuk-visually-hidden">page of applications</span>
     next_page:
-      next: Next
+      next_html: Next <span class="govuk-visually-hidden">page of applications</span>
     page:
       page: Page %{page}
