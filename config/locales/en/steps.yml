@@ -30,7 +30,7 @@ en:
         edit:
           page_title: Enter your client’s details
           heading: Enter your client’s details
-          full_name_legend: Full name
+          full_name_legend: Client's full name
       has_nino:
         edit:
           page_title: Enter your client’s NINO
