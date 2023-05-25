@@ -15,10 +15,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 933253dc37dc20c51efe962418c59f4d8bf8c75b
-  tag: v0.1.5
+  revision: d9802d263c9a0fb34c6cfdb10473567c592f34a9
+  tag: v0.1.9
   specs:
-    laa-criminal-legal-aid-schemas (0.1.4)
+    laa-criminal-legal-aid-schemas (0.1.9)
       dry-struct
       json-schema (~> 3.0.0)
 
@@ -428,7 +428,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 PLATFORMS
   ruby
