@@ -85,7 +85,7 @@ module DeveloperTools
           other_names: '',
           date_of_birth: overrides.fetch(:dob, details[:dob]),
           nino: overrides.fetch(:nino, details[:nino]),
-          passporting_benefit: overrides.fetch(:dwp, true),
+          passporting_benefit: overrides.fetch(:passporting_benefit, true),
         )
       end
     end
