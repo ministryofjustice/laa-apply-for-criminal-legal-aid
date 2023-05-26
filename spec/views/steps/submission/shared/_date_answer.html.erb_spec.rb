@@ -30,7 +30,7 @@ describe 'Rendering a summary row of type `DateAnswer`' do
 
     it 'renders the expected row' do
       assert_select 'div.govuk-summary-list__row', 1 do
-        assert_select 'dd.govuk-summary-list__value', text: '22 November 2008 12:00'
+        assert_select 'dd.govuk-summary-list__value', text: '22 November 2008 12:00am'
       end
     end
   end

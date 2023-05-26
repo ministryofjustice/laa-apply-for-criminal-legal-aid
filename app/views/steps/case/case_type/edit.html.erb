@@ -11,13 +11,15 @@
           <% if choice == CaseType::APPEAL_TO_CROWN_COURT %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :appeal_maat_id, width: 'one-third', autocomplete: 'off' %>
+              <%= f.govuk_text_field :appeal_maat_id, autocomplete: 'off', width: 'one-third',
+                                     extra_letter_spacing: true %>
             <% end %>
 
           <% elsif choice == CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES %>
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :appeal_with_changes_maat_id, width: 'one-third', autocomplete: 'off' %>
+              <%= f.govuk_text_field :appeal_with_changes_maat_id, autocomplete: 'off', width: 'one-third',
+                                     extra_letter_spacing: true %>
               <%= f.govuk_text_area :appeal_with_changes_details %>
             <% end %>
 

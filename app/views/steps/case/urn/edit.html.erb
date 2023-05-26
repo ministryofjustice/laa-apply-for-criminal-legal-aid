@@ -5,8 +5,10 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :urn, autocomplete: 'off', width: 'one-third', label: { tag: 'h1', size: 'xl' }  do %>
-        <p><%= t('.urn_guidance') %></p>
+      <%= f.govuk_text_field :urn, autocomplete: 'off', width: 'one-third',
+                             extra_letter_spacing: true,
+                             label: { tag: 'h1', size: 'xl' } do %>
+        <p class="govuk-body"><%= t('.urn_guidance') %></p>
       <% end %>
 
       <%= f.continue_button %>
