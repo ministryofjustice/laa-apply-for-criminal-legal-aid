@@ -10,7 +10,11 @@
         <% IojReasonType.values.each_with_index do |ioj_type, index| %>
           <span id="<%= ioj_type %>"></span>
           <%= f.govuk_check_box :types, ioj_type.to_s, link_errors: index.zero? do %>
-            <% f.govuk_text_area ioj_type.justification_field_name, label: { hidden: true }, 'aria-label': t('helpers.label.steps_case_ioj_form.ioj_justification_hint_a11y') %>
+            <% f.govuk_text_area ioj_type.justification_field_name,
+                                 label: { hidden: true },
+                                 'aria-live': 'polite',
+                                 'aria-label': t('helpers.label.steps_case_ioj_form.ioj_justification_hint_a11y')
+                                 %>
           <% end %>
         <% end %>
       <% end %>
