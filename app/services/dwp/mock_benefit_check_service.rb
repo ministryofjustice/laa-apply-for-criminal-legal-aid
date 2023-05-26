@@ -6,7 +6,6 @@ module DWP
       'BLOGGS'  => { nino: 'NC123457A', dob: '04-01-1990' },
       'WRINKLE' => { nino: 'NC010150A', dob: '01-01-1950' },
       'WALKER'  => { nino: 'JA293483A', dob: '10-01-1980' },
-      'POTTER'  => { nino: 'NC010155A', dob: '01-01-2007' }, # For under 18 passported on IOJ testing
     }.freeze
 
     def self.call(*args)

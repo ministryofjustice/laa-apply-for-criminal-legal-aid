@@ -44,7 +44,8 @@ en:
       steps_case_has_codefendants_form:
         has_codefendants: Does your client have any co-defendants in this case?
       steps_case_codefendants_form:
-        conflict_of_interest: Is there a conflict of interest with this co-defendant?
+        codefendants_attributes:
+          conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_hearing_details_form:
         hearing_date: Date of next hearing
       steps_case_ioj_form:
@@ -64,8 +65,9 @@ en:
         urn: For example, ‘12 AB 3456789’.
       steps_case_charges_form:
         offence_name: Add one offence at a time, for example, robbery. You can add more later.
-        date_to: Leave blank if the offence happened on a single date
-        date_from: For example, 27 3 2007
+        offence_dates_attributes:
+          date_from: For example, 27 3 2007
+          date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
@@ -144,9 +146,10 @@ en:
       steps_case_has_codefendants_form:
         has_codefendants_options: *YESNO
       steps_case_codefendants_form:
-        first_name: First name
-        last_name: Last name
-        conflict_of_interest_options: *YESNO
+        codefendants_attributes:
+          first_name: First name
+          last_name: Last name
+          conflict_of_interest_options: *YESNO
       steps_case_hearing_details_form:
         hearing_court_name: Court name
       steps_case_ioj_form:

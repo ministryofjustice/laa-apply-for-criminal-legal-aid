@@ -12,7 +12,9 @@
                                            @form_object.choices,
                                            :value %>
 
-      <%= f.govuk_phone_field :telephone_number, autocomplete: 'off', width: 'one-third', label: { size: 'm' } %>
+      <%= f.govuk_phone_field :telephone_number, autocomplete: 'off', width: 'one-third',
+                              extra_letter_spacing: true,
+                              label: { size: 'm' } %>
 
       <%= f.continue_button %>
     <% end %>

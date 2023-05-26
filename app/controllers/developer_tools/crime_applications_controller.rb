@@ -39,6 +39,34 @@ module DeveloperTools
       redirect_to edit_steps_client_benefit_check_result_path(crime_application)
     end
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def under18_bypass
+      find_or_create_applicant(
+        dob: rand(15..17).years.ago,
+        nino: nil,
+        passporting_benefit: nil,
+      ).update(
+        correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
+        telephone_number: '123456789',
+      )
+
+      find_or_create_case
+
+      crime_application.update(
+        client_has_partner: YesNoAnswer::NO,
+        navigation_stack: [
+          edit_steps_client_has_partner_path(crime_application),
+          edit_steps_client_details_path(crime_application),
+          edit_steps_client_contact_details_path(crime_application),
+          edit_steps_case_urn_path(crime_application),
+          edit_steps_case_case_type_path(crime_application),
+        ]
+      )
+
+      redirect_to edit_steps_case_case_type_path(crime_application)
+    end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
     private
 
     def crime_application
@@ -47,7 +75,7 @@ module DeveloperTools
       )
     end
 
-    def find_or_create_applicant
+    def find_or_create_applicant(overrides = {})
       Applicant.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
         surname, details = DWP::MockBenefitCheckService::KNOWN.to_a.sample
 
@@ -55,9 +83,17 @@ module DeveloperTools
           first_name: record.first_name || 'Test',
           last_name: surname,
           other_names: '',
-          date_of_birth: details[:dob],
-          nino: details[:nino],
-          passporting_benefit: true,
+          date_of_birth: overrides.fetch(:dob, details[:dob]),
+          nino: overrides.fetch(:nino, details[:nino]),
+          passporting_benefit: overrides.fetch(:passporting_benefit, true),
+        )
+      end
+    end
+
+    def find_or_create_case
+      Case.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
+        record.update(
+          urn: '',
         )
       end
     end

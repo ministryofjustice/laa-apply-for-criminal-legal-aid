@@ -24,7 +24,9 @@ module Adapters
         super(
           options.merge(
             methods: [:charges, :has_codefendants],
-            except: [:offences]
+            # `offence_class` is the overall application class, and is
+            # generated and injected by the datastore, we don't use it
+            except: [:offences, :offence_class]
           )
         )
       end

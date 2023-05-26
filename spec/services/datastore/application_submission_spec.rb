@@ -52,7 +52,7 @@ RSpec.describe Datastore::ApplicationSubmission do
 
     Charge.create(
       case: kase,
-      offence_name: 'Robbery',
+      offence_name: 'Attempt robbery',
       offence_dates: [OffenceDate.new(date_from: '01-02-2000')]
     )
 
@@ -137,6 +137,14 @@ RSpec.describe Datastore::ApplicationSubmission do
         expect(
           LaaCrimeSchemas::Validator.new(payload)
         ).to be_valid
+      end
+
+      # This test is redundant as we have the one above, but is a quick
+      # way to see in the logs why exactly the validation is failing
+      it 'has no schema errors' do
+        expect(
+          LaaCrimeSchemas::Validator.new(payload).fully_validate
+        ).to be_empty
       end
 
       it 'calls the API and submits the serialized application' do

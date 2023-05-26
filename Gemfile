@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby File.read('.ruby-version').chomp
 
 gem 'faraday', '~> 2.7'
-gem 'govuk_design_system_formbuilder', '~> 3.3.0'
+gem 'govuk_design_system_formbuilder', '~> 4.0.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
 gem 'lograge'
@@ -43,7 +43,7 @@ gem 'laa-criminal-applications-datastore-api-client',
     github: 'ministryofjustice/laa-criminal-applications-datastore-api-client'
 
 gem 'laa-criminal-legal-aid-schemas',
-    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v0.1.5'
+    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v0.1.9'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
