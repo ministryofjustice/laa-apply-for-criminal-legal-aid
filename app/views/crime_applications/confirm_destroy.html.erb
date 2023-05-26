@@ -23,11 +23,13 @@
       <div class="govuk-button-group">
         <%= f.button t('.confirm_delete_button'),
                      class: 'govuk-button govuk-button--warning',
-                     data: { module: 'govuk-button' } %>
+                     data: { module: 'govuk-button' },
+                     'aria-label': t('.confirm_delete_button_a11y') %>
 
-        <%= link_to crime_applications_path,
-                    class: 'govuk-button govuk-button--primary',
-                    data: { module: 'govuk-button' } do; t('.cancel_delete_button'); end %>
+        <%= link_button t('.cancel_delete_button'),
+                        crime_applications_path,
+                        class: 'govuk-button--primary',
+                        'aria-label': t('.cancel_delete_button_a11y') %>
       </div>
     <% end %>
   </div>

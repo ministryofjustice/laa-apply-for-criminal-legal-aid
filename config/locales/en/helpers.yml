@@ -138,6 +138,7 @@ en:
         appeal_maat_id: Previous MAAT ID (optional)
         appeal_with_changes_maat_id: Previous MAAT ID (optional)
         appeal_with_changes_details: Enter the details of what has changed
+        appeal_with_changes_details_a11y: Enter details of what has changed regarding your clients financial circumstances
       steps_case_charges_form:
         offence_name: Offence
       steps_case_charges_summary_form:
@@ -162,6 +163,7 @@ en:
         expert_examination_justification: Expert cross-examination justification
         interest_of_another_justification: Interest of another person justification
         other_justification: Other justification
+        ioj_justification_hint_a11y: Enter justification for legal aid according to your selection
         types_options:
           loss_of_liberty: It is likely that they will lose their liberty if any matter in the proceedings is decided against them
           suspended_sentence: They have been given a sentence that is suspended or non-custodial. If they break this, the court may be able to deal with them for the original offence
