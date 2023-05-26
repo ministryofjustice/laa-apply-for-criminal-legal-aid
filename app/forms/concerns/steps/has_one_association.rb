@@ -2,6 +2,7 @@ module Steps
   module HasOneAssociation
     extend ActiveSupport::Concern
 
+    # rubocop:disable Metrics/BlockLength
     class_methods do
       attr_accessor :association_name, :through_association
 
@@ -14,9 +15,7 @@ module Steps
       # Return the record if already exists, or initialise a blank one
       def associated_record(crime_application)
         parent = if through_association
-                   # :nocov: enable coverage once we use this in any form
                    existing_or_build(crime_application, through_association)
-                   # :nocov:
                  else
                    crime_application
                  end
@@ -32,12 +31,17 @@ module Steps
         self.association_name = name
         self.through_association = through
 
+        # Example: for a name argument `applicant`, we create
+        # read methods for `#applicant` and alias as `#record`
+        # For the special name `case`, we alias also as `#kase`
         define_method(name) do
           @_assoc ||= self.class.associated_record(crime_application)
         end
 
+        alias_method :record, name
         alias_method :kase, :case if name == :case
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end
