@@ -18,7 +18,7 @@
 
             <%= f.govuk_radio_button :case_type, choice.value do %>
               <%= f.govuk_text_field :appeal_with_changes_maat_id, width: 'one-third', autocomplete: 'off' %>
-              <%= f.govuk_text_area :appeal_with_changes_details %>
+              <%= f.govuk_text_area :appeal_with_changes_details, 'aria-label': t('helpers.label.steps_case_case_type_form.appeal_with_changes_details_a11y') %>
             <% end %>
 
           <% else %>
