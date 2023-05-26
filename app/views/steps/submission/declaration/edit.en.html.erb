@@ -47,7 +47,8 @@
       <%= f.govuk_fieldset legend: { text: t('.legal_representative_legend') } do %>
         <%= f.govuk_text_field :legal_rep_first_name, autocomplete: 'off', width: 'three-quarters' %>
         <%= f.govuk_text_field :legal_rep_last_name, autocomplete: 'off', width: 'three-quarters' %>
-        <%= f.govuk_text_field :legal_rep_telephone, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :legal_rep_telephone, autocomplete: 'off', width: 'three-quarters',
+                               extra_letter_spacing: true %>
       <% end %>
 
       <%= f.continue_button(primary: :save_and_submit) %>

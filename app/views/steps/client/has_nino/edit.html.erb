@@ -6,7 +6,9 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third', label: { tag: 'h1', size: 'xl' } %>
+      <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
+                             extra_letter_spacing: true,
+                             label: { tag: 'h1', size: 'xl' } %>
 
       <p class='govuk-body govuk-!-margin-bottom-6'>
         <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>
