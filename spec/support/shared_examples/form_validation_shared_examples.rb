@@ -3,7 +3,7 @@ RSpec.shared_examples 'a has-one-association form' do |options|
   let(:expected_attributes) { options[:expected_attributes] }
   let(:build_method_name) { "build_#{association_name}".to_sym }
 
-  let(:association_double) { instance_double(associated_class_name.camelize.constantize) }
+  let(:association_double) { associated_class_name.camelize.constantize.new }
 
   def associated_class_name
     reflection = CrimeApplication.reflect_on_association(association_name)
