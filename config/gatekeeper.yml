@@ -17,4 +17,5 @@ staging:
 
 production:
   office_codes:
+    - 1A123B # mock and tests
     - 2N232W # test provider in test firm
