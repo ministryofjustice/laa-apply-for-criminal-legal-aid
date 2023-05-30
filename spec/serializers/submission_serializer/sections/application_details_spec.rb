@@ -27,6 +27,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       parent_id: nil,
       schema_version: 1.0,
       reference: 6_000_001,
+      application_type: 'initial',
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
