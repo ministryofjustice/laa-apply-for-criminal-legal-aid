@@ -32,7 +32,7 @@ RSpec.describe 'Charges/offences summary page' do
       assert_select 'dl.govuk-summary-list' do
         assert_select 'div.govuk-summary-list__row', 1 do
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C or B'
+          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C'
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
 
           assert_select 'dd.govuk-summary-list__actions:nth-of-type(1) a', count: 1, text: 'Change offence'
@@ -54,7 +54,7 @@ RSpec.describe 'Charges/offences summary page' do
       assert_select 'dl.govuk-summary-list.govuk-summary-list--no-border' do
         assert_select 'div.govuk-summary-list__row', 1 do
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C or B'
+          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C'
           assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
 
           assert_select 'dd.govuk-summary-list__actions', count: 0

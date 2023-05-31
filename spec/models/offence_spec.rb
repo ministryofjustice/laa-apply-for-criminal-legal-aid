@@ -3,25 +3,28 @@ require 'rails_helper'
 RSpec.describe Offence, type: :model do
   describe '.find_by' do
     context 'can search by code' do
-      subject { described_class.find_by(code: 'FA06001') }
+      subject { described_class.find_by(code: 'CJ88116') }
 
       it 'returns the offence found' do
         expect(subject).to be_a(described_class)
       end
 
       it 'has the offence attributes' do
-        expect(subject.code).to eq('FA06001')
-        expect(subject.name).to eq('Fraud by false representation')
-        expect(subject.offence_class).to eq('F/G/K')
-        expect(subject.offence_type).to eq('CE Either Way')
+        expect(subject.name).to eq('Assault by beating')
+        expect(subject.offence_class).to eq('H')
+        expect(subject.offence_type).to eq('CS Summary Non-Motoring')
+        expect(subject.ioj_passport).to be(true)
       end
     end
 
     context 'can search by name' do
-      subject { described_class.find_by(name: 'Fraud by false representation') }
+      subject { described_class.find_by(name: 'Drive whilst disqualified') }
 
       it 'returns the offence found' do
-        expect(subject.code).to eq('FA06001')
+        expect(subject.code).to eq('RT88333')
+        expect(subject.offence_class).to eq('H')
+        expect(subject.offence_type).to eq('CM Summary - Motoring')
+        expect(subject.ioj_passport).to be(false)
       end
     end
 
@@ -44,7 +47,7 @@ RSpec.describe Offence, type: :model do
 
     it 'returns all offences' do
       expect(subject).to all(be_a(described_class))
-      expect(subject.size).to eq(233)
+      expect(subject.size).to eq(312)
     end
 
     it 'keeps the same order as in the CSV file' do

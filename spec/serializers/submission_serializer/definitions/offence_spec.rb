@@ -13,6 +13,7 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
       {
         name: 'Common assault',
         offence_class: 'H',
+        passportable: true,
         dates: [
           { date_from: 'date_from_1', date_to: 'date_to_1' }, { date_from: 'date_from_2', date_to: nil }
         ],
@@ -20,6 +21,7 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
       {
         name: 'An unlisted offence',
         offence_class: nil,
+        passportable: false,
         dates: [
           { date_from: 'date_from_1', date_to: nil }
         ]
