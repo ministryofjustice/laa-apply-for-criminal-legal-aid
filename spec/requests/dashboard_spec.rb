@@ -87,14 +87,22 @@ RSpec.describe 'Dashboard' do
     # NOTE: the return reason notification banner has different wording for
     # returned applications marked as split_case
 
-    let(:app_split_case_id) { '5d7d6320-98cb-40e2-b200-ccc10b75d96f' }
-    let(:app_split_case) { LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case') }
+    let(:app_split_case) do
+      LaaCrimeSchemas.fixture(1.0, name: 'application_returned') do |json|
+        json.deep_merge(
+          'return_details' => {
+            'reason' => 'split_case',
+            'details' => 'Offence 1 reason requires more detail'
+          }
+        )
+      end.to_json
+    end
 
     before do
-      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{app_split_case_id}")
+      stub_request(:get, "http://datastore-webmock/api/v1/applications/#{returned_application_fixture_id}")
         .to_return(body: app_split_case)
 
-      get completed_crime_application_path(app_split_case_id)
+      get completed_crime_application_path(returned_application_fixture_id)
     end
 
     # rubocop:disable Layout/LineLength

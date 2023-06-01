@@ -47,7 +47,7 @@ RSpec.describe Datastore::ApplicationRehydration do
     end
 
     context 'for a split case passported application' do
-      let(:parent) { JSON.parse(LaaCrimeSchemas.fixture(1.0, name: 'application_returned_split_case').read) }
+      let(:parent) { super().deep_merge('return_details' => { 'reason' => 'split_case' }) }
       let(:parent_ioj) { nil }
 
       it 'sets the `passport_override` flag on the Ioj record' do
