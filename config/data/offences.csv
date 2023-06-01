@@ -1,234 +1,313 @@
-code,name,offence_class,offence_type
-TH68010,Theft from a shop,F/G/K,CE Either Way
-CJ88116,Assault by beating,H,CS Summary Non-Motoring
-CD71039,Criminal damage to property valued under £5000,C,CE Either Way
-RT88191,Use a motor vehicle on a road / public place without third party insurance,H,CM Summary - Motoring
-MD71530,Possess a controlled drug of Class B - Cannabis / Cannabis Resin,H,CE Either Way
-CJ88144,Possess knife blade / sharp pointed article in a public place - Criminal Justice Act 1988,H,CE Either Way
-PL96001,Assault a constable in the execution of his / her duty,H,CS Summary Non-Motoring
-FA06001,Fraud by false representation,F/G/K,CE Either Way
-PH97003,Harassment - breach of a restraining order on conviction,H,CE Either Way
-CJ88001,Common assault,H,CS Summary Non-Motoring
-OF61102,Assault a person thereby occasioning them actual bodily harm,C,CE Either Way
-PU86004,Section 4 words / behaviour - fear unlawful violence,H,CS Summary Non-Motoring
-RT88333,Drive whilst disqualified,H,CM Summary - Motoring
-PC53001,Possess an offensive weapon in a public place,H,CE Either Way
-PU86116,Section 4A words / behaviour to cause harassment / alarm / distress,H,CS Summary Non-Motoring
-TH68036,Burglary dwelling and theft - no violence,E,CE Either Way
-TH68037,Burglary other than dwelling - theft,E,CE Either Way
-TH68023,Robbery,C/B,CI Indictable
-RT88334,Drive a motor vehicle otherwise than in accordance with a licence,H,CM Summary - Motoring
-AS14001,Breach a criminal behaviour order,H,CE Either Way
-PL96003,Obstruct/resist a constable in execution of duty,H,CS Summary Non-Motoring
-RT88007,Drive motor vehicle when alcohol level above limit,H,CM Summary - Motoring
-RT88026,Drive a motor vehicle dangerously,H,CE Either Way
-TH68020,Theft - other - including theft by finding,F/G/K,CE Either Way
-PU86149,"Use threatening / abusive words / behaviour likely to cause harassment, alarm or distress",H,CS Summary Non-Motoring
-PK78008,Make indecent photograph / pseudo-photograph of a child,J,CE Either Way
-BA76001,Fail to surrender to police / court bail at the appointed time,H,CS Summary Non-Motoring
-PH97004,Harassment without violence,H,CS Summary Non-Motoring
-RT88584,Drive motor vehicle with a proportion of a specified controlled drug above the specified limit,H,CM Summary - Motoring
-CD98067,Racially / religiously aggravated intentional harassment / alarm / distress - words / writing,H,CE Either Way
-PU86003,Affray,H,CE Either Way
-TH68007,Theft from a motor vehicle,F/G/K,CE Either Way
-CJ88149,Assault by beating of an emergency worker,H,CE Either Way
-FL96001,Breach a non-molestation order - Family Law Act 1996,H,CE Either Way
-MD71210,Possess a controlled drug of Class A - Cocaine,C,CE Either Way
-TH68073,Handle stolen goods,F/G/K,CE Either Way
-RT88010,Fail to provide specimen for analysis - vehicle driver,H,CM Summary - Motoring
-MD71231,Possess with intent to supply a controlled drug of Class A - Heroin,B,CE Either Way
-TH68001,Theft from the person of another,F/G/K,CE Either Way
-CJ67002,Drunk and disorderly in a public place,H,CS Summary Non-Motoring
-MD71526,Possess with intent to supply a controlled drug of Class B - Cannabis,B,CE Either Way
-SX03007,Sexual assault on a female,D,CE Either Way
-MD71230,Possess with intent to supply a controlled drug of Class A - Cocaine,B,CE Either Way
-SX03204,Sex offenders register - fail comply with notification requirements - SOA 2003,H,CE Either Way
-MD71211,Possess a controlled drug of Class A - Heroin,C,CE Either Way
-OF61131,Wound / inflict grievous bodily harm without intent,C,CE Either Way
-MD71234,Possess with intent to supply a controlled drug of Class A - Crack Cocaine,B,CE Either Way
-OF61016,Section 18 - wounding  with intent,B,CI Indictable
-TH68027,Burglary other than dwelling with intent to steal,E,CE Either Way
-TH68050,Take a motor vehicle without the owners consent,H,CM Summary - Motoring
-RT88578,Fail to stop a mechanically propelled vehicle when required by constable / traffic warden,H,CM Summary - Motoring
-RT88575,Drive a mechanically propelled vehicle on a road / in a public place without due care and attention,H,CM Summary - Motoring
-PC02021,Acquire / use / possess criminal property,B POCA,CE Either Way
-TH68078,Going equipped for theft - not motor vehicle,E,CE Either Way
-TH78011,Make off without making payment,H,CE Either Way
-TH68006,Theft of pedal cycle,F/G/K,CE Either Way
-TH68026,Burglary dwelling - with intent to steal,E,CE Either Way
-TH68013,Theft of motor vehicle,F/G/K,CE Either Way
-CA81001,Vehicle interference - motor vehicle,H,CS Summary Non-Motoring
-OF61017,Section 18 - grievous bodily harm with intent,B,CI Indictable
-TH68023A,Attempt robbery ,C,CI Indictable
-SX03220,Breach SHPO / interim SHPO / SOPO / interim SOPO / foreign travel order ,H,CE Either Way
-TH68002,Theft in dwelling other than an automatic machine or meter,F/G/K,CE Either Way
-MD71531,Produce controlled drug of Class B - cannabis,B,CE Either Way
-OF61014,Threats to kill,B,CE Either Way
-MT88007,Send letter / communication / article conveying a threatening message,H,CE Either Way
-RT88218,Driver of a vehicle fail to stop after a road accident,H,CM Summary - Motoring
-SX56025,Indecent assault on a girl under the age of 14 years ,J or D,CE Either Way
-CD98070,Racially / religiously aggravated common assault / beating,C,CE Either Way
-CJ88150,Common assault of an emergency worker,H,CE Either Way
-TH68072,Handling stolen goods - Theft Act 1968,F/G/K,CE Either Way
-CD98075,Racially / religiously aggravated harassment / alarm / distress by words / writing,H,CS Summary Non-Motoring
-CD71043,Threat to damage / destroy property,C,CE Either Way
-SS92039,Dishonestly fail notify change of circumstances affecting entitlement to social security benefit / advantage / payment,F/G/K,CE Either Way
-BA76002,Fail to answer to court / police bail as soon as practicable,H,CS Summary Non-Motoring
-MD71220,Possess a controlled drug of Class B - Amphetamine,H,CE Either Way
-SX03017,Assault a girl under 13 ,J,CE Either Way
-SX03002,Rape a woman 16 years of age or over - SOA 2003 ,J,CI Indictable
-TH68026A,Attempt burglary dwelling with intent to steal,E,CE Either Way
-MD71022,Possess a class C controlled drug,H,CE Either Way
-CA03005,Send by public communication network an offensive / indecent / obscene / menacing message / matter,H,CS Summary Non-Motoring
-TH68010A,Attempt theft from shop,F/G/K,CE Either Way
-CJ94005,Intimidate a witness / juror,I,CE Either Way
-CJ88148,Threaten a person with a blade / sharply pointed article in a public place,H,CE Either Way
-MD71225,Possess a controlled drug of Class B - Other,H,CE Either Way
-CJ88115,Possess indecent photograph / pseudo-photograph of a child ,J,CE Either Way
-MD71131C,Conspire to supply a class A controlled drug - heroin ,B,CI Indictable
-CY33049,Assault / ill-treat / neglect / abandon a child / young person to cause unnecessary suffering / injury,B,CE Either Way
-DA05001,Fail to attend for / remain for duration of initial assessment following test for class A drug,H,CS Summary Non-Motoring
-SX03128,Exposure - SOA 2003,D,CE Either Way
-TH68003,Theft by employee,F/G/K,CE Either Way
-MD71214,Possess a controlled drug of Class A - Crack Cocaine,C,CE Either Way
-CL77001,Use violence to secure entry to premises,H,CS Summary Non-Motoring
-CD98066,Racially / religiously aggravated fear / provocation of violence by words / writing,H,CE Either Way
-PH97009,Harassment - put in fear of violence,H,CE Either Way
-PL84001,Detainee / person charged fail / refuse to provide a sample for Class 'A' drug test,H,CS Summary Non-Motoring
-PH97006,Stalking without fear / alarm / distress,H,CS Summary Non-Motoring
-MD71130C,Conspire to supply a class A controlled drug - cocaine ,B,CI Indictable
-MD71131,Supply a controlled drug of Class A - Heroin,B,CE Either Way
-SC15004,Engage in controlling / coercive behaviour in an intimate / family relationship,H,CE Either Way
-COML030,Commit an act / series of acts with intent to pervert the course of public justice ,I,CI Indictable
-RT88220,Driver of a vehicle involved in a road accident fail to report that accident,H,CM Summary - Motoring
-TH68027A,Attempt burglary other than dwelling with intent to steal,E,CE Either Way
-FA06003,Fraud by abuse of position - Fraud Act 2006,F/G/K,CE Either Way
-AS14004,Individual fail to comply with a community protection notice,H,CS Summary Non-Motoring
-MD71134,Supply a controlled drug of Class A - Crack Cocaine,B,CE Either Way
-RT88096,Use a motor vehicle on a road without a valid test certificate,H,CM Summary - Motoring
-CJ08004,Possess extreme pornographic image portraying an act of intercourse / oral sex with a dead / alive animal ,D,CE Either Way
-PK78003,Distribute an indecent photograph / pseudo-photograph of a child,J,CE Either Way
-PC02020,Conceal / disguise / convert / transfer / remove criminal property,B POCA,CE Either Way
-FI68247,Possess a weapon for the discharge of a noxious liquid / gas / electrical incapacitation device / thing,B,CE Either Way
-PH97005,Harassment - breach of a restraining order after acquittal,H,CE Either Way
-MD71171,Concerned in supply of heroin ,B,CE Either Way
-ID10001,Possess / control identity documents with intent ,F,CI Indictable
-CD71015,Arson,C,CE Either Way
-EA03501,Extradition - Arrested under a Part 1 warrant  ,H,VA Misc. Applications
-AW06001,Cause unnecessary suffering to a protected animal - Animal Welfare Act 2006,H,CS Summary Non-Motoring
-SX56026,Indecent assault on a girl under the age of 16 years ,J,CE Either Way
-BA76005,Arrest by a constable for breaking / likely to break bail conditions - duty to surrender into the custody of a court,H,CS Summary Non-Motoring
-MD71219,Possess a controlled drug of Class A - Other,C,CE Either Way
-SX56028,Indecent assault on boy under the age of 14 years,J or D,CE Either Way
-RT88340,Drive a vehicle whilst unfit through drugs,H,CM Summary - Motoring
-CD71003,Arson with intent / reckless as to whether life was endangered ,B,CI Indictable
-SX03025,Offender 18 or over engage in penetrative sexual activity with a girl 13 to 15 - SOA 2003,J,CI Indictable
-SX03224A,Adult attempt to engage in sexual communication with a child,H,CE Either Way
-COML017,False imprisonment ,B,CI Indictable
-ED96015,Parent knowingly child not attending failed to ensure regular attendance at school,H,CS Summary Non-Motoring
-TH68146,Aggravated vehicle taking - ( initial taker ) and vehicle damage under £5000,H,CE Either Way
-COML025,Murder - victim one year of age or older ,A,CI Indictable
-SX03005,Assault a female 13 and over by penetration with part of body / a thing - SOA 2003,J,CI Indictable
-CD71038,Criminal damage to property - value over £5000,C,CE Either Way
-PR52043,Without authority possess inside a prison an item specified in section 40D(3B),H,CE Either Way
-MD71245,Possess with intent to supply a controlled drug of Class B - Other,B,CE Either Way
-MD71134C,Conspire to supply a class A controlled drug - crack cocaine,B,CI Indictable
-PU86002,Public order - violent disorder,B,CE Either Way
-EA03501,Extradition - Arrested under a Part 1 warrant,H,CO Criminal Related
-SX03013,Rape a girl under 13 ,J,CI Indictable
-RT88008,In charge of motor vehicle - alcohol level above limit,H,CM Summary - Motoring
-DD91034,Owner / person in charge of dog dangerously out of control causing injury,C,CE Either Way
-TH68045,Aggravated burglary - dwelling ,B,CI Indictable
-OF61095,Assault with intent to resist arrest,H,CE Either Way
-MD71233,Possess with intent to supply a controlled drug of Class A - MDMA,B,CE Either Way
-CJ09001,Possess a prohibited image of a child,J,CE Either Way
-MD71174,Concerned in the supply of crack cocaine ,B,CE Either Way
-CD71040,Destroy / damage property of a value unknown,C,CE Either Way
-PR52024,Bring / throw / convey a List 'A' prohibited article into / out of a prison ,B/C/H,CI Indictable
-FA06002,Dishonestly fail to disclose information to make a gain for self / another or cause / expose other to a loss,F/G/K,CE Either Way
-FA06004,Possess / control article for use in fraud - Fraud Act 2006,F/G/K,CE Either Way
-PC53002,Threaten a person with an offensive weapon in a public place ,H,CE Either Way
-PH97011,Stalking involving serious alarm / distress,H,CE Either Way
-TH68052,Drive a motor vehicle which had been taken without the owner's consent,H,CM Summary - Motoring
-MD71213,Possess a controlled drug of Class A - MDMA,C,CE Either Way
-AS14002,Fail to comply with a section 35 direction excluding a person from an area,H,CS Summary Non-Motoring
-PL02049,Assault designated / accredited person / inspector,H,CS Summary Non-Motoring
-MD71170,Concerned in supply of cocaine,B,CE Either Way
-MD71533,Concerned in the supply of a controlled drug of Class B - cannabis,B,CE Either Way
-SX56070,Rape a female under 16 ,J,CI Indictable
-AW06029,Duty of person responsible for animal to ensure welfare - Animal Welfare Act 2006,H,CS Summary Non-Motoring
-COML025A,Attempt murder - victim aged 1 year or over,A,CI Indictable
-RT88526,Cause serious injury by dangerous driving ,C/B,CE Either Way
-FI68321,Possess an imitation firearm with intent to cause fear of violence,B,CI Indictable
-SS92036,Dishonestly make a false statement to obtain a benefit / advantage / payment,F/G/K,CE Either Way
-SX03001,Rape a girl aged 13 / 14 / 15 - SOA 2003 ,J,CI Indictable
-OF61017A,Attempt to cause grievous bodily harm with intent to do grievous bodily harm,B,CI Indictable
-TH68054,Carried in / on a motor vehicle taken without the owners consent,H,CM Summary - Motoring
-SX03015,Assault a girl under 13 by penetration with a part of your body / a thing - SOA 2003,J,CI Indictable
-SX03158,Offender 18  or over engage in non penetrative sexual activity with girl 13 to 15 - SOA 2003 ,J,CE Either Way
-MD71552,Possess a controlled drug of Class B - cannabinoid receptor agonists,H,CE Either Way
-MD71130,Supply a controlled drug of Class A - Cocaine ,C,CE Either Way
-COML062,Act of outraging public decency - common law,H,CE Either Way
-SX56029,Indecent assault on boy under the age of 16 years ,J or D,CE Either Way
-COML020,Kidnap - common law,B,CI Indictable
-RT88076,Fail to stop vehicle when directed by PC / traffic warden / traffic officer / CSO engaged in regulation of road traffic,H,CM Summary - Motoring
-TH68007A,Attempt theft from motor vehicle,F/G/K,CE Either Way
-COML016,Escape from lawful custody,C,CI Indictable
-TH68081,Going equipped for burglary,E,CE Either Way
-TH68058,Abstract / use without authority electricity,F/G/K,CE Either Way
-DA05002,Fail to attend / remain for follow-up assessment following a test for presence of Class A drug - Drugs Act 2005,H,CS Summary Non-Motoring
-CA03009,Persistently make use of public communication network to cause annoyance / inconvenience / anxiety,H,CS Summary Non-Motoring
-TH68141,Aggravated vehicle taking - (initial taker) and dangerous driving,H,CE Either Way
-RT88221,Driver of a vehicle fail to stop after road accident - give name and address of self and owner / vehicle details,H,CM Summary - Motoring
-MT88005,Send communication / article of an indecent / offensive nature,H,CE Either Way
-VG24005,Begging in a public place,H,CS Summary Non-Motoring
-CD98074,Racially / religiously aggravated criminal damage,C,CE Either Way
-TH68071,Blackmail ,B,CI Indictable
-FI68421,Possess a firearm of length less than 30cm / 60cm - prohibited weapon ,B,CI Indictable
-SX03019,Cause / incite a girl under 13 to engage in sexual activity - no penetration,J,CE Either Way
-TH68023C,Conspire to commit robbery ,C,CI Indictable
-CJ15005,Disclose private sexual photographs and films with intent to cause distress,D,CE Either Way
-MD71239,Possess with intent to supply a controlled drug of Class A - Other ,B,CE Either Way
-TH68026C,Conspire to commit a burglary dwelling with intent to steal ,B,CI Indictable
-IC60006,Gross Indecency with a girl under fourteen years,J,CE Either Way
-SX03224,Engage in Sexual Communication with a child ,H,CE Either Way
-TH68144,Aggravated vehicle taking - ( initial taker ) and property damage under £5000,H,CE Either Way
-RT88567,Fail to give information relating to the identification of the driver / rider of a vehicle when required,H,CM Summary - Motoring
-TH68001A,Attempt theft from the person of another,F/G/K,CE Either Way
-MD71442,Possess with intent to supply a controlled drug of Class C - Other,C,CE Either Way
-SX03018,Assault a boy under 13 by touching - SOA 2003,J,CE Either Way
-RT88339,Drive whilst unfit through drink,H,CM Summary - Motoring
-MD71145C,Conspire to supply a class B controlled drug - other,B,CI Indictable
-CD71039A,Attempt criminal damage to property valued under £5000,C,CS Summary Non-Motoring
-MD71529,Concerned in production of a controlled drug of Class B - cannabis,B,CE Either Way
-TH68020A,Attempt theft - other - including by theft 'finding',F/G/K,CE Either Way
-RT88011,Fail to provide specimen - person in charge of vehicle,H,CM Summary - Motoring
-FI68010,Possess ammunition for a firearm without a certificate ,C,CE Either Way
-MD71240,Possess with intent to supply a controlled drug of Class B - Amphetamine ,B,CE Either Way
-CD98002,Breach of an anti-social behaviour order,H,CE Either Way
-MD71070,Obstruct an authorised person in exercise of a section 23 power to detain / search a person / vehicle / vessel re drugs,H,CE Either Way
-MD71139C,Conspire to supply a class A controlled drug - other ,B,CI Indictable
-MD71517,Possess with intent to supply a controlled drug of Class B - Cannabis Resin ,B,CE Either Way
-SX03225A,Adult attempt to meet a girl under 16 years of age following grooming ,D,CE Either Way
-MD71532,Supply a controlled drug of Class B - cannabis,B,CE Either Way
-TH68012,Theft from a meter / automatic machine ,F/G/K,CE Either Way
-PH97010,Stalking involving fear of violence,H,CE Either Way
-TH68079,Going equipped for theft of a motor vehicle,E,CE Either Way
-SX03029A,Attempt to cause / incite a girl 13 to 15 to engage in sexual activity - offender 18 or over - penetration,J,CI Indictable
-VE94158,Fraudulently use a registration mark / registration document,H,CE Either Way
-MT88006,Send letter / communication / article conveying indecent / offensive message,H,CE Either Way
-TH68147,Aggravated vehicle taking - (driver did not take) and dangerous driving,H,CE Either Way
-FI68320,Possess a firearm with intent to cause fear of violence,B,CI Indictable
-TH68044,Burglary dwelling - theft / attempt theft with violence,B,CI Indictable
-SX03162,Offender 18 or over cause / incite a girl 13 to 15 to engage in sexual activity - no penetration - SOA 2003,J,CE Either Way
-SX03014,Rape of a boy under 13 - SOA 2003,J,CI Indictable
-FA06001C,Conspire to commit fraud by false representation - Fraud Act 2006,F/G/K,CI Indictable
-SX03008,Sexual assault on a male,D,CE Either Way
-IC60005,Gross indecency with a boy under the age of fourteen years of age,J,CE Either Way
-MT88008,Send letter / communication / article conveying false information,H,CE Either Way
-OF61016A,Section 18 - attempt wounding with intent,B,CI Indictable
-PR52044,Unauthorised possession in prison of knife or offensive weapon ,H,CE Either Way
-VG24018,Vagrant - being found in or upon enclosed premises,H,CS Summary Non-Motoring
-LG02001,Drunk in charge of a child under the age of seven years,H,CS Summary Non-Motoring
-PR52028,Bring / throw / convey a List 'B' prohibited article into / out of a prison - Prison Act 1952,H,CE Either Way
-TH68006A,Attempt theft of pedal cycle,F/G/K,CE Either Way
+code,name,offence_type,offence_class,ioj_passport
+TH68010,"Theft from a shop (£30,000 or less)",CE Either Way,F,false
+TH68010,"Theft from a shop (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68010,"Theft from a shop (Over £100,000)",CE Either Way,K,false
+CJ88116,Assault by beating,CS Summary Non-Motoring,H,true
+CD71039,Aggravated criminal damage to property valued under £5000,CE Either Way,B,false
+CD71039,Criminal damage to property valued under £5000,CE Either Way,C,false
+RT88191,Use a motor vehicle on a road / public place without third party insurance,CM Summary - Motoring,H,false
+MD71530,Possess a controlled drug of Class B - Cannabis / Cannabis Resin,CE Either Way,H,false
+CJ88144,Possess knife blade / sharp pointed article in a public place - Criminal Justice Act 1988,CE Either Way,H,true
+PL96001,Assault a constable in the execution of his / her duty,CS Summary Non-Motoring,H,false
+FA06001,"Fraud by false representation (£30,000 or less)",CE Either Way,F,true
+FA06001,"Fraud by false representation (Over £30,000 up to £100,000)",CE Either Way,G,true
+FA06001,"Fraud by false representation (Over £100,000)",CE Either Way,K,true
+PH97003,Harassment - breach of a restraining order on conviction,CE Either Way,H,true
+CJ88001,Aggravated common assault,CS Summary Non-Motoring,C,true
+CJ88001,Common assault,CS Summary Non-Motoring,H,true
+OF61102,Assault a person thereby occasioning them actual bodily harm,CE Either Way,C,true
+PU86004,Section 4 words / behaviour - fear unlawful violence,CS Summary Non-Motoring,H,false
+RT88333,Drive whilst disqualified,CM Summary - Motoring,H,false
+PC53001,Possess an offensive weapon in a public place,CE Either Way,H,true
+PU86116,Section 4A words / behaviour to cause harassment / alarm / distress,CS Summary Non-Motoring,H,false
+TH68036,Aggravated burglary dwelling and theft - no violence,CE Either Way,B,true
+TH68036,Burglary dwelling and theft - no violence,CE Either Way,E,true
+TH68037,Aggravated burglary other than dwelling - theft,CE Either Way,B,true
+TH68037,Burglary other than dwelling - theft,CE Either Way,E,true
+TH68023,Armed robbery,CI Indictable,B,true
+TH68023,Robbery,CI Indictable,C,true
+RT88334,Drive a motor vehicle otherwise than in accordance with a licence,CM Summary - Motoring,H,false
+AS14001,Breach a criminal behaviour order,CE Either Way,H,true
+PL96003,Obstruct/resist a constable in execution of duty,CS Summary Non-Motoring,H,false
+RT88007,Drive motor vehicle when alcohol level above limit (causing death),CM Summary - Motoring,B,false
+RT88007,Drive motor vehicle when alcohol level above limit,CM Summary - Motoring,H,false
+RT88026,Drive a motor vehicle dangerously (causing death),CE Either Way,B,true
+RT88026,Drive a motor vehicle dangerously,CE Either Way,H,true
+TH68020,"Theft - other - including theft by finding (£30,000 or less)",CE Either Way,F,false
+TH68020,"Theft - other - including theft by finding (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68020,"Theft - other - including theft by finding (Over £100,000)",CE Either Way,K,false
+PU86149,"Use threatening / abusive words / behaviour likely to cause harassment, alarm or distress",CS Summary Non-Motoring,H,false
+PK78008,Make indecent photograph / pseudo-photograph of a child,CE Either Way,J,true
+BA76001,Fail to surrender to police / court bail at the appointed time,CS Summary Non-Motoring,H,false
+PH97004,Harassment without violence,CS Summary Non-Motoring,H,false
+RT88584,Drive motor vehicle with a proportion of a specified controlled drug above the specified limit (causing death),CM Summary - Motoring,B,false
+RT88584,Drive motor vehicle with a proportion of a specified controlled drug above the specified limit,CM Summary - Motoring,H,false
+CD98067,Racially / religiously aggravated intentional harassment / alarm / distress - words / writing,CE Either Way,H,false
+PU86003,Affray,CE Either Way,H,true
+TH68007,"Theft from a motor vehicle (£30,000 or less)",CE Either Way,F,false
+TH68007,"Theft from a motor vehicle (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68007,"Theft from a motor vehicle (Over £100,000)",CE Either Way,K,false
+CJ88149,Assault by beating of an emergency worker,CE Either Way,H,true
+FL96001,Breach a non-molestation order - Family Law Act 1996,CE Either Way,H,true
+MD71210,Possess a controlled drug of Class A - Cocaine,CE Either Way,C,false
+TH68073,"Handle stolen goods (£30,000 or less)",CE Either Way,F,false
+TH68073,"Handle stolen goods (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68073,"Handle stolen goods (Over £100,000)",CE Either Way,K,false
+RT88010,Fail to provide specimen for analysis - vehicle driver,CM Summary - Motoring,H,false
+MD71231,Possess with intent to supply a controlled drug of Class A - Heroin,CE Either Way,B,true
+TH68001,"Theft from the person of another (£30,000 or less)",CE Either Way,F,true
+TH68001,"Theft from the person of another (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68001,"Theft from the person of another  (Over £100,000)",CE Either Way,K,true
+CJ67002,Drunk and disorderly in a public place,CS Summary Non-Motoring,H,false
+MD71526,Possess with intent to supply a controlled drug of Class B - Cannabis,CE Either Way,B,true
+SX03007,Sexual assault on a female,CE Either Way,D,true
+MD71230,Possess with intent to supply a controlled drug of Class A - Cocaine,CE Either Way,B,true
+SX03204,Sex offenders register - fail comply with notification requirements - SOA 2003,CE Either Way,H,true
+MD71211,Possess a controlled drug of Class A - Heroin,CE Either Way,C,false
+OF61131,Wound / inflict grievous bodily harm without intent,CE Either Way,C,true
+MD71234,Possess with intent to supply a controlled drug of Class A - Crack Cocaine,CE Either Way,B,true
+OF61016,Section 18 - wounding with intent,CI Indictable,B,true
+TH68027,Aggravated burglary other than dwelling with intent to steal,CE Either Way,B,true
+TH68027,Burglary other than dwelling with intent to steal,CE Either Way,E,true
+TH68050,Take a motor vehicle without the owners consent (causing death),CM Summary - Motoring,C,false
+TH68050,Take a motor vehicle without the owners consent,CM Summary - Motoring,H,false
+RT88578,Fail to stop a mechanically propelled vehicle when required by constable / traffic warden,CM Summary - Motoring,H,false
+RT88575,Drive a mechanically propelled vehicle on a road / in a public place without due care and attention (causing death),CM Summary - Motoring,B,false
+RT88575,Drive a mechanically propelled vehicle on a road / in a public place without due care and attention,CM Summary - Motoring,H,false
+PC02021,Acquire / use / possess criminal property,CE Either Way,B,true
+TH68078,Going equipped for theft - not motor vehicle,CE Either Way,E,false
+TH78011,Make off without making payment,CE Either Way,H,false
+TH68006,"Theft of pedal cycle (£30,000 or less)",CE Either Way,F,true
+TH68006,"Theft of pedal cycle (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68006,"Theft of pedal cycle (Over £100,000)",CE Either Way,K,true
+TH68026,Burglary dwelling - with intent to steal,CE Either Way,E,true
+TH68013,"Theft of motor vehicle (£30,000 or less)",CE Either Way,F,true
+TH68013,"Theft of motor vehicle (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68013,"Theft of motor vehicle (Over £100,000)",CE Either Way,K,true
+TH68013,Aggravated theft of motor vehicle,CE Either Way,H,true
+CA81001,Vehicle interference - motor vehicle,CS Summary Non-Motoring,H,false
+OF61017,Section 18 - grievous bodily harm with intent,CI Indictable,B,true
+TH68023A,Armed attempt robbery,CI Indictable,B,true
+TH68023A,Attempt robbery,CI Indictable,C,true
+SX03220,Breach SHPO / interim SHPO / SOPO / interim SOPO / foreign travel order,CE Either Way,H,true
+TH68002,"Theft in dwelling other than an automatic machine or meter (£30,000 or less)",CE Either Way,F,true
+TH68002,"Theft in dwelling other than an automatic machine or meter (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68002,"Theft in dwelling other than an automatic machine or meter (Over £100,000)",CE Either Way,K,true
+MD71531,Produce controlled drug of Class B - cannabis,CE Either Way,B,false
+OF61014,Threats to kill,CE Either Way,B,true
+MT88007,Send letter / communication / article conveying a threatening message (threat to kill),CE Either Way,B,false
+MT88007,Send letter / communication / article conveying a threatening message (harm witness or juror),CE Either Way,C,false
+MT88007,Send letter / communication / article conveying a threatening message (damage property),CE Either Way,I,false
+RT88218,Driver of a vehicle fail to stop after a road accident,CM Summary - Motoring,H,false
+SX56025,"Indecent assault on a girl under the age of 14 years (Indecency with Children Act 1960, s.1(1))",CE Either Way,J,true
+SX56025,"Indecent assault on a girl under the age of 14 years (Sexual Offences Act 1956, s.14)",CE Either Way,D,true
+CD98070,Racially / religiously aggravated common assault / beating,CE Either Way,C,true
+CJ88150,Common assault of an emergency worker,CE Either Way,H,true
+TH68072,"Handling stolen goods - Theft Act 1968 (£30,000 or less)",CE Either Way,F,true
+TH68072,"Handling stolen goods - Theft Act 1968 (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68072,"Handling stolen goods - Theft Act 1968 (Over £100,000)",CE Either Way,K,true
+CD98075,Racially / religiously aggravated harassment / alarm / distress by words / writing,CS Summary Non-Motoring,H,false
+CD71043,Threat to damage / destroy property,CE Either Way,C,true
+SS92039,"Dishonestly fail notify change of circumstances affecting entitlement to social security benefit / advantage / payment (£30,000 or less)",CE Either Way,F,false
+SS92039,"Dishonestly fail notify change of circumstances affecting entitlement to social security benefit / advantage / payment (Over £30,000 up to £100,000)",CE Either Way,G,false
+SS92039,"Dishonestly fail notify change of circumstances affecting entitlement to social security benefit / advantage / payment (Over £100,000)",CE Either Way,K,false
+BA76002,Fail to answer to court / police bail as soon as practicable,CS Summary Non-Motoring,H,false
+MD71220,Possess a controlled drug of Class B - Amphetamine,CE Either Way,H,false
+SX03017,Assault a girl under 13,CE Either Way,J,true
+SX03002,Rape a woman 16 years of age or over - SOA 2003,CI Indictable,J,true
+TH68026A,Attempt burglary dwelling with intent to steal,CE Either Way,E,true
+MD71022,Possess a class C controlled drug,CE Either Way,H,false
+CA03005,Send by public communication network an offensive / indecent / obscene / menacing message /    matter,CS Summary Non-Motoring,H,false
+TH68010A,"Attempt theft from shop (£30,000 or less)",CE Either Way,F,false
+TH68010A,"Attempt theft from shop (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68010A,"Attempt theft from shop (Over £100,000)",CE Either Way,K,false
+CJ94005,Intimidate a witness / juror,CE Either Way,I,true
+CJ88148,Threaten a person with a blade / sharply pointed article in a public place,CE Either Way,H,true
+MD71225,Possess a controlled drug of Class B - Other,CE Either Way,H,false
+CJ88115,Possess indecent photograph / pseudo-photograph of a child,CE Either Way,J,true
+MD71131C,Conspire to supply a class A controlled drug - heroin,CI Indictable,B,true
+CY33049,Assault / ill-treat / neglect / abandon a child / young person to cause unnecessary suffering / injury,CE Either Way,B,true
+DA05001,Fail to attend for / remain for duration of initial assessment following test for class A drug,CS Summary Non-Motoring,H,false
+SX03128,Exposure - SOA 2003,CE Either Way,D,true
+TH68003,"Theft by employee (£30,000 or less)",CE Either Way,F,true
+TH68003,"Theft by employee (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68003,"Theft by employee (Over £100,000)",CE Either Way,K,true
+MD71214,Possess a controlled drug of Class A - Crack Cocaine,CE Either Way,C,false
+CL77001,Use violence to secure entry to premises,CS Summary Non-Motoring,H,true
+CD98066,Racially / religiously aggravated fear / provocation of violence by words / writing,CE Either Way,H,true
+PH97009,Harassment - put in fear of violence,CE Either Way,H,true
+PL84001,Detainee / person charged fail / refuse to provide a sample for Class 'A' drug test,CS Summary Non-Motoring,H,false
+PH97006,Stalking without fear / alarm / distress,CS Summary Non-Motoring,H,false
+MD71130C,Conspire to supply a class A controlled drug - cocaine,CI Indictable,B,true
+MD71131,Supply a controlled drug of Class A - Heroin,CE Either Way,B,true
+SC15004,Engage in controlling / coercive behaviour in an intimate / family relationship,CE Either Way,H,true
+COML030,Commit an act / series of acts with intent to pervert the course of public justice,CI Indictable,I,true
+RT88220,Driver of a vehicle involved in a road accident fail to report that accident,CM Summary - Motoring,H,false
+TH68027A,Attempt burglary other than dwelling with intent to steal,CE Either Way,E,true
+FA06003,"Fraud by abuse of position - Fraud Act 2006 (£30,000 or less)",CE Either Way,F,true
+FA06003,"Fraud by abuse of position - Fraud Act 2006 (Over £30,000 up to £100,000)",CE Either Way,G,true
+FA06003,"Fraud by abuse of position - Fraud Act 2006 (Over £100,000)",CE Either Way,K,true
+AS14004,Individual fail to comply with a community protection notice,CS Summary Non-Motoring,H,false
+MD71134,Supply a controlled drug of Class A - Crack Cocaine,CE Either Way,B,true
+RT88096,Use a motor vehicle on a road without a valid test certificate,CM Summary - Motoring,H,false
+CJ08004,Possess extreme pornographic image portraying an act of intercourse / oral sex with a dead / alive animal,CE Either Way,D,true
+PK78003,Distribute an indecent photograph / pseudo-photograph of a child,CE Either Way,J,true
+PC02020,Conceal / disguise / convert / transfer / remove criminal property,CE Either Way,B,true
+FI68247,Possess a weapon for the discharge of a noxious liquid / gas / electrical incapacitation device / thing,CE Either Way,B,true
+PH97005,Harassment - breach of a restraining order after acquittal,CE Either Way,H,true
+MD71171,Concerned in supply of heroin,CE Either Way,B,true
+ID10001,Possess / control identity documents with intent,CI Indictable,F,true
+CD71015,Aggravated arson,CE Either Way,B,true
+CD71015,Arson,CE Either Way,C,true
+EA03501,Extradition - Arrested under a Part 1 warrant,VA Misc. Applications,H,true
+AW06001,Cause unnecessary suffering to a protected animal - Animal Welfare Act 2006,CS Summary Non-Motoring,H,true
+SX56026,"Indecent assault on a girl under the age of 16 years (Sexual Offences Act 1956, s.14)",CE Either Way,J,true
+BA76005,Arrest by a constable for breaking / likely to break bail conditions - duty to surrender into the custody of a court,CS Summary Non-Motoring,H,false
+MD71219,Possess a controlled drug of Class A - Other,CE Either Way,C,false
+SX56028,"Indecent assault on boy under the age of 14 years (Sexual Offences Act 1956, s.14)",CE Either Way,D,true
+SX56028,"Indecent assault on boy under the age of 14 years (Indecency with Children Act 1960, s.1(1))",CE Either Way,J,true
+RT88340,Drive a vehicle whilst unfit through drugs (causing death),CM Summary - Motoring,B,false
+RT88340,Drive a vehicle whilst unfit through drugs,CM Summary - Motoring,H,false
+CD71003,Arson with intent / reckless as to whether life was endangered,CI Indictable,B,true
+SX03025,Offender 18 or over engage in penetrative sexual activity with a girl 13 to 15 - SOA 2003,CI Indictable,J,true
+SX03224A,Adult attempt to engage in sexual communication with a child (causing or inciting child prostitution of pornography),CE Either Way,J,true
+SX03224A,Adult attempt to engage in sexual communication with a child,CE Either Way,H,true
+COML017,False imprisonment,CI Indictable,B,true
+ED96015,Parent knowingly child not attending failed to ensure regular attendance at school,CS Summary Non-Motoring,H,false
+TH68146,Aggravated vehicle taking - (initial taker) and vehicle damage under £5000,CE Either Way,H,false
+COML025,Murder - victim one year of age or older,CI Indictable,A,true
+SX03005,Assault a female 13 and over by penetration with part of body / a thing - SOA 2003,CI Indictable,J,true
+CD71038,Criminal damage to property - value over £5000,CE Either Way,C,true
+PR52043,Without authority possess inside a prison an item specified in section 40D(3B),CE Either Way,H,true
+MD71245,Possess with intent to supply a controlled drug of Class B - Other,CE Either Way,B,true
+MD71134C,Conspire to supply a class A controlled drug - crack cocaine,CI Indictable,B,true
+PU86002,Public order - violent disorder,CE Either Way,B,true
+EA03501,Extradition - Arrested under a Part 1 warrant,CO Criminal Related,H,true
+SX03013,Rape a girl under 13,CI Indictable,J,true
+RT88008,In charge of motor vehicle - alcohol level above limit (causing death),CM Summary - Motoring,B,false
+RT88008,In charge of motor vehicle - alcohol level above limit,CM Summary - Motoring,H,false
+DD91034,Owner / person in charge of dog dangerously out of control causing injury,CE Either Way,C,false
+TH68045,Aggravated burglary - dwelling,CI Indictable,B,true
+OF61095,Assault with intent to resist arrest,CE Either Way,H,false
+MD71233,Possess with intent to supply a controlled drug of Class A - MDMA,CE Either Way,B,true
+CJ09001,Possess a prohibited image of a child,CE Either Way,J,true
+MD71174,Concerned in the supply of crack cocaine,CE Either Way,B,true
+CD71040,Aggravated destroy / damage property of a value unknown,CE Either Way,B,false
+CD71040,Destroy / damage property of a value unknown,CE Either Way,C,false
+PR52024,Bring / throw / convey a List 'A' prohibited article into / out of a prison (Class A or B drugs),CI Indictable,B,true
+PR52024,Bring / throw / convey a List 'A' prohibited article into / out of a prison (Class C drugs),CI Indictable,C,true
+PR52024,Bring / throw / convey a List 'A' prohibited article into / out of a prison,CI Indictable,H,true
+FA06002,"Dishonestly fail to disclose information to make a gain for self / another or cause / expose other to a loss (£30,000 or less)",CE Either Way,F,true
+FA06002,"Dishonestly fail to disclose information to make a gain for self / another or cause / expose other to a loss (Over £30,000 up to £100,000)",CE Either Way,G,true
+FA06002,"Dishonestly fail to disclose information to make a gain for self / another or cause / expose other to a loss (Over £100,000)",CE Either Way,K,true
+FA06004,"Possess / control article for use in fraud - Fraud Act 2006 (£30,000 or less)",CE Either Way,F,false
+FA06004,"Possess / control article for use in fraud - Fraud Act 2006 (Over £30,000 up to £100,000)",CE Either Way,G,false
+FA06004,"Possess / control article for use in fraud - Fraud Act 2006 (Over £100,000)",CE Either Way,K,false
+PC53002,Threaten a person with an offensive weapon in a public place,CE Either Way,H,true
+PH97011,Stalking involving serious alarm / distress,CE Either Way,H,true
+TH68052,Drive a motor vehicle which had been taken without the owner's consent,CM Summary - Motoring,H,false
+MD71213,Possess a controlled drug of Class A - MDMA,CE Either Way,C,false
+AS14002,Fail to comply with a section 35 direction excluding a person from an area,CS Summary Non-Motoring,H,false
+PL02049,Assault designated / accredited person / inspector causing Actual Bodily Harm (ABH),CS Summary Non-Motoring,C,false
+PL02049,Assault designated / accredited person / inspector,CS Summary Non-Motoring,H,false
+MD71170,Concerned in supply of cocaine,CE Either Way,B,true
+MD71533,Concerned in the supply of a controlled drug of Class B - cannabis,CE Either Way,B,false
+SX56070,Rape a female under 16,CI Indictable,J,true
+AW06029,Duty of person responsible for animal to ensure welfare - Animal Welfare Act 2006,CS Summary Non-Motoring,H,true
+COML025A,Attempt murder - victim aged 1 year or over,CI Indictable,A,true
+RT88526,Cause serious injury by dangerous driving (causing death),CE Either Way,B,true
+RT88526,Cause serious injury by dangerous driving,CE Either Way,H,true
+FI68321,Possess an imitation firearm with intent to cause fear of violence,CI Indictable,B,true
+SS92036,"Dishonestly make a false statement to obtain a benefit / advantage / payment (£30,000 or less)",CE Either Way,F,false
+SS92036,"Dishonestly make a false statement to obtain a benefit / advantage / payment (Over £30,000 up to £100,000)",CE Either Way,G,false
+SS92036,"Dishonestly make a false statement to obtain a benefit / advantage / payment (Over £100,000)",CE Either Way,K,false
+SX03001,Rape a girl aged 13 / 14 / 15 - SOA 2003,CI Indictable,J,true
+OF61017A,Attempt to cause grievous bodily harm with intent to do grievous bodily harm,CI Indictable,B,true
+TH68054,Carried in / on a motor vehicle taken without the owners consent,CM Summary - Motoring,H,false
+SX03015,Assault a girl under 13 by penetration with a part of your body / a thing - SOA 2003,CI Indictable,J,true
+SX03158,Offender 18  or over engage in non penetrative sexual activity with girl 13 to 15 - SOA 2003,CE Either Way,J,true
+MD71552,Possess a controlled drug of Class B - cannabinoid receptor agonists,CE Either Way,H,false
+MD71130,Supply a controlled drug of Class A - Cocaine,CE Either Way,C,true
+COML062,Act of outraging public decency - common law,CE Either Way,H,true
+SX56029,"Indecent assault on boy under the age of 16 years (Sexual Offences Act 1956, s.14)",CE Either Way,D,true
+SX56029,"Indecent assault on boy under the age of 16 years (Indecency with Children Act 1960, s.1(1))",CE Either Way,J,true
+COML020,Kidnap - common law,CI Indictable,B,true
+RT88076,Fail to stop vehicle when directed by PC / traffic warden / traffic officer / CSO engaged in regulation of road traffic,CM Summary - Motoring,H,false
+TH68007A,"Attempt theft from motor vehicle (£30,000 or less)",CE Either Way,F,true
+TH68007A,"Attempt theft from motor vehicle (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68007A,"Attempt theft from motor vehicle (Over £100,000)",CE Either Way,K,true
+COML016,Escape from lawful custody,CI Indictable,C,true
+TH68081,Going equipped for burglary,CE Either Way,E,true
+TH68058,"Abstract / use without authority electricity (£30,000 or less)",CE Either Way,F,false
+TH68058,"Abstract / use without authority electricity (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68058,"Abstract / use without authority electricity (Over £100,000)",CE Either Way,K,false
+DA05002,Fail to attend / remain for follow-up assessment following a test for presence of Class A drug - Drugs Act 2005,CS Summary Non-Motoring,H,false
+CA03009,Persistently make use of public communication network to cause annoyance / inconvenience / anxiety,CS Summary Non-Motoring,H,false
+TH68141,Aggravated vehicle taking - (initial taker) and dangerous driving (causing death),CE Either Way,B,false
+TH68141,Aggravated vehicle taking - (initial taker) and dangerous driving,CE Either Way,H,false
+RT88221,Driver of a vehicle fail to stop after road accident - give name and address of self and owner / vehicle details,CM Summary - Motoring,H,false
+MT88005,Send communication / article of an indecent / offensive nature,CE Either Way,H,true
+VG24005,Begging in a public place,CS Summary Non-Motoring,H,false
+CD98074,Racially / religiously aggravated criminal damage,CE Either Way,C,true
+TH68071,Blackmail,CI Indictable,B,true
+FI68421,Possess a firearm of length less than 30cm / 60cm - prohibited weapon (criminal intent or to endanger life),CI Indictable,B,true
+FI68421,Possess a firearm of length less than 30cm / 60cm - prohibited weapon,CI Indictable,C,true
+SX03019,Cause / incite a girl under 13 to engage in sexual activity - no penetration,CE Either Way,J,true
+TH68023C,Conspire to commit robbery,CI Indictable,C,true
+CJ15005,Disclose private sexual photographs and films with intent to cause distress,CE Either Way,D,true
+MD71239,Possess with intent to supply a controlled drug of Class A - Other,CE Either Way,B,true
+TH68026C,Conspire to commit a burglary dwelling with intent to steal,CI Indictable,B,true
+IC60006,Gross Indecency with a girl under fourteen years,CE Either Way,J,true
+TH68144,Aggravated vehicle taking - (initial taker) and property damage under £5000,CE Either Way,H,true
+RT88567,Fail to give information relating to the identification of the driver /  rider of a vehicle when required,CM Summary - Motoring,H,false
+TH68001A,"Attempt theft from the person of another (£30,000 or less)",CE Either Way,F,true
+TH68001A,"Attempt theft from the person of another (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68001A,"Attempt theft from the person of another (Over £100,000)",CE Either Way,K,true
+MD71442,Possess with intent to supply a controlled drug of Class C - Other,CE Either Way,C,true
+SX03018,Assault a boy under 13 by touching - SOA 2003,CE Either Way,J,true
+RT88339,Drive whilst unfit through drink (causing death),CM Summary - Motoring,B,false
+RT88339,Drive whilst unfit through drink,CM Summary - Motoring,H,false
+MD71145C,Conspire to supply a class B controlled drug - other,CI Indictable,B,true
+CD71039A,Aggravated attempt criminal damage to property valued under £5000,CS Summary Non-Motoring,B,false
+CD71039A,Attempt criminal damage to property valued under £5000,CS Summary Non-Motoring,C,false
+MD71529,Concerned in production of a controlled drug of Class B - cannabis,CE Either Way,B,true
+TH68020A,"Attempt theft - other - including by theft 'finding' (£30,000 or less)",CE Either Way,F,true
+TH68020A,"Attempt theft - other - including by theft 'finding' (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68020A,"Attempt theft - other - including by theft 'finding' (Over £100,000)",CE Either Way,K,true
+RT88011,Fail to provide specimen - person in charge of vehicle,CM Summary - Motoring,H,false
+FI68010,Possess ammunition for a firearm without a certificate,CE Either Way,C,true
+MD71240,Possess with intent to supply a controlled drug of Class B - Amphetamine,CE Either Way,B,true
+CD98002,Breach of an anti-social behaviour order,CE Either Way,H,false
+MD71070,Obstruct an authorised person in exercise of a section 23 power to detain / search a person / vehicle / vessel re drugs,CE Either Way,H,false
+MD71139C,Conspire to supply a class A controlled drug - other,CI Indictable,B,true
+MD71517,Possess with intent to supply a controlled drug of Class B - Cannabis Resin,CE Either Way,B,true
+SX03225A,Adult attempt to meet a girl under 16 years of age following grooming,CE Either Way,D,true
+MD71532,Supply a controlled drug of Class B - cannabis,CE Either Way,B,true
+TH68012,"Theft from a meter / automatic machine (£30,000 or less)",CE Either Way,F,true
+TH68012,"Theft from a meter / automatic machine (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68012,"Theft from a meter / automatic machine (Over £100,000)",CE Either Way,K,true
+PH97010,Stalking involving fear of violence,CE Either Way,H,true
+TH68079,Going equipped for theft of a motor vehicle,CE Either Way,E,true
+SX03029A,Attempt to cause / incite a girl 13 to 15 to engage in sexual activity - offender 18 or over - penetration,CI Indictable,J,true
+VE94158,Fraudulently use a registration mark / registration document,CE Either Way,H,false
+MT88006,Send letter / communication / article conveying indecent / offensive message,CE Either Way,H,false
+TH68146,Aggravated vehicle taking - (driver did not take) and dangerous driving (causing death),CE Either Way,B,true
+TH68147,Aggravated vehicle taking - (driver did not take) and dangerous driving,CE Either Way,H,true
+FI68320,Possess a firearm with intent to cause fear of violence,CI Indictable,B,true
+TH68044,Burglary dwelling - theft / attempt theft with violence,CI Indictable,B,true
+SX03162,Offender 18 or over cause / incite a girl 13 to 15 to engage in sexual activity - no penetration - SOA 2003,CE Either Way,J,true
+SX03014,Rape of a boy under 13 - SOA 2003,CI Indictable,J,true
+FA06001C,"Conspire to commit fraud by false representation - Fraud Act 2006 (£30,000 or less)",CI Indictable,F,true
+FA06001C,"Conspire to commit fraud by false representation - Fraud Act 2006 (Over £30,000 up to £100,000)",CI Indictable,G,true
+FA06001C,"Conspire to commit fraud by false representation - Fraud Act 2006 (Over £100,000)",CI Indictable,K,true
+SX03008,Sexual assault on a male,CE Either Way,D,true
+IC60005,Gross indecency with a boy under the age of fourteen years of age,CE Either Way,J,true
+MT88008,Send letter / communication / article conveying false information,CE Either Way,H,false
+OF61016A,Section 18 - attempt wounding with intent,CI Indictable,B,true
+PR52044,Unauthorised possession in prison of knife or offensive weapon,CE Either Way,H,true
+VG24018,Vagrant - being found in or upon enclosed premises,CS Summary Non-Motoring,H,false
+LG02001,Drunk in charge of a child under the age of seven years,CS Summary Non-Motoring,H,false
+PR52028,Bring / throw / convey a List 'B' prohibited article into / out of a prison - Prison Act 1952,CE Either Way,H,true
+TH68006A,"Attempt theft of pedal cycle (£30,000 or less)",CE Either Way,F,false
+TH68006A,"Attempt theft of pedal cycle (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68006A,"Attempt theft of pedal cycle (Over £100,000)",CE Either Way,K,false

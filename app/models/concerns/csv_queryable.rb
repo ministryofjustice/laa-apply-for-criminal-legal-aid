@@ -3,6 +3,13 @@ require 'csv'
 module CsvQueryable
   extend ActiveSupport::Concern
 
+  CSV::Converters[:boolean] = lambda do |field|
+    case field
+    when /\Atrue\z/i  then true
+    when /\Afalse\z/i then false
+    else; field; end
+  end
+
   attr_reader :row
 
   def initialize(row:)
@@ -46,8 +53,9 @@ module CsvQueryable
     def csv
       CSV.read(
         @filepath,
-        headers: true, header_converters: :symbol,
-        converters: ->(field) { field&.strip }
+        headers: true,
+        header_converters: :symbol,
+        converters: [:boolean]
       )
     end
   end

@@ -166,13 +166,9 @@ RSpec.describe Passporting::IojPassporter do
     context 'feature flag is enabled' do
       let(:feat_enabled) { true }
 
-      let(:passported_charge) { Charge.new(offence_name: 'Attempt robbery') }
-      let(:non_passported_charge) { Charge.new(offence_name: 'Affray') }
+      let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
+      let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
       let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
-
-      before do
-        allow(passported_charge.offence).to receive(:ioj_passport).and_return(true)
-      end
 
       context 'when there is at least one passported offence' do
         let(:charges) { [non_passported_charge, passported_charge] }
