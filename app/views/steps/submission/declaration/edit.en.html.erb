@@ -6,18 +6,17 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl">
-      Confirm the following and submit application
+      Enter your details to confirm the following
     </h1>
 
     <p class="govuk-body">Your client agrees that:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>they’ve instructed Hitchcock, Jones and King to represent them</li>
+      <li>they’ve instructed your law firm to represent them</li>
       <li>they’ve read the <a href="/about/privacy">LAA privacy policy</a></li>
       <li>we can share their information with other government departments like the DWP and HMRC (as stated in our privacy policy)</li>
       <li>we can check their details with bank and credit reference agencies</li>
-      <li>they may have to pay towards legal aid</li>
-      <li>they may have to repay the legal costs if they are found guilty on one or more offences at the end of the case (the 'statutory charge')</li>
+      <li>if they are convicted of any offences, they may have to pay towards legal aid through any income or capital they have</li>
       <li>the information they’ve given is complete and correct</li>
       <li>they’ll report any changes to their financial situation immediately</li>
     </ul>
@@ -38,9 +37,9 @@
     <p class="govuk-body">You agree that:</p>
 
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+      <li>you’ve explained to your client why they may have to pay towards legal aid and the consequences of not paying contributions on time or at all</li>
       <li>you’ve obtained a signed declaration from your client</li>
       <li>you’ve provided correct and complete information in this application</li>
-      <li>you’ll share a copy of the completed application with your client</li>
     </ul>
 
     <%= step_form @form_object do |f| %>
