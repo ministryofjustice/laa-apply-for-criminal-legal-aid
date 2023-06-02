@@ -26,7 +26,7 @@ metadata:
       SecRequestBodyLimit 1048576
       SecRequestBodyNoFilesLimit 1048576
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
-      SecRuleUpdateTargetById 941100 !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
 spec:
   ingressClassName: modsec
   tls:
