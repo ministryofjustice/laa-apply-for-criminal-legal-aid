@@ -15,12 +15,12 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 183785d967669e94009623978e094de03e910b12
-  tag: v0.3.0
+  revision: 39186b9ebf3d71c00e3b53b506c936aed52429ef
+  tag: v0.4.0
   specs:
-    laa-criminal-legal-aid-schemas (0.3.0)
-      dry-struct
-      json-schema (~> 3.0.0)
+    laa-criminal-legal-aid-schemas (0.4.0)
+      dry-struct (~> 1.6.0)
+      json-schema (~> 4.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -201,7 +201,7 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.3)
-    json-schema (3.0.0)
+    json-schema (4.0.0)
       addressable (>= 2.8)
     jwt (2.7.0)
     kaminari (1.2.2)
