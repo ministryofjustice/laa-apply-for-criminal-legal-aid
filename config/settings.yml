@@ -23,3 +23,5 @@ settings:
   portal_url: https://portal.legalservices.gov.uk
   eforms_url: https://portal.legalservices.gov.uk/oamfed/idp/initiatesso?providerid=eForms
   onboarding_email: LAAapplyonboarding@justice.gov.uk
+  support_email: apply-for-criminal-legal-aid@justice.gov.uk
+  case_enquiries_tel: 0300 200 2020
