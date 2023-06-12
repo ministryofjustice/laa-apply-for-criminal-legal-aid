@@ -21,11 +21,11 @@ en:
         edit:
           page_title: Does your client have a partner?
           partner_definitions:
-            intro: 'A partner is someone your client is:'
-            definition_1: married to
-            definition_2: in a civil partnership with
-            definition_3: living with as if they were married or in a civil partnership
-            definition_4: not permanently separated from
+            intro: 'A partner is someone your client:'
+            definition_1: is married to
+            definition_2: is in a civil partnership with
+            definition_3: normally lives with as a couple, even if they are not living together right now - for example, if one person is in hospital, prison or abroad
+            exclusion: Do not include anyone who is separated from your client in a way that is likely to be permanent.
       details:
         edit:
           page_title: Enter your client’s details
