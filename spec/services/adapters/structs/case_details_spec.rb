@@ -56,6 +56,8 @@ RSpec.describe Adapters::Structs::CaseDetails do
           urn
           case_type
           appeal_maat_id
+          appeal_with_changes_maat_id
+          appeal_with_changes_details
           charges
           codefendants
           has_codefendants
