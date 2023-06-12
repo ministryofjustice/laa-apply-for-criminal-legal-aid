@@ -46,7 +46,7 @@ en:
       delete_button: Delete
       table_headings:
         applicant_name: Name
-        submitted_at: Submitted
+        submitted_at: Date submitted
         reference: Reference number
         status: Status
         action: Action
