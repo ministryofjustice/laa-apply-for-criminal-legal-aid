@@ -58,7 +58,6 @@ en:
               invalid_year: Enter a valid year
               year_too_late: Date of birth is too far in the future
               year_too_early: Date of birth is too far in the past
-              past_not_allowed: Date of birth must be in the future
               future_not_allowed: Date of birth must be in the past
         steps/client/has_nino_form:
           attributes:
@@ -178,7 +177,7 @@ en:
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_late: Date of next hearing is too far in the future
-              past_not_allowed: Date of next hearing must be in the future
+              past_not_allowed: Date of next hearing must be today or in the future
         steps/case/ioj_form:
           attributes:
             types:
