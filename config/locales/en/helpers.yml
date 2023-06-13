@@ -116,6 +116,8 @@ en:
         confirm_details_options:
           'yes': 'Yes'
           'no': 'No, I need to change these details'
+      steps_address_lookup_form:
+        postcode: Postcode
       steps_address_results_form:
         lookup_id: Select an address
       steps_address_details_form:

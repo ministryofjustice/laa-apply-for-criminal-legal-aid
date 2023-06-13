@@ -7,9 +7,10 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
+    <h1 class="govuk-heading-xl"><%=t @form_object.heading %></h1>
+
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third',
-                             label: { tag: 'h1', size: 'xl', text: t(@form_object.heading) } %>
+      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
 
       <p class="govuk-body govuk-!-margin-bottom-2">
         <%= link_to t('.manual_entry'), edit_steps_address_details_path %>
