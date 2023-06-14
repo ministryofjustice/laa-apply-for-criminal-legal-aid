@@ -28,10 +28,13 @@ RSpec.describe 'Home' do
 
     context 'for `production` env name' do
       before do
-        allow(Rails.env).to receive(:test?).and_return(false)
-        allow(ENV).to receive(:fetch).with('ENV_NAME').and_return('production')
+        allow(HostEnv).to receive(:env_name).and_return(HostEnv::PRODUCTION)
 
         get root_path
+      end
+
+      after do
+        FeatureFlags.reset!
       end
 
       it 'has the correct body css classes' do
