@@ -14,8 +14,16 @@ class ErrorsController < ApplicationController
     respond_with_status(:not_found)
   end
 
-  def unauthorized
-    respond_with_status(:unauthorized)
+  def unauthenticated
+    respond_with_status(:ok)
+  end
+
+  def reauthenticate
+    respond_with_status(:ok)
+  end
+
+  def account_locked
+    respond_with_status(:ok)
   end
 
   def not_enrolled

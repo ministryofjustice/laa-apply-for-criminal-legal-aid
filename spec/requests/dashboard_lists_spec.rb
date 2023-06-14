@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboard' do
+RSpec.describe 'Dashboard', authorized: true do
   # Fixtures used to mock responses from the datastore
   let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }

@@ -8,14 +8,16 @@
 en:
   devise:
     failure:
+      # Failure messages are handled by `Devise::CustomFailureApp`
+      # and rendered as standalone pages, not flash messages.
       already_authenticated: ""
-      locked: "Your account is locked."
-      timeout: "Your session expired due to inactivity. Please sign in again to continue."
-      reauthenticate: "Your Portal session expired. Please sign in again to continue."
-      unauthenticated: "You need to sign in before continuing."
+      locked: ""
+      timeout: ""
+      reauthenticate: ""
+      unauthenticated: ""
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
-      success: "Successfully authenticated from %{kind} account."
+      success: ""
     sessions:
       signed_in: ""
       signed_out: "You have signed out"

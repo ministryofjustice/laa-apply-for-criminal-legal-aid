@@ -18,7 +18,7 @@ module Providers
     end
 
     def after_omniauth_failure_path_for(_)
-      new_provider_session_path
+      unauthenticated_errors_path
     end
 
     def auth_hash

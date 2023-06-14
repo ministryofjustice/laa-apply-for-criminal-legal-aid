@@ -36,22 +36,39 @@ RSpec.describe 'Error pages' do
     end
   end
 
-  context 'unauthorized' do
+  context 'unauthenticated' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/unauthorized'
-      expect(response).to have_http_status(:unauthorized)
+      get '/errors/unauthenticated'
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context 'reauthenticate' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/reauthenticate'
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context 'account_locked' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/account_locked'
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe 'double sign outs' do
+    before do
+      # We are already signed out, we trigger another one
+      delete providers_logout_path
     end
 
-    context 'when the sign in fails' do
-      before do
-        allow(OmniAuth.config).to receive(:test_mode).and_return(false)
-        allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
-      end
+    it 'does not show any flash message' do
+      expect(response).to redirect_to(root_path)
+      follow_redirect!
 
-      it 'redirects to the home' do
-        post provider_saml_omniauth_authorize_path
-        expect(response).to redirect_to(new_provider_session_path)
-      end
+      assert_select 'h1', 'Apply for criminal legal aid'
+      assert_select 'div.govuk-notification-banner', count: 0
     end
   end
 end

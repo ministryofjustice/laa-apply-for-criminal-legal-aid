@@ -26,6 +26,13 @@ RSpec.describe 'Sign in user journey' do
     it 'has a start button with action saml authorize' do
       expect(start_button_form_action).to eq(provider_saml_omniauth_authorize_path)
     end
+
+    it 'redirects to the unauthenticated page if trying to access protected routes' do
+      visit crime_applications_path
+
+      expect(current_url).to match(unauthenticated_errors_path)
+      expect(page).to have_content('Sign in to continue')
+    end
   end
 
   context 'user is signed in' do
@@ -92,6 +99,7 @@ RSpec.describe 'Sign in user journey' do
       click_button 'Sign out'
 
       expect(current_url).to match(root_path)
+      expect(page).to have_content('You have signed out')
       expect(page).not_to have_css('nav.govuk-header__navigation')
     end
   end
@@ -110,7 +118,25 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed out if session lifespan is exceeded' do
+  context 'user is signed out if session inactivity is exceeded' do
+    before do
+      allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
+      allow(Provider).to receive(:timeout_in).and_return(5.minutes)
+
+      start_button.click
+    end
+
+    it 'signs out the user after `timeout_in` time has passed' do
+      travel 6.minutes
+
+      click_link 'Your applications'
+
+      expect(current_url).to match(invalid_session_errors_path)
+      expect(page).to have_content('For your security, we signed you out')
+    end
+  end
+
+  context 'user is signed out if portal session lifespan is exceeded' do
     before do
       allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
       allow(Provider).to receive(:reauthenticate_in).and_return(5.minutes)
@@ -123,8 +149,34 @@ RSpec.describe 'Sign in user journey' do
 
       click_link 'Your applications'
 
-      expect(current_url).to match('/login')
-      expect(page).to have_content('Your Portal session expired. Please sign in again to continue.')
+      expect(current_url).to match(reauthenticate_errors_path)
+      expect(page).to have_content('For your security, we signed you out')
+    end
+  end
+
+  context 'when the user account is locked' do
+    before do
+      allow_any_instance_of(Provider).to receive(:locked_at).and_return(1.day.ago)
+      start_button.click
+    end
+
+    it 'forbids the user from accessing the service' do
+      expect(current_url).to match(account_locked_errors_path)
+      expect(page).to have_content('You cannot access this service')
+    end
+  end
+
+  context 'when the sign in fails' do
+    before do
+      allow(OmniAuth.config).to receive(:test_mode).and_return(false)
+      allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
+
+      start_button.click
+    end
+
+    it 'redirects to the unauthenticated page' do
+      expect(current_url).to match(unauthenticated_errors_path)
+      expect(page).to have_content('Could not authenticate you')
     end
   end
 end
