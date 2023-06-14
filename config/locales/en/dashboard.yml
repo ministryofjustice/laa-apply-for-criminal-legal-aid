@@ -20,7 +20,6 @@ en:
       heading: Make a new application
       subheading: Application incomplete
       progress_counter: You have completed %{completed} of %{total} sections.
-      back_to_applications: Back to all applications
       aside:
         reference: Reference number
         first_name: First name
@@ -61,7 +60,6 @@ en:
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
       print_application: Print application
-      back_to_applications: Back to all applications
       helpline:
         intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
         phone: 'Telephone: 0300 200 2020'

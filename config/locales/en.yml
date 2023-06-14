@@ -21,11 +21,19 @@ en:
     formats:
       <<: *DATE_FORMATS
 
+  hours_or_minutes:
+    hours:
+      one: an hour
+      other: '%{count} hours'
+    minutes:
+      one: a minute
+      other: '%{count} minutes'
+
   flash:
     success:
       title: Success
     notice:
-      title: Notice
+      title: Important
     alert:
       title: Alert
 

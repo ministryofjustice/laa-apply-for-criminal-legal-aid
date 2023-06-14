@@ -6,28 +6,6 @@ en:
 
     error_summary:
       heading: There is a problem on this page
-    invalid_session:
-      page_title: Sorry, you’ll have to start again
-      heading: Sorry, you’ll have to start again
-      lead_text: Your session automatically ends if you don’t use the service for XX minutes.
-      more_text: We do this for your security. Any unsaved details will be deleted.
-    application_not_found:
-      page_title: Page not found
-    not_found:
-      page_title: Page not found
-      heading: Page not found
-      lead_text: If you copied a web address, please check it’s correct.
-    unhandled:
-      page_title: Unexpected error
-      heading: Sorry, something went wrong with our service
-      lead_text: You can go back and retry, or start again.
-    unauthorized:
-      page_title: Unauthorized
-      heading: Access restricted
-      lead_text: This page requires you to be signed in to LAA Portal. You will be redirected back to this service after you sign in.
-      sign_in_button: Sign in with LAA Portal
-    not_enrolled:
-      page_title: Account not enrolled
 
   activemodel:
     errors:

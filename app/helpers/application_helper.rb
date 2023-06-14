@@ -17,6 +17,14 @@ module ApplicationHelper
     title ''
   end
 
+  def hours_or_minutes(minutes)
+    if (minutes % 1.hour).zero?
+      t('hours_or_minutes.hours', count: minutes.in_hours.to_i)
+    else
+      t('hours_or_minutes.minutes', count: minutes.in_minutes.to_i)
+    end
+  end
+
   def decorate(model, decorator_class = nil)
     (decorator_class || [model.class, :Decorator].join.demodulize.constantize).new(model)
   end

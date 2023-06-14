@@ -18,5 +18,5 @@ en:
       success: "Successfully authenticated from %{kind} account."
     sessions:
       signed_in: ""
-      signed_out: ""
+      signed_out: "You have signed out"
       already_signed_out: ""
