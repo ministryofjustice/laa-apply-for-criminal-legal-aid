@@ -1,0 +1,19 @@
+<% title 'We signed you out' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      For your security, we signed you out
+    </h1>
+
+    <p class="govuk-body">
+      This is because you were inactive for <%= hours_or_minutes(Rails.configuration.x.session.timeout_in) %>.
+    </p>
+
+    <p class="govuk-body">
+      Sign in to continue where you last saved your application.
+    </p>
+
+    <%= render partial: 'shared/portal_sign_in_button' %>
+  </div>
+</div>

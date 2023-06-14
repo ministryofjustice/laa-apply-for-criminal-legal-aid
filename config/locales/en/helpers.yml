@@ -9,12 +9,14 @@ en:
   helpers:
     back_link: Back
     back_to_portal: Back to the LAA Online Portal
-    start_again: Start again
+    back_to_applications: Back to your applications
     submit:
+      start: Start now
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
       save_and_submit: Save and submit application
       save_cookie_settings: Save cookie settings
+      sign_in: Sign in
       find_address: Find address
       try_again: Try again
       apply_in_eforms: Apply using eForms

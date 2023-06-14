@@ -38,6 +38,19 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#hours_or_minutes' do
+    context 'when minutes can be represented as whole hours' do
+      it { expect(helper.hours_or_minutes(60.minutes)).to eq('an hour') }
+      it { expect(helper.hours_or_minutes(120.minutes)).to eq('2 hours') }
+    end
+
+    context 'when minutes do not fill whole hours' do
+      it { expect(helper.hours_or_minutes(1.minute)).to eq('a minute') }
+      it { expect(helper.hours_or_minutes(30.minutes)).to eq('30 minutes') }
+      it { expect(helper.hours_or_minutes(125.minutes)).to eq('125 minutes') }
+    end
+  end
+
   describe '#decorate' do
     before do
       stub_const('FooBar', Class.new)

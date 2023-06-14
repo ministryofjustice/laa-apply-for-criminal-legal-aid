@@ -11,19 +11,31 @@ RSpec.describe 'Sign in user journey' do
     Provider.destroy_all
   end
 
+  let(:start_button) { find('button.govuk-button--start') }
+  let(:start_button_form_action) { start_button.ancestor('form')['action'] }
+
   before do
     allow_any_instance_of(
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
 
     visit '/'
-    click_on 'Start now'
   end
 
   context 'user is not signed in' do
-    it 'redirects to the login page' do
-      expect(current_url).to match('/login')
-      expect(page).to have_content('Access restricted')
+    it 'has a start button with action saml authorize' do
+      expect(start_button_form_action).to eq(provider_saml_omniauth_authorize_path)
+    end
+  end
+
+  context 'user is signed in' do
+    before do
+      start_button.click
+      visit '/'
+    end
+
+    it 'has a start button with action applications' do
+      expect(start_button_form_action).to eq(crime_applications_path)
     end
   end
 
@@ -35,7 +47,7 @@ RSpec.describe 'Sign in user journey' do
         saml: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
       )
 
-      click_button 'Sign in with LAA Portal'
+      start_button.click
     end
 
     it 'redirects to the error page' do
@@ -50,7 +62,7 @@ RSpec.describe 'Sign in user journey' do
         Provider
       ).to receive(:selected_office_code).and_return('1A123B')
 
-      click_button 'Sign in with LAA Portal'
+      start_button.click
     end
 
     it 'authenticates the user and redirects to the office account confirmation page' do
@@ -90,7 +102,7 @@ RSpec.describe 'Sign in user journey' do
         Provider
       ).to receive(:office_codes).and_return(['A1'])
 
-      click_button 'Sign in with LAA Portal'
+      start_button.click
     end
 
     it 'authenticates the user and redirects to the dashboard' do
@@ -103,7 +115,7 @@ RSpec.describe 'Sign in user journey' do
       allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
       allow(Provider).to receive(:reauthenticate_in).and_return(5.minutes)
 
-      click_button 'Sign in with LAA Portal'
+      start_button.click
     end
 
     it 'signs out the user after `reauthenticate_in` time has passed' do
