@@ -46,6 +46,10 @@ class FeatureFlags
 
   class << self
     delegate :method_missing, :respond_to?, to: :instance
+
+    def reset!
+      Singleton.__init__(self)
+    end
   end
 
   def method_missing(name, *args)
