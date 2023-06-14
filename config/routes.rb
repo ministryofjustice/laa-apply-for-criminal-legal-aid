@@ -30,7 +30,9 @@ Rails.application.routes.draw do
     get :application_not_found
     get :invalid_session
     get :unhandled
-    get :unauthorized
+    get :unauthenticated
+    get :reauthenticate
+    get :account_locked
     get :not_enrolled
     get :not_found
   end
@@ -42,7 +44,7 @@ Rails.application.routes.draw do
              }
 
   devise_scope :provider do
-    get 'login', to: 'errors#unauthorized', as: :new_provider_session
+    get 'login', to: 'errors#unauthenticated', as: :new_provider_session
 
     namespace :providers do
       delete 'logout', to: 'sessions#destroy', as: :logout

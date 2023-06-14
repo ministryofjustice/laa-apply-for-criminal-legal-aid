@@ -46,7 +46,10 @@ RSpec.configure do |config|
   # As a default, we assume a user is signed in all controllers.
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
-  config.before(:all, type: :request) { post provider_saml_omniauth_callback_path }
+
+  # Only request specs tagged with `authorized: true` will perform
+  # an automatic sign in. Otherwise assume user is signed out.
+  config.before(:all, authorized: true, type: :request) { post provider_saml_omniauth_callback_path }
 
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }
