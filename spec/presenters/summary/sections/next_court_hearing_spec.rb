@@ -16,7 +16,7 @@ describe Summary::Sections::NextCourtHearing do
       Case,
       urn: 'xyz',
       hearing_court_name: 'Court name',
-      hearing_date: Date.tomorrow,
+      hearing_date: Date.new(2028, 1, 20),
     )
   end
 
@@ -54,7 +54,7 @@ describe Summary::Sections::NextCourtHearing do
       expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[1].question).to eq(:hearing_date)
       expect(answers[1].change_path).to match('applications/12345/steps/case/hearing_details')
-      expect(answers[1].value).to eq(Date.tomorrow)
+      expect(answers[1].value).to eq(Date.new(2028, 1, 20))
     end
   end
 end

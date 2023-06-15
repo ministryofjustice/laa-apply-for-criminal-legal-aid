@@ -47,11 +47,11 @@ RSpec.describe 'Dashboard', authorized: true do
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp'
-          assert_select 'dd:nth-of-type(1)', '24 October 2022 9:50am'
+          assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
           assert_select 'dt:nth-of-type(1)', 'Date submitted'
-          assert_select 'dd:nth-of-type(1)', '24 October 2022 9:50am'
+          assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
           assert_select 'dt:nth-of-type(1)', 'Submitted by'
@@ -181,7 +181,12 @@ RSpec.describe 'Dashboard', authorized: true do
   describe 'edit an in progress application (aka task list)' do
     before :all do
       # sets up a test record
-      app = CrimeApplication.create
+      app = CrimeApplication.create(
+        date_stamp: DateTime.new(2023, 4, 20, 23, 15) # date is past March daylight saving change
+      )
+
+      # needs a proper case type so it shows the interim date stamp
+      Case.create(crime_application: app, case_type: CaseType::SUMMARY_ONLY.to_s)
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe',
                        date_of_birth: Date.new(1990, 2, 1))
@@ -217,6 +222,9 @@ RSpec.describe 'Dashboard', authorized: true do
 
         assert_select 'h3:nth-of-type(4)', 'Date of birth'
         assert_select 'p:nth-of-type(4)', '1 Feb 1990'
+
+        assert_select 'h3:nth-of-type(5)', 'Date stamp'
+        assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'
       end
     end
   end

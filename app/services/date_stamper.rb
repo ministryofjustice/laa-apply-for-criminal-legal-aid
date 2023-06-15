@@ -24,7 +24,7 @@ class DateStamper
     #    stamp.
 
     if CaseType.new(@case_type).date_stampable? && @crime_app.date_stamp.nil?
-      @crime_app.update(date_stamp: DateTime.now)
+      @crime_app.update(date_stamp: Time.current)
     else
       false
     end
