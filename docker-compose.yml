@@ -23,6 +23,7 @@ services:
       DATABASE_SSLMODE: disable
       DISABLE_HTTPS: "1"
       OMNIAUTH_TEST_MODE: "true"
+      BC_USE_DEV_MOCK: "true"
     ports:
       - "3000:3000"
     depends_on:
