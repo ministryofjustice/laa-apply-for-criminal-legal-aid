@@ -20,7 +20,7 @@ RSpec.describe DateStamper do
       let(:date) { nil }
 
       it 'adds a date stamp to the crime app' do
-        expect(crime_app).to receive(:update).with({ date_stamp: instance_of(DateTime) })
+        expect(crime_app).to receive(:update).with({ date_stamp: instance_of(ActiveSupport::TimeWithZone) })
         subject.call
       end
     end

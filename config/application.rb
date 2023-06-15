@@ -25,8 +25,12 @@ module LaaApplyForCriminalLegalAid
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
+
+    # Do not change unless you know what you are doing. All services
+    # should be configured to UTC zone, and only in the views present
+    # dates in the user’s time zone (in our case, `London`).
+    config.time_zone = 'UTC'
+
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Do not autoload all helpers in all controllers
