@@ -138,8 +138,8 @@ en:
 
       # BEGIN passport justification for legal aid section
       passport:
-        question: Passported
-        answers: 
+        question: Not needed
+        answers:
           'true': Details provided do not require further justification for legal aid
       passport_override:
         question: Passported
