@@ -140,7 +140,7 @@ en:
       passport:
         question: Not needed
         answers:
-          'true': Details provided do not require further justification for legal aid
+          'true': You do not need to provide justification for this application
       passport_override:
         question: Passported
         answers:
