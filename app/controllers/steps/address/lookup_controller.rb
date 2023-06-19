@@ -9,8 +9,14 @@ module Steps
 
       def update
         update_and_advance(
-          LookupForm, record: address_record, as: :lookup
+          LookupForm, record: address_record, as: step_name
         )
+      end
+
+      private
+
+      def step_name
+        params.key?(:clear_address) ? :clear_address : :lookup
       end
     end
   end
