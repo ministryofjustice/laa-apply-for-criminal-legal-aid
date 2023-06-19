@@ -22,6 +22,7 @@ services:
       RAILS_LOG_TO_STDOUT: "1"
       DATABASE_SSLMODE: disable
       DISABLE_HTTPS: "1"
+      BC_USE_DEV_MOCK: "true"
       OMNIAUTH_TEST_MODE: "true"
     ports:
       - "3000:3000"

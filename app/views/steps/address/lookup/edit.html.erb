@@ -17,7 +17,7 @@
       </p>
 
       <p class="govuk-body govuk-!-margin-bottom-6">
-        <%= link_to t('.no_address'), edit_steps_client_contact_details_path if @form_object.home_address? %>
+        <%= button_tag t('.no_address'), name: :clear_address, class: 'app-button--link' if @form_object.home_address? %>
       </p>
 
       <%= f.continue_button(primary: :find_address) %>

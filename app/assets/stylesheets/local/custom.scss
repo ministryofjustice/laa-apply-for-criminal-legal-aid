@@ -41,6 +41,14 @@ body.js-enabled {
   }
 }
 
+.app-button--link {
+  @include app-button-reset;
+  @extend %govuk-link;
+
+  // Buttons can't have different colours for visited/unvisited
+  color: $govuk-link-colour;
+}
+
 .app-header__auth-link {
   // 1. Remove any button styling
   @include app-button-reset;

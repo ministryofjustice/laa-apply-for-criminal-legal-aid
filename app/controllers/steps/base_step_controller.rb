@@ -20,9 +20,9 @@ module Steps
     private
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    def update_and_advance(form_class, opts = {})
+    def update_and_advance(form_class, as:, record: nil, flash: nil, **kwargs)
       hash = permitted_params(form_class).to_h
-      record = opts[:record]
+      hash.merge!(kwargs, step_name: as)
 
       @form_object = form_class.new(
         hash.merge(crime_application: current_crime_application, record: record)
@@ -33,9 +33,9 @@ module Steps
         @form_object.save!
         redirect_to edit_crime_application_path(current_crime_application)
       elsif @form_object.save
-        redirect_to decision_tree_class.new(@form_object, as: opts.fetch(:as)).destination, flash: opts[:flash]
+        redirect_to decision_tree_class.new(@form_object, as:).destination, flash:
       else
-        render opts.fetch(:render, :edit)
+        render :edit
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
