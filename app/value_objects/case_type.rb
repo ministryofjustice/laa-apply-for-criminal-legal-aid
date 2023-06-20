@@ -20,4 +20,11 @@ class CaseType < ValueObject
   def date_stampable?
     DATE_STAMPABLE.include?(self)
   end
+
+  def appeal?
+    [
+      APPEAL_TO_CROWN_COURT,
+      APPEAL_TO_CROWN_COURT_WITH_CHANGES,
+    ].include?(self)
+  end
 end
