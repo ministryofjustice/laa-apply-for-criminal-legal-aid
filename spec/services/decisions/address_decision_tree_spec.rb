@@ -38,19 +38,22 @@ RSpec.describe Decisions::AddressDecisionTree do
   end
 
   context 'when the step is `details`' do
-    let(:form_object) { double('FormObject', record: address_record) }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    context 'if we come from a home address sub-journey' do
-      let(:address_record) { HomeAddress.new }
-
-      it { is_expected.to have_destination('/steps/client/contact_details', :edit, id: crime_application) }
+    it 'runs the same logic as the `results` step' do
+      expect(subject).to receive(:after_address_entered)
+      subject.destination
     end
+  end
 
-    context 'if we come from a correspondence address sub-journey' do
-      let(:address_record) { CorrespondenceAddress.new }
+  context 'when the step is `clear_address`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :clear_address }
 
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    it 'runs the same logic as the `results` step' do
+      expect(subject).to receive(:after_address_entered)
+      subject.destination
     end
   end
 end

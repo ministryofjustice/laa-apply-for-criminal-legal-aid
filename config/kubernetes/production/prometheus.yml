@@ -22,24 +22,15 @@ spec:
   groups:
   - name: application-rules
     rules:
-    - alert: CrimeApply-NamespaceMissing
-      expr: >-
-        absent(kube_namespace_created{namespace=~"^laa-apply-for-criminal-legal-aid.*"})
-      for: 1m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Namespace `{{ $labels.namespace }}` is missing.
-
     - alert: CrimeApply-DeploymentReplicasMismatch
       expr: >-
         kube_deployment_spec_replicas{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
         != kube_deployment_status_replicas_available{job="kube-state-metrics"}
-      for: 15m
+      for: 30m
       labels:
         severity: laa-crime-apply-alerts
       annotations:
-        message: Deployment `{{ $labels.deployment }}` has not matched the expected number of replicas for more than 15m.
+        message: Deployment `{{ $labels.deployment }}` has not matched the expected number of replicas for more than 30m.
 
     - alert: CrimeApply-KubePodCrashLooping
       expr: >-
@@ -83,7 +74,7 @@ spec:
 
     - alert: CrimeApply-Ingress4XX
       expr: >-
-        avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[1m]) * 60 > 0) 
+        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[5m]) * 60 > 5) 
         by (exported_namespace)
       for: 1m
       labels:
@@ -94,7 +85,7 @@ spec:
 
     - alert: CrimeApply-Ingress5XX
       expr: >-
-        avg(rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[1m]) * 60 > 0) 
+        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[5m]) * 60 > 5) 
         by (exported_namespace)
       for: 1m
       labels:
@@ -105,7 +96,7 @@ spec:
 
     - alert: CrimeApply-TrivyVulns
       expr: >-
-        sum(trivy_image_vulnerabilities{namespace=~"^laa-apply-for-criminal-legal-aid.*", severity=~"Critical|High|Medium"} > 0) 
+        sum(trivy_image_vulnerabilities{namespace=~"^laa-apply-for-criminal-legal-aid.*", severity=~"Critical|High"} > 0) 
         by (namespace, image_tag, severity)
       for: 1h
       labels:
