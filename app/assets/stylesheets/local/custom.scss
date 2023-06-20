@@ -128,3 +128,10 @@ $app-blue-button-colour: govuk-colour("blue");
     outline: none;
   }
 }
+
+// Grey line separator for updated at date, taken from
+// https://github.com/alphagov/government-frontend/
+.app-c-updated-date {
+  padding-top: govuk-spacing(2);
+  border-top: 1px solid $govuk-border-colour;
+}
