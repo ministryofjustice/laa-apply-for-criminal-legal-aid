@@ -5,11 +5,13 @@ RSpec.describe Passporting::IojPassporter do
 
   let(:crime_application) { instance_double(CrimeApplication, applicant:, case:, ioj:, parent_id:) }
   let(:applicant) { instance_double(Applicant, under18?: under18) }
-  let(:case) { instance_double(Case, charges:) }
+  let(:case) { instance_double(Case, case_type:, charges:) }
 
   let(:parent_id) { nil }
   let(:under18) { nil }
   let(:ioj) { nil }
+
+  let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
   let(:charges) { [] }
 
   before do
@@ -114,6 +116,12 @@ RSpec.describe Passporting::IojPassporter do
   end
 
   describe '#age_passported?' do
+    context 'for an appeal case type' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      it { expect(subject.age_passported?).to be(false) }
+    end
+
     context 'for a new application' do
       context 'for under 18' do
         let(:under18) { true }
@@ -150,10 +158,18 @@ RSpec.describe Passporting::IojPassporter do
   end
 
   describe '#offence_passported?' do
+    let(:feat_enabled) { true }
+
     before do
       allow(
         FeatureFlags.offence_ioj_passport
       ).to receive(:enabled?).and_return(feat_enabled)
+    end
+
+    context 'for an appeal case type' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      it { expect(subject.offence_passported?).to be(false) }
     end
 
     context 'feature flag is disabled' do
@@ -164,8 +180,6 @@ RSpec.describe Passporting::IojPassporter do
 
     # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'feature flag is enabled' do
-      let(:feat_enabled) { true }
-
       let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
       let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
       let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
@@ -182,8 +196,14 @@ RSpec.describe Passporting::IojPassporter do
         it { expect(subject.offence_passported?).to be(true) }
       end
 
-      context 'when there are no passported offences' do
+      context 'when there is a mix of non listed offences and non passported offences' do
         let(:charges) { [non_listed_charge, non_passported_charge] }
+
+        it { expect(subject.offence_passported?).to be(false) }
+      end
+
+      context 'when there are only non listed offences' do
+        let(:charges) { [non_listed_charge] }
 
         it { expect(subject.offence_passported?).to be(false) }
       end
