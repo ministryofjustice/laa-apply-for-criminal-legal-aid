@@ -50,7 +50,18 @@ module Summary
       end
 
       def change_path(address)
-        edit_steps_address_details_path(address) if address.try(:to_param)
+        return unless address.try(:to_param)
+
+        if address.lookup_id.present?
+          # A postcode lookup was performed and an address was selected
+          edit_steps_address_results_path(address)
+        elsif address.address_line_one.present?
+          # Postcode lookup didn't return correct results, failed, or manual address
+          edit_steps_address_details_path(address)
+        else
+          # No address present, we take them to the postcode lookup
+          edit_steps_address_lookup_path(address)
+        end
       end
 
       def full_address(address)

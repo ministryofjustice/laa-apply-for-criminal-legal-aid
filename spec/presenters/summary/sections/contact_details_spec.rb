@@ -38,6 +38,7 @@ describe Summary::Sections::ContactDetails do
   let(:correspondence_address) do
     CorrespondenceAddress.new(
       id: 'e77e4fa3-76f1-4db6-8b92-72b36c8b327a',
+      lookup_id: 123,
       address_line_one: 'Test',
       address_line_two: 'Correspondence',
       postcode: 'Postcode',
@@ -84,13 +85,27 @@ describe Summary::Sections::ContactDetails do
 
       expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[2].question).to eq(:correspondence_address)
-      expect(answers[2].change_path).to match('applications/12345/steps/address/details/e77e4fa3')
+      expect(answers[2].change_path).to match('applications/12345/steps/address/results/e77e4fa3')
       expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nPostcode\r\nCity\r\nCountry")
 
       expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[3].question).to eq(:telephone_number)
       expect(answers[3].change_path).to match('applications/12345/steps/client/contact_details')
       expect(answers[3].value).to eq('123456789')
+    end
+
+    context 'when client has no home address' do
+      # NOTE: a DB record will always be present, but its attributes will be nil
+      let(:home_address) { HomeAddress.new(id: 'ff53a8dd-43f3-4e82-acba-53b1c0ce2b4c') }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(4)
+
+        expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[0].question).to eq(:home_address)
+        expect(answers[0].change_path).to match('applications/12345/steps/address/lookup/ff53a8dd')
+        expect(answers[0].value).to eq('')
+      end
     end
 
     context 'for `home_address` correspondence type' do
