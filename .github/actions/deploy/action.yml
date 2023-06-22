@@ -50,7 +50,7 @@ runs:
         ECR_URL: ${{ inputs.ecr-url }}
         IMAGE_TAG: ${{ github.sha }}
       shell: bash
-      run: envsubst < config/kubernetes/${{ inputs.environment-name }}/deployment.tpl > config/kubernetes/${{ inputs.environment-name }}/deployment.yml
+      run: for f in config/kubernetes/${{ inputs.environment-name }}/*.tpl; do envsubst < $f > ${f%.*}.yml; done
 
     - name: Apply manifest files
       shell: bash

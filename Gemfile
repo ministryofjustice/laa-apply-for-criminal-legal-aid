@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
+gem 'dartsass-rails', '~> 0.4.0'
 gem 'faraday', '~> 2.7'
 gem 'govuk_design_system_formbuilder', '~> 4.0.0'
 gem 'jbuilder', '~> 2.11.5'
@@ -22,6 +23,13 @@ gem 'omniauth-saml', '~> 2.1.0'
 # Accessing soap apis
 gem 'savon'
 
+# Monitoring
+gem 'prometheus_exporter'
+
+# Exceptions notifications
+gem 'sentry-rails'
+gem 'sentry-ruby'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -30,12 +38,6 @@ gem 'importmap-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
-
-gem 'dartsass-rails', '~> 0.4.0'
-
-# Exceptions notifications
-gem 'sentry-rails'
-gem 'sentry-ruby'
 
 gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
 
