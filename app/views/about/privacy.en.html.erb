@@ -6,13 +6,12 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-!-margin-bottom-9">
       <h1 class="govuk-heading-xl">Privacy notice</h1>
-      <h2 class="govuk-heading-l">Apply for Criminal Legal Aid Service</h2>
-      <p class="govuk-body">This service is provided by the
+      <p class="govuk-body">The 'Apply for criminal legal aid' service is provided by the
         <%= link_to 'Legal Aid Agency (LAA)', 'https://www.gov.uk/government/organisations/legal-aid-agency/', rel: 'external' %>,
         part of the Ministry of Justice (MoJ).
       </p>
 
-      <p class="govuk-body">This privacy notice covers how the digital service (“Apply for criminal legal aid”) collects personal data from providers who are submitting information on behalf of their clients.</p>
+      <p class="govuk-body">This privacy notice covers how this service collects personal data from providers who are submitting information on behalf of their clients.</p>
 
       <p class="govuk-body">
         For details of how the Legal Aid Agency collects and manages the personal data submitted within the application, check the
@@ -43,8 +42,8 @@
       </div>
 
       <p class="govuk-body">Where you provide your consent, we use
-        <%= link_to 'Google Analytics', 'https://support.google.com/analytics/topic/2919631', rel: 'external' %>
-        cookies. Google Analytics processes information about:
+        <%= link_to 'Google Analytics cookies', 'https://support.google.com/analytics/topic/2919631', rel: 'external' %>.
+        Google Analytics processes information about:
       </p>
       <div class="govuk-list">
         <ul class="govuk-list govuk-list--bullet">
@@ -57,8 +56,7 @@
 
       <p class="govuk-body">We make sure you cannot be identified by Google Analytics data. We do not pass any of your personal data to Google Analytics, and Google Analytics does not store your IP address.</p>
       <p class="govuk-body">We will not combine analytics information with other data sets in a way that would identify who you are.</p>
-      <p class="govuk-body">Find out more about <%= link_to 'cookies', cookies_path %> how we use Google Analytics and other cookies</a>
-  on this service.</p>
+      <p class="govuk-body">Find out <%= link_to 'how we use Google Analytics and other cookies on this service', cookies_path %>.</p>
 
       <h2 class="govuk-heading-l">What data we collect</h2>
 
@@ -71,12 +69,12 @@
       </div>
 
       <p class="govuk-body">We use the information we collect through Google Analytics to see how you use the service and to see how well it performs on your device.</p>
-      <p class="govuk-body">We do this to help:</p>
+      <p class="govuk-body">We do this to help make:</p>
       <div class="govuk-list">
         <ul class="govuk-list govuk-list--bullet">
-          <li>make sure the service is meeting the needs of its users</li>
-          <li>make improvements to the service</li>
-          <li>make performance improvements, for example improving page load time and data usage</li>
+          <li>sure the service is meeting the needs of its users</li>
+          <li>improvements to the service</li>
+          <li>performance improvements, for example improving page load time and data usage</li>
         </ul>
       </div>
 
@@ -102,8 +100,8 @@
       <p class="govuk-body">We will only retain your data for as long as it is needed for the purposes set out on this page.</p>
       <p class="govuk-body">We will retain long term summary logs of interactions with the service, but these logs are fully anonymous.</p>
       <p class="govuk-body">This is managed in line with the
-        <%= link_to 'Ministry of Justice Headquarters Record retention and disposition schedules Schedule',
-                    'https://www.gov.uk/government/publications/record-retention-and-disposition-schedules'%>
+        <%= link_to 'Ministry of Justice Headquarters Record retention and disposition schedules',
+                    'https://www.gov.uk/government/publications/record-retention-and-disposition-schedules'%>.
       </p>
 
       <h2 class="govuk-heading-l">Where your data is processed and stored</h2>
@@ -122,7 +120,8 @@
         </ul>
       </div>
 
-      <p class="govuk-body">You can also contact our Data Protection Officer (DPO):</p>
+      <h3 class="govuk-heading-m">Data Protection Officer (DPO)</h3>
+      <p class="govuk-body">You can also contact our DPO:</p>
       <p class="govuk-body"><%= mail_to 'dataprotection@justice.gov.uk' %></p>
       <p class="govuk-body">
         Data Protection Officer<br>
@@ -133,8 +132,9 @@
       </p>
 
       <p class="govuk-body">The DPO leads on all aspects of data protection for the MoJ.</p>
-      <p class="govuk-body">When we ask you for information, we will comply with the law. If you consider that your information has been handled incorrectly, you can contact the Information Commissioner for independent advice about data protection. You can contact the Information Commissioner at:</p>
-      <p class="govuk-body">Information Commissioner.</p>
+
+      <h3 class="govuk-heading-m">Information Commissioner</h3>
+      <p class="govuk-body">When we ask you for information, we will comply with the law. If you consider that your information has been handled incorrectly, you can contact the Information Commissioner for independent advice about data protection:</p>
       <p class="govuk-body"><%= mail_to 'icocasework@ico.org.uk' %></p>
       <p class="govuk-body">Telephone: 0303 123 1113</p>
       <p class="govuk-body">Textphone: 01625 545860</p>
