@@ -62,7 +62,6 @@ Rails.application.routes.draw do
   namespace :about do
     get :privacy
     get :contact
-    get :feedback
     get :accessibility
   end
 
