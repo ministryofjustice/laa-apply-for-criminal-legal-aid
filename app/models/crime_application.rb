@@ -15,6 +15,8 @@ class CrimeApplication < ApplicationRecord
 
   enum status: ApplicationStatus.enum_values
 
+  scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
+
   alias_attribute :reference, :usn
 
   store_accessor :provider_details,

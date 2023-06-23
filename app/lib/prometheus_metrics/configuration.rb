@@ -1,10 +1,15 @@
 module PrometheusMetrics
   module Configuration
+    require 'prometheus_exporter/server'
+    require_relative 'collectors'
+
     DEFAULT_PREFIX = 'ruby_'.freeze
     SERVER_BINDING_HOST = '0.0.0.0'.freeze
     SERVER_BINDING_PORT = 9394
 
-    CUSTOM_COLLECTORS = [].freeze
+    CUSTOM_COLLECTORS = [
+      PrometheusMetrics::ApplicationsCountCollector
+    ].freeze
 
     # :nocov:
     def self.should_configure?
@@ -21,8 +26,6 @@ module PrometheusMetrics
     # If we move to multi process mode, we will have to run the
     # exporter process separately (`bundle exec prometheus_exporter`)
     def self.start_server
-      require 'prometheus_exporter/server'
-
       server = PrometheusExporter::Server::WebServer.new(
         bind: SERVER_BINDING_HOST, port: SERVER_BINDING_PORT,
         verbose: ENV.fetch('PROMETHEUS_EXPORTER_VERBOSE', 'false').inquiry.true?
@@ -39,7 +42,6 @@ module PrometheusMetrics
       false
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def self.configure
       return unless should_configure?
       return unless start_server
@@ -47,7 +49,7 @@ module PrometheusMetrics
       require 'prometheus_exporter/instrumentation'
       require 'prometheus_exporter/middleware'
 
-      Rails.logger.info '[PrometheusExporter] Initialising middleware...'
+      Rails.logger.info '[PrometheusExporter] Initialising instrumentation middleware...'
 
       # Metrics will be prefixed, for example `ruby_http_requests_total`
       PrometheusExporter::Metric::Base.default_prefix = DEFAULT_PREFIX
@@ -61,17 +63,12 @@ module PrometheusMetrics
 
       # NOTE: if running Puma in cluster mode, the following
       # instrumentation will need to be changed
-      unless PrometheusExporter::Instrumentation::Puma.started?
-        Rails.logger.info '[PrometheusExporter] Initialising Puma instrumentation...'
-        PrometheusExporter::Instrumentation::Puma.start
-      end
+      PrometheusExporter::Instrumentation::Puma.start unless PrometheusExporter::Instrumentation::Puma.started?
 
       # NOTE: if running Puma in cluster mode, the following
       # instrumentation will need to be changed
-      Rails.logger.info '[PrometheusExporter] Initialising ActiveRecord instrumentation...'
       PrometheusExporter::Instrumentation::ActiveRecord.start
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     # :nocov:
   end
 end
