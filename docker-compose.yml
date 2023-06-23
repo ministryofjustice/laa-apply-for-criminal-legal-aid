@@ -26,6 +26,7 @@ services:
       BC_USE_DEV_MOCK: "true"
       OMNIAUTH_TEST_MODE: "true"
     ports:
-      - "3000:3000"
+      - "3000:3000" # puma server (rails app)
+      - "9394:9394" # prometheus exporter `/metrics` endpoint
     depends_on:
       - db
