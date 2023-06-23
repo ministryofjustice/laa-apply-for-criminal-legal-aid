@@ -38,7 +38,7 @@ module PrometheusMetrics
       false
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def self.configure
       return unless should_configure?
       return unless start_server
@@ -53,24 +53,13 @@ module PrometheusMetrics
 
       # This reports basic process stats like RSS and GC info, type master
       # means it is instrumenting the master process
-      PrometheusExporter::Instrumentation::Process.start(
-        type: 'master',
-        labels: {
-          # Hostname variable identify each pod on kubernetes
-          hostname: ENV.fetch('HOSTNAME', 'localhost'),
-        }
-      )
+      PrometheusExporter::Instrumentation::Process.start(type: 'master')
 
       # NOTE: if running Puma in cluster mode, the following
       # instrumentation will need to be changed
       unless PrometheusExporter::Instrumentation::Puma.started?
         Rails.logger.info '[PrometheusExporter] Initialising Puma instrumentation...'
-        PrometheusExporter::Instrumentation::Puma.start(
-          labels: {
-            # Hostname env variable identify each pod on kubernetes
-            hostname: ENV.fetch('HOSTNAME', 'localhost'),
-          }
-        )
+        PrometheusExporter::Instrumentation::Puma.start
       end
 
       # NOTE: if running Puma in cluster mode, the following
@@ -78,7 +67,7 @@ module PrometheusMetrics
       Rails.logger.info '[PrometheusExporter] Initialising ActiveRecord instrumentation...'
       PrometheusExporter::Instrumentation::ActiveRecord.start
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
     # :nocov:
   end
 end
