@@ -12,7 +12,7 @@ module PrometheusMetrics
          ENV.key?('SKIP_PROMETHEUS_EXPORTER')
         false
       else
-        ENV.key?('ENABLE_PROMETHEUS_EXPORTER')
+        ENV.fetch('ENABLE_PROMETHEUS_EXPORTER', 'false').inquiry.true?
       end
     end
 
