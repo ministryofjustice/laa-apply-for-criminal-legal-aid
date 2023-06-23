@@ -12,3 +12,18 @@ spec:
     targetPort: 3000
   selector:
     app: apply-for-criminal-legal-aid-web-production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+  labels:
+    app: apply-for-criminal-legal-aid-web-production
+spec:
+  ports:
+  - port: 9394
+    name: metrics
+    targetPort: 9394
+  selector:
+    app: apply-for-criminal-legal-aid-web-production
