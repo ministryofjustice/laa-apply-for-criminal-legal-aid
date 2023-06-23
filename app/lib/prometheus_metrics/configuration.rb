@@ -1,5 +1,6 @@
 module PrometheusMetrics
   module Configuration
+    DEFAULT_PREFIX = 'ruby_'.freeze
     SERVER_BINDING_HOST = '0.0.0.0'.freeze
     SERVER_BINDING_PORT = 9394
 
@@ -38,7 +39,7 @@ module PrometheusMetrics
       false
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def self.configure
       return unless should_configure?
       return unless start_server
@@ -47,6 +48,9 @@ module PrometheusMetrics
       require 'prometheus_exporter/middleware'
 
       Rails.logger.info '[PrometheusExporter] Initialising middleware...'
+
+      # Metrics will be prefixed, for example `ruby_http_requests_total`
+      PrometheusExporter::Metric::Base.default_prefix = DEFAULT_PREFIX
 
       # This reports stats per request like HTTP status and timings
       Rails.application.middleware.unshift PrometheusExporter::Middleware
@@ -67,7 +71,7 @@ module PrometheusMetrics
       Rails.logger.info '[PrometheusExporter] Initialising ActiveRecord instrumentation...'
       PrometheusExporter::Instrumentation::ActiveRecord.start
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     # :nocov:
   end
 end
