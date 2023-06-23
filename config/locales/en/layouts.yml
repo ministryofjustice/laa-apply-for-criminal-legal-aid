@@ -2,7 +2,7 @@
 en:
   layouts:
     phase_banner:
-      text_html: This is a new service – your <a href="%{survey_url}">feedback</a> will help us to improve it
+      text_html: This is a new service – your <a href="%{survey_url}" rel="external">feedback</a> will help us to improve it.
       tag:
         production: beta
 
