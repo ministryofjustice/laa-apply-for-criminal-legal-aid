@@ -18,6 +18,7 @@ services:
       RAILS_ENV: production
       DATABASE_URL: postgresql://postgres@db/laa-apply-for-criminal-legal-aid
       SECRET_KEY_BASE: f22760a0bd78a9191ba4c247e23a281cb251461cdba6b5215043ca11b694d734
+      ENABLE_PROMETHEUS_EXPORTER: "true"
       RAILS_SERVE_STATIC_FILES: "1"
       RAILS_LOG_TO_STDOUT: "1"
       DATABASE_SSLMODE: disable
@@ -25,6 +26,7 @@ services:
       BC_USE_DEV_MOCK: "true"
       OMNIAUTH_TEST_MODE: "true"
     ports:
-      - "3000:3000"
+      - "3000:3000" # puma server (rails app)
+      - "9394:9394" # prometheus exporter `/metrics` endpoint
     depends_on:
       - db
