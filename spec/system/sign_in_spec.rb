@@ -19,7 +19,7 @@ RSpec.describe 'Sign in user journey' do
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
 
-    visit '/'
+    visit root_path
   end
 
   context 'user is not signed in' do
@@ -38,11 +38,11 @@ RSpec.describe 'Sign in user journey' do
   context 'user is signed in' do
     before do
       start_button.click
-      visit '/'
+      visit root_path
     end
 
-    it 'has a start button with action applications' do
-      expect(start_button_form_action).to eq(crime_applications_path)
+    it 'redirects to the dashboard' do
+      expect(current_url).to match(crime_applications_path)
     end
   end
 
