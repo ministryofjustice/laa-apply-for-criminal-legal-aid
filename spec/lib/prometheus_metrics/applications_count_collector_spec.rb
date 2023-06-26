@@ -30,7 +30,12 @@ describe PrometheusMetrics::ApplicationsCountCollector do
     it 'calls the expected methods to gather metrics' do
       expect(
         subject.metrics.map(&:data)
-      ).to contain_exactly({ {} => 10 }, { {} => 8 }, { {} => 5 }, { {} => 2 })
+      ).to contain_exactly(
+        { { status: 'started' } => 10 },
+        { { status: 'in_progress' } => 8 },
+        { { status: 'date_stamped' } => 5 },
+        { { status: 'stale' } => 2 },
+      )
     end
 
     it 'uses Rails cache' do
