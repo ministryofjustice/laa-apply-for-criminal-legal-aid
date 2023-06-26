@@ -17,7 +17,7 @@ data:
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
 
   # If this is uncommented, authentication will be mocked
-  OMNIAUTH_TEST_MODE: "true"
+  # OMNIAUTH_TEST_MODE: "true"
 
   # LAA Portal metadata endpoint or file
   # (endpoint not accessible from inside CP, using locally stored file)
