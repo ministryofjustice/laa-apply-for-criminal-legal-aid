@@ -16,10 +16,7 @@ class DashboardController < ApplicationController
   end
 
   def in_progress_scope
-    CrimeApplication.where(office_code: current_office_code)
-                    .joins(:people)
-                    .includes(:applicant)
-                    .merge(Applicant.with_name)
+    CrimeApplication.with_applicant.where(office_code: current_office_code)
   end
 
   def application_counters
