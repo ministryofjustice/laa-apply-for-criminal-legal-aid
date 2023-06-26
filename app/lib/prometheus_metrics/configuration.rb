@@ -13,13 +13,14 @@ module PrometheusMetrics
 
     # :nocov:
     def self.should_configure?
-      if File.basename($PROGRAM_NAME) == 'rake' ||
-         (defined?(Rails) && (Rails.const_defined?(:Console) || Rails.env.test?)) ||
-         ENV.key?('SKIP_PROMETHEUS_EXPORTER')
-        false
-      else
-        ENV.fetch('ENABLE_PROMETHEUS_EXPORTER', 'false').inquiry.true?
-      end
+      return false if ENV.key?('SKIP_PROMETHEUS_EXPORTER')
+
+      # For now we only initialise prometheus exporter on servers
+      # In the future this may change to also support workers
+      return false unless defined?(Rails) &&
+                          (Rails.const_defined?('Rails::Server') || File.basename($PROGRAM_NAME) == 'puma')
+
+      ENV.fetch('ENABLE_PROMETHEUS_EXPORTER', 'false').inquiry.true?
     end
 
     # We are running puma in single process mode, so this is safe

@@ -4,7 +4,7 @@ class UsnSeqHelper
   # https://dsdmoj.atlassian.net/wiki/spaces/CRIMAP/pages/4210524301/USN
 
   USN_SEQUENCE_NAME  = 'crime_applications_usn_seq'.freeze
-  USN_SEQUENCE_START = 6_000_000
+  USN_SEQUENCE_START = 10_000_000
 
   class << self
     # Sequence configuration is not be captured in the `schema.rb`.
@@ -20,7 +20,7 @@ class UsnSeqHelper
     #
     # If the database setup is done with a 2-steps approach,
     # first `db:create` and then `db:migrate`, then the migration
-    # will configure the sequence to start back at 6_000_000.
+    # will configure the sequence to start back at 10_000_000.
     #
     # In both scenarios, this might not be desirable.
     # If using this helper, the `USN_SEQ_START` env variable can
@@ -37,7 +37,7 @@ class UsnSeqHelper
     # corruption of data, we would have to restore from a backup
     # at a point in time, which would reset everything back to
     # how it was at that moment, including the sequence numbering
-    # whatever that is by then (i.e. 6_789_567).
+    # whatever that is by then (i.e. 10_789_567).
     #
     def create_sequence
       ActiveRecord::Base.connection.execute(
