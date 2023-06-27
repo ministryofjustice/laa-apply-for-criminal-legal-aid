@@ -45,7 +45,7 @@ module LaaApplyForCriminalLegalAid
     config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
     config.x.analytics.cookies_consent_expiration = 6.months
 
-    config.x.benefit_checker.use_mock = ENV.fetch('BC_USE_DEV_MOCK', false)
+    config.x.benefit_checker.use_mock = ENV.fetch('BC_USE_DEV_MOCK', 'false')
     config.x.benefit_checker.wsdl_url = ENV.fetch('BC_WSDL_URL', nil)
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
