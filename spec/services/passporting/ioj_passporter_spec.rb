@@ -162,7 +162,7 @@ RSpec.describe Passporting::IojPassporter do
 
     before do
       allow(
-        FeatureFlags.offence_ioj_passport
+        FeatureFlags.offence_ioj_slipstream
       ).to receive(:enabled?).and_return(feat_enabled)
     end
 

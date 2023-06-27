@@ -1,4 +1,4 @@
-code,name,offence_type,offence_class,ioj_passport
+code,name,offence_type,offence_class,slipstreamable
 TH68010,"Theft from a shop (£30,000 or less)",CE Either Way,F,false
 TH68010,"Theft from a shop (Over £30,000 up to £100,000)",CE Either Way,G,false
 TH68010,"Theft from a shop (Over £100,000)",CE Either Way,K,false
