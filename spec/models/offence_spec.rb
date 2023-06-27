@@ -13,7 +13,7 @@ RSpec.describe Offence, type: :model do
         expect(subject.name).to eq('Assault by beating')
         expect(subject.offence_class).to eq('H')
         expect(subject.offence_type).to eq('CS Summary Non-Motoring')
-        expect(subject.ioj_passport).to be(true)
+        expect(subject.slipstreamable).to be(true)
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Offence, type: :model do
         expect(subject.code).to eq('RT88333')
         expect(subject.offence_class).to eq('H')
         expect(subject.offence_type).to eq('CM Summary - Motoring')
-        expect(subject.ioj_passport).to be(false)
+        expect(subject.slipstreamable).to be(false)
       end
     end
 
