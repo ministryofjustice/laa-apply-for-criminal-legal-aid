@@ -40,8 +40,13 @@ module Steps
     # compared to those in the persisted DB record. This will mostly work
     # for simple hashes { attr: value }, but complex structures will require
     # their custom, more in-deep change method, overriding this one.
-    def changed?
-      !record.slice(attribute_names).eql?(attributes)
+    def changed?(*attrs)
+      if attrs.any?
+        names = attrs.map(&:to_s)
+        !record.slice(*names).eql?(attributes.slice(*names))
+      else
+        !record.slice(attribute_names).eql?(attributes)
+      end
     end
 
     def to_key
