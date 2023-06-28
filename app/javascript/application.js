@@ -49,6 +49,13 @@ if ($headerNavigation) {
   $headerNavigation.classList.remove("app-header-menu-hidden-on-load")
 }
 
+// Allow window.print(), otherwise blocked by CSP
+import PrintAction from "local/print-action"
+const $elements = document.querySelectorAll('[data-module="print"]')
+for (let i = 0; i < $elements.length; i++) {
+  new PrintAction($elements[i]).init()
+}
+
 // Google analytics additional tracking
 // Keep this at the bottom of this file
 import GAEvents from "local/ga-events"
