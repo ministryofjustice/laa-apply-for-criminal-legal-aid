@@ -22,10 +22,21 @@ module Steps
         applicant.update(
           attributes.merge(
             # The following are dependent attributes that need to be reset
-            has_nino: nil,
-            nino: nil,
+            attributes_to_reset
           )
         )
+      end
+
+      # If the last name or date of birth have changed, the DWP check
+      # needs to run again as its result is linked to these attributes
+      def attributes_to_reset
+        return {} unless changed?(:last_name, :date_of_birth)
+
+        {
+          has_nino: nil,
+          nino: nil,
+          passporting_benefit: nil,
+        }
       end
     end
   end
