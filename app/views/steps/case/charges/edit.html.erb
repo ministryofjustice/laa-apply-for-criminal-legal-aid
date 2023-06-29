@@ -18,7 +18,7 @@
 
       <datalist id="<%= suggestions_id %>">
         <% Offence.all.present_each(OffencePresenter) do |o| %>
-          <%= tag.option(o.name, data: { caption: o.offence_class }) %>
+          <%= tag.option(o.name, data: { caption: o.offence_class, synonyms: o.synonyms }) %>
         <% end %>
       </datalist>
 

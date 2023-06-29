@@ -1,0 +1,5 @@
+offence_synonyms:
+- regex: !ruby/regexp /grievous bodily harm/i
+  synonyms: [gbh]
+- regex: !ruby/regexp /section 18/i
+  synonyms: [s18]
