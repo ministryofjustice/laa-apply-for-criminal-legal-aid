@@ -129,7 +129,7 @@ en:
         country: Country
         postcode: Postcode
       steps_case_urn_form:
-        urn: Enter the unique reference number (URN) for your client's case (optional)
+        urn: Enter the unique reference number (URN) for your client’s case (optional)
       steps_case_case_type_form:
         case_type_options:
           summary_only: Summary only

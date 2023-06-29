@@ -139,7 +139,7 @@ data:
           "datasource": {
             "uid": "$datasource"
           },
-          "description": "An application is considered in progress when at least the applicant's first name has been entered",
+          "description": "An application is considered in progress when at least the applicant’s first name has been entered",
           "fieldConfig": {
             "defaults": {
               "color": {
