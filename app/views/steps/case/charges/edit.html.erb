@@ -12,7 +12,8 @@
     <%= step_form @form_object do |f| %>
       <% suggestions_id = f.field_id(:offence_name, :field, :suggestions).tr('_', '-') %>
 
-      <%= f.govuk_text_field :offence_name, label: { size: 'm' }, autocomplete: 'off',
+      <%= f.govuk_text_field :offence_name, label: { size: 'm' },
+                             autocomplete: 'off', autocorrect: 'off',
                              data: { suggestions: suggestions_id, module: 'govuk-input' },
                              list: suggestions_id %>
 
