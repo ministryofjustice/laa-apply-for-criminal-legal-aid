@@ -57,7 +57,7 @@ RT88010,Fail to provide specimen for analysis - vehicle driver,CM Summary - Moto
 MD71231,Possess with intent to supply a controlled drug of Class A - Heroin,CE Either Way,B,true
 TH68001,"Theft from the person of another (£30,000 or less)",CE Either Way,F,true
 TH68001,"Theft from the person of another (Over £30,000 up to £100,000)",CE Either Way,G,true
-TH68001,"Theft from the person of another  (Over £100,000)",CE Either Way,K,true
+TH68001,"Theft from the person of another (Over £100,000)",CE Either Way,K,true
 CJ67002,Drunk and disorderly in a public place,CS Summary Non-Motoring,H,false
 MD71526,Possess with intent to supply a controlled drug of Class B - Cannabis,CE Either Way,B,true
 SX03007,Sexual assault on a female,CE Either Way,D,true
@@ -117,7 +117,7 @@ SX03017,Assault a girl under 13,CE Either Way,J,true
 SX03002,Rape a woman 16 years of age or over - SOA 2003,CI Indictable,J,true
 TH68026A,Attempt burglary dwelling with intent to steal,CE Either Way,E,true
 MD71022,Possess a class C controlled drug,CE Either Way,H,false
-CA03005,Send by public communication network an offensive / indecent / obscene / menacing message /    matter,CS Summary Non-Motoring,H,false
+CA03005,Send by public communication network an offensive / indecent / obscene / menacing message / matter,CS Summary Non-Motoring,H,false
 TH68010A,"Attempt theft from shop (£30,000 or less)",CE Either Way,F,false
 TH68010A,"Attempt theft from shop (Over £30,000 up to £100,000)",CE Either Way,G,false
 TH68010A,"Attempt theft from shop (Over £100,000)",CE Either Way,K,false
@@ -225,7 +225,7 @@ SX03001,Rape a girl aged 13 / 14 / 15 - SOA 2003,CI Indictable,J,true
 OF61017A,Attempt to cause grievous bodily harm with intent to do grievous bodily harm,CI Indictable,B,true
 TH68054,Carried in / on a motor vehicle taken without the owners consent,CM Summary - Motoring,H,false
 SX03015,Assault a girl under 13 by penetration with a part of your body / a thing - SOA 2003,CI Indictable,J,true
-SX03158,Offender 18  or over engage in non penetrative sexual activity with girl 13 to 15 - SOA 2003,CE Either Way,J,true
+SX03158,Offender 18 or over engage in non penetrative sexual activity with girl 13 to 15 - SOA 2003,CE Either Way,J,true
 MD71552,Possess a controlled drug of Class B - cannabinoid receptor agonists,CE Either Way,H,false
 MD71130,Supply a controlled drug of Class A - Cocaine,CE Either Way,C,true
 COML062,Act of outraging public decency - common law,CE Either Way,H,true
@@ -259,7 +259,7 @@ MD71239,Possess with intent to supply a controlled drug of Class A - Other,CE Ei
 TH68026C,Conspire to commit a burglary dwelling with intent to steal,CI Indictable,B,true
 IC60006,Gross Indecency with a girl under fourteen years,CE Either Way,J,true
 TH68144,Aggravated vehicle taking - (initial taker) and property damage under £5000,CE Either Way,H,true
-RT88567,Fail to give information relating to the identification of the driver /  rider of a vehicle when required,CM Summary - Motoring,H,false
+RT88567,Fail to give information relating to the identification of the driver / rider of a vehicle when required,CM Summary - Motoring,H,false
 TH68001A,"Attempt theft from the person of another (£30,000 or less)",CE Either Way,F,true
 TH68001A,"Attempt theft from the person of another (Over £30,000 up to £100,000)",CE Either Way,G,true
 TH68001A,"Attempt theft from the person of another (Over £100,000)",CE Either Way,K,true

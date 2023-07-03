@@ -3,3 +3,7 @@ offence_synonyms:
   synonyms: [gbh]
 - regex: !ruby/regexp /section 18/i
   synonyms: [s18]
+- regex: !ruby/regexp /anti-social behaviour/i
+  synonyms: [asb]
+- regex: !ruby/regexp /criminal behaviour order/i
+  synonyms: [cbo]
