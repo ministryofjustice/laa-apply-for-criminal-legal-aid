@@ -4,12 +4,12 @@
 import { initAll } from 'govuk-frontend'
 initAll()
 
-// Cookie banner
+// Cookie banner -- Script name is obfuscated to avoid browsers blocking it
 // https://design-system.service.gov.uk/components/cookie-banner/
-import CookieBanner from "local/cookie-banner"
+import Cbc from "local/cbc"
 const $cookieBanner = document.querySelector('[data-module="govuk-cookie-banner"]')
 if ($cookieBanner) {
-  new CookieBanner($cookieBanner).init()
+  new Cbc($cookieBanner).init()
 }
 
 // NOTE: suggestions input component not yet part of GOV.UK frontend

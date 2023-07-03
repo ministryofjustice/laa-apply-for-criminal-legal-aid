@@ -1,11 +1,11 @@
 'use strict';
 
-function CookieBanner($module) {
+function Cbc($module) {
   this.$cookieBanner = $module
   this.$hideButtonSelector = '.app--js-cookie-banner-hide'
 }
 
-CookieBanner.prototype.init = function () {
+Cbc.prototype.init = function () {
   const self = this,
         $hideButton = this.$cookieBanner.querySelector(this.$hideButtonSelector)
 
@@ -14,9 +14,9 @@ CookieBanner.prototype.init = function () {
   }
 }
 
-CookieBanner.prototype.hideBanner = function (e) {
+Cbc.prototype.hideBanner = function (e) {
   this.$cookieBanner.setAttribute('hidden', true)
   e.preventDefault()
 }
 
-export default CookieBanner
+export default Cbc
