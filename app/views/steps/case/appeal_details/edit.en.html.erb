@@ -1,0 +1,22 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_date_field :appeal_lodged_date, maxlength_enabled: true, legend: { size: 's' } %>
+
+      <%= f.govuk_text_area :appeal_with_changes_details,
+                            label: { size: 's' } if @form_object.appeal_with_changes? %>
+
+      <%= f.govuk_text_field :appeal_maat_id, autocomplete: 'off', width: 'one-third',
+                             extra_letter_spacing: true, label: { size: 's' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
