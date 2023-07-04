@@ -1,4 +1,5 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
@@ -7,6 +8,8 @@ module Decisions
         edit(:case_type)
       when :case_type
         after_case_type
+      when :appeal_details
+        date_stamp_if_needed
       when :date_stamp
         charges_summary_or_edit_new_charge
       when :charges
@@ -38,6 +41,12 @@ module Decisions
     private
 
     def after_case_type
+      return edit(:appeal_details) if form_object.case_type.appeal?
+
+      date_stamp_if_needed
+    end
+
+    def date_stamp_if_needed
       if DateStamper.new(form_object.crime_application, form_object.case.case_type).call
         edit(:date_stamp)
       else
@@ -126,4 +135,5 @@ module Decisions
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

@@ -119,8 +119,11 @@ en:
           urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
       case_type:
         edit:
-          page_title: Enter the case type
-          heading:  Enter the case type
+          page_title: What is the case type?
+      appeal_details:
+        edit:
+          page_title: Enter the appeal details
+          heading: Enter details of your client’s appeal to Crown Court
       date_stamp:
         edit:
           page_title: Your application has been date stamped

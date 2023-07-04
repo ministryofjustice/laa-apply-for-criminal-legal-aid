@@ -6,32 +6,9 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:case_type, legend: { tag: 'h1', size: 'xl' }) do %>
-        <% @form_object.choices.each_with_index do |choice, index| %>
-          <% if choice == CaseType::APPEAL_TO_CROWN_COURT %>
+      <%= f.govuk_collection_radio_buttons :case_type, @form_object.choices,
+                                           :value, legend: { tag: 'h1', size: 'xl' } %>
 
-            <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :appeal_maat_id, autocomplete: 'off', width: 'one-third',
-                                     extra_letter_spacing: true %>
-            <% end %>
-
-          <% elsif choice == CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES %>
-
-            <%= f.govuk_radio_button :case_type, choice.value do %>
-              <%= f.govuk_text_field :appeal_with_changes_maat_id, autocomplete: 'off', width: 'one-third',
-                                     extra_letter_spacing: true %>
-              <%= f.govuk_text_area :appeal_with_changes_details,
-                                    'aria-live': 'polite',
-                                    'aria-label': t("helpers.label.#{f.object_name}.appeal_with_changes_details_a11y") %>
-            <% end %>
-
-          <% else %>
-
-            <%= f.govuk_radio_button :case_type, choice.value, link_errors: index.zero? %>
-
-          <% end %>
-        <% end %>
-      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>

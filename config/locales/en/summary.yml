@@ -87,6 +87,8 @@ en:
       previous_maat_id:
         question: Previous MAAT ID
         absence_answer: *absence_none
+      appeal_lodged_date:
+        question: Date lodged
       appeal_with_changes_details:
         question: Change details
       # END case details section
