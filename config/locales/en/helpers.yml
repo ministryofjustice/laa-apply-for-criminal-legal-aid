@@ -66,7 +66,7 @@ en:
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
-        urn: For example, ‘12 AB 3456789’
+        urn: For example, ‘12 AB 3456789’.
       steps_case_appeal_details_form:
         appeal_lodged_date: For example, 27 3 2007
       steps_case_charges_form:
