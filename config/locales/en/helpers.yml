@@ -38,6 +38,8 @@ en:
         confirm_details: Are these details correct?
       steps_case_case_type_form:
         case_type: What is the case type?
+      steps_case_appeal_details_form:
+        appeal_lodged_date: Date the appeal was lodged
       steps_case_charges_form:
         date_from: Start date %{index}
         date_to: End date %{index} (optional)
@@ -64,7 +66,9 @@ en:
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
-        urn: For example, ‘12 AB 3456789’.
+        urn: For example, ‘12 AB 3456789’
+      steps_case_appeal_details_form:
+        appeal_lodged_date: For example, 27 3 2007
       steps_case_charges_form:
         offence_name: Add one offence at a time, for example, robbery. You can add more later.
         offence_dates_attributes:
@@ -139,10 +143,9 @@ en:
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+      steps_case_appeal_details_form:
         appeal_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_details: Enter the details of what has changed
-        appeal_with_changes_details_a11y: Enter details of what has changed regarding your clients financial circumstances
+        appeal_with_changes_details: Details of changes in financial circumstances
       steps_case_charges_form:
         offence_name: Offence
       steps_case_charges_summary_form:

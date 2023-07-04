@@ -5,16 +5,9 @@ module Steps
       has_one_association :case
 
       attribute :case_type, :value_object, source: CaseType
-      attribute :appeal_maat_id, :string
-      attribute :appeal_with_changes_maat_id, :string
-      attribute :appeal_with_changes_details, :string
 
       validates :case_type,
                 inclusion: { in: :choices }
-
-      validates :appeal_with_changes_details,
-                presence: true,
-                if: -> { appeal_with_changes? }
 
       def choices
         CaseType.values
@@ -22,24 +15,22 @@ module Steps
 
       private
 
+      def changed?
+        # The attribute is a `value_object`, overriding generic `#changed?`
+        !kase.case_type.eql?(case_type.to_s)
+      end
+
       def persist!
-        kase.update(attributes.merge(attributes_to_reset))
-      end
+        return true unless changed?
 
-      def attributes_to_reset
-        {
-          'appeal_maat_id' => (appeal_maat_id if appeal?),
-          'appeal_with_changes_maat_id' => (appeal_with_changes_maat_id if appeal_with_changes?),
-          'appeal_with_changes_details' => (appeal_with_changes_details if appeal_with_changes?),
-        }
-      end
-
-      def appeal?
-        case_type&.appeal_to_crown_court?
-      end
-
-      def appeal_with_changes?
-        case_type&.appeal_to_crown_court_with_changes?
+        kase.update(
+          attributes.merge(
+            # The following are dependent attributes that need to be reset
+            appeal_maat_id: nil,
+            appeal_lodged_date: nil,
+            appeal_with_changes_details: nil,
+          )
+        )
       end
     end
   end

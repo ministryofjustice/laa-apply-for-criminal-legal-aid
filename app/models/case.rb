@@ -12,6 +12,10 @@ class Case < ApplicationRecord
     end
   end
 
+  # Temporarily, because some applications in datastore might
+  # have this, now unused, attribute, to be able to re-hydrate
+  alias_attribute :appeal_with_changes_maat_id, :appeal_maat_id
+
   private
 
   def initialise_dates(charge)

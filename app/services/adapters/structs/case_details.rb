@@ -20,6 +20,11 @@ module Adapters
         codefendants.any? ? YesNoAnswer::YES : YesNoAnswer::NO
       end
 
+      # TODO: to be added to schemas/fixtures
+      def appeal_lodged_date
+        nil
+      end
+
       def serializable_hash(options = {})
         super(
           options.merge(

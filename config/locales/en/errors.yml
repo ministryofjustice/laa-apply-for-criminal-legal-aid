@@ -83,9 +83,18 @@ en:
           attributes:
             case_type:
               inclusion: Select a case type
+        steps/case/appeal_details_form:
+          attributes:
             appeal_with_changes_details:
-              blank: Add the details of what has changed
-              present: Details of what has changed are required for Appeal to Crown Court with changes to financial circumstances only
+              blank: Enter details of changes in financial circumstances
+            appeal_lodged_date:
+              blank: Enter the date the appeal was lodged
+              invalid: Enter a valid appeal lodged date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date the appeal was lodged is too far in the past
+              future_not_allowed: Date the appeal was lodged must be today or in the past
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
