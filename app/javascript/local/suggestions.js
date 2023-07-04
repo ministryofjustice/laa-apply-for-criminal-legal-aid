@@ -16,11 +16,6 @@ Input.prototype.init = function () {
   if (suggestionsSourceId) {
     this.suggestions = document.getElementById(suggestionsSourceId)
 
-    this.$formGroup.setAttribute('role', 'combobox')
-    this.$formGroup.setAttribute('aria-owns', this.$module.getAttribute('id'))
-    this.$formGroup.setAttribute('aria-haspopup', 'listbox')
-    this.$formGroup.setAttribute('aria-expanded', 'false')
-
     this.$suggestionsHeader = document.createElement('h2')
     this.$suggestionsHeader.setAttribute('class', 'govuk-input__suggestions-header')
     this.$suggestionsHeader.textContent = this.$module.getAttribute('data-suggestions-header') || 'Suggestions'
@@ -45,6 +40,9 @@ Input.prototype.init = function () {
     this.$module.removeAttribute('list') // [change: deactivate browser-native suggestions]
     this.$module.setAttribute('aria-autocomplete', 'list')
     this.$module.setAttribute('aria-controls', this.$module.getAttribute('id') + '-suggestions')
+    this.$module.setAttribute('role', 'combobox')
+    this.$module.setAttribute('aria-haspopup', 'listbox')
+    this.$module.setAttribute('aria-expanded', 'false')
 
     this.$module.addEventListener('input', this.handleInputInput.bind(this))
     this.$module.addEventListener('keydown', this.handleInputKeyDown.bind(this))
