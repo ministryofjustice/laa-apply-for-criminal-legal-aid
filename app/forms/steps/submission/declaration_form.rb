@@ -6,7 +6,7 @@ module Steps
       attribute :legal_rep_telephone, :string
 
       # Very basic validation to allow numeric and common telephone number symbols
-      TEL_REGEXP = /\A[0-9#+()-.]{7,18}\Z/
+      TEL_REGEXP = /\A[0-9#+()-.]{7,18}\z/
 
       validates :legal_rep_first_name,
                 :legal_rep_last_name,
