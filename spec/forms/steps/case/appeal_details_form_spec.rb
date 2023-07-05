@@ -47,6 +47,40 @@ RSpec.describe Steps::Case::AppealDetailsForm do
                       attribute_name: :appeal_lodged_date,
                       allow_past: true, allow_future: false
     end
+
+    context 'previous MAAT ID format' do
+      # It behaves the same for both appeal types
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      context 'when `appeal_maat_id` is not numeric' do
+        let(:appeal_maat_id) { 'X123Z' }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
+        end
+      end
+
+      context 'when `appeal_maat_id` is out of bounds' do
+        context 'not enough digits' do
+          let(:appeal_maat_id) { '12345' }
+
+          it 'has a validation error on the field' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
+          end
+        end
+
+        context 'too many digits' do
+          let(:appeal_maat_id) { '1234567890' }
+
+          it 'has a validation error on the field' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
+          end
+        end
+      end
+    end
   end
 
   describe '#save' do

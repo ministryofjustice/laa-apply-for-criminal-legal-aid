@@ -5,7 +5,7 @@ module Steps
       has_one_association :applicant
 
       # Very basic validation to allow numeric and common telephone number symbols
-      TEL_REGEXP = /\A[0-9#+()-.]{7,18}\Z/
+      TEL_REGEXP = /\A[0-9#+()-.]{7,18}\z/
 
       attribute :telephone_number, :string
       attribute :correspondence_address_type, :value_object, source: CorrespondenceType

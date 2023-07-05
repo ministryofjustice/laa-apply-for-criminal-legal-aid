@@ -4,7 +4,7 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :case
 
-      URN_REGEXP = /\A[0-9]{2}[A-Z]{2}[0-9]{7}\Z/
+      URN_REGEXP = /\A[0-9]{2}[A-Z]{2}[0-9]{7}\z/
 
       attribute :urn, :string
 
