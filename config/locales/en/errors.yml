@@ -88,7 +88,7 @@ en:
             appeal_with_changes_details:
               blank: Enter details of changes in financial circumstances
             appeal_maat_id:
-              invalid: Enter a valid previous MAAT ID
+              invalid: Enter a valid MAAT ID
             appeal_lodged_date:
               blank: Enter the date the appeal was lodged
               invalid: Enter a valid date
