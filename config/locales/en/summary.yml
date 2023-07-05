@@ -90,7 +90,7 @@ en:
       appeal_lodged_date:
         question: Date lodged
       appeal_with_changes_details:
-        question: Change details
+        question: Changes details
       # END case details section
 
       # BEGIN offences section
