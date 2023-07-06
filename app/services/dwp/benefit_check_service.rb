@@ -26,11 +26,11 @@ module DWP
     end
 
     def call
-      soap_client.call(:check, message: benefit_checker_params).body[:benefit_checker_response]
-    rescue StandardError => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(e)
-      nil
+      Rails.error.handle do
+        soap_client.call(
+          :check, message: benefit_checker_params
+        ).body[:benefit_checker_response]
+      end
     end
 
     private

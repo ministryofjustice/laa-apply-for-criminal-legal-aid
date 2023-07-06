@@ -96,8 +96,11 @@ RSpec.describe DWP::BenefitCheckService do
 
         let(:exception) { StandardError.new('boom!') }
 
-        it 'captures error' do
-          expect(Sentry).to receive(:capture_exception).with(exception)
+        it 'handles and reports the error' do
+          expect(Rails.error).to receive(:report).with(
+            exception, hash_including(handled: true)
+          )
+
           subject.passporting_benefit?(applicant)
         end
 
