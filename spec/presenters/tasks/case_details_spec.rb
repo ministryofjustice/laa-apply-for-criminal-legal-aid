@@ -16,7 +16,7 @@ RSpec.describe Tasks::CaseDetails do
   let(:kase) { nil }
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/case/urn') }
+    it { expect(subject.path).to eq('/applications/12345/steps/case/case_type') }
   end
 
   describe '#not_applicable?' do

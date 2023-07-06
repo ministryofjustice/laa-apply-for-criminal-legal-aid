@@ -1,7 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
     def path
-      edit_steps_case_urn_path
+      edit_steps_case_case_type_path
     end
 
     def not_applicable?
