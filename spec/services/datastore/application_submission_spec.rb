@@ -83,7 +83,7 @@ RSpec.describe Datastore::ApplicationSubmission do
   end
 
   before do
-    allow(crime_application).to receive(:destroy)
+    allow(crime_application).to receive(:destroy!)
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       .to_return(status: 201, body: '{}')
@@ -156,7 +156,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'purges the application from the local database' do
-        expect(crime_application).to have_received(:destroy)
+        expect(crime_application).to have_received(:destroy!)
       end
     end
 
@@ -165,13 +165,13 @@ RSpec.describe Datastore::ApplicationSubmission do
         stub_request(:post, 'http://datastore-webmock/api/v1/applications')
           .to_raise(StandardError)
 
-        allow(Sentry).to receive(:capture_exception)
+        allow(Rails.error).to receive(:report)
 
         subject.call
       end
 
       it 'does not purge the application from the local database' do
-        expect(crime_application).not_to have_received(:destroy)
+        expect(crime_application).not_to have_received(:destroy!)
       end
 
       it 'does not change any attributes of the application' do
@@ -181,8 +181,8 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'reports the exception, and redirect to the error page' do
-        expect(Sentry).to have_received(:capture_exception).with(
-          an_instance_of(StandardError)
+        expect(Rails.error).to have_received(:report).with(
+          an_instance_of(StandardError), hash_including(handled: true)
         )
       end
     end

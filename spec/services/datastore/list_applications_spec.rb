@@ -47,16 +47,14 @@ RSpec.describe Datastore::ListApplications do
       stub_request(:get, 'http://datastore-webmock/api/v1/applications')
         .with(query: expected_query)
         .to_raise(StandardError)
-
-      allow(Sentry).to receive(:capture_exception)
     end
 
     it 'reports the exception, and returns nil' do
-      expect(subject.call).to be_nil
-
-      expect(Sentry).to have_received(:capture_exception).with(
-        an_instance_of(StandardError)
+      expect(Rails.error).to receive(:report).with(
+        an_instance_of(StandardError), hash_including(handled: true)
       )
+
+      expect(subject.call).to be_nil
     end
   end
 end

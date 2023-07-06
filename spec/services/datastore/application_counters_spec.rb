@@ -32,16 +32,14 @@ RSpec.describe Datastore::ApplicationCounters do
       stub_request(:get, 'http://datastore-webmock/api/v1/applications')
         .with(query: expected_query)
         .to_raise(StandardError)
-
-      allow(Sentry).to receive(:capture_exception)
     end
 
     it 'reports the exception, and returns 0 count' do
-      expect(subject.returned_count).to eq(0)
-
-      expect(Sentry).to have_received(:capture_exception).with(
-        an_instance_of(StandardError)
+      expect(Rails.error).to receive(:report).with(
+        an_instance_of(StandardError), hash_including(handled: true)
       )
+
+      expect(subject.returned_count).to eq(0)
     end
   end
 end

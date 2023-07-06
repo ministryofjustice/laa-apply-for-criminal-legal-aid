@@ -29,10 +29,14 @@ RSpec.describe Datastore::GetApplication do
       stub_request(:get, endpoint).to_raise(error)
     end
 
-    context 'for not found errors' do
-      let(:error) { DatastoreApi::Errors::NotFoundError }
+    context 'for API errors' do
+      let(:error) { DatastoreApi::Errors::ConnectionError }
 
-      it 're-raises as `ApplicationNotFound`' do
+      it 'reports the exception and re-raises as `ApplicationNotFound' do
+        expect(Rails.error).to receive(:report).with(
+          an_instance_of(error), hash_including(handled: false)
+        )
+
         expect { subject.call }.to raise_exception(Errors::ApplicationNotFound)
       end
     end
@@ -40,7 +44,11 @@ RSpec.describe Datastore::GetApplication do
     context 'for other kind of errors' do
       let(:error) { StandardError }
 
-      it 'lets the exception bubble up' do
+      it 'reports the exception and lets it bubble up' do
+        expect(Rails.error).to receive(:report).with(
+          an_instance_of(error), hash_including(handled: false)
+        )
+
         expect { subject.call }.to raise_exception(StandardError)
       end
     end
