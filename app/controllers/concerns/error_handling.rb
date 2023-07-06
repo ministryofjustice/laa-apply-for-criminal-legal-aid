@@ -14,8 +14,7 @@ module ErrorHandling
       else
         raise if Rails.application.config.consider_all_requests_local
 
-        Rails.logger.error(exception)
-        Sentry.capture_exception(exception)
+        Rails.error.report(exception, handled: false)
 
         redirect_to unhandled_errors_path
       end

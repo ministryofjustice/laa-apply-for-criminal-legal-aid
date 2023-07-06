@@ -15,19 +15,16 @@ module Datastore
 
     private
 
+    # Fallback to `zero`, but do not blow up.
+    # As per locales, it will not show counter on the tab.
     def count(status)
-      result = DatastoreApi::Requests::ListApplications.new(
-        status: status.to_s, office_code: office_code, per_page: PER_PAGE_LIMIT
-      ).call
+      Rails.error.handle(fallback: -> { FALLBACK_COUNT }) do
+        result = DatastoreApi::Requests::ListApplications.new(
+          status: status.to_s, office_code: office_code, per_page: PER_PAGE_LIMIT
+        ).call
 
-      result.pagination.fetch('total_count')
-    rescue StandardError => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(e)
-
-      # Fallback to `zero`, but do not blow up.
-      # As per locales, it will not show counter on the tab.
-      FALLBACK_COUNT
+        result.pagination.fetch('total_count')
+      end
     end
   end
 end
