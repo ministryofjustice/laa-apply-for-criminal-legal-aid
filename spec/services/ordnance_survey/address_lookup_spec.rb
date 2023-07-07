@@ -120,7 +120,7 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
       end
     end
 
-    context 'capturing and sending errors to Sentry' do
+    context 'capturing and reporting errors' do
       let(:exception) { StandardError.new('boom!') }
 
       before do
@@ -128,8 +128,11 @@ RSpec.describe OrdnanceSurvey::AddressLookup do
           .to_raise(exception)
       end
 
-      it 'sends the error to Sentry' do
-        expect(Sentry).to receive(:capture_exception).with(exception)
+      it 'reports the error' do
+        expect(Rails.error).to receive(:report).with(
+          exception, hash_including(handled: true)
+        )
+
         service.call
       end
 

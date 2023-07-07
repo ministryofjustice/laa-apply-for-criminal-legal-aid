@@ -44,7 +44,7 @@ module OrdnanceSurvey
         response.body
       )
     rescue StandardError => e
-      Sentry.capture_exception(e)
+      Rails.error.report(e, handled: true)
       @last_exception = e
       []
     end
