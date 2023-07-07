@@ -52,15 +52,17 @@ describe Summary::Sections::CaseDetails do
     it 'has the correct rows' do
       expect(answers.count).to eq(2)
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:case_urn)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/urn')
-      expect(answers[0].value).to eq('xyz')
+      answer = answers[0]
+      expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+      expect(answer.question).to eq(:case_type)
+      expect(answer.change_path).to match('applications/12345/steps/case/case_type')
+      expect(answer.value).to eq('foobar')
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[1].question).to eq(:case_type)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/case_type')
-      expect(answers[1].value).to eq('foobar')
+      answer = answers[1]
+      expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answer.question).to eq(:case_urn)
+      expect(answer.change_path).to match('applications/12345/steps/case/urn')
+      expect(answer.value).to eq('xyz')
     end
 
     context 'for appeal to crown court' do
@@ -72,15 +74,17 @@ describe Summary::Sections::CaseDetails do
         it 'has the correct rows' do
           expect(answers.count).to eq(4)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::DateAnswer)
-          expect(answers[2].question).to eq(:appeal_lodged_date)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[2].value).to eq(appeal_lodged_date)
+          answer = answers[1]
+          expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answer.question).to eq(:appeal_lodged_date)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq(appeal_lodged_date)
 
-          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[3].question).to eq(:previous_maat_id)
-          expect(answers[3].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[3].value).to eq('123')
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('123')
         end
       end
 
@@ -90,11 +94,12 @@ describe Summary::Sections::CaseDetails do
         it 'has the correct rows' do
           expect(answers.count).to eq(4)
 
-          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[3].question).to eq(:previous_maat_id)
-          expect(answers[3].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[3].value).to eq('')
-          expect(answers[3].show).to be(true)
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('')
+          expect(answer.show).to be(true)
         end
       end
     end
@@ -109,20 +114,23 @@ describe Summary::Sections::CaseDetails do
         it 'has the correct rows' do
           expect(answers.count).to eq(5)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::DateAnswer)
-          expect(answers[2].question).to eq(:appeal_lodged_date)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[2].value).to eq(appeal_lodged_date)
+          answer = answers[1]
+          expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answer.question).to eq(:appeal_lodged_date)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq(appeal_lodged_date)
 
-          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[3].question).to eq(:appeal_with_changes_details)
-          expect(answers[3].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[3].value).to eq('details')
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:appeal_with_changes_details)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('details')
 
-          expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[4].question).to eq(:previous_maat_id)
-          expect(answers[4].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[4].value).to eq('123')
+          answer = answers[3]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('123')
         end
       end
 
@@ -132,11 +140,12 @@ describe Summary::Sections::CaseDetails do
         it 'has the correct rows' do
           expect(answers.count).to eq(5)
 
-          expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[4].question).to eq(:previous_maat_id)
-          expect(answers[4].change_path).to match('applications/12345/steps/case/appeal_details')
-          expect(answers[4].value).to eq('')
-          expect(answers[4].show).to be(true)
+          answer = answers[3]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('')
+          expect(answer.show).to be(true)
         end
       end
     end

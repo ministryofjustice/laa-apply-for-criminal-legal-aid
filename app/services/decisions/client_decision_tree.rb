@@ -60,7 +60,7 @@ module Decisions
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
       else
-        edit('/steps/case/urn')
+        edit('/steps/case/case_type')
       end
     end
 

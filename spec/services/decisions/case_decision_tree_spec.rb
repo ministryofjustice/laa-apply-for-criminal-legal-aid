@@ -21,15 +21,6 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   it_behaves_like 'a decision tree'
 
-  context 'when the step is `urn`' do
-    let(:form_object) { double('FormObject') }
-    let(:step_name) { :urn }
-
-    context 'has correct next step' do
-      it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
-    end
-  end
-
   context 'when the step is `case_type`' do
     let(:form_object) { double('FormObject', case: kase, case_type: CaseType.new(case_type)) }
     let(:step_name) { :case_type }
@@ -54,17 +45,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
-      context 'and there are no charges input yet' do
-        let(:charges_double) { double(any?: false, create!: 'charge') }
-
-        it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-      end
-
-      context 'and there are already charges input' do
-        let(:charges_double) { double(any?: true) }
-
-        it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination(:urn, :edit, id: crime_application) }
     end
 
     context 'and the application has no date stamp' do
@@ -83,17 +64,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       context 'and case type is not "date stampable"' do
         let(:case_type) { CaseType::INDICTABLE.to_s }
 
-        context 'and there are no charges input yet' do
-          let(:charges_double) { double(any?: false, create!: 'charge') }
-
-          it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
-        end
-
-        context 'and there are already charges input' do
-          let(:charges_double) { double(any?: true) }
-
-          it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination(:urn, :edit, id: crime_application) }
       end
     end
   end
@@ -113,6 +84,13 @@ RSpec.describe Decisions::CaseDecisionTree do
   context 'when the step is `date_stamp`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :date_stamp }
+
+    it { is_expected.to have_destination(:urn, :edit, id: crime_application) }
+  end
+
+  context 'when the step is `urn`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :urn }
 
     context 'and there are no charges yet' do
       let(:charges_double) { double(any?: false, create!: 'charge') }

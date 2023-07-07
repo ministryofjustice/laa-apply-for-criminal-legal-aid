@@ -12,11 +12,6 @@ module Summary
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
-          Components::FreeTextAnswer.new(
-            :case_urn, kase.urn,
-            change_path: edit_steps_case_urn_path, show: true
-          ),
-
           Components::ValueAnswer.new(
             :case_type, kase.case_type,
             change_path: edit_steps_case_case_type_path
@@ -38,6 +33,11 @@ module Summary
             :previous_maat_id, kase.appeal_maat_id,
             show: !kase.appeal_maat_id.nil?,
             change_path: edit_steps_case_appeal_details_path
+          ),
+
+          Components::FreeTextAnswer.new(
+            :case_urn, kase.urn,
+            change_path: edit_steps_case_urn_path, show: true
           ),
         ].select(&:show?)
       end
