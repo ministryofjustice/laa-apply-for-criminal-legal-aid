@@ -11,14 +11,15 @@ module Providers
       )
     end
 
+    def failure
+      Rails.error.report($ERROR_INFO, handled: true)
+      redirect_to unhandled_errors_path
+    end
+
     private
 
     def after_sign_in_path_for(_)
       Providers::OfficeRouter.call(current_provider)
-    end
-
-    def after_omniauth_failure_path_for(_)
-      unauthenticated_errors_path
     end
 
     def auth_hash

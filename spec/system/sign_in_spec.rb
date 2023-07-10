@@ -171,12 +171,17 @@ RSpec.describe 'Sign in user journey' do
       allow(OmniAuth.config).to receive(:test_mode).and_return(false)
       allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
 
+      allow(Rails.error).to receive(:report)
+
       start_button.click
     end
 
-    it 'redirects to the unauthenticated page' do
-      expect(current_url).to match(unauthenticated_errors_path)
-      expect(page).to have_content('Could not authenticate you')
+    it 'reports the exception and redirects to the unhandled error page' do
+      expect(Rails.error).to have_received(:report).with(
+        an_instance_of(StandardError), hash_including(handled: true)
+      )
+
+      expect(current_url).to match(unhandled_errors_path)
     end
   end
 end
