@@ -39,8 +39,6 @@ gem 'importmap-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-gem 'hmcts_common_platform', github: 'ministryofjustice/hmcts_common_platform', tag: 'v0.2.0'
-
 gem 'laa-criminal-applications-datastore-api-client',
     github: 'ministryofjustice/laa-criminal-applications-datastore-api-client'
 
