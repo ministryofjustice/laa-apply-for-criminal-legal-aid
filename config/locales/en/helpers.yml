@@ -145,7 +145,7 @@ en:
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
       steps_case_appeal_details_form:
         appeal_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_details: Details of changes in financial circumstances
+        appeal_with_changes_details: What has changed in your client’s financial circumstances?
       steps_case_charges_form:
         offence_name: Offence
       steps_case_charges_summary_form:
