@@ -122,8 +122,8 @@ en:
           page_title: What is the case type?
       appeal_details:
         edit:
-          page_title: Enter the appeal details
-          heading: Enter details of your client’s appeal to Crown Court
+          page_title: Your client’s appeal to Crown Court
+          heading: Your client’s appeal to Crown Court
       date_stamp:
         edit:
           page_title: Your application has been date stamped
