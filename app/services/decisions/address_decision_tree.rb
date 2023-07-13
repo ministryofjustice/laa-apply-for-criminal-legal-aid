@@ -17,7 +17,7 @@ module Decisions
       if form_object.record.is_a?(HomeAddress)
         edit('/steps/client/contact_details')
       else
-        edit('/steps/case/urn')
+        edit('/steps/case/case_type')
       end
     end
   end
