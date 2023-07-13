@@ -9,7 +9,7 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
-    <%= step_form @form_object do |f| %>
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.fields_for :codefendants do |c| %>
         <% index = c.index + 1 %>
 

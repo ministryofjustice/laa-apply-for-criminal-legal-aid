@@ -56,6 +56,15 @@ for (let i = 0; i < $elements.length; i++) {
   new PrintAction($elements[i]).init()
 }
 
+// Duplicate "main" submit and place it hidden higher than others
+// in the DOM hierarchy, so pressing `enter` key picks this one
+// Used in forms with secondary submit actions in between
+import MultiActionForm from "local/multi-action-form"
+const $forms = document.querySelectorAll('form[data-module="multi-action-form"]')
+for (let i = 0; i < $forms.length; i++) {
+  new MultiActionForm($forms[i]).init()
+}
+
 // Google analytics additional tracking
 // Keep this at the bottom of this file
 import GAEvents from "local/ga-events"

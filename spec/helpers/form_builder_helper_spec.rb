@@ -13,10 +13,11 @@ RSpec.describe FormBuilderHelper, type: :helper do
   end
 
   describe '#continue_button' do
+    # rubocop:disable Layout/LineLength
     context 'when there is no secondary action' do
       let(:expected_markup) do
         '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" ' \
-          'data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>'
+          'data-module="govuk-button" data-prevent-double-click="true" data-main-action="true">Save and continue</button>'
       end
 
       it 'outputs only the continue button' do
@@ -30,7 +31,7 @@ RSpec.describe FormBuilderHelper, type: :helper do
       let(:expected_markup) do
         '<div class="govuk-button-group">' \
           '<button type="submit" formnovalidate="formnovalidate" class="govuk-button" ' \
-          'data-module="govuk-button" data-prevent-double-click="true">Save and continue</button>' \
+          'data-module="govuk-button" data-prevent-double-click="true" data-main-action="true">Save and continue</button>' \
           '<button type="submit" formnovalidate="formnovalidate" class="govuk-button govuk-button--secondary" ' \
           'data-module="govuk-button" data-prevent-double-click="true" name="commit_draft">' \
           'Save and come back later</button></div>'
@@ -42,6 +43,7 @@ RSpec.describe FormBuilderHelper, type: :helper do
         ).to eq(expected_markup)
       end
     end
+    # rubocop:enable Layout/LineLength
 
     context 'button text can be customised' do
       before do

@@ -9,7 +9,7 @@
 
     <h1 class="govuk-heading-xl"><%=t @form_object.heading %></h1>
 
-    <%= step_form @form_object do |f| %>
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
 
       <p class="govuk-body govuk-!-margin-bottom-2">
