@@ -16,7 +16,8 @@ module Cookies
     def save
       cookies[cookie_name] = {
         expires: expiration,
-        value: accept_or_reject
+        value: accept_or_reject,
+        httponly: true,
       }
 
       accept_or_reject

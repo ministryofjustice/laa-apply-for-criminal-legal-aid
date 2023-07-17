@@ -556,8 +556,8 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "laa-apply-for-criminal-legal-aid-staging",
-              "value": "laa-apply-for-criminal-legal-aid-staging"
+              "text": "",
+              "value": ""
             },
             "datasource": {
               "type": "prometheus",
