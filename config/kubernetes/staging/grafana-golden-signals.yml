@@ -1711,9 +1711,9 @@ data:
           },
           {
             "current": {
-              "selected": true,
-              "text": "laa-apply-for-criminal-legal-aid-staging",
-              "value": "laa-apply-for-criminal-legal-aid-staging"
+              "selected": false,
+              "text": "",
+              "value": ""
             },
             "datasource": {
               "type": "prometheus",
