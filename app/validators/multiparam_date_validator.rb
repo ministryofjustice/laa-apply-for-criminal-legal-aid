@@ -5,7 +5,6 @@ class MultiparamDateValidator < ActiveModel::EachValidator
     earliest_year: 1900,
     latest_year: 2050,
     allow_past: true,
-    restrict_past_under_ten_years: false,
     allow_future: false,
   }.freeze
 
@@ -58,17 +57,15 @@ class MultiparamDateValidator < ActiveModel::EachValidator
   # the future, or a date is very far in the past (potential user typo).
   # This kind of validations can be configured passing an options hash
   # when declaring the validation in the attribute.
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
   def validate_config_constraints(date)
     add_error(:past_not_allowed) unless config[:allow_past] || Time.zone.today <= date
     add_error(:future_not_allowed) unless config[:allow_future] || Time.zone.today >= date
 
     add_error(:year_too_late) if date.year > config[:latest_year]
     add_error(:year_too_early) if date.year < config[:earliest_year]
-
-    add_error(:client_under_ten) if config[:restrict_past_under_ten_years] && (date.beginning_of_day > 10.years.ago)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def add_error(error)
     record.errors.add(attribute, error)

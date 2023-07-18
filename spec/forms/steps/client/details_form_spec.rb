@@ -34,8 +34,7 @@ RSpec.describe Steps::Client::DetailsForm do
 
     context 'date_of_birth' do
       it_behaves_like 'a multiparam date validation',
-                      attribute_name: :date_of_birth,
-                      restrict_past_under_ten_years: true
+                      attribute_name: :date_of_birth
     end
 
     context 'when validations pass' do
@@ -101,6 +100,18 @@ RSpec.describe Steps::Client::DetailsForm do
         it 'does not save the record but returns true' do
           expect(applicant_record).not_to receive(:update)
           expect(subject.save).to be(true)
+        end
+      end
+    end
+
+    context 'when date of birth not valid' do
+      context 'when dob is less than 10 years ago' do
+        let(:date_of_birth) { 9.years.ago.to_date }
+        let(:form_attributes) { super().merge(date_of_birth:) }
+
+        it 'is not valid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.added?(:client_under_ten)).to be(true)
         end
       end
     end
