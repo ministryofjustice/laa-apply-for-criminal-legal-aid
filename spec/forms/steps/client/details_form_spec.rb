@@ -111,7 +111,7 @@ RSpec.describe Steps::Client::DetailsForm do
 
         it 'is not valid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.added?(:client_under_ten)).to be(true)
+          expect(subject.errors.added?(:date_of_birth, :client_under_ten)).to be(true)
         end
       end
     end
