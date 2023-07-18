@@ -17,7 +17,7 @@ RSpec.describe Steps::Client::DetailsForm do
       first_name: 'John',
       last_name: 'Doe',
       other_names: nil,
-      date_of_birth: Date.yesterday,
+      date_of_birth: 20.years.ago.to_date,
     }
   end
 
@@ -34,7 +34,8 @@ RSpec.describe Steps::Client::DetailsForm do
 
     context 'date_of_birth' do
       it_behaves_like 'a multiparam date validation',
-                      attribute_name: :date_of_birth
+                      attribute_name: :date_of_birth,
+                      restrict_past_under_ten_years: true
     end
 
     context 'when validations pass' do
@@ -50,7 +51,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'first_name' => 'John',
                             'last_name' => 'Smith',
                             'other_names' => nil,
-                            'date_of_birth' => Date.yesterday,
+                            'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
                             :passporting_benefit => nil,
@@ -58,7 +59,7 @@ RSpec.describe Steps::Client::DetailsForm do
         end
 
         context 'date_of_birth' do
-          let(:date_of_birth) { Date.new(2008, 11, 22) }
+          let(:date_of_birth) { 20.years.ago.to_date }
           let(:form_attributes) { super().merge(date_of_birth:) }
 
           it_behaves_like 'a has-one-association form',
@@ -67,7 +68,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'first_name' => 'John',
                             'last_name' => 'Doe',
                             'other_names' => nil,
-                            'date_of_birth' => Date.new(2008, 11, 22),
+                            'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
                             :passporting_benefit => nil,
@@ -88,7 +89,7 @@ RSpec.describe Steps::Client::DetailsForm do
               'first_name' => 'Johnny',
               'last_name' => 'Doe',
               'other_names' => nil,
-              'date_of_birth' => Date.yesterday,
+              'date_of_birth' => 20.years.ago.to_date,
             }
           ).and_return(true)
 

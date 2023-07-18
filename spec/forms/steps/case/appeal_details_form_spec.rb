@@ -31,7 +31,7 @@ RSpec.describe Steps::Case::AppealDetailsForm do
 
       it_behaves_like 'a multiparam date validation',
                       attribute_name: :appeal_lodged_date,
-                      allow_past: true, allow_future: false
+                      restrict_past_under_ten_years: false
     end
 
     context 'when case type is `appeal_to_crown_court_with_changes`' do
@@ -45,7 +45,7 @@ RSpec.describe Steps::Case::AppealDetailsForm do
 
       it_behaves_like 'a multiparam date validation',
                       attribute_name: :appeal_lodged_date,
-                      allow_past: true, allow_future: false
+                      restrict_past_under_ten_years: false
     end
 
     context 'previous MAAT ID format' do

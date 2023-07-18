@@ -161,13 +161,33 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
   end
 
   context 'when date is in the past' do
+    # `true` is the validator default unless passing a different config
     let(:date) { Date.yesterday }
 
-    # `true` is the validator default unless passing a different config
     if options.fetch(:allow_past, true)
-      it 'allows past dates' do
-        expect(subject).to be_valid
-        expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(false)
+      if options.fetch(:restrict_past_under_ten_years, true)
+        context 'when dob is less than 10 years ago' do
+          let(:date) { 10.years.ago.to_date + 1.day }
+
+          it 'does not allow past dates under 10 years ago' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.added?(attribute_name, :client_under_ten)).to be(true)
+          end
+        end
+
+        context 'when dob is more than 10 years ago' do
+          let(:date) { 10.years.ago.to_date }
+
+          it 'allows past dates over 10 years ago' do
+            expect(subject).to be_valid
+            expect(subject.errors.added?(attribute_name, :client_under_ten)).to be(false)
+          end
+        end
+      else
+        it 'allows past dates' do
+          expect(subject).to be_valid
+          expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(false)
+        end
       end
     else
       it 'does not allow past dates' do

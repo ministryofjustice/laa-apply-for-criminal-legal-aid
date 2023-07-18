@@ -12,7 +12,8 @@ module Steps
       validates_presence_of :first_name,
                             :last_name
 
-      validates :date_of_birth, presence: true, multiparam_date: true
+      validates :date_of_birth, presence: true,
+                multiparam_date: { restrict_past_under_ten_years: true }
 
       private
 

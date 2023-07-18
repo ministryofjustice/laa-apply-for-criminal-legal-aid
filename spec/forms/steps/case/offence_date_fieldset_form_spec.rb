@@ -20,14 +20,16 @@ RSpec.describe Steps::Case::OffenceDateFieldsetForm do
       it { is_expected.to validate_presence_of(:date_from) }
 
       it_behaves_like 'a multiparam date validation',
-                      attribute_name: :date_from
+                      attribute_name: :date_from,
+                      restrict_past_under_ten_years: false
     end
 
     describe '#date_to' do
       it { is_expected.not_to validate_presence_of(:date_to) }
 
       it_behaves_like 'a multiparam date validation',
-                      attribute_name: :date_to
+                      attribute_name: :date_to,
+                      restrict_past_under_ten_years: false
     end
 
     context '`date_to` is before `date_from`' do
