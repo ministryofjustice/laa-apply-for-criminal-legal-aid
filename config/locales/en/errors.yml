@@ -37,6 +37,7 @@ en:
               year_too_late: Date of birth is too far in the future
               year_too_early: Date of birth is too far in the past
               future_not_allowed: Date of birth must be in the past
+              client_under_ten: Your client must be aged 10 or over to have been charged in England and Wales
         steps/client/has_nino_form:
           attributes:
             nino:

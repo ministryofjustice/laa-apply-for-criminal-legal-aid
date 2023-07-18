@@ -17,7 +17,7 @@ RSpec.describe Steps::Client::DetailsForm do
       first_name: 'John',
       last_name: 'Doe',
       other_names: nil,
-      date_of_birth: Date.yesterday,
+      date_of_birth: 20.years.ago.to_date,
     }
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'first_name' => 'John',
                             'last_name' => 'Smith',
                             'other_names' => nil,
-                            'date_of_birth' => Date.yesterday,
+                            'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
                             :passporting_benefit => nil,
@@ -58,7 +58,7 @@ RSpec.describe Steps::Client::DetailsForm do
         end
 
         context 'date_of_birth' do
-          let(:date_of_birth) { Date.new(2008, 11, 22) }
+          let(:date_of_birth) { 20.years.ago.to_date }
           let(:form_attributes) { super().merge(date_of_birth:) }
 
           it_behaves_like 'a has-one-association form',
@@ -67,7 +67,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'first_name' => 'John',
                             'last_name' => 'Doe',
                             'other_names' => nil,
-                            'date_of_birth' => Date.new(2008, 11, 22),
+                            'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
                             :passporting_benefit => nil,
@@ -88,7 +88,7 @@ RSpec.describe Steps::Client::DetailsForm do
               'first_name' => 'Johnny',
               'last_name' => 'Doe',
               'other_names' => nil,
-              'date_of_birth' => Date.yesterday,
+              'date_of_birth' => 20.years.ago.to_date,
             }
           ).and_return(true)
 
@@ -100,6 +100,18 @@ RSpec.describe Steps::Client::DetailsForm do
         it 'does not save the record but returns true' do
           expect(applicant_record).not_to receive(:update)
           expect(subject.save).to be(true)
+        end
+      end
+    end
+
+    context 'when date of birth not valid' do
+      context 'when dob is less than 10 years ago' do
+        let(:date_of_birth) { 9.years.ago.to_date }
+        let(:form_attributes) { super().merge(date_of_birth:) }
+
+        it 'is not valid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.added?(:date_of_birth, :client_under_ten)).to be(true)
         end
       end
     end

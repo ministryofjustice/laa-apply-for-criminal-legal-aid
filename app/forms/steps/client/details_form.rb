@@ -14,7 +14,15 @@ module Steps
 
       validates :date_of_birth, presence: true, multiparam_date: true
 
+      validate :date_of_birth_ten_or_more_years_ago
+
       private
+
+      def date_of_birth_ten_or_more_years_ago
+        return unless date_of_birth.is_a?(Date)
+
+        errors.add(:date_of_birth, :client_under_ten) if date_of_birth.beginning_of_day > 10.years.ago
+      end
 
       def persist!
         return true unless changed?
