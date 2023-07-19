@@ -2,12 +2,24 @@ require 'rails_helper'
 
 RSpec.describe ApplicationController do
   controller do
+    def invalid_token = raise(ActionController::InvalidAuthenticityToken)
     def invalid_session = raise(Errors::InvalidSession)
     def application_not_found = raise(Errors::ApplicationNotFound)
     def another_exception = raise(StandardError)
   end
 
   context 'Exceptions handling' do
+    context 'ActionController::InvalidAuthenticityToken' do
+      it 'does not report the exception, and redirects to the unauthenticated error page' do
+        routes.draw { get 'invalid_token' => 'anonymous#invalid_token' }
+
+        expect(Rails.error).not_to receive(:report)
+
+        get :invalid_token
+        expect(response).to redirect_to(unauthenticated_errors_path)
+      end
+    end
+
     context 'Errors::InvalidSession' do
       it 'does not report the exception, and redirect to the error page' do
         routes.draw { get 'invalid_session' => 'anonymous#invalid_session' }

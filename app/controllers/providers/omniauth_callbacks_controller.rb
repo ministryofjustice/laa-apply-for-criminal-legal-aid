@@ -12,6 +12,8 @@ module Providers
     end
 
     def failure
+      raise if $ERROR_INFO.is_a?(ActionController::InvalidAuthenticityToken)
+
       Rails.error.report($ERROR_INFO, handled: true)
       redirect_to unhandled_errors_path
     end
