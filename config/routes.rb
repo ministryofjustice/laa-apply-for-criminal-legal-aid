@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resource :errors, only: [] do
     get :application_not_found
     get :invalid_session
+    get :invalid_token
     get :unhandled
     get :unauthenticated
     get :reauthenticate

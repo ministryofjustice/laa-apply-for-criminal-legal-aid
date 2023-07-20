@@ -16,7 +16,7 @@ RSpec.describe ApplicationController do
         expect(Rails.error).not_to receive(:report)
 
         get :invalid_token
-        expect(response).to redirect_to(unauthenticated_errors_path)
+        expect(response).to redirect_to(invalid_token_errors_path)
       end
     end
 

@@ -5,7 +5,7 @@ module ErrorHandling
     rescue_from Exception do |exception|
       case exception
       when ActionController::InvalidAuthenticityToken
-        redirect_to unauthenticated_errors_path
+        redirect_to invalid_token_errors_path
       when Errors::InvalidSession
         redirect_to invalid_session_errors_path
       when Errors::ApplicationNotFound
