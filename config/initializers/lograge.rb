@@ -24,10 +24,13 @@ Rails.application.configure do
     }.compact_blank
   end
 
+  # Important: the `controller` might not be a full-featured
+  # `ApplicationController` but instead a `BareApplicationController`
+  # so careful what methods you assume exist! :wink:
   config.lograge.custom_payload do |controller|
     {
       provider_id: controller.current_provider.to_param,
-      office_code: controller.current_office_code,
+      office_code: controller.current_provider&.selected_office_code,
     }
   end
 end
