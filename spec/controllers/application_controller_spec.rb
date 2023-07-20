@@ -10,7 +10,7 @@ RSpec.describe ApplicationController do
 
   context 'Exceptions handling' do
     context 'ActionController::InvalidAuthenticityToken' do
-      it 'does not report the exception, and redirects to the unauthenticated error page' do
+      it 'does not report the exception, and redirects to the error page' do
         routes.draw { get 'invalid_token' => 'anonymous#invalid_token' }
 
         expect(Rails.error).not_to receive(:report)
