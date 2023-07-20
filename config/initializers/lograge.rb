@@ -27,6 +27,7 @@ Rails.application.configure do
   config.lograge.custom_payload do |controller|
     {
       provider_id: controller.current_provider.to_param,
+      office_code: controller.current_office_code,
     }
   end
 end

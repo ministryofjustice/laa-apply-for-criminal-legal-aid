@@ -10,11 +10,9 @@ Rails.application.config.filter_parameters += [
   # Attributes relating to an application
   # It does partial matching (i.e. `telephone_number` is covered by `phone`)
   :address_line,
-  :city,
-  :country,
+  :appeal_with_changes_details,
   :date_of_birth,
   :description,
-  :details,
   :email,
   :first_name,
   :justification,
