@@ -8,6 +8,13 @@ RSpec.describe 'Error pages' do
     end
   end
 
+  context 'invalid token' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/invalid_token'
+      expect(response).to have_http_status(:bad_request)
+    end
+  end
+
   context 'application not found' do
     it 'renders the expected page and has expected status code' do
       get '/errors/application_not_found'

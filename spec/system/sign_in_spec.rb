@@ -170,18 +170,10 @@ RSpec.describe 'Sign in user journey' do
     before do
       allow(OmniAuth.config).to receive(:test_mode).and_return(false)
       allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
-
-      allow(Rails.error).to receive(:report)
-
-      start_button.click
     end
 
-    it 'reports the exception and redirects to the unhandled error page' do
-      expect(Rails.error).to have_received(:report).with(
-        an_instance_of(StandardError), hash_including(handled: true)
-      )
-
-      expect(current_url).to match(unhandled_errors_path)
+    it 're-raises the exception for handling by the `ApplicationController`' do
+      expect { start_button.click }.to raise_error(StandardError)
     end
   end
 end

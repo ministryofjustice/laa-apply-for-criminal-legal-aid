@@ -3,6 +3,10 @@ class ErrorsController < UnauthenticatedController
     respond_with_status(:ok)
   end
 
+  def invalid_token
+    respond_with_status(:bad_request)
+  end
+
   def application_not_found
     respond_with_status(:not_found)
   end
