@@ -32,7 +32,7 @@
                           data: { module: 'govuk-button' } do; 'Destroy'; end %>
           <% end %>
 
-          <% if crime_application.submitted? %>
+          <% if crime_application.submitted? && Rails.env.development? %>
             <%= button_to mark_as_returned_developer_tools_crime_application_path, method: :put,
                           class: 'govuk-button govuk-button--warning govuk-!-margin-right-1',
                           data: { module: 'govuk-button' } do; 'Return application'; end %>
