@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
-  revision: c70ab780a2384fb156e9ded2213304cd2967254b
-  tag: v1.0.0
+  revision: a873cfd47eb6f14b5e90ed5f35e0d53a050a302b
+  ref: a873cfd
   specs:
-    laa-criminal-applications-datastore-api-client (1.0.0)
+    laa-criminal-applications-datastore-api-client (1.1.0)
       faraday (~> 2.7)
       moj-simple-jwt-auth (~> 0.1.0)
 

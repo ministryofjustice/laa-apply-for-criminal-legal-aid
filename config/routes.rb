@@ -21,6 +21,8 @@ def show_step(name)
 end
 
 Rails.application.routes.draw do
+  mount DatastoreApi::HealthEngine::Engine => '/datastore'
+
   get :health, to: 'healthcheck#show'
   get :ping,   to: 'healthcheck#ping'
 
