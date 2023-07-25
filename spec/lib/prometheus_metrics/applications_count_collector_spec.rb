@@ -6,7 +6,7 @@ require 'rails_helper'
 describe PrometheusMetrics::ApplicationsCountCollector do
   subject { described_class.new }
 
-  let(:expires_in) { 5.minutes }
+  let(:expires_in) { 2.minutes }
   let(:type) { 'crime_applications' }
 
   describe '#expires_in' do

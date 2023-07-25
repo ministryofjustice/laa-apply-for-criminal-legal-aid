@@ -4,10 +4,10 @@ module PrometheusMetrics
     # Prometheus monitoring service on kubernetes will scrape
     # the `/metrics` endpoint frequently (every 15s), but these
     # custom metrics don't require such precision.
-    # We cache (in-memory) for 5 minutes the results.
+    # We cache (in-memory) for a few minutes the results.
     #
     def expires_in
-      5.minutes
+      2.minutes
     end
 
     def type
