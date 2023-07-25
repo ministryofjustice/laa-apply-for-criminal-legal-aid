@@ -8,7 +8,8 @@ module PrometheusMetrics
     SERVER_BINDING_PORT = 9394
 
     CUSTOM_COLLECTORS = [
-      PrometheusMetrics::ApplicationsCountCollector
+      PrometheusMetrics::ApplicationsCountCollector,
+      PrometheusMetrics::ProvidersCountCollector,
     ].freeze
 
     # :nocov:

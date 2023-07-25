@@ -3,11 +3,11 @@ require 'rails_helper'
 # Very light-touch smoke test as there is no point in having these
 # too elaborated, as metrics will probably change frequently
 #
-describe PrometheusMetrics::ApplicationsCountCollector do
+describe PrometheusMetrics::ProvidersCountCollector do
   subject { described_class.new }
 
-  let(:expires_in) { 2.minutes }
-  let(:type) { 'crime_applications' }
+  let(:expires_in) { 5.minutes }
+  let(:type) { 'providers' }
 
   describe '#expires_in' do
     it { expect(subject.expires_in).to eq(expires_in) }
@@ -20,10 +20,8 @@ describe PrometheusMetrics::ApplicationsCountCollector do
   describe '#metrics' do
     before do
       # rubocop:disable RSpec/MessageChain
-      allow(CrimeApplication).to receive(:count).and_return(10)
-      allow(CrimeApplication).to receive_message_chain(:with_applicant, :count).and_return(8)
-      allow(CrimeApplication).to receive_message_chain(:where, :not, :count).and_return(5)
-      allow(CrimeApplication).to receive_message_chain(:with_applicant, :where, :count).and_return(2)
+      allow(Provider).to receive(:count).and_return(10)
+      allow(Provider).to receive_message_chain(:where, :count).and_return(5, 2, 1)
       # rubocop:enable RSpec/MessageChain
     end
 
@@ -31,20 +29,20 @@ describe PrometheusMetrics::ApplicationsCountCollector do
       expect(
         subject.metrics.map(&:data)
       ).to contain_exactly(
-        { { status: 'started' } => 10 },
-        { { status: 'in_progress' } => 8 },
-        { { status: 'date_stamped' } => 5 },
-        { { status: 'stale' } => 2 },
+        { { status: 'enrolled' } => 10 },
+        { { status: 'multi_office' } => 5 },
+        { { status: 'disengaged' } => 2 },
+        { { status: 'idle' } => 1 },
       )
     end
 
     it 'uses Rails cache' do
       expect(
         Rails.cache
-      ).to receive(:fetch).with(:total_count, expires_in:).and_return(10)
+      ).to receive(:fetch).with(:enrolled_count, expires_in:).and_return(10)
 
       # testing just one, all counters behave the same
-      subject.send(:total_count)
+      subject.send(:enrolled_count)
     end
   end
 end
