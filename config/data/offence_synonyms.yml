@@ -7,5 +7,7 @@ offence_synonyms:
   synonyms: [cbo]
 - regex: !ruby/regexp /grievous bodily harm/i
   synonyms: [gbh]
+- regex: !ruby/regexp /possess with intent to supply/i
+  synonyms: [pwits]
 - regex: !ruby/regexp /section 18/i
   synonyms: [s18]
