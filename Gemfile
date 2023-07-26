@@ -68,6 +68,5 @@ group :test do
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'webdrivers'
   gem 'webmock'
 end
