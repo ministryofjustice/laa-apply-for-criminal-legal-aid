@@ -3,18 +3,23 @@ require 'rails_helper'
 # Very light-touch smoke test as there is no point in having these
 # too elaborated, as metrics will probably change frequently
 #
-describe PrometheusMetrics::ProvidersCountCollector do
+describe PrometheusMetrics::Collectors::ProvidersCountCollector do
   subject { described_class.new }
 
   let(:expires_in) { 5.minutes }
-  let(:type) { 'providers' }
-
-  describe '#expires_in' do
-    it { expect(subject.expires_in).to eq(expires_in) }
-  end
+  let(:type) { 'crime_apply_providers_count' }
+  let(:description) { 'Number of providers by status' }
 
   describe '#type' do
     it { expect(subject.type).to eq(type) }
+  end
+
+  describe '#description' do
+    it { expect(subject.description).to eq(description) }
+  end
+
+  describe '#expires_in' do
+    it { expect(subject.expires_in).to eq(expires_in) }
   end
 
   describe '#metrics' do
@@ -39,7 +44,7 @@ describe PrometheusMetrics::ProvidersCountCollector do
     it 'uses Rails cache' do
       expect(
         Rails.cache
-      ).to receive(:fetch).with(:enrolled_count, expires_in:).and_return(10)
+      ).to receive(:fetch).with("#{type}/enrolled_count", expires_in:).and_return(10)
 
       # testing just one, all counters behave the same
       subject.send(:enrolled_count)
