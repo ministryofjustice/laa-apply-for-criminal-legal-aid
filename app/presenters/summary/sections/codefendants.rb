@@ -42,7 +42,7 @@ module Summary
         if YesNoAnswer.new(codefendant.conflict_of_interest).yes?
           [codefendant.full_name, I18n.t('summary.questions.conflict_of_interest_html')].join
         else
-          codefendant.full_name
+          [codefendant.full_name, I18n.t('summary.questions.no_conflict_of_interest_html')].join
         end
       end
     end

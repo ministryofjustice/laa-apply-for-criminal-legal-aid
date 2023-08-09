@@ -105,7 +105,8 @@ en:
           <<: *YESNO
       codefendant_full_name:
         question: "Co-defendant %{index}"
-      conflict_of_interest_html: <span class="govuk-caption-m">Has a conflict of interest</span>
+      conflict_of_interest_html: <span class="govuk-caption-m">Conflict of interest</span>
+      no_conflict_of_interest_html: <span class="govuk-caption-m">No conflict of interest</span>
       # END codefendants section
 
       # BEGIN next court hearing section
