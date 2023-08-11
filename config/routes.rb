@@ -127,6 +127,10 @@ Rails.application.routes.draw do
         edit_step :ioj
       end
 
+      namespace :evidence do
+        edit_step :upload
+      end
+
       namespace :submission do
         edit_step :review
         edit_step :declaration

@@ -1,0 +1,29 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div>
+      <h1 class="govuk-heading-xl">
+        <%=t '.heading' %>
+      </h1>
+
+      <p><%= t('.list.intro') %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t('.list.option_1') %></li>
+        <li><%= t('.list.option_2') %></li>
+        <li><%= t('.list.option_3') %></li>
+        <li><%= t('.list.option_4') %></li>
+      </ul>
+    </div>
+
+    <%= step_form @form_object, multipart: true do |f| %>
+      <%= f.govuk_file_field :upload_files, label: { size: 'm' }, multiple: true %>
+      <%= f.button t('.upload_file_button'),
+                   class: 'govuk-button govuk-button--secondary moj-multi-file-upload__button',
+                   data: { module: 'govuk-button' } %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

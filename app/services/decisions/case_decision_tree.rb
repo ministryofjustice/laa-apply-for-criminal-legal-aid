@@ -108,7 +108,11 @@ module Decisions
     # rubocop:disable Style/GuardClause
     def after_ioj
       if Passporting::MeansPassporter.new(current_crime_application).call
-        edit('/steps/submission/review')
+        if FeatureFlags.evidence_upload.enabled?
+          edit('/steps/evidence/upload')
+        else
+          edit('/steps/submission/review')
+        end
       else
         # TODO: post-MVP implement means assessment steps
         # For MVP, this branch should not be reachable, and if

@@ -295,7 +295,23 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and the means passporter was triggered' do
       let(:means_passported) { true }
 
-      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      before do
+        allow(FeatureFlags).to receive(:evidence_upload) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: feat_enabled)
+        }
+      end
+
+      context 'and the evidence upload feature flag is disabled' do
+        let(:feat_enabled) {false}
+
+        it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      end
+
+      context 'and the evidence upload feature flag is enabled' do
+        let(:feat_enabled) {true}
+
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      end
     end
   end
 end
