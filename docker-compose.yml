@@ -18,7 +18,10 @@ services:
       RAILS_ENV: production
       DATABASE_URL: postgresql://postgres@db/laa-apply-for-criminal-legal-aid
       SECRET_KEY_BASE: f22760a0bd78a9191ba4c247e23a281cb251461cdba6b5215043ca11b694d734
-      ENABLE_PROMETHEUS_EXPORTER: "true"
+      DATASTORE_API_ROOT: http://host.docker.internal:3003
+      DATASTORE_API_AUTH_SECRET: foobar
+      ENABLE_PROMETHEUS_EXPORTER: "false" # can be enabled for quick tests
+      PROMETHEUS_EXPORTER_PORT: 9394
       RAILS_SERVE_STATIC_FILES: "1"
       RAILS_LOG_TO_STDOUT: "1"
       DATABASE_SSLMODE: disable
