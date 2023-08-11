@@ -117,8 +117,9 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    dartsass-rails (0.4.1)
+    dartsass-rails (0.5.0)
       railties (>= 6.0.0)
+      sass-embedded (~> 1.63)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -168,6 +169,7 @@ GEM
     faraday-net_http (3.0.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    google-protobuf (3.24.0)
     govuk_design_system_formbuilder (4.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -369,6 +371,9 @@ GEM
       rexml
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    sass-embedded (1.64.2)
+      google-protobuf (~> 3.23)
+      rake (>= 13.0.0)
     savon (2.14.0)
       akami (~> 1.2)
       builder (>= 2.1.2)
@@ -438,7 +443,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
-  dartsass-rails (~> 0.4.0)
+  dartsass-rails (~> 0.5.0)
   debug
   devise (~> 4.8)
   dotenv-rails

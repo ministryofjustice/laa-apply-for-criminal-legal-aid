@@ -5,7 +5,8 @@ MAINTAINER LAA Crime Apply Team
 RUN apk add --update \
   postgresql-dev \
   tzdata \
-  yarn
+  yarn \
+  gcompat
 
 # Alpine does not have a glibc, and this is needed for dart-sass
 # Refer to: https://github.com/sgerrand/alpine-pkg-glibc
