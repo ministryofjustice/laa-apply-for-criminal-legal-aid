@@ -8,14 +8,6 @@ RUN apk add --update \
   yarn \
   gcompat
 
-# Alpine does not have a glibc, and this is needed for dart-sass
-# Refer to: https://github.com/sgerrand/alpine-pkg-glibc
-ARG GLIBC_VERSION=2.34-r0
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_VERSION/glibc-$GLIBC_VERSION.apk
-RUN apk add --force-overwrite glibc-$GLIBC_VERSION.apk
-
-
 FROM base AS dependencies
 
 # system dependencies required to build some gems
