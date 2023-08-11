@@ -4,9 +4,6 @@ module PrometheusMetrics
     require_relative 'collectors'
 
     DEFAULT_PREFIX = 'ruby_'.freeze
-    SERVER_BINDING_HOST = '0.0.0.0'.freeze
-    SERVER_BINDING_PORT = 9394
-
     CUSTOM_COLLECTORS = [
       PrometheusMetrics::Collectors::ApplicationsCountCollector,
       PrometheusMetrics::Collectors::ProvidersCountCollector,
@@ -30,7 +27,7 @@ module PrometheusMetrics
     # exporter process separately (`bundle exec prometheus_exporter`)
     def self.start_server
       server = PrometheusExporter::Server::WebServer.new(
-        bind: SERVER_BINDING_HOST, port: SERVER_BINDING_PORT,
+        bind: '0.0.0.0', port: ENV.fetch('PROMETHEUS_EXPORTER_PORT', 9394).to_i,
         verbose: ENV.fetch('PROMETHEUS_EXPORTER_VERBOSE', 'false').inquiry.true?
       )
 
