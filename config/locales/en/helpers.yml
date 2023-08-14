@@ -89,7 +89,7 @@ en:
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
       steps_evidence_upload_form:
-        #TODO update max file size
+        #TODO update max file size and overall limit
         upload_files: The maximum file size is XMB. Files must be a JPG, BMP, PNG, TIF or PDF.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192

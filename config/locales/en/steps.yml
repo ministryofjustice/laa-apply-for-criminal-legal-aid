@@ -183,12 +183,6 @@ en:
         edit:
           page_title: Upload supporting evidence
           heading: Upload supporting evidence
-          list:
-            intro: 'Use this page to provide:'
-            option_1: evidence your client gets a passporting benefit
-            option_2: evidence of your client's income and outgoings
-            option_3: evidence of your client's capital
-            option_4: any other supporting evidence, like a freezing order or charge sheet
           upload_file_button: Upload file
     submission:
       review:

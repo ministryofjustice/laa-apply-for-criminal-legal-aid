@@ -1,7 +1,6 @@
 module Steps
   module Evidence
     class UploadForm < Steps::BaseFormObject
-
       private
 
       # :nocov:
@@ -11,7 +10,6 @@ module Steps
         )
       end
       # :nocov:
-
     end
   end
 end
