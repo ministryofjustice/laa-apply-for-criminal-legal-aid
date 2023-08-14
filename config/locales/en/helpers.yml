@@ -88,6 +88,9 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_evidence_upload_form:
+        #TODO update max file size and overall limit
+        upload_files: The maximum file size is XMB. Files must be a JPG, BMP, PNG, TIF or PDF.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -182,6 +185,8 @@ en:
           expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not)
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
+      steps_evidence_upload_form:
+        upload_files: Upload files
       steps_submission_declaration_form:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name

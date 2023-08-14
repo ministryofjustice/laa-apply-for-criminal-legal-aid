@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div>
+      <h1 class="govuk-heading-xl"><%=t('.heading') %></h1>
+
+      <p class="govuk-body">Use this page to provide:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>evidence your client gets a passporting benefit</li>
+        <li>evidence of your client's income and outgoings</li>
+        <li>evidence of your client's capital</li>
+        <li>any other supporting evidence, like a freezing order or charge sheet</li>
+      </ul>
+    </div>
+
+    <%= step_form @form_object, multipart: true do |f| %>
+      <%= f.govuk_file_field :upload_files, label: { size: 'm' }, multiple: true %>
+      <%= f.button t('.upload_file_button'),
+                   class: 'govuk-button govuk-button--secondary moj-multi-file-upload__button',
+                   data: { module: 'govuk-button' } %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
