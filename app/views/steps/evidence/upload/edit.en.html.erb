@@ -15,7 +15,7 @@
     </ul>
 
     <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },
-                 url: crime_application_documents_path,
+                 url: bundle_documents_path(@form_object.current_document_bundle),
                  method: :post, multipart: true do |f| %>
 
       <div class="fallback">
@@ -25,6 +25,15 @@
         <%= f.button t('.upload_file_button'),
                      class: 'govuk-button govuk-button--secondary',
                      data: { module: 'govuk-button' } %>
+
+        <div class="moj-multi-file__uploaded-files ">
+          <h2 class="govuk-heading-m">Files added</h2>
+          <div class="govuk-summary-list moj-multi-file-upload__list">
+            <!-- TODO: create presenter to wrap document objects -->
+            <%= render partial: 'steps/evidence/upload/uploaded_file',
+                       collection: @form_object.current_document_bundle.documents, as: :document %>
+          </div>
+        </div>
       </div>
     <% end %>
 

@@ -74,18 +74,18 @@ Rails.application.routes.draw do
   resources :crime_applications, except: [:show, :new, :update], path: 'applications' do
     get :confirm_destroy, on: :member
 
-    member do
-      resources :documents, only: [:create, :destroy],
-                param: :document_id, as: 'crime_application_documents',
-                constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
-        get :download, on: :member
-      end
-    end
-
     scope :completed, as: :completed, controller: :completed_applications do
       get :index, on: :collection
       get :show, on: :member
       put :recreate, on: :member
+    end
+  end
+
+  # Documents upload handling
+  scope 'document_bundles/:id', as: 'bundle' do
+    resources :documents, only: [:create, :destroy], param: :document_id,
+              constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+      get :download, on: :member
     end
   end
 
