@@ -40,7 +40,8 @@ gem 'importmap-rails'
 gem 'bootsnap', require: false
 
 gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.1.0',
+    # github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.1.0',
+    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', ref: '0fb6084',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
