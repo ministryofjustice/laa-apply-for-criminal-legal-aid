@@ -12,10 +12,21 @@ if ($cookieBanner) {
   new Cbc($cookieBanner).init()
 }
 
+// Dropzone initialisation through MOJ frontend
+import MOJFrontend from '@ministryofjustice/frontend'
+if (window.jQuery) {
+  const $dzContainer = $('.moj-multi-file-upload')
+
+  new MOJFrontend.MultiFileUpload({
+    container: $dzContainer,
+    uploadUrl: $dzContainer.closest('form').attr('action'),
+    deleteUrl: '/ajax-delete-url' // TBC
+  })
+}
+
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453
 import Input from "local/suggestions"
-
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
 if ($inputs) {
   for (let i = 0; i < $inputs.length; i++) {
@@ -24,7 +35,6 @@ if ($inputs) {
 }
 
 import accessibleAutocomplete from 'accessible-autocomplete'
-
 const $acElements = document.querySelectorAll('[data-module="accessible-autocomplete"]')
 if ($acElements) {
   for (let i = 0; i < $acElements.length; i++) {

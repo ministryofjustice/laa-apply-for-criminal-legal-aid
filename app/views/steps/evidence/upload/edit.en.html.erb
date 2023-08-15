@@ -1,26 +1,45 @@
 <% title t('.page_title') %>
 <% step_header %>
 
+<% content_for(:head) do %>
+  <%= javascript_include_tag 'jquery', async: true, nonce: true %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div>
-      <h1 class="govuk-heading-xl"><%=t('.heading') %></h1>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-      <p class="govuk-body">Use this page to provide:</p>
+    <p class="govuk-body">Use this page to provide:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>evidence your client gets a passporting benefit</li>
-        <li>evidence of your client's income and outgoings</li>
-        <li>evidence of your client's capital</li>
-        <li>any other supporting evidence, like a freezing order or charge sheet</li>
-      </ul>
-    </div>
+    <ul class="govuk-list govuk-list--bullet govuk-!-padding-bottom-5">
+      <li>evidence your client gets a passporting benefit</li>
+      <li>evidence of your client's income and outgoings</li>
+      <li>evidence of your client's capital</li>
+      <li>any other supporting evidence, like a freezing order or charge sheet</li>
+    </ul>
 
-    <%= step_form @form_object, multipart: true do |f| %>
-      <%= f.govuk_file_field :upload_files, label: { size: 'm' }, multiple: true %>
-      <%= f.button t('.upload_file_button'),
-                   class: 'govuk-button govuk-button--secondary moj-multi-file-upload__button',
-                   data: { module: 'govuk-button' } %>
+    <%= form_for @form_object, html: { id: 'dz-evidence-upload-form' },
+                 url: crime_application_documents_path,
+                 method: :post, multipart: true do |f| %>
+      <div class="moj-multi-file-upload">
+        <div class="moj-multi-file-upload__upload">
+          <%= f.govuk_file_field :documents, multiple: true, label: { size: 'm' },
+                                 class: 'govuk-file-upload moj-multi-file-upload__input' %>
+
+          <%= f.button t('.upload_file_button'),
+                       class: 'govuk-button govuk-button--secondary moj-multi-file-upload__button',
+                       data: { module: 'govuk-button' } %>
+        </div>
+
+        <div class="moj-multi-file__uploaded-files ">
+          <h2 class="govuk-heading-m">Files added</h2>
+          <div class="govuk-summary-list moj-multi-file-upload__list">
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= step_form @form_object, html: { class: 'govuk-!-padding-top-5' } do |f| %>
       <%= f.continue_button %>
     <% end %>
   </div>
