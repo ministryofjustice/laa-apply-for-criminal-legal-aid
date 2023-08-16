@@ -3,7 +3,7 @@ MAINTAINER LAA Crime Apply Team
 
 # dependencies required both at runtime and build time
 RUN apk add --update \
-  postgresql-dev \
+  postgresql15-dev \
   tzdata \
   yarn \
   gcompat
