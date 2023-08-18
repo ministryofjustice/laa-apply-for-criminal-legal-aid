@@ -15,5 +15,8 @@
 // customised to include govuk styling in local/custom.scss
 @import "local/accessible-autocomplete";
 
+// Dropzone custom styling
+@import "local/dropzone";
+
 // App-specific custom styles and overrides
 @import "local/custom";

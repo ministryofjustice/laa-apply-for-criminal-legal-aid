@@ -12,17 +12,12 @@ if ($cookieBanner) {
   new Cbc($cookieBanner).init()
 }
 
-// Dropzone initialisation through MOJ frontend
-import MOJFrontend from '@ministryofjustice/frontend'
-if (window.jQuery) {
-  const $dzContainer = $('.moj-multi-file-upload')
-
-  new MOJFrontend.MultiFileUpload({
-    container: $dzContainer,
-    uploadUrl: $dzContainer.closest('form').attr('action'),
-    deleteUrl: '/ajax-delete-url' // TBC
-  })
-}
+// Dropzone component initialisation and configuration
+import DropzoneCfg from "local/dropzone-cfg"
+new DropzoneCfg({
+  dropzoneContainer: "form#dz-evidence-upload-form",
+  feedbackContainer: "div.app-multi-file__uploaded-files"
+}).init()
 
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453

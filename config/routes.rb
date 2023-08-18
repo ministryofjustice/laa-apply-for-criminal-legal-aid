@@ -135,7 +135,7 @@ Rails.application.routes.draw do
         edit_step :ioj
       end
 
-      namespace :evidence do
+      namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
         edit_step :upload
       end
 

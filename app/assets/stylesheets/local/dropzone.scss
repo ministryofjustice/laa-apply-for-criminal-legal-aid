@@ -1,0 +1,12 @@
+// Dropzone example styling
+// To be removed once we apply our own styles
+@import "dropzone/dist/dropzone";
+
+// Additional dropzone overrides added below
+//
+.dropzone {
+  @extend %govuk-body-m;
+
+  border: none;
+  outline: 3px dashed govuk-colour('black');
+}
