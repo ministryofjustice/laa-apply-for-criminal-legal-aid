@@ -27,7 +27,7 @@ RSpec.describe Steps::Case::UrnForm do
     end
 
     context 'when `urn` is invalid' do
-      let(:urn) { 'not a urn' }
+      let(:urn) { 'urn' }
 
       it 'has a validation error on the field' do
         expect(subject).not_to be_valid
