@@ -28,7 +28,7 @@ RSpec.describe Providers::ActiveOfficeChecker do
       context 'inactive codes are not in office code list' do
         let(:inactive_office_codes) { %w[3C345D 4C777Z] }
 
-        it 'returns the an unaltered office code list' do
+        it 'returns an unaltered office code list' do
           active_codes = %w[1A123B 2A555X 2B234C 3B666Y]
           expect(subject.active_office_codes).to match(active_codes)
         end
