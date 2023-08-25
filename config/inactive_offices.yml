@@ -18,7 +18,7 @@ localhost:
 
 staging:
   inactive_office_codes:
-    - 0N290J
+    - 0A719G
 
 production:
   inactive_office_codes:
