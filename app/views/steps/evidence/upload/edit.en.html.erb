@@ -25,7 +25,7 @@
 
       <%= f.button t('.choose_files_button'),
                    id: 'choose_files_button',
-                   class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0',
+                   class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0 govuk-visually-hidden',
                    type: 'button',
                    data: { module: 'govuk-button' } %>
 
@@ -36,14 +36,6 @@
         <%= f.button t('.upload_file_button'),
                      class: 'govuk-button govuk-button--secondary',
                      data: { module: 'govuk-button' } %>
-
-        <div class="moj-multi-file__uploaded-files">
-          <div class="govuk-summary-list moj-multi-file-upload__list">
-            <!-- TODO: create presenter to wrap document objects -->
-            <%= render partial: 'steps/evidence/upload/uploaded_file',
-                       collection: @form_object.current_document_bundle.documents, as: :document %>
-          </div>
-        </div>
       </div>
     <% end %>
 
