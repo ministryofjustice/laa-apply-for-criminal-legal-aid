@@ -19,9 +19,7 @@ module Datastore
           object_key = nil
           response = DatastoreApi::Requests::Documents::PresignUpload.new(usn:, expires_in:).call
 
-          if upload_to_s3(response.url, file)
-            object_key = response.object_key
-          end
+          object_key = response.object_key if upload_to_s3(response.url, file)
 
           bundle.documents.create(
             s3_object_key: object_key,

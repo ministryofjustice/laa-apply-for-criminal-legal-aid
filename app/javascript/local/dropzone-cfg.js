@@ -15,15 +15,14 @@ DropzoneCfg.prototype.init = function () {
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "documents",
-    maxFilesize: 20 // MB
+    maxFilesize: 20, // MB
+    dictDefaultMessage : 'Drag and drop files here or',
+    clickable: '#choose_files_button'
   })
 
-  // Basic example of event handling
-  this.$dropzone.on("success", file => {
-    let div = document.createElement("div")
-    div.append(file.name)
-    self.$feedbackContainer.querySelector('.govuk-summary-list').append(div);
-  });
+  this.$dropzoneContainerText = document.querySelector('div.dz-message')
+  this.$chooseFilesButton = document.querySelector('button#choose_files_button')
+  this.$dropzoneContainerText.appendChild(this.$chooseFilesButton)
 }
 
 export default DropzoneCfg

@@ -1,8 +1,5 @@
 # :nocov:
 class DocumentsController < ApplicationController
-  # TODO: this skip TO BE REMOVED -----
-  # MOJ multi-upload component XHR request does not propagate the token
-  skip_before_action :verify_authenticity_token
   before_action :check_crime_application_presence
 
   respond_to :html, :json, :js

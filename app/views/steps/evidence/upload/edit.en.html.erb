@@ -7,16 +7,27 @@
 
     <p class="govuk-body">Use this page to provide:</p>
 
-    <ul class="govuk-list govuk-list--bullet govuk-!-padding-bottom-5">
+    <ul class="govuk-list govuk-list--bullet govuk-!-padding-bottom-3">
       <li>evidence your client gets a passporting benefit</li>
       <li>evidence of your client's income and outgoings</li>
       <li>evidence of your client's capital</li>
       <li>any other supporting evidence, like a freezing order or charge sheet</li>
     </ul>
 
+    <h2 class="govuk-heading-m">
+      <%= t('.upload_files_heading') %>
+      <span class="govuk-caption-m govuk-!-padding-top-2"><%= t('.upload_files_info') %></span>
+    </h2>
+
     <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },
                  url: bundle_documents_path(@form_object.current_document_bundle),
                  method: :post, multipart: true do |f| %>
+
+      <%= f.button t('.choose_files_button'),
+                   id: 'choose_files_button',
+                   class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0',
+                   type: 'button',
+                   data: { module: 'govuk-button' } %>
 
       <div class="fallback">
         <%= f.govuk_file_field :documents, multiple: true,
@@ -26,8 +37,7 @@
                      class: 'govuk-button govuk-button--secondary',
                      data: { module: 'govuk-button' } %>
 
-        <div class="moj-multi-file__uploaded-files ">
-          <h2 class="govuk-heading-m">Files added</h2>
+        <div class="moj-multi-file__uploaded-files">
           <div class="govuk-summary-list moj-multi-file-upload__list">
             <!-- TODO: create presenter to wrap document objects -->
             <%= render partial: 'steps/evidence/upload/uploaded_file',
@@ -39,9 +49,19 @@
 
     <%= step_form @form_object, html: { class: 'govuk-!-padding-top-5' } do |f| %>
       <div class="app-multi-file__uploaded-files">
-        <h2 class="govuk-heading-m">Files added</h2>
-        <div class="govuk-summary-list">
-        </div>
+        <h2 class="govuk-heading-m"> <%= t('.uploaded_files_heading') %></h2>
+        <p class="govuk-body"><%= t('.uploaded_files_info') %></p>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header"><%= t('steps.evidence.upload.edit.file_name') %></th>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <%= render partial: 'steps/evidence/upload/uploaded_file',
+                     collection: @form_object.current_document_bundle.documents, as: :document %>
+          </tbody>
+        </table>
       </div>
 
       <%= f.continue_button %>

@@ -1,17 +1,13 @@
-<div class="govuk-summary-list__row moj-multi-file-upload__row">
-  <div class="govuk-summary-list__value moj-multi-file-upload__message">
-    <span class="moj-multi-file-upload__filename">
-      <%= document.filename %>
-    </span>
-
-    <!-- This is for demo purposes, it requires proper styling and copy -->
+<tr class="govuk-table__row">
+  <td id="<%=document.filename%>" class="govuk-table__cell">
+    <%= document.filename %>
     <% if document.s3_object_key %>
-      <span class="moj-multi-file-upload__progress">100%</span>
+      <strong class="govuk-tag govuk-tag--green">Uploaded</strong>
     <% else %>
-      <span class="moj-multi-file-upload__error">
-        <svg class="moj-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25"><path d="M13.6,15.4h-2.3v-4.5h2.3V15.4z M13.6,19.8h-2.3v-2.2h2.3V19.8z M0,23.2h25L12.5,2L0,23.2z"></path></svg>
-      </span>
+      <p class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span>
+        The selected file must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+      </p>
     <% end %>
-  </div>
-  <div class="govuk-summary-list__actions moj-multi-file-upload__actions"></div>
-</div>
+  </td>
+</tr>
