@@ -36,6 +36,7 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.innerHTML = "Uploaded"
+    location.reload()
   });
 
   this.$dropzone.on('error', (file, response) => {
@@ -44,6 +45,7 @@ DropzoneCfg.prototype.init = function () {
     this.$tableCell.append(error)
     this.$statusTag = this.$tableCell.querySelector(".govuk-tag")
     this.$tableCell.removeChild(this.$statusTag)
+    location.reload()
   })
 }
 function createTableRow(file) {

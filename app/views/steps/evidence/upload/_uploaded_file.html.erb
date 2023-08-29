@@ -12,4 +12,10 @@
       </p>
     <% end %>
   </td>
+  <td class="govuk-table__cell govuk-!-text-align-right">
+    <%= button_to t('.remove_button'), steps_evidence_upload_path, method: :put,
+                                       value: document.id.to_s,
+                                       name: :document_id,
+                                       class: 'app-button--link' %>
+  </td>
 </tr>
