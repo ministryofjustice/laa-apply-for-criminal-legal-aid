@@ -76,9 +76,23 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main'
 
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      # Assume role in Cloud Platform
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to container repository
+      - uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
 
       - name: Store current date
         run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -96,13 +110,15 @@ jobs:
 
       - name: Push to ECR
         id: ecr
-        uses: jwalton/gh-ecr-push@b10a019116283fff10914554dfe85bfb1c21d41b
-        with:
-          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
-          region: eu-west-2
-          local-image: app
-          image: ${{ secrets.ECR_NAME }}:${{ github.sha }}, ${{ secrets.ECR_NAME }}:staging.latest
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}-staging.latest
+        run: |
+          docker tag app $REGISTRY/$REPOSITORY:${{ github.sha }}
+          docker tag app $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker push $REGISTRY/$REPOSITORY:${{ github.sha }}
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
   deploy-staging:
     runs-on: ubuntu-latest
