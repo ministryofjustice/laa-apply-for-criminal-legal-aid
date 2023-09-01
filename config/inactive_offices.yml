@@ -1,0 +1,25 @@
+# List of providers office codes that are inactive.
+#
+# Temporary solution to allow us to onboard over the next few months.
+# Plan is to build an API to glean this info from other systems, but
+# in the intrim this this was agreed as a way to continue onboarding.
+#
+# This is used by Provider::ActiveOfficeChecker to filter out inactive
+# offices from the array that Crime Apply receives from the portal auth_info
+#
+# This happens after the Provider::Gatekeeper has filtered out providers
+# that have not been onboarded yet in Providers::OmniauthCallbacksController.
+#
+#
+localhost:
+  inactive_office_codes:
+    - 3B345C
+    - 4C567D
+
+staging:
+  inactive_office_codes:
+    - 0A719G
+
+production:
+  inactive_office_codes:
+
