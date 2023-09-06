@@ -9,7 +9,7 @@ module Tasks
     end
 
     def can_start?
-      applicant.present? && crime_application.means_passported?
+      fulfilled?(ClientDetails)
     end
 
     # If we have a `case` record we consider this in progress
