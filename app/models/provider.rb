@@ -23,7 +23,7 @@ class Provider < ApplicationRecord
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,
-          office_codes: auth.info.office_codes,
+          office_codes: active_office_codes(auth)
         )
 
         ensure_default_office(record)
@@ -43,6 +43,10 @@ class Provider < ApplicationRecord
           record.office_codes.first unless record.multiple_offices?
         )
       )
+    end
+
+    def active_office_codes(auth)
+      Providers::ActiveOfficeChecker.new(auth.info).active_office_codes
     end
   end
 end
