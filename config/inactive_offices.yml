@@ -22,4 +22,7 @@ staging:
 
 production:
   inactive_office_codes:
+    # Inactive codes up to sixth onboarding tranche - 07/09/23
+    - 0R918C
+    - 2M353Q
 
