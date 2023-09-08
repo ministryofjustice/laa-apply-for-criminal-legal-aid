@@ -4,6 +4,7 @@ class DocumentsController < ApplicationController
 
   respond_to :html, :json, :js
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
     document = Document.create_from_file(
       file: file_from_params, bundle: current_document_bundle
@@ -23,6 +24,7 @@ class DocumentsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def download; end
 
