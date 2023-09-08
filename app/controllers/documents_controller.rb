@@ -12,11 +12,9 @@ class DocumentsController < ApplicationController
 
     Datastore::Documents::Upload.new(document:).call if document.valid?(:criteria)
 
-    location = edit_steps_evidence_upload_path(current_crime_application)
-
-    respond_with(document, location:) do |format|
-      if document.errors.any?
-        format.html { redirect_to location }
+    respond_with(document, location: evidence_upload_step) do |format|
+      if document.invalid?(:storage)
+        format.html { redirect_to evidence_upload_step }
         format.json do
           render json: document.as_json.merge(error_message: document.errors.first.full_message),
                  status: :unprocessable_entity
@@ -31,6 +29,10 @@ class DocumentsController < ApplicationController
   def destroy; end
 
   private
+
+  def evidence_upload_step
+    edit_steps_evidence_upload_path(current_crime_application)
+  end
 
   def current_document_bundle
     @current_document_bundle ||= DocumentBundle.find(document_bundle_id)
