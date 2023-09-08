@@ -70,12 +70,6 @@ for (let i = 0; i < $forms.length; i++) {
   new MultiActionForm($forms[i]).init()
 }
 
-// Display of choose files button is conditional on whether JS is enabled
-const $chooseFilesButton = document.getElementById('choose_files_button')
-if ($chooseFilesButton) {
-  $chooseFilesButton.classList.remove("govuk-visually-hidden")
-}
-
 // Google analytics additional tracking
 // Keep this at the bottom of this file
 import GAEvents from "local/ga-events"

@@ -1,53 +1,49 @@
 module Datastore
   module Documents
     class Upload
-      attr_accessor :bundle, :files
+      class UnsuccessfulUploadError < StandardError; end
 
       PRESIGNED_URL_EXPIRES_IN = 15 # seconds
 
-      def initialize(bundle:, files:)
-        @bundle = bundle
-        @files = Array(files)
+      attr_accessor :document
+
+      def initialize(document:)
+        @document = document
       end
 
-      # TODO: terribly ugly PoC code, to be refactored,
-      # proper error handling, logging, etc.
       def call
-        results = []
+        return false if document.s3_object_key.present?
 
-        files.each do |file|
-          object_key = nil
-          response = DatastoreApi::Requests::Documents::PresignUpload.new(usn:, expires_in:).call
+        Rails.error.handle(fallback: -> { false }) do
+          presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
+            usn:, expires_in:
+          ).call
 
-          object_key = response.object_key if upload_to_s3(response.url, file)
-
-          bundle.documents.create(
-            s3_object_key: object_key,
-            filename: file.original_filename,
-            content_type: file.content_type,
-            file_size: file.tempfile.size,
-          )
-
-          results << object_key.present?
+          if upload_to_s3(presign_upload.url)
+            document.update(
+              s3_object_key: presign_upload.object_key
+            )
+          end
         end
-
-        results.all?(true)
       end
 
       private
 
-      # This might be best shifted to the DatastoreAPI
-      # as another S3 operation
-      def upload_to_s3(url, file)
-        Rails.error.handle(fallback: -> { false }) do
-          headers = { content_type: file.content_type, content_length: file.tempfile.size.to_s }
-          resp = Faraday.put(url, file.tempfile, headers)
-          resp.success?
-        end
+      def upload_to_s3(url)
+        headers = {
+          content_type: document.content_type,
+          content_length: document.file_size.to_s,
+        }
+
+        response = Faraday.put(
+          url, document.tempfile, headers
+        )
+
+        response.success? || (raise UnsuccessfulUploadError, response.body)
       end
 
       def usn
-        bundle.crime_application.usn
+        document.document_bundle.crime_application.usn
       end
 
       def expires_in

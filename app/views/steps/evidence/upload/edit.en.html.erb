@@ -30,7 +30,9 @@
                    data: { module: 'govuk-button' } %>
 
       <div class="fallback">
-        <%= f.govuk_file_field :documents, multiple: true,
+        <%# Keep `multiple` to false. This only affects non-javascript version, dropzone %>
+        <%# will still support multiple files. This greatly simplifies backend with little downside %>
+        <%= f.govuk_file_field :document, multiple: false,
                                label: { size: 'm' }, class: 'govuk-file-upload' %>
 
         <%= f.button t('.upload_file_button'),

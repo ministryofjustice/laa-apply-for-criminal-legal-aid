@@ -12,11 +12,13 @@ DropzoneCfg.prototype.init = function () {
 
   if (!this.$dropzoneContainer || !this.$feedbackContainer) { return }
 
+  // Display of choose files button is conditional on whether JS is enabled
+  document.getElementById('choose_files_button').classList.remove("govuk-visually-hidden")
+
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
-    paramName: "documents",
-    maxFilesize: 20, // MB
-    dictDefaultMessage : 'Drag and drop files here or',
+    paramName: "document",
+    dictDefaultMessage: 'Drag and drop files here or', // TODO: i18n
     clickable: '#choose_files_button'
   })
 

@@ -1,12 +1,15 @@
 <tr class="govuk-table__row">
   <td id="<%=document.filename%>" class="govuk-table__cell">
     <%= document.filename %>
+
     <% if document.s3_object_key %>
       <strong class="govuk-tag govuk-tag--green">Uploaded</strong>
     <% else %>
+      <% document.valid?(:storage) %>
+
       <p class="govuk-error-message">
         <span class="govuk-visually-hidden">Error:</span>
-        The selected file must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+        <%= document.errors.first.full_message %>
       </p>
     <% end %>
   </td>

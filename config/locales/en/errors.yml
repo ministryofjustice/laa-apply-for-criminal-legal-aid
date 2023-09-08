@@ -7,6 +7,20 @@ en:
     error_summary:
       heading: There is a problem on this page
 
+  activerecord:
+    errors:
+      models:
+        # evidence upload data model
+        document:
+          attributes:
+            file_size:
+              too_small: File is too small. You will need to submit a bigger version, more than %{min_size} kilobytes
+              too_big: File is too big. You will need to submit a smaller version, less than %{max_size} megabytes
+            content_type:
+              invalid: File must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF
+            s3_object_key:
+              blank: File was not successfully uploaded
+
   activemodel:
     errors:
       models:
