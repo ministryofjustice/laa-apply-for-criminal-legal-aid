@@ -3,10 +3,7 @@ require 'rails_helper'
 RSpec.describe Document, type: :model do
   subject { described_class.new(attributes) }
 
-  let(:attributes) { {} }
-
-  let(:bundle) { DocumentBundle.new }
-  let(:file) { fixture_file_upload('uploads/test.pdf', 'application/pdf') }
+  include_context 'with an existing document'
 
   describe '.create_from_file' do
     it 'creates a record with the expected file attributes' do
