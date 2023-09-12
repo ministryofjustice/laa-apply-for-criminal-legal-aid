@@ -41,7 +41,6 @@ DropzoneCfg.prototype.init = function () {
   this.$dropzone.on('error', (file, response) => {
     let error = createErrorMessage(response.error_message)
     this.$tableCell = document.getElementById(file.upload.uuid)
-    this.$tableCell.classList.add("govuk-form-group--error")
     this.$tableCell.append(error)
     this.$statusTag = this.$tableCell.querySelector(".govuk-tag")
     this.$tableCell.removeChild(this.$statusTag)
