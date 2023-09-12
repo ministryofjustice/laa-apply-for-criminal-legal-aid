@@ -58,7 +58,7 @@ RSpec.describe Datastore::Documents::Upload do
     end
 
     context 'when a document has previously been saved' do
-      let(:attributes) { super().merge(s3_object_key: '12345/xyz') }
+      let(:attributes) { super().merge(s3_object_key: '123/abcdef1234') }
 
       it 'returns false' do
         expect(subject.call).to be(false)
