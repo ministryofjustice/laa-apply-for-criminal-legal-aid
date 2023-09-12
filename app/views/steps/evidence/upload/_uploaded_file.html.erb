@@ -1,6 +1,6 @@
 <tr class="govuk-table__row">
-  <td id="<%=document.filename%>" class="govuk-table__cell">
-    <%= document.filename %>
+  <td id="<%=document.id%>" class="govuk-table__cell">
+    <span><%= document.filename %></span>
 
     <% if document.s3_object_key %>
       <strong class="govuk-tag govuk-tag--green">Uploaded</strong>
@@ -8,8 +8,7 @@
       <% document.valid?(:storage) %>
 
       <p class="govuk-error-message">
-        <span class="govuk-visually-hidden">Error:</span>
-        <%= document.errors.first.full_message %>
+        <span class="govuk-visually-hidden">Error:</span> <%= document.errors.first.full_message %>
       </p>
     <% end %>
   </td>
