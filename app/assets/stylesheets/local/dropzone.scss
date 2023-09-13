@@ -36,4 +36,9 @@
     width: fit-content;
     margin-top: govuk-spacing(2);
   }
+
+  .govuk-error-message {
+    margin-top: govuk-spacing(1);
+    margin-bottom: govuk-spacing(0);
+  }
 }

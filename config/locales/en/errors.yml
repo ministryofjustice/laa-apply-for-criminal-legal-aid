@@ -14,8 +14,8 @@ en:
         document:
           attributes:
             file_size:
-              too_small: File is too small. You will need to submit a bigger version, more than %{min_size} kilobytes
-              too_big: File is too big. You will need to submit a smaller version, less than %{max_size} megabytes
+              too_small: File must be more than %{min_size}KB
+              too_big: File must be less than %{max_size}MB
             content_type:
               invalid: File must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF or PDF
             s3_object_key:
