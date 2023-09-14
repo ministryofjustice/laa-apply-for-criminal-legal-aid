@@ -6,16 +6,11 @@ class FileUploadValidator < ActiveModel::Validator
     application/msword
     application/pdf
     application/rtf
-    application/vnd.ms-excel
     application/vnd.oasis.opendocument.text
-    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     application/vnd.openxmlformats-officedocument.wordprocessingml.document
     image/bmp
-    image/gif
-    image/jpeg
     image/png
     image/tiff
-    image/x-bitmap
     text/csv
     text/plain
     text/rtf

@@ -18,7 +18,7 @@
 
     <h2 class="govuk-heading-m">
       <%= t('.upload_files_heading') %>
-      <span class="govuk-caption-m govuk-!-padding-top-2"><%= t('.upload_files_info') %></span>
+      <span class="govuk-caption-m govuk-!-padding-top-2"><%= t('.upload_files_info', max_size: FileUploadValidator::MAX_FILE_SIZE) %></span>
     </h2>
 
     <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },

@@ -3,7 +3,7 @@
     <span><%= document.filename %></span>
 
     <% if document.s3_object_key %>
-      <strong class="govuk-tag govuk-tag--green">Uploaded</strong>
+      <strong class="govuk-tag govuk-tag--green"><%= t('steps.evidence.upload.edit.uploaded') %></strong>
     <% else %>
       <% document.valid?(:storage) %>
 
