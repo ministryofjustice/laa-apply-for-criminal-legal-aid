@@ -4,7 +4,7 @@
 # sensitive information. See the ActiveSupport::ParameterFilter documentation for supported
 # notations and behaviors.
 Rails.application.config.filter_parameters += [
-  :passw, :secret, :token, :_key, :crypt, :salt, :certificate,
+  :passw, :secret, :token, :crypt, :salt, :certificate,
   :SAMLRequest, :SAMLResponse, :Signature, :SigAlg, :KeyInfo,
 
   # Attributes relating to an application

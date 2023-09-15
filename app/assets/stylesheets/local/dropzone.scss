@@ -1,12 +1,44 @@
-// Dropzone example styling
-// To be removed once we apply our own styles
 @import "dropzone/dist/dropzone";
 
 // Additional dropzone overrides added below
-//
 .dropzone {
   @extend %govuk-body-m;
 
   border: none;
   outline: 3px dashed govuk-colour('black');
+  border-radius: 0;
+
+  .dz-message {
+    text-align: left;
+    cursor: default;
+    display: flex;
+    .dz-button {
+      margin-right: govuk-spacing(2);
+    }
+  }
+
+  .dz-preview {
+    display: none;
+  }
+}
+
+.dropzone.dz-started .dz-message {
+  display: flex;
+}
+
+.dropzone .dz-message .dz-button {
+  cursor: default;
+}
+
+.app-multi-file__uploaded-files {
+  .govuk-tag {
+    display: block;
+    width: fit-content;
+    margin-top: govuk-spacing(2);
+  }
+
+  .govuk-error-message {
+    margin-top: govuk-spacing(1);
+    margin-bottom: govuk-spacing(0);
+  }
 }
