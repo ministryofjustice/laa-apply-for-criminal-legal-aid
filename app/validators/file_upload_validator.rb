@@ -9,6 +9,7 @@ class FileUploadValidator < ActiveModel::Validator
     application/vnd.oasis.opendocument.text
     application/vnd.openxmlformats-officedocument.wordprocessingml.document
     image/bmp
+    image/jpeg
     image/png
     image/tiff
     text/csv
