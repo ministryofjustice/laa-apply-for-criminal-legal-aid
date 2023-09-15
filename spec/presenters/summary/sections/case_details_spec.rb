@@ -17,13 +17,13 @@ describe Summary::Sections::CaseDetails do
       urn: 'xyz',
       case_type: 'foobar',
       appeal_maat_id: appeal_maat_id,
-      appeal_with_changes_maat_id: appeal_with_changes_maat_id,
+      appeal_lodged_date: appeal_lodged_date,
       appeal_with_changes_details: appeal_with_changes_details,
     )
   end
 
   let(:appeal_maat_id) { nil }
-  let(:appeal_with_changes_maat_id) { nil }
+  let(:appeal_lodged_date) { nil }
   let(:appeal_with_changes_details) { nil }
 
   describe '#name' do
@@ -52,28 +52,39 @@ describe Summary::Sections::CaseDetails do
     it 'has the correct rows' do
       expect(answers.count).to eq(2)
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:case_urn)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/urn')
-      expect(answers[0].value).to eq('xyz')
+      answer = answers[0]
+      expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+      expect(answer.question).to eq(:case_type)
+      expect(answer.change_path).to match('applications/12345/steps/case/case_type')
+      expect(answer.value).to eq('foobar')
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[1].question).to eq(:case_type)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/case_type')
-      expect(answers[1].value).to eq('foobar')
+      answer = answers[1]
+      expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answer.question).to eq(:case_urn)
+      expect(answer.change_path).to match('applications/12345/steps/case/urn')
+      expect(answer.value).to eq('xyz')
     end
 
     context 'for appeal to crown court' do
+      let(:appeal_lodged_date) { Date.new(2018, 11, 22) }
+
       context 'with previous MAAT ID' do
         let(:appeal_maat_id) { '123' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(3)
+          expect(answers.count).to eq(4)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[2].question).to eq(:previous_maat_id)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[2].value).to eq('123')
+          answer = answers[1]
+          expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answer.question).to eq(:appeal_lodged_date)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq(appeal_lodged_date)
+
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('123')
         end
       end
 
@@ -81,54 +92,60 @@ describe Summary::Sections::CaseDetails do
         let(:appeal_maat_id) { '' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(3)
+          expect(answers.count).to eq(4)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[2].question).to eq(:previous_maat_id)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[2].value).to eq('')
-          expect(answers[2].show).to be(true)
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('')
+          expect(answer.show).to be(true)
         end
       end
     end
 
     context 'for appeal to crown court with changes in financial circumstances' do
+      let(:appeal_lodged_date) { Date.new(2018, 11, 22) }
       let(:appeal_with_changes_details) { 'details' }
 
       context 'with previous MAAT ID' do
-        let(:appeal_with_changes_maat_id) { '345' }
+        let(:appeal_maat_id) { '123' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[2].question).to eq(:previous_maat_id)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[2].value).to eq('345')
+          answer = answers[1]
+          expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answer.question).to eq(:appeal_lodged_date)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq(appeal_lodged_date)
 
-          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[3].question).to eq(:appeal_with_changes_details)
-          expect(answers[3].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[3].value).to eq('details')
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:appeal_with_changes_details)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('details')
+
+          answer = answers[3]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('123')
         end
       end
 
       context 'without previous MAAT ID (field is optional)' do
-        let(:appeal_with_changes_maat_id) { '' }
+        let(:appeal_maat_id) { '' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
-          expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[2].question).to eq(:previous_maat_id)
-          expect(answers[2].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[2].value).to eq('')
-          expect(answers[2].show).to be(true)
-
-          expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[3].question).to eq(:appeal_with_changes_details)
-          expect(answers[3].change_path).to match('applications/12345/steps/case/case_type')
-          expect(answers[3].value).to eq('details')
+          answer = answers[3]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:previous_maat_id)
+          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.value).to eq('')
+          expect(answer.show).to be(true)
         end
       end
     end

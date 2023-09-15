@@ -84,7 +84,7 @@ module LaaPortal
         )
       end
 
-      Sentry.capture_exception(e)
+      Rails.error.report(e, handled: false)
       raise(e) # re-raise exception
     end
     # rubocop:enable Metrics/MethodLength

@@ -38,6 +38,8 @@ en:
         confirm_details: Are these details correct?
       steps_case_case_type_form:
         case_type: What is the case type?
+      steps_case_appeal_details_form:
+        appeal_lodged_date: Date the appeal was lodged
       steps_case_charges_form:
         date_from: Start date %{index}
         date_to: End date %{index} (optional)
@@ -65,6 +67,8 @@ en:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
         urn: For example, ‘12 AB 3456789’.
+      steps_case_appeal_details_form:
+        appeal_lodged_date: For example, 27 3 2007
       steps_case_charges_form:
         offence_name: Add one offence at a time, for example, robbery. You can add more later.
         offence_dates_attributes:
@@ -84,6 +88,9 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_evidence_upload_form:
+        #TODO update max file size and overall limit
+        upload_files: The maximum file size is XMB. Files must be a JPG, BMP, PNG, TIF or PDF.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -129,7 +136,7 @@ en:
         country: Country
         postcode: Postcode
       steps_case_urn_form:
-        urn: Enter the unique reference number (URN) for your client's case (optional)
+        urn: Enter the unique reference number (URN) for your client’s case (optional)
       steps_case_case_type_form:
         case_type_options:
           summary_only: Summary only
@@ -139,10 +146,9 @@ en:
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+      steps_case_appeal_details_form:
         appeal_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_details: Enter the details of what has changed
-        appeal_with_changes_details_a11y: Enter details of what has changed regarding your clients financial circumstances
+        appeal_with_changes_details: What has changed in your client’s financial circumstances?
       steps_case_charges_form:
         offence_name: Offence
       steps_case_charges_summary_form:
@@ -179,6 +185,8 @@ en:
           expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not)
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
+      steps_evidence_upload_form:
+        upload_files: Upload files
       steps_submission_declaration_form:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name

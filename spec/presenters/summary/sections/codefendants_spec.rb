@@ -71,13 +71,13 @@ describe Summary::Sections::Codefendants do
       expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[1].question).to eq(:codefendant_full_name)
       expect(answers[1].change_path).to match('applications/12345/steps/case/codefendants#codefendant_1')
-      expect(answers[1].value).to eq('John Doe<span class="govuk-caption-m">Has a conflict of interest</span>')
+      expect(answers[1].value).to eq('John Doe<span class="govuk-caption-m">Conflict of interest</span>')
       expect(answers[1].i18n_opts).to eq({ index: 1 })
 
       expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[2].question).to eq(:codefendant_full_name)
       expect(answers[2].change_path).to match('applications/12345/steps/case/codefendants#codefendant_2')
-      expect(answers[2].value).to eq('Jane Doe')
+      expect(answers[2].value).to eq('Jane Doe<span class="govuk-caption-m">No conflict of interest</span>')
       expect(answers[2].i18n_opts).to eq({ index: 2 })
     end
   end

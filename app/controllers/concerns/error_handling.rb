@@ -4,7 +4,9 @@ module ErrorHandling
   included do
     rescue_from Exception do |exception|
       case exception
-      when Errors::InvalidSession, ActionController::InvalidAuthenticityToken
+      when ActionController::InvalidAuthenticityToken
+        redirect_to invalid_token_errors_path
+      when Errors::InvalidSession
         redirect_to invalid_session_errors_path
       when Errors::ApplicationNotFound
         redirect_to application_not_found_errors_path
@@ -14,8 +16,7 @@ module ErrorHandling
       else
         raise if Rails.application.config.consider_all_requests_local
 
-        Rails.logger.error(exception)
-        Sentry.capture_exception(exception)
+        Rails.error.report(exception, handled: false)
 
         redirect_to unhandled_errors_path
       end

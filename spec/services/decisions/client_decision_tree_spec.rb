@@ -160,13 +160,13 @@ address_id: 'address')
     context 'and answer is `home_address`' do
       let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
 
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
     end
 
     context 'and answer is `providers_office_address`' do
       let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
 
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
     end
   end
 end

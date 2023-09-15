@@ -26,13 +26,13 @@
     <% end %>
 
     <div class="govuk-!-margin-top-8 app-no-print">
-      <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+      <%= link_button t('.print_application'), '#', data: { module: 'print' } %>
     </div>
 
     <%= render @presenter.sections %>
 
     <div class="govuk-button-group govuk-!-margin-top-8 app-no-print">
-      <%= link_button t('.print_application'), '#', onclick: 'window.print(); return false;' %>
+      <%= link_button t('.print_application'), '#', data: { module: 'print' } %>
       <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
     </div>
   </div>

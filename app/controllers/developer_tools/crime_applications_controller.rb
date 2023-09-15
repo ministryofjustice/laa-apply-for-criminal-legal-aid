@@ -58,7 +58,6 @@ module DeveloperTools
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_contact_details_path(crime_application),
-          edit_steps_case_urn_path(crime_application),
           edit_steps_case_case_type_path(crime_application),
         ]
       )
@@ -91,11 +90,7 @@ module DeveloperTools
     end
 
     def find_or_create_case
-      Case.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
-        record.update(
-          urn: '',
-        )
-      end
+      Case.find_or_initialize_by(crime_application_id: crime_application.id)
     end
   end
 end

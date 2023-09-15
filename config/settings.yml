@@ -6,12 +6,16 @@ feature_flags:
   u18_means_passport:
     local: true
     staging: true
-    production: false
+    production: true
   u18_ioj_passport:
     local: true
     staging: true
-    production: false
-  offence_ioj_passport:
+    production: true
+  offence_ioj_slipstream:
+    local: true
+    staging: true
+    production: true
+  evidence_upload:
     local: true
     staging: true
     production: false
@@ -22,6 +26,9 @@ feature_flags:
 settings:
   portal_url: https://portal.legalservices.gov.uk
   eforms_url: https://portal.legalservices.gov.uk/oamfed/idp/initiatesso?providerid=eForms
+  portal_terms_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742318
+  laa_privacy_notice_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742320
+  feedback_survey_url: https://eu.surveymonkey.com/r/feedbackapplyforcriminallegalaid
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: apply-for-criminal-legal-aid@justice.gov.uk
   case_enquiries_tel: 0300 200 2020

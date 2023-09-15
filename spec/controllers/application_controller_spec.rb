@@ -2,17 +2,29 @@ require 'rails_helper'
 
 RSpec.describe ApplicationController do
   controller do
+    def invalid_token = raise(ActionController::InvalidAuthenticityToken)
     def invalid_session = raise(Errors::InvalidSession)
     def application_not_found = raise(Errors::ApplicationNotFound)
     def another_exception = raise(StandardError)
   end
 
   context 'Exceptions handling' do
+    context 'ActionController::InvalidAuthenticityToken' do
+      it 'does not report the exception, and redirects to the error page' do
+        routes.draw { get 'invalid_token' => 'anonymous#invalid_token' }
+
+        expect(Rails.error).not_to receive(:report)
+
+        get :invalid_token
+        expect(response).to redirect_to(invalid_token_errors_path)
+      end
+    end
+
     context 'Errors::InvalidSession' do
       it 'does not report the exception, and redirect to the error page' do
         routes.draw { get 'invalid_session' => 'anonymous#invalid_session' }
 
-        expect(Sentry).not_to receive(:capture_exception)
+        expect(Rails.error).not_to receive(:report)
 
         get :invalid_session
         expect(response).to redirect_to(invalid_session_errors_path)
@@ -23,7 +35,7 @@ RSpec.describe ApplicationController do
       it 'does not report the exception, and redirect to the error page' do
         routes.draw { get 'application_not_found' => 'anonymous#application_not_found' }
 
-        expect(Sentry).not_to receive(:capture_exception)
+        expect(Rails.error).not_to receive(:report)
 
         get :application_not_found
         expect(response).to redirect_to(application_not_found_errors_path)
@@ -38,7 +50,11 @@ RSpec.describe ApplicationController do
       it 'reports the exception, and redirect to the error page' do
         routes.draw { get 'another_exception' => 'anonymous#another_exception' }
 
-        expect(Sentry).to receive(:capture_exception)
+        expect(Rails.error).to receive(:report).with(
+          an_instance_of(StandardError), hash_including(handled: false)
+        ).and_call_original
+
+        expect(Rails.logger).to receive(:error)
 
         get :another_exception
         expect(response).to redirect_to(unhandled_errors_path)

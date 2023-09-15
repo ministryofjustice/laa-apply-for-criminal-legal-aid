@@ -39,11 +39,8 @@ module Summary
       end
 
       def name_and_conflict(codefendant)
-        if YesNoAnswer.new(codefendant.conflict_of_interest).yes?
-          [codefendant.full_name, I18n.t('summary.questions.conflict_of_interest_html')].join
-        else
-          codefendant.full_name
-        end
+        [codefendant.full_name,
+         I18n.t("#{codefendant.conflict_of_interest}_html", scope: 'summary.questions.conflict_of_interest')].join
       end
     end
   end

@@ -13,12 +13,14 @@ RSpec.describe Cookies::SettingsForm do
   end
 
   describe '#save' do
+    let(:default_cfg) { { expires: 6.months, httponly: true } }
+
     context 'for an `accept` value' do
       let(:consent_value) { described_class::CONSENT_ACCEPT }
 
       it 'sets the cookie and return the consent value' do
         expect(subject.save).to eq('accept')
-        expect(cookies_double['crime_apply_cookies_consent']).to eq({ expires: 6.months, value: 'accept' })
+        expect(cookies_double['crime_apply_cookies_consent']).to eq(default_cfg.merge(value: 'accept'))
       end
     end
 
@@ -27,7 +29,7 @@ RSpec.describe Cookies::SettingsForm do
 
       it 'sets the cookie and return the consent value' do
         expect(subject.save).to eq('reject')
-        expect(cookies_double['crime_apply_cookies_consent']).to eq({ expires: 6.months, value: 'reject' })
+        expect(cookies_double['crime_apply_cookies_consent']).to eq(default_cfg.merge(value: 'reject'))
       end
     end
 
@@ -36,7 +38,7 @@ RSpec.describe Cookies::SettingsForm do
 
       it 'sets the cookie and defaults to `reject` consent' do
         expect(subject.save).to eq('reject')
-        expect(cookies_double['crime_apply_cookies_consent']).to eq({ expires: 6.months, value: 'reject' })
+        expect(cookies_double['crime_apply_cookies_consent']).to eq(default_cfg.merge(value: 'reject'))
       end
     end
 
@@ -45,7 +47,7 @@ RSpec.describe Cookies::SettingsForm do
 
       it 'sets the cookie and defaults to `reject` consent' do
         expect(subject.save).to eq('reject')
-        expect(cookies_double['crime_apply_cookies_consent']).to eq({ expires: 6.months, value: 'reject' })
+        expect(cookies_double['crime_apply_cookies_consent']).to eq(default_cfg.merge(value: 'reject'))
       end
     end
   end

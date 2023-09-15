@@ -9,16 +9,13 @@ module Datastore
     end
 
     def call
-      result = DatastoreApi::Requests::ListApplications.new(
-        **filtering, **sorting, **pagination
-      ).call
+      Rails.error.handle do
+        result = DatastoreApi::Requests::ListApplications.new(
+          **filtering, **sorting, **pagination
+        ).call
 
-      Kaminari.paginate_array(result, total_count: result.pagination['total_count'])
-    rescue StandardError => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(e)
-
-      nil
+        Kaminari.paginate_array(result, total_count: result.pagination['total_count'])
+      end
     end
   end
 end

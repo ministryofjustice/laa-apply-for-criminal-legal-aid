@@ -12,3 +12,18 @@ spec:
     targetPort: 3000
   selector:
     app: apply-for-criminal-legal-aid-web-staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  labels:
+    app: apply-for-criminal-legal-aid-web-staging
+spec:
+  ports:
+  - port: 9394
+    name: metrics
+    targetPort: 9394
+  selector:
+    app: apply-for-criminal-legal-aid-web-staging

@@ -1,0 +1,15 @@
+<tr class="govuk-table__row">
+  <td id="<%=document.id%>" class="govuk-table__cell">
+    <span><%= document.filename %></span>
+
+    <% if document.s3_object_key %>
+      <strong class="govuk-tag govuk-tag--green"><%= t('steps.evidence.upload.edit.uploaded') %></strong>
+    <% else %>
+      <% document.valid?(:storage) %>
+
+      <p class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> <%= document.errors.first.full_message %>
+      </p>
+    <% end %>
+  </td>
+</tr>

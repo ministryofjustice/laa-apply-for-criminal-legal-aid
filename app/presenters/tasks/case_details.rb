@@ -1,7 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
     def path
-      edit_steps_case_urn_path
+      edit_steps_case_case_type_path
     end
 
     def not_applicable?
@@ -9,7 +9,7 @@ module Tasks
     end
 
     def can_start?
-      applicant.present? && crime_application.means_passported?
+      fulfilled?(ClientDetails)
     end
 
     # If we have a `case` record we consider this in progress

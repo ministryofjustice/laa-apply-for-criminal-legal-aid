@@ -19,7 +19,7 @@ RSpec.describe 'Sign in user journey' do
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
 
-    visit '/'
+    visit root_path
   end
 
   context 'user is not signed in' do
@@ -38,11 +38,11 @@ RSpec.describe 'Sign in user journey' do
   context 'user is signed in' do
     before do
       start_button.click
-      visit '/'
+      visit root_path
     end
 
-    it 'has a start button with action applications' do
-      expect(start_button_form_action).to eq(crime_applications_path)
+    it 'redirects to the dashboard' do
+      expect(current_url).to match(crime_applications_path)
     end
   end
 
@@ -170,13 +170,10 @@ RSpec.describe 'Sign in user journey' do
     before do
       allow(OmniAuth.config).to receive(:test_mode).and_return(false)
       allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
-
-      start_button.click
     end
 
-    it 'redirects to the unauthenticated page' do
-      expect(current_url).to match(unauthenticated_errors_path)
-      expect(page).to have_content('Could not authenticate you')
+    it 're-raises the exception for handling by the `ApplicationController`' do
+      expect { start_button.click }.to raise_error(StandardError)
     end
   end
 end

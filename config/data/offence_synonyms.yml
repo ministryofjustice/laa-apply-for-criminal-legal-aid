@@ -1,0 +1,13 @@
+offence_synonyms:
+- regex: !ruby/regexp /actual bodily harm/i
+  synonyms: [abh]
+- regex: !ruby/regexp /anti-social behaviour/i
+  synonyms: [asb]
+- regex: !ruby/regexp /criminal behaviour order/i
+  synonyms: [cbo]
+- regex: !ruby/regexp /grievous bodily harm/i
+  synonyms: [gbh]
+- regex: !ruby/regexp /possess with intent to supply/i
+  synonyms: [pwits]
+- regex: !ruby/regexp /section 18/i
+  synonyms: [s18]

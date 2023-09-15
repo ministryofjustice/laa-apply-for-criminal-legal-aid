@@ -22,15 +22,15 @@ module DWP
     end
 
     def self.use_mock?
-      ActiveModel::Type::Boolean.new.cast(Rails.configuration.x.benefit_checker.use_mock)
+      Rails.configuration.x.benefit_checker.use_mock.inquiry.true?
     end
 
     def call
-      soap_client.call(:check, message: benefit_checker_params).body[:benefit_checker_response]
-    rescue StandardError => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(e)
-      nil
+      Rails.error.handle do
+        soap_client.call(
+          :check, message: benefit_checker_params
+        ).body[:benefit_checker_response]
+      end
     end
 
     private
@@ -39,11 +39,10 @@ module DWP
 
     def benefit_checker_params
       {
-        clientReference: applicant.id,
+        clientReference: applicant.crime_application_id,
         nino: applicant.nino,
         surname: applicant.last_name.strip.upcase,
         dateOfBirth: applicant.date_of_birth.strftime('%Y%m%d'),
-        dateOfAward: Time.zone.today.strftime('%Y%m%d'),
       }.merge(credential_params)
     end
 

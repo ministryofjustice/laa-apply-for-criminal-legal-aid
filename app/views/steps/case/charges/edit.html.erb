@@ -9,16 +9,17 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
-    <%= step_form @form_object do |f| %>
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <% suggestions_id = f.field_id(:offence_name, :field, :suggestions).tr('_', '-') %>
 
-      <%= f.govuk_text_field :offence_name, label: { size: 'm' }, autocomplete: 'off',
+      <%= f.govuk_text_field :offence_name, label: { size: 'm' },
+                             autocomplete: 'off', autocorrect: 'off',
                              data: { suggestions: suggestions_id, module: 'govuk-input' },
                              list: suggestions_id %>
 
       <datalist id="<%= suggestions_id %>">
         <% Offence.all.present_each(OffencePresenter) do |o| %>
-          <%= tag.option(o.name, data: { caption: o.offence_class }) %>
+          <%= tag.option(o.name, data: { caption: o.offence_class, synonyms: o.synonyms }) %>
         <% end %>
       </datalist>
 

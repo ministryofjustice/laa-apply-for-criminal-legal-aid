@@ -21,6 +21,8 @@ def show_step(name)
 end
 
 Rails.application.routes.draw do
+  mount DatastoreApi::HealthEngine::Engine => '/datastore'
+
   get :health, to: 'healthcheck#show'
   get :ping,   to: 'healthcheck#ping'
 
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
   resource :errors, only: [] do
     get :application_not_found
     get :invalid_session
+    get :invalid_token
     get :unhandled
     get :unauthenticated
     get :reauthenticate
@@ -62,7 +65,6 @@ Rails.application.routes.draw do
   namespace :about do
     get :privacy
     get :contact
-    get :feedback
     get :accessibility
   end
 
@@ -76,6 +78,14 @@ Rails.application.routes.draw do
       get :index, on: :collection
       get :show, on: :member
       put :recreate, on: :member
+    end
+  end
+
+  # Documents upload handling
+  scope 'document_bundles/:id', as: 'bundle' do
+    resources :documents, only: [:create, :destroy], param: :document_id,
+              constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+      get :download, on: :member
     end
   end
 
@@ -112,9 +122,10 @@ Rails.application.routes.draw do
       end
 
       namespace :case do
-        edit_step :urn
         edit_step :case_type
+        edit_step :appeal_details
         edit_step :date_stamp
+        edit_step :urn
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
         edit_step :has_codefendants
@@ -122,6 +133,10 @@ Rails.application.routes.draw do
         edit_step :hearing_details
         edit_step :ioj_passport
         edit_step :ioj
+      end
+
+      namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+        edit_step :upload
       end
 
       namespace :submission do

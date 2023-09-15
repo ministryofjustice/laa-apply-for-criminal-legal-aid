@@ -4,7 +4,7 @@ en:
     index:
       page_title: Your applications
       delete_button: Delete
-      delete_button_a11y: Delete %{applicant_name}'s application
+      delete_button_a11y: Delete %{applicant_name}’s application
       table_headings:
         applicant_name: Name
         created_at: Start date
@@ -77,7 +77,7 @@ en:
         default_html: ""
         split_case_html: |
           <p class="govuk-body">
-            We've returned your application because you need to add justification for all offences. This is because the case has been 'split'.
+            We’ve returned your application because you need to add justification for all offences. This is because the case has been ’split’.
           </p>
           <p class="govuk-body">
             A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.

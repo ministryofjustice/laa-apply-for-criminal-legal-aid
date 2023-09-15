@@ -7,6 +7,7 @@ class CrimeApplication < ApplicationRecord
   has_one :partner, dependent: :destroy
 
   has_many :people, dependent: :destroy
+  has_many :document_bundles, dependent: :destroy
 
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case
@@ -14,6 +15,8 @@ class CrimeApplication < ApplicationRecord
   has_many :codefendants, through: :case
 
   enum status: ApplicationStatus.enum_values
+
+  scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
   alias_attribute :reference, :usn
 

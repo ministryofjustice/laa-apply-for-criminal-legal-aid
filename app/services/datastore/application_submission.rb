@@ -11,25 +11,22 @@ module Datastore
       submitted_at = Time.current
       date_stamp = crime_application.date_stamp || submitted_at
 
-      CrimeApplication.transaction do
-        crime_application.assign_attributes(
-          submitted_at:,
-          date_stamp:,
-        )
+      Rails.error.handle(fallback: -> { false }) do
+        CrimeApplication.transaction do
+          crime_application.assign_attributes(
+            submitted_at:,
+            date_stamp:,
+          )
 
-        DatastoreApi::Requests::CreateApplication.new(
-          payload: application_payload
-        ).call
+          DatastoreApi::Requests::CreateApplication.new(
+            payload: application_payload
+          ).call
 
-        crime_application.destroy
+          crime_application.destroy!
+        end
+
+        true
       end
-
-      true
-    rescue StandardError => e
-      Rails.logger.error(e)
-      Sentry.capture_exception(e)
-
-      false
     end
     # rubocop:enable Metrics/MethodLength
 

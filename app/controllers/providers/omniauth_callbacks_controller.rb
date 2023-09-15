@@ -11,14 +11,16 @@ module Providers
       )
     end
 
+    def failure
+      # Let the application generic error handling deal with the
+      # exception. Refer to `controllers/concerns/error_handling.rb`
+      raise
+    end
+
     private
 
     def after_sign_in_path_for(_)
       Providers::OfficeRouter.call(current_provider)
-    end
-
-    def after_omniauth_failure_path_for(_)
-      unauthenticated_errors_path
     end
 
     def auth_hash

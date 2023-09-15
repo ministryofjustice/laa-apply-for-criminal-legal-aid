@@ -3,6 +3,10 @@ module Steps
     before_action :check_crime_application_presence
     before_action :update_navigation_stack, only: [:show, :edit]
 
+    # Avoid the browser caching any of the step pages so the
+    # back button after signing out can't load any sensitive details
+    before_action :no_store
+
     # :nocov:
     def show
       raise 'implement this action, if needed, in subclasses'

@@ -33,7 +33,7 @@ RSpec.describe Decisions::AddressDecisionTree do
     context 'if we come from a correspondence address sub-journey' do
       let(:address_record) { CorrespondenceAddress.new }
 
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
     end
   end
 

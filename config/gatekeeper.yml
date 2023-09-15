@@ -19,3 +19,33 @@ production:
   office_codes:
     - 1A123B # mock and tests
     - 2N232W # test provider in test firm
+    # First onboarding tranche - 19/07/2023
+    - 1T524L
+    - 1Q101C
+    - 1R281K
+    - 1M383Y
+    # Second onboarding tranche - 31/07/2023
+    - 2A041V
+    - 1W261L
+    # Third onboarding tranche - 18/08/2023
+    - 1Q921U
+    # Fourth onboarding tranche - 22/08/2023
+    - 0A701M
+    - 0Q824N
+    - 1P821Y
+    - 1P864V
+    - 2P443M
+    - 1Y423L
+    # Fifth onboarding tranche - 29/08/2023
+    - 2P495U
+    - 1P821Y
+    # Sixth onboarding tranche - 05/09/2023
+    - 0Q974B
+    - 0R360W
+    - 0R532H
+    - 1P401R
+    - 0R796V
+    - 1N221J
+    - 2Q544J
+    - 0Z758M
+

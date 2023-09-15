@@ -87,8 +87,10 @@ en:
       previous_maat_id:
         question: Previous MAAT ID
         absence_answer: *absence_none
+      appeal_lodged_date:
+        question: Date lodged
       appeal_with_changes_details:
-        question: Change details
+        question: Changes details
       # END case details section
 
       # BEGIN offences section
@@ -103,7 +105,9 @@ en:
           <<: *YESNO
       codefendant_full_name:
         question: "Co-defendant %{index}"
-      conflict_of_interest_html: <span class="govuk-caption-m">Has a conflict of interest</span>
+      conflict_of_interest:
+        yes_html: <span class="govuk-caption-m">Conflict of interest</span>
+        no_html: <span class="govuk-caption-m">No conflict of interest</span>
       # END codefendants section
 
       # BEGIN next court hearing section

@@ -76,9 +76,30 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main'
 
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+
+    outputs:
+      ecr_url: ${{ steps.ecr-url-output.outputs.ecr_url }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      # Assume role in Cloud Platform
+      - uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      # Login to container repository
+      - uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
+
+      - name: Store ECR endpoint as output
+        id: ecr-url-output
+        run: echo "ecr_url=${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
 
       - name: Store current date
         run: echo "BUILD_DATE=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -96,13 +117,13 @@ jobs:
 
       - name: Push to ECR
         id: ecr
-        uses: jwalton/gh-ecr-push@b10a019116283fff10914554dfe85bfb1c21d41b
-        with:
-          access-key-id: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
-          region: eu-west-2
-          local-image: app
-          image: ${{ secrets.ECR_NAME }}:${{ github.sha }}, ${{ secrets.ECR_NAME }}:staging.latest
+        env:
+          ECR_URL: ${{ steps.ecr-url-output.outputs.ecr_url }}
+        run: |
+          docker tag app $ECR_URL:${{ github.sha }}
+          docker tag app $ECR_URL:staging.latest
+          docker push $ECR_URL:${{ github.sha }}
+          docker push $ECR_URL:staging.latest
 
   deploy-staging:
     runs-on: ubuntu-latest
@@ -118,7 +139,7 @@ jobs:
         with:
           environment-name: staging
           git-crypt-key: ${{ secrets.GIT_CRYPT_KEY }}
-          ecr-url: ${{ secrets.ECR_URL }}
+          ecr-url: ${{ needs.build.outputs.ecr_url }}
           kube-cert: ${{ secrets.KUBE_STAGING_CERT }}
           kube-token: ${{ secrets.KUBE_STAGING_TOKEN }}
           kube-cluster: ${{ secrets.KUBE_STAGING_CLUSTER }}
@@ -126,7 +147,7 @@ jobs:
 
   deploy-production:
     runs-on: ubuntu-latest
-    needs: deploy-staging
+    needs: [build, deploy-staging]
     environment: production
 
     steps:
@@ -138,7 +159,7 @@ jobs:
         with:
           environment-name: production
           git-crypt-key: ${{ secrets.GIT_CRYPT_KEY }}
-          ecr-url: ${{ secrets.ECR_URL }}
+          ecr-url: ${{ needs.build.outputs.ecr_url }}
           kube-cert: ${{ secrets.KUBE_PRODUCTION_CERT }}
           kube-token: ${{ secrets.KUBE_PRODUCTION_TOKEN }}
           kube-cluster: ${{ secrets.KUBE_PRODUCTION_CLUSTER }}

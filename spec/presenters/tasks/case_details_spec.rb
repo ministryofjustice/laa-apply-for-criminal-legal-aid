@@ -15,8 +15,18 @@ RSpec.describe Tasks::CaseDetails do
   let(:applicant) { nil }
   let(:kase) { nil }
 
+  # We assume the completeness of the client details here, as
+  # their statuses are tested in its own spec, no need to repeat
+  let(:client_details_fulfilled) { true }
+
+  before do
+    allow(
+      subject
+    ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+  end
+
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/case/urn') }
+    it { expect(subject.path).to eq('/applications/12345/steps/case/case_type') }
   end
 
   describe '#not_applicable?' do
@@ -24,28 +34,14 @@ RSpec.describe Tasks::CaseDetails do
   end
 
   describe '#can_start?' do
-    context 'when there is no applicant record yet' do
-      it { expect(subject.can_start?).to be(false) }
+    context 'when the client details task has been completed' do
+      it { expect(subject.can_start?).to be(true) }
     end
 
-    context 'when there is an applicant record' do
-      let(:applicant) { double }
+    context 'when the client details task has not been completed yet' do
+      let(:client_details_fulfilled) { false }
 
-      before do
-        allow(crime_application).to receive(:means_passported?).and_return(means_passported)
-      end
-
-      context 'when applicant is means passported' do
-        let(:means_passported) { true }
-
-        it { expect(subject.can_start?).to be(true) }
-      end
-
-      context 'when applicant is not means passported' do
-        let(:means_passported) { false }
-
-        it { expect(subject.can_start?).to be(false) }
-      end
+      it { expect(subject.can_start?).to be(false) }
     end
   end
 

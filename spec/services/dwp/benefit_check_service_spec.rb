@@ -8,10 +8,12 @@ RSpec.describe DWP::BenefitCheckService do
   let(:date_of_birth) { '1980/01/10'.to_date }
   let(:nino) { 'JA293483A' }
   let(:id) { '123' }
+  let(:crime_application_id) { '5678' }
 
   let(:applicant) do
     double(
       Applicant,
+      crime_application_id:,
       id:,
       last_name:,
       date_of_birth:,
@@ -19,7 +21,7 @@ RSpec.describe DWP::BenefitCheckService do
     )
   end
 
-  let(:use_mock) { false }
+  let(:use_mock) { 'false' }
 
   before do
     allow(Rails.configuration.x.benefit_checker)
@@ -36,9 +38,10 @@ RSpec.describe DWP::BenefitCheckService do
     let(:expected_params) do
       hash_including(
         message: hash_including(
-          clientReference: applicant.id,
-          surname: applicant.last_name.strip.upcase,
-          dateOfBirth: applicant.date_of_birth.strftime('%Y%m%d'),
+          clientReference: '5678',
+          nino: 'JA293483A',
+          surname: 'WALKER',
+          dateOfBirth: '19800110',
         ),
       )
     end
@@ -48,6 +51,7 @@ RSpec.describe DWP::BenefitCheckService do
     context 'when the call is successful' do
       it 'returns the right parameters' do
         result = subject.new(applicant).call
+
         expect(result[:benefit_checker_status]).to eq('Yes')
         expect(result[:original_client_ref]).not_to be_empty
         expect(result[:confirmation_ref]).not_to be_empty
@@ -92,8 +96,11 @@ RSpec.describe DWP::BenefitCheckService do
 
         let(:exception) { StandardError.new('boom!') }
 
-        it 'captures error' do
-          expect(Sentry).to receive(:capture_exception).with(exception)
+        it 'handles and reports the error' do
+          expect(Rails.error).to receive(:report).with(
+            exception, hash_including(handled: true)
+          )
+
           subject.passporting_benefit?(applicant)
         end
 
@@ -116,7 +123,7 @@ RSpec.describe DWP::BenefitCheckService do
     end
 
     describe 'behaviour with mock' do
-      let(:use_mock) { true }
+      let(:use_mock) { 'true' }
 
       it 'returns the right parameters' do
         expect(subject.passporting_benefit?(applicant)).to be(true)

@@ -149,12 +149,12 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     # `false` is the validator default unless passing a different config
     if options.fetch(:allow_future, false)
       it 'allows future dates' do
-        expect(subject).to be_valid
+        subject.validate
         expect(subject.errors.added?(attribute_name, :future_not_allowed)).to be(false)
       end
     else
       it 'does not allow future dates' do
-        expect(subject).not_to be_valid
+        subject.validate
         expect(subject.errors.added?(attribute_name, :future_not_allowed)).to be(true)
       end
     end
@@ -166,12 +166,12 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     # `true` is the validator default unless passing a different config
     if options.fetch(:allow_past, true)
       it 'allows past dates' do
-        expect(subject).to be_valid
+        subject.validate
         expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(false)
       end
     else
       it 'does not allow past dates' do
-        expect(subject).not_to be_valid
+        subject.validate
         expect(subject.errors.added?(attribute_name, :past_not_allowed)).to be(true)
       end
     end

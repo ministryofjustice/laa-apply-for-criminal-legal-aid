@@ -7,6 +7,20 @@ en:
     error_summary:
       heading: There is a problem on this page
 
+  activerecord:
+    errors:
+      models:
+        # evidence upload data model
+        document:
+          attributes:
+            file_size:
+              too_small: File must be more than %{min_size}KB
+              too_big: File must be less than %{max_size}MB
+            content_type:
+              invalid: File must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF
+            s3_object_key:
+              blank: File was not successfully uploaded
+
   activemodel:
     errors:
       models:
@@ -37,6 +51,7 @@ en:
               year_too_late: Date of birth is too far in the future
               year_too_early: Date of birth is too far in the past
               future_not_allowed: Date of birth must be in the past
+              client_under_ten: Your client must be aged 10 or over to have been charged in England and Wales
         steps/client/has_nino_form:
           attributes:
             nino:
@@ -83,9 +98,20 @@ en:
           attributes:
             case_type:
               inclusion: Select a case type
+        steps/case/appeal_details_form:
+          attributes:
             appeal_with_changes_details:
-              blank: Add the details of what has changed
-              present: Details of what has changed are required for Appeal to Crown Court with changes to financial circumstances only
+              blank: Enter details of changes in financial circumstances
+            appeal_maat_id:
+              invalid: Enter a valid MAAT ID
+            appeal_lodged_date:
+              blank: Enter the date the appeal was lodged
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date the appeal was lodged is too far in the past
+              future_not_allowed: Date the appeal was lodged must be today or in the past
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:

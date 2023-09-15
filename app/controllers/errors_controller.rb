@@ -1,9 +1,10 @@
-class ErrorsController < ApplicationController
-  skip_before_action :verify_authenticity_token,
-                     :authenticate_provider!
-
+class ErrorsController < UnauthenticatedController
   def invalid_session
     respond_with_status(:ok)
+  end
+
+  def invalid_token
+    respond_with_status(:bad_request)
   end
 
   def application_not_found

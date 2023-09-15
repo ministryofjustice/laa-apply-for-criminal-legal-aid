@@ -54,6 +54,7 @@ RSpec.describe Adapters::Structs::Applicant do
         %w[
           first_name
           last_name
+          other_names
           date_of_birth
           nino
           correspondence_address_type

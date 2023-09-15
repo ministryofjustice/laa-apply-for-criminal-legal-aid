@@ -7,7 +7,7 @@ class Offence
                  :name,
                  :offence_class,
                  :offence_type,
-                 :ioj_passport
+                 :slipstreamable
 
   def self.find_by_name(name)
     find_by(name:)

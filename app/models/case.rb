@@ -12,6 +12,10 @@ class Case < ApplicationRecord
     end
   end
 
+  composed_of :hearing_court, class_name: 'Court',
+              mapping: %i[hearing_court_name name],
+              constructor: :find_by_name, allow_nil: true
+
   private
 
   def initialise_dates(charge)

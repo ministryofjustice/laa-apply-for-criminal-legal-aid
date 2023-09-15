@@ -15,7 +15,7 @@ describe LaaPortal::SamlSetup do
   let(:metadata_file) { nil }
 
   before do
-    allow(Sentry).to receive(:capture_exception)
+    allow(Rails.error).to receive(:report)
     allow(OmniAuth.config).to receive(:test_mode).and_return(false)
 
     stub_const(
@@ -36,8 +36,8 @@ describe LaaPortal::SamlSetup do
           RuntimeError, /Either metadata URL or metadata file must be configured/
         )
 
-        expect(Sentry).to have_received(:capture_exception).with(
-          an_instance_of(RuntimeError)
+        expect(Rails.error).to have_received(:report).with(
+          an_instance_of(RuntimeError), hash_including(handled: false)
         )
       end
     end
@@ -79,8 +79,8 @@ describe LaaPortal::SamlSetup do
           StandardError, /Execution expired parsing remote metadata: `url`/
         )
 
-        expect(Sentry).to have_received(:capture_exception).with(
-          an_instance_of(StandardError)
+        expect(Rails.error).to have_received(:report).with(
+          an_instance_of(StandardError), hash_including(handled: false)
         )
       end
     end

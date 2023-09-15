@@ -119,8 +119,11 @@ en:
           urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
       case_type:
         edit:
-          page_title: Enter the case type
-          heading:  Enter the case type
+          page_title: What is the case type?
+      appeal_details:
+        edit:
+          page_title: Your client’s appeal to Crown Court
+          heading: Your client’s appeal to Crown Court
       date_stamp:
         edit:
           page_title: Your application has been date stamped
@@ -175,6 +178,19 @@ en:
       ioj:
         edit:
           page_title: Why should your client get legal aid?
+    evidence:
+      upload:
+        edit:
+          page_title: Upload supporting evidence
+          heading: Upload supporting evidence
+          upload_file_button: Upload file
+          upload_files_heading: Upload files
+          upload_files_info: The maximum file size is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
+          choose_files_button: Choose files
+          uploaded_files_heading: Uploaded files
+          uploaded_files_info: When you submit this application, the caseworker will also get these files.
+          file_name: File name
+          uploaded: Uploaded
     submission:
       review:
         edit:

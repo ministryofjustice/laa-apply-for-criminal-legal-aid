@@ -4,17 +4,15 @@
 # sensitive information. See the ActiveSupport::ParameterFilter documentation for supported
 # notations and behaviors.
 Rails.application.config.filter_parameters += [
-  :passw, :secret, :token, :_key, :crypt, :salt, :certificate,
+  :passw, :secret, :token, :crypt, :salt, :certificate,
   :SAMLRequest, :SAMLResponse, :Signature, :SigAlg, :KeyInfo,
 
   # Attributes relating to an application
   # It does partial matching (i.e. `telephone_number` is covered by `phone`)
   :address_line,
-  :city,
-  :country,
+  :appeal_with_changes_details,
   :date_of_birth,
   :description,
-  :details,
   :email,
   :first_name,
   :justification,

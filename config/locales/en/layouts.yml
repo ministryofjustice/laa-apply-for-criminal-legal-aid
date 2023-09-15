@@ -2,9 +2,9 @@
 en:
   layouts:
     phase_banner:
-      text: This is an MVP. Some things may not work as expected.
+      text_html: This is a new service – your <a href="%{survey_url}" rel="external">feedback</a> will help us to improve it.
       tag:
-        production: alpha
+        production: beta
 
     header_navigation:
       menu_button: Menu
@@ -20,7 +20,7 @@ en:
       contact: Contact
       feedback: Feedback
       privacy: Privacy
-      accessibility: Accessibility
+      accessibility: Accessibility statement
       terms_and_conditions: Terms and conditions
 
     cookie_banner:

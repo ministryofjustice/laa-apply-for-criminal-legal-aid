@@ -5,9 +5,12 @@ Rails.application.configure do
   config.lograge.logger = ActiveSupport::Logger.new($stdout)
   config.lograge.formatter = Lograge::Formatters::Logstash.new
 
+  # Reduce noise in the logs by ignoring the healthcheck actions
   config.lograge.ignore_actions = %w[
     HealthcheckController#show
     HealthcheckController#ping
+    DatastoreApi::HealthEngine::HealthcheckController#show
+    DatastoreApi::HealthEngine::HealthcheckController#ping
   ]
 
   config.lograge.custom_options = lambda do |event|
@@ -24,9 +27,13 @@ Rails.application.configure do
     }.compact_blank
   end
 
+  # Important: the `controller` might not be a full-featured
+  # `ApplicationController` but instead a `BareApplicationController`
+  # so careful what methods you assume exist! :wink:
   config.lograge.custom_payload do |controller|
     {
       provider_id: controller.current_provider.to_param,
+      office_code: controller.current_provider&.selected_office_code,
     }
   end
 end

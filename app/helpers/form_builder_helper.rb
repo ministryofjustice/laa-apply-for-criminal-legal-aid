@@ -5,7 +5,7 @@
 module FormBuilderHelper
   def continue_button(primary: :save_and_continue, secondary: :save_and_come_back_later,
                       primary_opts: {}, secondary_opts: {})
-    submit_button(primary, primary_opts) do
+    submit_button(primary, primary_opts.merge(data: { 'main-action': true })) do
       submit_button(secondary, secondary_opts.merge(secondary: true, name: 'commit_draft')) if secondary
     end
   end

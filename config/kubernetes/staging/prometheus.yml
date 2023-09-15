@@ -6,15 +6,15 @@
 # in both, staging and production environments.
 #
 # To see the current alerts in this namespace:
-#   kubectl describe prometheusrule -n laa-apply-for-criminal-legal-aid-production
+#   kubectl describe prometheusrule -n laa-apply-for-criminal-legal-aid-staging
 #
 # Alerts will be sent to the slack channel: #laa-crime-apply-alerts
 #
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-production
-  namespace: laa-apply-for-criminal-legal-aid-production
+  name: prometheus-rules
+  namespace: laa-apply-for-criminal-legal-aid-staging
   labels:
     role: alert-rules
     prometheus: cloud-platform
@@ -104,3 +104,12 @@ spec:
       annotations:
         message: Image `{{ $labels.image_tag }}` in namespace `{{ $labels.namespace }}` has {{ $value }} {{ $labels.severity }} vulnerabilities.
         dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/trivy_starboard_operator123/trivy-operator-image-vulnerability?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.namespace }}
+
+    - alert: CrimeApply-PrometheusExporterFailure
+      expr: >-
+        ruby_collector_working{namespace=~"^laa-apply-for-criminal-legal-aid.*"} != 1
+      for: 30m
+      labels:
+        severity: laa-crime-apply-alerts
+      annotations:
+        message: Prometheus exporter not working in pod `{{ $labels.pod }}` for more than 30m.

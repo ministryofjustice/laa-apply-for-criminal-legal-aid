@@ -17,6 +17,9 @@ module Passporting
     end
 
     def age_passported?
+      # Appeal cases do not trigger IoJ passporting
+      return false if appeal_case_type?
+
       # For resubmissions, we use the original age passport result,
       # instead of running a new age calculation
       return passported_on?(IojPassportType::ON_AGE_UNDER18) if resubmission?
@@ -25,8 +28,11 @@ module Passporting
     end
 
     def offence_passported?
-      FeatureFlags.offence_ioj_passport.enabled? &&
-        offences.any?(&:ioj_passport)
+      # Appeal cases do not trigger IoJ passporting
+      return false if appeal_case_type?
+
+      FeatureFlags.offence_ioj_slipstream.enabled? &&
+        offences.any?(&:slipstreamable)
     end
 
     def passport_types_collection
@@ -35,8 +41,16 @@ module Passporting
 
     private
 
+    def kase
+      @kase ||= crime_application.case
+    end
+
     def offences
-      crime_application.case.charges.filter_map(&:offence)
+      kase.charges.filter_map(&:offence)
+    end
+
+    def appeal_case_type?
+      CaseType.new(kase.case_type).appeal?
     end
 
     def applicant_under18?
