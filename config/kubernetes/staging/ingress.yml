@@ -26,7 +26,9 @@ metadata:
       SecRequestBodyLimit 1048576
       SecRequestBodyNoFilesLimit 1048576
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
-      SecRuleUpdateTargetById 941100-941350 !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetById 941100-941350 !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session # XSS false-positives
+      SecRuleUpdateTargetById 942100 !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session # SQL Injection false-positives
+      # Rule 949110 is found often in logs (anomaly threshold breached) should not be excluded as it's an overall score
 spec:
   ingressClassName: modsec
   tls:
