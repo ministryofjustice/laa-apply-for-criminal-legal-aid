@@ -22,7 +22,7 @@ RSpec.describe Datastore::Documents::Delete do
     context 'when a document is not deleted successfully' do
       before do
         stub_request(:delete, 'http://datastore-webmock/api/v1/documents/MTIzL2FiY2RlZjEyMzQ=')
-          .to_return(status: 500, body: '{"object_key":"123/abcdef1234"}')
+          .to_return(status: 500, body: '')
       end
 
       it 'returns object key of deleted document' do

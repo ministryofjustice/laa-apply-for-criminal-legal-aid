@@ -13,7 +13,6 @@ module Steps
 
       def step_name
         if params.key?('document_id')
-          # :nocov:
           object_key = "#{current_crime_application.usn}/#{params['document_id']}"
 
           if Datastore::Documents::Delete.new(object_key:).call
@@ -24,7 +23,6 @@ module Steps
           end
 
           :delete_document
-          # :nocov:
         else
           :upload_finished
         end
