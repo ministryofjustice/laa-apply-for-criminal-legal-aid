@@ -1,3 +1,5 @@
+require 'clam_scan'
+
 module Datastore
   module Documents
     class Upload
