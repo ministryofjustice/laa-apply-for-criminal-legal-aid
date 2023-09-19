@@ -1,3 +1,5 @@
+require 'clam_scan'
+
 ClamScan.configure do |config|
   # provide default options to be passed to ClamScan::Client.scan
   # options passed directly to a call to ClamScan::Client.scan will override these
