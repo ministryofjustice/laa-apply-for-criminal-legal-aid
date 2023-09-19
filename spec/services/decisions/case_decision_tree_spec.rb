@@ -15,8 +15,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive(:update).and_return(true)
-    allow(crime_application).to receive(:date_stamp).and_return(nil)
+    allow(crime_application).to receive_messages(update: true, date_stamp: nil)
   end
 
   it_behaves_like 'a decision tree'
