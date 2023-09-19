@@ -2,7 +2,9 @@ module Decisions
   class EvidenceDecisionTree < BaseDecisionTree
     def destination
       case step_name
-      when :upload
+      when :delete_document
+        edit(:upload)
+      when :upload_finished
         edit('/steps/submission/review')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"

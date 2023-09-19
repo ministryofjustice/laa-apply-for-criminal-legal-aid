@@ -191,6 +191,11 @@ en:
           uploaded_files_info: When you submit this application, the caseworker will also get these files.
           file_name: File name
           uploaded: Uploaded
+          delete:
+            success: Document has been sucessfully deleted
+            failure: Document was not sucessfully deleted
+        uploaded_file:
+          remove_button: Delete
     submission:
       review:
         edit:
