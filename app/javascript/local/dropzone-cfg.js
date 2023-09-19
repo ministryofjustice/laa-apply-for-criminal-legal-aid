@@ -26,7 +26,7 @@ DropzoneCfg.prototype.init = function () {
   this.$chooseFilesButton = document.querySelector('button#choose_files_button')
   this.$dropzoneContainerText.appendChild(this.$chooseFilesButton)
 
-  this.$dropzone.on('addedfile', (file, response) => {
+  this.$dropzone.on('addedfile', (file) => {
     let row = createTableRow(file);
     self.$feedbackContainer.querySelector('.govuk-table__body').append(row);
   });
@@ -36,24 +36,27 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.innerHTML = "Uploaded"
-    location.reload()
+
+    amendErrorLink(file, response)
   });
 
   this.$dropzone.on('error', (file, response) => {
     let error = createErrorMessage(response.error_message)
-    this.$tableCell = document.getElementById(file.upload.uuid)
+    this.$tableCell = document.getElementById(file.upload.uuid).querySelector(".govuk-table__cell")
     this.$tableCell.append(error)
     this.$statusTag = this.$tableCell.querySelector(".govuk-tag")
     this.$tableCell.removeChild(this.$statusTag)
-    location.reload()
+
+    amendErrorLink(file, response)
   })
 }
 function createTableRow(file) {
   let row = document.createElement("tr")
   let cell = document.createElement("td")
   let statusTag = createStatusTag("Uploading")
+  let errorLink = createDeleteLink()
 
-  cell.setAttribute("id", file.upload.uuid)
+  row.setAttribute("id", file.upload.uuid)
 
   row.classList.add("govuk-table__row")
   cell.classList.add("govuk-table__cell")
@@ -61,6 +64,7 @@ function createTableRow(file) {
   cell.append(file.name)
   cell.append(statusTag)
   row.append(cell)
+  row.append(errorLink)
   return row
 }
 
@@ -83,5 +87,30 @@ function createErrorMessage (msg) {
   errorEl.textContent = msg
   errorEl.prepend(screenReaderError)
   return errorEl
+}
+
+function createDeleteLink () {
+  const deleteEl = document.createElement("td")
+  deleteEl.classList.add("govuk-table__cell", "govuk-!-text-align-right")
+
+  const input = document.createElement("input")
+  input.setAttribute("type", "hidden")
+  input.setAttribute("value", "put")
+  input.setAttribute("autocomplete", "off")
+
+  const deleteButton = document.createElement("button")
+  deleteButton.classList.add("app-button--link")
+  deleteButton.setAttribute("type", "submit")
+  deleteButton.setAttribute("name", "document_id")
+  deleteButton.innerText = "Delete"
+
+  deleteEl.append(input)
+  deleteEl.append(deleteButton)
+  return deleteEl
+}
+
+function amendErrorLink (file, response) {
+  let deleteButton = document.getElementById(file.upload.uuid).querySelector(".app-button--link")
+  deleteButton.setAttribute("value", response.id)
 }
 export default DropzoneCfg
