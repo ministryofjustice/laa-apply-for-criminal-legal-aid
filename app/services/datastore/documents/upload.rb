@@ -15,6 +15,8 @@ module Datastore
         return false if document.s3_object_key.present?
 
         Rails.error.handle(fallback: -> { false }) do
+          virus_scan!
+
           presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
             usn:, expires_in:
           ).call
@@ -48,6 +50,14 @@ module Datastore
 
       def expires_in
         PRESIGNED_URL_EXPIRES_IN
+      end
+
+      def virus_scan!
+        raise UnsuccessfulUploadError, 'No file to virus scan!' if document.nil?
+
+        # If the file matches a known virus signature it will immediately be deleted from the file system
+        scan_result = ClamScan::Client.scan({ location: document.tempfile.path, remove: 'yes' })
+        raise UnsuccessfulUploadError, 'File may be unsafe' unless scan_result.safe?
       end
     end
   end

@@ -6,7 +6,8 @@ RUN apk add --update \
   postgresql15-dev \
   tzdata \
   yarn \
-  gcompat
+  gcompat \
+  clamav clamav-daemon freshclam
 
 FROM base AS dependencies
 

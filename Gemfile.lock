@@ -112,6 +112,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    clam_scan (0.0.2)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
     crack (0.4.5)
@@ -443,6 +444,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  clam_scan
   dartsass-rails (~> 0.5.0)
   debug
   devise (~> 4.8)

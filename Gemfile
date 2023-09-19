@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
+gem 'clam_scan'
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'faraday', '~> 2.7'
 gem 'govuk_design_system_formbuilder', '~> 4.0.0'
