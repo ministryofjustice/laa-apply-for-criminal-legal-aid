@@ -13,6 +13,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       other_names: '',
       date_of_birth: date_of_birth,
       nino: 'AB123456A',
+      benefit_type: 'universal_credit',
       home_address: home_address,
       correspondence_address: correspondence_address,
       telephone_number: '123456789',
@@ -48,6 +49,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           other_names: '',
           date_of_birth: date_of_birth,
           nino: 'AB123456A',
+          benefit_type: 'universal_credit',
           home_address: {
             address_line_one: 'Test',
             address_line_two: 'Home',

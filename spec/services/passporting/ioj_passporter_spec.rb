@@ -161,9 +161,9 @@ RSpec.describe Passporting::IojPassporter do
     let(:feat_enabled) { true }
 
     before do
-      allow(
-        FeatureFlags.offence_ioj_slipstream
-      ).to receive(:enabled?).and_return(feat_enabled)
+      allow(FeatureFlags).to receive(:offence_ioj_slipstream) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feat_enabled)
+      }
     end
 
     context 'for an appeal case type' do

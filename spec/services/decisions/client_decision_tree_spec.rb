@@ -63,20 +63,54 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   context 'when the step is `has_nino`' do
     let(:form_object) { double('FormObject') }
-    let(:applicant_double) { double(Applicant) }
     let(:step_name) { :has_nino }
-    let(:nino) { 'AA123245A' }
+
+    context 'and benefit type feature flag is enabled' do
+      it { is_expected.to have_destination(:benefit_type, :edit, id: crime_application) }
+    end
+
+    context 'and benefit type feature flag is disabled' do
+      let(:benefit_check_passported) { true }
+      let(:passporting_benefit) { nil }
+
+      before do
+        allow(crime_application).to receive(:benefit_check_passported?).and_return(benefit_check_passported)
+
+        allow(FeatureFlags).to receive(:benefit_type_step) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'has the correct destination' do
+        expect(subject).to have_destination(:benefit_check_result, :edit, id: crime_application)
+      end
+    end
+  end
+
+  context 'when the step is `benefit_type`' do
+    let(:form_object) { double('FormObject', benefit_type: BenefitType.new(benefit_type)) }
+    let(:applicant_double) { double(Applicant) }
+    let(:step_name) { :benefit_type }
 
     before do
       allow(crime_application).to receive(:applicant).and_return(applicant_double)
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
       allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
       allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
-
       allow(crime_application).to receive(:benefit_check_passported?).and_return(benefit_check_passported)
     end
 
+    context 'and the benefit type is `none`' do
+      let(:benefit_type) { BenefitType::NONE.to_s }
+      let(:benefit_check_passported) { false }
+      let(:passporting_benefit) { nil }
+
+      it { is_expected.to have_destination(:benefit_exit, :show, id: crime_application) }
+    end
+
     context 'when application has been already passported on benefit check' do
+      let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
       let(:benefit_check_passported) { true }
       let(:passporting_benefit) { nil }
 
@@ -88,6 +122,8 @@ RSpec.describe Decisions::ClientDecisionTree do
 
       context 'when the applicant has a passporting benefit' do
         context 'has correct next step' do
+          let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
           let(:passporting_benefit) { true }
 
           it { is_expected.to have_destination(:benefit_check_result, :edit, id: crime_application) }
@@ -96,6 +132,8 @@ RSpec.describe Decisions::ClientDecisionTree do
 
       context 'when the applicant does not have a passporting benefit' do
         context 'has correct next step' do
+          let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
           let(:passporting_benefit) { false }
 
           it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
@@ -104,6 +142,8 @@ RSpec.describe Decisions::ClientDecisionTree do
 
       context 'when the benefit checker cannot check on the status of the passporting benefit' do
         context 'has correct next step' do
+          let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
           let(:passporting_benefit) { nil }
 
           it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }

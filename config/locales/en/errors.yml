@@ -57,6 +57,10 @@ en:
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+        steps/client/benefit_type_form:
+          attributes:
+            benefit_type:
+              inclusion: Select a benefit type
         steps/client/contact_details_form:
           attributes:
             telephone_number:

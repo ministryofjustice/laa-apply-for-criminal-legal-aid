@@ -57,6 +57,7 @@ RSpec.describe Adapters::Structs::Applicant do
           other_names
           date_of_birth
           nino
+          benefit_type
           correspondence_address_type
           telephone_number
           home_address
