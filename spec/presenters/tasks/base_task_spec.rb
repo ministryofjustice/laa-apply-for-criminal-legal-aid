@@ -59,10 +59,8 @@ RSpec.describe Tasks::BaseTask do
 
   describe '#status' do
     before do
-      allow(subject).to receive(:not_applicable?).and_return(not_applicable)
-      allow(subject).to receive(:can_start?).and_return(can_start)
-      allow(subject).to receive(:completed?).and_return(completed)
-      allow(subject).to receive(:in_progress?).and_return(in_progress)
+      allow(subject).to receive_messages(not_applicable?: not_applicable, can_start?: can_start, completed?: completed,
+                                         in_progress?: in_progress)
     end
 
     let(:not_applicable) { false }
