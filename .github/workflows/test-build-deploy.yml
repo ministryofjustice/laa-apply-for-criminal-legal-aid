@@ -62,7 +62,7 @@ jobs:
         run: bin/rails db:prepare
 
       - name: Install clamav
-        run: sudo apt-get install clamav clamav-daemon freshclam
+        run: sudo apt-get install clamav clamav-daemon -y
 
       - name: Run linters and tests
         run: bundle exec rake
