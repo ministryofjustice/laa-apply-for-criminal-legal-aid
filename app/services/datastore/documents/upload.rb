@@ -54,13 +54,19 @@ module Datastore
         PRESIGNED_URL_EXPIRES_IN
       end
 
+      # TODO: Currently only log to Sentry until ClamAV is fully setup on servers, so
+      # only returning true/false
       def virus_scan!
-        return true if Rails.env.production?
-        raise UnsuccessfulUploadError, 'No file to virus scan!' if document.nil?
+        raise UnsuccessfulUploadError, 'File not found' if document.nil?
 
-        # If the file matches a known virus signature it will immediately be deleted from the file system
-        scan_result = ClamScan::Client.scan({ location: document.tempfile.path, remove: 'yes' })
-        raise UnsuccessfulUploadError, 'File may be unsafe' unless scan_result.safe?
+        scan_result = ClamScan::Client.scan({ location: document.tempfile.path })
+
+        if scan_result.virus?
+          Rails.logger.error "File may be unsafe. ClamAV Result: #{scan_result.body}"
+          false
+        else
+          true
+        end
       end
     end
   end

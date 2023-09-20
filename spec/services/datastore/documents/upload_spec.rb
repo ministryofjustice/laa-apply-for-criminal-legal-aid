@@ -22,6 +22,8 @@ RSpec.describe Datastore::Documents::Upload do
 
         stub_request(:put, presign_upload_url)
           .to_return(status: 200)
+
+        allow(subject).to receive(:virus_scan!).and_return(true)
       end
 
       it 'returns true and updates the documents s3 object key' do
@@ -63,6 +65,39 @@ RSpec.describe Datastore::Documents::Upload do
       it 'returns false' do
         expect(subject.call).to be(false)
       end
+    end
+  end
+
+  # Cursory testing of the virus_scan method rather than the actual clam_scan library
+  # which has a dependency on the clamdscan daemon or clamscan executable
+  describe '#virus_scan!' do
+    context 'with no file' do
+      subject { described_class.new(document: nil) }
+
+      it 'throws UnsuccessfulUploadError exception' do
+        expect {
+          subject.send(:virus_scan!)
+        }.to raise_exception Datastore::Documents::Upload::UnsuccessfulUploadError, 'File not found'
+      end
+    end
+
+    context 'with a compromised file' do
+      subject { described_class.new(document: Document.new(tempfile: Tempfile.new('badfile.txt'))) }
+
+      before do
+        allow_any_instance_of(ClamScan::Response).to receive(:virus?).and_return(true)
+      end
+
+      it 'returns false and logs the error' do
+        expect(Rails.logger).to receive(:error).with(/File may be unsafe. ClamAV Result:/)
+        subject.send(:virus_scan!)
+      end
+    end
+
+    context 'with a valid file' do
+      subject { described_class.new(document: Document.new(tempfile: Tempfile.new('okfile.txt'))) }
+
+      it { expect(subject.send(:virus_scan!)).to be true }
     end
   end
 end
