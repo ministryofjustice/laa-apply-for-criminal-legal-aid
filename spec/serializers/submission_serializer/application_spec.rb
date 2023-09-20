@@ -22,6 +22,7 @@ RSpec.describe SubmissionSerializer::Application do
           SubmissionSerializer::Sections::ClientDetails,
           SubmissionSerializer::Sections::CaseDetails,
           SubmissionSerializer::Sections::IojDetails,
+          SubmissionSerializer::Sections::SupportingEvidence,
         ]
       )
     end
@@ -36,9 +37,11 @@ RSpec.describe SubmissionSerializer::Application do
     # in spec `services/application_submission_spec.rb`
 
     let(:kase) { Case.new }
+    let(:bundle) { DocumentBundle.new }
 
     before do
       allow(crime_application).to receive(:case).and_return(kase)
+      allow(crime_application).to receive(:document_bundles).and_return([bundle])
     end
 
     it 'generates a serialized version of the application' do
@@ -53,6 +56,7 @@ RSpec.describe SubmissionSerializer::Application do
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
+          'supporting_evidence' => be_an(Array),
         )
       )
     end

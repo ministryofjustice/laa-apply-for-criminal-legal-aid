@@ -14,6 +14,10 @@ module Adapters
       def ioj
         Structs::InterestsOfJustice.new(interests_of_justice)
       end
+
+      def supporting_evidence
+        Structs::SupportingEvidence.new(supporting_evidence)
+      end
     end
   end
 end
