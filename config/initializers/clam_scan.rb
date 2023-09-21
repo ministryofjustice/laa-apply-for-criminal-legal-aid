@@ -9,11 +9,9 @@ ClamScan.configure do |config|
   # path to clamscan/clamdscan client
   # try `which clamdscan` or `which clamscan` in your shell to see where you should point this to
   # recommended to set to an absolute path to clamdscan
-  if Rails.env.production?
-    config.client_location = '/usr/bin/clamdscan'
-  else
-    config.client_location = '/usr/local/bin/clamdscan'
-  end
+  clamdscan_path = `which clamdscan`&.chomp
+  puts "[clam_scan init] clamdscan location: #{clamdscan_path}"
+  config.client_location = clamdscan_path
 
   # if set to true, ClamScan will raise an exception
   # unless a scan is successful and no viruses were found
