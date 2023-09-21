@@ -33,6 +33,8 @@ module Steps
             attributes_to_reset
           )
         )
+
+        crime_application.update(means_passport: [])
       end
 
       # If the last name or date of birth have changed, the DWP check
@@ -44,7 +46,6 @@ module Steps
           has_nino: nil,
           nino: nil,
           passporting_benefit: nil,
-          means_passport: [],
         }
       end
     end
