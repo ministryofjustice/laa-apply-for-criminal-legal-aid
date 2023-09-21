@@ -44,6 +44,7 @@ module Steps
           has_nino: nil,
           nino: nil,
           passporting_benefit: nil,
+          means_passport: [],
         }
       end
     end

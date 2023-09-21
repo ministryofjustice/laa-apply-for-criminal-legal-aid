@@ -22,6 +22,7 @@ module Steps
           attributes.merge(
             # The following are dependent attributes that need to be reset
             passporting_benefit: nil,
+            means_passport: [],
           )
         )
       end
