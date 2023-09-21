@@ -18,9 +18,8 @@ describe Summary::Sections::LegalRepresentativeDetails do
 
   before do
     allow(crime_application).to receive(:in_progress?).and_return(false)
-    allow(provider_details).to receive(:legal_rep_first_name).and_return('first name')
-    allow(provider_details).to receive(:legal_rep_last_name).and_return('last name')
-    allow(provider_details).to receive(:legal_rep_telephone).and_return('01987654321')
+    allow(provider_details).to receive_messages(legal_rep_first_name: 'first name', legal_rep_last_name: 'last name',
+                                                legal_rep_telephone: '01987654321')
   end
 
   describe '#name' do

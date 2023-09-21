@@ -10,11 +10,7 @@ RSpec.describe Decisions::DWPDecisionTree do
   before do
     allow(
       form_object
-    ).to receive(:crime_application).and_return(crime_application)
-
-    allow(
-      form_object
-    ).to receive(:applicant).and_return(applicant)
+    ).to receive_messages(crime_application:, applicant:)
   end
 
   it_behaves_like 'a decision tree'

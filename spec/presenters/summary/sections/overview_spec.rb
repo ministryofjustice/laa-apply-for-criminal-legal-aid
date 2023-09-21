@@ -20,8 +20,7 @@ describe Summary::Sections::Overview do
 
   before do
     allow(crime_application).to receive(:in_progress?).and_return(false)
-    allow(provider_details).to receive(:provider_email).and_return('provider@example.com')
-    allow(provider_details).to receive(:office_code).and_return('123AA')
+    allow(provider_details).to receive_messages(provider_email: 'provider@example.com', office_code: '123AA')
   end
 
   describe '#name' do
