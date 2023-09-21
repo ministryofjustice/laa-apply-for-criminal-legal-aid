@@ -24,6 +24,10 @@ RSpec.describe Steps::Client::DetailsForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
 
+  before do
+    allow(crime_application).to receive(:update).with({ means_passport: [] })
+  end
+
   describe '#save' do
     context 'validations' do
       it { is_expected.to validate_presence_of(:first_name) }
@@ -33,8 +37,7 @@ RSpec.describe Steps::Client::DetailsForm do
     end
 
     context 'date_of_birth' do
-      it_behaves_like 'a multiparam date validation',
-                      attribute_name: :date_of_birth
+      it_behaves_like 'a multiparam date validation', attribute_name: :date_of_birth
     end
 
     context 'when validations pass' do

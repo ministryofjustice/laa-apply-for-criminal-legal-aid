@@ -27,14 +27,14 @@ module Steps
       def persist!
         return true unless changed?
 
+        crime_application.update(means_passport: [])
+
         applicant.update(
           attributes.merge(
             # The following are dependent attributes that need to be reset
             attributes_to_reset
           )
         )
-
-        crime_application.update(means_passport: [])
       end
 
       # If the last name or date of birth have changed, the DWP check

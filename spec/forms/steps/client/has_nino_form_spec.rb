@@ -19,6 +19,10 @@ RSpec.describe Steps::Client::HasNinoForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
 
+  before do
+    allow(crime_application).to receive(:update).with({ means_passport: [] })
+  end
+
   describe '#save' do
     context 'validations' do
       context 'when `nino` is blank' do
