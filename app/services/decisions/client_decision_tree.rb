@@ -31,6 +31,16 @@ module Decisions
     end
 
     def after_client_details
+      Passporting::MeansPassporter.new(current_crime_application).call
+      # If this results in a loss of a means passport that had been set already
+      # communicate something to the user, and ensure the application gains a new
+      # means passport (or in future answers means questions) before submission
+
+      Passporting::IojPassporter.new(current_crime_application).call
+      # If this results in a loss of an IOJ passport that had been set already
+      # communicate something to the user, and ensure the application either 
+      # gains a new IOJ passport or answers IOJ reasons before submission
+
       if current_crime_application.age_passported?
         start_address_journey(HomeAddress)
       else
@@ -39,6 +49,11 @@ module Decisions
     end
 
     def after_has_nino
+      Passporting::MeansPassporter.new(current_crime_application).call
+      # If this results in a loss of a means passport that had been set already
+      # communicate something to the user, and ensure the application gains a new
+      # means passport (or in future answers means questions) before submission
+
       return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
 
       DWP::UpdateBenefitCheckResultService.call(applicant)

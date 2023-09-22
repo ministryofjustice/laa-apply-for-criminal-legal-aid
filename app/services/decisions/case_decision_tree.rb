@@ -70,6 +70,11 @@ module Decisions
     end
 
     def after_charges_summary
+      Passporting::IojPassporter.new(current_crime_application).call
+      # If this results in a loss of an IOJ passport that had been set already
+      # communicate something to the user, and ensure the application either 
+      # gains a new IOJ passport or answers IOJ reasons before submission
+
       return edit(:has_codefendants) if form_object.add_offence.no?
 
       edit_new_charge
