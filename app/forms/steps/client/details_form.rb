@@ -27,8 +27,6 @@ module Steps
       def persist!
         return true unless changed?
 
-        crime_application.update(means_passport: [])
-
         applicant.update(
           attributes.merge(
             # The following are dependent attributes that need to be reset

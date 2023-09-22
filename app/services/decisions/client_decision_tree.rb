@@ -31,6 +31,8 @@ module Decisions
     end
 
     def after_client_details
+      Passporting::MeansPassporter.new(current_crime_application).call
+
       if current_crime_application.age_passported?
         start_address_journey(HomeAddress)
       else
@@ -42,6 +44,7 @@ module Decisions
       return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
 
       DWP::UpdateBenefitCheckResultService.call(applicant)
+      Passporting::MeansPassporter.new(current_crime_application).call
 
       if applicant.passporting_benefit.nil?
         edit(:retry_benefit_check)
