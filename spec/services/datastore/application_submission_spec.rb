@@ -75,10 +75,6 @@ RSpec.describe Datastore::ApplicationSubmission do
       types: ['loss_of_liberty'],
       loss_of_liberty_justification: 'Details about loss of liberty.',
     )
-
-    bundle = DocumentBundle.create(crime_application: app)
-    file = fixture_file_upload('uploads/test.pdf', 'application/pdf')
-    Document.create_from_file(file:, bundle:)
   end
 
   after :all do
