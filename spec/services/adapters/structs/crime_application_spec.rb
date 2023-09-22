@@ -20,10 +20,4 @@ RSpec.describe Adapters::Structs::CrimeApplication do
       expect(subject.ioj).to be_a(Adapters::Structs::InterestsOfJustice)
     end
   end
-
-  describe '#supporting_evidence' do
-    it 'returns the supporting evidence struct' do
-      expect(subject.supporting_evidence).to be_a(Adapters::Structs::SupportingEvidence)
-    end
-  end
 end
