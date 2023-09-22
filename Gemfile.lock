@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 1c7d156ea6ddf0fb997706e3d59d66f4f102e0e7
-  tag: v1.0.0
+  revision: 28f7cddb1b6e2f23bb93724282a9ce6296df966e
+  tag: v1.0.1
   specs:
     laa-criminal-legal-aid-schemas (1.0.0)
       dry-struct (~> 1.6.0)
@@ -136,7 +136,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
-    dry-core (1.0.0)
+    dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
     dry-inflector (1.0.0)
