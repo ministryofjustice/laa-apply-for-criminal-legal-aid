@@ -100,13 +100,17 @@ Rails.application.routes.draw do
     namespace :steps do
       namespace :client do
         edit_step :has_partner
+        show_step :partner_exit
         edit_step :details
         edit_step :has_nino
-        edit_step :benefit_check_result
         show_step :nino_exit
-        show_step :partner_exit
-        edit_step :contact_details
+        if FeatureFlags.benefit_type_step.enabled?
+          edit_step :benefit_type
+          show_step :benefit_exit
+        end
+        edit_step :benefit_check_result
         edit_step :retry_benefit_check
+        edit_step :contact_details
       end
 
       namespace :dwp do

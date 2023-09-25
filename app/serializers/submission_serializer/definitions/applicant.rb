@@ -9,6 +9,7 @@ module SubmissionSerializer
           json.other_names other_names
           json.date_of_birth date_of_birth
           json.nino nino
+          json.benefit_type benefit_type
           json.telephone_number telephone_number
           json.correspondence_address_type correspondence_address_type
 
