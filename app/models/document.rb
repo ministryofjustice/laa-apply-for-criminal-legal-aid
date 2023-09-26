@@ -24,4 +24,8 @@ class Document < ApplicationRecord
       tempfile: file.tempfile,
     )
   end
+
+  def uploaded_to_s3?
+    s3_object_key.present?
+  end
 end
