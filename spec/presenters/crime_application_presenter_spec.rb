@@ -24,8 +24,7 @@ RSpec.describe CrimeApplicationPresenter do
   let(:case_type) { nil }
 
   before do
-    allow(crime_application).to receive(:applicant).and_return(applicant)
-    allow(crime_application).to receive(:case).and_return(case_double)
+    allow(crime_application).to receive_messages(applicant: applicant, case: case_double)
   end
 
   describe '#to_param' do
