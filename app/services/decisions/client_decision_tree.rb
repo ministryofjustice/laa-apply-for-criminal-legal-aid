@@ -9,6 +9,8 @@ module Decisions
         after_client_details
       when :has_nino, :retry_benefit_check
         after_has_nino
+      when :benefit_type
+        after_benefit_type
       when :benefit_check_result
         after_dwp_check
       when :contact_details
@@ -39,6 +41,22 @@ module Decisions
     end
 
     def after_has_nino
+      if FeatureFlags.benefit_type_step.enabled?
+        edit(:benefit_type)
+      else
+        determine_dwp_result_page
+      end
+    end
+
+    def after_benefit_type
+      if form_object.benefit_type.none?
+        show(:benefit_exit)
+      else
+        determine_dwp_result_page
+      end
+    end
+
+    def determine_dwp_result_page
       return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
 
       DWP::UpdateBenefitCheckResultService.call(applicant)

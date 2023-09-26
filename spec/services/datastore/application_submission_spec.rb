@@ -26,6 +26,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       last_name: 'Doe',
       date_of_birth: 25.years.ago,
       nino: 'AB123456A',
+      benefit_type: 'universal_credit',
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
       passporting_benefit: true,
