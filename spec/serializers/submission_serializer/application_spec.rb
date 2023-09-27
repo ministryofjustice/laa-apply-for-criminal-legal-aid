@@ -37,11 +37,11 @@ RSpec.describe SubmissionSerializer::Application do
     # in spec `services/application_submission_spec.rb`
 
     let(:kase) { Case.new }
-    let(:bundle) { DocumentBundle.new }
+    let(:documents_scope) { double(stored: [Document.new]) }
 
     before do
       allow(crime_application).to receive(:case).and_return(kase)
-      allow(crime_application).to receive(:document_bundles).and_return([bundle])
+      allow(crime_application).to receive(:documents).and_return(documents_scope)
     end
 
     it 'generates a serialized version of the application' do

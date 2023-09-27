@@ -3,20 +3,14 @@ module SubmissionSerializer
     class SupportingEvidence < Sections::BaseSection
       def to_builder
         Jbuilder.new do |json|
-          json.supporting_evidence Definitions::Document.generate(documents)
+          json.supporting_evidence Definitions::Document.generate(documents.stored)
         end
       end
 
       private
 
       def documents
-        # the upload page is not part of the flow yet so document bundles may not be initialised
-        if crime_application.document_bundles.first.nil?
-          @documents = {}
-        else
-          # we only want documents successfully uploaded to s3 to be serialised
-          @documents ||= crime_application.document_bundles.first.documents.stored
-        end
+        crime_application.documents
       end
     end
   end

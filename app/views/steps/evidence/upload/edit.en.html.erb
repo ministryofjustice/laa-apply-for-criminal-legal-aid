@@ -1,9 +1,10 @@
 <% title t('.page_title') %>
 <% step_header %>
-<%= render partial: 'shared/flash_banner' %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
     <p class="govuk-body govuk-!-margin-bottom-1">Use this page to provide:</p>
@@ -23,7 +24,7 @@
     </h2>
 
     <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },
-                 url: bundle_documents_path(@form_object.current_document_bundle),
+                 url: crime_application_documents_path,
                  method: :post, multipart: true do |f| %>
 
       <%= f.button t('.choose_files_button'),
@@ -57,7 +58,7 @@
           </thead>
           <tbody class="govuk-table__body">
           <%= render partial: 'steps/evidence/upload/uploaded_file',
-                     collection: @form_object.current_document_bundle.documents, as: :document %>
+                     collection: @form_object.documents, as: :document %>
           </tbody>
         </table>
       </div>

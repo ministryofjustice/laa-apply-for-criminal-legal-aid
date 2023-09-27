@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create
     document = Document.create_from_file(
-      file: file_from_params, bundle: current_document_bundle
+      file: file_from_params, crime_application: current_crime_application
     )
 
     Datastore::Documents::Upload.new(document:).call if document.valid?(:criteria)
@@ -34,10 +34,6 @@ class DocumentsController < ApplicationController
     edit_steps_evidence_upload_path(current_crime_application)
   end
 
-  def current_document_bundle
-    @current_document_bundle ||= DocumentBundle.find(document_bundle_id)
-  end
-
   # TODO: unify if possible the submission params
   # Currently XHR and HTML requests have different structure
   # Also needs proper error handling for non-JS version if user click
@@ -48,14 +44,6 @@ class DocumentsController < ApplicationController
     else
       params.fetch(:document)
     end
-  end
-
-  def document_bundle_id
-    params[:id]
-  end
-
-  def application_id
-    current_document_bundle.crime_application_id
   end
 end
 # :nocov:

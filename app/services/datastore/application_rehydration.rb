@@ -18,7 +18,7 @@ module Datastore
         means_passport: parent.means_passport,
         applicant: applicant,
         case: case_with_ioj,
-        document_bundles: [document_bundle]
+        documents: documents,
       )
     end
 
@@ -57,11 +57,11 @@ module Datastore
       )
     end
 
-    def document_bundle
-      documents = parent.supporting_evidence.map do |struct|
+    def documents
+      # TODO: Filter out deleted documents
+      parent.supporting_evidence.map do |struct|
         Document.new(struct.attributes)
       end
-      DocumentBundle.new(documents:)
     end
   end
 end

@@ -7,7 +7,7 @@ class CrimeApplication < ApplicationRecord
   has_one :partner, dependent: :destroy
 
   has_many :people, dependent: :destroy
-  has_many :document_bundles, dependent: :destroy
+  has_many :documents, dependent: :destroy
 
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case

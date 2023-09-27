@@ -1,5 +1,5 @@
 class Document < ApplicationRecord
-  belongs_to :document_bundle
+  belongs_to :crime_application
 
   # Using UUIDs as the record IDs. We can't trust sequential ordering by ID
   default_scope { order(created_at: :asc) }
@@ -16,10 +16,11 @@ class Document < ApplicationRecord
   attr_accessor :tempfile
 
   scope :stored, -> { where.not(s3_object_key: nil) }
+  scope :not_deleted, -> { where(deleted_at: nil) }
 
-  def self.create_from_file(file:, bundle:)
+  def self.create_from_file(file:, crime_application:)
     create(
-      document_bundle: bundle,
+      crime_application: crime_application,
       filename: file.original_filename,
       content_type: file.content_type,
       file_size: file.tempfile.size,

@@ -2,28 +2,27 @@ require 'rails_helper'
 
 RSpec.describe 'Evidence upload page', authorized: true do
   before :all do
-    app = CrimeApplication.create
-    bundle = DocumentBundle.create(crime_application: app)
+    crime_application = CrimeApplication.create
     file = fixture_file_upload('uploads/test.pdf', 'application/pdf')
 
     # Successfully uploaded document
-    Document.create_from_file(file:, bundle:).update(
+    Document.create_from_file(file:, crime_application:).update(
       s3_object_key: '123/abcdef1234'
     )
 
-    too_big_err_file = Document.create_from_file(file:, bundle:)
+    too_big_err_file = Document.create_from_file(file:, crime_application:)
     too_big_err_file.update(
       filename: 'too_big.pdf',
       file_size: 21.megabytes
     )
 
-    too_small_err_file = Document.create_from_file(file:, bundle:)
+    too_small_err_file = Document.create_from_file(file:, crime_application:)
     too_small_err_file.update(
       filename: 'too_small.pdf',
       file_size: 2.kilobytes
     )
 
-    content_type_err_file = Document.create_from_file(file:, bundle:)
+    content_type_err_file = Document.create_from_file(file:, crime_application:)
     content_type_err_file.update(
       filename: 'invalid_content_type.pdf',
       content_type: 'video/mp4'
@@ -35,7 +34,7 @@ RSpec.describe 'Evidence upload page', authorized: true do
     content_type_err_file.valid?(:criteria)
 
     # Unsuccessful upload for any other reason (no s3 key)
-    Document.create_from_file(file:, bundle:).update(
+    Document.create_from_file(file:, crime_application:).update(
       filename: 'error.pdf'
     )
   end

@@ -1,11 +1,13 @@
 module Steps
   module Evidence
     class UploadForm < Steps::BaseFormObject
-      alias_attribute :current_document_bundle, :record
+      # :nocov:
+      def documents
+        crime_application.documents.not_deleted
+      end
 
       private
 
-      # :nocov:
       def persist!
         true
       end

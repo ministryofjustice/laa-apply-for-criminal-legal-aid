@@ -3,22 +3,19 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::SupportingEvidence do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    document = instance_double(
+  let(:document) do
+    instance_double(
       Document,
       filename: 'test.pdf',
       s3_object_key: '123/abcdef1234',
       content_type: 'application/pdf',
       file_size: 12,
     )
+  end
 
-    bundle = instance_double(
-      DocumentBundle,
-      documents: double(stored: [document])
-    )
-
+  let(:crime_application) do
     instance_double(
-      CrimeApplication, document_bundles: [bundle]
+      CrimeApplication, documents: double(stored: [document])
     )
   end
 
