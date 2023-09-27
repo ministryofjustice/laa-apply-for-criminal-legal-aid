@@ -15,6 +15,8 @@ class Document < ApplicationRecord
   # Transient attribute
   attr_accessor :tempfile
 
+  scope :stored, -> { where.not(s3_object_key: nil) }
+
   def self.create_from_file(file:, bundle:)
     create(
       document_bundle: bundle,

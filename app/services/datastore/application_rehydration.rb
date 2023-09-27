@@ -18,6 +18,7 @@ module Datastore
         means_passport: parent.means_passport,
         applicant: applicant,
         case: case_with_ioj,
+        document_bundles: [document_bundle]
       )
     end
 
@@ -54,6 +55,13 @@ module Datastore
       Case.new(
         parent.case.serializable_hash.merge('ioj' => ioj)
       )
+    end
+
+    def document_bundle
+      documents = parent.supporting_evidence.map do |struct|
+        Document.new(struct.attributes)
+      end
+      DocumentBundle.new(documents:)
     end
   end
 end
