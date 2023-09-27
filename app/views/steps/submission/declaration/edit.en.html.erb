@@ -42,6 +42,9 @@
       <li>you’ve provided correct and complete information in this application</li>
     </ul>
 
+    <%= render partial: 'fulfilment_errors',
+               locals: { errors: @form_object.fulfilment_errors } if @form_object.fulfilment_errors.any? %>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_fieldset legend: { text: t('.legal_representative_legend') } do %>
         <%= f.govuk_text_field :legal_rep_first_name, autocomplete: 'off', width: 'three-quarters' %>

@@ -1,0 +1,23 @@
+<a id="steps-submission-declaration-form-crime-application-field-error"></a>
+
+<div class="app-declaration__fulfilment-errors govuk-form-group govuk-form-group--error govuk-!-margin-top-8">
+  <span class="govuk-error-message">
+    <%=t '.heading' %>
+  </span>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <ul class="govuk-list">
+        <% errors.each do |error| %>
+          <li><%= error.message %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <%# We only show the change link in the first error, in case there are more than one %>
+      <%= link_to t('.change_link'), errors.first.change_path, class: 'govuk-link govuk-link--no-visited-state ga-pageLink govuk-body-m',
+                  data: { ga_category: 'declaration', ga_label: "fulfilment error: #{errors.first.attribute}" } %>
+    </div>
+  </div>
+</div>

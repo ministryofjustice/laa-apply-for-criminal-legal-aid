@@ -101,22 +101,20 @@ module Decisions
     # NOTE: for MVP, this is the last step of the application,
     # however post-MVP there will be means assessment steps,
     # unless the applicant has been passported. As this is not
-    # yet implemented, and for MVP we only let means passported
-    # applicants, raise an exception (this should NOT happen but
-    # in case it happens, we get alerted).
+    # yet implemented, for now both branches behave the same.
+    # However before submission we perform a validation to
+    # ensure applicant is means-passported (array is not empty).
     #
-    # rubocop:disable Style/GuardClause
+    # rubocop:disable Style/IdenticalConditionalBranches,Lint/DuplicateBranch
     def after_ioj
       if Passporting::MeansPassporter.new(current_crime_application).call
         edit('/steps/submission/review')
       else
         # TODO: post-MVP implement means assessment steps
-        # For MVP, this branch should not be reachable, and if
-        # we end up here, we want to know about it (Sentry)
-        raise InvalidStep, 'application is not means-passported'
+        edit('/steps/submission/review')
       end
     end
-    # rubocop:enable Style/GuardClause
+    # rubocop:enable Style/IdenticalConditionalBranches, Lint/DuplicateBranch
 
     def edit_new_charge
       charge = case_charges.create!

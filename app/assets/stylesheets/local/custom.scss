@@ -135,3 +135,11 @@ $app-blue-button-colour: govuk-colour("blue");
   padding-top: govuk-spacing(2);
   border-top: 1px solid $govuk-border-colour;
 }
+
+.app-declaration__fulfilment-errors {
+  @include govuk-media-query($from: tablet) {
+    .govuk-grid-column-one-third {
+      text-align: right;
+    }
+  }
+}

@@ -25,4 +25,8 @@ class CrimeApplication < ApplicationRecord
                  :legal_rep_first_name,
                  :legal_rep_last_name,
                  :legal_rep_telephone
+
+  # Before submitting the application we run a final
+  # validation to ensure some key details are fulfilled
+  validates_with ApplicationFulfilmentValidator, on: :submission
 end

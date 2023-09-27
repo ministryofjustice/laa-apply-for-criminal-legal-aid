@@ -279,20 +279,15 @@ RSpec.describe Decisions::CaseDecisionTree do
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported)
     end
 
-    context 'and the means passporter was not triggered' do
-      let(:means_passported) { false }
+    context 'and the application is means-passported' do
+      let(:means_passported) { true }
 
-      it 'raises an error' do
-        expect {
-          subject.destination
-        }.to raise_error(
-          Decisions::BaseDecisionTree::InvalidStep, 'application is not means-passported'
-        )
-      end
+      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
 
-    context 'and the means passporter was triggered' do
-      let(:means_passported) { true }
+    # TODO: means test journey to be implemented
+    context 'and the application is not means-passported' do
+      let(:means_passported) { false }
 
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
