@@ -211,6 +211,9 @@ en:
         edit:
           page_title: Declaration
           legal_representative_legend: Legal representative
+        fulfilment_errors:
+          heading: You need to complete the following information before the application can be submitted
+          change_link: Change
       confirmation:
         show:
           page_title: Application submitted

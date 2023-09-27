@@ -20,8 +20,22 @@ RSpec.describe Steps::Submission::DeclarationForm do
   let(:provider_attrs) { { email: 'provider@example.com' } }
   let(:rep_details_attrs) { {} }
 
+  describe '#fulfilment_errors' do
+    it 'instantiate the presenter' do
+      expect(FulfilmentErrorsPresenter).to receive(:new).with(crime_application).and_call_original
+      expect(crime_application).to receive(:errors).and_return([])
+      expect(subject.fulfilment_errors).to eq([])
+    end
+  end
+
   describe '#save' do
+    before do
+      allow(crime_application).to receive(:valid?).with(:submission).and_return(fulfilment_ok)
+    end
+
     context 'validations' do
+      let(:fulfilment_ok) { true }
+
       it { is_expected.to validate_presence_of(:legal_rep_first_name) }
       it { is_expected.to validate_presence_of(:legal_rep_last_name) }
       it { is_expected.to validate_presence_of(:legal_rep_telephone) }
@@ -44,7 +58,9 @@ RSpec.describe Steps::Submission::DeclarationForm do
       end
     end
 
-    context 'when validations pass' do
+    context 'when form validations pass' do
+      let(:fulfilment_ok) { true }
+
       let(:expected_attrs) do
         {
           'legal_rep_first_name' => 'John',
@@ -100,6 +116,32 @@ RSpec.describe Steps::Submission::DeclarationForm do
           expect(provider_record).not_to receive(:update)
           expect(subject.save).to be(true)
         end
+      end
+    end
+
+    context 'when application fulfilment is not successful' do
+      let(:fulfilment_ok) { false }
+
+      let(:crime_application) { instance_double(CrimeApplication, errors: crime_application_errors) }
+      let(:crime_application_errors) { double('errors') }
+
+      before do
+        expect(crime_application_errors).to receive(:full_messages).and_return(%w[error1 error2])
+      end
+
+      it 'has an error in the `crime_application` attribute' do
+        expect(subject.save).to be(false)
+        expect(subject.errors.added?(:crime_application, :invalid)).to be(true)
+      end
+
+      it 'reports the fulfilment errors' do
+        expect(Rails.error).to receive(:report).with(
+          kind_of(
+            Steps::Submission::DeclarationForm::ApplicationFulfilmentError
+          ), hash_including(handled: true)
+        )
+
+        subject.save
       end
     end
   end

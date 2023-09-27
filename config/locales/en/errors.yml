@@ -10,6 +10,13 @@ en:
   activerecord:
     errors:
       models:
+        # fulfillment validation errors
+        crime_application:
+          attributes:
+            means_passport:
+              blank: Applicant is not passported on means
+            ioj_passport:
+              blank: Justification for legal aid needs to be completed
         # evidence upload data model
         document:
           attributes:
@@ -219,3 +226,6 @@ en:
             legal_rep_telephone:
               blank: Enter a telephone number
               invalid: Enter a telephone number in the correct format
+            # fulfillment validation errors
+            crime_application:
+              invalid: Some application details are missing

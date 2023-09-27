@@ -2,6 +2,6 @@
 # new Rails error reporting API (i.e. `Rails.error.handle`, etc.)
 class LoggerErrorSubscriber
   def report(error, *)
-    Rails.logger.error [error, error.backtrace.first].join("\n")
+    Rails.logger.error [error.class, error, error.backtrace&.first].join("\n")
   end
 end
