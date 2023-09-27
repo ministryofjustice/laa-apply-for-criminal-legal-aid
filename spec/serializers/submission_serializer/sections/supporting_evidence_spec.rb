@@ -14,7 +14,7 @@ RSpec.describe SubmissionSerializer::Sections::SupportingEvidence do
 
     bundle = instance_double(
       DocumentBundle,
-      documents: double(uploaded_to_s3: [document])
+      documents: double(stored: [document])
     )
 
     instance_double(

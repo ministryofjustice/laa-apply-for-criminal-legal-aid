@@ -21,24 +21,6 @@ RSpec.describe Document, type: :model do
     end
   end
 
-  describe '.uploaded_to_s3?' do
-    context 'for a document with no s3_object_key' do
-      let(:attributes) do { filename: 'test.pdf' } end
-
-      it 'returns false' do
-        expect(subject.uploaded_to_s3?).to be(false)
-      end
-    end
-
-    context 'for a document with an s3_object_key' do
-      let(:attributes) do { filename: 'test.pdf', s3_object_key: '123/abcdef1234' } end
-
-      it 'returns false' do
-        expect(subject.uploaded_to_s3?).to be(true)
-      end
-    end
-  end
-
   describe 'validations' do
     let(:attributes) do
       {

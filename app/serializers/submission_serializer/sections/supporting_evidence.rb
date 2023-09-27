@@ -15,7 +15,7 @@ module SubmissionSerializer
           @documents = {}
         else
           # we only want documents successfully uploaded to s3 to be serialised
-          @documents ||= crime_application.document_bundles.first.documents.uploaded_to_s3
+          @documents ||= crime_application.document_bundles.first.documents.stored
         end
       end
     end
