@@ -10,21 +10,21 @@ RSpec.describe Document, type: :model do
       expect(
         described_class
       ).to receive(:create).with(
-        document_bundle: bundle,
+        crime_application: crime_application,
         filename: 'test.pdf',
         content_type: 'application/pdf',
         file_size: 14_077,
         tempfile: kind_of(Tempfile),
       )
 
-      described_class.create_from_file(file:, bundle:)
+      described_class.create_from_file(file:, crime_application:)
     end
   end
 
   describe 'validations' do
     let(:attributes) do
       {
-        document_bundle: bundle,
+        crime_application: crime_application,
         filename: 'test.pdf',
         content_type: 'application/pdf',
         file_size: 1.megabytes,

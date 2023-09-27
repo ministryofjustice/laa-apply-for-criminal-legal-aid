@@ -43,7 +43,7 @@ module Datastore
       end
 
       def usn
-        document.document_bundle.crime_application.usn
+        document.crime_application.usn
       end
 
       def expires_in

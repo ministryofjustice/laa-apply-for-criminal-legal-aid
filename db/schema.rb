@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_153720) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_27_100615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -81,25 +81,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_153720) do
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
 
-  create_table "document_bundles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "submitted_at"
-    t.uuid "crime_application_id", null: false
-    t.index ["crime_application_id"], name: "index_document_bundles_on_crime_application_id"
-  end
-
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "submitted_at"
     t.datetime "deleted_at"
-    t.uuid "document_bundle_id", null: false
+    t.uuid "crime_application_id", null: false
+    t.jsonb "annotations", default: {}, null: false
     t.string "s3_object_key"
     t.string "filename"
     t.string "file_category"
     t.string "content_type"
     t.integer "file_size"
-    t.index ["document_bundle_id"], name: "index_documents_on_document_bundle_id"
+    t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -172,8 +166,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_153720) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
-  add_foreign_key "document_bundles", "crime_applications"
-  add_foreign_key "documents", "document_bundles"
+  add_foreign_key "documents", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"

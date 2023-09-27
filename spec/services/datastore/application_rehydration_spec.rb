@@ -35,7 +35,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),
         case: an_instance_of(Case),
-        document_bundles: [an_instance_of(DocumentBundle)]
+        documents: all(be_a(Document)),
       )
 
       expect(

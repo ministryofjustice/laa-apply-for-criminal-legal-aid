@@ -3,12 +3,12 @@ module Steps
     class UploadController < Steps::EvidenceStepController
       def edit
         @form_object = UploadForm.build(
-          document_bundle_record, crime_application: current_crime_application
+          current_crime_application
         )
       end
 
       def update
-        update_and_advance(UploadForm, record: document_bundle_record, as: step_name, flash: @flash)
+        update_and_advance(UploadForm, as: step_name, flash: @flash)
       end
 
       def step_name

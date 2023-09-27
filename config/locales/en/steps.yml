@@ -198,8 +198,8 @@ en:
           file_name: File name
           uploaded: Uploaded
           delete:
-            success: Document has been sucessfully deleted
-            failure: Document was not sucessfully deleted
+            success: Document has been successfully deleted
+            failure: Document was not successfully deleted
         uploaded_file:
           remove_button: Delete
     submission:
