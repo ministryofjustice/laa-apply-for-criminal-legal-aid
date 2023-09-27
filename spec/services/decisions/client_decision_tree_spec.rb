@@ -94,11 +94,11 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
     before do
-      allow(crime_application).to receive(:applicant).and_return(applicant_double)
+      allow(crime_application).to receive_messages(applicant: applicant_double,
+                                                   benefit_check_passported?: benefit_check_passported)
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
-      allow(applicant_double).to receive(:passporting_benefit?).and_return(passporting_benefit)
-      allow(applicant_double).to receive(:passporting_benefit).and_return(passporting_benefit)
-      allow(crime_application).to receive(:benefit_check_passported?).and_return(benefit_check_passported)
+      allow(applicant_double).to receive_messages(passporting_benefit?: passporting_benefit,
+                                                  passporting_benefit: passporting_benefit)
     end
 
     context 'and the benefit type is `none`' do

@@ -23,8 +23,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe '#fallback_title' do
     before do
-      allow(helper).to receive(:controller_name).and_return('my_controller')
-      allow(helper).to receive(:action_name).and_return('an_action')
+      allow(helper).to receive_messages(controller_name: 'my_controller', action_name: 'an_action')
 
       # So we can simulate what would happen on production
       allow(

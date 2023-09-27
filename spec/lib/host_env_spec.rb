@@ -4,8 +4,7 @@ describe HostEnv do
   describe 'local machine environment' do
     context 'local development rails environment' do
       before do
-        allow(Rails.env).to receive(:development?).and_return(true)
-        allow(Rails.env).to receive(:test?).and_return(false)
+        allow(Rails.env).to receive_messages(development?: true, test?: false)
       end
 
       describe '.staging?' do

@@ -15,8 +15,7 @@ RSpec.describe Providers::Gatekeeper do
 
   describe '#provider_enrolled?' do
     before do
-      allow(subject).to receive(:email_enrolled?).and_return(false)
-      allow(subject).to receive(:office_enrolled?).and_return(false)
+      allow(subject).to receive_messages(email_enrolled?: false, office_enrolled?: false)
     end
 
     it 'checks if the email is enrolled' do
