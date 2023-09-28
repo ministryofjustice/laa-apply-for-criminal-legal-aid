@@ -11,13 +11,12 @@ module Summary
 
       def answers
         [
-          documents.map.with_index(1) do |document, index|
+          documents.map do |document|
             next if document.s3_object_key.nil?
 
             Components::FreeTextAnswer.new(
               :supporting_evidence, document.filename,
-              change_path: change_path,
-              i18n_opts: { index: }
+              change_path:
             )
           end
         ].flatten.compact.select(&:show?)

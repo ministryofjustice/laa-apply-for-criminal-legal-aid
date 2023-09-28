@@ -163,5 +163,5 @@ en:
 
       # BEGIN supporting evidence section
       supporting_evidence:
-        question: "File %{index}"
+        question: "File name"
       # END supporting evidence section
