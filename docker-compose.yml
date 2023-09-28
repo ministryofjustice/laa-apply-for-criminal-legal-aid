@@ -5,6 +5,9 @@
 #
 version: '3'
 
+volumes:
+  clamav-signatures:
+
 services:
   db:
     image: postgres:15.2-alpine
@@ -12,9 +15,11 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   clamav:
-    image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+    image: clamav/clamav:stable_base
     ports:
       - "3310:3310"
+    volumes:
+      - clamav-signatures:/var/lib/clamav
 
   web:
     build: .
