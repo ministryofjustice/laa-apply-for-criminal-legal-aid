@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clamav-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 100%
+  selector:
+    matchLabels:
+      app: apply-for-criminal-legal-aid-clamav-staging
+  template:
+    metadata:
+      labels:
+        app: apply-for-criminal-legal-aid-clamav-staging
+        tier: backend
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: clamav
+        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3310
+            protocol: TCP
+        resources:
+          requests:
+            cpu: 25m
+            memory: 1Gi
+          limits:
+            cpu: 500m
+            memory: 3Gi
+        readinessProbe:
+          tcpSocket:
+            port: 3310
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        livenessProbe:
+          tcpSocket:
+            port: 3310
+          initialDelaySeconds: 30
+          periodSeconds: 60
