@@ -15,7 +15,7 @@ module Summary
             next if document.s3_object_key.nil?
 
             Components::FreeTextAnswer.new(
-              'supporting_evidence', document.filename,
+              :supporting_evidence, document.filename,
               change_path: change_path,
               i18n_opts: { index: }
             )
