@@ -14,6 +14,10 @@ module Datastore
       def call
         return false if document.s3_object_key.present?
 
+        # TODO: PoC - move this to a separate service object
+        # On scan, annotate document with `infected`, `clean`, etc.
+        # return false if Clamby.virus?(document.tempfile.path)
+
         Rails.error.handle(fallback: -> { false }) do
           presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
             usn:, expires_in:

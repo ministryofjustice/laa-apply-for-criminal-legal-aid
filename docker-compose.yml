@@ -11,6 +11,11 @@ services:
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
 
+  clamav:
+    image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+    ports:
+      - "3310:3310"
+
   web:
     build: .
     environment:
@@ -28,6 +33,7 @@ services:
       DISABLE_HTTPS: "1"
       BC_USE_DEV_MOCK: "true"
       OMNIAUTH_TEST_MODE: "true"
+      CLAMD_CONF_FILENAME: "clamd.docker.conf"
     ports:
       - "3000:3000" # puma server (rails app)
       - "9394:9394" # prometheus exporter `/metrics` endpoint
