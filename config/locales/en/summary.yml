@@ -19,6 +19,7 @@ en:
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
       legal_representative_details: Legal representative
+      supporting_evidence: Supporting evidence
 
     questions:
       # BEGIN overview section
@@ -159,3 +160,8 @@ en:
       legal_rep_telephone:
         question: Telephone
       # END legal representative details section
+
+      # BEGIN supporting evidence section
+      supporting_evidence:
+        question: "File name"
+      # END supporting evidence section

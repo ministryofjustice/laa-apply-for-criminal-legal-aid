@@ -20,4 +20,10 @@ RSpec.describe Adapters::Structs::CrimeApplication do
       expect(subject.ioj).to be_a(Adapters::Structs::InterestsOfJustice)
     end
   end
+
+  describe '#documents' do
+    it 'returns documents' do
+      expect(subject.documents).to all(be_a(Document))
+    end
+  end
 end

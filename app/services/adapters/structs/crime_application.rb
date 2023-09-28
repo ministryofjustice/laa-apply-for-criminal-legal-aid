@@ -14,6 +14,12 @@ module Adapters
       def ioj
         Structs::InterestsOfJustice.new(interests_of_justice)
       end
+
+      def documents
+        supporting_evidence.map do |struct|
+          Document.new(struct.attributes)
+        end
+      end
     end
   end
 end
