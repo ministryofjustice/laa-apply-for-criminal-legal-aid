@@ -18,8 +18,8 @@ module Summary
         Sections::NextCourtHearing.new(crime_application),
         Sections::JustificationForLegalAid.new(crime_application),
         Sections::PassportJustificationForLegalAid.new(crime_application),
-        Sections::LegalRepresentativeDetails.new(crime_application),
         Sections::SupportingEvidence.new(crime_application),
+        Sections::LegalRepresentativeDetails.new(crime_application),
       ].select(&:show?)
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

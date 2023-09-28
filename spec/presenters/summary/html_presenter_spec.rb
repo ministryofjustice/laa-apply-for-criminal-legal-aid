@@ -58,8 +58,8 @@ describe Summary::HtmlPresenter do
             Summary::Sections::NextCourtHearing,
             Summary::Sections::JustificationForLegalAid,
             Summary::Sections::PassportJustificationForLegalAid,
-            Summary::Sections::LegalRepresentativeDetails,
             Summary::Sections::SupportingEvidence,
+            Summary::Sections::LegalRepresentativeDetails,
           ]
         )
       end

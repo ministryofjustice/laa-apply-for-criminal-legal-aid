@@ -6,7 +6,7 @@ module Summary
       end
 
       def show?
-        crime_application.documents.present? && super
+        documents.present? && super
       end
 
       def answers

@@ -16,7 +16,6 @@ module Adapters
       end
 
       def documents
-        # TODO: Filter out deleted documents
         supporting_evidence.map do |struct|
           Document.new(struct.attributes)
         end
