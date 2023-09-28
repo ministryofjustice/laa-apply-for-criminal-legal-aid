@@ -15,8 +15,11 @@ module Adapters
         Structs::InterestsOfJustice.new(interests_of_justice)
       end
 
-      def evidence
-        Structs::SupportingEvidence.new(supporting_evidence)
+      def documents
+        # TODO: Filter out deleted documents
+        supporting_evidence.map do |struct|
+          Document.new(struct.attributes)
+        end
       end
     end
   end

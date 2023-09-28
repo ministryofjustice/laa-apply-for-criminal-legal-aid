@@ -6,7 +6,7 @@ module Summary
       @crime_application = Adapters::BaseApplication.build(crime_application)
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def sections
       [
         Sections::Overview.new(crime_application),
@@ -19,8 +19,9 @@ module Summary
         Sections::JustificationForLegalAid.new(crime_application),
         Sections::PassportJustificationForLegalAid.new(crime_application),
         Sections::LegalRepresentativeDetails.new(crime_application),
+        Sections::SupportingEvidence.new(crime_application),
       ].select(&:show?)
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
