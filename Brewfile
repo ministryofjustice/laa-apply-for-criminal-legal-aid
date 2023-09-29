@@ -6,3 +6,4 @@
 
 brew 'adr-tools'
 brew 'yarn'
+brew 'clamav'

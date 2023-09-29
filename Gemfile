@@ -26,6 +26,9 @@ gem 'savon'
 # Monitoring
 gem 'prometheus_exporter'
 
+# Virus scan with ClamAV
+gem 'clamby', '1.6.10'
+
 # Exceptions notifications
 gem 'sentry-rails'
 gem 'sentry-ruby'

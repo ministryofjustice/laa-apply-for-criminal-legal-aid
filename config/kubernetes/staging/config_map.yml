@@ -13,6 +13,7 @@ data:
   SESSION_TIMEOUT_MINUTES: "1440"
   REAUTHENTICATE_AFTER_MINUTES: "2880"
   ENABLE_PROMETHEUS_EXPORTER: "true"
+  CLAMD_CONF_FILENAME: "clamd.staging.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
 

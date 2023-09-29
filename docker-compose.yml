@@ -5,11 +5,21 @@
 #
 version: '3'
 
+volumes:
+  clamav-signatures:
+
 services:
   db:
     image: postgres:15.2-alpine
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+
+  clamav:
+    image: clamav/clamav:stable_base
+    ports:
+      - "3310:3310"
+    volumes:
+      - clamav-signatures:/var/lib/clamav
 
   web:
     build: .
@@ -28,6 +38,7 @@ services:
       DISABLE_HTTPS: "1"
       BC_USE_DEV_MOCK: "true"
       OMNIAUTH_TEST_MODE: "true"
+      CLAMD_CONF_FILENAME: "clamd.docker.conf"
     ports:
       - "3000:3000" # puma server (rails app)
       - "9394:9394" # prometheus exporter `/metrics` endpoint

@@ -6,6 +6,7 @@ RUN apk add --update \
   postgresql15-dev \
   tzdata \
   yarn \
+  clamav-clamdscan \
   gcompat
 
 FROM base AS dependencies
