@@ -1,10 +1,24 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clamav-signatures
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  annotations:
+    volume.alpha.kubernetes.io/storage-class: anything
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clamav-staging
   namespace: laa-apply-for-criminal-legal-aid-staging
 spec:
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 2
   minReadySeconds: 10
   strategy:
@@ -21,15 +35,38 @@ spec:
         app: apply-for-criminal-legal-aid-clamav-staging
         tier: backend
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - apply-for-criminal-legal-aid-clamav-staging
+            topologyKey: kubernetes.io/hostname
       securityContext:
-        fsGroup: 1000
+        # Change to 100 if using official clamav image
+        fsGroup: 1001
+        runAsUser: 1001
+        runAsGroup: 1001
+      volumes:
+      - name: clamav-signatures
+        persistentVolumeClaim:
+          claimName: clamav-signatures
       containers:
       - name: clamav
-        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
+        # NOTE: temporarily until clamav publishes an official unprivileged
+        # docker image (non-root) we use a forked version to run on k8s
+        # https://github.com/Cisco-Talos/clamav/issues/478
+        image: dradoaica/clamav-openshift:1.1
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 3310
             protocol: TCP
+        volumeMounts:
+          - mountPath: "/var/lib/clamav"
+            name: clamav-signatures
         resources:
           requests:
             cpu: 25m
@@ -47,3 +84,18 @@ spec:
             port: 3310
           initialDelaySeconds: 30
           periodSeconds: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clamav-service-staging
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  labels:
+    app: apply-for-criminal-legal-aid-clamav-staging
+spec:
+  ports:
+  - port: 3310
+    name: clamav
+    targetPort: 3310
+  selector:
+    app: apply-for-criminal-legal-aid-clamav-staging
