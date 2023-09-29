@@ -13,6 +13,7 @@ data:
   SESSION_TIMEOUT_MINUTES: "60"
   REAUTHENTICATE_AFTER_MINUTES: "1440"
   ENABLE_PROMETHEUS_EXPORTER: "true"
+  CLAMD_CONF_FILENAME: "clamd.production.conf"
   DATASTORE_API_ROOT: http://service-production.laa-criminal-applications-datastore-production.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   LAA_PORTAL_IDP_METADATA_URL: https://portal.legalservices.gov.uk/oamfed/idp/metadata
