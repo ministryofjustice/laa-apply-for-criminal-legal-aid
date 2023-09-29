@@ -13,7 +13,7 @@ RSpec.describe 'Evidence upload page', authorized: true do
     too_big_err_file = Document.create_from_file(file:, crime_application:)
     too_big_err_file.update(
       filename: 'too_big.pdf',
-      file_size: 21.megabytes
+      file_size: 11.megabytes
     )
 
     too_small_err_file = Document.create_from_file(file:, crime_application:)

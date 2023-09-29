@@ -21,7 +21,7 @@ metadata:
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
-      SecRequestBodyLimit 1048576
+      SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
       SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
