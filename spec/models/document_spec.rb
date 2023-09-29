@@ -43,7 +43,7 @@ RSpec.describe Document, type: :model do
       end
 
       context 'file is too big' do
-        let(:attributes) { super().merge(file_size: 21.megabytes) }
+        let(:attributes) { super().merge(file_size: 11.megabytes) }
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
@@ -63,7 +63,7 @@ RSpec.describe Document, type: :model do
       end
 
       context 'more than one error' do
-        let(:attributes) { super().merge(content_type: 'text/unknown', file_size: 21.megabytes) }
+        let(:attributes) { super().merge(content_type: 'text/unknown', file_size: 11.megabytes) }
 
         it 'has a validation error on all invalid fields' do
           expect(subject).not_to be_valid(:criteria)
@@ -84,7 +84,7 @@ RSpec.describe Document, type: :model do
       end
 
       context 'when some criteria also has failed' do
-        let(:attributes) { super().merge(file_size: 21.megabytes) }
+        let(:attributes) { super().merge(file_size: 11.megabytes) }
 
         it 'has a validation error on all invalid fields' do
           expect(subject).not_to be_valid(:storage)
