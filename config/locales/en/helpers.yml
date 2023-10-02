@@ -81,6 +81,8 @@ en:
       steps_case_hearing_details_form:
         hearing_court_name: For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
+      steps_case_first_court_hearing_form:
+        first_court_hearing_name: For example, Bristol Magistrates Court
       steps_case_ioj_form:
         loss_of_liberty_justification: *ioj_justification_hint
         suspended_sentence_justification: *ioj_justification_hint
@@ -174,6 +176,8 @@ en:
           conflict_of_interest_options: *YESNO
       steps_case_hearing_details_form:
         hearing_court_name: Court name
+      steps_case_first_court_hearing_form:
+        first_court_hearing_name: Where was the first court hearing?
       steps_case_ioj_form:
         loss_of_liberty_justification: Loss of liberty justification
         suspended_sentence_justification: Suspended sentence justification

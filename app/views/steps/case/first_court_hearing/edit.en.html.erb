@@ -1,0 +1,16 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_select :first_court_hearing_name, Court.all, :name, :name,
+                                    data: { module: 'accessible-autocomplete' },
+                                    options: { include_blank: true }, label: { tag: 'h1', size: 'xl' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
