@@ -30,6 +30,8 @@ module Decisions
         edit(:hearing_details)
       when :hearing_details
         after_hearing_details
+      when :first_court_hearing
+        ioj_or_passported
       when :ioj, :ioj_passport
         after_ioj
       else
@@ -91,6 +93,14 @@ module Decisions
     end
 
     def after_hearing_details
+      if form_object.is_first_court_hearing.no?
+        edit(:first_court_hearing)
+      else
+        ioj_or_passported
+      end
+    end
+
+    def ioj_or_passported
       if Passporting::IojPassporter.new(current_crime_application).call
         edit(:ioj_passport)
       else

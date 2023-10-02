@@ -241,23 +241,43 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `hearing_details`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', is_first_court_hearing:) }
     let(:step_name) { :hearing_details }
 
-    before do
-      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(ioj_passported)
+    context 'when court did not hear first hearing' do
+      let(:is_first_court_hearing) { FirstHearingAnswer::NO }
+
+      it { is_expected.to have_destination(:first_court_hearing, :edit, id: crime_application) }
     end
 
-    context 'and the IoJ passporter was not triggered' do
-      let(:ioj_passported) { false }
+    context 'when court did hear first hearing' do
+      let(:is_first_court_hearing) { FirstHearingAnswer::YES }
 
-      it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
+      before do
+        allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(ioj_passported)
+      end
+
+      context 'and the IoJ passporter was not triggered' do
+        let(:ioj_passported) { false }
+
+        it { is_expected.to have_destination(:ioj, :edit, id: crime_application) }
+      end
+
+      context 'and the IoJ passporter was triggered' do
+        let(:ioj_passported) { true }
+
+        it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
+      end
     end
+  end
 
-    context 'and the IoJ passporter was triggered' do
-      let(:ioj_passported) { true }
+  context 'when the step is `first_court_hearing`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :first_court_hearing }
 
-      it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
+    it 'runs the `ioj_or_passported` logic' do
+      expect(subject).to receive(:ioj_or_passported)
+      subject.destination
     end
   end
 
