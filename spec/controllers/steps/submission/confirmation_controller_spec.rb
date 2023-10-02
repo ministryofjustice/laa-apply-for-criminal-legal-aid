@@ -6,6 +6,8 @@ RSpec.describe Steps::Submission::ConfirmationController, type: :controller do
     let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
 
     before do
+      allow(controller).to receive(:current_office_code).and_return('1A123B')
+
       stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_id}")
         .to_return(body: application_fixture)
     end

@@ -40,8 +40,7 @@ RSpec.describe SubmissionSerializer::Application do
     let(:documents_scope) { double(stored: [Document.new]) }
 
     before do
-      allow(crime_application).to receive(:case).and_return(kase)
-      allow(crime_application).to receive(:documents).and_return(documents_scope)
+      allow(crime_application).to receive_messages(case: kase, documents: documents_scope)
     end
 
     it 'generates a serialized version of the application' do

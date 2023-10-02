@@ -64,11 +64,9 @@ RSpec.describe 'Sign in user journey' do
   end
 
   context 'user is signed in, has multiple accounts' do
-    before do
-      allow_any_instance_of(
-        Provider
-      ).to receive(:selected_office_code).and_return('1A123B')
+    include_context 'with office code selected'
 
+    before do
       start_button.click
     end
 

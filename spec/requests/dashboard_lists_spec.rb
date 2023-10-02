@@ -9,16 +9,12 @@ RSpec.describe 'Dashboard', authorized: true do
     { per_page: 20, total_count: 1, total_pages: 1, sort_by: 'submitted_at', sort_direction: 'desc' }.to_json
   end
 
+  include_context 'with office code selected'
+
   before do
     allow_any_instance_of(
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
-
-    # Assume we have a signed in Provider,
-    # with a selected office account
-    allow_any_instance_of(
-      Provider
-    ).to receive(:selected_office_code).and_return('1A123B')
   end
 
   describe 'list of in progress applications' do
