@@ -14,6 +14,8 @@
 
       <%= f.govuk_date_field :hearing_date, maxlength_enabled: true %>
 
+      <%= f.govuk_collection_radio_buttons :is_first_court_hearing, @form_object.choices, :value %>
+
       <%= f.continue_button %>
     <% end %>
   </div>

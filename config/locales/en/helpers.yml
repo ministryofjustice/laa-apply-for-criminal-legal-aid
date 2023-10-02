@@ -54,6 +54,7 @@ en:
           conflict_of_interest: Is there a conflict of interest with this co-defendant?
       steps_case_hearing_details_form:
         hearing_date: Date of next hearing
+        is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
 
@@ -176,6 +177,9 @@ en:
           conflict_of_interest_options: *YESNO
       steps_case_hearing_details_form:
         hearing_court_name: Court name
+        is_first_court_hearing_options:
+          <<: *YESNO
+          no_hearing_yet: There has not been a hearing yet
       steps_case_first_court_hearing_form:
         first_court_hearing_name: Where was the first court hearing?
       steps_case_ioj_form:
