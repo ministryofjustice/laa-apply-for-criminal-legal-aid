@@ -135,6 +135,7 @@ Rails.application.routes.draw do
         edit_step :has_codefendants
         edit_step :codefendants
         edit_step :hearing_details
+        edit_step :first_court_hearing
         edit_step :ioj_passport
         edit_step :ioj
       end

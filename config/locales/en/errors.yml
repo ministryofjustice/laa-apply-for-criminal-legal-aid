@@ -193,6 +193,10 @@ en:
               invalid_year: Enter a valid year
               year_too_late: Date of next hearing is too far in the future
               past_not_allowed: Date of next hearing must be today or in the future
+        steps/case/first_court_hearing_form:
+          attributes:
+            first_court_hearing_name:
+              blank: Enter a court name
         steps/case/ioj_form:
           attributes:
             types:

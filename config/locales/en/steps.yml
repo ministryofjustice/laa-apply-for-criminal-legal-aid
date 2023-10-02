@@ -176,6 +176,9 @@ en:
         edit:
           page_title: Next hearing court details
           heading: Enter the details of the next court hearing
+      first_court_hearing:
+        edit:
+          page_title: First court hearing
       ioj_passport:
         edit:
           page_title: Passported on IoJ
