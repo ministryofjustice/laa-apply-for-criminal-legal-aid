@@ -16,7 +16,7 @@ class Document < ApplicationRecord
   attr_accessor :tempfile
 
   scope :stored, -> { where.not(s3_object_key: nil) }
-  scope :not_deleted, -> { where(deleted_at: nil) }
+  scope :not_submitted, -> { where(submitted_at: nil) }
 
   def self.create_from_file(file:, crime_application:)
     create(

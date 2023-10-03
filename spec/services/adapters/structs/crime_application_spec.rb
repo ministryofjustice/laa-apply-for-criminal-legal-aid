@@ -25,5 +25,10 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     it 'returns documents' do
       expect(subject.documents).to all(be_a(Document))
     end
+
+    it 'documents are marked as submitted' do
+      doc = subject.documents.first
+      expect(doc.submitted_at).to eq(subject.submitted_at)
+    end
   end
 end
