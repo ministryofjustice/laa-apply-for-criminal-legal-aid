@@ -15,6 +15,8 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       appeal_with_changes_details: 'appeal changes',
       hearing_court_name: 'Court',
       hearing_date: hearing_date,
+      is_first_court_hearing: 'no',
+      first_court_hearing_name: 'First court',
       charges: double(complete: []), # `charges` serialisation tested in `definitions/offence_spec.rb`
       codefendants: [], # `codefendants` serialisation tested in `definitions/codefendant_spec.rb`
     )
@@ -34,6 +36,8 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         appeal_with_changes_details: 'appeal changes',
         hearing_court_name: 'Court',
         hearing_date: hearing_date,
+        is_first_court_hearing: 'no',
+        first_court_hearing_name: 'First court',
         offences: [],
         codefendants: []
       }
