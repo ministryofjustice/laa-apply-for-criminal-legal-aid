@@ -22,7 +22,7 @@ module Datastore
             payload: application_payload
           ).call
 
-          ApplicationPurger.call(crime_application)
+          crime_application.destroy!
         end
 
         true

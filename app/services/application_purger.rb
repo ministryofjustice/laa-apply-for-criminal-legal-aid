@@ -11,18 +11,11 @@ class ApplicationPurger
   private_class_method :new
 
   def call
-    delete_orphan_stored_documents unless application_submitted?
+    delete_orphan_stored_documents
     crime_application.destroy!
   end
 
   private
-
-  # When an application is submitted to the datastore, right before
-  # deleting it from the local database along with all relationships,
-  # we consider successfully stored documents as 'submitted' as well
-  def application_submitted?
-    crime_application.submitted_at.present?
-  end
 
   def delete_orphan_stored_documents
     orphan_documents.each do |document|
