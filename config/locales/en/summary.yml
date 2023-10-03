@@ -52,6 +52,15 @@ en:
         answers:
           'true': 'Yes'
           'false': 'No'
+      passporting_benefit:
+        question: Passporting benefit
+        answers:
+          universal_credit: Universal Credit
+          guarantee_pension: Guarantee Credit element of Pension Credit
+          jsa: Income-based Jobseeker’s Allowance (JSA)
+          esa: Income-related Employment and Support Allowance (ESA)
+          income_support: Income Support
+          none: None
       # END client details section
 
       # BEGIN contact details section

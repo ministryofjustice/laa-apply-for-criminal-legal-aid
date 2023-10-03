@@ -53,6 +53,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
+                            :benefit_type => nil,
                             :passporting_benefit => nil,
                           }
         end
@@ -70,6 +71,7 @@ RSpec.describe Steps::Client::DetailsForm do
                             'date_of_birth' => 20.years.ago.to_date,
                             :has_nino => nil,
                             :nino => nil,
+                            :benefit_type => nil,
                             :passporting_benefit => nil,
                           }
         end
