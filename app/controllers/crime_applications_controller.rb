@@ -21,7 +21,8 @@ class CrimeApplicationsController < DashboardController
   end
 
   def destroy
-    current_crime_application.destroy
+    ApplicationPurger.call(current_crime_application)
+
     redirect_to crime_applications_path,
                 flash: {
                   success: t('.success_flash', applicant_name: @crime_application.applicant_name)

@@ -11,21 +11,21 @@ module Steps
         update_and_advance(UploadForm, as: step_name, flash: @flash)
       end
 
+      private
+
       def step_name
-        if params.key?('document_id')
-          object_key = "#{current_crime_application.usn}/#{params['document_id']}"
+        return :upload_finished unless params.key?('document_id')
 
-          if Datastore::Documents::Delete.new(object_key:).call
-            Document.destroy(params['document_id'])
-            @flash = { success: t('steps.evidence.upload.edit.delete.success') }
-          else
-            @flash = { alert: t('steps.evidence.upload.edit.delete.failure') }
-          end
+        document = current_crime_application.documents.find(params['document_id'])
 
-          :delete_document
+        if Datastore::Documents::Delete.new(document:).call
+          @flash = { success: t('steps.evidence.upload.edit.delete.success') }
+          document.destroy
         else
-          :upload_finished
+          @flash = { alert: t('steps.evidence.upload.edit.delete.failure') }
         end
+
+        :delete_document
       end
     end
   end

@@ -84,7 +84,7 @@ RSpec.describe Datastore::ApplicationSubmission do
   end
 
   before do
-    allow(crime_application).to receive(:destroy!)
+    allow(ApplicationPurger).to receive(:call)
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       .to_return(status: 201, body: '{}')
@@ -157,7 +157,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'purges the application from the local database' do
-        expect(crime_application).to have_received(:destroy!)
+        expect(ApplicationPurger).to have_received(:call).with(crime_application)
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'does not purge the application from the local database' do
-        expect(crime_application).not_to have_received(:destroy!)
+        expect(ApplicationPurger).not_to have_received(:call).with(crime_application)
       end
 
       it 'does not change any attributes of the application' do

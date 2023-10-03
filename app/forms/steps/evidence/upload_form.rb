@@ -1,13 +1,11 @@
 module Steps
   module Evidence
     class UploadForm < Steps::BaseFormObject
-      # :nocov:
-      def documents
-        crime_application.documents.not_deleted
-      end
+      delegate :documents, to: :crime_application
 
       private
 
+      # :nocov:
       def persist!
         true
       end

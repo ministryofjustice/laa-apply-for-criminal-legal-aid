@@ -17,7 +17,9 @@ module Adapters
 
       def documents
         supporting_evidence.map do |struct|
-          Document.new(struct.attributes)
+          Document.new(
+            struct.attributes.merge(submitted_at:)
+          )
         end
       end
     end
