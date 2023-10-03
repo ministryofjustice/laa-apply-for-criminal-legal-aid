@@ -63,6 +63,8 @@ RSpec.describe Adapters::Structs::CaseDetails do
           has_codefendants
           hearing_court_name
           hearing_date
+          is_first_court_hearing
+          first_court_hearing_name
         ]
       )
     end

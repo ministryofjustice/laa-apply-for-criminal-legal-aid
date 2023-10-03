@@ -16,6 +16,7 @@ module Summary
         Sections::Offences.new(crime_application),
         Sections::Codefendants.new(crime_application),
         Sections::NextCourtHearing.new(crime_application),
+        Sections::FirstCourtHearing.new(crime_application),
         Sections::JustificationForLegalAid.new(crime_application),
         Sections::PassportJustificationForLegalAid.new(crime_application),
         Sections::SupportingEvidence.new(crime_application),

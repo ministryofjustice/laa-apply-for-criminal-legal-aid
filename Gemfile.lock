@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 1d653fab9b4a666c31321189552ed4b0033ef4de
-  tag: v1.0.2
+  revision: b2f94b5b4e952477435358d23f5f14fb38c87b0a
+  tag: v1.0.3
   specs:
-    laa-criminal-legal-aid-schemas (1.0.0)
+    laa-criminal-legal-aid-schemas (1.0.3)
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
 
@@ -84,7 +84,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.4)
+    addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     akami (1.3.1)
       gyoku (>= 0.4.0)
@@ -435,7 +435,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   ruby
