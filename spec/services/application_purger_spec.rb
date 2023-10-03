@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationPurger do
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, submitted_at:) }
+
   let(:document) { instance_double(Document) }
+  let(:submitted_at) { nil }
 
   before do
     allow(crime_application).to receive(:destroy!)
@@ -15,6 +17,17 @@ RSpec.describe ApplicationPurger do
   end
 
   describe '.call' do
+    context 'when application has a `submitted_at` timestamp' do
+      let(:documents) { [document] }
+      let(:submitted_at) { Time.current }
+
+      it 'purges the application from the local database without deleting documents' do
+        expect(Datastore::Documents::Delete).not_to receive(:new)
+        expect(crime_application).to receive(:destroy!)
+        described_class.call(crime_application)
+      end
+    end
+
     context 'when it has orphaned documents' do
       let(:documents) { [document] }
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
