@@ -32,6 +32,7 @@ module DeveloperTools
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_has_nino_path(crime_application),
+          edit_steps_client_benefit_type_path(crime_application),
           edit_steps_client_benefit_check_result_path(crime_application),
         ]
       )
@@ -44,6 +45,7 @@ module DeveloperTools
       find_or_create_applicant(
         dob: rand(15..17).years.ago,
         nino: nil,
+        benefit_type: nil,
         passporting_benefit: nil,
       ).update(
         correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
@@ -84,6 +86,7 @@ module DeveloperTools
           other_names: '',
           date_of_birth: overrides.fetch(:dob, details[:dob]),
           nino: overrides.fetch(:nino, details[:nino]),
+          benefit_type: overrides.fetch(:benefit_type, 'universal_credit'),
           passporting_benefit: overrides.fetch(:passporting_benefit, true),
         )
       end
