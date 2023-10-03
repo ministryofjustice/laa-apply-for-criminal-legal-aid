@@ -9,7 +9,6 @@ describe Summary::Sections::ClientDetails do
       to_param: '12345',
       client_has_partner: 'no',
       applicant: applicant,
-      means_passport: means_passport,
     )
   end
 
@@ -21,10 +20,11 @@ describe Summary::Sections::ClientDetails do
       other_names: '',
       date_of_birth: Date.new(1999, 1, 20),
       nino: '123456',
+      benefit_type: benefit_type,
     )
   end
 
-  let(:means_passport) { ['foobar'] }
+  let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
   describe '#name' do
     it { expect(subject.name).to eq(:client_details) }
@@ -78,13 +78,13 @@ describe Summary::Sections::ClientDetails do
       expect(answers[4].value).to eq('123456')
 
       expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[5].question).to eq(:means_passporting)
-      expect(answers[5].change_path).to be_nil
-      expect(answers[5].value).to be(true)
+      expect(answers[5].question).to eq(:passporting_benefit)
+      expect(answers[5].change_path).to match('applications/12345/steps/client/benefit_type')
+      expect(answers[5].value).to eq('universal_credit')
     end
 
-    context 'when there is no means passporting' do
-      let(:means_passport) { [] }
+    context 'when there is no `benefit_type` value' do
+      let(:benefit_type) { nil }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(5)

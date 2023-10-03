@@ -86,6 +86,7 @@ RSpec.describe Steps::Client::HasNinoForm do
                         association_name: :applicant,
                         expected_attributes: {
                           'nino' => 'NC123456A',
+                          :benefit_type => nil,
                           :passporting_benefit => nil,
                         }
       end

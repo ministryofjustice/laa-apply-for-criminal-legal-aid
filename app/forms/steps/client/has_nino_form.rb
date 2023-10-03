@@ -21,6 +21,7 @@ module Steps
         applicant.update(
           attributes.merge(
             # The following are dependent attributes that need to be reset
+            benefit_type: nil,
             passporting_benefit: nil,
           )
         )

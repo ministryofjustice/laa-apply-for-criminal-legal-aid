@@ -38,7 +38,8 @@ module Summary
           ),
 
           Components::ValueAnswer.new(
-            :means_passporting, means_passported?
+            :passporting_benefit, applicant.benefit_type,
+            change_path: edit_steps_client_benefit_type_path
           ),
         ].select(&:show?)
       end
@@ -48,10 +49,6 @@ module Summary
 
       def applicant
         @applicant ||= crime_application.applicant
-      end
-
-      def means_passported?
-        crime_application.means_passport.any?
       end
     end
   end
