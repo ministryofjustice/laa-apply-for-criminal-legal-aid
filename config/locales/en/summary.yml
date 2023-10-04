@@ -16,6 +16,7 @@ en:
       offences: Offences
       codefendants: Co-defendants
       next_court_hearing: Next court hearing
+      first_court_hearing: First court hearing
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
       legal_representative_details: Legal representative
@@ -125,7 +126,17 @@ en:
         question: Court name
       hearing_date:
         question: Date of next hearing
+      is_first_court_hearing:
+        question: Did this court also hear the first hearing?
+        answers:
+          <<: *YESNO
+          no_hearing_yet: There has not been a hearing yet
       # END next court hearing section
+
+      # BEGIN first court hearing section
+      first_court_hearing_name:
+        question: Court name
+      # END first court hearing section
 
       # BEGIN justification for legal aid section
       loss_of_liberty:
