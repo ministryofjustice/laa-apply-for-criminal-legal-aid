@@ -104,10 +104,8 @@ Rails.application.routes.draw do
         edit_step :details
         edit_step :has_nino
         show_step :nino_exit
-        if FeatureFlags.benefit_type_step.enabled?
-          edit_step :benefit_type
-          show_step :benefit_exit
-        end
+        edit_step :benefit_type
+        show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :retry_benefit_check
         edit_step :contact_details

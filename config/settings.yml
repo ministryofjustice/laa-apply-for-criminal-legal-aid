@@ -3,10 +3,6 @@ feature_flags:
     local: true
     staging: true
     production: false
-  benefit_type_step:
-    local: true
-    staging: true
-    production: false
   u18_means_passport:
     local: true
     staging: true
