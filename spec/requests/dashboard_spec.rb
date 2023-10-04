@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Dashboard', authorized: true do
+  include_context 'with office code selected'
+
   # Fixtures used to mock responses from the datastore
   let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
   let(:application_fixture_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
@@ -79,6 +81,14 @@ RSpec.describe 'Dashboard', authorized: true do
           assert_select 'dt:nth-of-type(1)', 'Last name'
           assert_select 'dd:nth-of-type(1)', 'Pound'
         end
+      end
+    end
+
+    context 'when the application\'s office code differs from the one selected' do
+      let(:selected_office_code) { 'AN0THR' }
+
+      it 'redirects to page not found' do
+        expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
   end
