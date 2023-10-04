@@ -65,44 +65,26 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_nino }
 
-    context 'and benefit type feature flag is enabled' do
-      it { is_expected.to have_destination(:benefit_type, :edit, id: crime_application) }
-    end
-
-    context 'and benefit type feature flag is disabled' do
-      let(:benefit_check_passported) { true }
-      let(:passporting_benefit) { nil }
-
-      before do
-        allow(crime_application).to receive(:benefit_check_passported?).and_return(benefit_check_passported)
-
-        allow(FeatureFlags).to receive(:benefit_type_step) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        }
-      end
-
-      it 'has the correct destination' do
-        expect(subject).to have_destination(:benefit_check_result, :edit, id: crime_application)
-      end
-    end
+    it { is_expected.to have_destination(:benefit_type, :edit, id: crime_application) }
   end
 
   context 'when the step is `benefit_type`' do
-    let(:form_object) { double('FormObject', benefit_type: BenefitType.new(benefit_type)) }
+    let(:form_object) { double('FormObject', benefit_type:) }
     let(:applicant_double) { double(Applicant) }
     let(:step_name) { :benefit_type }
-    let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+    let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant_double,
                                                    benefit_check_passported?: benefit_check_passported)
+
+      allow(applicant_double).to receive_messages(passporting_benefit:)
+
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
-      allow(applicant_double).to receive_messages(passporting_benefit?: passporting_benefit,
-                                                  passporting_benefit: passporting_benefit)
     end
 
     context 'and the benefit type is `none`' do
-      let(:benefit_type) { BenefitType::NONE.to_s }
+      let(:benefit_type) { BenefitType::NONE }
       let(:benefit_check_passported) { false }
       let(:passporting_benefit) { nil }
 
@@ -149,8 +131,8 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :retry_benefit_check }
 
-    it 'runs the same logic as the `has_nino` step' do
-      expect(subject).to receive(:after_has_nino)
+    it 'runs the `determine_dwp_result_page` logic' do
+      expect(subject).to receive(:determine_dwp_result_page)
       subject.destination
     end
   end
