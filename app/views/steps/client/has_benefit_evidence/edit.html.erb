@@ -1,9 +1,10 @@
 <% title t('.page_title') %>
-<% step_header(path: crime_applications_path) %>
+<% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
+
     <%= step_form @form_object do |f| %>
         <%= f.govuk_collection_radio_buttons :has_benefit_evidence, @form_object.choices,
                                              :value, inline: false,
@@ -14,7 +15,7 @@
                                                )
                                              ) } %>
 
-        <%= f.continue_button(secondary: false) %>
+        <%= f.continue_button %>
     <% end %>
   </div>
 </div>

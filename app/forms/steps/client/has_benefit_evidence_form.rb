@@ -1,9 +1,11 @@
 module Steps
   module Client
     class HasBenefitEvidenceForm < Steps::BaseFormObject
-      attribute :has_benefit_evidence, :value_object, source: YesNoAnswer
+      include Steps::HasOneAssociation
+      has_one_association :applicant
 
-      validates_inclusion_of :has_benefit_evidence, in: :choices
+      attribute :has_benefit_evidence, :value_object, source: YesNoAnswer
+      validates :has_benefit_evidence, inclusion: { in: :choices }
 
       def choices
         YesNoAnswer.values
@@ -12,7 +14,9 @@ module Steps
       private
 
       def persist!
-        true
+        applicant.update(
+          attributes
+        )
       end
     end
   end
