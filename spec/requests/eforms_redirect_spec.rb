@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'eForms redirect', authorized: true do
+RSpec.describe 'eForms redirect', :authorized do
   describe 'eForms redirect page' do
     before :all do
       # sets up a test record

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Charges/offences summary page', authorized: true do
+RSpec.describe 'Charges/offences summary page', :authorized do
   before :all do
     # sets up a few test records
     app = CrimeApplication.create
