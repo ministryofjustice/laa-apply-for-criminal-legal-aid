@@ -22,7 +22,7 @@ class ApplicationFulfilmentValidator < ActiveModel::Validator
   def perform_validations
     errors = []
 
-    unless Passporting::MeansPassporter.new(record).call || has_evidence?
+    unless Passporting::MeansPassporter.new(record).call || evidence_present?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
       ]
@@ -41,7 +41,7 @@ class ApplicationFulfilmentValidator < ActiveModel::Validator
     record.ioj.present? && record.ioj.types.any?
   end
 
-  def has_evidence?
+  def evidence_present?
     record.documents.stored.any?
   end
 
