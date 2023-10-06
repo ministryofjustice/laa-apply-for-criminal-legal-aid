@@ -296,18 +296,33 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :ioj }
 
     before do
-      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported)
+      allow_any_instance_of(
+        Passporting::MeansPassporter
+      ).to receive(:call).and_return(means_passported)
+
+      allow_any_instance_of(
+        Evidence::Requirements
+      ).to receive(:any?).and_return(evidence_required)
     end
 
     context 'and the application is means-passported' do
       let(:means_passported) { true }
+      let(:evidence_required) { false }
 
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+    end
+
+    context 'and the application requires evidence upload' do
+      let(:means_passported) { false }
+      let(:evidence_required) { true }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
 
     # TODO: means test journey to be implemented
     context 'and the application is not means-passported' do
       let(:means_passported) { false }
+      let(:evidence_required) { false }
 
       it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
     end
