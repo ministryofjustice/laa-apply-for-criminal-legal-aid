@@ -108,6 +108,10 @@ Rails.application.routes.draw do
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :retry_benefit_check
+        if FeatureFlags.evidence_upload.enabled?
+          edit_step :has_benefit_evidence
+          show_step :evidence_exit
+        end
         edit_step :contact_details
       end
 

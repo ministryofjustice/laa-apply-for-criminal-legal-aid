@@ -51,6 +51,13 @@ en:
         edit:
           page_title: Benefit check result
           heading: DWP records show that your client receives a passporting benefit
+      has_benefit_evidence:
+        edit:
+          page_title: Client's passporting benefit evidence
+          heading: Do you have evidence your client gets %{benefit_type}?
+      evidence_exit:
+        show:
+          page_title: Use eForms for this application
       retry_benefit_check:
         edit:
           page_title: Unable to connect to DWP

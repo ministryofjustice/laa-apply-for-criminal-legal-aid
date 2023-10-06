@@ -15,6 +15,8 @@ module Decisions
         determine_dwp_result_page
       when :benefit_check_result
         after_dwp_check
+      when :has_benefit_evidence
+        after_has_benefit_evidence
       when :contact_details
         after_contact_details
       else
@@ -66,6 +68,14 @@ module Decisions
 
     def after_dwp_check
       start_address_journey(HomeAddress)
+    end
+
+    def after_has_benefit_evidence
+      if form_object.has_benefit_evidence.yes?
+        start_address_journey(HomeAddress)
+      else
+        show(:evidence_exit)
+      end
     end
 
     def after_contact_details

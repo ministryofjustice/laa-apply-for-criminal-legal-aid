@@ -68,6 +68,10 @@ en:
           attributes:
             benefit_type:
               inclusion: Select a benefit type
+        steps/client/has_benefit_evidence_form:
+          attributes:
+            has_benefit_evidence:
+              inclusion: Select yes if you have evidence of your client's benefit
         steps/client/contact_details_form:
           attributes:
             telephone_number:

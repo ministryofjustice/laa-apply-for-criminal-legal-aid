@@ -127,6 +127,32 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
   end
 
+  context 'when the step is `has_benefit_evidence`' do
+    let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }
+    let(:step_name) { :has_benefit_evidence }
+
+    context 'and the answer is `yes`' do
+      let(:has_benefit_evidence) { YesNoAnswer::YES }
+
+      before do
+        allow(
+          Address
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+      end
+
+      it {
+        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
+address_id: 'address')
+      }
+    end
+
+    context 'and the answer is `no`' do
+      let(:has_benefit_evidence) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:evidence_exit, :show, id: crime_application) }
+    end
+  end
+
   context 'when the step is `retry_benefit_check`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :retry_benefit_check }
