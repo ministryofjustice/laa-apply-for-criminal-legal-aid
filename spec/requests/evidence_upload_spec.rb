@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Evidence upload page', authorized: true do
+RSpec.describe 'Evidence upload page', :authorized do
   before :all do
     crime_application = CrimeApplication.create
     file = fixture_file_upload('uploads/test.pdf', 'application/pdf')

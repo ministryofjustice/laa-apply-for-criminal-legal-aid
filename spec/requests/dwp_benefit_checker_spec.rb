@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'DWP passporting sub journey', authorized: true do
+RSpec.describe 'DWP passporting sub journey', :authorized do
   describe 'confirm applicant personal details page' do
     before :all do
       # sets up a few test records

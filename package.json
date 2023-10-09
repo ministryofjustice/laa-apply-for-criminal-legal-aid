@@ -4,9 +4,9 @@
   "dependencies": {
     "@ministryofjustice/frontend": "1.8.0",
     "dropzone": "^6.0.0-beta.2",
-    "govuk-frontend": "4.6.0"
+    "govuk-frontend": "4.7.0"
   },
   "scripts": {
-    "postinstall": "bin/importmap pin govuk-frontend@4.6.0 dropzone@6.0.0-beta.2"
+    "postinstall": "bin/importmap pin govuk-frontend@4.7.0 dropzone@6.0.0-beta.2"
   }
 }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboard', authorized: true do
+RSpec.describe 'Dashboard', :authorized do
   include_context 'with office code selected'
 
   # Fixtures used to mock responses from the datastore
