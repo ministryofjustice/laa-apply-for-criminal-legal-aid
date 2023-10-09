@@ -7,20 +7,24 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <p class="govuk-body govuk-!-margin-bottom-1">Use this page to provide:</p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= t('.explanation') %>
+    </p>
 
+    <%# TODO: dynamic list depending on evidence requirements %>
     <ul class="govuk-list govuk-list--bullet">
       <li>evidence your client gets a passporting benefit</li>
-      <li>evidence of your client's income and outgoings</li>
-      <li>evidence of your client's capital</li>
-      <li>any other supporting evidence, like a freezing order or charge sheet</li>
     </ul>
 
-    <p class="govuk-body">All evidence must be from the last 3 months.</p>
+    <p class="govuk-body">
+      <%= t('.recent_docs') %>
+    </p>
 
     <h2 class="govuk-heading-m">
       <%= t('.upload_files_heading') %>
-      <span class="govuk-caption-m govuk-!-padding-top-2"><%= t('.upload_files_info', max_size: FileUploadValidator::MAX_FILE_SIZE) %></span>
+      <span class="govuk-caption-m govuk-!-padding-top-2">
+        <%= t('.upload_files_info', max_size: FileUploadValidator::MAX_FILE_SIZE) %>
+      </span>
     </h2>
 
     <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },

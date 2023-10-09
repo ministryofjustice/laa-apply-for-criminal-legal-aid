@@ -199,6 +199,8 @@ en:
         edit:
           page_title: Upload supporting evidence
           heading: Upload supporting evidence
+          explanation: "Use this page to provide:"
+          recent_docs: All evidence must be from the last 3 months.
           upload_file_button: Upload file
           upload_files_heading: Upload files
           upload_files_info: The maximum file size is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.

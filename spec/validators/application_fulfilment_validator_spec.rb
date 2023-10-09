@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:ioj, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:ioj, :documents, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -17,11 +17,15 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:arguments) do
     {
       ioj:,
+      documents:
     }
   end
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
+
+  let(:documents) { double(stored: stored_documents) }
+  let(:stored_documents) { [] }
 
   context 'MeansPassporter validation' do
     before do
@@ -42,10 +46,22 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     context 'when the application is not means-passported' do
       let(:means_result) { false }
 
-      it 'is invalid' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:means_passport, :blank)).to be(true)
-        expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
+      context 'and evidence has been uploaded' do
+        let(:stored_documents) { ['stored_doc'] }
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'and evidence has not been uploaded' do
+        let(:stored_documents) { [] }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:means_passport, :blank)).to be(true)
+          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
+        end
       end
     end
   end
