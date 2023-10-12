@@ -7,14 +7,10 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <p class="govuk-body govuk-!-margin-bottom-1">
-      <%= t('.explanation') %>
-    </p>
-
     <%# TODO: dynamic list depending on evidence requirements %>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>evidence your client gets a passporting benefit</li>
-    </ul>
+    <p class="govuk-body govuk-!-margin-bottom-2">
+      <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
+    </p>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>
@@ -50,22 +46,24 @@
     <% end %>
 
     <%= step_form @form_object, html: { class: 'govuk-!-padding-top-5' } do |f| %>
-      <div class="app-multi-file__uploaded-files">
-        <h2 class="govuk-heading-m"> <%= t('.uploaded_files_heading') %></h2>
-        <p class="govuk-body"><%= t('.uploaded_files_info') %></p>
-        <table class="govuk-table">
-          <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header"><%= t('steps.evidence.upload.edit.file_name') %></th>
-            <th scope="col" class="govuk-table__header"></th>
-          </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <%= render partial: 'steps/evidence/upload/uploaded_file',
-                     collection: @form_object.documents, as: :document %>
-          </tbody>
-        </table>
-      </div>
+      <% if @form_object.documents.present? %>
+        <div class="app-multi-file__uploaded-files">
+          <h2 class="govuk-heading-m"> <%= t('.uploaded_files_heading') %></h2>
+          <p class="govuk-body"><%= t('.uploaded_files_info') %></p>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header"><%= t('steps.evidence.upload.edit.file_name') %></th>
+              <th scope="col" class="govuk-table__header"></th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <%= render partial: 'steps/evidence/upload/uploaded_file',
+                       collection: @form_object.documents, as: :document %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
 
       <%= f.continue_button %>
     <% end %>
