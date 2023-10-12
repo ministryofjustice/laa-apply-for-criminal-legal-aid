@@ -11,14 +11,14 @@ module Datastore
         @document = document
       end
 
-      def call
+      # TODO: 2023-10-6 document is persisted regardless of scan
+      # result due to incomplete UX
+      def call # rubocop:disable Metrics/AbcSize
         return false if document.s3_object_key.present?
 
-        # TODO: PoC - move this to a separate service object
-        # On scan, annotate document with `infected`, `clean`, etc.
-        # return false if Clamby.virus?(document.tempfile.path)
-
         Rails.error.handle(fallback: -> { false }) do
+          Scan.new(document:).call
+
           presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
             usn:, expires_in:
           ).call

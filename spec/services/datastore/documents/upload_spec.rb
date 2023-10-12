@@ -24,6 +24,13 @@ RSpec.describe Datastore::Documents::Upload do
           .to_return(status: 200)
       end
 
+      it 'has `awaiting` virus scan status before upload' do
+        expect(subject.document.scan_status).to eq 'awaiting'
+        expect(subject.document.scan_at).to be_nil
+        expect(subject.document.scan_provider).to be_nil
+        expect(subject.document.scan_output).to be_nil
+      end
+
       it 'returns true and updates the documents s3 object key' do
         expect(subject.call).to be(true)
         expect(subject.document.s3_object_key).to eq('123/abcdef1234')
@@ -62,6 +69,24 @@ RSpec.describe Datastore::Documents::Upload do
 
       it 'returns false' do
         expect(subject.call).to be(false)
+      end
+    end
+
+    # Requires further consideration for handling unsafe file journey
+    context 'when document has malicious virus' do
+      before do
+        allow(Clamby).to receive(:safe?).and_return(false)
+
+        stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_upload')
+          .with(body: expected_query)
+          .to_return(status: 201, body: { object_key: '123/abcdef1234', url: presign_upload_url }.to_json)
+
+        stub_request(:put, presign_upload_url)
+          .to_return(status: 200)
+      end
+
+      it 'continues upload' do
+        expect(subject.call).to be(true)
       end
     end
   end
