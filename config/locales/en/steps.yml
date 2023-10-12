@@ -210,7 +210,7 @@ en:
           file_name: File name
           uploaded: Uploaded
           delete:
-            success: "You have deleted %{file_name}"
+            success: "You deleted %{file_name}"
             failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
