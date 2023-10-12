@@ -16,7 +16,7 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
           subject
         ).to receive(:update_and_advance).with(
           Steps::Evidence::UploadForm, as: :delete_document,
-          flash: { success: 'Document has been successfully deleted' }
+          flash: { success: I18n.t('steps.evidence.upload.edit.delete.success', file_name: document.filename).to_s }
         )
 
         put :update, params: { id: crime_application, document_id: document }
@@ -29,7 +29,7 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
           subject
         ).to receive(:update_and_advance).with(
           Steps::Evidence::UploadForm, as: :delete_document,
-          flash: { alert: 'Document was not successfully deleted' }
+          flash: { alert: I18n.t('steps.evidence.upload.edit.delete.failure', file_name: document.filename).to_s }
         )
 
         put :update, params: { id: crime_application, document_id: document }
