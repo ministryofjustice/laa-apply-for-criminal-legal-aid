@@ -1,6 +1,7 @@
 # :nocov:
 class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
+  before_action :require_document
 
   respond_to :html, :json, :js
 
@@ -32,6 +33,10 @@ class DocumentsController < ApplicationController
 
   def evidence_upload_step
     edit_steps_evidence_upload_path(current_crime_application)
+  end
+
+  def require_document
+    redirect_to evidence_upload_step unless params.key?(:document) || params.key?(:steps_evidence_upload_form)
   end
 
   # TODO: unify if possible the submission params

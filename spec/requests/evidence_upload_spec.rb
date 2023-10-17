@@ -70,13 +70,13 @@ RSpec.describe 'Evidence upload page', :authorized do
             assert_select 'span:nth-of-type(1)', 'too_big.pdf'
             assert_select 'p:nth-of-type(1)',
                           "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_big',
-                                           max_size: FileUploadValidator::MAX_FILE_SIZE)}"
+                                           max_size: FileUploadValidator::MAX_FILE_SIZE, file_name: 'too_big.pdf')}"
           end
           assert_select 'tr.govuk-table__row:nth-of-type(3)' do
             assert_select 'span:nth-of-type(1)', 'too_small.pdf'
             assert_select 'p:nth-of-type(1)',
                           "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_small',
-                                           min_size: FileUploadValidator::MIN_FILE_SIZE)}"
+                                           min_size: FileUploadValidator::MIN_FILE_SIZE, file_name: 'too_small.pdf')}"
           end
         end
       end
@@ -85,7 +85,8 @@ RSpec.describe 'Evidence upload page', :authorized do
         assert_select 'tr.govuk-table__row:nth-of-type(4)' do
           assert_select 'span:nth-of-type(1)', 'invalid_content_type.pdf'
           assert_select 'p:nth-of-type(1)',
-                        "Error: #{I18n.t('activerecord.errors.models.document.attributes.content_type.invalid')}"
+                        "Error: #{I18n.t('activerecord.errors.models.document.attributes.content_type.invalid',
+                                         file_name: 'invalid_content_type.pdf')}"
         end
       end
 
