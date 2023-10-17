@@ -199,19 +199,19 @@ en:
         edit:
           page_title: Upload supporting evidence
           heading: Upload supporting evidence
-          explanation: "Use this page to provide:"
+          explanation: Use this page to provide
           recent_docs: All evidence must be from the last 3 months.
           upload_file_button: Upload file
           upload_files_heading: Upload files
           upload_files_info: The maximum file size is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
           choose_files_button: Choose files
           uploaded_files_heading: Uploaded files
-          uploaded_files_info: When you submit this application, the caseworker will also get these files.
+          uploaded_files_info: When you submit this application, a caseworker will be able to access these files.
           file_name: File name
           uploaded: Uploaded
           delete:
-            success: Document has been successfully deleted
-            failure: Document was not successfully deleted
+            success: "You deleted %{file_name}"
+            failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
     submission:
