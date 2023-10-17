@@ -60,7 +60,7 @@ RSpec.describe Datastore::Documents::Scan do
     end
 
     context 'with a missing document' do
-      it 'returns false' do
+      it 'raises exception' do
         expect { described_class.new(document: nil).call }.to raise_error ArgumentError
       end
     end
