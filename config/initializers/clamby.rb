@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'clamby'
+
 def clamd_config_file
   filename = ENV.fetch('CLAMD_CONF_FILENAME', 'clamd.local.conf')
   File.join(File.dirname(__FILE__), '..', 'clamd', filename)

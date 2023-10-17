@@ -27,7 +27,7 @@ gem 'savon'
 gem 'prometheus_exporter'
 
 # Virus scan with ClamAV
-gem 'clamby', '1.6.10'
+gem 'clamby', '1.6.10', require: false
 
 # Exceptions notifications
 gem 'sentry-rails'
@@ -47,7 +47,7 @@ gem 'laa-criminal-applications-datastore-api-client',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
-    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v1.0.3'
+    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v1.0.4'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
