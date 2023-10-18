@@ -33,19 +33,19 @@ class FileUploadValidator < ActiveModel::Validator
   def perform_validations
     unless record.content_type.in?(ALLOWED_CONTENT_TYPES)
       record.errors.add(
-        :content_type, :invalid, file_name: record.filename
+        :content_type, :invalid
       )
     end
 
     if record.file_size < MIN_FILE_SIZE.kilobytes
       record.errors.add(
-        :file_size, :too_small, min_size: MIN_FILE_SIZE, file_name: record.filename
+        :file_size, :too_small, min_size: MIN_FILE_SIZE
       )
     end
 
     if record.file_size > MAX_FILE_SIZE.megabytes
       record.errors.add(
-        :file_size, :too_big, max_size: MAX_FILE_SIZE, file_name: record.filename
+        :file_size, :too_big, max_size: MAX_FILE_SIZE
       )
     end
   end
