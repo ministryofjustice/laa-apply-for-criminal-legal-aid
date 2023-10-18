@@ -35,16 +35,16 @@ DropzoneCfg.prototype.init = function () {
 
   if (!this.$dropzoneContainer || !this.$feedbackContainer) { return }
 
+  // As dropzone and the fallback components share the parent form component, dropzone specific styling is added here
   this.$dropzoneContainer.classList.add("dropzone")
 
-  const chooseFilesButton = document.getElementById('choose_files_button')
+  this.$chooseFilesButton = document.querySelector('button#choose_files_button')
 
   // Display of choose files button is conditional on whether JS is enabled
-  chooseFilesButton.classList.remove("govuk-visually-hidden")
+  this.$chooseFilesButton.classList.remove("govuk-visually-hidden")
 
-  chooseFilesButton.addEventListener('click', (e) => {
+  this.$chooseFilesButton.addEventListener('click', (e) => {
     e.preventDefault() // prevent submitting form by default
-    removeErrorMessages()
   })
 
   // Display of files table (uploaded files only) is conditional on whether JS is enabled
@@ -61,13 +61,13 @@ DropzoneCfg.prototype.init = function () {
   })
 
   this.$dropzoneContainerText = document.querySelector('div.dz-message')
-  this.$chooseFilesButton = document.querySelector('button#choose_files_button')
   this.$dropzoneContainerText.appendChild(this.$chooseFilesButton)
 
   this.$dropzone.on('addedfile', (file) => {
-    // Remove any notification banners (e.g. for deleting a file) from view if present
+    // Remove any notification banners (e.g. for deleting a file) and error messages from view if present
     const notificationBanner = document.querySelector('.govuk-notification-banner')
     notificationBanner?.remove()
+    removeErrorMessages()
 
     let row = createTableRow(file);
     self.$feedbackContainer.querySelector('.govuk-table__body').append(row);
