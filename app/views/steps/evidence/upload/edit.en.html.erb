@@ -2,7 +2,7 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds" id="upload-page">
     <%= render partial: 'shared/flash_banner' %>
 
     <%# Required to display dropzone error messages %>
@@ -19,7 +19,7 @@
       <%= t('.recent_docs') %>
     </p>
 
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" id="upload-form">
       <h2 class="govuk-heading-m">
         <%= t('.upload_files_heading') %>
         <span class="govuk-caption-m govuk-!-padding-top-2">
@@ -28,7 +28,7 @@
       </h2>
 
       <%# Required to display dropzone error messages %>
-      <p class="govuk-error-message app-evidence-upload-hidden">
+      <p class="govuk-error-message app-evidence-upload-hidden" id="dropzone-error-message">
         <span class="govuk-visually-hidden">Error:</span>
       </p>
 

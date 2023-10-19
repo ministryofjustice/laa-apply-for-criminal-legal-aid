@@ -3,7 +3,8 @@
   <% next unless msg.is_a?(String) && msg.present? %>
 
   <div class="govuk-notification-banner govuk-notification-banner--<%= type %>" role="alert"
-       aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+       aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+       id="notification-banner">
     <div class="govuk-notification-banner__header">
       <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
         <%= t(:title, scope: "flash.#{type}") %>

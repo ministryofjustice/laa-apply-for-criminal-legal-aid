@@ -65,7 +65,7 @@ DropzoneCfg.prototype.init = function () {
 
   this.$dropzone.on('addedfile', (file) => {
     // Remove any notification banners (e.g. for deleting a file) and error messages from view if present
-    const notificationBanner = document.querySelector('.govuk-notification-banner')
+    const notificationBanner = document.getElementById('notification-banner')
     notificationBanner?.remove()
     removeErrorMessages()
 
@@ -127,8 +127,8 @@ function createStatusTag(text) {
 }
 
 function createErrorSummary (msg) {
-  const errorSummary = document.querySelector('.govuk-error-summary')
-  const errorSummaryList = document.querySelector('.govuk-error-summary__list')
+  const errorSummary = document.getElementById('error-summary')
+  const errorSummaryList = document.getElementById('error-summary-list')
 
   const li = document.createElement('li')
   const a = document.createElement('a')
@@ -173,26 +173,26 @@ function amendErrorLink (file, response) {
 
 function removeErrorMessages () {
   // Clear error messages and hide error components from view when user uploads again
-  const errorSummary = document.querySelector('.govuk-error-summary')
+  const errorSummary = document.getElementById('error-summary')
   errorSummary.querySelectorAll('li').forEach(listItem => {
     listItem.remove()
   })
   errorSummary.classList.add('app-evidence-upload-hidden')
 
-  document.querySelector('.govuk-form-group').classList.remove('govuk-form-group--error')
-  document.querySelector('.govuk-error-message').classList.add('app-evidence-upload-hidden')
-  document.querySelector('.govuk-error-message').innerHTML = ""
+  document.getElementById('upload-form').classList.remove('govuk-form-group--error')
+  document.getElementById('dropzone-error-message').classList.add('app-evidence-upload-hidden')
+  document.getElementById('dropzone-error-message').innerHTML = ""
 }
 
 function displayErrorMessage(errorSummary, errorMsg) {
   // Display error to top of page
-  let pageDiv = document.querySelector('.govuk-grid-column-two-thirds')
+  let pageDiv = document.getElementById('upload-page')
   pageDiv.prepend(errorSummary)
 
   // Display error above dropzone component
-  const uploadFilesElem = document.querySelector('.govuk-form-group')
+  const uploadFilesElem = document.getElementById('upload-form')
   uploadFilesElem.classList.add('govuk-form-group--error')
-  const errorMessage = document.querySelector('.govuk-error-message')
+  const errorMessage = document.getElementById('dropzone-error-message')
 
   errorMessage.innerHTML += errorMsg + "<br />"
   errorMessage.classList.remove('app-evidence-upload-hidden')
