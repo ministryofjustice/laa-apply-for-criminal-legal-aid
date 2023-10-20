@@ -1,0 +1,16 @@
+<div id="upload-table" class="<%= documents.present? ? '' : 'app-evidence-upload-hidden' %>">
+  <h2 class="govuk-heading-m"> <%= t('steps.evidence.upload.edit.uploaded_files_heading') %></h2>
+  <p class="govuk-body"><%= t('steps.evidence.upload.edit.uploaded_files_info') %></p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"><%= t('steps.evidence.upload.edit.file_name') %></th>
+      <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Delete file</span></th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <%= render partial: 'steps/evidence/upload/uploaded_file',
+               collection: documents, as: :document %>
+    </tbody>
+  </table>
+</div>

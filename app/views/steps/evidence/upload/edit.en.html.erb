@@ -2,8 +2,11 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-two-thirds" id="upload-page">
     <%= render partial: 'shared/flash_banner' %>
+
+    <%# Required to display dropzone error messages %>
+    <%= render partial: 'steps/evidence/upload/upload_error_summary' %>
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
@@ -16,56 +19,56 @@
       <%= t('.recent_docs') %>
     </p>
 
-    <h2 class="govuk-heading-m">
-      <%= t('.upload_files_heading') %>
-      <span class="govuk-caption-m govuk-!-padding-top-2">
-        <%= t('.upload_files_info', max_size: FileUploadValidator::MAX_FILE_SIZE) %>
-      </span>
-    </h2>
+    <div class="govuk-form-group" id="upload-form">
+      <h2 class="govuk-heading-m">
+        <%= t('.upload_files_heading') %>
+        <span class="govuk-caption-m govuk-!-padding-top-2">
+          <%= t('.upload_files_info', max_size: FileUploadValidator::MAX_FILE_SIZE) %>
+        </span>
+      </h2>
 
-    <%= form_for @form_object, html: { id: 'dz-evidence-upload-form', class: 'dropzone' },
-                 url: crime_application_documents_path,
-                 method: :post, multipart: true do |f| %>
+      <%# Required to display dropzone error messages %>
+      <p class="govuk-error-message app-evidence-upload-hidden" id="dropzone-error-message">
+        <span class="govuk-visually-hidden">Error:</span>
+      </p>
 
-      <%= f.button t('.choose_files_button'),
-                   id: 'choose_files_button',
-                   class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0 govuk-visually-hidden',
-                   type: 'button',
-                   data: { module: 'govuk-button' } %>
+      <%= form_for @form_object, html: { id: 'dz-evidence-upload-form' },
+                   url: crime_application_documents_path,
+                   method: :post, multipart: true do |f| %>
 
-      <div class="fallback">
-        <%# Keep `multiple` to false. This only affects non-javascript version, dropzone %>
-        <%# will still support multiple files. This greatly simplifies backend with little downside %>
-        <%= f.govuk_file_field :document, multiple: false,
-                               label: { size: 'm' }, class: 'govuk-file-upload' %>
-
-        <%= f.button t('.upload_file_button'),
-                     class: 'govuk-button govuk-button--secondary',
+        <%= f.button t('.choose_files_button'),
+                     id: 'choose_files_button',
+                     class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0 govuk-visually-hidden',
+                     type: 'button',
                      data: { module: 'govuk-button' } %>
-      </div>
-    <% end %>
 
-    <%= step_form @form_object, html: { class: 'govuk-!-padding-top-5' } do |f| %>
-      <% if @form_object.documents.present? %>
-        <div class="app-multi-file__uploaded-files">
-          <h2 class="govuk-heading-m"> <%= t('.uploaded_files_heading') %></h2>
-          <p class="govuk-body"><%= t('.uploaded_files_info') %></p>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header"><%= t('steps.evidence.upload.edit.file_name') %></th>
-              <th scope="col" class="govuk-table__header"></th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            <%= render partial: 'steps/evidence/upload/uploaded_file',
-                       collection: @form_object.documents, as: :document %>
-            </tbody>
-          </table>
+        <div class="fallback">
+          <%# Keep `multiple` to false. This only affects non-javascript version, dropzone %>
+          <%# will still support multiple files. This greatly simplifies backend with little downside %>
+          <%= f.govuk_file_field :document, multiple: false,
+                                 label: { size: 'm' }, class: 'govuk-file-upload' %>
+
+          <%= f.button t('.upload_file_button'),
+                       class: 'govuk-button govuk-button--secondary',
+                       data: { module: 'govuk-button' } %>
         </div>
-      <% end %>
-
-      <%= f.continue_button %>
     <% end %>
+    </div>
+
+    <div class="app-multi-file__uploaded-files">
+      <%= step_form @form_object do |f| %>
+        <div id="upload-table-dropzone" class="app-evidence-upload-hidden">
+          <%= render partial: 'steps/evidence/upload/uploaded_files', locals: { documents: @form_object.documents.stored } %>
+        </div>
+
+        <div id="upload-table-fallback">
+          <% if @form_object.documents.present? %>
+            <%= render partial: 'steps/evidence/upload/uploaded_files', locals: { documents: @form_object.documents } %>
+          <% end %>
+        </div>
+
+        <%= f.continue_button %>
+      <% end %>
+    </div>
   </div>
 </div>

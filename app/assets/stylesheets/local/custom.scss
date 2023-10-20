@@ -143,3 +143,8 @@ $app-blue-button-colour: govuk-colour("blue");
     }
   }
 }
+
+// To conditionally hide components to support JS/Non JS evidence upload functionality
+.app-evidence-upload-hidden {
+  display: none;
+}

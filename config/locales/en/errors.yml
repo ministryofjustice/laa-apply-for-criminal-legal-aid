@@ -21,12 +21,12 @@ en:
         document:
           attributes:
             file_size:
-              too_small: File must be more than %{min_size}KB
-              too_big: File must be less than %{max_size}MB
+              too_small: File must be bigger than %{min_size}KB
+              too_big: File must be smaller than %{max_size}MB
             content_type:
               invalid: File must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF
             s3_object_key:
-              blank: File was not successfully uploaded
+              blank: File could not be uploaded – try again
 
   activemodel:
     errors:

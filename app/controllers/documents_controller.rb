@@ -1,6 +1,7 @@
 # :nocov:
 class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
+  before_action :require_document
 
   respond_to :html, :json, :js
 
@@ -34,10 +35,14 @@ class DocumentsController < ApplicationController
     edit_steps_evidence_upload_path(current_crime_application)
   end
 
+  # Handles scenario where user clicks upload button without having selected a file to upload on non-JS form
+  # Needs to be handled in future with an appropriate error message but this is not easily feasible with current setup
+  def require_document
+    redirect_to evidence_upload_step unless params.key?(:document) || params.key?(:steps_evidence_upload_form)
+  end
+
   # TODO: unify if possible the submission params
   # Currently XHR and HTML requests have different structure
-  # Also needs proper error handling for non-JS version if user click
-  # upload button without having selected a file
   def file_from_params
     if params.key?(:steps_evidence_upload_form)
       params.fetch(:steps_evidence_upload_form, {}).fetch(:document)
