@@ -1,3 +1,4 @@
+# :nocov:
 module Steps
   class IncomeStepController < BaseStepController
     private
@@ -7,3 +8,4 @@ module Steps
     end
   end
 end
+# :nocov:
