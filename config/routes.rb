@@ -1,7 +1,8 @@
 def edit_step(name, opts = {}, &block)
   resource name,
            only: opts.fetch(:only, [:edit, :update]),
-           controller: name,
+           controller: opts.fetch(:alias, name),
+           as: opts.fetch(:alias, name),
            path_names: { edit: '' } do; block.call if block_given?; end
 end
 
@@ -140,6 +141,10 @@ Rails.application.routes.draw do
         edit_step :first_court_hearing
         edit_step :ioj_passport
         edit_step :ioj
+      end
+
+      namespace :income, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+        edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
       end
 
       namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do

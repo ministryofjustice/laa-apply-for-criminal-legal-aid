@@ -57,6 +57,8 @@ en:
         is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
+      steps_income_lost_job_in_custody_form:
+        lost_job_in_custody: Did your client lose their job as a result of being in custody?
 
     hint:
       steps_client_details_form:
@@ -99,6 +101,8 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_income_lost_job_in_custody_form:
+        date_job_lost: For example, 27 3 2007
       steps_evidence_upload_form:
         #TODO update max file size and overall limit
         upload_files: The maximum file size is XMB. Files must be a JPG, BMP, PNG, TIF or PDF.
@@ -211,6 +215,8 @@ en:
           expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not)
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
+      steps_income_lost_job_in_custody_form:
+        lost_job_in_custody_options: *YESNO
       steps_evidence_upload_form:
         upload_files: Upload files
       steps_submission_declaration_form:
