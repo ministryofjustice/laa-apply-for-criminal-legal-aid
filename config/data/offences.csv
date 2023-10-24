@@ -311,3 +311,4 @@ PR52028,Bring / throw / convey a List 'B' prohibited article into / out of a pri
 TH68006A,"Attempt theft of pedal cycle (£30,000 or less)",CE Either Way,F,false
 TH68006A,"Attempt theft of pedal cycle (Over £30,000 up to £100,000)",CE Either Way,G,false
 TH68006A,"Attempt theft of pedal cycle (Over £100,000)",CE Either Way,K,false
+SC15005,"Intentional Strangulation",CE Either Way,B,false
