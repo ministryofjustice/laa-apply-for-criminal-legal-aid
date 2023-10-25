@@ -6,7 +6,7 @@ A service to apply for criminal legal aid
 
 ## Getting Started
 
-Clone the repository, and follow these steps in order.  
+Clone the repository, and follow these steps in order.
 The instructions assume you have [Homebrew](https://brew.sh) installed in your machine, as well as use some ruby version manager, usually [rbenv](https://github.com/rbenv/rbenv). If not, please install all this first.
 
 **1. Pre-requirements**
@@ -33,7 +33,7 @@ After you've defined your DB configuration in the above files, run the following
 
 Once all the above is done, you should be able to run the application as follows:
 
-a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.  
+a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
 b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
 
 You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
@@ -42,14 +42,14 @@ If you ever feel something is not right with the CSS or JS, run `rails assets:cl
 
 **Note about the datastore service**
 
-Some functionality in this service relies on a [remote datastore](https://github.com/ministryofjustice/laa-criminal-applications-datastore) 
+Some functionality in this service relies on a [remote datastore](https://github.com/ministryofjustice/laa-criminal-applications-datastore)
 being available to submit applications, and read these back again.
 
-Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running 
-to receive the submitted application.  
+Mainly, the service can be fully used without any external dependencies up until the submission point, where the datastore needs to be locally running
+to receive the submitted application.
 Also, some functionality in the dashboard will make use of this datastore.
 
-For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is 
+For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
 ## Running the tests
@@ -69,14 +69,14 @@ Or you can run them individually:
 
 ## Docker
 
-The application can be run inside a docker container. This will take care of the ruby environment, postgres database 
+The application can be run inside a docker container. This will take care of the ruby environment, postgres database
 and any other dependency for you, without having to configure anything in your machine.
 
 * `docker-compose up`
 
 The application will be run in "production" mode, so will be as accurate as possible to the real production environment.
 
-**NOTE:** never use `docker-compose` for a real production environment. This is only provided to test a local container. The 
+**NOTE:** never use `docker-compose` for a real production environment. This is only provided to test a local container. The
 actual docker images used in the cluster are built as part of the deploy pipeline.
 
 
@@ -96,7 +96,7 @@ feature_flags:
     production: false
 ```
 
-If not declared, `local` and `test` environments will default to `true` (feature flag enabled).  
+If not declared, `local` and `test` environments will default to `true` (feature flag enabled).
 Any other envs, if not explicitly declared, will default to `false` (for instance `staging` or `production`).
 
 To check if a feature is enabled / disabled and run code accordingly, use:
@@ -109,8 +109,8 @@ FeatureFlags.your_new_feature.disabled?
 
 ## Settings
 
-Similar to feature flags, the application can have settings. The same file `config/settings.yml` is used to define 
-settings, and these are not environment-aware. If your setting is supposed to change depending on the 
+Similar to feature flags, the application can have settings. The same file `config/settings.yml` is used to define
+settings, and these are not environment-aware. If your setting is supposed to change depending on the
 environment (staging / production for example) then it probably belongs in the kubernetes `config_map` instead.
 
 To read a setting, use:
@@ -124,7 +124,7 @@ Settings.setting_name
 
 ### To provision infrastructure
 
-AWS infrastructure is created by Cloud Platforms via PR to [their repository](https://github.com/ministryofjustice/cloud-platform-environments).  
+AWS infrastructure is created by Cloud Platforms via PR to [their repository](https://github.com/ministryofjustice/cloud-platform-environments).
 Read [how to connect the cluster](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html).
 
 **Namespaces for this service:**
@@ -143,13 +143,13 @@ echo -n "new-string" | base64
 echo "bmV3LXN0cmluZw==" | base64 --decode
 ```
 
-The `secrets.yml` manifest files are git-crypted so we can commit these to the repository. 
-Follow the [instructions](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/git-crypt-setup.html#git-crypt) 
+The `secrets.yml` manifest files are git-crypted so we can commit these to the repository.
+Follow the [instructions](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/git-crypt-setup.html#git-crypt)
 on how to setup `git-crypt` locally and ask any existing collaborator to add your GPG key to the repo to be able to read/write secrets.
 
-In the deploy pipeline we use a symmetric key exported as a repository secret `GIT_CRYPT_KEY` and a 
-[github action](https://github.com/marketplace/actions/github-action-to-unlock-git-crypt-secrets) to unlock the secrets 
-and apply them automatically as part of each deploy.  
+In the deploy pipeline we use a symmetric key exported as a repository secret `GIT_CRYPT_KEY` and a
+[github action](https://github.com/marketplace/actions/github-action-to-unlock-git-crypt-secrets) to unlock the secrets
+and apply them automatically as part of each deploy.
 
 ### Applying the configuration
 
@@ -161,13 +161,24 @@ kubectl apply -f config/kubernetes/staging/ingress.yml
 
 ### Continuous integration and delivery
 
-The application is setup to trigger tests on every pull request and, in addition, to build and release to staging 
+The application is setup to trigger tests on every pull request and, in addition, to build and release to staging
 automatically on merge to `main` branch. Release to production will need to be approved manually.
 
 All this is done through **github actions**.
 
-The secrets needed for these actions are created automatically as part of the **terraforming**. You can read more about 
+The secrets needed for these actions are created automatically as part of the **terraforming**. You can read more about
 it in [this document](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/github-actions-continuous-deployment.html#automating-the-deployment-process).
+
+
+## Virus scanning with ClamAV
+
+[ClamAV](https://www.clamav.net/) is used to ensure system safety against malicious file uploads.
+
+Virus scanning is performed using a dedicated ClamAV server, built from the official ClamAV Docker image (`image: clamav/clamav:stable_base`).
+
+The server has been configured to allow ClamAV to accept file streams over TCP. Interaction with the ClamAV server is performed using the [Clamby](https://github.com/kobaltz/clamby) gem.
+
+Please note the `clamav` service will take longer to initialise than the rest of the application, meaning deployment of the overall Apply system could be delayed depending on the size of any Clam updates on startup.
 
 
 ## Architectural decision records
