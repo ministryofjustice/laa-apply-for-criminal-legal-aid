@@ -227,6 +227,18 @@ en:
               blank: Enter details on why it is in the interest of another person that your client is represented
             other_justification:
               blank: Enter details on why your client should get legal aid
+        steps/income/lost_job_in_custody_form:
+          attributes:
+            lost_job_in_custody:
+              inclusion: Select yes if your client lost their job as a result of being in custody
+            date_job_lost: 
+              blank: Date job was lost cannot be blank
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date job was lost is too far in the past
+              future_not_allowed: Date job was lost cannot be in the future
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:
