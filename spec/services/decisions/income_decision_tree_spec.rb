@@ -23,6 +23,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :lost_job_in_custody }
 
     context 'has correct next step' do
+      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `manage_without_income`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :manage_without_income }
+
+    context 'has correct next step' do
       it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end
   end

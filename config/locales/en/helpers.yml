@@ -59,6 +59,8 @@ en:
         types: Why should your client get legal aid?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
+      steps_income_manage_without_income_form:
+        manage_without_income: How does your client manage with no income?
 
     hint:
       steps_client_details_form:
@@ -103,9 +105,6 @@ en:
         other_justification: *ioj_justification_hint
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
-      steps_evidence_upload_form:
-        #TODO update max file size and overall limit
-        upload_files: The maximum file size is XMB. Files must be a JPG, BMP, PNG, TIF or PDF.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -217,6 +216,14 @@ en:
           other: Other
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
+      steps_income_manage_without_income_form:
+        manage_without_income_options:
+          friends_sofa: They sleep on a friend's sofa for free
+          family: They stay with family for free
+          homeless: They are homeless
+          custody: They have been in custody for more than 3 months
+          other: Other
+        manage_other_details: Tell us how your client manages with no income
       steps_evidence_upload_form:
         upload_files: Upload files
       steps_submission_declaration_form:

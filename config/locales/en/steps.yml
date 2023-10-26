@@ -82,7 +82,7 @@ en:
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application
-      
+
     address:
       lookup:
         edit:
@@ -125,7 +125,7 @@ en:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
-    
+
     case:
       urn:
         edit:
@@ -195,13 +195,16 @@ en:
       ioj:
         edit:
           page_title: Why should your client get legal aid?
-    
+
     income:
       caption: Income assessment
       lost_job_in_custody:
         edit:
           page_title: Did client lose job being in custody?
           date_job_lost: Date job was lost
+      manage_without_income:
+        edit:
+          page_title: How does client manage with no income?
 
     evidence:
       upload:
@@ -223,7 +226,7 @@ en:
             failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
-    
+
     submission:
       review:
         edit:
