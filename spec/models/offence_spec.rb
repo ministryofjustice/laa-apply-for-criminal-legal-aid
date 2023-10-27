@@ -47,12 +47,12 @@ RSpec.describe Offence, type: :model do
 
     it 'returns all offences' do
       expect(subject).to all(be_a(described_class))
-      expect(subject.size).to eq(312)
+      expect(subject.size).to eq(313)
     end
 
     it 'keeps the same order as in the CSV file' do
       expect(subject.first.code).to eq('TH68010')
-      expect(subject.last.code).to eq('TH68006A')
+      expect(subject.last.code).to eq('SC15005')
     end
   end
 

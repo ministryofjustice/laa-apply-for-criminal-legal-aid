@@ -2,10 +2,9 @@ module Decisions
   class IncomeDecisionTree < BaseDecisionTree
     def destination
       case step_name
-      # :nocov:
-      when :x
-        edit(:y)
-      # :nocov:
+      when :lost_job_in_custody
+        # TODO: link to next step when we have it
+        show('/home', action: :index)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
