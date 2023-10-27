@@ -43,7 +43,7 @@ spec:
 
     - alert: CrimeApply-KubeQuotaExceeded
       expr: >-
-        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace=~"^laa-apply-for-criminal-legal-aid.*"} 
+        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
         / ignoring(instance, job, type) (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0) > 90
       for: 5m
       labels:
@@ -63,7 +63,7 @@ spec:
     - alert: CrimeApply-SlowResponses
       expr: >-
         avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m])
-        / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0) 
+        / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0)
         by (exported_namespace) > 3
       for: 1m
       labels:
@@ -74,7 +74,7 @@ spec:
 
     - alert: CrimeApply-Ingress4XX
       expr: >-
-        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[5m]) * 60 > 5) 
+        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[5m]) * 60 > 5)
         by (exported_namespace)
       for: 1m
       labels:
@@ -85,7 +85,7 @@ spec:
 
     - alert: CrimeApply-Ingress5XX
       expr: >-
-        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[5m]) * 60 > 5) 
+        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[5m]) * 60 > 5)
         by (exported_namespace)
       for: 1m
       labels:
