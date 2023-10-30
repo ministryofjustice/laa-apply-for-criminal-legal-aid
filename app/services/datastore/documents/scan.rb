@@ -1,11 +1,10 @@
 require 'clamby'
-require 'laa_crime_schemas'
 
 # Performs virus scan using remote ClamAV scanning server
 module Datastore
   module Documents
     class Scan
-      # include ::LaaCrimeSchemas::Types
+      include ::LaaCrimeSchemas::Types
 
       attr_reader :document
 
@@ -28,18 +27,18 @@ module Datastore
       private
 
       def success?
-        [::LaaCrimeSchemas::Types::VirusScanStatus['pass']].include? document.scan_status
+        [VirusScanStatus['pass']].include? document.scan_status
       end
 
       def scan_result
-        Rails.error.handle(fallback: -> { ::LaaCrimeSchemas::Types::VirusScanStatus['incomplete'] }) do
+        Rails.error.handle(fallback: -> { VirusScanStatus['incomplete'] }) do
           case Clamby.safe?(document.tempfile.path)
           when true
-            ::LaaCrimeSchemas::Types::VirusScanStatus['pass']
+            VirusScanStatus['pass']
           when false
-            ::LaaCrimeSchemas::Types::VirusScanStatus['flagged']
+            VirusScanStatus['flagged']
           else
-            ::LaaCrimeSchemas::Types::VirusScanStatus['other']
+            VirusScanStatus['other']
           end
         end
       end

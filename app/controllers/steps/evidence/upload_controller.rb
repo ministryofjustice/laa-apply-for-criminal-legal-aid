@@ -18,19 +18,17 @@ module Steps
 
         document = current_crime_application.documents.find(params['document_id'])
 
-        if Datastore::Documents::Delete.new(document:, current_provider:, request_ip:).call
-          @flash = { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }
-          Rails.logger.info "Document successfully deleted - #{document.s3_object_key}"
-          document.destroy
-        else
-          @flash = { alert: t('steps.evidence.upload.edit.delete.failure', file_name: document.filename) }
-        end
+        @flash = if Datastore::Documents::Delete.new(document:, log_context:).call
+                   { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }
+                 else
+                   { alert: t('steps.evidence.upload.edit.delete.failure', file_name: document.filename) }
+                 end
 
         :delete_document
       end
 
-      def request_ip
-        request.remote_ip
+      def log_context
+        LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
       end
     end
   end

@@ -1,21 +1,11 @@
-# module DatastoreApi::Requests::Documents
-#   class Delete
-#     def call
-#       puts '===> MONKEYPATCHED!'
-#       raise ArgumentError, 'testing'
-#     end
-#   end
-# end
-
 module Datastore
   module Documents
     class Delete
-      attr_reader :document, :current_provider, :request_ip
+      attr_reader :document, :log_context
 
-      def initialize(document:, current_provider:, request_ip:)
+      def initialize(document:, log_context:)
         @document = document
-        @current_provider = current_provider
-        @request_ip = request_ip
+        @log_context = log_context
       end
 
       def call
@@ -23,6 +13,7 @@ module Datastore
 
         Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
           DatastoreApi::Requests::Documents::Delete.new(object_key:).call
+          Rails.logger.info "Document successfully deleted. Object key: #{document.s3_object_key}"
           true
         end
       end
@@ -40,10 +31,7 @@ module Datastore
       end
 
       def context
-        { provider_id: current_provider.id,
-          provider_ip: request_ip,
-          file_type: document.content_type,
-          s3_object_key: object_key }
+        log_context << { file_type: document.content_type, s3_object_key: object_key }
       end
     end
   end

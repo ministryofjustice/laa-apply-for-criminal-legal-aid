@@ -1,14 +1,13 @@
 class ApplicationPurger
-  attr_reader :crime_application, :current_provider, :request_ip
+  attr_reader :crime_application, :log_context
 
-  def self.call(crime_application, current_provider, request_ip)
-    new(crime_application, current_provider, request_ip).call
+  def self.call(crime_application, log_context)
+    new(crime_application, log_context).call
   end
 
-  def initialize(crime_application, current_provider, request_ip)
+  def initialize(crime_application, log_context)
     @crime_application = crime_application
-    @current_provider = current_provider
-    @request_ip = request_ip
+    @log_context = log_context
   end
   private_class_method :new
 
@@ -21,7 +20,7 @@ class ApplicationPurger
 
   def delete_orphan_stored_documents
     orphan_documents.each do |document|
-      Datastore::Documents::Delete.new(document:, current_provider:, request_ip:).call
+      Datastore::Documents::Delete.new(document:, log_context:).call
     end
   end
 
