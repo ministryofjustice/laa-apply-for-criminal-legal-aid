@@ -71,6 +71,7 @@ module Datastore
 
       def context
         log_context << { file_type: document.content_type }
+        log_context.to_h
       end
     end
   end

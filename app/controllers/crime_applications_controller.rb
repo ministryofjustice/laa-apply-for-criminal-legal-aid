@@ -42,6 +42,6 @@ class CrimeApplicationsController < DashboardController
   end
 
   def log_context
-    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
+    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip).to_h
   end
 end
