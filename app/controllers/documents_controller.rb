@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
       file: file_from_params, crime_application: current_crime_application
     )
 
-    Datastore::Documents::Upload.new(document:).call if document.valid?(:criteria)
+    Datastore::Documents::Upload.new(document:, log_context:).call if document.valid?(:criteria)
 
     respond_with(document, location: evidence_upload_step) do |format|
       if document.invalid?(:storage)
@@ -30,6 +30,10 @@ class DocumentsController < ApplicationController
   def destroy; end
 
   private
+
+  def log_context
+    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
+  end
 
   def evidence_upload_step
     edit_steps_evidence_upload_path(current_crime_application)
