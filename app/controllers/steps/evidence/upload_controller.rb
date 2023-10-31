@@ -18,11 +18,12 @@ module Steps
 
         document = current_crime_application.documents.find(params['document_id'])
 
-        @flash = if Datastore::Documents::Delete.new(document:, log_context:).call
-                   { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }
-                 else
-                   { alert: t('steps.evidence.upload.edit.delete.failure', file_name: document.filename) }
-                 end
+        if Datastore::Documents::Delete.new(document:, log_context:).call
+          @flash = { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }
+          document.destroy
+        else
+          @flash = { alert: t('steps.evidence.upload.edit.delete.failure', file_name: document.filename) }
+        end
 
         :delete_document
       end
