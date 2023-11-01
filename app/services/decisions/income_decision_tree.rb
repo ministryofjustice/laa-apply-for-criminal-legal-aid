@@ -2,6 +2,8 @@ module Decisions
   class IncomeDecisionTree < BaseDecisionTree
     def destination
       case step_name
+      when :employment_status
+        after_employment_status
       when :lost_job_in_custody
         # TODO: link to next step when we have it
         edit(:manage_without_income)
@@ -11,6 +13,20 @@ module Decisions
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
+    end
+
+    private
+
+    def after_employment_status
+      if ended_employment_within_three_months
+        edit(:lost_job_in_custody)
+      else
+        show('/home', action: :index)
+      end
+    end
+
+    def ended_employment_within_three_months
+      @ended_employment_within_three_months ||= current_crime_application.applicant.ended_employment_with_three_months
     end
   end
 end

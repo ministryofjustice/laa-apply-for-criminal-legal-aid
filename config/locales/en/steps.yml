@@ -198,6 +198,9 @@ en:
 
     income:
       caption: Income assessment
+      employment_status:
+        edit:
+          page_title: What is client's employment status?
       lost_job_in_custody:
         edit:
           page_title: Did client lose job being in custody?
