@@ -9,12 +9,17 @@ module Steps
 
       validates_inclusion_of :employment_status, in: :choices
 
-      validates :ended_employment_within_three_months,
-                presence: true,
-                if: -> { not_working? }
+      validates_inclusion_of :ended_employment_within_three_months,
+                             in: :yes_no_choices,
+                             presence: true,
+                             if: -> { not_working? }
 
       def choices
         EmploymentStatus.values
+      end
+
+      def yes_no_choices
+        YesNoAnswer.values
       end
 
       private
@@ -31,7 +36,7 @@ module Steps
         }
       end
 
-      def lost_job_in_custody?
+      def not_working?
         employment_status&.not_working?
       end
     end

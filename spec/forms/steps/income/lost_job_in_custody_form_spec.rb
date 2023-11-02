@@ -6,16 +6,16 @@ RSpec.describe Steps::Income::LostJobInCustodyForm do
   let(:arguments) do
     {
       crime_application:,
-      employment_status:,
-      ended_employment_with_three_months:
+      lost_job_in_custody:,
+      date_job_lost:
     }
   end
 
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
 
-  let(:employment_status) { nil }
-  let(:ended_employment_with_three_months) { nil }
+  let(:lost_job_in_custody) { nil }
+  let(:date_job_lost) { nil }
 
   describe '#choices' do
     it 'returns the possible choices' do

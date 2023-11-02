@@ -18,15 +18,20 @@ module Decisions
     private
 
     def after_employment_status
-      if ended_employment_within_three_months
+      if not_working && ended_employment_within_three_months
         edit(:lost_job_in_custody)
       else
         show('/home', action: :index)
       end
     end
 
+    def not_working
+      @not_working ||= current_crime_application.applicant.employment_status == 'not_working'
+    end
+
     def ended_employment_within_three_months
-      @ended_employment_within_three_months ||= current_crime_application.applicant.ended_employment_with_three_months
+      @ended_employment_within_three_months ||= current_crime_application
+                                                .applicant&.ended_employment_within_three_months&.yes?
     end
   end
 end

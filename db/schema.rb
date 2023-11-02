@@ -155,7 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_123725) do
     t.string "manage_without_income"
     t.string "manage_other_details"
     t.string "employment_status"
-    t.boolean "ended_employment_within_three_months"
+    t.string "ended_employment_within_three_months"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

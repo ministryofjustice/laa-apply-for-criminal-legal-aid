@@ -7,8 +7,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
+      applicant: applicant
     )
   end
+
+  let(:applicant) { instance_double(Applicant, employment_status:) }
+  let(:employment_status) { nil }
 
   before do
     allow(
@@ -17,6 +21,27 @@ RSpec.describe Decisions::IncomeDecisionTree do
   end
 
   it_behaves_like 'a decision tree'
+
+  context 'when the step is `employment_status`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :employment_status }
+
+    context 'when status selected is an employed option' do
+      let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+
+    context 'when status selected is not working' do
+      let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+      before do
+        allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::YES)
+      end
+
+      it { is_expected.to have_destination(:lost_job_in_custody, :edit, id: crime_application) }
+    end
+  end
 
   context 'when the step is `lost_job_in_custody`' do
     let(:form_object) { double('FormObject') }
