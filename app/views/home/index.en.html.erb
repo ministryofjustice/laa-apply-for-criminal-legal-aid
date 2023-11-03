@@ -8,20 +8,41 @@
       <%= service_name %>
     </h1>
 
-    <p class="govuk-body">
+    <% if FeatureFlags.means_journey.enabled? %>
+      <p class="govuk-body">
+      Use this service to apply for criminal legal aid in ongoing cases. The application will be means tested.
+      </p>
+      <p class="govuk-body">
+      Your client cannot have a partner.
+      </p>
+      <p class="govuk-body">
+      They must be one of the following:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>receiving a passporting benefit, like Universal Credit</li>
+        <li>not working</li>
+      </ul>
+
+      <p class="govuk-body">
+        <%= link_to 'Use eForms for all other applications', Settings.eforms_url %>.
+      </p>
+    <% else %>
+      <p class="govuk-body">
       Use this service to apply for criminal legal aid if:
-    </p>
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the case is ongoing</li>
-      <li>you know your client’s National Insurance number (if they are 18 years old or over)</li>
-      <li>your client does not have a partner</li>
-      <li>your client receives a passporting benefit, including Universal Credit</li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the case is ongoing</li>
+        <li>you know your client’s National Insurance number (if they are 18 years old or over)</li>
+        <li>your client does not have a partner</li>
+        <li>your client receives a passporting benefit, including Universal Credit</li>
+      </ul>
 
-    <p class="govuk-body">
+      <p class="govuk-body">
       Use <%= link_to 'eForms', Settings.eforms_url %> for all other applications.
-    </p>
+      </p>
+    <% end %>
 
     <%= button_to provider_saml_omniauth_authorize_path, method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
