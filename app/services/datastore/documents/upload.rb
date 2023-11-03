@@ -5,33 +5,46 @@ module Datastore
 
       PRESIGNED_URL_EXPIRES_IN = 15 # seconds
 
-      attr_accessor :document
+      attr_reader :document, :log_context, :presign_upload
 
-      def initialize(document:)
+      def initialize(document:, log_context:)
         @document = document
+        @log_context = log_context
+        @presign_upload = nil
       end
 
       # TODO: 2023-10-6 document is persisted regardless of scan
       # result due to incomplete UX
-      def call # rubocop:disable Metrics/AbcSize
+      def call
         return false if document.s3_object_key.present?
 
-        Rails.error.handle(fallback: -> { false }) do
-          Scan.new(document:).call
+        Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
+          scan
+          set_presign_upload
+          upload_document
 
-          presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
-            usn:, expires_in:
-          ).call
-
-          if upload_to_s3(presign_upload.url)
-            document.update(
-              s3_object_key: presign_upload.object_key
-            )
-          end
+          true
         end
       end
 
       private
+
+      def scan
+        Scan.new(document:).call
+      end
+
+      def upload_document
+        document.update(s3_object_key: @presign_upload&.object_key) if upload_to_s3(@presign_upload&.url)
+      end
+
+      def set_presign_upload
+        @presign_upload = DatastoreApi::Requests::Documents::PresignUpload.new(
+          usn:, expires_in:
+        ).call
+
+        raise UnsuccessfulUploadError, 'Error retrieving presign upload url' unless @presign_upload&.url
+        raise UnsuccessfulUploadError, 'Object Key missing' unless @presign_upload&.object_key
+      end
 
       def upload_to_s3(url)
         headers = {
@@ -43,7 +56,9 @@ module Datastore
           url, document.tempfile, headers
         )
 
-        response.success? || (raise UnsuccessfulUploadError, response.body)
+        raise UnsuccessfulUploadError, response.body unless response.success?
+
+        Rails.logger.info "Document successfully uploaded. Object key: #{document.s3_object_key}"
       end
 
       def usn
@@ -52,6 +67,11 @@ module Datastore
 
       def expires_in
         PRESIGNED_URL_EXPIRES_IN
+      end
+
+      def context
+        log_context << { file_type: document.content_type }
+        log_context.to_h
       end
     end
   end

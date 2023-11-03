@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::Documents::Delete do
-  subject { described_class.new(document:) }
+  subject { described_class.new(document:, log_context:) }
 
-  let(:document) { instance_double(Document, submitted_at:, s3_object_key:) }
-
+  let(:document) { instance_double(Document, submitted_at:, s3_object_key:, content_type:) }
+  let(:log_context) { LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123') }
   let(:submitted_at) { nil }
   let(:s3_object_key) { '123/abcdef1234' }
+  let(:content_type) { 'application/pdf' }
 
   describe '#call' do
     context 'when document has already been submitted to case workers' do
@@ -32,6 +33,7 @@ RSpec.describe Datastore::Documents::Delete do
       end
 
       it 'returns true' do
+        expect(document).to receive(:destroy)
         expect(subject.call).to be(true)
       end
     end
@@ -43,6 +45,7 @@ RSpec.describe Datastore::Documents::Delete do
       end
 
       it 'returns false' do
+        expect(document).not_to receive(:destroy)
         expect(subject.call).to be(false)
       end
     end
