@@ -238,13 +238,19 @@ en:
             lost_job_in_custody:
               inclusion: Select yes if your client lost their job as a result of being in custody
             date_job_lost:
-              blank: Date job was lost cannot be blank
+              blank: Enter the date they lost their job
+              blank_day: Date they lost their job must include a day
+              blank_month: Date they lost their job must include a month
+              blank_year: Date they lost their job must include a year
+              blank_day_month: Date they lost their job must include a day and month
+              blank_day_year: Date they lost their job must include a day and year
+              blank_month_year: Date they lost their job must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date job was lost is too far in the past
-              future_not_allowed: Date job was lost cannot be in the future
+              future_not_allowed: Date they lost their job must be today or in the past
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:

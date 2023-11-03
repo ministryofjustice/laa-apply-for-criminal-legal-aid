@@ -207,8 +207,8 @@ en:
           page_title: Use eForms for this application
       lost_job_in_custody:
         edit:
-          page_title: Did client lose job being in custody?
-          date_job_lost: Date job was lost
+          page_title: Did your client lose their job as a result of being in custody?
+          date_job_lost: When did they lose their job?
       manage_without_income:
         edit:
           page_title: How does client manage with no income?
