@@ -37,7 +37,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when employment ended within 3 months' do
         before do
-          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::YES)
+          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::YES.to_s)
         end
 
         it { is_expected.to have_destination(:lost_job_in_custody, :edit, id: crime_application) }
@@ -45,7 +45,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when employment has not ended within 3 months' do
         before do
-          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::NO)
+          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::NO.to_s)
         end
 
         it { is_expected.to have_destination('/home', :index, id: crime_application) }
