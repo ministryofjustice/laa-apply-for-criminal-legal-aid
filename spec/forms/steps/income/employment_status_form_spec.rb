@@ -14,7 +14,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
 
-  let(:employment_status) { nil }
+  let(:employment_status) { [] }
   let(:ended_employment_within_three_months) { nil }
 
   describe '#choices' do
@@ -40,12 +40,12 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:employment_status, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
       end
     end
 
     context 'when `employment_status` is not valid' do
-      let(:employment_status) { 'foo' }
+      let(:employment_status) { ['foo'] }
 
       it 'returns false' do
         expect(form.save).to be(false)
@@ -53,12 +53,21 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:employment_status, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
+      end
+
+      context 'when `employment_status` selected has a valid and an invalid option' do
+        let(:employment_status) { %w[foo EmploymentStatus::EMPLOYED] }
+
+        it 'has is a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
+        end
       end
     end
 
     context 'when `employment_status` is valid' do
-      let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+      let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
       it { is_expected.to be_valid }
 
@@ -69,7 +78,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
       it_behaves_like 'a has-one-association form',
                       association_name: :applicant,
                       expected_attributes: {
-                        'employment_status' => EmploymentStatus::EMPLOYED,
+                        'employment_status' => [EmploymentStatus::EMPLOYED.to_s],
                         'ended_employment_within_three_months' => nil
                       }
 
@@ -88,7 +97,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
 
       context 'when `employment_status` answer is `not_working`' do
         context 'when `ended_employment_within_three_months` was previously recorded' do
-          let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+          let(:employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
           let(:ended_employment_within_three_months) { YesNoAnswer::YES }
 
           it 'is valid' do
@@ -102,7 +111,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
           end
 
           it 'cannot reset `date_job_lost` as it is relevant' do
-            applicant_record.update(employment_status: EmploymentStatus::NOT_WORKING.to_s)
+            applicant_record.update(employment_status: [EmploymentStatus::NOT_WORKING.to_s])
 
             attributes = form.send(:attributes_to_reset)
             expect(attributes['ended_employment_within_three_months']).to eq(ended_employment_within_three_months)
@@ -110,7 +119,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
         end
 
         context 'when a `date_job_lost` was not previously recorded' do
-          let(:employment_status) { EmploymentStatus::NOT_WORKING }
+          let(:employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
           let(:ended_employment_within_three_months) { YesNoAnswer::YES.to_s }
 
           it 'is also valid' do
