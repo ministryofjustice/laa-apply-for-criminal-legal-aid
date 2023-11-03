@@ -231,7 +231,7 @@ en:
           attributes:
             lost_job_in_custody:
               inclusion: Select yes if your client lost their job as a result of being in custody
-            date_job_lost: 
+            date_job_lost:
               blank: Date job was lost cannot be blank
               invalid: Enter a valid date
               invalid_day: Enter a valid day
@@ -239,6 +239,12 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date job was lost is too far in the past
               future_not_allowed: Date job was lost cannot be in the future
+        steps/income/manage_without_income_form:
+          attributes:
+            manage_without_income:
+              inclusion: Select how your client manages with no income
+            manage_other_details:
+              blank: Enter details on how your client manages with no income
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:

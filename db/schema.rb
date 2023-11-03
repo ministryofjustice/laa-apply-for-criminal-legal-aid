@@ -152,6 +152,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_123725) do
     t.string "has_benefit_evidence"
     t.string "lost_job_in_custody"
     t.date "date_job_lost"
+    t.string "manage_without_income"
+    t.string "manage_other_details"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
