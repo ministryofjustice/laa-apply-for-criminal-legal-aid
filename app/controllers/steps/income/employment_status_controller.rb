@@ -10,6 +10,12 @@ module Steps
       def update
         update_and_advance(EmploymentStatusForm, as: :employment_status)
       end
+
+      private
+
+      def additional_permitted_params
+        [employment_status: []]
+      end
     end
   end
 end

@@ -10,6 +10,7 @@
         <% @form_object.choices.each.with_index do |choice, index| %>
           <% if choice.not_working? %>
             <%= f.govuk_check_box_divider %>
+            <span id="<%= choice %>"></span>
             <%= f.govuk_check_box :employment_status, choice.value, exclusive: true do %>
               <% f.govuk_radio_buttons_fieldset(:ended_employment_within_three_months, legend: { text: t('.ended_employment_within_three_months'), size: 's' }) do %>
                 <% @form_object.yes_no_choices.each_with_index do |option, index| %>
@@ -18,6 +19,7 @@
               <% end %>
             <% end %>
           <% else %>
+            <span id="<%= choice %>"></span>
             <%= f.govuk_check_box :employment_status, choice, link_errors: index.zero? %>
           <% end %>
         <% end %>
