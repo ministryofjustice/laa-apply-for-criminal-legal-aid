@@ -202,6 +202,9 @@ en:
         edit:
           page_title: What is your client’s employment status?
           ended_employment_within_three_months: Has your client ended employment in the last 3 months?
+      employed_exit:
+        show:
+          page_title: Use eForms for this application
       lost_job_in_custody:
         edit:
           page_title: Did client lose job being in custody?

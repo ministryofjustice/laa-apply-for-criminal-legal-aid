@@ -18,10 +18,14 @@ module Decisions
     private
 
     def after_employment_status
-      if not_working && ended_employment_within_three_months
-        edit(:lost_job_in_custody)
+      if not_working
+        if ended_employment_within_three_months
+          edit(:lost_job_in_custody)
+        else
+          show('/home', action: :index)
+        end
       else
-        show('/home', action: :index)
+        show(:employed_exit)
       end
     end
 
