@@ -71,7 +71,7 @@ en:
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing your client's name and their benefit details.
         has_benefit_evidence_options:
-          'yes': You'll need to upload evidence at the end of this application
+          'yes': You'll need to upload evidence at the end of this application.
       steps_client_contact_details_form:
         telephone_number: For example, 01632 960 001 or +44 808 157 0192
       steps_address_lookup_form:
