@@ -57,6 +57,8 @@ en:
         is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
+      steps_income_employment_status_form:
+        employment_status: What is your client's employment status?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
@@ -103,6 +105,10 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_income_employment_status_form:
+        employment_status: Select all that apply.
+        employment_status_options:
+          not_working: This includes anyone who has ended employment in the last 3 months, has never had a job, or is a pensioner.
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_submission_declaration_form:
@@ -214,6 +220,15 @@ en:
           expert_examination: The proceedings may involve expert cross-examination of a prosecution witness (whether an expert or not)
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
+      steps_income_employment_status_form:
+        employment_status_options:
+          employed: Employed
+          self_employed: Self-employed
+          business_partnership: In a business partnership
+          director: Company director
+          shareholder: Shareholder in a private company
+          not_working: My client is not working
+        ended_employment_within_three_months_options: *YESNO
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_manage_without_income_form:

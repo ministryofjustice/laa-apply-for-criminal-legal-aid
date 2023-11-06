@@ -1,0 +1,33 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+  <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+
+      <%= f.govuk_check_boxes_fieldset :employment_status, legend: { tag: 'h1', size: 'xl' } do %>
+
+        <% @form_object.choices.each_with_index do |choice, index| %>
+          <span id="<%= choice %>"></span>
+          <% if choice.not_working? %>
+            <%= f.govuk_check_box_divider %>
+            <%= f.govuk_check_box :employment_status, choice.to_s, exclusive: true do %>
+              <% f.govuk_radio_buttons_fieldset(:ended_employment_within_three_months, legend: { text: t('.ended_employment_within_three_months'), size: 's' }) do %>
+                <% @form_object.yes_no_choices.each_with_index do |option, index| %>
+                  <%= f.govuk_radio_button :ended_employment_within_three_months, option.value, link_errors: index.zero? %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= f.govuk_check_box :employment_status, choice.to_s, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

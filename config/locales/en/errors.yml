@@ -227,6 +227,12 @@ en:
               blank: Enter details on why it is in the interest of another person that your client is represented
             other_justification:
               blank: Enter details on why your client should get legal aid
+        steps/income/employment_status_form:
+          attributes:
+            employment_status:
+              invalid: Select your client's employment status, or select 'My client is not working'
+            ended_employment_within_three_months:
+              inclusion: Select yes if your client ended employment in the last 3 months
         steps/income/lost_job_in_custody_form:
           attributes:
             lost_job_in_custody:
