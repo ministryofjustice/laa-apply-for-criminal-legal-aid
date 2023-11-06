@@ -37,13 +37,14 @@ class MultiparamDateValidator < ActiveModel::EachValidator
 
   private
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/AbcSize
   def validate_date(date)
-    add_error(:blank_day_month)  if date.day.nil? && date.month.nil?
-    add_error(:blank_day_year)   if date.day.nil? && date.year.nil?
-    add_error(:blank_month_year) if date.month.nil? && date.year.nil?
-    add_error(:blank_day)        unless date.day.present?
-    add_error(:blank_month)      unless date.month.present?
-    add_error(:blank_year)       unless date.year.present?
+    add_error(:blank_day_month)  if date.day.blank? && date.month.blank?
+    add_error(:blank_day_year)   if date.day.blank? && date.year.blank?
+    add_error(:blank_month_year) if date.month.blank? && date.year.blank?
+    add_error(:blank_day)        if date.day.blank?
+    add_error(:blank_month)      if date.month.blank?
+    add_error(:blank_year)       if date.year.blank?
     add_error(:invalid_day)      unless date.day.to_i.between?(1, 31)
     add_error(:invalid_month)    unless date.month.to_i.between?(1, 12)
     add_error(:invalid_year)     unless date.year.to_s.length.eql?(4)
@@ -58,12 +59,12 @@ class MultiparamDateValidator < ActiveModel::EachValidator
       add_error(:invalid)
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
   # Some basic constraints, for example some dates like DoB can't be in
   # the future, or a date is very far in the past (potential user typo).
   # This kind of validations can be configured passing an options hash
   # when declaring the validation in the attribute.
-  # rubocop:disable Metrics/AbcSize
   def validate_config_constraints(date)
     add_error(:past_not_allowed) unless config[:allow_past] || Time.zone.today <= date
     add_error(:future_not_allowed) unless config[:allow_future] || Time.zone.today >= date
