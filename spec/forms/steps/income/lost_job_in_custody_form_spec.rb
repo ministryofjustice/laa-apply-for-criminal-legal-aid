@@ -117,6 +117,20 @@ RSpec.describe Steps::Income::LostJobInCustodyForm do
           end
         end
       end
+
+      context 'when `date_job_lost` is over 3 months ago' do
+        let(:lost_job_in_custody) { YesNoAnswer::YES.to_s }
+        let(:date_job_lost) { 4.months.ago.to_date }
+
+        it 'returns false' do
+          expect(form.save).to be(false)
+        end
+
+        it 'has a validation error on the field' do
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:date_job_lost, :over_three_months_ago)).to be(true)
+        end
+      end
     end
   end
 end

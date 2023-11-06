@@ -10,8 +10,7 @@
           <% @form_object.choices.each_with_index do |choice, index| %>
             <% if choice == ManageWithoutIncomeType::OTHER %>
               <%= f.govuk_radio_button :manage_without_income, choice.value do %>
-                <% f.govuk_text_area :manage_other_details,
-                                     label: { size: 's' } %>
+                <% f.govuk_text_area :manage_other_details %>
               <% end %>
             <% else %>
               <%= f.govuk_radio_button :manage_without_income, choice.value, link_errors: index.zero? %>

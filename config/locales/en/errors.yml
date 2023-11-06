@@ -51,6 +51,12 @@ en:
               blank: Enter a last name
             date_of_birth:
               blank: Enter a date of birth
+              blank_day: Date of birth must include a day
+              blank_month: Date of birth must include a month
+              blank_year: Date of birth must include a year
+              blank_day_month: Date of birth must include a day and month
+              blank_day_year: Date of birth must include a day and year
+              blank_month_year: Date of birth must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
@@ -121,6 +127,12 @@ en:
               invalid: Enter a valid MAAT ID
             appeal_lodged_date:
               blank: Enter the date the appeal was lodged
+              blank_day: Date the appeal was lodged must include a day
+              blank_month: Date the appeal was lodged must include a month
+              blank_year: Date the appeal was lodged must include a year
+              blank_day_month: Date the appeal was lodged must include a day and month
+              blank_day_year: Date the appeal was lodged must include a day and year
+              blank_month_year: Date the appeal was lodged must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
@@ -158,6 +170,12 @@ en:
         steps/case/offence_date_fieldset_form:
           shared_date_errors: &shared_date_errors
             blank: Date cannot be blank
+            blank_day: Date must include a day
+            blank_month: Date must include a month
+            blank_year: Date must include a year
+            blank_day_month: Date must include a day and month
+            blank_day_year: Date must include a day and year
+            blank_month_year: Date must include a month and year
             invalid: Enter a valid date
             invalid_day: Enter a valid day
             invalid_month: Enter a valid month
@@ -171,6 +189,12 @@ en:
           summary:
             date_from:
               blank: Start date %{index} cannot be blank
+              blank_day: Start date %{index} must include a day
+              blank_month: Start date %{index} must include a month
+              blank_year: Start date %{index} must include a year
+              blank_day_month: Start date %{index} must include a day and month
+              blank_day_year: Start date %{index} must include a day and year
+              blank_month_year: Start date %{index} must include a month and year
               invalid: Enter a valid start date %{index}
               invalid_day: Enter a valid start date %{index} day
               invalid_month: Enter a valid start date %{index} month
@@ -178,6 +202,12 @@ en:
               year_too_early: Start date %{index} is too far in the past
               future_not_allowed: Start date %{index} cannot be in the future
             date_to:
+              blank_day: End date %{index} must include a day
+              blank_month: End date %{index} must include a month
+              blank_year: End date %{index} must include a year
+              blank_day_month: End date %{index} must include a day and month
+              blank_day_year: End date %{index} must include a day and year
+              blank_month_year: End date %{index} must include a month and year
               invalid: Enter a valid end date %{index}
               invalid_day: Enter a valid end date %{index} day
               invalid_month: Enter a valid end date %{index} month
@@ -191,6 +221,12 @@ en:
               blank: Enter a court name
             hearing_date:
               blank: Date of next hearing cannot be blank
+              blank_day: Date of next hearing must include a day
+              blank_month: Date of next hearing must include a month
+              blank_year: Date of next hearing must include a year
+              blank_day_month: Date of next hearing must include a day and month
+              blank_day_year: Date of next hearing must include a day and year
+              blank_month_year: Date of next hearing must include a month and year
               invalid: Enter a valid next hearing date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
@@ -238,13 +274,19 @@ en:
             lost_job_in_custody:
               inclusion: Select yes if your client lost their job as a result of being in custody
             date_job_lost:
-              blank: Date job was lost cannot be blank
+              blank: Enter the date they lost their job
+              blank_day: Date they lost their job must include a day
+              blank_month: Date they lost their job must include a month
+              blank_year: Date they lost their job must include a year
+              blank_day_month: Date they lost their job must include a day and month
+              blank_day_year: Date they lost their job must include a day and year
+              blank_month_year: Date they lost their job must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
-              year_too_early: Date job was lost is too far in the past
-              future_not_allowed: Date job was lost cannot be in the future
+              over_three_months_ago: Date they lost their job must be within the last 3 months
+              future_not_allowed: Date they lost their job must be today or in the past
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
