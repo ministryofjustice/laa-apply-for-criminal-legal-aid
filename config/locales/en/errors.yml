@@ -53,7 +53,7 @@ en:
               blank: Enter a date of birth
               blank_day: Date of birth must include a day
               blank_month: Date of birth must include a month
-              blank_year: bunDate of birth must include a year
+              blank_year: Date of birth must include a year
               blank_day_month: Date of birth must include a day and month
               blank_day_year: Date of birth must include a day and year
               blank_month_year: Date of birth must include a month and year
