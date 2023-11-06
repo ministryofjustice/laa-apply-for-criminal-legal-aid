@@ -27,7 +27,11 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :employment_status }
 
     context 'when status selected is an employed option' do
-      let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+      let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED])
+      end
 
       it { is_expected.to have_destination(:employed_exit, :show, id: crime_application) }
     end
@@ -37,7 +41,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when employment ended within 3 months' do
         before do
-          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::YES.to_s)
+          allow(form_object).to receive_messages(employment_status: [EmploymentStatus::NOT_WORKING.to_s],
+                                                 ended_employment_within_three_months: YesNoAnswer::YES)
         end
 
         it { is_expected.to have_destination(:lost_job_in_custody, :edit, id: crime_application) }
@@ -45,7 +50,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when employment has not ended within 3 months' do
         before do
-          allow(applicant).to receive(:ended_employment_within_three_months).and_return(YesNoAnswer::NO.to_s)
+          allow(form_object).to receive_messages(employment_status: [EmploymentStatus::NOT_WORKING.to_s],
+                                                 ended_employment_within_three_months: YesNoAnswer::NO)
         end
 
         it { is_expected.to have_destination('/home', :index, id: crime_application) }

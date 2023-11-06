@@ -30,13 +30,11 @@ module Decisions
     end
 
     def not_working
-      @not_working ||= current_crime_application
-                       .applicant.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+      form_object.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
     def ended_employment_within_three_months
-      @ended_employment_within_three_months ||= current_crime_application
-                                                .applicant&.ended_employment_within_three_months == 'yes'
+      form_object.ended_employment_within_three_months&.yes?
     end
   end
 end
