@@ -216,6 +216,8 @@ en:
           other: Other
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
+      steps_income_income_before_tax_form:
+        income_above_threshold_options: *YESNO
       steps_income_manage_without_income_form:
         manage_without_income_options:
           friends_sofa: They sleep on a friend's sofa for free
