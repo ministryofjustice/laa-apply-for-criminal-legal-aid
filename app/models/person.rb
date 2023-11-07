@@ -8,7 +8,7 @@ class Person < ApplicationRecord
   has_one :home_address, dependent: :destroy, class_name: 'HomeAddress'
   has_one :correspondence_address, dependent: :destroy, class_name: 'CorrespondenceAddress'
 
-  has_one :income_details, foreign_key: :person_id, dependent: :destroy
+  has_one :income_details, dependent: :destroy
 
   scope :with_name, -> { where.not(first_name: [nil, '']) }
 
