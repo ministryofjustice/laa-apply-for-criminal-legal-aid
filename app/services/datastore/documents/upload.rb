@@ -13,15 +13,14 @@ module Datastore
         @presign_upload = nil
       end
 
-      # TODO: 2023-10-6 document is persisted regardless of scan
-      # result due to incomplete UX
       def call
         return false if document.s3_object_key.present?
 
         Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
           scan
           set_presign_upload
-          upload_document
+          upload_to_s3(@presign_upload&.url)
+          persist_document(@presign_upload&.object_key)
 
           true
         end
@@ -30,11 +29,26 @@ module Datastore
       private
 
       def scan
-        Scan.new(document:).call
+        virus_scan = Scan.new(document:)
+        virus_scan.call
+
+        return if virus_scan.success?
+
+        raise UnsuccessfulUploadError, 'Virus scan inconclusive' if virus_scan.inconclusive?
+
+        log = [
+          "Crime Application ID: #{document.crime_application_id}",
+          "Document ID: #{document.id}",
+          "Scan result: #{document.scan_status}"
+        ].join(' ')
+
+        raise UnsuccessfulUploadError, "Virus scan flagged potential malcious file - #{log}"
       end
 
-      def upload_document
-        document.update(s3_object_key: @presign_upload&.object_key) if upload_to_s3(@presign_upload&.url)
+      def persist_document(s3_object_key)
+        raise UnsuccessfulUploadError, 'S3 Object Key missing' if s3_object_key.blank?
+
+        document.update(s3_object_key:)
       end
 
       def set_presign_upload

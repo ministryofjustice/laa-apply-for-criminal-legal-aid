@@ -14,6 +14,13 @@ RSpec.describe Datastore::Documents::Upload do
   end
 
   describe '#call' do
+    # Assume virus-scanning server is available
+    before do
+      allow_any_instance_of(Datastore::Documents::Scan).to receive(:unavailable?).and_return(false)
+
+      subject.document.tempfile = Tempfile.new('empty-file')
+    end
+
     context 'when a document is uploaded successfully' do
       before do
         stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_upload')
@@ -22,6 +29,8 @@ RSpec.describe Datastore::Documents::Upload do
 
         stub_request(:put, presign_upload_url)
           .to_return(status: 200)
+
+        allow(Clamby).to receive(:safe?).and_return(true)
       end
 
       it 'has `awaiting` virus scan status before upload' do
@@ -72,21 +81,37 @@ RSpec.describe Datastore::Documents::Upload do
       end
     end
 
-    # Requires further consideration for handling unsafe file journey
-    context 'when document has malicious virus' do
+    context 'when anti-virus scanning flags malicious file' do
       before do
-        allow(Clamby).to receive(:safe?).and_return(false)
-
         stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_upload')
           .with(body: expected_query)
           .to_return(status: 201, body: { object_key: '123/abcdef1234', url: presign_upload_url }.to_json)
 
         stub_request(:put, presign_upload_url)
           .to_return(status: 200)
+
+        allow(Clamby).to receive(:safe?).and_return(false)
       end
 
-      it 'continues upload' do
-        expect(subject.call).to be(true)
+      it 'fails to upload' do
+        expect(subject.call).to be(false)
+        expect(subject.document.scan_status).to eq 'flagged'
+        expect(Rails.logger).to receive(:error).with(/Virus scan flagged potential malcious file -/)
+      end
+    end
+
+    context 'when anti-virus scanning is inconclusive' do
+      before do
+        allow_any_instance_of(Datastore::Documents::Scan).to receive(:unavailable?).and_return(true)
+
+        allow(Clamby).to receive(:safe?).and_return(false)
+      end
+
+      it 'allows upload', :aggregate_failures do
+        expect(subject.call).to be(false)
+        expect(subject.document.scan_status).to eq 'other'
+        expect(Clamby).not_to have_received(:safe?) # No virus scan took place
+        expect(Rails.logger).to receive(:error).with('Virus scan inconclusive')
       end
     end
   end

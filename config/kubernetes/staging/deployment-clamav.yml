@@ -28,10 +28,7 @@ spec:
         runAsGroup: 1001
       containers:
       - name: clamav
-        # NOTE: temporarily until clamav publishes an official unprivileged
-        # docker image (non-root) we use a forked version to run on k8s
-        # https://github.com/Cisco-Talos/clamav/issues/478
-        image: dradoaica/clamav-openshift:1.1
+        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 3310

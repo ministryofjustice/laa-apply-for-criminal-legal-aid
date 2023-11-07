@@ -9,10 +9,10 @@ end
 
 Clamby.configure(
   {
-    check: false,
+    check: true,
     daemonize: true,
     config_file: clamd_config_file,
-    output_level: 'medium', # one of 'off', 'low', 'medium', 'high'
+    output_level: 'high', # one of 'off', 'low', 'medium', 'high'
     fdpass: true,
     stream: true,
     error_clamscan_missing: true,
