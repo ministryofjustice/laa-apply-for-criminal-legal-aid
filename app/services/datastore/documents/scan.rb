@@ -6,9 +6,11 @@ require 'open3'
 module Datastore
   module Documents
     class Scan
-      TIMEOUT = 10 # Seconds before ClamAV scan abandoned
+      TIMEOUT = 20 # Seconds before ClamAV scan abandoned
 
       attr_reader :document
+
+      delegate :success?, :flagged?, :inconclusive?, to: :class
 
       def initialize(document:)
         @document = document
@@ -17,7 +19,7 @@ module Datastore
       def call
         raise ArgumentError, 'Document not present' if document.nil?
 
-        document.update(
+        document.update!(
           scan_status: scan_result,
           scan_at: ::Time.current,
           scan_provider: 'ClamAV'
@@ -29,16 +31,19 @@ module Datastore
       end
 
       def success?
-        [type_of('pass')].include? document.scan_status
+        self.class.success?(document)
       end
 
-      # Likely states if ClamAV server not found
       def inconclusive?
-        [type_of('awaiting'), type_of('other'), type_of('incomplete')].include? document.scan_status
+        self.class.inconclusive?(document)
       end
 
-      def failed?
-        [type_of('flagged')].include? document.scan_status
+      def flagged?
+        self.class.flagged?(document)
+      end
+
+      def type_of(key)
+        self.class.type_of(key)
       end
 
       # See specs for expected STDOUT/STDERR outputs
@@ -47,11 +52,32 @@ module Datastore
         !(stdout.to_s.include?('ClamAV') && stderr.to_s.blank?)
       rescue Errno::ENOENT => e
         log = [
-          'ClamAV Error - clamdscan package must be installed and executable',
+          'ClamAV Scan Error - clamdscan package must be installed and executable',
           "Exception: #{e.message}"
         ].join(' ')
         Rails.logger.error(log)
+
         true
+      end
+
+      class << self
+        def success?(document)
+          [type_of('pass')].include? document.scan_status
+        end
+
+        def flagged?(document)
+          [type_of('flagged')].include? document.scan_status
+          document.scan_status == type_of('flagged')
+        end
+
+        # Likely states if ClamAV server not found
+        def inconclusive?(document)
+          [type_of('awaiting'), type_of('other'), type_of('incomplete')].include? document.scan_status
+        end
+
+        def type_of(key)
+          ::LaaCrimeSchemas::Types::VirusScanStatus[key]
+        end
       end
 
       private
@@ -74,10 +100,6 @@ module Datastore
             end
           end
         end
-      end
-
-      def type_of(key)
-        ::LaaCrimeSchemas::Types::VirusScanStatus[key]
       end
     end
   end

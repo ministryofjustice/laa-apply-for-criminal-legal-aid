@@ -7,6 +7,9 @@ class Document < ApplicationRecord
   # Use with: `document.valid?(:criteria)`
   validates_with FileUploadValidator, on: [:criteria, :storage]
 
+  # Use with: `document.valid?(:scan)`
+  validates_with ScanValidator, on: :scan
+
   # In addition to the basic criteria, the object key must be
   # present to consider this document a fully valid and S3-stored one
   # Use with: `document.valid?(:storage)`

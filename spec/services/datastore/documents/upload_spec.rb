@@ -91,27 +91,42 @@ RSpec.describe Datastore::Documents::Upload do
           .to_return(status: 200)
 
         allow(Clamby).to receive(:safe?).and_return(false)
+        allow(Rails.logger).to receive(:error).with(/Virus scan flagged potential malcious file -/)
       end
 
       it 'fails to upload' do
         expect(subject.call).to be(false)
         expect(subject.document.scan_status).to eq 'flagged'
-        expect(Rails.logger).to receive(:error).with(/Virus scan flagged potential malcious file -/)
+      end
+
+      it 'logs errors' do
+        subject.call
+
+        expect(Rails.logger).to have_received(:error).with(/Virus scan flagged potential malcious file -/)
       end
     end
 
+    # Assume anti-virus scanner is unavailable
     context 'when anti-virus scanning is inconclusive' do
       before do
         allow_any_instance_of(Datastore::Documents::Scan).to receive(:unavailable?).and_return(true)
 
         allow(Clamby).to receive(:safe?).and_return(false)
+        allow(Rails.logger).to receive(:error).with(/ClamAV Scan Service unavailable/)
+        allow(Rails.logger).to receive(:error).with(/Virus scan inconclusive/)
       end
 
-      it 'allows upload', :aggregate_failures do
+      it 'fails upload' do
         expect(subject.call).to be(false)
         expect(subject.document.scan_status).to eq 'other'
         expect(Clamby).not_to have_received(:safe?) # No virus scan took place
-        expect(Rails.logger).to receive(:error).with('Virus scan inconclusive')
+      end
+
+      it 'logs errors' do
+        subject.call
+
+        expect(Rails.logger).to have_received(:error).with(/Virus scan inconclusive/)
+        expect(Rails.logger).to have_received(:error).with(/ClamAV Scan Service unavailable/)
       end
     end
   end

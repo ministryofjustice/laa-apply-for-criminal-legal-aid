@@ -8,9 +8,8 @@ RUN apk add --update \
   tzdata \
   yarn \
   gcompat \
-  clamav-daemon \
-  clamav \
-  clamdscan
+  clamav-clamdscan && \
+  apk del clamav-daemon freshclam
 
 FROM base AS dependencies
 

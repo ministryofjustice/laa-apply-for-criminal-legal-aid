@@ -34,9 +34,8 @@ RSpec.describe Datastore::Documents::Scan do
         it 'returns true' do
           expect(subject.call).to be true
           expect(subject.document.scan_status).to eq 'pass'
-          expect(subject.failed?).to be false
+          expect(subject.flagged?).to be false
           expect(subject.inconclusive?).to be false
-
         end
       end
 
@@ -46,7 +45,7 @@ RSpec.describe Datastore::Documents::Scan do
         it 'returns false' do
           expect(subject.call).to be false
           expect(subject.document.scan_status).to eq 'flagged'
-          expect(subject.failed?).to be true
+          expect(subject.flagged?).to be true
           expect(subject.inconclusive?).to be false
         end
       end
@@ -88,6 +87,18 @@ RSpec.describe Datastore::Documents::Scan do
     end
 
     context 'when anti-virus server unavailable' do
+      before do
+        allow(subject).to receive('unavailable?').and_return(true)
+      end
+
+      it 'sets scan status to `other`' do
+        subject.call
+        document.reload
+
+        expect(subject.document.scan_at).to be_a Time
+        expect(subject.document.scan_status).to eq 'other'
+        expect(subject.document.scan_provider).to eq 'ClamAV'
+      end
     end
   end
 
@@ -108,9 +119,17 @@ RSpec.describe Datastore::Documents::Scan do
           .to receive(:capture3)
           .with(/clamdscan/, any_args)
           .and_raise(Errno::ENOENT, 'No such file or directory - clamdscan')
+
+        allow(Rails.logger).to receive(:error).with(/ClamAV Scan Error - clamdscan package must be installed/)
       end
 
       it { expect(subject).to be true }
+
+      it 'logs errors' do
+        subject
+
+        expect(Rails.logger).to have_received(:error).with(/ClamAV Scan Error - clamdscan package must be installed/)
+      end
     end
 
     context 'when clamdscan is installed but remote server unreachable' do
