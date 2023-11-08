@@ -51,6 +51,14 @@ RSpec.describe Steps::Income::IncomeBeforeTaxForm do
       it 'passes validation' do
         expect(form.errors.of_kind?(:income_above_threshold, :invalid)).to be(false)
       end
+
+      it 'updates the record' do
+        expect(income_details).to receive(:update)
+          .with({ 'income_above_threshold' => YesNoAnswer::YES })
+          .and_return(true)
+
+        expect(subject.save).to be(true)
+      end
     end
   end
 end
