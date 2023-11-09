@@ -13,6 +13,7 @@ class CrimeApplication < ApplicationRecord
   has_one :ioj, through: :case
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
+  has_many :income_details, through: :people
 
   enum status: ApplicationStatus.enum_values
 
