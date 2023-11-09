@@ -9,7 +9,9 @@
       <%= f.govuk_collection_radio_buttons :income_above_threshold, @form_object.choices,
                                            :value, inline: false,
                                            legend: { text: t('.income_above_threshold'), tag: 'h1', size: 'xl' } do %>
-          <p><%= t('.income_above_threshold_info') %></p>
+           <span class="govuk-caption-m govuk-!-margin-bottom-4">
+             <%= t('.income_above_threshold_info') %>
+           </span>
         <% end %>
       <%= f.continue_button %>
     <% end %>
