@@ -14,8 +14,6 @@ class CrimeApplicationPresenter < BasePresenter
   end
 
   def applicant_name
-    return unless applicant?
-
     "#{applicant.first_name} #{applicant.last_name}"
   end
 

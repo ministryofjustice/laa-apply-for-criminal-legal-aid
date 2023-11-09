@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AddressFormDecorator do
+RSpec.describe AddressFormPresenter do
   subject { described_class.new(form_object) }
 
   let(:form_object) { double('FormObject', record: address_record) }
