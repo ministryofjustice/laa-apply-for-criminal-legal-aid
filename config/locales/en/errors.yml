@@ -29,7 +29,7 @@ en:
               blank: File could not be uploaded – try again
             scan_status:
               flagged: File may have a virus - please check the file is safe before trying again
-              inconclusive: File scanning service failed - please contact <a href="%{support_email}">%{support_email}</a>
+              inconclusive: File scanning service failed - please contact <a href="mailto:%{support_email}">%{support_email}</a>
 
   activemodel:
     errors:
