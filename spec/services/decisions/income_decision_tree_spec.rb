@@ -68,6 +68,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
     end
   end
 
+  context 'when the step is `income_before_tax`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :income_before_tax }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+  end
+
   context 'when the step is `manage_without_income`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :manage_without_income }

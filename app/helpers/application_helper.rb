@@ -25,10 +25,6 @@ module ApplicationHelper
     end
   end
 
-  def decorate(model, decorator_class = nil)
-    (decorator_class || [model.class, :Decorator].join.demodulize.constantize).new(model)
-  end
-
   def present(model, presenter_class = nil)
     (presenter_class || [model.class, :Presenter].join.demodulize.constantize).new(model)
   end

@@ -50,29 +50,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '#decorate' do
-    before do
-      stub_const('FooBar', Class.new)
-      stub_const('FooBarDecorator', Class.new(BaseDecorator))
-    end
-
-    let(:foobar) { FooBar.new }
-
-    context 'for a specific delegator class' do
-      it 'instantiate the decorator with the passed object' do
-        expect(FooBarDecorator).to receive(:new).with(foobar)
-        helper.decorate(foobar, FooBarDecorator)
-      end
-    end
-
-    context 'using the object to infer the delegator class' do
-      it 'instantiate the decorator with the passed object inferring the class' do
-        expect(FooBarDecorator).to receive(:new).with(foobar)
-        helper.decorate(foobar)
-      end
-    end
-  end
-
   describe '#present' do
     before do
       stub_const('FooBar', Class.new)

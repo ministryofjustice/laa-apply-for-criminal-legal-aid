@@ -290,6 +290,10 @@ en:
               invalid_year: Enter a valid year
               over_three_months_ago: Date they lost their job must be within the last 3 months
               future_not_allowed: Date they lost their job must be today or in the past
+        steps/income/income_before_tax_form:
+          attributes:
+            income_above_threshold:
+              inclusion: Select yes if your client’s income is currently more than £12,475 a year before tax
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
