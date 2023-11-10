@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_202222) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_10_131336) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -111,6 +111,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_202222) do
     t.string "income_above_threshold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "employment_status", default: [], array: true
+    t.string "ended_employment_within_three_months"
     t.index ["person_id"], name: "index_income_details_on_person_id"
   end
 
@@ -162,8 +164,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_202222) do
     t.date "date_job_lost"
     t.string "manage_without_income"
     t.string "manage_other_details"
-    t.string "employment_status", default: [], array: true
-    t.string "ended_employment_within_three_months"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

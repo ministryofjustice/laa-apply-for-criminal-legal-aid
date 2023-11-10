@@ -11,8 +11,9 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
-  let(:applicant_record) { Applicant.new }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:applicant) { instance_double(Applicant, income_details:) }
+  let(:income_details) { IncomeDetails.new }
 
   let(:employment_status) { [] }
   let(:ended_employment_within_three_months) { nil }
@@ -75,13 +76,6 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
         expect(form.errors.of_kind?(:employment_status, :invalid)).to be(false)
       end
 
-      it_behaves_like 'a has-one-association form',
-                      association_name: :applicant,
-                      expected_attributes: {
-                        'employment_status' => [EmploymentStatus::EMPLOYED.to_s],
-                        'ended_employment_within_three_months' => nil
-                      }
-
       context 'when `employment_status` answer is `employed`' do
         context 'when `ended_employment_within_three_months` was previously recorded' do
           let(:ended_employment_within_three_months) { YesNoAnswer::YES }
@@ -91,6 +85,17 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
           it 'can make ended_employment_within_three_months field nil if no longer required' do
             attributes = form.send(:attributes_to_reset)
             expect(attributes['ended_employment_within_three_months']).to be_nil
+          end
+
+          it 'updates the record' do
+            expect(income_details).to receive(:update)
+              .with({
+                      'employment_status' => ['employed'],
+                'ended_employment_within_three_months' => nil
+                    })
+              .and_return(true)
+
+            expect(subject.save).to be(true)
           end
         end
       end
@@ -111,7 +116,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
           end
 
           it 'cannot reset `date_job_lost` as it is relevant' do
-            applicant_record.update(employment_status: [EmploymentStatus::NOT_WORKING.to_s])
+            income_details.update(employment_status: [EmploymentStatus::NOT_WORKING.to_s])
 
             attributes = form.send(:attributes_to_reset)
             expect(attributes['ended_employment_within_three_months']).to eq(ended_employment_within_three_months)
