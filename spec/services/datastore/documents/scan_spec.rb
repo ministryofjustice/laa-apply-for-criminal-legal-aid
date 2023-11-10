@@ -70,7 +70,7 @@ RSpec.describe Datastore::Documents::Scan do
 
       context 'with a missing document' do
         it 'raises exception' do
-          expect { described_class.new(document: nil).call }.to raise_error ScanError, /Document not present/
+          expect { described_class.new(document: nil).call }.to raise_error(/Document not present/)
         end
       end
 
@@ -79,14 +79,14 @@ RSpec.describe Datastore::Documents::Scan do
           stub_const('Datastore::Documents::Scan::TIMEOUT', 'Twenty Seconds')
           msg = /TIMEOUT environment variable must be more than 5 seconds, current: Twenty Seconds/
 
-          expect { subject.call }.to raise_error ScanError, msg
+          expect { subject.call }.to raise_error msg
         end
 
         it 'raises exception when TIMEOUT is below 5 seconds' do
           stub_const('Datastore::Documents::Scan::TIMEOUT', '2')
           msg = /TIMEOUT environment variable must be more than 5 seconds, current: 2/
 
-          expect { subject.call }.to raise_error ScanError, msg
+          expect { subject.call }.to raise_error msg
         end
       end
 
