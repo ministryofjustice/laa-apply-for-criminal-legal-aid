@@ -209,6 +209,11 @@ en:
         edit:
           page_title: Did your client lose their job as a result of being in custody?
           date_job_lost: When did they lose their job?
+      income_before_tax:
+        edit:
+          page_title: Is your client's income currently more than £12,475 a year before tax?
+          income_above_threshold_info: Do not include any employment income if your client has lost their job or ended employment.
+          income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
       manage_without_income:
         edit:
           page_title: How does client manage with no income?

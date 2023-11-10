@@ -1,4 +1,7 @@
 module Decisions
+  # TODO: remove this rubocop opt out when
+  # branches are known and are therefore non-duplicate
+  # rubocop:disable Lint/DuplicateBranch
   class IncomeDecisionTree < BaseDecisionTree
     def destination
       case step_name
@@ -7,6 +10,9 @@ module Decisions
       when :lost_job_in_custody
         # TODO: link to next step when we have it
         edit(:manage_without_income)
+      when :income_before_tax
+        # TODO: link to next step when we have it
+        show('/home', action: :index)
       when :manage_without_income
         # TODO: link to next step when we have it
         show('/home', action: :index)
@@ -14,6 +20,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
+    # rubocop:enable Lint/DuplicateBranch
 
     private
 

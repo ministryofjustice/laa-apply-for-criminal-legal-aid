@@ -148,6 +148,7 @@ Rails.application.routes.draw do
         show_step :employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
         edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
+        edit_step :clients_income_before_tax, alias: :income_before_tax
       end
 
       namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do

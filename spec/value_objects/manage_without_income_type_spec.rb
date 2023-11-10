@@ -10,7 +10,7 @@ RSpec.describe ManageWithoutIncomeType do
       expect(described_class.values.map(&:to_s)).to eq(%w[
                                                          friends_sofa
                                                          family
-                                                         homeless
+                                                         living_on_streets
                                                          custody
                                                          other
                                                        ])

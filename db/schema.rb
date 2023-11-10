@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_03_123725) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_202222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -106,6 +106,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_123725) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
+  create_table "income_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "person_id", null: false
+    t.string "income_above_threshold"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_income_details_on_person_id"
+  end
+
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "types", default: [], array: true
     t.text "loss_of_liberty_justification"
@@ -184,6 +192,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_123725) do
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
   add_foreign_key "documents", "crime_applications"
+  add_foreign_key "income_details", "people"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"

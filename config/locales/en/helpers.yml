@@ -231,11 +231,13 @@ en:
         ended_employment_within_three_months_options: *YESNO
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
+      steps_income_income_before_tax_form:
+        income_above_threshold_options: *YESNO
       steps_income_manage_without_income_form:
         manage_without_income_options:
           friends_sofa: They sleep on a friend's sofa for free
           family: They stay with family for free
-          homeless: They are homeless
+          living_on_streets: They are living on the streets / homeless
           custody: They have been in custody for more than 3 months
           other: Other
         manage_other_details: Tell us how your client manages with no income
