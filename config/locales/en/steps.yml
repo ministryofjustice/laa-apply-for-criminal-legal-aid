@@ -238,6 +238,16 @@ en:
             failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
+        scan_flagged: "Virus scan flagged potential malcious file - Crime Application ID: #{crime_application_id} Document ID: #{document_id} Scan result: #{scan_status}"
+        scan_inconclusive: Virus scan inconclusive
+        success: "Document successfully uploaded. Object key: #{s3_object_key}"
+      scan:
+        document_missing: Document not present
+        bad_timeout: "TIMEOUT environment variable must be more than %{min} seconds, current: %{current}"
+        attempted: "Document scan attempted. Result: '%{scan_status}'"
+        unavailable: ClamAV Scan Service unavailable
+        not_installed: "ClamAV Scan Error - clamdscan package must be installed and executable. Exception: %{message}"
+        timeout: "ClamAV file scan breached %{timeout} second, scan abandoned"
 
     submission:
       review:

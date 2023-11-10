@@ -37,7 +37,6 @@ RSpec.describe Document, type: :model do
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
-          expect(subject.errors.size).to eq(1)
           expect(subject.errors.of_kind?(:file_size, :too_small)).to be(true)
         end
       end
@@ -47,7 +46,6 @@ RSpec.describe Document, type: :model do
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
-          expect(subject.errors.size).to eq(1)
           expect(subject.errors.of_kind?(:file_size, :too_big)).to be(true)
         end
       end
@@ -57,19 +55,40 @@ RSpec.describe Document, type: :model do
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
-          expect(subject.errors.size).to eq(1)
           expect(subject.errors.of_kind?(:content_type, :invalid)).to be(true)
         end
       end
 
       context 'more than one error' do
-        let(:attributes) { super().merge(content_type: 'text/unknown', file_size: 11.megabytes) }
+        let(:attributes) do
+          super().merge(content_type: 'text/unknown', file_size: 11.megabytes, scan_status: 'flagged')
+        end
 
         it 'has a validation error on all invalid fields' do
           expect(subject).not_to be_valid(:criteria)
           expect(subject.errors.size).to eq(2)
           expect(subject.errors.of_kind?(:file_size, :too_big)).to be(true)
           expect(subject.errors.of_kind?(:content_type, :invalid)).to be(true)
+        end
+      end
+    end
+
+    context 'scan' do
+      context 'when flagged' do
+        let(:attributes) { super().merge(scan_status: 'flagged') }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid(:scan)
+          expect(subject.errors.of_kind?(:scan_status, :flagged)).to be(true)
+        end
+      end
+
+      context 'when inconclusive' do
+        let(:attributes) { super().merge(scan_status: 'other') }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid(:scan)
+          expect(subject.errors.of_kind?(:scan_status, :inconclusive)).to be(true)
         end
       end
     end

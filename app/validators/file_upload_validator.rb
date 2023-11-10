@@ -27,8 +27,6 @@ class FileUploadValidator < ActiveModel::Validator
 
   private
 
-  # More validations to be added as we see fit
-  # These validations are not about the "content" of the file, but the "container"
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/GuardClause
   def perform_validations
     unless record.content_type.in?(ALLOWED_CONTENT_TYPES)

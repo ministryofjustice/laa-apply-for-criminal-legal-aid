@@ -27,6 +27,9 @@ en:
               invalid: File must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF
             s3_object_key:
               blank: File could not be uploaded – try again
+            scan_status:
+              flagged: File may have a virus - please check the file is safe before trying again
+              inconclusive: File scanning service failed - please contact <a href="mailto:%{support_email}">%{support_email}</a>
 
   activemodel:
     errors:

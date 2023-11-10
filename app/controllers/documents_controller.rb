@@ -14,10 +14,10 @@ class DocumentsController < ApplicationController
     Datastore::Documents::Upload.new(document:, log_context:).call if document.valid?(:criteria)
 
     respond_with(document, location: evidence_upload_step) do |format|
-      if document.invalid?(:storage)
+      if document.invalid?(:scan) || document.invalid?(:storage)
         format.html { redirect_to evidence_upload_step }
         format.json do
-          render json: document.as_json.merge(error_message: document.errors.first.full_message),
+          render json: document.as_json.merge(error_message: error_for(document)),
                  status: :unprocessable_entity
         end
       end
@@ -43,6 +43,12 @@ class DocumentsController < ApplicationController
   # Needs to be handled in future with an appropriate error message but this is not easily feasible with current setup
   def require_document
     redirect_to evidence_upload_step unless params.key?(:document) || params.key?(:steps_evidence_upload_form)
+  end
+
+  def error_for(document)
+    return nil if document.errors.empty?
+
+    document.errors.first.full_message.html_safe # rubocop:disable Rails/OutputSafety
   end
 
   # TODO: unify if possible the submission params

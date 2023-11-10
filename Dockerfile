@@ -2,12 +2,14 @@ FROM ruby:3.2.2-alpine3.18 AS base
 MAINTAINER LAA Crime Apply Team
 
 # dependencies required both at runtime and build time
+# ClamAV binaries required to access separate ClamAV service over TCP
 RUN apk add --update \
   postgresql15-dev \
   tzdata \
   yarn \
-  clamav-clamdscan \
-  gcompat
+  gcompat \
+  clamav-clamdscan && \
+  apk del clamav-daemon freshclam
 
 FROM base AS dependencies
 

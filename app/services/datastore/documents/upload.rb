@@ -13,15 +13,14 @@ module Datastore
         @presign_upload = nil
       end
 
-      # TODO: 2023-10-6 document is persisted regardless of scan
-      # result due to incomplete UX
       def call
         return false if document.s3_object_key.present?
 
         Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
           scan
           set_presign_upload
-          upload_document
+          upload_to_s3(@presign_upload&.url)
+          persist_document(@presign_upload&.object_key)
 
           true
         end
@@ -30,11 +29,26 @@ module Datastore
       private
 
       def scan
-        Scan.new(document:).call
+        virus_scan = Scan.new(document:)
+        virus_scan.call
+
+        return if virus_scan.success?
+
+        raise UnsuccessfulUploadError, t(:scan_inconclusive) if virus_scan.inconclusive?
+
+        args = {
+          crime_application_id: document.crime_application_id,
+          document_id: document.id,
+          scan_status: document.scan_status,
+        }
+
+        raise UnsuccessfulUploadError, t(:scan_flagged, **args)
       end
 
-      def upload_document
-        document.update(s3_object_key: @presign_upload&.object_key) if upload_to_s3(@presign_upload&.url)
+      def persist_document(s3_object_key)
+        raise UnsuccessfulUploadError, 'S3 Object Key missing' if s3_object_key.blank?
+
+        document.update(s3_object_key:)
       end
 
       def set_presign_upload
@@ -58,7 +72,7 @@ module Datastore
 
         raise UnsuccessfulUploadError, response.body unless response.success?
 
-        Rails.logger.info "Document successfully uploaded. Object key: #{document.s3_object_key}"
+        Rails.logger.info t(:success, s3_object_key: document.s3_object_key)
       end
 
       def usn
@@ -72,6 +86,10 @@ module Datastore
       def context
         log_context << { file_type: document.content_type }
         log_context.to_h
+      end
+
+      def t(key, **args)
+        I18n.t("steps.evidence.upload.#{key}", **args)
       end
     end
   end

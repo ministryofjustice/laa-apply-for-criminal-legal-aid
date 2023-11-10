@@ -132,12 +132,14 @@ function createErrorSummary (msg) {
 
   const li = document.createElement('li')
   const a = document.createElement('a')
-  li.appendChild(a)
-  errorSummaryList.appendChild(li)
 
-  a.innerText += msg
+  li.innerHTML = msg + "<br/><br/>"
+  a.innerText += "Try again"
   a.setAttribute('aria-label', msg)
   a.setAttribute('href', '#choose_files_button')
+
+  li.appendChild(a)
+  errorSummaryList.appendChild(li)
 
   errorSummary.classList.remove('app-evidence-upload-hidden')
   errorSummary.scrollIntoView()
@@ -207,8 +209,8 @@ function generateErrorMessage(file, response) {
     errorMsg += ERR_FILE_SIZE_TOO_BIG
   } else if (file.size <= MIN_FILE_SIZE) {
     errorMsg += ERR_FILE_SIZE_TOO_SMALL
-  } else if (response.error !== '') {
-    errorMsg = response.error
+  } else if (response.error_message !== '') {
+    errorMsg = response.error_message
   } else {
     errorMsg += ERR_GENERIC
   }

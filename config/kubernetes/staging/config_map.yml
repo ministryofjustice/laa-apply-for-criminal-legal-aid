@@ -16,6 +16,7 @@ data:
   CLAMD_CONF_FILENAME: "clamd.staging.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
+  VIRUS_SCAN_TIMEOUT: '20'
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
