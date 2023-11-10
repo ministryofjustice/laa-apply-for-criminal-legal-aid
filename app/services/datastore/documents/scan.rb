@@ -6,7 +6,10 @@ require 'open3'
 module Datastore
   module Documents
     class Scan
-      TIMEOUT = 20 # Seconds before ClamAV scan abandoned
+      class ScanError < StandardError; end
+
+      TIMEOUT = ENV.fetch('VIRUS_SCAN_TIMEOUT', 20).to_i # Seconds before ClamAV scan abandoned
+      MIN_TIMEOUT = 5
 
       attr_reader :document
 
@@ -17,7 +20,8 @@ module Datastore
       end
 
       def call
-        raise ArgumentError, 'Document not present' if document.nil?
+        raise ScanError, t(:document_missing) if document.nil?
+        raise ScanError, t(:bad_timeout, min: MIN_TIMEOUT, current: TIMEOUT) if TIMEOUT.to_i < MIN_TIMEOUT
 
         document.update!(
           scan_status: scan_result,
@@ -25,7 +29,7 @@ module Datastore
           scan_provider: 'ClamAV'
         )
 
-        Rails.logger.info "Document scan attempted. Result: `#{document.scan_status}`"
+        Rails.logger.info t(:attempted, scan_status: document.scan_status)
 
         success?
       end
@@ -51,12 +55,7 @@ module Datastore
         stdout, stderr, _status = Open3.capture3('clamdscan', '-c', Clamby.config[:config_file], '--version')
         !(stdout.to_s.include?('ClamAV') && stderr.to_s.blank?)
       rescue Errno::ENOENT => e
-        log = [
-          'ClamAV Scan Error - clamdscan package must be installed and executable',
-          "Exception: #{e.message}"
-        ].join(' ')
-        Rails.logger.error(log)
-
+        Rails.logger.error t(:not_installed, message: e.message)
         true
       end
 
@@ -82,14 +81,14 @@ module Datastore
 
       private
 
-      def scan_result # rubocop:disable Metrics/MethodLength
+      def scan_result # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         if unavailable?
-          Rails.logger.error('ClamAV Scan Service unavailable')
+          Rails.logger.error t(:unavailable)
           return type_of('other')
         end
 
         Rails.error.handle(fallback: -> { type_of('incomplete') }) do
-          Timeout.timeout(TIMEOUT, "ClamAV file scan breached #{TIMEOUT} seconds, scan abadoned") do
+          Timeout.timeout(TIMEOUT, t(:timeout, timeout: TIMEOUT)) do
             case Clamby.safe?(document.tempfile.path)
             when true
               type_of('pass')
@@ -100,6 +99,10 @@ module Datastore
             end
           end
         end
+      end
+
+      def t(key, **args)
+        I18n.t("steps.evidence.scan.#{key}", **args)
       end
     end
   end

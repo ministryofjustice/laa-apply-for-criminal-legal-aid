@@ -34,15 +34,15 @@ module Datastore
 
         return if virus_scan.success?
 
-        raise UnsuccessfulUploadError, 'Virus scan inconclusive' if virus_scan.inconclusive?
+        raise UnsuccessfulUploadError, t(:scan_inconclusive) if virus_scan.inconclusive?
 
-        log = [
-          "Crime Application ID: #{document.crime_application_id}",
-          "Document ID: #{document.id}",
-          "Scan result: #{document.scan_status}"
-        ].join(' ')
+        args = {
+          crime_application_id: document.crime_application_id,
+          document_id: document.id,
+          scan_status: document.scan_status,
+        }
 
-        raise UnsuccessfulUploadError, "Virus scan flagged potential malcious file - #{log}"
+        raise UnsuccessfulUploadError, t(:scan_flagged, **args)
       end
 
       def persist_document(s3_object_key)
@@ -72,7 +72,7 @@ module Datastore
 
         raise UnsuccessfulUploadError, response.body unless response.success?
 
-        Rails.logger.info "Document successfully uploaded. Object key: #{document.s3_object_key}"
+        Rails.logger.info t(:success, s3_object_key: document.s3_object_key)
       end
 
       def usn
@@ -86,6 +86,10 @@ module Datastore
       def context
         log_context << { file_type: document.content_type }
         log_context.to_h
+      end
+
+      def t(key, **args)
+        I18n.t("steps.evidence.upload.#{key}", **args)
       end
     end
   end

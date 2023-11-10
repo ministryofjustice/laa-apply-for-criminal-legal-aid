@@ -6,7 +6,7 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 2
-  minReadySeconds: 10
+  minReadySeconds: 15
   serviceName: clamav
   updateStrategy:
     type: RollingUpdate
@@ -22,14 +22,13 @@ spec:
         tier: backend
     spec:
       securityContext:
-        # Change to 100 if using official clamav image
-        fsGroup: 1001
-        runAsUser: 1001
-        runAsGroup: 1001
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
       - name: clamav
         image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - containerPort: 3310
             protocol: TCP
