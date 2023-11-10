@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AddressFormDecorator do
+RSpec.describe AddressFormPresenter do
   subject { described_class.new(form_object) }
 
   let(:form_object) { double('FormObject', record: address_record) }
@@ -11,7 +11,7 @@ RSpec.describe AddressFormDecorator do
   let(:address_type) { nil }
   let(:person_type)  { nil }
 
-  # NOTE: we only really have for now `Applicant`, but as these decorator is built
+  # NOTE: we only really have for now `Applicant`, but as this presenter is built
   # to cope with multiple people types, we are testing it also for `Partner`
 
   describe '#page_title' do

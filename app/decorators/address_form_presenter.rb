@@ -1,4 +1,4 @@
-class AddressFormDecorator < BaseDecorator
+class AddressFormPresenter < BasePresenter
   delegate :postcode, to: :record
 
   def page_title
