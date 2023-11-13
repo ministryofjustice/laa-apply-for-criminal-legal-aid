@@ -32,7 +32,7 @@ RSpec.describe Document, type: :model do
     end
 
     context 'criteria' do
-      context 'file is too small', skip: 'TODO: Temporarily disable CRIMAP-207' do
+      context 'file is too small' do
         let(:attributes) { super().merge(file_size: 3.kilobytes) }
 
         it 'has a validation error on the field' do
