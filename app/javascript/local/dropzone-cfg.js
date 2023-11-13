@@ -2,7 +2,7 @@
 
 import Dropzone from "dropzone"
 
-const MIN_FILE_SIZE = 5000 // Bytes = 5KB
+const MIN_FILE_SIZE = 1 // Bytes = 5KB, TODO: Temporarily disable CRIMAP-207, Reset to 5000
 const MAX_FILE_SIZE = 1000000 // Bytes = 10MB
 
 const ERR_GENERIC = 'could not be uploaded – try again'
@@ -11,7 +11,8 @@ const ERR_FILE_SIZE_TOO_SMALL = 'must be bigger than 5KB'
 const ERR_CONTENT_TYPE = 'must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF'
 const ALLOWED_CONTENT_TYPES = [
   // dropzone checks both the mimetype and the file extension so this list covers everything
-  '.doc', '.docx', '.rtf', '.odt', '.jpg', '.jpeg', '.bpm', '.png', '.tif', '.tiff', '.pdf',
+  // TODO: Temporarily disable CRIMAP-207, Reset to omit '.txt'
+  '.txt', '.doc', '.docx', '.rtf', '.odt', '.jpg', '.jpeg', '.bpm', '.png', '.tif', '.tiff', '.pdf',
   'application/pdf',
   'application/msword',
   'application/vnd.oasis.opendocument.text',

@@ -72,12 +72,13 @@ RSpec.describe 'Evidence upload page', :authorized do
                           "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_big',
                                            max_size: FileUploadValidator::MAX_FILE_SIZE)}"
           end
-          assert_select 'tr.govuk-table__row:nth-of-type(3)' do
-            assert_select 'span:nth-of-type(1)', 'too_small.pdf'
-            assert_select 'p:nth-of-type(1)',
-                          "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_small',
-                                           min_size: FileUploadValidator::MIN_FILE_SIZE)}"
-          end
+          # TODO: Temporarily disable CRIMAP-207
+          # assert_select 'tr.govuk-table__row:nth-of-type(3)' do
+          #   assert_select 'span:nth-of-type(1)', 'too_small.pdf'
+          #   assert_select 'p:nth-of-type(1)',
+          #                 "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_small',
+          #                                  min_size: FileUploadValidator::MIN_FILE_SIZE)}"
+          # end
         end
       end
 

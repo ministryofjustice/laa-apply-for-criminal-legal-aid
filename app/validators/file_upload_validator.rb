@@ -1,5 +1,5 @@
 class FileUploadValidator < ActiveModel::Validator
-  MIN_FILE_SIZE = 5 # KB
+  MIN_FILE_SIZE = 0 # KB, TODO: Temporarily disable CRIMAP-207, reset to 5
   MAX_FILE_SIZE = 10 # MB
 
   ALLOWED_CONTENT_TYPES = %w[
