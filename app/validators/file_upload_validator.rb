@@ -1,5 +1,5 @@
 class FileUploadValidator < ActiveModel::Validator
-  MIN_FILE_SIZE = 5 # KB
+  MIN_FILE_SIZE = 0 # KB, TODO: Temporarily disable CRIMAP-207, reset to 5
   MAX_FILE_SIZE = 10 # MB
 
   ALLOWED_CONTENT_TYPES = %w[
@@ -27,7 +27,7 @@ class FileUploadValidator < ActiveModel::Validator
 
   private
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/GuardClause
+  # rubocop:disable Style/GuardClause
   def perform_validations
     unless record.content_type.in?(ALLOWED_CONTENT_TYPES)
       record.errors.add(
@@ -36,9 +36,10 @@ class FileUploadValidator < ActiveModel::Validator
     end
 
     if record.file_size < MIN_FILE_SIZE.kilobytes
-      record.errors.add(
-        :file_size, :too_small, min_size: MIN_FILE_SIZE
-      )
+      # TODO: Temporarily disable CRIMAP-207
+      # record.errors.add(
+      #   :file_size, :too_small, min_size: MIN_FILE_SIZE
+      # )
     end
 
     if record.file_size > MAX_FILE_SIZE.megabytes
@@ -47,5 +48,5 @@ class FileUploadValidator < ActiveModel::Validator
       )
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/GuardClause
+  # rubocop:enable Style/GuardClause
 end
