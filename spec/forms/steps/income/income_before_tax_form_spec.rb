@@ -10,8 +10,7 @@ RSpec.describe Steps::Income::IncomeBeforeTaxForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
-  let(:applicant) { instance_double(Applicant, income_details:) }
+  let(:crime_application) { instance_double(CrimeApplication, income_details:) }
   let(:income_details) { instance_double(IncomeDetails) }
 
   let(:income_above_threshold) { nil }
@@ -59,6 +58,12 @@ RSpec.describe Steps::Income::IncomeBeforeTaxForm do
 
         expect(subject.save).to be(true)
       end
+
+      it_behaves_like 'a has-one-association form',
+                      association_name: :income_details,
+                      expected_attributes: {
+                        'income_above_threshold' => YesNoAnswer::YES,
+                      }
     end
   end
 end
