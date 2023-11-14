@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord
 
   has_one :applicant, dependent: :destroy
   has_one :partner, dependent: :destroy
+  has_one :income_details, dependent: :destroy
 
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy
@@ -13,7 +14,6 @@ class CrimeApplication < ApplicationRecord
   has_one :ioj, through: :case
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
-  has_many :income_details, through: :people
 
   enum status: ApplicationStatus.enum_values
 
