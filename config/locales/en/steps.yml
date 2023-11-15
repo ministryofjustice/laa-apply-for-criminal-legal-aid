@@ -214,6 +214,11 @@ en:
           page_title: Is your client's income currently more than £12,475 a year before tax?
           income_above_threshold_info: Do not include any employment income if your client has lost their job or ended employment.
           income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
+      client_owns_property:
+        edit:
+          page_title: Is your client's income currently more than £12,475 a year before tax?
+          client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
+          client_owns_property: Does your client own their home, or any other land or property?
       manage_without_income:
         edit:
           page_title: How does client manage with no income?
