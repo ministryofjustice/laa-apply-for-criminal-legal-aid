@@ -27,7 +27,7 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
     context 'when `client_owns_property` is blank' do
       let(:client_owns_property) { '' }
 
-      it 'has is a validation error on the field' do
+      it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:client_owns_property, :inclusion)).to be(true)
       end

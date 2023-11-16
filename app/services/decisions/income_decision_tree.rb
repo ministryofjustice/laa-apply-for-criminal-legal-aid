@@ -36,6 +36,7 @@ module Decisions
     end
 
     def after_income_before_tax
+      # TODO: change when step before added
       if income_below_threshold?
         edit(:client_owns_property)
       else
