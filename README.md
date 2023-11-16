@@ -121,9 +121,9 @@ Settings.setting_name
 
 ## Uploading files with virus scanning
 
-To upload files successfully (e.g. during the 'Evidence Upload' feature) requires the use of Localstack, the ClamAv `clamdscan` agent and the ClamAV server.
+Uploading files successfully on a development machine (e.g. during the 'Evidence Upload' user journey) requires the use of Localstack, the ClamAv `clamdscan` agent and the ClamAV server.
 
-To start the Localstack server refer to the (https://github.com/ministryofjustice/laa-criminal-applications-datastore#getting-started)[Datastore SNS notifications and S3 buckets section].
+To start the Localstack server refer to the [Datastore SNS notifications and S3 buckets section](https://github.com/ministryofjustice/laa-criminal-applications-datastore#getting-started).
 
 To install the ClamAV agent locally on a Mac, use Homebrew:
 
@@ -131,7 +131,7 @@ To install the ClamAV agent locally on a Mac, use Homebrew:
 brew install clamav
 ```
 
-Refer to (https://docs.clamav.net/manual/Installing.html)[ClamAV documentation] for other platforms.
+Refer to [ClamAV documentation](https://docs.clamav.net/manual/Installing.html) for other platforms.
 
 To start the ClamAV server:
 
