@@ -17,7 +17,7 @@ describe Summary::HtmlPresenter do
     context 'for a database application' do
       let(:crime_application) do
         instance_double(CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
-                        documents: double)
+                        income_details: double, documents: double)
       end
 
       it 'has the right sections in the right order' do
@@ -34,6 +34,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::FirstCourtHearing,
             Summary::Sections::JustificationForLegalAid,
             Summary::Sections::PassportJustificationForLegalAid,
+            Summary::Sections::IncomeDetails,
             Summary::Sections::SupportingEvidence,
           ]
         )
@@ -60,6 +61,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::FirstCourtHearing,
             Summary::Sections::JustificationForLegalAid,
             Summary::Sections::PassportJustificationForLegalAid,
+            Summary::Sections::IncomeDetails,
             Summary::Sections::SupportingEvidence,
             Summary::Sections::LegalRepresentativeDetails,
           ]
