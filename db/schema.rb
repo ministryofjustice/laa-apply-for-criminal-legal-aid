@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_14_162825) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -112,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_162825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "client_owns_property"
+    t.string "has_frozen_income_or_assets"
     t.index ["crime_application_id"], name: "index_income_details_on_crime_application_id"
   end
 

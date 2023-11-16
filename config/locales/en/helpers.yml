@@ -233,6 +233,8 @@ en:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
         income_above_threshold_options: *YESNO
+      steps_income_income_savings_assets_form:
+        has_frozen_income_or_assets_options: *YESNO
       steps_income_client_owns_property_form:
         client_owns_property_options: *YESNO
       steps_income_manage_without_income_form:

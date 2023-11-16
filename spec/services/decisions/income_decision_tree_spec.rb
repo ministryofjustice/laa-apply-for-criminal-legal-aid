@@ -85,6 +85,27 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive_messages(income_above_threshold: YesNoAnswer::NO)
       end
 
+      it { is_expected.to have_destination(:income_savings_assets, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `income_savings_assets`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :income_savings_assets }
+
+    context 'when income is above the threshold' do
+      before do
+        allow(form_object).to receive_messages(has_frozen_income_or_assets: YesNoAnswer::YES)
+      end
+
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+
+    context 'when they done have fozen income or assets' do
+      before do
+        allow(form_object).to receive_messages(has_frozen_income_or_assets: YesNoAnswer::NO)
+      end
+
       it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
     end
   end
