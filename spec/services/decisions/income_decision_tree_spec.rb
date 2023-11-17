@@ -72,6 +72,27 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_before_tax }
 
+    context 'when income is above the threshold' do
+      before do
+        allow(form_object).to receive_messages(income_above_threshold: YesNoAnswer::YES)
+      end
+
+      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    end
+
+    context 'when income below the threshold' do
+      before do
+        allow(form_object).to receive_messages(income_above_threshold: YesNoAnswer::NO)
+      end
+
+      it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `client_owns_property`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_owns_property }
+
     context 'has correct next step' do
       it { is_expected.to have_destination('/home', :index, id: crime_application) }
     end

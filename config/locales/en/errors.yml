@@ -294,6 +294,10 @@ en:
           attributes:
             income_above_threshold:
               inclusion: Select yes if your client’s income is currently more than £12,475 a year before tax
+        steps/income/client_owns_property_form:
+          attributes:
+            client_owns_property:
+              inclusion: Select yes if your client owns their home, or any other land or property?
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
