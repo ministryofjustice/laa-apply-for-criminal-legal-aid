@@ -15,7 +15,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   clamav:
-    image: clamav/clamav:stable_base
+    image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed
     ports:
       - "3310:3310"
     volumes:
