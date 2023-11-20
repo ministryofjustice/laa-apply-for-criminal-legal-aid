@@ -140,3 +140,10 @@ production:
     - 2A561K
     - 2E841M
     - 2L866L
+    # Deactivate codes 20/11/2023
+    - 0N019P
+    - 0N581A
+    - 2L982M
+    - 2M286T
+    - 2Q102D
+    - 2Q103E
