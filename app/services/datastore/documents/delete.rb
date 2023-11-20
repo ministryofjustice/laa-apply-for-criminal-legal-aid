@@ -12,7 +12,7 @@ module Datastore
         return true unless deletable?
 
         Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
-          document.destroy if DatastoreApi::Requests::Documents::Delete.new(object_key:).call
+          DatastoreApi::Requests::Documents::Delete.new(object_key:).call
           Rails.logger.info "Document successfully deleted. Object key: #{document.s3_object_key}"
           true
         end

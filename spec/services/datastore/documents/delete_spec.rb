@@ -33,7 +33,6 @@ RSpec.describe Datastore::Documents::Delete do
       end
 
       it 'returns true' do
-        expect(document).to receive(:destroy)
         expect(subject.call).to be(true)
       end
     end
