@@ -22,6 +22,7 @@ RSpec.describe SubmissionSerializer::Application do
           SubmissionSerializer::Sections::ClientDetails,
           SubmissionSerializer::Sections::CaseDetails,
           SubmissionSerializer::Sections::IojDetails,
+          SubmissionSerializer::Sections::MeansDetails,
           SubmissionSerializer::Sections::SupportingEvidence,
         ]
       )
@@ -38,9 +39,15 @@ RSpec.describe SubmissionSerializer::Application do
 
     let(:kase) { Case.new }
     let(:documents_scope) { double(stored: [Document.new]) }
+    let(:income_details) { IncomeDetails.new }
 
     before do
       allow(crime_application).to receive_messages(case: kase, documents: documents_scope)
+      allow(crime_application).to receive_messages(
+        case: kase,
+        documents: documents_scope,
+        income_details: income_details
+      )
     end
 
     it 'generates a serialized version of the application' do
@@ -55,6 +62,7 @@ RSpec.describe SubmissionSerializer::Application do
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
+          'means_details' => a_hash_including('income_details' => { 'income_above_threshold' => nil }),
           'supporting_evidence' => be_an(Array),
         )
       )
