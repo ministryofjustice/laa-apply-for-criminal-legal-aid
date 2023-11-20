@@ -109,8 +109,10 @@ Rails.application.routes.draw do
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :retry_benefit_check
-        edit_step :has_benefit_evidence
-        show_step :evidence_exit
+        if FeatureFlags.evidence_upload.enabled?
+          edit_step :has_benefit_evidence
+          show_step :evidence_exit
+        end
         edit_step :contact_details
       end
 
@@ -150,7 +152,7 @@ Rails.application.routes.draw do
         edit_step :does_client_own_home_land_property, alias: :client_owns_property
       end
 
-      namespace :evidence do
+      namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
         edit_step :upload
       end
 
