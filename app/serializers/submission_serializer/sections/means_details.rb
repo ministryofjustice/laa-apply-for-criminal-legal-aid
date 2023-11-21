@@ -5,7 +5,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.means_details do
             json.income_details do
-              json.income_above_threshold crime_application.income_details.income_above_threshold
+              json.income_above_threshold crime_application.income_details&.income_above_threshold
             end
           end
         end
