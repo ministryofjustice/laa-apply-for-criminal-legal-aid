@@ -8,6 +8,10 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
     let(:crime_application) { CrimeApplication.create }
     let(:document) { crime_application.documents.create({ filename: 'test.pdf' }) }
 
+    before do
+      document
+    end
+
     context 'deleting a document' do
       it 'has the expected step name' do
         allow_any_instance_of(Datastore::Documents::Delete).to receive(:call).and_return(true)
@@ -19,7 +23,8 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
           flash: { success: 'You deleted test.pdf' }
         )
 
-        put :update, params: { id: crime_application, document_id: document }
+        expect { put :update, params: { id: crime_application, document_id: document } }
+          .to change { crime_application.reload.documents.size }.from(1).to(0)
       end
 
       it 'is has the correct flash message when delete is unsuccessful' do
@@ -32,7 +37,8 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
           flash: { alert: 'test.pdf could not be deleted – try again' }
         )
 
-        put :update, params: { id: crime_application, document_id: document }
+        expect { put :update, params: { id: crime_application, document_id: document } }
+          .to(not_change { crime_application.reload.documents.size })
       end
     end
 
