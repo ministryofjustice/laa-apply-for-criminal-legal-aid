@@ -209,6 +209,10 @@ en:
         edit:
           page_title: Did your client lose their job as a result of being in custody?
           date_job_lost: When did they lose their job?
+      frozen_income_savings_assets:
+        edit:
+          page_title:  Does your client have any income, savings or assets under a restraint or freezing order?
+          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
       income_before_tax:
         edit:
           page_title: Is your client's income currently more than £12,475 a year before tax?

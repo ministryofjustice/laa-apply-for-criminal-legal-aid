@@ -10,6 +10,8 @@ module Decisions
         edit(:manage_without_income)
       when :income_before_tax
         after_income_before_tax
+      when :frozen_income_savings_assets
+        after_frozen_income_savings_assets
       when :client_owns_property
         edit('/home', action: :index)
       when :manage_without_income
@@ -24,8 +26,8 @@ module Decisions
     private
 
     def after_employment_status
-      if not_working
-        if ended_employment_within_three_months
+      if not_working?
+        if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         else
           show('/home', action: :index)
@@ -36,8 +38,16 @@ module Decisions
     end
 
     def after_income_before_tax
-      # TODO: change when step before added
       if income_below_threshold?
+        edit(:frozen_income_savings_assets)
+      else
+        # TODO: once we have the next step
+        show('/home', action: :index)
+      end
+    end
+
+    def after_frozen_income_savings_assets
+      if no_frozen_assets?
         edit(:client_owns_property)
       else
         # TODO: once we have the next step
@@ -45,16 +55,20 @@ module Decisions
       end
     end
 
-    def not_working
+    def not_working?
       form_object.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
-    def ended_employment_within_three_months
+    def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
     end
 
     def income_below_threshold?
       form_object.income_above_threshold.no?
+    end
+
+    def no_frozen_assets?
+      form_object.has_frozen_income_or_assets.no?
     end
   end
 end
