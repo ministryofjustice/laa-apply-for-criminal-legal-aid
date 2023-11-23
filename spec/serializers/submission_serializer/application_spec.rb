@@ -46,7 +46,7 @@ RSpec.describe SubmissionSerializer::Application do
                                                    income_details: income_details)
     end
 
-    it 'generates a serialized version of the application' do # rubocop:disable RSpec/ExampleLength
+    it 'generates a serialized version of the application' do
       expect(
         subject.generate
       ).to match(
@@ -58,11 +58,7 @@ RSpec.describe SubmissionSerializer::Application do
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
-          'means_details' => a_hash_including('income_details' => {
-                                                'income_above_threshold' => nil,
-                                                'date_job_lost' => nil,
-                                                'lost_job_in_custody' => nil
-                                              }),
+          'means_details' => a_hash_including('income_details' => { 'income_above_threshold' => nil }),
           'supporting_evidence' => be_an(Array),
         )
       )
