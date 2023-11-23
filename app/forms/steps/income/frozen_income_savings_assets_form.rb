@@ -1,6 +1,6 @@
 module Steps
   module Income
-    class IncomeSavingsAssetsForm < Steps::BaseFormObject
+    class FrozenIncomeSavingsAssetsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :income_details
 

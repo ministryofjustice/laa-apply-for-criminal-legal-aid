@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Income::IncomeSavingsAssetsForm do
+RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

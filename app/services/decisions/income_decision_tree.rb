@@ -10,8 +10,8 @@ module Decisions
         edit(:manage_without_income)
       when :income_before_tax
         after_income_before_tax
-      when :income_savings_assets
-        after_income_savings_assets
+      when :frozen_income_savings_assets
+        after_frozen_income_savings_assets
       when :client_owns_property
         edit('/home', action: :index)
       when :manage_without_income
@@ -39,14 +39,14 @@ module Decisions
 
     def after_income_before_tax
       if income_below_threshold?
-        edit(:income_savings_assets)
+        edit(:frozen_income_savings_assets)
       else
         # TODO: once we have the next step
         show('/home', action: :index)
       end
     end
 
-    def after_income_savings_assets
+    def after_frozen_income_savings_assets
       if no_frozen_assets?
         edit(:client_owns_property)
       else
