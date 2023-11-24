@@ -301,7 +301,7 @@ en:
         steps/income/client_have_dependants_form:
           attributes:
             client_have_dependants:
-              inclusion: Select yes if your client has any dependants or no if they do not have any dependants
+              inclusion: Select yes if your client has any dependants?
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:
