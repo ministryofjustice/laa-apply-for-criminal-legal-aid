@@ -237,6 +237,8 @@ en:
         has_frozen_income_or_assets_options: *YESNO
       steps_income_client_owns_property_form:
         client_owns_property_options: *YESNO
+      steps_client_have_dependants_form:
+        client_have_dependants_options: *YESNO
       steps_income_manage_without_income_form:
         manage_without_income_options:
           friends_sofa: They sleep on a friend's sofa for free

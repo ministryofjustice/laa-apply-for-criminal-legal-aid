@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_24_155040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
     t.datetime "updated_at", null: false
     t.string "client_owns_property"
     t.string "has_frozen_income_or_assets"
+    t.string "client_have_dependants"
     t.index ["crime_application_id"], name: "index_income_details_on_crime_application_id"
   end
 
@@ -167,6 +168,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
     t.string "employment_status", default: [], array: true
     t.string "ended_employment_within_three_months"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+  end
+
+  create_table "persons", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

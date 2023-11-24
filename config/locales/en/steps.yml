@@ -218,6 +218,15 @@ en:
           page_title: Is your client's income currently more than £12,475 a year before tax?
           income_above_threshold_info: Do not include any employment income if your client has lost their job or ended employment.
           income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
+      client_have_dependants:
+        edit:
+          page_title: 'Does your client have any dependants?'
+          client_have_dependants: 'Does your client have any dependants?'
+          dependant_definitions:
+            intro: 'Include anyone who is all these:'
+            definition_1: 'under 18 years old'
+            definition_2: 'lives with your client'
+            definition_3: 'depends on your client for financial support'
       client_owns_property:
         edit:
           page_title: Does your client own their home, or any other land or property?

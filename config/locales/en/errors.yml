@@ -298,6 +298,10 @@ en:
           attributes:
             has_frozen_income_or_assets:
               inclusion: Select yes if your client has any income, savings or assets under a restraint or freezing order?
+        steps/income/client_have_dependants_form:
+          attributes:
+            client_have_dependants:
+              inclusion: Select yes if your client has any dependants or no if they do not have any dependants
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:

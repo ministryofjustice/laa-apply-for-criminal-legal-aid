@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :employment_status
@@ -12,6 +12,8 @@ module Decisions
         after_income_before_tax
       when :frozen_income_savings_assets
         after_frozen_income_savings_assets
+      when :client_have_dependants
+        after_client_have_dependants
       when :client_owns_property
         edit('/home', action: :index)
       when :manage_without_income
@@ -21,7 +23,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -53,6 +55,11 @@ module Decisions
         # TODO: once we have the next step
         show('/home', action: :index)
       end
+    end
+
+    def after_client_have_dependants
+      # TODO: once we have the next step
+      show('/home', action: :index)
     end
 
     def not_working?
