@@ -39,8 +39,13 @@ module Datastore
       parent.date_stamp if CaseType.new(parent.case.case_type).date_stampable?
     end
 
+    # NOTE: Income Details implementation is WIP, hence hard-coded nillable fields
     def applicant
-      Applicant.new(parent.applicant.serializable_hash)
+      Applicant.new(
+        'lost_job_in_custody' => parent.means_details&.income_details&.lost_job_in_custody,
+        'date_job_lost' => parent.means_details&.income_details&.date_job_lost,
+        **parent.applicant.serializable_hash
+      )
     end
 
     def ioj
