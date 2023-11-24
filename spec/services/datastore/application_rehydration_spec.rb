@@ -24,7 +24,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       allow(subject.parent).to receive(:ioj).and_return(parent_ioj)
     end
 
-    it 're-hydrates the new application using the parent details' do
+    it 're-hydrates the new application using the parent details' do # rubocop:disable RSpec/ExampleLength
       expect(
         crime_application
       ).to receive(:update!).with(
@@ -42,6 +42,15 @@ RSpec.describe Datastore::ApplicationRehydration do
         Ioj
       ).to receive(:new).with(
         hash_including('types' => ['foobar'])
+      ).and_call_original
+
+      expect(
+        Applicant
+      ).to receive(:new).with(
+        hash_including(
+          'lost_job_in_custody' => 'yes',
+          'date_job_lost' => '2023-09-01'.to_date
+        )
       ).and_call_original
 
       expect(subject.call).to be(true)
