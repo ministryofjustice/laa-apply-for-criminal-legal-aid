@@ -15,16 +15,16 @@ module SubmissionSerializer
       private
 
       def income_above_threshold(json)
-        return unless crime_application.income_details
+        return unless crime_application.income
 
-        json.income_above_threshold crime_application.income_details.income_above_threshold
+        json.income_above_threshold crime_application.income.income_above_threshold
       end
 
       def lost_job_in_custody(json)
-        return unless crime_application&.income_details&.lost_job_in_custody
+        return unless crime_application&.income&.lost_job_in_custody
 
-        json.lost_job_in_custody crime_application.income_details.lost_job_in_custody
-        json.date_job_lost crime_application.income_details.date_job_lost
+        json.lost_job_in_custody crime_application.income.lost_job_in_custody
+        json.date_job_lost crime_application.income.date_job_lost
       end
     end
   end

@@ -7,11 +7,11 @@ RSpec.describe Decisions::IncomeDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
-      income_details: income_details
+      income: income
     )
   end
 
-  let(:income_details) { instance_double(IncomeDetails, employment_status:) }
+  let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
 
   before do

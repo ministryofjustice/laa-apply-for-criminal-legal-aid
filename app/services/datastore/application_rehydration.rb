@@ -18,7 +18,7 @@ module Datastore
         means_passport: parent.means_passport,
         applicant: applicant,
         case: case_with_ioj,
-        income_details: income_details,
+        income: income,
         documents: parent.documents,
       )
     end
@@ -58,8 +58,8 @@ module Datastore
       )
     end
 
-    def income_details
-      IncomeDetails.new(
+    def income
+      Income.new(
         parent.income.serializable_hash
       )
     end

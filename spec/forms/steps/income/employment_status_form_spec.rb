@@ -11,8 +11,8 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, income_details:) }
-  let(:income_details) { IncomeDetails.new }
+  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:income) { Income.new }
 
   let(:employment_status) { [] }
   let(:ended_employment_within_three_months) { nil }
@@ -76,7 +76,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
       end
 
       it_behaves_like 'a has-one-association form',
-                      association_name: :income_details,
+                      association_name: :income,
                       expected_attributes: {
                         'employment_status' => [EmploymentStatus::EMPLOYED.to_s],
                         'ended_employment_within_three_months' => nil
@@ -111,7 +111,7 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
           end
 
           it 'cannot reset `date_job_lost` as it is relevant' do
-            income_details.update(employment_status: [EmploymentStatus::NOT_WORKING.to_s])
+            income.update(employment_status: [EmploymentStatus::NOT_WORKING.to_s])
 
             attributes = form.send(:attributes_to_reset)
             expect(attributes['ended_employment_within_three_months']).to eq(ended_employment_within_three_months)

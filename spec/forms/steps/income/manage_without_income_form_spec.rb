@@ -11,8 +11,8 @@ RSpec.describe Steps::Income::ManageWithoutIncomeForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, income_details:) }
-  let(:income_details) { IncomeDetails.new }
+  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:income) { Income.new }
 
   let(:manage_without_income) { nil }
   let(:manage_other_details) { nil }
@@ -46,7 +46,7 @@ RSpec.describe Steps::Income::ManageWithoutIncomeForm do
       end
 
       it_behaves_like 'a has-one-association form',
-                      association_name: :income_details,
+                      association_name: :income,
                       expected_attributes: {
                         'manage_without_income' => ManageWithoutIncomeType::FAMILY,
                         'manage_other_details' => nil
@@ -67,7 +67,7 @@ RSpec.describe Steps::Income::ManageWithoutIncomeForm do
         end
 
         it 'cannot reset `manage_other_details` as it is relevant' do
-          income_details.update(manage_without_income: ManageWithoutIncomeType::OTHER.to_s)
+          income.update(manage_without_income: ManageWithoutIncomeType::OTHER.to_s)
 
           attributes = form.send(:attributes_to_reset)
           expect(attributes['manage_other_details']).to eq(manage_other_details)

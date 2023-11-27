@@ -11,8 +11,8 @@ RSpec.describe Steps::Income::LostJobInCustodyForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, income_details:) }
-  let(:income_details) { IncomeDetails.new }
+  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:income) { Income.new }
 
   let(:lost_job_in_custody) { nil }
   let(:date_job_lost) { nil }
@@ -60,7 +60,7 @@ RSpec.describe Steps::Income::LostJobInCustodyForm do
       end
 
       it_behaves_like 'a has-one-association form',
-                      association_name: :income_details,
+                      association_name: :income,
                       expected_attributes: {
                         'lost_job_in_custody' => YesNoAnswer::NO,
                         'date_job_lost' => nil
@@ -95,7 +95,7 @@ RSpec.describe Steps::Income::LostJobInCustodyForm do
           end
 
           it 'cannot reset `date_job_lost` as it is relevant' do
-            income_details.update(lost_job_in_custody: YesNoAnswer::YES.to_s)
+            income.update(lost_job_in_custody: YesNoAnswer::YES.to_s)
 
             attributes = form.send(:attributes_to_reset)
             expect(attributes['date_job_lost']).to eq(date_job_lost)

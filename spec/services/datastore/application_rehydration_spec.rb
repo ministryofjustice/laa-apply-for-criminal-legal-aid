@@ -35,7 +35,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),
         case: an_instance_of(Case),
-        income_details: an_instance_of(IncomeDetails),
+        income: an_instance_of(Income),
         documents: all(be_a(Document)),
       )
 
@@ -46,7 +46,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       ).and_call_original
 
       expect(
-        IncomeDetails
+        Income
       ).to receive(:new).with(
         hash_including(
           'lost_job_in_custody' => 'yes',
