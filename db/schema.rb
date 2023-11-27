@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_11_27_163617) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_115239) do
+>>>>>>> 8d7c2cf (Move income detail columns from People to IncomeDetails table)
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -119,7 +123,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_163617) do
     t.string "manage_other_details"
     t.string "employment_status", default: [], array: true
     t.string "ended_employment_within_three_months"
+<<<<<<< HEAD
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
+=======
+    t.index ["crime_application_id"], name: "index_income_details_on_crime_application_id"
+>>>>>>> 8d7c2cf (Move income detail columns from People to IncomeDetails table)
   end
 
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
