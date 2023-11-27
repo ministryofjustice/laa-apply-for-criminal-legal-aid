@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Summary::Sections::IncomeDetails do
+describe Summary::Sections::EmploymentDetails do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -14,12 +14,13 @@ describe Summary::Sections::IncomeDetails do
   let(:income) do
     instance_double(
       Income,
-      income_above_threshold: 'yes'
+      lost_job_in_custody: 'yes',
+      date_job_lost: Date.new(2023, 11, 20),
     )
   end
 
   describe '#name' do
-    it { expect(subject.name).to eq(:income_details) }
+    it { expect(subject.name).to eq(:employment_details) }
   end
 
   describe '#show?' do
@@ -43,11 +44,15 @@ describe Summary::Sections::IncomeDetails do
 
     context 'when there are income details' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(1)
+        expect(answers.count).to eq(2)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[0].question).to eq(:income_above_threshold)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/clients_income_before_tax')
+        expect(answers[0].question).to eq(:lost_job_in_custody)
+        expect(answers[0].change_path).to match('applications/12345/steps/income/did_client_lose_job_being_in_custody')
         expect(answers[0].value).to eq('yes')
+        expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
+        expect(answers[1].question).to eq(:date_job_lost)
+        expect(answers[1].change_path).to match('applications/12345/steps/income/did_client_lose_job_being_in_custody')
+        expect(answers[1].value).to eq(Date.new(2023, 11, 20))
       end
     end
   end

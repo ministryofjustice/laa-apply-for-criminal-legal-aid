@@ -4,8 +4,10 @@ module SubmissionSerializer
       def to_builder
         Jbuilder.new do |json|
           json.means_details do
-            income_above_threshold(json)
-            lost_job_in_custody(json)
+            json.income_details do
+              income_above_threshold(json)
+              lost_job_in_custody(json)
+            end
           end
         end
       end

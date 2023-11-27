@@ -20,7 +20,8 @@ en:
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
       legal_representative_details: Legal representative
-      income_details: Income details
+      employment_details: Employment
+      income_details: Income
       supporting_evidence: Supporting evidence
 
     questions:
@@ -173,9 +174,18 @@ en:
           'true': The case has been split, so you need to add justification for all offences
       # END passport justification for legal aid section
 
+      # BEGIN employment details section
+      lost_job_in_custody:
+        question: Did your client lose their job as a result of being in custody?
+        answers:
+          <<: *YESNO
+      date_job_lost:
+        question: When did they lose their job?
+      # END employment details section
+
       # BEGIN income details section
       income_above_threshold:
-        question: Income over £12,475
+        question: Is your client’s income currently more than £12,475 a year before tax?
         answers:
           <<: *YESNO
       # END income details section
