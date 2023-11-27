@@ -2,7 +2,7 @@ module Steps
   module Income
     class EmploymentStatusForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
-      has_one_association :applicant
+      has_one_association :income_details
 
       attribute :employment_status, array: true, default: []
       attribute :ended_employment_within_three_months, :value_object, source: YesNoAnswer
@@ -36,7 +36,7 @@ module Steps
       end
 
       def persist!
-        applicant.update(
+        income_details.update(
           attributes.merge(attributes_to_reset)
         )
       end

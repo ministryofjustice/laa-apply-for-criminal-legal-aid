@@ -15,6 +15,10 @@ module Adapters
         Structs::InterestsOfJustice.new(interests_of_justice)
       end
 
+      def income
+        Structs::IncomeDetails.new(means_details.income_details)
+      end
+
       def documents
         supporting_evidence.map do |struct|
           Document.new(
