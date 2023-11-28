@@ -2,7 +2,7 @@ module Steps
   module Income
     class ManageWithoutIncomeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
-      has_one_association :applicant
+      has_one_association :income
 
       attribute :manage_without_income, :value_object, source: ManageWithoutIncomeType
       attribute :manage_other_details, :string
@@ -20,7 +20,7 @@ module Steps
       private
 
       def persist!
-        applicant.update(
+        income.update(
           attributes.merge(attributes_to_reset)
         )
       end

@@ -4,15 +4,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant: applicant, income_details: IncomeDetails.new)
+    instance_double(CrimeApplication, income:)
   end
 
   describe '#generate' do
-    let(:applicant) do
+    let(:income) do
       instance_double(
-        Applicant,
-        first_name: 'Max',
-        last_name: 'Mustermann',
+        Income,
+        income_above_threshold: 'yes',
         lost_job_in_custody: 'yes',
         date_job_lost: '2023-10-01',
       )
@@ -22,7 +21,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       {
         means_details: {
           income_details: {
-            income_above_threshold: nil,
+            income_above_threshold: 'yes',
             lost_job_in_custody: 'yes',
             date_job_lost: '2023-10-01',
           }
@@ -35,11 +34,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
 
   describe '#lost_job_in_custody' do
     context 'when lost_job_in_custody is nil' do
-      let(:applicant) do
+      let(:income) do
         instance_double(
-          Applicant,
-          first_name: 'Max',
-          last_name: 'Mustermann',
+          Income,
+          income_above_threshold: 'yes',
           lost_job_in_custody: nil,
           date_job_lost: nil,
         )
@@ -49,7 +47,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         {
           means_details: {
             income_details: {
-              income_above_threshold: nil,
+              income_above_threshold: 'yes'
             }
           }
         }.as_json

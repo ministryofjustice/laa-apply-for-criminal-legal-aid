@@ -18,6 +18,7 @@ module Datastore
         means_passport: parent.means_passport,
         applicant: applicant,
         case: case_with_ioj,
+        income: income,
         documents: parent.documents,
       )
     end
@@ -39,13 +40,8 @@ module Datastore
       parent.date_stamp if CaseType.new(parent.case.case_type).date_stampable?
     end
 
-    # NOTE: Income Details implementation is WIP, hence hard-coded nillable fields
     def applicant
-      Applicant.new(
-        'lost_job_in_custody' => parent.means_details&.income_details&.lost_job_in_custody,
-        'date_job_lost' => parent.means_details&.income_details&.date_job_lost,
-        **parent.applicant.serializable_hash
-      )
+      Applicant.new(parent.applicant.serializable_hash)
     end
 
     def ioj
@@ -59,6 +55,14 @@ module Datastore
     def case_with_ioj
       Case.new(
         parent.case.serializable_hash.merge('ioj' => ioj)
+      )
+    end
+
+    def income
+      return if parent.income.blank?
+
+      Income.new(
+        parent.income.serializable_hash
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_163617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -106,14 +106,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
-  create_table "income_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "client_owns_property"
     t.string "has_frozen_income_or_assets"
-    t.index ["crime_application_id"], name: "index_income_details_on_crime_application_id"
+    t.string "lost_job_in_custody"
+    t.date "date_job_lost"
+    t.string "manage_without_income"
+    t.string "manage_other_details"
+    t.string "employment_status", default: [], array: true
+    t.string "ended_employment_within_three_months"
+    t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -160,12 +166,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.string "lost_job_in_custody"
-    t.date "date_job_lost"
-    t.string "manage_without_income"
-    t.string "manage_other_details"
-    t.string "employment_status", default: [], array: true
-    t.string "ended_employment_within_three_months"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
@@ -194,7 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_154434) do
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
   add_foreign_key "documents", "crime_applications"
-  add_foreign_key "income_details", "crime_applications"
+  add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "people", "crime_applications"
