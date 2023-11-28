@@ -3,10 +3,14 @@ module SubmissionSerializer
     class MeansDetails < Sections::BaseSection
       def to_builder
         Jbuilder.new do |json|
-          json.means_details do
-            json.income_details do
-              income_above_threshold(json)
-              lost_job_in_custody(json)
+          if income.present?
+            json.means_details do
+              json.income_details do
+                json.income_above_threshold income.income_above_threshold
+                json.employment_type income.employment_status
+                ended_employment_within_three_months(json)
+                lost_job_in_custody(json)
+              end
             end
           end
         end
@@ -14,17 +18,21 @@ module SubmissionSerializer
 
       private
 
-      def income_above_threshold(json)
-        return unless crime_application.income
+      def lost_job_in_custody(json)
+        return unless income&.lost_job_in_custody
 
-        json.income_above_threshold crime_application.income.income_above_threshold
+        json.lost_job_in_custody income.lost_job_in_custody
+        json.date_job_lost income.date_job_lost
       end
 
-      def lost_job_in_custody(json)
-        return unless crime_application.income&.lost_job_in_custody
+      def ended_employment_within_three_months(json)
+        return unless income&.ended_employment_within_three_months
 
-        json.lost_job_in_custody crime_application.income.lost_job_in_custody
-        json.date_job_lost crime_application.income.date_job_lost
+        json.ended_employment_within_three_months income.ended_employment_within_three_months
+      end
+
+      def income
+        crime_application.income
       end
     end
   end

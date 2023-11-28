@@ -12,6 +12,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       instance_double(
         Income,
         income_above_threshold: 'yes',
+        employment_status: ['not_working'],
+        ended_employment_within_three_months: 'yes',
         lost_job_in_custody: 'yes',
         date_job_lost: '2023-10-01',
       )
@@ -22,6 +24,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         means_details: {
           income_details: {
             income_above_threshold: 'yes',
+            employment_type: ['not_working'],
+            ended_employment_within_three_months: 'yes',
             lost_job_in_custody: 'yes',
             date_job_lost: '2023-10-01',
           }
@@ -38,6 +42,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         instance_double(
           Income,
           income_above_threshold: 'yes',
+          employment_status: ['not_working'],
+          ended_employment_within_three_months: 'no',
           lost_job_in_custody: nil,
           date_job_lost: nil,
         )
@@ -47,7 +53,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         {
           means_details: {
             income_details: {
-              income_above_threshold: 'yes'
+              income_above_threshold: 'yes',
+              employment_type: ['not_working'],
+              ended_employment_within_three_months: 'no'
             }
           }
         }.as_json
