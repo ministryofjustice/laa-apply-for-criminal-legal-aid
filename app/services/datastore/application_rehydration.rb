@@ -59,6 +59,8 @@ module Datastore
     end
 
     def income
+      return if parent.income.blank?
+
       Income.new(
         parent.income.serializable_hash
       )
