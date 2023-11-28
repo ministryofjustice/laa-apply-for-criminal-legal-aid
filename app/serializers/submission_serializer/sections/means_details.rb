@@ -21,7 +21,7 @@ module SubmissionSerializer
       end
 
       def lost_job_in_custody(json)
-        return unless crime_application&.income&.lost_job_in_custody
+        return unless crime_application.income&.lost_job_in_custody
 
         json.lost_job_in_custody crime_application.income.lost_job_in_custody
         json.date_job_lost crime_application.income.date_job_lost
