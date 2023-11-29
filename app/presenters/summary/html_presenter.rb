@@ -19,6 +19,8 @@ module Summary
         Sections::FirstCourtHearing.new(crime_application),
         Sections::JustificationForLegalAid.new(crime_application),
         Sections::PassportJustificationForLegalAid.new(crime_application),
+        Sections::EmploymentDetails.new(crime_application),
+        Sections::IncomeDetails.new(crime_application),
         Sections::SupportingEvidence.new(crime_application),
         Sections::LegalRepresentativeDetails.new(crime_application),
       ].select(&:show?)

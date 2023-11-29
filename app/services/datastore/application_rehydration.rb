@@ -11,6 +11,7 @@ module Datastore
       return if already_recreated?
 
       crime_application.update!(
+        # TODO: Update partner rehydration when partner introduced and stored
         client_has_partner: YesNoAnswer::NO,
         parent_id: parent.id,
         date_stamp: date_stamp,
