@@ -2,7 +2,7 @@ module Steps
   module Income
     class IncomeBeforeTaxForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
-      has_one_association :income_details
+      has_one_association :income
 
       # threshold being £12,475 as of Nov 2023
       attribute :income_above_threshold, :value_object, source: YesNoAnswer
@@ -16,7 +16,7 @@ module Steps
       private
 
       def persist!
-        income_details.update(
+        income.update(
           attributes
         )
       end

@@ -2,7 +2,7 @@ module Steps
   module Income
     class FrozenIncomeSavingsAssetsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
-      has_one_association :income_details
+      has_one_association :income
 
       attribute :has_frozen_income_or_assets, :value_object, source: YesNoAnswer
 
@@ -15,7 +15,7 @@ module Steps
       private
 
       def persist!
-        income_details.update(
+        income.update(
           attributes
         )
       end

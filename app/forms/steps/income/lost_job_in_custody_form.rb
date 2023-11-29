@@ -2,7 +2,7 @@ module Steps
   module Income
     class LostJobInCustodyForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
-      has_one_association :applicant
+      has_one_association :income
 
       attribute :lost_job_in_custody, :value_object, source: YesNoAnswer
       attribute :date_job_lost, :multiparam_date
@@ -29,7 +29,7 @@ module Steps
       end
 
       def persist!
-        applicant.update(
+        income.update(
           attributes.merge(attributes_to_reset)
         )
       end

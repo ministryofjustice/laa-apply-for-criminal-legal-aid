@@ -76,7 +76,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       types: ['loss_of_liberty'],
       loss_of_liberty_justification: 'Details about loss of liberty.',
     )
-    IncomeDetails.create(
+    Income.create(
       crime_application: app,
       income_above_threshold: 'yes'
     )

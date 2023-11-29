@@ -10,8 +10,8 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, income_details:) }
-  let(:income_details) { instance_double(IncomeDetails) }
+  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:income) { instance_double(Income) }
 
   let(:client_owns_property) { nil }
 
@@ -52,7 +52,7 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
       end
 
       it 'updates the record' do
-        expect(income_details).to receive(:update)
+        expect(income).to receive(:update)
           .with({ 'client_owns_property' => YesNoAnswer::YES })
           .and_return(true)
 
@@ -60,7 +60,7 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
       end
 
       it_behaves_like 'a has-one-association form',
-                      association_name: :income_details,
+                      association_name: :income,
                       expected_attributes: {
                         'client_owns_property' => YesNoAnswer::YES,
                       }
