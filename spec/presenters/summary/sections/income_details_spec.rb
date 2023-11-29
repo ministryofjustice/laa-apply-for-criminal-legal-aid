@@ -23,17 +23,17 @@ describe Summary::Sections::IncomeDetails do
   end
 
   describe '#show?' do
-    context 'when there is no income_details' do
-      let(:income) { nil }
-
-      it 'shows this section' do
-        expect(subject.show?).to be(false)
-      end
-    end
-
     context 'when there is an income_details' do
       it 'shows this section' do
         expect(subject.show?).to be(true)
+      end
+    end
+
+    context 'when there is no income_details' do
+      let(:income) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
       end
     end
   end

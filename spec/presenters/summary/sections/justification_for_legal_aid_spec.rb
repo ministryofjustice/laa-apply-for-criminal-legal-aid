@@ -24,17 +24,17 @@ describe Summary::Sections::JustificationForLegalAid do
   end
 
   describe '#show?' do
-    context 'when there is no ioj' do
-      let(:ioj) { nil }
-
-      it 'shows this section' do
-        expect(subject.show?).to be(false)
-      end
-    end
-
     context 'when there is an ioj' do
       it 'shows this section' do
         expect(subject.show?).to be(true)
+      end
+    end
+
+    context 'when there is no ioj' do
+      let(:ioj) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
       end
     end
   end
