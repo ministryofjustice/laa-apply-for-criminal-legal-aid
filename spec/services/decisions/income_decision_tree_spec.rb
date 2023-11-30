@@ -128,9 +128,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
     end
   end
 
-  context 'when the step is `after_client_have_dependants`' do
+  context 'when the step is `after_client_has_dependants`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :client_have_dependants }
+    let(:step_name) { :client_has_dependants }
 
     context 'has correct next step' do
       it { is_expected.to have_destination('/home', :index, id: crime_application) }

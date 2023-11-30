@@ -12,8 +12,8 @@ module Decisions
         after_income_before_tax
       when :frozen_income_savings_assets
         after_frozen_income_savings_assets
-      when :client_have_dependants
-        after_client_have_dependants
+      when :client_has_dependants
+        after_client_has_dependants
       when :client_owns_property
         edit('/home', action: :index)
       when :manage_without_income
@@ -57,7 +57,7 @@ module Decisions
       end
     end
 
-    def after_client_have_dependants
+    def after_client_has_dependants
       # TODO: once we have the next step
       show('/home', action: :index)
     end

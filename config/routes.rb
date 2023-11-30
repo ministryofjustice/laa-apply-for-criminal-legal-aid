@@ -151,7 +151,7 @@ Rails.application.routes.draw do
         edit_step :clients_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
         edit_step :does_client_own_home_land_property, alias: :client_owns_property
-        edit_step :does_client_have_dependants, alias: :client_have_dependants
+        edit_step :does_client_have_dependants, alias: :client_has_dependants
       end
 
       namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do

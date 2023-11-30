@@ -1,12 +1,12 @@
 module Steps
   module Income
-    class ClientHaveDependantsForm < Steps::BaseFormObject
+    class ClientHasDependantsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :income
 
-      attribute :client_have_dependants, :value_object, source: YesNoAnswer
+      attribute :client_has_dependants, :value_object, source: YesNoAnswer
 
-      validates_inclusion_of :client_have_dependants, in: :choices
+      validates_inclusion_of :client_has_dependants, in: :choices
 
       def choices
         YesNoAnswer.values
