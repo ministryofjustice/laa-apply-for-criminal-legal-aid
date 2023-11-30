@@ -147,6 +147,9 @@ production:
     - 2M286T
     - 2Q102D
     - 2Q103E
+    # Deactivate codes 30/11/2023
+    - 0L290K
+    - 0V021N
     # Inactive codes for fourteenth onboarding tranche - 30/11/2023
     - 0Y265P
     - 0C179U
