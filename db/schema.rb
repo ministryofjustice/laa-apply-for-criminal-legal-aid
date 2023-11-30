@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_27_163617) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_30_090648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_163617) do
     t.string "manage_other_details"
     t.string "employment_status", default: [], array: true
     t.string "ended_employment_within_three_months"
+    t.string "client_have_dependants"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
