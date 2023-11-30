@@ -16,6 +16,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         ended_employment_within_three_months: 'yes',
         lost_job_in_custody: 'yes',
         date_job_lost: '2023-10-01',
+        manage_without_income: 'other',
+        manage_other_details: 'Another way that they manage'
       )
     end
 
@@ -28,6 +30,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             ended_employment_within_three_months: 'yes',
             lost_job_in_custody: 'yes',
             date_job_lost: '2023-10-01',
+            manage_without_income: 'other',
+            manage_other_details: 'Another way that they manage'
           }
         }
       }.as_json
