@@ -29,6 +29,7 @@ spec:
       - name: clamav
         image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
         imagePullPolicy: Always
+        command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
         ports:
           - containerPort: 3310
             protocol: TCP
@@ -45,12 +46,12 @@ spec:
         readinessProbe:
           tcpSocket:
             port: 3310
-          initialDelaySeconds: 600
+          initialDelaySeconds: 300
           periodSeconds: 120
         livenessProbe:
           tcpSocket:
             port: 3310
-          initialDelaySeconds: 600
+          initialDelaySeconds: 300
           periodSeconds: 120
   volumeClaimTemplates:
   - metadata:
