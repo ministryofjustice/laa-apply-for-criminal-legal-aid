@@ -308,6 +308,10 @@ en:
               inclusion: Select how your client manages with no income
             manage_other_details:
               blank: Enter details on how your client manages with no income
+        steps/income/client_has_dependants_form:
+          attributes:
+            client_has_dependants:
+              inclusion: Select yes if your client has any dependants?
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:
