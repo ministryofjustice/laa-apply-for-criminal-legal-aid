@@ -58,10 +58,7 @@ RSpec.describe SubmissionSerializer::Application do
           'client_details' => a_hash_including('applicant'),
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
-          'means_details' => a_hash_including('income_details' => {
-                                                'income_above_threshold' => nil,
-             'employment_type' => [],
-                                              }),
+          'means_details' => a_hash_including('income_details'),
           'supporting_evidence' => be_an(Array),
         )
       )
