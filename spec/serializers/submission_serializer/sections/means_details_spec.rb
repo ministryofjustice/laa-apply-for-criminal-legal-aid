@@ -48,7 +48,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         employment_status: ['not_working'],
         ended_employment_within_three_months: nil,
         lost_job_in_custody: nil,
-        date_job_lost: nil
+        date_job_lost: nil,
+        manage_without_income: nil,
+        manage_other_details: nil
       )
     end
 
@@ -60,8 +62,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             employment_type: ['not_working'],
             ended_employment_within_three_months: nil,
             lost_job_in_custody: nil,
-            date_job_lost: nil
-
+            date_job_lost: nil,
+            manage_without_income: nil,
+            manage_other_details: nil,
           }
         }
       }.as_json
