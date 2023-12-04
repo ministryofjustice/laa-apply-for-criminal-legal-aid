@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :has_savings, @form_object.choices,
+                                           :value, inline: false,
+                                           legend: { text: t('.has_savings'), tag: 'h1', size: 'xl' } do %>
+           <span class="govuk-caption-m govuk-!-margin-bottom-4">
+             <%= t('.has_savings_info') %>
+           </span>
+        <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
