@@ -27,6 +27,9 @@
           <% end %>
 
           <% if crime_application.in_progress? %>
+             <%= button_to edit_steps_income_employment_status_path, method: :get,
+                          class: 'govuk-button govuk-!-margin-right-1',
+                          data: { module: 'govuk-button' } do; 'Income journey'; end %>
             <%= button_to developer_tools_crime_application_path, method: :delete,
                           class: 'govuk-button govuk-button--warning',
                           data: { module: 'govuk-button' } do; 'Destroy'; end %>

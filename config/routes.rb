@@ -147,11 +147,11 @@ Rails.application.routes.draw do
         edit_step :what_is_clients_employment_status, alias: :employment_status
         show_step :employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
-        edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
         edit_step :clients_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
         edit_step :does_client_own_home_land_property, alias: :client_owns_property
         edit_step :does_client_have_dependants, alias: :client_has_dependants
+        edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
       end
 
       namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
