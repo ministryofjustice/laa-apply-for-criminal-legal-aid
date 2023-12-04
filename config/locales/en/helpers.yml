@@ -225,7 +225,7 @@ en:
           employed: Employed
           self_employed: Self-employed
           business_partnership: In a business partnership
-          director: Company director
+          director: Company director in a private company
           shareholder: Shareholder in a private company
           not_working: My client is not working
         ended_employment_within_three_months_options: *YESNO
