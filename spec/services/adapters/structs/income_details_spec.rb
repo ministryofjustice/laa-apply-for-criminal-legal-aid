@@ -11,9 +11,11 @@ RSpec.describe Adapters::Structs::IncomeDetails do
         subject.serializable_hash
       ).to match(
         a_hash_including(
-          'income_above_threshold' => 'yes',
+          'employment_status' => ['not_working'],
+          'ended_employment_within_three_months' => 'yes',
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => Date.new(2023, 9, 1),
+          'income_above_threshold' => 'yes',
         )
       )
     end
@@ -23,6 +25,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
         subject.serializable_hash.keys
       ).to match_array(
         %w[
+          employment_status
+          ended_employment_within_three_months
           income_above_threshold
           lost_job_in_custody
           date_job_lost
