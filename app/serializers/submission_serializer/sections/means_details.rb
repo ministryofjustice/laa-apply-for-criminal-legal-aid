@@ -13,6 +13,7 @@ module SubmissionSerializer
                 json.lost_job_in_custody income.lost_job_in_custody
                 json.date_job_lost income.date_job_lost
                 json.has_frozen_income_or_assets income.has_frozen_income_or_assets
+                json.has_savings income.has_savings
                 json.manage_without_income income.manage_without_income
                 json.manage_other_details income.manage_other_details
               end
