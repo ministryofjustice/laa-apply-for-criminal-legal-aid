@@ -209,15 +209,25 @@ en:
         edit:
           page_title: Did your client lose their job as a result of being in custody?
           date_job_lost: When did they lose their job?
-      frozen_income_savings_assets:
-        edit:
-          page_title:  Does your client have any income, savings or assets under a restraint or freezing order?
-          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
       income_before_tax:
         edit:
           page_title: Is your client's income currently more than £12,475 a year before tax?
           income_above_threshold_info: Do not include any employment income if your client has lost their job or ended employment.
           income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
+      frozen_income_savings_assets:
+        edit:
+          page_title:  Does your client have any income, savings or assets under a restraint or freezing order?
+          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
+      client_owns_property:
+        edit:
+          page_title: Does your client own their home, or any other land or property?
+          client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
+          client_owns_property: Does your client own their home, or any other land or property?
+      has_savings:
+        edit:
+          page_title: Does your client have any savings or investments?
+          has_savings_info: Include savings or investments they have inside or outside the UK.
+          has_savings: Does your client have any savings or investments?
       client_has_dependants:
         edit:
           page_title: 'Does your client have any dependants?'
@@ -227,11 +237,6 @@ en:
             definition_1: 'under 18 years old'
             definition_2: 'lives with your client'
             definition_3: 'depends on your client for financial support'
-      client_owns_property:
-        edit:
-          page_title: Does your client own their home, or any other land or property?
-          client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
-          client_owns_property: Does your client own their home, or any other land or property?
       manage_without_income:
         edit:
           page_title: How does client manage with no income?

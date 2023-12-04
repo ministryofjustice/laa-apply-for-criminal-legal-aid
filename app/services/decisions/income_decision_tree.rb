@@ -13,6 +13,8 @@ module Decisions
       when :frozen_income_savings_assets
         after_frozen_income_savings_assets
       when :client_owns_property
+        after_client_owns_property
+      when :has_savings
         # TODO: link to next step when we have it
         edit(:client_has_dependants)
       when :client_has_dependants
@@ -59,6 +61,15 @@ module Decisions
       end
     end
 
+    def after_client_owns_property
+      if no_property?
+        edit(:has_savings)
+      else
+        # TODO: once we have the next step
+        edit(:client_has_dependants)
+      end
+    end
+
     def after_client_has_dependants
       # TODO: once we have the next step
       edit(:manage_without_income)
@@ -78,6 +89,10 @@ module Decisions
 
     def no_frozen_assets?
       form_object.has_frozen_income_or_assets.no?
+    end
+
+    def no_property?
+      form_object.client_owns_property.no?
     end
   end
 end

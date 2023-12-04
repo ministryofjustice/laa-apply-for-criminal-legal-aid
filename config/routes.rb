@@ -150,6 +150,7 @@ Rails.application.routes.draw do
         edit_step :clients_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
         edit_step :does_client_own_home_land_property, alias: :client_owns_property
+        edit_step :does_client_have_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
         edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
       end
