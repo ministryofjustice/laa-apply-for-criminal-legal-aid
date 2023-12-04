@@ -22,7 +22,7 @@ module SubmissionSerializer
       private
 
       def income
-        crime_application.income
+        @income ||= crime_application.income
       end
     end
   end
