@@ -7,15 +7,16 @@ module Decisions
         after_employment_status
       when :lost_job_in_custody
         # TODO: link to next step when we have it
-        edit(:manage_without_income)
+        edit(:income_before_tax)
       when :income_before_tax
         after_income_before_tax
       when :frozen_income_savings_assets
         after_frozen_income_savings_assets
+      when :client_owns_property
+        # TODO: link to next step when we have it
+        edit(:client_has_dependants)
       when :client_has_dependants
         after_client_has_dependants
-      when :client_owns_property
-        edit('/home', action: :index)
       when :manage_without_income
         # TODO: link to next step when we have it
         show('/home', action: :index)
@@ -32,9 +33,10 @@ module Decisions
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         else
-          show('/home', action: :index)
+          edit(:income_before_tax)
         end
       else
+        # TODO: Update exit page content to include unemployed
         show(:employed_exit)
       end
     end
@@ -44,7 +46,7 @@ module Decisions
         edit(:frozen_income_savings_assets)
       else
         # TODO: once we have the next step
-        show('/home', action: :index)
+        edit(:client_has_dependants)
       end
     end
 
@@ -53,13 +55,13 @@ module Decisions
         edit(:client_owns_property)
       else
         # TODO: once we have the next step
-        show('/home', action: :index)
+        edit(:client_has_dependants)
       end
     end
 
     def after_client_has_dependants
       # TODO: once we have the next step
-      show('/home', action: :index)
+      edit(:manage_without_income)
     end
 
     def not_working?
