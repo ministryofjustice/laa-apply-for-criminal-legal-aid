@@ -14,7 +14,8 @@ describe Summary::Sections::IncomeDetails do
   let(:income) do
     instance_double(
       Income,
-      income_above_threshold: 'yes'
+      income_above_threshold: 'no',
+      has_frozen_income_or_assets: 'no'
     )
   end
 
@@ -43,11 +44,17 @@ describe Summary::Sections::IncomeDetails do
 
     context 'when there are income details' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(1)
+        expect(answers.count).to eq(2)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:income_above_threshold)
         expect(answers[0].change_path).to match('applications/12345/steps/income/clients_income_before_tax')
-        expect(answers[0].value).to eq('yes')
+        expect(answers[0].value).to eq('no')
+        expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[1].question).to eq(:has_frozen_income_or_assets)
+        expect(answers[1].change_path).to match(
+          'applications/12345/steps/income/income_savings_assets_under_restraint_freezing_order'
+        )
+        expect(answers[1].value).to eq('no')
       end
     end
   end

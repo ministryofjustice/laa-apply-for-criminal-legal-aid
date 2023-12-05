@@ -196,6 +196,10 @@ en:
         question: Is your client’s income currently more than £12,475 a year before tax?
         answers:
           <<: *YESNO
+      has_frozen_income_or_assets:
+        question: Does your client have any income, savings or assets under a restraint or freezing order?
+        answers:
+          <<: *YESNO
       # END income details section
 
       # BEGIN legal representative details section
