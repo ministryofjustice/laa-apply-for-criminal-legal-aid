@@ -297,21 +297,25 @@ en:
         steps/income/frozen_income_savings_assets_form:
           attributes:
             has_frozen_income_or_assets:
-              inclusion: Select yes if your client has any income, savings or assets under a restraint or freezing order?
+              inclusion: Select yes if your client has any income, savings or assets under a restraint or freezing order
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:
-              inclusion: Select yes if your client owns their home, or any other land or property?
+              inclusion: Select yes if your client owns their home, or any other land or property
+        steps/income/has_savings_form:
+          attributes:
+            has_savings:
+              inclusion: Select yes if your client has savings or investments
+        steps/income/client_has_dependants_form:
+          attributes:
+            client_has_dependants:
+              inclusion: Select yes if your client has any dependants
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
               inclusion: Select how your client manages with no income
             manage_other_details:
               blank: Enter details on how your client manages with no income
-        steps/income/client_has_dependants_form:
-          attributes:
-            client_has_dependants:
-              inclusion: Select yes if your client has any dependants?
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:

@@ -114,12 +114,33 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_owns_property }
 
+    context 'when they have property' do
+      before do
+        allow(form_object).to receive_messages(client_owns_property: YesNoAnswer::YES)
+      end
+
+      it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
+    end
+
+    context 'when they do not have property' do
+      before do
+        allow(form_object).to receive_messages(client_owns_property: YesNoAnswer::NO)
+      end
+
+      it { is_expected.to have_destination(:has_savings, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `has savings`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :has_savings }
+
     context 'has correct next step' do
       it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
     end
   end
 
-  context 'when the step is `after_client_has_dependants`' do
+  context 'when the step is `client_has_dependants`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_has_dependants }
 
