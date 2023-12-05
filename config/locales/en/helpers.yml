@@ -245,7 +245,7 @@ en:
         manage_without_income_options:
           friends_sofa: They sleep on a friend's sofa for free
           family: They stay with family for free
-          living_on_streets: They are living on the streets / homeless
+          living_on_streets: They are living on the streets or homeless
           custody: They have been in custody for more than 3 months
           other: Other
         manage_other_details: Tell us how your client manages with no income

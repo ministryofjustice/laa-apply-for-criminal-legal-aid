@@ -22,6 +22,7 @@ en:
       legal_representative_details: Legal representative
       employment_details: Employment
       income_details: Income
+      other_income_details: Other sources of income
       supporting_evidence: Supporting evidence
 
     questions:
@@ -201,6 +202,20 @@ en:
         answers:
           <<: *YESNO
       # END income details section
+
+      # BEGIN other sources of income details section
+      manage_without_income:
+        question: How does your client manage with no income?
+        answers:
+          friends_sofa: They sleep on a friend's sofa for free
+          family: They stay with family for free
+          living_on_streets: They are living on the streets or homeless
+          custody: They have been in custody for more than 3 months
+          other: Other
+      manage_other_details:
+        #TODO: Question title has no design and needs to be checked/updated when designs are finalized
+        question: Details
+      # END other sources of income details section
 
       # BEGIN legal representative details section
       legal_rep_first_name:
