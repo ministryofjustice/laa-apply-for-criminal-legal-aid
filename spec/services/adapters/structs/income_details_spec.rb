@@ -16,6 +16,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => Date.new(2023, 9, 1),
           'income_above_threshold' => 'yes',
+          'has_frozen_income_or_assets' => 'no',
+          'has_savings' => 'no',
         )
       )
     end
@@ -27,9 +29,11 @@ RSpec.describe Adapters::Structs::IncomeDetails do
         %w[
           employment_status
           ended_employment_within_three_months
-          income_above_threshold
           lost_job_in_custody
           date_job_lost
+          income_above_threshold
+          has_frozen_income_or_assets
+          has_savings
         ]
       )
     end
