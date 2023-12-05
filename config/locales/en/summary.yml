@@ -175,6 +175,14 @@ en:
       # END passport justification for legal aid section
 
       # BEGIN employment details section
+      employment_status:
+        question: What is your client’s employment status?
+        answers:
+          'not_working': My client is not working
+      ended_employment_within_three_months:
+        question: Has your client ended employment in the last 3 months?
+        answers:
+          <<: *YESNO
       lost_job_in_custody:
         question: Did your client lose their job as a result of being in custody?
         answers:
