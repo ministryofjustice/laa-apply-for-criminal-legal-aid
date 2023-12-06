@@ -17,7 +17,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         lost_job_in_custody: 'yes',
         date_job_lost: '2023-10-01',
         has_frozen_income_or_assets: 'no',
-        has_savings: 'yes',
+        client_owns_property: 'no',
+        has_savings: 'yes'
         manage_without_income: 'other',
         manage_other_details: 'Another way that they manage'
       )
@@ -33,6 +34,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             lost_job_in_custody: 'yes',
             date_job_lost: '2023-10-01',
             has_frozen_income_or_assets: 'no',
+            client_owns_property: 'no',
             has_savings: 'yes',
             manage_without_income: 'other',
             manage_other_details: 'Another way that they manage'
@@ -54,6 +56,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         lost_job_in_custody: nil,
         date_job_lost: nil,
         has_frozen_income_or_assets: nil,
+        client_owns_property: nil,
         has_savings: nil,
         manage_without_income: nil,
         manage_other_details: nil
@@ -70,6 +73,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             lost_job_in_custody: nil,
             date_job_lost: nil,
             has_frozen_income_or_assets: nil,
+            client_owns_property: nil,
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
