@@ -1,0 +1,17 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :payments, @form_object.choices, legend: { tag: 'h1', size: 'xl' } do %>
+        <% IncomePaymentType.values.each_with_index do |payment_type, index| %>
+          <span id="<%= payment_type %>"></span>
+          <%= f.govuk_check_box :types, payment_type.to_s, link_errors: index.zero? do %>
+        <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
