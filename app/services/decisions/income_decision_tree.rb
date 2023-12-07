@@ -15,6 +15,8 @@ module Decisions
       when :client_owns_property
         after_client_owns_property
       when :has_savings
+        edit(:payments)
+      when :payments
         # TODO: link to next step when we have it
         edit(:client_has_dependants)
       when :client_has_dependants

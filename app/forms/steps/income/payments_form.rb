@@ -6,13 +6,17 @@ module Steps
 
       attribute :payments, array: true, default: []
 
-      validates_inclusion_of :has_savings, in: :choices
+      validate :validate_types
 
-      def choices
-        YesNoAnswer.values
+      def types=(ary)
+        super(ary.compact_blank) if ary
       end
 
       private
+
+      def validate_types
+        errors.add(:types, :invalid) if (types - IncomePaymentType.values.map(&:to_s)).any?
+      end
 
       def persist!
         income.update(
