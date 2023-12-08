@@ -6,6 +6,8 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           if income.present?
             json.means_details do
+              dependants_details(json)
+
               json.income_details do
                 json.income_above_threshold income.income_above_threshold
                 json.employment_type income.employment_status
@@ -17,8 +19,6 @@ module SubmissionSerializer
                 json.has_savings income.has_savings
                 json.manage_without_income income.manage_without_income
                 json.manage_other_details income.manage_other_details
-
-                client_has_dependants(json)
               end
             end
           end
@@ -32,15 +32,16 @@ module SubmissionSerializer
         @income ||= crime_application.income
       end
 
-      def client_has_dependants(json)
-        json.client_has_dependants income.client_has_dependants
+      def dependants
+        income.crime_application.dependants
+      end
+
+      def dependants_details(json)
         return if income.client_has_dependants == YesNoAnswer::NO
 
-        dependants = income.case.dependants.map do |dependant|
-          { age: dependant.age }
-        end
+        list = crime_application.dependants.with_ages.map { |dependant| { age: dependant.age } }
 
-        json.dependants dependants.as_json
+        json.dependants list.as_json
       end
     end
   end

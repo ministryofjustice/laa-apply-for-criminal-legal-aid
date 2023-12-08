@@ -10,11 +10,13 @@ class CrimeApplication < ApplicationRecord
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy
 
+  has_many :dependants, dependent: :destroy
+  accepts_nested_attributes_for :dependants, allow_destroy: true
+
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
-  has_many :dependants, through: :case
 
   enum status: ApplicationStatus.enum_values
 

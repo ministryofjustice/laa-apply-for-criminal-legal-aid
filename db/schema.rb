@@ -88,11 +88,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_07_181336) do
   end
 
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "case_id", null: false
+    t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "age"
-    t.index ["case_id"], name: "index_dependants_on_case_id"
+    t.index ["crime_application_id"], name: "index_dependants_on_crime_application_id"
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -203,7 +203,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_07_181336) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
-  add_foreign_key "dependants", "cases"
+  add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"

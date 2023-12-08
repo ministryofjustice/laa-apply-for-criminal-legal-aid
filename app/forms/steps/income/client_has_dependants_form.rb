@@ -34,7 +34,7 @@ module Steps
       def reset_dependants_if_needed
         return if client_has_dependants.yes?
 
-        crime_application.case.dependants = []
+        crime_application.dependants = []
       end
     end
   end

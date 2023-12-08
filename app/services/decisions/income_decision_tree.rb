@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :employment_status
@@ -32,7 +32,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -85,7 +85,7 @@ module Decisions
     end
 
     def edit_dependants(add_blank: false)
-      dependants = form_object.case.dependants
+      dependants = form_object.crime_application.dependants
       dependants.create! if add_blank || dependants.empty?
 
       edit(:dependants)

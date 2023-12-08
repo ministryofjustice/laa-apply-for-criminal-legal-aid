@@ -5,12 +5,12 @@ module Steps
 
       has_one_association :case
 
-      delegate :dependants_attributes=, to: :kase
+      delegate :dependants_attributes=, to: :crime_application
 
       validates_with DependantsValidator, unless: :any_marked_for_destruction?
 
       def dependants
-        @dependants ||= kase.dependants.map do |dependant|
+        @dependants ||= crime_application.dependants.map do |dependant|
           DependantFieldsetForm.build(
             dependant, crime_application:
           )
@@ -31,7 +31,7 @@ module Steps
       # the updates or destroys of the associated `codefendant` records,
       # as we are using `accepts_nested_attributes_for`
       def persist!
-        kase.save
+        crime_application.save
       end
     end
   end
