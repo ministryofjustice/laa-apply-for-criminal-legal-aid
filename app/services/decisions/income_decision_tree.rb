@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
       when :employment_status
@@ -19,6 +19,12 @@ module Decisions
         edit(:client_has_dependants)
       when :client_has_dependants
         after_client_has_dependants
+      when :add_dependant
+        edit_dependants(add_blank: true)
+      when :delete_dependant
+        edit_dependants
+      when :dependants_finished
+        edit('/home', action: :index)
       when :manage_without_income
         # TODO: link to next step when we have it
         show('/home', action: :index)
@@ -26,7 +32,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
@@ -71,8 +77,18 @@ module Decisions
     end
 
     def after_client_has_dependants
-      # TODO: once we have the next step
-      edit(:manage_without_income)
+      if form_object.client_has_dependants.yes?
+        edit_dependants
+      else
+        edit(:manage_without_income)
+      end
+    end
+
+    def edit_dependants(add_blank: false)
+      dependants = form_object.case.dependants
+      dependants.create! if add_blank || dependants.empty?
+
+      edit(:dependants)
     end
 
     def not_working?

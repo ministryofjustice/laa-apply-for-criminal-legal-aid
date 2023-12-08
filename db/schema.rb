@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_04_201732) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_181336) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -85,6 +85,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_201732) do
     t.string "means_passport", default: [], array: true
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
+  end
+
+  create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "age"
+    t.index ["case_id"], name: "index_dependants_on_case_id"
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -195,6 +203,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_201732) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
+  add_foreign_key "dependants", "cases"
   add_foreign_key "documents", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"

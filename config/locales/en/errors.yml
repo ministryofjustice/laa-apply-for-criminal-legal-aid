@@ -310,6 +310,12 @@ en:
           attributes:
             client_has_dependants:
               inclusion: Select yes if your client has any dependants
+        steps/income/dependant_fieldset_form:
+          summary:
+            age:
+              not_a_number: "The %{ordinal} dependant's age must be a number"
+              blank: "Enter %{ordinal} dependant's age"
+              less_than: "The %{ordinal} dependant must be under 18"
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:

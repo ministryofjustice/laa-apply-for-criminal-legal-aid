@@ -5,6 +5,9 @@ class Case < ApplicationRecord
   has_many :codefendants, dependent: :destroy
   accepts_nested_attributes_for :codefendants, allow_destroy: true
 
+  has_many :dependants, dependent: :destroy
+  accepts_nested_attributes_for :dependants, allow_destroy: true
+
   has_many :charges, dependent: :destroy,
            before_add: [:initialise_dates] do
     def complete

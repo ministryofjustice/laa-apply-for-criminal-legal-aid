@@ -17,6 +17,8 @@ module SubmissionSerializer
                 json.has_savings income.has_savings
                 json.manage_without_income income.manage_without_income
                 json.manage_other_details income.manage_other_details
+
+                client_has_dependants(json)
               end
             end
           end
@@ -28,6 +30,17 @@ module SubmissionSerializer
 
       def income
         @income ||= crime_application.income
+      end
+
+      def client_has_dependants(json)
+        json.client_has_dependants income.client_has_dependants
+        return if income.client_has_dependants == YesNoAnswer::NO
+
+        dependants = income.case.dependants.map do |dependant|
+          { age: dependant.age }
+        end
+
+        json.dependants dependants.as_json
       end
     end
   end
