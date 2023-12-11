@@ -11,11 +11,11 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:income) do
       instance_double(
         Income,
-        income_above_threshold: 'yes',
         employment_status: ['not_working'],
         ended_employment_within_three_months: 'yes',
         lost_job_in_custody: 'yes',
         date_job_lost: '2023-10-01',
+        income_above_threshold: 'no',
         has_frozen_income_or_assets: 'no',
         client_owns_property: 'no',
         has_savings: 'yes',
@@ -28,11 +28,11 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       {
         means_details: {
           income_details: {
-            income_above_threshold: 'yes',
             employment_type: ['not_working'],
             ended_employment_within_three_months: 'yes',
             lost_job_in_custody: 'yes',
             date_job_lost: '2023-10-01',
+            income_above_threshold: 'no',
             has_frozen_income_or_assets: 'no',
             client_owns_property: 'no',
             has_savings: 'yes',
@@ -50,11 +50,11 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:income) do
       instance_double(
         Income,
-        income_above_threshold: 'yes',
         employment_status: ['not_working'],
         ended_employment_within_three_months: nil,
         lost_job_in_custody: nil,
         date_job_lost: nil,
+        income_above_threshold: 'no',
         has_frozen_income_or_assets: nil,
         client_owns_property: nil,
         has_savings: nil,
@@ -67,11 +67,11 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       {
         means_details: {
           income_details: {
-            income_above_threshold: 'yes',
             employment_type: ['not_working'],
             ended_employment_within_three_months: nil,
             lost_job_in_custody: nil,
             date_job_lost: nil,
+            income_above_threshold: 'no',
             has_frozen_income_or_assets: nil,
             client_owns_property: nil,
             has_savings: nil,
