@@ -45,7 +45,7 @@ describe Summary::Sections::IncomeDetails do
 
     context 'when there are income details' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(2)
+        expect(answers.count).to eq(3)
 
         # £12,475
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
