@@ -15,7 +15,8 @@ describe Summary::Sections::IncomeDetails do
     instance_double(
       Income,
       income_above_threshold: 'no',
-      has_frozen_income_or_assets: 'no'
+      has_frozen_income_or_assets: 'no',
+      client_owns_property: 'no'
     )
   end
 
@@ -45,16 +46,26 @@ describe Summary::Sections::IncomeDetails do
     context 'when there are income details' do
       it 'has the correct rows' do
         expect(answers.count).to eq(2)
+
+        # £12,475
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:income_above_threshold)
         expect(answers[0].change_path).to match('applications/12345/steps/income/clients_income_before_tax')
         expect(answers[0].value).to eq('no')
+
+        # freezing order
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[1].question).to eq(:has_frozen_income_or_assets)
         expect(answers[1].change_path).to match(
           'applications/12345/steps/income/income_savings_assets_under_restraint_freezing_order'
         )
         expect(answers[1].value).to eq('no')
+
+        # client has property or land?
+        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[2].question).to eq(:client_owns_property)
+        expect(answers[2].change_path).to match('applications/12345/steps/income/does_client_own_home_land_property')
+        expect(answers[2].value).to eq('no')
       end
     end
   end
