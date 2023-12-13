@@ -42,7 +42,7 @@ RSpec.describe Steps::Income::ClientHasDependantsForm do
       end
     end
 
-    context 'when `client_has_dependants` is valid' do
+    context 'when `client_has_dependants` is `yes`' do
       let(:client_has_dependants) { YesNoAnswer::YES.to_s }
 
       it { is_expected.to be_valid }
@@ -64,6 +64,24 @@ RSpec.describe Steps::Income::ClientHasDependantsForm do
                       expected_attributes: {
                         'client_has_dependants' => YesNoAnswer::YES,
                       }
+    end
+
+    context 'when `client_has_dependants` is `no`' do
+      before do
+        allow(subject.crime_application).to receive(:dependants=).with([])
+      end
+
+      let(:client_has_dependants) { YesNoAnswer::NO.to_s }
+
+      it 'resets dependants' do
+        expect(income).to receive(:update)
+          .with({ 'client_has_dependants' => YesNoAnswer::NO })
+          .and_return(true)
+
+        subject.save
+
+        expect(subject.crime_application).to have_received(:dependants=).with([])
+      end
     end
   end
 end

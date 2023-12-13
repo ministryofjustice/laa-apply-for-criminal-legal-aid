@@ -26,9 +26,9 @@ module Steps
           )
 
           reset_dependants_if_needed
-        end
 
-        income
+          true
+        end
       end
 
       def reset_dependants_if_needed

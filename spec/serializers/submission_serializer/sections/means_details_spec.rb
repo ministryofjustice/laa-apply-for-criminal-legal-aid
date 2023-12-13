@@ -4,7 +4,15 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, income:)
+    instance_double(
+      CrimeApplication,
+      income: income,
+      dependants: dependants
+    )
+  end
+
+  let(:dependants) do
+    double(Array, with_ages: [])
   end
 
   describe '#generate' do
@@ -20,13 +28,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         client_owns_property: 'no',
         has_savings: 'yes',
         manage_without_income: 'other',
-        manage_other_details: 'Another way that they manage'
+        manage_other_details: 'Another way that they manage',
       )
     end
 
     let(:json_output) do
       {
         means_details: {
+          dependants: [],
           income_details: {
             income_above_threshold: 'yes',
             employment_type: ['not_working'],
@@ -66,6 +75,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:json_output) do
       {
         means_details: {
+          dependants: [],
           income_details: {
             income_above_threshold: 'yes',
             employment_type: ['not_working'],

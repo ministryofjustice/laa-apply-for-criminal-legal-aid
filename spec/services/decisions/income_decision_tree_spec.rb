@@ -144,8 +144,21 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_has_dependants }
 
-    context 'has correct next step' do
+    context 'when client does not have dependants' do
+      before do
+        allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::NO)
+      end
+
       it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+    end
+
+    context 'when client does have dependants' do
+      before do
+        allow(crime_application).to receive(:dependants).and_return([Dependant.new])
+        allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+      end
+
+      it { is_expected.to have_destination(:dependants, :edit, id: crime_application) }
     end
   end
 
