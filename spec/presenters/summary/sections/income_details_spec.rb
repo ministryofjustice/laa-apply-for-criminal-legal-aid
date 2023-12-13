@@ -47,26 +47,26 @@ describe Summary::Sections::IncomeDetails do
       it 'has the correct rows' do
         expect(answers.count).to eq(3)
 
-        # £12,475
-        expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[0].question).to eq(:income_above_threshold)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/clients_income_before_tax')
-        expect(answers[0].value).to eq('no')
+        income_details_yes_no_row_check(0,
+                                        :income_above_threshold,
+                                        'clients_income_before_tax')
 
-        # freezing order
-        expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[1].question).to eq(:has_frozen_income_or_assets)
-        expect(answers[1].change_path).to match(
-          'applications/12345/steps/income/income_savings_assets_under_restraint_freezing_order'
-        )
-        expect(answers[1].value).to eq('no')
+        income_details_yes_no_row_check(1,
+                                        :has_frozen_income_or_assets,
+                                        'income_savings_assets_under_restraint_freezing_order')
 
-        # client has property or land?
-        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[2].question).to eq(:client_owns_property)
-        expect(answers[2].change_path).to match('applications/12345/steps/income/does_client_own_home_land_property')
-        expect(answers[2].value).to eq('no')
+        income_details_yes_no_row_check(2,
+                                        :client_owns_property,
+                                        'does_client_own_home_land_property')
       end
     end
+  end
+
+  def income_details_yes_no_row_check(index, step, path) # rubocop:disable Metrics/AbcSize
+    full_path = "applications/12345/steps/income/#{path}"
+    expect(answers[index]).to be_an_instance_of(Summary::Components::ValueAnswer)
+    expect(answers[index].question).to eq(step)
+    expect(answers[index].change_path).to match(full_path)
+    expect(answers[index].value).to eq('no')
   end
 end
