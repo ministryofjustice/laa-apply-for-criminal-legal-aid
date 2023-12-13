@@ -1,0 +1,34 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
+      <%= f.govuk_check_boxes_fieldset :income_payment, legend: { tag: 'h1', size: 'xl' } do %>
+    
+        <% IncomePaymentType.values.each_with_index do |type, index| %>
+          <span id="<%= type %>"></span>
+          <% if type.none? %>
+            <%= f.govuk_check_box_divider %>
+            <%= f.govuk_check_box :income_payment_type, type.to_s, exclusive: true %>
+          <% else %>
+            <%= f.govuk_check_box :income_payment_type, type.to_s, link_errors: index.zero? do %>
+              <%= f.govuk_fieldset legend: nil do %>
+                <%= f.fields_for :income_payment_details do |d| %>
+
+                  <%= d.govuk_text_field :amount, width: 'one-third', label: { text: 'Enter amount' }, prefix_text: '£' %>
+                  <%= d.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { text: 'Select how often they get this payment', size: 's', class: 'govuk-!-font-weight-regular'} %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <%= f.continue_button %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

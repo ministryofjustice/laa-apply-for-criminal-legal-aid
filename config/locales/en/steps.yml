@@ -228,6 +228,9 @@ en:
           page_title: Does your client have any savings or investments?
           has_savings_info: Include savings or investments they have inside or outside the UK.
           has_savings: Does your client have any savings or investments?
+      income_payments:
+        edit:
+          page_title: Which of these payments does your client get?
       client_has_dependants:
         edit:
           page_title: 'Does your client have any dependants?'
