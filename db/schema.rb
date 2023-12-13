@@ -114,6 +114,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_162300) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
+  create_table "income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.integer "amount"
+    t.string "frequency"
+    t.string "details"
+    t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
+  end
+
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
@@ -129,7 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_162300) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
-    t.string "payments", default: [], array: true
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -215,6 +225,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_162300) do
   add_foreign_key "codefendants", "cases"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
+  add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
