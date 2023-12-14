@@ -9,7 +9,7 @@ module Summary
         income.present? && super
       end
 
-      def answers # rubocop:disable  Metrics/MethodLength
+      def answers
         [
           Components::ValueAnswer.new(
             :income_above_threshold, income.income_above_threshold,
@@ -18,10 +18,6 @@ module Summary
           Components::ValueAnswer.new(
             :has_frozen_income_or_assets, income.has_frozen_income_or_assets,
             change_path: edit_steps_income_frozen_income_savings_assets_path
-          ),
-          Components::ValueAnswer.new(
-            :client_owns_property, income.client_owns_property,
-            change_path: edit_steps_income_client_owns_property_path
           ),
         ].select(&:show?)
       end

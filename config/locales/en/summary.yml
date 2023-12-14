@@ -201,10 +201,6 @@ en:
         question: Does your client have any income, savings or assets under a restraint or freezing order?
         answers:
           <<: *YESNO
-      client_owns_property:
-        question: Does your client own their home, or any other land or property?
-        answers:
-          <<: *YESNO
       # END income details section
 
       # BEGIN other sources of income details section
