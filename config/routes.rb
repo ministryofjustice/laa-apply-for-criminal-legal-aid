@@ -156,6 +156,10 @@ Rails.application.routes.draw do
         edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
       end
 
+      namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+        edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
+      end
+
       namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
         edit_step :upload
       end

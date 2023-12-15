@@ -251,6 +251,13 @@ en:
         edit:
           page_title: How does client manage with no income?
 
+    outgoings:
+      caption: Outgoings assessment
+      outgoings_more_than_income:
+        edit:
+          page_title: Are your client’s outgoings more than their income?
+          outgoings_more_than_income: Are your client’s outgoings more than their income?
+
     evidence:
       upload:
         edit:

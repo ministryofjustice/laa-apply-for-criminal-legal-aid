@@ -323,6 +323,12 @@ en:
               inclusion: Select how your client manages with no income
             manage_other_details:
               blank: Enter details on how your client manages with no income
+        steps/outgoings/outgoings_more_than_income_form:
+          attributes:
+            outgoings_more_than_income:
+              inclusion: Select yes if your client’s outgoings are more than their income
+            how_manage:
+              blank: Enter how your client manages if their outgoings are more than their income
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:

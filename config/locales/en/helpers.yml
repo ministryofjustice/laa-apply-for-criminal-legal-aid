@@ -63,6 +63,8 @@ en:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
         manage_without_income: How does your client manage with no income?
+      steps_outgoings_outgoings_more_than_income:
+        outgoings_more_than_income: Are your client’s outgoings more than their income?
 
     hint:
       steps_client_details_form:
@@ -249,6 +251,9 @@ en:
           custody: They have been in custody for more than 3 months
           other: Other
         manage_other_details: Tell us how your client manages with no income
+      steps_outgoings_outgoings_more_than_income_form:
+        outgoings_more_than_income_options: *YESNO
+        how_manage: How does your client manage if their outgoings are more than their income?
       steps_evidence_upload_form:
         upload_files: Upload files
       steps_submission_declaration_form:
