@@ -16,7 +16,8 @@ describe Summary::Sections::IncomeDetails do
       Income,
       income_above_threshold: 'no',
       has_frozen_income_or_assets: 'no',
-      client_owns_property: 'no'
+      client_owns_property: 'no',
+      has_savings: 'no'
     )
   end
 
@@ -42,27 +43,39 @@ describe Summary::Sections::IncomeDetails do
 
   describe '#answers' do
     let(:answers) { subject.answers }
+    let(:rows) {
+      [
+        [
+          :income_above_threshold,
+          'clients_income_before_tax'
+        ],
+        [
+          :has_frozen_income_or_assets,
+          'income_savings_assets_under_restraint_freezing_order'
+        ],
+        [
+          :client_owns_property,
+          'does_client_own_home_land_property'
+        ],
+        [
+          :has_savings,
+          'does_client_have_savings_investments'
+        ]
+      ]
+    }
 
     context 'when there are income details' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(3)
+        expect(answers.count).to eq(rows.size)
 
-        income_details_yes_no_row_check(0,
-                                        :income_above_threshold,
-                                        'clients_income_before_tax')
-
-        income_details_yes_no_row_check(1,
-                                        :has_frozen_income_or_assets,
-                                        'income_savings_assets_under_restraint_freezing_order')
-
-        income_details_yes_no_row_check(2,
-                                        :client_owns_property,
-                                        'does_client_own_home_land_property')
+        rows.each_with_index do |row, i|
+          income_details_yes_no_row_check(*row, i)
+        end
       end
     end
   end
 
-  def income_details_yes_no_row_check(index, step, path) # rubocop:disable Metrics/AbcSize
+  def income_details_yes_no_row_check(step, path, index) # rubocop:disable Metrics/AbcSize
     full_path = "applications/12345/steps/income/#{path}"
     expect(answers[index]).to be_an_instance_of(Summary::Components::ValueAnswer)
     expect(answers[index].question).to eq(step)

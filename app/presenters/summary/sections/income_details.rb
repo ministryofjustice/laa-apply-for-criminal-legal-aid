@@ -23,6 +23,10 @@ module Summary
             :client_owns_property, income.client_owns_property,
             change_path: edit_steps_income_client_owns_property_path
           ),
+          Components::ValueAnswer.new(
+            :has_savings, income.has_savings,
+            change_path: edit_steps_income_has_savings_path
+          ),
         ].select(&:show?)
       end
 
