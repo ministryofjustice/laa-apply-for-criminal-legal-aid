@@ -205,6 +205,10 @@ en:
         question: Does your client own their home, or any other land or property?
         answers:
           <<: *YESNO
+      has_savings:
+        question: Does your client have any savings or investments?
+        answers:
+          <<: *YESNO
       # END income details section
 
       # BEGIN other sources of income details section
