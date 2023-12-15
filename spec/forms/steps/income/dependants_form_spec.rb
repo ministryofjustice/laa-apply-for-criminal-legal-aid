@@ -79,4 +79,41 @@ RSpec.describe Steps::Income::DependantsForm do
       it { expect(subject.show_destroy?).to be(true) }
     end
   end
+
+  describe '#save' do
+    context 'with invalid age' do
+      let(:dependants_attributes) do
+        {
+          '0' => { age: 90 },
+          '1' => { age: -1 },
+        }
+      end
+
+      it 'does not save' do
+        expect(subject.save).to be(false)
+      end
+
+      it 'sets the errors with their index' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?('dependants-attributes[0].age', :less_than)).to be(true)
+      end
+
+      context 'when deleting a dependant' do
+        before do
+          allow(subject).to receive(:any_marked_for_destruction?).and_return(true)
+        end
+
+        it 'will not run the validations' do
+          expect(subject).to be_valid
+        end
+      end
+    end
+
+    context 'when there are no errors' do
+      it 'saves the record' do
+        expect(crime_application).to receive(:save).and_return(true)
+        expect(subject.save).to be(true)
+      end
+    end
+  end
 end
