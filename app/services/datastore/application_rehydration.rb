@@ -60,12 +60,13 @@ module Datastore
       )
     end
 
+    # `client_has_dependants` is not part of Schema, requires calculation
     def income
       return if parent.income.blank?
 
       Income.new(
         parent.income.serializable_hash.merge(
-          client_has_dependants:
+          'client_has_dependants' => client_has_dependants
         )
       )
     end

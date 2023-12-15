@@ -51,7 +51,8 @@ RSpec.describe Datastore::ApplicationRehydration do
       ).to receive(:new).with(
         hash_including(
           'lost_job_in_custody' => 'yes',
-          'date_job_lost' => '2023-09-01'.to_date
+          'date_job_lost' => '2023-09-01'.to_date,
+          'client_has_dependants' => YesNoAnswer::NO,
         )
       ).and_call_original
 
@@ -108,6 +109,32 @@ RSpec.describe Datastore::ApplicationRehydration do
 
           subject.call
         end
+      end
+    end
+
+    context 'when means_details contains dependants' do
+      let(:parent) do
+        super().deep_merge('means_details' => { 'dependants' => [{ age: 0 }, { age: 17 }] })
+      end
+
+      it 'sets `income.client_has_dependants` field' do
+        expect(Income).to receive(:new).with(
+          hash_including(
+            'client_has_dependants' => YesNoAnswer::YES,
+          )
+        ).and_call_original
+
+        subject.call
+      end
+
+      it 'generates dependants' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            dependants: contain_exactly(Dependant, Dependant)
+          )
+        )
+
+        subject.call
       end
     end
 
