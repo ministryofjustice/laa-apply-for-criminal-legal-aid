@@ -7,12 +7,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
-      income: income
+      income: income,
+      dependants: dependants_double,
     )
   end
 
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
+  let(:dependants_double) { double('dependants_collection') }
 
   before do
     allow(
@@ -160,6 +162,48 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       it { is_expected.to have_destination(:dependants, :edit, id: crime_application) }
     end
+  end
+
+  context 'when the step is `add_dependant`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :add_dependant }
+
+    it 'creates a blank dependant record and redirects to the dependants page' do
+      expect(dependants_double).to receive(:create!).at_least(:once)
+      expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `delete_dependant`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :delete_dependant }
+
+    # Technically the interface will not allow this possibility as we don't allow
+    # deleting the last remaining record, but the test exists as a sanity check.
+    # (See Codefendants behaviour/UX)
+    context 'and there are no other dependants left' do
+      let(:dependants_double) { double('dependants_collection', empty?: true) }
+
+      it 'creates a blank dependant record and redirects to the dependants page' do
+        expect(dependants_double).to receive(:create!).at_least(:once)
+        expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+      end
+    end
+
+    context 'and there are other dependants left' do
+      let(:dependants_double) { double('dependants_collection', empty?: false) }
+
+      it 'redirects to the dependants page' do
+        expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+      end
+    end
+  end
+
+  context 'when the step is `dependants_finished`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :dependants_finished }
+
+    it { is_expected.to have_destination('/home', :index, id: crime_application) }
   end
 
   context 'when the step is `manage_without_income`' do

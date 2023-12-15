@@ -84,8 +84,8 @@ RSpec.describe Steps::Income::DependantsForm do
     context 'with invalid age' do
       let(:dependants_attributes) do
         {
-          '0' => { age: 90 },
-          '1' => { age: -1 },
+          '0' => { age: '90' },
+          '1' => { age: '-1' },
         }
       end
 
@@ -96,6 +96,12 @@ RSpec.describe Steps::Income::DependantsForm do
       it 'sets the errors with their index' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?('dependants-attributes[0].age', :less_than)).to be(true)
+      end
+
+      it 'responds to virtual attribute' do
+        expect(subject).not_to be_valid
+        expect(subject.send(:'dependants-attributes[0].age')).to eq(90)
+        expect(subject.send(:'dependants-attributes[1].age')).to eq(-1)
       end
 
       context 'when deleting a dependant' do
