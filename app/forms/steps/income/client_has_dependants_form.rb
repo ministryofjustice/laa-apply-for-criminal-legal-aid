@@ -13,10 +13,6 @@ module Steps
         YesNoAnswer.values
       end
 
-      def case
-        income.crime_application.case
-      end
-
       private
 
       def persist!

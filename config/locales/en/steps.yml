@@ -236,7 +236,7 @@ en:
           age_hint: years old
           remove_button: Remove %{ordinal} dependant
           add_button: Add another dependant
-          deleted_flash: Dependant removed
+          deleted_flash: The dependant has been deleted
       client_owns_property:
         edit:
           page_title: Does your client own their home, or any other land or property?
