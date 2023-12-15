@@ -6,8 +6,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      income: income,
-      dependants: dependants
+      income:,
+      dependants:
     )
   end
 
