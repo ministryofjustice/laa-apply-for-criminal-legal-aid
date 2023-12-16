@@ -156,11 +156,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
     context 'when client does have dependants' do
       before do
-        allow(crime_application).to receive(:dependants).and_return([Dependant.new])
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
       end
 
-      it { is_expected.to have_destination(:dependants, :edit, id: crime_application) }
+      it 'creates a blank dependant record and redirects to the dependants page' do
+        expect(
+          dependants_double
+        ).to receive(:create!).at_least(:once)
+
+        expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+      end
     end
   end
 

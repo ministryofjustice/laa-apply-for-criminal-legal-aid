@@ -78,7 +78,7 @@ module Decisions
 
     def after_client_has_dependants
       if form_object.client_has_dependants.yes?
-        edit_dependants
+        edit_dependants(add_blank: true)
       else
         edit(:manage_without_income)
       end
