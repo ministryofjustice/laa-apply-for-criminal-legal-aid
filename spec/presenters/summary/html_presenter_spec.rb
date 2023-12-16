@@ -20,6 +20,7 @@ describe Summary::HtmlPresenter do
                         income: double, documents: double)
       end
 
+      # rubocop:disable RSpec/ExampleLength
       it 'has the right sections in the right order' do
         expect(
           subject.sections
@@ -36,10 +37,12 @@ describe Summary::HtmlPresenter do
             Summary::Sections::PassportJustificationForLegalAid,
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
+            Summary::Sections::OtherIncomeDetails,
             Summary::Sections::SupportingEvidence,
           ]
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'for a completed application (API response)' do
@@ -65,6 +68,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::PassportJustificationForLegalAid,
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
+            Summary::Sections::OtherIncomeDetails,
             Summary::Sections::SupportingEvidence,
             Summary::Sections::LegalRepresentativeDetails,
           ]
