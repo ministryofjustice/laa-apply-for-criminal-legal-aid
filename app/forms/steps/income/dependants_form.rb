@@ -27,8 +27,8 @@ module Steps
 
       private
 
-      # If validation passes, the actual saving of the `case` performs
-      # the updates or destroys of the associated `codefendant` records,
+      # If validation passes, the actual saving of the `crime_application` performs
+      # the updates or destroys of the associated `dependant` records,
       # as we are using `accepts_nested_attributes_for`
       def persist!
         crime_application.save
