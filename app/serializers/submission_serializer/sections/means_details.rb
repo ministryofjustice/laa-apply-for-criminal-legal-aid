@@ -6,6 +6,8 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           if income.present?
             json.means_details do
+              json.dependants Definitions::Dependant.generate(crime_application.dependants.with_ages)
+
               json.income_details do
                 json.income_above_threshold income.income_above_threshold
                 json.employment_type income.employment_status

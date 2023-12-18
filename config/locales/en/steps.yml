@@ -200,7 +200,7 @@ en:
       caption: Income assessment
       employment_status:
         edit:
-          page_title: What is your client’s employment status?
+          page_title: What is your client's employment status?
           ended_employment_within_three_months: Has your client ended employment in the last 3 months?
       employed_exit:
         show:
@@ -237,6 +237,16 @@ en:
             definition_1: 'under 18 years old'
             definition_2: 'lives with your client'
             definition_3: 'depends on your client for financial support'
+      dependants:
+        edit:
+          page_title: Dependants’ ages
+          heading: Dependants’ ages
+          dependant_legend: '%{ordinal} dependant age'
+          age: How old is the %{ordinal} dependant?
+          age_hint: years old
+          remove_button: Remove %{ordinal} dependant
+          add_button: Add another dependant
+          deleted_flash: The dependant has been deleted
       manage_without_income:
         edit:
           page_title: How does client manage with no income?

@@ -7,7 +7,7 @@ module Datastore
       @parent = Adapters::JsonApplication.new(parent)
     end
 
-    def call
+    def call # rubocop:disable Metrics/MethodLength
       return if already_recreated?
 
       crime_application.update!(
@@ -21,6 +21,7 @@ module Datastore
         case: case_with_ioj,
         income: income,
         documents: parent.documents,
+        dependants: dependants,
       )
     end
 
@@ -59,12 +60,23 @@ module Datastore
       )
     end
 
+    # `client_has_dependants` is not part of Schema, requires calculation
     def income
       return if parent.income.blank?
 
       Income.new(
-        parent.income.serializable_hash
+        parent.income.serializable_hash.merge(
+          'client_has_dependants' => client_has_dependants
+        )
       )
+    end
+
+    def dependants
+      parent.means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+    end
+
+    def client_has_dependants
+      parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
     end
   end
 end
