@@ -7,7 +7,7 @@
      <%= step_form @form_object do |f| %>
         <%= f.govuk_radio_buttons_fieldset :outgoings_more_than_income, legend: { text: t('.outgoings_more_than_income'), tag: 'h1', size: 'xl' } do %>
           <% @form_object.choices.each_with_index do |choice, index| %>
-            <% if choice == YesNoAnswer::YES %>
+            <% if choice.yes? %>
               <%= f.govuk_radio_button :outgoings_more_than_income, choice.value do %>
                 <%= f.govuk_text_area :how_manage,
                                       legend: {
