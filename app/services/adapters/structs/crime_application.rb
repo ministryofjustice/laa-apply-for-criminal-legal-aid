@@ -19,6 +19,10 @@ module Adapters
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
+      def outgoings
+        Structs::OutgoingsDetails.new(means_details.outgoings_details)
+      end
+
       def documents
         supporting_evidence.map do |struct|
           Document.new(

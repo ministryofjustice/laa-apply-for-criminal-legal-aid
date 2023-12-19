@@ -21,6 +21,18 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     end
   end
 
+  describe '#income' do
+    it 'returns the income struct' do
+      expect(subject.income).to be_a(Adapters::Structs::IncomeDetails)
+    end
+  end
+
+  describe '#outgoings' do
+    it 'returns the outgoings struct' do
+      expect(subject.outgoings).to be_a(Adapters::Structs::OutgoingsDetails)
+    end
+  end
+
   describe '#documents' do
     it 'returns documents' do
       expect(subject.documents).to all(be_a(Document))

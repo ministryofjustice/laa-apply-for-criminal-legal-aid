@@ -20,6 +20,14 @@ module SubmissionSerializer
                 json.manage_without_income income.manage_without_income
                 json.manage_other_details income.manage_other_details
               end
+
+              json.outgoings_details do
+                # TODO: Update to take array from outgoings payments when we get
+                # there - needs to default to []
+                json.outgoings []
+                json.outgoings_more_than_income outgoings&.outgoings_more_than_income
+                json.how_manage outgoings&.how_manage
+              end
             end
           end
         end
@@ -30,6 +38,10 @@ module SubmissionSerializer
 
       def income
         @income ||= crime_application.income
+      end
+
+      def outgoings
+        @outgoings ||= crime_application.outgoings
       end
     end
   end
