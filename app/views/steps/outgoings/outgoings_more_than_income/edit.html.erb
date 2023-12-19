@@ -1,0 +1,26 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.outgoings.caption') %></span>
+     <%= step_form @form_object do |f| %>
+        <%= f.govuk_radio_buttons_fieldset :outgoings_more_than_income, legend: { text: t('.outgoings_more_than_income'), tag: 'h1', size: 'xl' } do %>
+          <% @form_object.choices.each_with_index do |choice, index| %>
+            <% if choice.yes? %>
+              <%= f.govuk_radio_button :outgoings_more_than_income, choice.value do %>
+                <%= f.govuk_text_area :how_manage,
+                                      legend: {
+                                        size: 's', class: 'govuk-!-font-weight-regular'
+                                      } %>
+              <% end %>
+            <% else %>
+              <%= f.govuk_radio_button :outgoings_more_than_income, choice.value, link_errors: index.zero? %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
