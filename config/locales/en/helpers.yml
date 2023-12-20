@@ -2,9 +2,17 @@
 en:
   helpers/dictionary:
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
+    frequency_legend: &frequency_legend 'Select how often they get this payment'
+    amount_label: &amount_label 'Enter amount'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
+    frequency_options: &frequency_options
+      'weekly': 'Every week'
+      'fortnightly': 'Every 2 weeks'
+      'four_weekly': 'Every 4 weeks'
+      'monthly': 'Monthly'
+      'anually': 'Yearly'
 
   helpers:
     back_link: Back
@@ -61,8 +69,28 @@ en:
         employment_status: What is your client's employment status?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
-      steps_income_payments_form:
-        payments: Which of these payments does your client get?
+      steps_income_income_payments_form:
+        income_payment: Which of these payments does your client get?
+        maintenance:
+          frequency: *frequency_legend
+        private_pension:
+          frequency: *frequency_legend
+        state_pension:
+          frequency: *frequency_legend
+        interest_investment:
+          frequency: *frequency_legend
+        student_loan_grant:
+          frequency: *frequency_legend
+        board:
+          frequency: *frequency_legend
+        rent:
+          frequency: *frequency_legend
+        financial_support_with_access:
+          frequency: *frequency_legend
+        from_friends_relatives:
+          frequency: *frequency_legend
+        other:
+          frequency: Select how often they get these payments
       steps_income_manage_without_income_form:
         manage_without_income: How does your client manage with no income?
       steps_outgoings_outgoings_more_than_income:
@@ -115,14 +143,14 @@ en:
           not_working: This includes anyone who has ended employment in the last 3 months, has never had a job, or is a pensioner.
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
-      steps_income_payments_form:
-        payments: Select all that apply.
-        payments_options:
-          maintainance: This includes child maintenance.
+      steps_income_income_payments_form:
+        income_payment: Select all that apply.
+        income_payment_options:
+          maintenance: This includes child maintenance.
           private_pension: This includes pensions from an employer.
           board: This includes any non-contractual payments.
           rent: This includes contractual payments from property your client does not live in.
-          from_friends_family: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
+          from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -252,8 +280,8 @@ en:
       steps_income_has_savings_form:
         has_savings_options: *YESNO
       steps_income_income_payments_form:
-        income_payment_type_options:
-          maintainance: Maintenance payments
+        income_payment_options:
+          maintenance: Maintenance payments
           private_pension: Private pensions
           state_pension: State Pension
           interest_investment: Interest or income from savings or investments
@@ -264,9 +292,37 @@ en:
           from_friends_relatives: Money from friends or family
           other: Other sources of income
           none: My client does not get any of these payments
+        maintenance:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        private_pension:
+          frequency_options: *frequency_options
+          amount: *amount_label
         state_pension:
-          frequency_options:
-            weekly: 'THIS IS WEEKLY!'
+          frequency_options: *frequency_options
+          amount: *amount_label
+        interest_investment:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        student_loan_grant:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        board:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        rent:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        financial_support_with_access:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        from_friends_relatives:
+          frequency_options: *frequency_options
+          amount: *amount_label
+        other:
+          frequency_options: *frequency_options
+          amount: Enter total amount of all other sources of income
+          details: Enter the other sources of income they get
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO
       steps_income_manage_without_income_form:

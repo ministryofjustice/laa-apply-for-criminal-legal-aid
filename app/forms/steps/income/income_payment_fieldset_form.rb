@@ -1,13 +1,11 @@
 module Steps
   module Income
     class IncomePaymentFieldsetForm < Steps::BaseFormObject
-
       attribute :id, :string
       attribute :payment_type, :string
       attribute :amount, :integer
       attribute :frequency, :string
       attribute :details, :string
-
 
       validates_presence_of :payment_type
       validates_presence_of :amount

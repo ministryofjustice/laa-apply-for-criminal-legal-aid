@@ -105,7 +105,6 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.0.1)
     builder (3.2.4)
-    byebug (11.1.3)
     capybara (3.39.2)
       addressable
       matrix
@@ -466,7 +465,6 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
-  byebug
   capybara
   clamby (= 1.6.10)
   dartsass-rails (~> 0.5.0)

@@ -138,6 +138,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :has_savings }
 
     context 'has correct next step' do
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `income payments`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :income_payments }
+
+    context 'has correct next step' do
       it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
     end
   end
