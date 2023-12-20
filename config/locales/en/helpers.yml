@@ -264,9 +264,9 @@ en:
           from_friends_relatives: Money from friends or family
           other: Other sources of income
           none: My client does not get any of these payments
-        income_payment_fieldset_options:
-          frequency:
-            weekly: Every week
+        state_pension:
+          frequency_options:
+            weekly: 'THIS IS WEEKLY!'
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO
       steps_income_manage_without_income_form:

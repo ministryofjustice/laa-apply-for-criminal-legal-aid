@@ -5,7 +5,7 @@ class CreateIncomePaymentsTable < ActiveRecord::Migration[7.0]
 
       t.timestamps
 
-      t.string :type
+      t.string :payment_type
       t.integer :amount
       t.string :frequency
       t.string :details
