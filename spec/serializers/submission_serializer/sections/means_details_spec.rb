@@ -7,6 +7,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     instance_double(
       CrimeApplication,
       income:,
+      outgoings:,
       dependants:
     )
   end
@@ -32,6 +33,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       )
     end
 
+    let(:outgoings) do
+      instance_double(
+        Outgoings,
+        outgoings_more_than_income: 'yes',
+        how_manage: 'A description of how they manage'
+      )
+    end
+
     let(:json_output) do
       {
         means_details: {
@@ -47,6 +56,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: 'yes',
             manage_without_income: 'other',
             manage_other_details: 'Another way that they manage'
+          },
+          outgoings_details: {
+            # TODO: Outgoings array currently hardcoded in serializer
+            outgoings: [],
+            outgoings_more_than_income: 'yes',
+            how_manage: 'A description of how they manage'
           }
         }
       }.as_json
@@ -72,6 +87,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       )
     end
 
+    let(:outgoings) do
+      instance_double(
+        Outgoings,
+        outgoings_more_than_income: nil,
+        how_manage: nil
+      )
+    end
+
     let(:json_output) do
       {
         means_details: {
@@ -87,6 +110,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
+          },
+          outgoings_details: {
+            # TODO: Outgoings array currently hardcoded in serializer
+            outgoings: [],
+            outgoings_more_than_income: nil,
+            how_manage: nil
           }
         }
       }.as_json
