@@ -9,7 +9,7 @@
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.govuk_check_boxes_fieldset :income_payment, legend: { tag: 'h1', size: 'xl' } do %>
-    
+
         <% IncomePaymentType.values.each_with_index do |type, index| %>
           <span id="<%= type %>"></span>
           <% if type.none? %>
@@ -18,8 +18,8 @@
           <% else %>
             <%= f.govuk_check_box :income_payment_type, type.to_s, link_errors: index.zero? do %>
               <%= f.govuk_fieldset legend: nil do %>
-                <%= f.fields_for :income_payment_details do |d| %>
 
+                <%= f.fields_for type.to_s do |d| %>
                   <%= d.govuk_text_field :amount, width: 'one-third', label: { text: 'Enter amount' }, prefix_text: '£' %>
                   <%= d.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { text: 'Select how often they get this payment', size: 's', class: 'govuk-!-font-weight-regular'} %>
                 <% end %>

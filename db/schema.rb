@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_162300) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
+    t.string "payment_type"
     t.integer "amount"
     t.string "frequency"
     t.string "details"
