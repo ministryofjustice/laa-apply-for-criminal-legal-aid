@@ -22,6 +22,7 @@ module Datastore
         income: income,
         documents: parent.documents,
         dependants: dependants,
+        outgoings: outgoings,
       )
     end
 
@@ -71,6 +72,12 @@ module Datastore
 
     def dependants
       parent.dependants.map { |struct| Dependant.new(**struct) }
+    end
+
+    def outgoings
+      return if parent.outgoings.blank?
+
+      Outgoings.new(parent.outgoings.serializable_hash)
     end
   end
 end

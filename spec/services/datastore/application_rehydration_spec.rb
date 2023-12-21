@@ -38,6 +38,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         income: an_instance_of(Income),
         documents: all(be_a(Document)),
         dependants: all(be_a(Dependant)),
+        outgoings: an_instance_of(Outgoings),
       )
 
       expect(
