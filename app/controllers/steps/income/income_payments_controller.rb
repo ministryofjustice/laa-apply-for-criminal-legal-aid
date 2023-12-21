@@ -3,7 +3,7 @@ module Steps
     class IncomePaymentsController < Steps::IncomeStepController
       def edit
         @form_object = IncomePaymentsForm.new(
-           crime_application: current_crime_application
+          crime_application: current_crime_application
         )
       end
 
@@ -14,7 +14,10 @@ module Steps
       end
 
       def additional_permitted_params
-        [income_payments_details_attributes: Steps::Income::IncomePaymentFieldsetForm.attribute_names]
+        params = [income_payment: []]
+        params << IncomePaymentType.values.to_h do |t|
+          [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names]
+        end
       end
     end
   end

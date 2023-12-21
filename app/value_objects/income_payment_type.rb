@@ -1,6 +1,6 @@
 class IncomePaymentType < ValueObject
   VALUES = [
-    MAINTAINANCE = new(:maintainance),
+    MAINTENANCE = new(:maintenance),
     PRIVATE_PENSION = new(:private_pension),
     STATE_PENSION = new(:state_pension),
     INTEREST_INVESTMENT = new(:interest_investment),
