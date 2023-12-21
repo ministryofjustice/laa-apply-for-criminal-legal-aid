@@ -52,7 +52,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         hash_including(
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => '2023-09-01'.to_date,
-          'client_has_dependants' => YesNoAnswer::NO,
+          'client_has_dependants' => nil, # No dependants returned
         )
       ).and_call_original
 

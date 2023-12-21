@@ -65,18 +65,12 @@ module Datastore
       return if parent.income.blank?
 
       Income.new(
-        parent.income.serializable_hash.merge(
-          'client_has_dependants' => client_has_dependants
-        )
+        parent.income.serializable_hash
       )
     end
 
     def dependants
-      parent.means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
-    end
-
-    def client_has_dependants
-      parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
+      parent.dependants.map { |struct| Dependant.new(**struct) }
     end
   end
 end

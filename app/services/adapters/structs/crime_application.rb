@@ -15,8 +15,17 @@ module Adapters
         Structs::InterestsOfJustice.new(interests_of_justice)
       end
 
+      # client_has_dependants must be calculated, but the dependants
+      # data is in means_details rather than means_details.income_details
       def income
-        Structs::IncomeDetails.new(means_details.income_details)
+        income = Structs::IncomeDetails.new(means_details.income_details)
+        income.client_has_dependants = client_has_dependants
+
+        income
+      end
+
+      def dependants
+        means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
       end
 
       def outgoings
@@ -28,6 +37,18 @@ module Adapters
           Document.new(
             struct.attributes.merge(submitted_at:)
           )
+        end
+      end
+
+      private
+
+      def client_has_dependants
+        return nil unless means_details&.dependants
+
+        if means_details.dependants.size.positive?
+          YesNoAnswer::YES
+        else
+          YesNoAnswer::NO
         end
       end
     end

@@ -1,6 +1,8 @@
 module Adapters
   module Structs
     class IncomeDetails < BaseStructAdapter
+      attr_accessor :client_has_dependants
+
       def employment_status
         # TODO: Handle this having multiple employment status' when we get designs for employed
         employment_type || []
@@ -9,7 +11,7 @@ module Adapters
       def serializable_hash(options = {})
         super(
           options.merge(
-            methods: [:employment_status],
+            methods: [:employment_status, :client_has_dependants],
             # `employment_type` is the name for employment_status
             # in the datastore, we don't use it
             except: [:employment_type]

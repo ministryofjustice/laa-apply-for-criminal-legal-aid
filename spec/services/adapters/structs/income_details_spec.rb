@@ -20,7 +20,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'client_owns_property' => 'no',
           'has_savings' => 'no',
           'manage_without_income' => 'other',
-          'manage_other_details' => 'Another way they manage'
+          'manage_other_details' => 'Another way they manage',
+          'client_has_dependants' => nil,
         )
       )
     end
@@ -40,6 +41,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           has_savings
           manage_without_income
           manage_other_details
+          client_has_dependants
         ]
       )
     end
