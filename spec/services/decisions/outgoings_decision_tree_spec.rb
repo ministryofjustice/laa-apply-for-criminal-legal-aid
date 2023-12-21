@@ -21,6 +21,15 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
 
   it_behaves_like 'a decision tree'
 
+  context 'when the step is `income_tax_rate`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :income_tax_rate }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `outgoings_more_than_income`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :outgoings_more_than_income }
