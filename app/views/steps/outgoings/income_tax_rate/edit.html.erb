@@ -1,0 +1,18 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.outgoings.caption') %></span>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :income_tax_rate_above_threshold, @form_object.choices,
+                                           :value, inline: false,
+                                           legend: { text: t('.income_tax_rate_above_threshold'), tag: 'h1', size: 'xl' } do %>
+        <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

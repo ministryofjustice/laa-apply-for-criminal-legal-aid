@@ -22,6 +22,7 @@ module Datastore
         income: income,
         documents: parent.documents,
         dependants: dependants,
+        outgoings: outgoings,
       )
     end
 
@@ -77,6 +78,12 @@ module Datastore
 
     def client_has_dependants
       parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
+    end
+
+    def outgoings
+      return if parent.outgoings.blank?
+
+      Outgoings.new(parent.outgoings.serializable_hash)
     end
   end
 end
