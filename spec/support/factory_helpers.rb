@@ -7,9 +7,9 @@ module FactoryHelpers
     )
   end
 
-  def build_struct_application(fixture_name: 'application')
-    Adapters::JsonApplication.new(
-      JSON.parse(LaaCrimeSchemas.fixture(1.0, name: fixture_name).read)
-    )
+  def build_struct_application(fixture_name: 'application', json: nil)
+    json ||= JSON.parse(LaaCrimeSchemas.fixture(1.0, name: fixture_name).read)
+
+    Adapters::JsonApplication.new(json)
   end
 end

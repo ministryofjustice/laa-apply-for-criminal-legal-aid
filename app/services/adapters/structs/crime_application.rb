@@ -25,7 +25,7 @@ module Adapters
       end
 
       def dependants
-        means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+        means_details&.dependants&.map { |struct| Dependant.new(struct) } || []
       end
 
       def outgoings
@@ -45,11 +45,7 @@ module Adapters
       def client_has_dependants
         return nil unless means_details&.dependants
 
-        if means_details.dependants.size.positive?
-          YesNoAnswer::YES
-        else
-          YesNoAnswer::NO
-        end
+        means_details.dependants.size.positive? ? YesNoAnswer::YES : YesNoAnswer::NO
       end
     end
   end
