@@ -114,17 +114,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_184900) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
-  create_table "income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "crime_application_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "payment_type"
-    t.integer "amount"
-    t.string "frequency"
-    t.string "details"
-    t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
-  end
-
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
@@ -226,7 +215,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_184900) do
   add_foreign_key "codefendants", "cases"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
-  add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
