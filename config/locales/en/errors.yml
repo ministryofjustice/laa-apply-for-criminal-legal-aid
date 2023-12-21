@@ -323,6 +323,10 @@ en:
               inclusion: Select how your client manages with no income
             manage_other_details:
               blank: Enter details on how your client manages with no income
+        steps/outgoings/income_tax_rate_form:
+          attributes:
+            income_tax_rate_above_threshold:
+              inclusion: Select yes if in the last 2 years, your client has paid the 40% income tax rate
         steps/outgoings/outgoings_more_than_income_form:
           attributes:
             outgoings_more_than_income:

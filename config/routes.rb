@@ -157,6 +157,7 @@ Rails.application.routes.draw do
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+        edit_step :has_client_paid_income_tax_rate, alias: :income_tax_rate
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
       end
 
