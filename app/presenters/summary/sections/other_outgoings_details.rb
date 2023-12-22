@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class OtherOutgoingsDetails < Sections::BaseSection
-      def name
-        :other_outgoings_details
-      end
-
       def show?
         outgoings.present? && super
       end

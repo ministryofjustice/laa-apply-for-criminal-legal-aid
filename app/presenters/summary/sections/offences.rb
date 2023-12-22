@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class Offences < Sections::BaseSection
-      def name
-        :offences
-      end
-
       def show?
         crime_application.case.present? && super
       end

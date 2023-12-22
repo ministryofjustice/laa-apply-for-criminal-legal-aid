@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class LegalRepresentativeDetails < Sections::BaseSection
-      def name
-        :legal_representative_details
-      end
-
       def show?
         !crime_application.in_progress? && super
       end

@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class IncomeDetails < Sections::BaseSection
-      def name
-        :income_details
-      end
-
       def show?
         income.present? && super
       end
