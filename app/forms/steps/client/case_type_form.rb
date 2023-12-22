@@ -1,5 +1,5 @@
 module Steps
-  module Case
+  module Client
     class CaseTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :case

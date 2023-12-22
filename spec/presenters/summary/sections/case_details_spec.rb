@@ -55,7 +55,7 @@ describe Summary::Sections::CaseDetails do
       answer = answers[0]
       expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answer.question).to eq(:case_type)
-      expect(answer.change_path).to match('applications/12345/steps/case/case_type')
+      expect(answer.change_path).to match('applications/12345/steps/client/case_type')
       expect(answer.value).to eq('foobar')
 
       answer = answers[1]
@@ -77,13 +77,13 @@ describe Summary::Sections::CaseDetails do
           answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
           expect(answer.question).to eq(:appeal_lodged_date)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq(appeal_lodged_date)
 
           answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:previous_maat_id)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('123')
         end
       end
@@ -97,7 +97,7 @@ describe Summary::Sections::CaseDetails do
           answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:previous_maat_id)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('')
           expect(answer.show).to be(true)
         end
@@ -117,19 +117,19 @@ describe Summary::Sections::CaseDetails do
           answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
           expect(answer.question).to eq(:appeal_lodged_date)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq(appeal_lodged_date)
 
           answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:appeal_with_changes_details)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('details')
 
           answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:previous_maat_id)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('123')
         end
       end
@@ -143,7 +143,7 @@ describe Summary::Sections::CaseDetails do
           answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:previous_maat_id)
-          expect(answer.change_path).to match('applications/12345/steps/case/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('')
           expect(answer.show).to be(true)
         end

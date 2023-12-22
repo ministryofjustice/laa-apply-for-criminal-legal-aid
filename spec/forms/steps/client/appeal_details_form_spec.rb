@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Case::AppealDetailsForm do
+RSpec.describe Steps::Client::AppealDetailsForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

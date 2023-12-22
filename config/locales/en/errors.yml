@@ -68,6 +68,30 @@ en:
               year_too_early: Date of birth is too far in the past
               future_not_allowed: Date of birth must be in the past
               client_under_ten: Your client must be aged 10 or over to have been charged in England and Wales
+        steps/client/case_type_form:
+          attributes:
+            case_type:
+              inclusion: Select a case type
+        steps/client/appeal_details_form:
+          attributes:
+            appeal_with_changes_details:
+              blank: Enter details of changes in financial circumstances
+            appeal_maat_id:
+              invalid: Enter a valid MAAT ID
+            appeal_lodged_date:
+              blank: Enter the date the appeal was lodged
+              blank_day: Date the appeal was lodged must include a day
+              blank_month: Date the appeal was lodged must include a month
+              blank_year: Date the appeal was lodged must include a year
+              blank_day_month: Date the appeal was lodged must include a day and month
+              blank_day_year: Date the appeal was lodged must include a day and year
+              blank_month_year: Date the appeal was lodged must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date the appeal was lodged is too far in the past
+              future_not_allowed: Date the appeal was lodged must be today or in the past
         steps/client/has_nino_form:
           attributes:
             nino:
@@ -118,30 +142,6 @@ en:
           attributes:
             urn:
               invalid: Enter a valid URN
-        steps/case/case_type_form:
-          attributes:
-            case_type:
-              inclusion: Select a case type
-        steps/case/appeal_details_form:
-          attributes:
-            appeal_with_changes_details:
-              blank: Enter details of changes in financial circumstances
-            appeal_maat_id:
-              invalid: Enter a valid MAAT ID
-            appeal_lodged_date:
-              blank: Enter the date the appeal was lodged
-              blank_day: Date the appeal was lodged must include a day
-              blank_month: Date the appeal was lodged must include a month
-              blank_year: Date the appeal was lodged must include a year
-              blank_day_month: Date the appeal was lodged must include a day and month
-              blank_day_year: Date the appeal was lodged must include a day and year
-              blank_month_year: Date the appeal was lodged must include a month and year
-              invalid: Enter a valid date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_early: Date the appeal was lodged is too far in the past
-              future_not_allowed: Date the appeal was lodged must be today or in the past
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
