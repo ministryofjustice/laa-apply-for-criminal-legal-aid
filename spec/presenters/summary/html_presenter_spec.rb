@@ -17,7 +17,7 @@ describe Summary::HtmlPresenter do
     context 'for a database application' do
       let(:crime_application) do
         instance_double(CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
-                        income: double, documents: double)
+                        income: double, outgoings: double, documents: double)
       end
 
       # rubocop:disable RSpec/ExampleLength
@@ -38,6 +38,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
             Summary::Sections::OtherIncomeDetails,
+            Summary::Sections::OtherOutgoingsDetails,
             Summary::Sections::SupportingEvidence,
           ]
         )
@@ -69,6 +70,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
             Summary::Sections::OtherIncomeDetails,
+            Summary::Sections::OtherOutgoingsDetails,
             Summary::Sections::SupportingEvidence,
             Summary::Sections::LegalRepresentativeDetails,
           ]

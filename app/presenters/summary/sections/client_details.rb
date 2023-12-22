@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class ClientDetails < Sections::BaseSection
-      def name
-        :client_details
-      end
-
       def show?
         applicant.present? && super
       end

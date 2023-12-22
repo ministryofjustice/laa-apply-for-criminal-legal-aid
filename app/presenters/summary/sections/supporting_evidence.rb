@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class SupportingEvidence < Sections::BaseSection
-      def name
-        :supporting_evidence
-      end
-
       def show?
         documents.present? && super
       end

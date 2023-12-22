@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class CaseDetails < Sections::BaseSection
-      def name
-        :case_details
-      end
-
       def show?
         kase.present? && super
       end

@@ -20,9 +20,9 @@ module Datastore
         applicant: applicant,
         case: case_with_ioj,
         income: income,
-        documents: parent.documents,
         dependants: dependants,
         outgoings: outgoings,
+        documents: parent.documents,
       )
     end
 

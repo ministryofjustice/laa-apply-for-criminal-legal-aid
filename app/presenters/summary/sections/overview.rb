@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class Overview < Sections::BaseSection
-      def name
-        :overview
-      end
-
       def show?
         !crime_application.in_progress? && super
       end

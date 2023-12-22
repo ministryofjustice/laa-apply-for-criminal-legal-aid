@@ -17,6 +17,10 @@ module Summary
         'steps/submission/shared/section'
       end
 
+      def name
+        self.class.name.split('::').last.underscore.to_sym
+      end
+
       # May be overridden in subclasses to hide/show if appropriate
       def show?
         answers.any?
