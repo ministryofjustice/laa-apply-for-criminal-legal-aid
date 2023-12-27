@@ -45,7 +45,6 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:json_output) do
       {
         means_details: {
-          dependants: [],
           income_details: {
             employment_type: ['not_working'],
             ended_employment_within_three_months: 'yes',
@@ -56,7 +55,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             client_owns_property: 'no',
             has_savings: 'yes',
             manage_without_income: 'other',
-            manage_other_details: 'Another way that they manage'
+            manage_other_details: 'Another way that they manage',
+            dependants: []
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
@@ -101,7 +101,6 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:json_output) do
       {
         means_details: {
-          dependants: [],
           income_details: {
             employment_type: ['not_working'],
             ended_employment_within_three_months: nil,
@@ -113,6 +112,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
+            dependants: []
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer

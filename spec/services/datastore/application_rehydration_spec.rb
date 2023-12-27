@@ -115,7 +115,7 @@ RSpec.describe Datastore::ApplicationRehydration do
 
     context 'when means_details contains dependants' do
       let(:parent) do
-        super().deep_merge('means_details' => { 'dependants' => [{ age: 0 }, { age: 17 }] })
+        super().deep_merge('means_details' => { 'income_details' => { 'dependants' => [{ age: 0 }, { age: 17 }] } })
       end
 
       it 'sets `income.client_has_dependants` field' do

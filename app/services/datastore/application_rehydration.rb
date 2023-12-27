@@ -73,11 +73,11 @@ module Datastore
     end
 
     def dependants
-      parent.means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+      parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
     end
 
     def client_has_dependants
-      parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
+      parent.means_details&.income_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     def outgoings

@@ -129,7 +129,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_184900) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
-    t.string "payments", default: [], array: true
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
