@@ -9,6 +9,10 @@ class CrimeApplicationsController < DashboardController
   end
 
   def edit
+    if @crime_application.application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+      redirect_to edit_steps_evidence_upload_path(@crime_application)
+    end
+
     @tasklist = TaskList::Collection.new(
       view_context, crime_application: current_crime_application
     )

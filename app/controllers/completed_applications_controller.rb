@@ -35,6 +35,21 @@ class CompletedApplicationsController < DashboardController
   end
   # :nocov:
 
+  def create_pse
+    usn = current_crime_application.reference
+
+    # There can only be one application in progress with same USN
+    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
+
+    Datastore::ApplicationRehydration.new(
+      crime_application, parent: current_crime_application, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+    ).call
+
+    # Redirect to the check your answers (review) page
+    # of the newly created application
+    redirect_to edit_completed_crime_application_post_submission_evidence_upload_path(crime_application)
+  end
+
   private
 
   def sortable_columns

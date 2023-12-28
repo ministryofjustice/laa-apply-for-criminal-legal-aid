@@ -60,10 +60,13 @@ en:
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
       print_application: Print application
+      upload_pse: Upload post submission evidence
       helpline:
         intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
         phone: 'Telephone: 0300 200 2020'
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
+      action:
+        upload_pse: Upload post submission evidence
     return_notification:
       title: Important
       heading:

@@ -1,29 +1,43 @@
 module Datastore
   class ApplicationRehydration
-    attr_reader :crime_application, :parent
+    attr_reader :crime_application, :parent, :application_type
 
-    def initialize(crime_application, parent:)
+    def initialize(crime_application, parent:, application_type: nil)
       @crime_application = crime_application
       @parent = Adapters::JsonApplication.new(parent)
+      @application_type = application_type || ApplicationType::INITIAL.to_s
     end
 
     def call # rubocop:disable Metrics/MethodLength
       return if already_recreated?
 
-      crime_application.update!(
-        # TODO: Update partner rehydration when partner introduced and stored
-        client_has_partner: YesNoAnswer::NO,
-        parent_id: parent.id,
-        date_stamp: date_stamp,
-        ioj_passport: parent.ioj_passport,
-        means_passport: parent.means_passport,
-        applicant: applicant,
-        case: case_with_ioj,
-        income: income,
-        dependants: dependants,
-        outgoings: outgoings,
-        documents: parent.documents,
-      )
+      if application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+        crime_application.update!(
+          # TODO: Update partner rehydration when partner introduced and stored
+          client_has_partner: YesNoAnswer::NO,
+          parent_id: parent.id,
+          date_stamp: date_stamp,
+          ioj_passport: parent.ioj_passport,
+          means_passport: parent.means_passport,
+          applicant: applicant,
+          outgoings: outgoings,
+          application_type: application_type
+        )
+      else
+        crime_application.update!(
+          # TODO: Update partner rehydration when partner introduced and stored
+          client_has_partner: YesNoAnswer::NO,
+          parent_id: parent.id,
+          date_stamp: date_stamp,
+          ioj_passport: parent.ioj_passport,
+          means_passport: parent.means_passport,
+          applicant: applicant,
+          case: case_with_ioj,
+          outgoings: outgoings,
+          documents: parent.documents,
+          application_type: application_type
+        )
+      end
     end
 
     private

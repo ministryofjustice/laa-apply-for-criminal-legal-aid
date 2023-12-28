@@ -87,6 +87,11 @@ Rails.application.routes.draw do
       get :index, on: :collection
       get :show, on: :member
       put :recreate, on: :member
+      put :create_pse, on: :member
+
+      namespace :post_submission_evidence do
+        edit_step :upload
+      end
     end
   end
 

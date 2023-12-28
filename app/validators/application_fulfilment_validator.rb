@@ -22,6 +22,8 @@ class ApplicationFulfilmentValidator < ActiveModel::Validator
   def perform_validations
     errors = []
 
+    return errors if record.application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+
     unless Passporting::MeansPassporter.new(record).call || evidence_present?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
