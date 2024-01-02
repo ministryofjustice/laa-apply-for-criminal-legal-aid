@@ -16,8 +16,10 @@ module Decisions
     def after_address_entered
       if form_object.record.is_a?(HomeAddress)
         edit('/steps/client/contact_details')
+      elsif current_crime_application.age_passported?
+        edit('/steps/case/urn')
       else
-        edit('/steps/case/case_type')
+        edit('/steps/client/has_nino')
       end
     end
   end

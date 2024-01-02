@@ -5,11 +5,14 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   let(:crime_application) { instance_double(CrimeApplication, applicant:) }
   let(:applicant) { instance_double(Applicant) }
+  let(:kase) { instance_double(Case) }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
+
+    allow(crime_application).to receive_messages(update: true, date_stamp: nil)
   end
 
   it_behaves_like 'a decision tree'
@@ -35,29 +38,169 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    before do
-      allow(crime_application).to receive(:age_passported?).and_return(age_passported)
+    it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
+  end
+
+  context 'when the step is `case_type`' do
+    let(:form_object) { double('FormObject', case: kase, case_type: CaseType.new(case_type)) }
+    let(:step_name) { :case_type }
+
+    context 'and the case type is `appeal_to_crown_court`' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
     end
 
-    context 'and client is age passported' do
-      let(:age_passported) { true }
+    context 'and the case type is `appeal_to_crown_court_with_changes`' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
 
+      it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
+    end
+
+    context 'and the application already has a date stamp' do
       before do
+        allow(crime_application).to receive(:date_stamp) { Time.zone.today }
+        allow(kase).to receive(:case_type).and_return(case_type)
+
         allow(
           Address
         ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
       end
 
+      let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
+
       it {
-        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-          address_id: 'address')
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
       }
     end
 
-    context 'and client is not age passported' do
-      let(:age_passported) { false }
+    context 'and the application has no date stamp' do
+      before do
+        allow(crime_application).to receive(:date_stamp)
+        allow(kase).to receive(:case_type).and_return(case_type)
+      end
 
-      it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+      context 'and the case type is "date stampable"' do
+        let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
+
+        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
+      end
+
+      context 'and case type is not "date stampable"' do
+        let(:case_type) { CaseType::INDICTABLE.to_s }
+
+        before do
+          allow(
+            Address
+          ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+        end
+
+        it {
+          expect(subject).to have_destination(
+            '/steps/address/lookup',
+            :edit,
+            id: crime_application,
+            address_id: 'address'
+          )
+        }
+      end
+    end
+  end
+
+  context 'when the step is `appeal_details`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :appeal_details }
+
+    # We've tested this logic for non-appeals, no need to test again
+    # as this step runs the same method/code
+    it 'performs the date stamp logic' do
+      expect(subject).to receive(:date_stamp_if_needed)
+      subject.destination
+    end
+  end
+
+  context 'when the step is `date_stamp`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :date_stamp }
+
+    before do
+      allow(
+        Address
+      ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+    end
+
+    it {
+      expect(subject).to have_destination(
+        '/steps/address/lookup',
+        :edit,
+        id: crime_application,
+        address_id: 'address'
+      )
+    }
+  end
+
+  context 'when the step is `contact_details`' do
+    let(:form_object) { double('FormObject', correspondence_address_type:) }
+    let(:step_name) { :contact_details }
+
+    context 'and answer is `other_address`' do
+      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS }
+
+      before do
+        allow(
+          CorrespondenceAddress
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+      end
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
+      }
+    end
+
+    context 'and applicant is not `age_passported`' do
+      before do
+        allow(crime_application).to receive(:age_passported?).and_return(false)
+      end
+
+      context 'and answer is `home_address`' do
+        let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
+
+        it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `providers_office_address`' do
+        let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
+
+        it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+      end
+    end
+
+    context 'and applicant is `age_passported`' do
+      before do
+        allow(crime_application).to receive(:age_passported?).and_return(true)
+      end
+
+      context 'and answer is `home_address`' do
+        let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
+
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      end
+
+      context 'and answer is `providers_office_address`' do
+        let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
+
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      end
     end
   end
 
@@ -134,16 +277,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'and the answer is `yes`' do
       let(:has_benefit_evidence) { YesNoAnswer::YES }
 
-      before do
-        allow(
-          Address
-        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
-      end
-
-      it {
-        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-address_id: 'address')
-      }
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
 
     context 'and the answer is `no`' do
@@ -167,47 +301,6 @@ address_id: 'address')
     let(:form_object) { double('FormObject') }
     let(:step_name) { :benefit_check_result }
 
-    before do
-      allow(
-        Address
-      ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
-    end
-
-    it {
-      expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-  address_id: 'address')
-    }
-  end
-
-  context 'when the step is `contact_details`' do
-    let(:form_object) { double('FormObject', correspondence_address_type:) }
-    let(:step_name) { :contact_details }
-
-    context 'and answer is `other_address`' do
-      let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS }
-
-      before do
-        allow(
-          CorrespondenceAddress
-        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
-      end
-
-      it {
-        expect(subject).to have_destination('/steps/address/lookup', :edit, id: crime_application,
-address_id: 'address')
-      }
-    end
-
-    context 'and answer is `home_address`' do
-      let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
-
-      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
-    end
-
-    context 'and answer is `providers_office_address`' do
-      let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
-
-      it { is_expected.to have_destination('/steps/case/case_type', :edit, id: crime_application) }
-    end
+    it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
   end
 end

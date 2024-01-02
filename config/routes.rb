@@ -103,6 +103,9 @@ Rails.application.routes.draw do
         edit_step :has_partner
         show_step :partner_exit
         edit_step :details
+        edit_step :case_type
+        edit_step :appeal_details
+        edit_step :date_stamp
         edit_step :has_nino
         show_step :nino_exit
         edit_step :benefit_type
@@ -129,9 +132,6 @@ Rails.application.routes.draw do
       end
 
       namespace :case do
-        edit_step :case_type
-        edit_step :appeal_details
-        edit_step :date_stamp
         edit_step :urn
         crud_step :charges, param: :charge_id
         edit_step :charges_summary

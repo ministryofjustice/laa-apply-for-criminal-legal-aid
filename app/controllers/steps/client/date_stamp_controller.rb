@@ -1,6 +1,6 @@
 module Steps
-  module Case
-    class DateStampController < Steps::CaseStepController
+  module Client
+    class DateStampController < Steps::ClientStepController
       include Steps::NoOpAdvanceStep
 
       private
