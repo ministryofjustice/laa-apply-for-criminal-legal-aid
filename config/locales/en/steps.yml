@@ -253,6 +253,9 @@ en:
 
     outgoings:
       caption: Outgoings assessment
+      housing_payment_type:
+        edit:
+          page_title: Which of these payments does your client pay where they usually live?
       income_tax_rate:
         edit:
           page_title: In the last 2 years, has your client paid the 40% income tax rate?
