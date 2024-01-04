@@ -63,8 +63,8 @@ en:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
         manage_without_income: How does your client manage with no income?
-      steps_outgoings_outgoings_more_than_income:
-        outgoings_more_than_income: Are your client’s outgoings more than their income?
+      steps_outgoings_housing_payment_type_form:
+        housing_payment_type: Which of these payments does your client pay where they usually live?
 
     hint:
       steps_client_details_form:
@@ -251,6 +251,12 @@ en:
           custody: They have been in custody for more than 3 months
           other: Other
         manage_other_details: Tell us how your client manages with no income
+      steps_outgoings_housing_payment_type_form:
+        housing_payment_type_options:
+          rent: Rent
+          mortgage: Mortgage
+          board_lodgings: Board and lodgings
+          none: My client does not pay any of these payments
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_more_than_income_form:
