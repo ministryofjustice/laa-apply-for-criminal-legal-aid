@@ -20,7 +20,6 @@ module Datastore
         applicant: applicant,
         case: case_with_ioj,
         income: income,
-        dependants: dependants,
         outgoings: outgoings,
         documents: parent.documents,
       )
@@ -67,17 +66,9 @@ module Datastore
 
       Income.new(
         parent.income.serializable_hash.merge(
-          'client_has_dependants' => client_has_dependants
+          'dependants' => parent.means_details.income_details.dependants
         )
       )
-    end
-
-    def dependants
-      parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
-    end
-
-    def client_has_dependants
-      parent.means_details&.income_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     def outgoings
