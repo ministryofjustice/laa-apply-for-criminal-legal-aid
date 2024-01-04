@@ -16,7 +16,7 @@
         <p>Speed up some common application actions</p>
 
         <div class="govuk-button-group">
-          <% if crime_application.in_progress? && crime_application.case.nil? %>
+          <% if crime_application.in_progress? && crime_application.case&.charges&.empty? %>
             <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
                           class: 'govuk-button govuk-!-margin-right-1',
                           data: { module: 'govuk-button' } do; 'Bypass DWP'; end %>
