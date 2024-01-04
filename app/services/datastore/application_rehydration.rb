@@ -17,10 +17,10 @@ module Datastore
         date_stamp: date_stamp,
         ioj_passport: parent.ioj_passport,
         means_passport: parent.means_passport,
+        dependants: dependants,
         applicant: applicant,
         case: case_with_ioj,
         income: income,
-        dependants: dependants,
         outgoings: outgoings,
         documents: parent.documents,
       )
@@ -61,23 +61,17 @@ module Datastore
       )
     end
 
+    def dependants
+      parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+    end
+
     # `client_has_dependants` is not part of Schema, requires calculation
     def income
       return if parent.income.blank?
 
       Income.new(
-        parent.income.serializable_hash.merge(
-          'client_has_dependants' => client_has_dependants
-        )
+        parent.income.serializable_hash
       )
-    end
-
-    def dependants
-      parent.means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
-    end
-
-    def client_has_dependants
-      parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     def outgoings
