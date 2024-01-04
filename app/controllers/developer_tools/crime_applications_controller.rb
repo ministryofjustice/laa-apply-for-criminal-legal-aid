@@ -60,11 +60,11 @@ module DeveloperTools
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_contact_details_path(crime_application),
-          edit_steps_case_case_type_path(crime_application),
+          edit_steps_client_case_type_path(crime_application),
         ]
       )
 
-      redirect_to edit_steps_case_case_type_path(crime_application)
+      redirect_to edit_steps_client_case_type_path(crime_application)
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Case::CaseTypeForm do
+RSpec.describe Steps::Client::CaseTypeForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

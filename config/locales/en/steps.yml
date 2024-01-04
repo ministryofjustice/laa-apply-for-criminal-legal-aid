@@ -34,6 +34,17 @@ en:
           page_title: Enter your client’s details
           heading: Enter your client’s details
           full_name_legend: Client’s full name
+      case_type:
+        edit:
+          page_title: What is the case type?
+      appeal_details:
+        edit:
+          page_title: Your client’s appeal to Crown Court
+          heading: Your client’s appeal to Crown Court
+      date_stamp:
+        edit:
+          page_title: Your application has been date stamped
+          heading: Your application has been date stamped
       has_nino:
         edit:
           page_title: Enter your client’s NINO
@@ -131,17 +142,6 @@ en:
         edit:
           page_title: Enter your client’s URN
           urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
-      case_type:
-        edit:
-          page_title: What is the case type?
-      appeal_details:
-        edit:
-          page_title: Your client’s appeal to Crown Court
-          heading: Your client’s appeal to Crown Court
-      date_stamp:
-        edit:
-          page_title: Your application has been date stamped
-          heading: Your application has been date stamped
       charges:
         edit:
           page_title: What has your client been charged with?
@@ -253,6 +253,9 @@ en:
 
     outgoings:
       caption: Outgoings assessment
+      housing_payment_type:
+        edit:
+          page_title: Which of these payments does your client pay where they usually live?
       income_tax_rate:
         edit:
           page_title: In the last 2 years, has your client paid the 40% income tax rate?

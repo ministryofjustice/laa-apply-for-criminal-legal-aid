@@ -4,7 +4,7 @@ class DependantsValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    record.dependants.each.with_index do |dependant, index|
+    record.dependants.each_with_index do |dependant, index|
       add_indexed_errors(dependant, index) unless dependant.valid?
     end
   end
