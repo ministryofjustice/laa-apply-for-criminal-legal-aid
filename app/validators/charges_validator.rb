@@ -4,7 +4,7 @@ class ChargesValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    record.offence_dates.each.with_index do |offence_date, index|
+    record.offence_dates.each_with_index do |offence_date, index|
       add_indexed_errors(offence_date, index) unless offence_date.valid?
     end
   end

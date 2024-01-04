@@ -4,7 +4,7 @@ class CodefendantsValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    record.codefendants.each.with_index do |codefendant, index|
+    record.codefendants.each_with_index do |codefendant, index|
       add_indexed_errors(codefendant, index) unless codefendant.valid?
     end
   end
