@@ -2,6 +2,9 @@ module Decisions
   class OutgoingsDecisionTree < BaseDecisionTree
     def destination
       case step_name
+      when :housing_payment_type
+        # TODO: link to next step when we have it
+        edit(:income_tax_rate)
       when :income_tax_rate
         edit(:outgoings_more_than_income)
       when :outgoings_more_than_income
