@@ -68,7 +68,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
 
       context 'when `pays_council_tax` answer is no' do
         context 'when a `council_tax_amount` was previously recorded' do
-          let(:council_tax_amount) { 100_000 }
+          let(:council_tax_amount) { '1000' }
 
           it { is_expected.to be_valid }
 
@@ -82,7 +82,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       context 'when `pays_council_tax` answer is yes' do
         context 'when a `council_tax_amount` was previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount) { 100_000 }
+          let(:council_tax_amount) { '1000' }
 
           it 'is valid' do
             expect(form).to be_valid
@@ -104,7 +104,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
 
         context 'when a `council_tax_amount` was not previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount) { 100_000 }
+          let(:council_tax_amount) { '1000' }
 
           it 'is also valid' do
             expect(form).to be_valid
