@@ -261,7 +261,7 @@ en:
           none: My client does not pay any of these payments
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO
-        council_tax_amount: How much do they pay yearly?
+        council_tax_amount_in_pounds: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_more_than_income_form:

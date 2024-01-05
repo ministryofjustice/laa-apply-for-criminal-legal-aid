@@ -10,6 +10,12 @@ module Steps
       def update
         update_and_advance(CouncilTaxForm, as: :council_tax)
       end
+
+      private
+
+      def additional_permitted_params
+        [:council_tax_amount_in_pounds]
+      end
     end
   end
 end

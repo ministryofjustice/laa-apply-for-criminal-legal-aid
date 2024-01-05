@@ -7,7 +7,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
     {
       crime_application:,
       pays_council_tax:,
-      council_tax_amount:
+      council_tax_amount_in_pounds:
     }
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
   let(:outgoings) { Outgoings.new }
 
   let(:pays_council_tax) { nil }
-  let(:council_tax_amount) { nil }
+  let(:council_tax_amount_in_pounds) { nil }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -67,8 +67,12 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
                       }
 
       context 'when `pays_council_tax` answer is no' do
+        let(:pays_council_tax) { YesNoAnswer::NO.to_s }
+
         context 'when a `council_tax_amount` was previously recorded' do
-          let(:council_tax_amount) { '1000' }
+          before do
+            outgoings.update(council_tax_amount: 100_079)
+          end
 
           it { is_expected.to be_valid }
 
@@ -82,35 +86,38 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       context 'when `pays_council_tax` answer is yes' do
         context 'when a `council_tax_amount` was previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount) { '1000' }
+          let(:council_tax_amount_in_pounds) { 1000.79 }
+
+          before do
+            outgoings.update(pays_council_tax: YesNoAnswer::YES.to_s)
+            outgoings.update(council_tax_amount: 100_079)
+          end
 
           it 'is valid' do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :council_tax_amount,
+                :council_tax_amount_in_pounds,
                 :present
               )
             ).to be(false)
           end
 
           it 'cannot reset `council_tax_amount` as it is relevant' do
-            outgoings.update(pays_council_tax: YesNoAnswer::YES.to_s)
-
             attributes = form.send(:attributes_to_reset)
-            expect(attributes['council_tax_amount']).to eq(council_tax_amount)
+            expect(attributes['council_tax_amount']).to eq(100_079)
           end
         end
 
         context 'when a `council_tax_amount` was not previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount) { '1000' }
+          let(:council_tax_amount_in_pounds) { 1000.79 }
 
           it 'is also valid' do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :council_tax_amount,
+                :council_tax_amount_in_pounds,
                 :present
               )
             ).to be(false)
