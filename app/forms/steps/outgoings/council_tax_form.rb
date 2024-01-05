@@ -29,9 +29,9 @@ module Steps
       def council_tax_amount_in_pounds
         return unless council_tax_amount
 
-        amount_in_pence = council_tax_amount.dup
+        amount_in_pounds = council_tax_amount.dup / 100.0
 
-        amount_in_pence / 100.0
+        helpers.number_with_precision(amount_in_pounds, precision: 2)
       end
 
       private
@@ -50,6 +50,10 @@ module Steps
 
       def pays_council_tax?
         pays_council_tax&.yes?
+      end
+
+      def helpers
+        ActionController::Base.helpers
       end
     end
   end
