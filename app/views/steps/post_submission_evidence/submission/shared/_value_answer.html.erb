@@ -1,0 +1,12 @@
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{value_answer.question}.question", **value_answer.i18n_opts)
+  end
+
+  content_for(:row_answer, flush: true) do
+    t("summary.questions.#{value_answer.question}.answers.#{value_answer.value}")
+  end
+%>
+
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: value_answer, editable: editable } %>

@@ -1,0 +1,26 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl">
+      Enter your details
+    </h1>
+
+    <%= render partial: 'fulfilment_errors',
+               locals: { errors: @form_object.fulfilment_errors } if @form_object.fulfilment_errors.any? %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset legend: { text: t('.legal_representative_legend') } do %>
+        <%= f.govuk_text_field :legal_rep_first_name, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :legal_rep_last_name, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :legal_rep_telephone, autocomplete: 'off', width: 'three-quarters',
+                               extra_letter_spacing: true %>
+      <% end %>
+
+      <%= f.continue_button(primary: :save_and_submit) %>
+    <% end %>
+  </div>
+</div>

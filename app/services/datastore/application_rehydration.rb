@@ -11,7 +11,7 @@ module Datastore
     def call # rubocop:disable Metrics/MethodLength
       return if already_recreated?
 
-      if application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+      if pse?
         crime_application.update!(
           # TODO: Update partner rehydration when partner introduced and stored
           client_has_partner: YesNoAnswer::NO,
@@ -20,6 +20,7 @@ module Datastore
           ioj_passport: parent.ioj_passport,
           means_passport: parent.means_passport,
           applicant: applicant,
+          case: case_with_ioj,
           outgoings: outgoings,
           application_type: application_type
         )
@@ -42,11 +43,17 @@ module Datastore
 
     private
 
+    def pse?
+      application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+    end
+
     def already_recreated?
       crime_application.applicant.present?
     end
 
     def split_case?
+      return false if pse?
+
       parent.return_details.reason.inquiry.split_case?
     end
 

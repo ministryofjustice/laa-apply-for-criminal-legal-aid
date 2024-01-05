@@ -1,0 +1,12 @@
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{offence_answer.question}.question", **offence_answer.i18n_opts)
+  end
+%>
+
+<% content_for(:row_answer, flush: true) do %>
+  <%= render partial: 'steps/shared/charge', locals: { charge: offence_answer } %>
+<% end %>
+
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: offence_answer, editable: editable } %>

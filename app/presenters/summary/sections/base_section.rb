@@ -28,6 +28,7 @@ module Summary
 
       # If action links are allowed (i.e. `change` links)
       def editable?
+        return false
         crime_application.in_progress? && @editable
       end
 

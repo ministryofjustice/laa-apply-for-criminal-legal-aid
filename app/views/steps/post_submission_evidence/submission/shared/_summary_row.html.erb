@@ -1,0 +1,32 @@
+<%
+  show_actions = editable && row.change_link?
+
+  div_classes = ['govuk-summary-list__row']
+  div_classes << 'govuk-summary-list__row--no-actions' unless show_actions
+%>
+
+<div class="<%= div_classes.join(' ') %>">
+  <dt class="govuk-summary-list__key govuk-!-width-one-third">
+    <%= yield(:row_question) %>
+  </dt>
+
+  <dd class="govuk-summary-list__value">
+    <%= yield(:row_answer) %>
+  </dd>
+
+  <% if show_actions %>
+    <%
+      a11y_question = t(
+        "summary.questions.#{row.question}.question_a11y", **{
+          default: t("summary.questions.#{row.question}.question", **row.i18n_opts)
+        }.merge(row.i18n_opts)
+      )
+    %>
+
+    <dd class="govuk-summary-list__actions">
+      <%= link_to t('summary.change_link_html', a11y_question:), row.change_path,
+                  class: 'govuk-link--no-visited-state ga-pageLink',
+                  data: { ga_category: 'check your answers', ga_label: "change #{row.question}" } %>
+    </dd>
+  <% end %>
+</div>

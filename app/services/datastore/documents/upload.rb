@@ -17,7 +17,7 @@ module Datastore
         return false if document.s3_object_key.present?
 
         Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
-          # scan
+          scan
           set_presign_upload
           upload_to_s3(@presign_upload&.url)
           persist_document(@presign_upload&.object_key)

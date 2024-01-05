@@ -176,6 +176,19 @@ Rails.application.routes.draw do
         edit_step :failure
         show_step :confirmation
       end
+
+      namespace :post_submission_evidence do
+        namespace :evidence do
+          edit_step :upload
+        end
+
+        namespace :submission do
+          edit_step :review
+          edit_step :declaration
+          edit_step :failure
+          show_step :confirmation
+        end
+      end
     end
   end
 

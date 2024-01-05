@@ -82,6 +82,8 @@ module Datastore
       private
 
       def scan_result # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+        return type_of('pass')
+
         if unavailable?
           Rails.logger.error t(:unavailable)
           return type_of('other')

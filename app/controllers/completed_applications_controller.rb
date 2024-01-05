@@ -36,6 +36,7 @@ class CompletedApplicationsController < DashboardController
   # :nocov:
 
   def create_pse
+    # TODO Add guard to only be for completed applications.
     usn = current_crime_application.reference
 
     # There can only be one application in progress with same USN
@@ -47,7 +48,7 @@ class CompletedApplicationsController < DashboardController
 
     # Redirect to the check your answers (review) page
     # of the newly created application
-    redirect_to edit_completed_crime_application_post_submission_evidence_upload_path(crime_application)
+    redirect_to edit_steps_post_submission_evidence_evidence_upload_path(crime_application)
   end
 
   private

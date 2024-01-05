@@ -8,7 +8,7 @@ module SubmissionSerializer
           json.parent_id crime_application.parent_id
           json.schema_version 1.0
           json.reference crime_application.reference
-          json.application_type ApplicationType::INITIAL.to_s
+          json.application_type crime_application.application_type
           json.created_at crime_application.created_at
           json.submitted_at crime_application.submitted_at
           json.date_stamp crime_application.date_stamp

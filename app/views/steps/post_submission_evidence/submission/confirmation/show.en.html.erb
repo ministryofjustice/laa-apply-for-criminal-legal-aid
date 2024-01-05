@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
+      <h1 class="govuk-panel__title">
+        Evidence submitted
+      </h1>
+      <div class="govuk-panel__body">
+        Your reference number<br>
+        <strong>
+          <%= @crime_application.reference %>
+        </strong>
+      </div>
+    </div>
+
+    <div class="govuk-button-group govuk-!-margin-top-8">
+      <%= link_button t('.view_application'), completed_crime_application_path %>
+      <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
+    </div>
+  </div>
+</div>

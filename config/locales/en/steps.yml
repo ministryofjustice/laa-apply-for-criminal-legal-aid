@@ -262,7 +262,7 @@ en:
           page_title: Are your client’s outgoings more than their income?
           outgoings_more_than_income: Are your client’s outgoings more than their income?
 
-    evidence:
+    evidence: &EVIDENCE
       upload:
         edit:
           page_title: Upload supporting evidence
@@ -292,8 +292,7 @@ en:
         unavailable: ClamAV Scan Service unavailable
         not_installed: "ClamAV Scan Error - clamdscan package must be installed and executable. Exception: %{message}"
         timeout: "ClamAV file scan breached %{timeout} second, scan abandoned"
-
-    submission:
+    submission: &SUBMISSION
       review:
         edit:
           page_title: Review the application
@@ -316,3 +315,10 @@ en:
           lead_text: We cannot connect to our database. This means you cannot submit applications in progress, or view returned and submitted applications.
           info_text: We have saved your latest application in progress.
           contact_helpline_html: <a href="%{helpline_url}">Contact the criminal applications helpline</a> if you need to get an update on submitted applications.
+
+    post_submission_evidence:
+      evidence:
+        <<: *EVIDENCE
+      submission:
+        <<: *SUBMISSION
+

@@ -1,0 +1,21 @@
+<tr class="govuk-table__row">
+  <td id="<%=document.id%>" class="govuk-table__cell">
+    <span><%= document.filename %></span>
+
+    <% if document.s3_object_key %>
+      <strong class="govuk-tag govuk-tag--green"><%= t('steps.evidence.upload.edit.uploaded') %></strong>
+    <% else %>
+      <% document.valid?(:storage) %>
+
+      <p class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> <%= document.errors.first.full_message %>
+      </p>
+    <% end %>
+  </td>
+  <td class="govuk-table__cell govuk-!-text-align-right">
+    <%= button_to t('.remove_button'), steps_evidence_upload_path, method: :put,
+                                       value: document.id.to_s,
+                                       name: :document_id,
+                                       class: 'app-button--link' %>
+  </td>
+</tr>
