@@ -256,6 +256,9 @@ en:
       housing_payment_type:
         edit:
           page_title: Which of these payments does your client pay where they usually live?
+      council_tax:
+        edit:
+          page_title: Does your client pay Council Tax where they usually live?
       income_tax_rate:
         edit:
           page_title: In the last 2 years, has your client paid the 40% income tax rate?

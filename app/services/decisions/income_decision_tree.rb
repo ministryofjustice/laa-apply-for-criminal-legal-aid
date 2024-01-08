@@ -24,7 +24,8 @@ module Decisions
       when :delete_dependant
         edit_dependants
       when :dependants_finished
-        edit('/home', action: :index)
+        # TODO: link to next step when we have it
+        edit(:manage_without_income)
       when :manage_without_income
         # TODO: link to next step when we have it
         edit('/steps/outgoings/housing_payment_type')

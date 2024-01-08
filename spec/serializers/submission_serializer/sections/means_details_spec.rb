@@ -36,6 +36,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:outgoings) do
       instance_double(
         Outgoings,
+        housing_payment_type: 'mortgage',
         income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
         how_manage: 'A description of how they manage'
@@ -61,6 +62,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
             outgoings: [],
+            housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
             how_manage: 'A description of how they manage'
@@ -92,6 +94,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:outgoings) do
       instance_double(
         Outgoings,
+        housing_payment_type: nil,
         income_tax_rate_above_threshold: nil,
         outgoings_more_than_income: nil,
         how_manage: nil
@@ -117,6 +120,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
             outgoings: [],
+            housing_payment_type: nil,
             income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
             how_manage: nil
