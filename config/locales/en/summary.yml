@@ -23,6 +23,7 @@ en:
       employment_details: Employment
       income_details: Income
       other_income_details: Other sources of income
+      housing_payments: Housing Payments
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
 
@@ -225,6 +226,16 @@ en:
         #TODO: Question title has no design and needs to be checked/updated when designs are finalized
         question: Details
       # END other sources of income details section
+
+      # BEGIN housing payments section
+      housing_payment_type:
+        question: Which of these payments does your client pay where they usually live?
+        answers:
+          rent: Rent
+          mortgage: Mortgage
+          board_lodgings: Board and lodgings
+          none: None
+      # END housing payments section
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
