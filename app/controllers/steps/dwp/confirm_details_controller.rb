@@ -16,9 +16,9 @@ module Steps
       private
 
       def set_presenter
-        @client_details = Summary::Sections::ClientDetails.new(
+        @dwp_client_details = [Summary::Sections::DWPClientDetails.new(
           current_crime_application, editable: false, headless: true
-        )
+        )].select(&:show?)
       end
     end
   end

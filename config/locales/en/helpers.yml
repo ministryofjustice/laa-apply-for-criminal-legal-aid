@@ -65,6 +65,8 @@ en:
         manage_without_income: How does your client manage with no income?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does your client pay where they usually live?
+      steps_outgoings_council_tax_form:
+        council_tax: Does your client pay Council Tax where they usually live?
 
     hint:
       steps_client_details_form:
@@ -257,6 +259,9 @@ en:
           mortgage: Mortgage
           board_lodgings: Board and lodgings
           none: My client does not pay any of these payments
+      steps_outgoings_council_tax_form:
+        pays_council_tax_options: *YESNO
+        council_tax_amount_in_pounds: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_more_than_income_form:

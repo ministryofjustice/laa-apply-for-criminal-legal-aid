@@ -11,6 +11,7 @@ RSpec.describe Adapters::Structs::OutgoingsDetails do
         subject.serializable_hash
       ).to match(
         a_hash_including(
+          'housing_payment_type' => 'rent',
           'income_tax_rate_above_threshold' => 'no',
           'outgoings_more_than_income' => 'yes',
           'how_manage' => 'A description of how they manage'
@@ -23,6 +24,7 @@ RSpec.describe Adapters::Structs::OutgoingsDetails do
         subject.serializable_hash.keys
       ).to match_array(
         %w[
+          housing_payment_type
           income_tax_rate_above_threshold
           outgoings_more_than_income
           how_manage
