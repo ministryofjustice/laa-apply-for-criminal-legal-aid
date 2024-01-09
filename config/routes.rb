@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   scope 'applications/:id' do
     namespace :steps do
       namespace :client do
+        edit_step :is_application_means_tested, alias: :is_means_tested
         edit_step :has_partner
         show_step :partner_exit
         edit_step :details

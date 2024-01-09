@@ -17,6 +17,23 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   it_behaves_like 'a decision tree'
 
+  context 'when the step is `is_means_tested`' do
+    let(:form_object) { double('FormObject', is_means_tested:) }
+    let(:step_name) { :is_means_tested }
+
+    context 'and answer is `yes`' do
+      let(:is_means_tested) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+    end
+
+    context 'and answer is `no`' do
+      let(:is_means_tested) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `has_partner`' do
     let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }

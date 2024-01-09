@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_03_143020) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_09_133815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_03_143020) do
     t.jsonb "provider_details", default: {}, null: false
     t.uuid "parent_id"
     t.string "means_passport", default: [], array: true
+    t.string "is_means_tested"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
