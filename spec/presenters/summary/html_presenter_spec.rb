@@ -38,6 +38,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
             Summary::Sections::OtherIncomeDetails,
+            Summary::Sections::HousingPayments,
             Summary::Sections::OtherOutgoingsDetails,
             Summary::Sections::SupportingEvidence,
           ]
@@ -70,6 +71,7 @@ describe Summary::HtmlPresenter do
             Summary::Sections::EmploymentDetails,
             Summary::Sections::IncomeDetails,
             Summary::Sections::OtherIncomeDetails,
+            Summary::Sections::HousingPayments,
             Summary::Sections::OtherOutgoingsDetails,
             Summary::Sections::SupportingEvidence,
             Summary::Sections::LegalRepresentativeDetails,
