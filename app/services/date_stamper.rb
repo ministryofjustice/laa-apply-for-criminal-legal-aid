@@ -22,8 +22,9 @@ class DateStamper
     # -- If case type is “date stampable” then we use the date stamp value
     # -- If case is non “date stampable” we use the submission date as the date
     #    stamp.
+    return false if @crime_app.date_stamp.present?
 
-    if CaseType.new(@case_type).date_stampable? && @crime_app.date_stamp.nil?
+    if @crime_app.not_means_tested? || CaseType.new(@case_type).date_stampable?
       @crime_app.update(date_stamp: Time.current)
     else
       false

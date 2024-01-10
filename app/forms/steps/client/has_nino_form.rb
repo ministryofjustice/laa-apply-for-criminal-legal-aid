@@ -7,13 +7,21 @@ module Steps
       NINO_REGEXP = /\A(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z][0-9]{6}([A-DFM])\z/
 
       attribute :nino, :string
-      validates :nino, format: { with: NINO_REGEXP }
+      validate :validate_nino
 
       def nino=(str)
         super(str.upcase.delete(' ')) if str
       end
 
       private
+
+      def validate_nino
+        if nino.blank?
+          crime_application.not_means_tested? ? return : errors.add(:nino, :blank)
+        end
+
+        errors.add(:nino, :invalid) unless NINO_REGEXP.match?(nino)
+      end
 
       def persist!
         return true unless changed?

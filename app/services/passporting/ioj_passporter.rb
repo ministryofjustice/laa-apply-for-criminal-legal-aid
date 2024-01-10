@@ -50,6 +50,8 @@ module Passporting
     end
 
     def appeal_case_type?
+      return false if crime_application.not_means_tested?
+
       CaseType.new(kase.case_type).appeal?
     end
 

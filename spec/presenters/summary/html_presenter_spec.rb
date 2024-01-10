@@ -33,6 +33,7 @@ describe Summary::HtmlPresenter do
 
         let(:expected_sections) do
           %w[
+            Overview
             ClientDetails
             ContactDetails
             CaseDetails

@@ -4,6 +4,12 @@ module Adapters
   module Structs
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
       include TypeOfApplication
+      # `is_means_tested` is not part of Schema, requires calculation
+      # rubocop:disable Naming/PredicateName
+      def is_means_tested
+        means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
+      end
+      # rubocop:enable Naming/PredicateName
 
       def applicant
         Structs::Applicant.new(client_details.applicant)

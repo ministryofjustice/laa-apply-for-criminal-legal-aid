@@ -1,6 +1,6 @@
 module Decisions
   # rubocop:disable Metrics/ClassLength
-  # TODO: Break to new initial details tree
+  # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
@@ -10,7 +10,7 @@ module Decisions
       when :has_partner
         after_has_partner
       when :details
-        edit(:case_type)
+        after_client_details
       when :case_type
         after_case_type
       when :appeal_details
@@ -20,7 +20,7 @@ module Decisions
       when :contact_details
         after_contact_details
       when :has_nino
-        edit(:benefit_type)
+        after_has_nino
       when :benefit_type
         after_benefit_type
       when :retry_benefit_check
@@ -39,9 +39,9 @@ module Decisions
 
     def after_is_means_tested
       if form_object.is_means_tested.yes?
-        # Task list
         edit(:has_partner)
       else
+        # Task list
         edit('/crime_applications')
       end
     end
@@ -52,6 +52,16 @@ module Decisions
       else
         # Task list
         edit('/crime_applications')
+      end
+    end
+
+    def after_client_details
+      if DateStamper.new(form_object.crime_application, 'no_case_type').call
+        edit(:date_stamp)
+      elsif form_object.crime_application.not_means_tested?
+        start_address_journey(HomeAddress)
+      else
+        edit(:case_type)
       end
     end
 
@@ -83,6 +93,14 @@ module Decisions
       address = address_class.find_or_create_by(person: applicant)
 
       edit('/steps/address/lookup', address_id: address)
+    end
+
+    def after_has_nino
+      if current_crime_application.not_means_tested?
+        edit('/steps/case/urn')
+      else
+        edit(:benefit_type)
+      end
     end
 
     def after_benefit_type

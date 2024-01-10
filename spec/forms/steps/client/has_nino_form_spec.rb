@@ -18,6 +18,11 @@ RSpec.describe Steps::Client::HasNinoForm do
 
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
+  let(:not_means_tested) { false }
+
+  before do
+    allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
+  end
 
   describe '#save' do
     context 'validations' do
@@ -26,7 +31,7 @@ RSpec.describe Steps::Client::HasNinoForm do
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+          expect(subject.errors.of_kind?(:nino, :blank)).to be(true)
         end
       end
 
@@ -70,6 +75,37 @@ RSpec.describe Steps::Client::HasNinoForm do
           it 'passed validation' do
             expect(subject).to be_valid
             expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
+          end
+        end
+      end
+
+      context 'when application is not means tested' do
+        let(:not_means_tested) { true }
+
+        context 'when `nino` is blank' do
+          let(:nino) { '' }
+
+          it 'does not have a validation error on the field' do
+            expect(subject).to be_valid
+            expect(subject.errors.of_kind?(:nino, :blank)).to be(false)
+          end
+        end
+
+        context 'when `nino` a random string' do
+          let(:nino) { 'not a NINO' }
+
+          it 'has a validation error on the field' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+          end
+        end
+
+        context 'when `nino` has an unused prefix' do
+          let(:nino) { 'BG123456C' }
+
+          it 'has a validation error on the field' do
+            expect(subject).not_to be_valid
+            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
           end
         end
       end

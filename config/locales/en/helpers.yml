@@ -156,8 +156,6 @@ en:
       steps_client_appeal_details_form:
         appeal_maat_id: Previous MAAT ID (optional)
         appeal_with_changes_details: What has changed in your client’s financial circumstances?
-      steps_client_has_nino_form:
-        nino: Enter your client’s National Insurance number
       steps_client_benefit_type_form:
         benefit_type_options:
           universal_credit: Universal Credit

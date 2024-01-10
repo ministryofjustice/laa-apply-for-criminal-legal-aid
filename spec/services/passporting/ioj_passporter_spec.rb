@@ -15,7 +15,7 @@ RSpec.describe Passporting::IojPassporter do
   let(:charges) { [] }
 
   before do
-    allow(crime_application).to receive(:ioj_passport).and_return([])
+    allow(crime_application).to receive_messages(ioj_passport: [], not_means_tested?: false)
   end
 
   describe '#call' do

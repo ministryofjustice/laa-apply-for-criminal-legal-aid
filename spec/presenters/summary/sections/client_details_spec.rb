@@ -19,11 +19,12 @@ describe Summary::Sections::ClientDetails do
       last_name: 'last name',
       other_names: '',
       date_of_birth: Date.new(1999, 1, 20),
-      nino: '123456',
+      nino: nino,
       benefit_type: benefit_type,
     )
   end
 
+  let(:nino) { '123456' }
   let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
   describe '#name' do

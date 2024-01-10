@@ -12,6 +12,7 @@ RSpec.describe Passporting::MeansPassporter do
 
   before do
     allow(crime_application).to receive(:update)
+    allow(crime_application).to receive(:is_means_tested)
     allow(crime_application).to receive(:means_passport).and_return([])
   end
 
