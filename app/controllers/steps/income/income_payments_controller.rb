@@ -14,10 +14,7 @@ module Steps
       end
 
       def additional_permitted_params
-        params = [income_payment: []]
-        params << IncomePaymentType.values.to_h do |t|
-          [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names]
-        end
+        [(IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } + [['income_payment', []]]).to_h]
       end
     end
   end
