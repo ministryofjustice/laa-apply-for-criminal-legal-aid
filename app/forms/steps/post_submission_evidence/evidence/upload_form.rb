@@ -4,7 +4,7 @@ module Steps
       class UploadForm < Steps::BaseFormObject
         delegate :documents, to: :crime_application
 
-        attribute :pse_notes, :string
+        attribute :notes, :string
 
         private
 

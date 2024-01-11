@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_095230) do
     t.uuid "parent_id"
     t.string "means_passport", default: [], array: true
     t.string "application_type", default: "initial", null: false
-    t.text "pse_notes"
+    t.text "notes"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end

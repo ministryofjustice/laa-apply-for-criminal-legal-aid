@@ -3,7 +3,7 @@ module SubmissionSerializer
     class SupportingEvidence < Sections::BaseSection
       def to_builder
         Jbuilder.new do |json|
-          json.supporting_evidence Definitions::Document.generate(documents.supporting_evidence)
+          json.supporting_evidence Definitions::Document.generate(documents.stored)
         end
       end
 

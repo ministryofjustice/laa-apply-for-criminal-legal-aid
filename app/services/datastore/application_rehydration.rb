@@ -13,8 +13,8 @@ module Datastore
 
       if pse?
         crime_application.update!(
+          parent_id: parent.id,
           applicant: applicant,
-          case: case_with_ioj,
           application_type: application_type
         )
       else

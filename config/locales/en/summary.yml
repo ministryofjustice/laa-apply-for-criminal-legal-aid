@@ -257,6 +257,6 @@ en:
       # BEGIN post submission evidence section
       post_submission_evidence:
         question: File name
-      pse_notes:
+      notes:
         question: Notes
       # END post submission evidence section

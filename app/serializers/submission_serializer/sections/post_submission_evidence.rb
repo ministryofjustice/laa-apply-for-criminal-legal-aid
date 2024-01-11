@@ -3,8 +3,8 @@ module SubmissionSerializer
     class PostSubmissionEvidence < Sections::BaseSection
       def to_builder
         Jbuilder.new do |json|
-          json.post_submission_evidence Definitions::Document.generate(documents.post_submission_evidence)
-          json.pse_notes crime_application.pse_notes
+          json.supporting_evidence Definitions::Document.generate(documents.stored)
+          json.notes crime_application.notes
         end
       end
 

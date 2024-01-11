@@ -2,12 +2,12 @@ module Summary
   module Sections
     class PostSubmissionEvidence < Sections::BaseSection
       def show?
-        pse.present? && super
+        documents.present? && super
       end
 
       def answers
         [
-          pse.map do |document|
+          documents.map do |document|
             next if document.s3_object_key.nil?
 
             Components::FreeTextAnswer.new(
@@ -16,7 +16,7 @@ module Summary
             )
           end,
           Components::FreeTextAnswer.new(
-            :pse_notes, crime_application.pse_notes,
+            :notes, crime_application.notes,
             change_path:
           )
         ].flatten.compact.select(&:show?)
@@ -28,8 +28,8 @@ module Summary
         edit_steps_post_submission_evidence_evidence_upload_path(crime_application)
       end
 
-      def pse
-        @pse ||= crime_application.pse
+      def documents
+        @documents ||= crime_application.documents
       end
     end
   end

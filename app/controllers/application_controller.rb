@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
   end
 
   def present_crime_application
-    throw current_crime_application
     @crime_application = helpers.present(
       current_crime_application, CrimeApplicationPresenter
     )
