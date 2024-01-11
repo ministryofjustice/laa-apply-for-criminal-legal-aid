@@ -23,6 +23,8 @@ module DeveloperTools
                   flash: { success: 'Application marked as returned' }
     end
 
+    # rubocop:disable Metrics/MethodLength
+
     def bypass_dwp
       find_or_create_applicant
 
@@ -40,7 +42,7 @@ module DeveloperTools
       redirect_to edit_steps_client_benefit_check_result_path(crime_application)
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def under18_bypass
       find_or_create_applicant(
         dob: rand(15..17).years.ago,

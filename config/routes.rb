@@ -100,6 +100,9 @@ Rails.application.routes.draw do
   scope 'applications/:id' do
     namespace :steps do
       namespace :client do
+        if FeatureFlags.means_journey.enabled?
+          edit_step :is_application_means_tested, alias: :is_means_tested
+        end
         edit_step :has_partner
         show_step :partner_exit
         edit_step :details

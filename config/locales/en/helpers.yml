@@ -26,6 +26,8 @@ en:
         consent: Do you want to accept analytics cookies?
       steps_provider_select_office_form:
         office_code: Select your office account number
+      steps_client_is_means_tested_form:
+        is_means_tested: Is this application means tested?
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
@@ -127,6 +129,8 @@ en:
         is_current_office_options:
           'yes': 'Yes'
           'no': 'No, another office is handling this application'
+      steps_client_is_means_tested_form:
+        is_means_tested_options: *YESNO
       steps_client_has_partner_form:
         client_has_partner_options: *YESNO
       steps_client_details_form:

@@ -42,6 +42,10 @@ en:
           attributes:
             office_code:
               inclusion: Select an office account number from the list
+        steps/client/is_means_tested_form:
+          attributes:
+            is_means_tested:
+              inclusion: Select yes if this application is means tested
         steps/client/has_partner_form:
           attributes:
             client_has_partner:
