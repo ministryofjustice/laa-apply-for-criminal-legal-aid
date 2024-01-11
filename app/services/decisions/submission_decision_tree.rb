@@ -14,18 +14,10 @@ module Decisions
     private
 
     def submit_application
-      if @crime_application.application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
-        if Datastore::PostSubmissionEvidence.new(current_crime_application).call
-          show(:confirmation)
-        else
-          edit(:failure)
-        end
+      if Datastore::ApplicationSubmission.new(current_crime_application).call
+        show(:confirmation)
       else
-        if Datastore::ApplicationSubmission.new(current_crime_application).call
-          show(:confirmation)
-        else
-          edit(:failure)
-        end
+        edit(:failure)
       end
     end
   end

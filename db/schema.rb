@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_28_130043) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_095230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_130043) do
     t.uuid "parent_id"
     t.string "means_passport", default: [], array: true
     t.string "application_type", default: "initial", null: false
+    t.text "pse_notes"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
@@ -112,6 +113,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_130043) do
     t.enum "scan_status", default: "awaiting", enum_type: "virus_scan_status"
     t.string "scan_output"
     t.datetime "scan_at"
+    t.string "application_type", default: "initial", null: false
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 

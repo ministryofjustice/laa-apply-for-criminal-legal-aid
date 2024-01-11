@@ -7,6 +7,7 @@ module SubmissionSerializer
           json.filename filename
           json.content_type content_type
           json.file_size file_size
+          json.application_type application_type
         end
       end
     end

@@ -20,6 +20,12 @@ class Document < ApplicationRecord
 
   scope :stored, -> { where.not(s3_object_key: nil) }
   scope :not_submitted, -> { where(submitted_at: nil) }
+  scope :post_submission_evidence, lambda {
+    where(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s).where.not(s3_object_key: nil)
+  }
+  scope :supporting_evidence, lambda {
+    where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s).where.not(s3_object_key: nil)
+  }
 
   def self.create_from_file(file:, crime_application:)
     create(
@@ -28,6 +34,7 @@ class Document < ApplicationRecord
       content_type: file.content_type,
       file_size: file.tempfile.size,
       tempfile: file.tempfile,
+      application_type: crime_application.application_type
     )
   end
 end

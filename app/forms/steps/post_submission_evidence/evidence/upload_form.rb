@@ -4,13 +4,15 @@ module Steps
       class UploadForm < Steps::BaseFormObject
         delegate :documents, to: :crime_application
 
+        attribute :pse_notes, :string
+
         private
 
-        # :nocov:
         def persist!
-          true
+          crime_application.update(
+            attributes
+          )
         end
-        # :nocov:
       end
     end
   end

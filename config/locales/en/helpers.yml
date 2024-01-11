@@ -258,7 +258,9 @@ en:
         how_manage: How does your client manage if their outgoings are more than their income?
       steps_evidence_upload_form:
         upload_files: Upload files
-      steps_submission_declaration_form:
+      steps_submission_declaration_form: &LEGALREPDETAILS
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
+      steps_post_submission_evidence_submission_declaration_form:
+        <<: *LEGALREPDETAILS

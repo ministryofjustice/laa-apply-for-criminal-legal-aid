@@ -30,6 +30,14 @@ module Adapters
           )
         end
       end
+
+      def pse
+        post_submission_evidence.map do |struct|
+          Document.new(
+            struct.attributes.merge(submitted_at:)
+          )
+        end
+      end
     end
   end
 end

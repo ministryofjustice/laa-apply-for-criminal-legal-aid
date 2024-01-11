@@ -13,15 +13,8 @@ module Datastore
 
       if pse?
         crime_application.update!(
-          # TODO: Update partner rehydration when partner introduced and stored
-          client_has_partner: YesNoAnswer::NO,
-          parent_id: parent.id,
-          date_stamp: date_stamp,
-          ioj_passport: parent.ioj_passport,
-          means_passport: parent.means_passport,
           applicant: applicant,
           case: case_with_ioj,
-          outgoings: outgoings,
           application_type: application_type
         )
       else

@@ -19,6 +19,7 @@ module SubmissionSerializer
         Sections::IojDetails.new(crime_application),
         Sections::MeansDetails.new(crime_application),
         Sections::SupportingEvidence.new(crime_application),
+        Sections::PostSubmissionEvidence.new(crime_application),
       ].select(&:generate?)
     end
 

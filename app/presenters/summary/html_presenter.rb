@@ -12,7 +12,7 @@ module Summary
         [
           Sections::Overview.new(crime_application),
           Sections::ClientDetails.new(crime_application),
-          Sections::SupportingEvidence.new(crime_application),
+          Sections::PostSubmissionEvidence.new(crime_application),
           Sections::LegalRepresentativeDetails.new(crime_application),
         ].select(&:show?)
       else

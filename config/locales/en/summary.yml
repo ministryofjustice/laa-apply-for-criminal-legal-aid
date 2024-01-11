@@ -25,6 +25,7 @@ en:
       other_income_details: Other sources of income
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
+      post_submission_evidence: Post submission evidence
 
     questions:
       # BEGIN overview section
@@ -252,3 +253,10 @@ en:
       supporting_evidence:
         question: "File name"
       # END supporting evidence section
+
+      # BEGIN post submission evidence section
+      post_submission_evidence:
+        question: File name
+      pse_notes:
+        question: Notes
+      # END post submission evidence section
