@@ -6,7 +6,7 @@ module Adapters
       # TODO: SHIFT TO STRUCT>>>>>
       attribute :review_status, Types::ReviewApplicationStatus
       # <<<<<<
-     
+
       def applicant
         Structs::Applicant.new(client_details.applicant)
       end
@@ -20,6 +20,7 @@ module Adapters
       end
 
       def income
+        return unless means_details
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
@@ -38,7 +39,7 @@ module Adapters
       def initial?
         application_type == Types::ApplicationType['initial']
       end
-      
+
       def post_submission_evidence?
         application_type == Types::ApplicationType['post_submission_evidence']
       end

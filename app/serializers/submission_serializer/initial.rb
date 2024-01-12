@@ -1,5 +1,5 @@
 module SubmissionSerializer
-  class Initial
+  class Initial < Application
     def sections
       [
         Sections::ApplicationDetails.new(crime_application),

@@ -54,7 +54,6 @@ module Summary
             ),
           ].select(&:show?)
         end
-
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
