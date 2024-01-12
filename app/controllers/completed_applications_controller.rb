@@ -16,34 +16,19 @@ class CompletedApplicationsController < DashboardController
     )
   end
 
-  # TODO: this is WIP, can be tested by manually setting
-  # an application in the `returned` status.
-  # :nocov:
   def recreate
-    usn = current_crime_application.reference
-
-    # There can only be one application in progress with same USN
-    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
-
     Datastore::ApplicationRehydration.new(
-      crime_application, parent: current_crime_application
+      child_application, parent: current_crime_application
     ).call
 
     # Redirect to the check your answers (review) page
     # of the newly created application
     redirect_to edit_steps_submission_review_path(crime_application)
   end
-  # :nocov:
 
-  def create_pse
-    # TODO Add guard to only be for completed applications.
-    usn = current_crime_application.reference
-
-    # There can only be one application in progress with same USN
-    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
-
-    Datastore::ApplicationRehydration.new(
-      crime_application, parent: current_crime_application, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+  def create_post_submission_evidence
+    Datastore::PostSubmissionHyrdation.new(
+      child_application, parent: current_crime_application
     ).call
 
     # Redirect to the check your answers (review) page
@@ -52,6 +37,13 @@ class CompletedApplicationsController < DashboardController
   end
 
   private
+
+  def child_application
+    usn = current_crime_application.reference
+
+    # There can only be one application in progress with same USN
+    CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
+  end
 
   def sortable_columns
     %w[submitted_at]

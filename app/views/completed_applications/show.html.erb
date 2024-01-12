@@ -34,11 +34,14 @@
     <div class="govuk-button-group govuk-!-margin-top-8 app-no-print">
       <%= link_button t('.print_application'), '#', data: { module: 'print' } %>
       <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
-      <%#= link_button t('.upload_pse'), edit_completed_crime_application_post_submission_evidence_upload_path(crime_application_id: @crime_application.id), class: 'govuk-button--secondary' %>
-      <%# TODO: ONLY SHOW FOR COMPLETED/REVIEWED APPLICATIONS (add to status on submitted tab) %>
-      <%= button_to create_pse_completed_crime_application_path, method: :put,
-                    class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
-                    data: { module: 'govuk-button' } do; t('.action.upload_pse'); end %>
+    </div>
+
+    <div class="govuk-button-group govuk-!-margin-top-8 app-no-print">
+      <% if @crime_application.initial? && @crime_application.assessed? %> 
+        <%= button_to create_pse_completed_crime_application_path, method: :put,
+                      class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
+                      data: { module: 'govuk-button' } do; t('.action.upload_pse'); end %>
+      <% end %>
     </div>
   </div>
 </div>

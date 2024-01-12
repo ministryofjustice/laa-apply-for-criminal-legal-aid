@@ -31,9 +31,11 @@ module Datastore
     # rubocop:enable Metrics/MethodLength
 
     def application_payload
-      SubmissionSerializer::Application.new(
-        crime_application
-      ).generate.as_json
+      serializer_klass.new(crime_application).generate.as_json
+    end
+
+    def serializer_klass
+      SubmissionSerializer.const_get(Types::ApplicationType[application_type].camelize)
     end
   end
 end

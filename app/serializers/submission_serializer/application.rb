@@ -10,28 +10,6 @@ module SubmissionSerializer
       to_builder.attributes!
     end
 
-    def sections
-      if crime_application.application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
-        [
-          Sections::ApplicationDetails.new(crime_application),
-          Sections::ProviderDetails.new(crime_application),
-          Sections::ClientDetails.new(crime_application),
-          Sections::PostSubmissionEvidence.new(crime_application),
-        ].select(&:generate?)
-      else
-        [
-          Sections::ApplicationDetails.new(crime_application),
-          Sections::ProviderDetails.new(crime_application),
-          Sections::ClientDetails.new(crime_application),
-          Sections::CaseDetails.new(crime_application),
-          Sections::IojDetails.new(crime_application),
-          Sections::MeansDetails.new(crime_application),
-          Sections::SupportingEvidence.new(crime_application),
-          Sections::PostSubmissionEvidence.new(crime_application),
-        ].select(&:generate?)
-      end
-    end
-
     private
 
     # :nocov:

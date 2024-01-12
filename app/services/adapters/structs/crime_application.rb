@@ -3,6 +3,10 @@ require 'laa_crime_schemas'
 module Adapters
   module Structs
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
+      # TODO: SHIFT TO STRUCT>>>>>
+      attribute :review_status, Types::ReviewApplicationStatus
+      # <<<<<<
+     
       def applicant
         Structs::Applicant.new(client_details.applicant)
       end
@@ -29,6 +33,18 @@ module Adapters
             struct.attributes.merge(submitted_at:)
           )
         end
+      end
+
+      def initial?
+        application_type == Types::ApplicationType['initial']
+      end
+      
+      def post_submission_evidence?
+        application_type == Types::ApplicationType['post_submission_evidence']
+      end
+
+      def assessed?
+        review_status == Types::ReviewApplicationStatus['assessment_completed']
       end
     end
   end

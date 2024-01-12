@@ -6,7 +6,7 @@ class CrimeApplicationPresenter < BasePresenter
   end
 
   def resubmission?
-    parent_id.present?
+    initial? && parent_id.present?
   end
 
   def applicant_dob

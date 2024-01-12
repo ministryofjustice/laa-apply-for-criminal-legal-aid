@@ -170,6 +170,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_095230) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "income_tax_rate_above_threshold"
+    t.string "housing_payment_type"
+    t.string "pays_council_tax"
+    t.integer "council_tax_amount"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 

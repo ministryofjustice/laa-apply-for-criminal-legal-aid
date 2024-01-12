@@ -14,6 +14,10 @@ module Adapters
           )
         end
       end
+
+      def initial?
+        false
+      end
     end
   end
 end

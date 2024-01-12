@@ -1,52 +1,38 @@
 module Datastore
   class ApplicationRehydration
-    attr_reader :crime_application, :parent, :application_type
+    attr_reader :crime_application, :parent
 
-    def initialize(crime_application, parent:, application_type: nil)
+    def initialize(crime_application, parent:)
       @crime_application = crime_application
       @parent = Adapters::JsonApplication.new(parent)
-      @application_type = application_type || ApplicationType::INITIAL.to_s
     end
 
     def call # rubocop:disable Metrics/MethodLength
       return if already_recreated?
 
-      if pse?
-        crime_application.update!(
-          parent_id: parent.id,
-          applicant: applicant,
-          application_type: application_type
-        )
-      else
-        crime_application.update!(
-          # TODO: Update partner rehydration when partner introduced and stored
-          client_has_partner: YesNoAnswer::NO,
-          parent_id: parent.id,
-          date_stamp: date_stamp,
-          ioj_passport: parent.ioj_passport,
-          means_passport: parent.means_passport,
-          applicant: applicant,
-          case: case_with_ioj,
-          outgoings: outgoings,
-          documents: parent.documents,
-          application_type: application_type
-        )
-      end
+      crime_application.update!(
+        # TODO: Update partner rehydration when partner introduced and stored
+        client_has_partner: YesNoAnswer::NO,
+        parent_id: parent.id,
+        date_stamp: date_stamp,
+        ioj_passport: parent.ioj_passport,
+        means_passport: parent.means_passport,
+        dependants: dependants,
+        applicant: applicant,
+        case: case_with_ioj,
+        income: income,
+        outgoings: outgoings,
+        documents: parent.documents,
+      )
     end
 
     private
-
-    def pse?
-      application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
-    end
 
     def already_recreated?
       crime_application.applicant.present?
     end
 
     def split_case?
-      return false if pse?
-
       parent.return_details.reason.inquiry.split_case?
     end
 
@@ -75,23 +61,17 @@ module Datastore
       )
     end
 
+    def dependants
+      parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+    end
+
     # `client_has_dependants` is not part of Schema, requires calculation
     def income
       return if parent.income.blank?
 
       Income.new(
-        parent.income.serializable_hash.merge(
-          'client_has_dependants' => client_has_dependants
-        )
+        parent.income.serializable_hash
       )
-    end
-
-    def dependants
-      parent.means_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
-    end
-
-    def client_has_dependants
-      parent.means_details&.dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     def outgoings
