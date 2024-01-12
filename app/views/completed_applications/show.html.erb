@@ -38,7 +38,7 @@
 
     <div class="govuk-button-group govuk-!-margin-top-8 app-no-print">
       <% if @crime_application.initial? && @crime_application.assessed? %> 
-        <%= button_to create_pse_completed_crime_application_path, method: :put,
+        <%= button_to create_post_submission_evidence_completed_crime_application_path, method: :put,
                       class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',
                       data: { module: 'govuk-button' } do; t('.action.upload_pse'); end %>
       <% end %>

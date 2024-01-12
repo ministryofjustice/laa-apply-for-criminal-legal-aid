@@ -37,5 +37,7 @@ module Datastore
     def serializer_klass
       SubmissionSerializer.const_get(Types::ApplicationType[application_type].camelize)
     end
+
+    delegate :application_type, to: :crime_application
   end
 end

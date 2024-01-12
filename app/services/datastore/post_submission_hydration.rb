@@ -8,8 +8,8 @@ module Datastore
     end
 
     def call
-      raise ApplicationNotInitial unless crime_application.initial?
-      raise ApplicationNotAssessed unless unless crime_application.assessed?
+      raise ApplicationNotInitial unless parent.initial?
+      raise ApplicationNotAssessed unless parent.assessed?
 
       return if already_recreated?
 

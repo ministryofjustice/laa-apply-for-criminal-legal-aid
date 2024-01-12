@@ -23,17 +23,19 @@ class CompletedApplicationsController < DashboardController
 
     # Redirect to the check your answers (review) page
     # of the newly created application
-    redirect_to edit_steps_submission_review_path(crime_application)
+    redirect_to edit_steps_submission_review_path(child_application)
   end
 
   def create_post_submission_evidence
-    Datastore::PostSubmissionHyrdation.new(
+    Datastore::PostSubmissionHydration.new(
       child_application, parent: current_crime_application
     ).call
 
     # Redirect to the check your answers (review) page
     # of the newly created application
-    redirect_to edit_steps_post_submission_evidence_evidence_upload_path(crime_application)
+    redirect_to edit_steps_post_submission_evidence_evidence_upload_path(
+      child_application
+    )
   end
 
   private
