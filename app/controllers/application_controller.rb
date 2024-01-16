@@ -9,7 +9,10 @@ class ApplicationController < ActionController::Base
   add_flash_types :success
 
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.find_by(id: application_id)
+    @current_crime_application ||= CrimeApplication.find_by(
+      id: application_id,
+      office_code: current_office_code
+    )
   end
   helper_method :current_crime_application
 

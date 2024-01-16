@@ -215,7 +215,8 @@ RSpec.describe 'Dashboard', :authorized do
     before :all do
       # sets up a test record
       app = CrimeApplication.create(
-        date_stamp: DateTime.new(2023, 4, 20, 23, 15) # date is past March daylight saving change
+        date_stamp: DateTime.new(2023, 4, 20, 23, 15), # date is past March daylight saving change
+        office_code: '1A123B'
       )
 
       # needs a proper case type so it shows the interim date stamp
@@ -260,12 +261,20 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'
       end
     end
+
+    context 'when the in progress application\'s office code differs from the one selected' do
+      let(:selected_office_code) { 'AN0THR' }
+
+      it 'redirects to page not found' do
+        expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
   end
 
   describe 'deleting in progress applications' do
     before :all do
       # sets up a few test records
-      app = CrimeApplication.create
+      app = CrimeApplication.create(office_code: '1A123B')
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end
