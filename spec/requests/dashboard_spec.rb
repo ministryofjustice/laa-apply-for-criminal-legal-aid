@@ -261,6 +261,14 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'
       end
     end
+
+    context 'when the in progress application\'s office code differs from the one selected' do
+      let(:selected_office_code) { 'AN0THR' }
+
+      it 'redirects to page not found' do
+        expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
   end
 
   describe 'deleting in progress applications' do
