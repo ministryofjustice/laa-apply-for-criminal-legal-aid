@@ -3,6 +3,8 @@ require 'laa_crime_schemas'
 module Adapters
   module Structs
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
+      include TypeOfApplication
+
       def applicant
         Structs::Applicant.new(client_details.applicant)
       end

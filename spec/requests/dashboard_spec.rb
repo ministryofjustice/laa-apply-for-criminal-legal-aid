@@ -63,6 +63,34 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'button.govuk-button', count: 0, text: 'Update application'
     end
 
+    it 'does not have a button to "Upload post submission evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+    end
+
+    context 'when the application has been reviewed' do
+      let(:application_fixture) do
+        LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
+      end
+
+      it 'has a button to "Upload post submission evidence"' do
+        assert_select 'button.govuk-button', count: 1, text: 'Upload post submission evidence'
+      end
+
+      context 'when PSE feature flag is not enabled' do
+        before do
+          allow(FeatureFlags).to receive(:post_submission_evidence) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+          }
+
+          get completed_crime_application_path(application_fixture_id)
+        end
+
+        it 'does not have a button to "Upload post submission evidence"' do
+          assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+        end
+      end
+    end
+
     # rubocop:disable RSpec/ExampleLength
     it 'has the application details' do
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
@@ -170,6 +198,10 @@ RSpec.describe 'Dashboard', :authorized do
       expect(response).to have_http_status(:success)
 
       assert_select 'h1', 'Application for a criminal legal aid representation order'
+    end
+
+    it 'does not have a button to "Upload post submission evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
     end
 
     # rubocop:disable Layout/LineLength

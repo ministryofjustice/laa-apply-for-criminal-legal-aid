@@ -23,6 +23,11 @@ feature_flags:
     local: true
     staging: true
     production: false
+  post_submission_evidence:
+    local: true
+    staging: true
+    production: false
+
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

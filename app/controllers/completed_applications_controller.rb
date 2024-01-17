@@ -37,7 +37,11 @@ class CompletedApplicationsController < DashboardController
     # of the newly created application
     redirect_to edit_steps_submission_review_path(crime_application)
   end
-  # :nocov:
+
+  def create_pse
+    # TODO: implement functionality
+    redirect_to completed_crime_application_path(crime_application: current_crime_application)
+  end
 
   private
 
