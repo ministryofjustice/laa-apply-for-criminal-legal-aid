@@ -35,6 +35,16 @@ module Summary
             :case_urn, kase.urn,
             change_path: edit_steps_case_urn_path, show: true
           ),
+
+          Components::FreeTextAnswer.new(
+            :has_case_concluded, kase.has_case_concluded,
+            change_path: edit_steps_case_has_case_concluded_path, show: true
+          ),
+
+          Components::DateAnswer.new(
+            :date_case_concluded, kase.date_case_concluded,
+            change_path: edit_steps_case_has_case_concluded_path, show: kase.has_case_concluded.nil?
+          ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
