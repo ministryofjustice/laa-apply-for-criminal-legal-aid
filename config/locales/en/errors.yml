@@ -146,6 +146,18 @@ en:
           attributes:
             urn:
               invalid: Enter a valid URN
+        steps/case/has_case_concluded_form:
+          attributes:
+            has_case_concluded:
+              inclusion: Select yes if your client has the case concluded
+            date_case_concluded:
+              blank: Date case was concluded cannot be blank
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date case was concluded is too far in the past
+              future_not_allowed: Date case was concluded cannot be in the future
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
