@@ -44,6 +44,8 @@ en:
         confirm_result: Are the DWP records correct?
       steps_dwp_confirm_details_form:
         confirm_details: Are these details correct?
+      steps_case_has_case_concluded_form:
+        has_case_concluded: Has the case concluded?
       steps_case_charges_form:
         date_from: Start date %{index}
         date_to: End date %{index} (optional)
@@ -91,7 +93,7 @@ en:
       steps_case_appeal_details_form:
         appeal_lodged_date: For example, 27 3 2007
       steps_case_has_case_concluded_form:
-        has_case_concluded: Did your client has the case concluded?
+        date_case_concluded: For example, 27 3 2007
       steps_case_charges_form:
         offence_name: Add one offence at a time, for example, robbery. You can add more later.
         offence_dates_attributes:
