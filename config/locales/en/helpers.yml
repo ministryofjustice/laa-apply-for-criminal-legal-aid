@@ -13,6 +13,7 @@ en:
       'four_weekly': 'Every 4 weeks'
       'monthly': 'Monthly'
       'anually': 'Yearly'
+      'yearly': 'Yearly'
 
   helpers:
     back_link: Back

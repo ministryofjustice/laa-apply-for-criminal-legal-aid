@@ -14,7 +14,12 @@ module Steps
       end
 
       def additional_permitted_params
-        [(IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } + [['income_payment', []]]).to_h]
+        #[income_payments_attributes: {  }, income_payments: []]
+        #[income_payments_attributes: {  }, types: [], income_payments: []]
+
+        #[(IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } + [['income_payments', []]]).to_h]
+        #[(IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } + [['payment_types', []]]).to_h]
+        [(IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } + [['types', []]] + [['income_payments', []]]).to_h]
       end
     end
   end
