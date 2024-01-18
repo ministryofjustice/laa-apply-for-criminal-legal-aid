@@ -71,8 +71,8 @@ en:
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_income_payments_form:
-        income_payment: Which of these payments does your client get?
-        maintenance:
+        income_payments: Which of these payments does your client get?
+        types_maintenance:
           frequency: *frequency_legend
         private_pension:
           frequency: *frequency_legend
@@ -145,8 +145,8 @@ en:
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_income_income_payments_form:
-        income_payment: Select all that apply.
-        income_payment_options:
+        income_payments: Select all that apply.
+        types_options:
           maintenance: This includes child maintenance.
           private_pension: This includes pensions from an employer.
           board: This includes any non-contractual payments.
@@ -281,7 +281,7 @@ en:
       steps_income_has_savings_form:
         has_savings_options: *YESNO
       steps_income_income_payments_form:
-        income_payment_options:
+        types_options:
           maintenance: Maintenance payments
           private_pension: Private pensions
           state_pension: State Pension

@@ -6,89 +6,27 @@
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
     <%= govuk_error_summary(@form_object) %>
 
-<hr/>
-<%= step_form @form_object do |f| %>
-    <%= f.govuk_check_boxes_fieldset :income_payments, legend: { text: 'Alternative implementation', tag: 'h1', size: 'xl' } do %>
-
-      <%= f.fields_for :income_payments do |d| %>
-        <% if d.object.payment_type == IncomePaymentType::NONE.to_s %>
-          <%= f.govuk_check_box_divider %>
-          <%= d.govuk_check_box :payment_type, IncomePaymentType::NONE.to_s, exclusive: true, checked: false %>
-        <% else %>
-          <%= d.govuk_check_box :payment_type, d.object.payment_type, checked: d.object.amount.present?, link_errors: true, exclusive: true do %>
-            <%= d.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
-            <%= d.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: {size: 's', class: 'govuk-!-font-weight-regular'} %>
-            <% if d.object.payment_type == IncomePaymentType::OTHER.to_s %>
-              <%= d.govuk_text_area :details %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-
-  <%= f.continue_button %>
-<% end %>
-<hr/>
-
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :income_payments, legend: { tag: 'h1', size: 'xl' } do %>
-        <% IncomePaymentType.values.each_with_index do |type, index| %>
-          <span id="<%= type %>"></span>
-          <% if type.none? %>
-            <%= f.govuk_check_box_divider %>
-            <%= f.govuk_check_box :income_payments, type.to_s, exclusive: true %>
-          <% else %>
-            <%= f.govuk_check_box :income_payments, type.to_s, link_errors: index.zero? do %>
-              <%= f.govuk_fieldset legend: nil do %>
+      <%= f.govuk_check_boxes_fieldset :income_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
 
-                <%= f.fields_for type.to_s do |d| %>
-                  <%= d.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
-                  <%= d.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: {size: 's', class: 'govuk-!-font-weight-regular'} %>
-                  <% if type.other? %>
-                    <%= d.govuk_text_area :details %>
-                  <% end %>
-                <% end %>
+        <% @form_object.ordered_payment_types.each do |type| %>
+          <%= f.govuk_check_box :types, type.to_s, checked: f.object.send(type.to_s)&.id.present? do %>
+            <%= f.govuk_fieldset legend: nil do %>
+              <%= f.fields_for type.to_sym, f.object.send(type.to_s) do |g| %>
+                <%= g.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
+                <%= g.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values,
+                  :value,
+                  legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
+                <%= g.govuk_text_area :details if type == IncomePaymentType::OTHER.to_s %>
               <% end %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
 
-      <%= f.continue_button %>
-    <% end %>
-
-
-    <hr/>
-    <h2>Wednesday</h2>
-    <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :income_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
-        <%= f.govuk_check_box :types, 'maintenance', checked: f.object.maintenance&.id.present? do %>
-          <%= f.fields_for :maintenance, f.object.maintenance do |a| %>
-            <%= a.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
-            <%= a.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-          <% end %>
-        <% end %>
-
-        <%= f.govuk_check_box :types, 'from_friends_relatives', checked: f.object.from_friends_relatives&.id.present? do %>
-          <%= f.fields_for :from_friends_relatives, f.object.from_friends_relatives do |b| %>
-            <%= b.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
-            <%= b.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-          <% end %>
-        <% end %>
-
-        <%= f.govuk_check_box :types, 'other', checked: f.object.other&.id.present? do %>
-          <%= f.fields_for :other, f.object.other do |g| %>
-            <%= g.govuk_text_field :amount, width: 'one-third', prefix_text: '£' %>
-            <%= g.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-            <%= g.govuk_text_area :details %>
-          <% end %>
-        <% end %>
-
+        <%= f.govuk_check_box_divider %>
         <%= f.govuk_check_box :types, 'none', exclusive: true %>
 
       <% end %>
-
       <%= f.continue_button %>
     <% end %>
   </div>

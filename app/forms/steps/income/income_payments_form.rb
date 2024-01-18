@@ -1,111 +1,63 @@
 module Steps
   module Income
     class IncomePaymentsForm < Steps::BaseFormObject
-      delegate :income_payments_attributes=, to: :crime_application
+      PAYMENT_TYPES_ORDER = %w[
+        maintenance
+        private_pension
+        state_pension
+        interest_investment
+        student_loan_grant
+        board
+        rent
+        financial_support_with_access
+        from_friends_relatives
+        other
+      ].freeze
 
-      #attribute :income_payment, array: true, default: [] # Useless
-      attribute :income_payments, array: true, default: [] # Useless
-      attribute :types, array: true, default: [] # Useless
-      #attribute :payment_types, array: true, default: []
+      attribute :income_payments, array: true, default: [] # Used by BaseFormObject
+      attribute :types, array: true, default: [] # Used by edit.html to represent selected checkbox value
+
+      attr_reader :new_payments
 
       IncomePaymentType.values.each do |type|
         attribute type.to_s, :string
+
+        define_method :"#{type}" do
+          crime_application.income_payments.find_by(payment_type: type.value.to_s)
+        end
+
+        define_method :"#{type}=" do |value|
+          @new_payments ||= {}
+          @new_payments[type.value.to_s] = IncomePaymentFieldsetForm.build(
+            IncomePayment.new(payment_type: type.to_s, **value),
+            crime_application:
+          )
+        end
       end
-
-
-      attribute :new_payments, array: true, default: []
-
 
       #validates_with IncomePaymentsValidator
 
-      # Generates fieldset forms for all payment_types and then populate with persisted values
+      # Generates fieldset forms for all payment_types.
+      # Ensure loaded values overwrite the default IncomePaymentType values
       def income_payments
-        @income_payments = (crime_application.income_payments.reload + other_payment_types).map do |i|
+        @income_payments = crime_application.income_payments.map do |i|
           IncomePaymentFieldsetForm.build(i, crime_application:)
         end
       end
 
-      def all_payment_types
-        @all_payment_types ||= IncomePaymentType.values
-      end
-
-      def other_payment_types
-        @other_payment_types ||= all_payment_types
-                                   .reject { |i| crime_application.income_payments.map(&:payment_type).include?(i.to_s) }
-                                   .map { |ipt| IncomePayment.new(payment_type: ipt.to_s) }
-      end
-
-
-      def new_fieldset(payment_type:)
-        IncomePaymentFieldsetForm.build(IncomePayment.new(payment_type:), crime_application:)
-      end
-
-      def maintenance
-        crime_application.income_payments.find_by(payment_type: 'maintenance')# || new_fieldset(payment_type: 'maintenance')
-      end
-
-      def maintenance=(val)
-        new_payments << IncomePaymentFieldsetForm.build(IncomePayment.new(payment_type: 'maintenance', **val), crime_application:)
-      end
-
-      def private_pension
-        crime_application.income_payments.find_by(payment_type: 'private_pension') || new_fieldset(payment_type: 'private_pension')
-      end
-
-      def state_pension
-        crime_application.income_payments.find_by(payment_type: 'state_pension') || new_fieldset(payment_type: 'state_pension')
-      end
-
-      def interest_investment
-        crime_application.income_payments.find_by(payment_type: 'interest_investment') || new_fieldset(payment_type: 'interest_investment')
-      end
-
-      def student_loan_grant
-        crime_application.income_payments.find_by(payment_type: 'student_loan_grant') || new_fieldset(payment_type: 'student_loan_grant')
-      end
-
-      def board
-        crime_application.income_payments.find_by(payment_type: 'board') || new_fieldset(payment_type: 'board')
-      end
-
-      def rent
-        crime_application.income_payments.find_by(payment_type: 'rent') || new_fieldset(payment_type: 'rent')
-      end
-
-      def financial_support_with_access
-        crime_application.income_payments.find_by(payment_type: 'financial_support_with_access') || new_fieldset(payment_type: 'financial_support_with_access')
-      end
-
-      def from_friends_relatives
-        crime_application.income_payments.find_by(payment_type: 'from_friends_relatives')# || new_fieldset(payment_type: 'from_friends_relatives')
-      end
-
-      def from_friends_relatives=(val)
-        new_payments << IncomePaymentFieldsetForm.build(IncomePayment.new(payment_type: 'from_friends_relatives', **val), crime_application:)
-      end
-
-      def other
-        crime_application.income_payments.find_by(payment_type: 'other') #|| new_fieldset(payment_type: 'other')
-      end
-
-      def other=(val)
-        new_payments << IncomePaymentFieldsetForm.build(IncomePayment.new(payment_type: 'other', **val), crime_application:)
-      end
-
-
-      def none
-        nil
+      def ordered_payment_types
+        IncomePaymentType.values.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
       private
 
-      # Strips out un-selected payment types prior to saving
       def persist!
         ::CrimeApplication.transaction do
+          # Reset
+          crime_application.income_payments.destroy_all
 
-
-
-          crime_application.income_payments = new_payments.map(&:record)
+          # Rebuild
+          crime_application.income_payments = @new_payments.slice(*types).values.map(&:record)
           crime_application.save!
         end
       end
