@@ -358,7 +358,7 @@ production:
     - 0P319C
     - 0P221W
     - 0R045D
-  # Inactive codes for fifteenth onboarding tranche - 11/01/2024
+    # Inactive codes for fifteenth onboarding tranche - 11/01/2024
     - 1T982J
     - 2N127G
     - 0M777B
@@ -435,3 +435,41 @@ production:
     - 2P665D
     - 2Q497H
     - 2M087B
+    # Inactive codes for sixteenth onboarding tranche - 18/01/2024
+    - 2D421U
+    - 2F621K
+    - 2M032R
+    - 2N863G
+    - 2N916P
+    - 2N922W
+    - 2N923X
+    - 2N924Y
+    - 2N925Z
+    - 2N926A
+    - 2N981K
+    - 2N982L
+    - 2N983M
+    - 2N984N
+    - 2P384Y
+    - 2P386A
+    - 2P387B
+    - 2P526C
+    - 2P527D
+    - 2P736F
+    - 2P207F
+    - 1Z501H
+    - 2M060X
+    - 2P580L
+    - 2Q259Z
+    - 2N200L
+    - 2M096L
+    - 0J891P
+    - 0F953W
+    - 0A249W
+    - 2P178Z
+    - 2P510K
+    - 2P511L
+    - 2Q380F
+    - 2Q381G
+    - 2M102T
+    - 2M178A
