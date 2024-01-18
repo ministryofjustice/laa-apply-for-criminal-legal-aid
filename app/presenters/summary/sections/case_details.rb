@@ -43,7 +43,8 @@ module Summary
 
           Components::DateAnswer.new(
             :date_case_concluded, kase.date_case_concluded,
-            change_path: edit_steps_case_has_case_concluded_path, show: kase.has_case_concluded.nil?
+            show: kase.has_case_concluded? && !kase.date_case_concluded.nil? ,
+            change_path: edit_steps_case_has_case_concluded_path,
           ),
         ].select(&:show?)
       end
