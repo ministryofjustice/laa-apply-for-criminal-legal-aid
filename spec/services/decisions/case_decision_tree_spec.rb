@@ -24,6 +24,15 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
+    it 'redirects to the `has_case_concluded` page' do
+      is_expected.to have_destination(:has_case_concluded, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `has_case_concluded`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :has_case_concluded }
+
     context 'and there are no charges yet' do
       let(:charges_double) { double(any?: false, create!: 'charge') }
 
