@@ -32,6 +32,9 @@ module Adapters
           )
         end
       end
+
+      alias additional_information notes
+      alias usn reference
     end
   end
 end

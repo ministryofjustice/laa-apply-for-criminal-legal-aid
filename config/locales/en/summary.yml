@@ -261,5 +261,8 @@ en:
 
       # BEGIN supporting evidence section
       supporting_evidence:
-        question: "File name"
+        question: File name
+      additional_information:
+        question: Additional information 
+        absence_answer: *absence_none
       # END supporting evidence section

@@ -69,6 +69,9 @@ en:
         housing_payment_type: Which of these payments does your client pay where they usually live?
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
+      steps_evidence_additional_information_form:
+        add_additional_information: Do you need to add any more information to this application? 
+        
 
     hint:
       steps_client_details_form:
@@ -273,6 +276,9 @@ en:
         how_manage: How does your client manage if their outgoings are more than their income?
       steps_evidence_upload_form:
         upload_files: Upload files
+      steps_evidence_additional_information_form:
+        add_additional_information_options: *YESNO
+        additional_information: Enter details that will help us process this application 
       steps_submission_declaration_form:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name

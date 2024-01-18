@@ -13,10 +13,21 @@ module TypeOfApplication
   end
 
   def initial?
-    ApplicationType.new(application_type) == ApplicationType::INITIAL
+    application_type?(:initial)
   end
 
   def returned?
     returned_at.present?
+  end
+
+  def post_submission_evidence?
+    application_type?(:post_submission_evidence)
+  end
+  alias pse? post_submission_evidence?
+
+  private
+
+  def application_type?(other_type)
+    ApplicationType.new(application_type) == ApplicationType.new(other_type)
   end
 end

@@ -10,6 +10,8 @@ RSpec.describe Decisions::EvidenceDecisionTree do
     )
   end
 
+  let(:form_object) { double('FormObject') }
+
   before do
     allow(
       form_object
@@ -19,19 +21,41 @@ RSpec.describe Decisions::EvidenceDecisionTree do
   it_behaves_like 'a decision tree'
 
   context 'when the step is `upload`' do
-    let(:form_object) { double('FormObject') }
     let(:step_name) { :upload_finished }
 
-    context 'has correct next step' do
-      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+    it 'directs to additional information' do
+      expect(subject).to have_destination(:additional_information, :edit, id: crime_application)
+    end
+
+    context 'when additional information feature flag is disabled' do
+      before do
+        allow(FeatureFlags).to receive(:additional_information) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'directs to submission review' do
+        expect(subject).to have_destination(
+          '/steps/submission/review', :edit, id: crime_application
+        )
+      end
+    end
+  end
+
+  context 'when the step is `additional_information`' do
+    let(:step_name) { :additional_information }
+
+    it 'directs to `submission/review`' do
+      expect(subject).to have_destination(
+        '/steps/submission/review', :edit, id: crime_application
+      )
     end
   end
 
   context 'when the step is `delete_document`' do
-    let(:form_object) { double('FormObject') }
     let(:step_name) { :delete_document }
 
-    context 'redirects to the upload page' do
+    context 'directs to the upload page' do
       it { is_expected.to have_destination(:upload, :edit, id: crime_application) }
     end
   end

@@ -76,6 +76,22 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'button.govuk-button', count: 1, text: 'Upload post submission evidence'
       end
 
+      it 'creates a new PSE application and shows the task list' do
+        expect do
+          post create_pse_completed_crime_application_path(application_fixture_id)
+        end.to change(CrimeApplication.where(parent_id: application_fixture_id), :count).from(0).to(1)
+
+        expect(response).to have_http_status(:redirect)
+        follow_redirect!
+
+        assert_select 'h1', 'Submit supporting evidence for a previously submitted application'
+        assert_select 'p', 'You have completed 0 of 4 sections.'
+
+        assert_select 'h3:contains("Reference number") + p', '6000001'
+        assert_select 'h3:contains("First name") + p', 'Kit'
+        assert_select 'h3:contains("Last name") + p', 'Pound'
+      end
+
       context 'when PSE feature flag is not enabled' do
         before do
           allow(FeatureFlags).to receive(:post_submission_evidence) {

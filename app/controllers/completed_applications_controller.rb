@@ -16,9 +16,6 @@ class CompletedApplicationsController < DashboardController
     )
   end
 
-  # TODO: this is WIP, can be tested by manually setting
-  # an application in the `returned` status.
-  # :nocov:
   def recreate
     usn = current_crime_application.reference
 
@@ -39,8 +36,13 @@ class CompletedApplicationsController < DashboardController
   end
 
   def create_pse
-    # TODO: implement functionality
-    redirect_to completed_crime_application_path(crime_application: current_crime_application)
+    pse_application = PostSubmissionEvidence::FindOrCreate.new(
+      initial_application: Adapters::JsonApplication.new(current_crime_application)
+    ).call
+
+    # Redirect to the check your answers (review) page
+    # of the newly created application
+    redirect_to edit_crime_application_path(pse_application)
   end
 
   private
