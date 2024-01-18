@@ -11,11 +11,17 @@ describe Summary::Sections::CaseDetails do
     )
   end
 
+  let(:has_case_concluded) { 'no' }
+  let(:date_case_concluded) { nil }
+
   let(:kase) do
     instance_double(
       Case,
       urn: 'xyz',
       case_type: 'foobar',
+      has_case_concluded: has_case_concluded,
+      date_case_concluded: date_case_concluded,
+      has_case_concluded?: false,
       appeal_maat_id: appeal_maat_id,
       appeal_lodged_date: appeal_lodged_date,
       appeal_with_changes_details: appeal_with_changes_details,
@@ -49,20 +55,61 @@ describe Summary::Sections::CaseDetails do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    it 'has the correct rows' do
-      expect(answers.count).to eq(2)
+    context "when has_case_concluded=='no'" do
+      it 'has the correct rows' do
+        expect(answers.count).to eq(3)
 
-      answer = answers[0]
-      expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answer.question).to eq(:case_type)
-      expect(answer.change_path).to match('applications/12345/steps/client/case_type')
-      expect(answer.value).to eq('foobar')
+        answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:case_type)
+        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
+        expect(answer.value).to eq('foobar')
 
-      answer = answers[1]
-      expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answer.question).to eq(:case_urn)
-      expect(answer.change_path).to match('applications/12345/steps/case/urn')
-      expect(answer.value).to eq('xyz')
+        answer = answers[1]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:case_urn)
+        expect(answer.change_path).to match('applications/12345/steps/case/urn')
+        expect(answer.value).to eq('xyz')
+
+        answer = answers[2]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:has_case_concluded)
+        expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
+        expect(answer.value).to eq('no')
+      end
+    end
+
+    context "when has_case_concluded=='yes'" do
+      let(:has_case_concluded) { 'no' }
+      let(:date_case_concluded) { Time.zone.today }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(4)
+
+        answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:case_type)
+        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
+        expect(answer.value).to eq('foobar')
+
+        answer = answers[1]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:case_urn)
+        expect(answer.change_path).to match('applications/12345/steps/case/urn')
+        expect(answer.value).to eq('xyz')
+
+        answer = answers[2]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:has_case_concluded)
+        expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
+        expect(answer.value).to eq('no')
+
+        answer = answers[3]
+        expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+        expect(answer.question).to eq(:date_case_concluded)
+        expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
+        expect(answer.value).to eq(date_case_concluded)
+      end
     end
 
     context 'for appeal to crown court' do
@@ -72,7 +119,7 @@ describe Summary::Sections::CaseDetails do
         let(:appeal_maat_id) { '123' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
           answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
@@ -92,7 +139,7 @@ describe Summary::Sections::CaseDetails do
         let(:appeal_maat_id) { '' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
           answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -112,7 +159,7 @@ describe Summary::Sections::CaseDetails do
         let(:appeal_maat_id) { '123' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(5)
+          expect(answers.count).to eq(6)
 
           answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
@@ -131,6 +178,18 @@ describe Summary::Sections::CaseDetails do
           expect(answer.question).to eq(:previous_maat_id)
           expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
           expect(answer.value).to eq('123')
+
+          answer = answers[4]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:case_urn)
+          expect(answer.change_path).to match('applications/12345/steps/case/urn')
+          expect(answer.value).to eq('xyz')
+
+          answer = answers[5]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:has_case_concluded)
+          expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
+          expect(answer.value).to eq('no')
         end
       end
 
@@ -138,7 +197,7 @@ describe Summary::Sections::CaseDetails do
         let(:appeal_maat_id) { '' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(5)
+          expect(answers.count).to eq(6)
 
           answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
