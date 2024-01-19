@@ -12,7 +12,7 @@ module Steps
       validates :date_case_concluded,
                 multiparam_date: true,
                 presence: true,
-                if: -> { has_case_concluded? }
+                if: -> { case_concluded? }
 
       def choices
         YesNoAnswer.values
@@ -28,11 +28,11 @@ module Steps
 
       def attributes_to_reset
         {
-          'date_case_concluded' => (date_case_concluded if has_case_concluded?)
+          'date_case_concluded' => (date_case_concluded if case_concluded?)
         }
       end
 
-      def has_case_concluded?
+      def case_concluded?
         has_case_concluded&.yes?
       end
     end

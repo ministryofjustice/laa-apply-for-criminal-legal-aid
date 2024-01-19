@@ -25,7 +25,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :urn }
 
     it 'redirects to the `has_case_concluded` page' do
-      is_expected.to have_destination(:has_case_concluded, :edit, id: crime_application)
+      expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
     end
   end
 

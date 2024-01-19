@@ -72,7 +72,7 @@ describe Summary::Sections::CaseDetails do
         expect(answer.value).to eq('xyz')
 
         answer = answers[2]
-        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:has_case_concluded)
         expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
         expect(answer.value).to eq('no')
@@ -80,7 +80,7 @@ describe Summary::Sections::CaseDetails do
     end
 
     context "when has_case_concluded=='yes'" do
-      let(:has_case_concluded) { 'no' }
+      let(:has_case_concluded) { 'yes' }
       let(:date_case_concluded) { Time.zone.today }
 
       it 'has the correct rows' do
@@ -99,10 +99,10 @@ describe Summary::Sections::CaseDetails do
         expect(answer.value).to eq('xyz')
 
         answer = answers[2]
-        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:has_case_concluded)
         expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
-        expect(answer.value).to eq('no')
+        expect(answer.value).to eq('yes')
 
         answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
@@ -186,7 +186,7 @@ describe Summary::Sections::CaseDetails do
           expect(answer.value).to eq('xyz')
 
           answer = answers[5]
-          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:has_case_concluded)
           expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
           expect(answer.value).to eq('no')

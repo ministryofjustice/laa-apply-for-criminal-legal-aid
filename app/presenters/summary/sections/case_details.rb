@@ -36,14 +36,14 @@ module Summary
             change_path: edit_steps_case_urn_path, show: true
           ),
 
-          Components::FreeTextAnswer.new(
+          Components::ValueAnswer.new(
             :has_case_concluded, kase.has_case_concluded,
-            change_path: edit_steps_case_has_case_concluded_path, show: true
+            change_path: edit_steps_case_has_case_concluded_path
           ),
 
           Components::DateAnswer.new(
             :date_case_concluded, kase.date_case_concluded,
-            show: kase.has_case_concluded? && !kase.date_case_concluded.nil? ,
+            show: case_concluded?,
             change_path: edit_steps_case_has_case_concluded_path,
           ),
         ].select(&:show?)
@@ -54,6 +54,10 @@ module Summary
 
       def kase
         @kase ||= crime_application.case
+      end
+
+      def case_concluded?
+        kase.has_case_concluded == 'yes' && !kase.date_case_concluded.nil?
       end
     end
   end
