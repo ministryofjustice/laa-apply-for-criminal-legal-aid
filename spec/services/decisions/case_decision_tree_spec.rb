@@ -24,8 +24,27 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
-    it 'redirects to the `has_case_concluded` page' do
-      expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
+    before do
+      allow(FeatureFlags).to receive(:case_concluded_page) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_case_concluded_page_enabled)
+      }
+    end
+
+    context 'feature flag `case_concluded_page` is enabled' do
+      let(:feature_flag_case_concluded_page_enabled) { true }
+
+      it 'redirects to the `has_case_concluded` page' do
+        expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
+      end
+    end
+
+    context 'feature flag `case_concluded_page` is disabled' do
+      let(:feature_flag_case_concluded_page_enabled) { false }
+      let(:charges_double) { double(any?: false, create!: 'charge') }
+
+      it 'redirects to the edit `charges` page' do
+        expect(subject).to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge')
+      end
     end
   end
 

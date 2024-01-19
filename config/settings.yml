@@ -27,6 +27,10 @@ feature_flags:
     local: true
     staging: true
     production: false
+  case_concluded_page:
+    local: true
+    staging: true
+    production: false
 
 
 # NOTE: consider if the setting you are adding here
