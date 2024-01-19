@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DateStamper do
-  subject { described_class.new(crime_app, case_type) }
+  subject { described_class.new(crime_app, case_type:) }
 
   let(:crime_app) do
     instance_double(

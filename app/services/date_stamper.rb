@@ -1,5 +1,5 @@
 class DateStamper
-  def initialize(crime_app, case_type)
+  def initialize(crime_app, case_type: 'none')
     @crime_app = crime_app
     @case_type = case_type
   end

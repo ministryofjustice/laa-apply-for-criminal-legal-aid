@@ -56,7 +56,7 @@ module Decisions
     end
 
     def after_client_details
-      if DateStamper.new(form_object.crime_application, 'no_case_type').call
+      if DateStamper.new(form_object.crime_application).call
         edit(:date_stamp)
       elsif form_object.crime_application.not_means_tested?
         start_address_journey(HomeAddress)
@@ -72,7 +72,7 @@ module Decisions
     end
 
     def date_stamp_if_needed
-      if DateStamper.new(form_object.crime_application, form_object.case.case_type).call
+      if DateStamper.new(form_object.crime_application, case_type: form_object.case.case_type).call
         edit(:date_stamp)
       else
         start_address_journey(HomeAddress)
