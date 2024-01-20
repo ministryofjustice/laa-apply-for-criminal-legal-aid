@@ -13,16 +13,18 @@ module Summary
               :reference, crime_application.reference.to_s,
             ),
 
-            Components::ValueAnswer.new(
-              :means_tested, crime_application.is_means_tested,
-              change_path: edit_steps_client_is_means_tested_path
-            ),
-
             Components::DateAnswer.new(
               :date_stamp, crime_application.date_stamp,
               i18n_opts: { format: :datetime },
             ),
           ]
+
+        if FeatureFlags.means_journey.enabled? && crime_application.is_means_tested
+          relevant_answers.insert(1, Components::ValueAnswer.new(
+                                       :means_tested, crime_application.is_means_tested,
+                                       change_path: edit_steps_client_is_means_tested_path
+                                     ))
+        end
 
         unless crime_application.in_progress?
           completed_answers =
