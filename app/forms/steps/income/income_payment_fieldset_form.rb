@@ -7,38 +7,26 @@ module Steps
       attribute :frequency, :string
       attribute :details, :string
 
-      validates_presence_of :payment_type
-      validates_presence_of :amount
-      validates_presence_of :frequency
+      validates :amount, presence: true, numericality: {
+        greater_than_or_equal_to: 0,
+        only_integer: true
+      }
 
-      def self.build(income_payment, crime_application: nil)
-        #puts "===>RECORD: #{income_payment.inspect}"
-        # if (matches = income_payment.payment_type.to_s.match(%r{^\["\w*"\]$}))
-        #   income_payment.payment_type = matches[1]
-        #   puts "===> REGEX MATCHED! `#{income_payment.payment_type}`"
-        # end
+      validates :payment_types, presence: true, inclusion: { in: :payment_types }
+      validates :frequency, presence: true, inclusion: { in: :frequencies }
 
-        super(income_payment, crime_application:)
+      def payment_types
+        IncomePaymentType.values.map(&:to_s) - ['none']
       end
 
-      # def payment_type=(val)
-      #   #val = ((JSON.parse(val) rescue nil) || val)
-      #   puts "VAL WAS: #{val}"
-      #   self['payment_type'] = val
-      # end
-
-      # def types=(ary)
-      #   super(ary.compact_blank) if ary
-      # end
-
-      # def validate_types
-      #   errors.add(:types, :invalid) if (types - IncomePaymentType.values.map(&:to_s)).any?
-      # end
+      def frequencies
+        PaymentFrequencyType.values.map(&:to_s)
+      end
 
       # Needed for `#fields_for` to render the uuids as hidden fields
-      # def persisted?
-      #   id.present?
-      # end
+      def persisted?
+        id.present?
+      end
     end
   end
 end

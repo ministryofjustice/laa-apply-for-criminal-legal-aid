@@ -4,9 +4,16 @@ class IncomePaymentsValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    record.income_payments.each.with_index do |income_payment, index|
-      next if income_payment.payment_type.blank?
-      next if income_payment.payment_type.to_s == 'none'
+    #record.income_payments.each.with_index do |income_payment, index|
+    #   binding.break
+    #   next if income_payment.payment_type.to_s == 'none'
+
+    #   add_indexed_errors(income_payment, index) unless income_payment.valid?
+    # end
+
+    record.types.each_with_index do |type, index|
+      next if type == 'none'
+      income_payment = record.public_send(type)
 
       add_indexed_errors(income_payment, index) unless income_payment.valid?
     end
@@ -16,7 +23,7 @@ class IncomePaymentsValidator < ActiveModel::Validator
 
   def add_indexed_errors(income_payment, index)
     income_payment.errors.each do |error|
-      attr_name = indexed_attribute(index, error.attribute)
+      attr_name = indexed_attribute(index, income_payment, error.attribute)
 
       record.errors.add(
         attr_name,
@@ -31,8 +38,8 @@ class IncomePaymentsValidator < ActiveModel::Validator
     end
   end
 
-  def indexed_attribute(index, attr)
-    "income_payments-attributes[#{index}].#{attr}"
+  def indexed_attribute(_index, income_payment, attr)
+    "#{income_payment.payment_type.dasherize}-#{attr}"
   end
 
   # `activemodel.errors.models.steps/income/income_payment_fieldset_form.summary.x.y`
