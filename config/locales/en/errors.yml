@@ -320,10 +320,11 @@ en:
         steps/income/income_payment_fieldset_form:
           summary:
             amount:
-              blank: Enter an amount
+              blank: "Enter an amount for %{payment_type}"
+              greater_than: "Amount for %{payment_type} must be more than 0"
             frequency:
-              blank: Select a frequency
-              inclusion: Frquency must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly
+              blank: "Select a frequency for %{payment_type}"
+              inclusion: "Frquency for %{payment_type} must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
               blank: Enter an amount

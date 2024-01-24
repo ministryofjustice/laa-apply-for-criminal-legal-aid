@@ -21,7 +21,7 @@ class IncomePaymentsValidator < ActiveModel::Validator
       record.errors.add(
         attr_name,
         error.type,
-        message: error_message(income_payment, error), ordinal: (index + 1).ordinalize_fully
+        message: error_message(income_payment, error)
       )
 
       # We define the attribute getter as it doesn't really exist
@@ -37,9 +37,15 @@ class IncomePaymentsValidator < ActiveModel::Validator
 
   # `activemodel.errors.models.steps/income/income_payment_fieldset_form.summary.x.y`
   def error_message(obj, error)
+    payment_type = I18n.t(
+      obj.payment_type,
+      scope: [:helpers, :label, :steps_income_income_payments_form, :types_options]
+    )
+
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
-      scope: [:activemodel, :errors, :models]
+      scope: [:activemodel, :errors, :models],
+      payment_type: payment_type
     )
   end
 end

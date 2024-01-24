@@ -1,8 +1,7 @@
 module Steps
   module Income
     class IncomePaymentsForm < Steps::BaseFormObject
-      # Ensure ordering of checkboxes (presentation) remains separate to the type definition
-      # NOTE: remember to add any new types to this list otherwise it will not show on page edit
+      # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
         maintenance
         private_pension
@@ -28,42 +27,30 @@ module Steps
         # Used by govuk form component to retrieve values to populate the fields_for
         # for each type (on page load)
         define_method :"#{type}" do
-          income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s)
-
-          unless income_payment
-            attrs = types.include?(type.to_s) ? @new_payments[type.value.to_s].attributes : {}
-            puts "TYPE: #{type.to_s} - #{attrs}"
-            income_payment = IncomePayment.new(payment_type: type.to_s, **attrs)
-          end
-
-          IncomePaymentFieldsetForm.build(income_payment, crime_application:).tap do |record|
+          IncomePaymentFieldsetForm.build(find_or_create_income_payment(type), crime_application:).tap do |record|
             record.valid? if types.include?(type.to_s)
           end
         end
 
         # Used to convert attributes for a given type into a corresponding fieldset
-        # (on form submit)
+        # (on form submit). 'type' is the checkbox value
         define_method :"#{type}=" do |value|
           @new_payments ||= {}
-          obj = IncomePaymentFieldsetForm.build(
+          record = IncomePaymentFieldsetForm.build(
             IncomePayment.new(payment_type: type.to_s, **value),
             crime_application:
           )
-          puts "TYPES: #{types}"
-          if types.include?(type.to_s) && obj.valid?
-            obj.save
-            puts "TYPE=: #{type.value}- valid? #{obj.valid?} - amount: #{obj.amount}"
+
+          # Save on demand, not at end to allow partial updates of the form
+          if types.include?(type.to_s)
+            record.save
           else
-            obj.delete
+            record.delete
           end
 
-          @new_payments[type.value.to_s] = obj
-        end
-      end
-
-      def income_payments
-        @income_payments = crime_application.income_payments.map do |i|
-          IncomePaymentFieldsetForm.build(i, crime_application:)
+          # @new_payments used as a temporary store to allow error messages to
+          # be displayed for invalid models
+          @new_payments[type.value.to_s] = record
         end
       end
 
@@ -77,23 +64,21 @@ module Steps
 
       private
 
-      def valid_income_payments
-        return [] unless @new_payments
+      # Precedence: submitted values, stored values, empty IncomePayment
+      def find_or_create_income_payment(type)
+        if types.include?(type.to_s)
+          attrs = @new_payments[type.value.to_s].attributes
+          return IncomePayment.new(payment_type: type.to_s, **attrs)
+        end
 
-        @new_payments.slice(*types).values.map(&:record).select(&:valid?)
+        income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s)
+        return income_payment if income_payment
+
+        IncomePayment.new(payment_type: type.to_s)
       end
 
-      def persist!
-        # puts "DOING PERSISt!!!"
-        # ::CrimeApplication.transaction do
-        #   # Reset
-        #   crime_application.income_payments.destroy_all
-
-        #   # Rebuild
-        #   crime_application.income_payments = valid_income_payments
-        #   crime_application.save!
-        # end
-      end
+      # Individual income_payments_fieldset_forms are in charge of saving themselves
+      def persist!; end
     end
   end
 end

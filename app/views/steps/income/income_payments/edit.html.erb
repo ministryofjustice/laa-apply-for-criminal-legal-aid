@@ -13,7 +13,6 @@
           <%= f.govuk_check_box :types, type.to_s, checked: f.object.checked?(type), link_errors: true do %>
             <%= f.fields_for type.to_sym, f.object.public_send(type.to_s) do |g| %>
               <%= g.govuk_fieldset legend: nil, id: "income_payment_#{type}" do %>
-                <pre><%= g.object.class %>: <%= g.object.errors.inspect %></pre>
                 <%= g.govuk_number_field :amount,
                                         autocomplete: 'off',
                                         inputmode: 'numeric',

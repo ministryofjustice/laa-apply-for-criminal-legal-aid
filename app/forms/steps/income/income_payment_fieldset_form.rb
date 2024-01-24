@@ -8,7 +8,7 @@ module Steps
       attribute :details, :string
 
       validates :amount, presence: true, numericality: {
-        greater_than_or_equal_to: 0,
+        greater_than: 0,
         only_integer: true
       }
 
@@ -29,7 +29,6 @@ module Steps
       end
 
       def persist!
-        puts "SAVING INCOME!"
         unless persisted?
           delete
           record.crime_application = crime_application
