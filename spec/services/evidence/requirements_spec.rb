@@ -18,18 +18,28 @@ RSpec.describe Evidence::Requirements do
     before do
       # `benefits?` method is tested separated
       allow(subject).to receive(:benefits?).and_return(benefits)
+      allow(crime_application).to receive(:pse?).and_return(pse?)
     end
 
     context 'there are some evidence requirements' do
+      let(:pse?) { false }
       let(:benefits) { true }
 
       it { expect(subject.any?).to be(true) }
     end
 
     context 'there are no evidence requirements' do
+      let(:pse?) { false }
       let(:benefits) { false }
 
       it { expect(subject.any?).to be(false) }
+    end
+
+    context 'when the application is PSE' do
+      let(:pse?) { true }
+      let(:benefits) { false }
+
+      it { expect(subject.any?).to be(true) }
     end
   end
 

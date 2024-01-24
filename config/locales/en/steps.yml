@@ -305,6 +305,9 @@ en:
         unavailable: ClamAV Scan Service unavailable
         not_installed: "ClamAV Scan Error - clamdscan package must be installed and executable. Exception: %{message}"
         timeout: "ClamAV file scan breached %{timeout} second, scan abandoned"
+      additional_information:
+        edit:
+          page_title: Additional information 
 
     submission:
       review:

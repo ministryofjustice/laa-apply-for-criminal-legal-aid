@@ -168,7 +168,7 @@ Rails.application.routes.draw do
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
       end
 
-      namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+      namespace :evidence do
         edit_step :upload
       end
 

@@ -8,7 +8,7 @@ RSpec.describe ApplicationType do
   describe '.values' do
     it 'returns all possible values' do
       expect(described_class.values.map(&:to_s)).to eq(
-        %w[initial]
+        %w[initial post_submission_evidence]
       )
     end
   end

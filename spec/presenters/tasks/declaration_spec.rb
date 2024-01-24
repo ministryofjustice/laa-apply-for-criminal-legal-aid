@@ -24,24 +24,48 @@ RSpec.describe Tasks::Declaration do
   end
 
   describe '#can_start?' do
-    # We assume the completeness of the Ioj here, as
-    # their statuses are tested in its own spec, no need to repeat
-    before do
-      allow(
-        subject
-      ).to receive(:fulfilled?).with(Tasks::Ioj).and_return(ioj_fulfilled)
+    context 'when an initial application' do
+      # We assume the completeness of the Ioj here, as
+      # their statuses are tested in its own spec, no need to repeat
+      before do
+        allow(
+          subject
+        ).to receive(:fulfilled?).with(Tasks::Ioj).and_return(ioj_fulfilled)
+      end
+
+      context 'when the Ioj task has been completed' do
+        let(:ioj_fulfilled) { true }
+
+        it { expect(subject.can_start?).to be(true) }
+      end
+
+      context 'when the Ioj task has not been completed yet' do
+        let(:ioj_fulfilled) { false }
+
+        it { expect(subject.can_start?).to be(false) }
+      end
     end
 
-    context 'when the Ioj task has been completed' do
-      let(:ioj_fulfilled) { true }
+    context 'when a post submission evidence application' do
+      before do
+        crime_application.application_type = ApplicationType::POST_SUBMISSION_EVIDENCE
 
-      it { expect(subject.can_start?).to be(true) }
-    end
+        allow(
+          subject
+        ).to receive(:fulfilled?).with(Tasks::EvidenceUpload).and_return(evidence_uploaded?)
+      end
 
-    context 'when the Ioj task has not been completed yet' do
-      let(:ioj_fulfilled) { false }
+      context 'when supporting evidence has been uploaded' do
+        let(:evidence_uploaded?) { true }
 
-      it { expect(subject.can_start?).to be(false) }
+        it { expect(subject.can_start?).to be(true) }
+      end
+
+      context 'when supporting evidence has not been uploaded' do
+        let(:evidence_uploaded?) { false }
+
+        it { expect(subject.can_start?).to be(false) }
+      end
     end
   end
 
