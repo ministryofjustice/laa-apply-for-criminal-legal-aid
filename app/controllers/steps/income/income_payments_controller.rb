@@ -14,11 +14,11 @@ module Steps
       end
 
       def additional_permitted_params
-        [(
-            IncomePaymentType.values.map { |t| [t.to_s, Steps::Income::IncomePaymentFieldsetForm.attribute_names] } +
-            [['types', []]] +
-            [['income_payments', []]]
-          ).to_h
+        payment_types = IncomePaymentType.values.map(&:to_s)
+        fieldset_attributes = Steps::Income::IncomePaymentFieldsetForm.attribute_names
+
+        [
+          payment_types.product([fieldset_attributes]).to_h.merge('types' => [], 'income_payments' => [])
         ]
       end
     end

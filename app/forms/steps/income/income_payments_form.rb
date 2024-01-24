@@ -78,7 +78,9 @@ module Steps
       end
 
       # Individual income_payments_fieldset_forms are in charge of saving themselves
-      def persist!; end
+      def persist!
+        true
+      end
     end
   end
 end
