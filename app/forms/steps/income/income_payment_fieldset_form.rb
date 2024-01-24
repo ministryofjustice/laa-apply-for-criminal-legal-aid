@@ -7,9 +7,8 @@ module Steps
       attribute :frequency, :string
       attribute :details, :string
 
-      validates :amount, presence: true, numericality: {
-        greater_than: 0,
-        only_integer: true
+      validates :amount_in_pounds, presence: true, numericality: {
+        greater_than: 0
       }
 
       validates :payment_types, presence: true, inclusion: { in: :payment_types }
@@ -21,6 +20,13 @@ module Steps
 
       def frequencies
         PaymentFrequencyType.values.map(&:to_s)
+      end
+
+      def amount_in_pounds
+        return unless amount
+
+        amount_in_pounds = amount.dup / 100.0
+        helpers.number_with_precision(amount_in_pounds, precision: 2)
       end
 
       # Needed for `#fields_for` to render the uuids as hidden fields
@@ -39,6 +45,10 @@ module Steps
 
       def delete
         crime_application.income_payments.find_by(payment_type:)&.delete
+      end
+
+      def helpers
+        ActionController::Base.helpers
       end
     end
   end

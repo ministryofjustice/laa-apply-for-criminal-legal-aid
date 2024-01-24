@@ -37,7 +37,7 @@ module Steps
         define_method :"#{type}=" do |value|
           @new_payments ||= {}
           record = IncomePaymentFieldsetForm.build(
-            IncomePayment.new(payment_type: type.to_s, **value),
+            IncomePayment.new(payment_type: type.to_s, **with_correct_amount(value)),
             crime_application:
           )
 
@@ -75,6 +75,13 @@ module Steps
         return income_payment if income_payment
 
         IncomePayment.new(payment_type: type.to_s)
+      end
+
+      def with_correct_amount(values)
+        return values unless values.key?('amount_in_pounds')
+
+        values['amount'] = (values['amount_in_pounds'].to_f * 100).round
+        values.except!('amount_in_pounds')
       end
 
       # Individual income_payments_fieldset_forms are in charge of saving themselves

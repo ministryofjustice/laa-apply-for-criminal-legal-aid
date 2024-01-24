@@ -323,7 +323,7 @@ en:
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
         steps/income/income_payment_fieldset_form:
           summary:
-            amount:
+            amount_in_pounds:
               blank: "Enter an amount for %{payment_type}"
               greater_than: "Amount for %{payment_type} must be more than 0"
             frequency:
