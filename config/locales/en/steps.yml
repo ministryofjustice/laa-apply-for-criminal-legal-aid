@@ -148,7 +148,7 @@ en:
       has_case_concluded:
         edit:
           page_title: Has the case concluded?
-          date_case_concluded: When did the case conclude?
+          date_case_concluded: Enter when the case concluded
       charges:
         edit:
           page_title: What has your client been charged with?
