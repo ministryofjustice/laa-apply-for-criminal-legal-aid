@@ -45,6 +45,8 @@ RSpec.describe Datastore::ApplicationSubmission do
     kase = Case.create(
       crime_application: app,
       urn: '12345ABC',
+      has_case_concluded: 'yes',
+      date_case_concluded: 1.year.ago,
       case_type: 'either_way',
       has_codefendants: 'yes',
       hearing_court_name: 'Manchester Crown Court',

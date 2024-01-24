@@ -4,12 +4,15 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) { instance_double(CrimeApplication, case: kase) }
+  let(:case_concluded_date) { DateTime.new(2023, 3, 2) }
 
   let(:kase) do
     instance_double(
       Case,
       urn: '12345',
       case_type: case_type,
+      has_case_concluded: 'yes',
+      date_case_concluded: case_concluded_date,
       appeal_maat_id: '123',
       appeal_lodged_date: appeal_lodged_date,
       appeal_with_changes_details: 'appeal changes',
@@ -31,6 +34,8 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       case_details: {
         urn: '12345',
         case_type: case_type,
+        has_case_concluded: 'yes',
+        date_case_concluded: case_concluded_date,
         appeal_maat_id: '123',
         appeal_lodged_date: appeal_lodged_date,
         appeal_with_changes_details: 'appeal changes',
