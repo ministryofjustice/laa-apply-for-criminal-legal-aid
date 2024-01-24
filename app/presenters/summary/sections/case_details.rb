@@ -35,6 +35,17 @@ module Summary
             :case_urn, kase.urn,
             change_path: edit_steps_case_urn_path, show: true
           ),
+
+          Components::ValueAnswer.new(
+            :has_case_concluded, kase.has_case_concluded,
+            change_path: edit_steps_case_has_case_concluded_path
+          ),
+
+          Components::DateAnswer.new(
+            :date_case_concluded, kase.date_case_concluded,
+            show: case_concluded?,
+            change_path: edit_steps_case_has_case_concluded_path,
+          ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
@@ -43,6 +54,10 @@ module Summary
 
       def kase
         @kase ||= crime_application.case
+      end
+
+      def case_concluded?
+        kase.has_case_concluded == 'yes' && !kase.date_case_concluded.nil?
       end
     end
   end

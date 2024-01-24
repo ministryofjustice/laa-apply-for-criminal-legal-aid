@@ -24,6 +24,34 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
+    before do
+      allow(FeatureFlags).to receive(:means_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
+      }
+    end
+
+    context 'feature flag `means_journey` is enabled' do
+      let(:feature_flag_means_journey_enabled) { true }
+
+      it 'redirects to the `has_case_concluded` page' do
+        expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
+      end
+    end
+
+    context 'feature flag `means_journey` is disabled' do
+      let(:feature_flag_means_journey_enabled) { false }
+      let(:charges_double) { double(any?: false, create!: 'charge') }
+
+      it 'redirects to the edit `charges` page' do
+        expect(subject).to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge')
+      end
+    end
+  end
+
+  context 'when the step is `has_case_concluded`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :has_case_concluded }
+
     context 'and there are no charges yet' do
       let(:charges_double) { double(any?: false, create!: 'charge') }
 

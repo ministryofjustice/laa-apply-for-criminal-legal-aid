@@ -48,6 +48,7 @@ RSpec.describe Adapters::Structs::CaseDetails do
       )
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(
         subject.serializable_hash.keys
@@ -58,6 +59,8 @@ RSpec.describe Adapters::Structs::CaseDetails do
           appeal_maat_id
           appeal_lodged_date
           appeal_with_changes_details
+          has_case_concluded
+          date_case_concluded
           charges
           codefendants
           has_codefendants
@@ -68,6 +71,7 @@ RSpec.describe Adapters::Structs::CaseDetails do
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'codefendants relationship' do
       it 'has the expected codefendants from the fixture' do

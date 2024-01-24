@@ -90,6 +90,12 @@ en:
       case_urn:
         question: Unique reference number
         absence_answer: *absence_none
+      has_case_concluded:
+        question: Has the case concluded?
+        answers:
+          <<: *YESNO
+      date_case_concluded:
+        question: When did the case concluded?
       case_type:
         question: Case type
         answers:

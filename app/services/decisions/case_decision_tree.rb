@@ -4,6 +4,8 @@ module Decisions
     def destination
       case step_name
       when :urn
+        FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
+      when :has_case_concluded
         charges_summary_or_edit_new_charge
       when :charges
         edit(:charges_summary)
