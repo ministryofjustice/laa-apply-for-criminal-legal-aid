@@ -95,7 +95,7 @@ en:
         answers:
           <<: *YESNO
       date_case_concluded:
-        question: When did the case concluded?
+        question: Enter when the case concluded
       case_type:
         question: Case type
         answers:
