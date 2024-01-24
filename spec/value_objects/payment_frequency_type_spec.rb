@@ -9,11 +9,11 @@ RSpec.describe PaymentFrequencyType do
     it 'returns all possible values' do
       expect(described_class.values.map(&:to_s)).to eq(
         %w[
-          weekly
-          fortnightly
-          four_weekly
-          monthly
-          yearly
+          week
+          fortnight
+          four_weeks
+          month
+          annual
         ]
       )
     end

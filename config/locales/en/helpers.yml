@@ -8,13 +8,11 @@ en:
       'yes': 'Yes'
       'no': 'No'
     frequency_options: &frequency_options
-      'weekly': 'Every week'
-      'fortnightly': 'Every 2 weeks'
-      'four_weekly': 'Every 4 weeks'
-      'monthly': 'Monthly'
-      'anually': 'Yearly'
-      'yearly': 'Yearly'
-
+      'week': 'Every week'
+      'fortnight': 'Every 2 weeks'
+      'four_weeks': 'Every 4 weeks'
+      'month': 'Monthly'
+      'annual': 'Yearly'
   helpers:
     back_link: Back
     back_to_portal: Back to the LAA Online Portal

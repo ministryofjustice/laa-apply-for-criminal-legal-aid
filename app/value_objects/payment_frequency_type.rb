@@ -1,9 +1,9 @@
 class PaymentFrequencyType < ValueObject
   VALUES = [
-    WEEKLY = new(:weekly),
-    FORTNIGHTLY = new(:fortnightly),
-    FOUR_WEEKLY = new(:four_weekly),
-    MONTHLY = new(:monthly),
-    YEARLY = new(:yearly),
+    WEEKLY = new(:week),
+    FORTNIGHTLY = new(:fortnight),
+    FOUR_WEEKLY = new(:four_weeks),
+    MONTHLY = new(:month),
+    ANNUALLY = new(:annual),
   ].freeze
 end
