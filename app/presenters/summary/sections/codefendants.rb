@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class Codefendants < Sections::BaseSection
-      def name
-        :codefendants
-      end
-
       def show?
         kase.present? && super
       end

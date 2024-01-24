@@ -40,6 +40,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           has_savings
           manage_without_income
           manage_other_details
+          client_has_dependants
         ]
       )
     end

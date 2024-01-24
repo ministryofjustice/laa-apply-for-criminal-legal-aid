@@ -23,6 +23,8 @@ module DeveloperTools
                   flash: { success: 'Application marked as returned' }
     end
 
+    # rubocop:disable Metrics/MethodLength
+
     def bypass_dwp
       find_or_create_applicant
 
@@ -40,7 +42,7 @@ module DeveloperTools
       redirect_to edit_steps_client_benefit_check_result_path(crime_application)
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def under18_bypass
       find_or_create_applicant(
         dob: rand(15..17).years.ago,
@@ -60,11 +62,11 @@ module DeveloperTools
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_contact_details_path(crime_application),
-          edit_steps_case_case_type_path(crime_application),
+          edit_steps_client_case_type_path(crime_application),
         ]
       )
 
-      redirect_to edit_steps_case_case_type_path(crime_application)
+      redirect_to edit_steps_client_case_type_path(crime_application)
     end
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 

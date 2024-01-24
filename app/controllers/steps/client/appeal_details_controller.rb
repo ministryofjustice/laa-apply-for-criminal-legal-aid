@@ -1,6 +1,6 @@
 module Steps
-  module Case
-    class AppealDetailsController < Steps::CaseStepController
+  module Client
+    class AppealDetailsController < Steps::ClientStepController
       def edit
         @form_object = AppealDetailsForm.build(
           current_crime_application

@@ -22,8 +22,12 @@ class CompletedApplicationsController < DashboardController
   def recreate
     usn = current_crime_application.reference
 
-    # There can only be one application in progress with same USN
+    # There can only be one application in progress with same USN across all offices
     crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
+
+    # Ensure that the 'in progress' application is associated with the correct office code.
+    # If this exception is raised, there may be an issue with the data integrity.
+    raise 'In progress in another office.' unless crime_application.office_code == current_office_code
 
     Datastore::ApplicationRehydration.new(
       crime_application, parent: current_crime_application
@@ -33,7 +37,11 @@ class CompletedApplicationsController < DashboardController
     # of the newly created application
     redirect_to edit_steps_submission_review_path(crime_application)
   end
-  # :nocov:
+
+  def create_pse
+    # TODO: implement functionality
+    redirect_to completed_crime_application_path(crime_application: current_crime_application)
+  end
 
   private
 

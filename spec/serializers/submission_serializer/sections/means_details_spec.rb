@@ -36,6 +36,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:outgoings) do
       instance_double(
         Outgoings,
+        housing_payment_type: 'mortgage',
+        income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
         how_manage: 'A description of how they manage'
       )
@@ -44,7 +46,6 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:json_output) do
       {
         means_details: {
-          dependants: [],
           income_details: {
             employment_type: ['not_working'],
             ended_employment_within_three_months: 'yes',
@@ -55,11 +56,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             client_owns_property: 'no',
             has_savings: 'yes',
             manage_without_income: 'other',
-            manage_other_details: 'Another way that they manage'
+            manage_other_details: 'Another way that they manage',
+            dependants: []
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
             outgoings: [],
+            housing_payment_type: 'mortgage',
+            income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
             how_manage: 'A description of how they manage'
           }
@@ -90,6 +94,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:outgoings) do
       instance_double(
         Outgoings,
+        housing_payment_type: nil,
+        income_tax_rate_above_threshold: nil,
         outgoings_more_than_income: nil,
         how_manage: nil
       )
@@ -98,7 +104,6 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     let(:json_output) do
       {
         means_details: {
-          dependants: [],
           income_details: {
             employment_type: ['not_working'],
             ended_employment_within_three_months: nil,
@@ -110,10 +115,13 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
+            dependants: []
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
             outgoings: [],
+            housing_payment_type: nil,
+            income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
             how_manage: nil
           }

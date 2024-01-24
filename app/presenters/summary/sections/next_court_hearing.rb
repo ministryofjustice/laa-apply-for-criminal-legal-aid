@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class NextCourtHearing < Sections::BaseSection
-      def name
-        :next_court_hearing
-      end
-
       def show?
         kase.present? && super
       end

@@ -217,7 +217,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :dependants_finished }
 
-    it { is_expected.to have_destination('/home', :index, id: crime_application) }
+    it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
   end
 
   context 'when the step is `manage_without_income`' do
@@ -225,7 +225,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :manage_without_income }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/home', :index, id: crime_application) }
+      it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
     end
   end
 end

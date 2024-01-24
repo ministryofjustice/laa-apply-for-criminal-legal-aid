@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_24_001845) do
     t.jsonb "provider_details", default: {}, null: false
     t.uuid "parent_id"
     t.string "means_passport", default: [], array: true
+    t.string "is_means_tested"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
@@ -140,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_24_001845) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
+    t.string "payments", default: [], array: true
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -177,6 +179,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_24_001845) do
     t.string "how_manage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "income_tax_rate_above_threshold"
+    t.string "housing_payment_type"
+    t.string "pays_council_tax"
+    t.integer "council_tax_amount"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 

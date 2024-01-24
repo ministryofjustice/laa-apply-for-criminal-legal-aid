@@ -10,11 +10,34 @@ RSpec.describe 'Dashboard', :authorized do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
 
   describe 'start a new application' do
-    it 'creates a new `crime_application` record' do
-      expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+    context 'when means journey feature flag is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:means_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
 
-      expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(/has_partner/)
+      it 'creates a new `crime_application` record' do
+        expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/is_application_means_tested/)
+      end
+    end
+
+    context 'when means journey feature flag is not enabled' do
+      before do
+        allow(FeatureFlags).to receive(:means_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'creates a new `crime_application` record' do
+        expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/has_partner/)
+      end
     end
   end
 
@@ -38,6 +61,34 @@ RSpec.describe 'Dashboard', :authorized do
 
     it 'does not have an update application button' do
       assert_select 'button.govuk-button', count: 0, text: 'Update application'
+    end
+
+    it 'does not have a button to "Upload post submission evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+    end
+
+    context 'when the application has been reviewed' do
+      let(:application_fixture) do
+        LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
+      end
+
+      it 'has a button to "Upload post submission evidence"' do
+        assert_select 'button.govuk-button', count: 1, text: 'Upload post submission evidence'
+      end
+
+      context 'when PSE feature flag is not enabled' do
+        before do
+          allow(FeatureFlags).to receive(:post_submission_evidence) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+          }
+
+          get completed_crime_application_path(application_fixture_id)
+        end
+
+        it 'does not have a button to "Upload post submission evidence"' do
+          assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+        end
+      end
     end
 
     # rubocop:disable RSpec/ExampleLength
@@ -149,6 +200,10 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
+    it 'does not have a button to "Upload post submission evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+    end
+
     # rubocop:disable Layout/LineLength
     it 'has a notification banner with the return details' do
       assert_select 'div.govuk-notification-banner' do
@@ -192,7 +247,8 @@ RSpec.describe 'Dashboard', :authorized do
     before :all do
       # sets up a test record
       app = CrimeApplication.create(
-        date_stamp: DateTime.new(2023, 4, 20, 23, 15) # date is past March daylight saving change
+        date_stamp: DateTime.new(2023, 4, 20, 23, 15), # date is past March daylight saving change
+        office_code: '1A123B'
       )
 
       # needs a proper case type so it shows the interim date stamp
@@ -237,12 +293,20 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'
       end
     end
+
+    context 'when the in progress application\'s office code differs from the one selected' do
+      let(:selected_office_code) { 'AN0THR' }
+
+      it 'redirects to page not found' do
+        expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
   end
 
   describe 'deleting in progress applications' do
     before :all do
       # sets up a few test records
-      app = CrimeApplication.create
+      app = CrimeApplication.create(office_code: '1A123B')
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
     end

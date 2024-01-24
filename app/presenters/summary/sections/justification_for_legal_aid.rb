@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class JustificationForLegalAid < Sections::BaseSection
-      def name
-        :justification_for_legal_aid
-      end
-
       def show?
         ioj.present? && super
       end

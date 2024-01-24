@@ -35,10 +35,16 @@ en:
         consent: Do you want to accept analytics cookies?
       steps_provider_select_office_form:
         office_code: Select your office account number
+      steps_client_is_means_tested_form:
+        is_means_tested: Is this application means tested?
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
         date_of_birth: Date of birth
+      steps_client_case_type_form:
+        case_type: What is the case type?
+      steps_client_appeal_details_form:
+        appeal_lodged_date: Date the appeal was lodged
       steps_client_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
       steps_client_contact_details_form:
@@ -47,10 +53,6 @@ en:
         confirm_result: Are the DWP records correct?
       steps_dwp_confirm_details_form:
         confirm_details: Are these details correct?
-      steps_case_case_type_form:
-        case_type: What is the case type?
-      steps_case_appeal_details_form:
-        appeal_lodged_date: Date the appeal was lodged
       steps_case_charges_form:
         date_from: Start date %{index}
         date_to: End date %{index} (optional)
@@ -94,8 +96,10 @@ en:
           frequency: Select how often they get these payments
       steps_income_manage_without_income_form:
         manage_without_income: How does your client manage with no income?
-      steps_outgoings_outgoings_more_than_income:
-        outgoings_more_than_income: Are your client’s outgoings more than their income?
+      steps_outgoings_housing_payment_type_form:
+        housing_payment_type: Which of these payments does your client pay where they usually live?
+      steps_outgoings_council_tax_form:
+        council_tax: Does your client pay Council Tax where they usually live?
 
     hint:
       steps_client_details_form:
@@ -164,12 +168,26 @@ en:
         is_current_office_options:
           'yes': 'Yes'
           'no': 'No, another office is handling this application'
+      steps_client_is_means_tested_form:
+        is_means_tested_options: *YESNO
       steps_client_has_partner_form:
         client_has_partner_options: *YESNO
       steps_client_details_form:
         first_name: First name
         last_name: Last name
         other_names: Other names (optional)
+      steps_client_case_type_form:
+        case_type_options:
+          summary_only: Summary only
+          either_way: Either way
+          indictable: Indictable
+          already_in_crown_court: Trial already in crown court
+          committal: Committal for sentence
+          appeal_to_crown_court: Appeal to crown court
+          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+      steps_client_appeal_details_form:
+        appeal_maat_id: Previous MAAT ID (optional)
+        appeal_with_changes_details: What has changed in your client’s financial circumstances?
       steps_client_has_nino_form:
         nino: Enter your client’s National Insurance number
       steps_client_benefit_type_form:
@@ -208,18 +226,6 @@ en:
         postcode: Postcode
       steps_case_urn_form:
         urn: Enter the unique reference number (URN) for your client’s case (optional)
-      steps_case_case_type_form:
-        case_type_options:
-          summary_only: Summary only
-          either_way: Either way
-          indictable: Indictable
-          already_in_crown_court: Trial already in crown court
-          committal: Committal for sentence
-          appeal_to_crown_court: Appeal to crown court
-          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
-      steps_case_appeal_details_form:
-        appeal_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_details: What has changed in your client’s financial circumstances?
       steps_case_charges_form:
         offence_name: Offence
       steps_case_charges_summary_form:
@@ -334,6 +340,17 @@ en:
           custody: They have been in custody for more than 3 months
           other: Other
         manage_other_details: Tell us how your client manages with no income
+      steps_outgoings_housing_payment_type_form:
+        housing_payment_type_options:
+          rent: Rent
+          mortgage: Mortgage
+          board_lodgings: Board and lodgings
+          none: My client does not pay any of these payments
+      steps_outgoings_council_tax_form:
+        pays_council_tax_options: *YESNO
+        council_tax_amount_in_pounds: How much do they pay yearly?
+      steps_outgoings_income_tax_rate_form:
+        income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income_options: *YESNO
         how_manage: How does your client manage if their outgoings are more than their income?

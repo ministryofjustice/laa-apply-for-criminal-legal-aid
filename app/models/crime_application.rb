@@ -1,4 +1,5 @@
 class CrimeApplication < ApplicationRecord
+  include TypeOfApplication
   include Passportable
 
   has_one :case, dependent: :destroy

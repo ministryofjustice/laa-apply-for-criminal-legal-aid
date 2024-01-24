@@ -1,12 +1,24 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
+  # TODO: Break to new initial details tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
+      when :is_means_tested
+        after_is_means_tested
       when :has_partner
         after_has_partner
       when :details
-        after_client_details
+        edit(:case_type)
+      when :case_type
+        after_case_type
+      when :appeal_details
+        date_stamp_if_needed
+      when :date_stamp
+        start_address_journey(HomeAddress)
+      when :contact_details
+        after_contact_details
       when :has_nino
         edit(:benefit_type)
       when :benefit_type
@@ -17,15 +29,22 @@ module Decisions
         after_dwp_check
       when :has_benefit_evidence
         after_has_benefit_evidence
-      when :contact_details
-        after_contact_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
+
+    def after_is_means_tested
+      if form_object.is_means_tested.yes?
+        # Task list
+        edit(:has_partner)
+      else
+        edit('/crime_applications')
+      end
+    end
 
     def after_has_partner
       if form_object.client_has_partner.yes?
@@ -36,12 +55,34 @@ module Decisions
       end
     end
 
-    def after_client_details
-      if current_crime_application.age_passported?
+    def after_case_type
+      return edit(:appeal_details) if form_object.case_type.appeal?
+
+      date_stamp_if_needed
+    end
+
+    def date_stamp_if_needed
+      if DateStamper.new(form_object.crime_application, form_object.case.case_type).call
+        edit(:date_stamp)
+      else
         start_address_journey(HomeAddress)
+      end
+    end
+
+    def after_contact_details
+      if form_object.correspondence_address_type.other_address?
+        start_address_journey(CorrespondenceAddress)
+      elsif current_crime_application.age_passported?
+        edit('/steps/case/urn')
       else
         edit(:has_nino)
       end
+    end
+
+    def start_address_journey(address_class)
+      address = address_class.find_or_create_by(person: applicant)
+
+      edit('/steps/address/lookup', address_id: address)
     end
 
     def after_benefit_type
@@ -67,33 +108,20 @@ module Decisions
     end
 
     def after_dwp_check
-      start_address_journey(HomeAddress)
+      edit('/steps/case/urn')
     end
 
     def after_has_benefit_evidence
       if form_object.has_benefit_evidence.yes?
-        start_address_journey(HomeAddress)
+        edit('/steps/case/urn')
       else
         show(:evidence_exit)
       end
-    end
-
-    def after_contact_details
-      if form_object.correspondence_address_type.other_address?
-        start_address_journey(CorrespondenceAddress)
-      else
-        edit('/steps/case/case_type')
-      end
-    end
-
-    def start_address_journey(address_class)
-      address = address_class.find_or_create_by(person: applicant)
-
-      edit('/steps/address/lookup', address_id: address)
     end
 
     def applicant
       @applicant ||= current_crime_application.applicant
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

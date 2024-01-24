@@ -14,7 +14,7 @@
                             label: { size: 's' } if @form_object.appeal_with_changes? %>
 
       <%= f.govuk_text_field :appeal_maat_id, autocomplete: 'off', width: 'one-third',
-                             extra_letter_spacing: true, label: { size: 's' } %>
+                             extra_letter_spacing: true, label: { size: 's' } unless @form_object.appeal_with_changes? %>
 
       <%= f.continue_button %>
     <% end %>

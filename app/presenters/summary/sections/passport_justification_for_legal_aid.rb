@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class PassportJustificationForLegalAid < Sections::BaseSection
-      def name
-        :passport_justification_for_legal_aid
-      end
-
       def answers
         [
           Components::ValueAnswer.new(
