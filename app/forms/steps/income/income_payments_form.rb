@@ -1,6 +1,8 @@
 module Steps
   module Income
     class IncomePaymentsForm < Steps::BaseFormObject
+      # Ensure ordering of checkboxes (presentation) remains separate to the type definition
+      # NOTE: remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
         maintenance
         private_pension
@@ -15,52 +17,50 @@ module Steps
       ].freeze
 
       attribute :income_payments, array: true, default: [] # Used by BaseFormObject
-      attribute :types, array: true, default: [] # Used by edit.html to represent selected checkbox value
-
+      attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
       attr_reader :new_payments
+
+      validates_with IncomePaymentsValidator
 
       IncomePaymentType.values.each do |type| # rubocop:disable Style/HashEachMethods
         attribute type.to_s, :string
 
+        # Used by govuk form component to retrieve values to populate the fields_for
+        # for each type (on page load)
         define_method :"#{type}" do
-          income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s) || IncomePayment.new(payment_type: type.to_s)
+          income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s)
 
-          obj = IncomePaymentFieldsetForm.build(
-            income_payment,
-            crime_application:
-          )
-
-          if (types.include?(type.to_s)) && !obj.valid?
-          #   obj.errors.each do |error|
-          #     puts "THE ERROR #{error.type}"
-          #     self.errors.add(
-          #       error.attribute,
-          #       error.type,
-          #       message: I18n.t(
-          #         "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
-          #         scope: [:activemodel, :errors, :models]
-          #       )
-          #     )
-          #   end
-            puts "OBJ VALID [#{type}][#{types}]: #{obj.valid?} - #{obj.errors.inspect}"
+          unless income_payment
+            attrs = types.include?(type.to_s) ? @new_payments[type.value.to_s].attributes : {}
+            puts "TYPE: #{type.to_s} - #{attrs}"
+            income_payment = IncomePayment.new(payment_type: type.to_s, **attrs)
           end
 
-          obj
+          IncomePaymentFieldsetForm.build(income_payment, crime_application:).tap do |record|
+            record.valid? if types.include?(type.to_s)
+          end
         end
 
+        # Used to convert attributes for a given type into a corresponding fieldset
+        # (on form submit)
         define_method :"#{type}=" do |value|
           @new_payments ||= {}
           obj = IncomePaymentFieldsetForm.build(
             IncomePayment.new(payment_type: type.to_s, **value),
             crime_application:
           )
+          puts "TYPES: #{types}"
+          if types.include?(type.to_s) && obj.valid?
+            obj.save
+            puts "TYPE=: #{type.value}- valid? #{obj.valid?} - amount: #{obj.amount}"
+          else
+            obj.delete
+          end
+
           @new_payments[type.value.to_s] = obj
         end
       end
 
-      validates_with IncomePaymentsValidator
-
-      # Use FieldserForm as a typed formobject for each IncomePayment
       def income_payments
         @income_payments = crime_application.income_payments.map do |i|
           IncomePaymentFieldsetForm.build(i, crime_application:)
@@ -77,15 +77,22 @@ module Steps
 
       private
 
-      def persist!
-        ::CrimeApplication.transaction do
-          # Reset
-          crime_application.income_payments.destroy_all
+      def valid_income_payments
+        return [] unless @new_payments
 
-          # Rebuild
-          crime_application.income_payments = @new_payments.slice(*types).values.map(&:record)
-          crime_application.save!
-        end
+        @new_payments.slice(*types).values.map(&:record).select(&:valid?)
+      end
+
+      def persist!
+        # puts "DOING PERSISt!!!"
+        # ::CrimeApplication.transaction do
+        #   # Reset
+        #   crime_application.income_payments.destroy_all
+
+        #   # Rebuild
+        #   crime_application.income_payments = valid_income_payments
+        #   crime_application.save!
+        # end
       end
     end
   end

@@ -4,17 +4,10 @@ class IncomePaymentsValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    #record.income_payments.each.with_index do |income_payment, index|
-    #   binding.break
-    #   next if income_payment.payment_type.to_s == 'none'
-
-    #   add_indexed_errors(income_payment, index) unless income_payment.valid?
-    # end
-
     record.types.each_with_index do |type, index|
       next if type == 'none'
-      income_payment = record.public_send(type)
 
+      income_payment = record.public_send(type)
       add_indexed_errors(income_payment, index) unless income_payment.valid?
     end
   end

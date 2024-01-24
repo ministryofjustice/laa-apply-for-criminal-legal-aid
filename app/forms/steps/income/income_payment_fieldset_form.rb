@@ -27,6 +27,20 @@ module Steps
       def persisted?
         id.present?
       end
+
+      def persist!
+        puts "SAVING INCOME!"
+        unless persisted?
+          delete
+          record.crime_application = crime_application
+        end
+
+        record.save!
+      end
+
+      def delete
+        crime_application.income_payments.find_by(payment_type:)&.delete
+      end
     end
   end
 end
