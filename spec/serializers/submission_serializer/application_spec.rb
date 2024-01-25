@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Application do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) { CrimeApplication.new(application_type:) }
+  let(:application_type) { 'initial' }
 
   describe '#sections' do
     before do
@@ -26,6 +27,23 @@ RSpec.describe SubmissionSerializer::Application do
           SubmissionSerializer::Sections::SupportingEvidence,
         ]
       )
+    end
+
+    context 'when an PSE application' do
+      let(:application_type) { 'post_submission_evidence' }
+
+      it 'has the right sections in the right order' do
+        expect(
+          subject.sections
+        ).to match_instances_array(
+          [
+            SubmissionSerializer::Sections::PseApplicationDetails,
+            SubmissionSerializer::Sections::ProviderDetails,
+            SubmissionSerializer::Sections::ClientDetails,
+            SubmissionSerializer::Sections::SupportingEvidence
+          ]
+        )
+      end
     end
   end
 

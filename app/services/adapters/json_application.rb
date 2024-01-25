@@ -9,7 +9,7 @@ module Adapters
     private
 
     def struct_for(payload)
-      if payload.key?('case_details')
+      if payload.key?('case_details') || payload.key?('supporting_evidence')
         Structs::CrimeApplication.new(payload)
       else
         Structs::PrunedApplication.new(payload)

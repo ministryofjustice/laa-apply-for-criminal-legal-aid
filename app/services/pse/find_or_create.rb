@@ -21,7 +21,12 @@ module Pse
     private
 
     def applicant
-      Applicant.new(initial_application.applicant.serializable_hash)
+      @applicant ||= Applicant.new(
+        first_name: initial_application.applicant.first_name,
+        last_name: initial_application.applicant.last_name,
+        other_names: initial_application.applicant.other_names,
+        date_of_birth: initial_application.applicant.date_of_birth
+      )
     end
 
     def application_type
