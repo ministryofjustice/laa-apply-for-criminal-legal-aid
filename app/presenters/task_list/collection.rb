@@ -18,7 +18,7 @@ module TaskList
       ],
       post_submission_evidence: [
         [:support_evidence, [:evidence_upload]],
-        [:review_confirm,   [:review, :confirm_and_submit]],
+        [:review_confirm,   [:review, :declaration]],
       ]
     }.freeze
 

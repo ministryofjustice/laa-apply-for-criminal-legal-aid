@@ -48,6 +48,7 @@ en:
         applicant_name: Name
         submitted_at: Date submitted
         reference: Reference number
+        application_type: Type of application
         status: Status
         action: Action
       status:

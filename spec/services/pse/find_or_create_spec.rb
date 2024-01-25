@@ -9,8 +9,16 @@ RSpec.describe Pse::FindOrCreate do
 
   let(:reference) { 1_000_023 }
   let(:id) { SecureRandom.uuid }
-  let(:applicant) { instance_double(Adapters::Structs::Applicant, serializable_hash: {}) }
   let(:provider_details) { double(office_code: 'An0Fi5') }
+
+  let(:applicant) do
+    double(
+      first_name: 'Bob',
+      last_name: 'Smith',
+      other_names: 'Robby',
+      date_of_birth: '2000-01-01'
+    )
+  end
 
   describe '#call' do
     context 'when initial_application cannot receive pse' do
