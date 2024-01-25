@@ -13,7 +13,7 @@ module TypeOfApplication
   end
 
   def initial?
-    application_type?(:initial)
+    application_type_eql?(:initial)
   end
 
   def returned?
@@ -21,13 +21,13 @@ module TypeOfApplication
   end
 
   def post_submission_evidence?
-    application_type?(:post_submission_evidence)
+    application_type_eql?(:post_submission_evidence)
   end
   alias pse? post_submission_evidence?
 
   private
 
-  def application_type?(other_type)
+  def application_type_eql?(other_type)
     ApplicationType.new(application_type) == ApplicationType.new(other_type)
   end
 end

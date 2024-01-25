@@ -97,7 +97,12 @@ describe Summary::HtmlPresenter do
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
-          %w[Overview ClientDetails SupportingEvidence LegalRepresentativeDetails]
+          %w[
+            Overview
+            ClientDetails
+            SupportingEvidence
+            LegalRepresentativeDetails
+          ]
         end
 
         it { is_expected.to match_array(expected_sections) }
