@@ -11,8 +11,8 @@
   <%= tag.meta name: 'theme-color', content: '#0b0c0c' %>
   <%= tag.meta property: 'og:image', content: asset_path('images/govuk-opengraph-image.png') %>
 
-  <%= favicon_link_tag asset_path('images/favicon.ico'), rel: "icon" %>
-  <%= favicon_link_tag asset_path('images/favicon.svg'), rel: "icon", type: "image/svg+xml" %>
+  <%= favicon_link_tag asset_path('images/favicon.ico'), rel: 'icon' %>
+  <%= favicon_link_tag asset_path('images/favicon.svg'), rel: 'icon', type: 'image/svg+xml' %>
   <%= favicon_link_tag asset_path('images/govuk-icon-mask.svg'), rel: 'mask-icon', color: '#0b0c0c' %>
   <%= favicon_link_tag asset_path('images/govuk-icon-180.png'), rel: 'apple-touch-icon' %>
   <%= favicon_link_tag asset_path('manifest.json'), rel: 'manifest' %>
@@ -25,7 +25,7 @@
 
 <body class="govuk-template__body app-body <%= ['app-body', HostEnv.env_name].join('--') %>">
 <%= javascript_tag nonce: true do %>
-  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
 <% end %>
 
 <%= yield(:cookie_banner) unless controller_name == 'cookies' %>
