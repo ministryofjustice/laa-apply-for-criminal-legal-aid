@@ -10,7 +10,6 @@ module Summary
         [
           Components::ValueAnswer.new(
             :case_type, kase.case_type,
-            show: crime_application.means_passport.exclude?('on_not_means_tested'),
             change_path: edit_steps_client_case_type_path
           ),
 

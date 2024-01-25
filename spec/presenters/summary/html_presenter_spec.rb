@@ -89,7 +89,14 @@ describe Summary::HtmlPresenter do
 
       context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
-        let(:expected_sections) { %w[ClientDetails SupportingEvidence] }
+
+        let(:expected_sections) do
+          %w[
+            Overview
+            ClientDetails
+            SupportingEvidence
+          ]
+        end
 
         it { is_expected.to match_array(expected_sections) }
       end

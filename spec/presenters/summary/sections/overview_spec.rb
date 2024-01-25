@@ -93,7 +93,7 @@ describe Summary::Sections::Overview do
       end
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(3)
+        expect(answers.count).to eq(2)
 
         answer = answers[0]
         expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -105,11 +105,6 @@ describe Summary::Sections::Overview do
         expect(answer.question).to eq(:means_tested)
         expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
         expect(answer.value).to eq('yes')
-
-        answer = answers[2]
-        expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
-        expect(answer.question).to eq(:date_stamp)
-        expect(answer.value).to eq(Date.new(2023, 1, 20))
       end
     end
   end

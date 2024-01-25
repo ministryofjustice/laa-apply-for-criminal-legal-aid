@@ -6,7 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <% heading = current_crime_application.is_means_tested == 'no' ? '.optional_nino' : '.nino'%>
+      <% heading = current_crime_application.not_means_tested? ? '.optional_nino' : '.nino'%>
 
       <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
                              extra_letter_spacing: true,

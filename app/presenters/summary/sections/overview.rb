@@ -2,7 +2,7 @@ module Summary
   module Sections
     class Overview < Sections::BaseSection
       def show?
-        crime_application.case.present? && super
+        show_overview_details? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -12,23 +12,23 @@ module Summary
             Components::FreeTextAnswer.new(
               :reference, crime_application.reference.to_s,
             ),
-
-            Components::DateAnswer.new(
-              :date_stamp, crime_application.date_stamp,
-              i18n_opts: { format: :datetime },
-            ),
           ]
 
-        if FeatureFlags.means_journey.enabled? && crime_application.is_means_tested
-          relevant_answers.insert(1, Components::ValueAnswer.new(
-                                       :means_tested, crime_application.is_means_tested,
-                                       change_path: edit_steps_client_is_means_tested_path
-                                     ))
+        if FeatureFlags.means_journey.enabled?
+          relevant_answers.push(Components::ValueAnswer.new(
+                                  :means_tested, crime_application.is_means_tested,
+                                  change_path: edit_steps_client_is_means_tested_path
+                                ))
         end
 
         unless crime_application.in_progress?
           completed_answers =
             [
+              Components::DateAnswer.new(
+                :date_stamp, crime_application.date_stamp,
+                i18n_opts: { format: :datetime },
+              ),
+
               Components::DateAnswer.new(
                 :date_submitted, crime_application.submitted_at,
                 i18n_opts: { format: :datetime },
@@ -53,6 +53,10 @@ module Summary
 
       def provider_details
         @provider_details ||= crime_application.provider_details
+      end
+
+      def show_overview_details?
+        crime_application.case.present?
       end
     end
   end
