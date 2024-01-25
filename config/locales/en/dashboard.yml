@@ -9,6 +9,7 @@ en:
         applicant_name: Name
         created_at: Start date
         reference: Reference number
+        application_type: Type of application
         status: Status
         action: Action
       status:

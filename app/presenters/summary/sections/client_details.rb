@@ -41,6 +41,10 @@ module Summary
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
+      def editable?
+        crime_application.initial? && super
+      end
+
       private
 
       def applicant

@@ -44,7 +44,11 @@ RSpec.describe Tasks::EvidenceUpload do
       allow(
         subject
       ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
+
+      allow(crime_application).to receive(:pse?).and_return(pse?)
     end
+
+    let(:pse?) { false }
 
     context 'when the Case Details task has been completed' do
       let(:case_details_fulfilled) { true }
@@ -56,6 +60,12 @@ RSpec.describe Tasks::EvidenceUpload do
       let(:case_details_fulfilled) { false }
 
       it { expect(subject.can_start?).to be(false) }
+
+      context 'but the application is pse' do
+        let(:pse?) { true }
+
+        it { expect(subject.can_start?).to be(true) }
+      end
     end
   end
 

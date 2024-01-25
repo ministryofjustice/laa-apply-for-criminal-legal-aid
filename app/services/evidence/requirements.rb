@@ -13,6 +13,10 @@ module Evidence
     end
 
     def any?
+      # Assume all PSE has evidence requirements for now. These may be defined
+      # by the parent application at some point.
+      return true if crime_application.pse?
+
       [benefits?].any?
     end
 

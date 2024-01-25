@@ -32,6 +32,8 @@ module Adapters
           )
         end
       end
+
+      alias usn reference
     end
   end
 end

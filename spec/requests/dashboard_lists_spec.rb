@@ -66,7 +66,7 @@ RSpec.describe 'Dashboard', :authorized do
             assert_select 'a', count: 1, text: 'John Doe'
             assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 Oct 2022'
             assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
-            assert_select 'td.govuk-table__cell:nth-of-type(3)' do
+            assert_select 'td.govuk-table__cell:nth-of-type(4)' do
               assert_select 'button.govuk-button', count: 2, text: 'Delete'
             end
           end

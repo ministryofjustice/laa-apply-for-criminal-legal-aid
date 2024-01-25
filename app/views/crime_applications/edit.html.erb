@@ -3,7 +3,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+    <h1 class="govuk-heading-xl">
+      <%= t(@crime_application.application_type, scope: [:tasklist, :heading_text]) %>
+    </h1>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
       <%=t '.subheading' %>

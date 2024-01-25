@@ -9,7 +9,11 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(Ioj)
+      if crime_application.pse?
+        fulfilled?(EvidenceUpload)
+      else
+        fulfilled?(Ioj)
+      end
     end
 
     # Once the Ioj task is fulfilled, this is always true

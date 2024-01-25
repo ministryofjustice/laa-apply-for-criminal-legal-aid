@@ -6,7 +6,7 @@ RSpec.describe TaskList::Collection do
   subject { described_class.new(view, crime_application:) }
 
   let(:name) { :foobar_task }
-  let(:crime_application) { double }
+  let(:crime_application) { double application_type: 'initial' }
 
   describe 'collection of sections' do
     it 'has the `client_details` section' do
