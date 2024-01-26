@@ -40,9 +40,7 @@ class CompletedApplicationsController < DashboardController
       initial_application: Adapters::JsonApplication.new(current_crime_application)
     ).call
 
-    # Redirect to the check your answers (review) page
-    # of the newly created application
-    redirect_to edit_crime_application_path(pse_application)
+    redirect_to edit_steps_evidence_upload_path(pse_application)
   end
 
   private

@@ -2,7 +2,7 @@ module Passporting
   class BasePassporter
     attr_reader :crime_application
 
-    delegate :applicant, :ioj, to: :crime_application
+    delegate :applicant, :ioj, :resubmission?, to: :crime_application
 
     def initialize(crime_application)
       @crime_application = crime_application
@@ -23,10 +23,6 @@ module Passporting
     # :nocov:
 
     private
-
-    def resubmission?
-      crime_application.parent_id.present?
-    end
 
     def applicant_under18?
       applicant.under18?
