@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::CaseDetails do
   subject { described_class.new(crime_application) }
 
@@ -62,7 +63,6 @@ describe Summary::Sections::CaseDetails do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#answers' do
     let(:answers) { subject.answers }
 
