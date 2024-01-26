@@ -6,9 +6,11 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
+      <% heading = current_crime_application.not_means_tested? ? '.optional_nino' : '.nino'%>
+
       <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
                              extra_letter_spacing: true,
-                             label: { tag: 'h1', size: 'xl' } %>
+                             label: { text: t(heading), tag: 'h1', size: 'xl' } %>
 
       <p class='govuk-body govuk-!-margin-bottom-6'>
         <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>

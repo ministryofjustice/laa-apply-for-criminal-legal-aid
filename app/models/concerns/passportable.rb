@@ -2,7 +2,8 @@ module Passportable
   extend ActiveSupport::Concern
 
   delegate :age_passported?,
-           :benefit_check_passported?, to: :means_passporter
+           :benefit_check_passported?,
+           :not_means_tested?, to: :means_passporter
 
   def means_passported?
     means_passporter.passported?

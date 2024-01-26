@@ -16,7 +16,7 @@ module Summary
       end
 
       def show?
-        show.presence || value?
+        show.nil? ? value? : show
       end
 
       def value?

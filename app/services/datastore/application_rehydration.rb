@@ -7,13 +7,14 @@ module Datastore
       @parent = Adapters::JsonApplication.new(parent)
     end
 
-    def call # rubocop:disable Metrics/MethodLength
+    def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       return if already_recreated?
 
       crime_application.update!(
         # TODO: Update partner rehydration when partner introduced and stored
-        client_has_partner: YesNoAnswer::NO,
+        client_has_partner: client_has_partner,
         parent_id: parent.id,
+        is_means_tested: means_tested,
         date_stamp: date_stamp,
         ioj_passport: parent.ioj_passport,
         means_passport: parent.means_passport,
@@ -36,11 +37,22 @@ module Datastore
       parent.return_details.reason.inquiry.split_case?
     end
 
+    # `is_means_tested` is not part of Schema, requires calculation
+    def means_tested
+      parent.means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
+    end
+
+    def client_has_partner
+      return if not_means_tested?
+
+      YesNoAnswer::NO
+    end
+
     # For re-hydration of returned applications, we keep the original
     # date stamp if the parent case type was date-stampable, otherwise
     # we leave it `nil`, so a new date is applied on resubmission.
     def date_stamp
-      parent.date_stamp if CaseType.new(parent.case.case_type).date_stampable?
+      parent.date_stamp if not_means_tested? || CaseType.new(parent.case.case_type).date_stampable?
     end
 
     def applicant
@@ -65,7 +77,6 @@ module Datastore
       parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
     end
 
-    # `client_has_dependants` is not part of Schema, requires calculation
     def income
       return if parent.income.blank?
 
@@ -78,6 +89,12 @@ module Datastore
       return if parent.outgoings.blank?
 
       Outgoings.new(parent.outgoings.serializable_hash)
+    end
+
+    def not_means_tested?
+      return true if means_tested.value == :no
+
+      false
     end
   end
 end

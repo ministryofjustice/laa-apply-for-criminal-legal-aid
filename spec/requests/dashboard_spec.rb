@@ -115,18 +115,22 @@ RSpec.describe 'Dashboard', :authorized do
           assert_select 'dd:nth-of-type(1)', '6000001'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
+          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dd:nth-of-type(1)', 'Yes'
+        end
+        assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp'
           assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
           assert_select 'dt:nth-of-type(1)', 'Date submitted'
           assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(5)' do
           assert_select 'dt:nth-of-type(1)', 'Submitted by'
           assert_select 'dd:nth-of-type(1)', 'provider@example.com'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(5)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(6)' do
           assert_select 'dt:nth-of-type(1)', 'Office account number'
           assert_select 'dd:nth-of-type(1)', '1A123B'
         end
@@ -247,13 +251,13 @@ RSpec.describe 'Dashboard', :authorized do
 
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(1)' do
-          assert_select 'dt:nth-of-type(1)', 'First name'
-          assert_select 'dd:nth-of-type(1)', 'John'
+          assert_select 'dt:nth-of-type(1)', 'LAA reference number'
+          assert_select 'dd:nth-of-type(1)', '6000002'
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Last name'
-          assert_select 'dd:nth-of-type(1)', 'POTTER'
+          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dd:nth-of-type(1)', 'Yes'
         end
       end
     end

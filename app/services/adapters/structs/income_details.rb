@@ -6,6 +6,7 @@ module Adapters
         employment_type || []
       end
 
+      # `client_has_dependants` is not part of Schema, requires calculation
       def client_has_dependants
         dependants&.any? ? YesNoAnswer::YES : YesNoAnswer::NO
       end

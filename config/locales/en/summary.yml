@@ -31,6 +31,10 @@ en:
       # BEGIN overview section
       reference:
         question: LAA reference number
+      means_tested:
+        question: Application is subject to the usual means test
+        answers:
+          <<: *YESNO
       date_stamp:
         question: Date stamp
       date_submitted:
@@ -53,6 +57,7 @@ en:
         question: Date of birth
       nino:
         question: National Insurance number
+        absence_answer: *absence_none
       means_passporting:
         question: Passporting benefit
         answers:

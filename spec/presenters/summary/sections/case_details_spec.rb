@@ -17,20 +17,26 @@ describe Summary::Sections::CaseDetails do
   let(:kase) do
     instance_double(
       Case,
-      urn: 'xyz',
-      case_type: 'foobar',
-      has_case_concluded: has_case_concluded,
-      date_case_concluded: date_case_concluded,
-      has_case_concluded?: false,
-      appeal_maat_id: appeal_maat_id,
-      appeal_lodged_date: appeal_lodged_date,
-      appeal_with_changes_details: appeal_with_changes_details,
+      urn:,
+      case_type:,
+      appeal_maat_id:,
+      appeal_lodged_date:,
+      appeal_with_changes_details:,
+      has_case_concluded:,
+      date_case_concluded:,
     )
   end
 
+  let(:case_type) { 'foobar' }
   let(:appeal_maat_id) { nil }
   let(:appeal_lodged_date) { nil }
   let(:appeal_with_changes_details) { nil }
+  let(:urn) { 'xyz' }
+  let(:means_passport) { [] }
+
+  before do
+    allow(crime_application).to receive(:means_passport).and_return(means_passport)
+  end
 
   describe '#name' do
     it { expect(subject.name).to eq(:case_details) }
@@ -52,6 +58,7 @@ describe Summary::Sections::CaseDetails do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#answers' do
     let(:answers) { subject.answers }
 
@@ -207,6 +214,28 @@ describe Summary::Sections::CaseDetails do
           expect(answer.show).to be(true)
         end
       end
+    end
+
+    context 'when application is not means tested' do
+      let(:means_passport) { ['on_not_means_tested'] }
+      let(:case_type) { nil }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(2)
+
+        answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:case_urn)
+        expect(answer.change_path).to match('applications/12345/steps/case/urn')
+        expect(answer.value).to eq('xyz')
+
+        answer = answers[1]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:has_case_concluded)
+        expect(answer.change_path).to match('applications/12345/steps/case/has_case_concluded')
+        expect(answer.value).to eq('no')
+      end
+      # rubocop:enable RSpec/MultipleMemoizedHelpers
     end
   end
 end
