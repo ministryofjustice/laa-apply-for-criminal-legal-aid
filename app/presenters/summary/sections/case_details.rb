@@ -46,6 +46,17 @@ module Summary
             show: case_concluded?,
             change_path: edit_steps_case_has_case_concluded_path,
           ),
+
+          Components::ValueAnswer.new(
+            :is_client_remanded, kase.is_client_remanded,
+            change_path: edit_steps_case_is_client_remanded_path
+          ),
+
+          Components::DateAnswer.new(
+            :date_client_remanded, kase.date_client_remanded,
+            show: client_remanded?,
+            change_path: edit_steps_case_is_client_remanded_path
+          ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
@@ -58,6 +69,10 @@ module Summary
 
       def case_concluded?
         kase.has_case_concluded == 'yes' && !kase.date_case_concluded.nil?
+      end
+
+      def client_remanded?
+        kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
       end
     end
   end

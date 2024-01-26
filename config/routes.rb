@@ -138,6 +138,7 @@ Rails.application.routes.draw do
       namespace :case do
         edit_step :urn
         edit_step :has_case_concluded
+        edit_step :is_client_remanded
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
         edit_step :has_codefendants
