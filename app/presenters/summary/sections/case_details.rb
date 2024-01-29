@@ -33,29 +33,30 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :case_urn, kase.urn,
-            change_path: edit_steps_case_urn_path, show: true
+            show: true,
+            change_path: edit_steps_case_urn_path
           ),
 
           Components::ValueAnswer.new(
             :has_case_concluded, kase.has_case_concluded,
-            change_path: edit_steps_case_has_case_concluded_path
+            change_path: case_concluded_change_path
           ),
 
           Components::DateAnswer.new(
             :date_case_concluded, kase.date_case_concluded,
             show: case_concluded?,
-            change_path: edit_steps_case_has_case_concluded_path,
+            change_path: case_concluded_change_path
           ),
 
           Components::ValueAnswer.new(
             :is_client_remanded, kase.is_client_remanded,
-            change_path: edit_steps_case_is_client_remanded_path
+            change_path: client_remanded_change_path
           ),
 
           Components::DateAnswer.new(
             :date_client_remanded, kase.date_client_remanded,
             show: client_remanded?,
-            change_path: edit_steps_case_is_client_remanded_path
+            change_path: client_remanded_change_path
           ),
         ].select(&:show?)
       end
@@ -73,6 +74,18 @@ module Summary
 
       def client_remanded?
         kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
+      end
+
+      def case_concluded_change_path
+        return nil unless FeatureFlags.means_journey.enabled?
+
+        edit_steps_case_has_case_concluded_path
+      end
+
+      def client_remanded_change_path
+        return nil unless FeatureFlags.means_journey.enabled?
+
+        edit_steps_case_is_client_remanded_path
       end
     end
   end
