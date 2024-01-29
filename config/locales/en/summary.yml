@@ -100,7 +100,13 @@ en:
         answers:
           <<: *YESNO
       date_case_concluded:
-        question: Enter when the case concluded
+        question: Date the case concluded
+      is_client_remanded:
+        question: Has a court remanded your client in custody?
+        answers:
+          <<: *YESNO
+      date_client_remanded:
+        question: Date they were remanded
       case_type:
         question: Case type
         answers:

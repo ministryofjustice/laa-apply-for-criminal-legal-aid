@@ -9,6 +9,8 @@ module SubmissionSerializer
             json.case_type kase.case_type
             json.has_case_concluded kase.has_case_concluded
             json.date_case_concluded kase.date_case_concluded
+            json.is_client_remanded kase.is_client_remanded
+            json.date_client_remanded kase.date_client_remanded
             json.appeal_maat_id kase.appeal_maat_id
             json.appeal_lodged_date kase.appeal_lodged_date
             json.appeal_with_changes_details kase.appeal_with_changes_details
