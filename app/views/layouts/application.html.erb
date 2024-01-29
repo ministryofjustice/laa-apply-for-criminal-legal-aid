@@ -26,7 +26,11 @@
 <% end %>
 
 <% content_for(:phase_banner) do %>
-  <% render partial: 'layouts/phase_banner' %>
+  <% env = HostEnv.env_name  %>
+  <%= govuk_phase_banner(tag: {text: t("layouts.phase_banner.tag.#{env}"), colour: t("layouts.phase_banner.colour.#{env}")},
+                         text: t('layouts.phase_banner.text_html', survey_url: Settings.feedback_survey_url),
+                         classes: "govuk-phase-banner-#{env}"
+      ) %>
 <% end %>
 
 <% content_for(:content) do %>

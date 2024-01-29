@@ -4,7 +4,13 @@ en:
     phase_banner:
       text_html: This is a new service – your <a href="%{survey_url}" rel="external">feedback</a> will help us to improve it.
       tag:
-        production: beta
+        production: Beta
+        staging: Staging
+        local: Dev
+      colour:
+        production: blue
+        staging: orange
+        local: green
 
     header_navigation:
       menu_button: Menu
