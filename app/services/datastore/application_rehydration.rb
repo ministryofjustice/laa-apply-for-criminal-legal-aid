@@ -24,6 +24,7 @@ module Datastore
         income: income,
         outgoings: outgoings,
         documents: parent.documents,
+        additional_information: parent.additional_information
       )
     end
 
