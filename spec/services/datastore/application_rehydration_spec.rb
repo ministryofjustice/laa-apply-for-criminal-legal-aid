@@ -41,6 +41,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         documents: all(be_a(Document)),
         dependants: all(be_a(Dependant)),
         outgoings: an_instance_of(Outgoings),
+        additional_information: parent['additional_information']
       )
 
       expect(
