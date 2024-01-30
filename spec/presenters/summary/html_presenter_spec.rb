@@ -49,6 +49,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             SupportingEvidence
+            MoreInformation
           ]
         end
 
@@ -76,6 +77,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             SupportingEvidence
+            MoreInformation
             LegalRepresentativeDetails
           ]
         end
@@ -95,6 +97,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             SupportingEvidence
+            MoreInformation
           ]
         end
 
@@ -109,6 +112,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             SupportingEvidence
+            MoreInformation
             LegalRepresentativeDetails
           ]
         end

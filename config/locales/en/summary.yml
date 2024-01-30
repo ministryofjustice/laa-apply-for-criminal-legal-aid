@@ -26,6 +26,7 @@ en:
       housing_payments: Housing Payments
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
+      more_information: More information
 
     questions:
       # BEGIN overview section
@@ -280,6 +281,6 @@ en:
       supporting_evidence:
         question: File name
       additional_information:
-        question: Additional information 
+        question: Details that will help us process this application
         absence_answer: *absence_none
       # END supporting evidence section

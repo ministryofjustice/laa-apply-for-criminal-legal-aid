@@ -2,6 +2,8 @@ module Decisions
   class SubmissionDecisionTree < BaseDecisionTree
     def destination
       case step_name
+      when :more_information
+        edit(:review)
       when :review
         edit(:declaration)
       when :declaration, :submission_retry

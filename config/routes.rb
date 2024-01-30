@@ -176,6 +176,7 @@ Rails.application.routes.draw do
       end
 
       namespace :submission do
+        edit_step :more_information
         edit_step :review
         edit_step :declaration
         edit_step :failure

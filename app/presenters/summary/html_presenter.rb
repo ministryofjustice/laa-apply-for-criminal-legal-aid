@@ -22,12 +22,14 @@ module Summary
         housing_payments
         other_outgoings_details
         supporting_evidence
+        more_information
         legal_representative_details
       ],
       post_submission_evidence: %i[
         overview
         client_details
         supporting_evidence
+        more_information
         legal_representative_details
       ]
     }.freeze

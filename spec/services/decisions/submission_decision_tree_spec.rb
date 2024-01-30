@@ -18,6 +18,15 @@ RSpec.describe Decisions::SubmissionDecisionTree do
 
   it_behaves_like 'a decision tree'
 
+  context 'when the step is `more_information`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :more_information }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination(:review, :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `review`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :review }
