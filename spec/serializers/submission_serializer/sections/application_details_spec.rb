@@ -15,6 +15,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       date_stamp: date_stamp,
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
+      additional_information: 'More details'
     )
   end
 
@@ -34,6 +35,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       date_stamp: date_stamp,
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
+      additional_information: 'More details'
     }.as_json
   end
 
