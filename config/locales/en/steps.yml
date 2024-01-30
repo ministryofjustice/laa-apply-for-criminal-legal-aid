@@ -327,7 +327,7 @@ en:
         show:
           page_title: Application submitted
           heading: 
-            initial: Application completed
+            initial: Application complete
             post_submission_evidence: Evidence submitted
             resubmission: Application updated 
           what_happens_next: 
