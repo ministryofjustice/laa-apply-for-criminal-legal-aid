@@ -151,6 +151,10 @@ en:
         edit:
           page_title: Has the case concluded?
           date_case_concluded: Enter when the case concluded
+      is_client_remanded:
+        edit:
+          page_title: Has a court remanded your client in custody?
+          date_client_remanded: Enter when they were remanded
       charges:
         edit:
           page_title: What has your client been charged with?

@@ -61,6 +61,8 @@ RSpec.describe Adapters::Structs::CaseDetails do
           appeal_with_changes_details
           has_case_concluded
           date_case_concluded
+          is_client_remanded
+          date_client_remanded
           charges
           codefendants
           has_codefendants
