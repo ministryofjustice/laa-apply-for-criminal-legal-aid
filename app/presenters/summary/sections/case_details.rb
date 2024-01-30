@@ -58,6 +58,23 @@ module Summary
             show: client_remanded?,
             change_path: client_remanded_change_path
           ),
+
+          Components::ValueAnswer.new(
+            :is_preorder_work_claimed, kase.is_preorder_work_claimed,
+            change_path: preorder_work_claimed_path
+          ),
+
+          Components::DateAnswer.new(
+            :preorder_work_date, kase.preorder_work_date,
+            show: preorder_work_claimed?,
+            change_path: preorder_work_claimed_path
+          ),
+
+          Components::FreeTextAnswer.new(
+            :preorder_work_details, kase.preorder_work_details,
+            show: preorder_work_claimed?,
+            change_path: preorder_work_claimed_path
+          ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
@@ -76,6 +93,10 @@ module Summary
         kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
       end
 
+      def preorder_work_claimed?
+        kase.is_preorder_work_claimed == 'yes' && !kase.preorder_work_date.nil? && !kase.preorder_work_details.nil?
+      end
+
       def case_concluded_change_path
         return nil unless FeatureFlags.means_journey.enabled?
 
@@ -86,6 +107,12 @@ module Summary
         return nil unless FeatureFlags.means_journey.enabled?
 
         edit_steps_case_is_client_remanded_path
+      end
+
+      def preorder_work_claimed_path
+        return nil unless FeatureFlags.means_journey.enabled?
+
+        edit_steps_case_is_preorder_work_claimed_path
       end
     end
   end

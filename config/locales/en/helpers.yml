@@ -47,6 +47,8 @@ en:
         confirm_details: Are these details correct?
       steps_case_has_case_concluded_form:
         has_case_concluded: Has the case concluded?
+      steps_case_is_preorder_work_claimed_form:
+        is_preorder_work_claimed: Do you intend to claim pre-order work?
       steps_case_is_client_remanded_form:
         is_client_remanded: Has a court remanded your client in custody?
       steps_case_charges_form:
@@ -100,6 +102,9 @@ en:
         appeal_lodged_date: For example, 27 3 2007
       steps_case_has_case_concluded_form:
         date_case_concluded: For example, 27 3 2007
+      steps_case_is_preorder_work_claimed_form:
+        preorder_work_date: For example, 27 3 2007
+        preorder_work_details: 'Urgency of work details'
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 27 3 2007
       steps_case_charges_form:
@@ -199,6 +204,8 @@ en:
         urn: Enter the unique reference number (URN) for your client’s case (optional)
       steps_case_has_case_concluded_form:
         has_case_concluded_options: *YESNO
+      steps_case_is_preorder_work_claimed_form:
+        is_preorder_work_claimed_options: *YESNO
       steps_case_is_client_remanded_form:
         is_client_remanded_options: *YESNO
       steps_case_charges_form:

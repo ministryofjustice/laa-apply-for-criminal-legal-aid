@@ -16,6 +16,9 @@ describe Summary::Sections::CaseDetails do
   let(:date_case_concluded) { nil }
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
+  let(:is_preorder_work_claimed) { nil }
+  let(:preorder_work_date) { nil }
+  let(:preorder_work_details) { nil }
 
   let(:kase) do
     instance_double(
@@ -24,6 +27,9 @@ describe Summary::Sections::CaseDetails do
       case_type:,
       has_case_concluded:,
       date_case_concluded:,
+      is_preorder_work_claimed:,
+      preorder_work_date:,
+      preorder_work_details:,
       is_client_remanded:,
       date_client_remanded:,
       appeal_maat_id:,

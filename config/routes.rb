@@ -138,6 +138,7 @@ Rails.application.routes.draw do
       namespace :case do
         if FeatureFlags.means_journey.enabled?
           edit_step :has_the_case_concluded, alias: :has_case_concluded
+          edit_step :claim_pre_order_work,  alias: :is_preorder_work_claimed
           edit_step :has_court_remanded_client_in_custody,  alias: :is_client_remanded
         end
         edit_step :urn

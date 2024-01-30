@@ -164,6 +164,26 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
               future_not_allowed: Date case was concluded must be today or in the past
+        steps/case/is_preorder_work_claimed_form:
+          attributes:
+            is_preorder_work_claimed:
+              inclusion: Select yes if you intend to claim pre-order work
+            preorder_work_date:
+              blank: Enter when you or your firm were first instructed
+              blank_day: Date you or your firm were first instructed must include a day
+              blank_month: Date you or your firm were first instructed must include a month
+              blank_year: Date you or your firm were first instructed must include a year
+              blank_day_month: Date you or your firm were first instructed must include a day and month
+              blank_day_year: Date you or your firm were first instructed must include a day and year
+              blank_month_year: Date you or your firm were first instructed must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date you or your firm were first instructed must be today or in the past
+            preorder_work_details:
+              blank: Enter details about the urgency of the work
         steps/case/is_client_remanded_form:
           attributes:
             is_client_remanded:

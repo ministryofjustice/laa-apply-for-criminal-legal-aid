@@ -11,6 +11,9 @@ module SubmissionSerializer
             json.date_case_concluded kase.date_case_concluded
             json.is_client_remanded kase.is_client_remanded
             json.date_client_remanded kase.date_client_remanded
+            json.is_preorder_work_claimed kase.is_preorder_work_claimed
+            json.preorder_work_date kase.preorder_work_date
+            json.preorder_work_details kase.preorder_work_details
             json.appeal_maat_id kase.appeal_maat_id
             json.appeal_lodged_date kase.appeal_lodged_date
             json.appeal_with_changes_details kase.appeal_with_changes_details
