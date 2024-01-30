@@ -1,8 +1,7 @@
 module SubmissionSerializer
   module Sections
     class ApplicationDetails < Sections::BaseSection
-      # rubocop:disable Metrics/AbcSize
-      def to_builder
+      def to_builder # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         Jbuilder.new do |json|
           json.id crime_application.id
           json.parent_id crime_application.parent_id
@@ -14,9 +13,9 @@ module SubmissionSerializer
           json.date_stamp crime_application.date_stamp
           json.ioj_passport crime_application.ioj_passport
           json.means_passport crime_application.means_passport
+          json.additional_information crime_application.additional_information if FeatureFlags.more_information.enabled?
         end
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
