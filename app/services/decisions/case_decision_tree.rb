@@ -1,7 +1,6 @@
 module Decisions
   class CaseDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
-    def destination
+    def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :urn
         FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
@@ -35,7 +34,6 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
@@ -61,11 +59,9 @@ module Decisions
     end
 
     def after_has_codefendants
-      if form_object.has_codefendants.yes?
-        edit_codefendants
-      else
-        edit(:hearing_details)
-      end
+      return edit_codefendants if form_object.has_codefendants.yes?
+
+      edit(:hearing_details)
     end
 
     def edit_codefendants(add_blank: false)
@@ -76,11 +72,9 @@ module Decisions
     end
 
     def after_hearing_details
-      if form_object.is_first_court_hearing.no?
-        edit(:first_court_hearing)
-      else
-        ioj_or_passported
-      end
+      return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
+
+      ioj_or_passported
     end
 
     def ioj_or_passported
@@ -91,18 +85,16 @@ module Decisions
       end
     end
 
-    # rubocop:disable Lint/DuplicateBranch
     def after_ioj
-      if Passporting::MeansPassporter.new(current_crime_application).call
-        edit('/steps/submission/review')
-      elsif Evidence::Requirements.new(current_crime_application).any?
-        edit('/steps/evidence/upload')
-      else
-        # TODO: post-MVP implement means assessment steps
-        edit('/steps/submission/review')
-      end
+      return edit('/steps/evidence/upload') if evidence_upload_required?
+
+      submission_root_step
     end
-    # rubocop:enable Lint/DuplicateBranch
+
+    def evidence_upload_required?
+      Evidence::Requirements.new(current_crime_application).any? &&
+        !Passporting::MeansPassporter.new(current_crime_application).call
+    end
 
     def edit_new_charge
       charge = case_charges.create!
@@ -119,6 +111,12 @@ module Decisions
 
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
+    end
+
+    def submission_root_step
+      return edit('/steps/submission/review') unless FeatureFlags.more_information.enabled?
+
+      edit('/steps/submission/more_information')
     end
   end
 end

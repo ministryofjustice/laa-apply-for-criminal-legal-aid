@@ -279,7 +279,17 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:means_passported) { true }
       let(:evidence_required) { false }
 
-      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+
+      context 'when more_information feature flag is not enabled' do
+        before do
+          allow(FeatureFlags).to receive(:more_information) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+          }
+        end
+
+        it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      end
     end
 
     context 'and the application requires evidence upload' do
@@ -294,7 +304,17 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:means_passported) { false }
       let(:evidence_required) { false }
 
-      it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+
+      context 'when more_information feature flag is not enabled' do
+        before do
+          allow(FeatureFlags).to receive(:more_information) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+          }
+        end
+
+        it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
+      end
     end
   end
 end

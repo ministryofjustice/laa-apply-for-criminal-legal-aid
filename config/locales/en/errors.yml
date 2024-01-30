@@ -385,6 +385,10 @@ en:
               inclusion: Select yes if your client’s outgoings are more than their income
             how_manage:
               blank: Enter how your client manages if their outgoings are more than their income
+        steps/submission/more_information_form:
+          attributes:
+            additional_information:
+              blank: Enter details you need to add to the application or select no
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:
