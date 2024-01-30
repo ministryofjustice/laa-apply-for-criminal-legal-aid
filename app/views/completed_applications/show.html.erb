@@ -10,9 +10,9 @@
     <%= render partial: 'return_notification',
                locals: { return_details: @crime_application.return_details } if @crime_application.returned? %>
 
-    <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
+             <h1 class="govuk-heading-xl"><%= t(".heading.#{@crime_application.application_type}") %></h1>
 
-    <% unless @crime_application.returned? %>
+    <% if @crime_application.can_be_withdrawn? %>
       <div class="govuk-inset-text">
         <p class="govuk-body">
           <%= t('.helpline.intro') %>

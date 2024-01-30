@@ -8,7 +8,7 @@
         <% if @crime_application.resubmission? %>
           Application updated
         <% else %>
-          Application complete
+          <%= t(".heading.#{@crime_application.application_type}") %>
         <% end %>
       </h1>
       <div class="govuk-panel__body">
@@ -24,7 +24,7 @@
     </h2>
 
     <p class="govuk-body">
-      We’ll check your application to see if your client is entitled to legal aid.
+      <%= t(".what_happens_next.#{@crime_application.application_type}") %>
     </p>
 
     <p class="govuk-body">
@@ -36,7 +36,7 @@
     </p>
 
     <div class="govuk-button-group govuk-!-margin-top-8">
-      <%= link_button t('.view_application'), completed_crime_application_path %>
+      <%= link_button t(".view_application.#{@crime_application.application_type}"), completed_crime_application_path %>
       <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
     </div>
   </div>

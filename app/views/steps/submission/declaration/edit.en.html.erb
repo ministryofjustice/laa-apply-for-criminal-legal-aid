@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <%= render partial: current_crime_application.application_type %>
+    <%= render partial: @form_object.application_type %>
 
     <%= render partial: 'fulfilment_errors',
                locals: { errors: @form_object.fulfilment_errors } if @form_object.fulfilment_errors.any? %>
@@ -18,7 +18,7 @@
                                extra_letter_spacing: true %>
       <% end %>
 
-      <%= f.continue_button(primary: :save_and_submit) %>
+      <%= f.continue_button(primary: "save_and_submit_#{@form_object.application_type}") %>
     <% end %>
   </div>
 </div>

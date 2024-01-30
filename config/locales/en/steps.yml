@@ -284,8 +284,8 @@ en:
     evidence:
       upload:
         edit:
-          page_title: Upload supporting evidence
-          heading: Upload supporting evidence
+          page_title: Add supporting evidence
+          heading: Add supporting evidence
           explanation: Use this page to provide
           recent_docs: All evidence must be from the last 3 months.
           upload_file_button: Upload file
@@ -330,7 +330,18 @@ en:
       confirmation:
         show:
           page_title: Application submitted
-          view_application: View completed application
+          heading: 
+            initial: Application complete
+            post_submission_evidence: Evidence submitted
+            resubmission: Application updated 
+          what_happens_next: 
+            initial: We’ll check your application to see if your client is entitled to legal aid.
+            post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
+          view_application: 
+            initial: View completed application
+            post_submission_evidence: View submitted evidence
+        
+
       failure:
         edit:
           page_title: Application submission failed
