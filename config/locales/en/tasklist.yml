@@ -3,7 +3,7 @@ en:
   tasklist:
     heading_text:
       initial: Make a new application
-      post_submission_evidence: Submit supporting evidence for a previously submitted application
+      post_submission_evidence: Add supporting evidence
     heading:
       client_details: About your client
       case_details: About the case
@@ -20,7 +20,7 @@ en:
       check_your_answers: Check your answers
       check_assessment_result: Check means assessment result
       evidence_upload: Upload evidence
-      pse_evidence_upload: Upload post submission evidence
+      pse_evidence_upload: Add supporting evidence
       review: Review the application
       declaration: Confirm declaration and submit application
       confirm_and_submit: Confirm and submit application

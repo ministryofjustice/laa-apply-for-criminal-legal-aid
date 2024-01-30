@@ -25,6 +25,8 @@ module Steps
       new(attrs)
     end
 
+    delegate :application_type, to: :crime_application
+
     def save
       valid? && persist!
     end

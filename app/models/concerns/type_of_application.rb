@@ -20,6 +20,10 @@ module TypeOfApplication
     returned_at.present?
   end
 
+  def resubmission?
+    initial? && parent_id.present?
+  end
+
   def post_submission_evidence?
     application_type_eql?(:post_submission_evidence)
   end
