@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     get 'login', to: 'errors#unauthenticated', as: :new_provider_session
 
     namespace :providers do
-      delete 'logout', to: 'sessions#destroy', as: :logout
+      get 'logout', to: 'sessions#destroy', as: :logout
     end
   end
 

@@ -48,15 +48,6 @@ body.js-enabled {
   color: $govuk-link-colour;
 }
 
-.app-header__auth-link {
-  // 1. Remove any button styling
-  @include app-button-reset;
-
-  // 2. Apply header link styling
-  @include govuk-font($size: 16, $weight: bold);
-  white-space: nowrap;
-}
-
 .app-dashboard-table {
   .govuk-table__header,
   .govuk-table__cell {

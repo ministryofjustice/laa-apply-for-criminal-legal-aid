@@ -11,8 +11,8 @@
               class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
 <% end %>
 
-<% content_for(:header_navigation) do %>
-  <% render partial: 'layouts/header_navigation' %>
+<% content_for(:header) do %>
+  <% render partial: 'layouts/header' %>
 <% end %>
 
 <% content_for(:cookie_banner) do %>
@@ -27,10 +27,9 @@
 
 <% content_for(:phase_banner) do %>
   <% env = HostEnv.env_name  %>
-  <%= govuk_phase_banner(tag: {text: t("layouts.phase_banner.tag.#{env}"), colour: t("layouts.phase_banner.colour.#{env}")},
+  <%= govuk_phase_banner(tag: { text: t("layouts.phase_banner.tag.#{env}"), colour: t("layouts.phase_banner.colour.#{env}") },
                          text: t('layouts.phase_banner.text_html', survey_url: Settings.feedback_survey_url),
-                         classes: "govuk-phase-banner-#{env}"
-      ) %>
+                         classes: "govuk-phase-banner-#{env}") %>
 <% end %>
 
 <% content_for(:content) do %>
