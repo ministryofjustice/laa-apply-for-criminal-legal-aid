@@ -13,17 +13,16 @@
 }
 
 // Differentiate the header in non-production envs by
-// overriding the color of the header and phase tag
-.app-body {
-  &:not(&--production) {
-    $colour: govuk-colour("orange");
+// overriding the default colour
+$colours: ("staging": govuk-colour("orange"), "local": govuk-colour("green"));
 
-    .govuk-header__container {
-      border-bottom-color: $colour;
-    }
-    .govuk-phase-banner__content__tag {
-      background-color: $colour;
-    }
+@each $key, $colour in $colours {
+  .govuk-phase-banner-#{$key} {
+    border-bottom-color: $colour;
+  }
+
+  .govuk-header-#{$key} > .govuk-header__container {
+    border-bottom-color: $colour;
   }
 }
 
@@ -47,15 +46,6 @@ body.js-enabled {
 
   // Buttons can't have different colours for visited/unvisited
   color: $govuk-link-colour;
-}
-
-.app-header__auth-link {
-  // 1. Remove any button styling
-  @include app-button-reset;
-
-  // 2. Apply header link styling
-  @include govuk-font($size: 16, $weight: bold);
-  white-space: nowrap;
 }
 
 .app-dashboard-table {

@@ -120,7 +120,7 @@ en:
 
   kaminari:
     paginator:
-      nav_aria_label: Results
+      nav_aria_label: Pagination
     prev_page:
       previous_html: Previous <span class="govuk-visually-hidden">page of applications</span>
     next_page:
