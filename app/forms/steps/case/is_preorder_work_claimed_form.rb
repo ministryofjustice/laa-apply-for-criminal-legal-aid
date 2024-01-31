@@ -15,6 +15,8 @@ module Steps
                 presence: true,
                 if: -> { preorder_work_claimed? }
 
+      validates :preorder_work_details, presence: true, if: -> { preorder_work_claimed? }
+
       def choices
         YesNoAnswer.values
       end

@@ -75,9 +75,10 @@ RSpec.describe Steps::Case::IsPreorderWorkClaimedForm do
 
           it { is_expected.to be_valid }
 
-          it 'can make preorder_work_date field nil if no longer required' do
+          it 'can make preorder_work_date and preorder_work_details field nil if no longer required' do
             attributes = form.send(:attributes_to_reset)
             expect(attributes['preorder_work_date']).to be_nil
+            expect(attributes['preorder_work_details']).to be_nil
           end
         end
       end
@@ -90,13 +91,8 @@ RSpec.describe Steps::Case::IsPreorderWorkClaimedForm do
 
           it 'is valid' do
             expect(form).to be_valid
-            expect(
-              form.errors.of_kind?(
-                :preorder_work_date,
-                :preorder_work_details,
-                :present
-              )
-            ).to be(false)
+            expect(form.errors.of_kind?(:preorder_work_date, :present)).to be(false)
+            expect(form.errors.of_kind?(:preorder_work_details, :present)).to be(false)
           end
 
           it 'cannot reset `preorder_work_date` as it is relevant' do
@@ -107,20 +103,15 @@ RSpec.describe Steps::Case::IsPreorderWorkClaimedForm do
           end
         end
 
-        context 'when a `preorder_work_date` was not previously recorded' do
+        context 'when a `preorder_work_date` and `preorder_work_details` was not previously recorded' do
           let(:is_preorder_work_claimed) { YesNoAnswer::YES.to_s }
           let(:preorder_work_date) { 1.month.ago.to_date }
           let(:preorder_work_details) { 'details text' }
 
           it 'is also valid' do
             expect(form).to be_valid
-            expect(
-              form.errors.of_kind?(
-                :preorder_work_date,
-                :preorder_work_details,
-                :present
-              )
-            ).to be(false)
+            expect(form.errors.of_kind?(:preorder_work_date, :present)).to be(false)
+            expect(form.errors.of_kind?(:preorder_work_details, :present)).to be(false)
           end
         end
       end
