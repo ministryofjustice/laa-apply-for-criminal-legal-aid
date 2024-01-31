@@ -3,7 +3,7 @@ module Decisions
     def destination
       case step_name
       when :housing_payment_type
-        edit(:council_tax)
+        edit(:housing_payment)
       when :council_tax
         # TODO: link to next step when we have it
         edit(:income_tax_rate)
