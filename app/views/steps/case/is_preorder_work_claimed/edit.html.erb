@@ -15,9 +15,9 @@
                                        size: 's'
                                      } %>
               <%= f.govuk_text_area :preorder_work_details,
-                                   label: { hidden: true },
-                                   'aria-live': 'polite',
-                                   'aria-label': t('.preorder_work_details',) %>
+                                    label: { hidden: true },
+                                    'aria-live': 'polite',
+                                    'aria-label': t('.preorder_work_details',) %>
             <% end %>
           <% else %>
             <%= f.govuk_radio_button :is_preorder_work_claimed, choice.value, link_errors: index.zero? %>
