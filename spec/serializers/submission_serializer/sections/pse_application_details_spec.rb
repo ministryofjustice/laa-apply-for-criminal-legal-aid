@@ -19,6 +19,7 @@ RSpec.describe SubmissionSerializer::Sections::PseApplicationDetails do
           application_type: 'post_submission_evidence',
           ioj_passport: ['on_age_under18'],
           means_passport: ['on_age_under18'],
+          additional_information: 'PSE additional information',
         )
       end
 
@@ -30,7 +31,8 @@ RSpec.describe SubmissionSerializer::Sections::PseApplicationDetails do
           reference: 10_000_001,
           application_type: 'post_submission_evidence',
           created_at: created_at,
-          submitted_at: submitted_at
+          submitted_at: submitted_at,
+          additional_information: 'PSE additional information'
         }.as_json
       end
 

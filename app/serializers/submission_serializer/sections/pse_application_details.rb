@@ -10,6 +10,7 @@ module SubmissionSerializer
           json.application_type crime_application.application_type
           json.created_at crime_application.created_at
           json.submitted_at crime_application.submitted_at
+          json.additional_information crime_application.additional_information if FeatureFlags.more_information.enabled?
         end
       end
     end
