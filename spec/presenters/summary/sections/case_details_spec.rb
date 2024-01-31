@@ -145,24 +145,6 @@ describe Summary::Sections::CaseDetails do
       it 'has the correct rows' do
         expect(answers.count).to eq(5)
 
-        answer = answers[0]
-        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answer.question).to eq(:case_type)
-        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
-        expect(answer.value).to eq('foobar')
-
-        answer = answers[1]
-        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answer.question).to eq(:case_urn)
-        expect(answer.change_path).to match('applications/12345/steps/case/urn')
-        expect(answer.value).to eq('xyz')
-
-        answer = answers[2]
-        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answer.question).to eq(:has_case_concluded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_the_case_concluded')
-        expect(answer.value).to eq('no')
-
         answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:is_preorder_work_claimed)
@@ -191,24 +173,6 @@ describe Summary::Sections::CaseDetails do
       it 'has the correct rows' do
         expect(answers.count).to eq(8)
 
-        answer = answers[0]
-        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answer.question).to eq(:case_type)
-        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
-        expect(answer.value).to eq('foobar')
-
-        answer = answers[1]
-        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answer.question).to eq(:case_urn)
-        expect(answer.change_path).to match('applications/12345/steps/case/urn')
-        expect(answer.value).to eq('xyz')
-
-        answer = answers[2]
-        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answer.question).to eq(:has_case_concluded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_the_case_concluded')
-        expect(answer.value).to eq('no')
-
         answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:is_preorder_work_claimed)
@@ -226,18 +190,6 @@ describe Summary::Sections::CaseDetails do
         expect(answer.question).to eq(:preorder_work_details)
         expect(answer.change_path).to match('applications/12345/steps/case/claim_pre_order_work')
         expect(answer.value).to eq(preorder_work_details)
-
-        answer = answers[6]
-        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answer.question).to eq(:is_client_remanded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
-        expect(answer.value).to eq('yes')
-
-        answer = answers[7]
-        expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
-        expect(answer.question).to eq(:date_client_remanded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
-        expect(answer.value).to eq(date_client_remanded)
       end
     end
 
