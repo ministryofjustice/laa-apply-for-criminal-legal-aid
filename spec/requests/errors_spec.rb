@@ -67,7 +67,7 @@ RSpec.describe 'Error pages' do
   describe 'double sign outs' do
     before do
       # We are already signed out, we trigger another one
-      delete providers_logout_path
+      get providers_logout_path
     end
 
     it 'does not show any flash message' do

@@ -5,7 +5,7 @@
   border-width: $govuk-border-width-form-element $govuk-border-width-form-element 0 $govuk-border-width-form-element;
   border-style: solid;
   border-color: currentColor;
-  background-color: govuk-colour("light-grey", $legacy: "grey-3");
+  background-color: govuk-colour("light-grey");
 }
 
 .govuk-input__suggestions-list {

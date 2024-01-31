@@ -1,8 +1,6 @@
 // [change: commented out all polyfills imports]
 // import 'govuk-frontend/vendor/polyfills/Function/prototype/bind'
 // addEventListener, event.target normalization and DOMContentLoaded
-// import '../../vendor/polyfills/Event'
-// import '../../vendor/polyfills/Element/prototype/classList'
 
 function Input ($module) {
   this.$module = $module
