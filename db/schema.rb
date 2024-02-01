@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_29_124609) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -52,6 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_124609) do
     t.date "date_case_concluded"
     t.string "is_client_remanded"
     t.date "date_client_remanded"
+    t.string "is_preorder_work_claimed"
+    t.date "preorder_work_date"
+    t.text "preorder_work_details"
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 

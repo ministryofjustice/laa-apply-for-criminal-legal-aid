@@ -61,6 +61,9 @@ RSpec.describe Adapters::Structs::CaseDetails do
           appeal_with_changes_details
           has_case_concluded
           date_case_concluded
+          is_preorder_work_claimed
+          preorder_work_date
+          preorder_work_details
           is_client_remanded
           date_client_remanded
           charges

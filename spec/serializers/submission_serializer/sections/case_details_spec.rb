@@ -6,6 +6,7 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   let(:crime_application) { instance_double(CrimeApplication, case: kase) }
   let(:case_concluded_date) { DateTime.new(2023, 3, 2) }
   let(:client_remand_date) { DateTime.new(2023, 3, 2) }
+  let(:preorder_work_date) { DateTime.new(2023, 3, 2) }
 
   let(:kase) do
     instance_double(
@@ -14,6 +15,9 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       case_type: case_type,
       has_case_concluded: 'yes',
       date_case_concluded: case_concluded_date,
+      is_preorder_work_claimed: 'yes',
+      preorder_work_date: client_remand_date,
+      preorder_work_details: 'preorder_work_details',
       is_client_remanded: 'yes',
       date_client_remanded: client_remand_date,
       appeal_maat_id: '123',
@@ -39,6 +43,9 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         case_type: case_type,
         has_case_concluded: 'yes',
         date_case_concluded: case_concluded_date,
+        is_preorder_work_claimed: 'yes',
+        preorder_work_date: client_remand_date,
+        preorder_work_details: 'preorder_work_details',
         is_client_remanded: 'yes',
         date_client_remanded: client_remand_date,
         appeal_maat_id: '123',

@@ -52,7 +52,16 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_case_concluded }
 
-    it 'redirects to the `has_case_concluded` page' do
+    it 'redirects to the `is_preorder_work_claimed` page' do
+      expect(subject).to have_destination(:is_preorder_work_claimed, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `is_preorder_work_claimed`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :is_preorder_work_claimed }
+
+    it 'redirects to the `is_client_remanded` page' do
       expect(subject).to have_destination(:is_client_remanded, :edit, id: crime_application)
     end
   end

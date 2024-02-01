@@ -151,6 +151,11 @@ en:
         edit:
           page_title: Has the case concluded?
           date_case_concluded: Enter when the case concluded
+      is_preorder_work_claimed:
+        edit:
+          page_title: Do you intend to claim pre-order work?
+          preorder_work_date: Enter when you or your firm were first instructed
+          preorder_work_details: Enter details about the urgency of the work
       is_client_remanded:
         edit:
           page_title: Has a court remanded your client in custody?

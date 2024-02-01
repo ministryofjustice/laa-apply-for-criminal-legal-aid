@@ -49,6 +49,23 @@ module Summary
           ),
 
           Components::ValueAnswer.new(
+            :is_preorder_work_claimed, kase.is_preorder_work_claimed,
+            change_path: preorder_work_claimed_path
+          ),
+
+          Components::DateAnswer.new(
+            :preorder_work_date, kase.preorder_work_date,
+            show: preorder_work_claimed?,
+            change_path: preorder_work_claimed_path
+          ),
+
+          Components::FreeTextAnswer.new(
+            :preorder_work_details, kase.preorder_work_details,
+            show: preorder_work_claimed?,
+            change_path: preorder_work_claimed_path
+          ),
+
+          Components::ValueAnswer.new(
             :is_client_remanded, kase.is_client_remanded,
             change_path: client_remanded_change_path
           ),
@@ -69,7 +86,13 @@ module Summary
       end
 
       def case_concluded?
-        kase.has_case_concluded == 'yes' && !kase.date_case_concluded.nil?
+        kase.has_case_concluded == 'yes' && kase.date_case_concluded.present?
+      end
+
+      def preorder_work_claimed?
+        kase.is_preorder_work_claimed == 'yes' &&
+          kase.preorder_work_date.present? &&
+          kase.preorder_work_details.present?
       end
 
       def client_remanded?
@@ -80,6 +103,12 @@ module Summary
         return nil unless FeatureFlags.means_journey.enabled?
 
         edit_steps_case_has_case_concluded_path
+      end
+
+      def preorder_work_claimed_path
+        return nil unless FeatureFlags.means_journey.enabled?
+
+        edit_steps_case_is_preorder_work_claimed_path
       end
 
       def client_remanded_change_path

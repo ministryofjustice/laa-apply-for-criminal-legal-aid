@@ -5,6 +5,8 @@ module Decisions
       when :urn
         FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
       when :has_case_concluded
+        edit(:is_preorder_work_claimed)
+      when :is_preorder_work_claimed
         edit(:is_client_remanded)
       when :is_client_remanded
         charges_summary_or_edit_new_charge

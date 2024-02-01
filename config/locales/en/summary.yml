@@ -102,6 +102,14 @@ en:
           <<: *YESNO
       date_case_concluded:
         question: Date the case concluded
+      is_preorder_work_claimed:
+        question: Do you intend to claim pre-order work?
+        answers:
+          <<: *YESNO
+      preorder_work_date:
+        question: When you or your firm were first instructed
+      preorder_work_details:
+        question: Details about the urgency of the work
       is_client_remanded:
         question: Has a court remanded your client in custody?
         answers:
