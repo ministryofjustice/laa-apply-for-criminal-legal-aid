@@ -104,7 +104,7 @@ en:
         date_case_concluded: For example, 27 3 2007
       steps_case_is_preorder_work_claimed_form:
         preorder_work_date: For example, 27 3 2007
-        preorder_work_details: 'Urgency of work details'
+        preorder_work_details: Urgency of work details
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 27 3 2007
       steps_case_charges_form:
