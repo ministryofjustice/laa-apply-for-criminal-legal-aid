@@ -77,7 +77,9 @@ en:
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_submission_more_information_form:
-        need_more_information: Do you need to add any more information to this application? 
+        need_more_information: Do you need to add any more information to this application?
+      steps_partner_details_form:
+        date_of_birth: Date of birth
         
 
     hint:
@@ -136,6 +138,9 @@ en:
         date_job_lost: For example, 27 3 2007
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
+      steps_partner_details_form:
+        other_names: This includes aliases, nicknames or other names your client may be known as.
+        date_of_birth: For example, 27 3 2007
 
     label:
       cookies_settings_form:
@@ -301,3 +306,7 @@ en:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
+      steps_partner_details_form:
+        first_name: First name
+        last_name: Last name
+        other_names: Other names (optional)

@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset legend: { text: t('.full_name_legend') } do %>
+        <%= f.govuk_text_field :first_name, autocomplete: 'off', width: 'three-quarters' %>
+        <%= f.govuk_text_field :last_name, autocomplete: 'off', width: 'three-quarters' %>
+      <% end %>
+
+      <%= f.govuk_text_field :other_names, autocomplete: 'off', width: 'three-quarters', label: { size: 'm' } %>
+
+      <%= f.govuk_date_field :date_of_birth, maxlength_enabled: true, legend: { size: 'm' } %>
+
+      <%= f.continue_button(secondary: false) %>
+    <% end %>
+  </div>
+</div>

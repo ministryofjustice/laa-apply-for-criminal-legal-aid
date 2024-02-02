@@ -86,6 +86,13 @@ en:
           page_title: Client’s contact details
           heading: Enter your client’s contact details
 
+    partner:
+      details:
+        edit:
+          page_title: Enter your partner’s details
+          heading: Enter your partner’s details
+          full_name_legend: Partner’s full name
+
     dwp:
       confirm_result:
         edit:

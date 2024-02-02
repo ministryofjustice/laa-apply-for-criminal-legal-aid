@@ -1,34 +1,12 @@
 module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
-  class ClientDecisionTree < BaseDecisionTree
+  class PartnerDecisionTree < BaseDecisionTree
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
-      when :is_means_tested
-        after_is_means_tested
-      when :has_partner
-        after_has_partner
       when :details
-        after_client_details
-      when :case_type
-        after_case_type
-      when :appeal_details
-        date_stamp_if_needed
-      when :date_stamp
-        start_address_journey(HomeAddress)
-      when :contact_details
-        after_contact_details
-      when :has_nino
-        after_has_nino
-      when :benefit_type
-        after_benefit_type
-      when :retry_benefit_check
-        determine_dwp_result_page
-      when :benefit_check_result
-        after_dwp_check
-      when :has_benefit_evidence
-        after_has_benefit_evidence
+        after_partner_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -37,20 +15,8 @@ module Decisions
 
     private
 
-    def after_is_means_tested
-      if form_object.is_means_tested.yes?
-        edit(:has_partner)
-      else
-        # Task list
-        edit('/crime_applications')
-      end
-    end
 
-    def after_has_partner
-      edit('/crime_applications')
-    end
-
-    def after_client_details
+    def after_partner_details
       if DateStamper.new(form_object.crime_application).call
         edit(:date_stamp)
       elsif form_object.crime_application.not_means_tested?

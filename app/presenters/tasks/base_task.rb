@@ -46,6 +46,10 @@ module Tasks
       true
     end
 
+    def has_partner?
+      crime_application.partner
+    end
+
     # :nocov:
     def can_start?
       raise 'implement in task subclasses'

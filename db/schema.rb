@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -139,7 +139,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
-    t.string "payments", default: [], array: true
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -200,7 +199,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

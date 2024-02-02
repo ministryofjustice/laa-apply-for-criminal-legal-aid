@@ -14,6 +14,7 @@ en:
     task:
       more_information: Add any more information
       client_details: Client details
+      partner_details: Partner details
       case_details: Case details
       ioj: Justification for legal aid
       income_assessment: Income assessment
