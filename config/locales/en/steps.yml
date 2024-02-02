@@ -19,7 +19,7 @@ en:
     client:
       is_means_tested:
         edit:
-          page_title: Is this application means tested?
+          page_title:  Is this application subject to the usual means or passported test?
       has_partner:
         edit:
           page_title: Does your client have a partner?
