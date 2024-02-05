@@ -40,7 +40,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'feature flag `means_journey` is disabled' do
       let(:feature_flag_means_journey_enabled) { false }
-      let(:charges_double) { double(any?: false, create!: 'charge', select: nil) }
+      let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
 
       it 'redirects to the edit `charges` page' do
         expect(subject).to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge')
@@ -71,7 +71,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:step_name) { :is_client_remanded }
 
     context 'and there are no charges yet' do
-      let(:charges_double) { double(any?: false, create!: 'charge', select: nil) }
+      let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
 
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
     end
@@ -180,7 +180,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'and answer is `yes`' do
       let(:add_offence) { YesNoAnswer::YES }
-      let(:charges_double) { double(create!: 'charge', select: nil) }
+      let(:charges_double) { double(create!: 'charge', reject: nil) }
 
       # No need to repeat this test, just once is enough as sanity check
       it 'creates a blank new `charge` record' do

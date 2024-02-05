@@ -17,10 +17,6 @@ class Charge < ApplicationRecord
     offence_name.present? && valid_dates?
   end
 
-  def incomplete?
-    !complete?
-  end
-
   def valid_dates?
     offence_dates.any? && offence_dates.all?(&:date_from)
   end

@@ -105,7 +105,7 @@ module Decisions
     end
 
     def incomplete_charges
-      case_charges.select(&:incomplete?)
+      case_charges.reject(&:complete?)
     end
 
     def case_charges
