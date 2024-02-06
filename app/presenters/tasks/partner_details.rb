@@ -5,7 +5,7 @@ module Tasks
     end
 
     def not_applicable?
-      has_partner?
+      !include_partner?
     end
 
     # Client details is the first thing a provider can do so it is always true

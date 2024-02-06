@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_02_172256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
     t.string "lookup_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
+  end
+
+  create_table "amounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount"
+    t.string "frequency"
+    t.string "type_of_amount"
+    t.bigint "crime_application_id"
+    t.jsonb "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_amounts_on_crime_application_id"
   end
 
   create_table "cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -124,6 +135,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
+  create_table "income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_type", null: false
+    t.integer "amount", null: false
+    t.string "frequency", null: false
+    t.string "details"
+    t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
+  end
+
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
@@ -183,6 +205,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
+  create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.uuid "partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -228,6 +258,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_02_161747) do
   add_foreign_key "codefendants", "cases"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
+  add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"

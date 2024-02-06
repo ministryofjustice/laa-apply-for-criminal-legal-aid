@@ -46,8 +46,8 @@ module Tasks
       true
     end
 
-    def has_partner?
-      crime_application.partner
+    def include_partner?
+      crime_application.client_has_partner == 'yes'
     end
 
     # :nocov:

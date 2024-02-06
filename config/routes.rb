@@ -105,7 +105,7 @@ Rails.application.routes.draw do
           edit_step :is_application_means_tested, alias: :is_means_tested
         end
         edit_step :has_partner
-        # show_step :partner_exit
+        show_step :partner_exit
         edit_step :details
         edit_step :case_type
         edit_step :appeal_details
@@ -125,7 +125,7 @@ Rails.application.routes.draw do
 
       namespace :partner do
         edit_step :details
-        edit_step :case_relationship
+        edit_step :involvement
       end
 
       namespace :dwp do

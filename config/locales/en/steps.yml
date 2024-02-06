@@ -92,6 +92,12 @@ en:
           page_title: Enter your partner’s details
           heading: Enter your partner’s details
           full_name_legend: Partner’s full name
+      involvement:
+        edit:
+          page_title: Is your client's partner involved in the case
+          heading: Is  client's partner involved in the case
+          conflict_of_interest: CONFLICT
+          involvement_in_case: OOI
 
     dwp:
       confirm_result:

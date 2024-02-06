@@ -443,3 +443,10 @@ en:
               year_too_early: Date of birth is too far in the past
               future_not_allowed: Date of birth must be in the past
               client_under_ten: Your client must be aged 10 or over to have been charged in England and Wales
+
+        steps/partner/involvement_form:
+          attributes:
+            involvement_in_case:
+              blank: Select which one 
+            conflict_of_interest:
+              blank: Select yes if there is a conflict of interest

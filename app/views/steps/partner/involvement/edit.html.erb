@@ -1,0 +1,24 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:involved_in_case, legend: { tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_radio_button :is_involved_in_case, YesNoAnswer::YES do %>
+          <% f.govuk_radio_buttons_fieldset :involvement_in_case, legend: { hidden: true} do %>
+            <%= f.govuk_radio_button :involvement_in_case, InvolvementInCase::VICTIM %>
+            <%= f.govuk_radio_button :involvement_in_case, InvolvementInCase::PROSECUTION_WITNESS %>
+            <%= f.govuk_radio_button :involvement_in_case, InvolvementInCase::CODEFENDANT do %>
+              <%= f.govuk_collection_radio_buttons :conflict_of_interest, YesNoAnswer.values, :value, inline: true, legend: { size: 'm' } %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= f.govuk_radio_button :is_involved_in_case, YesNoAnswer.new(:no) %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
