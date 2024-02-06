@@ -40,7 +40,7 @@ module Decisions
     private
 
     def charges_summary_or_edit_new_charge
-      return edit(:charges_summary) if case_charges.any?
+      return edit(:charges_summary) if case_charges.any?(&:complete?)
 
       edit_new_charge
     end
@@ -99,8 +99,13 @@ module Decisions
     end
 
     def edit_new_charge
-      charge = case_charges.create!
+      charge = incomplete_charges.present? ? incomplete_charges.first : case_charges.create!
+
       edit(:charges, charge_id: charge)
+    end
+
+    def incomplete_charges
+      case_charges.reject(&:complete?)
     end
 
     def case_charges
