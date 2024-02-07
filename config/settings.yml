@@ -30,7 +30,7 @@ feature_flags:
   more_information:
     local: true
     staging: true
-    production: false
+    production: true
 
 
 # NOTE: consider if the setting you are adding here
