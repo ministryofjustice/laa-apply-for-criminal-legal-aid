@@ -325,6 +325,8 @@ en:
           summary:
             amount_in_pounds:
               greater_than: "Amount for %{payment_type} must be more than 0"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
             frequency:
               blank: "Select a frequency for %{payment_type}"
               inclusion: "Frquency for %{payment_type} must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"

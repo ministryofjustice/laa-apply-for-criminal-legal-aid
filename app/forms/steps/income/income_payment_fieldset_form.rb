@@ -5,7 +5,7 @@ module Steps
       attribute :payment_type, :string
       attribute :amount, :integer # Save in pence
       attribute :frequency, :string
-      attribute :other_sources_description, :string
+      attribute :details, :string
 
       validates :amount_in_pounds, numericality: {
         greater_than: 0
@@ -13,6 +13,8 @@ module Steps
 
       validates :payment_types, presence: true, inclusion: { in: :payment_types }
       validates :frequency, presence: true, inclusion: { in: :frequencies }
+
+      validate :details_only_when_other?
 
       def payment_types
         IncomePaymentType.values.map(&:to_s) - ['none']
@@ -47,8 +49,17 @@ module Steps
         crime_application.income_payments.find_by(payment_type:)&.delete
       end
 
+      private
+
       def helpers
         ActionController::Base.helpers
+      end
+
+      def details_only_when_other?
+        return true if payment_type == IncomePaymentType::OTHER.to_s
+        return true if details.blank?
+
+        errors.add(:details)
       end
     end
   end

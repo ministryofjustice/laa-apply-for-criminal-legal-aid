@@ -5,7 +5,7 @@ class IncomePaymentsValidator < ActiveModel::Validator
     @record = record
 
     record.types.each_with_index do |type, index|
-      next if type == 'none'
+      next if type == IncomePaymentType::NONE.to_s
 
       income_payment = record.public_send(type)
       add_indexed_errors(income_payment, index) unless income_payment.valid?

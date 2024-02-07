@@ -8,7 +8,7 @@ class CreateIncomePayments < ActiveRecord::Migration[7.0]
       t.string :payment_type, null: false
       t.integer :amount, null: false
       t.string :frequency, null: false
-      t.jsonb :details, default: {}, null: false
+      t.jsonb :metadata, default: {}, null: false
     end
   end
 end

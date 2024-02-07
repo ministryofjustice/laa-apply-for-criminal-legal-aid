@@ -29,7 +29,7 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
   end
 
   # TODO: CRIMAPP-466 Refactor as Money to prevent
-  # type conversion from float to integer
+  # auto-type conversion from float to integer
   describe '#amount' do
     let(:amount) { 304.23 }
     let(:frequency) { 'month' }
@@ -43,10 +43,10 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
     let(:frequency) { 'week' }
     let(:amount) { 0 }
 
-    before {
+    before do
       subject.attributes['amount_in_pounds'] = amount_in_pounds
       subject.valid?
-    }
+    end
 
     context 'when 0' do
       let(:amount_in_pounds) { 0 }
