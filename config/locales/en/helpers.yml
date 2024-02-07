@@ -298,35 +298,35 @@ en:
           other: Other sources of income
           none: My client does not get any of these payments
         maintenance:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         private_pension:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         state_pension:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         interest_investment:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         student_loan_grant:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         board:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         rent:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         financial_support_with_access:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         from_friends_relatives:
+          amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-          amount: *amount_label
         other:
+          amount_in_pounds: Enter total amount of all other sources of income
           frequency_options: *frequency_options
-          amount: Enter total amount of all other sources of income
           details: Enter the other sources of income they get
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO

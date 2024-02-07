@@ -324,7 +324,6 @@ en:
         steps/income/income_payment_fieldset_form:
           summary:
             amount_in_pounds:
-              blank: "Enter an amount for %{payment_type}"
               greater_than: "Amount for %{payment_type} must be more than 0"
             frequency:
               blank: "Select a frequency for %{payment_type}"

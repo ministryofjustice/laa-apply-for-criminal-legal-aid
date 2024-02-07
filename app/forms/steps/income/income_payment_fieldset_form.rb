@@ -3,11 +3,11 @@ module Steps
     class IncomePaymentFieldsetForm < Steps::BaseFormObject
       attribute :id, :string
       attribute :payment_type, :string
-      attribute :amount, :integer
+      attribute :amount, :integer # Save in pence
       attribute :frequency, :string
       attribute :details, :string
 
-      validates :amount_in_pounds, presence: true, numericality: {
+      validates :amount_in_pounds, numericality: {
         greater_than: 0
       }
 
