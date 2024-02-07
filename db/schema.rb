@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_24_001845) do
     t.string "payment_type", null: false
     t.integer "amount", null: false
     t.string "frequency", null: false
-    t.string "details"
+    t.jsonb "details", default: {}, null: false
     t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
   end
 

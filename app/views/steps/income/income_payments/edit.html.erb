@@ -22,7 +22,7 @@
                                         PaymentFrequencyType.values,
                                         :value,
                                         legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-                <%= g.govuk_text_area :details if type == IncomePaymentType::OTHER.to_s %>
+                <%= g.govuk_text_area :other_sources_description if type == IncomePaymentType::OTHER.to_s %>
               <% end %>
             <% end %>
           <% end %>

@@ -5,7 +5,7 @@ module Steps
       attribute :payment_type, :string
       attribute :amount, :integer # Save in pence
       attribute :frequency, :string
-      attribute :details, :string
+      attribute :other_sources_description, :string
 
       validates :amount_in_pounds, numericality: {
         greater_than: 0
