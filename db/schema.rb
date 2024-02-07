@@ -208,6 +208,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_172256) do
   create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "involvement_in_case"
     t.string "conflict_of_interest"
+    t.string "same_home_address_as_client"
     t.uuid "partner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

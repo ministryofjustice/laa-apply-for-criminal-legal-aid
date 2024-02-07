@@ -12,6 +12,10 @@ class AddressFormPresenter < BasePresenter
   def home_address?
     record.is_a?(HomeAddress)
   end
+  
+  def partner_address?
+    record.is_a?(PartnerAddress)
+  end
 
   def addresses
     @addresses ||= begin

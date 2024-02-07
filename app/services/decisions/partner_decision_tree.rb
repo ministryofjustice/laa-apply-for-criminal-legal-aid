@@ -9,7 +9,7 @@ module Decisions
         if partner.has_contrary_interests?
           edit('/steps/client/has_nino')
         else
-          edit(:address)
+          start_address_journey(HomeAddress)
         end
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -20,6 +20,12 @@ module Decisions
 
     def partner
       @partner ||= current_crime_application.partner
+    end
+
+    def start_address_journey(address_class)
+      address = address_class.find_or_create_by(person: partner)
+
+      edit('/steps/address/lookup', address_id: address)
     end
   end
 end

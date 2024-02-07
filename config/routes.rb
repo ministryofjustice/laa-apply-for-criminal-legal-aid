@@ -126,6 +126,13 @@ Rails.application.routes.draw do
       namespace :partner do
         edit_step :details
         edit_step :involvement
+        edit_step :home_address
+
+        namespace :address do
+          crud_step :lookup,  param: :address_id, except: [:destroy]
+          crud_step :results, param: :address_id, except: [:destroy]
+          crud_step :details, param: :address_id, except: [:destroy]
+        end
       end
 
       namespace :dwp do
