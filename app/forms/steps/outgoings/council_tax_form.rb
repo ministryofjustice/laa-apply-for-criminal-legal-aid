@@ -5,7 +5,7 @@ module Steps
       has_one_association :outgoings
 
       attribute :pays_council_tax, :value_object, source: YesNoAnswer
-      attribute :council_tax_amount, :money
+      attribute :council_tax_amount, :pence
 
       validates_inclusion_of :pays_council_tax, in: :choices
 

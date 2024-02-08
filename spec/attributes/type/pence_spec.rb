@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe Type::Money do
-  subject(:money) { described_class.new }
+RSpec.describe Type::Pence do
+  subject(:pence) { described_class.new }
 
   describe 'registry' do
-    it 'is registered with ActiveModel type `:money`' do
+    it 'is registered with ActiveModel type `:pence`' do
       expect(
-        ActiveModel::Type.lookup(:money).is_a?(described_class)
+        ActiveModel::Type.lookup(:pence).is_a?(described_class)
       ).to be(true)
     end
 
-    it 'has an underlying type of `:money`' do
-      expect(subject.type).to eq(:money)
+    it 'has an underlying type of `:pence`' do
+      expect(subject.type).to eq(:pence)
     end
   end
 
   describe '#serialize' do
-    subject(:serialized_value) { money.serialize(value) }
+    subject(:serialized_value) { pence.serialize(value) }
 
     describe 'when value is `nil`' do
       let(:value) { 0 }
@@ -46,7 +46,7 @@ RSpec.describe Type::Money do
   end
 
   describe '#deserialize(value)' do
-    subject(:deserialized_value) { money.deserialize(value) }
+    subject(:deserialized_value) { pence.deserialize(value) }
 
     describe 'when value is `nil`' do
       let(:value) { nil }
@@ -70,7 +70,7 @@ RSpec.describe Type::Money do
   end
 
   describe '#cast(value)' do
-    subject(:coerced_value) { money.cast(value) }
+    subject(:coerced_value) { pence.cast(value) }
 
     describe 'when value is `nil`' do
       let(:value) { nil }

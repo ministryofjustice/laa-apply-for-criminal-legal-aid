@@ -1,7 +1,7 @@
 module Type
-  class Money < ActiveRecord::Type::Integer
+  class Pence < ActiveRecord::Type::Integer
     def type
-      :money
+      :pence
     end
 
     def deserialize(value)
