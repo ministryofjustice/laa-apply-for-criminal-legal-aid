@@ -27,6 +27,7 @@ module Decisions
     def url_options(controller, action, params = {})
       { controller: controller, action: action, id: current_crime_application }.merge(params)
     end
+
     # :nocov:
   end
 end

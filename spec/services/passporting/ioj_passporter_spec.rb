@@ -3,11 +3,17 @@ require 'rails_helper'
 RSpec.describe Passporting::IojPassporter do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:, case:, ioj:, parent_id:) }
-  let(:applicant) { instance_double(Applicant, under18?: under18) }
-  let(:case) { instance_double(Case, case_type:, charges:) }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      applicant: instance_double(Applicant, under18?: under18),
+      case: instance_double(Case, case_type:, charges:),
+      ioj: ioj,
+      resubmission?: resubmission?
+    )
+  end
 
-  let(:parent_id) { nil }
+  let(:resubmission?) { false }
   let(:under18) { nil }
   let(:ioj) { nil }
 
@@ -15,7 +21,7 @@ RSpec.describe Passporting::IojPassporter do
   let(:charges) { [] }
 
   before do
-    allow(crime_application).to receive(:ioj_passport).and_return([])
+    allow(crime_application).to receive_messages(ioj_passport: [], not_means_tested?: false)
   end
 
   describe '#call' do
@@ -137,7 +143,7 @@ RSpec.describe Passporting::IojPassporter do
     end
 
     context 'for a resubmitted application' do
-      let(:parent_id) { 'uuid' }
+      let(:resubmission?) { true }
 
       before do
         allow(crime_application).to receive(:ioj_passport).and_return(ioj_passport)
@@ -178,7 +184,6 @@ RSpec.describe Passporting::IojPassporter do
       it { expect(subject.offence_passported?).to be(false) }
     end
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'feature flag is enabled' do
       let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
       let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
@@ -208,6 +213,5 @@ RSpec.describe Passporting::IojPassporter do
         it { expect(subject.offence_passported?).to be(false) }
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 end

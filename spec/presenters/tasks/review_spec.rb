@@ -30,22 +30,46 @@ RSpec.describe Tasks::Review do
   describe '#can_start?' do
     # We assume the completeness of the Ioj here, as
     # their statuses are tested in its own spec, no need to repeat
-    before do
-      allow(
-        subject
-      ).to receive(:fulfilled?).with(Tasks::Ioj).and_return(ioj_fulfilled)
+
+    context 'when an initial application' do
+      before do
+        allow(
+          subject
+        ).to receive(:fulfilled?).with(Tasks::Ioj).and_return(ioj_fulfilled)
+      end
+
+      context 'when the Ioj task has been completed' do
+        let(:ioj_fulfilled) { true }
+
+        it { expect(subject.can_start?).to be(true) }
+      end
+
+      context 'when the Ioj task has not been completed yet' do
+        let(:ioj_fulfilled) { false }
+
+        it { expect(subject.can_start?).to be(false) }
+      end
     end
 
-    context 'when the Ioj task has been completed' do
-      let(:ioj_fulfilled) { true }
+    context 'when the application is PSE' do
+      before do
+        allow(subject).to receive(:fulfilled?).with(Tasks::EvidenceUpload).and_return(
+          evidence_fulfilled
+        )
+        allow(crime_application).to receive(:pse?).and_return(true)
+      end
 
-      it { expect(subject.can_start?).to be(true) }
-    end
+      context 'when the evidence task has been completed' do
+        let(:evidence_fulfilled) { true }
 
-    context 'when the Ioj task has not been completed yet' do
-      let(:ioj_fulfilled) { false }
+        it { expect(subject.can_start?).to be(true) }
+      end
 
-      it { expect(subject.can_start?).to be(false) }
+      context 'when the evidence task has not been completed yet' do
+        let(:evidence_fulfilled) { false }
+
+        it { expect(subject.can_start?).to be(false) }
+      end
     end
   end
 

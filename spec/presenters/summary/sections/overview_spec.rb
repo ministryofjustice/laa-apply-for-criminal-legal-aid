@@ -19,7 +19,7 @@ describe Summary::Sections::Overview do
   let(:status) { :submitted }
 
   before do
-    allow(crime_application).to receive(:in_progress?).and_return(false)
+    allow(crime_application).to receive_messages(case: Case.new, in_progress?: false, is_means_tested: 'yes')
     allow(provider_details).to receive_messages(provider_email: 'provider@example.com', office_code: '123AA')
   end
 
@@ -42,7 +42,7 @@ describe Summary::Sections::Overview do
       end
 
       it 'does not show this section' do
-        expect(subject.show?).to be(false)
+        expect(subject.show?).to be(true)
       end
     end
   end
@@ -50,28 +50,62 @@ describe Summary::Sections::Overview do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    it 'has the correct rows' do
-      expect(answers.count).to eq(5)
+    context 'when the application is completed' do
+      it 'has the correct rows' do
+        expect(answers.count).to eq(6)
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:reference)
-      expect(answers[0].value).to eq('12345')
+        answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:reference)
+        expect(answer.value).to eq('12345')
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
-      expect(answers[1].question).to eq(:date_stamp)
-      expect(answers[1].value).to eq(Date.new(2023, 1, 20))
+        answer = answers[1]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:means_tested)
+        expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
+        expect(answer.value).to eq('yes')
 
-      expect(answers[2]).to be_an_instance_of(Summary::Components::DateAnswer)
-      expect(answers[2].question).to eq(:date_submitted)
-      expect(answers[2].value).to eq(Date.new(2023, 1, 21))
+        answer = answers[2]
+        expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+        expect(answer.question).to eq(:date_stamp)
+        expect(answer.value).to eq(Date.new(2023, 1, 20))
 
-      expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[3].question).to eq(:provider_email)
-      expect(answers[3].value).to eq('provider@example.com')
+        answer = answers[3]
+        expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+        expect(answer.question).to eq(:date_submitted)
+        expect(answer.value).to eq(Date.new(2023, 1, 21))
 
-      expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[4].question).to eq(:office_code)
-      expect(answers[4].value).to eq('123AA')
+        answer = answers[4]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:provider_email)
+        expect(answer.value).to eq('provider@example.com')
+
+        answer = answers[5]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:office_code)
+        expect(answer.value).to eq('123AA')
+      end
+    end
+
+    context 'when the application is in_progress' do
+      before do
+        allow(crime_application).to receive(:in_progress?).and_return(true)
+      end
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(2)
+
+        answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answer.question).to eq(:reference)
+        expect(answer.value).to eq('12345')
+
+        answer = answers[1]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:means_tested)
+        expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
+        expect(answer.value).to eq('yes')
+      end
     end
   end
 end

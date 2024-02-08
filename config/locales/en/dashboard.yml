@@ -9,6 +9,7 @@ en:
         applicant_name: Name
         created_at: Start date
         reference: Reference number
+        application_type: Type of application
         status: Status
         action: Action
       status:
@@ -47,6 +48,7 @@ en:
         applicant_name: Name
         submitted_at: Date submitted
         reference: Reference number
+        application_type: Type of application
         status: Status
         action: Action
       status:
@@ -55,7 +57,9 @@ en:
       no_records: There are no %{status} applications
     show:
       page_title: Application representation order
-      heading: Application for a criminal legal aid representation order
+      heading: 
+        initial: Application for a criminal legal aid representation order
+        post_submission_evidence: Supporting evidence
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
@@ -65,7 +69,7 @@ en:
         phone: 'Telephone: 0300 200 2020'
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
       action:
-        create_pse: Upload post submission evidence
+        create_pse: Add supporting evidence
     return_notification:
       title: Important
       heading:
@@ -116,7 +120,7 @@ en:
 
   kaminari:
     paginator:
-      nav_aria_label: Results
+      nav_aria_label: Pagination
     prev_page:
       previous_html: Previous <span class="govuk-visually-hidden">page of applications</span>
     next_page:

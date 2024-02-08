@@ -21,7 +21,7 @@ RSpec.describe 'Home' do
 
       it 'has the correct phase tag' do
         assert_select 'body.app-body.app-body--test' do
-          assert_select '.govuk-phase-banner__content__tag', 'test'
+          assert_select '.govuk-phase-banner__content__tag', 'Test'
         end
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe 'Home' do
 
       it 'has the correct phase tag' do
         assert_select 'body.app-body.app-body--production' do
-          assert_select '.govuk-phase-banner__content__tag', 'beta'
+          assert_select '.govuk-phase-banner__content__tag', 'Beta'
         end
       end
     end

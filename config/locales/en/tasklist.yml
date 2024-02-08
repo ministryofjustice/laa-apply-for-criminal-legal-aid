@@ -1,13 +1,18 @@
 ---
 en:
   tasklist:
+    heading_text:
+      initial: Make a new application
+      post_submission_evidence: Add supporting evidence
     heading:
       client_details: About your client
       case_details: About the case
       means_assessment: Means assessment
       support_evidence: Supporting evidence
+      more_information: More information
       review_confirm: Review and confirm
     task:
+      more_information: Add any more information
       client_details: Client details
       case_details: Case details
       ioj: Justification for legal aid
@@ -18,6 +23,7 @@ en:
       evidence_upload: Upload evidence
       review: Review the application
       declaration: Confirm declaration and submit application
+      confirm_and_submit: Confirm and submit application
     status:
       completed: Completed
       in_progress: In progress

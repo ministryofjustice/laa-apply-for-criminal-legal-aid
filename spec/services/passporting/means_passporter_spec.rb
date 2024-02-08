@@ -3,21 +3,23 @@ require 'rails_helper'
 RSpec.describe Passporting::MeansPassporter do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:, parent_id:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, resubmission?: resubmission?) }
+
   let(:applicant) { instance_double(Applicant, under18?: under18, passporting_benefit: passporting_benefit) }
 
-  let(:parent_id) { nil }
+  let(:resubmission?) { false }
   let(:under18) { nil }
   let(:passporting_benefit) { nil }
 
   before do
     allow(crime_application).to receive(:update)
+    allow(crime_application).to receive(:is_means_tested)
     allow(crime_application).to receive(:means_passport).and_return([])
   end
 
   describe '#call' do
     context 'for a resubmitted application' do
-      let(:parent_id) { 'uuid' }
+      let(:resubmission?) { true }
 
       it 'uses the existing values' do
         expect(crime_application).not_to receive(:update)
@@ -117,7 +119,7 @@ RSpec.describe Passporting::MeansPassporter do
     end
 
     context 'for a resubmitted application' do
-      let(:parent_id) { 'uuid' }
+      let(:resubmission?) { true }
 
       before do
         allow(crime_application).to receive(:means_passport).and_return(means_passport)
@@ -153,7 +155,7 @@ RSpec.describe Passporting::MeansPassporter do
     end
 
     context 'for a resubmitted application' do
-      let(:parent_id) { 'uuid' }
+      let(:resubmission?) { true }
 
       before do
         allow(crime_application).to receive(:means_passport).and_return(means_passport)

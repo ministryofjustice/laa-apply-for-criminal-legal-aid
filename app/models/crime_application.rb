@@ -2,6 +2,8 @@ class CrimeApplication < ApplicationRecord
   include TypeOfApplication
   include Passportable
 
+  attr_readonly :application_type
+
   has_one :case, dependent: :destroy
 
   has_one :applicant, dependent: :destroy
@@ -36,5 +38,5 @@ class CrimeApplication < ApplicationRecord
 
   # Before submitting the application we run a final
   # validation to ensure some key details are fulfilled
-  validates_with ApplicationFulfilmentValidator, on: :submission
+  validates_with ApplicationFulfilmentValidator, on: :submission, unless: :post_submission_evidence?
 end

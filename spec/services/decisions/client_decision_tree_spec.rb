@@ -7,12 +7,14 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:applicant) { instance_double(Applicant) }
   let(:kase) { instance_double(Case) }
 
+  let(:not_means_tested) { nil }
+
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive_messages(update: true, date_stamp: nil)
+    allow(crime_application).to receive_messages(update: true, date_stamp: nil, not_means_tested?: not_means_tested)
   end
 
   it_behaves_like 'a decision tree'
@@ -55,7 +57,45 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
+    before do
+      allow(crime_application).to receive(:is_means_tested?).and_return(is_means_tested)
+    end
+
+    context 'and application is means tested' do
+      let(:is_means_tested) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
+    end
+
+    context 'and application is not means tested' do
+      let(:is_means_tested) { YesNoAnswer::NO }
+      let(:not_means_tested) { true }
+
+      context 'and application does not already have a date stamp' do
+        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
+      end
+
+      context 'and application already has a date stamp' do
+        before do
+          allow(crime_application).to receive(:date_stamp) { Time.zone.today }
+          allow(
+            Address
+          ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+        end
+
+        let(:is_means_tested) { YesNoAnswer::NO }
+        let(:not_means_tested) { true }
+
+        it {
+          expect(subject).to have_destination(
+            '/steps/address/lookup',
+            :edit,
+            id: crime_application,
+            address_id: 'address'
+          )
+        }
+      end
+    end
   end
 
   context 'when the step is `case_type`' do
@@ -225,7 +265,15 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_nino }
 
-    it { is_expected.to have_destination(:benefit_type, :edit, id: crime_application) }
+    context 'when the application is means tested' do
+      it { is_expected.to have_destination(:benefit_type, :edit, id: crime_application) }
+    end
+
+    context 'when the application is not means tested' do
+      let(:not_means_tested) { true }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `benefit_type`' do

@@ -5,7 +5,8 @@ ruby File.read('.ruby-version').chomp
 
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'faraday', '~> 2.7'
-gem 'govuk_design_system_formbuilder', '~> 4.1.0'
+gem 'govuk-components', '~> 5.0.2'
+gem 'govuk_design_system_formbuilder', '~> 5.0.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
 gem 'lograge'
@@ -47,7 +48,7 @@ gem 'laa-criminal-applications-datastore-api-client',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
-    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v1.0.29'
+    github: 'ministryofjustice/laa-criminal-legal-aid-schemas', tag: 'v1.0.37'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

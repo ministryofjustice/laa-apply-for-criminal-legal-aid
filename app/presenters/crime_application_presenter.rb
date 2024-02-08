@@ -5,10 +5,6 @@ class CrimeApplicationPresenter < BasePresenter
     )
   end
 
-  def resubmission?
-    parent_id.present?
-  end
-
   def applicant_dob
     l(applicant.date_of_birth)
   end
@@ -19,6 +15,10 @@ class CrimeApplicationPresenter < BasePresenter
 
   def applicant?
     applicant.present?
+  end
+
+  def can_be_withdrawn?
+    initial? && !reviewed?
   end
 
   # This is used in the task list (applications in progress)

@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     get 'login', to: 'errors#unauthenticated', as: :new_provider_session
 
     namespace :providers do
-      delete 'logout', to: 'sessions#destroy', as: :logout
+      get 'logout', to: 'sessions#destroy', as: :logout
     end
   end
 
@@ -136,6 +136,11 @@ Rails.application.routes.draw do
       end
 
       namespace :case do
+        if FeatureFlags.means_journey.enabled?
+          edit_step :has_the_case_concluded, alias: :has_case_concluded
+          edit_step :claim_pre_order_work,  alias: :is_preorder_work_claimed
+          edit_step :has_court_remanded_client_in_custody,  alias: :is_client_remanded
+        end
         edit_step :urn
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
@@ -168,11 +173,12 @@ Rails.application.routes.draw do
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
       end
 
-      namespace :evidence, constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+      namespace :evidence do
         edit_step :upload
       end
 
       namespace :submission do
+        edit_step :more_information
         edit_step :review
         edit_step :declaration
         edit_step :failure

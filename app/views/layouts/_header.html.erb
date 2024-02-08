@@ -1,0 +1,9 @@
+<% if signed_in? %>
+  <%= govuk_header(homepage_url: 'https://www.gov.uk', service_name: yield(:service_name), service_url: root_path, classes: "govuk-header-#{HostEnv.env_name}") do |header|
+        header.with_navigation_item(text: t('.your_applications'), href: crime_applications_path, active: false)
+        header.with_navigation_item(text: current_provider.display_name, href: nil, active: false, html_attributes: { aria: { role: 'paragraph' } }, classes: 'app-header__auth-user')
+        header.with_navigation_item(text: t('.sign_out'), href: providers_logout_path, active: false, html_attributes: { aria: { role: 'button' } })
+      end %>
+<% else %>
+  <%= govuk_header(homepage_url: 'https://www.gov.uk', service_name: yield(:service_name), service_url: root_path, classes: "govuk-header-#{HostEnv.env_name}") %>
+<% end %>

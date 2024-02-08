@@ -63,8 +63,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'button.govuk-button', count: 0, text: 'Update application'
     end
 
-    it 'does not have a button to "Upload post submission evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+    it 'does not have a button to "Add supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
     end
 
     context 'when the application has been reviewed' do
@@ -72,8 +72,20 @@ RSpec.describe 'Dashboard', :authorized do
         LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
       end
 
-      it 'has a button to "Upload post submission evidence"' do
-        assert_select 'button.govuk-button', count: 1, text: 'Upload post submission evidence'
+      it 'has a button to "Add supporting evidence"' do
+        assert_select 'button.govuk-button', count: 1, text: 'Add supporting evidence'
+      end
+
+      it 'creates a new PSE application' do
+        expect do
+          post create_pse_completed_crime_application_path(application_fixture_id)
+        end.to change(CrimeApplication.where(parent_id: application_fixture_id), :count).from(0).to(1)
+
+        expect(response).to have_http_status(:redirect)
+
+        follow_redirect!
+
+        assert_select 'h1', 'Add supporting evidence'
       end
 
       context 'when PSE feature flag is not enabled' do
@@ -85,8 +97,8 @@ RSpec.describe 'Dashboard', :authorized do
           get completed_crime_application_path(application_fixture_id)
         end
 
-        it 'does not have a button to "Upload post submission evidence"' do
-          assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+        it 'does not have a button to "Add supporting evidence"' do
+          assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
         end
       end
     end
@@ -99,18 +111,22 @@ RSpec.describe 'Dashboard', :authorized do
           assert_select 'dd:nth-of-type(1)', '6000001'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
+          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dd:nth-of-type(1)', 'Yes'
+        end
+        assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
           assert_select 'dt:nth-of-type(1)', 'Date stamp'
           assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
           assert_select 'dt:nth-of-type(1)', 'Date submitted'
           assert_select 'dd:nth-of-type(1)', '24 October 2022 10:50am'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(5)' do
           assert_select 'dt:nth-of-type(1)', 'Submitted by'
           assert_select 'dd:nth-of-type(1)', 'provider@example.com'
         end
-        assert_select 'div.govuk-summary-list__row:nth-of-type(5)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(6)' do
           assert_select 'dt:nth-of-type(1)', 'Office account number'
           assert_select 'dd:nth-of-type(1)', '1A123B'
         end
@@ -200,8 +216,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
-    it 'does not have a button to "Upload post submission evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Upload post submission evidence'
+    it 'does not have a button to "Add supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
     end
 
     # rubocop:disable Layout/LineLength
@@ -231,13 +247,13 @@ RSpec.describe 'Dashboard', :authorized do
 
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(1)' do
-          assert_select 'dt:nth-of-type(1)', 'First name'
-          assert_select 'dd:nth-of-type(1)', 'John'
+          assert_select 'dt:nth-of-type(1)', 'LAA reference number'
+          assert_select 'dd:nth-of-type(1)', '6000002'
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Last name'
-          assert_select 'dd:nth-of-type(1)', 'POTTER'
+          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dd:nth-of-type(1)', 'Yes'
         end
       end
     end

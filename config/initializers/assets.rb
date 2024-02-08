@@ -10,7 +10,7 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 # Additional govuk branded assets like favicon, govuk-mask-icon, etc.
-Rails.application.config.assets.paths << Rails.root.join('node_modules/govuk-frontend/govuk/assets')
+Rails.application.config.assets.paths << Rails.root.join('node_modules/govuk-frontend/dist/govuk/assets')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets

@@ -30,7 +30,7 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :nino, applicant.nino,
-            change_path: edit_steps_client_has_nino_path
+            change_path: edit_steps_client_has_nino_path, show: true
           ),
 
           Components::ValueAnswer.new(
@@ -40,6 +40,10 @@ module Summary
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+      def editable?
+        crime_application.initial? && super
+      end
 
       private
 

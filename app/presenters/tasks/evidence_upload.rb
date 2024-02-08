@@ -9,6 +9,8 @@ module Tasks
     end
 
     def can_start?
+      return true if crime_application.pse?
+
       fulfilled?(CaseDetails)
     end
 

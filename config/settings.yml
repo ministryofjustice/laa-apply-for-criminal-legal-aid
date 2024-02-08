@@ -27,6 +27,10 @@ feature_flags:
     local: true
     staging: true
     production: false
+  more_information:
+    local: true
+    staging: true
+    production: true
 
 
 # NOTE: consider if the setting you are adding here

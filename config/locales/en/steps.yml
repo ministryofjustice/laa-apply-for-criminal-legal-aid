@@ -51,6 +51,8 @@ en:
       has_nino:
         edit:
           page_title: Enter your client’s NINO
+          nino: Enter your client’s National Insurance number
+          optional_nino: Enter your client’s National Insurance number (optional)
           eforms_link: My client does not have a National Insurance number or cannot find it
       nino_exit:
         show:
@@ -145,6 +147,19 @@ en:
         edit:
           page_title: Enter your client’s URN
           urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
+      has_case_concluded:
+        edit:
+          page_title: Has the case concluded?
+          date_case_concluded: Enter when the case concluded
+      is_preorder_work_claimed:
+        edit:
+          page_title: Do you intend to claim pre-order work?
+          preorder_work_date: Enter when you or your firm were first instructed
+          preorder_work_details: Enter details about the urgency of the work
+      is_client_remanded:
+        edit:
+          page_title: Has a court remanded your client in custody?
+          date_client_remanded: Enter when they were remanded
       charges:
         edit:
           page_title: What has your client been charged with?
@@ -277,8 +292,8 @@ en:
     evidence:
       upload:
         edit:
-          page_title: Upload supporting evidence
-          heading: Upload supporting evidence
+          page_title: Add supporting evidence
+          heading: Add supporting evidence
           explanation: Use this page to provide
           recent_docs: All evidence must be from the last 3 months.
           upload_file_button: Upload file
@@ -306,6 +321,9 @@ en:
         timeout: "ClamAV file scan breached %{timeout} second, scan abandoned"
 
     submission:
+      more_information:
+        edit:
+          page_title: More information 
       review:
         edit:
           page_title: Review the application
@@ -320,7 +338,18 @@ en:
       confirmation:
         show:
           page_title: Application submitted
-          view_application: View completed application
+          heading: 
+            initial: Application complete
+            post_submission_evidence: Evidence submitted
+            resubmission: Application updated 
+          what_happens_next: 
+            initial: We’ll check your application to see if your client is entitled to legal aid.
+            post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
+          view_application: 
+            initial: View completed application
+            post_submission_evidence: View submitted evidence
+        
+
       failure:
         edit:
           page_title: Application submission failed

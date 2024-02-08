@@ -26,11 +26,16 @@ en:
       housing_payments: Housing Payments
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
+      more_information: More information
 
     questions:
       # BEGIN overview section
       reference:
         question: LAA reference number
+      means_tested:
+        question: Application is subject to the usual means test
+        answers:
+          <<: *YESNO
       date_stamp:
         question: Date stamp
       date_submitted:
@@ -53,6 +58,7 @@ en:
         question: Date of birth
       nino:
         question: National Insurance number
+        absence_answer: *absence_none
       means_passporting:
         question: Passporting benefit
         answers:
@@ -90,6 +96,26 @@ en:
       case_urn:
         question: Unique reference number
         absence_answer: *absence_none
+      has_case_concluded:
+        question: Has the case concluded?
+        answers:
+          <<: *YESNO
+      date_case_concluded:
+        question: Date the case concluded
+      is_preorder_work_claimed:
+        question: Do you intend to claim pre-order work?
+        answers:
+          <<: *YESNO
+      preorder_work_date:
+        question: When you or your firm were first instructed
+      preorder_work_details:
+        question: Details about the urgency of the work
+      is_client_remanded:
+        question: Has a court remanded your client in custody?
+        answers:
+          <<: *YESNO
+      date_client_remanded:
+        question: Date they were remanded
       case_type:
         question: Case type
         answers:
@@ -261,5 +287,8 @@ en:
 
       # BEGIN supporting evidence section
       supporting_evidence:
-        question: "File name"
+        question: File name
+      additional_information:
+        question: Details that will help us process this application
+        absence_answer: *absence_none
       # END supporting evidence section

@@ -2,32 +2,46 @@ module Summary
   class HtmlPresenter
     attr_reader :crime_application
 
+    delegate :application_type, to: :crime_application
+
+    SECTIONS = {
+      initial: %i[
+        overview
+        client_details
+        contact_details
+        case_details
+        offences
+        codefendants
+        next_court_hearing
+        first_court_hearing
+        justification_for_legal_aid
+        passport_justification_for_legal_aid
+        employment_details
+        income_details
+        other_income_details
+        housing_payments
+        other_outgoings_details
+        supporting_evidence
+        more_information
+        legal_representative_details
+      ],
+      post_submission_evidence: %i[
+        overview
+        client_details
+        supporting_evidence
+        more_information
+        legal_representative_details
+      ]
+    }.freeze
+
     def initialize(crime_application:)
       @crime_application = Adapters::BaseApplication.build(crime_application)
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def sections
-      [
-        Sections::Overview.new(crime_application),
-        Sections::ClientDetails.new(crime_application),
-        Sections::ContactDetails.new(crime_application),
-        Sections::CaseDetails.new(crime_application),
-        Sections::Offences.new(crime_application),
-        Sections::Codefendants.new(crime_application),
-        Sections::NextCourtHearing.new(crime_application),
-        Sections::FirstCourtHearing.new(crime_application),
-        Sections::JustificationForLegalAid.new(crime_application),
-        Sections::PassportJustificationForLegalAid.new(crime_application),
-        Sections::EmploymentDetails.new(crime_application),
-        Sections::IncomeDetails.new(crime_application),
-        Sections::OtherIncomeDetails.new(crime_application),
-        Sections::HousingPayments.new(crime_application),
-        Sections::OtherOutgoingsDetails.new(crime_application),
-        Sections::SupportingEvidence.new(crime_application),
-        Sections::LegalRepresentativeDetails.new(crime_application),
-      ].select(&:show?)
+      SECTIONS.fetch(application_type.to_sym).map do |section|
+        Sections.const_get(section.to_s.camelize).new(crime_application)
+      end.select(&:show?)
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end

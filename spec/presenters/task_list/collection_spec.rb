@@ -6,7 +6,7 @@ RSpec.describe TaskList::Collection do
   subject { described_class.new(view, crime_application:) }
 
   let(:name) { :foobar_task }
-  let(:crime_application) { double }
+  let(:crime_application) { double application_type: 'initial' }
 
   describe 'collection of sections' do
     it 'has the `client_details` section' do
@@ -34,10 +34,16 @@ RSpec.describe TaskList::Collection do
       expect(subject[3].tasks).to eq([:evidence_upload])
     end
 
-    it 'has the `review_confirm` section' do
+    it 'has the `more_information` section' do
       expect(subject[4].index).to eq(5)
-      expect(subject[4].name).to eq(:review_confirm)
-      expect(subject[4].tasks).to eq([:review, :declaration])
+      expect(subject[4].name).to eq(:more_information)
+      expect(subject[4].tasks).to eq([:more_information])
+    end
+
+    it 'has the `review_confirm` section' do
+      expect(subject[5].index).to eq(6)
+      expect(subject[5].name).to eq(:review_confirm)
+      expect(subject[5].tasks).to eq([:review, :declaration])
     end
   end
 
@@ -63,7 +69,7 @@ RSpec.describe TaskList::Collection do
     it 'iterates through the sections defined, rendering each one' do
       expect(
         TaskList::Section
-      ).to receive(:new).exactly(5).times.and_return(double.as_null_object)
+      ).to receive(:new).exactly(6).times.and_return(double.as_null_object)
 
       expect(
         subject.render

@@ -146,6 +146,62 @@ en:
           attributes:
             urn:
               invalid: Enter a valid URN
+        steps/case/has_case_concluded_form:
+          attributes:
+            has_case_concluded:
+              inclusion: Select yes if your client has the case concluded
+            date_case_concluded:
+              blank: Date case was concluded cannot be blank
+              blank_day: Date case was concluded must include a day
+              blank_month: Date case was concluded must include a month
+              blank_year: Date case was concluded must include a year
+              blank_day_month: Date case was concluded must include a day and month
+              blank_day_year: Date case was concluded must include a day and year
+              blank_month_year: Date case was concluded must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date case was concluded must be today or in the past
+        steps/case/is_preorder_work_claimed_form:
+          attributes:
+            is_preorder_work_claimed:
+              inclusion: Select yes if you intend to claim pre-order work
+            preorder_work_date:
+              blank: Enter when you or your firm were first instructed
+              blank_day: Date you or your firm were first instructed must include a day
+              blank_month: Date you or your firm were first instructed must include a month
+              blank_year: Date you or your firm were first instructed must include a year
+              blank_day_month: Date you or your firm were first instructed must include a day and month
+              blank_day_year: Date you or your firm were first instructed must include a day and year
+              blank_month_year: Date you or your firm were first instructed must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date you or your firm were first instructed must be today or in the past
+            preorder_work_details:
+              blank: Enter details about the urgency of the work
+        steps/case/is_client_remanded_form:
+          attributes:
+            is_client_remanded:
+              inclusion: Select yes if your client has the custody remanded
+            date_client_remanded:
+              blank: Date client custody was remanded cannot be blank
+              blank_day: Date client custody was remanded must include a day
+              blank_month: Date client custody was remanded must include a month
+              blank_year: Date client custody was remanded must include a year
+              blank_day_month: Date client custody was remanded must include a day and month
+              blank_day_year: Date client custody was remanded must include a day and year
+              blank_month_year: Date client custody was remanded must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date client custody was remanded must be today or in the past
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
@@ -361,6 +417,10 @@ en:
               inclusion: Select yes if your client’s outgoings are more than their income
             how_manage:
               blank: Enter how your client manages if their outgoings are more than their income
+        steps/submission/more_information_form:
+          attributes:
+            additional_information:
+              blank: Enter details you need to add to the application or select no
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:

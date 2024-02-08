@@ -8,12 +8,14 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       CrimeApplication,
       id: 'uuid',
       parent_id: nil,
+      application_type: 'initial',
       reference: 10_000_001,
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
+      additional_information: 'More details'
     )
   end
 
@@ -33,6 +35,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       date_stamp: date_stamp,
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
+      additional_information: 'More details'
     }.as_json
   end
 

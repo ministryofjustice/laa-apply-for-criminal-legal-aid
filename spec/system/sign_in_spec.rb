@@ -90,11 +90,11 @@ RSpec.describe 'Sign in user journey' do
     it 'renders the user menu in the header' do
       expect(page).to have_css('nav.govuk-header__navigation')
       expect(page).to have_css('.app-header__auth-user', text: 'provider@example.com')
-      expect(page).to have_button('Sign out')
+      expect(page).to have_link('Sign out')
     end
 
     it 'on sign out it redirects to the home' do
-      click_button 'Sign out'
+      click_link 'Sign out'
 
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')
