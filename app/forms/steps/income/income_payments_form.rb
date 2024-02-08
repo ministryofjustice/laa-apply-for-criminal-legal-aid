@@ -8,7 +8,7 @@ module Steps
         state_pension
         interest_investment
         student_loan_grant
-        board
+        board_from_family
         rent
         financial_support_with_access
         from_friends_relatives
@@ -25,7 +25,7 @@ module Steps
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for
-        # for each type (on page load)
+        # for each type (on page load). Trigger validation on load.
         define_method :"#{type}" do
           IncomePaymentFieldsetForm.build(find_or_create_income_payment(type), crime_application:).tap do |record|
             record.valid? if types.include?(type.to_s)
@@ -59,14 +59,14 @@ module Steps
       end
 
       def checked?(type)
-        send(type.to_s)&.id.present? || types.include?(type)
+        types.include?(type) || send(type.to_s)&.id.present?
       end
 
       private
 
       # Precedence: submitted values, stored values, empty IncomePayment
-      def find_or_create_income_payment(type)
-        if types.include?(type.to_s)
+      def find_or_create_income_payment(type) # rubocop:disable Metrics/AbcSize
+        if types.include?(type.to_s) && @new_payments&.key?(type.value.to_s)
           attrs = @new_payments[type.value.to_s].attributes
           return IncomePayment.new(payment_type: type.to_s, **attrs)
         end

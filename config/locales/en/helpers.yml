@@ -129,7 +129,7 @@ en:
         types_options:
           maintenance: This includes child maintenance.
           private_pension: This includes pensions from an employer.
-          board: This includes any non-contractual payments.
+          board_from_family: This includes any non-contractual payments.
           rent: This includes contractual payments from property your client does not live in.
           from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
       steps_submission_declaration_form:
@@ -269,7 +269,7 @@ en:
           state_pension: State Pension
           interest_investment: Interest or income from savings or investments
           student_loan_grant: Student grant or loan
-          board: Board from family members living with your client
+          board_from_family: Board from family members living with your client
           rent: Rent from a tenant
           financial_support_with_access: Financial support from someone who allows your client access to their assets or money
           from_friends_relatives: Money from friends or family
@@ -290,7 +290,7 @@ en:
         student_loan_grant:
           amount_in_pounds: *amount_label
           frequency_options: *frequency_options
-        board:
+        board_from_family:
           amount_in_pounds: *amount_label
           frequency_options: *frequency_options
         rent:
