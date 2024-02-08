@@ -15,7 +15,7 @@
           <% if choice.not_working? %>
             <%= f.govuk_check_box_divider %>
             <%= f.govuk_check_box :employment_status, choice.to_s, exclusive: true do %>
-              <% f.govuk_radio_buttons_fieldset(:ended_employment_within_three_months, legend: { text: t('.ended_employment_within_three_months'), size: 's', class: 'govuk-!-font-weight-regular' }) do %>
+              <% f.govuk_radio_buttons_fieldset(:ended_employment_within_three_months, legend: { text: t('.ended_employment_within_three_months'), size: 's' }) do %>
                 <% @form_object.yes_no_choices.each_with_index do |option, index| %>
                   <%= f.govuk_radio_button :ended_employment_within_three_months, option.value, link_errors: index.zero? %>
                 <% end %>
