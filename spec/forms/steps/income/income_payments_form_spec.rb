@@ -187,6 +187,9 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
           expect(subject.errors.of_kind?('maintenance-amount_in_pounds', :greater_than)).to be(true)
           expect(subject.errors.of_kind?('maintenance-frequency', :inclusion)).to be(true)
           expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)
+
+          # Error attributes should respond
+          expect(subject.send(:'maintenance-amount_in_pounds')).to eq '0.00'
         end
       end
     end
