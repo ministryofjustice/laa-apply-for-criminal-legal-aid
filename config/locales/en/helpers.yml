@@ -75,6 +75,8 @@ en:
         types: Why should your client get legal aid?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
+      steps_income_income_payments_form:
+        income_payments: Which of these payments does your client get?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
@@ -84,8 +86,8 @@ en:
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_submission_more_information_form:
-        need_more_information: Do you need to add any more information to this application? 
-        
+        need_more_information: Do you need to add any more information to this application?
+
 
     hint:
       steps_client_details_form:
@@ -355,7 +357,7 @@ en:
         upload_files: Upload files
       steps_submission_more_information_form:
         need_more_information_options: *YESNO
-        additional_information: Enter details that will help us process this application 
+        additional_information: Enter details that will help us process this application
       steps_submission_declaration_form:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
