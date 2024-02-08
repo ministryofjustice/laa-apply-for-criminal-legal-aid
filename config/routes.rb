@@ -169,6 +169,7 @@ Rails.application.routes.draw do
         edit_step :does_client_pay_council_tax, alias: :council_tax
         edit_step :has_client_paid_income_tax_rate, alias: :income_tax_rate
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
+        edit_step :how_much_rent_does_client_pay, alias: :client_rent_payments
       end
 
       namespace :evidence do

@@ -3,6 +3,8 @@ module Decisions
     def destination
       case step_name
       when :housing_payment_type
+        after_housing_payment_type
+      when :client_rent_payments
         edit(:council_tax)
       when :council_tax
         # TODO: link to next step when we have it
@@ -14,6 +16,16 @@ module Decisions
         show('/home', action: :index)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
+      end
+    end
+
+    private
+
+    def after_housing_payment_type
+      if form_object.housing_payment_type == 'rent'
+        edit(:client_rent_payments)
+      else
+        edit(:council_tax)
       end
     end
   end

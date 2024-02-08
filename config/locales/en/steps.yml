@@ -269,6 +269,9 @@ en:
       housing_payment_type:
         edit:
           page_title: Which of these payments does your client pay where they usually live?
+      client_rent_payment:
+        edit:
+          page_title: How much rent does your client pay, after taking away Housing Benefit?
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
