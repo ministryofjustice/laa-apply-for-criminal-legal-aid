@@ -32,7 +32,7 @@ module Summary
         unless post_submission_evidence?
           answers.push(Components::FreeTextAnswer.new(
                          :nino, applicant.nino,
-                         change_path: edit_steps_client_has_nino_path, show: true
+                         change_path: edit_steps_client_has_nino_path
                        ))
         end
 
@@ -59,7 +59,7 @@ module Summary
       end
 
       def post_submission_evidence?
-        crime_application.application_type == ApplicationType::POST_SUBMISSION_EVIDENCE.to_s
+        crime_application.pse?
       end
 
       def no_benefit?
