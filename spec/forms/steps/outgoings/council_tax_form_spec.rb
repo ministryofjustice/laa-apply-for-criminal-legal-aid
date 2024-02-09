@@ -7,7 +7,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
     {
       crime_application:,
       pays_council_tax:,
-      council_tax_amount_in_pounds:
+      council_tax_amount:
     }
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
   let(:outgoings) { Outgoings.new }
 
   let(:pays_council_tax) { nil }
-  let(:council_tax_amount_in_pounds) { nil }
+  let(:council_tax_amount) { nil }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -86,7 +86,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       context 'when `pays_council_tax` answer is yes' do
         context 'when a `council_tax_amount` was previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount_in_pounds) { 1000.79 }
+          let(:council_tax_amount) { 1000.79 }
 
           before do
             outgoings.update(pays_council_tax: YesNoAnswer::YES.to_s)
@@ -97,7 +97,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :council_tax_amount_in_pounds,
+                :council_tax_amount,
                 :present
               )
             ).to be(false)
@@ -105,19 +105,19 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
 
           it 'cannot reset `council_tax_amount` as it is relevant' do
             attributes = form.send(:attributes_to_reset)
-            expect(attributes['council_tax_amount']).to eq(100_079)
+            expect(attributes['council_tax_amount']).to eq('1000.79')
           end
         end
 
         context 'when a `council_tax_amount` was not previously recorded' do
           let(:pays_council_tax) { YesNoAnswer::YES.to_s }
-          let(:council_tax_amount_in_pounds) { 1000.79 }
+          let(:council_tax_amount) { 1000.79 }
 
           it 'is also valid' do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :council_tax_amount_in_pounds,
+                :council_tax_amount,
                 :present
               )
             ).to be(false)
