@@ -17,6 +17,8 @@ en:
               blank: Applicant is not passported on means
             ioj_passport:
               blank: Justification for legal aid needs to be completed
+            documents:
+              blank: Upload supporting evidence
         # evidence upload data model
         document:
           attributes:
