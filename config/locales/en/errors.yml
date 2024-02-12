@@ -165,7 +165,7 @@ en:
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
-              future_not_allowed: Date case was concluded must be today or in the past
+              future_not_allowed: Date the case concluded must be today or in the past
         steps/case/is_preorder_work_claimed_form:
           attributes:
             is_preorder_work_claimed:
