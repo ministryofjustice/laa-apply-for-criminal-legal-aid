@@ -9,6 +9,7 @@ describe Summary::Sections::ClientDetails do
       to_param: '12345',
       client_has_partner: 'no',
       applicant: applicant,
+      application_type: application_type,
     )
   end
 
@@ -26,6 +27,12 @@ describe Summary::Sections::ClientDetails do
 
   let(:nino) { '123456' }
   let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+  let(:application_type) { ApplicationType::INITIAL }
+  let(:pse?) { false }
+
+  before do
+    allow(crime_application).to receive(:pse?).and_return(pse?)
+  end
 
   describe '#name' do
     it { expect(subject.name).to eq(:client_details) }
@@ -86,6 +93,15 @@ describe Summary::Sections::ClientDetails do
 
     context 'when there is no `benefit_type` value' do
       let(:benefit_type) { nil }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(5)
+      end
+    end
+
+    context 'when application is a post submission evidence application' do
+      let(:application_type) { ApplicationType::POST_SUBMISSION_EVIDENCE }
+      let(:pse?) { true }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(5)
