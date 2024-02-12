@@ -88,7 +88,6 @@ en:
       steps_submission_more_information_form:
         need_more_information: Do you need to add any more information to this application?
 
-
     hint:
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.

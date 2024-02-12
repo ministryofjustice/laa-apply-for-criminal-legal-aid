@@ -208,7 +208,11 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
 
       it 'saves nothing' do
         expect(subject.crime_application.income_payments.size).to eq 0
-        expect(subject.save).to be true # Always true
+
+        # Always true because child records must already be persisted beforehand.
+        # The `.save` is called as part of the BaseFormObject lifecycle
+        expect(subject.save).to be true
+
         expect(subject.errors.size).to eq 0
       end
     end
