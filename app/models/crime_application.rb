@@ -37,4 +37,5 @@ class CrimeApplication < ApplicationRecord
   # Before submitting the application we run a final
   # validation to ensure some key details are fulfilled
   validates_with ApplicationFulfilmentValidator, on: :submission, unless: :post_submission_evidence?
+  validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
 end
