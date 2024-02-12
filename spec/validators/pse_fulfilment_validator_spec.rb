@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:documents, keyword_init: true) do
+  PseApplicationValidatable = Struct.new(:documents, keyword_init: true) do
     include ActiveModel::Validations
     validates_with PseFulfilmentValidator
 
@@ -12,7 +12,7 @@ module Test
 end
 
 RSpec.describe PseFulfilmentValidator, type: :model do
-  subject { Test::CrimeApplicationValidatable.new(arguments) }
+  subject { Test::PseApplicationValidatable.new(arguments) }
 
   let(:arguments) do
     { documents: }
