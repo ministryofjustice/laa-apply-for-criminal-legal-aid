@@ -151,21 +151,21 @@ en:
         steps/case/has_case_concluded_form:
           attributes:
             has_case_concluded:
-              inclusion: Select yes if your client has the case concluded
+              inclusion: Select yes if the case has concluded
             date_case_concluded:
-              blank: Date case was concluded cannot be blank
-              blank_day: Date case was concluded must include a day
-              blank_month: Date case was concluded must include a month
-              blank_year: Date case was concluded must include a year
-              blank_day_month: Date case was concluded must include a day and month
-              blank_day_year: Date case was concluded must include a day and year
-              blank_month_year: Date case was concluded must include a month and year
+              blank: Enter when the case concluded
+              blank_day: Date the case concluded must include a day
+              blank_month: Date the case concluded must include a month
+              blank_year: Date the case concluded must include a year
+              blank_day_month: Date the case concluded must include a day and month
+              blank_day_year: Date the case concluded must include a day and year
+              blank_month_year: Date the case concluded must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
-              future_not_allowed: Date case was concluded must be today or in the past
+              future_not_allowed: Date the case concluded must be today or in the past
         steps/case/is_preorder_work_claimed_form:
           attributes:
             is_preorder_work_claimed:
@@ -189,21 +189,21 @@ en:
         steps/case/is_client_remanded_form:
           attributes:
             is_client_remanded:
-              inclusion: Select yes if your client has the custody remanded
+              inclusion: Select yes if a court has remanded your client in custody
             date_client_remanded:
-              blank: Date client custody was remanded cannot be blank
-              blank_day: Date client custody was remanded must include a day
-              blank_month: Date client custody was remanded must include a month
-              blank_year: Date client custody was remanded must include a year
-              blank_day_month: Date client custody was remanded must include a day and month
-              blank_day_year: Date client custody was remanded must include a day and year
-              blank_month_year: Date client custody was remanded must include a month and year
+              blank: Enter when they were remanded
+              blank_day: Date they were remanded must include a day
+              blank_month: Date they were remanded must include a month
+              blank_year: Date they were remanded must include a year
+              blank_day_month: Date they were remanded must include a day and month
+              blank_day_year: Date they were remanded must include a day and year
+              blank_month_year: Date they were remanded must include a month and year
               invalid: Enter a valid date
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
-              future_not_allowed: Date client custody was remanded must be today or in the past
+              future_not_allowed: Date they were remanded must be today or in the past
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
@@ -379,6 +379,18 @@ en:
               blank: "Enter %{ordinal} dependant's age"
               less_than: "The %{ordinal} dependant must be under 18 years old"
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
+        steps/income/income_payment_fieldset_form:
+          summary:
+            amount_in_pounds:
+              greater_than: "Amount for %{payment_type} must be more than 0"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+            frequency:
+              blank: "Select a frequency for %{payment_type}"
+              inclusion: "Frequency for %{payment_type} must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: Enter an amount
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
