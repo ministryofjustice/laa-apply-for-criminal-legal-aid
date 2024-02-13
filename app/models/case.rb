@@ -12,15 +12,27 @@ class Case < ApplicationRecord
     end
   end
 
-  validates :date_case_concluded, presence: true, if: -> { has_case_concluded == 'yes' }
-  validates :date_client_remanded, presence: true, if: -> { is_client_remanded == 'yes' }
-  validates :preorder_work_date, :preorder_work_details, presence: true, if: -> { is_preorder_work_claimed == 'yes' }
+  validates :date_case_concluded, presence: true, if: -> { case_concluded? }
+  validates :date_client_remanded, presence: true, if: -> { client_remanded? }
+  validates :preorder_work_date, :preorder_work_details, presence: true, if: -> { preorder_work_claimed? }
 
   composed_of :hearing_court, class_name: 'Court',
               mapping: %i[hearing_court_name name],
               constructor: :find_by_name, allow_nil: true
 
   private
+
+  def case_concluded?
+    has_case_concluded == Constants::YES
+  end
+
+  def client_remanded?
+    is_client_remanded == Constants::YES
+  end
+
+  def preorder_work_claimed?
+    is_preorder_work_claimed == Constants::YES
+  end
 
   def initialise_dates(charge)
     charge.offence_dates.first_or_initialize
