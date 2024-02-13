@@ -2,10 +2,17 @@
 en:
   helpers/dictionary:
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
+    frequency_legend: &frequency_legend 'Select how often they get this payment'
+    amount_label: &amount_label 'Enter amount'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
-
+    frequency_options: &frequency_options
+      'week': 'Every week'
+      'fortnight': 'Every 2 weeks'
+      'four_weeks': 'Every 4 weeks'
+      'month': 'Monthly'
+      'annual': 'Yearly'
   helpers:
     back_link: Back
     back_to_portal: Back to the LAA Online Portal
@@ -68,6 +75,8 @@ en:
         types: Why should your client get legal aid?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
+      steps_income_income_payments_form:
+        income_payments: Which of these payments does your client get?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
@@ -77,8 +86,7 @@ en:
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_submission_more_information_form:
-        need_more_information: Do you need to add any more information to this application? 
-        
+        need_more_information: Do you need to add any more information to this application?
 
     hint:
       steps_client_details_form:
@@ -134,6 +142,14 @@ en:
           not_working: This includes anyone who has ended employment in the last 3 months, has never had a job, or is a pensioner.
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
+      steps_income_income_payments_form:
+        income_payments: Select all that apply.
+        types_options:
+          maintenance: This includes child maintenance.
+          private_pension: This includes pensions from an employer.
+          board_from_family: This includes any non-contractual payments.
+          rent: This includes contractual payments from property your client does not live in.
+          from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -268,6 +284,50 @@ en:
         client_owns_property_options: *YESNO
       steps_income_has_savings_form:
         has_savings_options: *YESNO
+      steps_income_income_payments_form:
+        types_options:
+          maintenance: Maintenance payments
+          private_pension: Private pensions
+          state_pension: State Pension
+          interest_investment: Interest or income from savings or investments
+          student_loan_grant: Student grant or loan
+          board_from_family: Board from family members living with your client
+          rent: Rent from a tenant
+          financial_support_with_access: Financial support from someone who allows your client access to their assets or money
+          from_friends_relatives: Money from friends or family
+          other: Other sources of income
+          none: My client does not get any of these payments
+        maintenance:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        private_pension:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        state_pension:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        interest_investment:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        student_loan_grant:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        board_from_family:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        rent:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        financial_support_with_access:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        from_friends_relatives:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount_in_pounds: Enter total amount of all other sources of income
+          frequency_options: *frequency_options
+          details: Enter the other sources of income they get
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO
       steps_income_manage_without_income_form:
@@ -296,7 +356,7 @@ en:
         upload_files: Upload files
       steps_submission_more_information_form:
         need_more_information_options: *YESNO
-        additional_information: Enter details that will help us process this application 
+        additional_information: Enter details that will help us process this application
       steps_submission_declaration_form:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
