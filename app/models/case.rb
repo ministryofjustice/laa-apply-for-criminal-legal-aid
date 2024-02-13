@@ -12,6 +12,10 @@ class Case < ApplicationRecord
     end
   end
 
+  validates :date_case_concluded, presence: true, if: -> { has_case_concluded == 'yes' }
+  validates :date_client_remanded, presence: true, if: -> { is_client_remanded == 'yes' }
+  validates :preorder_work_date, :preorder_work_details, presence: true, if: -> { is_preorder_work_claimed == 'yes' }
+
   composed_of :hearing_court, class_name: 'Court',
               mapping: %i[hearing_court_name name],
               constructor: :find_by_name, allow_nil: true
