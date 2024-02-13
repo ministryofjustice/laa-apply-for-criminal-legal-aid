@@ -13,6 +13,8 @@ en:
         # fulfillment validation errors
         crime_application:
           attributes:
+            base:
+              case_type_missing: A case type needs to be selected
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:

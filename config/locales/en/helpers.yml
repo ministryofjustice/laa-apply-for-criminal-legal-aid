@@ -35,7 +35,7 @@ en:
       steps_provider_select_office_form:
         office_code: Select your office account number
       steps_client_is_means_tested_form:
-        is_means_tested: Is this application means tested?
+        is_means_tested: Is this application subject to the usual means or passported test?
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
