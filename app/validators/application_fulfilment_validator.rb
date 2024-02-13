@@ -12,7 +12,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
-    if record.case.case_type.nil? && record.is_means_tested == 'yes'
+    if record.is_means_tested == 'yes' && record.case.case_type.nil?
       errors << [
         :base, :case_type_missing, { change_path: edit_steps_client_case_type_path }
       ]
