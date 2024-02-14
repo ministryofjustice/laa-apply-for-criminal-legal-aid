@@ -23,8 +23,8 @@ module Steps
 
     private
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    def update_and_advance(form_class, as:, record: nil, flash: nil, **kwargs)
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/ParameterLists
+    def update_and_advance(form_class, as:, record: nil, flash: nil, validate_draft: false, **kwargs)
       hash = permitted_params(form_class).to_h
       hash.merge!(kwargs, step_name: as)
 
@@ -34,7 +34,7 @@ module Steps
 
       if params.key?(:commit_draft)
         # Validations will not be run when saving a draft
-        @form_object.save!
+        validate_draft ? @form_object.save : @form_object.save!
         redirect_to edit_crime_application_path(current_crime_application)
       elsif @form_object.save
         redirect_to decision_tree_class.new(@form_object, as:).destination, flash:
@@ -42,7 +42,7 @@ module Steps
         render :edit
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/ParameterLists
 
     def permitted_params(form_class)
       params

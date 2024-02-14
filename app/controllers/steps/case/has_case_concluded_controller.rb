@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(HasCaseConcludedForm, as: :has_case_concluded)
+        update_and_advance(HasCaseConcludedForm, as: :has_case_concluded, validate_draft: true)
       end
     end
   end

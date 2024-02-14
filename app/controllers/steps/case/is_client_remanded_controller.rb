@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(IsClientRemandedForm, as: :is_client_remanded)
+        update_and_advance(IsClientRemandedForm, as: :is_client_remanded, validate_draft: true)
       end
     end
   end
