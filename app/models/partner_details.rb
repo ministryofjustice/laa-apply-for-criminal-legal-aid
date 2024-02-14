@@ -2,23 +2,24 @@ class PartnerDetails < ApplicationRecord
   belongs_to :partner
 
   def has_contrary_interests?
-    return true if YesNoAnswer.new(conflict_of_interest) == YesNoAnswer::YES
+    return true if YesNoAnswer.new(conflict_of_interest).yes?
     return true if victim_or_prosecution_witness?
 
     false
   end
 
   def involved_in_case?
-    return false if InvolvementInCase.new(involvement_in_case) != InvolvementInCase::NONE
+    !InvolvementInCase.new(involvement_in_case).none?
+  end
 
-    true
+  def same_home_address_as_client?
+    YesNoAnswer.new(same_home_address_as_client).yes?
   end
 
   private
 
   def victim_or_prosecution_witness?
-    [InvolvementInCase::VICTIM, InvolvementInCase::PROSECUTION_WITNESS].include?(
-      InvolvementInCase.new(involvement_in_case)
-    )
+    involvement = InvolvementInCase.new(involvement_in_case)
+    involvement.victim? || involvement.prosecution_witness?
   end
 end

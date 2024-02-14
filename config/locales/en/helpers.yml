@@ -81,9 +81,11 @@ en:
       steps_partner_details_form:
         date_of_birth: Date of birth
       steps_partner_involvement_form:
-        involved_in_case: Is your client's partner a victim, presecution witness, or a co-defendant in the case?
+        involved_in_case: Is the partner a victim, presecution witness, or a co-defendant in the case?
         involvement_in_case: Partner's involvement in case
-        conflict_of_interest: Is there a conflict of interest with your client's partner?
+        conflict_of_interest: Is there a conflict of interest with the partner?
+      steps_partner_home_address_form:
+        same_home_address_as_client: Does the partner have the same home address as your client?
 
     hint:
       steps_client_details_form:
@@ -142,7 +144,7 @@ en:
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
       steps_partner_details_form:
-        other_names: This includes aliases, nicknames or other names your client may be known as.
+        other_names: This includes aliases, nicknames or other names the partner may be known as.
         date_of_birth: For example, 27 3 2007
       steps_partner_involvement_form:
         involvement_in_case: Select which one 
@@ -323,3 +325,5 @@ en:
           prosecution_witness: Prosecution witness 
           codefendant: Co-defendant 
         conflict_of_interest: Is there a conflict of interest with this co-defendant?
+      steps_partner_home_address_form:
+        same_home_address_as_client_options: *YESNO

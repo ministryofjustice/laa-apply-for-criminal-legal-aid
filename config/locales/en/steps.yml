@@ -89,13 +89,15 @@ en:
     partner:
       details:
         edit:
-          page_title: Enter your client's partner’s details
-          heading: Enter your client's partner’s details
+          page_title: Enter the partner’s details
+          heading: Enter the partner’s details
           full_name_legend: Partner’s full name
       involvement:
         edit:
-          page_title: Is your client's partner involved in the case
-      partner_address: Partner’s home address
+          page_title: Is the partner involved in the case?
+      home_address:
+        edit:
+          page_title: Is the partner's home address the same as your client?
 
     dwp:
       confirm_result:
@@ -119,14 +121,13 @@ en:
               correspondence_address: Client’s correspondence address
             partner:
               home_address: Partner’s home address
-              same_home_address_as_client: Partner’s usual home address is different to your client’s
           heading:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
             partner:
-              partner_address: Enter your client’s partner’s home address
-          no_address: My client does not have a home address
+              home_address: Enter the parter’s home address
+          no_address: They do not have a home address
           manual_entry: Enter address manually
       results:
         edit:
@@ -134,10 +135,14 @@ en:
             applicant:
               home_address: Client’s home address selection
               correspondence_address: Client’s correspondence address selection
+            partner:
+              home_address: Partner’s home address selection
           heading:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
+            partner:
+              home_address: Enter the parter’s home address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
@@ -153,10 +158,16 @@ en:
             applicant:
               home_address: Client’s home address
               correspondence_address: Client’s correspondence address
+            partner:
+              home_address: Partner’s home address
+              same_home_address_as_client: The partner’s usual home address is different to your client’s
           heading:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
+            partner:
+              home_address: Partner’s home address
+              same_home_address_as_client: The partner’s usual home address is different to your client’s
 
     case:
       urn:

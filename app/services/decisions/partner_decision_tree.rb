@@ -7,9 +7,15 @@ module Decisions
         edit(:involvement)
       when :involvement
         if partner.has_contrary_interests?
-          edit('/steps/client/has_nino')
+          after_partner_journey
         else
-          start_address_journey(HomeAddress)
+          edit(:home_address)
+        end
+      when :home_address
+        if partner.same_home_address_as_client? 
+          after_partner_journey
+        else
+          start_address_journey(HomeAddress) 
         end
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -18,8 +24,8 @@ module Decisions
 
     private
 
-    def partner
-      @partner ||= current_crime_application.partner
+    def after_partner_journey
+      edit('/steps/client/has_nino')
     end
 
     def start_address_journey(address_class)

@@ -39,7 +39,7 @@ module Decisions
 
     def after_is_means_tested
       if form_object.is_means_tested.yes?
-        edit(:has_partner)
+        edit(:details)
       else
         # Task list
         edit('/crime_applications')
@@ -47,7 +47,11 @@ module Decisions
     end
 
     def after_has_partner
-      edit('/crime_applications')
+      if YesNoAnswer.new(current_crime_application.client_has_partner).yes?
+        edit('/steps/partner/details')
+      else
+        edit('/steps/client/has_nino')
+      end
     end
 
     def after_client_details
@@ -80,7 +84,7 @@ module Decisions
       elsif current_crime_application.age_passported?
         edit('/steps/case/urn')
       else
-        edit(:has_nino)
+        edit(:has_partner)
       end
     end
 

@@ -1,0 +1,17 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons(
+        :same_home_address_as_client,
+        @form_object.choices,
+        :value,
+        legend: { tag: 'h1', size: 'xl' }) %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
