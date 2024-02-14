@@ -23,15 +23,15 @@ class Case < ApplicationRecord
   private
 
   def case_concluded?
-    has_case_concluded == Constants::YES
+    has_case_concluded == YesNoAnswer::YES.to_s
   end
 
   def client_remanded?
-    is_client_remanded == Constants::YES
+    is_client_remanded == YesNoAnswer::YES.to_s
   end
 
   def preorder_work_claimed?
-    is_preorder_work_claimed == Constants::YES
+    is_preorder_work_claimed == YesNoAnswer::YES.to_s
   end
 
   def initialise_dates(charge)
