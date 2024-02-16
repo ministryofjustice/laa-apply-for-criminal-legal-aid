@@ -1,59 +1,45 @@
 module Steps
   module Capital
-    class SavingsController < Steps::CaseStepController
+    class SavingsController < Steps::CapitalStepController
       def edit
-        @form_object = ChargesForm.build(
-          charge_record, crime_application: current_crime_application
+        @form_object = SavingsForm.build(
+          saving_record, crime_application: current_crime_application
         )
       end
 
       def update
         update_and_advance(
-          ChargesForm, record: charge_record, as: step_name, flash: flash_msg
+          SavingsForm, record: saving_record, as: :savings
         )
       end
 
       def destroy
-        charge_record.destroy
+        saving_record.destroy
 
-        if case_charges.reload.any?
-          redirect_to edit_steps_case_charges_summary_path,
+        if savings.reload.any?
+          redirect_to edit_steps_savings_summary_path,
                       success: t('.success_flash')
         else
           # If this was the last remaining record, redirect
           # to the charges page with a new blank one
-          charge = case_charges.create!
-          redirect_to edit_steps_case_charges_path(charge_id: charge),
+          charge = savings.create!
+          redirect_to edit_steps_savings_path(saving_id: charge),
                       success: t('.success_flash')
         end
       end
 
       def confirm_destroy
-        @charge = helpers.present(charge_record)
+        @saving = helpers.present(saving_record)
       end
 
       private
 
-      def step_name
-        if params.key?('add_offence_date')
-          :add_offence_date
-        elsif params.to_s.include?('"_destroy"=>"1"')
-          :delete_offence_date
-        else
-          :charges
-        end
+      def saving_record
+        @saving_record ||= savings.find(params[:saving_id])
       end
 
-      def flash_msg
-        { success: t('.edit.deleted_flash') } if step_name.eql?(:delete_offence_date)
-      end
-
-      def charge_record
-        @charge_record ||= case_charges.find(params[:charge_id])
-      end
-
-      def case_charges
-        @case_charges ||= current_crime_application.case.charges
+      def savings
+        @savings ||= current_crime_application.savings
       end
 
       def additional_permitted_params
