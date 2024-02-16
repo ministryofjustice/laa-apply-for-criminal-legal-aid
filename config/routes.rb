@@ -173,6 +173,10 @@ Rails.application.routes.draw do
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
       end
 
+      namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+        edit_step :which_savings, alias: :add_saving
+      end
+
       namespace :evidence do
         edit_step :upload
       end

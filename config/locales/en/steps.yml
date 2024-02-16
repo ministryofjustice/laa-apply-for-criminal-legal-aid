@@ -289,6 +289,12 @@ en:
           page_title: Are your client’s outgoings more than their income?
           outgoings_more_than_income: Are your client’s outgoings more than their income?
 
+    capital:
+      caption: Capital assessment
+      add_saving:
+        edit:
+          page_title: Which savings does your client have inside or outside the UK?
+
     evidence:
       upload:
         edit:
