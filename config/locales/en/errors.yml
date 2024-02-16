@@ -374,6 +374,10 @@ en:
           attributes:
             client_has_dependants:
               inclusion: Select yes if your client has any dependants
+        steps/income/dependants_form:
+          attributes:
+            dependants:
+              too_long: Must have 50 or fewer dependants
         steps/income/dependant_fieldset_form:
           summary:
             age:

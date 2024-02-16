@@ -27,9 +27,18 @@ module Steps
       end
 
       def attributes_to_reset
-        {
-          'date_case_concluded' => (date_case_concluded if case_concluded?)
-        }
+        if case_concluded?
+          {
+            'date_case_concluded' => date_case_concluded
+          }
+        else
+          {
+            'date_case_concluded' => nil,
+            'is_preorder_work_claimed' => nil,
+            'preorder_work_date' => nil,
+            'preorder_work_details' => nil
+          }
+        end
       end
 
       def case_concluded?
