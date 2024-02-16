@@ -7,7 +7,7 @@ module Steps
 
       delegate :dependants_attributes=, to: :crime_application
 
-      validates :dependants, length: { in: 0...Dependant::MAX_TOTAL_DEPENDANTS },
+      validates :dependants, length: { maximum: Dependant::MAX_TOTAL_DEPENDANTS },
                 unless: :any_marked_for_destruction?
 
       validates_with DependantsValidator, unless: :any_marked_for_destruction?
