@@ -175,6 +175,7 @@ Rails.application.routes.draw do
 
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :which_savings, alias: :add_saving
+        crud_step :savings, param: :saving_id
       end
 
       namespace :evidence do

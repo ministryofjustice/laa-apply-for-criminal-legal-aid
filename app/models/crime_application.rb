@@ -19,6 +19,8 @@ class CrimeApplication < ApplicationRecord
   has_many :dependants, dependent: :destroy
   accepts_nested_attributes_for :dependants, allow_destroy: true
 
+  has_many :savings, dependent: :destroy
+
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case
   has_many :addresses, through: :people

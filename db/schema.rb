@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_16_142643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -150,7 +150,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
-    t.string "payments", default: [], array: true
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -211,7 +210,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -234,6 +233,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.index ["auth_provider", "uid"], name: "index_providers_on_auth_provider_and_uid", unique: true
   end
 
+  create_table "savings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "saving_type"
+    t.string "provider_name"
+    t.string "sort_code"
+    t.string "account_number"
+    t.integer "account_balance"
+    t.string "is_overdrawn"
+    t.string "are_wages_paid_into_account"
+    t.string "account_holder"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_savings_on_crime_application_id", unique: true
+  end
+
   add_foreign_key "addresses", "people"
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
@@ -246,4 +260,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "people", "crime_applications"
+  add_foreign_key "savings", "crime_applications"
 end

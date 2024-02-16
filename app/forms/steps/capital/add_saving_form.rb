@@ -10,8 +10,7 @@ module Steps
       private
 
       def persist!
-        # TODO: If none, go to next step
-        # If type selected, build new savings form
+        crime_application.savings.create(saving_type:)
       end
     end
   end
