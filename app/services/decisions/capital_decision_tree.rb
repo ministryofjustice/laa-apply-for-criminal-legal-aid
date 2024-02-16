@@ -4,6 +4,8 @@ module Decisions
       case step_name
       when :saving_type
         # TODO: Add next step
+      when :properties
+        # TODO: Add next step
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
