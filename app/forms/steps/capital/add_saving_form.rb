@@ -3,6 +3,8 @@ module Steps
     class AddSavingForm < Steps::BaseFormObject
       attr_accessor :saving_type
 
+      validates :saving_type, presence: true
+
       def choices
         SavingType.values
       end
