@@ -87,6 +87,8 @@ en:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_submission_more_information_form:
         need_more_information: Do you need to add any more information to this application?
+      steps_capital_add_property_form:
+        property_type: Which assets does your client own or part-own inside or outside the UK?
 
     hint:
       steps_client_details_form:
@@ -152,6 +154,8 @@ en:
           from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
+      steps_capital_add_property_form:
+        property_type: Add one asset at a time. You can add more later.
 
     label:
       cookies_settings_form:
@@ -361,3 +365,9 @@ en:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
+      steps_capital_add_property_form:
+        property_type_options:
+          residential: Residential property
+          commercial: Commercial property
+          land: Land
+          none: My client does not own any of these assets

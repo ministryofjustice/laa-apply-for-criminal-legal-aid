@@ -1,0 +1,18 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :property_type, @form_object.choices,
+                                           :value, inline: false,
+                                           legend: { tag: 'h1', size: 'xl' } do %>
+      <% end %>
+      <%= f.govuk_radio_divider %>
+      <%= f.govuk_radio_button :property_type, 'none' %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
