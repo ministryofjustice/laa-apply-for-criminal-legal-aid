@@ -23,7 +23,7 @@ RSpec.describe Steps::Income::DependantsForm do
   end
 
   describe '#dependants' do
-    context 'there are no dependants' do
+    context 'when there are no dependants' do
       let(:dependants_attributes) { {} }
 
       it 'returns an empty collection' do
@@ -31,13 +31,25 @@ RSpec.describe Steps::Income::DependantsForm do
       end
     end
 
-    context 'there are existing dependants' do
+    context 'when there are existing dependants' do
       it 'builds a collection of `DependantFieldsetForm` instances' do
         expect(subject.dependants[0]).to be_an_instance_of(Steps::Income::DependantFieldsetForm)
         expect(subject.dependants[1]).to be_an_instance_of(Steps::Income::DependantFieldsetForm)
 
         expect(subject.dependants[0].age).to eq(17)
         expect(subject.dependants[1].age).to eq(0)
+      end
+    end
+
+    context 'when there are more than 50 dependants' do
+      before do
+        (1..50).each do
+          crime_application.dependants.create!(age: 1)
+        end
+      end
+
+      it 'will not allow more dependants to be added' do
+
       end
     end
   end
