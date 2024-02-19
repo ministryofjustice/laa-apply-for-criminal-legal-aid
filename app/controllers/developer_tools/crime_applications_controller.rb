@@ -29,10 +29,8 @@ module DeveloperTools
       find_or_create_applicant
 
       crime_application.update(
-        is_means_tested: YesNoAnswer::YES,
         client_has_partner: YesNoAnswer::NO,
         navigation_stack: [
-          edit_steps_client_is_means_tested_path(crime_application),
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_has_nino_path(crime_application),
@@ -59,10 +57,8 @@ module DeveloperTools
       find_or_create_case
 
       crime_application.update(
-        is_means_tested: YesNoAnswer::YES,
         client_has_partner: YesNoAnswer::NO,
         navigation_stack: [
-          edit_steps_client_is_means_tested_path(crime_application),
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
           edit_steps_client_contact_details_path(crime_application),
