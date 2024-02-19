@@ -14,11 +14,7 @@ module Decisions
     private
 
     def submission_root_step
-      if FeatureFlags.more_information.enabled?
-        edit('/steps/submission/more_information')
-      else
-        edit('/steps/submission/review')
-      end
+      edit('/steps/submission/more_information')
     end
   end
 end

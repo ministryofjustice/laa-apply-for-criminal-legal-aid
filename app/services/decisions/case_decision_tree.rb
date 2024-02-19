@@ -128,8 +128,6 @@ module Decisions
     end
 
     def submission_root_step
-      return edit('/steps/submission/review') unless FeatureFlags.more_information.enabled?
-
       edit('/steps/submission/more_information')
     end
   end

@@ -2,7 +2,7 @@ module Summary
   module Sections
     class MoreInformation < Sections::BaseSection
       def show?
-        FeatureFlags.more_information.enabled?
+        crime_application.case.present? && super
       end
 
       def answers
