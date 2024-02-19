@@ -1,7 +1,9 @@
 module Steps
   module Capital
-    class AddPropertyForm < Steps::BaseFormObject
+    class PropertyTypeForm < Steps::BaseFormObject
       attr_accessor :property_type
+
+      validates :property_type, presence: true
 
       def choices
         PropertyType.values

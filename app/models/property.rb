@@ -1,2 +1,0 @@
-class Property < ApplicationRecord
-end

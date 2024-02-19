@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::AddPropertyForm do
+RSpec.describe Steps::Capital::PropertyTypeForm do
   subject(:form) { described_class.new }
 
   # let(:arguments) do
