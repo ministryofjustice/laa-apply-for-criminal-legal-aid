@@ -3,18 +3,6 @@ feature_flags:
     local: true
     staging: true
     production: false
-  u18_means_passport:
-    local: true
-    staging: true
-    production: true
-  u18_ioj_passport:
-    local: true
-    staging: true
-    production: true
-  offence_ioj_slipstream:
-    local: true
-    staging: true
-    production: true
   evidence_upload:
     local: true
     staging: true

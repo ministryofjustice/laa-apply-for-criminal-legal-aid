@@ -47,10 +47,6 @@ module Passporting
       false
     end
 
-    def applicant_under18?
-      FeatureFlags.u18_means_passport.enabled? && super
-    end
-
     def benefit_check_passed?
       applicant.passporting_benefit.present?
     end
