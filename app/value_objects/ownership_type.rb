@@ -5,4 +5,3 @@ class OwnershipType < ValueObject
     PARTNER = new(:partner),
   ].freeze
 end
-

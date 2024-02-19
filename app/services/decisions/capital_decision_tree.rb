@@ -5,16 +5,20 @@ module Decisions
       when :add_saving
         edit_new_saving
       when :saving
-        raise "Show savings implemented in CRIMAPP-512"
+        raise 'Show savings implemented in CRIMAPP-512'
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
 
     def edit_new_saving
-      saving = incomplete_savings.present? ? incomplete_savings.first : savings.create!(saving_type: @form_object.saving_type)
+      saving_id = if incomplete_savings.present?
+                    incomplete_savings.first
+                  else
+                    savings.create!(saving_type: @form_object.saving_type)
+                  end
 
-      edit(:savings, saving_id: saving)
+      edit(:savings, saving_id:)
     end
 
     def incomplete_savings
@@ -24,7 +28,7 @@ module Decisions
         savings.reject(&:complete?)
       end
     end
-    
+
     def saving_type
       @form_object.saving_type
     end

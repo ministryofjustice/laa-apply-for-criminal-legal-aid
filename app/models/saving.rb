@@ -4,7 +4,6 @@ class Saving < ApplicationRecord
   attribute :account_balance, :pence
 
   def complete?
-    # TODO: add other required attributes
-    saving_type.present? && account_holder.present?
+    !attributes.values.any?(&:blank?)
   end
 end

@@ -75,7 +75,7 @@ module Steps
     def []=(attr_name, value)
       instance_variable_set("@#{attr_name}".to_sym, value)
     end
-    
+
     private
 
     # :nocov:

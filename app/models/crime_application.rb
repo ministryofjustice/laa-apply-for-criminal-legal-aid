@@ -43,7 +43,5 @@ class CrimeApplication < ApplicationRecord
   validates_with ApplicationFulfilmentValidator, on: :submission, unless: :post_submission_evidence?
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
 
-
-  def include_partner?
-  end
+  def include_partner?; end
 end
