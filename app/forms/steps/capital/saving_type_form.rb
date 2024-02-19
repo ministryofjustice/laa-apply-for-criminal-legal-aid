@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class AddSavingForm < Steps::BaseFormObject
+    class SavingTypeForm < Steps::BaseFormObject
       attr_accessor :saving_type
 
       validates :saving_type, presence: true

@@ -425,7 +425,7 @@ en:
               inclusion: Select yes if your client’s outgoings are more than their income
             how_manage:
               blank: Enter how your client manages if their outgoings are more than their income
-        steps/capital/add_saving_form:
+        steps/capital/saving_type_form:
           attributes:
             saving_type:
               blank: Select which savings your client has inside or outside the UK, or select 'My client does not have any of these savings'

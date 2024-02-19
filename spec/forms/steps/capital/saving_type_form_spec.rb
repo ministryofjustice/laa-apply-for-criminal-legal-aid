@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::AddSavingForm do
+RSpec.describe Steps::Capital::SavingTypeForm do
   subject(:form) { described_class.new }
 
   describe '#choices' do

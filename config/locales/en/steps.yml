@@ -291,7 +291,7 @@ en:
 
     capital:
       caption: Capital assessment
-      add_saving:
+      savings:
         edit:
           page_title: Which savings does your client have inside or outside the UK?
 
