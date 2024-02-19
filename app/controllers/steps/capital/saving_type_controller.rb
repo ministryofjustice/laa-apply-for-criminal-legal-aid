@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class SavingsController < Steps::CapitalStepController
+    class SavingTypeController < Steps::CapitalStepController
       def edit
         @form_object = SavingTypeForm.build(
           current_crime_application
