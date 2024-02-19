@@ -10,6 +10,10 @@ module Steps
       def update
         update_and_advance(AddSavingForm, as: :add_saving)
       end
+
+      def additional_permitted_params
+        [:saving_type]
+      end
     end
   end
 end
