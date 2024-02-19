@@ -255,7 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_16_142643) do
 
   create_table "savings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
-    t.string "saving_type"
+    t.string "saving_type", null: false
     t.string "provider_name"
     t.string "sort_code"
     t.string "account_number"
@@ -265,7 +265,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_16_142643) do
     t.string "account_holder"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["crime_application_id"], name: "index_savings_on_crime_application_id", unique: true
+    t.index ["crime_application_id"], name: "index_savings_on_crime_application_id"
   end
 
   add_foreign_key "addresses", "people"

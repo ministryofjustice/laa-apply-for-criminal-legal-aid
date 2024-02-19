@@ -23,7 +23,7 @@
         <%= f.govuk_collection_radio_buttons :account_holder, OwnershipType.values, :value %>
       <% else %>
 
-        <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { size: 'm' } do %>
+        <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { tag: 'h1', size: 'xl' } do %>
         <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false %>
         <% end %>
       <% end %>

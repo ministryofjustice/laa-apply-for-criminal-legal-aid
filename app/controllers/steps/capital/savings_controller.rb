@@ -43,7 +43,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [offence_dates_attributes: Steps::Case::OffenceDateFieldsetForm.attribute_names]
+        [:confirm_in_applicants_name]
       end
     end
   end

@@ -17,10 +17,14 @@ module Decisions
       edit(:savings, saving_id: saving)
     end
 
-    def incomplete_saving_for_type
-      savings.where(saving_type:).reject(&:complete?)
+    def incomplete_savings
+      if saving_type
+        savings.where(saving_type:).reject(&:complete?)
+      else
+        savings.reject(&:complete?)
+      end
     end
-
+    
     def saving_type
       @form_object.saving_type
     end

@@ -4,6 +4,10 @@ en:
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
     frequency_legend: &frequency_legend 'Select how often they get this payment'
     amount_label: &amount_label 'Enter amount'
+    OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
+      applicant: 'Client'
+      applicant_and_partner: 'Client and partner'
+      partner: 'Partner'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
@@ -89,6 +93,15 @@ en:
         need_more_information: Do you need to add any more information to this application?
       steps_capital_add_saving_form:
         saving_type: Which savings does your client have inside or outside the UK?
+      steps_capital_savings_form:
+        provider_name: What is the name of the bank, building society or other holder of the savings?
+        sort_code: What is the sort code or branch name?
+        account_number: What is the account number?
+        account_balance: Is the account overdrawn?
+        is_overdrawn: Is the account overdrawn?
+        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        account_holder: Whose name is the account in?
+        confirm_in_applicants_name: Confirm the following 
 
     hint:
       steps_client_details_form:
@@ -373,3 +386,16 @@ en:
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_savings_form:
+        provider_name: What is the name of the bank, building society or other holder of the savings?
+        sort_code: What is the sort code or branch name?
+        account_number: What is the account number?
+        account_balance: What is the account balance?
+        is_overdrawn: Is the account overdrawn?
+        is_overdrawn_options: *YESNO
+        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        are_wages_paid_into_account_options: *YESNO
+        account_holder: Whose name is the account in?
+        account_holder_options: *OWNERSHIP_OPTIONS 
+        confirm_in_applicants_name_options: 
+          'true': I confirm that the account is in my client's name 

@@ -421,6 +421,24 @@ en:
               inclusion: Select yes if your client’s outgoings are more than their income
             how_manage:
               blank: Enter how your client manages if their outgoings are more than their income
+        steps/capital/savings_form:
+          attributes:
+            provider_name: 
+              blank: Enter the name of the bank, building society or other holder of the savings
+            sort_code: 
+              blank: Enter the sort code or branch name
+            account_number: 
+              blank: Enter the account number
+            account_balance: 
+              blank: Enter the account balance
+            is_overdrawn: 
+              inclusion: Select yes if the account is overdrawn
+            are_wages_paid_into_account: 
+              inclusion: Select yes if your client's wages or benefits are paid into this account
+            account_holder: 
+              inclusion: Select whose name the account is in
+            confirm_in_applicants_name:
+              confirm: Confirm the account is in your client’s name
         steps/submission/more_information_form:
           attributes:
             additional_information:

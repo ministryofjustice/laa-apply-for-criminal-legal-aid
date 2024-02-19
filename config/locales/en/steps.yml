@@ -296,9 +296,13 @@ en:
           page_title: Which savings does your client have inside or outside the UK?
       savings:
         edit:
-          page_title: Which savings does your client have inside or outside the UK?
-          heading: Which savings does your client have inside or outside the UK?
-
+          page_title: Add savings account details 
+          heading: 
+            bank: Your client’s bank accounts
+            building_society: Your client’s building society accounts
+            cash_isa: Your client’s cash ISAs
+            national_savings_or_post_office: Your client’s National Savings or Post Office accounts
+            other: Your client’s other cash investment
 
     evidence:
       upload:
