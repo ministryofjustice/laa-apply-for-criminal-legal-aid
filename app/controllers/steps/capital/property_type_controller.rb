@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class PropertiesController < Steps::CapitalStepController
+    class PropertyTypeController < Steps::CapitalStepController
       def edit
         @form_object = PropertyTypeForm.build(
           current_crime_application
@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(PropertyTypeForm, as: :properties)
+        update_and_advance(PropertyTypeForm, as: :property_type)
       end
 
       def additional_permitted_params
