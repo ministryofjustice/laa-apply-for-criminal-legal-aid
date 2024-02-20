@@ -35,7 +35,7 @@ en:
       steps_provider_select_office_form:
         office_code: Select your office account number
       steps_client_is_means_tested_form:
-        is_means_tested: Is this application means tested?
+        is_means_tested: Is this application subject to the usual means or passported test?
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
@@ -89,6 +89,8 @@ en:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_submission_more_information_form:
         need_more_information: Do you need to add any more information to this application?
+      steps_capital_saving_type_form:
+        saving_type: Which savings does your client have inside or outside the UK?
 
     hint:
       steps_client_details_form:
@@ -159,6 +161,8 @@ en:
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
+      steps_capital_saving_type_form:
+        saving_type: Add one savings account at a time. You can add more later.
 
     label:
       cookies_settings_form:
@@ -396,3 +400,11 @@ en:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
+      steps_capital_saving_type_form:
+        saving_type_options:
+          bank: Bank accounts
+          building_society: Building society accounts
+          cash_isa: Cash ISAs
+          national_savings_or_post_office: National Savings or Post Office accounts
+          other: Any other cash investment
+          none: My client does not have any of these savings

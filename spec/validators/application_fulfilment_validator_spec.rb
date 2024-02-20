@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:ioj, :documents, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :case, :ioj, :documents, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -16,10 +16,17 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:arguments) do
     {
+      is_means_tested:,
+      case:,
       ioj:,
       documents:
     }
   end
+
+  let(:is_means_tested) { 'yes' }
+
+  let(:case) { instance_double(Case, case_type:) }
+  let(:case_type) { 'either_way' }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
@@ -98,6 +105,45 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
         it 'is valid' do
           expect(subject).to be_valid
+        end
+      end
+    end
+  end
+
+  context 'CaseType validation' do
+    before do
+      # stub the other validations
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+    end
+
+    context 'when the application has a case type' do
+      let(:case_type) { 'either_way' }
+      let(:is_means_tested) { 'yes' }
+
+      it 'is valid' do
+        expect(subject).to be_valid
+      end
+    end
+
+    context 'when the application is missing a case type' do
+      let(:case_type) { nil }
+
+      context 'and application is not means tested' do
+        let(:is_means_tested) { 'no' }
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
+      context 'and application is means tested' do
+        let(:is_means_tested) { 'yes' }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:base, :case_type_missing)).to be(true)
+          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case_type')
         end
       end
     end

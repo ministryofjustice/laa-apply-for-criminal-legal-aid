@@ -1,11 +1,12 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :urn
         FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
       when :has_case_concluded
-        edit(:is_preorder_work_claimed)
+        after_has_case_concluded
       when :is_preorder_work_claimed
         edit(:is_client_remanded)
       when :is_client_remanded
@@ -38,6 +39,12 @@ module Decisions
     end
 
     private
+
+    def after_has_case_concluded
+      return edit(:is_client_remanded) if form_object.has_case_concluded.no?
+
+      edit(:is_preorder_work_claimed)
+    end
 
     def charges_summary_or_edit_new_charge
       return edit(:charges_summary) if case_charges.any?(&:complete?)
@@ -126,4 +133,5 @@ module Decisions
       edit('/steps/submission/more_information')
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

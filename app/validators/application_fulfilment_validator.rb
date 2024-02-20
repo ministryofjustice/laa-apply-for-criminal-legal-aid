@@ -1,12 +1,20 @@
 class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   private
 
-  def perform_validations
+  # More validations can be added here
+  # Errors, when more than one, will maintain the order
+  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     errors = []
 
     unless Passporting::MeansPassporter.new(record).call || evidence_present?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
+      ]
+    end
+
+    if record.is_means_tested == 'yes' && record.case.case_type.nil?
+      errors << [
+        :base, :case_type_missing, { change_path: edit_steps_client_case_type_path }
       ]
     end
 

@@ -22,10 +22,8 @@ module Decisions
     end
 
     def after_confirm_details
-      if form_object.confirm_details.yes? && FeatureFlags.evidence_upload.enabled?
+      if form_object.confirm_details.yes?
         edit('steps/client/has_benefit_evidence')
-      elsif form_object.confirm_details.yes?
-        show(:benefit_check_result_exit)
       else
         edit('steps/client/details')
       end

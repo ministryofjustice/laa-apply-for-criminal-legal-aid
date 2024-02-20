@@ -19,7 +19,7 @@ en:
     client:
       is_means_tested:
         edit:
-          page_title: Is this application means tested?
+          page_title: Is this application subject to the usual means or passported test?
       has_partner:
         edit:
           page_title: Does your client have a partner?
@@ -291,6 +291,12 @@ en:
         edit:
           page_title: Are your client’s outgoings more than their income?
           outgoings_more_than_income: Are your client’s outgoings more than their income?
+
+    capital:
+      caption: Capital assessment
+      saving_type:
+        edit:
+          page_title: Which savings does your client have inside or outside the UK?
 
     evidence:
       upload:
