@@ -30,10 +30,10 @@ module Steps
 
         # Used to convert attributes for a given type into a corresponding fieldset
         # (on form submit). 'type' is the checkbox value
-        define_method :"#{type}=" do |value|
+        define_method :"#{type}=" do |attrs|
           @new_payments ||= {}
           record = IncomeBenefitFieldsetForm.build(
-            IncomeBenefit.new(payment_type: type.to_s, **with_correct_amount(value)),
+            IncomeBenefit.new(payment_type: type.to_s, **attrs),
             crime_application:
           )
 
@@ -71,13 +71,6 @@ module Steps
         return income_benefit if income_benefit
 
         IncomeBenefit.new(payment_type: type.to_s)
-      end
-
-      def with_correct_amount(values)
-        return values unless values.key?('amount_in_pounds')
-
-        values['amount'] = (values['amount_in_pounds'].to_f * 100).round
-        values.except!('amount_in_pounds')
       end
 
       # Individual income_benefits_fieldset_forms are in charge of saving themselves

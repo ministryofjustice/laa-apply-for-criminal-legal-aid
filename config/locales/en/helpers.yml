@@ -309,34 +309,34 @@ en:
           other: Other sources of income
           none: My client does not get any of these payments
         maintenance:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         private_pension:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         state_pension:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         interest_investment:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         student_loan_grant:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         board_from_family:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         rent:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         financial_support_with_access:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         from_friends_relatives:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount_in_pounds: Enter total amount of all other sources of income
+          amount: Enter total amount of all other sources of income
           frequency_options: *frequency_options
           details: Enter the other sources of income they get
       steps_income_income_benefits_form:
@@ -349,22 +349,22 @@ en:
           other: Other benefits (except disregarded benefits)
           none: My client does not get any of these benefits
         child:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         working_or_child_tax_credit:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         incapacity:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         industrial_injuries_disablement:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         jsa:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount_in_pounds: Enter total amount of all other benefits (except disregarded benefits)
+          amount: Enter total amount of all other benefits (except disregarded benefits)
           frequency_options: *frequency_options
           details: Enter what benefits they get and the amount
       steps_income_client_has_dependants_form:
@@ -385,7 +385,7 @@ en:
           none: My client does not pay any of these payments
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO
-        council_tax_amount_in_pounds: How much do they pay yearly?
+        council_tax_amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_more_than_income_form:
