@@ -77,6 +77,8 @@ en:
         employment_status: What is your client's employment status?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
+      steps_income_income_benefits_form:
+        income_payments: Which of these benefits does your client get?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
@@ -150,6 +152,11 @@ en:
           board_from_family: This includes any non-contractual payments.
           rent: This includes contractual payments from property your client does not live in.
           from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
+      steps_income_income_benefits_form:
+        income_benefits: Select all that apply.
+        types_options:
+          jsa: This includes New Style JSA.
+          other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
 
@@ -328,6 +335,34 @@ en:
           amount_in_pounds: Enter total amount of all other sources of income
           frequency_options: *frequency_options
           details: Enter the other sources of income they get
+      steps_income_income_benefits_form:
+        types_options:
+          child: Child Benfit
+          working_or_child_tax_credit: Working Tax Credit or Child Tax Credit
+          incapacity: Incapacity Benefit
+          industrial_injuries_disablement: Industrial Injuries Disablement Benefit
+          jsa: Contribution-based Jobseeker’s Allowance (JSA)
+          other: Other benefits (except disregarded benefits)
+          none: My client does not get any of these benefits
+        child:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        working_or_child_tax_credit:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        incapacity:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        industrial_injuries_disablement:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        jsa:
+          amount_in_pounds: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount_in_pounds: Enter total amount of all other benefits (except disregarded benefits)
+          frequency_options: *frequency_options
+          details: Enter what benefits they get and the amount
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO
       steps_income_manage_without_income_form:

@@ -3,15 +3,11 @@ module Steps
     class IncomeBenefitsForm < Steps::BaseFormObject
       # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
-        maintenance
-        private_pension
-        state_pension
-        interest_investment
-        student_loan_grant
-        board_from_family
-        rent
-        financial_support_with_access
-        from_friends_relatives
+        child
+        working_or_child_tax_credit
+        incapacity
+        industrial_injuries_disablement
+        jsa
         other
       ].freeze
 

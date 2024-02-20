@@ -391,6 +391,18 @@ en:
           attributes:
             amount:
               blank: Enter an amount
+        steps/income/income_benefit_fieldset_form:
+          summary:
+            amount_in_pounds:
+              greater_than: "Amount for %{payment_type} must be more than 0"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+            frequency:
+              blank: "Select a frequency for %{payment_type}"
+              inclusion: "Frequency for %{payment_type} must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: Enter an amount
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
