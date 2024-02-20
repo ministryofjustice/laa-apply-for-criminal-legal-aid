@@ -77,8 +77,7 @@ Rails.application.routes.draw do
 
     member do
       resources :documents, only: [:create, :destroy],
-                param: :document_id, as: 'crime_application_documents',
-                constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+                param: :document_id, as: 'crime_application_documents' do
         get :download, on: :member
       end
     end
@@ -116,10 +115,8 @@ Rails.application.routes.draw do
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :retry_benefit_check
-        if FeatureFlags.evidence_upload.enabled?
-          edit_step :has_benefit_evidence
-          show_step :evidence_exit
-        end
+        edit_step :has_benefit_evidence
+        show_step :evidence_exit
         edit_step :contact_details
       end
 
@@ -171,6 +168,11 @@ Rails.application.routes.draw do
         edit_step :does_client_pay_council_tax, alias: :council_tax
         edit_step :has_client_paid_income_tax_rate, alias: :income_tax_rate
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
+      end
+
+      namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+        edit_step :which_assets_does_client_own, alias: :property_type
+        edit_step :which_savings_does_client_have, alias: :saving_type
       end
 
       namespace :evidence do

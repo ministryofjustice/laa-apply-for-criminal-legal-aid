@@ -5,7 +5,7 @@ module Decisions
       when :urn
         FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
       when :has_case_concluded
-        edit(:is_preorder_work_claimed)
+        after_has_case_concluded
       when :is_preorder_work_claimed
         edit(:is_client_remanded)
       when :is_client_remanded
@@ -38,6 +38,12 @@ module Decisions
     end
 
     private
+
+    def after_has_case_concluded
+      return edit(:is_client_remanded) if form_object.has_case_concluded.no?
+
+      edit(:is_preorder_work_claimed)
+    end
 
     def charges_summary_or_edit_new_charge
       return edit(:charges_summary) if case_charges.any?(&:complete?)
@@ -90,7 +96,7 @@ module Decisions
     def after_ioj
       return edit('/steps/evidence/upload') if evidence_upload_required?
 
-      submission_root_step
+      edit('/steps/submission/more_information')
     end
 
     def evidence_upload_required?
@@ -118,12 +124,6 @@ module Decisions
 
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
-    end
-
-    def submission_root_step
-      return edit('/steps/submission/review') unless FeatureFlags.more_information.enabled?
-
-      edit('/steps/submission/more_information')
     end
   end
 end

@@ -49,11 +49,23 @@ RSpec.describe Decisions::CaseDecisionTree do
   end
 
   context 'when the step is `has_case_concluded`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', case: kase, has_case_concluded: has_case_concluded) }
     let(:step_name) { :has_case_concluded }
 
-    it 'redirects to the `is_preorder_work_claimed` page' do
-      expect(subject).to have_destination(:is_preorder_work_claimed, :edit, id: crime_application)
+    context 'and answer is `yes`' do
+      let(:has_case_concluded) { YesNoAnswer::YES }
+
+      it 'redirects to the `is_preorder_work_claimed` page' do
+        expect(subject).to have_destination(:is_preorder_work_claimed, :edit, id: crime_application)
+      end
+    end
+
+    context 'and answer is `no`' do
+      let(:has_case_concluded) { YesNoAnswer::NO }
+
+      it 'redirects to the `is_client_remanded` page' do
+        expect(subject).to have_destination(:is_client_remanded, :edit, id: crime_application)
+      end
     end
   end
 
@@ -289,16 +301,6 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:evidence_required) { false }
 
       it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
-
-      context 'when more_information feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:more_information) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
-      end
     end
 
     context 'and the application requires evidence upload' do
@@ -314,16 +316,6 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:evidence_required) { false }
 
       it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
-
-      context 'when more_information feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:more_information) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it { is_expected.to have_destination('/steps/submission/review', :edit, id: crime_application) }
-      end
     end
   end
 end

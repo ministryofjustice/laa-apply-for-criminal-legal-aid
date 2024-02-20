@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class MoreInformation < Sections::BaseSection
-      def show?
-        FeatureFlags.more_information.enabled?
-      end
-
       def answers
         [
           Components::FreeTextAnswer.new(
