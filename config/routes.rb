@@ -77,8 +77,7 @@ Rails.application.routes.draw do
 
     member do
       resources :documents, only: [:create, :destroy],
-                param: :document_id, as: 'crime_application_documents',
-                constraints: -> (_) { FeatureFlags.evidence_upload.enabled? } do
+                param: :document_id, as: 'crime_application_documents' do
         get :download, on: :member
       end
     end
@@ -116,10 +115,8 @@ Rails.application.routes.draw do
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :retry_benefit_check
-        if FeatureFlags.evidence_upload.enabled?
-          edit_step :has_benefit_evidence
-          show_step :evidence_exit
-        end
+        edit_step :has_benefit_evidence
+        show_step :evidence_exit
         edit_step :contact_details
       end
 

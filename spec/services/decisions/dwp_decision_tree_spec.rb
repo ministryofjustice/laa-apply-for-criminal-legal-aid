@@ -39,19 +39,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     context 'and the answer is `yes`' do
       let(:confirm_details) { YesNoAnswer::YES }
 
-      context 'and the evidence upload feature flag enabled' do
-        it { is_expected.to have_destination('steps/client/has_benefit_evidence', :edit, id: crime_application) }
-      end
-
-      context 'and the evidence upload feature flag is disabled' do
-        before do
-          allow(FeatureFlags).to receive(:evidence_upload) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it { is_expected.to have_destination(:benefit_check_result_exit, :show, id: crime_application) }
-      end
+      it { is_expected.to have_destination('steps/client/has_benefit_evidence', :edit, id: crime_application) }
     end
 
     context 'and the answer is `no`' do
