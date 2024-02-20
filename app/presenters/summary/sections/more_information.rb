@@ -1,10 +1,6 @@
 module Summary
   module Sections
     class MoreInformation < Sections::BaseSection
-      def show?
-        crime_application.case.present? && super
-      end
-
       def answers
         [
           Components::FreeTextAnswer.new(
