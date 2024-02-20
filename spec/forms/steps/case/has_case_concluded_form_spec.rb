@@ -63,7 +63,10 @@ RSpec.describe Steps::Case::HasCaseConcludedForm do
                       association_name: :case,
                       expected_attributes: {
                         'has_case_concluded' => YesNoAnswer::NO,
-                        'date_case_concluded' => nil
+                        'date_case_concluded' => nil,
+                        'is_preorder_work_claimed' => nil,
+                        'preorder_work_date' => nil,
+                        'preorder_work_details' => nil
                       }
 
       context 'when `has_case_concluded` answer is no' do

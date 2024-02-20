@@ -374,6 +374,10 @@ en:
           attributes:
             client_has_dependants:
               inclusion: Select yes if your client has any dependants
+        steps/income/dependants_form:
+          attributes:
+            dependants:
+              too_long: Must have 50 or fewer dependants
         steps/income/dependant_fieldset_form:
           summary:
             age:
@@ -421,6 +425,14 @@ en:
               inclusion: Select yes if your client’s outgoings are more than their income
             how_manage:
               blank: Enter how your client manages if their outgoings are more than their income
+        steps/capital/property_type_form:
+          attributes:
+            property_type:
+              blank: Select which assets your client owns or part-owns inside or outside the UK, or select 'My client does not own any of these assets'
+        steps/capital/saving_type_form:
+          attributes:
+            saving_type:
+              blank: Select which savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
         steps/submission/more_information_form:
           attributes:
             additional_information:
