@@ -55,7 +55,6 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
         expect(record.amount).to eq 10_326
         expect(record.frequency).to eq 'month'
         expect(record.details).to eq 'Earned some cash selling furniture'
-        binding.break
 
         subject.other = {
           'amount_in_pounds' => 8982.10,
