@@ -1,5 +1,4 @@
 module Decisions
-  # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
@@ -97,7 +96,7 @@ module Decisions
     def after_ioj
       return edit('/steps/evidence/upload') if evidence_upload_required?
 
-      submission_root_step
+      edit('/steps/submission/more_information')
     end
 
     def evidence_upload_required?
@@ -126,12 +125,5 @@ module Decisions
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
-
-    def submission_root_step
-      return edit('/steps/submission/review') unless FeatureFlags.more_information.enabled?
-
-      edit('/steps/submission/more_information')
-    end
   end
-  # rubocop:enable Metrics/ClassLength
 end
