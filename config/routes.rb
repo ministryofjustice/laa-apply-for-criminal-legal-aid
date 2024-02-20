@@ -164,7 +164,7 @@ Rails.application.routes.draw do
         edit_step :dependants, alias: :dependants
         edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
         edit_step :which_payments_does_client_get, alias: :income_payments
-        edit_step :which_benefits_does_client_get, alias: :benefit_payments
+        edit_step :which_benefits_does_client_get, alias: :income_benefits
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do

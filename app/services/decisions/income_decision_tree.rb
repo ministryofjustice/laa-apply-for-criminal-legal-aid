@@ -19,7 +19,7 @@ module Decisions
         edit(:income_payments)
       when :income_payments
         edit(:income_benefits)
-      when :benefit_payments
+      when :income_benefits
         # TODO: link to next step when we have it
         edit(:client_has_dependants)
       when :client_has_dependants

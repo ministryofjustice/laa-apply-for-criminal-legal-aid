@@ -14,8 +14,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
   let(:case_record) { Case.new }
 
   let(:allowed_types) do
-    %w[maintenance private_pension state_pension interest_investment student_loan_grant
-       board_from_family rent financial_support_with_access from_friends_relatives other]
+    %w[child working_or_child_tax_credit incapacity industrial_injuries_disablement jsa other]
   end
 
   let(:fieldset_form_class) { Steps::Income::IncomeBenefitFieldsetForm }
@@ -56,6 +55,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
         expect(record.amount).to eq 10_326
         expect(record.frequency).to eq 'month'
         expect(record.details).to eq 'Earned some cash selling furniture'
+        binding.break
 
         subject.other = {
           'amount_in_pounds' => 8982.10,
@@ -181,7 +181,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
           expect(subject.errors.of_kind?('jsa-details', :invalid)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'maintenance-amount_in_pounds')).to eq '0.00'
+          expect(subject.send(:'child-amount_in_pounds')).to eq '0.00'
         end
       end
     end
