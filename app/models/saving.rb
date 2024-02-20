@@ -4,6 +4,6 @@ class Saving < ApplicationRecord
   attribute :account_balance, :pence
 
   def complete?
-    !attributes.values.any?(&:blank?)
+    attributes.values.none?(&:blank?)
   end
 end

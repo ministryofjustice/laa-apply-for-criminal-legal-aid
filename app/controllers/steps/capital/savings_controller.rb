@@ -13,29 +13,12 @@ module Steps
         )
       end
 
-      def destroy
-        saving_record.destroy
-
-        if savings.reload.any?
-          redirect_to edit_steps_savings_summary_path,
-                      success: t('.success_flash')
-        else
-          # If this was the last remaining record, redirect
-          # to the charges page with a new blank one
-          charge = savings.create!
-          redirect_to edit_steps_savings_path(saving_id: charge),
-                      success: t('.success_flash')
-        end
-      end
-
-      def confirm_destroy
-        @saving = helpers.present(saving_record)
-      end
-
       private
 
       def saving_record
         @saving_record ||= savings.find(params[:saving_id])
+      rescue ActiveRecord::RecordNotFound
+        raise Errors::SavingNotFound
       end
 
       def savings

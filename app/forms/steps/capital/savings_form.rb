@@ -25,7 +25,6 @@ module Steps
       )
 
       validates :account_holder, inclusion: { in: OwnershipType.values, if: :include_partner? }
-
       validate :owned_by_applicant, unless: :include_partner?
 
       def persist!
@@ -33,7 +32,9 @@ module Steps
       end
 
       def confirm_in_applicants_name=(confirm)
-        self.account_holder = OwnershipType::APPLICANT if confirm
+        return unless confirm && !include_partner?
+
+        self.account_holder = OwnershipType::APPLICANT 
       end
 
       def confirm_in_applicants_name

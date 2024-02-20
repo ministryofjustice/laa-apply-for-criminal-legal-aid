@@ -51,7 +51,7 @@ RSpec::Matchers.define :validate_is_a do |attribute, klass|
     value = klass.values.sample.to_s
     object.send("#{attribute}=", value)
     return if check_errors(object, attribute, :inclusion)
-    
+
     object.send("#{attribute}=", nil)
     return unless check_errors(object, attribute, :inclusion)
 
@@ -65,11 +65,11 @@ RSpec::Matchers.define :validate_is_a do |attribute, klass|
     "validate #{attribute} is a #{klass}"
   end
 
-  failure_message do |object|
+  failure_message do |_object|
     "expected `#{attribute}` to have an error unless #{klass}"
   end
 
-  failure_message_when_negated do |object|
+  failure_message_when_negated do |_object|
     "expected `#{attribute}` not to have an error unless #{klass}"
   end
 end
