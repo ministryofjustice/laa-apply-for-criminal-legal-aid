@@ -2,7 +2,7 @@
   "name": "laa-apply-for-criminal-legal-aid",
   "private": "true",
   "dependencies": {
-    "@ministryofjustice/frontend": "2.0.1",
+    "@ministryofjustice/frontend": "2.1.0",
     "dropzone": "^6.0.0-beta.2",
     "govuk-frontend": "5.0.0"
   },
