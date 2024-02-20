@@ -14,20 +14,6 @@ RSpec.describe Tasks::MoreInformation do
     it { expect(subject.path).to eq('/applications/12345/steps/submission/more_information') }
   end
 
-  describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to be(false) }
-
-    context 'when feature flag disabled' do
-      before do
-        allow(FeatureFlags).to receive(:more_information) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        }
-      end
-
-      it { expect(subject.not_applicable?).to be(true) }
-    end
-  end
-
   describe '#can_start?' do
     before do
       allow(

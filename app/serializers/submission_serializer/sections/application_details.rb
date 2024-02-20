@@ -13,7 +13,7 @@ module SubmissionSerializer
           json.date_stamp crime_application.date_stamp
           json.ioj_passport crime_application.ioj_passport
           json.means_passport crime_application.means_passport
-          json.additional_information crime_application.additional_information if FeatureFlags.more_information.enabled?
+          json.additional_information crime_application.additional_information
         end
       end
     end
