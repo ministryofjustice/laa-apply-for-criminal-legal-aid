@@ -5,7 +5,7 @@ module Tasks
     end
 
     def not_applicable?
-      !FeatureFlags.more_information.enabled?
+      false
     end
 
     def can_start?
