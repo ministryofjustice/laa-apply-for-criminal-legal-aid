@@ -30,4 +30,30 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
   end
+
+  context 'when the step is `property_type`' do
+    let(:crime_application) { instance_double(CrimeApplication, id: '10') }
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :property_type }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, property:)
+    end
+
+    context 'the client has no properties' do
+      let(:property) { nil }
+
+      it 'redirects to select saving type' do
+        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected a property type' do
+      let(:property) { instance_double(Property) }
+
+      it 'redirects the edit `properties` page' do
+        expect(subject).to have_destination(:properties, :edit, id: crime_application, property_id: property)
+      end
+    end
+  end
 end

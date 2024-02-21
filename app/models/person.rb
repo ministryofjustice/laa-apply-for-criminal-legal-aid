@@ -4,6 +4,7 @@ class Person < ApplicationRecord
 
   belongs_to :crime_application
   has_many :addresses, dependent: :destroy
+  has_many :properties, dependent: :destroy
 
   has_one :home_address, dependent: :destroy, class_name: 'HomeAddress'
   has_one :correspondence_address, dependent: :destroy, class_name: 'CorrespondenceAddress'

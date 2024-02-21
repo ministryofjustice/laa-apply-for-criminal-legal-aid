@@ -441,3 +441,21 @@ en:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
+      steps_capital_properties_form:
+        house_type: Which type of property is it?
+        house_type_options:
+          bungalow: Bungalow,
+          detached: Detached,
+          flat: Flat or maisonette,
+          semidetached: Semi-detached,
+          terraced: Terraced,
+        bedrooms: How many bedrooms are there?
+        value: How much is the property worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the property does your client own?
+        percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address: Is the address of the property the same as your client’s home address?
+        is_home_address_options: *YESNO
+        has_other_owners: Does anyone else own part of the property?
+        has_other_owners_options: *YESNO
+

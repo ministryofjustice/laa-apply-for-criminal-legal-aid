@@ -8,7 +8,7 @@ module ErrorHandling
         redirect_to invalid_token_errors_path
       when Errors::InvalidSession
         redirect_to invalid_session_errors_path
-      when Errors::SavingNotFound
+      when Errors::SavingNotFound || Errors::PropertyNotFound
         redirect_to not_found_errors_path
       when Errors::ApplicationNotFound
         redirect_to application_not_found_errors_path
