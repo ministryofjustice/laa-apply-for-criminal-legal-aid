@@ -28,52 +28,50 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
     end
   end
 
-  # TODO: CRIMAPP-466 Refactor as Money to prevent
-  # auto-type conversion from float to integer
   describe '#amount' do
-    let(:amount) { 304.23 }
-    let(:frequency) { 'month' }
-
-    it 'saves as integer' do
-      expect(subject.amount).to eq 304
-    end
-  end
-
-  describe '#amount_in_pounds' do
-    let(:frequency) { 'week' }
     let(:amount) { 0 }
+    let(:frequency) { 'week' }
 
     before do
-      subject.attributes['amount_in_pounds'] = amount_in_pounds
+      subject.attributes['amount'] = amount
       subject.valid?
     end
 
     context 'when 0' do
-      let(:amount_in_pounds) { 0 }
+      let(:amount) { 0 }
 
       it { is_expected.not_to be_valid }
-      it { expect(subject.errors.of_kind?(:amount_in_pounds, :greater_than)).to be(true) }
+      it { expect(subject.errors.of_kind?(:amount, :greater_than)).to be(true) }
     end
 
     context 'when less than 0' do
-      let(:amount_in_pounds) { -1 }
+      let(:amount) { -1 }
 
       it { is_expected.not_to be_valid }
-      it { expect(subject.errors.of_kind?(:amount_in_pounds, :greater_than)).to be(true) }
+      it { expect(subject.errors.of_kind?(:amount, :greater_than)).to be(true) }
     end
 
     context 'when blank' do
-      let(:amount_in_pounds) { '' }
+      let(:amount) { '' }
 
       it { is_expected.not_to be_valid }
-      it { expect(subject.amount_in_pounds).to eq '0.00' }
-      it { expect(subject.errors.of_kind?(:amount_in_pounds, :greater_than)).to be(true) }
+      it { expect(subject.amount).to eq '' }
+      it { expect(subject.errors.of_kind?(:amount, :not_a_number)).to be(true) }
     end
 
     context 'when not a number' do
-      let(:amount_in_pounds) { ' twelve ' }
+      let(:amount) { ' twelve ' }
 
-      it { expect(subject.errors.of_kind?(:amount_in_pounds, :greater_than)).to be(true) }
+      it { expect(subject.errors.of_kind?(:amount, :not_a_number)).to be(true) }
+    end
+
+    context 'when valid' do
+      let(:amount) { 82.90 }
+
+      it 'displays a stringified number' do
+        expect(subject).to be_valid
+        expect(subject.amount).to eq '82.90'
+      end
     end
   end
 
@@ -115,7 +113,7 @@ RSpec.shared_examples 'a payment form' do |payment_class|
 
   describe 'types' do
     let(:example_attribute_data) do
-      { 'amount_in_pounds' => 23.30, 'frequency' => 'week' }
+      { 'amount' => 23.30, 'frequency' => 'week' }
     end
 
     context 'when defined as an attribute' do
@@ -125,7 +123,7 @@ RSpec.shared_examples 'a payment form' do |payment_class|
           response = subject.public_send(type)
 
           expect(response).to be_a fieldset_form_class
-          expect(response.amount).to eq 2330
+          expect(response.amount).to eq '23.30'
           expect(response.payment_type).to eq type
           expect(response.frequency).to eq 'week'
           expect(response.details).to be_nil
@@ -140,25 +138,33 @@ RSpec.shared_examples 'a payment form' do |payment_class|
 
       it 'replaces the persisted fieldset form when attribute is reset' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
         subject.other = {
-          'amount_in_pounds' => 103.26,
+          'amount' => 103.26,
           'frequency' => 'month',
           'details' => 'Earned some cash selling furniture'
         }
         record = payments.find_by(payment_type: 'other')
         expect(payments.size).to eq 1
-        expect(record.amount).to eq 10_326
+        expect(record.amount).to eq 103.26
         expect(record.frequency).to eq 'month'
         expect(record.details).to eq 'Earned some cash selling furniture'
 
         subject.other = {
-          'amount_in_pounds' => 8982.10,
+          'amount' => 8982.10,
           'frequency' => 'annual'
         }
         record = payments.find_by(payment_type: 'other')
         expect(payments.size).to eq 1
-        expect(record.amount).to eq 898_210
+        expect(record.amount).to eq 8982.10
         expect(record.frequency).to eq 'annual'
         expect(record.details).to be_nil
+      end
+
+      it 'persists amount as an integer' do
+        subject.public_send(:'other=', example_attribute_data)
+        record = payments.find_by(payment_type: 'other')
+
+        expect(record.amount_before_type_cast).to eq 2330
+        expect(record.amount_before_type_cast).to be_a Integer
       end
     end
   end
@@ -173,7 +179,7 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     context 'when persisted record exists' do
       before do
         # Persist
-        subject.other = { 'amount_in_pounds' => 105.50, 'frequency' => 'four_weeks' }
+        subject.other = { 'amount' => 105.50, 'frequency' => 'four_weeks' }
       end
 
       it 'returns true' do

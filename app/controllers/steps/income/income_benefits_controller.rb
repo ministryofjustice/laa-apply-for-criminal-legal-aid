@@ -15,7 +15,7 @@ module Steps
 
       def additional_permitted_params
         payment_types = IncomeBenefitType.values.map(&:to_s)
-        fieldset_attributes = Steps::Income::IncomeBenefitFieldsetForm.attribute_names + ['amount_in_pounds']
+        fieldset_attributes = Steps::Income::IncomeBenefitFieldsetForm.attribute_names
 
         [
           payment_types.product([fieldset_attributes]).to_h.merge('types' => [], 'benefit_payments' => [])

@@ -51,16 +51,16 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
               'income_payments' => [''], # Rails nested attributes field
               'types' => %w[maintenance student_loan_grant rent other], # Selected payment checkboxes
 
-              'maintenance' =>  { 'amount_in_pounds' => '56.12', 'frequency' => 'week' }, # Data for selected payment
-              'private_pension' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'state_pension' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'interest_investment' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'student_loan_grant' => { 'amount_in_pounds' => '3.00', 'frequency' => 'annual' },
-              'board_from_family' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'rent' => { 'amount_in_pounds' => '2', 'frequency' => 'month' },
-              'financial_support_with_access' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'from_friends_relatives' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'other' => { 'amount_in_pounds' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
+              'maintenance' =>  { 'amount' => '56.12', 'frequency' => 'week' }, # Data for selected payment
+              'private_pension' => { 'amount' => '', 'frequency' => '' },
+              'state_pension' => { 'amount' => '', 'frequency' => '' },
+              'interest_investment' => { 'amount' => '', 'frequency' => '' },
+              'student_loan_grant' => { 'amount' => '3.00', 'frequency' => 'annual' },
+              'board_from_family' => { 'amount' => '', 'frequency' => '' },
+              'rent' => { 'amount' => '2', 'frequency' => 'month' },
+              'financial_support_with_access' => { 'amount' => '', 'frequency' => '' },
+              'from_friends_relatives' => { 'amount' => '', 'frequency' => '' },
+              'other' => { 'amount' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
             }
           }
         end
@@ -77,16 +77,16 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
               'income_payments' => [''],
               'types' => %w[maintenance student_loan_grant rent other],
 
-              'maintenance' =>  { 'amount_in_pounds' => '', 'frequency' => 'every week' },
-              'private_pension' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'state_pension' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'interest_investment' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'student_loan_grant' => { 'amount_in_pounds' => '3.00', 'frequency' => 'annual', 'details' => 'How?' },
-              'board_from_family' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'rent' => { 'amount_in_pounds' => '2', 'frequency' => 'month' },
-              'financial_support_with_access' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'from_friends_relatives' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'other' => { 'amount_in_pounds' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
+              'maintenance' =>  { 'amount' => '', 'frequency' => 'every week' },
+              'private_pension' => { 'amount' => '', 'frequency' => '' },
+              'state_pension' => { 'amount' => '', 'frequency' => '' },
+              'interest_investment' => { 'amount' => '', 'frequency' => '' },
+              'student_loan_grant' => { 'amount' => '3.00', 'frequency' => 'annual', 'details' => 'How?' },
+              'board_from_family' => { 'amount' => '', 'frequency' => '' },
+              'rent' => { 'amount' => '2', 'frequency' => 'month' },
+              'financial_support_with_access' => { 'amount' => '', 'frequency' => '' },
+              'from_friends_relatives' => { 'amount' => '', 'frequency' => '' },
+              'other' => { 'amount' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
             }
           }
         end
@@ -96,12 +96,12 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
         end
 
         it 'has error messages' do
-          expect(subject.errors.of_kind?('maintenance-amount_in_pounds', :greater_than)).to be(true)
+          expect(subject.errors.of_kind?('maintenance-amount', :not_a_number)).to be(true)
           expect(subject.errors.of_kind?('maintenance-frequency', :inclusion)).to be(true)
           expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'maintenance-amount_in_pounds')).to eq '0.00'
+          expect(subject.send(:'maintenance-amount')).to eq ''
         end
       end
     end

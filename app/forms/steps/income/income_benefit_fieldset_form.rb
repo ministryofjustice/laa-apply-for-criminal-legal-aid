@@ -3,11 +3,11 @@ module Steps
     class IncomeBenefitFieldsetForm < Steps::BaseFormObject
       attribute :id, :string
       attribute :payment_type, :string
-      attribute :amount, :integer # Save in pence
+      attribute :amount, :pence
       attribute :frequency, :string
       attribute :details, :string
 
-      validates :amount_in_pounds, numericality: {
+      validates :amount, numericality: {
         greater_than: 0
       }
 
@@ -15,13 +15,6 @@ module Steps
       validates :frequency, presence: true, inclusion: { in: :frequencies }
 
       validate :details_only_when_other?
-
-      def amount_in_pounds
-        return unless amount
-
-        amount_in_pounds = amount.dup / 100.0
-        helpers.number_with_precision(amount_in_pounds, precision: 2)
-      end
 
       # Needed for `#fields_for` to render the uuids as hidden fields
       def persisted?
@@ -49,10 +42,6 @@ module Steps
 
       def frequencies
         PaymentFrequencyType.values.map(&:to_s)
-      end
-
-      def helpers
-        ActionController::Base.helpers
       end
 
       def details_only_when_other?

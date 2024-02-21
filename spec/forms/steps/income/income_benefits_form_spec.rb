@@ -50,12 +50,12 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
               'income_benefits' => [''], # Rails nested attributes field
               'types' => %w[child jsa other], # Selected payment checkboxes
 
-              'child' =>  { 'amount_in_pounds' => '56.12', 'frequency' => 'week' }, # Data for selected payment
-              'working_or_child_tax_credit' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'incapacity' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'industrial_injuries_disablement' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'jsa' => { 'amount_in_pounds' => '3.00', 'frequency' => 'annual' },
-              'other' => { 'amount_in_pounds' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
+              'child' =>  { 'amount' => '56.12', 'frequency' => 'week' }, # Data for selected payment
+              'working_or_child_tax_credit' => { 'amount' => '', 'frequency' => '' },
+              'incapacity' => { 'amount' => '', 'frequency' => '' },
+              'industrial_injuries_disablement' => { 'amount' => '', 'frequency' => '' },
+              'jsa' => { 'amount' => '3.00', 'frequency' => 'annual' },
+              'other' => { 'amount' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
             }
           }
         end
@@ -72,12 +72,12 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
               'income_benefits' => [''],
               'types' => %w[child jsa other],
 
-              'child' =>  { 'amount_in_pounds' => '', 'frequency' => 'every week' },
-              'working_or_child_tax_credit' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'incapacity' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'industrial_injuries_disablement' => { 'amount_in_pounds' => '', 'frequency' => '' },
-              'jsa' => { 'amount_in_pounds' => '3.00', 'frequency' => 'annual', 'details' => 'How?' },
-              'other' => { 'amount_in_pounds' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
+              'child' =>  { 'amount' => '', 'frequency' => 'every week' },
+              'working_or_child_tax_credit' => { 'amount' => '', 'frequency' => '' },
+              'incapacity' => { 'amount' => '', 'frequency' => '' },
+              'industrial_injuries_disablement' => { 'amount' => '', 'frequency' => '' },
+              'jsa' => { 'amount' => '3.00', 'frequency' => 'annual', 'details' => 'How?' },
+              'other' => { 'amount' => '44', 'frequency' => 'week', 'details' => 'Side hustle' },
             }
           }
         end
@@ -87,12 +87,12 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
         end
 
         it 'has error messages' do
-          expect(subject.errors.of_kind?('child-amount_in_pounds', :greater_than)).to be(true)
+          expect(subject.errors.of_kind?('child-amount', :not_a_number)).to be(true)
           expect(subject.errors.of_kind?('child-frequency', :inclusion)).to be(true)
           expect(subject.errors.of_kind?('jsa-details', :invalid)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'child-amount_in_pounds')).to eq '0.00'
+          expect(subject.send(:'child-amount')).to eq ''
         end
       end
     end
