@@ -249,6 +249,9 @@ en:
       income_payments:
         edit:
           page_title: Which of these payments does your client get?
+      income_benefits:
+        edit:
+          page_title: Which of these benefits does your client get?
       client_has_dependants:
         edit:
           page_title: 'Does your client have any dependants?'
@@ -332,7 +335,7 @@ en:
     submission:
       more_information:
         edit:
-          page_title: More information 
+          page_title: More information
       review:
         edit:
           page_title: Review the application
@@ -347,17 +350,17 @@ en:
       confirmation:
         show:
           page_title: Application submitted
-          heading: 
+          heading:
             initial: Application complete
             post_submission_evidence: Evidence submitted
-            resubmission: Application updated 
-          what_happens_next: 
+            resubmission: Application updated
+          what_happens_next:
             initial: We’ll check your application to see if your client is entitled to legal aid.
             post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
-          view_application: 
+          view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence
-        
+
 
       failure:
         edit:

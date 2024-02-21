@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_13_115112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -122,6 +122,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
     t.string "scan_output"
     t.datetime "scan_at"
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
+  end
+
+  create_table "income_benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_type", null: false
+    t.integer "amount", null: false
+    t.string "frequency", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.index ["crime_application_id"], name: "index_income_benefits_on_crime_application_id"
   end
 
   create_table "income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -239,6 +250,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_142502) do
   add_foreign_key "codefendants", "cases"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
+  add_foreign_key "income_benefits", "crime_applications"
   add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
