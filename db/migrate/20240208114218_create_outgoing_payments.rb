@@ -6,9 +6,9 @@ class CreateOutgoingPayments < ActiveRecord::Migration[7.0]
       t.timestamps
 
       t.string :payment_type, null: false
-      t.integer :amount, null: false
-      t.string :frequency, null: false
-      t.jsonb :metadata, default: {}, null: false
+      t.integer :amount
+      t.string :frequency
+      t.jsonb :metadata, default: {}
       t.index [:crime_application_id, :payment_type], unique: true, name: "index_crime_application_outgoing_payment_type"
     end
   end
