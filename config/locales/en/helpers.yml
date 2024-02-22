@@ -102,6 +102,8 @@ en:
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
         confirm_in_applicants_name: Confirm the following 
         account_holder: Whose name is the account in?
+      steps_capital_savings_summary_form:
+        add_saving: Do you want to add another savings account?
 
     hint:
       steps_client_details_form:
@@ -436,4 +438,6 @@ en:
         are_wages_paid_into_account_options: *YESNO
         account_holder_options: *OWNERSHIP_OPTIONS 
         confirm_in_applicants_name_options: 
-          'true': I confirm that the account is in my client's name 
+          'true': I confirm that the account is in my client's name
+      steps_capital_savings_summary_form:
+        add_saving_options: *YESNO

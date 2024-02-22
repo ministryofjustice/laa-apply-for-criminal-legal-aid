@@ -175,6 +175,7 @@ Rails.application.routes.draw do
         edit_step :which_assets_does_client_own, alias: :property_type
         edit_step :which_savings_does_client_have, alias: :saving_type
         crud_step :savings, param: :saving_id
+        edit_step :clients_savings, alias: :savings_summary
       end
 
       namespace :evidence do

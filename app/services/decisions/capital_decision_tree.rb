@@ -5,7 +5,9 @@ module Decisions
       when :saving_type
         after_saving_type(form_object.saving)
       when :savings
-        # TODO: Add next step
+        edit(:savings_summary)
+      when :savings_summary
+        after_savings_summary
       when :property_type
         # TODO: Add next step
       else
@@ -19,6 +21,12 @@ module Decisions
       return edit(:premium_bonds) unless saving
 
       edit(:savings, saving_id: saving)
+    end
+
+    def after_savings_summary
+      return edit(:premium_bonds) if form_object.add_saving.no?
+
+      edit(:saving_type)
     end
   end
 end

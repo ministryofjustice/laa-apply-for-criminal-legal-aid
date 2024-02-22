@@ -465,6 +465,11 @@ en:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
+        steps/capital/savings_summary_form:
+          attributes:
+            add_saving:
+              inclusion: Select yes if you want to add another savings account
+              missing_details: You must complete all saving account details in order to proceed
         steps/submission/more_information_form:
           attributes:
             additional_information:

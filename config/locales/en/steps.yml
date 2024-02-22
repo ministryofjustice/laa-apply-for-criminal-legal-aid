@@ -6,6 +6,8 @@ en:
       charge:
         unknown_name: Name not entered
         incomplete_tag: Incomplete
+      saving:
+        incomplete_tag: Incomplete
 
     provider:
       confirm_office:
@@ -309,7 +311,25 @@ en:
             cash_isa: Your client’s cash ISA
             national_savings_or_post_office: Your client’s National Savings or Post Office account
             other: Your client’s other cash investment
-
+        confirm_destroy:
+          page_title: Delete saving account confirmation
+          heading: Are you sure you want to remove this savings account?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this savings account
+          cancel_delete_button_a11y: No, do not remove this savings account
+        destroy:
+          success_flash: You removed the savings account
+      savings_summary:
+        edit:
+          page_title: Savings summary list
+          heading:
+            zero: You have not added savings yet
+            one: You have added %{count} savings
+            other: You have added %{count} savings
+        saving_details:
+          change_link_html: Change <span class="govuk-visually-hidden">saving</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
     evidence:
       upload:
         edit:
