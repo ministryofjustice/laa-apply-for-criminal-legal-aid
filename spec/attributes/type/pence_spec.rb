@@ -41,7 +41,7 @@ RSpec.describe Type::Pence do
     describe 'when value is an integer' do
       let(:value) { 123 }
 
-      it { is_expected.to eq(12_300) }
+      it { is_expected.to eq(123) }
     end
   end
 
@@ -61,9 +61,9 @@ RSpec.describe Type::Pence do
     end
 
     describe 'when value is a float' do
-      let(:value) { 1100 }
+      let(:value) { 1100.09 }
 
-      it { is_expected.to eq(11.0) }
+      it { is_expected.to eq(11.00) }
 
       it { is_expected.to be_a(Float) }
     end

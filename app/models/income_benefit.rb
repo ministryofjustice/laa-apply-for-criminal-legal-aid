@@ -1,6 +1,4 @@
 class IncomeBenefit < ApplicationRecord
-  include Payable
-
   belongs_to :crime_application
 
   attribute :amount, :pence

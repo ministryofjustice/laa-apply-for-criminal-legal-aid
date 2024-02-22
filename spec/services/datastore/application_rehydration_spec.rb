@@ -198,7 +198,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           IncomePayment
         ).to receive(:new).with(
           payment_type: 'other',
-          amount: 12.89,
+          amount: 1289,
           frequency: 'fortnight',
           metadata: { details: "A note\n2022" },
         )
@@ -245,7 +245,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           IncomeBenefit
         ).to receive(:new).with(
           payment_type: 'other',
-          amount: 12.89,
+          amount: 1289,
           frequency: 'fortnight',
           metadata: { details: "A note\n2022" },
         )
@@ -254,7 +254,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           IncomeBenefit
         ).to receive(:new).with(
           payment_type: 'child',
-          amount: 891.01,
+          amount: 89_101,
           frequency: 'annual',
         )
 

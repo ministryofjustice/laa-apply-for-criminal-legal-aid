@@ -84,13 +84,13 @@ module Datastore
 
     def income_payments
       parent.means_details&.income_details&.income_payments&.map do |struct|
-        IncomePayment.build_with_pennies(**struct)
+        IncomePayment.new(**struct)
       end || []
     end
 
     def income_benefits
       parent.means_details&.income_details&.income_benefits&.map do |struct|
-        IncomeBenefit.build_with_pennies(**struct)
+        IncomeBenefit.new(**struct)
       end || []
     end
 
