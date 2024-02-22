@@ -102,6 +102,10 @@ en:
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
         confirm_in_applicants_name: Confirm the following 
         account_holder: Whose name is the account in?
+      steps_capital_properties_form:
+        house_type: Which type of property is it?
+        is_home_address: Is the address of the property the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the property?
 
     hint:
       steps_client_details_form:
@@ -442,7 +446,6 @@ en:
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
       steps_capital_properties_form:
-        house_type: Which type of property is it?
         house_type_options:
           bungalow: Bungalow,
           detached: Detached,
@@ -454,8 +457,6 @@ en:
         outstanding_mortgage: How much is left to pay on the mortgage?
         percentage_applicant_owned: What percentage of the property does your client own?
         percentage_partner_owned: What percentage of the property does your client’s partner own?
-        is_home_address: Is the address of the property the same as your client’s home address?
         is_home_address_options: *YESNO
-        has_other_owners: Does anyone else own part of the property?
         has_other_owners_options: *YESNO
 
