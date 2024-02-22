@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(SavingTypeForm, as: :savings)
+        update_and_advance(SavingTypeForm, as: :saving_type)
       end
 
       def additional_permitted_params
