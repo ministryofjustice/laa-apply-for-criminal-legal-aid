@@ -11,8 +11,9 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, outgoings:) }
-  let(:outgoings) { Outgoings.new }
+  let(:crime_application) { instance_double(CrimeApplication, outgoings:, outgoings_payments:) }
+  let(:outgoings) { instance_double(Outgoings) }
+  let(:outgoings_payments) { [] }
 
   let(:pays_council_tax) { nil }
   let(:council_tax_amount) { nil }
@@ -68,17 +69,24 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
 
       context 'when `pays_council_tax` answer is no' do
         let(:pays_council_tax) { YesNoAnswer::NO.to_s }
+        let(:outgoings_payment) { instance_double(OutgoingsPayment, payment_type: OutgoingsPaymentType::COUNCIL_TAX)}
+        # let(:outgoings_payment) do
+        #   OutgoingsPayment.new(
+        #     amount: 100_000,
+        #     payment_type: OutgoingsPaymentType::COUNCIL_TAX.to_s,
+        #     frequency: PaymentFrequencyType::ANNUALLY.to_s,
+        #     crime_application:
+        #     ) 
+        #   end
+
 
         context 'when a `council_tax_amount` was previously recorded' do
-          before do
-            outgoings.update(council_tax_amount: 100_079)
-          end
+
 
           it { is_expected.to be_valid }
 
           it 'can make council_tax_amount field nil if no longer required' do
-            attributes = form.send(:attributes_to_reset)
-            expect(attributes['council_tax_amount']).to be_nil
+            expect(outgoings_payment).to receive(:destroy)
           end
         end
       end
@@ -104,7 +112,6 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
           end
 
           it 'cannot reset `council_tax_amount` as it is relevant' do
-            attributes = form.send(:attributes_to_reset)
             expect(attributes['council_tax_amount']).to eq('1000.79')
           end
         end

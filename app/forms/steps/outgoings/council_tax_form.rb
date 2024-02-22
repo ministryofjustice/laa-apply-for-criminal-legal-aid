@@ -23,19 +23,25 @@ module Steps
       private
 
       def persist!
-        outgoings.update(
-          attributes.merge(attributes_to_reset)
-        )
-      end
-
-      def attributes_to_reset
-        {
-          'council_tax_amount' => (council_tax_amount if pays_council_tax?)
-        }
+        if pays_council_tax?
+          council_tax_payment_entry.first_or_initialize.tap do |payment_type|
+            payment_type.update!(
+              amount: council_tax_amount,
+              payment_type: OutgoingsPaymentType::COUNCIL_TAX.to_s,
+              frequency: PaymentFrequencyType::ANNUALLY.to_s
+            )
+          end
+        else
+          council_tax_payment_entry.destroy
+        end
       end
 
       def pays_council_tax?
         pays_council_tax&.yes?
+      end
+
+      def council_tax_payment_entry
+        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.to_s)
       end
     end
   end
