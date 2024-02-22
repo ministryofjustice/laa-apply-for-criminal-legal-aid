@@ -17,7 +17,7 @@ module Adapters
             methods: [:employment_status, :client_has_dependants],
             # `employment_type` is the name for employment_status
             # in the datastore, we don't use it
-            except: [:employment_type, :dependants]
+            except: [:employment_type, :dependants, :income_payments, :income_benefits]
           )
         )
       end

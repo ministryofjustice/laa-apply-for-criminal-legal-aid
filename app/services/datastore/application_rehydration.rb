@@ -24,7 +24,9 @@ module Datastore
         income: income,
         outgoings: outgoings,
         documents: parent.documents,
-        additional_information: parent.additional_information
+        additional_information: parent.additional_information,
+        income_payments: income_payments,
+        income_benefits: income_benefits,
       )
     end
 
@@ -75,7 +77,21 @@ module Datastore
     end
 
     def dependants
-      parent.means_details&.income_details&.dependants&.map { |struct| Dependant.new(**struct) } || []
+      parent.means_details&.income_details&.dependants&.map do |struct|
+        Dependant.new(**struct)
+      end || []
+    end
+
+    def income_payments
+      parent.means_details&.income_details&.income_payments&.map do |struct|
+        IncomePayment.build_with_pennies(**struct)
+      end || []
+    end
+
+    def income_benefits
+      parent.means_details&.income_details&.income_benefits&.map do |struct|
+        IncomeBenefit.build_with_pennies(**struct)
+      end || []
     end
 
     def income
