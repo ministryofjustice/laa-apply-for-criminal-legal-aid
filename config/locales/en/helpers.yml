@@ -4,6 +4,10 @@ en:
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
     frequency_legend: &frequency_legend 'Select how often they get this payment'
     amount_label: &amount_label 'Enter amount'
+    OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
+      applicant: 'Client'
+      applicant_and_partner: 'Client and partner'
+      partner: 'Partner'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
@@ -93,6 +97,11 @@ en:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
         saving_type: Which savings does your client have inside or outside the UK?
+      steps_capital_savings_form:
+        is_overdrawn: Is the account overdrawn?
+        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        confirm_in_applicants_name: Confirm the following 
+        account_holder: Whose name is the account in?
 
     hint:
       steps_client_details_form:
@@ -418,3 +427,13 @@ en:
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_savings_form:
+        provider_name: What is the name of the bank, building society or other holder of the savings?
+        sort_code: What is the sort code or branch name?
+        account_number: What is the account number?
+        account_balance: What is the account balance?
+        is_overdrawn_options: *YESNO
+        are_wages_paid_into_account_options: *YESNO
+        account_holder_options: *OWNERSHIP_OPTIONS 
+        confirm_in_applicants_name_options: 
+          'true': I confirm that the account is in my client's name 

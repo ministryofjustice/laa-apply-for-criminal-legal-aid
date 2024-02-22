@@ -5,6 +5,8 @@ module Steps
 
       validates :saving_type, presence: true
 
+      attr_reader :saving
+
       def choices
         SavingType.values
       end
@@ -12,8 +14,15 @@ module Steps
       private
 
       def persist!
-        # TODO: If none, go to next step
-        # If type selected, build new savings form
+        return true if saving_type == 'none'
+
+        @saving = incomplete_saving_for_type || crime_application.savings.create(saving_type:)
+      end
+
+      def incomplete_saving_for_type
+        return nil unless saving_type
+
+        crime_application.savings.where(saving_type:).reject(&:complete?).first
       end
     end
   end
