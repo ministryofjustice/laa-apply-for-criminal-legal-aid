@@ -270,7 +270,7 @@ en:
         answers:
           rent: Rent
           mortgage: Mortgage
-          board_lodgings: Board and lodgings
+          board_and_lodging: Board and lodgings
           none: None
       # END housing payments section
 

@@ -282,6 +282,9 @@ en:
       housing_payment_type:
         edit:
           page_title: Which of these payments does your client pay where they usually live?
+      board_and_lodging:
+        edit:
+          page_title: Board and lodgings payments
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
