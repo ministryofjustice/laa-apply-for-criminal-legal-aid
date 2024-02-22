@@ -300,6 +300,15 @@ en:
       property_type:
         edit:
           page_title: Which assets does your client own or part-own inside or outside the UK?
+      savings:
+        edit:
+          page_title: Add savings account details 
+          heading: 
+            bank: Your client’s bank account
+            building_society: Your client’s building society account
+            cash_isa: Your client’s cash ISA
+            national_savings_or_post_office: Your client’s National Savings or Post Office account
+            other: Your client’s other cash investment
 
     evidence:
       upload:
