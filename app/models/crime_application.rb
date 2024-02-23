@@ -10,6 +10,7 @@ class CrimeApplication < ApplicationRecord
   has_one :partner, dependent: :destroy
   has_one :income, dependent: :destroy
   has_one :outgoings, dependent: :destroy
+  has_one :capital, dependent: :destroy
 
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy

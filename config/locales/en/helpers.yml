@@ -437,3 +437,7 @@ en:
         account_holder_options: *OWNERSHIP_OPTIONS 
         confirm_in_applicants_name_options: 
           'true': I confirm that the account is in my client's name 
+      steps_capital_premium_bonds_form:
+        premium_bonds_holder_number: Enter the holder number
+        premium_bonds_total_value: Enter the total value of their bonds
+        has_premium_bonds_options: *YESNO

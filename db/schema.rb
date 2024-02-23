@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
     t.string "lookup_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
+  end
+
+  create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "has_premium_bonds"
+    t.integer "premium_bonds_total_value"
+    t.string "premium_bonds_holder_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
   create_table "cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
