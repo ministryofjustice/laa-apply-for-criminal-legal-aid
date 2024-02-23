@@ -41,7 +41,9 @@ RSpec.describe Datastore::ApplicationRehydration do
         documents: all(be_a(Document)),
         dependants: all(be_a(Dependant)),
         outgoings: an_instance_of(Outgoings),
-        additional_information: parent['additional_information']
+        additional_information: parent['additional_information'],
+        income_payments: all(be_a(IncomePayment)),
+        income_benefits: all(be_a(IncomeBenefit)),
       )
 
       expect(
@@ -134,8 +136,12 @@ RSpec.describe Datastore::ApplicationRehydration do
     end
 
     context 'when means_details contains dependants' do
+      let(:dependants) do
+        { 'dependants' => [{ 'age' => 0 }, { 'age' => 17 }] }
+      end
+
       let(:parent) do
-        super().deep_merge('means_details' => { 'income_details' => { 'dependants' => [{ age: 0 }, { age: 17 }] } })
+        super().deep_merge('means_details' => { 'income_details' => dependants })
       end
 
       it 'sets `income.client_has_dependants` field' do
@@ -153,6 +159,103 @@ RSpec.describe Datastore::ApplicationRehydration do
           hash_including(
             dependants: contain_exactly(Dependant, Dependant)
           )
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains income_payments' do
+      let(:income_payments) do
+        {
+          'income_payments' => [
+            {
+              'payment_type' => 'other',
+              'amount' => 1289,
+              'frequency' => 'fortnight',
+              'metadata' => { 'details' => "A note\n2022" },
+            },
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'income_details' => income_payments })
+      end
+
+      it 'generates income payments' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            income_payments: contain_exactly(IncomePayment)
+          )
+        )
+
+        subject.call
+      end
+
+      it 'forces IncomePayment to be constructed using pounds value' do
+        expect(
+          IncomePayment
+        ).to receive(:new).with(
+          payment_type: 'other',
+          amount: 1289,
+          frequency: 'fortnight',
+          metadata: { details: "A note\n2022" },
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains income_benefits' do
+      let(:income_benefits) do
+        {
+          'income_benefits' => [
+            {
+              'payment_type' => 'other',
+              'amount' => 1289,
+              'frequency' => 'fortnight',
+              'metadata' => { 'details' => "A note\n2022" },
+            },
+            {
+              'payment_type' => 'child',
+              'amount' => 89_101,
+              'frequency' => 'annual',
+            },
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'income_details' => income_benefits })
+      end
+
+      it 'generates income benefits' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            income_benefits: contain_exactly(IncomeBenefit, IncomeBenefit)
+          )
+        )
+
+        subject.call
+      end
+
+      it 'forces IncomeBenefit to be constructed using pounds value' do
+        expect(
+          IncomeBenefit
+        ).to receive(:new).with(
+          payment_type: 'other',
+          amount: 1289,
+          frequency: 'fortnight',
+          metadata: { details: "A note\n2022" },
+        )
+
+        expect(
+          IncomeBenefit
+        ).to receive(:new).with(
+          payment_type: 'child',
+          amount: 89_101,
+          frequency: 'annual',
         )
 
         subject.call
