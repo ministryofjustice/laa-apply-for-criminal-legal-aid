@@ -1,33 +1,29 @@
 module Steps
   module Income
-    class IncomePaymentsForm < Steps::BaseFormObject
+    class IncomeBenefitsForm < Steps::BaseFormObject
       # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
-        maintenance
-        private_pension
-        state_pension
-        interest_investment
-        student_loan_grant
-        board_from_family
-        rent
-        financial_support_with_access
-        from_friends_relatives
+        child
+        working_or_child_tax_credit
+        incapacity
+        industrial_injuries_disablement
+        jsa
         other
       ].freeze
 
-      attribute :income_payments, array: true, default: [] # Used by BaseFormObject
+      attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
       attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
       attr_reader :new_payments
 
-      validates_with IncomePaymentsValidator
+      validates_with IncomeBenefitsValidator
 
-      IncomePaymentType.values.each do |type| # rubocop:disable Style/HashEachMethods
+      IncomeBenefitType.values.each do |type| # rubocop:disable Style/HashEachMethods
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for
         # for each type (on page load). Trigger validation on load.
         define_method :"#{type}" do
-          IncomePaymentFieldsetForm.build(find_or_create_income_payment(type), crime_application:).tap do |record|
+          IncomeBenefitFieldsetForm.build(find_or_create_income_benefit(type), crime_application:).tap do |record|
             record.valid? if types.include?(type.to_s)
           end
         end
@@ -36,8 +32,8 @@ module Steps
         # (on form submit). 'type' is the checkbox value
         define_method :"#{type}=" do |attrs|
           @new_payments ||= {}
-          record = IncomePaymentFieldsetForm.build(
-            IncomePayment.new(payment_type: type.to_s, **attrs),
+          record = IncomeBenefitFieldsetForm.build(
+            IncomeBenefit.new(payment_type: type.to_s, **attrs),
             crime_application:
           )
 
@@ -55,7 +51,7 @@ module Steps
       end
 
       def ordered_payment_types
-        IncomePaymentType.values.map(&:to_s) & PAYMENT_TYPES_ORDER
+        IncomeBenefitType.values.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
       def checked?(type)
@@ -64,20 +60,20 @@ module Steps
 
       private
 
-      # Precedence: submitted values, stored values, empty IncomePayment
-      def find_or_create_income_payment(type) # rubocop:disable Metrics/AbcSize
+      # Precedence: submitted values, stored values, empty IncomeBenefit
+      def find_or_create_income_benefit(type) # rubocop:disable Metrics/AbcSize
         if types.include?(type.to_s) && @new_payments&.key?(type.value.to_s)
           attrs = @new_payments[type.value.to_s].attributes
-          return IncomePayment.new(payment_type: type.to_s, **attrs)
+          return IncomeBenefit.new(payment_type: type.to_s, **attrs)
         end
 
-        income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s)
-        return income_payment if income_payment
+        income_benefit = crime_application.income_benefits.find_by(payment_type: type.value.to_s)
+        return income_benefit if income_benefit
 
-        IncomePayment.new(payment_type: type.to_s)
+        IncomeBenefit.new(payment_type: type.to_s)
       end
 
-      # Individual income_payments_fieldset_forms are in charge of saving themselves
+      # Individual income_benefits_fieldset_forms are in charge of saving themselves
       def persist!
         true
       end
