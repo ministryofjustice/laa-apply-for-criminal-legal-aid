@@ -1,0 +1,33 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl">
+      <%= t(".heading.#{@form_object.saving_type}") %>
+    </h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :provider_name, autocomplete: 'off' %>
+      <%= f.govuk_text_field :sort_code, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
+      <%= f.govuk_text_field :account_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
+      <%= f.govuk_number_field :account_balance, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
+      <%= f.govuk_collection_radio_buttons :is_overdrawn, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+      <%= f.govuk_collection_radio_buttons :are_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+
+      <% if f.object.include_partner? %>
+        <%= f.govuk_collection_radio_buttons :account_holder, OwnershipType.values, :value, legend: { size: 's' } %>
+      <% else %>
+
+        <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { size: 'm' } do %>
+        <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false %>
+        <% end %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

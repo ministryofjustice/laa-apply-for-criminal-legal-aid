@@ -276,6 +276,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
     let(:applicant_double) { double(Applicant) }
@@ -289,14 +290,25 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(applicant_double).to receive_messages(passporting_benefit:)
 
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+
+      allow(FeatureFlags).to receive(:means_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
+      }
     end
 
     context 'and the benefit type is `none`' do
+      let(:feature_flag_means_journey_enabled) { false }
       let(:benefit_type) { BenefitType::NONE }
       let(:benefit_check_passported) { false }
       let(:passporting_benefit) { nil }
 
       it { is_expected.to have_destination(:benefit_exit, :show, id: crime_application) }
+
+      context 'and feature flag `means_journey` is enabled' do
+        let(:feature_flag_means_journey_enabled) { true }
+
+        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
+      end
     end
 
     context 'when application has been already passported on benefit check' do
@@ -334,6 +346,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `has_benefit_evidence`' do
     let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }

@@ -4,6 +4,10 @@ en:
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
     frequency_legend: &frequency_legend 'Select how often they get this payment'
     amount_label: &amount_label 'Enter amount'
+    OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
+      applicant: 'Client'
+      applicant_and_partner: 'Client and partner'
+      partner: 'Partner'
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
@@ -95,6 +99,11 @@ en:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
         saving_type: Which savings does your client have inside or outside the UK?
+      steps_capital_savings_form:
+        is_overdrawn: Is the account overdrawn?
+        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        confirm_in_applicants_name: Confirm the following 
+        account_holder: Whose name is the account in?
 
     hint:
       steps_client_details_form:
@@ -320,34 +329,34 @@ en:
           other: Other sources of income
           none: My client does not get any of these payments
         maintenance:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         private_pension:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         state_pension:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         interest_investment:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         student_loan_grant:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         board_from_family:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         rent:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         financial_support_with_access:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         from_friends_relatives:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount_in_pounds: Enter total amount of all other sources of income
+          amount: Enter total amount of all other sources of income
           frequency_options: *frequency_options
           details: Enter the other sources of income they get
       steps_income_income_benefits_form:
@@ -360,22 +369,22 @@ en:
           other: Other benefits (except disregarded benefits)
           none: My client does not get any of these benefits
         child:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         working_or_child_tax_credit:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         incapacity:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         industrial_injuries_disablement:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         jsa:
-          amount_in_pounds: *amount_label
+          amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount_in_pounds: Enter total amount of all other benefits (except disregarded benefits)
+          amount: Enter total amount of all other benefits (except disregarded benefits)
           frequency_options: *frequency_options
           details: Enter what benefits they get and the amount
       steps_income_client_has_dependants_form:
@@ -396,7 +405,7 @@ en:
           none: My client does not pay any of these payments
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO
-        council_tax_amount_in_pounds: How much do they pay yearly?
+        council_tax_amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_misc_payments_form:
@@ -441,3 +450,13 @@ en:
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_savings_form:
+        provider_name: What is the name of the bank, building society or other holder of the savings?
+        sort_code: What is the sort code or branch name?
+        account_number: What is the account number?
+        account_balance: What is the account balance?
+        is_overdrawn_options: *YESNO
+        are_wages_paid_into_account_options: *YESNO
+        account_holder_options: *OWNERSHIP_OPTIONS 
+        confirm_in_applicants_name_options: 
+          'true': I confirm that the account is in my client's name 

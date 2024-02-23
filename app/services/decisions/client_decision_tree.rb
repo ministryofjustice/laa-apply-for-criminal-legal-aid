@@ -105,7 +105,11 @@ module Decisions
 
     def after_benefit_type
       if form_object.benefit_type.none?
-        show(:benefit_exit)
+        if FeatureFlags.means_journey.enabled?
+          edit('/steps/income/employment_status')
+        else
+          show(:benefit_exit)
+        end
       else
         determine_dwp_result_page
       end

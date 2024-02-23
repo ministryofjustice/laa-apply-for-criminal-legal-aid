@@ -8,7 +8,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       CrimeApplication,
       income:,
       outgoings:,
-      dependants:
+      dependants:,
+      income_payments:,
+      income_benefits:,
     )
   end
 
@@ -43,6 +45,30 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       )
     end
 
+    let(:income_payments) do
+      [
+        instance_double(
+          IncomePayment,
+          payment_type: 'other',
+          amount_before_type_cast: 1802,
+          frequency: 'annual',
+          metadata: { 'details' => 'Side hustle' }
+        )
+      ]
+    end
+
+    let(:income_benefits) do
+      [
+        instance_double(
+          IncomeBenefit,
+          payment_type: 'child',
+          amount_before_type_cast: 123,
+          frequency: 'month',
+          metadata: { 'details' => 'Extra topup' },
+        )
+      ]
+    end
+
     let(:json_output) do
       {
         means_details: {
@@ -57,7 +83,19 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: 'yes',
             manage_without_income: 'other',
             manage_other_details: 'Another way that they manage',
-            dependants: []
+            dependants: [],
+            income_payments: [{
+              payment_type: 'other',
+              amount: 1802,
+              frequency: 'annual',
+              metadata: { 'details' => 'Side hustle' }
+            }],
+            income_benefits: [
+              payment_type: 'child',
+              amount: 123,
+              frequency: 'month',
+              metadata: { 'details' => 'Extra topup' },
+            ],
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
@@ -115,7 +153,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
-            dependants: []
+            dependants: [],
+            income_payments: nil,
+            income_benefits: nil,
           },
           outgoings_details: {
             # TODO: Outgoings array currently hardcoded in serializer
@@ -127,6 +167,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
           }
         }
       }.as_json
+    end
+
+    let(:income_payments) do
+      nil
+    end
+
+    let(:income_benefits) do
+      nil
     end
 
     it 'does not output lost_job_in_custody_fields' do
