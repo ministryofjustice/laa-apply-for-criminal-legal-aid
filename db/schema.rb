@@ -250,9 +250,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "person_id", null: false
+    t.uuid "crime_application_id", null: false
     t.string "property_type", null: false
     t.string "house_type"
+    t.string "custom_house_type"
     t.integer "size_in_acres"
     t.string "usage"
     t.integer "bedrooms"
@@ -265,7 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
     t.json "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_properties_on_person_id"
+    t.index ["crime_application_id"], name: "index_properties_on_crime_application_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -318,5 +319,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "savings", "crime_applications"
-  add_foreign_key "properties", "people"
+  add_foreign_key "properties", "crime_applications"
 end

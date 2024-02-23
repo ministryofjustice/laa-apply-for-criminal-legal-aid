@@ -31,6 +31,7 @@ class CrimeApplication < ApplicationRecord
   has_one :ioj, through: :case
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
+  has_many :properties, dependent: :destroy
 
   enum status: ApplicationStatus.enum_values
 

@@ -16,7 +16,7 @@ RSpec.describe Property, type: :model do
       let(:required_attributes) do
         {
           id: SecureRandom.uuid,
-          person_id: SecureRandom.uuid,
+          crime_application_id: SecureRandom.uuid,
           property_type: PropertyType.values.sample,
           house_type: HouseType.values.sample,
           bedrooms: 2,

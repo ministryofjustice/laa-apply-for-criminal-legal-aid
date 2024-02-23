@@ -180,6 +180,9 @@ en:
         property_type: Add one asset at a time. You can add more later.
       steps_capital_saving_type_form:
         saving_type: Add one savings account at a time. You can add more later.
+      steps_capital_properties_form:
+        bedrooms: Enter ‘0’ if the property is a studio.
+        value: You can use property websites to find the estimated value.
 
     label:
       cookies_settings_form:
@@ -447,11 +450,13 @@ en:
         has_premium_bonds_options: *YESNO
       steps_capital_properties_form:
         house_type_options:
-          bungalow: Bungalow,
-          detached: Detached,
-          flat: Flat or maisonette,
-          semidetached: Semi-detached,
-          terraced: Terraced,
+          bungalow: Bungalow
+          detached: Detached
+          flat_or_maisonette: Flat or maisonette
+          semidetached: Semi-detached
+          terraced: Terraced
+          custom: The type of property is not listed
+        custom_house_type: Enter the type of property
         bedrooms: How many bedrooms are there?
         value: How much is the property worth?
         outstanding_mortgage: How much is left to pay on the mortgage?

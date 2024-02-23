@@ -1,5 +1,5 @@
 class Property < ApplicationRecord
-  belongs_to :person
+  belongs_to :crime_application
 
   def complete?
     values_at(

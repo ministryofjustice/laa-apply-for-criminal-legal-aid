@@ -22,7 +22,7 @@ module Steps
       end
 
       def properties
-        @properties ||= current_crime_application.applicant.properties
+        @properties ||= current_crime_application.properties
       end
 
       def additional_permitted_params

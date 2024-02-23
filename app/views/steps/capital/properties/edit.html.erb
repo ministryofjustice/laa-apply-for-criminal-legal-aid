@@ -12,7 +12,16 @@
     </h1>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :house_type, HouseType.values, :value, inline: false, legend: { size: 's' } %>
+      <%= f.govuk_radio_buttons_fieldset :house_type, legend: { size: 's' } do %>
+        <% @form_object.house_types.each_with_index do |option, index| %>
+          <%= f.govuk_radio_button :house_type, option, link_errors: index.zero? %>
+        <% end %>
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :house_type, 'custom' do %>
+          <%= f.govuk_text_field :custom_house_type, autocomplete: 'off', width: 'one-third' %>
+        <%end%>
+      <% end %>
+
       <%= f.govuk_number_field :bedrooms, inputmode: 'numeric', width: 'one-third' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
       <%= f.govuk_number_field :outstanding_mortgage, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>

@@ -475,6 +475,10 @@ en:
               blank: Select yes if your client has any Premium Bonds
         steps/capital/properties_form:
           attributes:
+            house_type:
+              blank: Enter the type of property
+            custom_house_type:
+              blank: Enter the type of property
             bedrooms:
               blank: Enter how many bedrooms are there
             value:

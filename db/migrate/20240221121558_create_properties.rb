@@ -1,10 +1,11 @@
 class CreateProperties < ActiveRecord::Migration[7.0]
   def change
     create_table :properties, id: :uuid do |t|
-      t.references :person, type: :uuid, foreign_key: true, null: false
+      t.references :crime_application, type: :uuid, foreign_key: true, null: false
 
       t.string :property_type, null: false
       t.string :house_type
+      t.string :custom_house_type
       t.integer :size_in_acres
       t.string :usage
       t.integer :bedrooms
