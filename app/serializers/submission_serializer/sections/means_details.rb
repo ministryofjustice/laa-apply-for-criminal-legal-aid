@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class MeansDetails < Sections::BaseSection
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
       def to_builder
         Jbuilder.new do |json|
           if income.present?
@@ -18,6 +18,8 @@ module SubmissionSerializer
                 json.manage_without_income income.manage_without_income
                 json.manage_other_details income.manage_other_details
                 json.dependants Definitions::Dependant.generate(crime_application.dependants.with_ages)
+                json.income_payments Definitions::Payment.generate(crime_application.income_payments)
+                json.income_benefits Definitions::Payment.generate(crime_application.income_benefits)
               end
 
               json.outgoings_details do
@@ -34,7 +36,7 @@ module SubmissionSerializer
           end
         end
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
 
       private
 
