@@ -52,7 +52,7 @@ module Steps
       end
 
       def house_type_is_listed?
-        house_type != 'custom'
+        house_types.map(&:to_s).any? house_type
       end
     end
   end

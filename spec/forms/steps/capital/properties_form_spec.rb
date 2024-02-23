@@ -46,13 +46,13 @@ RSpec.describe Steps::Capital::PropertiesForm do
       allow(applicant).to receive(:home_address?).and_return(has_home_address)
     end
 
-    context 'applicant has home addresss' do
+    context 'applicant has home address' do
       let(:has_home_address) { true }
 
       it { expect(subject.person_has_home_address?).to be(true) }
     end
 
-    context 'applicant has no home addresss' do
+    context 'applicant has no home address' do
       let(:has_home_address) { false }
 
       it { expect(subject.person_has_home_address?).to be(false) }
@@ -71,6 +71,26 @@ RSpec.describe Steps::Capital::PropertiesForm do
         is_home_address: 'yes',
         has_other_owners: 'yes',
       }
+    end
+
+    context 'when house type is not listed' do
+      context 'with valid attributes' do
+        let(:attributes) { required_attributes.merge(house_type: 'custom', custom_house_type: 'custom house type') }
+
+        it 'updates the record' do
+          expect(record).to receive(:update).and_return(true)
+          expect(subject.save).to be(true)
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:attributes) { required_attributes.merge(house_type: 'custom') }
+
+        it 'updates the record' do
+          expect(record).not_to receive(:update)
+          expect(subject.save).to be(false)
+        end
+      end
     end
 
     context 'when client has no partner' do
