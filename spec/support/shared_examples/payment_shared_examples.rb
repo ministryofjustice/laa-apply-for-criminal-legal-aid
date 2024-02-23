@@ -144,7 +144,7 @@ RSpec.shared_examples 'a payment form' do |payment_class|
         }
         record = payments.find_by(payment_type: 'other')
         expect(payments.size).to eq 1
-        expect(record.amount).to eq 103.26
+        expect(record.amount).to eq '103.26'
         expect(record.frequency).to eq 'month'
         expect(record.details).to eq 'Earned some cash selling furniture'
 
@@ -154,7 +154,7 @@ RSpec.shared_examples 'a payment form' do |payment_class|
         }
         record = payments.find_by(payment_type: 'other')
         expect(payments.size).to eq 1
-        expect(record.amount).to eq 8982.10
+        expect(record.amount).to eq '8982.10'
         expect(record.frequency).to eq 'annual'
         expect(record.details).to be_nil
       end
