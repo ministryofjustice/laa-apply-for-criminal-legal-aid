@@ -283,6 +283,9 @@ en:
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
+      misc_payments:
+        edit:
+          page_title: Which of these payments does your client pay?
       income_tax_rate:
         edit:
           page_title: In the last 2 years, has your client paid the 40% income tax rate?

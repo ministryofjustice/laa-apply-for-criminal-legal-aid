@@ -1,5 +1,6 @@
 class OutgoingPayment < ApplicationRecord
   belongs_to :crime_application
 
-  store_accessor :metadata, :details
+  attribute :amount, :pence
+  store_accessor :metadata, :case_reference
 end
