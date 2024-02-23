@@ -2,6 +2,7 @@ module ErrorHandling
   extend ActiveSupport::Concern
 
   included do
+    # rubocop:disable Lint/DuplicateBranch
     rescue_from Exception do |exception|
       case exception
       when ActionController::InvalidAuthenticityToken
@@ -25,6 +26,7 @@ module ErrorHandling
         redirect_to unhandled_errors_path
       end
     end
+    # rubocop:enable Lint/DuplicateBranch
   end
 
   private
