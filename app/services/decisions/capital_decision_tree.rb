@@ -10,7 +10,6 @@ module Decisions
         after_property_type(form_object.property)
       when :properties
         # TODO: Add next step
-        after_properties
       when :premium_bonds
         # TODO: Add next step
       else
@@ -30,11 +29,6 @@ module Decisions
       return edit(:saving_type) unless property
 
       edit(:properties, property_id: property)
-    end
-
-    def after_properties
-      # TODO: Update next step
-      edit(:saving_type)
     end
   end
 end
