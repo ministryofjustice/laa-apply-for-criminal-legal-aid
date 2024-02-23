@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :outgoing_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
+      <%= f.govuk_check_boxes_fieldset :misc_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
 
         <% @form_object.ordered_payment_types.each do |type| %>
           <%= f.govuk_check_box :types, type.to_s, checked: f.object.checked?(type), link_errors: true do %>
