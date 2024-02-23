@@ -24,10 +24,6 @@ module Steps
       def properties
         @properties ||= current_crime_application.properties
       end
-
-      def additional_permitted_params
-        [:confirm_in_applicants_name]
-      end
     end
   end
 end
