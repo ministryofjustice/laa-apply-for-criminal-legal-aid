@@ -1,6 +1,3 @@
 class SavingPresenter < BasePresenter
-  # TODO
-  def sort_code
-    'testing'
-  end
+  # TODO in second part of CRIMAPP-512
 end

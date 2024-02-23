@@ -15,17 +15,13 @@ RSpec.describe Steps::Capital::SavingsSummaryForm do
     instance_double(CrimeApplication)
   end
 
-  # describe 'validations' do
-  #   it { is_expected.to validate_is_a(:add_saving, YesNoAnswer) }
-  # end
-
   describe '#add_saving=(attribute)' do
     subject(:add_saving) { form.add_saving = value }
 
     context 'when value is not set' do
       let(:value) { nil }
 
-      it 'sets `#account_holder` to `applicant`' do
+      it 'does not set `#add_saving`' do
         expect { add_saving }.not_to(change(form, :add_saving))
       end
     end
@@ -33,8 +29,22 @@ RSpec.describe Steps::Capital::SavingsSummaryForm do
     context 'when value is set' do
       let(:value) { 'yes' }
 
-      it 'does not set the account holder' do
+      it 'sets `#add_saving` to `yes`' do
         expect { add_saving }.to change(form, :add_saving).from(nil).to(YesNoAnswer::YES)
+      end
+    end
+  end
+
+  describe '#save' do
+    context 'for valid details' do
+      let(:attributes) do
+        {
+          add_saving: 'yes',
+        }
+      end
+
+      it 'updates the form' do
+        expect(subject.save).to be(true)
       end
     end
   end

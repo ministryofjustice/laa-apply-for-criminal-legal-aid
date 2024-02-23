@@ -325,7 +325,7 @@ en:
           page_title: Savings summary list
           heading:
             zero: You have not added savings yet
-            one: You have added %{count} savings
+            one: You have added %{count} saving
             other: You have added %{count} savings
         saving_details:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>

@@ -111,29 +111,4 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
       end
     end
   end
-
-  # describe '#destroy' do
-  #   context 'when deleting a saving' do
-  #     let(:saving) do
-  #       Saving.create!(saving_type: SavingType::BANK, crime_application: crime_application)
-  #     end
-  #
-  #     after do
-  #       put :update, params: {
-  #         id: crime_application.id,
-  #         saving_id: saving.id
-  #       }
-  #     end
-  #
-  #     it 'has the expected step name' do
-  #       expect(
-  #         subject
-  #       ).to receive(:update_and_advance).with(
-  #         form_class,
-  #         record: saving,
-  #         as: :savings
-  #       )
-  #     end
-  #   end
-  # end
 end
