@@ -13,9 +13,9 @@ RSpec.describe Steps::Capital::PropertiesForm do
   let(:attributes) { {} }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, client_has_partner:)
+    instance_double(CrimeApplication, client_has_partner:, applicant:)
   end
-
+  let(:applicant) { instance_double(Applicant) }
   let(:record) { Property.new }
   let(:client_has_partner) { 'no' }
 
@@ -38,6 +38,24 @@ RSpec.describe Steps::Capital::PropertiesForm do
       before { allow(subject).to receive(:house_type_is_listed?).and_return(false) }
 
       it { is_expected.to validate_presence_of(:custom_house_type) }
+    end
+  end
+
+  describe '#person_has_home_address?' do
+    before do
+      allow(applicant).to receive(:home_address?).and_return(has_home_address)
+    end
+
+    context 'applicant has home addresss' do
+      let(:has_home_address) { true }
+
+      it { expect(subject.person_has_home_address?).to be(true) }
+    end
+
+    context 'applicant has no home addresss' do
+      let(:has_home_address) { false }
+
+      it { expect(subject.person_has_home_address?).to be(false) }
     end
   end
 
