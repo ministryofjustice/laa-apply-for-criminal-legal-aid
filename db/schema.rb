@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_25_175632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -219,6 +219,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "type", null: false
+    t.string "payment_type", null: false
+    t.integer "amount", null: false
+    t.string "frequency", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id", "type", "payment_type"], name: "index_crime_application_payments_type_payment_type", unique: true
+    t.index ["crime_application_id"], name: "index_payments_on_crime_application_id"
+  end
+
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -286,6 +299,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoing_payments", "crime_applications"
   add_foreign_key "outgoings", "crime_applications"
+  add_foreign_key "payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "savings", "crime_applications"
 end
