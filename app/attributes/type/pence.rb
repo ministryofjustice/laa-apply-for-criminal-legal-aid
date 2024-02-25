@@ -10,11 +10,13 @@ module Type
     def deserialize(value)
       return if value.blank?
 
-      super.to_f / 100
+      cast(value * 0.01)
     end
 
     def serialize(value)
-      return value if value.is_a? Integer
+      return if value.nil?
+      return if value.is_a?(::String) && non_numeric_string?(value)
+      return super if value.is_a?(Integer)
 
       super((value.to_f * 100).round)
     end
