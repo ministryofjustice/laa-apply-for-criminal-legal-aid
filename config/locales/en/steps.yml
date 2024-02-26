@@ -312,6 +312,10 @@ en:
             cash_isa: Your client’s cash ISA
             national_savings_or_post_office: Your client’s National Savings or Post Office account
             other: Your client’s other cash investment
+      premium_bonds:
+        edit:
+          page_title: Does your client have any Premium Bonds?
+          heading:  Does your client have any Premium Bonds?
 
     evidence:
       upload:

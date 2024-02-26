@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
     t.string "lookup_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
+  end
+
+  create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "has_premium_bonds"
+    t.integer "premium_bonds_total_value"
+    t.string "premium_bonds_holder_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
   create_table "cases", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -202,8 +212,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
     t.integer "amount", null: false
     t.string "frequency", null: false
     t.jsonb "metadata", default: {}, null: false
-    t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoing_payment_type", unique: true
-    t.index ["crime_application_id"], name: "index_outgoing_payments_on_crime_application_id"
+    t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
+    t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end
 
   create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -284,7 +294,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_104823) do
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
-  add_foreign_key "outgoing_payments", "crime_applications"
+  add_foreign_key "outgoings_payments", "crime_applications"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "savings", "crime_applications"

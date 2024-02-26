@@ -10,13 +10,16 @@ class CrimeApplication < ApplicationRecord
   has_one :partner, dependent: :destroy
   has_one :income, dependent: :destroy
   has_one :outgoings, dependent: :destroy
+  has_one :capital, dependent: :destroy
 
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy
+
   has_many :income_payments, dependent: :destroy
   accepts_nested_attributes_for :income_payments, allow_destroy: true
-  has_many :outgoing_payments, dependent: :destroy
-  accepts_nested_attributes_for :outgoing_payments, allow_destroy: true
+
+  has_many :outgoings_payments, dependent: :destroy
+  accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
 
   has_many :income_benefits, dependent: :destroy
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
