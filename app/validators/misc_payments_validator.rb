@@ -5,34 +5,34 @@ class MiscPaymentsValidator < ActiveModel::Validator
     @record = record
 
     record.types.each_with_index do |type, index|
-      next if type == OutgoingPaymentType::NONE.to_s
+      next if type == OutgoingsPaymentType::NONE.to_s
 
-      outgoing_payment = record.public_send(type)
-      add_indexed_errors(outgoing_payment, index) unless outgoing_payment.valid?
+      outgoings_payment = record.public_send(type)
+      add_indexed_errors(outgoings_payment, index) unless outgoings_payment.valid?
     end
   end
 
   private
 
-  def add_indexed_errors(outgoing_payment, index)
-    outgoing_payment.errors.each do |error|
-      attr_name = indexed_attribute(index, outgoing_payment, error.attribute)
+  def add_indexed_errors(outgoings_payment, index)
+    outgoings_payment.errors.each do |error|
+      attr_name = indexed_attribute(index, outgoings_payment, error.attribute)
 
       record.errors.add(
         attr_name,
         error.type,
-        message: error_message(outgoing_payment, error)
+        message: error_message(outgoings_payment, error)
       )
 
       # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
-        outgoing_payment.public_send(error.attribute)
+        outgoings_payment.public_send(error.attribute)
       end
     end
   end
 
-  def indexed_attribute(_index, outgoing_payment, attr)
-    "#{outgoing_payment.payment_type.dasherize}-#{attr}"
+  def indexed_attribute(_index, outgoings_payment, attr)
+    "#{outgoings_payment.payment_type.dasherize}-#{attr}"
   end
 
   # `activemodel.errors.models.steps/outgoings/misc_payment_fieldset_form.summary.x.y`

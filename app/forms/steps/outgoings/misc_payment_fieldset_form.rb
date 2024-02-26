@@ -31,13 +31,13 @@ module Steps
       end
 
       def delete
-        crime_application.outgoing_payments.find_by(payment_type:)&.delete
+        crime_application.outgoings_payments.find_by(payment_type:)&.delete
       end
 
       private
 
       def payment_types
-        OutgoingPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) - ['none']
+        OutgoingsPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) - ['none']
       end
 
       def frequencies
@@ -45,7 +45,7 @@ module Steps
       end
 
       def case_ref_when_legal_aid_contribution?
-        return true if payment_type == OutgoingPaymentType::LEGAL_AID_CONTRIBUTION.to_s
+        return true if payment_type == OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s
         return true if case_reference.blank?
 
         errors.add(:case_reference)

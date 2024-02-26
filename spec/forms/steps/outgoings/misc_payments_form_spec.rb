@@ -20,7 +20,7 @@ RSpec.describe Steps::Outgoings::MiscPaymentsForm do
   let(:fieldset_form_class) { Steps::Outgoings::MiscPaymentFieldsetForm }
 
   let(:payments) do
-    subject.crime_application.outgoing_payments
+    subject.crime_application.outgoings_payments
   end
 
   it_behaves_like 'a payment form', described_class

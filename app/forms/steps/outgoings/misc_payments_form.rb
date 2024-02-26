@@ -14,13 +14,13 @@ module Steps
 
       validates_with MiscPaymentsValidator
 
-      OutgoingPaymentType::MISC_PAYMENT_TYPES.each do |type|
+      OutgoingsPaymentType::MISC_PAYMENT_TYPES.each do |type|
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for
         # for each type (on page load). Trigger validation on load.
         define_method :"#{type}" do
-          MiscPaymentFieldsetForm.build(find_or_create_outgoing_payment(type), crime_application:).tap do |record|
+          MiscPaymentFieldsetForm.build(find_or_create_outgoings_payment(type), crime_application:).tap do |record|
             record.valid? if types.include?(type.to_s)
           end
         end
@@ -30,7 +30,7 @@ module Steps
         define_method :"#{type}=" do |attrs|
           @new_payments ||= {}
           record = MiscPaymentFieldsetForm.build(
-            OutgoingPayment.new(payment_type: type.to_s, **attrs),
+            OutgoingsPayment.new(payment_type: type.to_s, **attrs),
             crime_application:
           )
 
@@ -48,7 +48,7 @@ module Steps
       end
 
       def ordered_payment_types
-        OutgoingPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
+        OutgoingsPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
       def checked?(type)
@@ -57,17 +57,17 @@ module Steps
 
       private
 
-      # Precedence: submitted values, stored values, empty OutgoingPayment
-      def find_or_create_outgoing_payment(type) # rubocop:disable Metrics/AbcSize
+      # Precedence: submitted values, stored values, empty OutgoingsPayment
+      def find_or_create_outgoings_payment(type) # rubocop:disable Metrics/AbcSize
         if types.include?(type.to_s) && @new_payments&.key?(type.value.to_s)
           attrs = @new_payments[type.value.to_s].attributes
-          return OutgoingPayment.new(payment_type: type.to_s, **attrs)
+          return OutgoingsPayment.new(payment_type: type.to_s, **attrs)
         end
 
-        outgoing_payment = crime_application.outgoing_payments.find_by(payment_type: type.value.to_s)
-        return outgoing_payment if outgoing_payment
+        outgoings_payment = crime_application.outgoings_payments.find_by(payment_type: type.value.to_s)
+        return outgoings_payment if outgoings_payment
 
-        OutgoingPayment.new(payment_type: type.to_s)
+        OutgoingsPayment.new(payment_type: type.to_s)
       end
 
       # Individual misc_payment_fieldset_forms are in charge of saving themselves

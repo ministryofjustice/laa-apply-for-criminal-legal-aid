@@ -14,7 +14,7 @@ module Steps
       end
 
       def additional_permitted_params
-        payment_types = OutgoingPaymentType::MISC_PAYMENT_TYPES.map(&:to_s)
+        payment_types = OutgoingsPaymentType::MISC_PAYMENT_TYPES.map(&:to_s)
         fieldset_attributes = Steps::Outgoings::MiscPaymentFieldsetForm.attribute_names
 
         [
