@@ -18,19 +18,43 @@ RSpec.describe Type::Pence do
   describe '#serialize' do
     subject(:serialized_value) { pence.serialize(value) }
 
-    describe 'when value is `nil`' do
-      let(:value) { 0 }
+    context 'when value is `nil`' do
+      let(:value) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when value is a blank string' do
+      let(:value) { '' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when value is zero' do
+      let(:value) { '0' }
 
       it { is_expected.to eq(0) }
     end
 
-    describe 'when value is a float' do
+    context 'when value is non-numeric string' do
+      let(:value) { 'wibble' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when value is a float' do
       let(:value) { 1.23109923 }
 
       it { is_expected.to eq(123) }
     end
 
-    describe 'when value is a string' do
+    context 'when value is -ve numeric string' do
+      let(:value) { '-0.02' }
+
+      it { is_expected.to eq(-2) }
+    end
+
+    context 'when value is a float string' do
       let(:value) { '321.019' }
 
       it { is_expected.to eq(32_102) }
@@ -38,62 +62,68 @@ RSpec.describe Type::Pence do
       it { is_expected.to be_a(Integer) }
     end
 
+    context 'when value is an integer string' do
+      let(:value) { '321' }
+
+      it { is_expected.to eq(32_100) }
+    end
+
+    context 'when value is a numeric string with spaces' do
+      let(:value) { ' 321 ' }
+
+      it { is_expected.to eq(32_100) }
+    end
+
     describe 'when value is an integer' do
       let(:value) { 123 }
 
-      it { is_expected.to eq(123) }
+      it 'assumes the value is already in pennies' do
+        expect(subject).to eq(123)
+      end
     end
   end
 
-  describe '#deserialize(value)' do
+  describe '#deserialize' do
     subject(:deserialized_value) { pence.deserialize(value) }
 
-    describe 'when value is `nil`' do
+    context 'when value is `nil`' do
       let(:value) { nil }
 
       it { is_expected.to be_nil }
     end
 
-    describe 'when value is `empty`' do
-      let(:value) { '' }
+    context 'when value is zero' do
+      let(:value) { 0 }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to eq '0.00' }
     end
 
-    describe 'when value is a float' do
-      let(:value) { 1100.09 }
+    context 'when value positive Integer' do
+      let(:value) { 123_120 }
 
-      it { is_expected.to eq(11.00) }
+      it { is_expected.to eq '1231.20' }
+    end
 
-      it { is_expected.to be_a(Float) }
+    context 'when value is a negative Integer' do
+      let(:value) { -1 }
+
+      it { is_expected.to eq '-0.01' }
     end
   end
 
-  describe '#cast(value)' do
-    subject(:coerced_value) { pence.cast(value) }
+  describe '#cast' do
+    subject(:cast_value) { pence.cast(value) }
 
-    describe 'when value is `nil`' do
-      let(:value) { nil }
+    context 'when value is string' do
+      let(:value) { '0.09' }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to eq '0.09' }
     end
 
-    describe 'when value is a float' do
-      let(:value) { 1.23 }
-
-      it { is_expected.to eq('1.23') }
-    end
-
-    describe 'when value is a string' do
-      let(:value) { '321.01' }
-
-      it { is_expected.to eq('321.01') }
-    end
-
-    describe 'when value is an integer' do
+    context 'when value is an integer' do
       let(:value) { 123 }
 
-      it { is_expected.to eq(123) }
+      it { is_expected.to eq 123 }
     end
   end
 end
