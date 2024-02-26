@@ -465,6 +465,15 @@ en:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
+        steps/capital/premium_bonds_form:
+          attributes:
+            premium_bonds_total_value: 
+              blank: Enter the total value of their bonds
+            premium_bonds_holder_number: 
+              blank: Enter the holder number
+            has_premium_bonds: 
+              blank: Select yes if your client has any Premium Bonds
+
         steps/submission/more_information_form:
           attributes:
             additional_information:
