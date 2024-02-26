@@ -29,17 +29,11 @@ module Steps
       end
 
       def persist!
-        record.update(
-          attributes.merge(attributes_to_reset)
-        )
+        record.update(attributes)
       end
 
-      def attributes_to_reset
-        if house_type_is_listed?
-          { 'custom_house_type' => nil }
-        else
-          {}
-        end
+      def before_save
+        self.custom_house_type = nil if house_type_is_listed?
       end
 
       # TODO: use proper partner policy once we have one.
