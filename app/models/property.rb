@@ -1,6 +1,9 @@
 class Property < ApplicationRecord
   belongs_to :crime_application
 
+  attribute :value, :pence
+  attribute :outstanding_mortgage, :pence
+
   def complete?
     values_at(
       :property_type,
