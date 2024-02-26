@@ -47,10 +47,6 @@ module Steps
         YesNoAnswer.new(crime_application.client_has_partner).yes?
       end
 
-      def person_has_home_address?
-        crime_application.applicant.home_address?
-      end
-
       def house_type_is_listed?
         house_types.map(&:to_s).any? house_type
       end

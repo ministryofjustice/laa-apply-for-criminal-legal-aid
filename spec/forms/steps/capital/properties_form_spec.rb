@@ -41,24 +41,6 @@ RSpec.describe Steps::Capital::PropertiesForm do
     end
   end
 
-  describe '#person_has_home_address?' do
-    before do
-      allow(applicant).to receive(:home_address?).and_return(has_home_address)
-    end
-
-    context 'applicant has home address' do
-      let(:has_home_address) { true }
-
-      it { expect(subject.person_has_home_address?).to be(true) }
-    end
-
-    context 'applicant has no home address' do
-      let(:has_home_address) { false }
-
-      it { expect(subject.person_has_home_address?).to be(false) }
-    end
-  end
-
   describe '#save' do
     let(:required_attributes) do
       {
