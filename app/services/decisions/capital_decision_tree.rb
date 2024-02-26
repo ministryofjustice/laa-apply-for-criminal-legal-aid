@@ -9,7 +9,8 @@ module Decisions
       when :property_type
         after_property_type(form_object.property)
       when :properties
-        # TODO: Add next step
+        # TODO: Update next step
+        edit(:saving_type)
       when :premium_bonds
         # TODO: Add next step
       else
