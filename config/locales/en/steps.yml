@@ -330,6 +330,11 @@ en:
         saving_details:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
+      premium_bonds:
+        edit:
+          page_title: Does your client have any Premium Bonds?
+          heading:  Does your client have any Premium Bonds?
+
     evidence:
       upload:
         edit:

@@ -441,3 +441,7 @@ en:
           'true': I confirm that the account is in my client's name
       steps_capital_savings_summary_form:
         add_saving_options: *YESNO
+      steps_capital_premium_bonds_form:
+        premium_bonds_holder_number: Enter the holder number
+        premium_bonds_total_value: Enter the total value of their bonds
+        has_premium_bonds_options: *YESNO

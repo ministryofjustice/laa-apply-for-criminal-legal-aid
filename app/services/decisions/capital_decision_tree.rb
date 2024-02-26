@@ -10,6 +10,8 @@ module Decisions
         after_savings_summary
       when :property_type
         # TODO: Add next step
+      when :premium_bonds
+        # TODO: Add next step
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

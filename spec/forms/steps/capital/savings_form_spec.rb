@@ -72,13 +72,20 @@ RSpec.describe Steps::Capital::SavingsForm do
   end
 
   describe '#confirm_in_applicants_name=(confirm)' do
-    subject(:confirm) { form.confirm_in_applicants_name = value }
+    subject(:confirm) do
+      form.confirm_in_applicants_name = value
+      form.save
+    end
 
     context 'when value is true' do
       let(:value) { true }
 
       it 'sets `#account_holder` to `applicant`' do
         expect { confirm }.to change(form, :account_holder).from(nil).to(OwnershipType::APPLICANT)
+      end
+
+      it 'is not persisted (i.e. needs re-confirming)' do
+        expect(form.confirm_in_applicants_name).to be_nil
       end
 
       context 'when client has parter' do
@@ -118,6 +125,7 @@ RSpec.describe Steps::Capital::SavingsForm do
           account_balance: '100.01',
           is_overdrawn: YesNoAnswer.values.sample,
           are_wages_paid_into_account: YesNoAnswer.values.sample,
+          confirm_in_applicants_name: YesNoAnswer::YES
         }
       end
 

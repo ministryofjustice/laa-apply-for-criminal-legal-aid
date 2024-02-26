@@ -20,15 +20,7 @@ module Steps
         record.update(attributes)
       end
 
-      def confirm_in_applicants_name=(confirm)
-        return unless confirm && !include_partner?
-
-        self.account_holder = OwnershipType::APPLICANT
-      end
-
-      def confirm_in_applicants_name
-        account_holder == OwnershipType::APPLICANT
-      end
+      attr_accessor :confirm_in_applicants_name
 
       # TODO: use proper partner policy once we have one.
       def include_partner?
@@ -39,6 +31,18 @@ module Steps
         return unless account_holder.blank? || !account_holder.applicant?
 
         errors.add(:confirm_in_applicants_name, :confirm)
+      end
+
+      private
+
+      def before_save
+        return if include_partner?
+
+        self.account_holder = if confirm_in_applicants_name.blank?
+                                nil
+                              else
+                                OwnershipType::APPLICANT
+                              end
       end
     end
   end
