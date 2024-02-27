@@ -12,7 +12,6 @@ class Property < ApplicationRecord
       :value,
       :outstanding_mortgage,
       :percentage_applicant_owned,
-      :is_home_address,
       :has_other_owners
     ).all?(&:present?)
   end
