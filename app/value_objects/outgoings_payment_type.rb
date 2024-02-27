@@ -10,7 +10,7 @@ class OutgoingsPaymentType < ValueObject
     NONE = new(:none),
   ].freeze
 
-  MISC_PAYMENT_TYPES = [
+  OTHER_PAYMENT_TYPES = [
     OutgoingsPaymentType::CHILDCARE,
     OutgoingsPaymentType::MAINTENANCE,
     OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION,

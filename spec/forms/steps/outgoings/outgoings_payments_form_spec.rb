@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Outgoings::MiscPaymentsForm do
+RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -17,7 +17,7 @@ RSpec.describe Steps::Outgoings::MiscPaymentsForm do
     %w[childcare maintenance legal_aid_contribution]
   end
 
-  let(:fieldset_form_class) { Steps::Outgoings::MiscPaymentFieldsetForm }
+  let(:fieldset_form_class) { Steps::Outgoings::OutgoingPaymentFieldsetForm }
 
   let(:payments) do
     subject.crime_application.outgoings_payments
@@ -30,14 +30,14 @@ RSpec.describe Steps::Outgoings::MiscPaymentsForm do
       subject do
         described_class.new(
           crime_application: crime_application,
-          types: form_data.dig('steps_outgoings_misc_payments_form', 'types'),
-          misc_payments: form_data.dig('steps_outgoings_misc_payments_form', 'misc_payments'),
+          types: form_data.dig('steps_outgoings_outgoings_payments_form', 'types'),
+          outgoings_payments: form_data.dig('steps_outgoings_outgoings_payments_form', 'outgoings_payments'),
         )
       end
 
       before do
         allowed_types.each do |type|
-          subject.public_send(:"#{type}=", form_data.dig('steps_outgoings_misc_payments_form', type))
+          subject.public_send(:"#{type}=", form_data.dig('steps_outgoings_outgoings_payments_form', type))
         end
 
         subject.valid?
@@ -46,8 +46,8 @@ RSpec.describe Steps::Outgoings::MiscPaymentsForm do
       context 'with valid data' do
         let(:form_data) do
           {
-            'steps_outgoings_misc_payments_form' => {
-              'misc_payments' => [''], # Rails nested attributes field
+            'steps_outgoings_outgoings_payments_form' => {
+              'outgoings_payments' => [''], # Rails nested attributes field
               'types' => %w[childcare legal_aid_contribution], # Selected payment checkboxes
 
               'childcare' =>  { 'amount' => '56.12', 'frequency' => 'week' }, # Data for selected payment
@@ -65,8 +65,8 @@ RSpec.describe Steps::Outgoings::MiscPaymentsForm do
       context 'with invalid data' do
         let(:form_data) do
           {
-            'steps_outgoings_misc_payments_form' => {
-              'misc_payments' => [''],
+            'steps_outgoings_outgoings_payments_form' => {
+              'outgoings_payments' => [''],
               'types' => %w[childcare maintenance legal_aid_contribution],
 
               'childcare' =>  { 'amount' => '', 'frequency' => 'every week' },

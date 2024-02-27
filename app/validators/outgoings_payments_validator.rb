@@ -1,4 +1,4 @@
-class MiscPaymentsValidator < ActiveModel::Validator
+class OutgoingsPaymentsValidator < ActiveModel::Validator
   attr_reader :record
 
   def validate(record)
@@ -35,11 +35,11 @@ class MiscPaymentsValidator < ActiveModel::Validator
     "#{outgoings_payment.payment_type.dasherize}-#{attr}"
   end
 
-  # `activemodel.errors.models.steps/outgoings/misc_payment_fieldset_form.summary.x.y`
+  # `activemodel.errors.models.steps/outgoings/outgoing_payment_fieldset_form.summary.x.y`
   def error_message(obj, error)
     payment_type = I18n.t(
       obj.payment_type,
-      scope: [:helpers, :label, :steps_outgoings_misc_payments_form, :types_options]
+      scope: [:helpers, :label, :steps_outgoings_outgoings_payments_form, :types_options]
     )
 
     I18n.t(

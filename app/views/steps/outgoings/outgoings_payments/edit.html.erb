@@ -7,12 +7,12 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :misc_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
+      <%= f.govuk_check_boxes_fieldset :outgoings_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
 
         <% @form_object.ordered_payment_types.each do |type| %>
           <%= f.govuk_check_box :types, type.to_s, checked: f.object.checked?(type), link_errors: true do %>
             <%= f.fields_for type.to_sym, f.object.public_send(type.to_s) do |g| %>
-              <%= g.govuk_fieldset legend: nil, id: "misc_payment_#{type}" do %>
+              <%= g.govuk_fieldset legend: nil, id: "outgoing_payment_#{type}" do %>
                 <%= g.govuk_number_field :amount,
                                          autocomplete: 'off',
                                          inputmode: 'numeric',
@@ -23,7 +23,7 @@
                                                      :value,
                                                      legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
 
-                <% if type == OutgoingPaymentType::LEGAL_AID_CONTRIBUTION.to_s %>
+                <% if type == OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s %>
                   <%= g.govuk_text_field :case_reference,
                                          autocomplete: 'off',
                                          width: 'two-thirds' %>

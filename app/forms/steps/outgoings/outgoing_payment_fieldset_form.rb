@@ -1,6 +1,6 @@
 module Steps
   module Outgoings
-    class MiscPaymentFieldsetForm < Steps::BaseFormObject
+    class OutgoingPaymentFieldsetForm < Steps::BaseFormObject
       attribute :id, :string
       attribute :payment_type, :string
       attribute :amount, :pence
@@ -37,7 +37,7 @@ module Steps
       private
 
       def payment_types
-        OutgoingsPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) - ['none']
+        OutgoingsPaymentType::OTHER_PAYMENT_TYPES.map(&:to_s) - ['none']
       end
 
       def frequencies

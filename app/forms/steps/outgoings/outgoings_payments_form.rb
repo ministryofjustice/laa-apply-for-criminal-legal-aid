@@ -1,6 +1,6 @@
 module Steps
   module Outgoings
-    class MiscPaymentsForm < Steps::BaseFormObject
+    class OutgoingsPaymentsForm < Steps::BaseFormObject
       # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
         childcare
@@ -8,19 +8,19 @@ module Steps
         legal_aid_contribution
       ].freeze
 
-      attribute :misc_payments, array: true, default: [] # Used by BaseFormObject
+      attribute :outgoings_payments, array: true, default: [] # Used by BaseFormObject
       attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
       attr_reader :new_payments
 
-      validates_with MiscPaymentsValidator
+      validates_with OutgoingsPaymentsValidator
 
-      OutgoingsPaymentType::MISC_PAYMENT_TYPES.each do |type|
+      OutgoingsPaymentType::OTHER_PAYMENT_TYPES.each do |type|
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for
         # for each type (on page load). Trigger validation on load.
         define_method :"#{type}" do
-          MiscPaymentFieldsetForm.build(find_or_create_outgoings_payment(type), crime_application:).tap do |record|
+          OutgoingPaymentFieldsetForm.build(find_or_create_outgoings_payment(type), crime_application:).tap do |record|
             record.valid? if types.include?(type.to_s)
           end
         end
@@ -29,7 +29,7 @@ module Steps
         # (on form submit). 'type' is the checkbox value
         define_method :"#{type}=" do |attrs|
           @new_payments ||= {}
-          record = MiscPaymentFieldsetForm.build(
+          record = OutgoingPaymentFieldsetForm.build(
             OutgoingsPayment.new(payment_type: type.to_s, **attrs),
             crime_application:
           )
@@ -48,7 +48,7 @@ module Steps
       end
 
       def ordered_payment_types
-        OutgoingsPaymentType::MISC_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
+        OutgoingsPaymentType::OTHER_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
       def checked?(type)
@@ -70,7 +70,7 @@ module Steps
         OutgoingsPayment.new(payment_type: type.to_s)
       end
 
-      # Individual misc_payment_fieldset_forms are in charge of saving themselves
+      # Individual outgoing_payment_fieldset_form are in charge of saving themselves
       def persist!
         true
       end

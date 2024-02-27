@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Outgoings::MiscPaymentFieldsetForm do
+RSpec.describe Steps::Outgoings::OutgoingPaymentFieldsetForm do
   it_behaves_like 'a payment fieldset form', described_class
 
   describe '#metadata' do
