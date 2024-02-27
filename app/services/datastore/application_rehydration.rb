@@ -23,6 +23,7 @@ module Datastore
         case: case_with_ioj,
         income: income,
         outgoings: outgoings,
+        outgoings_payments: outgoings_payments,
         documents: parent.documents,
         additional_information: parent.additional_information,
         income_payments: income_payments,
@@ -106,6 +107,12 @@ module Datastore
       return if parent.outgoings.blank?
 
       Outgoings.new(parent.outgoings.serializable_hash)
+    end
+
+    def outgoings_payments
+      parent.means_details&.outgoings_details&.outgoings&.map do |struct|
+        OutgoingsPayment.new(**struct)
+      end || []
     end
 
     def not_means_tested?
