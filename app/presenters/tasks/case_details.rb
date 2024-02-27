@@ -20,7 +20,10 @@ module Tasks
     def completed?
       crime_application.case.values_at(
         :hearing_court_name, :hearing_date
-      ).all?(&:present?)
+      ).all?(&:present?) &&
+        crime_application.case.case_concluded_attributes_present? &&
+        crime_application.case.client_remanded_attributes_present? &&
+        crime_application.case.preorder_work_attributes_present?
     end
   end
 end
