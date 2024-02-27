@@ -1,0 +1,23 @@
+
+<p class="govuk-body govuk-!-margin-bottom-1">
+  <%= saving.format_saving_type %>
+</p>
+<p class="govuk-caption-m govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+  <%= saving.account_number %>
+</p>
+<p class="govuk-caption-m govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+  <%= saving.format_sort_code %>
+</p>
+
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{saving_answer.question}.question", **saving_answer.i18n_opts)
+  end
+%>
+
+<% content_for(:row_answer, flush: true) do %>
+  <%= render partial: 'steps/shared/saving', locals: { saving: saving_answer } %>
+<% end %>
+
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: saving_answer, editable: editable } %>

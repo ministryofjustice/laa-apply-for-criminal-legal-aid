@@ -1,3 +1,9 @@
 class SavingPresenter < BasePresenter
-  # TODO: in second part of CRIMAPP-512
+  def format_saving_type
+    t("steps.shared.saving.#{saving_type}")
+  end
+
+  def format_sort_code
+    sort_code
+  end
 end

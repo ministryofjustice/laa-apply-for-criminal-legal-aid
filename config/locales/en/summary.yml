@@ -292,3 +292,14 @@ en:
         question: Details that will help us process this application
         absence_answer: *absence_none
       # END supporting evidence section
+
+      # BEGIN savings section
+      provider_name:
+        question: What is the name of the bank, building society or other holder of the savings?
+      sort_code:
+        question: What is the sort code or branch name?
+      account_number:
+        question: What is the account number?
+      account_balance:
+        question: What is the account balance?
+      # END savings section

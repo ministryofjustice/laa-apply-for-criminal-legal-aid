@@ -8,6 +8,11 @@ en:
         incomplete_tag: Incomplete
       saving:
         incomplete_tag: Incomplete
+        bank: Bank account
+        building_society: Building society account
+        cash_isa: Cash ISA
+        national_savings_or_post_office: National Savings or Post Office account
+        other: Any other cash investment
 
     provider:
       confirm_office:
