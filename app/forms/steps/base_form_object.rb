@@ -85,7 +85,6 @@ module Steps
       raise 'Subclasses of BaseFormObject need to implement #persist!'
     end
     # :nocov:
-    #
 
     # Override in subclass where needed. For example, to reset attributes.
     def before_save; end
