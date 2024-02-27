@@ -103,7 +103,7 @@ module Decisions
     end
 
     def edit_dependants(add_blank: false)
-      dependants = crime_app.dependants
+      dependants = crime_application.dependants
       dependants.create! if add_blank || dependants.empty?
 
       edit(:dependants)
@@ -126,34 +126,34 @@ module Decisions
     end
 
     def appeal_no_changes?
-      crime_app.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
     end
 
     def summary_only?
-      crime_app.case.case_type == CaseType::SUMMARY_ONLY.to_s
+      crime_application.case.case_type == CaseType::SUMMARY_ONLY.to_s
     end
 
     def income_below_threshold?
-      crime_app.income.income_above_threshold == 'no'
+      crime_application.income.income_above_threshold == 'no'
     end
 
     def no_frozen_assets?
-      crime_app.income.has_frozen_income_or_assets == 'no'
+      crime_application.income.has_frozen_income_or_assets == 'no'
     end
 
     def no_property?
-      crime_app.income.client_owns_property == 'no'
+      crime_application.income.client_owns_property == 'no'
     end
 
     def no_savings?
-      crime_app.income.has_savings == 'no'
+      crime_application.income.has_savings == 'no'
     end
 
     def payments
-      crime_app.income_payments + crime_app.income_benefits
+      crime_application.income_payments + crime_application.income_benefits
     end
 
-    def crime_app
+    def crime_application
       form_object.crime_application
     end
 
