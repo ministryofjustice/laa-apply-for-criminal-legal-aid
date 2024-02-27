@@ -19,8 +19,8 @@ module Steps
                 :outstanding_mortgage,
                 :percentage_applicant_owned,
                 :has_other_owners, presence: true
-      validates :is_home_address, presence: true, if: -> { crime_application.applicant.home_address? }
-      validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: -> { crime_application.applicant.home_address? }
+      validates :is_home_address, presence: true, if: -> { person_has_home_address? }
+      validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: -> { person_has_home_address? }
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
       validates :percentage_partner_owned, presence: true, if: :include_partner?
       validates :custom_house_type, presence: true, unless: -> { house_type_is_listed? }
@@ -35,6 +35,10 @@ module Steps
 
       def before_save
         self.custom_house_type = nil if house_type_is_listed?
+      end
+
+      def person_has_home_address?
+        crime_application.applicant.home_address?
       end
 
       # TODO: use proper partner policy once we have one.

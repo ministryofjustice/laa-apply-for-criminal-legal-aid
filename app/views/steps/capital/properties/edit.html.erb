@@ -27,7 +27,7 @@
       <%= f.govuk_number_field :outstanding_mortgage, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
       <%= f.govuk_number_field :percentage_applicant_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>
       <%= f.govuk_number_field :percentage_partner_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' if f.object.include_partner? %>
-      <% if f.object.crime_application.applicant.home_address? %>
+      <% if f.object.person_has_home_address? %>
         <%= f.govuk_collection_radio_buttons :is_home_address, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
       <% end %>
       <%= f.govuk_collection_radio_buttons :has_other_owners, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>

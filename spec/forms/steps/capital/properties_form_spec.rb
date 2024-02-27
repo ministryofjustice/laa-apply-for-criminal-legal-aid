@@ -15,9 +15,10 @@ RSpec.describe Steps::Capital::PropertiesForm do
   let(:crime_application) do
     instance_double(CrimeApplication, client_has_partner:, applicant:)
   end
-  let(:applicant) { instance_double(Applicant) }
+  let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
   let(:record) { Property.new }
   let(:client_has_partner) { 'no' }
+  let(:home_address?) { true }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:house_type) }
@@ -25,19 +26,32 @@ RSpec.describe Steps::Capital::PropertiesForm do
     it { is_expected.to validate_presence_of(:value) }
     it { is_expected.to validate_presence_of(:outstanding_mortgage) }
     it { is_expected.to validate_presence_of(:percentage_applicant_owned) }
-    it { is_expected.to validate_is_a(:is_home_address, YesNoAnswer) }
     it { is_expected.to validate_is_a(:has_other_owners, YesNoAnswer) }
 
-    context 'percentage_partner_owned' do
+    describe '#percentage_partner_owned' do
       before { allow(subject).to receive(:include_partner?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:percentage_partner_owned) }
     end
 
-    context 'custom_house_type' do
+    describe '#custom_house_type' do
       before { allow(subject).to receive(:house_type_is_listed?).and_return(false) }
 
       it { is_expected.to validate_presence_of(:custom_house_type) }
+    end
+
+    describe '#is_home_address' do
+      context 'when applicant home address is present' do
+        let(:home_address?) { true }
+
+        it { is_expected.to validate_is_a(:is_home_address, YesNoAnswer) }
+      end
+
+      context 'when applicant home address is not present' do
+        let(:home_address?) { false }
+
+        it { is_expected.not_to validate_is_a(:is_home_address, YesNoAnswer) }
+      end
     end
   end
 
