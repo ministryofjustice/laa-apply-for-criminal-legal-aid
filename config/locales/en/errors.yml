@@ -478,6 +478,10 @@ en:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
+        steps/capital/savings_summary_form:
+          attributes:
+            add_saving:
+              inclusion: Select yes if you want to add another savings account
         steps/capital/premium_bonds_form:
           attributes:
             premium_bonds_total_value:

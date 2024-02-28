@@ -1,0 +1,51 @@
+<%#
+  TODO: This partial is shared between the `savings summary` page
+  and the `check your answers` page.
+%>
+
+<p class="govuk-body govuk-!-margin-bottom-1">
+  <%= saving.saving_type %>
+</p>
+<p class="govuk-caption-m govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+  <%= saving.account_number %>
+</p>
+<p class="govuk-caption-m govuk-!-margin-bottom-2 govuk-!-margin-top-0">
+  <%= saving.sort_code %>
+</p>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Show details of <%= saving.saving_type %>
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.provider_name %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.sort_code %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.account_number %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.account_balance %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.is_overdrawn %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.are_wages_paid_into_account %>
+    </p>
+    <p class="govuk-body govuk-!-margin-bottom-1">
+      <%= saving.account_holder %>
+    </p>
+  </div>
+</details>
+
+<% unless saving.complete? %>
+  <strong class="moj-badge moj-badge--red">
+    <%= t('.incomplete_tag') %>
+  </strong>
+<% end %>

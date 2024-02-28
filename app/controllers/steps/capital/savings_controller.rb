@@ -13,6 +13,21 @@ module Steps
         )
       end
 
+      def destroy
+        saving_record.destroy
+
+        if savings.reload.any?
+          redirect_to edit_steps_capital_savings_summary_path, success: t('.success_flash')
+        else
+          # If this was the last remaining record, redirect to the saving type page
+          redirect_to edit_steps_capital_saving_type_path, success: t('.success_flash')
+        end
+      end
+
+      def confirm_destroy
+        @saving = saving_record
+      end
+
       private
 
       def saving_record

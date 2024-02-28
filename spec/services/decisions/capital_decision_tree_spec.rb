@@ -19,6 +19,24 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
   it_behaves_like 'a decision tree'
 
+  context 'when the step is `savings_summary`' do
+    let(:form_object) { double('FormObject', saving:) }
+    let(:step_name) { :savings_summary }
+    let(:saving) { 'new_saving' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_saving:)
+    end
+
+    context 'the client has selected yes to adding a savings account' do
+      let(:add_saving) { YesNoAnswer::YES }
+
+      it 'redirects the edit `saving type` page' do
+        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      end
+    end
+  end
+
   context 'when the step is `property_type`' do
     let(:form_object) { double('FormObject', property:) }
     let(:step_name) { :property_type }
@@ -80,7 +98,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :savings }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination(:premium_bonds, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:savings_summary, :edit, id: crime_application) }
     end
   end
 
