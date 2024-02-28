@@ -16,20 +16,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
   before do
     allow(form_object).to receive_messages(crime_application:)
   end
-  
+
   it_behaves_like 'a decision tree'
-
-  context 'when the step is `savings`' do
-    let(:step_name) { :savings }
-
-    before do
-      allow(form_object).to receive_messages(crime_application:)
-    end
-
-    context 'has correct next step' do
-      it { is_expected.to have_destination(:savings_summary, :edit, id: crime_application) }
-    end
-  end
 
   context 'when the step is `savings_summary`' do
     let(:step_name) { :savings_summary }

@@ -14,11 +14,6 @@ module Decisions
       when :properties
         # TODO: Route to approprite property page loop once built
         edit(:saving_type) # Placeholder to join up flow
-      when :saving_type
-        after_saving_type(form_object.saving)
-      when :savings
-        # TODO: Route to approprite savings page loop once built
-        edit(:premium_bonds) # Placeholder to join up flow
       when :premium_bonds
         # TODO: Route to national savings certificates once built
         edit('/steps/case/urn') # Placeholder to join up flow
