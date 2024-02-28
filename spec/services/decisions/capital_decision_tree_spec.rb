@@ -20,6 +20,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
   it_behaves_like 'a decision tree'
 
   context 'when the step is `savings_summary`' do
+    let(:form_object) { double('FormObject', saving:) }
     let(:step_name) { :savings_summary }
     let(:saving) { 'new_saving' }
 
@@ -97,7 +98,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :savings }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination(:premium_bonds, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:savings_summary, :edit, id: crime_application) }
     end
   end
 
