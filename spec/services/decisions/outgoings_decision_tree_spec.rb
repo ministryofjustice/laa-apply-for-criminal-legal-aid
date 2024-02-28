@@ -53,7 +53,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     let(:step_name) { :outgoings_more_than_income }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
     end
   end
 end

@@ -9,12 +9,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
+      case: kase,
     )
   end
 
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
+  let(:kase) { instance_double(Case, case_type:) }
+  let(:case_type) { nil }
 
   before do
     allow(
@@ -56,7 +59,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                  ended_employment_within_three_months: YesNoAnswer::NO)
         end
 
-        it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
+        context 'when case_type is not appeal no changes' do
+          let(:case_type) { 'summary_only' }
+
+          it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
+        end
+
+        context 'when case_type is appeal no changes' do
+          let(:case_type) { 'appeal_to_crown_court' }
+
+          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        end
       end
     end
   end
@@ -65,8 +78,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :lost_job_in_custody }
 
-    context 'has correct next step' do
+    context 'when case_type is not appeal no changes' do
+      let(:case_type) { 'summary_only' }
+
       it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
+    end
+
+    context 'when case_type is appeal no changes' do
+      let(:case_type) { 'appeal_to_crown_court' }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end
 
@@ -74,18 +95,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_before_tax }
 
-    context 'when income is above the threshold' do
-      before do
-        allow(form_object).to receive_messages(income_above_threshold: YesNoAnswer::YES)
-      end
+    before do
+      allow(income).to receive_messages(income_above_threshold:)
+    end
 
-      it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
+    context 'when income is above the threshold' do
+      let(:income_above_threshold) { YesNoAnswer::YES.to_s }
+
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
 
     context 'when income below the threshold' do
-      before do
-        allow(form_object).to receive_messages(income_above_threshold: YesNoAnswer::NO)
-      end
+      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
 
       it { is_expected.to have_destination(:frozen_income_savings_assets, :edit, id: crime_application) }
     end
@@ -95,18 +116,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :frozen_income_savings_assets }
 
-    context 'when they have frozen income or assets' do
-      before do
-        allow(form_object).to receive_messages(has_frozen_income_or_assets: YesNoAnswer::YES)
-      end
+    before do
+      allow(income).to receive_messages(has_frozen_income_or_assets:)
+    end
 
-      it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
+    context 'when they have frozen income or assets' do
+      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
 
     context 'when they do not have frozen income or assets' do
-      before do
-        allow(form_object).to receive_messages(has_frozen_income_or_assets: YesNoAnswer::NO)
-      end
+      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
 
       it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
     end
@@ -116,18 +137,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_owns_property }
 
-    context 'when they have property' do
-      before do
-        allow(form_object).to receive_messages(client_owns_property: YesNoAnswer::YES)
-      end
+    before do
+      allow(income).to receive_messages(client_owns_property:)
+    end
 
-      it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
+    context 'when they have property' do
+      let(:client_owns_property) { YesNoAnswer::YES.to_s }
+
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
 
     context 'when they do not have property' do
-      before do
-        allow(form_object).to receive_messages(client_owns_property: YesNoAnswer::NO)
-      end
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
 
       it { is_expected.to have_destination(:has_savings, :edit, id: crime_application) }
     end
@@ -155,10 +176,50 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_benefits }
 
-    context 'has correct next step' do
+    before do
+      allow(income).to receive_messages(
+        income_above_threshold:,
+        has_frozen_income_or_assets:,
+        client_owns_property:,
+        has_savings:
+      )
+    end
+
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
+    context 'when dependants are relevant' do
+      let(:income_above_threshold) { YesNoAnswer::YES.to_s }
+      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
+      let(:has_savings) { YesNoAnswer::NO.to_s }
+
       it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
     end
+
+    context 'when dependants are not relevant' do
+      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
+      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
+      let(:has_savings) { YesNoAnswer::NO.to_s }
+      let(:income_benefits) { [] }
+
+      before do
+        allow(crime_application).to receive_messages(income_payments:, income_benefits:)
+      end
+
+      context 'when there are no payments' do
+        let(:income_payments) { [] }
+
+        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+      end
+
+      context 'when there are payments' do
+        let(:income_payments) { [{ amount: 1234 }] }
+
+        it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+      end
+    end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `client_has_dependants`' do
     let(:form_object) { double('FormObject') }
@@ -169,7 +230,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::NO)
       end
 
-      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+      context 'when there are no payments' do
+        before do
+          allow(crime_application).to receive_messages(income_payments: [], income_benefits: [])
+        end
+
+        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+      end
     end
 
     context 'when client does have dependants' do
@@ -226,7 +293,21 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :dependants_finished }
 
-    it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+    context 'when there are no payments' do
+      before do
+        allow(crime_application).to receive_messages(income_payments: [], income_benefits: [])
+      end
+
+      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+    end
+
+    context 'when there are payments' do
+      before do
+        allow(crime_application).to receive_messages(income_payments: [{ amount: 1 }], income_benefits: [])
+      end
+
+      it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `manage_without_income`' do

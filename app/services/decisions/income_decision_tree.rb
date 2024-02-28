@@ -1,5 +1,5 @@
 module Decisions
-  class IncomeDecisionTree < BaseDecisionTree
+  class IncomeDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     def destination
@@ -7,8 +7,7 @@ module Decisions
       when :employment_status
         after_employment_status
       when :lost_job_in_custody
-        # TODO: link to next step when we have it
-        edit(:income_before_tax)
+        after_lost_job_in_custody
       when :income_before_tax
         after_income_before_tax
       when :frozen_income_savings_assets
@@ -20,8 +19,7 @@ module Decisions
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
-        # TODO: link to next step when we have it
-        edit(:client_has_dependants)
+        after_income_benefits
       when :client_has_dependants
         after_client_has_dependants
       when :add_dependant
@@ -29,8 +27,7 @@ module Decisions
       when :delete_dependant
         edit_dependants
       when :dependants_finished
-        # TODO: link to next step when we have it
-        edit(:manage_without_income)
+        determine_showing_no_income_page
       when :manage_without_income
         # TODO: link to next step when we have it
         edit('/steps/outgoings/housing_payment_type')
@@ -46,6 +43,8 @@ module Decisions
       if not_working?
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
+        elsif appeal_no_changes?
+          edit('/steps/evidence/upload')
         else
           edit(:income_before_tax)
         end
@@ -55,12 +54,19 @@ module Decisions
       end
     end
 
+    def after_lost_job_in_custody
+      if appeal_no_changes?
+        edit('/steps/evidence/upload')
+      else
+        edit(:income_before_tax)
+      end
+    end
+
     def after_income_before_tax
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
       else
-        # TODO: once we have the next step
-        edit(:client_has_dependants)
+        edit(:income_payments)
       end
     end
 
@@ -68,8 +74,7 @@ module Decisions
       if no_frozen_assets?
         edit(:client_owns_property)
       else
-        # TODO: once we have the next step
-        edit(:client_has_dependants)
+        edit(:income_payments)
       end
     end
 
@@ -77,8 +82,15 @@ module Decisions
       if no_property?
         edit(:has_savings)
       else
-        # TODO: once we have the next step
+        edit(:income_payments)
+      end
+    end
+
+    def after_income_benefits
+      if dependants_relevant?
         edit(:client_has_dependants)
+      else
+        determine_showing_no_income_page
       end
     end
 
@@ -86,15 +98,23 @@ module Decisions
       if form_object.client_has_dependants.yes?
         edit_dependants(add_blank: true)
       else
-        edit(:manage_without_income)
+        determine_showing_no_income_page
       end
     end
 
     def edit_dependants(add_blank: false)
-      dependants = form_object.crime_application.dependants
+      dependants = crime_application.dependants
       dependants.create! if add_blank || dependants.empty?
 
       edit(:dependants)
+    end
+
+    def determine_showing_no_income_page
+      if payments.empty?
+        edit(:manage_without_income)
+      else
+        edit('/steps/outgoings/housing_payment_type')
+      end
     end
 
     def not_working?
@@ -105,16 +125,44 @@ module Decisions
       form_object.ended_employment_within_three_months&.yes?
     end
 
+    def appeal_no_changes?
+      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+    end
+
+    def summary_only?
+      crime_application.case.case_type == CaseType::SUMMARY_ONLY.to_s
+    end
+
     def income_below_threshold?
-      form_object.income_above_threshold.no?
+      crime_application.income.income_above_threshold == 'no'
     end
 
     def no_frozen_assets?
-      form_object.has_frozen_income_or_assets.no?
+      crime_application.income.has_frozen_income_or_assets == 'no'
     end
 
     def no_property?
-      form_object.client_owns_property.no?
+      crime_application.income.client_owns_property == 'no'
+    end
+
+    def no_savings?
+      crime_application.income.has_savings == 'no'
+    end
+
+    def payments
+      crime_application.income_payments + crime_application.income_benefits
+    end
+
+    def crime_application
+      form_object.crime_application
+    end
+
+    def dependants_relevant?
+      if income_below_threshold? && no_frozen_assets?
+        !(summary_only? || (no_property? && no_savings?))
+      else
+        true
+      end
     end
   end
 end
