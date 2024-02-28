@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_21_121558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -204,18 +204,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
     t.index ["charge_id"], name: "index_offence_dates_on_charge_id"
   end
 
-  create_table "outgoing_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "crime_application_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "payment_type", null: false
-    t.integer "amount", null: false
-    t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
-    t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
-  end
-
   create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "outgoings_more_than_income"
@@ -227,6 +215,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
     t.string "pays_council_tax"
     t.integer "council_tax_amount"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
+  end
+
+  create_table "outgoings_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_type", null: false
+    t.integer "amount"
+    t.string "frequency"
+    t.jsonb "metadata", default: {}
+    t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
+    t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end
 
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -246,6 +246,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
+  end
+
+  create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "property_type", null: false
+    t.string "house_type"
+    t.string "custom_house_type"
+    t.integer "size_in_acres"
+    t.string "usage"
+    t.integer "bedrooms"
+    t.integer "value"
+    t.integer "outstanding_mortgage"
+    t.integer "percentage_applicant_owned"
+    t.integer "percentage_partner_owned"
+    t.string "is_home_address"
+    t.string "has_other_owners"
+    t.json "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_properties_on_crime_application_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -284,6 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   end
 
   add_foreign_key "addresses", "people"
+  add_foreign_key "capitals", "crime_applications"
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
@@ -294,8 +315,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_120639) do
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "offence_dates", "charges"
-  add_foreign_key "outgoings_payments", "crime_applications"
   add_foreign_key "outgoings", "crime_applications"
+  add_foreign_key "outgoings_payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
+  add_foreign_key "properties", "crime_applications"
   add_foreign_key "savings", "crime_applications"
 end

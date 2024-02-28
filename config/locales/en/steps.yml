@@ -335,6 +335,14 @@ en:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
 
+      properties:
+        edit:
+          page_title: Your client’s residential property
+          heading:
+            residential: Your client’s residential property
+            commercial: Your client’s commercial property
+            land: Your client’s land
+
     evidence:
       upload:
         edit:

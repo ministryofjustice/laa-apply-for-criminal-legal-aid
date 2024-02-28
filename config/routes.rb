@@ -177,6 +177,7 @@ Rails.application.routes.draw do
         crud_step :savings, param: :saving_id
         edit_step :clients_savings, alias: :savings_summary
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
+        crud_step :properties, param: :property_id
       end
 
       namespace :evidence do

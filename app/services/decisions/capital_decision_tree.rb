@@ -1,5 +1,6 @@
 module Decisions
   class CapitalDecisionTree < BaseDecisionTree
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :saving_type
@@ -9,13 +10,17 @@ module Decisions
       when :savings_summary
         after_savings_summary
       when :property_type
-        # TODO: Add next step
+        after_property_type(form_object.property)
+      when :properties
+        # TODO: Update next step
+        edit(:saving_type)
       when :premium_bonds
         # TODO: Add next step
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -29,6 +34,12 @@ module Decisions
       return edit(:premium_bonds) if form_object.add_saving.no?
 
       edit(:saving_type)
+    end
+
+    def after_property_type(property)
+      return edit(:saving_type) unless property
+
+      edit(:properties, property_id: property)
     end
   end
 end
