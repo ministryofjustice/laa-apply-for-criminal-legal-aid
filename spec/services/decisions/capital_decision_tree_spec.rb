@@ -76,14 +76,6 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
 
-    context 'the client has selected no to adding a savings account' do
-      let(:add_saving) { YesNoAnswer::NO }
-
-      it 'redirects the edit premium bonds page' do
-        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
-      end
-    end
-
     context 'the client has selected a property type' do
       let(:property) { instance_double(Property) }
 

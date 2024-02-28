@@ -25,7 +25,7 @@ module Steps
       end
 
       def confirm_destroy
-        @saving = helpers.present(saving_record)
+        @saving = saving_record
       end
 
       private
