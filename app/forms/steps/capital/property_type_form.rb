@@ -5,6 +5,8 @@ module Steps
 
       validates :property_type, presence: true
 
+      attr_reader :property
+
       def choices
         PropertyType.values
       end
@@ -12,8 +14,15 @@ module Steps
       private
 
       def persist!
-        # TODO: If none, go to next step
-        # If type selected, build new properties form
+        return true if property_type == 'none'
+
+        @property = incomplete_property_for_type || crime_application.properties.create(property_type:)
+      end
+
+      def incomplete_property_for_type
+        return nil unless property_type
+
+        crime_application.properties.where(property_type:).reject(&:complete?).first
       end
     end
   end

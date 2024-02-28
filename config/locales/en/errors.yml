@@ -486,7 +486,26 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
-
+        steps/capital/properties_form:
+          attributes:
+            house_type:
+              blank: Enter the type of property
+            custom_house_type:
+              blank: Enter the type of property
+            bedrooms:
+              blank: Enter how many bedrooms are there
+            value:
+              blank: Enter how much the property is worth
+            outstanding_mortgage:
+              blank: Enter how much is left to pay on the mortgage
+            percentage_applicant_owned:
+              blank: Enter the percentage of the property your client owns
+            percentage_partner_owned:
+              blank: Enter the percentage of the property your client's partner owns
+            is_home_address:
+              inclusion: Select yes if the address of the property is the same as your client's home address
+            has_other_owners:
+              inclusion: Select yes if anyone else owns part of the land
         steps/submission/more_information_form:
           attributes:
             additional_information:
