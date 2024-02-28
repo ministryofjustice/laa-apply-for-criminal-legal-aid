@@ -1,6 +1,6 @@
 module Decisions
   class CapitalDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :saving_type
@@ -23,7 +23,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 

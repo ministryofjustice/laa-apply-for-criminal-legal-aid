@@ -5,6 +5,8 @@ module Steps
 
       attribute :address
 
+      validates :address, presence: true
+
       validates_with AddressValidator
 
       def address_line_one
