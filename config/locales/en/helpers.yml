@@ -91,6 +91,8 @@ en:
         housing_payment_type: Which of these payments does your client pay where they usually live?
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
+      steps_outgoings_outgoings_payments_form:
+        outgoings_payments: Which of these payments does your client pay?
       steps_submission_more_information_form:
         need_more_information: Do you need to add any more information to this application?
       steps_capital_property_type_form:
@@ -100,7 +102,7 @@ en:
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
-        confirm_in_applicants_name: Confirm the following 
+        confirm_in_applicants_name: Confirm the following
         account_holder: Whose name is the account in?
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
@@ -182,6 +184,11 @@ en:
         property_type: Add one asset at a time. You can add more later.
       steps_capital_saving_type_form:
         saving_type: Add one savings account at a time. You can add more later.
+      steps_outgoings_outgoings_payments_form:
+        outgoings_payments: Select all that apply.
+        types_options:
+          childcare: For example, to a childminder, nanny or nursery.
+          maintenance: This includes child maintenance.
       steps_capital_properties_form:
         bedrooms: Enter ‘0’ if the property is a studio.
         value: You can use property websites to find the estimated value.
@@ -410,6 +417,22 @@ en:
         council_tax_amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_outgoings_payments_form:
+        types_options:
+          childcare: Childcare payments
+          maintenance: Maintenance payments to a former partner
+          legal_aid_contribution: Contributions to criminal or civil legal aid
+          none: My client does not pay any of these payments
+        childcare:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        maintenance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        legal_aid_contribution:
+          amount: *amount_label
+          frequency_options: *frequency_options
+          case_reference: What is the case reference of the criminal rep order or civil certificate?
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income_options: *YESNO
         how_manage: How does your client manage if their outgoings are more than their income?

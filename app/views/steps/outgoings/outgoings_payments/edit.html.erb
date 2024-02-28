@@ -1,0 +1,43 @@
+<% title t('.page_title') %>
+<% step_header(path: crime_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.outgoings.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_check_boxes_fieldset :outgoings_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
+
+        <% @form_object.ordered_payment_types.each do |type| %>
+          <%= f.govuk_check_box :types, type.to_s, checked: f.object.checked?(type), link_errors: true do %>
+            <%= f.fields_for type.to_sym, f.object.public_send(type.to_s) do |g| %>
+              <%= g.govuk_fieldset legend: nil, id: "outgoing_payment_#{type}" do %>
+                <%= g.govuk_number_field :amount,
+                                         autocomplete: 'off',
+                                         inputmode: 'numeric',
+                                         width: 'one-third',
+                                         prefix_text: '£' %>
+                <%= g.govuk_collection_radio_buttons :frequency,
+                                                     PaymentFrequencyType.values,
+                                                     :value,
+                                                     legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
+
+                <% if type == OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s %>
+                  <%= g.govuk_text_field :case_reference,
+                                         autocomplete: 'off',
+                                         width: 'two-thirds' %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :types, 'none', exclusive: true %>
+
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

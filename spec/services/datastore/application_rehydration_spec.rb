@@ -41,6 +41,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         documents: all(be_a(Document)),
         dependants: all(be_a(Dependant)),
         outgoings: an_instance_of(Outgoings),
+        outgoings_payments: all(be_a(OutgoingsPayment)),
         additional_information: parent['additional_information'],
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),
@@ -193,7 +194,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         subject.call
       end
 
-      it 'forces IncomePayment to be constructed using pounds value' do
+      it 'forces IncomePayment to be constructed using pence value' do
         expect(
           IncomePayment
         ).to receive(:new).with(
@@ -240,7 +241,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         subject.call
       end
 
-      it 'forces IncomeBenefit to be constructed using pounds value' do
+      it 'forces IncomeBenefit to be constructed using pence value' do
         expect(
           IncomeBenefit
         ).to receive(:new).with(
@@ -256,6 +257,61 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'child',
           amount: 89_101,
           frequency: 'annual',
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains outgoings' do
+      let(:outgoings) do
+        {
+          'outgoings' => [
+            {
+              'payment_type' => 'legal_aid_contribution',
+              'amount' => 12_344,
+              'frequency' => 'annual',
+              'metadata' => { 'case_reference' => "CASE101\n2023-12-02" },
+            },
+            {
+              'payment_type' => 'rent',
+              'amount' => 56_432,
+              'frequency' => 'month',
+            },
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'outgoings_details' => outgoings })
+      end
+
+      it 'generates outgoings payments' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            outgoings_payments: contain_exactly(OutgoingsPayment, OutgoingsPayment)
+          )
+        )
+
+        subject.call
+      end
+
+      it 'forces OutgoingsPayment to be constructed using pence value' do
+        expect(
+          OutgoingsPayment
+        ).to receive(:new).with(
+          payment_type: 'legal_aid_contribution',
+          amount: 12_344,
+          frequency: 'annual',
+          metadata: { case_reference: "CASE101\n2023-12-02" },
+        )
+
+        expect(
+          OutgoingsPayment
+        ).to receive(:new).with(
+          payment_type: 'rent',
+          amount: 56_432,
+          frequency: 'month',
         )
 
         subject.call
