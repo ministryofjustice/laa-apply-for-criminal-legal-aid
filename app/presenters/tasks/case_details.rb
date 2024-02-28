@@ -18,9 +18,7 @@ module Tasks
     end
 
     def completed?
-      crime_application.case.values_at(
-        :hearing_court_name, :hearing_date
-      ).all?(&:present?)
+      crime_application.case.complete?
     end
   end
 end
