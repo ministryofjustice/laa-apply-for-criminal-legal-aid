@@ -23,9 +23,7 @@ module SubmissionSerializer
               end
 
               json.outgoings_details do
-                # TODO: Update to take array from outgoings payments when we get
-                # there - needs to default to []
-                json.outgoings []
+                json.outgoings Definitions::Payment.generate(crime_application.outgoings_payments)
 
                 json.housing_payment_type outgoings&.housing_payment_type
                 json.income_tax_rate_above_threshold outgoings&.income_tax_rate_above_threshold

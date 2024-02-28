@@ -35,6 +35,15 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     let(:step_name) { :council_tax }
 
     context 'has correct next step' do
+      it { is_expected.to have_destination(:outgoings_payments, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `outgoings_payments`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :outgoings_payments }
+
+    context 'has correct next step' do
       it { is_expected.to have_destination(:income_tax_rate, :edit, id: crime_application) }
     end
   end
@@ -53,7 +62,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     let(:step_name) { :outgoings_more_than_income }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
     end
   end
 end

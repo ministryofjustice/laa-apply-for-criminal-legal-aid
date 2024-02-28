@@ -8,6 +8,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       CrimeApplication,
       income:,
       outgoings:,
+      outgoings_payments:,
       dependants:,
       income_payments:,
       income_benefits:,
@@ -43,6 +44,18 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         outgoings_more_than_income: 'yes',
         how_manage: 'A description of how they manage'
       )
+    end
+
+    let(:outgoings_payments) do
+      [
+        instance_double(
+          OutgoingsPayment,
+          payment_type: 'council_tax',
+          amount_before_type_cast: 14_744,
+          frequency: 'month',
+          metadata: {},
+        )
+      ]
     end
 
     let(:income_payments) do
@@ -98,8 +111,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             ],
           },
           outgoings_details: {
-            # TODO: Outgoings array currently hardcoded in serializer
-            outgoings: [],
+            outgoings: [{
+              payment_type: 'council_tax',
+              amount: 14_744,
+              frequency: 'month',
+              metadata: {},
+            }],
             housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
@@ -158,8 +175,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             income_benefits: nil,
           },
           outgoings_details: {
-            # TODO: Outgoings array currently hardcoded in serializer
-            outgoings: [],
+            outgoings: nil,
             housing_payment_type: nil,
             income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
@@ -174,6 +190,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     end
 
     let(:income_benefits) do
+      nil
+    end
+
+    let(:outgoings_payments) do
       nil
     end
 

@@ -119,49 +119,44 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     context 'when defined as an attribute' do
       it 'responds with a fieldset form', :aggregate_failures do
         allowed_types.each do |type|
-          subject.public_send("#{type}=", example_attribute_data)
+          subject.public_send(:"#{type}=", example_attribute_data)
           response = subject.public_send(type)
 
           expect(response).to be_a fieldset_form_class
           expect(response.amount).to eq '23.30'
           expect(response.payment_type).to eq type
           expect(response.frequency).to eq 'week'
-          expect(response.details).to be_nil
+
+          expect(response.details).to be_nil if response.respond_to?(:details)
+          expect(response.case_reference).to be_nil if response.respond_to?(:case_reference)
         end
       end
 
       it 'persists the fieldset form when attribute is initially set' do
         expect do
-          allowed_types.each { |type| subject.public_send("#{type}=", example_attribute_data) }
+          allowed_types.each { |type| subject.public_send(:"#{type}=", example_attribute_data) }
         end.to change(payments, :size).by(allowed_types.size)
       end
 
-      it 'replaces the persisted fieldset form when attribute is reset' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
-        subject.other = {
-          'amount' => 103.26,
-          'frequency' => 'month',
-          'details' => 'Earned some cash selling furniture'
-        }
-        record = payments.find_by(payment_type: 'other')
+      it 'replaces the persisted fieldset form when attribute is reset' do
+        subject.public_send(:"#{allowed_types.first}=", { 'amount' => 103.26, 'frequency' => 'month' })
+
+        record = payments.find_by(payment_type: allowed_types.first)
         expect(payments.size).to eq 1
         expect(record.amount).to eq '103.26'
         expect(record.frequency).to eq 'month'
-        expect(record.details).to eq 'Earned some cash selling furniture'
 
-        subject.other = {
-          'amount' => 8982.10,
-          'frequency' => 'annual'
-        }
-        record = payments.find_by(payment_type: 'other')
+        subject.public_send(:"#{allowed_types.first}=", { 'amount' => 8982.10, 'frequency' => 'annual' })
+
+        record = payments.find_by(payment_type: allowed_types.first)
         expect(payments.size).to eq 1
         expect(record.amount).to eq '8982.10'
         expect(record.frequency).to eq 'annual'
-        expect(record.details).to be_nil
       end
 
       it 'persists amount as an integer' do
-        subject.public_send(:'other=', example_attribute_data)
-        record = payments.find_by(payment_type: 'other')
+        subject.public_send(:"#{allowed_types.first}=", example_attribute_data)
+        record = payments.find_by(payment_type: allowed_types.first)
 
         expect(record.amount_before_type_cast).to eq 2330
         expect(record.amount_before_type_cast).to be_a Integer
@@ -179,11 +174,11 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     context 'when persisted record exists' do
       before do
         # Persist
-        subject.other = { 'amount' => 105.50, 'frequency' => 'four_weeks' }
+        subject.public_send(:"#{allowed_types.first}=", { 'amount' => 105.50, 'frequency' => 'four_weeks' })
       end
 
       it 'returns true' do
-        expect(subject.checked?('other')).to be true
+        expect(subject.checked?(allowed_types.first)).to be true
       end
     end
 
@@ -193,16 +188,16 @@ RSpec.shared_examples 'a payment form' do |payment_class|
       subject(:form) do
         described_class.new(
           crime_application: crime_application,
-          types: %w[rent] # Submitted/initialising payment values
+          types: [allowed_types.first] # Submitted/initialising payment values
         )
       end
 
       it 'returns true for submitted value' do
-        expect(subject.checked?('rent')).to be true
+        expect(subject.checked?(allowed_types.first)).to be true
       end
 
       it 'returns false for unsubmitted value' do
-        expect(subject.checked?('other')).to be false
+        expect(subject.checked?(allowed_types.second)).to be false
       end
     end
 

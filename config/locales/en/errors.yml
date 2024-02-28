@@ -429,6 +429,19 @@ en:
               blank: Enter how much your client pays yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
+        steps/outgoings/outgoing_payment_fieldset_form:
+          summary:
+            amount:
+              greater_than: "%{payment_type} amount must be greater than 0"
+              not_a_number: "%{payment_type} amount is not a number"
+            case_reference:
+              invalid: "Cannot add case_reference for %{payment_type}"
+            frequency:
+              blank: "%{payment_type} frequency can't be blank"
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: Enter an amount
         steps/outgoings/income_tax_rate_form:
           attributes:
             income_tax_rate_above_threshold:
@@ -449,29 +462,29 @@ en:
               blank: Select which savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
         steps/capital/savings_form:
           attributes:
-            provider_name: 
+            provider_name:
               blank: Enter the name of the bank, building society or other holder of the savings
-            sort_code: 
+            sort_code:
               blank: Enter the sort code or branch name
-            account_number: 
+            account_number:
               blank: Enter the account number
-            account_balance: 
+            account_balance:
               blank: Enter the account balance
-            is_overdrawn: 
+            is_overdrawn:
               inclusion: Select yes if the account is overdrawn
-            are_wages_paid_into_account: 
+            are_wages_paid_into_account:
               inclusion: Select yes if your client's wages or benefits are paid into this account
-            account_holder: 
+            account_holder:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
         steps/capital/premium_bonds_form:
           attributes:
-            premium_bonds_total_value: 
+            premium_bonds_total_value:
               blank: Enter the total value of their bonds
-            premium_bonds_holder_number: 
+            premium_bonds_holder_number:
               blank: Enter the holder number
-            has_premium_bonds: 
+            has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
         steps/capital/properties_form:
           attributes:
