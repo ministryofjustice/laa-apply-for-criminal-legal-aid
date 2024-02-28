@@ -31,8 +31,16 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected yes to adding a savings account' do
       let(:add_saving) { YesNoAnswer::YES }
 
-      it 'redirects the edit `saving type` page' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      it 'redirects to the edit `saving type` page' do
+        expect(subject).to have_destination(:other_saving_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding a savings account' do
+      let(:add_saving) { YesNoAnswer::NO }
+
+      it 'redirects to the premium bonds page' do
+        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
       end
     end
   end
@@ -108,6 +116,19 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     context 'has correct next step' do
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `other_saving_type`' do
+    let(:form_object) { double('FormObject', saving:) }
+    let(:step_name) { :other_saving_type }
+
+    context 'the client has selected a saving type' do
+      let(:saving) { 'new_saving' }
+
+      it 'redirects the edit `savings` page' do
+        expect(subject).to have_destination(:savings, :edit, id: crime_application, saving_id: saving)
+      end
     end
   end
 end

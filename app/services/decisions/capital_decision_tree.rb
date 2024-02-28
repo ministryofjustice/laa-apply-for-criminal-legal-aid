@@ -5,6 +5,8 @@ module Decisions
       case step_name
       when :saving_type
         after_saving_type(form_object.saving)
+      when :other_saving_type
+        edit(:savings, saving_id: form_object.saving)
       when :savings
         edit(:savings_summary)
       when :savings_summary
@@ -34,7 +36,7 @@ module Decisions
     def after_savings_summary
       return edit(:premium_bonds) if form_object.add_saving.no?
 
-      edit(:saving_type)
+      edit(:other_saving_type)
     end
 
     def after_property_type(property)
