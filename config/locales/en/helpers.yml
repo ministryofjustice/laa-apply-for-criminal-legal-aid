@@ -370,7 +370,7 @@ en:
           details: Enter the other sources of income they get
       steps_income_income_benefits_form:
         types_options:
-          child: Child Benfit
+          child: Child Benefit
           working_or_child_tax_credit: Working Tax Credit or Child Tax Credit
           incapacity: Incapacity Benefit
           industrial_injuries_disablement: Industrial Injuries Disablement Benefit
@@ -466,8 +466,8 @@ en:
         account_balance: What is the account balance?
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
-        account_holder_options: *OWNERSHIP_OPTIONS 
-        confirm_in_applicants_name_options: 
+        account_holder_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_savings_summary_form:
         add_saving_options: *YESNO
@@ -491,4 +491,3 @@ en:
         percentage_partner_owned: What percentage of the property does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
-
