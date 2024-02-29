@@ -460,6 +460,10 @@ en:
           attributes:
             saving_type:
               blank: Select which savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
+        steps/capital/other_saving_type_form:
+          attributes:
+            saving_type:
+              blank: Select which other savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
         steps/capital/savings_form:
           attributes:
             provider_name:
