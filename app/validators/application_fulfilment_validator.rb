@@ -32,6 +32,6 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def means_record_present?
-    record.income.present? && record.income.employment_status.include?('not_working')
+    record.income.present? && record.income&.employment_status&.include?('not_working')
   end
 end
