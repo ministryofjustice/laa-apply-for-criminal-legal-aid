@@ -4,30 +4,15 @@ module Steps
       delegate :property_type, to: :record
 
       attribute :address
+      attribute :address_line_one
+      attribute :address_line_two
+      attribute :city
+      attribute :country
+      attribute :postcode
 
       validates :address, presence: true
 
       validates_with AddressValidator
-
-      def address_line_one
-        address[:address_line_one]
-      end
-
-      def address_line_two
-        address[:address_line_two]
-      end
-
-      def city
-        address[:city]
-      end
-
-      def country
-        address[:country]
-      end
-
-      def postcode
-        address[:postcode]
-      end
 
       private
 
