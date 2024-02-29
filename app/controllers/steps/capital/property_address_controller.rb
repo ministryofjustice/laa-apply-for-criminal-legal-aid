@@ -14,13 +14,9 @@ module Steps
       private
 
       def property_record
-        @property_record ||= properties.find(params[:property_id])
+        @property_record ||= current_crime_application.properties.find(params[:property_id])
       rescue ActiveRecord::RecordNotFound
         raise Errors::PropertyNotFound
-      end
-
-      def properties
-        @properties ||= current_crime_application.properties
       end
 
       def additional_permitted_params
