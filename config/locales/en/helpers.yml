@@ -33,6 +33,22 @@ en:
       try_again: Try again
       apply_in_eforms: Apply using eForms
 
+    objects:
+      savings: &SAVING_FORM
+        account_balance: What is the account balance?
+        account_holder: Whose name is the account in?
+        account_holder_options: *OWNERSHIP_OPTIONS 
+        account_number: What is the account number?
+        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        are_wages_paid_into_account_options: *YESNO
+        confirm_in_applicants_name: Confirm the following 
+        confirm_in_applicants_name_options: 
+          'true': I confirm that the account is in my client's name 
+        is_overdrawn: Is the account overdrawn?
+        is_overdrawn_options: *YESNO
+        provider_name: What is the name of the bank, building society or other holder of the savings?
+        sort_code: What is the sort code or branch name?
+
     legend:
       cookies_settings_form:
         consent: Do you want to accept analytics cookies?
@@ -97,11 +113,7 @@ en:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
         saving_type: Which savings does your client have inside or outside the UK?
-      steps_capital_savings_form:
-        is_overdrawn: Is the account overdrawn?
-        are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
-        confirm_in_applicants_name: Confirm the following 
-        account_holder: Whose name is the account in?
+      steps_capital_savings_form: *SAVING_FORM
       steps_capital_properties_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
@@ -434,16 +446,7 @@ en:
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
-      steps_capital_savings_form:
-        provider_name: What is the name of the bank, building society or other holder of the savings?
-        sort_code: What is the sort code or branch name?
-        account_number: What is the account number?
-        account_balance: What is the account balance?
-        is_overdrawn_options: *YESNO
-        are_wages_paid_into_account_options: *YESNO
-        account_holder_options: *OWNERSHIP_OPTIONS 
-        confirm_in_applicants_name_options: 
-          'true': I confirm that the account is in my client's name 
+      steps_capital_savings_form: *SAVING_FORM
       steps_capital_premium_bonds_form:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds

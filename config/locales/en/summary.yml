@@ -27,6 +27,7 @@ en:
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: More information
+      savings: Savings 
 
     questions:
       # BEGIN overview section
@@ -292,3 +293,4 @@ en:
         question: Details that will help us process this application
         absence_answer: *absence_none
       # END supporting evidence section
+      #

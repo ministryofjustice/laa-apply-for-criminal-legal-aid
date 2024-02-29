@@ -34,6 +34,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_121558) do
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
   end
 
+  create_table "amounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount"
+    t.string "frequency"
+    t.string "type_of_amount"
+    t.bigint "crime_application_id"
+    t.jsonb "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_amounts_on_crime_application_id"
+  end
+
   create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "has_premium_bonds"
@@ -153,7 +164,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_121558) do
     t.string "payment_type", null: false
     t.integer "amount", null: false
     t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
+    t.string "details"
     t.index ["crime_application_id", "payment_type"], name: "index_income_payments_on_crime_application_id_and_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
   end
@@ -229,6 +240,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_121558) do
     t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end
 
+  create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.string "same_home_address_as_client"
+    t.uuid "partner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -245,7 +265,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_21_121558) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

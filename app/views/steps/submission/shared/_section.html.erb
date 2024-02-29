@@ -1,9 +1,28 @@
-<% unless section.headless? %>
-  <h2 class="govuk-heading-m">
-    <%= t(section.name, scope: 'summary.sections') %>
-  </h2>
-<% end %>
+<% if false %>
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+      <%= t(section.name, scope: 'summary.sections') %>
+    </h2>
+    <ul class="govuk-summary-card__actions">
+      <li class="govuk-summary-card__action">
+      </li>
+    </ul>
+  </div>
+  <div class="govuk-summary-card__content">
+    <dl class="govuk-summary-list">
+      <%= render section.answers, editable: section.editable? %>
+    </dl>
+  </div>
+</div>
+<% else %>
+  <% unless section.headless? %>
+    <h2 class="govuk-heading-m">
+      <%= t(section.name, scope: 'summary.sections') %>
+    </h2>
+  <% end %>
 
-<dl class="govuk-summary-list">
-  <%= render section.answers, editable: section.editable? %>
-</dl>
+  <dl class="govuk-summary-list">
+    <%= render section.answers, editable: section.editable? %>
+  </dl>
+<% end %>
