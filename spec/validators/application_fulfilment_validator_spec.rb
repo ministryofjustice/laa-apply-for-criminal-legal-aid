@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :case, :ioj, :documents, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :case, :ioj, :income, :documents, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -19,6 +19,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       is_means_tested:,
       case:,
       ioj:,
+      income:,
       documents:
     }
   end
@@ -31,6 +32,9 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
 
+  let(:income) { instance_double(Income, employment_status:) }
+  let(:employment_status) { [] }
+
   let(:documents) { double(stored: stored_documents) }
   let(:stored_documents) { [] }
 
@@ -42,6 +46,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
     end
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when the application is means-passported' do
       let(:means_result) { true }
 
@@ -61,8 +66,26 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
         end
       end
 
+      context 'and means details have been recorded' do
+        let(:employment_status) { ['not_working'] }
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
+
       context 'and evidence has not been uploaded' do
         let(:stored_documents) { [] }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:means_passport, :blank)).to be(true)
+          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
+        end
+      end
+
+      context 'and means details have not been recorded' do
+        let(:employment_status) { [] }
 
         it 'is invalid' do
           expect(subject).not_to be_valid
@@ -109,6 +132,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'CaseType validation' do
     before do
