@@ -41,7 +41,7 @@ RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
       {
         id: crime_application,
         property_id: property,
-        steps_capital_property_address_form: {address: address_attributes}
+        steps_capital_property_address_form: { address: address_attributes }
       }
     end
 
