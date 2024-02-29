@@ -138,7 +138,7 @@ RSpec.describe 'Dashboard', :authorized do
       # client details section, no change links
       assert_select 'h2', 'Client details'
 
-      assert_select 'dl.govuk-summary-list:nth-of-type(2)' do
+      assert_select 'dl.govuk-summary-list' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do
           assert_select 'dt:nth-of-type(1)', 'First name'
           assert_select 'dd:nth-of-type(1)', 'Kit'
