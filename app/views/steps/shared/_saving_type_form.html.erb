@@ -1,0 +1,30 @@
+<% if show_none_option %>
+  <% title t('.saving_type.page_title') %>
+<% else %>
+  <% title t('.other_saving_type.page_title')  %>
+<% end %>
+
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+    <%= govuk_error_summary(form_object) %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <%= step_form form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :saving_type, legend: { tag: 'h1', size: 'xl' } do %>
+        <% form_object.choices.each_with_index do |option, index| %>
+          <%= f.govuk_radio_button :saving_type, option, link_errors: index.zero? %>
+        <% end %>
+        <% if show_none_option %>
+          <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_button :saving_type, 'none' %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
