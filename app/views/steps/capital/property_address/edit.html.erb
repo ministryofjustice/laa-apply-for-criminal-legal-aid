@@ -7,9 +7,9 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl"><%=t ".heading.#{@form_object.property_type}" %></h1>
-
     <%= step_form @form_object do |f| %>
-      <%= f.fields_for :address, OpenStruct.new(@form_object.address) do |address_field| %>
+      <%# NOTE: Address is just a replacement of OpenStruct rubocop was complaining about %>
+      <%= f.fields_for :address, Address.new(@form_object.address) do |address_field| %>
         <%= address_field.govuk_text_field :address_line_one, autocomplete: 'off' %>
         <%= address_field.govuk_text_field :address_line_two, autocomplete: 'off' %>
         <%= address_field.govuk_text_field :city, autocomplete: 'off' %>
