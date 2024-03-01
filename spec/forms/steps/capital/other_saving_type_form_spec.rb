@@ -18,7 +18,6 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
     end
 
     context 'when a saving of the type exists' do
-
       it 'a new saving of the saving type is created' do
         expect(form.saving).to be new_saving
         expect(savings).to have_received(:create).with(saving_type:)
