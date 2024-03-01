@@ -99,6 +99,8 @@ en:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
         saving_type: Which savings does your client have inside or outside the UK?
+      steps_capital_other_saving_type_form:
+        saving_type: Which other savings does your client have inside or outside the UK?
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
@@ -183,6 +185,8 @@ en:
       steps_capital_property_type_form:
         property_type: Add one asset at a time. You can add more later.
       steps_capital_saving_type_form:
+        saving_type: Add one savings account at a time. You can add more later.
+      steps_capital_other_saving_type_form:
         saving_type: Add one savings account at a time. You can add more later.
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Select all that apply.
@@ -452,13 +456,15 @@ en:
           land: Land
           none: My client does not own any of these assets
       steps_capital_saving_type_form:
-        saving_type_options:
+        saving_type_options: &SAVING_TYPE_OPTIONS
           bank: Bank accounts
           building_society: Building society accounts
           cash_isa: Cash ISAs
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_other_saving_type_form:
+        saving_type_options: *SAVING_TYPE_OPTIONS
       steps_capital_savings_form:
         provider_name: What is the name of the bank, building society or other holder of the savings?
         sort_code: What is the sort code or branch name?
