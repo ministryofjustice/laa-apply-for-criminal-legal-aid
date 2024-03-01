@@ -8,11 +8,6 @@ en:
         incomplete_tag: Incomplete
       saving:
         incomplete_tag: Incomplete
-      saving_type_form:
-        saving_type:
-            page_title: Which savings does your client have inside or outside the UK?
-        other_saving_type:
-            page_title: Which other savings does your client have inside or outside the UK?
 
     provider:
       confirm_office:
@@ -304,6 +299,12 @@ en:
 
     capital:
       caption: Capital assessment
+      saving_type:
+        edit:
+          page_title: Which savings does your client have inside or outside the UK?
+      other_saving_type:
+        edit:
+          page_title: Which other savings does your client have inside or outside the UK?
       property_type:
         edit:
           page_title: Which assets does your client own or part-own inside or outside the UK?
