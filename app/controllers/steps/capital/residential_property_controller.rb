@@ -1,6 +1,8 @@
 module Steps
   module Capital
-    class ResidentialPropertyController < PropertiesController
+    class ResidentialPropertyController < Steps::CapitalStepController
+      include Steps::Capital::PropertyStep
+
       private
 
       def advance_as
