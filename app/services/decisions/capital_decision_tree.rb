@@ -44,7 +44,7 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit(:residential_property, property_id: property)
+      edit("#{property.property_type}_property".to_sym, property_id: property)
     end
 
     def after_properties
