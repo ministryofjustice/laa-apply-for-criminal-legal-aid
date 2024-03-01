@@ -17,16 +17,6 @@ module Steps
 
       private
 
-      # :nocov:
-      def form_name
-        raise NotImplementedError
-      end
-
-      def advance_as
-        raise NotImplementedError
-      end
-      # :nocov:
-
       def property_record
         @property_record ||= current_crime_application.properties.find(params[:property_id])
       rescue ActiveRecord::RecordNotFound
