@@ -180,7 +180,7 @@ Rails.application.routes.draw do
         edit_step :clients_savings, alias: :savings_summary
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
         crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
-        crud_step :address_of_clients_residential_property, alias: :residential_property_address, param: :property_id, except: [:destroy]
+        crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
       end
 
       namespace :evidence do

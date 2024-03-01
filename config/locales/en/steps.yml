@@ -341,7 +341,7 @@ en:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
 
-      properties:
+      residential_property:
         edit:
           page_title: Your client’s residential property
           heading:
