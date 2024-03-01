@@ -13,9 +13,9 @@ module Decisions
         after_savings_summary
       when :property_type
         after_property_type(form_object.property)
-      when :properties
+      when :residential_property
         after_properties
-      when :property_address
+      when :residential_property_address
         # TODO: Route to property owner page once built
         edit(:saving_type)
       when :premium_bonds
@@ -44,11 +44,11 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit(:properties, property_id: property)
+      edit(:residential_property, property_id: property)
     end
 
     def after_properties
-      return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
+      return edit(:residential_property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       # TODO: Route to appropriate property page loop once built
       edit(:saving_type) # Placeholder to join up flow
