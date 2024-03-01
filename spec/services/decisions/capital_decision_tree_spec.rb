@@ -85,7 +85,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
       let(:is_home_address) { YesNoAnswer::NO }
 
       it 'redirects the edit `property_address` page' do
-        expect(subject).to have_destination(:residential_property_address, :edit, id: crime_application)
+        expect(subject).to have_destination(:property_address, :edit, id: crime_application)
       end
     end
   end
