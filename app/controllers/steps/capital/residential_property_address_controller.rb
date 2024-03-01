@@ -10,6 +10,10 @@ module Steps
       def form_name
         PropertyAddressForm
       end
+
+      def additional_permitted_params
+        [address: [:address_line_one, :address_line_two, :city, :country, :postcode]]
+      end
     end
   end
 end
