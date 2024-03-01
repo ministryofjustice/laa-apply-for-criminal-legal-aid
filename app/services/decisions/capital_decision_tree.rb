@@ -1,6 +1,6 @@
 module Decisions
   class CapitalDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :saving_type
@@ -12,8 +12,10 @@ module Decisions
       when :property_type
         after_property_type(form_object.property)
       when :properties
-        # TODO: Route to approprite property page loop once built
-        edit(:saving_type) # Placeholder to join up flow
+        after_properties
+      when :property_address
+        # TODO: Route to property owner page once built
+        edit(:saving_type)
       when :premium_bonds
         # TODO: Route to national savings certificates once built
         edit('/steps/case/urn') # Placeholder to join up flow
@@ -21,7 +23,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -41,6 +43,13 @@ module Decisions
       return edit(:saving_type) unless property
 
       edit(:properties, property_id: property)
+    end
+
+    def after_properties
+      return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
+
+      # TODO: Route to approprite property page loop once built
+      edit(:saving_type) # Placeholder to join up flow
     end
   end
 end
