@@ -514,6 +514,16 @@ en:
               inclusion: Select yes if the address of the property is the same as your client's home address
             has_other_owners:
               inclusion: Select yes if anyone else owns part of the land
+        steps/capital/property_address_form:
+          attributes:
+            address_line_one:
+              blank: Enter address line 1, typically the building and street
+            city:
+              blank: Enter town or city
+            country:
+              blank:  Enter country
+            postcode:
+              blank: Enter postcode
         steps/submission/more_information_form:
           attributes:
             additional_information:

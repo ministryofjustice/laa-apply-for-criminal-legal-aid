@@ -497,3 +497,10 @@ en:
         percentage_partner_owned: What percentage of the property does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
+      steps_capital_property_address_form:
+        address:
+          address_line_one: Address line 1
+          address_line_two: Address line 2 (optional)
+          city: Town or city
+          country: Country
+          postcode: Postcode

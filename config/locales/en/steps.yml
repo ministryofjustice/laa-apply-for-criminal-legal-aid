@@ -349,6 +349,14 @@ en:
             commercial: Your client’s commercial property
             land: Your client’s land
 
+      property_address:
+        edit:
+          page_title: What is the address of your client’s land?
+          heading:
+            residential: What is the address of your client’s residential property?
+            commercial: What is the address of your client’s commercial property?
+            land: What is the address of your client’s land?
+
     evidence:
       upload:
         edit:
