@@ -46,7 +46,7 @@ module Decisions
     end
 
     def after_properties
-      return edit(:property_address) if form_object.is_home_address.no?
+      return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       # TODO: Route to approprite property page loop once built
       edit(:saving_type) # Placeholder to join up flow
