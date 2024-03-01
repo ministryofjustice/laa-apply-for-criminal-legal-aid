@@ -115,7 +115,7 @@ module Decisions
 
     # TODO: : Fix nested conditions
     def after_properties
-      return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
+      return edit(:residential_property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       if form_object.has_other_owners.yes?
         property_owners.create! if incomplete_property_owners.blank?
