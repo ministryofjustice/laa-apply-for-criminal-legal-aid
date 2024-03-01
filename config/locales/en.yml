@@ -29,6 +29,11 @@ en:
       one: a minute
       other: '%{count} minutes'
 
+  number:
+    currency:
+      format:
+        unit: '£'
+
   flash:
     success:
       title: Success

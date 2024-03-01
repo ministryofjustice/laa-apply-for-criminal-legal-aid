@@ -33,6 +33,12 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     end
   end
 
+  describe '#capital' do
+    it 'returns the capital struct' do
+      expect(subject.capital).to be_a(Adapters::Structs::CapitalDetails)
+    end
+  end
+
   describe '#documents' do
     it 'returns documents' do
       expect(subject.documents).to all(be_a(Document))
