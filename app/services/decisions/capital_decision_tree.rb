@@ -15,7 +15,7 @@ module Decisions
         after_property_type(form_object.property)
       when :residential_property
         after_properties
-      when :residential_property_address
+      when :property_address
         # TODO: Route to property owner page once built
         after_property_address
       when :property_owners
@@ -75,7 +75,7 @@ module Decisions
 
     # TODO: : Fix nested conditions
     def after_properties
-      return edit(:residential_property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
+      return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       if form_object.has_other_owners.yes?
         property_owners.create! if incomplete_property_owners.blank?
