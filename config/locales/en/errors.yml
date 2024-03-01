@@ -514,7 +514,6 @@ en:
           attributes:
             address_line_one:
               blank: Enter address line 1, typically the building and street
-            address_line_two: # optional
             city:
               blank: Enter town or city
             country:
