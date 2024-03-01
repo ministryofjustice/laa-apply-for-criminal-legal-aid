@@ -83,14 +83,14 @@ RSpec.describe Decisions::CapitalDecisionTree do
       let(:is_home_address) { YesNoAnswer::NO }
 
       it 'redirects the edit `property_address` page' do
-        expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        expect(subject).to have_destination(:residential_property_address, :edit, id: crime_application)
       end
     end
   end
 
   context 'when the step is `property_address`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :property_address }
+    let(:step_name) { :residential_property_address }
 
     context 'has correct next step' do
       it { is_expected.to have_destination(:saving_type, :edit, id: crime_application) }
