@@ -4,6 +4,10 @@ class Property < ApplicationRecord
   attribute :value, :pence
   attribute :outstanding_mortgage, :pence
 
+  store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
+
+  OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
+
   def complete?
     values_at(
       :property_type,

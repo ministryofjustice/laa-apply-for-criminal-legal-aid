@@ -175,10 +175,12 @@ Rails.application.routes.draw do
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :which_assets_does_client_own, alias: :property_type
         edit_step :which_savings_does_client_have, alias: :saving_type
+        edit_step :which_other_savings_does_client_have, alias: :other_saving_type
         crud_step :savings, param: :saving_id
         edit_step :clients_savings, alias: :savings_summary
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
-        crud_step :properties, param: :property_id
+        crud_step :properties, alias: :properties, param: :property_id, except: [:destroy]
+        crud_step :property_address, alias: :property_address, param: :property_id, except: [:destroy]
       end
 
       namespace :evidence do
