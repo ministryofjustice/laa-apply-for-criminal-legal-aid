@@ -1,7 +1,7 @@
 module Steps
   module Capital
     class PropertyAddressController < Steps::CapitalStepController
-      include Steps::Capital::PropertyStep
+      include Steps::Capital::PropertyUpdateStep
 
       private
 

@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    module PropertyStep
+    module PropertyUpdateStep
       extend ActiveSupport::Concern
 
       def edit
@@ -22,6 +22,16 @@ module Steps
       rescue ActiveRecord::RecordNotFound
         raise Errors::PropertyNotFound
       end
+
+      # :nocov:
+      def advance_as
+        raise NotImplementedError
+      end
+
+      def form_name
+        raise NotImplementedError
+      end
+      # :nocov:
     end
   end
 end
