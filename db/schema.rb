@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_175632) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_29_125141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -262,7 +262,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_175632) do
     t.integer "percentage_partner_owned"
     t.string "is_home_address"
     t.string "has_other_owners"
-    t.json "address"
+    t.jsonb "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_properties_on_crime_application_id"
