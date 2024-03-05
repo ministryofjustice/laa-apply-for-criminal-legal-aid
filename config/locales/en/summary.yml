@@ -261,6 +261,10 @@ en:
           mortgage: Mortgage
           board_lodgings: Board and lodgings
           none: None
+      mortgage:
+        question: How much are your client's mortgage payments?
+        answers:
+          description: "£%{amount} every %{frequency}"
       # END housing payments section
 
       # BEGIN other outgoings details section

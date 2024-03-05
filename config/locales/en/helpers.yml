@@ -11,6 +11,12 @@ en:
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
+    frequency_phrases: &frequency_phrases
+      'week': 'week'
+      'fortnight': '2 weeks'
+      'four_weeks': '4 weeks'
+      'month': 'month'
+      'annual': 'year'
     frequency_options: &frequency_options
       'week': 'Every week'
       'fortnight': 'Every 2 weeks'
