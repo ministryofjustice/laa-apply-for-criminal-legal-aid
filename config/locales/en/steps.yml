@@ -302,6 +302,9 @@ en:
       saving_type:
         edit:
           page_title: Which savings does your client have inside or outside the UK?
+      other_saving_type:
+        edit:
+          page_title: Which other savings does your client have inside or outside the UK?
       property_type:
         edit:
           page_title: Which assets does your client own or part-own inside or outside the UK?
@@ -345,6 +348,14 @@ en:
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+
+      property_address:
+        edit:
+          page_title: What is the address of your client’s land?
+          heading:
+            residential: What is the address of your client’s residential property?
+            commercial: What is the address of your client’s commercial property?
+            land: What is the address of your client’s land?
 
     evidence:
       upload:
