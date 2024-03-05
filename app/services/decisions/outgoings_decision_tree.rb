@@ -4,7 +4,7 @@ module Decisions
       case step_name
       when :housing_payment_type
         after_housing_payment_type
-      when :board_and_lodgings, :mortgage
+      when :board_and_lodgings, :mortgage, :rent
         edit(:council_tax)
       when :council_tax
         edit(:outgoings_payments)
@@ -29,6 +29,8 @@ module Decisions
         edit(:board_and_lodgings)
       elsif form_object.housing_payment_type.value == :mortgage
         edit(:mortgage)
+      elsif form_object.housing_payment_type.value == :rent
+        edit(:rent)
       end
     end
   end

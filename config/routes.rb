@@ -171,6 +171,7 @@ Rails.application.routes.draw do
         edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
         edit_step :which_payments_does_client_pay, alias: :outgoings_payments
         edit_step :mortgage_payments, alias: :mortgage
+        edit_step :rent_payments, alias: :rent
       end
 
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do

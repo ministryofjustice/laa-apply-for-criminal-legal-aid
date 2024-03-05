@@ -10,4 +10,8 @@ class OutgoingsPayment < ApplicationRecord
   def self.mortgage
     where(payment_type: OutgoingsPaymentType::MORTGAGE).order(created_at: :desc).first
   end
+
+  def self.rent
+    where(payment_type: OutgoingsPaymentType::RENT).order(created_at: :desc).first
+  end
 end

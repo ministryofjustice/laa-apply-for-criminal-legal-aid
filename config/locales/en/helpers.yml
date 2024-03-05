@@ -97,6 +97,8 @@ en:
         housing_payment_type: Which of these payments does your client pay where they usually live?
       steps_outgoings_mortgage_form:
         frequency: Select how often they pay mortgage payments
+      steps_outgoings_rent_form:
+        frequency: Select how often they pay rent payments
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_outgoings_outgoings_payments_form:
@@ -426,6 +428,9 @@ en:
           none: My client does not pay any of these payments
       steps_outgoings_mortgage_form:
         amount: How much are your client's mortgage payments?
+        frequency_options: *frequency_options
+      steps_outgoings_rent_form:
+        amount: How much rent does your client pay, after taking away Housing Benefit?
         frequency_options: *frequency_options
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO

@@ -265,6 +265,10 @@ en:
         question: How much are your client's mortgage payments?
         answers:
           description: "£%{amount} every %{frequency}"
+      rent:
+        question: How much rent does your client pay, after taking away Housing Benefit?
+        answers:
+          description: "£%{amount} every %{frequency}"
       # END housing payments section
 
       # BEGIN other outgoings details section

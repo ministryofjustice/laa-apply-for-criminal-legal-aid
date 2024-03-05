@@ -287,6 +287,11 @@ en:
           page_title: Mortgage payments
           mortgage_legend: Mortgage payments
           amount_hint: Only include mortgage payments where they usually live.
+      rent:
+        edit:
+          page_title: Rent payments
+          rent_legend: Rent payments
+          amount_hint: Only include rent payments where they usually live.
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
