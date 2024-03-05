@@ -25,8 +25,56 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :housing_payment_type }
 
-    context 'has correct next step' do
+    context 'with nothing somehow selected' do
+      before do
+        allow(
+          form_object
+        ).to receive(:housing_payment_type).and_return(nil)
+      end
+
       it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
+    end
+
+    context 'when the option selected is mortgage' do
+      before do
+        allow(
+          form_object
+        ).to receive(:housing_payment_type).and_return(HousingPaymentType::MORTGAGE)
+      end
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:mortgage, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the mortgage form is completed' do
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :mortgage }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the option selected is board_and_lodgings' do
+      before do
+        allow(
+          form_object
+        ).to receive(:housing_payment_type).and_return(HousingPaymentType::BOARD_LODGINGS)
+      end
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:board_and_lodgings, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the board_and_lodging form is completed' do
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :board_and_lodgings }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
+      end
     end
   end
 

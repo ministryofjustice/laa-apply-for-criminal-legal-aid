@@ -54,6 +54,13 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
           amount_before_type_cast: 14_744,
           frequency: 'month',
           metadata: {},
+        ),
+        instance_double(
+          OutgoingsPayment,
+          payment_type: HousingPaymentType::MORTGAGE,
+          amount_before_type_cast: 3_292_900,
+          frequency: 'annual',
+          metadata: {},
         )
       ]
     end
@@ -111,12 +118,20 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             ],
           },
           outgoings_details: {
-            outgoings: [{
-              payment_type: 'council_tax',
-              amount: 14_744,
-              frequency: 'month',
-              metadata: {},
-            }],
+            outgoings: [
+              {
+                payment_type: 'council_tax',
+                amount: 14_744,
+                frequency: 'month',
+                metadata: {},
+              },
+              {
+                payment_type: 'mortgage',
+                amount: 3_292_900,
+                frequency: 'annual',
+                metadata: {},
+              }
+            ],
             housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',

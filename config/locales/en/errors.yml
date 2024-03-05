@@ -421,6 +421,15 @@ en:
           attributes:
             housing_payment_type:
               inclusion: Select which payment your client pays where they usually live
+        steps/outgoings/mortgage_form:
+          attributes:
+            amount:
+              blank: Enter how much your client's mortgage payments are, after taking away Housing Benefit
+              greater_than: Your client's mortgage payments must be more than 0
+              not_a_number: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
+            frequency:
+              blank: Select how often they pay mortgage payments
+              inclusion: Select how often they pay mortgage payments
         steps/outgoings/council_tax_form:
           attributes:
             pays_council_tax:

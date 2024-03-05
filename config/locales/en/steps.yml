@@ -282,6 +282,11 @@ en:
       housing_payment_type:
         edit:
           page_title: Which of these payments does your client pay where they usually live?
+      mortgage:
+        edit:
+          page_title: Mortgage payments
+          mortgage_legend: Mortgage payments
+          amount_hint: Only include mortgage payments where they usually live.
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
