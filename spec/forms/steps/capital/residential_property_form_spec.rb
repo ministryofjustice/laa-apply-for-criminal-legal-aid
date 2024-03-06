@@ -136,5 +136,13 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
         end
       end
     end
+
+    describe '#house_types' do
+      it 'returns the possible choices' do
+        expect(subject.house_types.map(&:to_s)).to eq(
+          %w[bungalow detached flat_or_maisonette semidetached terraced]
+        )
+      end
+    end
   end
 end

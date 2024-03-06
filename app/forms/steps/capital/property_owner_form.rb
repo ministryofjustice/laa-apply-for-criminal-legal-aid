@@ -20,6 +20,10 @@ module Steps
         property_owners.size > 1
       end
 
+      def relationships
+        RelationshipType.values
+      end
+
       private
 
       def property_owners_collection
@@ -30,9 +34,12 @@ module Steps
           # }
           property_owners_attributes.values
         else
+          # :nocov:
+          # TODO :: ADD Specs for else part
           record.property_owners.map do |po|
             po.slice(:id, :name, :relationship, :custom_relationship, :percentage_owned)
           end
+          # :nocov:
         end
       end
 

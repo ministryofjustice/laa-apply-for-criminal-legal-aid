@@ -135,6 +135,24 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
     end
   end
 
+  describe '#relationships' do
+    it 'returns the possible choices' do
+      expect(subject.relationships.map(&:to_s)).to eq(
+        %w[
+          business_associates
+          ex_partner
+          family_members
+          friends
+          house_builder
+          housing_association
+          local_authority
+          partner_with_a_contrary_interest
+          property_company
+        ]
+      )
+    end
+  end
+
   describe '#show_destroy?' do
     context 'if there are fewer than two property owners' do
       let(:property_owners_attributes) do

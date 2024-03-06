@@ -16,24 +16,6 @@ RSpec.describe Steps::Capital::PropertyOwnerFieldsetForm do
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:record_id) { '12345' }
 
-  describe '#relationships' do
-    it 'returns the possible choices' do
-      expect(subject.relationships).to eq(
-        [
-          RelationshipType::BUSINESS_ASSOCIATES,
-          RelationshipType::EX_PARTNER,
-          RelationshipType::FAMILY_MEMBERS,
-          RelationshipType::FRIENDS,
-          RelationshipType::HOUSE_BUILDER,
-          RelationshipType::HOUSING_ASSOCIATION,
-          RelationshipType::LOCAL_AUTHORITY,
-          RelationshipType::PARTNER_WITH_A_CONTRARY_INTEREST,
-          RelationshipType::PROPERTY_COMPANY,
-        ]
-      )
-    end
-  end
-
   describe '#persisted?' do
     context 'when the record has an ID' do
       it { expect(subject.persisted?).to be(true) }
