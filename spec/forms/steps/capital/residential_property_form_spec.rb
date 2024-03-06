@@ -35,9 +35,19 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
     end
 
     describe '#custom_house_type' do
-      before { allow(subject).to receive(:house_type_is_listed?).and_return(false) }
+      before { allow(subject).to receive(:custom_house_type?).and_return(custom_house_type_selected) }
 
-      it { is_expected.to validate_presence_of(:custom_house_type) }
+      context 'when custom_house_type is selected' do
+        let(:custom_house_type_selected) { true }
+
+        it { is_expected.to validate_presence_of(:custom_house_type) }
+      end
+
+      context 'when custom_house_type is not selected' do
+        let(:custom_house_type_selected) { false }
+
+        it { is_expected.not_to validate_presence_of(:custom_house_type) }
+      end
     end
 
     describe '#is_home_address' do

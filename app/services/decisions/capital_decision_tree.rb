@@ -17,7 +17,14 @@ module Decisions
         after_properties
       when :property_address
         # TODO: Route to property owner page once built
-        edit(:saving_type)
+        after_property_address(form_object.record)
+      when :property_owners, :properties
+        # TODO: Route to assets list page once built
+        after_property_owner
+      when :add_property_owner
+        after_add_property_owner
+      when :delete_property_owner
+        after_delete_property_owner
       when :premium_bonds
         # TODO: Route to national savings certificates once built
         edit('/steps/case/urn') # Placeholder to join up flow
@@ -50,8 +57,51 @@ module Decisions
     def after_properties
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
+      if form_object.has_other_owners.yes?
+        property.property_owners.create! if incomplete_property_owners.blank?
+        return edit(:property_owners, property_id: property)
+      end
       # TODO: Route to appropriate property page loop once built
       edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def after_property_address(property)
+      if form_object.has_other_owners == 'yes'
+        property.property_owners.create! if incomplete_property_owners.blank?
+        return edit(:property_owners, property_id: property)
+      end
+
+      # TODO: Route to appropriate property page loop once built
+      edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def incomplete_property_owners
+      property_owners.reject(&:complete?)
+    end
+
+    def after_property_owner
+      edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def after_add_property_owner
+      property_owners << PropertyOwner.new if blank_owner_required?
+      edit(:property_owners, property_id: property)
+    end
+
+    def after_delete_property_owner
+      edit(:property_owners, property_id: property)
+    end
+
+    def property_owners
+      @property_owners ||= property.property_owners
+    end
+
+    def property
+      @property ||= form_object.record
+    end
+
+    def blank_owner_required?
+      property.property_owners.map(&:name).exclude?(nil)
     end
   end
 end

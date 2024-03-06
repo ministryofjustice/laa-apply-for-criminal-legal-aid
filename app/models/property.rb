@@ -1,8 +1,13 @@
 class Property < ApplicationRecord
   belongs_to :crime_application
 
+  default_scope { order(created_at: :asc) }
+
   attribute :value, :pence
   attribute :outstanding_mortgage, :pence
+
+  has_many :property_owners, dependent: :destroy
+  accepts_nested_attributes_for :property_owners, allow_destroy: true
 
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 

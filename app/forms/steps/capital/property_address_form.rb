@@ -1,7 +1,7 @@
 module Steps
   module Capital
     class PropertyAddressForm < Steps::BaseFormObject
-      delegate :property_type, to: :record
+      delegate :property_type, :has_other_owners, to: :record
 
       attribute :address
       attribute :address_line_one
