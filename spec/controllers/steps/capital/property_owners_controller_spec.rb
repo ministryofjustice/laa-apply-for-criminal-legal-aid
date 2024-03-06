@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
-  let(:form_class) { Steps::Capital::PropertyAddresForm }
+RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
+  let(:form_class) { Steps::Capital::PropertyOwnerForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
   let(:crime_application) { CrimeApplication.create }
   let(:property) do
@@ -41,29 +41,25 @@ RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
       {
         id: crime_application,
         property_id: property,
-        steps_capital_property_address_form: { address: address_attributes }
+        steps_capital_property_owner_form: { property_owners_attributes: }
       }
     end
 
-    let(:address_attributes) do
-      {
-        address_line_one: 'address_line_one',
-        address_line_two: 'address_line_two',
-        city: 'city',
-        country: 'country',
-        postcode: 'postcode'
-      }
-    end
+    context 'when valid property owners attributes' do
+      let(:property_owners_attributes) do
+        { '0' => { name: 'name 1', relationship: 'friends', percentage_owned: 10 } }
+      end
 
-    context 'when valid address attributes' do
       it 'redirects to the which_savings path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).to redirect_to(/which_savings_does_client_have/)
       end
     end
 
-    context 'when invalid address attributes' do
-      before { address_attributes.merge!(address_line_one: nil, city: nil) }
+    context 'when invalid property owners attributes' do
+      let(:property_owners_attributes) do
+        { '0' => { name: nil, relationship: 'friends', percentage_owned: 10 } }
+      end
 
       it 'not redirects to the which_savings path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }

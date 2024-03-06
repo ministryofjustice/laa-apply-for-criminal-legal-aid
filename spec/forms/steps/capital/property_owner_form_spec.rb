@@ -16,10 +16,10 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
   let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'custom_relationship' => '', 'percentage_owned' => '50' }
+    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'custom_relationship' => nil, 'percentage_owned' => '50' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'custom_relationship' => '', 'percentage_owned' => '20' }
+    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'custom_relationship' => nil, 'percentage_owned' => '20' }
   }
   let(:property_owners_attributes3) {
     { 'name' => 'c', 'relationship' => Steps::Capital::PropertyOwnerFieldsetForm::CUSTOM_RELATIONSHIP, 'custom_relationship' => 'custom relationship name', 'percentage_owned' => '10' }
@@ -37,9 +37,9 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
     context 'property owners' do
       let(:property_owners_attributes) do
         {
-          '0' => property_owners_attributes1.merge('name' => '', 'percentage_owned' => ''),
-          '1' => property_owners_attributes2.merge('relationship' => ''),
-          '2' => property_owners_attributes3.merge('custom_relationship' => '')
+          '0' => property_owners_attributes1.merge('name' => nil, 'percentage_owned' => nil),
+          '1' => property_owners_attributes2.merge('relationship' => nil),
+          '2' => property_owners_attributes3.merge('custom_relationship' => nil)
         }
       end
 
