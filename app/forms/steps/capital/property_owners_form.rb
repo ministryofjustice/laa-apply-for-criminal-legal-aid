@@ -21,10 +21,6 @@ module Steps
         property_owners.size > 1
       end
 
-      def relationships
-        RelationshipType.values
-      end
-
       private
 
       # If validation passes, the actual saving of the `property` performs
