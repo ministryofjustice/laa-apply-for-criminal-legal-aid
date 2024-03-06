@@ -85,7 +85,7 @@ module Decisions
     end
 
     def after_add_property_owner
-      property_owners << PropertyOwner.new if blank_owner_required?
+      property_owners << PropertyOwner.new
       edit(:property_owners, property_id: property)
     end
 
@@ -99,10 +99,6 @@ module Decisions
 
     def property
       @property ||= form_object.record
-    end
-
-    def blank_owner_required?
-      property_owners.map(&:name).exclude?(nil)
     end
   end
 end
