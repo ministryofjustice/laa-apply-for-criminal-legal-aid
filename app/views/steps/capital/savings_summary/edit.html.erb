@@ -12,11 +12,7 @@
       <%=t '.heading', count: @form_object.savings.size %>
     </h1>
 
-    <dl class="govuk-summary-list">
-      <% @form_object.savings.present_each(SavingPresenter) do |saving| %>
-        <%= render partial: 'saving_details', locals: { saving: saving, show_actions: true } %>
-      <% end %>
-    </dl>
+    <%= render Summary::Sections::Savings.new(current_crime_application, headless: true) %>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :add_saving, @form_object.choices, :value,
