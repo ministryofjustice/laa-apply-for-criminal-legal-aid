@@ -51,9 +51,11 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit("#{property.property_type}_property".to_sym, property_id: property)
+      edit(:"#{property.property_type}_property", property_id: property)
     end
 
+    # rubocop:disable Metrics/AbcSize
+    # TODO :: Fix nested conditions
     def after_properties
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
@@ -64,6 +66,7 @@ module Decisions
       # TODO: Route to appropriate property page loop once built
       edit(:saving_type) # Placeholder to join up flow
     end
+    # rubocop:enable Metrics/AbcSize
 
     def after_property_address(property)
       if form_object.has_other_owners == 'yes'
