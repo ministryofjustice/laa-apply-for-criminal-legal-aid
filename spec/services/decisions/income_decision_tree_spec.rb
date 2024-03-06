@@ -129,7 +129,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when they do not have frozen income or assets' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
 
-      it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
+      context 'when case type is not summary only' do
+        let(:case_type) { 'indictable' }
+
+        it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
+      end
+
+      context 'when case type is summary only' do
+        let(:case_type) { 'summary_only' }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
     end
   end
 
@@ -215,11 +225,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when there are payments' do
         let(:income_payments) { [{ amount: 1234 }] }
 
-        it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `client_has_dependants`' do
     let(:form_object) { double('FormObject') }
@@ -236,6 +245,26 @@ RSpec.describe Decisions::IncomeDecisionTree do
         end
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+      end
+
+      context 'when there are payments' do
+        before do
+          allow(crime_application).to receive_messages(income_payments: [{ amount: 1234 }], income_benefits: [])
+
+          allow(income).to receive_messages(
+            income_above_threshold:,
+            has_frozen_income_or_assets:,
+            client_owns_property:,
+            has_savings:
+          )
+        end
+
+        let(:income_above_threshold) { YesNoAnswer::NO.to_s }
+        let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+        let(:client_owns_property) { YesNoAnswer::NO.to_s }
+        let(:has_savings) { YesNoAnswer::NO.to_s }
+
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
     end
 
@@ -303,10 +332,22 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
     context 'when there are payments' do
       before do
-        allow(crime_application).to receive_messages(income_payments: [{ amount: 1 }], income_benefits: [])
+        allow(crime_application).to receive_messages(income_payments: [{ amount: 1234 }], income_benefits: [])
+
+        allow(income).to receive_messages(
+          income_above_threshold:,
+          has_frozen_income_or_assets:,
+          client_owns_property:,
+          has_savings:
+        )
       end
 
-      it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
+      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
+      let(:has_savings) { YesNoAnswer::NO.to_s }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 
@@ -314,8 +355,33 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :manage_without_income }
 
-    context 'has correct next step' do
+    before do
+      allow(income).to receive_messages(
+        income_above_threshold:,
+        has_frozen_income_or_assets:,
+        client_owns_property:,
+        has_savings:
+      )
+    end
+
+    context 'when full means assessment needs completing' do
+      let(:income_above_threshold) { YesNoAnswer::YES.to_s }
+      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
+      let(:has_savings) { YesNoAnswer::NO.to_s }
+
       it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+    end
+
+    context 'when full means assessment does not need completing' do
+      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
+      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+      let(:client_owns_property) { YesNoAnswer::NO.to_s }
+      let(:has_savings) { YesNoAnswer::NO.to_s }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 end
+
+# rubocop:enable RSpec/MultipleMemoizedHelpers
