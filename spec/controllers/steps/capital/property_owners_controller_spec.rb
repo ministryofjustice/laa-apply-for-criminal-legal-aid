@@ -33,7 +33,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
       end
     end
 
-    context 'when deleting a date' do
+    context 'when deleting a property owner' do
       let(:property_owners_attributes) do
         {
           property_owners_attributes: {

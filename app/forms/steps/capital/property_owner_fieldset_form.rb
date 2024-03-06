@@ -9,11 +9,19 @@ module Steps
       attribute :percentage_owned, :integer
 
       validates :name, :relationship, :percentage_owned, presence: true
-      validates :custom_relationship, presence: true, if: -> { relationship == PropertyOwner::CUSTOM_RELATIONSHIP }
+      validates :custom_relationship, presence: true, if: :custom_relationship?
+
+      def relationships
+        RelationshipType.values
+      end
 
       # Needed for `#fields_for` to render the uuids as hidden fields
       def persisted?
         id.present?
+      end
+
+      def custom_relationship?
+        relationship == PropertyOwner::CUSTOM_RELATIONSHIP
       end
     end
   end
