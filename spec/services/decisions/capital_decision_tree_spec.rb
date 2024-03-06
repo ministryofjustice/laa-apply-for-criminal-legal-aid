@@ -67,7 +67,9 @@ RSpec.describe Decisions::CapitalDecisionTree do
   end
 
   context 'when the step is `properties`' do
-    let(:form_object) { double('FormObject', property:, is_home_address:, has_other_owners: YesNoAnswer::NO) }
+    let(:form_object) do
+      double('FormObject', property: property, is_home_address: is_home_address, has_other_owners: YesNoAnswer::NO)
+    end
     let(:step_name) { :residential_property }
     let(:property) { instance_double(Property) }
 
@@ -89,7 +91,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
   end
 
   context 'when the step is `property_address`' do
-    let(:form_object) { double('FormObject', record:, has_other_owners: YesNoAnswer::NO) }
+    let(:form_object) { double('FormObject', record: record, has_other_owners: YesNoAnswer::NO) }
     let(:step_name) { :property_address }
 
     context 'has correct next step' do
