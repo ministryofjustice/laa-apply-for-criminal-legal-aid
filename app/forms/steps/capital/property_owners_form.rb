@@ -20,10 +20,6 @@ module Steps
         property_owners.size > 1
       end
 
-      def relationships
-        RelationshipType.values
-      end
-
       private
 
       def property_owners_collection
