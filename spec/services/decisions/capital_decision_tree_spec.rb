@@ -66,38 +66,78 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
-  context 'when the step is `properties`' do
+  context 'when the step is `residential_property`' do
     let(:form_object) do
-      double('FormObject', property: property, is_home_address: is_home_address, has_other_owners: YesNoAnswer::NO)
+      double('FormObject', record:, is_home_address:, has_other_owners:)
     end
     let(:step_name) { :residential_property }
-    let(:property) { instance_double(Property) }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
 
-    context 'when property address same as home address' do
-      let(:is_home_address) { YesNoAnswer::YES }
+    context 'is_home_address and has_other_owners' do
+      context 'when property address is same as home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `saving_type` page' do
+          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is same as home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `saving_type` page' do
+          expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `property_address`' do
+    # let(:form_object) { double('FormObject', record: record, has_other_owners: YesNoAnswer::NO) }
+    # let(:step_name) { :property_address }
+
+    let(:form_object) do
+      double('FormObject', record:, has_other_owners:)
+    end
+    let(:step_name) { :property_address }
+    let(:record) { instance_double(Property, is_home_address: 'no', property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
+
+    context 'when property has no other owners' do
+      let(:has_other_owners) { YesNoAnswer::NO }
 
       it 'redirects the edit `saving_type` page' do
         expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
       end
     end
 
-    context 'when property address different from home address' do
-      let(:is_home_address) { YesNoAnswer::NO }
+    context 'when property has other owners' do
+      let(:has_other_owners) { YesNoAnswer::YES }
 
-      it 'redirects the edit `property_address` page' do
-        expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+      it 'redirects the edit `property_owners` page' do
+        expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
       end
-    end
-  end
-
-  context 'when the step is `property_address`' do
-    let(:form_object) { double('FormObject', record: record, has_other_owners: YesNoAnswer::NO) }
-    let(:step_name) { :property_address }
-
-    context 'has correct next step' do
-      let(:record) { instance_double(Property) }
-
-      it { is_expected.to have_destination(:saving_type, :edit, id: crime_application) }
     end
   end
 

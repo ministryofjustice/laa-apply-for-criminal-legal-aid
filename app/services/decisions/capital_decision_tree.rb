@@ -17,8 +17,8 @@ module Decisions
         after_properties
       when :property_address
         # TODO: Route to property owner page once built
-        after_property_address(form_object.record)
-      when :property_owners, :properties
+        after_property_address
+      when :property_owners
         # TODO: Route to assets list page once built
         after_property_owner
       when :add_property_owner
@@ -54,23 +54,21 @@ module Decisions
       edit(:"#{property.property_type}_property", property_id: property)
     end
 
-    # rubocop:disable Metrics/AbcSize
-    # TODO :: Fix nested conditions
+    # TODO: : Fix nested conditions
     def after_properties
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       if form_object.has_other_owners.yes?
-        property.property_owners.create! if incomplete_property_owners.blank?
+        property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
       # TODO: Route to appropriate property page loop once built
       edit(:saving_type) # Placeholder to join up flow
     end
-    # rubocop:enable Metrics/AbcSize
 
-    def after_property_address(property)
-      if form_object.has_other_owners == 'yes'
-        property.property_owners.create! if incomplete_property_owners.blank?
+    def after_property_address
+      if form_object.has_other_owners.to_s == YesNoAnswer::YES.to_s
+        property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
 
@@ -104,7 +102,7 @@ module Decisions
     end
 
     def blank_owner_required?
-      property.property_owners.map(&:name).exclude?(nil)
+      property_owners.map(&:name).exclude?(nil)
     end
   end
 end

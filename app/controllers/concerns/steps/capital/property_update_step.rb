@@ -11,7 +11,7 @@ module Steps
 
       def update
         update_and_advance(
-          form_name, record: property_record, as: advance_as
+          form_name, record: property_record, as: advance_as, flash: flash_msg
         )
       end
 
@@ -29,6 +29,10 @@ module Steps
       end
 
       def form_name
+        raise NotImplementedError
+      end
+
+      def flash_msg
         raise NotImplementedError
       end
       # :nocov:
