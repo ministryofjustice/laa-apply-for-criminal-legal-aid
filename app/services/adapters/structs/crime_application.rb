@@ -31,6 +31,12 @@ module Adapters
         Structs::OutgoingsDetails.new(means_details.outgoings_details)
       end
 
+      def capital
+        @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
+      end
+
+      delegate :savings, to: :captial
+
       def documents
         supporting_evidence.map do |struct|
           Document.new(

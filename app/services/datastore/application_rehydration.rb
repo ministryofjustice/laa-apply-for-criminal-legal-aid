@@ -28,6 +28,8 @@ module Datastore
         additional_information: parent.additional_information,
         income_payments: income_payments,
         income_benefits: income_benefits,
+        capital: capital,
+        savings: capital ? parent.capital.savings : []
       )
     end
 
@@ -107,6 +109,12 @@ module Datastore
       return if parent.outgoings.blank?
 
       Outgoings.new(parent.outgoings.serializable_hash)
+    end
+
+    def capital
+      return if parent.capital.blank?
+
+      Capital.new(parent.capital.serializable_hash)
     end
 
     def outgoings_payments
