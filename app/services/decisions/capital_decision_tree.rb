@@ -117,7 +117,6 @@ module Decisions
       end
       edit(:properties_summary)
     end
-    # rubocop:enable Metrics/AbcSize
 
     def after_property_address
       if form_object.has_other_owners.to_s == YesNoAnswer::YES.to_s
