@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::PropertiesController, type: :controller do
-  let(:form_class) { Steps::Capital::PropertiesForm }
+RSpec.describe Steps::Capital::ResidentialPropertyController, type: :controller do
+  let(:form_class) { Steps::Capital::ResidentialPropertyForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
   let(:crime_application) { CrimeApplication.create }

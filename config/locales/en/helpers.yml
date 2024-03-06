@@ -108,7 +108,7 @@ en:
         account_holder: Whose name is the account in?
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
@@ -193,7 +193,7 @@ en:
         types_options:
           childcare: For example, to a childminder, nanny or nursery.
           maintenance: This includes child maintenance.
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         bedrooms: Enter ‘0’ if the property is a studio.
         value: You can use property websites to find the estimated value.
 
@@ -481,7 +481,7 @@ en:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         house_type_options:
           bungalow: Bungalow
           detached: Detached

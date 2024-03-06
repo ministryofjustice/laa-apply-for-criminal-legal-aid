@@ -10,7 +10,7 @@ def crud_step(name, opts = {})
   edit_step name, only: [] do
     resources only: [:edit, :update, :destroy],
               except: opts.fetch(:except, []),
-              controller: name, param: opts.fetch(:param),
+              controller: opts.fetch(:alias, name), param: opts.fetch(:param),
               path_names: { edit: '' } do
       get :confirm_destroy, on: :member if parent_resource.actions.include?(:destroy)
     end
@@ -179,8 +179,8 @@ Rails.application.routes.draw do
         crud_step :savings, param: :saving_id
         edit_step :clients_savings, alias: :savings_summary
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
-        crud_step :properties, alias: :properties, param: :property_id, except: [:destroy]
-        crud_step :property_address, alias: :property_address, param: :property_id, except: [:destroy]
+        crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
+        crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
       end
 
       namespace :evidence do

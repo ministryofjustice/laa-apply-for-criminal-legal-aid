@@ -13,7 +13,7 @@ module Decisions
         after_savings_summary
       when :property_type
         after_property_type(form_object.property)
-      when :properties
+      when :residential_property
         after_properties
       when :property_address
         # TODO: Route to property owner page once built
@@ -44,7 +44,7 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit(:properties, property_id: property)
+      edit("#{property.property_type}_property".to_sym, property_id: property)
     end
 
     def after_properties

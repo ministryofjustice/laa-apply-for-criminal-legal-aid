@@ -1,22 +1,16 @@
 module Steps
   module Capital
     class PropertyAddressController < Steps::CapitalStepController
-      def edit
-        @form_object = PropertyAddressForm.build(
-          property_record, crime_application: current_crime_application
-        )
-      end
-
-      def update
-        update_and_advance(PropertyAddressForm, record: property_record, as: :property_address)
-      end
+      include Steps::Capital::PropertyUpdateStep
 
       private
 
-      def property_record
-        @property_record ||= current_crime_application.properties.find(params[:property_id])
-      rescue ActiveRecord::RecordNotFound
-        raise Errors::PropertyNotFound
+      def advance_as
+        :property_address
+      end
+
+      def form_name
+        PropertyAddressForm
       end
 
       def additional_permitted_params

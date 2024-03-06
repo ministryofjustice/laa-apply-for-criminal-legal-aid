@@ -494,7 +494,7 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
-        steps/capital/properties_form:
+        steps/capital/residential_property_form:
           attributes:
             house_type:
               blank: Enter the type of property
