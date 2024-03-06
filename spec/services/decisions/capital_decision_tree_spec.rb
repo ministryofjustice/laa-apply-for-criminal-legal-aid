@@ -60,7 +60,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected a property type' do
       let(:property) { instance_double(Property, property_type: 'residential') }
 
-      it 'redirects the edit `properties` page' do
+      it 'redirects the edit `residential_property` page' do
         expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::YES }
 
-        it 'redirects the edit `saving_type` page' do
+        it 'redirects the edit `property_owners` page' do
           expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
         end
       end
@@ -114,9 +114,6 @@ RSpec.describe Decisions::CapitalDecisionTree do
   end
 
   context 'when the step is `property_address`' do
-    # let(:form_object) { double('FormObject', record: record, has_other_owners: YesNoAnswer::NO) }
-    # let(:step_name) { :property_address }
-
     let(:form_object) do
       double('FormObject', record:, has_other_owners:)
     end
@@ -138,6 +135,39 @@ RSpec.describe Decisions::CapitalDecisionTree do
       it 'redirects the edit `property_owners` page' do
         expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
       end
+    end
+  end
+
+  context 'when the step is `property_owners`' do
+    let(:form_object) do
+      double('FormObject', record:)
+    end
+    let(:step_name) { :property_owners }
+    let(:record) { instance_double(Property) }
+
+    it 'redirects the edit `saving_type` page' do
+      expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `add_property_owner`' do
+    let(:form_object) { double('FormObject', record:) }
+    let(:step_name) { :add_property_owner }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, name: 'abc', complete?: false) }
+
+    it 'redirects the edit `property_owners` page' do
+      expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `delete_property_owner`' do
+    let(:form_object) { double('FormObject', record:) }
+    let(:step_name) { :delete_property_owner }
+    let(:record) { instance_double(Property) }
+
+    it 'redirects the edit `property_owners` page' do
+      expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
     end
   end
 
