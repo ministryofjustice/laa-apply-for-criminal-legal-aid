@@ -8,6 +8,68 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
     Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application)
   end
 
+  describe 'property owner actions' do
+    let(:form_class_params_name) { form_class.name.underscore }
+    let(:property_record) { Property.create(crime_application: crime_application, property_type: 'residential') }
+
+    context 'when adding a property owner' do
+      after do
+        put :update, params: {
+          id: crime_application.id,
+          property_id: property_record.id,
+          add_property_owner: ''
+        }
+      end
+
+      it 'has the expected step name' do
+        expect(
+          subject
+        ).to receive(:update_and_advance).with(
+          form_class,
+          record: property_record,
+          as: :add_property_owner,
+          flash: nil
+        )
+      end
+    end
+
+    context 'when deleting a date' do
+      let(:property_owners_attributes) do
+        {
+          property_owners_attributes: {
+            '0' => {
+              'name' => 'a',
+              'relationship' => 'friends',
+              'custom_relationship' => '',
+              'percentage_owned' => '50',
+              '_destroy' => '1',
+              'id' => '123'
+            }
+          }
+        }
+      end
+
+      after do
+        put :update, params: {
+          :id => crime_application.id,
+          :property_id => property_record.id,
+          form_class_params_name => property_owners_attributes
+        }
+      end
+
+      it 'has the expected step name' do
+        expect(
+          subject
+        ).to receive(:update_and_advance).with(
+          form_class,
+          record: property_record,
+          as: :delete_property_owner,
+          flash: { success: 'The owner has been deleted' }
+        )
+      end
+    end
+  end
+
   describe '#edit' do
     context 'when property is not found' do
       it 'redirects to the property not found error page' do

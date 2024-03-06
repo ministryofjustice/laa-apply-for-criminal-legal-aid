@@ -3,8 +3,6 @@ module Steps
     class PropertyForm < Steps::BaseFormObject
       delegate :property_type, to: :record
 
-      CUSTOM_HOUSE_TYPE = 'custom'.freeze
-
       attribute :house_type, :string
       attribute :custom_house_type, :string
       attribute :bedrooms, :integer
@@ -49,7 +47,7 @@ module Steps
       end
 
       def custom_house_type?
-        house_type == CUSTOM_HOUSE_TYPE
+        house_type == Property::CUSTOM_HOUSE_TYPE
       end
     end
   end

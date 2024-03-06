@@ -1,6 +1,8 @@
 class Property < ApplicationRecord
   belongs_to :crime_application
 
+  CUSTOM_HOUSE_TYPE = 'custom'.freeze
+
   default_scope { order(created_at: :asc) }
 
   attribute :value, :pence

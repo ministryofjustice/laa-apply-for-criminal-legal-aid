@@ -22,7 +22,7 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
     { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'custom_relationship' => nil, 'percentage_owned' => '20' }
   }
   let(:property_owners_attributes3) {
-    { 'name' => 'c', 'relationship' => Steps::Capital::PropertyOwnerFieldsetForm::CUSTOM_RELATIONSHIP, 'custom_relationship' => 'custom relationship name', 'percentage_owned' => '10' }
+    { 'name' => 'c', 'relationship' => PropertyOwner::CUSTOM_RELATIONSHIP, 'custom_relationship' => 'custom relationship name', 'percentage_owned' => '10' }
   }
 
   let(:property_owners_attributes) do
