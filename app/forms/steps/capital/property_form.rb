@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class PropertiesForm < Steps::BaseFormObject
+    class PropertyForm < Steps::BaseFormObject
       delegate :property_type, to: :record
 
       attribute :house_type, :string
