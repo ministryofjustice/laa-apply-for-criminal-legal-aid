@@ -248,3 +248,65 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     end
   end
 end
+
+RSpec.shared_examples 'a basic amount with frequency' do |payment_class|
+  describe 'amount with frequency' do
+    subject(:form) { payment_class.new(arguments) }
+
+    # Ensure thorough validity test in host spec
+    context 'when amount and frequency are valid' do
+      let(:arguments) do
+        { 'amount' => '12239', 'frequency' => 'month' }.merge(crime_application:)
+      end
+
+      it 'has amount and frquency' do
+        expect(subject.amount).to eq '12239'
+        expect(subject.frequency).to eq PaymentFrequencyType::MONTHLY
+      end
+    end
+
+    context 'when amount is less than 0' do
+      let(:arguments) do
+        { 'amount' => '-122', 'frequency' => 'month' }.merge(crime_application:)
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:amount, :greater_than)).to be(true)
+      end
+    end
+
+    context 'when amount is not a number' do
+      let(:arguments) do
+        { 'amount' => 'nine quid', 'frequency' => 'month' }.merge(crime_application:)
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:amount, :not_a_number)).to be(true)
+      end
+    end
+
+    context 'when amount is blank' do
+      let(:arguments) do
+        { 'amount' => '', 'frequency' => 'month' }.merge(crime_application:)
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:amount, :blank)).to be(true)
+      end
+    end
+
+    context 'when frequency is not valid' do
+      let(:arguments) do
+        { 'amount' => '1221', 'frequency' => 'every 2 months' }.merge(crime_application:)
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:frequency, :inclusion)).to be(true)
+      end
+    end
+  end
+end

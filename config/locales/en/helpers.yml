@@ -89,6 +89,8 @@ en:
         manage_without_income: How does your client manage with no income?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does your client pay where they usually live?
+      steps_outgoings_mortgage_form:
+        frequency: Select how often they pay mortgage payments
       steps_outgoings_board_and_lodging_form:
         frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
@@ -420,6 +422,9 @@ en:
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
           none: My client does not pay any of these payments
+      steps_outgoings_mortgage_form:
+        amount: How much are your client's mortgage payments?
+        frequency_options: *frequency_options
       steps_outgoings_board_and_lodging_form:
         board_amount: How much does your client pay for board and lodgings?
         food_amount: How much of the board and lodgings payment is for food?

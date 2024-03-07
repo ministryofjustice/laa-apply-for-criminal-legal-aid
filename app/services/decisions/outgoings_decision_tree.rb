@@ -3,9 +3,8 @@ module Decisions
     def destination # rubocop:disable Metrics/MethodLength
       case step_name
       when :housing_payment_type
-        # TODO: determine and link to next step when we have it
         after_housing_payment_type
-      when :board_and_lodging
+      when :board_and_lodging, :mortgage
         edit(:council_tax)
       when :council_tax
         edit(:outgoings_payments)
@@ -23,9 +22,14 @@ module Decisions
     private
 
     def after_housing_payment_type
-      if form_object.housing_payment_type.value == :board_and_lodging
+      if form_object.housing_payment_type.nil?
+        # TODO: Consider appropriate action for empty housing_payment_type
+        edit(:council_tax)
+      elsif form_object.housing_payment_type.value == :board_and_lodging
         edit(:board_and_lodging)
-      else
+      elsif form_object.housing_payment_type.value == :mortgage
+        edit(:mortgage)
+      else # rubocop:disable Lint/DuplicateBranch
         edit(:council_tax)
       end
     end
