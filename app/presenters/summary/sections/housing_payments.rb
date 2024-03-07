@@ -28,7 +28,7 @@ module Summary
       # however doing so caused headache with specs
       def mortgage
         crime_application.outgoings_payments.find do |p|
-          p.payment_type == HousingPaymentType::MORTGAGE.to_s
+          p.payment_type.to_s == HousingPaymentType::MORTGAGE.to_s
         end
       end
     end
