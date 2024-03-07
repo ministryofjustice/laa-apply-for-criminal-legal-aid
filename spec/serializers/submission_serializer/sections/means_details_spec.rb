@@ -12,12 +12,16 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       dependants:,
       income_payments:,
       income_benefits:,
+      capital:,
+      savings:,
     )
   end
 
   let(:dependants) do
     double(Array, with_ages: [])
   end
+
+  let(:savings) { [] }
 
   describe '#generate' do
     let(:income) do
@@ -89,6 +93,16 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       ]
     end
 
+    let(:capital) do
+      instance_double(
+        Capital,
+        has_premium_bonds: 'yes',
+        premium_bonds_total_value_before_type_cast: 123,
+        premium_bonds_holder_number: '123A',
+        savings: []
+      )
+    end
+
     let(:json_output) do
       {
         means_details: {
@@ -136,6 +150,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
             how_manage: 'A description of how they manage'
+          },
+          capital_details: {
+            has_premium_bonds: 'yes',
+            premium_bonds_total_value: 123,
+            premium_bonds_holder_number: '123A',
+            savings: []
           }
         }
       }.as_json
@@ -209,6 +229,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
     end
 
     let(:outgoings_payments) do
+      nil
+    end
+
+    let(:capital) do
       nil
     end
 

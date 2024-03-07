@@ -287,6 +287,9 @@ en:
           page_title: Mortgage payments
           mortgage_legend: Mortgage payments
           amount_hint: Only include mortgage payments where they usually live.
+      board_and_lodging:
+        edit:
+          page_title: Board and lodgings payments
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
@@ -346,7 +349,7 @@ en:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
 
-      properties:
+      residential_property:
         edit:
           page_title: Your client’s residential property
           heading:
