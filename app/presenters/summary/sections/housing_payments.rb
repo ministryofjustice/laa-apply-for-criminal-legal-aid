@@ -27,7 +27,7 @@ module Summary
       # TODO: Attempted to get an appropriate Struct to return this value
       # however doing so caused headache with specs
       def mortgage
-        crime_application.outgoings_payments.first do |p|
+        crime_application.outgoings_payments.find do |p|
           p.payment_type == HousingPaymentType::MORTGAGE.to_s
         end
       end
