@@ -29,6 +29,7 @@ module SubmissionSerializer
                 json.income_tax_rate_above_threshold outgoings&.income_tax_rate_above_threshold
                 json.outgoings_more_than_income outgoings&.outgoings_more_than_income
                 json.how_manage outgoings&.how_manage
+                json.pays_council_tax outgoings&.pays_council_tax
               end
             end
           end
