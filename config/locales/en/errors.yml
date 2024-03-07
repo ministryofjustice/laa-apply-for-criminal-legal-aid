@@ -443,7 +443,7 @@ en:
           attributes:
             pays_council_tax:
               inclusion: Select yes if your client pays Council Tax where they usually live
-            council_tax_amount:
+            amount:
               blank: Enter how much your client pays yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50

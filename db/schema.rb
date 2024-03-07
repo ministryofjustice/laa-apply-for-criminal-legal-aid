@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_29_125141) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_07_011302) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -213,7 +213,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_125141) do
     t.string "income_tax_rate_above_threshold"
     t.string "housing_payment_type"
     t.string "pays_council_tax"
-    t.integer "council_tax_amount"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 

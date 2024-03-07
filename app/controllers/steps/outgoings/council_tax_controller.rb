@@ -2,9 +2,7 @@ module Steps
   module Outgoings
     class CouncilTaxController < Steps::OutgoingsStepController
       def edit
-        @form_object = CouncilTaxForm.build(
-          current_crime_application
-        )
+        @form_object = CouncilTaxForm.build(current_crime_application)
       end
 
       def update
