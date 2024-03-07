@@ -4,6 +4,8 @@ module Decisions
       case step_name
       when :housing_payment_type
         # TODO: determine and link to next step when we have it
+        after_housing_payment_type
+      when :board_and_lodging
         edit(:council_tax)
       when :council_tax
         edit(:outgoings_payments)
@@ -15,6 +17,16 @@ module Decisions
         edit('/steps/capital/property_type')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
+      end
+    end
+
+    private
+
+    def after_housing_payment_type
+      if form_object.housing_payment_type.value == :board_and_lodging
+        edit(:board_and_lodging)
+      else
+        edit(:council_tax)
       end
     end
   end

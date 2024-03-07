@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_29_125141) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -222,9 +222,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_29_125141) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "payment_type", null: false
-    t.integer "amount", null: false
-    t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
+    t.integer "amount"
+    t.string "frequency"
+    t.jsonb "metadata", default: {}
     t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end

@@ -421,6 +421,20 @@ en:
           attributes:
             housing_payment_type:
               inclusion: Select which payment your client pays where they usually live
+        steps/outgoings/board_and_lodging_form:
+          attributes:
+            board_amount:
+              blank: Enter how much your client pays for board and lodgings
+              invalid: Payments for board and lodgings must be a number, like 50
+            food_amount:
+              blank: Enter how much of the board and lodgings payment is for food
+              invalid: Payments for food must be a number, like 50
+            frequency:
+              inclusion: Select how often they pay for board and lodgings, and food
+            payee_name:
+              blank: Enter the name of the person your client pays for board and lodgings
+            payee_relationship_to_client:
+              blank: Enter your client's relationship to this person
         steps/outgoings/council_tax_form:
           attributes:
             pays_council_tax:
