@@ -1,0 +1,12 @@
+<%
+  content_for(:row_question, flush: true) do
+    t("summary.questions.#{percentage_answer.question}.question")
+  end
+
+  content_for(:row_answer, flush: true) do
+    number_to_currency(percentage_answer.value, unit: '£', separator: '.', delimiter: ',') if percentage_answer.value
+  end
+%>
+
+<%= render partial: 'steps/submission/shared/summary_row',
+           locals: { row: percentage_answer, editable: editable } %>

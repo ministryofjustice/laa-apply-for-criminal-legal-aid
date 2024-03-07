@@ -50,6 +50,11 @@ en:
         other: Other lump sum investment
       national_savings_certificates: National Savings Certificates
       national_savings_certificate: National Savings Certificate
+      properties: Assets
+      property:
+        residential: Residential property
+        commercial: Commercial property
+        land: Land
 
     questions:
       # BEGIN overview section
@@ -369,7 +374,7 @@ en:
         question: Enter the holder number
         absence_answer: ''
       # END premium_bonds
-      #
+
       # START investments
       description: 
         question: Describe the investment
@@ -397,4 +402,33 @@ en:
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none
-      # END investments
+      # END national_savings_certificates
+
+      # BEGIN property
+      house_type:
+        question: Which type of property is it?
+        absence_answer: *absence_none
+      bedrooms:
+        question: How many bedrooms are there?
+        absence_answer: *absence_none
+      value:
+        question: How much is the property worth?
+        absence_answer: *absence_none
+      outstanding_mortgage:
+        question: How much is left to pay on the mortgage?
+        absence_answer: *absence_none
+      percentage_applicant_owned:
+        question: What percentage of the property does your client own?
+        absence_answer: *absence_none
+      percentage_partner_owned:
+        question: What percentage of the property does your client’s partner own?
+        absence_answer: *absence_none
+      is_home_address:
+        question: Is the address of the property the same as your client’s home address?
+        answers: *YESNO
+        absence_answer: *absence_none
+      has_other_owners:
+        question: Does anyone else own part of the property?
+        answers: *YESNO
+        absence_answer: *absence_none
+      # END property

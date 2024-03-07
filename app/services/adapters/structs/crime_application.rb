@@ -43,7 +43,7 @@ module Adapters
         @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
       end
 
-      delegate :savings, :investments, :national_savings_certificates, to: :capital
+      delegate :savings, :investments, :national_savings_certificates, :properties, to: :capital
 
       def documents
         supporting_evidence.map do |struct|

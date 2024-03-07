@@ -530,6 +530,10 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
+        steps/capital/other_property_type_form:
+          attributes:
+            property_type:
+              blank: Select which other assets your client has inside or outside the UK, or select 'My client does not have any of these assets'
         steps/capital/residential_property_form:
           attributes:
             house_type:

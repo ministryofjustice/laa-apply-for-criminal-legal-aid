@@ -11,6 +11,8 @@ module Decisions
         edit(:savings_summary)
       when :savings_summary
         after_savings_summary
+      when :properties_summary
+        after_properties_summary
       when :property_type
         after_property_type(form_object.property)
       when :residential_property
@@ -85,6 +87,12 @@ module Decisions
       edit(:other_investment_type)
     end
 
+    def after_properties_summary
+      return edit(:saving_type) if form_object.add_property.no?
+
+      edit(:other_property_type)
+    end
+
     def after_property_type(property)
       return edit(:saving_type) unless property
 
@@ -100,7 +108,7 @@ module Decisions
         return edit(:property_owners, property_id: property)
       end
       # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary) # Placeholder to join up flow
     end
 
     def after_property_address
@@ -110,7 +118,7 @@ module Decisions
       end
 
       # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary) # Placeholder to join up flow
     end
 
     def incomplete_property_owners
@@ -118,7 +126,7 @@ module Decisions
     end
 
     def after_property_owner
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary) # Placeholder to join up flow
     end
 
     def after_add_property_owner
