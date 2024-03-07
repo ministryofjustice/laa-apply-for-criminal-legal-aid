@@ -58,17 +58,17 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
 
     context 'the client has selected a property type' do
-      let(:property) { instance_double(Property) }
+      let(:property) { instance_double(Property, property_type: 'residential') }
 
       it 'redirects the edit `properties` page' do
-        expect(subject).to have_destination(:properties, :edit, id: crime_application, property_id: property)
+        expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
       end
     end
   end
 
   context 'when the step is `properties`' do
     let(:form_object) { double('FormObject', property:, is_home_address:) }
-    let(:step_name) { :properties }
+    let(:step_name) { :residential_property }
     let(:property) { instance_double(Property) }
 
     context 'when property address same as home address' do

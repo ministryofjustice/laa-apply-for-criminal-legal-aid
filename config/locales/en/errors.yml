@@ -299,7 +299,7 @@ en:
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
               year_too_late: Date of next hearing is too far in the future
-              past_not_allowed: Date of next hearing must be today or in the future
+              year_too_early: Date is too far in the past
             is_first_court_hearing:
               inclusion: Select yes if this court also heard the first hearing
         steps/case/first_court_hearing_form:
@@ -430,6 +430,20 @@ en:
             frequency:
               blank: Select how often they pay mortgage payments
               inclusion: Select how often they pay mortgage payments
+        steps/outgoings/board_and_lodging_form:
+          attributes:
+            board_amount:
+              blank: Enter how much your client pays for board and lodgings
+              invalid: Payments for board and lodgings must be a number, like 50
+            food_amount:
+              blank: Enter how much of the board and lodgings payment is for food
+              invalid: Payments for food must be a number, like 50
+            frequency:
+              inclusion: Select how often they pay for board and lodgings, and food
+            payee_name:
+              blank: Enter the name of the person your client pays for board and lodgings
+            payee_relationship_to_client:
+              blank: Enter your client's relationship to this person
         steps/outgoings/council_tax_form:
           attributes:
             pays_council_tax:
@@ -503,7 +517,7 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
-        steps/capital/properties_form:
+        steps/capital/residential_property_form:
           attributes:
             house_type:
               blank: Enter the type of property

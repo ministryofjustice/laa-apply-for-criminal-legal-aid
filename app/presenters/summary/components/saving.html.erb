@@ -1,0 +1,8 @@
+<%= govuk_summary_card(title:) do |card|
+      if show_actions
+        card.with_action { change_link }
+        card.with_action { remove_link }
+      end
+
+      render answers, editable: show_actions
+    end %>
