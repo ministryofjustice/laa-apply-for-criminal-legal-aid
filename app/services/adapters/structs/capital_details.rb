@@ -13,8 +13,14 @@ module Adapters
         super.map { |attrs| Investment.new(**attrs) }
       end
 
+      def properties
+        return [] unless __getobj__
+
+        super.map { |attrs| Property.new(**attrs) }
+      end
+
       def serializable_hash(options = {})
-        super options.merge(except: [:savings, :investments])
+        super options.merge(except: [:savings, :investments, :properties])
       end
     end
   end

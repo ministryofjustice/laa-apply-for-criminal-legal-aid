@@ -189,6 +189,9 @@ Rails.application.routes.draw do
         edit_step :which_other_investments_does_client_have, alias: :other_investment_type
         crud_step :investments, param: :investment_id
         edit_step :clients_investments, alias: :investments_summary
+        edit_step :clients_assets, alias: :properties_summary
+        crud_step :properties, param: :property_id
+        edit_step :which_other_assets_does_client_have, alias: :other_property_type
       end
 
       namespace :evidence do

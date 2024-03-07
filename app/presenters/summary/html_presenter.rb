@@ -24,6 +24,7 @@ module Summary
         savings
         premium_bonds
         investments
+        properties
         supporting_evidence
         more_information
         legal_representative_details

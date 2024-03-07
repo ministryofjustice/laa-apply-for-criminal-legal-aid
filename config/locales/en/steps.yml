@@ -321,6 +321,9 @@ en:
       property_type:
         edit:
           page_title: Which assets does your client own or part-own inside or outside the UK?
+      other_property_type:
+        edit:
+          page_title: Which other assets does your client own or part-own inside or outside the UK?
       savings:
         edit:
           page_title: Add savings account details
@@ -393,7 +396,16 @@ en:
         edit:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
-
+      properties:
+        confirm_destroy:
+          page_title: Delete asset confirmation
+          heading: Are you sure you want to remove this asset?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this asset
+          cancel_delete_button_a11y: No, do not remove this asset
+        destroy:
+          success_flash: The asset has been deleted
       residential_property:
         edit:
           page_title: Your client’s residential property
@@ -421,6 +433,14 @@ en:
           add_button: Add another owner
           remove_button: Remove owner %{index}
           deleted_flash: The owner has been deleted
+
+      properties_summary:
+        edit:
+          page_title: Assets summary list
+          heading:
+            zero: You have not added assets yet
+            one: You have added %{count} asset
+            other: You have added %{count} assets
 
     evidence:
       upload:
