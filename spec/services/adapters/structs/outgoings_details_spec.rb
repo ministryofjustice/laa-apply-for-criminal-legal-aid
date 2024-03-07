@@ -14,7 +14,8 @@ RSpec.describe Adapters::Structs::OutgoingsDetails do
           'housing_payment_type' => 'rent',
           'income_tax_rate_above_threshold' => 'no',
           'outgoings_more_than_income' => 'yes',
-          'how_manage' => 'A description of how they manage'
+          'how_manage' => 'A description of how they manage',
+          'pays_council_tax' => 'yes',
         )
       )
     end
@@ -28,6 +29,7 @@ RSpec.describe Adapters::Structs::OutgoingsDetails do
           income_tax_rate_above_threshold
           outgoings_more_than_income
           how_manage
+          pays_council_tax
         ]
       )
     end

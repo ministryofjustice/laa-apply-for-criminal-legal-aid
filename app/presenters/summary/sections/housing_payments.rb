@@ -30,10 +30,6 @@ module Summary
         @outgoings ||= crime_application.outgoings
       end
 
-      def show_council_tax?
-        false
-      end
-
       def council_tax_info
         return [] if board_lodgings
 

@@ -32,9 +32,9 @@ module Steps
 
           if pays_council_tax?
             crime_application.outgoings_payments.create!(
-              payment_type: OutgoingsPaymentType::COUNCIL_TAX.value,
+              payment_type: OutgoingsPaymentType::COUNCIL_TAX,
               amount: amount,
-              frequency: PaymentFrequencyType::ANNUALLY.value,
+              frequency: PaymentFrequencyType::ANNUALLY,
             )
           end
         end
@@ -45,7 +45,7 @@ module Steps
       end
 
       def reset!
-        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.value).destroy_all
+        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX).destroy_all
       end
     end
   end
