@@ -10,6 +10,9 @@ module Steps
 
       validates :name, :relationship, :percentage_owned, presence: true
       validates :custom_relationship, presence: true, if: :custom_relationship?
+      validates :relationship, inclusion: {
+        in: RelationshipType.values.map(&:to_s).push(PropertyOwner::CUSTOM_RELATIONSHIP)
+      }
 
       # Needed for `#fields_for` to render the uuids as hidden fields
       def persisted?

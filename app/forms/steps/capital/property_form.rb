@@ -24,6 +24,9 @@ module Steps
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
       validates :percentage_partner_owned, presence: true, if: :include_partner?
       validates :custom_house_type, presence: true, if: :custom_house_type?
+      validates :house_type, inclusion: {
+        in: ->(property) { property.house_types.map(&:to_s).push(Property::CUSTOM_HOUSE_TYPE) }
+      }
 
       def house_types
         HouseType.values

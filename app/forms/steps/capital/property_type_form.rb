@@ -6,6 +6,8 @@ module Steps
 
       validates :property_type, presence: true
 
+      validates :property_type, inclusion: { in: ->(property) { property.choices.map(&:to_s) } }
+
       def choices
         PropertyType.values
       end
