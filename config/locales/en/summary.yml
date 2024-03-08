@@ -9,6 +9,10 @@ en:
         applicant: 'Client'
         applicant_and_partner: 'Client and partner'
         partner: 'Partner'
+      HOUSE_TYPE: &HOUSE_TYPE
+        flat_or_maisonette: 'Client'
+        applicant_and_partner: 'Client and partner'
+        partner: 'Partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
