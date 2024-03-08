@@ -48,11 +48,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     end
 
     context 'when the rent form is completed' do
-      before do
-        allow(
-          form_object
-        ).to receive(:housing_payment_type).and_return(HousingPaymentType::RENT)
-      end
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :rent }
 
       context 'has correct next step' do
         it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
