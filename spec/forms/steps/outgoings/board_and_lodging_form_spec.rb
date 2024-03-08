@@ -40,7 +40,7 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
                            payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.to_s,
                            frequency: 'four_weeks',
                            amount: 600,
-                           details: { 'board_amount' => '700', 'food_amount' => '100', 'payee_name' => 'Joan',
+                           metadata: { 'board_amount' => 700, 'food_amount' => 100, 'payee_name' => 'Joan',
                                       'payee_relationship_to_client' => 'Landlady' })
     }
 
@@ -50,9 +50,9 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
       ).and_return(existing_outgoings_payment)
     end
 
-    it 'sets the form attributes from the model details' do
-      expect(form.board_amount).to eq('700')
-      expect(form.food_amount).to eq('100')
+    it 'sets the form attributes from the model metadata' do
+      expect(form.board_amount).to eq(700)
+      expect(form.food_amount).to eq(100)
       expect(form.frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
       expect(form.payee_name).to eq('Joan')
       expect(form.payee_relationship_to_client).to eq('Landlady')
@@ -145,12 +145,12 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
       it 'updates the outgoings payment with the correct attributes' do
         expect(outgoings_payment.amount).to eq('520.00')
         expect(outgoings_payment.frequency).to eq('month')
-        expect(outgoings_payment.details).to eq({
-                                                  'board_amount' => '600',
-                                                  'food_amount' => '80',
-                                                  'payee_name' => 'John Doe',
-                                                  'payee_relationship_to_client' => 'Landlord'
-                                                })
+        expect(outgoings_payment.metadata).to eq({
+                                                   'board_amount' => 600,
+                                                   'food_amount' => 80,
+                                                   'payee_name' => 'John Doe',
+                                                   'payee_relationship_to_client' => 'Landlord'
+                                                 })
       end
 
       context 'when amounts were previously recorded' do
