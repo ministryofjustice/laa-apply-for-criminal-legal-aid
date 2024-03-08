@@ -21,7 +21,7 @@ module Decisions
 
     private
 
-    def after_housing_payment_type # rubocop:disable Metrics/AbcSize
+    def after_housing_payment_type
       if form_object.housing_payment_type.nil?
         # TODO: Consider appropriate action for empty housing_payment_type
         edit(:council_tax)
