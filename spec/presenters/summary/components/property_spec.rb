@@ -47,6 +47,11 @@ RSpec.describe Summary::Components::Property, type: :component do
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'yes' }
 
+      is_home_address: 'yes',
+      has_other_owners: 'yes',
+    }
+  end
+
   before { component }
 
   describe 'actions' do
@@ -72,7 +77,7 @@ RSpec.describe Summary::Components::Property, type: :component do
   end
 
   describe 'answers' do
-    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
+    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       expect(page).to have_summary_row(
         'Which type of property is it?',
         'other_house_type'
@@ -94,9 +99,14 @@ RSpec.describe Summary::Components::Property, type: :component do
         '70.54%',
       )
       expect(page).to have_summary_row(
+        'What percentage of the property does your client’s partner own?',
+        '50%',
+      )
+      expect(page).to have_summary_row(
         'Is the address of the property the same as your client’s home address?',
         'Yes',
       )
+
       expect(page).to have_summary_row(
         'Does anyone else own part of the property?',
         'Yes',
@@ -261,7 +271,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         }
       end
 
-      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
+      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
         expect(page).to have_summary_row(
           'Which type of property is it?',
           'None'
