@@ -13,10 +13,6 @@ module Steps
         PropertyAddressForm
       end
 
-      def flash_msg
-        nil
-      end
-
       def additional_permitted_params
         [address: [:address_line_one, :address_line_two, :city, :country, :postcode]]
       end

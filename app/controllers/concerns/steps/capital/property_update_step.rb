@@ -33,7 +33,7 @@ module Steps
       end
 
       def flash_msg
-        raise NotImplementedError
+        nil
       end
       # :nocov:
     end
