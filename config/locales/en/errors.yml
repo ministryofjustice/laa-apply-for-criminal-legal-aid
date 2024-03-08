@@ -547,6 +547,17 @@ en:
               blank:  Enter country
             postcode:
               blank: Enter postcode
+        steps/capital/property_owner_fieldset_form:
+          summary: &shared_property_owner_errors
+            name:
+              blank: Enter the name of the [first] other owner
+            relationship:
+              blank: Enter their relationship to your client
+            custom_relationship:
+              blank: Enter their relationship
+            percentage_owned:
+              blank: Enter the percentage of the land they own
+          attributes: *shared_property_owner_errors
         steps/submission/more_information_form:
           attributes:
             additional_information:

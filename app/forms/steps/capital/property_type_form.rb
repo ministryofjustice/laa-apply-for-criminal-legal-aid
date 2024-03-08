@@ -2,10 +2,11 @@ module Steps
   module Capital
     class PropertyTypeForm < Steps::BaseFormObject
       attr_accessor :property_type
+      attr_reader :property
 
       validates :property_type, presence: true
 
-      attr_reader :property
+      validates :property_type, inclusion: { in: ->(property) { property.choices.map(&:to_s) } }
 
       def choices
         PropertyType.values
