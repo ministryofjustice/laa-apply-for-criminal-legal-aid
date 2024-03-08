@@ -38,6 +38,7 @@ en:
         cash_isa: Cash ISA
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
+      premium_bonds: Premium Bonds
 
     questions:
       # BEGIN overview section
@@ -329,4 +330,15 @@ en:
       sort_code: 
         question: What is the sort code or branch name?
         absence_answer: *absence_none
-    # END saving
+      # END saving
+      #
+      # START premium_bonds
+      has_premium_bonds: 
+        question: Does your client have any Premium Bonds?
+        answers: *YESNO 
+      premium_bonds_total_value: 
+        question: Enter the total value of their bonds
+      premium_bonds_holder_number: 
+        question: Enter the holder number
+        absence_answer: ''
+      # END premium_bonds

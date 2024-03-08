@@ -10,7 +10,8 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(CrimeApplication, applicant: double, case: double, ioj: double,
                     status: :in_progress, income: double, outgoings: double,
-                    documents: double, application_type: application_type, savings: [double])
+                    documents: double, application_type: application_type, savings: [double],
+                    capital: double)
   end
 
   let(:datastore_application) do
@@ -69,6 +70,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            PremiumBonds
             SupportingEvidence
             MoreInformation
           ]
@@ -98,6 +100,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            PremiumBonds
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails
