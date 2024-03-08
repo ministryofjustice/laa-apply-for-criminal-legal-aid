@@ -32,7 +32,7 @@ en:
       supporting_evidence: Supporting evidence
       more_information: More information
       savings: Savings
-      saving: 
+      saving:
         bank: Bank account
         building_society: Building society account
         cash_isa: Cash ISA
@@ -276,7 +276,7 @@ en:
       mortgage:
         question: How much are your client's mortgage payments?
         answers:
-          description: "£%{amount} every %{frequency}"
+          description: "%{amount} every %{frequency}"
       # END housing payments section
 
       # BEGIN other outgoings details section
@@ -310,39 +310,39 @@ en:
       # END supporting evidence section
 
       # BEGIN saving
-      account_balance: 
+      account_balance:
         question: What is the account balance?
         absence_answer: *absence_none
-      account_holder: 
+      account_holder:
         question: Whose name is the account in?
-        answers: *OWNERSHIP_TYPE 
+        answers: *OWNERSHIP_TYPE
         absence_answer: *absence_none
-      account_number: 
+      account_number:
         question: What is the account number?
         absence_answer: *absence_none
-      are_wages_paid_into_account: 
+      are_wages_paid_into_account:
         question: Are your client’s wages or benefits paid into this account?
         answers: *YESNO
         absence_answer: *absence_none
-      is_overdrawn: 
+      is_overdrawn:
         question: Is the account overdrawn?
         answers: *YESNO
         absence_answer: *absence_none
-      provider_name: 
+      provider_name:
         question: What is the name of the bank, building society or other holder of the savings?
         absence_answer: *absence_none
-      sort_code: 
+      sort_code:
         question: What is the sort code or branch name?
         absence_answer: *absence_none
       # END saving
       #
       # START premium_bonds
-      has_premium_bonds: 
+      has_premium_bonds:
         question: Does your client have any Premium Bonds?
-        answers: *YESNO 
-      premium_bonds_total_value: 
+        answers: *YESNO
+      premium_bonds_total_value:
         question: Enter the total value of their bonds
-      premium_bonds_holder_number: 
+      premium_bonds_holder_number:
         question: Enter the holder number
         absence_answer: ''
       # END premium_bonds
