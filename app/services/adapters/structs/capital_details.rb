@@ -8,7 +8,7 @@ module Adapters
       end
 
       def serializable_hash(options = {})
-        super options.merge(except: [:savings])
+        super options.merge(except: [:savings, :investments])
       end
     end
   end

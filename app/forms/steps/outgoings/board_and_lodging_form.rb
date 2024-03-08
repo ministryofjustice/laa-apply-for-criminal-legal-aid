@@ -23,8 +23,9 @@ module Steps
 
         if outgoings_payment
           form.frequency = outgoings_payment.frequency
-          outgoings_payment.details&.each do |attr_name, value|
-            form.send("#{attr_name}=", value)
+
+          outgoings_payment.metadata&.each do |attr_name, value|
+            form.send(:"#{attr_name}=", value)
           end
         end
 
@@ -41,10 +42,14 @@ module Steps
         outgoings_payment = crime_application.outgoings_payments.find_by(
           payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.to_s
         )
+
         outgoings_payment.update!(
           amount: amount,
           frequency: frequency,
-          details: attributes.slice('board_amount', 'food_amount', 'payee_name', 'payee_relationship_to_client')
+          payee_name: payee_name,
+          payee_relationship_to_client: payee_relationship_to_client,
+          board_amount: board_amount.to_i, # Force explicit cast to conform to Schema
+          food_amount: food_amount.to_i,
         )
       end
     end

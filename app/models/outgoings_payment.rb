@@ -4,7 +4,13 @@ class OutgoingsPayment < ApplicationRecord
   attribute :amount, :pence
   attribute :payment_type, :value_object, source: HousingPaymentType
 
-  store_accessor :metadata, :details, :case_reference
+  store_accessor :metadata,
+                 :details,
+                 :case_reference,
+                 :board_amount,
+                 :food_amount,
+                 :payee_name,
+                 :payee_relationship_to_client
 
   # TODO: Not sure why scope does not work instead
   def self.mortgage
