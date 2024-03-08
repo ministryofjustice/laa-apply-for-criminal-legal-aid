@@ -8,6 +8,7 @@ describe Summary::Sections::HousingPayments do
       CrimeApplication,
       to_param: '12345',
       outgoings: outgoings,
+      outgoings_payments: outgoings_payments,
     )
   end
 
@@ -15,6 +16,29 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       Outgoings,
       housing_payment_type: 'rent'
+    )
+  end
+
+  let(:outgoings_payments) do
+    []
+  end
+
+  let(:mortgage_payment) do
+    instance_double(
+      OutgoingsPayment,
+      payment_type: 'mortgage',
+      amount: 333,
+      frequency: 'year'
+    )
+  end
+
+  # A legitimate outgoing but should not be shown in this section
+  let(:maintenance_payment) do
+    instance_double(
+      OutgoingsPayment,
+      payment_type: 'maintenance',
+      amount: 101,
+      frequency: 'week'
     )
   end
 
@@ -49,6 +73,25 @@ describe Summary::Sections::HousingPayments do
         expect(answers[0].change_path)
           .to match('applications/12345/steps/outgoings/housing_payments_where_client_lives')
         expect(answers[0].value).to eq('rent')
+      end
+    end
+
+    context 'with mortgage' do
+      let(:outgoings_payments) do
+        [
+          mortgage_payment,
+          maintenance_payment,
+        ]
+      end
+
+      it 'shows this section' do
+        expect(answers.count).to eq(2)
+        expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
+        expect(answers[1].question).to eq(:mortgage)
+        expect(answers[1].change_path)
+          .to match('applications/12345/steps/outgoings/mortgage_payments')
+        expect(answers[1].value.amount).to eq(333)
+        expect(answers[1].value.frequency).to eq('year')
       end
     end
   end
