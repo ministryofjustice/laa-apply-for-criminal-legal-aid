@@ -19,11 +19,11 @@ module Summary
           Components::MoneyAnswer.new(
             :outstanding_mortgage, property.outstanding_mortgage
           ),
-          Components::FreeTextAnswer.new(
-            :percentage_applicant_owned, property.percentage_applicant_owned.to_s
+          Components::PercentageAnswer.new(
+            :percentage_applicant_owned, property.percentage_applicant_owned
           ),
-          Components::FreeTextAnswer.new(
-            :percentage_partner_owned, property.percentage_partner_owned.to_s
+          Components::PercentageAnswer.new(
+            :percentage_partner_owned, property.percentage_partner_owned
           ),
           Components::ValueAnswer.new(
             :is_home_address, property.is_home_address
