@@ -27,8 +27,8 @@ RSpec.describe Summary::Components::Property, type: :component do
       id: 'PROPERTY123',
       crime_application_id: 'APP123',
       property_type: 'residential',
-      house_type: 'custom',
-      custom_house_type: 'custom_house_type',
+      house_type: 'bungalow',
+      custom_house_type: nil,
       size_in_acres: nil,
       usage: nil,
       bedrooms: 3,
@@ -44,6 +44,11 @@ RSpec.describe Summary::Components::Property, type: :component do
 
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'yes' }
+
+      is_home_address: 'yes',
+      has_other_owners: 'yes',
+    }
+  end
 
   before { component }
 
@@ -70,10 +75,10 @@ RSpec.describe Summary::Components::Property, type: :component do
   end
 
   describe 'answers' do
-    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
+    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'custom_house_type'
+        'bungalow'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
@@ -92,9 +97,14 @@ RSpec.describe Summary::Components::Property, type: :component do
         '70.54%',
       )
       expect(page).to have_summary_row(
+        'What percentage of the property does your client’s partner own?',
+        '50%',
+      )
+      expect(page).to have_summary_row(
         'Is the address of the property the same as your client’s home address?',
         'Yes',
       )
+
       expect(page).to have_summary_row(
         'Does anyone else own part of the property?',
         'Yes',
@@ -259,7 +269,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         }
       end
 
-      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
+      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
         expect(page).to have_summary_row(
           'Which type of property is it?',
           'None'
@@ -278,6 +288,10 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'What percentage of the property does your client own?',
+          'None',
+        )
+        expect(page).to have_summary_row(
+          'What percentage of the property does your client’s partner own?',
           'None',
         )
         expect(page).to have_summary_row(
