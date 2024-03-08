@@ -18,10 +18,8 @@ module Decisions
       when :residential_property
         after_properties
       when :property_address
-        # TODO: Route to property owner page once built
         after_property_address
       when :property_owners
-        # TODO: Route to assets list page once built
         after_property_owner
       when :add_property_owner
         after_add_property_owner
@@ -89,7 +87,6 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      # TODO: Route to appropriate property page loop once built
       edit(:properties_summary) # Placeholder to join up flow
     end
 
@@ -98,8 +95,6 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-
-      # TODO: Route to appropriate property page loop once built
       edit(:properties_summary) # Placeholder to join up flow
     end
 
