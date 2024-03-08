@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class PropertiesForm < Steps::BaseFormObject
+    class PropertyForm < Steps::BaseFormObject
       delegate :property_type, to: :record
 
       attribute :house_type, :string
@@ -23,7 +23,10 @@ module Steps
       validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: :person_has_home_address?
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
       validates :percentage_partner_owned, presence: true, if: :include_partner?
-      validates :custom_house_type, presence: true, unless: :house_type_is_listed?
+      validates :custom_house_type, presence: true, if: :custom_house_type?
+      validates :house_type, inclusion: {
+        in: ->(property) { property.house_types.map(&:to_s).push(Property::CUSTOM_HOUSE_TYPE) }
+      }
 
       def house_types
         HouseType.values
@@ -34,7 +37,7 @@ module Steps
       end
 
       def before_save
-        self.custom_house_type = nil if house_type_is_listed?
+        self.custom_house_type = nil unless custom_house_type?
       end
 
       def person_has_home_address?
@@ -46,8 +49,8 @@ module Steps
         YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
       end
 
-      def house_type_is_listed?
-        house_types.map(&:to_s).any? house_type
+      def custom_house_type?
+        house_type == Property::CUSTOM_HOUSE_TYPE
       end
     end
   end

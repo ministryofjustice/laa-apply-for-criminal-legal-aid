@@ -292,6 +292,9 @@ en:
           page_title: Rent payments
           rent_legend: Rent payments
           amount_hint: Only include rent payments where they usually live.
+      board_and_lodging:
+        edit:
+          page_title: Board and lodgings payments
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
@@ -351,7 +354,7 @@ en:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
 
-      properties:
+      residential_property:
         edit:
           page_title: Your client’s residential property
           heading:
@@ -366,6 +369,18 @@ en:
             residential: What is the address of your client’s residential property?
             commercial: What is the address of your client’s commercial property?
             land: What is the address of your client’s land?
+
+      property_owners:
+        edit:
+          page_title: Other people who own your client’s residential property
+          heading:
+            residential: Other people who own your client’s residential property
+            commercial: Other people who own your client’s commercial property
+            land: Other people who own your client’s land
+          property_owners_fieldset_legend: Other owner %{index}
+          add_button: Add another owner
+          remove_button: Remove owner %{index}
+          deleted_flash: The owner has been deleted
 
     evidence:
       upload:

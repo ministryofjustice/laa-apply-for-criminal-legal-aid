@@ -10,7 +10,7 @@ module Steps
 
       validates :hearing_court_name, presence: true
       validates :hearing_date, presence: true,
-                multiparam_date: { allow_past: false, allow_future: true }
+                multiparam_date: { allow_future: true }
 
       validates :is_first_court_hearing, inclusion: { in: :choices }
 

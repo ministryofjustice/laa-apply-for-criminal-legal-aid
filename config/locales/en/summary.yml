@@ -5,6 +5,10 @@ en:
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
+      OWNERSHIP_TYPE: &OWNERSHIP_TYPE
+        applicant: 'Client'
+        applicant_and_partner: 'Client and partner'
+        partner: 'Partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -27,6 +31,14 @@ en:
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: More information
+      savings: Savings
+      saving: 
+        bank: Bank account
+        building_society: Building society account
+        cash_isa: Cash ISA
+        national_savings_or_post_office: National Savings or Post Office account
+        other: Other cash investment
+      premium_bonds: Premium Bonds
 
     questions:
       # BEGIN overview section
@@ -259,7 +271,7 @@ en:
         answers:
           rent: Rent
           mortgage: Mortgage
-          board_lodgings: Board and lodgings
+          board_and_lodging: Board and lodgings
           none: None
       mortgage:
         question: How much are your client's mortgage payments?
@@ -300,3 +312,41 @@ en:
         question: Details that will help us process this application
         absence_answer: *absence_none
       # END supporting evidence section
+
+      # BEGIN saving
+      account_balance: 
+        question: What is the account balance?
+        absence_answer: *absence_none
+      account_holder: 
+        question: Whose name is the account in?
+        answers: *OWNERSHIP_TYPE 
+        absence_answer: *absence_none
+      account_number: 
+        question: What is the account number?
+        absence_answer: *absence_none
+      are_wages_paid_into_account: 
+        question: Are your client’s wages or benefits paid into this account?
+        answers: *YESNO
+        absence_answer: *absence_none
+      is_overdrawn: 
+        question: Is the account overdrawn?
+        answers: *YESNO
+        absence_answer: *absence_none
+      provider_name: 
+        question: What is the name of the bank, building society or other holder of the savings?
+        absence_answer: *absence_none
+      sort_code: 
+        question: What is the sort code or branch name?
+        absence_answer: *absence_none
+      # END saving
+      #
+      # START premium_bonds
+      has_premium_bonds: 
+        question: Does your client have any Premium Bonds?
+        answers: *YESNO 
+      premium_bonds_total_value: 
+        question: Enter the total value of their bonds
+      premium_bonds_holder_number: 
+        question: Enter the holder number
+        absence_answer: ''
+      # END premium_bonds

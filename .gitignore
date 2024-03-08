@@ -47,3 +47,4 @@ Brewfile.lock.json
 
 # Ignore IntelliJ IDE project-specific settings
 .idea/
+.vscode/

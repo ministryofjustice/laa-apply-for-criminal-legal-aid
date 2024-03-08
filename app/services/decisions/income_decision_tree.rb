@@ -29,8 +29,7 @@ module Decisions
       when :dependants_finished
         determine_showing_no_income_page
       when :manage_without_income
-        # TODO: link to next step when we have it
-        edit('/steps/outgoings/housing_payment_type')
+        determine_continuing_means_journey
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -71,7 +70,7 @@ module Decisions
     end
 
     def after_frozen_income_savings_assets
-      if no_frozen_assets?
+      if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
       else
         edit(:income_payments)
@@ -87,7 +86,7 @@ module Decisions
     end
 
     def after_income_benefits
-      if dependants_relevant?
+      if requires_full_means_assessment?
         edit(:client_has_dependants)
       else
         determine_showing_no_income_page
@@ -113,7 +112,7 @@ module Decisions
       if payments.empty?
         edit(:manage_without_income)
       else
-        edit('/steps/outgoings/housing_payment_type')
+        determine_continuing_means_journey
       end
     end
 
@@ -157,11 +156,19 @@ module Decisions
       form_object.crime_application
     end
 
-    def dependants_relevant?
+    def requires_full_means_assessment?
       if income_below_threshold? && no_frozen_assets?
         !(summary_only? || (no_property? && no_savings?))
       else
         true
+      end
+    end
+
+    def determine_continuing_means_journey
+      if requires_full_means_assessment?
+        edit('/steps/outgoings/housing_payment_type')
+      else
+        edit('/steps/case/urn')
       end
     end
   end

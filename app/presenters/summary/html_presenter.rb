@@ -21,6 +21,8 @@ module Summary
         other_income_details
         housing_payments
         other_outgoings_details
+        savings
+        premium_bonds
         supporting_evidence
         more_information
         legal_representative_details

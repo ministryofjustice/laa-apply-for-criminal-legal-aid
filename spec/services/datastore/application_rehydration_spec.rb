@@ -45,6 +45,8 @@ RSpec.describe Datastore::ApplicationRehydration do
         additional_information: parent['additional_information'],
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),
+        capital: nil,
+        savings: [] # capital and savings tested separately
       )
 
       expect(
@@ -312,6 +314,46 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'rent',
           amount: 56_432,
           frequency: 'month',
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains capital_details' do
+      let(:capital_details) do
+        {
+          'savings' => [{ 'saving_type' => 'bank',
+                          'provider_name' => 'Test Bank',
+                          'account_holder' => 'applicant',
+                          'sort_code' => '01-01-01',
+                          'account_number' => '01234500',
+                          'account_balance' => 10_001,
+                          'is_overdrawn' => 'yes',
+                          'are_wages_paid_into_account' => 'yes' },
+                        { 'saving_type' => 'building_society',
+                          'provider_name' => 'Test Building Society',
+                          'account_holder' => 'applicant',
+                          'sort_code' => '12-34-56',
+                          'account_number' => '01234500',
+                          'account_balance' => 200_050,
+                          'is_overdrawn' => 'no',
+                          'are_wages_paid_into_account' => 'no' }],
+          'has_premium_bonds' => 'yes',
+          'premium_bonds_total_value' => 1234,
+          'premium_bonds_holder_number' => '1234A'
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'capital_details' => capital_details })
+      end
+
+      it 'generates savings' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            savings: contain_exactly(Saving, Saving)
+          )
         )
 
         subject.call

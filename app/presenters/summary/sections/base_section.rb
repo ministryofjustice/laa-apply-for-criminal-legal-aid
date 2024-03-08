@@ -31,6 +31,11 @@ module Summary
         crime_application.in_progress? && @editable
       end
 
+      # May be overridden in subclasses if section is a list
+      def list?
+        false
+      end
+
       # If this section shows the header or not
       def headless?
         @headless

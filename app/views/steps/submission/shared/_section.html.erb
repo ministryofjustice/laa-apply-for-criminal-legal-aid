@@ -1,4 +1,4 @@
-<% if FeatureFlags.summary_cards.enabled? && !section.headless?%>
+<% if FeatureFlags.summary_cards.enabled? && !(section.headless? || section.list?)%>
   <div class="govuk-summary-card">
     <div class="govuk-summary-card__title-wrapper">
       <h2 class="govuk-summary-card__title">

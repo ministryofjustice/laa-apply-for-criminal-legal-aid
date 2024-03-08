@@ -8,12 +8,33 @@ describe Summary::HtmlPresenter do
   subject(:presenter) { described_class.new(crime_application:) }
 
   let(:database_application) do
-    instance_double(CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
-                    income: double, outgoings: double, documents: double, application_type: application_type)
+    instance_double(CrimeApplication, applicant: double, case: double, ioj: double,
+                    status: :in_progress, income: double, outgoings: double,
+                    documents: double, application_type: application_type, savings: [double],
+                    capital: double)
   end
 
   let(:datastore_application) do
-    JSON.parse(LaaCrimeSchemas.fixture(1.0).read).merge('application_type' => application_type)
+    extra = {
+      'means_details' => {
+        'capital_details' => {
+          'savings' => [{ 'saving_type' => 'bank',
+                          'provider_name' => 'Test Bank',
+                          'account_holder' => 'applicant',
+                          'sort_code' => '01-01-01',
+                          'account_number' => '01234500',
+                          'account_balance' => 10_001,
+                          'is_overdrawn' => 'yes',
+                          'are_wages_paid_into_account' => 'yes' }],
+          'has_premium_bonds' => 'yes',
+          'premium_bonds_total_value' => 1234,
+          'premium_bonds_holder_number' => '1234A'
+        }
+      },
+      'application_type' => application_type,
+    }
+
+    JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
   end
 
   describe '#sections' do
@@ -48,6 +69,8 @@ describe Summary::HtmlPresenter do
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
+            Savings
+            PremiumBonds
             SupportingEvidence
             MoreInformation
           ]
@@ -76,6 +99,8 @@ describe Summary::HtmlPresenter do
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
+            Savings
+            PremiumBonds
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails
