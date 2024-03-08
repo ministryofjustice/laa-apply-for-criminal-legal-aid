@@ -87,7 +87,6 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      # TODO: Route to appropriate property page loop once built
       edit(:properties_summary) # Placeholder to join up flow
     end
 
@@ -96,8 +95,6 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-
-      # TODO: Route to appropriate property page loop once built
       edit(:properties_summary) # Placeholder to join up flow
     end
 
