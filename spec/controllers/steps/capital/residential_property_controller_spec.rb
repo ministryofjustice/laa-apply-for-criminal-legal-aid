@@ -111,4 +111,52 @@ RSpec.describe Steps::Capital::ResidentialPropertyController, type: :controller 
       end
     end
   end
+
+  describe '#destroy' do
+    let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
+    let(:form_class_params_name) { form_class.name.underscore }
+
+    let(:expected_params) do
+      {
+        :id => crime_application,
+        :property_id => property,
+        form_class_params_name => { foo: 'bar' }
+      }
+    end
+
+    context 'when deleting an asset' do
+      let(:property) do
+        Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application)
+      end
+
+      describe 'confirm destroy' do
+        it 'renders the property page again' do
+          get :confirm_destroy, params: expected_params, session: { crime_application_id: crime_application.id }
+          expect(response).not_to have_http_status(:redirect)
+        end
+      end
+
+      context 'when deleting an asset' do
+        context 'when asset the last remaining asset' do
+          it 'renders the property page again' do
+            delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
+            expect(Property.count).to be 0
+            expect(response).to redirect_to(%r{/steps/capital/which_assets_does_client_own})
+          end
+        end
+
+        context 'when not the last remaining asset' do
+          before do
+            Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application)
+          end
+
+          it 'renders the property page again' do
+            delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
+            expect(Property.count).to be 1
+            expect(response).to redirect_to(%r{/steps/capital/clients_assets})
+          end
+        end
+      end
+    end
+  end
 end
