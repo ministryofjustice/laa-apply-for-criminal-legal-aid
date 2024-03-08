@@ -122,6 +122,9 @@ en:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          relationship: What is their relationship to your client?
 
     hint:
       steps_client_details_form:
@@ -525,3 +528,19 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          name: What is the name of the [first] other owner?
+          relationship_options:
+            business_associates: Business Associates
+            ex_partner: Ex-partner
+            family_members: Family members
+            friends: Friends
+            house_builder: House builder
+            housing_association: Housing association
+            local_authority: Local authority
+            partner_with_a_contrary_interest: Partner with a contrary interest
+            property_company: Property company
+            custom: Their relationship is not listed
+          custom_relationship: Enter their relationship
+          percentage_owned: What percentage of the land do they own?
