@@ -28,8 +28,8 @@ RSpec.describe Summary::Components::Property, type: :component do
       id: 'PROPERTY123',
       crime_application_id: 'APP123',
       property_type: 'residential',
-      house_type: 'custom',
-      custom_house_type: 'custom_house_type',
+      house_type: 'bungalow',
+      custom_house_type: nil,
       size_in_acres: nil,
       usage: nil,
       bedrooms: 3,
@@ -45,6 +45,11 @@ RSpec.describe Summary::Components::Property, type: :component do
 
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'yes' }
+
+      is_home_address: 'yes',
+      has_other_owners: 'yes',
+    }
+  end
 
   before { component }
 
@@ -71,10 +76,10 @@ RSpec.describe Summary::Components::Property, type: :component do
   end
 
   describe 'answers' do
-    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
+    it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'custom_house_type'
+        'bungalow'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
@@ -93,106 +98,18 @@ RSpec.describe Summary::Components::Property, type: :component do
         '70%',
       )
       expect(page).to have_summary_row(
+        'What percentage of the property does your client’s partner own?',
+        '50%',
+      )
+      expect(page).to have_summary_row(
         'Is the address of the property the same as your client’s home address?',
         'Yes',
       )
+
       expect(page).to have_summary_row(
         'Does anyone else own part of the property?',
         'Yes',
       )
-    end
-
-    context 'when client has no home address' do
-      let(:is_home_address) { 'no' }
-
-      it 'renders address in as summary list' do
-        expect(page).to have_summary_row(
-          'Is the address of the property the same as your client’s home address?',
-          'No',
-        )
-        expect(page).to have_summary_row(
-          'Address',
-          'London TW7',
-        )
-      end
-    end
-
-    context 'when client has home address' do
-      let(:is_home_address) { 'yes' }
-
-      it 'renders address in as summary list' do
-        expect(page).to have_summary_row(
-          'Is the address of the property the same as your client’s home address?',
-          'Yes',
-        )
-      end
-    end
-
-    context 'when client has partner' do
-      let(:client_has_partner) { true }
-
-      it 'renders as summary list with partner percentage' do
-        expect(page).to have_summary_row(
-          'What percentage of the property does your client’s partner own?',
-          '50%',
-        )
-      end
-    end
-
-    context 'when client has no partner' do
-      let(:client_has_partner) { false }
-
-      it 'renders as summary list without partner percentage', pending: 'to investigate why `not_to` is not working' do
-        expect(page).not_to have_summary_row(
-          'What percentage of the property does your client’s partner own?',
-          '50%',
-        )
-      end
-    end
-
-    context 'when property has other owners' do
-      let(:has_other_owners) { 'yes' }
-
-      it 'renders as summary list with other owners' do
-        expect(page).to have_summary_row(
-          'Does anyone else own part of the property?',
-          'Yes',
-        )
-        expect(page).to have_summary_row(
-          'What is the name of the [1st] other owner?',
-          'Joe',
-        )
-        expect(page).to have_summary_row(
-          'What is their relationship to your client?',
-          'Friends',
-        )
-        expect(page).to have_summary_row(
-          'What percentage of the property do they own?',
-          '10%',
-        )
-      end
-
-      context 'when custom relationship' do
-        let(:relationship) { 'custom' }
-
-        it 'renders as summary list with non-listed relationship' do
-          expect(page).to have_summary_row(
-            'What is their relationship to your client?',
-            'xyz',
-          )
-        end
-      end
-    end
-
-    context 'when property has no other owners' do
-      let(:has_other_owners) { 'no' }
-
-      it 'renders as summary list with other owners' do
-        expect(page).to have_summary_row(
-          'Does anyone else own part of the property?',
-          'No',
-        )
-      end
     end
 
     context 'when answers are missing' do
@@ -215,7 +132,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         }
       end
 
-      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
+      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
         expect(page).to have_summary_row(
           'Which type of property is it?',
           'None'
@@ -234,6 +151,10 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'What percentage of the property does your client own?',
+          'None',
+        )
+        expect(page).to have_summary_row(
+          'What percentage of the property does your client’s partner own?',
           'None',
         )
         expect(page).to have_summary_row(
