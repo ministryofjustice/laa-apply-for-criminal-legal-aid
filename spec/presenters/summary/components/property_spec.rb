@@ -19,6 +19,7 @@ RSpec.describe Summary::Components::Property, type: :component do
                     percentage_owned: 10)
   }
 
+  let(:property_owner) { instance_double(PropertyOwner, name: 'Joe', relationship: 'friends', percentage_owned: 10) }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
   let(:client_has_partner) { false }
   let(:relationship) { 'friends' }
@@ -79,7 +80,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'bungalow'
+        'Bungalow'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
