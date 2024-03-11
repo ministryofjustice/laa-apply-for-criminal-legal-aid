@@ -3,6 +3,7 @@ class OutgoingsPayment < ApplicationRecord
 
   attribute :amount, :pence
   attribute :payment_type, :value_object, source: HousingPaymentType
+  attribute :frequency, :value_object, source: PaymentFrequencyType
 
   store_accessor :metadata,
                  :details,

@@ -144,14 +144,14 @@ RSpec.shared_examples 'a payment form' do |payment_class|
         record = payments.find_by(payment_type: allowed_types.first)
         expect(payments.size).to eq 1
         expect(record.amount).to eq '103.26'
-        expect(record.frequency).to eq 'month'
+        expect(record.frequency).to eq PaymentFrequencyType::MONTHLY
 
         subject.public_send(:"#{allowed_types.first}=", { 'amount' => 8982.10, 'frequency' => 'annual' })
 
         record = payments.find_by(payment_type: allowed_types.first)
         expect(payments.size).to eq 1
         expect(record.amount).to eq '8982.10'
-        expect(record.frequency).to eq 'annual'
+        expect(record.frequency).to eq PaymentFrequencyType::ANNUALLY
       end
 
       it 'persists amount as an integer' do
