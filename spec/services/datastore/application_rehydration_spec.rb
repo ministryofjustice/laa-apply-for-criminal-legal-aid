@@ -48,7 +48,8 @@ RSpec.describe Datastore::ApplicationRehydration do
         capital: nil,
         savings: [], # capital and savings tested separately
         investments: [], # capital and investments tested separately
-        national_savings_certificates: [] # capital and certificates tested separately
+        national_savings_certificates: [], # capital and certificates tested separately
+        properties: []
       )
 
       expect(
@@ -341,6 +342,7 @@ RSpec.describe Datastore::ApplicationRehydration do
                           'account_balance' => 200_050,
                           'is_overdrawn' => 'no',
                           'are_wages_paid_into_account' => 'no' }],
+          'properties' => [],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A',
@@ -355,7 +357,8 @@ RSpec.describe Datastore::ApplicationRehydration do
       it 'generates savings' do
         expect(crime_application).to receive(:update!).with(
           hash_including(
-            savings: contain_exactly(Saving, Saving)
+            savings: contain_exactly(Saving, Saving),
+            properties: contain_exactly(Property, Property)
           )
         )
 
