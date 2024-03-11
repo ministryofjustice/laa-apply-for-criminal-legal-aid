@@ -61,38 +61,6 @@ describe Summary::Sections::HousingPayments do
     )
   end
 
-  let(:outgoings_payments) do
-    []
-  end
-
-  let(:mortgage_payment) do
-    instance_double(
-      OutgoingsPayment,
-      payment_type: 'mortgage',
-      amount: 333,
-      frequency: 'year'
-    )
-  end
-
-  let(:rent_payment) do
-    instance_double(
-      OutgoingsPayment,
-      payment_type: 'rent',
-      amount: 5555,
-      frequency: 'month'
-    )
-  end
-
-  # A legitimate outgoing but should not be shown in this section
-  let(:maintenance_payment) do
-    instance_double(
-      OutgoingsPayment,
-      payment_type: 'maintenance',
-      amount: 101,
-      frequency: 'week'
-    )
-  end
-
   describe '#name' do
     it { expect(subject.name).to eq(:housing_payments) }
   end
@@ -216,7 +184,7 @@ describe Summary::Sections::HousingPayments do
       end
 
       it 'shows this section' do
-        expect(answers.count).to eq(2)
+        expect(answers.count).to eq(3)
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:mortgage)
         expect(answers[1].change_path)
@@ -235,7 +203,7 @@ describe Summary::Sections::HousingPayments do
       end
 
       it 'shows this section' do
-        expect(answers.count).to eq(2)
+        expect(answers.count).to eq(3)
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:rent)
         expect(answers[1].change_path)
