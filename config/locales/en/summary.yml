@@ -446,7 +446,6 @@ en:
       # END national_savings_certificates
 
       # BEGIN property, address and owners
-      # BEGIN property
       house_type:
         question: Which type of property is it?
         absence_answer: *absence_none
