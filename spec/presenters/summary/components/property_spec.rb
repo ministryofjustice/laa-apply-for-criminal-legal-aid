@@ -78,7 +78,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'bungalow'
+        'Bungalow'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
