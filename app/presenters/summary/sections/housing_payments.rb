@@ -31,7 +31,7 @@ module Summary
       end
 
       def council_tax_info
-        return [] if board_lodgings
+        return [] if board_and_lodging
 
         [
           Components::ValueAnswer.new(

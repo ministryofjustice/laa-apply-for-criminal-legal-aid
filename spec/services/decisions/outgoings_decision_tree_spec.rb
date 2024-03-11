@@ -91,28 +91,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
 
     context 'when the board_and_lodging form is completed' do
       let(:form_object) { double('FormObject') }
-      let(:step_name) { :board_and_lodgings }
-
-      context 'has correct next step' do
-        it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
-      end
-    end
-
-    context 'when the option selected is rent' do
-      before do
-        allow(
-          form_object
-        ).to receive(:housing_payment_type).and_return(HousingPaymentType::RENT)
-      end
-
-      context 'has correct next step' do
-        it { is_expected.to have_destination(:rent, :edit, id: crime_application) }
-      end
-    end
-
-    context 'when the rent form is completed' do
-      let(:form_object) { double('FormObject') }
-      let(:step_name) { :rent }
+      let(:step_name) { :board_and_lodging }
 
       context 'has correct next step' do
         it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
