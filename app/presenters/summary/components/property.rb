@@ -22,14 +22,11 @@ module Summary
             ),
             Components::PercentageAnswer.new(
               :percentage_applicant_owned, property.percentage_applicant_owned
+            ),
+            Components::PercentageAnswer.new(
+              :percentage_partner_owned, property.percentage_partner_owned
             )
           ]
-
-        if property.include_partner?
-          attributes << Components::PercentageAnswer.new(
-            :percentage_partner_owned, property.percentage_partner_owned
-          )
-        end
 
         attributes << Components::ValueAnswer.new(:is_home_address, property.is_home_address)
 

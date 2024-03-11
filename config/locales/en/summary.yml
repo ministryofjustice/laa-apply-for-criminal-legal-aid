@@ -408,7 +408,6 @@ en:
       # END investments
 
       # BEGIN property, address and owners
-      # BEGIN property
       house_type:
         question: Which type of property is it?
         absence_answer: *absence_none
@@ -448,4 +447,4 @@ en:
         question: What percentage of the property do they own?
         absence_answer: *absence_none
       # END property, address and owners
-      # END property
+
