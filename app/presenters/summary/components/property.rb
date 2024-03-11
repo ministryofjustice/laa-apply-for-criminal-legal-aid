@@ -23,9 +23,6 @@ module Summary
             ),
             Components::PercentageAnswer.new(
               :percentage_applicant_owned, property.percentage_applicant_owned
-            ),
-            Components::PercentageAnswer.new(
-              :percentage_partner_owned, property.percentage_partner_owned
             )
           ]
 
