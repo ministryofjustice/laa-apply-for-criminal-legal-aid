@@ -17,7 +17,7 @@ RSpec.describe Steps::Outgoings::RentForm do
       let(:existing_rent_payment) {
         OutgoingsPayment.new(
           crime_application: crime_application,
-          payment_type: OutgoingsPaymentType::RENT,
+          payment_type: OutgoingsPaymentType::RENT.to_s,
           amount: 8999,
           frequency: 'four_weeks',
         )

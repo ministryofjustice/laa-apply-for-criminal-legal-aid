@@ -43,6 +43,15 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       end
 
       context 'has correct next step' do
+        it { is_expected.to have_destination(:rent, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the rent form is completed' do
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :rent }
+
+      context 'has correct next step' do
         it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
       end
     end

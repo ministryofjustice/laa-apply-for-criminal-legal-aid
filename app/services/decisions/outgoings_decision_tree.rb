@@ -31,8 +31,6 @@ module Decisions
         edit(:mortgage)
       elsif form_object.housing_payment_type.value == :rent
         edit(:rent)
-      else # rubocop:disable Lint/DuplicateBranch
-        edit(:council_tax)
       end
     end
   end

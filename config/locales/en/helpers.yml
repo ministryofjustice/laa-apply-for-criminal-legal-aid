@@ -438,6 +438,7 @@ en:
         frequency_options: *frequency_options
       steps_outgoings_rent_form:
         amount: How much rent does your client pay, after taking away Housing Benefit?
+        frequency_options: *frequency_options
       steps_outgoings_board_and_lodging_form:
         board_amount: How much does your client pay for board and lodgings?
         food_amount: How much of the board and lodgings payment is for food?
