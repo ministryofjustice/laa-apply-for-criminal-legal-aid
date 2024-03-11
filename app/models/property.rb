@@ -15,6 +15,11 @@ class Property < ApplicationRecord
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
 
+  # TODO: use proper partner policy once we have one.
+  def include_partner?
+    YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
+  end
+
   def complete?
     values_at(
       :property_type,
