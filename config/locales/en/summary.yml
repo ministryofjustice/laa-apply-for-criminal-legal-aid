@@ -10,9 +10,21 @@ en:
         applicant_and_partner: 'Client and partner'
         partner: 'Partner'
       HOUSE_TYPE: &HOUSE_TYPE
-        flat_or_maisonette: 'Client'
-        applicant_and_partner: 'Client and partner'
-        partner: 'Partner'
+        bungalow: Bungalow
+        detached: Detached
+        flat_or_maisonette: Flat or maisonette
+        semidetached: Semi-detached
+        terraced: Terraced
+      RELATIONSHIP: &RELATIONSHIP
+        business_associates: Business Associates
+        ex_partner: Ex-partner
+        family_members: Family members
+        friends: Friends
+        house_builder: House builder
+        housing_association: Housing association
+        local_authority: Local authority
+        partner_with_a_contrary_interest: Partner with a contrary interest
+        property_company: Property company
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -57,6 +69,11 @@ en:
         residential: Residential property
         commercial: Commercial property
         land: Land
+        house_type:
+          <<: *HOUSE_TYPE
+      property_owner:
+        relationship:
+          <<: *RELATIONSHIP
 
     questions:
       # BEGIN overview section
@@ -390,7 +407,7 @@ en:
         absence_answer: *absence_none
       # END investments
 
-      # BEGIN property
+      # BEGIN property, address and owners
       house_type:
         question: Which type of property is it?
         absence_answer: *absence_none
@@ -417,4 +434,16 @@ en:
         question: Does anyone else own part of the property?
         answers: *YESNO
         absence_answer: *absence_none
-      # END property
+      address:
+        question: Address
+        absence_answer: *absence_none
+      name:
+        question: What is the name of the [%{index}] other owner?
+        absence_answer: *absence_none
+      relationship:
+        question: What is their relationship to your client?
+        absence_answer: *absence_none
+      percentage_owned:
+        question: What percentage of the property do they own?
+        absence_answer: *absence_none
+      # END property, address and owners

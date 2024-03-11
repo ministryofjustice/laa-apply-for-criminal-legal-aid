@@ -30,6 +30,7 @@ describe Summary::HtmlPresenter do
                           'description' => 'About my ISA',
                           'value' => 10_001,
                           'ownership_type' => 'applicant_and_partner' }],
+          'properties' => [],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A'
@@ -74,6 +75,8 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
+            Properties
             PremiumBonds
             Investments
             SupportingEvidence
@@ -105,6 +108,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
             PremiumBonds
             Investments
             SupportingEvidence
