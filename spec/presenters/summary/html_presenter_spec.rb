@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
     instance_double(CrimeApplication, applicant: double, case: double, ioj: double,
                     status: :in_progress, income: double, outgoings: double,
                     documents: double, application_type: application_type,
-                    capital: double, savings: [double], investments: [double])
+                    capital: double, savings: [double], investments: [double], properties: [double])
   end
 
   let(:datastore_application) do
@@ -75,7 +75,6 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
-            Properties
             Properties
             PremiumBonds
             Investments

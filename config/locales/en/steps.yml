@@ -413,6 +413,8 @@ en:
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+        destroy:
+          success_flash: The asset has been deleted
 
       property_address:
         edit:

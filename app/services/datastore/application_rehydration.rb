@@ -31,6 +31,7 @@ module Datastore
         capital: capital,
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : []
+        properties: capital ? parent.capital.properties : []
       )
     end
 
