@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_07_011302) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -220,10 +220,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_011302) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "payment_type", null: false
-    t.integer "amount", null: false
-    t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
+    t.string "payment_type"
+    t.integer "amount"
+    t.string "frequency"
+    t.jsonb "metadata", default: {}
     t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end
@@ -265,6 +265,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_011302) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_properties_on_crime_application_id"
+  end
+
+  create_table "property_owners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "property_id", null: false
+    t.string "name"
+    t.string "relationship"
+    t.string "custom_relationship"
+    t.integer "percentage_owned"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_property_owners_on_property_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -318,5 +329,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_011302) do
   add_foreign_key "outgoings_payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "properties", "crime_applications"
+  add_foreign_key "property_owners", "properties"
   add_foreign_key "savings", "crime_applications"
 end

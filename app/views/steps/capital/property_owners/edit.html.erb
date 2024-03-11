@@ -1,0 +1,42 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t ".heading.#{@form_object.record.property_type}" %></h1>
+
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
+      <%= f.fields_for :property_owners, @form_object.property_owners do |po_field| %>
+        <% index = po_field.index + 1 %>
+        <%= f.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:) } do %>
+          <%= po_field.govuk_text_field :name, autocomplete: 'off' %>
+          <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { size: 's' } do %>
+            <% @form_object.relationships.each_with_index do |option, index| %>
+              <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
+            <% end %>
+            <%= po_field.govuk_radio_divider %>
+            <%= po_field.govuk_radio_button :relationship, 'custom' do %>
+              <%= po_field.govuk_text_field :custom_relationship, autocomplete: 'off', width: 'one-third' %>
+            <%end%>
+          <% end %>
+          <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>
+
+          <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),
+                        class: %w[govuk-button govuk-button--warning],
+                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+        <%end%>
+      <%end%>
+
+      <%= f.button t('.add_button'), type: :submit, name: :add_property_owner,
+                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
+                   data: { module: 'govuk-button' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

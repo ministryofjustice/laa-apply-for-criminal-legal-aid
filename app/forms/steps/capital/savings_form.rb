@@ -24,7 +24,7 @@ module Steps
 
       # TODO: use proper partner policy once we have one.
       def include_partner?
-        YesNoAnswer.new(crime_application.client_has_partner).yes?
+        YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
       end
 
       def owned_by_applicant

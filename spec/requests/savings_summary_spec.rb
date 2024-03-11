@@ -26,19 +26,12 @@ RSpec.describe 'Savings summary page', :authorized do
 
     it 'lists the offences with their details and action links' do
       expect(response).to have_http_status(:success)
-
+      # summary card details tested in the Summary::Components::Saving spec
+      assert_select '.govuk-summary-card'
       assert_select 'h1', 'You have added 1 saving'
 
-      assert_select 'dl.govuk-summary-list' do
-        assert_select 'div.govuk-summary-list__row', 1 do
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'bank'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: '01234500'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '01-01-01'
-
-          assert_select 'dd.govuk-summary-list__actions:nth-of-type(1) a', count: 1, text: 'Change saving'
-          assert_select 'dd.govuk-summary-list__actions:nth-of-type(2) a', count: 1, text: 'Remove saving'
-        end
-      end
+      # confirm action are shown
+      assert_select 'li.govuk-summary-card__action', count: 2
     end
   end
 
@@ -51,15 +44,10 @@ RSpec.describe 'Savings summary page', :authorized do
     end
 
     it 'allows a user to confirm before deleting a saving' do
-      assert_select 'dl.govuk-summary-list.govuk-summary-list--no-border' do
-        assert_select 'div.govuk-summary-list__row', 1 do
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'bank'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: '01234500'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '01-01-01'
-
-          assert_select 'dd.govuk-summary-list__actions', count: 0
-        end
-      end
+      # summary card details tested in the Summary::Components::Saving spec
+      assert_select '.govuk-summary-card'
+      # confirm action are not shown
+      assert_select 'li.govuk-summary-card__action', count: 0
 
       expect(response.body).to include('Are you sure you want to remove this savings account?')
       expect(response.body).to include('Yes, remove it')

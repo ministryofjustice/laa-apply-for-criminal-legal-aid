@@ -35,6 +35,18 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
     end
 
+    context 'when the option selected is rent' do
+      before do
+        allow(
+          form_object
+        ).to receive(:housing_payment_type).and_return(HousingPaymentType::RENT)
+      end
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
+      end
+    end
+
     context 'when the option selected is mortgage' do
       before do
         allow(
@@ -56,15 +68,15 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       end
     end
 
-    context 'when the option selected is board_and_lodgings' do
+    context 'when the option selected is board_and_lodging' do
       before do
         allow(
           form_object
-        ).to receive(:housing_payment_type).and_return(HousingPaymentType::BOARD_LODGINGS)
+        ).to receive(:housing_payment_type).and_return(HousingPaymentType::BOARD_AND_LODGING)
       end
 
       context 'has correct next step' do
-        it { is_expected.to have_destination(:board_and_lodgings, :edit, id: crime_application) }
+        it { is_expected.to have_destination(:board_and_lodging, :edit, id: crime_application) }
       end
     end
 

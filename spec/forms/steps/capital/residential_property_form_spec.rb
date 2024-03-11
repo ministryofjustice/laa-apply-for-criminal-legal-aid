@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::PropertiesForm do
+RSpec.describe Steps::Capital::ResidentialPropertyForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -35,9 +35,19 @@ RSpec.describe Steps::Capital::PropertiesForm do
     end
 
     describe '#custom_house_type' do
-      before { allow(subject).to receive(:house_type_is_listed?).and_return(false) }
+      before { allow(subject).to receive(:custom_house_type?).and_return(custom_house_type_selected) }
 
-      it { is_expected.to validate_presence_of(:custom_house_type) }
+      context 'when custom_house_type is selected' do
+        let(:custom_house_type_selected) { true }
+
+        it { is_expected.to validate_presence_of(:custom_house_type) }
+      end
+
+      context 'when custom_house_type is not selected' do
+        let(:custom_house_type_selected) { false }
+
+        it { is_expected.not_to validate_presence_of(:custom_house_type) }
+      end
     end
 
     describe '#is_home_address' do
@@ -124,6 +134,14 @@ RSpec.describe Steps::Capital::PropertiesForm do
 
           expect(subject.save).to be(true)
         end
+      end
+    end
+
+    describe '#house_types' do
+      it 'returns the possible choices' do
+        expect(subject.house_types.map(&:to_s)).to eq(
+          %w[bungalow detached flat_or_maisonette semidetached terraced]
+        )
       end
     end
   end

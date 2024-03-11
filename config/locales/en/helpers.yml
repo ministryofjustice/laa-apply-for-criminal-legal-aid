@@ -99,6 +99,8 @@ en:
         frequency: Select how often they pay mortgage payments
       steps_outgoings_rent_form:
         frequency: Select how often they pay rent payments
+      steps_outgoings_board_and_lodging_form:
+        frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
       steps_outgoings_outgoings_payments_form:
@@ -118,10 +120,13 @@ en:
         account_holder: Whose name is the account in?
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          relationship: What is their relationship to your client?
 
     hint:
       steps_client_details_form:
@@ -190,6 +195,8 @@ en:
         types_options:
           jsa: This includes New Style JSA.
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
+      steps_outgoings_board_and_lodging_form:
+        food_amount_in_pounds: For example, '0' or '50'.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
       steps_capital_property_type_form:
@@ -203,7 +210,7 @@ en:
         types_options:
           childcare: For example, to a childminder, nanny or nursery.
           maintenance: This includes child maintenance.
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         bedrooms: Enter ‘0’ if the property is a studio.
         value: You can use property websites to find the estimated value.
 
@@ -424,13 +431,18 @@ en:
         housing_payment_type_options:
           rent: Rent
           mortgage: Mortgage
-          board_lodgings: Board and lodgings
+          board_and_lodging: Board and lodgings
           none: My client does not pay any of these payments
       steps_outgoings_mortgage_form:
         amount: How much are your client's mortgage payments?
         frequency_options: *frequency_options
       steps_outgoings_rent_form:
         amount: How much rent does your client pay, after taking away Housing Benefit?
+      steps_outgoings_board_and_lodging_form:
+        board_amount: How much does your client pay for board and lodgings?
+        food_amount: How much of the board and lodgings payment is for food?
+        payee_name: What is the name of the person your client pays for board and lodgings?
+        payee_relationship_to_client: What is your client's relationship to this person?
         frequency_options: *frequency_options
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO
@@ -497,7 +509,7 @@ en:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
-      steps_capital_properties_form:
+      steps_capital_residential_property_form:
         house_type_options:
           bungalow: Bungalow
           detached: Detached
@@ -520,3 +532,19 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          name: What is the name of the [first] other owner?
+          relationship_options:
+            business_associates: Business Associates
+            ex_partner: Ex-partner
+            family_members: Family members
+            friends: Friends
+            house_builder: House builder
+            housing_association: Housing association
+            local_authority: Local authority
+            partner_with_a_contrary_interest: Partner with a contrary interest
+            property_company: Property company
+            custom: Their relationship is not listed
+          custom_relationship: Enter their relationship
+          percentage_owned: What percentage of the land do they own?

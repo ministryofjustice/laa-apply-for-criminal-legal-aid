@@ -10,8 +10,12 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, outgoings:) }
-  let(:outgoings) { instance_double(Outgoings) }
+  let(:crime_application) { CrimeApplication.new(outgoings:) }
+  let(:outgoings) { Outgoings.new }
+  let(:outgoings_payment) {
+    OutgoingsPayment.new(crime_application: crime_application,
+                         payment_type: OutgoingsPaymentType::BOARD_AND_LODGING)
+  }
 
   let(:housing_payment_type) { nil }
 
@@ -22,7 +26,7 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
       ).to eq([
                 HousingPaymentType::RENT,
                 HousingPaymentType::MORTGAGE,
-                HousingPaymentType::BOARD_LODGINGS,
+                HousingPaymentType::BOARD_AND_LODGING,
                 HousingPaymentType::NONE
               ])
     end
@@ -48,7 +52,16 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
     end
 
     context 'when `housing_payment_type` is valid' do
-      let(:housing_payment_type) { HousingPaymentType::RENT.to_s }
+      let(:housing_payment_type) { HousingPaymentType::RENT }
+
+      before do
+        allow(crime_application.outgoings_payments).to receive(:create).with(
+          payment_type: housing_payment_type
+        ).and_return outgoings_payment
+        allow(form).to receive(:existing_housing_payment).and_return nil
+        form.housing_payment_type = housing_payment_type
+        form.save
+      end
 
       it { is_expected.to be_valid }
 
@@ -56,19 +69,13 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
         expect(form.errors.of_kind?(:housing_payment_type, :invalid)).to be(false)
       end
 
-      it 'updates the record' do
-        expect(outgoings).to receive(:update)
-          .with({ 'housing_payment_type' => HousingPaymentType::RENT })
-          .and_return(true)
-
-        expect(subject.save).to be(true)
+      it 'updates the outgoings record' do
+        expect(crime_application.outgoings.housing_payment_type).to eq(housing_payment_type.to_s)
       end
 
-      it_behaves_like 'a has-one-association form',
-                      association_name: :outgoings,
-                      expected_attributes: {
-                        'housing_payment_type' => HousingPaymentType::RENT,
-                      }
+      it 'creates an outgoings payment object' do
+        expect(subject.save).to eq(outgoings_payment)
+      end
     end
   end
 end

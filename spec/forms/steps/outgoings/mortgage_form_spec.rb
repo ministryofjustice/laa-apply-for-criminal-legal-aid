@@ -17,7 +17,7 @@ RSpec.describe Steps::Outgoings::MortgageForm do
       let(:existing_mortgage_payment) {
         OutgoingsPayment.new(
           crime_application: crime_application,
-          payment_type: OutgoingsPaymentType::MORTGAGE,
+          payment_type: OutgoingsPaymentType::MORTGAGE.to_s,
           amount: 8999,
           frequency: 'four_weeks',
         )

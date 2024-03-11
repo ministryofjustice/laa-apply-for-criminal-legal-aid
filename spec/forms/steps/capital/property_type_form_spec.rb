@@ -16,9 +16,9 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
   end
 
   describe '#save' do
-    let(:property_type) { PropertyType.values.sample }
-    let(:new_property) { instance_double(Property) }
-    let(:existing_property) { instance_double(Property, complete?: complete?) }
+    let(:property_type) { PropertyType::RESIDENTIAL.to_s }
+    let(:new_property) { instance_double(Property, property_type:) }
+    let(:existing_property) { instance_double(Property, property_type: property_type, complete?: complete?) }
     let(:complete?) { false }
 
     before do

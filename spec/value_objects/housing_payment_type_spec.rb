@@ -11,7 +11,7 @@ RSpec.describe HousingPaymentType do
         %w[
           rent
           mortgage
-          board_lodgings
+          board_and_lodging
           none
         ]
       )

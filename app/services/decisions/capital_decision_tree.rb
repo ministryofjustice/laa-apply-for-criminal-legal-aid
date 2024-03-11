@@ -13,11 +13,18 @@ module Decisions
         after_savings_summary
       when :property_type
         after_property_type(form_object.property)
-      when :properties
+      when :residential_property
         after_properties
       when :property_address
         # TODO: Route to property owner page once built
-        edit(:saving_type)
+        after_property_address
+      when :property_owners
+        # TODO: Route to assets list page once built
+        after_property_owner
+      when :add_property_owner
+        after_add_property_owner
+      when :delete_property_owner
+        after_delete_property_owner
       when :premium_bonds
         # TODO: Route to national savings certificates once built
         edit('/steps/case/urn') # Placeholder to join up flow
@@ -44,14 +51,54 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit(:properties, property_id: property)
+      edit(:"#{property.property_type}_property", property_id: property)
     end
 
+    # TODO: : Fix nested conditions
     def after_properties
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
+      if form_object.has_other_owners.yes?
+        property_owners.create! if incomplete_property_owners.blank?
+        return edit(:property_owners, property_id: property)
+      end
       # TODO: Route to appropriate property page loop once built
       edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def after_property_address
+      if form_object.has_other_owners.to_s == YesNoAnswer::YES.to_s
+        property_owners.create! if incomplete_property_owners.blank?
+        return edit(:property_owners, property_id: property)
+      end
+
+      # TODO: Route to appropriate property page loop once built
+      edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def incomplete_property_owners
+      property_owners.reject(&:complete?)
+    end
+
+    def after_property_owner
+      edit(:saving_type) # Placeholder to join up flow
+    end
+
+    def after_add_property_owner
+      property_owners << PropertyOwner.new
+      edit(:property_owners, property_id: property)
+    end
+
+    def after_delete_property_owner
+      edit(:property_owners, property_id: property)
+    end
+
+    def property_owners
+      @property_owners ||= property.property_owners
+    end
+
+    def property
+      @property ||= form_object.record
     end
   end
 end
