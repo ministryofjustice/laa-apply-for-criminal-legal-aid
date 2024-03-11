@@ -288,7 +288,7 @@ en:
       council_tax:
         question: How much do they pay yearly?
         answers:
-          description: "£%{amount}"
+          description: "%{amount}"
       # END housing payments section
 
       # BEGIN other outgoings details section
