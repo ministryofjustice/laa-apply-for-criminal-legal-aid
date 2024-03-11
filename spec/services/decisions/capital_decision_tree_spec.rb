@@ -357,6 +357,15 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
+  context 'when the step is `trust_fund`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :trust_fund }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `other_saving_type`' do
     let(:form_object) { double('FormObject', saving:) }
     let(:step_name) { :other_saving_type }

@@ -40,7 +40,11 @@ module Decisions
       when :investments
         edit(:investments_summary)
       when :investments_summary
-        after_investments_summary
+        # TODO: Route to national savings certificates once built
+        edit('/steps/case/urn') # Placeholder to join up flow
+      when :trust_fund
+        # TODO: Route to assets page if required
+        edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

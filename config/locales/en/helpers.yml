@@ -573,6 +573,10 @@ en:
         property_type_options: *PROPERTY_TYPE_OPTIONS
       steps_capital_properties_summary_form:
         add_property_options: *YESNO
+      steps_capital_trust_fund_form:
+        trust_fund_amount_held: Enter the holder number
+        yearly_dividend: Enter the total value of their bonds
+        will_benefit_from_trust_fund_options: *YESNO
       steps_capital_residential_property_form:
         house_type_options:
           bungalow: Bungalow

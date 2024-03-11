@@ -42,6 +42,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_171957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "has_national_savings_certificates"
+    t.string "will_benefit_from_trust_fund"
+    t.integer "trust_fund_amount_held"
+    t.integer "yearly_dividend"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -243,7 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_171957) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "payment_type"
+    t.string "payment_type", null: false
     t.integer "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}

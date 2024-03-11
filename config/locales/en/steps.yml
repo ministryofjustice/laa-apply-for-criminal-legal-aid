@@ -424,6 +424,10 @@ en:
         investment_details:
           change_link_html: Change <span class="govuk-visually-hidden">National Savings Certificate</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">National Savings Certificate</span>
+      trust_fund:
+        edit:
+          page_title: Does your client stand to benefit from a trust fund inside or outside the UK?
+          heading: Does your client stand to benefit from a trust fund inside or outside the UK?
 
       properties:
         confirm_destroy:
