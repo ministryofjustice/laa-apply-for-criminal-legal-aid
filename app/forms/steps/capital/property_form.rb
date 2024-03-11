@@ -37,6 +37,8 @@ module Steps
       end
 
       def before_save
+        record.address = nil if is_home_address.yes?
+        record.property_owners.destroy_all if has_other_owners.no?
         self.custom_house_type = nil unless custom_house_type?
       end
 

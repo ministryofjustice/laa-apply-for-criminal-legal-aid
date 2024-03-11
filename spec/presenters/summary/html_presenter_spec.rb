@@ -35,6 +35,7 @@ describe Summary::HtmlPresenter do
                           'certificate_number' => '2b',
                           'value' => 121,
                           'ownership_type' => 'partner' }],
+          'properties' => [],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A'
@@ -79,6 +80,8 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
+            Properties
             PremiumBonds
             NationalSavingsCertificates
             Investments
@@ -111,6 +114,7 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
             PremiumBonds
             NationalSavingsCertificates
             Investments
