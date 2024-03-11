@@ -10,7 +10,7 @@ RSpec.describe SubmissionSerializer::Definitions::Investment do
       investment_type: InvestmentType::BOND,
       description: 'About the Bond',
       value: 10_001,
-      holder: OwnershipType::APPLICANT
+      ownership_type: OwnershipType::APPLICANT
     )
   end
 
@@ -19,7 +19,7 @@ RSpec.describe SubmissionSerializer::Definitions::Investment do
       investment_type: InvestmentType::UNIT_TRUST,
       description: 'About the Unit Trust',
       value: 21,
-      holder: OwnershipType::APPLICANT_AND_PARTNER
+      ownership_type: OwnershipType::APPLICANT_AND_PARTNER
     )
   end
 
@@ -29,13 +29,13 @@ RSpec.describe SubmissionSerializer::Definitions::Investment do
         investment_type: 'bond',
         description: 'About the Bond',
         value: 10_001,
-        holder: 'applicant'
+        ownership_type: 'applicant'
       },
       {
         investment_type: 'unit_trust',
         description: 'About the Unit Trust',
         value: 21,
-        holder: 'applicant_and_partner'
+        ownership_type: 'applicant_and_partner'
       },
     ].as_json
   end

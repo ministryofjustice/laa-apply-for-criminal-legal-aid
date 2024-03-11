@@ -6,7 +6,7 @@ RSpec.describe 'Investments summary page', :authorized do
     app.investments.create!(investment_type: InvestmentType::BOND,
                             description: 'About the Bond',
                             value: 10_001,
-                            holder: OwnershipType::APPLICANT)
+                            ownership_type: OwnershipType::APPLICANT)
   end
 
   after :all do
@@ -20,7 +20,7 @@ RSpec.describe 'Investments summary page', :authorized do
       get edit_steps_capital_investments_summary_path(crime_application)
     end
 
-    it 'lists the offences with their details and action links' do
+    it 'lists the investments with their details and action links' do
       expect(response).to have_http_status(:success)
       # summary card details tested in the Summary::Components::Investment spec
       assert_select '.govuk-summary-card'

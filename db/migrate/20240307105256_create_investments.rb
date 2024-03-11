@@ -5,10 +5,12 @@ class CreateInvestments < ActiveRecord::Migration[7.0]
       t.string :investment_type, null: false
       t.integer :value
       t.text :description
-      t.string :holder
+      t.string :ownership_type
 
 
       t.timestamps
     end
+
+    rename_column :savings, :account_holder, :ownership_type
   end
 end

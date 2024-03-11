@@ -326,7 +326,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         {
           'savings' => [{ 'saving_type' => 'bank',
                           'provider_name' => 'Test Bank',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '01-01-01',
                           'account_number' => '01234500',
                           'account_balance' => 10_001,
@@ -334,7 +334,7 @@ RSpec.describe Datastore::ApplicationRehydration do
                           'are_wages_paid_into_account' => 'yes' },
                         { 'saving_type' => 'building_society',
                           'provider_name' => 'Test Building Society',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '12-34-56',
                           'account_number' => '01234500',
                           'account_balance' => 200_050,

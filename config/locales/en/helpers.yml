@@ -117,7 +117,7 @@ en:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
         confirm_in_applicants_name: Confirm the following
-        account_holder: Whose name is the account in?
+        ownership_type: Whose name is the account in?
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
       steps_capital_investment_type_form:
@@ -527,14 +527,14 @@ en:
         account_balance: What is the account balance?
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
-        account_holder_options: *OWNERSHIP_OPTIONS
+        ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_investments_form:
         description: Describe the investment
         value: What is the value of the investment?
-        holder: Whose name is the investment in?
-        holder_options: *OWNERSHIP_OPTIONS
+        ownership_type: Whose name is the investment in?
+        ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_savings_summary_form:

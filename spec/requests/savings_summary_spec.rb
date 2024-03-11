@@ -5,7 +5,7 @@ RSpec.describe 'Savings summary page', :authorized do
     app = CrimeApplication.create
     app.savings.create!(saving_type: SavingType::BANK,
                         provider_name: 'Bank of Test',
-                        account_holder: OwnershipType::APPLICANT,
+                        ownership_type: OwnershipType::APPLICANT,
                         sort_code: '01-01-01',
                         account_number: '01234500',
                         account_balance: '100.01',

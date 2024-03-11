@@ -16,7 +16,7 @@ module Steps
       def persist!
         return true if investment_type == 'none'
 
-        @investment = incomplete_investment_for_type || crime_application.investments.create(investment_type:)
+        @investment = incomplete_investment_for_type || crime_application.investments.create!(investment_type:)
       end
 
       def incomplete_investment_for_type

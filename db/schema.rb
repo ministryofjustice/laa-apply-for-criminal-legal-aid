@@ -181,7 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.string "investment_type", null: false
     t.integer "value"
     t.text "description"
-    t.string "holder"
+    t.string "ownership_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_investments_on_crime_application_id"
@@ -318,7 +318,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.integer "account_balance"
     t.string "is_overdrawn"
     t.string "are_wages_paid_into_account"
-    t.string "account_holder"
+    t.string "ownership_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_savings_on_crime_application_id"

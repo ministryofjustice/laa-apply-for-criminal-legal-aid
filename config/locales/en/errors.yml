@@ -514,7 +514,7 @@ en:
               inclusion: Select yes if the account is overdrawn
             are_wages_paid_into_account:
               inclusion: Select yes if your client's wages or benefits are paid into this account
-            account_holder:
+            ownership_type:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
@@ -586,7 +586,7 @@ en:
             value:
               blank: Enter the value of the investment 
               not_a_number: The value of their investment must be a number, like 50
-            holder:
+            ownership_type:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the investment is in your client’s name

@@ -19,7 +19,7 @@ RSpec.describe Saving, type: :model do
           crime_application_id: SecureRandom.uuid,
           saving_type: SavingType.values.sample,
           provider_name: 'Bank of Test',
-          account_holder: OwnershipType.values.sample,
+          ownership_type: OwnershipType.values.sample,
           sort_code: '01-01-01',
           account_number: '01234500',
           account_balance: '100.01',

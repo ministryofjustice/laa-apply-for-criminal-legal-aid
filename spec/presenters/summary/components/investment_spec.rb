@@ -14,7 +14,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
       description: 'About the shares',
       investment_type: 'share',
       value: 100,
-      holder: 'applicant'
+      ownership_type: 'applicant'
     }
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
           description: nil,
           investment_type: nil,
           value: nil,
-          holder: nil
+          ownership_type: nil
         }
       end
 

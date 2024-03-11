@@ -6,7 +6,7 @@ module SubmissionSerializer
           json.investment_type investment_type
           json.description description
           json.value value_before_type_cast
-          json.holder holder
+          json.ownership_type ownership_type
         end
       end
     end

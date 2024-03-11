@@ -14,7 +14,7 @@ module Summary
             :value, investment.value
           ),
           Components::ValueAnswer.new(
-            :holder, investment.holder
+            :ownership_type, investment.ownership_type
           )
         ]
       end

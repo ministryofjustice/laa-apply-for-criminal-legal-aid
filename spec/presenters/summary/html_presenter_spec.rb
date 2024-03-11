@@ -20,7 +20,7 @@ describe Summary::HtmlPresenter do
         'capital_details' => {
           'savings' => [{ 'saving_type' => 'bank',
                           'provider_name' => 'Test Bank',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '01-01-01',
                           'account_number' => '01234500',
                           'account_balance' => 10_001,
@@ -29,7 +29,7 @@ describe Summary::HtmlPresenter do
           'investments' => [{ 'investment_type' => 'share_isa',
                           'description' => 'About my ISA',
                           'value' => 10_001,
-                          'holder' => 'applicant_and_partner' }],
+                          'ownership_type' => 'applicant_and_partner' }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A'

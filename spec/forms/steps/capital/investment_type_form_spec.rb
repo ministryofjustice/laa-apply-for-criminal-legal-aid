@@ -22,7 +22,7 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
     let(:complete?) { false }
 
     before do
-      allow(investments).to receive(:create).with(investment_type:).and_return new_investment
+      allow(investments).to receive(:create!).with(investment_type:).and_return new_investment
 
       form.investment_type = investment_type
       form.save
@@ -33,14 +33,14 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
 
       it 'returns true but does not set or create a investment' do
         expect(form.investment).to be_nil
-        expect(investments).not_to have_received(:create)
+        expect(investments).not_to have_received(:create!)
       end
     end
 
     context 'when there are no investments of the investment type' do
       it 'a new investment of the investment type is created' do
         expect(form.investment).to be new_investment
-        expect(investments).to have_received(:create).with(investment_type:)
+        expect(investments).to have_received(:create!).with(investment_type:)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
 
       it 'is set as the investment' do
         expect(form.investment).to be existing_investment
-        expect(investments).not_to have_received(:create)
+        expect(investments).not_to have_received(:create!)
       end
 
       context 'when the existing investment is complete' do
@@ -57,7 +57,7 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
 
         it 'a new investment of the investment type is created' do
           expect(form.investment).to be new_investment
-          expect(investments).to have_received(:create).with(investment_type:)
+          expect(investments).to have_received(:create!).with(investment_type:)
         end
       end
     end

@@ -334,7 +334,7 @@ en:
       account_balance:
         question: What is the account balance?
         absence_answer: *absence_none
-      account_holder:
+      saving_ownership_type:
         question: Whose name is the account in?
         answers: *OWNERSHIP_TYPE
         absence_answer: *absence_none
@@ -375,7 +375,7 @@ en:
       value: 
         question: What is the value of the investment?
         absence_answer: *absence_none
-      holder: 
+      ownership_type: 
         question: Whose name is the investment in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none

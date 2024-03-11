@@ -30,7 +30,7 @@ RSpec.describe Steps::Capital::InvestmentsForm do
         end
 
         before do
-          form.holder = ownership
+          form.ownership_type = ownership
           form.valid?
         end
 
@@ -63,7 +63,7 @@ RSpec.describe Steps::Capital::InvestmentsForm do
     context 'when client has a partner' do
       let(:client_has_partner) { 'yes' }
 
-      it { is_expected.to validate_is_a(:holder, OwnershipType) }
+      it { is_expected.to validate_is_a(:ownership_type, OwnershipType) }
     end
   end
 
@@ -76,8 +76,8 @@ RSpec.describe Steps::Capital::InvestmentsForm do
     context 'when value is true' do
       let(:value) { true }
 
-      it 'sets `#holder` to `applicant`' do
-        expect { confirm }.to change(form, :holder).from(nil).to(OwnershipType::APPLICANT)
+      it 'sets `#ownership_type` to `applicant`' do
+        expect { confirm }.to change(form, :ownership_type).from(nil).to(OwnershipType::APPLICANT)
       end
 
       it 'is not persisted (i.e. needs re-confirming)' do
@@ -87,8 +87,8 @@ RSpec.describe Steps::Capital::InvestmentsForm do
       context 'when client has parter' do
         let(:client_has_partner) { 'yes' }
 
-        it 'does not set the account holder' do
-          expect { confirm }.not_to(change(form, :holder))
+        it 'does not set the account ownership_type' do
+          expect { confirm }.not_to(change(form, :ownership_type))
         end
       end
     end
@@ -96,16 +96,16 @@ RSpec.describe Steps::Capital::InvestmentsForm do
     context 'when value is false' do
       let(:value) { false }
 
-      it 'does not set the account holder' do
-        expect { confirm }.not_to(change(form, :holder))
+      it 'does not set the account ownership_type' do
+        expect { confirm }.not_to(change(form, :ownership_type))
       end
     end
 
     context 'when value is nil' do
       let(:value) { nil }
 
-      it 'does not set the account holder' do
-        expect { confirm }.not_to(change(form, :holder))
+      it 'does not set the account ownership_type' do
+        expect { confirm }.not_to(change(form, :ownership_type))
       end
     end
   end
@@ -115,7 +115,7 @@ RSpec.describe Steps::Capital::InvestmentsForm do
       let(:attributes) do
         {
           description: 'About my Bonds',
-          holder: OwnershipType::APPLICANT,
+          ownership_type: OwnershipType::APPLICANT,
           value: '100.01',
           confirm_in_applicants_name: YesNoAnswer::YES
         }
