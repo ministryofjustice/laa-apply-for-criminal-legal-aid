@@ -5,7 +5,7 @@ module Summary
         outgoings.present? && super
       end
 
-      def answers
+      def answers # rubocop:disable Metrics/MethodLength
         [
           Components::ValueAnswer.new(
             :housing_payment_type, outgoings.housing_payment_type,
@@ -14,6 +14,10 @@ module Summary
           Components::PaymentAnswer.new(
             :mortgage, mortgage,
             change_path: edit_steps_outgoings_mortgage_path
+          ),
+          Components::PaymentAnswer.new(
+            :rent, rent,
+            change_path: edit_steps_outgoings_rent_path
           ),
         ].select(&:show?)
       end
@@ -25,10 +29,17 @@ module Summary
       end
 
       # TODO: Attempted to get an appropriate Struct to return this value
-      # however doing so caused headache with specs
+      # however doing so caused headache with specs. Ensure match is using
+      # .to_s to ensure both ActiveRecord and Struct models work as expected
       def mortgage
         crime_application.outgoings_payments.find do |p|
           p.payment_type.to_s == HousingPaymentType::MORTGAGE.to_s
+        end
+      end
+
+      def rent
+        crime_application.outgoings_payments.find do |p|
+          p.payment_type.to_s == HousingPaymentType::RENT.to_s
         end
       end
     end

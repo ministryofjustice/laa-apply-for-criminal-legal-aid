@@ -32,6 +32,15 @@ describe Summary::Sections::HousingPayments do
     )
   end
 
+  let(:rent_payment) do
+    instance_double(
+      OutgoingsPayment,
+      payment_type: 'rent',
+      amount: 5555,
+      frequency: 'month'
+    )
+  end
+
   # A legitimate outgoing but should not be shown in this section
   let(:maintenance_payment) do
     instance_double(
@@ -92,6 +101,25 @@ describe Summary::Sections::HousingPayments do
           .to match('applications/12345/steps/outgoings/mortgage_payments')
         expect(answers[1].value.amount).to eq(333)
         expect(answers[1].value.frequency).to eq('year')
+      end
+    end
+
+    context 'with rent' do
+      let(:outgoings_payments) do
+        [
+          rent_payment,
+          maintenance_payment,
+        ]
+      end
+
+      it 'shows this section' do
+        expect(answers.count).to eq(2)
+        expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
+        expect(answers[1].question).to eq(:rent)
+        expect(answers[1].change_path)
+          .to match('applications/12345/steps/outgoings/rent_payments')
+        expect(answers[1].value.amount).to eq(5555)
+        expect(answers[1].value.frequency).to eq('month')
       end
     end
   end
