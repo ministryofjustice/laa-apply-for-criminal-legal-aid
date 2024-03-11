@@ -184,6 +184,11 @@ Rails.application.routes.draw do
         crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
         crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
         crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
+
+        edit_step :does_client_have_national_savings_certificates, alias: :has_national_savings_certificates
+        crud_step :national_savings_certificates, param: :savings_certificate_id
+
+        edit_step :clients_national_savings_certificates, alias: :national_savings_certificates_summary
       end
 
       namespace :evidence do

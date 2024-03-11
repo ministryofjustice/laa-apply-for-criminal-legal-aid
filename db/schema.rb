@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
     t.string "premium_bonds_holder_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "has_national_savings_certificates"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -176,6 +177,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
+  create_table "investments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "investment_type", null: false
+    t.integer "value"
+    t.text "description"
+    t.string "holder"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_investments_on_crime_application_id"
+  end
+
   create_table "iojs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "types", default: [], array: true
     t.text "loss_of_liberty_justification"
@@ -193,6 +205,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
     t.datetime "updated_at", null: false
     t.boolean "passport_override", default: false
     t.index ["case_id"], name: "index_iojs_on_case_id", unique: true
+  end
+
+  create_table "national_savings_certificates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "certificate_number"
+    t.integer "value"
+    t.string "holder_number"
+    t.string "holder"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_national_savings_certificates_on_crime_application_id"
   end
 
   create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -221,7 +244,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "payment_type"
+    t.string "payment_type", null: false
     t.integer "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}
@@ -324,7 +347,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_151741) do
   add_foreign_key "income_benefits", "crime_applications"
   add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
+  add_foreign_key "investments", "crime_applications"
   add_foreign_key "iojs", "cases"
+  add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "outgoings_payments", "crime_applications"

@@ -26,8 +26,9 @@ module Decisions
       when :delete_property_owner
         after_delete_property_owner
       when :premium_bonds
-        # TODO: Route to national savings certificates once built
-        edit('/steps/case/urn') # Placeholder to join up flow
+        edit(:has_national_savings_certificates)
+      when :has_national_savings_certificates
+        # TODO
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

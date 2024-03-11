@@ -348,6 +348,10 @@ en:
         edit:
           page_title: Does your client have any Premium Bonds?
           heading:  Does your client have any Premium Bonds?
+      has_national_savings_certificates:
+        edit:
+          page_title: Does your client have any National Savings Certificates?
+          heading:  Does your client have any National Savings Certificates?
 
       residential_property:
         edit:
