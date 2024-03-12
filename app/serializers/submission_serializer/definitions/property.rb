@@ -1,6 +1,7 @@
 module SubmissionSerializer
   module Definitions
     class Property < Definitions::BaseDefinition
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
           json.property_type property_type
@@ -18,6 +19,7 @@ module SubmissionSerializer
           json.address address
         end
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end
