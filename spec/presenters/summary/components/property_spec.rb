@@ -52,6 +52,9 @@ RSpec.describe Summary::Components::Property, type: :component do
     }
   end
 
+  let(:is_home_address) { 'yes' }
+  let(:has_other_owners) { 'yes' }
+
   before { component }
 
   describe 'actions' do
@@ -180,6 +183,51 @@ RSpec.describe Summary::Components::Property, type: :component do
 
       context 'when other relationship' do
         let(:relationship) { 'other' }
+
+        it 'renders as summary list with non-listed relationship' do
+          expect(page).to have_summary_row(
+            'What is their relationship to your client?',
+            'xyz',
+          )
+        end
+      end
+    end
+
+    context 'when property has no other owners' do
+      let(:has_other_owners) { 'no' }
+
+      it 'renders as summary list with other owners' do
+        expect(page).to have_summary_row(
+          'Does anyone else own part of the property?',
+          'No',
+        )
+      end
+    end
+
+    context 'when property has other owners' do
+      let(:has_other_owners) { 'yes' }
+
+      it 'renders as summary list with other owners' do
+        expect(page).to have_summary_row(
+          'Does anyone else own part of the property?',
+          'Yes',
+        )
+        expect(page).to have_summary_row(
+          'What is the name of the [1st] other owner?',
+          'Joe',
+        )
+        expect(page).to have_summary_row(
+          'What is their relationship to your client?',
+          'Friends',
+        )
+        expect(page).to have_summary_row(
+          'What percentage of the property do they own?',
+          '10%',
+        )
+      end
+
+      context 'when custom relationship' do
+        let(:relationship) { 'custom' }
 
         it 'renders as summary list with non-listed relationship' do
           expect(page).to have_summary_row(
