@@ -8,11 +8,11 @@
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_fieldset(legend: { text: t('.rent_legend'), tag: 'h1', size: 'xl' }) do %>
-        <%= f.govuk_text_field(:amount,
-                               width: 'one-half',
-                               prefix_text: '£',
-                               hint: { text: t('.amount_hint') },
-                               autocomplete: 'off') %>
+        <%= f.govuk_number_field(:amount,
+                                 width: 'one-half',
+                                 prefix_text: '£',
+                                 hint: { text: t('.amount_hint') },
+                                 autocomplete: 'off') %>
         <%= f.govuk_collection_radio_buttons(:frequency,
                                              PaymentFrequencyType.values,
                                              :value,

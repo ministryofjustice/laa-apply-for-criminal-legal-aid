@@ -426,6 +426,7 @@ en:
             amount:
               blank: Enter how much your client's mortgage payments are, after taking away Housing Benefit
               greater_than: Your client's mortgage payments must be more than 0
+              invalid: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
               not_a_number: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
             frequency:
               blank: Select how often they pay mortgage payments
@@ -435,7 +436,8 @@ en:
             amount:
               blank: Enter how much rent your client pays, after taking away Housing Benefit
               greater_than: Your client's rent payments must be more than 0
-              not_a_number: Your client's rent payments, after taking away Housing Benefit, must be a number, like 50
+              invalid: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
+              not_a_number: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
             frequency:
               blank: Select how often they pay rent payments
               inclusion: Select how often they pay rent payments
@@ -461,6 +463,7 @@ en:
               blank: Enter how much your client pays yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
+              not_a_number: How much they pay yearly must be a number, like 50
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
