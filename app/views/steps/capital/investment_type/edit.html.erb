@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+    <%= govuk_error_summary(@form_object) %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :investment_type, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each_with_index do |option, index| %>
+          <%= f.govuk_radio_button :investment_type, option, link_errors: index.zero? %>
+        <% end %>
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :investment_type, 'none' %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

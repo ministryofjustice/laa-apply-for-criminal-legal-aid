@@ -11,7 +11,7 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
 
   describe '#save' do
     before do
-      allow(savings).to receive(:create).with(saving_type:).and_return new_saving
+      allow(savings).to receive(:create!).with(saving_type:).and_return new_saving
 
       form.saving_type = saving_type
       form.save
@@ -20,7 +20,7 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
     context 'when a saving of the type exists' do
       it 'a new saving of the saving type is created' do
         expect(form.saving).to be new_saving
-        expect(savings).to have_received(:create).with(saving_type:)
+        expect(savings).to have_received(:create!).with(saving_type:)
       end
     end
   end

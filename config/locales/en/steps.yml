@@ -330,6 +330,7 @@ en:
             cash_isa: Your client’s cash ISA
             national_savings_or_post_office: Your client’s National Savings or Post Office account
             other: Your client’s other cash investment
+          info: You told us your client has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
           heading: Are you sure you want to remove this savings account?
@@ -341,7 +342,7 @@ en:
           success_flash: You removed the savings account
       savings_summary:
         edit:
-          page_title: Savings summary list
+          page_title: Your client’s savings
           heading:
             zero: You have not added savings yet
             one: You have added %{count} saving
@@ -349,6 +350,45 @@ en:
         saving_details:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
+
+      investment_type:
+        edit:
+          page_title: Which investments does your client have inside or outside the UK?
+      other_investment_type:
+        edit:
+          page_title: Which other investments does your client have inside or outside the UK?
+      investments:
+        edit:
+          page_title: Add investment details
+          heading:
+            bond: Your client’s investment bonds
+            pep: Your client’s personal equity plans (PEPs)
+            share: Your client’s shares
+            share_isa: Your client’s share ISAs
+            stock: Your client’s stocks, including gilts and government bonds
+            unit_trust: Your client’s unit trusts
+            other: Your client’s other lump sum investments
+          info: You told us your client has investments.
+        confirm_destroy:
+          page_title: Delete investment confirmation
+          heading: Are you sure you want to remove this investment?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this investment
+          cancel_delete_button_a11y: No, do not remove this investment
+        destroy:
+          success_flash: You removed the investment
+      investments_summary:
+        edit:
+          page_title: Your client’s investments
+          heading:
+            zero: You have not added investments yet
+            one: You have added %{count} investment
+            other: You have added %{count} investments
+        investment_details:
+          change_link_html: Change <span class="govuk-visually-hidden">investment</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">investment</span>
+
       premium_bonds:
         edit:
           page_title: Does your client have any Premium Bonds?

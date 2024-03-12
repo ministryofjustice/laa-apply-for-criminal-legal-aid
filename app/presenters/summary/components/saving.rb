@@ -6,6 +6,7 @@ module Summary
       private
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+        Rails.logger.debug saving.ownership_type
         [
           Components::FreeTextAnswer.new(
             :provider_name, saving.provider_name
@@ -26,7 +27,7 @@ module Summary
             :are_wages_paid_into_account, saving.are_wages_paid_into_account
           ),
           Components::ValueAnswer.new(
-            :account_holder, saving.account_holder
+            :saving_ownership_type, saving.ownership_type
           )
         ]
       end

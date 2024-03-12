@@ -39,6 +39,15 @@ en:
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
       premium_bonds: Premium Bonds
+      investments: Investments
+      investment: 
+        bond: Investment bond
+        pep: Personal equity plan (PEP)
+        share: Shares
+        share_isa: Share ISA
+        stock: Stock, including gilts and government bonds
+        unit_trust: Unit trust
+        other: Other lump sum investment
 
     questions:
       # BEGIN overview section
@@ -325,7 +334,7 @@ en:
       account_balance:
         question: What is the account balance?
         absence_answer: *absence_none
-      account_holder:
+      saving_ownership_type:
         question: Whose name is the account in?
         answers: *OWNERSHIP_TYPE
         absence_answer: *absence_none
@@ -358,3 +367,16 @@ en:
         question: Enter the holder number
         absence_answer: ''
       # END premium_bonds
+      #
+      # START investments
+      description: 
+        question: Describe the investment
+        absence_answer: *absence_none
+      value: 
+        question: What is the value of the investment?
+        absence_answer: *absence_none
+      ownership_type: 
+        question: Whose name is the investment in?
+        answers: *OWNERSHIP_TYPE 
+        absence_answer: *absence_none
+      # END investments

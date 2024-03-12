@@ -45,6 +45,32 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
+  context 'when the step is `investments_summary`' do
+    let(:form_object) { double('FormObject', investment:) }
+    let(:step_name) { :investments_summary }
+    let(:investment) { 'new_investment' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_investment:)
+    end
+
+    context 'the client has selected yes to adding a investments account' do
+      let(:add_investment) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `investment type` page' do
+        expect(subject).to have_destination(:other_investment_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding a investments account' do
+      let(:add_investment) { YesNoAnswer::NO }
+
+      it 'redirects to the case page' do
+        expect(subject).to have_destination('/steps/case/urn', :edit, id: crime_application)
+      end
+    end
+  end
+
   context 'when the step is `property_type`' do
     let(:form_object) { double('FormObject', property:) }
     let(:step_name) { :property_type }
@@ -192,6 +218,27 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
+  context 'when the step is `investment_type`' do
+    let(:form_object) { double('FormObject', investment:) }
+    let(:step_name) { :investment_type }
+
+    context 'the client has no investments' do
+      let(:investment) { nil }
+
+      it 'redirects premium bonds' do
+        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected a investment type' do
+      let(:investment) { 'new_investment' }
+
+      it 'redirects the edit `investments` page' do
+        expect(subject).to have_destination(:investments, :edit, id: crime_application, investment_id: investment)
+      end
+    end
+  end
+
   context 'when the step is `savings`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :savings }
@@ -201,12 +248,21 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
+  context 'when the step is `investments`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :investments }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination(:investments_summary, :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `premium_bonds`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :premium_bonds }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:investment_type, :edit, id: crime_application) }
     end
   end
 
@@ -219,6 +275,19 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
       it 'redirects the edit `savings` page' do
         expect(subject).to have_destination(:savings, :edit, id: crime_application, saving_id: saving)
+      end
+    end
+  end
+
+  context 'when the step is `other_investment_type`' do
+    let(:form_object) { double('FormObject', investment:) }
+    let(:step_name) { :other_investment_type }
+
+    context 'the client has selected a investment type' do
+      let(:investment) { 'new_investment' }
+
+      it 'redirects the edit `investments` page' do
+        expect(subject).to have_destination(:investments, :edit, id: crime_application, investment_id: investment)
       end
     end
   end

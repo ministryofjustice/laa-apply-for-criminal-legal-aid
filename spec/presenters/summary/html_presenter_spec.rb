@@ -10,8 +10,8 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(CrimeApplication, applicant: double, case: double, ioj: double,
                     status: :in_progress, income: double, outgoings: double,
-                    documents: double, application_type: application_type, savings: [double],
-                    capital: double)
+                    documents: double, application_type: application_type,
+                    capital: double, savings: [double], investments: [double])
   end
 
   let(:datastore_application) do
@@ -20,12 +20,16 @@ describe Summary::HtmlPresenter do
         'capital_details' => {
           'savings' => [{ 'saving_type' => 'bank',
                           'provider_name' => 'Test Bank',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '01-01-01',
                           'account_number' => '01234500',
                           'account_balance' => 10_001,
                           'is_overdrawn' => 'yes',
                           'are_wages_paid_into_account' => 'yes' }],
+          'investments' => [{ 'investment_type' => 'share_isa',
+                          'description' => 'About my ISA',
+                          'value' => 10_001,
+                          'ownership_type' => 'applicant_and_partner' }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A'
@@ -71,6 +75,7 @@ describe Summary::HtmlPresenter do
             OtherOutgoingsDetails
             Savings
             PremiumBonds
+            Investments
             SupportingEvidence
             MoreInformation
           ]
@@ -101,6 +106,7 @@ describe Summary::HtmlPresenter do
             OtherOutgoingsDetails
             Savings
             PremiumBonds
+            Investments
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails

@@ -4,7 +4,7 @@ module Steps
       private
 
       def persist!
-        @saving = crime_application.savings.create(saving_type:)
+        @saving = crime_application.savings.create!(saving_type:)
       end
     end
   end

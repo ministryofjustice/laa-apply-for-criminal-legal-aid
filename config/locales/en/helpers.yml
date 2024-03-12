@@ -117,9 +117,17 @@ en:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
         confirm_in_applicants_name: Confirm the following
-        account_holder: Whose name is the account in?
+        ownership_type: Whose name is the account in?
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
+      steps_capital_investment_type_form:
+        investment_type: Which investments does your client have inside or outside the UK?
+      steps_capital_other_investment_type_form:
+        investment_type: Which other investments does your client have inside or outside the UK?
+      steps_capital_investments_form:
+        confirm_in_applicants_name: Confirm the following
+      steps_capital_investments_summary_form:
+        add_investment: Do you want to add another investment?
       steps_capital_residential_property_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
@@ -205,6 +213,12 @@ en:
         saving_type: Add one savings account at a time. You can add more later.
       steps_capital_other_saving_type_form:
         saving_type: Add one savings account at a time. You can add more later.
+      steps_capital_investment_type_form:
+        investment_type: Add one investment at a time. You can add more later.
+      steps_capital_other_investment_type_form:
+        investment_type: Add one investment at a time. You can add more later.
+      steps_capital_investments_form:
+        description: For example, which companies your client has invested in, the value of each share owned, or when they can access the investment.
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Select all that apply.
         types_options:
@@ -492,8 +506,20 @@ en:
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_investment_type_form:
+        investment_type_options: &INVESTMENT_TYPE_OPTIONS
+          bond: Investment bonds
+          pep: Personal equity plans (PEPs)
+          share: Shares
+          share_isa: Share ISAs
+          stock: Stocks, including gilts and government bonds
+          unit_trust: Unit trusts
+          other: Any other lump sum investments
+          none: My client does not have any of these investments
       steps_capital_other_saving_type_form:
         saving_type_options: *SAVING_TYPE_OPTIONS
+      steps_capital_other_investment_type_form:
+        investment_type_options: *INVESTMENT_TYPE_OPTIONS
       steps_capital_savings_form:
         provider_name: What is the name of the bank, building society or other holder of the savings?
         sort_code: What is the sort code or branch name?
@@ -501,11 +527,20 @@ en:
         account_balance: What is the account balance?
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
-        account_holder_options: *OWNERSHIP_OPTIONS
+        ownership_type_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
+          'true': I confirm that the account is in my client's name
+      steps_capital_investments_form:
+        description: Describe the investment
+        value: What is the value of the investment?
+        ownership_type: Whose name is the investment in?
+        ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_savings_summary_form:
         add_saving_options: *YESNO
+      steps_capital_investments_summary_form:
+        add_investment_options: *YESNO
       steps_capital_premium_bonds_form:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds

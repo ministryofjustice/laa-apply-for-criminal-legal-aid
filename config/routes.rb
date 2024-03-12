@@ -185,6 +185,10 @@ Rails.application.routes.draw do
         crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
         crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
         crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
+        edit_step :which_investments_does_client_have, alias: :investment_type
+        edit_step :which_other_investments_does_client_have, alias: :other_investment_type
+        crud_step :investments, param: :investment_id
+        edit_step :clients_investments, alias: :investments_summary
       end
 
       namespace :evidence do
