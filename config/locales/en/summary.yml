@@ -414,7 +414,8 @@ en:
       bedrooms:
         question: How many bedrooms are there?
         absence_answer: *absence_none
-      value:
+      # TODO :: Temporary fix to avoid duplicate keys in summary.yml
+      property_value:
         question: How much is the property worth?
         absence_answer: *absence_none
       outstanding_mortgage:
