@@ -14,6 +14,7 @@ module Summary
             Components::FreeTextAnswer.new(
               :bedrooms, property.bedrooms.to_s
             ),
+            # TODO :: Temporary fix to avoid duplicate keys in summary.yml
             Components::MoneyAnswer.new(
               :property_value, property.value
             ),
