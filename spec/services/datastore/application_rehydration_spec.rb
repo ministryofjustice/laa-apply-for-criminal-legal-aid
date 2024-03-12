@@ -368,7 +368,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         expect(crime_application).to receive(:update!).with(
           hash_including(
             savings: contain_exactly(Saving, Saving),
-            properties: contain_exactly(Property, Property)
+            properties: contain_exactly(Property)
           )
         )
 

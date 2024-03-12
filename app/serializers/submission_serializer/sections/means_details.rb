@@ -39,6 +39,7 @@ module SubmissionSerializer
                 json.premium_bonds_holder_number capital.premium_bonds_holder_number
                 json.savings Definitions::Saving.generate(capital.savings)
                 json.investments Definitions::Investment.generate(capital.investments)
+                json.properties Definitions::Property.generate(capital.properties)
               end
             end
           end
