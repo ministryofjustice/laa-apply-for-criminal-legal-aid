@@ -18,8 +18,6 @@ RSpec.describe Summary::Components::Property, type: :component do
                     custom_relationship: 'xyz',
                     percentage_owned: 10)
   }
-
-  let(:property_owner) { instance_double(PropertyOwner, name: 'Joe', relationship: 'friends', percentage_owned: 10) }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
   let(:client_has_partner) { false }
   let(:relationship) { 'friends' }
@@ -41,14 +39,6 @@ RSpec.describe Summary::Components::Property, type: :component do
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
       address: { city: 'London', postcode: 'TW7' },
-    }
-  end
-
-  let(:is_home_address) { 'yes' }
-  let(:has_other_owners) { 'yes' }
-
-      is_home_address: 'yes',
-      has_other_owners: 'yes',
     }
   end
 
