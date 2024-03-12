@@ -11,6 +11,8 @@
       <%= t(".heading.#{@form_object.investment_type}") %>
     </h1>
 
+    <p><%= t('.info') %></p>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_area :description, autocomplete: 'off' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>

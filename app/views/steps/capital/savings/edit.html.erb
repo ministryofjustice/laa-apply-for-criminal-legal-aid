@@ -11,6 +11,8 @@
       <%= t(".heading.#{@form_object.saving_type}") %>
     </h1>
 
+    <p><%= t('.info') %></p>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :provider_name, autocomplete: 'off' %>
       <%= f.govuk_text_field :sort_code, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>

@@ -330,6 +330,7 @@ en:
             cash_isa: Your client’s cash ISA
             national_savings_or_post_office: Your client’s National Savings or Post Office account
             other: Your client’s other cash investment
+          info: You told us your client has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
           heading: Are you sure you want to remove this savings account?
@@ -367,6 +368,7 @@ en:
             stock: Your client’s stocks, including gilts and government bonds
             unit_trust: Your client’s unit trusts
             other: Your client’s other lump sum investments
+          info: You told us your client has investments.
         confirm_destroy:
           page_title: Delete investment confirmation
           heading: Are you sure you want to remove this investment?
