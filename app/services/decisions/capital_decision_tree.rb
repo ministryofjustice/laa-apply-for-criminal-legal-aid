@@ -20,11 +20,11 @@ module Decisions
       when :property_address
         after_property_address
       when :property_owners
-        after_property_owner
+        edit(:properties_summary)
       when :add_property_owner
         after_add_property_owner
       when :delete_property_owner
-        after_delete_property_owner
+        edit(:property_owners, property_id: property)
       when :premium_bonds
         edit(:has_national_savings_certificates)
       when :has_national_savings_certificates
@@ -120,16 +120,8 @@ module Decisions
       property_owners.reject(&:complete?)
     end
 
-    def after_property_owner
-      edit(:properties_summary)
-    end
-
     def after_add_property_owner
       property_owners << PropertyOwner.new
-      edit(:property_owners, property_id: property)
-    end
-
-    def after_delete_property_owner
       edit(:property_owners, property_id: property)
     end
 
