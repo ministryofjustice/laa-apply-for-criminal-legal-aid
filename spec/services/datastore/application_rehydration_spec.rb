@@ -46,7 +46,8 @@ RSpec.describe Datastore::ApplicationRehydration do
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),
         capital: nil,
-        savings: [] # capital and savings tested separately
+        savings: [], # capital and savings tested separately
+        investments: [] # capital and savings tested separately
       )
 
       expect(

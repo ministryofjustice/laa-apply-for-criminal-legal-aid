@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionSerializer::Sections::MeansDetails do
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -14,6 +15,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       income_benefits:,
       capital:,
       savings:,
+      investments:,
     )
   end
 
@@ -22,6 +24,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   end
 
   let(:savings) { [] }
+  let(:investments) { [] }
 
   describe '#generate' do
     let(:income) do
@@ -100,7 +103,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         has_premium_bonds: 'yes',
         premium_bonds_total_value_before_type_cast: 123,
         premium_bonds_holder_number: '123A',
-        savings: []
+        savings: [],
+        investments: []
       )
     end
 
@@ -157,7 +161,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             has_premium_bonds: 'yes',
             premium_bonds_total_value: 123,
             premium_bonds_holder_number: '123A',
-            savings: []
+            savings: [],
+            investments: []
           }
         }
       }.as_json
@@ -244,4 +249,5 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       expect(subject.generate).to eq(json_output)
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

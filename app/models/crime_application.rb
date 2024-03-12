@@ -33,6 +33,11 @@ class CrimeApplication < ApplicationRecord
            inverse_of: :crime_application,
            dependent: :destroy)
 
+  has_many(:investments,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case
   has_many :addresses, through: :people

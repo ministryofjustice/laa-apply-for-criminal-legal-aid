@@ -23,6 +23,7 @@ module Summary
         other_outgoings_details
         savings
         premium_bonds
+        investments
         supporting_evidence
         more_information
         legal_representative_details

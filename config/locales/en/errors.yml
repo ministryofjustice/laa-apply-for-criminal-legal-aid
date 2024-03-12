@@ -509,6 +509,7 @@ en:
               blank: Enter the account number
             account_balance:
               blank: Enter the account balance
+              not_a_number: The account balance must be a number, like 50
             is_overdrawn:
               inclusion: Select yes if the account is overdrawn
             are_wages_paid_into_account:
@@ -570,6 +571,29 @@ en:
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
+        steps/capital/investment_type_form:
+          attributes:
+            investment_type:
+              blank: Select which investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+        steps/capital/other_investment_type_form:
+          attributes:
+            investment_type:
+              blank: Select which other investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+        steps/capital/investments_form:
+          attributes:
+            description:
+              blank: Describe the investment
+            value:
+              blank: Enter the value of the investment 
+              not_a_number: The value of their investment must be a number, like 50
+            holder:
+              inclusion: Select whose name the account is in
+            confirm_in_applicants_name:
+              confirm: Confirm the investment is in your client’s name
+        steps/capital/investments_summary_form:
+          attributes:
+            add_investment:
+              inclusion: Select yes if you want to add another investment
         steps/submission/more_information_form:
           attributes:
             additional_information:

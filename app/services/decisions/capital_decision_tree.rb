@@ -26,8 +26,15 @@ module Decisions
       when :delete_property_owner
         after_delete_property_owner
       when :premium_bonds
-        # TODO: Route to national savings certificates once built
-        edit('/steps/case/urn') # Placeholder to join up flow
+        edit(:investment_type)
+      when :investment_type
+        after_investment_type(form_object.investment)
+      when :other_investment_type
+        edit(:investments, investment_id: form_object.investment)
+      when :investments
+        edit(:investments_summary)
+      when :investments_summary
+        after_investments_summary
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -46,6 +53,18 @@ module Decisions
       return edit(:premium_bonds) if form_object.add_saving.no?
 
       edit(:other_saving_type)
+    end
+
+    def after_investment_type(investment)
+      return edit(:premium_bonds) unless investment
+
+      edit(:investments, investment_id: investment)
+    end
+
+    def after_investments_summary
+      return edit('/steps/case/urn') if form_object.add_investment.no?
+
+      edit(:other_investment_type)
     end
 
     def after_property_type(property)
