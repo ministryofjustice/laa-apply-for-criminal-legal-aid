@@ -280,7 +280,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
       let(:investment) { nil }
 
       it 'redirects premium bonds' do
-        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
       end
     end
 

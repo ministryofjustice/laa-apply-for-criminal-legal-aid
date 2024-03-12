@@ -65,7 +65,7 @@ module Decisions
     end
 
     def after_investment_type(investment)
-      return edit(:premium_bonds) unless investment
+      return edit(:trust_fund) unless investment
 
       edit(:investments, investment_id: investment)
     end
