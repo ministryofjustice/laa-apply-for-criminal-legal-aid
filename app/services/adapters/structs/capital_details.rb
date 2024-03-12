@@ -14,12 +14,14 @@ module Adapters
       end
 
       def national_savings_certificates
-        []
-        # TODO: add rehydration from datastore
+        return [] unless __getobj__
+
+        super.map { |attrs| NationalSavingsCertificate.new(**attrs) }
       end
 
       def serializable_hash(options = {})
-        super options.merge(except: [:savings, :investments])
+        except = %i[savings investments national_savings_certificates properties]
+        super options.merge(except:)
       end
     end
   end

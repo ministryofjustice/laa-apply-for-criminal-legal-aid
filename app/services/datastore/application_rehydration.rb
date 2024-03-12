@@ -30,7 +30,8 @@ module Datastore
         income_benefits: income_benefits,
         capital: capital,
         savings: capital ? parent.capital.savings : [],
-        investments: capital ? parent.capital.investments : []
+        investments: capital ? parent.capital.investments : [],
+        national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
       )
     end
 
