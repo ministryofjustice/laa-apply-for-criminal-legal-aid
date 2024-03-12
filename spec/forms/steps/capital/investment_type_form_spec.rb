@@ -37,25 +37,25 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
       end
     end
 
-    context 'when there are no investments of the investment type' do
-      it 'a new investment of the investment type is created' do
+    context 'when there are no existing investment records of the selected investment type' do
+      it 'a new investment record of the investment type is created' do
         expect(form.investment).to be new_investment
         expect(investments).to have_received(:create!).with(investment_type:)
       end
     end
 
-    context 'when a investment of the type exists' do
+    context 'when an investment record of the selected investment type exists' do
       let(:existing_investments) { [existing_investment] }
 
-      it 'is set as the investment' do
+      it 'is set as the investment record' do
         expect(form.investment).to be existing_investment
         expect(investments).not_to have_received(:create!)
       end
 
-      context 'when the existing investment is complete' do
+      context 'when the existing investment record is complete' do
         let(:complete?) { true }
 
-        it 'a new investment of the investment type is created' do
+        it 'a new investment record of the selected investment type is created' do
           expect(form.investment).to be new_investment
           expect(investments).to have_received(:create!).with(investment_type:)
         end

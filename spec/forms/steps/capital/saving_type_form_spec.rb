@@ -38,25 +38,25 @@ RSpec.describe Steps::Capital::SavingTypeForm do
       end
     end
 
-    context 'when there are no savings of the saving type' do
-      it 'a new saving of the saving type is created' do
+    context 'when there are no existing savings records of the selected saving type' do
+      it 'a new saving record of the saving type is created' do
         expect(form.saving).to be new_saving
         expect(savings).to have_received(:create!).with(saving_type:)
       end
     end
 
-    context 'when a saving of the type exists' do
+    context 'when a saving record of the selected saving type exists' do
       let(:existing_savings) { [existing_saving] }
 
-      it 'is set as the saving' do
+      it 'is set as the saving record' do
         expect(form.saving).to be existing_saving
         expect(savings).not_to have_received(:create!)
       end
 
-      context 'when the existing saving is complete' do
+      context 'when the existing saving record is complete' do
         let(:complete?) { true }
 
-        it 'a new saving of the saving type is created' do
+        it 'a new saving record of the selected saving type is created' do
           expect(form.saving).to be new_saving
           expect(savings).to have_received(:create!).with(saving_type:)
         end
