@@ -47,14 +47,6 @@ RSpec.describe Summary::Components::Property, type: :component do
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'yes' }
 
-      is_home_address: 'yes',
-      has_other_owners: 'yes',
-    }
-  end
-
-  let(:is_home_address) { 'yes' }
-  let(:has_other_owners) { 'yes' }
-
   before { component }
 
   describe 'actions' do
