@@ -83,7 +83,7 @@ module Decisions
     end
 
     def after_investments_summary
-      return edit('/steps/case/urn') if form_object.add_investment.no?
+      return edit(:trust_fund) if form_object.add_investment.no?
 
       edit(:other_investment_type)
     end

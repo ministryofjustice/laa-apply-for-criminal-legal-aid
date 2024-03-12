@@ -65,8 +65,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected no to adding a investments account' do
       let(:add_investment) { YesNoAnswer::NO }
 
-      it 'redirects to the case page' do
-        expect(subject).to have_destination('/steps/case/urn', :edit, id: crime_application)
+      it 'redirects to the trust fund page' do
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
       end
     end
   end
