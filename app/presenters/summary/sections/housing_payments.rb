@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class HousingPayments < Sections::BaseSection
+      include ActionView::Helpers::NumberHelper
+
       def show?
         outgoings.present? && super
       end
@@ -20,7 +22,7 @@ module Summary
               :rent, rent,
               change_path: edit_steps_outgoings_rent_path
             ),
-          ] + council_tax_info
+          ] + board_and_lodging_info + council_tax_info
         ).select(&:show?)
       end
 
@@ -28,6 +30,31 @@ module Summary
 
       def outgoings
         @outgoings ||= crime_application.outgoings
+      end
+
+      def board_and_lodging_info # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+        return [] unless board_and_lodging
+
+        details = board_and_lodging.metadata['details']
+
+        [
+          Components::FreeTextAnswer.new(
+            :board_amount, formatted_amount_and_frequency(details['board_amount'], board_and_lodging.frequency.value),
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::FreeTextAnswer.new(
+            :food_amount, formatted_amount_and_frequency(details['food_amount'], board_and_lodging.frequency.value),
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::FreeTextAnswer.new(
+            :payee_name, details['payee_name'],
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::FreeTextAnswer.new(
+            :payee_relationship_to_client, details['payee_relationship_to_client'],
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          )
+        ]
       end
 
       def council_tax_info
@@ -43,6 +70,11 @@ module Summary
             change_path: edit_steps_outgoings_council_tax_path
           ),
         ]
+      end
+
+      def formatted_amount_and_frequency(amount, frequency)
+        "#{number_to_currency(amount, unit: '£', separator: '.',
+delimiter: ',')} every #{PaymentFrequencyType.to_phrase(frequency)}"
       end
 
       # TODO: Attempted to get an appropriate Struct to return this value
