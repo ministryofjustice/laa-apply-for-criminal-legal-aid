@@ -257,7 +257,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'What percentage of the property do they own?',
-          '10%',
+          '10.57%',
         )
       end
 
