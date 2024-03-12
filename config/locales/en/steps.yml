@@ -438,7 +438,7 @@ en:
 
       properties_summary:
         edit:
-          page_title: Assets summary list
+          page_title: Your client’s assets
           heading:
             zero: You have not added assets yet
             one: You have added %{count} asset

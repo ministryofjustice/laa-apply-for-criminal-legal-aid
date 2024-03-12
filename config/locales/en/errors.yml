@@ -533,7 +533,7 @@ en:
         steps/capital/other_property_type_form:
           attributes:
             property_type:
-              blank: Select which other assets your client has inside or outside the UK, or select 'My client does not have any of these assets'
+              blank: Select which other savings your client owns or part-owns inside or outside the UK
         steps/capital/residential_property_form:
           attributes:
             house_type:
