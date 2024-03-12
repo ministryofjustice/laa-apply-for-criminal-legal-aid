@@ -51,6 +51,19 @@ describe Summary::Sections::HousingPayments do
     )
   end
 
+  let(:board_and_lodging_payment) do
+    instance_double(
+      OutgoingsPayment,
+      payment_type: 'board_and_lodging',
+      amount: 750,
+      frequency: 'month',
+      board_amount: 800,
+      food_amount: 50,
+      payee_name: 'George',
+      payee_relationship_to_client: 'Friend'
+    )
+  end
+
   # A legitimate outgoing but should not be shown in this section
   let(:maintenance_payment) do
     instance_double(
@@ -210,6 +223,42 @@ describe Summary::Sections::HousingPayments do
           .to match('applications/12345/steps/outgoings/rent_payments')
         expect(answers[1].value.amount).to eq(5555)
         expect(answers[1].value.frequency).to eq('month')
+      end
+    end
+
+    context 'with board and lodging' do
+      let(:outgoings_payments) do
+        [
+          board_and_lodging_payment
+        ]
+      end
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(5)
+
+        expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
+        expect(answers[1].question).to eq(:board_amount)
+        expect(answers[1].change_path)
+          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+        expect(answers[1].value.amount).to eq(800)
+
+        expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
+        expect(answers[2].question).to eq(:food_amount)
+        expect(answers[2].change_path)
+          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+        expect(answers[2].value.amount).to eq(50)
+
+        expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[3].question).to eq(:payee_name)
+        expect(answers[3].change_path)
+          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+        expect(answers[3].value).to eq('George')
+
+        expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[4].question).to eq(:payee_relationship_to_client)
+        expect(answers[4].change_path)
+          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+        expect(answers[4].value).to eq('Friend')
       end
     end
   end

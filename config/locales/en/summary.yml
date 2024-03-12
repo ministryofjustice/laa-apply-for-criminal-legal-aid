@@ -292,6 +292,24 @@ en:
         question: How much rent does your client pay, after taking away Housing Benefit?
         answers:
           description: "%{amount} every %{frequency}"
+      # BEGIN board and lodgings section
+      board_amount:
+        question: How much does your client pay for board and lodgings?
+        answers:
+          description: "%{amount} every %{frequency}"
+      food_amount:
+        question: How much of the board and lodgings payment is for food?
+        answers:
+          description: "%{amount} every %{frequency}"
+      payee_name:
+        question: What is the name of the person your client pays for board and lodgings?
+        answers:
+          description: "%{name}"
+      payee_relationship_to_client:
+        question: What is your client's relationship to this person?
+        answers:
+          description: "%{relationship}"
+      # END board and lodgings section
       pays_council_tax:
         question: Does your client pay Council Tax where they usually live?
         answers:
