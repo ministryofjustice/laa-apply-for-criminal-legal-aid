@@ -15,7 +15,7 @@ module Summary
               :bedrooms, property.bedrooms.to_s
             ),
             Components::MoneyAnswer.new(
-              :value, property.value
+              :property_value, property.value
             ),
             Components::MoneyAnswer.new(
               :outstanding_mortgage, property.outstanding_mortgage
