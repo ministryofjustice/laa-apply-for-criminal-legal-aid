@@ -4,7 +4,7 @@
   end
 
   content_for(:row_answer, flush: true) do
-    number_to_percentage(percentage_answer.value, precision: 2) if percentage_answer.value
+    number_to_percentage(percentage_answer.value, precision: 0) if percentage_answer.value
   end
 %>
 
