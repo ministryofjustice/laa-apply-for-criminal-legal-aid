@@ -87,7 +87,7 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      edit(:properties_summary) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def after_property_address
@@ -95,7 +95,7 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      edit(:properties_summary) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def incomplete_property_owners
@@ -103,7 +103,7 @@ module Decisions
     end
 
     def after_property_owner
-      edit(:properties_summary) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def after_add_property_owner
