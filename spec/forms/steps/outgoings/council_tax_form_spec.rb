@@ -150,4 +150,12 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       end
     end
   end
+
+  describe '#amount' do
+    let(:other_args) do
+      { 'pays_council_tax' => 'yes' }
+    end
+
+    it_behaves_like 'a basic amount', described_class
+  end
 end

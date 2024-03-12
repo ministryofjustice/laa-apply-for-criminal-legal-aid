@@ -45,7 +45,7 @@ module Steps
       end
 
       def reset!
-        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX).destroy_all
+        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.value).destroy_all
       end
     end
   end

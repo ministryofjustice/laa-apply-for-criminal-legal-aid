@@ -19,14 +19,15 @@ module Steps
         outgoings.update(
           attributes
         )
+
         @housing_payment = existing_housing_payment || crime_application.outgoings_payments.create(
-          payment_type: housing_payment_type
+          payment_type: housing_payment_type.value
         )
       end
 
       # :nocov:
       def existing_housing_payment
-        crime_application.outgoings_payments.where(payment_type: housing_payment_type).first
+        crime_application.outgoings_payments.where(payment_type: housing_payment_type.value).first
       end
       # :nocov:
     end
