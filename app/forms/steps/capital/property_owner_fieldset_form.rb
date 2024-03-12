@@ -6,7 +6,7 @@ module Steps
       attribute :name, :string
       attribute :relationship, :string
       attribute :custom_relationship, :string
-      attribute :percentage_owned, :integer
+      attribute :percentage_owned, :decimal
 
       validates :name, :relationship, :percentage_owned, presence: true
       validates :custom_relationship, presence: true, if: :custom_relationship?

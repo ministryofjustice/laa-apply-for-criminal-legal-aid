@@ -16,7 +16,7 @@ RSpec.describe Summary::Components::Property, type: :component do
                     name: 'Joe',
                     relationship: relationship,
                     custom_relationship: 'xyz',
-                    percentage_owned: 10)
+                    percentage_owned: 10.567)
   }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
   let(:client_has_partner) { false }
@@ -34,7 +34,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       bedrooms: 3,
       value: 200_000,
       outstanding_mortgage: 100_000,
-      percentage_applicant_owned: 70,
+      percentage_applicant_owned: 70.538,
       percentage_partner_owned: 50,
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
@@ -89,7 +89,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       )
       expect(page).to have_summary_row(
         'What percentage of the property does your client own?',
-        '70%',
+        '70.54%',
       )
       expect(page).to have_summary_row(
         'Is the address of the property the same as your client’s home address?',
@@ -133,7 +133,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       it 'renders as summary list with partner percentage' do
         expect(page).to have_summary_row(
           'What percentage of the property does your client’s partner own?',
-          '50%',
+          '50.00%',
         )
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       it 'renders as summary list without partner percentage', pending: 'to investigate why `not_to` is not working' do
         expect(page).not_to have_summary_row(
           'What percentage of the property does your client’s partner own?',
-          '50%',
+          '50.00%',
         )
       end
     end
@@ -167,7 +167,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'What percentage of the property do they own?',
-          '10%',
+          '10.57%',
         )
       end
 
