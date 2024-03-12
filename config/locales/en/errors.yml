@@ -530,6 +530,10 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
+        steps/capital/has_national_savings_certificates_form:
+          attributes:
+            has_national_savings_certificates:
+              inclusion: Select yes if your client has any National Savings Certificates
         steps/capital/residential_property_form:
           attributes:
             house_type:

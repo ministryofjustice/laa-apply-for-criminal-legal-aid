@@ -177,18 +177,26 @@ Rails.application.routes.draw do
 
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :which_assets_does_client_own, alias: :property_type
+
         edit_step :which_savings_does_client_have, alias: :saving_type
         edit_step :which_other_savings_does_client_have, alias: :other_saving_type
         crud_step :savings, param: :saving_id
         edit_step :clients_savings, alias: :savings_summary
+
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
         crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
         crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
         crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
+        
+        edit_step :does_client_have_national_savings_certificates, alias: :has_national_savings_certificates
+        crud_step :national_savings_certificates, param: :national_savings_certificate_id
+        edit_step :clients_national_savings_certificates, alias: :national_savings_certificates_summary
+
         edit_step :which_investments_does_client_have, alias: :investment_type
         edit_step :which_other_investments_does_client_have, alias: :other_investment_type
         crud_step :investments, param: :investment_id
         edit_step :clients_investments, alias: :investments_summary
+
       end
 
       namespace :evidence do

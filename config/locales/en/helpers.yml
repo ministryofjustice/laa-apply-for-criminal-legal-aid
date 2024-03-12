@@ -545,6 +545,8 @@ en:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
+      steps_capital_has_national_savings_certificates_form:
+        has_national_savings_certificates_options: *YESNO
       steps_capital_residential_property_form:
         house_type_options:
           bungalow: Bungalow
