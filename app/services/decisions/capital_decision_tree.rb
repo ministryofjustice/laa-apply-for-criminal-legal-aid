@@ -40,8 +40,7 @@ module Decisions
       when :investments
         edit(:investments_summary)
       when :investments_summary
-        # TODO: Route to national savings certificates once built
-        edit('/steps/case/urn') # Placeholder to join up flow
+        after_investments_summary
       when :trust_fund
         # TODO: Route to assets page if required
         edit('/steps/evidence/upload')
