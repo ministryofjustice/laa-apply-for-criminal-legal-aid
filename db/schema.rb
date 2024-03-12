@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_12_171957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -231,7 +231,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "payment_type"
+    t.string "payment_type", null: false
     t.integer "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}
@@ -255,7 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
+    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -268,8 +268,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.integer "bedrooms"
     t.integer "value"
     t.integer "outstanding_mortgage"
-    t.integer "percentage_applicant_owned"
-    t.integer "percentage_partner_owned"
+    t.decimal "percentage_applicant_owned"
+    t.decimal "percentage_partner_owned"
     t.string "is_home_address"
     t.string "has_other_owners"
     t.jsonb "address"
@@ -283,7 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.string "name"
     t.string "relationship"
     t.string "custom_relationship"
-    t.integer "percentage_owned"
+    t.decimal "percentage_owned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_property_owners_on_property_id"
