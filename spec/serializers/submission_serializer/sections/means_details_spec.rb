@@ -17,6 +17,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       savings:,
       investments:,
       national_savings_certificates:,
+      properties:
     )
   end
 
@@ -27,6 +28,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   let(:savings) { [] }
   let(:investments) { [] }
   let(:national_savings_certificates) { [] }
+  let(:properties) { [] }
 
   describe '#generate' do
     let(:income) do
@@ -107,7 +109,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         premium_bonds_holder_number: '123A',
         savings: [],
         investments: [],
-        national_savings_certificates: []
+        national_savings_certificates: [],
+        properties: []
       )
     end
 
@@ -166,7 +169,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             premium_bonds_holder_number: '123A',
             savings: [],
             investments: [],
-            national_savings_certificates: []
+            national_savings_certificates: [],
+            properties: []
           }
         }
       }.as_json
