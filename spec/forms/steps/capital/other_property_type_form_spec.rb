@@ -11,7 +11,7 @@ RSpec.describe Steps::Capital::OtherPropertyTypeForm do
 
   describe '#save' do
     before do
-      allow(properties).to receive(:create).with(property_type:).and_return new_property
+      allow(properties).to receive(:create!).with(property_type:).and_return new_property
 
       form.property_type = property_type
       form.save
@@ -20,7 +20,7 @@ RSpec.describe Steps::Capital::OtherPropertyTypeForm do
     context 'when a property of the type exists' do
       it 'a new property of the property type is created' do
         expect(form.property).to be new_property
-        expect(properties).to have_received(:create).with(property_type:)
+        expect(properties).to have_received(:create!).with(property_type:)
       end
     end
   end
