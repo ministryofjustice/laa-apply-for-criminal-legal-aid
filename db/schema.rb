@@ -243,7 +243,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "payment_type", null: false
+    t.string "payment_type"
     t.integer "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}

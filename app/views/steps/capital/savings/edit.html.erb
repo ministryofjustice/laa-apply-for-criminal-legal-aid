@@ -21,18 +21,7 @@
       <%= f.govuk_collection_radio_buttons :is_overdrawn, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
       <%= f.govuk_collection_radio_buttons :are_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
 
-      <% if f.object.include_partner? %>
-<<<<<<< HEAD
-        <%= f.govuk_collection_radio_buttons :ownership_type, OwnershipType.values, :value, legend: { size: 's' } %>
-=======
-        <%= f.govuk_collection_radio_buttons :holder, OwnershipType.values, :value, legend: { size: 's' } %>
->>>>>>> 70ae9add (asdf)
-      <% else %>
-
-        <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { size: 'm' } do %>
-        <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false %>
-        <% end %>
-      <% end %>
+      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: } %>
       <%= f.continue_button %>
     <% end %>
   </div>

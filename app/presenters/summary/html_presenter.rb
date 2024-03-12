@@ -23,6 +23,7 @@ module Summary
         other_outgoings_details
         savings
         premium_bonds
+        national_savings_certificates
         investments
         supporting_evidence
         more_information

@@ -12,7 +12,5 @@ class CreateNationalSavingsCertificates < ActiveRecord::Migration[7.0]
     end
 
     add_column :capitals, :has_national_savings_certificates, :string
-    rename_column :savings, :account_holder, :ownership_type
-    # rename_column :investments, :holder, :ownership_type
   end
 end

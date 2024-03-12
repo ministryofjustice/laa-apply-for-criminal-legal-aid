@@ -48,6 +48,8 @@ en:
         stock: Stock, including gilts and government bonds
         unit_trust: Unit trust
         other: Other lump sum investment
+      national_savings_certificates: National Savings Certificates
+      national_savings_certificate: National Savings Certificate
 
     questions:
       # BEGIN overview section
@@ -377,6 +379,22 @@ en:
         absence_answer: *absence_none
       ownership_type: 
         question: Whose name is the investment in?
+        answers: *OWNERSHIP_TYPE 
+        absence_answer: *absence_none
+      # END investments
+      #
+      # START national_savings_certificates
+      national_savings_certificate_holder_number: 
+        question: What is the customer number or holder number?
+        absence_answer: *absence_none
+      national_savings_certificate_certificate_number:
+        question: 'What is the certificate number?'
+        absence_answer: *absence_none
+      national_savings_certificate_value: 
+        question: What is the value of the certificate?
+        absence_answer: *absence_none
+      national_savings_certificate_ownership_type: 
+        question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none
       # END investments

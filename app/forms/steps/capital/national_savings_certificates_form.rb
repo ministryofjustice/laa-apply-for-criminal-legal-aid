@@ -1,16 +1,24 @@
 module Steps
   module Capital
-    class NationalSavingsCertificateForm < Steps::BaseFormObject
-      include Steps::Ownable 
+    class NationalSavingsCertificatesForm < Steps::BaseFormObject
+      include OwnershipConfirmation
 
-      attribute :certificate_number, :string
+      delegate :national_savings_certificate_type, to: :record
+
       attribute :holder_number, :string
+      attribute :certificate_number, :string
       attribute :value, :pence
 
-      validates :certificate_number, :holder_number, :value, presence: true
+      validates :holder_number, :certificate_number, :value, presence: true
 
       def persist!
         record.update(attributes)
+      end
+
+      private
+
+      def before_save
+        set_ownership
       end
     end
   end

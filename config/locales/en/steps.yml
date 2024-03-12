@@ -397,6 +397,30 @@ en:
         edit:
           page_title: Does your client have any National Savings Certificates?
           heading:  Does your client have any National Savings Certificates?
+      national_savings_certificates:
+        edit:
+          page_title: Add investment details
+          heading: Your client’s National Savings Certificates 
+          info: You told us your client has  National Savings Certificates.
+        confirm_destroy:
+          page_title: Delete National Savings Certificate confirmation
+          heading: Are you sure you want to remove this National Savings Certificate?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this National Savings Certificate
+          cancel_delete_button_a11y: No, do not remove this National Savings Certificate
+        destroy:
+          success_flash: You removed the National Savings Certificate
+      national_savings_certificates_summary:
+        edit:
+          page_title: Your client’s National Savings Certificates
+          heading:
+            zero: You have not added National Savings Certificates yet
+            one: You have added %{count} National Savings Certificate
+            other: You have added %{count} National Savings Certificates
+        investment_details:
+          change_link_html: Change <span class="govuk-visually-hidden">National Savings Certificate</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">National Savings Certificate</span>
 
       residential_property:
         edit:

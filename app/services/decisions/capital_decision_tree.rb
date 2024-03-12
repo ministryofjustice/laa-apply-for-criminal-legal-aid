@@ -1,5 +1,5 @@
 module Decisions
-  class CapitalDecisionTree < BaseDecisionTree
+  class CapitalDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
@@ -29,6 +29,8 @@ module Decisions
         edit(:has_national_savings_certificates)
       when :has_national_savings_certificates
         after_has_national_savings_certificates
+      when :national_savings_certificates
+        edit(:national_savings_certificates_summary)
       when :national_savings_certificates_summary
         after_national_savings_certificates_summary
       when :investment_type
@@ -39,7 +41,6 @@ module Decisions
         edit(:investments_summary)
       when :investments_summary
         after_investments_summary
-        edit(:has_national_savings_certificates)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -73,7 +74,7 @@ module Decisions
     end
 
     def after_national_savings_certificates_summary
-      return edit(:investment_type)  if form_object.add_national_savings_certificate.no?
+      return edit(:investment_type) if form_object.add_national_savings_certificate.no?
 
       edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
     end
