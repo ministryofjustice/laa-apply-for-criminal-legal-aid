@@ -1,7 +1,7 @@
 module Steps
   module Capital
     class PropertyForm < Steps::BaseFormObject
-      delegate :property_type, to: :record
+      delegate :property_type, :include_partner?, to: :record
 
       attribute :house_type, :string
       attribute :custom_house_type, :string
@@ -46,10 +46,10 @@ module Steps
         crime_application.applicant.home_address?
       end
 
-      # TODO: use proper partner policy once we have one.
-      def include_partner?
-        YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
-      end
+      # # TODO: use proper partner policy once we have one.
+      # def include_partner?
+      #   YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
+      # end
 
       def custom_house_type?
         house_type == Property::CUSTOM_HOUSE_TYPE
