@@ -598,7 +598,7 @@ en:
           postcode: Postcode
       steps_capital_property_owner_form:
         property_owners_attributes:
-          name: What is the name of the [first] other owner?
+          name: What is the name of the %{index} other owner?
           relationship_options:
             business_associates: Business Associates
             ex_partner: Ex-partner

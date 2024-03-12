@@ -457,7 +457,7 @@ en:
         question: Address
         absence_answer: *absence_none
       name:
-        question: What is the name of the [%{index}] other owner?
+        question: What is the name of the %{index} other owner?
         absence_answer: *absence_none
       relationship:
         question: What is their relationship to your client?
