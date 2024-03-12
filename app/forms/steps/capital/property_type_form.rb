@@ -17,7 +17,7 @@ module Steps
       def persist!
         return true if property_type == 'none'
 
-        @property = incomplete_property_for_type || crime_application.properties.create(property_type:)
+        @property = incomplete_property_for_type || crime_application.properties.create!(property_type:)
       end
 
       def incomplete_property_for_type

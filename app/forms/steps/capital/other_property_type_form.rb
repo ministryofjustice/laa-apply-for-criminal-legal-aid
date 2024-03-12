@@ -4,7 +4,7 @@ module Steps
       private
 
       def persist!
-        @property = crime_application.properties.create(property_type:)
+        @property = crime_application.properties.create!(property_type:)
       end
     end
   end
