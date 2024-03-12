@@ -4,7 +4,7 @@ module Steps
       private
 
       def persist!
-        @investment = crime_application.investments.create(investment_type:)
+        @investment = crime_application.investments.create!(investment_type:)
       end
     end
   end

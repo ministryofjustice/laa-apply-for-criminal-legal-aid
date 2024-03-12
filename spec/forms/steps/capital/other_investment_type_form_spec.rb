@@ -11,7 +11,7 @@ RSpec.describe Steps::Capital::OtherInvestmentTypeForm do
 
   describe '#save' do
     before do
-      allow(investments).to receive(:create).with(investment_type:).and_return new_investment
+      allow(investments).to receive(:create!).with(investment_type:).and_return new_investment
 
       form.investment_type = investment_type
       form.save
@@ -20,7 +20,7 @@ RSpec.describe Steps::Capital::OtherInvestmentTypeForm do
     context 'when a investment of the type exists' do
       it 'a new investment of the investment type is created' do
         expect(form.investment).to be new_investment
-        expect(investments).to have_received(:create).with(investment_type:)
+        expect(investments).to have_received(:create!).with(investment_type:)
       end
     end
   end
