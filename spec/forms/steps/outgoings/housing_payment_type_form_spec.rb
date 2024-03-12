@@ -56,7 +56,7 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
 
       before do
         allow(crime_application.outgoings_payments).to receive(:create).with(
-          payment_type: housing_payment_type
+          payment_type: :rent
         ).and_return outgoings_payment
         allow(form).to receive(:existing_housing_payment).and_return nil
         form.housing_payment_type = housing_payment_type
@@ -70,7 +70,7 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
       end
 
       it 'updates the outgoings record' do
-        expect(crime_application.outgoings.housing_payment_type).to eq(housing_payment_type.to_s)
+        expect(crime_application.outgoings.housing_payment_type.to_s).to eq(housing_payment_type.to_s)
       end
 
       it 'creates an outgoings payment object' do

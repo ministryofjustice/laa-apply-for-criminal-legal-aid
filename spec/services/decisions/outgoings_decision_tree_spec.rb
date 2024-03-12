@@ -94,7 +94,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       let(:step_name) { :board_and_lodging }
 
       context 'has correct next step' do
-        it { is_expected.to have_destination(:council_tax, :edit, id: crime_application) }
+        it { is_expected.to have_destination(:outgoings_payments, :edit, id: crime_application) }
       end
     end
   end

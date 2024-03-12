@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class MeansDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
         Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           next if income.blank?
 
@@ -29,6 +29,7 @@ module SubmissionSerializer
               json.income_tax_rate_above_threshold outgoings&.income_tax_rate_above_threshold
               json.outgoings_more_than_income outgoings&.outgoings_more_than_income
               json.how_manage outgoings&.how_manage
+              json.pays_council_tax outgoings&.pays_council_tax
             end
 
             if capital

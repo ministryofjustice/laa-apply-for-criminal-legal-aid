@@ -144,7 +144,7 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
 
       it 'updates the outgoings payment with the correct attributes' do
         expect(outgoings_payment.amount).to eq('520.00')
-        expect(outgoings_payment.frequency).to eq('month')
+        expect(outgoings_payment.frequency.to_s).to eq('month')
         expect(outgoings_payment.metadata).to eq({
                                                    'board_amount' => 600,
                                                    'food_amount' => 80,

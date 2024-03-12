@@ -281,6 +281,14 @@ en:
         question: How much rent does your client pay, after taking away Housing Benefit?
         answers:
           description: "%{amount} every %{frequency}"
+      pays_council_tax:
+        question: Does your client pay Council Tax where they usually live?
+        answers:
+          <<: *YESNO
+      council_tax:
+        question: How much do they pay yearly?
+        answers:
+          description: "%{amount}"
       # END housing payments section
 
       # BEGIN other outgoings details section

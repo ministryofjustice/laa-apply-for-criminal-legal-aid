@@ -46,6 +46,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: 'mortgage',
         income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
+        pays_council_tax: 'yes',
         how_manage: 'A description of how they manage'
       )
     end
@@ -149,7 +150,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
-            how_manage: 'A description of how they manage'
+            how_manage: 'A description of how they manage',
+            pays_council_tax: 'yes',
           },
           capital_details: {
             has_premium_bonds: 'yes',
@@ -187,7 +189,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: nil,
         income_tax_rate_above_threshold: nil,
         outgoings_more_than_income: nil,
-        how_manage: nil
+        how_manage: nil,
+        pays_council_tax: nil,
       )
     end
 
@@ -214,7 +217,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             housing_payment_type: nil,
             income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
-            how_manage: nil
+            how_manage: nil,
+            pays_council_tax: nil,
           }
         }
       }.as_json

@@ -5,7 +5,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.payment_type payment_type.respond_to?(:value) ? payment_type.to_s : payment_type
           json.amount amount_before_type_cast
-          json.frequency frequency
+          json.frequency frequency.respond_to?(:value) ? frequency.to_s : frequency
           json.metadata metadata
         end
       end

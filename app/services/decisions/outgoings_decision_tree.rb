@@ -4,9 +4,9 @@ module Decisions
       case step_name
       when :housing_payment_type
         after_housing_payment_type
-      when :board_and_lodging, :mortgage, :rent
+      when :mortgage, :rent
         edit(:council_tax)
-      when :council_tax
+      when :board_and_lodging, :council_tax
         edit(:outgoings_payments)
       when :outgoings_payments
         edit(:income_tax_rate)
