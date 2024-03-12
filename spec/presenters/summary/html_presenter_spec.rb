@@ -97,6 +97,7 @@ describe Summary::HtmlPresenter do
             PremiumBonds
             NationalSavingsCertificates
             Investments
+            TrustFund
             SupportingEvidence
             MoreInformation
           ]
@@ -130,6 +131,7 @@ describe Summary::HtmlPresenter do
             PremiumBonds
             NationalSavingsCertificates
             Investments
+            TrustFund
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails
