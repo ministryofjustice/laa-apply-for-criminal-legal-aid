@@ -342,7 +342,7 @@ en:
           success_flash: You removed the savings account
       savings_summary:
         edit:
-          page_title: Savings summary list
+          page_title: Your client’s savings
           heading:
             zero: You have not added savings yet
             one: You have added %{count} saving
@@ -380,7 +380,7 @@ en:
           success_flash: You removed the investment
       investments_summary:
         edit:
-          page_title: investments summary list
+          page_title: Your client’s investments
           heading:
             zero: You have not added investments yet
             one: You have added %{count} investment
