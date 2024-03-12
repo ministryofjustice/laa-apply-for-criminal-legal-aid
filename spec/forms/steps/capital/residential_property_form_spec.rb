@@ -16,7 +16,7 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
     instance_double(CrimeApplication, applicant:)
   end
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
-  let(:record) { instance_double(Property, include_partner?: client_has_partner, 'address=' => nil) }
+  let(:record) { instance_double(Property, include_partner?: client_has_partner, 'address=': nil) }
   let(:client_has_partner) { false }
   let(:home_address?) { true }
 
