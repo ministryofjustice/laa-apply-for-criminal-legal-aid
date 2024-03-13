@@ -76,7 +76,7 @@ en:
       property_owner:
         relationship:
           <<: *RELATIONSHIP
-      trust_fund: Trust Funds
+      trust_fund: Trust funds
 
     questions:
       # BEGIN overview section
