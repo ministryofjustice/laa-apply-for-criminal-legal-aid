@@ -447,6 +447,7 @@ en:
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+          info: You told us your client owns or part-owns residential property.
         destroy:
           success_flash: The asset has been deleted
       commercial_property:
@@ -456,6 +457,7 @@ en:
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+          info: You told us your client owns or part-owns commercial property.
         destroy:
           success_flash: The asset has been deleted
       land:
@@ -465,6 +467,7 @@ en:
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+          info: You told us your client owns or part-owns land.
         destroy:
           success_flash: The asset has been deleted
 

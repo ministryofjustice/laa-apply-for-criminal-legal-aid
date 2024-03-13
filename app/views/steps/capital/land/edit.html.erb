@@ -11,6 +11,8 @@
       <%= t(".heading.#{@form_object.property_type}") %>
     </h1>
 
+    <p><%= t('.info') %></p>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_number_field :size_in_acres, inputmode: 'numeric', suffix_text: 'acres', width: 'one-third' %>
       <%= f.govuk_text_field :usage %>
