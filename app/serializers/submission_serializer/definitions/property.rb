@@ -12,8 +12,8 @@ module SubmissionSerializer
           json.bedrooms bedrooms
           json.value value_before_type_cast
           json.outstanding_mortgage outstanding_mortgage_before_type_cast
-          json.percentage_applicant_owned percentage_applicant_owned.to_f
-          json.percentage_partner_owned percentage_partner_owned.to_f
+          json.percentage_applicant_owned percentage_applicant_owned&.to_f
+          json.percentage_partner_owned percentage_partner_owned&.to_f
           json.is_home_address is_home_address
           json.has_other_owners has_other_owners
           json.address address
