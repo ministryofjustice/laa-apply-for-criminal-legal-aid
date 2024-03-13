@@ -44,7 +44,7 @@ module Summary
 
         property.property_owners.each_with_index do |owner, index|
           attributes << Components::FreeTextAnswer.new(
-            :name, owner.name, i18n_opts: { index: (index + 1).ordinalize }
+            :name, owner.name, i18n_opts: { index: (index + 1).ordinalize_fully }
           )
           attributes << Components::FreeTextAnswer.new(
             :relationship, relationship(owner)
