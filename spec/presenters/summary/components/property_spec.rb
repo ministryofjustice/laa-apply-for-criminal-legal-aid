@@ -158,7 +158,7 @@ RSpec.describe Summary::Components::Property, type: :component do
           'Yes',
         )
         expect(page).to have_summary_row(
-          'What is the name of the 1st other owner?',
+          'What is the name of the first other owner?',
           'Joe',
         )
         expect(page).to have_summary_row(
