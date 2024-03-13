@@ -452,25 +452,31 @@ en:
       bedrooms:
         question: How many bedrooms are there?
         absence_answer: *absence_none
+      size_in_acres:
+        question: What size is the land?
+        absence_answer: *absence_none
+      usage:
+        question: How is the %{asset} used?
+        absence_answer: *absence_none
       # TODO :: Temporary fix to avoid duplicate keys
       property_value:
-        question: How much is the property worth?
+        question: How much is the %{asset} worth?
         absence_answer: *absence_none
       outstanding_mortgage:
         question: How much is left to pay on the mortgage?
         absence_answer: *absence_none
       percentage_applicant_owned:
-        question: What percentage of the property does your client own?
+        question: What percentage of the %{asset} does your client own?
         absence_answer: *absence_none
       percentage_partner_owned:
-        question: What percentage of the property does your client’s partner own?
+        question: What percentage of the %{asset} does your client’s partner own?
         absence_answer: *absence_none
       is_home_address:
-        question: Is the address of the property the same as your client’s home address?
+        question: Is the address of the %{asset} the same as your client’s home address?
         answers: *YESNO
         absence_answer: *absence_none
       has_other_owners:
-        question: Does anyone else own part of the property?
+        question: Does anyone else own part of the %{asset}?
         answers: *YESNO
         absence_answer: *absence_none
       address:
@@ -483,7 +489,7 @@ en:
         question: What is their relationship to your client?
         absence_answer: *absence_none
       percentage_owned:
-        question: What percentage of the property do they own?
+        question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
       # END property, address and owners
 

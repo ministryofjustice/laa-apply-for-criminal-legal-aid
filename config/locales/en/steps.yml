@@ -449,6 +449,24 @@ en:
             land: Your client’s land
         destroy:
           success_flash: The asset has been deleted
+      commercial_property:
+        edit:
+          page_title: Your client’s commercial property
+          heading:
+            residential: Your client’s residential property
+            commercial: Your client’s commercial property
+            land: Your client’s land
+        destroy:
+          success_flash: The asset has been deleted
+      land:
+        edit:
+          page_title: Your client’s land
+          heading:
+            residential: Your client’s residential property
+            commercial: Your client’s commercial property
+            land: Your client’s land
+        destroy:
+          success_flash: The asset has been deleted
 
       property_address:
         edit:

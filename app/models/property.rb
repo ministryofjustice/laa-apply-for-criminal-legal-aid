@@ -28,14 +28,38 @@ class Property < ApplicationRecord
   end
 
   def complete?
-    values_at(
-      :property_type,
-      :house_type,
-      :bedrooms,
-      :value,
-      :outstanding_mortgage,
-      :percentage_applicant_owned,
-      :has_other_owners
-    ).all?(&:present?)
+    case property_type
+    when 'residential'
+      values_at(
+        :property_type,
+        :house_type,
+        :bedrooms,
+        :value,
+        :outstanding_mortgage,
+        :percentage_applicant_owned,
+        :has_other_owners
+      ).all?(&:present?)
+    when 'land'
+      values_at(
+        :property_type,
+        :size_in_acres,
+        :usage,
+        :value,
+        :outstanding_mortgage,
+        :percentage_applicant_owned,
+        :has_other_owners
+      ).all?(&:present?)
+    when 'commercial'
+      values_at(
+        :property_type,
+        :usage,
+        :value,
+        :outstanding_mortgage,
+        :percentage_applicant_owned,
+        :has_other_owners
+      ).all?(&:present?)
+    else
+      raise 'Unsupported Asset'
+    end
   end
 end

@@ -568,14 +568,61 @@ en:
               blank: Enter how many bedrooms are there
             value:
               blank: Enter how much the property is worth
+              not_a_number: How much the property is worth must be a number, like 50
             outstanding_mortgage:
               blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               blank: Enter the percentage of the property your client owns
+              not_a_number: The percentage of the property your client owns must be a number between 0 and 100
             percentage_partner_owned:
               blank: Enter the percentage of the property your client's partner owns
+              not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
+            has_other_owners:
+              inclusion: Select yes if anyone else owns part of the property
+        steps/capital/commercial_property_form:
+          attributes:
+            usage:
+              blank: Enter what the property is used for
+            value:
+              blank: Enter how much the property is worth
+              not_a_number: How much the property is worth must be a number, like 50
+            outstanding_mortgage:
+              blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+            percentage_applicant_owned:
+              blank: Enter the percentage of the property your client owns
+              not_a_number: The percentage of the property your client owns must be a number between 0 and 100
+            percentage_partner_owned:
+              blank: Enter the percentage of the property your client's partner owns
+              not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
+            is_home_address:
+              inclusion: Select yes if the address of the property is the same as your client's home address
+            has_other_owners:
+              inclusion: Select yes if anyone else owns part of the property
+        steps/capital/land_form:
+          attributes:
+            size_in_acres:
+              blank: Enter the size of the land in acres
+              not_a_number: The size of the land in acres must be a number, like 50
+            usage:
+              blank: Enter how the land is used
+            value:
+              blank: Enter how much the land is worth
+              not_a_number: How much the land is worth must be a number, like 50
+            outstanding_mortgage:
+              blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+            percentage_applicant_owned:
+              blank: Enter the percentage of the land your client owns
+              not_a_number: The percentage of the land your client owns must be a number between 0 and 100
+            percentage_partner_owned:
+              blank: Enter the percentage of the land your client's partner owns
+              not_a_number: The percentage of the land your client's partner owns must be a number between 0 and 100
+            is_home_address:
+              inclusion: Select yes if the address of the land is the same as your client's home address
             has_other_owners:
               inclusion: Select yes if anyone else owns part of the land
         steps/capital/property_address_form:
