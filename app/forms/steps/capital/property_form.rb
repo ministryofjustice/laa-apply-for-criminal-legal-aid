@@ -46,11 +46,6 @@ module Steps
         crime_application.applicant.home_address?
       end
 
-      # # TODO: use proper partner policy once we have one.
-      # def include_partner?
-      #   YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
-      # end
-
       def custom_house_type?
         house_type == Property::CUSTOM_HOUSE_TYPE
       end

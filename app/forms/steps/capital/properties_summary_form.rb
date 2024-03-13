@@ -20,7 +20,7 @@ module Steps
       private
 
       # NOTE: this step is not persisting anything to DB.
-      # We only use `add_saving` transiently in the decision tree.
+      # We only use `add_property=` transiently in the decision tree.
       def persist!
         true
       end
