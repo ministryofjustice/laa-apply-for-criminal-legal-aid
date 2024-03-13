@@ -15,7 +15,7 @@ module Decisions
         after_properties_summary
       when :property_type
         after_property_type(form_object.property)
-      when :residential_property
+      when :residential_property, :commercial_property, :land
         after_properties
       when :property_address
         after_property_address
@@ -76,7 +76,13 @@ module Decisions
     def after_property_type(property)
       return edit(:saving_type) unless property
 
-      edit(:"#{property.property_type}_property", property_id: property)
+      redirect_path = if property.property_type == PropertyType::LAND.to_s
+                        property.property_type.to_sym
+                      else
+                        "#{property.property_type}_property".to_sym
+                      end
+
+      edit(redirect_path, property_id: property)
     end
 
     # TODO: : Fix nested conditions

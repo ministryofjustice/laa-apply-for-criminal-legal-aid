@@ -136,6 +136,12 @@ en:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
+      steps_capital_commercial_property_form:
+        is_home_address: Is the address of the property the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the property?
+      steps_capital_land_form:
+        is_home_address: Is the address of the land the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the land?
       steps_capital_property_owner_form:
         property_owners_attributes:
           relationship: What is their relationship to your client?
@@ -232,6 +238,10 @@ en:
         property_type: Add one asset at a time. You can add more later.
       steps_capital_residential_property_form:
         bedrooms: Enter ‘0’ if the property is a studio.
+        value: You can use property websites to find the estimated value.
+      steps_capital_commercial_property_form:
+        value: You can use property websites to find the estimated value.
+      steps_capital_land_form:
         value: You can use property websites to find the estimated value.
 
     label:
@@ -569,6 +579,23 @@ en:
         outstanding_mortgage: How much is left to pay on the mortgage?
         percentage_applicant_owned: What percentage of the property does your client own?
         percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_commercial_property_form:
+        usage: How is the property used?
+        value: How much is the property worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the property does your client own?
+        percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_land_form:
+        size_in_acres: What size is the land in acres?
+        usage: How is the land used?
+        value: How much is the land worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the land does your client own?
+        percentage_partner_owned: What percentage of the land does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
       steps_capital_property_address_form:
