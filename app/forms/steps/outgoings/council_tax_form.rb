@@ -10,6 +10,8 @@ module Steps
       validates :amount, presence: true, numericality: { greater_than: 0 }, if: -> { pays_council_tax? }
       validates_inclusion_of :pays_council_tax, in: :choices
 
+      validate :council_tax_payable?
+
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.council_tax
 
@@ -46,6 +48,12 @@ module Steps
 
       def reset!
         crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.value).destroy_all
+      end
+
+      def council_tax_payable?
+        return true if crime_application.outgoings&.housing_payment_type != OutgoingsPaymentType::BOARD_AND_LODGING.to_s
+
+        errors.add(:pays_council_tax, :not_payable)
       end
     end
   end

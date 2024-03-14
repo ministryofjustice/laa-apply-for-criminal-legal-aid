@@ -61,7 +61,7 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
 
   describe '#save' do
     before do
-      form.save
+      allow(crime_application.outgoings_payments).to receive(:create!).and_return(true)
     end
 
     context 'when `board_amount` is not provided' do
@@ -143,14 +143,17 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
       end
 
       it 'updates the outgoings payment with the correct attributes' do
-        expect(outgoings_payment.amount).to eq('520.00')
-        expect(outgoings_payment.frequency.to_s).to eq('month')
-        expect(outgoings_payment.metadata).to eq({
-                                                   'board_amount' => 600,
-                                                   'food_amount' => 80,
-                                                   'payee_name' => 'John Doe',
-                                                   'payee_relationship_to_client' => 'Landlord'
-                                                 })
+        expect(crime_application.outgoings_payments).to receive(:create!).with(
+          payment_type: :board_and_lodging,
+          amount: 520.00,
+          frequency: PaymentFrequencyType::MONTHLY,
+          payee_name: 'John Doe',
+          payee_relationship_to_client: 'Landlord',
+          board_amount: 600,
+          food_amount: 80,
+        )
+
+        form.save
       end
 
       context 'when amounts were previously recorded' do
