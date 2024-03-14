@@ -4,17 +4,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
-
     <%= govuk_error_summary(@form_object) %>
-
-    <h1 class="govuk-heading-xl">
-      <%= t(".heading.#{@form_object.investment_type}") %>
-    </h1>
-
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <p><%= t('.info') %></p>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_area :description, autocomplete: 'off' %>
+      <%= f.govuk_text_field :holder_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
+      <%= f.govuk_text_field :certificate_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
 
       <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: } %>

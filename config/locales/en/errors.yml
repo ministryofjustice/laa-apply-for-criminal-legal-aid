@@ -571,6 +571,7 @@ en:
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
+
         steps/capital/investment_type_form:
           attributes:
             investment_type:
@@ -594,6 +595,29 @@ en:
           attributes:
             add_investment:
               inclusion: Select yes if you want to add another investment
+
+        steps/capital/has_national_savings_certificates_form:
+          attributes:
+            has_national_savings_certificates:
+              inclusion: Select yes if your client has any National Savings Certificates
+        steps/capital/national_savings_certificates_form:
+          attributes:
+            holder_number:
+              blank: Enter the customer number or holder number
+            certificate_number:
+              blank: Enter the certificate number
+            value:
+              blank: Enter the value of the certificate 
+              not_a_number: The value of their certificate must be a number, like 50
+            ownership_type:
+              inclusion: Select who owns the certifcate
+            confirm_in_applicants_name:
+              confirm: Confirm your client owns the certificate
+        steps/capital/national_savings_certificates_summary_form:
+          attributes:
+            add_national_savings_certificate:
+              inclusion: Select yes if you want to add another National Savings Certificate
+
         steps/submission/more_information_form:
           attributes:
             additional_information:

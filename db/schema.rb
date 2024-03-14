@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.string "premium_bonds_holder_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "has_national_savings_certificates"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -206,6 +207,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
     t.index ["case_id"], name: "index_iojs_on_case_id", unique: true
   end
 
+  create_table "national_savings_certificates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "certificate_number"
+    t.integer "value"
+    t.string "holder_number"
+    t.string "ownership_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_national_savings_certificates_on_crime_application_id"
+  end
+
   create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -336,6 +348,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_105256) do
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "investments", "crime_applications"
   add_foreign_key "iojs", "cases"
+  add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "outgoings_payments", "crime_applications"

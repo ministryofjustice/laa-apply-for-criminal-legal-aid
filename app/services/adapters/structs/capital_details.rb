@@ -13,6 +13,11 @@ module Adapters
         super.map { |attrs| Investment.new(**attrs) }
       end
 
+      def national_savings_certificates
+        []
+        # TODO: add rehydration from datastore
+      end
+
       def serializable_hash(options = {})
         super options.merge(except: [:savings, :investments])
       end

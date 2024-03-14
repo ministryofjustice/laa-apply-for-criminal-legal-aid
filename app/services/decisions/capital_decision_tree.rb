@@ -1,5 +1,5 @@
 module Decisions
-  class CapitalDecisionTree < BaseDecisionTree
+  class CapitalDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
@@ -26,7 +26,13 @@ module Decisions
       when :delete_property_owner
         after_delete_property_owner
       when :premium_bonds
-        edit(:investment_type)
+        edit(:has_national_savings_certificates)
+      when :has_national_savings_certificates
+        after_has_national_savings_certificates
+      when :national_savings_certificates
+        edit(:national_savings_certificates_summary)
+      when :national_savings_certificates_summary
+        after_national_savings_certificates_summary
       when :investment_type
         after_investment_type(form_object.investment)
       when :other_investment_type
@@ -59,6 +65,18 @@ module Decisions
       return edit(:premium_bonds) unless investment
 
       edit(:investments, investment_id: investment)
+    end
+
+    def after_has_national_savings_certificates
+      return edit(:investment_type) if form_object.has_national_savings_certificates.no?
+
+      edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
+    end
+
+    def after_national_savings_certificates_summary
+      return edit(:investment_type) if form_object.add_national_savings_certificate.no?
+
+      edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
     end
 
     def after_investments_summary
