@@ -8,7 +8,12 @@ class Property < ApplicationRecord
   attribute :value, :pence
   attribute :outstanding_mortgage, :pence
 
-  has_many :property_owners, dependent: :destroy
+  has_many :property_owners, dependent: :destroy do
+    def complete
+      select(&:complete?)
+    end
+  end
+
   accepts_nested_attributes_for :property_owners, allow_destroy: true
 
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode

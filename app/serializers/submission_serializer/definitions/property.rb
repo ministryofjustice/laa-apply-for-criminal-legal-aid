@@ -17,6 +17,7 @@ module SubmissionSerializer
           json.is_home_address is_home_address
           json.has_other_owners has_other_owners
           json.address address
+          json.property_owners Definitions::PropertyOwner.generate(property_owners)
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
