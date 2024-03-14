@@ -22,7 +22,7 @@ module Summary
           Components::ValueAnswer.new(
             :national_savings_certificate_ownership_type,
             national_savings_certificate.ownership_type
-          ) # TODO: FIX
+          )
         ]
       end
 

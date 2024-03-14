@@ -605,7 +605,7 @@ en:
             holder_number:
               blank: Enter the customer number or holder number
             certificate_number:
-              blank: Ender the certificate number?
+              blank: Enter the certificate number
             value:
               blank: Enter the value of the certificate 
               not_a_number: The value of their certificate must be a number, like 50
