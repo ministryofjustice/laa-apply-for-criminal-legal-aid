@@ -10,7 +10,7 @@ module Steps
       validates :amount, presence: true, numericality: { greater_than: 0 }, if: -> { pays_council_tax? }
       validates_inclusion_of :pays_council_tax, in: :choices
 
-      validate :council_tax_payable?
+      validate :council_tax_payable?, if: -> { pays_council_tax? }
 
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.council_tax
@@ -39,6 +39,8 @@ module Steps
               frequency: PaymentFrequencyType::ANNUALLY,
             )
           end
+
+          true
         end
       end
 
