@@ -357,8 +357,7 @@ RSpec.describe Datastore::ApplicationRehydration do
                              'address' => nil }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
-          'premium_bonds_holder_number' => '1234A',
-          'properties' => []
+          'premium_bonds_holder_number' => '1234A'
         }
       end
 

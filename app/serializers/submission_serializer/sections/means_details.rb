@@ -41,7 +41,7 @@ module SubmissionSerializer
                 json.investments Definitions::Investment.generate(capital.investments)
                 json.national_savings_certificates Definitions::NationalSavingsCertificate.generate(
                   capital.national_savings_certificates
-                ),
+                )
                 json.properties Definitions::Property.generate(capital.properties)
               end
             end
