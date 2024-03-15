@@ -112,6 +112,7 @@ describe Summary::HtmlPresenter do
             OtherOutgoingsDetails
             Savings
             PremiumBonds
+            NationalSavingsCertificates
             Investments
             SupportingEvidence
             MoreInformation

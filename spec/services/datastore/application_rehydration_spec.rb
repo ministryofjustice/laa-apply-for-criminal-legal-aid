@@ -47,7 +47,8 @@ RSpec.describe Datastore::ApplicationRehydration do
         income_benefits: all(be_a(IncomeBenefit)),
         capital: nil,
         savings: [], # capital and savings tested separately
-        investments: [] # capital and savings tested separately
+        investments: [], # capital and investments tested separately
+        national_savings_certificates: [] # capital and certificates tested separately
       )
 
       expect(
@@ -342,7 +343,8 @@ RSpec.describe Datastore::ApplicationRehydration do
                           'are_wages_paid_into_account' => 'no' }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
-          'premium_bonds_holder_number' => '1234A'
+          'premium_bonds_holder_number' => '1234A',
+          'properties' => []
         }
       end
 
