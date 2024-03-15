@@ -26,8 +26,7 @@ module Summary
             )
           ]
 
-        # TODO: Crime application is nil error
-        if property.include_partner?
+        unless property.percentage_partner_owned.nil?
           attributes << Components::PercentageAnswer.new(
             :percentage_partner_owned, property.percentage_partner_owned
           )
