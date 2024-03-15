@@ -575,7 +575,10 @@ en:
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
-
+        steps/capital/properties_summary_form:
+          attributes:
+            add_property:
+              inclusion: Select yes if you want to add another asset
         steps/capital/investment_type_form:
           attributes:
             investment_type:
