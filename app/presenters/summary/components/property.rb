@@ -8,10 +8,10 @@ module Summary
         'commercial' => 'property',
         'land' => 'land'
       }.freeze
+
       private
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-
         attributes = []
 
         if property.property_type == PropertyType::RESIDENTIAL.to_s
@@ -21,19 +21,6 @@ module Summary
             ),
             Components::FreeTextAnswer.new(
               :bedrooms, property.bedrooms.to_s
-            ),
-            # TODO: Temporary fix to avoid duplicate keys in summary.yml
-            Components::MoneyAnswer.new(
-              :property_value, property.value
-            ),
-            Components::MoneyAnswer.new(
-              :outstanding_mortgage, property.outstanding_mortgage
-            ),
-            Components::PercentageAnswer.new(
-              :percentage_applicant_owned, property.percentage_applicant_owned
-            ),
-            Components::PercentageAnswer.new(
-              :percentage_partner_owned, property.percentage_partner_owned
             )
           ]
         end

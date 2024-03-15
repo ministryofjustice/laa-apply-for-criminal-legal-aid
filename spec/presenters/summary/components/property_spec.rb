@@ -346,19 +346,19 @@ RSpec.describe Summary::Components::Property, type: :component do
     let(:attributes) { super().merge({ property_type: }) }
 
     context 'when residential' do
-      let(:property_type) { :residential }
+      let(:property_type) { 'residential' }
 
       it { is_expected.to eq 'Residential property' }
     end
 
     context 'when commercial' do
-      let(:property_type) { :commercial }
+      let(:property_type) { 'commercial' }
 
       it { is_expected.to eq 'Commercial property' }
     end
 
     context 'when land' do
-      let(:property_type) { :land }
+      let(:property_type) { 'land' }
 
       it { is_expected.to eq 'Land' }
     end

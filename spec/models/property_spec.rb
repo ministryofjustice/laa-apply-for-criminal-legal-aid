@@ -11,8 +11,8 @@ RSpec.describe Property, type: :model do
     {
       id: SecureRandom.uuid,
       crime_application: crime_application,
-      property_type: PropertyType.values.sample,
-      house_type: HouseType.values.sample,
+      property_type: PropertyType::RESIDENTIAL.to_s,
+      house_type: HouseType.values.sample.to_s,
       bedrooms: 2,
       value: 300_000,
       outstanding_mortgage: 100_000,
@@ -24,10 +24,10 @@ RSpec.describe Property, type: :model do
   end
 
   describe '#complete?' do
-    subject(:complete) { instance.complete? }
+    subject { instance.complete? }
 
     context 'when initialized' do
-      it { is_expected.to be false }
+      it { expect { subject }.to raise_error(RuntimeError, /Unsupported Asset/) }
     end
 
     context 'when property_type is residential' do
@@ -46,18 +46,20 @@ RSpec.describe Property, type: :model do
   end
 
   describe '#include_partner?' do
+    subject { instance.include_partner? }
+
     let(:attributes) { required_attributes }
 
     context 'when client has partner' do
       let(:client_has_partner) { 'yes' }
 
-      it { expect(instance.include_partner?).to be true }
+      it { is_expected.to be true }
     end
 
     context 'when client has no partner' do
       let(:client_has_partner) { 'no' }
 
-      it { expect(instance.include_partner?).to be false }
+      it { is_expected.to be false }
     end
   end
 end
