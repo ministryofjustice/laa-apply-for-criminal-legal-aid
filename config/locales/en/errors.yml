@@ -530,6 +530,10 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               blank: Select yes if your client has any Premium Bonds
+        steps/capital/other_property_type_form:
+          attributes:
+            property_type:
+              blank: Select which other savings your client owns or part-owns inside or outside the UK
         steps/capital/residential_property_form:
           attributes:
             house_type:
@@ -571,7 +575,10 @@ en:
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
-
+        steps/capital/properties_summary_form:
+          attributes:
+            add_property:
+              inclusion: Select yes if you want to add another asset
         steps/capital/investment_type_form:
           attributes:
             investment_type:

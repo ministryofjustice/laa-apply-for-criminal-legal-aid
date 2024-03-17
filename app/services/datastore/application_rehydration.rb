@@ -1,4 +1,5 @@
 module Datastore
+  # rubocop:disable Metrics/ClassLength
   class ApplicationRehydration
     attr_reader :crime_application, :parent
 
@@ -32,6 +33,7 @@ module Datastore
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],
         national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
+        properties: capital ? parent.capital.properties : []
       )
     end
 
@@ -131,4 +133,5 @@ module Datastore
       false
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

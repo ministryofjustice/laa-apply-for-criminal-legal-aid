@@ -25,6 +25,7 @@ module Summary
         premium_bonds
         national_savings_certificates
         investments
+        properties
         supporting_evidence
         more_information
         legal_representative_details

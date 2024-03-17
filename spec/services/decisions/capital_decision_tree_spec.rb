@@ -128,13 +128,13 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:record) { instance_double(Property, property_owners: [property_owner]) }
     let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
 
-    context 'is_home_address and has_other_owners' do
+    context 'is_home_address, has_other_owners' do
       context 'when property address is same as home address and have no other owners' do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::NO }
 
-        it 'redirects the edit `saving_type` page' do
-          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
         end
       end
 
@@ -178,8 +178,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'when property has no other owners' do
       let(:has_other_owners) { YesNoAnswer::NO }
 
-      it 'redirects the edit `saving_type` page' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      it 'redirects to `clients_assets` page' do
+        expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
       end
     end
 
@@ -199,8 +199,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :property_owners }
     let(:record) { instance_double(Property) }
 
-    it 'redirects the edit `saving_type` page' do
-      expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+    it 'redirects to `clients_assets` page' do
+      expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
     end
   end
 
@@ -222,6 +222,32 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     it 'redirects the edit `property_owners` page' do
       expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `properties_summary`' do
+    let(:form_object) { double('FormObject', property:) }
+    let(:step_name) { :properties_summary }
+    let(:property) { 'new_property' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_property:)
+    end
+
+    context 'the client has selected yes to adding an asset' do
+      let(:add_property) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `property type` page' do
+        expect(subject).to have_destination(:other_property_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding an asset' do
+      let(:add_property) { YesNoAnswer::NO }
+
+      it 'redirects to select saving type' do
+        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      end
     end
   end
 

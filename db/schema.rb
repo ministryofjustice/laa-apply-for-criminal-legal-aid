@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_12_171957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -280,8 +280,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
     t.integer "bedrooms"
     t.integer "value"
     t.integer "outstanding_mortgage"
-    t.integer "percentage_applicant_owned"
-    t.integer "percentage_partner_owned"
+    t.decimal "percentage_applicant_owned"
+    t.decimal "percentage_partner_owned"
     t.string "is_home_address"
     t.string "has_other_owners"
     t.jsonb "address"
@@ -295,7 +295,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_102934) do
     t.string "name"
     t.string "relationship"
     t.string "custom_relationship"
-    t.integer "percentage_owned"
+    t.decimal "percentage_owned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_property_owners_on_property_id"
