@@ -30,36 +30,48 @@ class Property < ApplicationRecord
   def complete?
     case property_type
     when 'residential'
-      values_at(
-        :property_type,
-        :house_type,
-        :bedrooms,
-        :value,
-        :outstanding_mortgage,
-        :percentage_applicant_owned,
-        :has_other_owners
-      ).all?(&:present?)
+      residential_complete?
     when 'land'
-      values_at(
-        :property_type,
-        :size_in_acres,
-        :usage,
-        :value,
-        :outstanding_mortgage,
-        :percentage_applicant_owned,
-        :has_other_owners
-      ).all?(&:present?)
+      land_complete?
     when 'commercial'
-      values_at(
-        :property_type,
-        :usage,
-        :value,
-        :outstanding_mortgage,
-        :percentage_applicant_owned,
-        :has_other_owners
-      ).all?(&:present?)
+      commercial_complete?
     else
       raise 'Unsupported Asset'
     end
+  end
+
+  def residential_complete?
+    values_at(
+      :property_type,
+      :house_type,
+      :bedrooms,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
+  end
+
+  def land_complete?
+    values_at(
+      :property_type,
+      :size_in_acres,
+      :usage,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
+  end
+
+  def commercial_complete?
+    values_at(
+      :property_type,
+      :usage,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
   end
 end

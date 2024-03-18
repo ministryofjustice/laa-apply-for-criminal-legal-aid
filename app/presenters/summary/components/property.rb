@@ -1,6 +1,6 @@
 module Summary
   module Components
-    class Property < BaseRecord
+    class Property < BaseRecord # rubocop:disable Metrics/ClassLength
       alias property record
 
       PROPERTY_MAPPING = {
@@ -11,7 +11,7 @@ module Summary
 
       private
 
-      def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         attributes = []
 
         if property.property_type == PropertyType::RESIDENTIAL.to_s
@@ -28,7 +28,9 @@ module Summary
         if property.property_type == PropertyType::LAND.to_s
           attributes << [
             Components::FreeTextAnswer.new(
-              :size_in_acres, "#{property.size_in_acres} acres", i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+              :size_in_acres, "#{property.size_in_acres} acres", i18n_opts: {
+                asset: PROPERTY_MAPPING[property.property_type]
+              }
             ),
             Components::FreeTextAnswer.new(
               :usage, property.usage, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
@@ -50,16 +52,22 @@ module Summary
             :property_value, property.value, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
           ),
           Components::MoneyAnswer.new(
-            :outstanding_mortgage, property.outstanding_mortgage, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :outstanding_mortgage, property.outstanding_mortgage, i18n_opts: {
+              asset: PROPERTY_MAPPING[property.property_type]
+            }
           ),
           Components::PercentageAnswer.new(
-            :percentage_applicant_owned, property.percentage_applicant_owned, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :percentage_applicant_owned, property.percentage_applicant_owned, i18n_opts: {
+              asset: PROPERTY_MAPPING[property.property_type]
+            }
           )
         ]
 
         unless property.percentage_partner_owned.nil?
           attributes << Components::PercentageAnswer.new(
-            :percentage_partner_owned, property.percentage_partner_owned, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :percentage_partner_owned, property.percentage_partner_owned, i18n_opts: {
+              asset: PROPERTY_MAPPING[property.property_type]
+            }
           )
         end
 
@@ -73,7 +81,9 @@ module Summary
           )
         end
 
-        attributes << Components::ValueAnswer.new(:has_other_owners, property.has_other_owners, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] })
+        attributes << Components::ValueAnswer.new(:has_other_owners, property.has_other_owners, i18n_opts: {
+                                                    asset: PROPERTY_MAPPING[property.property_type]
+                                                  })
 
         property.property_owners.each_with_index do |owner, index|
           attributes << Components::FreeTextAnswer.new(
@@ -115,7 +125,7 @@ module Summary
         address.values.compact_blank.join("\r\n")
       end
 
-      def change_path
+      def change_path # rubocop:disable Metrics/AbcSize
         case record.property_type
         when 'residential'
           edit_steps_capital_residential_property_path(id: record.crime_application_id, property_id: record.id)

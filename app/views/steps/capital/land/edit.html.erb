@@ -15,7 +15,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_number_field :size_in_acres, inputmode: 'numeric', suffix_text: 'acres', width: 'one-third' %>
-      <%= f.govuk_text_field :usage %>
+      <%= f.govuk_text_field :usage, autocomplete: 'off' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
       <%= f.govuk_number_field :outstanding_mortgage, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
       <%= f.govuk_number_field :percentage_applicant_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>
