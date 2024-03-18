@@ -13,11 +13,11 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
   let(:attributes) { {} }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, client_has_partner:, applicant:)
+    instance_double(CrimeApplication, applicant:)
   end
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
-  let(:record) { Property.new }
-  let(:client_has_partner) { 'no' }
+  let(:record) { instance_double(Property, include_partner?: client_has_partner, 'address=': nil) }
+  let(:client_has_partner) { false }
   let(:home_address?) { true }
 
   describe 'validations' do
@@ -100,7 +100,7 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
     end
 
     context 'when client has no partner' do
-      let(:client_has_partner) { 'no' }
+      let(:client_has_partner) { false }
 
       context 'for valid details' do
         let(:attributes) { required_attributes }
@@ -114,7 +114,7 @@ RSpec.describe Steps::Capital::ResidentialPropertyForm do
     end
 
     context 'when client has a partner' do
-      let(:client_has_partner) { 'yes' }
+      let(:client_has_partner) { true }
 
       context 'for invalid details' do
         let(:attributes) { required_attributes }

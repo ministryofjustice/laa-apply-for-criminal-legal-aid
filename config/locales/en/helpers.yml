@@ -126,8 +126,16 @@ en:
         investment_type: Which other investments does your client have inside or outside the UK?
       steps_capital_investments_form:
         confirm_in_applicants_name: Confirm the following
+      steps_capital_national_savings_certificates_form:
+        confirm_in_applicants_name: Confirm the following
       steps_capital_investments_summary_form:
         add_investment: Do you want to add another investment?
+      steps_capital_national_savings_certificates_summary_form:
+        add_national_savings_certificate: Do you want to add another National Savings Certificate?
+      steps_capital_properties_summary_form:
+        add_property: Do you want to add another asset?
+      steps_capital_other_property_type_form:
+        property_type: Which other assets does your client own or part-own inside or outside the UK?
       steps_capital_residential_property_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
@@ -219,11 +227,15 @@ en:
         investment_type: Add one investment at a time. You can add more later.
       steps_capital_investments_form:
         description: For example, which companies your client has invested in, the value of each share owned, or when they can access the investment.
+      steps_capital_national_savings_certificates_form:
+        value: Give an estimate if you do not know the exact value.
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Select all that apply.
         types_options:
           childcare: For example, to a childminder, nanny or nursery.
           maintenance: This includes child maintenance.
+      steps_capital_other_property_type_form:
+        property_type: Add one asset at a time. You can add more later.
       steps_capital_residential_property_form:
         bedrooms: Enter ‘0’ if the property is a studio.
         value: You can use property websites to find the estimated value.
@@ -493,7 +505,7 @@ en:
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
       steps_capital_property_type_form:
-        property_type_options:
+        property_type_options: &PROPERTY_TYPE_OPTIONS
           residential: Residential property
           commercial: Commercial property
           land: Land
@@ -537,14 +549,30 @@ en:
         ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
+      steps_capital_national_savings_certificates_form:
+        holder_number: What is the customer number or holder number?
+        certificate_number: What is the certificate number?
+        value: What is the value of the certificate?
+        ownership_type: Who owns the certificate?
+        ownership_type_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
+          'true': I confirm my client owns the certificate 
       steps_capital_savings_summary_form:
         add_saving_options: *YESNO
       steps_capital_investments_summary_form:
         add_investment_options: *YESNO
+      steps_capital_national_savings_certificates_summary_form:
+        add_national_savings_certificate_options: *YESNO
       steps_capital_premium_bonds_form:
         premium_bonds_holder_number: Enter the holder number
         premium_bonds_total_value: Enter the total value of their bonds
         has_premium_bonds_options: *YESNO
+      steps_capital_has_national_savings_certificates_form:
+        has_national_savings_certificates_options: *YESNO
+      steps_capital_other_property_type_form:
+        property_type_options: *PROPERTY_TYPE_OPTIONS
+      steps_capital_properties_summary_form:
+        add_property_options: *YESNO
       steps_capital_residential_property_form:
         house_type_options:
           bungalow: Bungalow
@@ -570,7 +598,7 @@ en:
           postcode: Postcode
       steps_capital_property_owner_form:
         property_owners_attributes:
-          name: What is the name of the [first] other owner?
+          name: What is the name of the %{index} other owner?
           relationship_options:
             business_associates: Business Associates
             ex_partner: Ex-partner
