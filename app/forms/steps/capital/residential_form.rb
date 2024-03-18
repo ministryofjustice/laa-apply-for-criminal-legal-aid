@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class ResidentialPropertyForm < PropertyForm
+    class ResidentialForm < PropertyForm
       attribute :house_type, :string
       attribute :custom_house_type, :string
       attribute :bedrooms, :integer

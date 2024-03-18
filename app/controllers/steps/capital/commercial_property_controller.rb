@@ -8,7 +8,7 @@ module Steps
       end
 
       def form_name
-        CommercialPropertyForm
+        CommercialForm
       end
     end
   end

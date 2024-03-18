@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class CommercialPropertyForm < PropertyForm
+    class CommercialForm < PropertyForm
       attribute :usage, :string
 
       validates :usage, presence: true
