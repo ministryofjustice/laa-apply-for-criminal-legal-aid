@@ -10,9 +10,17 @@ class IncomeBenefitsValidator < ActiveModel::Validator
       income_benefit = record.public_send(type)
       add_indexed_errors(income_benefit, index) unless income_benefit.valid?
     end
+
+    require_type?
   end
 
   private
+
+  def require_type?
+    return false unless record.types.empty?
+
+    record.errors.add(:types, :none_selected)
+  end
 
   def add_indexed_errors(income_benefit, index)
     income_benefit.errors.each do |error|

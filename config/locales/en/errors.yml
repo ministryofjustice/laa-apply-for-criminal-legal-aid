@@ -385,6 +385,10 @@ en:
               blank: "Enter %{ordinal} dependant's age"
               less_than: "The %{ordinal} dependant must be under 18 years old"
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
+        steps/income/income_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
             amount:
@@ -398,6 +402,10 @@ en:
           attributes:
             amount:
               blank: Enter an amount
+        steps/income/income_benefits_form:
+          attributes:
+            types:
+              none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
             amount:
@@ -465,6 +473,10 @@ en:
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
               not_a_number: How much they pay yearly must be a number, like 50
+        steps/outgoings/outgoings_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
