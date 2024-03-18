@@ -113,7 +113,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         savings: [],
         investments: [],
         national_savings_certificates: [],
-        properties: []
+        properties: [],
+        has_frozen_income_or_assets: nil
       )
     end
 
@@ -176,7 +177,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             savings: [],
             investments: [],
             national_savings_certificates: [],
-            properties: []
+            properties: [],
+            has_frozen_income_or_assets: nil
           }
         }
       }.as_json

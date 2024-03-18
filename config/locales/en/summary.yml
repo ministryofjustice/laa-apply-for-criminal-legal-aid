@@ -77,6 +77,7 @@ en:
         relationship:
           <<: *RELATIONSHIP
       trust_fund: Trust funds
+      other_capital_details: Other capital details
 
     questions:
       # BEGIN overview section
