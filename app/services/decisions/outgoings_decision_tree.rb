@@ -22,15 +22,11 @@ module Decisions
     private
 
     def after_housing_payment_type
-      if form_object.housing_payment_type.nil?
-        # TODO: Consider appropriate action for empty housing_payment_type
+      case form_object.housing_payment_type&.value
+      when :board_and_lodging, :mortgage, :rent
+        edit(form_object.housing_payment_type.value)
+      when nil, :none
         edit(:council_tax)
-      elsif form_object.housing_payment_type.value == :board_and_lodging
-        edit(:board_and_lodging)
-      elsif form_object.housing_payment_type.value == :mortgage
-        edit(:mortgage)
-      elsif form_object.housing_payment_type.value == :rent
-        edit(:rent)
       end
     end
   end
