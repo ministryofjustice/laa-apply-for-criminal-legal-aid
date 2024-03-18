@@ -310,7 +310,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: None
+          none: My client does not pay any of these payments
       mortgage:
         question: How much are your client's mortgage payments?
         answers:
