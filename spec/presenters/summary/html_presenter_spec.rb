@@ -51,7 +51,10 @@ describe Summary::HtmlPresenter do
                              'address' => nil }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
-          'premium_bonds_holder_number' => '1234A'
+          'premium_bonds_holder_number' => '1234A',
+          'will_benefit_from_trust_fund' => 'yes',
+          'trust_fund_amount_held' => 1000,
+          'trust_fund_yearly_dividend' => 2000
         }
       },
       'application_type' => application_type,
@@ -97,6 +100,7 @@ describe Summary::HtmlPresenter do
             PremiumBonds
             NationalSavingsCertificates
             Investments
+            TrustFund
             SupportingEvidence
             MoreInformation
           ]
@@ -130,6 +134,7 @@ describe Summary::HtmlPresenter do
             PremiumBonds
             NationalSavingsCertificates
             Investments
+            TrustFund
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails

@@ -65,8 +65,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected no to adding a investments account' do
       let(:add_investment) { YesNoAnswer::NO }
 
-      it 'redirects to the case page' do
-        expect(subject).to have_destination('/steps/case/urn', :edit, id: crime_application)
+      it 'redirects to the trust fund page' do
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
       end
     end
   end
@@ -280,7 +280,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
       let(:investment) { nil }
 
       it 'redirects premium bonds' do
-        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
       end
     end
 
@@ -354,6 +354,15 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     context 'has correct next step' do
       it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `trust_fund`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :trust_fund }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end
 

@@ -42,6 +42,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "has_national_savings_certificates"
+    t.string "will_benefit_from_trust_fund"
+    t.integer "trust_fund_amount_held"
+    t.integer "trust_fund_yearly_dividend"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -267,7 +270,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
+    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

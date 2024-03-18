@@ -76,6 +76,7 @@ en:
       property_owner:
         relationship:
           <<: *RELATIONSHIP
+      trust_fund: Trust funds
 
     questions:
       # BEGIN overview section
@@ -408,7 +409,7 @@ en:
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none
       # END investments
-      #
+
       # START national_savings_certificates
       national_savings_certificate_holder_number: 
         question: What is the customer number or holder number?
@@ -467,3 +468,12 @@ en:
         absence_answer: *absence_none
       # END property, address and owners
 
+      # START trust_fund
+      will_benefit_from_trust_fund:
+        question: Does your client stand to benefit from a trust fund inside or outside the UK?
+        answers: *YESNO
+      trust_fund_amount_held:
+        question: Enter the amount held in the fund
+      trust_fund_yearly_dividend:
+        question: Enter the yearly dividend
+      # END trust_fund

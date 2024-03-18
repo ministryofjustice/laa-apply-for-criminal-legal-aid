@@ -41,6 +41,9 @@ module Decisions
         edit(:investments_summary)
       when :investments_summary
         after_investments_summary
+      when :trust_fund
+        # TODO: Route to assets page if required
+        edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -62,7 +65,7 @@ module Decisions
     end
 
     def after_investment_type(investment)
-      return edit(:premium_bonds) unless investment
+      return edit(:trust_fund) unless investment
 
       edit(:investments, investment_id: investment)
     end
@@ -80,7 +83,7 @@ module Decisions
     end
 
     def after_investments_summary
-      return edit('/steps/case/urn') if form_object.add_investment.no?
+      return edit(:trust_fund) if form_object.add_investment.no?
 
       edit(:other_investment_type)
     end
