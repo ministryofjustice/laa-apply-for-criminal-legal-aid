@@ -136,11 +136,11 @@ en:
         add_property: Do you want to add another asset?
       steps_capital_other_property_type_form:
         property_type: Which other assets does your client own or part-own inside or outside the UK?
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
-      steps_capital_commercial_property_form:
+      steps_capital_commercial_form:
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
       steps_capital_land_form:
@@ -242,10 +242,10 @@ en:
           maintenance: This includes child maintenance.
       steps_capital_other_property_type_form:
         property_type: Add one asset at a time. You can add more later.
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         bedrooms: Enter ‘0’ if the property is a studio.
         value: You can use property websites to find the estimated value.
-      steps_capital_commercial_property_form:
+      steps_capital_commercial_form:
         value: You can use property websites to find the estimated value.
       steps_capital_land_form:
         value: You can use property websites to find the estimated value.
@@ -603,7 +603,7 @@ en:
         percentage_partner_owned: What percentage of the property does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
-      steps_capital_commercial_property_form:
+      steps_capital_commercial_form:
         usage: How is the property used?
         value: How much is the property worth?
         outstanding_mortgage: How much is left to pay on the mortgage?

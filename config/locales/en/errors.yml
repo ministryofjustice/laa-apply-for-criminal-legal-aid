@@ -582,7 +582,7 @@ en:
               inclusion: Select yes if the address of the property is the same as your client's home address
             has_other_owners:
               inclusion: Select yes if anyone else owns part of the property
-        steps/capital/commercial_property_form:
+        steps/capital/commercial_form:
           attributes:
             usage:
               blank: Enter what the property is used for

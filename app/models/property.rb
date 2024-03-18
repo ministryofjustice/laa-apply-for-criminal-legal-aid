@@ -21,27 +21,8 @@ class Property < ApplicationRecord
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
-
-  # TODO: use proper partner policy once we have one.
-  def include_partner?
-    YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
-  end
-
-  def complete?
-    case property_type
-    when 'residential'
-      residential_complete?
-    when 'land'
-      land_complete?
-    when 'commercial'
-      commercial_complete?
-    else
-      raise 'Unsupported Asset'
-    end
-  end
-
-  def residential_complete?
-    values_at(
+  REQUIRED_ATTRIBUTES = {
+    residential: [
       :property_type,
       :house_type,
       :bedrooms,
@@ -49,11 +30,8 @@ class Property < ApplicationRecord
       :outstanding_mortgage,
       :percentage_applicant_owned,
       :has_other_owners
-    ).all?(&:present?)
-  end
-
-  def land_complete?
-    values_at(
+    ],
+    land: [
       :property_type,
       :size_in_acres,
       :usage,
@@ -61,17 +39,23 @@ class Property < ApplicationRecord
       :outstanding_mortgage,
       :percentage_applicant_owned,
       :has_other_owners
-    ).all?(&:present?)
-  end
-
-  def commercial_complete?
-    values_at(
+    ],
+    commercial: [
       :property_type,
       :usage,
       :value,
       :outstanding_mortgage,
       :percentage_applicant_owned,
       :has_other_owners
-    ).all?(&:present?)
+    ]
+  }.freeze
+
+  # TODO: use proper partner policy once we have one.
+  def include_partner?
+    YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
+  end
+
+  def complete?
+    values_at(REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?)
   end
 end

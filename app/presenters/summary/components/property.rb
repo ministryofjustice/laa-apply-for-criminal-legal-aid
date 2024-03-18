@@ -125,7 +125,7 @@ module Summary
         address.values.compact_blank.join("\r\n")
       end
 
-      def change_path # rubocop:disable Metrics/AbcSize
+      def change_path # rubocop:disable
         case record.property_type
         when 'residential'
           edit_steps_capital_residential_property_path(id: record.crime_application_id, property_id: record.id)
@@ -133,8 +133,6 @@ module Summary
           edit_steps_capital_commercial_property_path(id: record.crime_application_id, property_id: record.id)
         when 'land'
           edit_steps_capital_land_path(id: record.crime_application_id, property_id: record.id)
-        else
-          raise 'Unsupported asset'
         end
       end
 

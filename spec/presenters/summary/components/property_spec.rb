@@ -21,12 +21,13 @@ RSpec.describe Summary::Components::Property, type: :component do
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
   let(:client_has_partner) { false }
   let(:relationship) { 'friends' }
+  let(:property_type) { 'residential' }
 
   let(:attributes) do
     {
       id: 'PROPERTY123',
       crime_application_id: 'APP123',
-      property_type: 'residential',
+      property_type: property_type,
       house_type: 'custom',
       custom_house_type: 'custom_house_type',
       size_in_acres: nil,

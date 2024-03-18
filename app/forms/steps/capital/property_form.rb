@@ -31,10 +31,6 @@ module Steps
       def person_has_home_address?
         crime_application.applicant.home_address?
       end
-
-      def custom_house_type?
-        house_type == Property::CUSTOM_HOUSE_TYPE
-      end
     end
   end
 end

@@ -11,9 +11,11 @@ RSpec.describe Property, type: :model do
     {
       id: SecureRandom.uuid,
       crime_application: crime_application,
-      property_type: PropertyType::RESIDENTIAL.to_s,
+      property_type: property_type,
       house_type: HouseType.values.sample.to_s,
       bedrooms: 2,
+      usage: 'usage details',
+      size_in_acres: 100,
       value: 300_000,
       outstanding_mortgage: 100_000,
       percentage_applicant_owned: 20,
@@ -26,19 +28,49 @@ RSpec.describe Property, type: :model do
   describe '#complete?' do
     subject { instance.complete? }
 
-    context 'when initialized' do
-      it { expect { subject }.to raise_error(RuntimeError, /Unsupported Asset/) }
-    end
-
     context 'when property_type is residential' do
+      let(:property_type) { PropertyType::RESIDENTIAL.to_s }
+
       context 'when all provided attributes are present' do
-        let(:attributes) { required_attributes }
+        let(:attributes) { required_attributes.slice!(:usage, :size_in_acres) }
 
         it { is_expected.to be true }
       end
 
       context 'when any required attributes are missing' do
-        let(:attributes) { required_attributes.merge(outstanding_mortgage: nil) }
+        let(:attributes) { required_attributes.merge(house_type: nil) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when property_type is commercial' do
+      let(:property_type) { PropertyType::COMMERCIAL.to_s }
+
+      context 'when all provided attributes are present' do
+        let(:attributes) { required_attributes.slice!(:house_type, :bedrooms) }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when any required attributes are missing' do
+        let(:attributes) { required_attributes.merge(usage: nil) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when property_type is land' do
+      let(:property_type) { PropertyType::LAND.to_s }
+
+      context 'when all provided attributes are present' do
+        let(:attributes) { required_attributes.slice!(:house_type, :bedrooms) }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when any required attributes are missing' do
+        let(:attributes) { required_attributes.merge(size_in_acres: nil) }
 
         it { is_expected.to be false }
       end
@@ -48,6 +80,7 @@ RSpec.describe Property, type: :model do
   describe '#include_partner?' do
     subject { instance.include_partner? }
 
+    let(:property_type) { PropertyType::RESIDENTIAL.to_s }
     let(:attributes) { required_attributes }
 
     context 'when client has partner' do
