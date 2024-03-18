@@ -70,4 +70,39 @@ class Property < ApplicationRecord
   def property_owners_complete?
     property_owners.all?(&:complete?)
   end
+
+  def residential_complete?
+    values_at(
+      :property_type,
+      :house_type,
+      :bedrooms,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
+  end
+
+  def land_complete?
+    values_at(
+      :property_type,
+      :size_in_acres,
+      :usage,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
+  end
+
+  def commercial_complete?
+    values_at(
+      :property_type,
+      :usage,
+      :value,
+      :outstanding_mortgage,
+      :percentage_applicant_owned,
+      :has_other_owners
+    ).all?(&:present?)
+  end
 end
