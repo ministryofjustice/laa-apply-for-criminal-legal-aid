@@ -46,6 +46,7 @@ module SubmissionSerializer
                   capital.national_savings_certificates
                 )
                 json.properties Definitions::Property.generate(capital.properties)
+                json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
               end
             end
           end

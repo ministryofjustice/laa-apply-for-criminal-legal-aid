@@ -202,6 +202,8 @@ Rails.application.routes.draw do
         edit_step :clients_assets, alias: :properties_summary
         crud_step :properties, param: :property_id
         edit_step :which_other_assets_does_client_have, alias: :other_property_type
+
+        edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
       end
 
       namespace :evidence do

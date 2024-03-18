@@ -42,7 +42,8 @@ module Decisions
       when :investments_summary
         after_investments_summary
       when :trust_fund
-        # TODO: Route to assets page if required
+        after_trust_fund
+      when :frozen_income_savings_assets
         edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -92,6 +93,14 @@ module Decisions
       return edit(:saving_type) if form_object.add_property.no?
 
       edit(:other_property_type)
+    end
+
+    def after_trust_fund
+      if form_object.crime_application.income.has_frozen_income_or_assets.nil?
+        return edit(:frozen_income_savings_assets)
+      end
+
+      edit('/steps/evidence/upload')
     end
 
     def after_property_type(property)

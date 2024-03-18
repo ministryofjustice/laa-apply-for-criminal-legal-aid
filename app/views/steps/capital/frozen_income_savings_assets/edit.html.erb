@@ -1,0 +1,16 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :has_frozen_income_or_assets, @form_object.choices,
+                                           :value, inline: false,
+                                           legend: { text: t('.has_frozen_income_or_assets'), tag: 'h1', size: 'xl' } do %>
+        <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -476,6 +476,10 @@ en:
             zero: You have not added assets yet
             one: You have added %{count} asset
             other: You have added %{count} assets
+      frozen_income_savings_assets:
+        edit:
+          page_title: Does your client have any income, savings or assets under a restraint or freezing order?
+          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
 
     evidence:
       upload:

@@ -7,11 +7,14 @@ RSpec.describe Decisions::CapitalDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
+      income: income,
       capital: capital
     )
   end
 
   let(:capital) { instance_double(Capital) }
+  let(:income) { instance_double(Income, has_frozen_income_or_assets:) }
+  let(:has_frozen_income_or_assets) { nil }
 
   before do
     allow(form_object).to receive_messages(crime_application:)
@@ -361,7 +364,22 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :trust_fund }
 
-    context 'has correct next step' do
+    context 'when has_frozen_income_or_assets is nil' do
+      it { is_expected.to have_destination(:frozen_income_savings_assets, :edit, id: crime_application) }
+    end
+
+    context 'when has_frozen_income_or_assets is set' do
+      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `frozen_income_savings_assets`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :frozen_income_savings_assets }
+
+    context 'redirects to the evidence upload page' do
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end

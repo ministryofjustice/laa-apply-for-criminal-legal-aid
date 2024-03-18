@@ -616,3 +616,5 @@ en:
             custom: Their relationship is not listed
           custom_relationship: Enter their relationship
           percentage_owned: What percentage of the land do they own?
+      steps_capital_frozen_income_savings_assets_form:
+        has_frozen_income_or_assets_options: *YESNO
