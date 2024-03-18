@@ -25,14 +25,14 @@ RSpec.describe Steps::Capital::TrustFundForm do
       before { form.will_benefit_from_trust_fund = 'yes' }
 
       it { is_expected.to validate_presence_of(:trust_fund_amount_held) }
-      it { is_expected.to validate_presence_of(:yearly_dividend) }
+      it { is_expected.to validate_presence_of(:trust_fund_yearly_dividend) }
     end
 
     context 'when will client benefit from trust fund answered no' do
       before { form.will_benefit_from_trust_fund = 'no' }
 
       it { is_expected.not_to validate_presence_of(:trust_fund_amount_held) }
-      it { is_expected.not_to validate_presence_of(:yearly_dividend) }
+      it { is_expected.not_to validate_presence_of(:trust_fund_yearly_dividend) }
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Steps::Capital::TrustFundForm do
 
         form.will_benefit_from_trust_fund = will_benefit_from_trust_fund
         form.trust_fund_amount_held = '100023.00'
-        form.yearly_dividend = '2000.00'
+        form.trust_fund_yearly_dividend = '2000.00'
 
         subject.save
       end
@@ -55,7 +55,7 @@ RSpec.describe Steps::Capital::TrustFundForm do
           {
             will_benefit_from_trust_fund: YesNoAnswer::YES,
             trust_fund_amount_held: '100023.00',
-            yearly_dividend: '2000.00'
+            trust_fund_yearly_dividend: '2000.00'
           }
         end
 
@@ -71,7 +71,7 @@ RSpec.describe Steps::Capital::TrustFundForm do
           {
             will_benefit_from_trust_fund: YesNoAnswer::NO,
             trust_fund_amount_held: nil,
-            yearly_dividend: nil
+            trust_fund_yearly_dividend: nil
           }.stringify_keys
         end
 

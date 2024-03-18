@@ -21,8 +21,8 @@ module Summary
             show: will_benefit_from_trust_fund?
           ),
           Components::MoneyAnswer.new(
-            :yearly_dividend,
-            crime_application.capital.yearly_dividend,
+            :trust_fund_yearly_dividend,
+            crime_application.capital.trust_fund_yearly_dividend,
             change_path: change_path,
             show: will_benefit_from_trust_fund?
           )

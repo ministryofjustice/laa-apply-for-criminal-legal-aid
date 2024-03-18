@@ -39,7 +39,7 @@ module SubmissionSerializer
                 json.premium_bonds_holder_number capital.premium_bonds_holder_number
                 json.will_benefit_from_trust_fund capital.will_benefit_from_trust_fund
                 json.trust_fund_amount_held capital.trust_fund_amount_held_before_type_cast
-                json.yearly_dividend capital.yearly_dividend_before_type_cast
+                json.trust_fund_yearly_dividend capital.trust_fund_yearly_dividend_before_type_cast
                 json.savings Definitions::Saving.generate(capital.savings)
                 json.investments Definitions::Investment.generate(capital.investments)
                 json.national_savings_certificates Definitions::NationalSavingsCertificate.generate(

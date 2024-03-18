@@ -6,13 +6,13 @@ module Steps
 
       attribute :will_benefit_from_trust_fund, :value_object, source: YesNoAnswer
       attribute :trust_fund_amount_held, :pence
-      attribute :yearly_dividend, :pence
+      attribute :trust_fund_yearly_dividend, :pence
 
       validates :will_benefit_from_trust_fund, inclusion: { in: YesNoAnswer.values }
 
       validates(
         :trust_fund_amount_held,
-        :yearly_dividend,
+        :trust_fund_yearly_dividend,
         presence: true,
         if: -> { will_benefit_from_trust_fund&.yes? }
       )
@@ -27,7 +27,7 @@ module Steps
         return if will_benefit_from_trust_fund&.yes?
 
         self.trust_fund_amount_held = nil
-        self.yearly_dividend = nil
+        self.trust_fund_yearly_dividend = nil
       end
     end
   end

@@ -474,6 +474,6 @@ en:
         answers: *YESNO
       trust_fund_amount_held:
         question: Enter the amount held in the fund
-      yearly_dividend:
+      trust_fund_yearly_dividend:
         question: Enter the yearly dividend
       # END trust_fund

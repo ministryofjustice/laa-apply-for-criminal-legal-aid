@@ -54,7 +54,7 @@ describe Summary::HtmlPresenter do
           'premium_bonds_holder_number' => '1234A',
           'will_benefit_from_trust_fund' => 'yes',
           'trust_fund_amount_held' => 1000,
-          'yearly_dividend' => 2000
+          'trust_fund_yearly_dividend' => 2000
         }
       },
       'application_type' => application_type,

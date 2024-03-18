@@ -10,7 +10,7 @@ describe Summary::Sections::TrustFund do
       Capital,
       will_benefit_from_trust_fund: 'yes',
       trust_fund_amount_held: '1000.01',
-      yearly_dividend: '100.01'
+      trust_fund_yearly_dividend: '100.01'
     )
   end
 
@@ -55,7 +55,7 @@ describe Summary::Sections::TrustFund do
         expect(answers[1].value).to eq('1000.01')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::MoneyAnswer)
-        expect(answers[2].question).to eq(:yearly_dividend)
+        expect(answers[2].question).to eq(:trust_fund_yearly_dividend)
         expect(answers[1].change_path).to match(expected_change_path)
         expect(answers[2].value).to eq('100.01')
       end
