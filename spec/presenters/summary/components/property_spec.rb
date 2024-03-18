@@ -8,7 +8,8 @@ RSpec.describe Summary::Components::Property, type: :component do
                     complete?: true,
                     property_owners: [property_owner],
                     include_partner?: client_has_partner,
-                    crime_application: crime_application, **attributes)
+                    crime_application: crime_application,
+                    address: nil, **attributes)
   }
 
   let(:property_owner) {
@@ -234,10 +235,6 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'What percentage of the property does your client own?',
-          'None',
-        )
-        expect(page).to have_summary_row(
-          'Is the address of the property the same as your client’s home address?',
           'None',
         )
 

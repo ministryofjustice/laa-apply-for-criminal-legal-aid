@@ -71,11 +71,13 @@ module Summary
           )
         end
 
-        attributes << Components::ValueAnswer.new(
-          :is_home_address, property.is_home_address, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
-        )
+        unless property.is_home_address.nil?
+          attributes << Components::ValueAnswer.new(
+            :is_home_address, property.is_home_address, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+          )
+        end
 
-        if (property.is_home_address == YesNoAnswer::NO.to_s) && property.address&.values.present?
+        if (property.is_home_address != YesNoAnswer::YES.to_s) && property.address&.values.present?
           attributes << Components::FreeTextAnswer.new(
             :address, full_address(property.address), i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
           )

@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.shared_examples 'property controller' do |parameter|
+RSpec.shared_examples 'capital properties controller' do |parameter|
   let(:property_type) { parameter }
   let(:form_class) { "Steps::Capital::#{property_type.titleize}Form".constantize }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
