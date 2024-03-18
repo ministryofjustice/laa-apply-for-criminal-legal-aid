@@ -587,7 +587,7 @@ en:
         trust_fund_amount_held: Enter the amount held in the fund
         trust_fund_yearly_dividend: Enter the yearly dividend
         will_benefit_from_trust_fund_options: *YESNO
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         house_type_options:
           bungalow: Bungalow
           detached: Detached

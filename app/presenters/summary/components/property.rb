@@ -4,9 +4,9 @@ module Summary
       alias property record
 
       PROPERTY_MAPPING = {
-        'residential' => 'property',
-        'commercial' => 'property',
-        'land' => 'land'
+        PropertyType::RESIDENTIAL.to_s => 'property',
+        PropertyType::COMMERCIAL.to_s => 'property',
+        PropertyType::LAND.to_s => 'land'
       }.freeze
 
       private
@@ -14,6 +14,7 @@ module Summary
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         attributes = []
 
+        # property specific attributes starts
         if property.property_type == PropertyType::RESIDENTIAL.to_s
           attributes << [
             Components::FreeTextAnswer.new(
@@ -45,7 +46,9 @@ module Summary
             )
           ]
         end
+        # property specific attributes ends
 
+        # common property attributes start
         attributes << [
           # TODO: Temporary fix to avoid duplicate keys in summary.yml
           Components::MoneyAnswer.new(
@@ -98,6 +101,7 @@ module Summary
             :percentage_owned, owner.percentage_owned, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
           )
         end
+        # common property attributes end
         attributes.flatten!
       end
 
@@ -129,11 +133,11 @@ module Summary
 
       def change_path # rubocop:disable
         case record.property_type
-        when 'residential'
+        when PropertyType::RESIDENTIAL.to_s
           edit_steps_capital_residential_property_path(id: record.crime_application_id, property_id: record.id)
-        when 'commercial'
+        when PropertyType::COMMERCIAL.to_s
           edit_steps_capital_commercial_property_path(id: record.crime_application_id, property_id: record.id)
-        when 'land'
+        when PropertyType::LAND.to_s
           edit_steps_capital_land_path(id: record.crime_application_id, property_id: record.id)
         end
       end
