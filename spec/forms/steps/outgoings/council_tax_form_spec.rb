@@ -149,6 +149,33 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
         form.save
       end
     end
+
+    context 'when housing_payment_type is board_and_lodging' do
+      let(:arguments) do
+        { 'pays_council_tax' => 'yes' }.merge(crime_application:)
+      end
+
+      before do
+        crime_application.outgoings.housing_payment_type = 'board_and_lodging'
+      end
+
+      it 'is not payable' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:pays_council_tax, :not_payable)).to be(true)
+      end
+    end
+
+    context 'when housing_payment_type is not board_and_lodging' do
+      let(:arguments) do
+        { 'pays_council_tax' => 'yes', 'amount' => 29_000 }.merge(crime_application:)
+      end
+
+      before do
+        crime_application.outgoings.housing_payment_type = 'rent'
+      end
+
+      it { is_expected.to be_valid }
+    end
   end
 
   describe '#amount' do

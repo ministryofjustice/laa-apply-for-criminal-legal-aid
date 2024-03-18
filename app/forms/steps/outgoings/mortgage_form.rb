@@ -30,7 +30,7 @@ module Steps
       end
 
       def reset!
-        crime_application.outgoings_payments.where(payment_type: OutgoingsPaymentType::MORTGAGE.value).destroy_all
+        crime_application.outgoings_payments.housing_payments.destroy_all
       end
     end
   end
