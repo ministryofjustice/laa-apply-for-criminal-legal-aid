@@ -24,7 +24,7 @@ module Steps
       end
 
       def before_save
-        return if will_benefit_from_trust_fund.yes?
+        return if will_benefit_from_trust_fund&.yes?
 
         self.trust_fund_amount_held = nil
         self.yearly_dividend = nil
