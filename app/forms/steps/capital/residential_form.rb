@@ -20,6 +20,7 @@ module Steps
       end
 
       def before_save
+        super
         record.custom_house_type = nil unless custom_house_type?
       end
 
