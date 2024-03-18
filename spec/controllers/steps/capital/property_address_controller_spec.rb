@@ -56,18 +56,18 @@ RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
     end
 
     context 'when valid address attributes' do
-      it 'redirects to the which_savings path' do
+      it 'redirects to `clients_assets` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to(/which_savings_does_client_have/)
+        expect(response).to redirect_to(/clients_assets/)
       end
     end
 
     context 'when invalid address attributes' do
       before { address_attributes.merge!(address_line_one: nil, city: nil) }
 
-      it 'not redirects to the which_savings path' do
+      it 'not redirects to the `clients_assets` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).not_to redirect_to(/which_savings_does_client_have/)
+        expect(response).not_to redirect_to(/clients_assets/)
       end
     end
   end

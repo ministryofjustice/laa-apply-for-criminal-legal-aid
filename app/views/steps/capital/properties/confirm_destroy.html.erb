@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header(path: edit_steps_capital_properties_summary_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%=t '.heading' %>
+    </h1>
+
+    <dl class='govuk-summary-list'>
+      <%= render Summary::Components::Property.new(record: @property, show_actions: false) %>
+    </dl>
+
+    <%= form_with url: steps_capital_properties_path, method: :delete do |f| %>
+      <div class="govuk-button-group">
+        <%= f.button t('.confirm_delete_button'),
+                     class: 'govuk-button govuk-button--warning',
+                     'aria-label': t('.confirm_delete_button_a11y'),
+                     data: { module: 'govuk-button' } %>
+
+        <%= link_button t('.cancel_delete_button'), edit_steps_capital_properties_summary_path,
+                        class: 'govuk-button--primary',
+                        'aria-label': t('.cancel_delete_button_a11y') %>
+      </div>
+    <% end %>
+  </div>
+</div>

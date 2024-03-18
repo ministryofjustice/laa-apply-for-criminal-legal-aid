@@ -1,5 +1,5 @@
 module Decisions
-  class CapitalDecisionTree < BaseDecisionTree
+  class CapitalDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
@@ -11,22 +11,28 @@ module Decisions
         edit(:savings_summary)
       when :savings_summary
         after_savings_summary
+      when :properties_summary
+        after_properties_summary
       when :property_type
         after_property_type(form_object.property)
       when :residential_property
         after_properties
       when :property_address
-        # TODO: Route to property owner page once built
         after_property_address
       when :property_owners
-        # TODO: Route to assets list page once built
-        after_property_owner
+        edit(:properties_summary)
       when :add_property_owner
         after_add_property_owner
       when :delete_property_owner
-        after_delete_property_owner
+        edit(:property_owners, property_id: property)
       when :premium_bonds
-        edit(:investment_type)
+        edit(:has_national_savings_certificates)
+      when :has_national_savings_certificates
+        after_has_national_savings_certificates
+      when :national_savings_certificates
+        edit(:national_savings_certificates_summary)
+      when :national_savings_certificates_summary
+        after_national_savings_certificates_summary
       when :investment_type
         after_investment_type(form_object.investment)
       when :other_investment_type
@@ -61,10 +67,28 @@ module Decisions
       edit(:investments, investment_id: investment)
     end
 
+    def after_has_national_savings_certificates
+      return edit(:investment_type) if form_object.has_national_savings_certificates.no?
+
+      edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
+    end
+
+    def after_national_savings_certificates_summary
+      return edit(:investment_type) if form_object.add_national_savings_certificate.no?
+
+      edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
+    end
+
     def after_investments_summary
       return edit('/steps/case/urn') if form_object.add_investment.no?
 
       edit(:other_investment_type)
+    end
+
+    def after_properties_summary
+      return edit(:saving_type) if form_object.add_property.no?
+
+      edit(:other_property_type)
     end
 
     def after_property_type(property)
@@ -81,8 +105,7 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def after_property_address
@@ -90,25 +113,15 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-
-      # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def incomplete_property_owners
       property_owners.reject(&:complete?)
     end
 
-    def after_property_owner
-      edit(:saving_type) # Placeholder to join up flow
-    end
-
     def after_add_property_owner
       property_owners << PropertyOwner.new
-      edit(:property_owners, property_id: property)
-    end
-
-    def after_delete_property_owner
       edit(:property_owners, property_id: property)
     end
 

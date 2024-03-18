@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
+
+ActiveRecord::Schema[7.0].define(version: 2024_03_12_171957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.string "premium_bonds_holder_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "has_national_savings_certificates"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -206,6 +208,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.index ["case_id"], name: "index_iojs_on_case_id", unique: true
   end
 
+  create_table "national_savings_certificates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "certificate_number"
+    t.integer "value"
+    t.string "holder_number"
+    t.string "ownership_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_national_savings_certificates_on_crime_application_id"
+  end
+
   create_table "offence_dates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -268,8 +281,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.integer "bedrooms"
     t.integer "value"
     t.integer "outstanding_mortgage"
-    t.integer "percentage_applicant_owned"
-    t.integer "percentage_partner_owned"
+    t.decimal "percentage_applicant_owned"
+    t.decimal "percentage_partner_owned"
     t.string "is_home_address"
     t.string "has_other_owners"
     t.jsonb "address"
@@ -283,7 +296,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
     t.string "name"
     t.string "relationship"
     t.string "custom_relationship"
-    t.integer "percentage_owned"
+    t.decimal "percentage_owned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_property_owners_on_property_id"
@@ -336,6 +349,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_004807) do
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "investments", "crime_applications"
   add_foreign_key "iojs", "cases"
+  add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "outgoings_payments", "crime_applications"

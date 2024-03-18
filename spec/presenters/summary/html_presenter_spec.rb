@@ -8,10 +8,12 @@ describe Summary::HtmlPresenter do
   subject(:presenter) { described_class.new(crime_application:) }
 
   let(:database_application) do
-    instance_double(CrimeApplication, applicant: double, case: double, ioj: double,
-                    status: :in_progress, income: double, outgoings: double,
-                    documents: double, application_type: application_type,
-                    capital: double, savings: [double], investments: [double])
+    instance_double(
+      CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
+      income: double, outgoings: double, documents: double, application_type: application_type,
+      capital: double, savings: [double], investments: [double],
+      national_savings_certificates: [double], properties: [double]
+    )
   end
 
   let(:datastore_application) do
@@ -30,6 +32,23 @@ describe Summary::HtmlPresenter do
                           'description' => 'About my ISA',
                           'value' => 10_001,
                           'ownership_type' => 'applicant_and_partner' }],
+          'national_savings_certificates' => [{ 'holder_number' => '1a',
+                          'certificate_number' => '2b',
+                          'value' => 121,
+                          'ownership_type' => 'partner' }],
+          'properties' => [{ 'property_type' => 'residential',
+                             'house_type' => 'custom',
+                             'custom_house_type' => 'custom house type',
+                             'size_in_acres' => 100,
+                             'usage' => 'usage details',
+                             'bedrooms' => 2,
+                             'value' => 200_000,
+                             'outstanding_mortgage' => 100_000,
+                             'percentage_applicant_owned' => 80.01,
+                             'percentage_partner_owned' => 20.01,
+                             'is_home_address' => 'yes',
+                             'has_other_owners' => 'no',
+                             'address' => nil }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A'
@@ -74,7 +93,9 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
             PremiumBonds
+            NationalSavingsCertificates
             Investments
             SupportingEvidence
             MoreInformation
@@ -105,7 +126,9 @@ describe Summary::HtmlPresenter do
             HousingPayments
             OtherOutgoingsDetails
             Savings
+            Properties
             PremiumBonds
+            NationalSavingsCertificates
             Investments
             SupportingEvidence
             MoreInformation
