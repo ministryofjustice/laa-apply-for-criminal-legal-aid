@@ -1,4 +1,4 @@
-class OutgoingsPayment < ApplicationRecord
+class OutgoingsPayment < Payment
   belongs_to :crime_application
 
   attribute :amount, :pence
