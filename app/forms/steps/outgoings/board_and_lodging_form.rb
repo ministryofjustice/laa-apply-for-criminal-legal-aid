@@ -13,18 +13,15 @@ module Steps
       validates :payee_name, presence: true
       validates :payee_relationship_to_client, presence: true
 
-      # extract the values from OutgoingsPayment.details hash if they already exist
-      # and use to set the form attributes on load
       def self.build(crime_application)
-        outgoings_payment = crime_application.outgoings_payments.find_by(
-          payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.to_s
-        )
+        payment = crime_application.outgoings_payments.board_and_lodging
+
         form = new
 
-        if outgoings_payment
-          form.frequency = outgoings_payment.frequency
+        if payment
+          form.frequency = payment.frequency
 
-          outgoings_payment.metadata&.each do |attr_name, value|
+          payment.metadata&.each do |attr_name, value|
             form.send(:"#{attr_name}=", value)
           end
         end
