@@ -20,7 +20,7 @@ module Summary
               :rent, rent,
               change_path: edit_steps_outgoings_rent_path
             ),
-          ] + council_tax_info
+          ] + board_and_lodging_info + council_tax_info
         ).select(&:show?)
       end
 
@@ -28,6 +28,29 @@ module Summary
 
       def outgoings
         @outgoings ||= crime_application.outgoings
+      end
+
+      def board_and_lodging_info # rubocop:disable Metrics/MethodLength
+        return [] unless board_and_lodging
+
+        [
+          Components::PaymentAnswer.new(
+            :board_amount, board_and_lodging_board_amount,
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::PaymentAnswer.new(
+            :food_amount, board_and_lodging_food_amount,
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::FreeTextAnswer.new(
+            :payee_name, board_and_lodging.payee_name,
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          ),
+          Components::FreeTextAnswer.new(
+            :payee_relationship_to_client, board_and_lodging.payee_relationship_to_client,
+            change_path: edit_steps_outgoings_board_and_lodging_path
+          )
+        ]
       end
 
       def council_tax_info
@@ -43,6 +66,20 @@ module Summary
             change_path: edit_steps_outgoings_council_tax_path
           ),
         ]
+      end
+
+      def board_and_lodging_board_amount
+        OutgoingsPayment.new(
+          amount: board_and_lodging.board_amount,
+          frequency: PaymentFrequencyType.new(board_and_lodging.frequency),
+        )
+      end
+
+      def board_and_lodging_food_amount
+        OutgoingsPayment.new(
+          amount: board_and_lodging.food_amount,
+          frequency: PaymentFrequencyType.new(board_and_lodging.frequency),
+        )
       end
 
       # TODO: Attempted to get an appropriate Struct to return this value
