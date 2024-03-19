@@ -18,7 +18,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'income_above_threshold' => 'no',
           'has_frozen_income_or_assets' => 'no',
           'client_owns_property' => 'no',
-          'has_savings' => 'no',
+          'has_savings' => 'yes',
           'manage_without_income' => 'other',
           'manage_other_details' => 'Another way they manage'
         )
