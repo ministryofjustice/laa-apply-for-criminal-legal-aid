@@ -103,7 +103,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
       {
         id: crime_application,
         property_id: property,
-        steps_capital_property_owner_form: { property_owners_attributes: }
+        steps_capital_property_owners_form: { property_owners_attributes: }
       }
     end
 
