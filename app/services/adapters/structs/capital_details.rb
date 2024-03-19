@@ -22,7 +22,12 @@ module Adapters
       def properties
         return [] unless __getobj__
 
-        super.map { |attrs| Property.new(**attrs) }
+        super.map do |attrs|
+          attrs.property_owners.map! do |po|
+            PropertyOwner.new(**po)
+          end
+          Property.new(**attrs)
+        end
       end
 
       def serializable_hash(options = {})
