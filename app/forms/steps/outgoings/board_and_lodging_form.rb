@@ -45,8 +45,8 @@ module Steps
             frequency: frequency,
             payee_name: payee_name,
             payee_relationship_to_client: payee_relationship_to_client,
-            board_amount: board_amount.to_i, # Force explicit cast to conform to Schema
-            food_amount: food_amount.to_i,
+            board_amount: Type::Pence.new.serialize(board_amount),
+            food_amount: Type::Pence.new.serialize(food_amount),
           )
         end
       end
