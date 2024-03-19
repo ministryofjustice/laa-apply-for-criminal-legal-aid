@@ -35,7 +35,7 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
   describe '#build' do
     subject(:form) { described_class.build(crime_application) }
 
-    let(:existing_outgoings_payment) {
+    let(:existing_board_and_lodging_payment) {
       OutgoingsPayment.new(crime_application: crime_application,
                            payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.to_s,
                            frequency: 'four_weeks',
@@ -45,9 +45,9 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
     }
 
     before do
-      allow(crime_application.outgoings_payments).to receive(:find_by).with(
-        { payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.to_s }
-      ).and_return(existing_outgoings_payment)
+      allow(crime_application.outgoings_payments).to(
+        receive(:board_and_lodging).and_return(existing_board_and_lodging_payment)
+      )
     end
 
     it 'sets the form attributes from the model metadata' do
@@ -149,8 +149,8 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
           frequency: PaymentFrequencyType::MONTHLY,
           payee_name: 'John Doe',
           payee_relationship_to_client: 'Landlord',
-          board_amount: 600,
-          food_amount: 80,
+          board_amount: 60_000,
+          food_amount: 8_000,
         )
 
         form.save

@@ -22,11 +22,9 @@ class OutgoingsPayment < ApplicationRecord
     where(payment_type: OutgoingsPaymentType::RENT.value).order(created_at: :desc).first
   end
 
-  # :nocov:
   def self.board_and_lodging
     where(payment_type: OutgoingsPaymentType::BOARD_AND_LODGING.value).order(created_at: :desc).first
   end
-  # :nocov:
 
   def self.council_tax
     where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.value).order(created_at: :desc).first
