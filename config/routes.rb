@@ -184,6 +184,9 @@ Rails.application.routes.draw do
         edit_step :clients_savings, alias: :savings_summary
 
         edit_step :does_client_have_premium_bonds, alias: :premium_bonds
+        edit_step :does_client_stand_to_benefit_from_trust_fund, alias: :trust_fund
+
+        crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
         crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
         crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
@@ -196,7 +199,9 @@ Rails.application.routes.draw do
         edit_step :which_other_investments_does_client_have, alias: :other_investment_type
         crud_step :investments, param: :investment_id
         edit_step :clients_investments, alias: :investments_summary
-
+        edit_step :clients_assets, alias: :properties_summary
+        crud_step :properties, param: :property_id
+        edit_step :which_other_assets_does_client_have, alias: :other_property_type
       end
 
       namespace :evidence do

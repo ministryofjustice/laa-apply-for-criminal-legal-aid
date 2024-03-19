@@ -8,12 +8,24 @@ class Property < ApplicationRecord
   attribute :value, :pence
   attribute :outstanding_mortgage, :pence
 
-  has_many :property_owners, dependent: :destroy
+  has_many :property_owners, dependent: :destroy do
+    # :nocov:
+    def complete
+      select(&:complete?)
+    end
+    # :nocov:
+  end
+
   accepts_nested_attributes_for :property_owners, allow_destroy: true
 
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
+
+  # TODO: use proper partner policy once we have one.
+  def include_partner?
+    YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
+  end
 
   def complete?
     values_at(

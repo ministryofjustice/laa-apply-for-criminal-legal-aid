@@ -9,6 +9,22 @@ en:
         applicant: 'Client'
         applicant_and_partner: 'Client and partner'
         partner: 'Partner'
+      HOUSE_TYPE: &HOUSE_TYPE
+        bungalow: Bungalow
+        detached: Detached
+        flat_or_maisonette: Flat or maisonette
+        semidetached: Semi-detached
+        terraced: Terraced
+      RELATIONSHIP: &RELATIONSHIP
+        business_associates: Business Associates
+        ex_partner: Ex-partner
+        family_members: Family members
+        friends: Friends
+        house_builder: House builder
+        housing_association: Housing association
+        local_authority: Local authority
+        partner_with_a_contrary_interest: Partner with a contrary interest
+        property_company: Property company
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -50,6 +66,17 @@ en:
         other: Other lump sum investment
       national_savings_certificates: National Savings Certificates
       national_savings_certificate: National Savings Certificate
+      properties: Assets
+      property:
+        residential: Residential property
+        commercial: Commercial property
+        land: Land
+        house_type:
+          <<: *HOUSE_TYPE
+      property_owner:
+        relationship:
+          <<: *RELATIONSHIP
+      trust_fund: Trust funds
 
     questions:
       # BEGIN overview section
@@ -283,7 +310,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: None
+          none: My client does not pay any of these payments
       mortgage:
         question: How much are your client's mortgage payments?
         answers:
@@ -387,7 +414,7 @@ en:
         question: Enter the holder number
         absence_answer: ''
       # END premium_bonds
-      #
+
       # START investments
       description: 
         question: Describe the investment
@@ -400,7 +427,7 @@ en:
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none
       # END investments
-      #
+
       # START national_savings_certificates
       national_savings_certificate_holder_number: 
         question: What is the customer number or holder number?
@@ -415,4 +442,56 @@ en:
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: *absence_none
-      # END investments
+      # END national_savings_certificates
+
+      # BEGIN property, address and owners
+      house_type:
+        question: Which type of property is it?
+        absence_answer: *absence_none
+      bedrooms:
+        question: How many bedrooms are there?
+        absence_answer: *absence_none
+      # TODO :: Temporary fix to avoid duplicate keys
+      property_value:
+        question: How much is the property worth?
+        absence_answer: *absence_none
+      outstanding_mortgage:
+        question: How much is left to pay on the mortgage?
+        absence_answer: *absence_none
+      percentage_applicant_owned:
+        question: What percentage of the property does your client own?
+        absence_answer: *absence_none
+      percentage_partner_owned:
+        question: What percentage of the property does your client’s partner own?
+        absence_answer: *absence_none
+      is_home_address:
+        question: Is the address of the property the same as your client’s home address?
+        answers: *YESNO
+        absence_answer: *absence_none
+      has_other_owners:
+        question: Does anyone else own part of the property?
+        answers: *YESNO
+        absence_answer: *absence_none
+      address:
+        question: Address
+        absence_answer: *absence_none
+      name:
+        question: What is the name of the %{index} other owner?
+        absence_answer: *absence_none
+      relationship:
+        question: What is their relationship to your client?
+        absence_answer: *absence_none
+      percentage_owned:
+        question: What percentage of the property do they own?
+        absence_answer: *absence_none
+      # END property, address and owners
+
+      # START trust_fund
+      will_benefit_from_trust_fund:
+        question: Does your client stand to benefit from a trust fund inside or outside the UK?
+        answers: *YESNO
+      trust_fund_amount_held:
+        question: Enter the amount held in the fund
+      trust_fund_yearly_dividend:
+        question: Enter the yearly dividend
+      # END trust_fund

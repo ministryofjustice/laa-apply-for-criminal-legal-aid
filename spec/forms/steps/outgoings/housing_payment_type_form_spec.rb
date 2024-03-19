@@ -55,10 +55,6 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
       let(:housing_payment_type) { HousingPaymentType::RENT }
 
       before do
-        allow(crime_application.outgoings_payments).to receive(:create).with(
-          payment_type: :rent
-        ).and_return outgoings_payment
-        allow(form).to receive(:existing_housing_payment).and_return nil
         form.housing_payment_type = housing_payment_type
         form.save
       end
@@ -72,9 +68,72 @@ RSpec.describe Steps::Outgoings::HousingPaymentTypeForm do
       it 'updates the outgoings record' do
         expect(crime_application.outgoings.housing_payment_type.to_s).to eq(housing_payment_type.to_s)
       end
+    end
 
-      it 'creates an outgoings payment object' do
-        expect(subject.save).to eq(outgoings_payment)
+    context 'when there were existing housing payments different to selected value' do
+      let(:older_housing_payment) do
+        OutgoingsPayment.new(
+          payment_type: 'board_and_lodging',
+          frequency: PaymentFrequencyType::FOUR_WEEKLY,
+          amount: 890.02,
+        )
+      end
+
+      before do
+        crime_application.outgoings_payments << older_housing_payment
+        crime_application.outgoings.housing_payment_type = 'board_and_lodging'
+
+        allow(crime_application.outgoings_payments).to(
+          receive(:housing_payments).and_return(crime_application.outgoings_payments)
+        )
+      end
+
+      it 'deletes them all' do
+        expect(crime_application.outgoings_payments.housing_payments).to receive(:destroy_all)
+
+        form.housing_payment_type = HousingPaymentType::RENT
+        form.save
+      end
+    end
+
+    context 'when board and lodging is saved' do
+      let(:council_tax_payment) do
+        OutgoingsPayment.new(
+          payment_type: 'council_tax',
+          frequency: PaymentFrequencyType::ANNUALLY,
+          amount: 1200.00,
+        )
+      end
+
+      let(:maintenance_payment) do
+        OutgoingsPayment.new(
+          payment_type: 'maintenance',
+          frequency: PaymentFrequencyType::ANNUALLY,
+          amount: 100.00,
+        )
+      end
+
+      before do
+        crime_application.outgoings_payments << council_tax_payment
+        crime_application.outgoings_payments << maintenance_payment
+        crime_application.outgoings.pays_council_tax = 'yes'
+      end
+
+      it 'deletes any existing council tax payments' do
+        expect(crime_application.outgoings_payments).to contain_exactly(council_tax_payment, maintenance_payment)
+
+        form.housing_payment_type = HousingPaymentType::BOARD_AND_LODGING
+        form.save
+
+        expect(crime_application.outgoings_payments.reload).to contain_exactly(maintenance_payment)
+      end
+
+      it 'resets outgoings.pays_council_tax' do
+        form.housing_payment_type = HousingPaymentType::BOARD_AND_LODGING
+
+        expect { form.save }.to(
+          change(crime_application.outgoings, :pays_council_tax).from('yes').to(nil)
+        )
       end
     end
   end

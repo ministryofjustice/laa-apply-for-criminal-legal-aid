@@ -11,20 +11,20 @@ module Decisions
         edit(:savings_summary)
       when :savings_summary
         after_savings_summary
+      when :properties_summary
+        after_properties_summary
       when :property_type
         after_property_type(form_object.property)
       when :residential_property
         after_properties
       when :property_address
-        # TODO: Route to property owner page once built
         after_property_address
       when :property_owners
-        # TODO: Route to assets list page once built
-        after_property_owner
+        edit(:properties_summary)
       when :add_property_owner
         after_add_property_owner
       when :delete_property_owner
-        after_delete_property_owner
+        edit(:property_owners, property_id: property)
       when :premium_bonds
         edit(:has_national_savings_certificates)
       when :has_national_savings_certificates
@@ -41,6 +41,9 @@ module Decisions
         edit(:investments_summary)
       when :investments_summary
         after_investments_summary
+      when :trust_fund
+        # TODO: Route to assets page if required
+        edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -62,7 +65,7 @@ module Decisions
     end
 
     def after_investment_type(investment)
-      return edit(:premium_bonds) unless investment
+      return edit(:trust_fund) unless investment
 
       edit(:investments, investment_id: investment)
     end
@@ -80,9 +83,15 @@ module Decisions
     end
 
     def after_investments_summary
-      return edit('/steps/case/urn') if form_object.add_investment.no?
+      return edit(:trust_fund) if form_object.add_investment.no?
 
       edit(:other_investment_type)
+    end
+
+    def after_properties_summary
+      return edit(:saving_type) if form_object.add_property.no?
+
+      edit(:other_property_type)
     end
 
     def after_property_type(property)
@@ -99,8 +108,7 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-      # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def after_property_address
@@ -108,25 +116,15 @@ module Decisions
         property_owners.create! if incomplete_property_owners.blank?
         return edit(:property_owners, property_id: property)
       end
-
-      # TODO: Route to appropriate property page loop once built
-      edit(:saving_type) # Placeholder to join up flow
+      edit(:properties_summary)
     end
 
     def incomplete_property_owners
       property_owners.reject(&:complete?)
     end
 
-    def after_property_owner
-      edit(:saving_type) # Placeholder to join up flow
-    end
-
     def after_add_property_owner
       property_owners << PropertyOwner.new
-      edit(:property_owners, property_id: property)
-    end
-
-    def after_delete_property_owner
       edit(:property_owners, property_id: property)
     end
 

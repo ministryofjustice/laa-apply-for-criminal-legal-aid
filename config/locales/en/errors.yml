@@ -385,6 +385,10 @@ en:
               blank: "Enter %{ordinal} dependant's age"
               less_than: "The %{ordinal} dependant must be under 18 years old"
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
+        steps/income/income_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
             amount:
@@ -398,6 +402,10 @@ en:
           attributes:
             amount:
               blank: Enter an amount
+        steps/income/income_benefits_form:
+          attributes:
+            types:
+              none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
             amount:
@@ -459,11 +467,16 @@ en:
           attributes:
             pays_council_tax:
               inclusion: Select yes if your client pays Council Tax where they usually live
+              not_payable: Council tax is not payable if your client's housing type is board and lodgings
             amount:
               blank: Enter how much your client pays yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
               not_a_number: How much they pay yearly must be a number, like 50
+        steps/outgoings/outgoings_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
@@ -529,7 +542,19 @@ en:
             premium_bonds_holder_number:
               blank: Enter the holder number
             has_premium_bonds:
-              blank: Select yes if your client has any Premium Bonds
+              inclusion: Select yes if your client has any Premium Bonds
+        steps/capital/other_property_type_form:
+          attributes:
+            property_type:
+              blank: Select which other savings your client owns or part-owns inside or outside the UK
+        steps/capital/trust_fund_form:
+          attributes:
+            trust_fund_amount_held:
+              blank: Enter the amount held in the fund
+            trust_fund_yearly_dividend:
+              blank: Enter the yearly dividend
+            will_benefit_from_trust_fund:
+              inclusion: Select yes if your client stands to benefit from a trust fund inside or outside the UK
         steps/capital/residential_property_form:
           attributes:
             house_type:
@@ -571,7 +596,10 @@ en:
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
-
+        steps/capital/properties_summary_form:
+          attributes:
+            add_property:
+              inclusion: Select yes if you want to add another asset
         steps/capital/investment_type_form:
           attributes:
             investment_type:
@@ -585,7 +613,7 @@ en:
             description:
               blank: Describe the investment
             value:
-              blank: Enter the value of the investment 
+              blank: Enter the value of the investment
               not_a_number: The value of their investment must be a number, like 50
             ownership_type:
               inclusion: Select whose name the account is in

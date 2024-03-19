@@ -21,10 +21,12 @@ module Summary
         other_income_details
         housing_payments
         other_outgoings_details
+        properties
         savings
         premium_bonds
         national_savings_certificates
         investments
+        trust_fund
         supporting_evidence
         more_information
         legal_representative_details

@@ -242,8 +242,9 @@ RSpec.shared_examples 'a payment form' do |payment_class|
 
       it 'saves nothing' do
         expect(payments.size).to eq 0
-        expect(subject.save).to be true # Always true
-        expect(subject.errors.size).to eq 0
+
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:types, :none_selected)).to be(true)
       end
     end
   end

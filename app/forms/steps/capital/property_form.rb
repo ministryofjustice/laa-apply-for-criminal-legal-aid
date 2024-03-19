@@ -1,15 +1,15 @@
 module Steps
   module Capital
     class PropertyForm < Steps::BaseFormObject
-      delegate :property_type, to: :record
+      delegate :property_type, :include_partner?, to: :record
 
       attribute :house_type, :string
       attribute :custom_house_type, :string
       attribute :bedrooms, :integer
       attribute :value, :pence
       attribute :outstanding_mortgage, :pence
-      attribute :percentage_applicant_owned, :integer
-      attribute :percentage_partner_owned, :integer
+      attribute :percentage_applicant_owned, :decimal
+      attribute :percentage_partner_owned, :decimal
       attribute :is_home_address, :value_object, source: YesNoAnswer
       attribute :has_other_owners, :value_object, source: YesNoAnswer
 
@@ -37,16 +37,13 @@ module Steps
       end
 
       def before_save
+        record.address = nil if is_home_address&.yes?
+        record.property_owners.destroy_all if has_other_owners.no?
         self.custom_house_type = nil unless custom_house_type?
       end
 
       def person_has_home_address?
         crime_application.applicant.home_address?
-      end
-
-      # TODO: use proper partner policy once we have one.
-      def include_partner?
-        YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
       end
 
       def custom_house_type?

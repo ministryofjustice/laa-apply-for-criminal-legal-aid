@@ -29,4 +29,8 @@ class OutgoingsPayment < ApplicationRecord
   def self.council_tax
     where(payment_type: OutgoingsPaymentType::COUNCIL_TAX.value).order(created_at: :desc).first
   end
+
+  def self.housing_payments
+    where(payment_type: OutgoingsPaymentType::HOUSING_PAYMENT_TYPES.map(&:to_s))
+  end
 end
