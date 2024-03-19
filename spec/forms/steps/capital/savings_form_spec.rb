@@ -34,7 +34,7 @@ RSpec.describe Steps::Capital::SavingsForm do
         end
 
         before do
-          form.account_holder = ownership
+          form.ownership_type = ownership
           form.valid?
         end
 
@@ -67,25 +67,32 @@ RSpec.describe Steps::Capital::SavingsForm do
     context 'when client has a partner' do
       let(:client_has_partner) { 'yes' }
 
-      it { is_expected.to validate_is_a(:account_holder, OwnershipType) }
+      it { is_expected.to validate_is_a(:ownership_type, OwnershipType) }
     end
   end
 
   describe '#confirm_in_applicants_name=(confirm)' do
-    subject(:confirm) { form.confirm_in_applicants_name = value }
+    subject(:confirm) do
+      form.confirm_in_applicants_name = value
+      form.save
+    end
 
     context 'when value is true' do
       let(:value) { true }
 
-      it 'sets `#account_holder` to `applicant`' do
-        expect { confirm }.to change(form, :account_holder).from(nil).to(OwnershipType::APPLICANT)
+      it 'sets `#ownership_type` to `applicant`' do
+        expect { confirm }.to change(form, :ownership_type).from(nil).to(OwnershipType::APPLICANT)
+      end
+
+      it 'is not persisted (i.e. needs re-confirming)' do
+        expect(form.confirm_in_applicants_name).to be_nil
       end
 
       context 'when client has parter' do
         let(:client_has_partner) { 'yes' }
 
-        it 'does not set the account holder' do
-          expect { confirm }.not_to(change(form, :account_holder))
+        it 'does not set the account ownership_type' do
+          expect { confirm }.not_to(change(form, :ownership_type))
         end
       end
     end
@@ -93,16 +100,16 @@ RSpec.describe Steps::Capital::SavingsForm do
     context 'when value is false' do
       let(:value) { false }
 
-      it 'does not set the account holder' do
-        expect { confirm }.not_to(change(form, :account_holder))
+      it 'does not set the account ownership_type' do
+        expect { confirm }.not_to(change(form, :ownership_type))
       end
     end
 
     context 'when value is nil' do
       let(:value) { nil }
 
-      it 'does not set the account holder' do
-        expect { confirm }.not_to(change(form, :account_holder))
+      it 'does not set the account ownership_type' do
+        expect { confirm }.not_to(change(form, :ownership_type))
       end
     end
   end
@@ -112,12 +119,13 @@ RSpec.describe Steps::Capital::SavingsForm do
       let(:attributes) do
         {
           provider_name: 'Bank of Test',
-          account_holder: OwnershipType::APPLICANT,
+          ownership_type: OwnershipType::APPLICANT,
           sort_code: '01-01-01',
           account_number: '01234500',
           account_balance: '100.01',
           is_overdrawn: YesNoAnswer.values.sample,
           are_wages_paid_into_account: YesNoAnswer.values.sample,
+          confirm_in_applicants_name: YesNoAnswer::YES
         }
       end
 

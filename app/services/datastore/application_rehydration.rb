@@ -1,4 +1,5 @@
 module Datastore
+  # rubocop:disable Metrics/ClassLength
   class ApplicationRehydration
     attr_reader :crime_application, :parent
 
@@ -23,10 +24,16 @@ module Datastore
         case: case_with_ioj,
         income: income,
         outgoings: outgoings,
+        outgoings_payments: outgoings_payments,
         documents: parent.documents,
         additional_information: parent.additional_information,
         income_payments: income_payments,
         income_benefits: income_benefits,
+        capital: capital,
+        savings: capital ? parent.capital.savings : [],
+        investments: capital ? parent.capital.investments : [],
+        national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
+        properties: capital ? parent.capital.properties : []
       )
     end
 
@@ -108,10 +115,23 @@ module Datastore
       Outgoings.new(parent.outgoings.serializable_hash)
     end
 
+    def capital
+      return if parent.capital.blank?
+
+      Capital.new(parent.capital.serializable_hash)
+    end
+
+    def outgoings_payments
+      parent.means_details&.outgoings_details&.outgoings&.map do |struct|
+        OutgoingsPayment.new(**struct)
+      end || []
+    end
+
     def not_means_tested?
       return true if means_tested.value == :no
 
       false
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

@@ -1,7 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
     def path
-      edit_steps_client_case_type_path
+      edit_steps_case_urn_path
     end
 
     def not_applicable?
@@ -18,9 +18,7 @@ module Tasks
     end
 
     def completed?
-      crime_application.case.values_at(
-        :hearing_court_name, :hearing_date
-      ).all?(&:present?)
+      crime_application.case.complete?
     end
   end
 end

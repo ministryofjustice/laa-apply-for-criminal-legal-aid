@@ -10,13 +10,18 @@ class CrimeApplication < ApplicationRecord
   has_one :partner, dependent: :destroy
   has_one :income, dependent: :destroy
   has_one :outgoings, dependent: :destroy
+  has_one :capital, dependent: :destroy
 
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy
+
   has_many :income_payments, dependent: :destroy
   accepts_nested_attributes_for :income_payments, allow_destroy: true
   has_many :outgoing_payments, dependent: :destroy
   accepts_nested_attributes_for :outgoing_payments, allow_destroy: true
+
+  has_many :outgoings_payments, dependent: :destroy
+  accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
 
   has_many :income_benefits, dependent: :destroy
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
@@ -24,7 +29,25 @@ class CrimeApplication < ApplicationRecord
   has_many :dependants, dependent: :destroy
   accepts_nested_attributes_for :dependants, allow_destroy: true
 
-  has_many :savings, dependent: :destroy
+  has_many(:properties,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
+  has_many(:savings,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
+  has_many(:investments,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
+  has_many(:national_savings_certificates,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
 
   # Shortcuts through intermediate tables
   has_one :ioj, through: :case

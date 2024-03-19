@@ -28,11 +28,13 @@ module Steps
     delegate :application_type, to: :crime_application
 
     def save
+      before_save
       valid? && persist!
     end
 
     # This is a `save if you can, but it's fine if not` method, bypassing validations
     def save!
+      before_save
       persist!
     rescue StandardError
       false
@@ -83,5 +85,8 @@ module Steps
       raise 'Subclasses of BaseFormObject need to implement #persist!'
     end
     # :nocov:
+
+    # Override in subclass where needed. For example, to reset attributes.
+    def before_save; end
   end
 end

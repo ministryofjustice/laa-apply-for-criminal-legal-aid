@@ -11,6 +11,12 @@ en:
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
+    frequency_phrases: &frequency_phrases
+      'week': 'week'
+      'fortnight': '2 weeks'
+      'four_weeks': '4 weeks'
+      'month': 'month'
+      'annual': 'year'
     frequency_options: &frequency_options
       'week': 'Every week'
       'fortnight': 'Every 2 weeks'
@@ -89,21 +95,54 @@ en:
         manage_without_income: How does your client manage with no income?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does your client pay where they usually live?
+      steps_outgoings_mortgage_form:
+        frequency: Select how often they pay mortgage payments
+      steps_outgoings_rent_form:
+        frequency: Select how often they pay rent payments
+      steps_outgoings_board_and_lodging_form:
+        frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
         council_tax: Does your client pay Council Tax where they usually live?
-      steps_outgoings_misc_payments_form:
-        misc_payments: Which of these payments does your client pay?
+      steps_outgoings_outgoings_payments_form:
+        outgoings_payments: Which of these payments does your client pay?
       steps_submission_more_information_form:
         need_more_information: Do you need to add any more information to this application?
       steps_capital_property_type_form:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
         saving_type: Which savings does your client have inside or outside the UK?
+      steps_capital_other_saving_type_form:
+        saving_type: Which other savings does your client have inside or outside the UK?
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
-        confirm_in_applicants_name: Confirm the following 
-        account_holder: Whose name is the account in?
+        confirm_in_applicants_name: Confirm the following
+        ownership_type: Whose name is the account in?
+      steps_capital_savings_summary_form:
+        add_saving: Do you want to add another savings account?
+      steps_capital_investment_type_form:
+        investment_type: Which investments does your client have inside or outside the UK?
+      steps_capital_other_investment_type_form:
+        investment_type: Which other investments does your client have inside or outside the UK?
+      steps_capital_investments_form:
+        confirm_in_applicants_name: Confirm the following
+      steps_capital_national_savings_certificates_form:
+        confirm_in_applicants_name: Confirm the following
+      steps_capital_investments_summary_form:
+        add_investment: Do you want to add another investment?
+      steps_capital_national_savings_certificates_summary_form:
+        add_national_savings_certificate: Do you want to add another National Savings Certificate?
+      steps_capital_properties_summary_form:
+        add_property: Do you want to add another asset?
+      steps_capital_other_property_type_form:
+        property_type: Which other assets does your client own or part-own inside or outside the UK?
+      steps_capital_residential_property_form:
+        house_type: Which type of property is it?
+        is_home_address: Is the address of the property the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the property?
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          relationship: What is their relationship to your client?
 
     hint:
       steps_client_details_form:
@@ -172,17 +211,34 @@ en:
         types_options:
           jsa: This includes New Style JSA.
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
+      steps_outgoings_board_and_lodging_form:
+        food_amount_in_pounds: For example, '0' or '50'.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
       steps_capital_property_type_form:
         property_type: Add one asset at a time. You can add more later.
       steps_capital_saving_type_form:
         saving_type: Add one savings account at a time. You can add more later.
-      steps_outgoings_misc_payments_form:
-        misc_payments: Select all that apply.
+      steps_capital_other_saving_type_form:
+        saving_type: Add one savings account at a time. You can add more later.
+      steps_capital_investment_type_form:
+        investment_type: Add one investment at a time. You can add more later.
+      steps_capital_other_investment_type_form:
+        investment_type: Add one investment at a time. You can add more later.
+      steps_capital_investments_form:
+        description: For example, which companies your client has invested in, the value of each share owned, or when they can access the investment.
+      steps_capital_national_savings_certificates_form:
+        value: Give an estimate if you do not know the exact value.
+      steps_outgoings_outgoings_payments_form:
+        outgoings_payments: Select all that apply.
         types_options:
           childcare: For example, to a childminder, nanny or nursery.
           maintenance: This includes child maintenance.
+      steps_capital_other_property_type_form:
+        property_type: Add one asset at a time. You can add more later.
+      steps_capital_residential_property_form:
+        bedrooms: Enter ‘0’ if the property is a studio.
+        value: You can use property websites to find the estimated value.
 
     label:
       cookies_settings_form:
@@ -361,7 +417,7 @@ en:
           details: Enter the other sources of income they get
       steps_income_income_benefits_form:
         types_options:
-          child: Child Benfit
+          child: Child Benefit
           working_or_child_tax_credit: Working Tax Credit or Child Tax Credit
           incapacity: Incapacity Benefit
           industrial_injuries_disablement: Industrial Injuries Disablement Benefit
@@ -401,14 +457,26 @@ en:
         housing_payment_type_options:
           rent: Rent
           mortgage: Mortgage
-          board_lodgings: Board and lodgings
+          board_and_lodging: Board and lodgings
           none: My client does not pay any of these payments
+      steps_outgoings_mortgage_form:
+        amount: How much are your client's mortgage payments?
+        frequency_options: *frequency_options
+      steps_outgoings_rent_form:
+        amount: How much rent does your client pay, after taking away Housing Benefit?
+        frequency_options: *frequency_options
+      steps_outgoings_board_and_lodging_form:
+        board_amount: How much does your client pay for board and lodgings?
+        food_amount: How much of the board and lodgings payment is for food?
+        payee_name: What is the name of the person your client pays for board and lodgings?
+        payee_relationship_to_client: What is your client's relationship to this person?
+        frequency_options: *frequency_options
       steps_outgoings_council_tax_form:
         pays_council_tax_options: *YESNO
-        council_tax_amount: How much do they pay yearly?
+        amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
-      steps_outgoings_misc_payments_form:
+      steps_outgoings_outgoings_payments_form:
         types_options:
           childcare: Childcare payments
           maintenance: Maintenance payments to a former partner
@@ -437,19 +505,33 @@ en:
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
       steps_capital_property_type_form:
-        property_type_options:
+        property_type_options: &PROPERTY_TYPE_OPTIONS
           residential: Residential property
           commercial: Commercial property
           land: Land
           none: My client does not own any of these assets
       steps_capital_saving_type_form:
-        saving_type_options:
+        saving_type_options: &SAVING_TYPE_OPTIONS
           bank: Bank accounts
           building_society: Building society accounts
           cash_isa: Cash ISAs
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
           none: My client does not have any of these savings
+      steps_capital_investment_type_form:
+        investment_type_options: &INVESTMENT_TYPE_OPTIONS
+          bond: Investment bonds
+          pep: Personal equity plans (PEPs)
+          share: Shares
+          share_isa: Share ISAs
+          stock: Stocks, including gilts and government bonds
+          unit_trust: Unit trusts
+          other: Any other lump sum investments
+          none: My client does not have any of these investments
+      steps_capital_other_saving_type_form:
+        saving_type_options: *SAVING_TYPE_OPTIONS
+      steps_capital_other_investment_type_form:
+        investment_type_options: *INVESTMENT_TYPE_OPTIONS
       steps_capital_savings_form:
         provider_name: What is the name of the bank, building society or other holder of the savings?
         sort_code: What is the sort code or branch name?
@@ -457,6 +539,80 @@ en:
         account_balance: What is the account balance?
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
-        account_holder_options: *OWNERSHIP_OPTIONS 
-        confirm_in_applicants_name_options: 
-          'true': I confirm that the account is in my client's name 
+        ownership_type_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
+          'true': I confirm that the account is in my client's name
+      steps_capital_investments_form:
+        description: Describe the investment
+        value: What is the value of the investment?
+        ownership_type: Whose name is the investment in?
+        ownership_type_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
+          'true': I confirm that the account is in my client's name
+      steps_capital_national_savings_certificates_form:
+        holder_number: What is the customer number or holder number?
+        certificate_number: What is the certificate number?
+        value: What is the value of the certificate?
+        ownership_type: Who owns the certificate?
+        ownership_type_options: *OWNERSHIP_OPTIONS
+        confirm_in_applicants_name_options:
+          'true': I confirm my client owns the certificate
+      steps_capital_savings_summary_form:
+        add_saving_options: *YESNO
+      steps_capital_investments_summary_form:
+        add_investment_options: *YESNO
+      steps_capital_national_savings_certificates_summary_form:
+        add_national_savings_certificate_options: *YESNO
+      steps_capital_premium_bonds_form:
+        premium_bonds_holder_number: Enter the holder number
+        premium_bonds_total_value: Enter the total value of their bonds
+        has_premium_bonds_options: *YESNO
+      steps_capital_has_national_savings_certificates_form:
+        has_national_savings_certificates_options: *YESNO
+      steps_capital_other_property_type_form:
+        property_type_options: *PROPERTY_TYPE_OPTIONS
+      steps_capital_properties_summary_form:
+        add_property_options: *YESNO
+      steps_capital_trust_fund_form:
+        trust_fund_amount_held: Enter the amount held in the fund
+        trust_fund_yearly_dividend: Enter the yearly dividend
+        will_benefit_from_trust_fund_options: *YESNO
+      steps_capital_residential_property_form:
+        house_type_options:
+          bungalow: Bungalow
+          detached: Detached
+          flat_or_maisonette: Flat or maisonette
+          semidetached: Semi-detached
+          terraced: Terraced
+          custom: The type of property is not listed
+        custom_house_type: Enter the type of property
+        bedrooms: How many bedrooms are there?
+        value: How much is the property worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the property does your client own?
+        percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_property_address_form:
+        address:
+          address_line_one: Address line 1
+          address_line_two: Address line 2 (optional)
+          city: Town or city
+          country: Country
+          postcode: Postcode
+      steps_capital_property_owner_form:
+        property_owners_attributes:
+          name: What is the name of the %{index} other owner?
+          relationship_options:
+            business_associates: Business Associates
+            ex_partner: Ex-partner
+            family_members: Family members
+            friends: Friends
+            house_builder: House builder
+            housing_association: Housing association
+            local_authority: Local authority
+            partner_with_a_contrary_interest: Partner with a contrary interest
+            property_company: Property company
+            custom: Their relationship is not listed
+          custom_relationship: Enter their relationship
+          percentage_owned: What percentage of the land do they own?

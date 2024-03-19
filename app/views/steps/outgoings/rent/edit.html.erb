@@ -1,0 +1,25 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.outgoings.caption') %></span>
+
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset(legend: { text: t('.rent_legend'), tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_number_field(:amount,
+                                 width: 'one-half',
+                                 prefix_text: '£',
+                                 hint: { text: t('.amount_hint') },
+                                 autocomplete: 'off') %>
+        <%= f.govuk_collection_radio_buttons(:frequency,
+                                             PaymentFrequencyType.values,
+                                             :value,
+                                             legend: { size: 's', class: 'govuk-!-font-weight-regular' }) %>
+        <% end %>
+      <%= f.continue_button %>
+    <% end %>
+
+  </div>
+</div>

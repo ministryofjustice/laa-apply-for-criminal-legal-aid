@@ -40,7 +40,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     # to the shared examples, or to also create the partner associated record.
     #
     context 'when application is found' do
-      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) } unless method_defined?(:existing_case)
 
       it 'responds with HTTP success' do
         get :edit, params: { id: existing_case }

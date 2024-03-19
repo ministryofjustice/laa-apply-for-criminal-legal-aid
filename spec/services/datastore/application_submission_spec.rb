@@ -93,6 +93,12 @@ RSpec.describe Datastore::ApplicationSubmission do
       crime_application: app,
       outgoings_more_than_income: 'no'
     )
+
+    Capital.create(
+      crime_application: app,
+      has_premium_bonds: 'no',
+      will_benefit_from_trust_fund: 'no'
+    )
   end
 
   after :all do

@@ -6,6 +6,8 @@ en:
       charge:
         unknown_name: Name not entered
         incomplete_tag: Incomplete
+      saving:
+        incomplete_tag: Incomplete
 
     provider:
       confirm_office:
@@ -280,10 +282,23 @@ en:
       housing_payment_type:
         edit:
           page_title: Which of these payments does your client pay where they usually live?
+      mortgage:
+        edit:
+          page_title: Mortgage payments
+          mortgage_legend: Mortgage payments
+          amount_hint: Only include mortgage payments where they usually live.
+      rent:
+        edit:
+          page_title: Rent payments
+          rent_legend: Rent payments
+          amount_hint: Only include rent payments where they usually live.
+      board_and_lodging:
+        edit:
+          page_title: Board and lodgings payments
       council_tax:
         edit:
           page_title: Does your client pay Council Tax where they usually live?
-      misc_payments:
+      outgoings_payments:
         edit:
           page_title: Which of these payments does your client pay?
       income_tax_rate:
@@ -300,18 +315,167 @@ en:
       saving_type:
         edit:
           page_title: Which savings does your client have inside or outside the UK?
+      other_saving_type:
+        edit:
+          page_title: Which other savings does your client have inside or outside the UK?
       property_type:
         edit:
           page_title: Which assets does your client own or part-own inside or outside the UK?
+      other_property_type:
+        edit:
+          page_title: Which other assets does your client own or part-own inside or outside the UK?
       savings:
         edit:
-          page_title: Add savings account details 
-          heading: 
+          page_title: Add savings account details
+          heading:
             bank: Your client’s bank account
             building_society: Your client’s building society account
             cash_isa: Your client’s cash ISA
             national_savings_or_post_office: Your client’s National Savings or Post Office account
             other: Your client’s other cash investment
+          info: You told us your client has savings.
+        confirm_destroy:
+          page_title: Delete saving account confirmation
+          heading: Are you sure you want to remove this savings account?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this savings account
+          cancel_delete_button_a11y: No, do not remove this savings account
+        destroy:
+          success_flash: You removed the savings account
+      savings_summary:
+        edit:
+          page_title: Your client’s savings
+          heading:
+            zero: You have not added savings yet
+            one: You have added %{count} saving
+            other: You have added %{count} savings
+        saving_details:
+          change_link_html: Change <span class="govuk-visually-hidden">saving</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
+
+      investment_type:
+        edit:
+          page_title: Which investments does your client have inside or outside the UK?
+      other_investment_type:
+        edit:
+          page_title: Which other investments does your client have inside or outside the UK?
+      investments:
+        edit:
+          page_title: Add investment details
+          heading:
+            bond: Your client’s investment bonds
+            pep: Your client’s personal equity plans (PEPs)
+            share: Your client’s shares
+            share_isa: Your client’s share ISAs
+            stock: Your client’s stocks, including gilts and government bonds
+            unit_trust: Your client’s unit trusts
+            other: Your client’s other lump sum investments
+          info: You told us your client has investments.
+        confirm_destroy:
+          page_title: Delete investment confirmation
+          heading: Are you sure you want to remove this investment?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this investment
+          cancel_delete_button_a11y: No, do not remove this investment
+        destroy:
+          success_flash: You removed the investment
+      investments_summary:
+        edit:
+          page_title: Your client’s investments
+          heading:
+            zero: You have not added investments yet
+            one: You have added %{count} investment
+            other: You have added %{count} investments
+        investment_details:
+          change_link_html: Change <span class="govuk-visually-hidden">investment</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">investment</span>
+
+      premium_bonds:
+        edit:
+          page_title: Does your client have any Premium Bonds?
+          heading:  Does your client have any Premium Bonds?
+      has_national_savings_certificates:
+        edit:
+          page_title: Does your client have any National Savings Certificates?
+          heading:  Does your client have any National Savings Certificates?
+      national_savings_certificates:
+        edit:
+          page_title: Add investment details
+          heading: Your client’s National Savings Certificates
+          info: You told us your client has  National Savings Certificates.
+        confirm_destroy:
+          page_title: Delete National Savings Certificate confirmation
+          heading: Are you sure you want to remove this National Savings Certificate?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this National Savings Certificate
+          cancel_delete_button_a11y: No, do not remove this National Savings Certificate
+        destroy:
+          success_flash: You removed the National Savings Certificate
+      national_savings_certificates_summary:
+        edit:
+          page_title: Your client’s National Savings Certificates
+          heading:
+            zero: You have not added National Savings Certificates yet
+            one: You have added %{count} National Savings Certificate
+            other: You have added %{count} National Savings Certificates
+        investment_details:
+          change_link_html: Change <span class="govuk-visually-hidden">National Savings Certificate</span>
+          remove_link_html: Remove <span class="govuk-visually-hidden">National Savings Certificate</span>
+      trust_fund:
+        edit:
+          page_title: Does your client stand to benefit from a trust fund inside or outside the UK?
+          heading: Does your client stand to benefit from a trust fund inside or outside the UK?
+
+      properties:
+        confirm_destroy:
+          page_title: Delete asset confirmation
+          heading: Are you sure you want to remove this asset?
+          confirm_delete_button: Yes, remove it
+          cancel_delete_button: No, do not remove it
+          confirm_delete_button_a11y: Yes, remove this asset
+          cancel_delete_button_a11y: No, do not remove this asset
+        destroy:
+          success_flash: The asset has been deleted
+      residential_property:
+        edit:
+          page_title: Your client’s residential property
+          heading:
+            residential: Your client’s residential property
+            commercial: Your client’s commercial property
+            land: Your client’s land
+        destroy:
+          success_flash: The asset has been deleted
+
+      property_address:
+        edit:
+          page_title: What is the address of your client’s land?
+          heading:
+            residential: What is the address of your client’s residential property?
+            commercial: What is the address of your client’s commercial property?
+            land: What is the address of your client’s land?
+
+      property_owners:
+        edit:
+          page_title: Other people who own your client’s residential property
+          heading:
+            residential: Other people who own your client’s residential property
+            commercial: Other people who own your client’s commercial property
+            land: Other people who own your client’s land
+          property_owners_fieldset_legend: Other owner %{index}
+          add_button: Add another owner
+          remove_button: Remove owner %{index}
+          deleted_flash: The owner has been deleted
+
+      properties_summary:
+        edit:
+          page_title: Your client’s assets
+          heading:
+            zero: You have not added assets yet
+            one: You have added %{count} asset
+            other: You have added %{count} assets
 
     evidence:
       upload:
@@ -320,9 +484,10 @@ en:
           heading: Add supporting evidence
           explanation: Use this page to provide
           recent_docs: All evidence must be from the last 3 months.
+          rename_files: Files often have long, meaningless names by default, but if you rename them to a friendly name it will make it easier for us to assess your case. For example, Client-bank-statement.PDF instead of File23.PDF.
           upload_file_button: Upload file
           upload_files_heading: Upload files
-          upload_files_info: The maximum file size is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
+          upload_files_info: The maximum size for each file is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
           choose_files_button: Choose files
           uploaded_files_heading: Uploaded files
           uploaded_files_info: When you submit this application, a caseworker will be able to access these files.

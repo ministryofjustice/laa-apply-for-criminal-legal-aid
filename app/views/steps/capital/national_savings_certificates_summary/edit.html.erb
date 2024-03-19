@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+    <%= govuk_error_summary(@form_object) %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <h1 class="govuk-heading-xl">
+      <%=t '.heading', count: @form_object.national_savings_certificates.size %>
+    </h1>
+
+    <%= render Summary::Sections::NationalSavingsCertificates.new(current_crime_application, headless: true) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons(
+            :add_national_savings_certificate,
+            @form_object.choices,
+            :value,
+            inline: true
+          ) %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -41,9 +41,15 @@ RSpec.describe Datastore::ApplicationRehydration do
         documents: all(be_a(Document)),
         dependants: all(be_a(Dependant)),
         outgoings: an_instance_of(Outgoings),
+        outgoings_payments: all(be_a(OutgoingsPayment)),
         additional_information: parent['additional_information'],
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),
+        capital: nil,
+        savings: [], # capital and savings tested separately
+        investments: [], # capital and investments tested separately
+        national_savings_certificates: [], # capital and certificates tested separately
+        properties: []
       )
 
       expect(
@@ -193,7 +199,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         subject.call
       end
 
-      it 'forces IncomePayment to be constructed using pounds value' do
+      it 'forces IncomePayment to be constructed using pence value' do
         expect(
           IncomePayment
         ).to receive(:new).with(
@@ -240,7 +246,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         subject.call
       end
 
-      it 'forces IncomeBenefit to be constructed using pounds value' do
+      it 'forces IncomeBenefit to be constructed using pence value' do
         expect(
           IncomeBenefit
         ).to receive(:new).with(
@@ -256,6 +262,118 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'child',
           amount: 89_101,
           frequency: 'annual',
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains outgoings' do
+      let(:outgoings) do
+        {
+          'outgoings' => [
+            {
+              'payment_type' => 'legal_aid_contribution',
+              'amount' => 12_344,
+              'frequency' => 'annual',
+              'metadata' => { 'case_reference' => "CASE101\n2023-12-02" },
+            },
+            {
+              'payment_type' => 'rent',
+              'amount' => 56_432,
+              'frequency' => 'month',
+            },
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'outgoings_details' => outgoings })
+      end
+
+      it 'generates outgoings payments' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            outgoings_payments: contain_exactly(OutgoingsPayment, OutgoingsPayment)
+          )
+        )
+
+        subject.call
+      end
+
+      it 'forces OutgoingsPayment to be constructed using pence value' do
+        expect(
+          OutgoingsPayment
+        ).to receive(:new).with(
+          payment_type: 'legal_aid_contribution',
+          amount: 12_344,
+          frequency: 'annual',
+          metadata: { case_reference: "CASE101\n2023-12-02" },
+        )
+
+        expect(
+          OutgoingsPayment
+        ).to receive(:new).with(
+          payment_type: 'rent',
+          amount: 56_432,
+          frequency: 'month',
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains capital_details' do
+      let(:capital_details) do
+        {
+          'savings' => [{ 'saving_type' => 'bank',
+                          'provider_name' => 'Test Bank',
+                          'ownership_type' => 'applicant',
+                          'sort_code' => '01-01-01',
+                          'account_number' => '01234500',
+                          'account_balance' => 10_001,
+                          'is_overdrawn' => 'yes',
+                          'are_wages_paid_into_account' => 'yes' },
+                        { 'saving_type' => 'building_society',
+                          'provider_name' => 'Test Building Society',
+                          'ownership_type' => 'applicant',
+                          'sort_code' => '12-34-56',
+                          'account_number' => '01234500',
+                          'account_balance' => 200_050,
+                          'is_overdrawn' => 'no',
+                          'are_wages_paid_into_account' => 'no' }],
+          'properties' => [{ 'property_type' => 'residential',
+                             'house_type' => 'custom',
+                             'custom_house_type' => 'custom house type',
+                             'size_in_acres' => nil,
+                             'usage' => nil,
+                             'bedrooms' => 92,
+                             'value' => 200_000,
+                             'outstanding_mortgage' => 100_000,
+                             'percentage_applicant_owned' => 90.01,
+                             'percentage_partner_owned' => 10.01,
+                             'is_home_address' => 'yes',
+                             'has_other_owners' => 'no',
+                             'address' => nil }],
+          'has_premium_bonds' => 'yes',
+          'premium_bonds_total_value' => 1234,
+          'premium_bonds_holder_number' => '1234A',
+          'will_benefit_from_trust_fund' => 'yes',
+          'trust_fund_amount_held' => 1000,
+          'trust_fund_yearly_dividend' => 2000
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'capital_details' => capital_details })
+      end
+
+      it 'generates savings' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            savings: contain_exactly(Saving, Saving),
+            properties: contain_exactly(Property)
+          )
         )
 
         subject.call

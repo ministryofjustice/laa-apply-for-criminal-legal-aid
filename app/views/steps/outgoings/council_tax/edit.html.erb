@@ -12,8 +12,10 @@
         <% @form_object.choices.each_with_index do |choice, index| %>
           <% if choice.yes? %>
             <%= f.govuk_radio_button :pays_council_tax, choice.value do %>
-              <%= f.govuk_number_field :council_tax_amount,
-                                       prefix_text: '£' %>
+              <%= f.govuk_text_field(:amount,
+                                     width: 'one-half',
+                                     prefix_text: '£',
+                                     autocomplete: 'off') %>
             <% end %>
           <% else %>
             <%= f.govuk_radio_button :pays_council_tax, choice.value, link_errors: index.zero? %>

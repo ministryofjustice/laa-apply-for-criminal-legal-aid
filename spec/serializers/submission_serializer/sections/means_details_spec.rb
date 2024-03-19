@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionSerializer::Sections::MeansDetails do
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -8,15 +9,26 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       CrimeApplication,
       income:,
       outgoings:,
+      outgoings_payments:,
       dependants:,
       income_payments:,
       income_benefits:,
+      capital:,
+      savings:,
+      investments:,
+      national_savings_certificates:,
+      properties:
     )
   end
 
   let(:dependants) do
     double(Array, with_ages: [])
   end
+
+  let(:savings) { [] }
+  let(:investments) { [] }
+  let(:national_savings_certificates) { [] }
+  let(:properties) { [] }
 
   describe '#generate' do
     let(:income) do
@@ -41,8 +53,28 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: 'mortgage',
         income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
+        pays_council_tax: 'yes',
         how_manage: 'A description of how they manage'
       )
+    end
+
+    let(:outgoings_payments) do
+      [
+        instance_double(
+          OutgoingsPayment,
+          payment_type: 'council_tax',
+          amount_before_type_cast: 14_744,
+          frequency: 'month',
+          metadata: {},
+        ),
+        instance_double(
+          OutgoingsPayment,
+          payment_type: HousingPaymentType::MORTGAGE,
+          amount_before_type_cast: 3_292_900,
+          frequency: 'annual',
+          metadata: {},
+        )
+      ]
     end
 
     let(:income_payments) do
@@ -67,6 +99,22 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
           metadata: { 'details' => 'Extra topup' },
         )
       ]
+    end
+
+    let(:capital) do
+      instance_double(
+        Capital,
+        has_premium_bonds: 'yes',
+        premium_bonds_total_value_before_type_cast: 123,
+        premium_bonds_holder_number: '123A',
+        will_benefit_from_trust_fund: 'yes',
+        trust_fund_amount_held_before_type_cast: 1000,
+        trust_fund_yearly_dividend_before_type_cast: 2000,
+        savings: [],
+        investments: [],
+        national_savings_certificates: [],
+        properties: []
+      )
     end
 
     let(:json_output) do
@@ -98,12 +146,37 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             ],
           },
           outgoings_details: {
-            # TODO: Outgoings array currently hardcoded in serializer
-            outgoings: [],
+            outgoings: [
+              {
+                payment_type: 'council_tax',
+                amount: 14_744,
+                frequency: 'month',
+                metadata: {},
+              },
+              {
+                payment_type: 'mortgage',
+                amount: 3_292_900,
+                frequency: 'annual',
+                metadata: {},
+              }
+            ],
             housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
-            how_manage: 'A description of how they manage'
+            how_manage: 'A description of how they manage',
+            pays_council_tax: 'yes',
+          },
+          capital_details: {
+            has_premium_bonds: 'yes',
+            premium_bonds_total_value: 123,
+            premium_bonds_holder_number: '123A',
+            will_benefit_from_trust_fund: 'yes',
+            trust_fund_amount_held: 1000,
+            trust_fund_yearly_dividend: 2000,
+            savings: [],
+            investments: [],
+            national_savings_certificates: [],
+            properties: []
           }
         }
       }.as_json
@@ -135,7 +208,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: nil,
         income_tax_rate_above_threshold: nil,
         outgoings_more_than_income: nil,
-        how_manage: nil
+        how_manage: nil,
+        pays_council_tax: nil,
       )
     end
 
@@ -158,12 +232,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             income_benefits: nil,
           },
           outgoings_details: {
-            # TODO: Outgoings array currently hardcoded in serializer
-            outgoings: [],
+            outgoings: nil,
             housing_payment_type: nil,
             income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
-            how_manage: nil
+            how_manage: nil,
+            pays_council_tax: nil,
           }
         }
       }.as_json
@@ -177,8 +251,17 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       nil
     end
 
+    let(:outgoings_payments) do
+      nil
+    end
+
+    let(:capital) do
+      nil
+    end
+
     it 'does not output lost_job_in_custody_fields' do
       expect(subject.generate).to eq(json_output)
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

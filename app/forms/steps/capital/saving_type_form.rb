@@ -16,7 +16,7 @@ module Steps
       def persist!
         return true if saving_type == 'none'
 
-        @saving = incomplete_saving_for_type || crime_application.savings.create(saving_type:)
+        @saving = incomplete_saving_for_type || crime_application.savings.create!(saving_type:)
       end
 
       def incomplete_saving_for_type
