@@ -486,6 +486,7 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             case_reference:
               invalid: "Cannot add case_reference for %{payment_type}"
+              blank: Enter the case reference of the criminal rep order or civil certificate
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"

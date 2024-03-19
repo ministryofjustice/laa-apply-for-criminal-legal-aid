@@ -18,6 +18,9 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
        board_from_family rent financial_support_with_access from_friends_relatives other]
   end
 
+  let(:other_type) { 'other' }
+  let(:other_type_attribute_data) { { 'amount' => 23.30, 'frequency' => 'week', 'details' => 'XYZ' } }
+
   let(:fieldset_form_class) { Steps::Income::IncomePaymentFieldsetForm }
 
   let(:payments) do
