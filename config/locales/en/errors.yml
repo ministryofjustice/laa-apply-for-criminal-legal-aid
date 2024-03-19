@@ -396,6 +396,7 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter the other sources of income they get
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
@@ -413,6 +414,7 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter what benefits they get and the amount
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
@@ -635,7 +637,7 @@ en:
             certificate_number:
               blank: Enter the certificate number
             value:
-              blank: Enter the value of the certificate 
+              blank: Enter the value of the certificate
               not_a_number: The value of their certificate must be a number, like 50
             ownership_type:
               inclusion: Select who owns the certifcate
