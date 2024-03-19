@@ -638,7 +638,8 @@ en:
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
-              blank: Enter the name of the [first] other owner
+              # TODO: Change text to -> Enter the name of the [first] other owner
+              blank: Enter the name of the other owner
             relationship:
               blank: Enter their relationship to your client
             custom_relationship:

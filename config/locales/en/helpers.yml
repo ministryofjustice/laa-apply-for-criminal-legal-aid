@@ -146,7 +146,7 @@ en:
       steps_capital_land_form:
         is_home_address: Is the address of the land the same as your client’s home address?
         has_other_owners: Does anyone else own part of the land?
-      steps_capital_property_owner_form:
+      steps_capital_property_owners_form:
         property_owners_attributes:
           relationship: What is their relationship to your client?
 
@@ -627,7 +627,7 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
-      steps_capital_property_owner_form:
+      steps_capital_property_owners_form:
         property_owners_attributes:
           name: What is the name of the %{index} other owner?
           relationship_options:

@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class PropertyOwnerForm < Steps::BaseFormObject
+    class PropertyOwnersForm < Steps::BaseFormObject
       # transient attribute
       attr_accessor :property_owners_attributes
 

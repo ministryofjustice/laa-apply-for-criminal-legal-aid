@@ -73,7 +73,7 @@ en:
         land: Land
         house_type:
           <<: *HOUSE_TYPE
-      property_owner:
+      property_owners:
         relationship:
           <<: *RELATIONSHIP
       trust_fund: Trust funds

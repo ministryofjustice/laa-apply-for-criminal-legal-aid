@@ -3,10 +3,19 @@ module Summary
     class Property < BaseRecord # rubocop:disable Metrics/ClassLength
       alias property record
 
-      PROPERTY_MAPPING = {
-        PropertyType::RESIDENTIAL.to_s => 'property',
-        PropertyType::COMMERCIAL.to_s => 'property',
-        PropertyType::LAND.to_s => 'land'
+      PROPERTY_TYPE_MAPPING = {
+        PropertyType::RESIDENTIAL.to_s => {
+          display_name: 'property',
+          edit_path: 'edit_steps_capital_residential_property_path'
+        },
+        PropertyType::COMMERCIAL.to_s => {
+          display_name: 'property',
+          edit_path: 'edit_steps_capital_commercial_property_path'
+        },
+        PropertyType::LAND.to_s => {
+          display_name: 'land',
+          edit_path: 'edit_steps_capital_land_path'
+        }
       }.freeze
 
       private
@@ -18,7 +27,9 @@ module Summary
         if property.property_type == PropertyType::RESIDENTIAL.to_s
           attributes << [
             Components::FreeTextAnswer.new(
-              :house_type, house_type, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+              :house_type, house_type, i18n_opts: {
+                asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              }
             ),
             Components::FreeTextAnswer.new(
               :bedrooms, property.bedrooms.to_s
@@ -30,11 +41,11 @@ module Summary
           attributes << [
             Components::FreeTextAnswer.new(
               :size_in_acres, "#{property.size_in_acres} acres", i18n_opts: {
-                asset: PROPERTY_MAPPING[property.property_type]
+                asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
               }
             ),
             Components::FreeTextAnswer.new(
-              :usage, property.usage, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+              :usage, property.usage, i18n_opts: { asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name] }
             )
           ]
         end
@@ -42,7 +53,7 @@ module Summary
         if property.property_type == PropertyType::COMMERCIAL.to_s
           attributes << [
             Components::FreeTextAnswer.new(
-              :usage, property.usage, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+              :usage, property.usage, i18n_opts: { asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name] }
             )
           ]
         end
@@ -52,16 +63,18 @@ module Summary
         attributes << [
           # TODO: Temporary fix to avoid duplicate keys in summary.yml
           Components::MoneyAnswer.new(
-            :property_value, property.value, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :property_value, property.value, i18n_opts: {
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+            }
           ),
           Components::MoneyAnswer.new(
             :outstanding_mortgage, property.outstanding_mortgage, i18n_opts: {
-              asset: PROPERTY_MAPPING[property.property_type]
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
             }
           ),
           Components::PercentageAnswer.new(
             :percentage_applicant_owned, property.percentage_applicant_owned, i18n_opts: {
-              asset: PROPERTY_MAPPING[property.property_type]
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
             }
           )
         ]
@@ -69,25 +82,29 @@ module Summary
         unless property.percentage_partner_owned.nil?
           attributes << Components::PercentageAnswer.new(
             :percentage_partner_owned, property.percentage_partner_owned, i18n_opts: {
-              asset: PROPERTY_MAPPING[property.property_type]
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
             }
           )
         end
 
         unless property.is_home_address.nil?
           attributes << Components::ValueAnswer.new(
-            :is_home_address, property.is_home_address, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :is_home_address, property.is_home_address, i18n_opts: {
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+            }
           )
         end
 
         if (property.is_home_address != YesNoAnswer::YES.to_s) && property.address&.values.present?
           attributes << Components::FreeTextAnswer.new(
-            :address, full_address(property.address), i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :address, full_address(property.address), i18n_opts: {
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+            }
           )
         end
 
         attributes << Components::ValueAnswer.new(:has_other_owners, property.has_other_owners, i18n_opts: {
-                                                    asset: PROPERTY_MAPPING[property.property_type]
+                                                    asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
                                                   })
 
         property.property_owners.each_with_index do |owner, index|
@@ -98,7 +115,9 @@ module Summary
             :relationship, relationship(owner)
           )
           attributes << Components::PercentageAnswer.new(
-            :percentage_owned, owner.percentage_owned, i18n_opts: { asset: PROPERTY_MAPPING[property.property_type] }
+            :percentage_owned, owner.percentage_owned, i18n_opts: {
+              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+            }
           )
         end
         # common property attributes end
@@ -121,7 +140,7 @@ module Summary
         if owner.relationship == ::PropertyOwner::CUSTOM_RELATIONSHIP
           owner.custom_relationship
         else
-          I18n.t(owner.relationship, scope: [:summary, :sections, :property_owner, :relationship])
+          I18n.t(owner.relationship, scope: [:summary, :sections, :property_owners, :relationship])
         end
       end
 
@@ -131,15 +150,10 @@ module Summary
         address.values.compact_blank.join("\r\n")
       end
 
-      def change_path # rubocop:disable
-        case record.property_type
-        when PropertyType::RESIDENTIAL.to_s
-          edit_steps_capital_residential_property_path(id: record.crime_application_id, property_id: record.id)
-        when PropertyType::COMMERCIAL.to_s
-          edit_steps_capital_commercial_property_path(id: record.crime_application_id, property_id: record.id)
-        when PropertyType::LAND.to_s
-          edit_steps_capital_land_path(id: record.crime_application_id, property_id: record.id)
-        end
+      def change_path
+        send(PROPERTY_TYPE_MAPPING[property.property_type][:edit_path],
+             id: record.crime_application_id,
+             property_id: record.id)
       end
 
       def remove_path

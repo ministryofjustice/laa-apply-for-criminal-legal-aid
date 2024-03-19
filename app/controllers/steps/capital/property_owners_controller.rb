@@ -6,7 +6,7 @@ module Steps
       private
 
       def form_name
-        PropertyOwnerForm
+        PropertyOwnersForm
       end
 
       def advance_as
