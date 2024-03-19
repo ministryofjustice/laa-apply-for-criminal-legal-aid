@@ -96,9 +96,7 @@ module Decisions
     end
 
     def after_trust_fund
-      if form_object.crime_application.income.has_frozen_income_or_assets.nil?
-        return edit(:frozen_income_savings_assets)
-      end
+      return edit(:frozen_income_savings_assets) if income_frozen_assets_unanswered?
 
       edit('/steps/evidence/upload')
     end
@@ -143,6 +141,10 @@ module Decisions
 
     def property
       @property ||= form_object.record
+    end
+
+    def income_frozen_assets_unanswered?
+      form_object.crime_application.income.has_frozen_income_or_assets.nil?
     end
   end
 end
