@@ -28,6 +28,12 @@ en:
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
+    payment_frequency:
+      week: week
+      fortnight: two weeks
+      four_weeks: four weeks
+      month: month
+      annual: year
     sections:
       overview: Overview
 
@@ -46,6 +52,8 @@ en:
       legal_representative_details: Legal representative
       employment_details: Employment
       income_details: Income
+      income_payments_details: Payments your client gets
+      income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
       other_outgoings_details: Other outgoings
@@ -312,6 +320,52 @@ en:
             one: "%{age} year old"
             other: "%{age} years old"
       # END dependants section
+
+      # BEGIN income payments details section
+      which_payments:
+        question: Which of these payments does your client get?
+        answers:
+          none: My client gets none of these payments
+      maintenance:
+        question: Maintenance payments
+      private_pension:
+        question: Private pensions
+      state_pension:
+        question: State pensions
+      interest_investment:
+        question: Interest or income from savings or investments
+      student_loan_grant:
+        question: Student grant or loan
+      board_from_family:
+        question: Board from family members living with your client
+      rent:
+        question: Rent from a tenant
+      financial_support_with_access:
+        question: Financial support from someone who allows your client access to their assets or money
+      from_friends_relatives:
+        question: Money from friends or family
+      other:
+        question: Other sources of income
+      # END income payments details section
+
+      # BEGIN income benefits details section
+      which_benefits:
+        question: Which of these benefits does your client get?
+        answers:
+          none: My client gets none of these benefits
+      child:
+        question: Child Benefit
+      working_or_child_tax_credit:
+        question: Working Tax Credit or Child Tax Credit
+      incapacity:
+        question: Incapacity Benefit
+      industrial_injuries_disablement:
+        question: Industrial Injuries Disablement Benefit
+      jsa:
+        question: Contribution-based Jobseeker’s Allowance (JSA)
+      other:
+        question: Other benefits (except disregarded benefits)
+      # END income benefits details section
 
       # BEGIN other sources of income details section
       manage_without_income:
