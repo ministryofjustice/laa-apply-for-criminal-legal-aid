@@ -43,7 +43,7 @@ module Decisions
         after_investments_summary
       when :trust_fund
         after_trust_fund
-      when :frozen_income_savings_assets
+      when :frozen_income_savings_assets_capital
         edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -96,7 +96,7 @@ module Decisions
     end
 
     def after_trust_fund
-      return edit(:frozen_income_savings_assets) if income_frozen_assets_unanswered?
+      return edit(:frozen_income_savings_assets_capital) if income_frozen_assets_unanswered?
 
       edit('/steps/evidence/upload')
     end

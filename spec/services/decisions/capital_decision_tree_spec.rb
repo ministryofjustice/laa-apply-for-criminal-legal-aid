@@ -365,7 +365,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :trust_fund }
 
     context 'when has_frozen_income_or_assets is nil' do
-      it { is_expected.to have_destination(:frozen_income_savings_assets, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:frozen_income_savings_assets_capital, :edit, id: crime_application) }
     end
 
     context 'when has_frozen_income_or_assets is set' do
@@ -375,9 +375,9 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
-  context 'when the step is `frozen_income_savings_assets`' do
+  context 'when the step is `frozen_income_savings_assets_capital`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :frozen_income_savings_assets }
+    let(:step_name) { :frozen_income_savings_assets_capital }
 
     context 'redirects to the evidence upload page' do
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }

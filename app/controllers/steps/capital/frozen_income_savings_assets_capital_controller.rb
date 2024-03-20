@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class FrozenIncomeSavingsAssetsController < Steps::CapitalStepController
+    class FrozenIncomeSavingsAssetsCapitalController < Steps::CapitalStepController
       def edit
         @form_object = FrozenIncomeSavingsAssetsForm.build(
           current_crime_application
@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(FrozenIncomeSavingsAssetsForm, as: :frozen_income_savings_assets)
+        update_and_advance(FrozenIncomeSavingsAssetsForm, as: :frozen_income_savings_assets_capital)
       end
     end
   end

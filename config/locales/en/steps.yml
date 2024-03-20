@@ -477,7 +477,7 @@ en:
             zero: You have not added assets yet
             one: You have added %{count} asset
             other: You have added %{count} assets
-      frozen_income_savings_assets: *FROZEN_INCOME_ASSETS_PAGE_TEXT
+      frozen_income_savings_assets_capital: *FROZEN_INCOME_ASSETS_PAGE_TEXT
 
     evidence:
       upload:
