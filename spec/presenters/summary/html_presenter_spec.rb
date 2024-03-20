@@ -101,6 +101,7 @@ describe Summary::HtmlPresenter do
             NationalSavingsCertificates
             Investments
             TrustFund
+            OtherCapitalDetails
             SupportingEvidence
             MoreInformation
           ]
@@ -135,6 +136,7 @@ describe Summary::HtmlPresenter do
             NationalSavingsCertificates
             Investments
             TrustFund
+            OtherCapitalDetails
             SupportingEvidence
             MoreInformation
             LegalRepresentativeDetails

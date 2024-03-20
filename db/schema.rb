@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_225935) do
     t.string "will_benefit_from_trust_fund"
     t.integer "trust_fund_amount_held"
     t.integer "trust_fund_yearly_dividend"
+    t.string "has_frozen_income_or_assets"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 

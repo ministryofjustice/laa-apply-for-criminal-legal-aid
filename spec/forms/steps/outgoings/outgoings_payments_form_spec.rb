@@ -17,6 +17,9 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
     %w[childcare maintenance legal_aid_contribution]
   end
 
+  let(:other_type) { 'legal_aid_contribution' }
+  let(:other_type_attribute_data) { { 'amount' => 23.30, 'frequency' => 'week', 'case_reference' => 'CASE123' } }
+
   let(:fieldset_form_class) { Steps::Outgoings::OutgoingPaymentFieldsetForm }
 
   let(:payments) do

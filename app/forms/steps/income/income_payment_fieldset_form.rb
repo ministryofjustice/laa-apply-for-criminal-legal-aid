@@ -45,10 +45,11 @@ module Steps
       private
 
       def details_only_when_other?
-        return true if payment_type == IncomePaymentType::OTHER.to_s
-        return true if details.blank?
-
-        errors.add(:details)
+        if (payment_type == IncomePaymentType::OTHER.to_s) && details.blank?
+          errors.add(:details, :blank)
+        elsif (payment_type != IncomePaymentType::OTHER.to_s) && details.present?
+          errors.add(:details, :invalid)
+        end
       end
     end
   end
