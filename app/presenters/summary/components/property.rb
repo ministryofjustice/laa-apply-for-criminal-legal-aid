@@ -28,7 +28,7 @@ module Summary
           attributes << [
             Components::FreeTextAnswer.new(
               :house_type, house_type, i18n_opts: {
-                asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+                asset: asset
               }
             ),
             Components::FreeTextAnswer.new(
@@ -41,11 +41,11 @@ module Summary
           attributes << [
             Components::FreeTextAnswer.new(
               :size_in_acres, "#{property.size_in_acres} acres", i18n_opts: {
-                asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+                asset: asset
               }
             ),
             Components::FreeTextAnswer.new(
-              :usage, property.usage, i18n_opts: { asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name] }
+              :usage, property.usage, i18n_opts: { asset: asset }
             )
           ]
         end
@@ -53,7 +53,7 @@ module Summary
         if property.property_type == PropertyType::COMMERCIAL.to_s
           attributes << [
             Components::FreeTextAnswer.new(
-              :usage, property.usage, i18n_opts: { asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name] }
+              :usage, property.usage, i18n_opts: { asset: asset }
             )
           ]
         end
@@ -64,17 +64,17 @@ module Summary
           # TODO: Temporary fix to avoid duplicate keys in summary.yml
           Components::MoneyAnswer.new(
             :property_value, property.value, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           ),
           Components::MoneyAnswer.new(
             :outstanding_mortgage, property.outstanding_mortgage, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           ),
           Components::PercentageAnswer.new(
             :percentage_applicant_owned, property.percentage_applicant_owned, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           )
         ]
@@ -82,7 +82,7 @@ module Summary
         unless property.percentage_partner_owned.nil?
           attributes << Components::PercentageAnswer.new(
             :percentage_partner_owned, property.percentage_partner_owned, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           )
         end
@@ -90,7 +90,7 @@ module Summary
         unless property.is_home_address.nil?
           attributes << Components::ValueAnswer.new(
             :is_home_address, property.is_home_address, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           )
         end
@@ -98,13 +98,13 @@ module Summary
         if (property.is_home_address != YesNoAnswer::YES.to_s) && property.address&.values.present?
           attributes << Components::FreeTextAnswer.new(
             :address, full_address(property.address), i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           )
         end
 
         attributes << Components::ValueAnswer.new(:has_other_owners, property.has_other_owners, i18n_opts: {
-                                                    asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+                                                    asset: asset
                                                   })
 
         property.property_owners.each_with_index do |owner, index|
@@ -116,7 +116,7 @@ module Summary
           )
           attributes << Components::PercentageAnswer.new(
             :percentage_owned, owner.percentage_owned, i18n_opts: {
-              asset: PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
+              asset: asset
             }
           )
         end
@@ -126,6 +126,10 @@ module Summary
 
       def name
         I18n.t(property.property_type, scope: [:summary, :sections, :property])
+      end
+
+      def asset
+        PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
       end
 
       def house_type
