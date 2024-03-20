@@ -134,7 +134,11 @@ RSpec.shared_examples 'a payment form' do |payment_class|
 
       it 'persists the fieldset form when attribute is initially set' do
         expect do
-          allowed_types.each { |type| subject.public_send(:"#{type}=", example_attribute_data) }
+          allowed_types.each do |type|
+            attrs = type == other_type ? other_type_attribute_data : example_attribute_data
+
+            subject.public_send(:"#{type}=", attrs)
+          end
         end.to change(payments, :size).by(allowed_types.size)
       end
 
