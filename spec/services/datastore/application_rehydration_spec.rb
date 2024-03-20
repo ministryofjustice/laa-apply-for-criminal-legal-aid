@@ -323,6 +323,59 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
     end
 
+    context 'when means_details contains income_details' do
+      let(:income_details) do
+        {
+          'income_payments' => [{ 'payment_type' => 'maintenance',
+                                  'amount' => 20_000,
+                                  'frequency' => 'week' },
+                                { 'payment_type' => 'rent',
+                                  'amount' => 60_000,
+                                  'frequency' => 'month' }],
+          'income_benefits' => [{ 'payment_type' => 'child',
+                                  'amount' => 10_000,
+                                  'frequency' => 'month' },
+                                { 'payment_type' => 'incapacity',
+                                  'amount' => 5_000,
+                                  'frequency' => 'month' }],
+          'employment_status' => ['not_working'],
+          'ended_employment_within_three_months' => 'yes',
+          'lost_job_in_custody' => 'yes',
+          'date_job_lost' => Date.new(2023, 9, 1),
+          'income_above_threshold' => 'no',
+          'has_frozen_income_or_assets' => 'no',
+          'client_owns_property' => 'no',
+          'has_savings' => 'no',
+          'manage_without_income' => 'other',
+          'manage_other_details' => 'Another way they manage'
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'income_details' => income_details })
+      end
+
+      it 'generates income_payments' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            income_payments: contain_exactly(IncomePayment, IncomePayment)
+          )
+        )
+
+        subject.call
+      end
+
+      it 'generates income_benefits' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            income_benefits: contain_exactly(IncomeBenefit, IncomeBenefit)
+          )
+        )
+
+        subject.call
+      end
+    end
+
     context 'when means_details contains capital_details' do
       let(:capital_details) do
         {
