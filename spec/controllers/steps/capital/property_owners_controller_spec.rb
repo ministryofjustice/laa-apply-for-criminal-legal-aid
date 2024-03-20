@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
-  let(:form_class) { Steps::Capital::PropertyOwnerForm }
+  let(:form_class) { Steps::Capital::PropertyOwnersForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
   let(:crime_application) { CrimeApplication.create }
   let(:property) do
@@ -40,7 +40,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
             '0' => {
               'name' => 'a',
               'relationship' => 'friends',
-              'custom_relationship' => '',
+              'other_relationship' => '',
               'percentage_owned' => '50',
               '_destroy' => '1',
               'id' => '123'
@@ -103,7 +103,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
       {
         id: crime_application,
         property_id: property,
-        steps_capital_property_owner_form: { property_owners_attributes: }
+        steps_capital_property_owners_form: { property_owners_attributes: }
       }
     end
 

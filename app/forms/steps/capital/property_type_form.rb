@@ -5,7 +5,6 @@ module Steps
       attr_reader :property
 
       validates :property_type, presence: true
-
       validates :property_type, inclusion: { in: ->(property) { property.choices.map(&:to_s) << 'none' } }
 
       def choices

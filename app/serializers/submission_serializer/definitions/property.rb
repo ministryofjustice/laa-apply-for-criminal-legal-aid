@@ -6,7 +6,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.property_type property_type
           json.house_type house_type
-          json.custom_house_type custom_house_type
+          json.other_house_type other_house_type
           json.size_in_acres size_in_acres
           json.usage usage
           json.bedrooms bedrooms

@@ -114,11 +114,27 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
 
-    context 'the client has selected a property type' do
+    context 'the client has selected a residential property type' do
       let(:property) { instance_double(Property, property_type: 'residential') }
 
       it 'redirects the edit `residential_property` page' do
         expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
+      end
+    end
+
+    context 'the client has selected a commercial property type' do
+      let(:property) { instance_double(Property, property_type: 'commercial') }
+
+      it 'redirects the edit `residential_property` page' do
+        expect(subject).to have_destination(:commercial_property, :edit, id: crime_application, property_id: property)
+      end
+    end
+
+    context 'the client has selected land' do
+      let(:property) { instance_double(Property, property_type: 'land') }
+
+      it 'redirects the edit `land` page' do
+        expect(subject).to have_destination(:land, :edit, id: crime_application, property_id: property)
       end
     end
   end
@@ -128,6 +144,100 @@ RSpec.describe Decisions::CapitalDecisionTree do
       double('FormObject', record:, is_home_address:, has_other_owners:)
     end
     let(:step_name) { :residential_property }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
+
+    context 'is_home_address, has_other_owners' do
+      context 'when property address is same as home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is same as home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_owners` page' do
+          expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `commercial_property`' do
+    let(:form_object) do
+      double('FormObject', record:, is_home_address:, has_other_owners:)
+    end
+    let(:step_name) { :commercial_property }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
+
+    context 'is_home_address, has_other_owners' do
+      context 'when property address is same as home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is same as home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_owners` page' do
+          expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `land`' do
+    let(:form_object) do
+      double('FormObject', record:, is_home_address:, has_other_owners:)
+    end
+    let(:step_name) { :land }
     let(:record) { instance_double(Property, property_owners: [property_owner]) }
     let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
 

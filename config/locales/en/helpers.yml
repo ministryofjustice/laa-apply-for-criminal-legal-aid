@@ -136,11 +136,17 @@ en:
         add_property: Do you want to add another asset?
       steps_capital_other_property_type_form:
         property_type: Which other assets does your client own or part-own inside or outside the UK?
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
         has_other_owners: Does anyone else own part of the property?
-      steps_capital_property_owner_form:
+      steps_capital_commercial_form:
+        is_home_address: Is the address of the property the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the property?
+      steps_capital_land_form:
+        is_home_address: Is the address of the land the same as your client’s home address?
+        has_other_owners: Does anyone else own part of the land?
+      steps_capital_property_owners_form:
         property_owners_attributes:
           relationship: What is their relationship to your client?
 
@@ -236,8 +242,12 @@ en:
           maintenance: This includes child maintenance.
       steps_capital_other_property_type_form:
         property_type: Add one asset at a time. You can add more later.
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         bedrooms: Enter ‘0’ if the property is a studio.
+        value: You can use property websites to find the estimated value.
+      steps_capital_commercial_form:
+        value: You can use property websites to find the estimated value.
+      steps_capital_land_form:
         value: You can use property websites to find the estimated value.
 
     label:
@@ -577,20 +587,37 @@ en:
         trust_fund_amount_held: Enter the amount held in the fund
         trust_fund_yearly_dividend: Enter the yearly dividend
         will_benefit_from_trust_fund_options: *YESNO
-      steps_capital_residential_property_form:
+      steps_capital_residential_form:
         house_type_options:
           bungalow: Bungalow
           detached: Detached
           flat_or_maisonette: Flat or maisonette
           semidetached: Semi-detached
           terraced: Terraced
-          custom: The type of property is not listed
-        custom_house_type: Enter the type of property
+          other: The type of property is not listed
+        other_house_type: Enter the type of property
         bedrooms: How many bedrooms are there?
         value: How much is the property worth?
         outstanding_mortgage: How much is left to pay on the mortgage?
         percentage_applicant_owned: What percentage of the property does your client own?
         percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_commercial_form:
+        usage: How is the property used?
+        value: How much is the property worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the property does your client own?
+        percentage_partner_owned: What percentage of the property does your client’s partner own?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_land_form:
+        size_in_acres: What size is the land in acres?
+        usage: How is the land used?
+        value: How much is the land worth?
+        outstanding_mortgage: How much is left to pay on the mortgage?
+        percentage_applicant_owned: What percentage of the land does your client own?
+        percentage_partner_owned: What percentage of the land does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
       steps_capital_property_address_form:
@@ -600,7 +627,7 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
-      steps_capital_property_owner_form:
+      steps_capital_property_owners_form:
         property_owners_attributes:
           name: What is the name of the %{index} other owner?
           relationship_options:
@@ -613,8 +640,8 @@ en:
             local_authority: Local authority
             partner_with_a_contrary_interest: Partner with a contrary interest
             property_company: Property company
-            custom: Their relationship is not listed
-          custom_relationship: Enter their relationship
+            other: Their relationship is not listed
+          other_relationship: Enter their relationship
           percentage_owned: What percentage of the land do they own?
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
