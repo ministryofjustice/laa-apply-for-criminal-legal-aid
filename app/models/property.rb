@@ -58,42 +58,4 @@ class Property < ApplicationRecord
   def complete?
     values_at(REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?)
   end
-
-  def residential_complete?
-    values_at(
-      :property_type,
-      :house_type,
-      :bedrooms,
-      :value,
-      :outstanding_mortgage,
-      :percentage_applicant_owned,
-      :has_other_owners
-    ],
-    land: [
-      :property_type,
-      :size_in_acres,
-      :usage,
-      :value,
-      :outstanding_mortgage,
-      :percentage_applicant_owned,
-      :has_other_owners
-    ],
-    commercial: [
-      :property_type,
-      :usage,
-      :value,
-      :outstanding_mortgage,
-      :percentage_applicant_owned,
-      :has_other_owners
-    ]
-  }.freeze
-
-  # TODO: use proper partner policy once we have one.
-  def include_partner?
-    YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
-  end
-
-  def complete?
-    values_at(REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?)
-  end
 end
