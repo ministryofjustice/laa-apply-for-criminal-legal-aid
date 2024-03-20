@@ -20,8 +20,8 @@
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
             <% end %>
             <%= po_field.govuk_radio_divider %>
-            <%= po_field.govuk_radio_button :relationship, 'custom' do %>
-              <%= po_field.govuk_text_field :custom_relationship, autocomplete: 'off', width: 'one-third' %>
+            <%= po_field.govuk_radio_button :relationship, 'other' do %>
+              <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
             <%end%>
           <% end %>
           <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>

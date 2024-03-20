@@ -562,7 +562,7 @@ en:
           attributes:
             house_type:
               blank: Enter the type of property
-            custom_house_type:
+            other_house_type:
               blank: Enter the type of property
             bedrooms:
               blank: Enter how many bedrooms are there
@@ -642,7 +642,7 @@ en:
               blank: Enter the name of the other owner
             relationship:
               blank: Enter their relationship to your client
-            custom_relationship:
+            other_relationship:
               blank: Enter their relationship
             percentage_owned:
               blank: Enter the percentage of the land they own

@@ -16,7 +16,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     instance_double(PropertyOwner,
                     name: 'Joe',
                     relationship: relationship,
-                    custom_relationship: 'xyz',
+                    other_relationship: 'xyz',
                     percentage_owned: 10.567)
   }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
@@ -29,8 +29,8 @@ RSpec.describe Summary::Components::Property, type: :component do
       id: 'PROPERTY123',
       crime_application_id: 'APP123',
       property_type: property_type,
-      house_type: 'custom',
-      custom_house_type: 'custom_house_type',
+      house_type: 'other',
+      other_house_type: 'other_house_type',
       size_in_acres: nil,
       usage: nil,
       bedrooms: 3,
@@ -40,7 +40,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       percentage_partner_owned: 50,
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
-      address: { city: 'London', postcode: 'TW7' },
+      address: { 'city' => 'london', 'country' => 'United Kingdom', 'postcode' => 'TW7' },
     }
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'custom_house_type'
+        'other_house_type'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
@@ -113,7 +113,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'Address',
-          'London TW7',
+          'TW7 london United Kingdom',
         )
       end
     end
@@ -173,8 +173,8 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
       end
 
-      context 'when custom relationship' do
-        let(:relationship) { 'custom' }
+      context 'when other relationship' do
+        let(:relationship) { 'other' }
 
         it 'renders as summary list with non-listed relationship' do
           expect(page).to have_summary_row(
@@ -203,7 +203,7 @@ RSpec.describe Summary::Components::Property, type: :component do
           crime_application_id: 'APP123',
           property_type: 'residential',
           house_type: nil,
-          custom_house_type: nil,
+          other_house_type: nil,
           size_in_acres: nil,
           usage: nil,
           bedrooms: nil,

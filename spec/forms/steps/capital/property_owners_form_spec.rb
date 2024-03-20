@@ -16,13 +16,13 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
   let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'custom_relationship' => nil, 'percentage_owned' => '50' }
+    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'custom_relationship' => nil, 'percentage_owned' => '20' }
+    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '20' }
   }
   let(:property_owners_attributes3) {
-    { 'name' => 'c', 'relationship' => PropertyOwner::CUSTOM_RELATIONSHIP, 'custom_relationship' => 'custom relationship name', 'percentage_owned' => '10' }
+    { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '10' }
   }
 
   let(:property_owners_attributes) do
@@ -39,7 +39,7 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
         {
           '0' => property_owners_attributes1.merge('name' => nil, 'percentage_owned' => nil),
           '1' => property_owners_attributes2.merge('relationship' => nil),
-          '2' => property_owners_attributes3.merge('custom_relationship' => nil)
+          '2' => property_owners_attributes3.merge('other_relationship' => nil)
         }
       end
 
@@ -62,9 +62,9 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
         )
       end
 
-      it 'has errors when the relationship is custom and custom_relationship is blank' do
-        expect(subject.errors.of_kind?('property_owners-attributes[2].custom_relationship', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owners-attributes[2].custom_relationship').first).to eq(
+      it 'has errors when the relationship is other and other_relationship is blank' do
+        expect(subject.errors.of_kind?('property_owners-attributes[2].other_relationship', :blank)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[2].other_relationship').first).to eq(
           'Enter their relationship'
         )
       end

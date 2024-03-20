@@ -40,7 +40,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
             '0' => {
               'name' => 'a',
               'relationship' => 'friends',
-              'custom_relationship' => '',
+              'other_relationship' => '',
               'percentage_owned' => '50',
               '_destroy' => '1',
               'id' => '123'

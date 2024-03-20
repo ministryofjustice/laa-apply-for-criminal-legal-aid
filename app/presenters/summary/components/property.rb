@@ -129,16 +129,16 @@ module Summary
       end
 
       def house_type
-        if property.house_type == ::Property::CUSTOM_HOUSE_TYPE
-          property.custom_house_type
+        if property.house_type == ::Property::OTHER_HOUSE_TYPE
+          property.other_house_type
         else
           I18n.t(property.house_type, scope: [:summary, :sections, :property, :house_type])
         end
       end
 
       def relationship(owner)
-        if owner.relationship == ::PropertyOwner::CUSTOM_RELATIONSHIP
-          owner.custom_relationship
+        if owner.relationship == ::PropertyOwner::OTHER_RELATIONSHIP
+          owner.other_relationship
         else
           I18n.t(owner.relationship, scope: [:summary, :sections, :property_owners, :relationship])
         end

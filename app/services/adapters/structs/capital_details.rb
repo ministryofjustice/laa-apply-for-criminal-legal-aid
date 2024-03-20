@@ -23,8 +23,10 @@ module Adapters
         return [] unless __getobj__
 
         super.map do |attrs|
-          attrs.property_owners.map! do |po|
-            PropertyOwner.new(**po)
+          if attrs.respond_to?(:property_owners)
+            attrs.property_owners.map! do |po|
+              PropertyOwner.new(**po)
+            end
           end
           Property.new(**attrs)
         end

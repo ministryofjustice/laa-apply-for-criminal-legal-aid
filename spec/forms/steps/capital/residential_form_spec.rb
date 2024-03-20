@@ -17,7 +17,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
   end
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
   let(:record) {
-    instance_double(Property, include_partner?: client_has_partner, 'custom_house_type=': nil, 'address=': nil)
+    instance_double(Property, include_partner?: client_has_partner, 'other_house_type=': nil, 'address=': nil)
   }
   let(:client_has_partner) { false }
   let(:home_address?) { true }
@@ -36,19 +36,19 @@ RSpec.describe Steps::Capital::ResidentialForm do
       it { is_expected.to validate_presence_of(:percentage_partner_owned) }
     end
 
-    describe '#custom_house_type' do
-      before { allow(subject).to receive(:custom_house_type?).and_return(custom_house_type_selected) }
+    describe '#other_house_type' do
+      before { allow(subject).to receive(:other_house_type?).and_return(other_house_type_selected) }
 
-      context 'when custom_house_type is selected' do
-        let(:custom_house_type_selected) { true }
+      context 'when other_house_type is selected' do
+        let(:other_house_type_selected) { true }
 
-        it { is_expected.to validate_presence_of(:custom_house_type) }
+        it { is_expected.to validate_presence_of(:other_house_type) }
       end
 
-      context 'when custom_house_type is not selected' do
-        let(:custom_house_type_selected) { false }
+      context 'when other_house_type is not selected' do
+        let(:other_house_type_selected) { false }
 
-        it { is_expected.not_to validate_presence_of(:custom_house_type) }
+        it { is_expected.not_to validate_presence_of(:other_house_type) }
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
     let(:required_attributes) do
       {
         house_type: 'bungalow',
-        custom_house_type: nil,
+        other_house_type: nil,
         bedrooms: 2,
         value: 170_000,
         outstanding_mortgage: 100_000,
@@ -83,7 +83,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
 
     context 'when house type is not listed' do
       context 'with valid attributes' do
-        let(:attributes) { required_attributes.merge(house_type: 'custom', custom_house_type: 'custom house type') }
+        let(:attributes) { required_attributes.merge(house_type: 'other', other_house_type: 'other house type') }
 
         it 'updates the record' do
           expect(record).to receive(:update).and_return(true)
@@ -92,7 +92,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
       end
 
       context 'with invalid attributes' do
-        let(:attributes) { required_attributes.merge(house_type: 'custom') }
+        let(:attributes) { required_attributes.merge(house_type: 'other') }
 
         it 'updates the record' do
           expect(record).not_to receive(:update)

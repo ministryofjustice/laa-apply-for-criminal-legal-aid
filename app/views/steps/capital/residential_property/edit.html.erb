@@ -19,8 +19,8 @@
           <%= f.govuk_radio_button :house_type, option, link_errors: index.zero? %>
         <% end %>
         <%= f.govuk_radio_divider %>
-        <%= f.govuk_radio_button :house_type, 'custom' do %>
-          <%= f.govuk_text_field :custom_house_type, autocomplete: 'off', width: 'one-third' %>
+        <%= f.govuk_radio_button :house_type, 'other' do %>
+          <%= f.govuk_text_field :other_house_type, autocomplete: 'off', width: 'one-third' %>
         <%end%>
       <% end %>
 
