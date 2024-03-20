@@ -27,6 +27,7 @@ module Summary
         national_savings_certificates
         investments
         trust_fund
+        other_capital_details
         supporting_evidence
         more_information
         legal_representative_details
