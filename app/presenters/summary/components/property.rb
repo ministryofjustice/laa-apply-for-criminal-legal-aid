@@ -147,7 +147,7 @@ module Summary
       def full_address(address)
         return unless address
 
-        address.values.compact_blank.join("\r\n")
+        address.values_at(*Address::ADDRESS_ATTRIBUTES.map(&:to_s)).compact_blank.join("\r\n")
       end
 
       def change_path
