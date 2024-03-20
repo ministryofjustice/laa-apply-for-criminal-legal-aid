@@ -9,11 +9,9 @@ class Property < ApplicationRecord
   attribute :outstanding_mortgage, :pence
 
   has_many :property_owners, dependent: :destroy do
-    # :nocov:
     def complete
       select(&:complete?)
     end
-    # :nocov:
   end
 
   accepts_nested_attributes_for :property_owners, allow_destroy: true
