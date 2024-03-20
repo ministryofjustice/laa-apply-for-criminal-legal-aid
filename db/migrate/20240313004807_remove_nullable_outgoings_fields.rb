@@ -1,4 +1,4 @@
-class RemoveNullableOutgoingsPayments < ActiveRecord::Migration[7.0]
+class RemoveNullableOutgoingsFields < ActiveRecord::Migration[7.0]
   def up
     ::OutgoingsPayment.transaction do
       OutgoingsPayment.where('amount IS NULL OR frequency IS NULL').destroy_all
