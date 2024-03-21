@@ -1,6 +1,6 @@
 module Steps
   module Capital
-    class PropertyOwnerForm < Steps::BaseFormObject
+    class PropertyOwnersForm < Steps::BaseFormObject
       # transient attribute
       attr_accessor :property_owners_attributes
 
@@ -30,14 +30,14 @@ module Steps
         if property_owners_attributes
           # This is a params hash in the format:
           # {"0"=>
-          #   {"name"=>"ab", "relationship"=>"custom", "custom_relationship"=>"de", "percentage_owned"=>"32", "id"=>"1"}
+          #   {"name"=>"ab", "relationship"=>"other", "other_relationship"=>"de", "percentage_owned"=>"32", "id"=>"1"}
           # }
           property_owners_attributes.values
         else
           # :nocov:
           # TODO :: ADD Specs for else part
           record.property_owners.map do |po|
-            po.slice(:id, :name, :relationship, :custom_relationship, :percentage_owned)
+            po.slice(:id, :name, :relationship, :other_relationship, :percentage_owned)
           end
           # :nocov:
         end

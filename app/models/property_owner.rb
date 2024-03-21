@@ -1,7 +1,7 @@
 class PropertyOwner < ApplicationRecord
   belongs_to :property
 
-  CUSTOM_RELATIONSHIP = 'custom'.freeze
+  OTHER_RELATIONSHIP = 'other'.freeze
 
   default_scope { order(created_at: :asc) }
 

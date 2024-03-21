@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_19_225935) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_20_134018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -248,14 +248,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_225935) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "property_type", null: false
     t.string "house_type"
-    t.string "custom_house_type"
+    t.string "other_house_type"
     t.integer "size_in_acres"
     t.string "usage"
     t.integer "bedrooms"
@@ -275,7 +275,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_225935) do
     t.uuid "property_id", null: false
     t.string "name"
     t.string "relationship"
-    t.string "custom_relationship"
+    t.string "other_relationship"
     t.decimal "percentage_owned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

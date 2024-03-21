@@ -1,6 +1,6 @@
 <%
   content_for(:row_question, flush: true) do
-    t("summary.questions.#{percentage_answer.question}.question")
+    t("summary.questions.#{percentage_answer.question}.question", **percentage_answer.i18n_opts)
   end
 
   content_for(:row_answer, flush: true) do

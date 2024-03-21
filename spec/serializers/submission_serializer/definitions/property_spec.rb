@@ -10,7 +10,7 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
       {
         property_type: 'residential',
         house_type: 'bungalow',
-        custom_house_type: nil,
+        other_house_type: nil,
         size_in_acres: 100,
         usage: 'usage details',
         bedrooms: 2,
@@ -28,8 +28,8 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
     instance_double(
       Property,
       property_type: 'residential',
-      house_type: 'custom',
-      custom_house_type: 'custom house type',
+      house_type: 'other',
+      other_house_type: 'other house type',
       size_in_acres: 200,
       usage: 'usage details',
       bedrooms: 2,
@@ -49,7 +49,7 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
       PropertyOwner,
       name: 'owner1 name',
       relationship: 'friends',
-      custom_relationship: nil,
+      other_relationship: nil,
       percentage_owned: 10,
       complete?: true
     )
@@ -58,8 +58,8 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
     instance_double(
       PropertyOwner,
       name: 'owner2 name',
-      relationship: 'custom',
-      custom_relationship: 'custom name',
+      relationship: 'other',
+      other_relationship: 'other name',
       percentage_owned: 90,
       complete?: false
     )
@@ -70,7 +70,7 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
       {
         property_type: 'residential',
         house_type: 'bungalow',
-        custom_house_type: nil,
+        other_house_type: nil,
         size_in_acres: 100,
         usage: 'usage details',
         bedrooms: 2,
@@ -85,21 +85,21 @@ RSpec.describe SubmissionSerializer::Definitions::Property do
           {
             name: 'owner1 name',
             relationship: 'friends',
-            custom_relationship: nil,
+            other_relationship: nil,
             percentage_owned: 10
           },
           {
             name: 'owner2 name',
-            relationship: 'custom',
-            custom_relationship: 'custom name',
+            relationship: 'other',
+            other_relationship: 'other name',
             percentage_owned: 90
           }
         ]
       },
       {
         property_type: 'residential',
-        house_type: 'custom',
-        custom_house_type: 'custom house type',
+        house_type: 'other',
+        other_house_type: 'other house type',
         size_in_acres: 200,
         usage: 'usage details',
         bedrooms: 2,

@@ -33,19 +33,19 @@ RSpec.describe Steps::Capital::PropertyOwnerFieldsetForm do
     it { is_expected.to validate_presence_of(:relationship) }
     it { is_expected.to validate_presence_of(:percentage_owned) }
 
-    context 'validate custom_relationship' do
-      before { allow(subject).to receive(:custom_relationship?).and_return(custom_relationship_selected) }
+    context 'validate other_relationship' do
+      before { allow(subject).to receive(:other_relationship?).and_return(other_relationship_selected) }
 
-      context 'when custom_relationship is selected' do
-        let(:custom_relationship_selected) { true }
+      context 'when other_relationship is selected' do
+        let(:other_relationship_selected) { true }
 
-        it { is_expected.to validate_presence_of(:custom_relationship) }
+        it { is_expected.to validate_presence_of(:other_relationship) }
       end
 
-      context 'when custom_relationship is not selected' do
-        let(:custom_relationship_selected) { false }
+      context 'when other_relationship is not selected' do
+        let(:other_relationship_selected) { false }
 
-        it { is_expected.not_to validate_presence_of(:custom_relationship) }
+        it { is_expected.not_to validate_presence_of(:other_relationship) }
       end
     end
   end

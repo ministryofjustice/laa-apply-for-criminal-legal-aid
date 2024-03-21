@@ -1,14 +1,14 @@
 module Steps
   module Capital
-    class ResidentialPropertyController < PropertiesController
+    class CommercialPropertyController < PropertiesController
       private
 
       def advance_as
-        :residential_property
+        :commercial_property
       end
 
       def form_name
-        ResidentialForm
+        CommercialForm
       end
     end
   end

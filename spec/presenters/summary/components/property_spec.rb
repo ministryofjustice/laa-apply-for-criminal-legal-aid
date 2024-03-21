@@ -8,27 +8,29 @@ RSpec.describe Summary::Components::Property, type: :component do
                     complete?: true,
                     property_owners: [property_owner],
                     include_partner?: client_has_partner,
-                    crime_application: crime_application, **attributes)
+                    crime_application: crime_application,
+                    address: nil, **attributes)
   }
 
   let(:property_owner) {
     instance_double(PropertyOwner,
                     name: 'Joe',
                     relationship: relationship,
-                    custom_relationship: 'xyz',
+                    other_relationship: 'xyz',
                     percentage_owned: 10.567)
   }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
   let(:client_has_partner) { false }
   let(:relationship) { 'friends' }
+  let(:property_type) { 'residential' }
 
   let(:attributes) do
     {
       id: 'PROPERTY123',
       crime_application_id: 'APP123',
-      property_type: 'residential',
-      house_type: 'custom',
-      custom_house_type: 'custom_house_type',
+      property_type: property_type,
+      house_type: 'other',
+      other_house_type: 'other_house_type',
       size_in_acres: nil,
       usage: nil,
       bedrooms: 3,
@@ -38,7 +40,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       percentage_partner_owned: 50,
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
-      address: { city: 'London', postcode: 'TW7' },
+      address: { 'city' => 'london', 'country' => 'United Kingdom', 'postcode' => 'TW7' },
     }
   end
 
@@ -73,7 +75,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
       expect(page).to have_summary_row(
         'Which type of property is it?',
-        'custom_house_type'
+        'other_house_type'
       )
       expect(page).to have_summary_row(
         'How many bedrooms are there?',
@@ -111,7 +113,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'Address',
-          'London TW7',
+          'TW7 london United Kingdom',
         )
       end
     end
@@ -171,8 +173,8 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
       end
 
-      context 'when custom relationship' do
-        let(:relationship) { 'custom' }
+      context 'when other relationship' do
+        let(:relationship) { 'other' }
 
         it 'renders as summary list with non-listed relationship' do
           expect(page).to have_summary_row(
@@ -201,7 +203,7 @@ RSpec.describe Summary::Components::Property, type: :component do
           crime_application_id: 'APP123',
           property_type: 'residential',
           house_type: nil,
-          custom_house_type: nil,
+          other_house_type: nil,
           size_in_acres: nil,
           usage: nil,
           bedrooms: nil,
@@ -235,10 +237,6 @@ RSpec.describe Summary::Components::Property, type: :component do
           'What percentage of the property does your client own?',
           'None',
         )
-        expect(page).to have_summary_row(
-          'Is the address of the property the same as your client’s home address?',
-          'None',
-        )
 
         expect(page).to have_summary_row(
           'Does anyone else own part of the property?',
@@ -256,19 +254,19 @@ RSpec.describe Summary::Components::Property, type: :component do
     let(:attributes) { super().merge({ property_type: }) }
 
     context 'when residential' do
-      let(:property_type) { :residential }
+      let(:property_type) { 'residential' }
 
       it { is_expected.to eq 'Residential property' }
     end
 
     context 'when commercial' do
-      let(:property_type) { :commercial }
+      let(:property_type) { 'commercial' }
 
       it { is_expected.to eq 'Commercial property' }
     end
 
     context 'when land' do
-      let(:property_type) { :land }
+      let(:property_type) { 'land' }
 
       it { is_expected.to eq 'Land' }
     end

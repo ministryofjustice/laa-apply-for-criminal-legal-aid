@@ -187,7 +187,8 @@ Rails.application.routes.draw do
         edit_step :does_client_stand_to_benefit_from_trust_fund, alias: :trust_fund
 
         crud_step :residential_property, alias: :residential_property, param: :property_id
-        crud_step :residential_property, alias: :residential_property, param: :property_id, except: [:destroy]
+        crud_step :commercial_property, alias: :commercial_property, param: :property_id
+        crud_step :land, alias: :land, param: :property_id
         crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
         crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
         

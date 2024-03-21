@@ -88,7 +88,7 @@ RSpec.describe Steps::Capital::SavingsForm do
         expect(form.confirm_in_applicants_name).to be_nil
       end
 
-      context 'when client has parter' do
+      context 'when client has partner' do
         let(:client_has_partner) { 'yes' }
 
         it 'does not set the account ownership_type' do

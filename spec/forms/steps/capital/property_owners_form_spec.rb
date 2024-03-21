@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::PropertyOwnerForm do
+RSpec.describe Steps::Capital::PropertyOwnersForm do
   # rubocop:disable Layout/LineLength
   subject { described_class.new(arguments) }
 
@@ -16,13 +16,13 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
   let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'custom_relationship' => nil, 'percentage_owned' => '50' }
+    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'custom_relationship' => nil, 'percentage_owned' => '20' }
+    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '20' }
   }
   let(:property_owners_attributes3) {
-    { 'name' => 'c', 'relationship' => PropertyOwner::CUSTOM_RELATIONSHIP, 'custom_relationship' => 'custom relationship name', 'percentage_owned' => '10' }
+    { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '10' }
   }
 
   let(:property_owners_attributes) do
@@ -39,7 +39,7 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
         {
           '0' => property_owners_attributes1.merge('name' => nil, 'percentage_owned' => nil),
           '1' => property_owners_attributes2.merge('relationship' => nil),
-          '2' => property_owners_attributes3.merge('custom_relationship' => nil)
+          '2' => property_owners_attributes3.merge('other_relationship' => nil)
         }
       end
 
@@ -49,29 +49,29 @@ RSpec.describe Steps::Capital::PropertyOwnerForm do
       end
 
       it 'has errors when name is blank' do
-        expect(subject.errors.of_kind?('property_owner-attributes[0].name', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owner-attributes[0].name').first).to eq(
-          'Enter the name of the [first] other owner'
+        expect(subject.errors.of_kind?('property_owners-attributes[0].name', :blank)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[0].name').first).to eq(
+          'Enter the name of the other owner'
         )
       end
 
       it 'has errors when the relationship is blank' do
-        expect(subject.errors.of_kind?('property_owner-attributes[1].relationship', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owner-attributes[1].relationship').first).to eq(
+        expect(subject.errors.of_kind?('property_owners-attributes[1].relationship', :blank)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[1].relationship').first).to eq(
           'Enter their relationship to your client'
         )
       end
 
-      it 'has errors when the relationship is custom and custom_relationship is blank' do
-        expect(subject.errors.of_kind?('property_owner-attributes[2].custom_relationship', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owner-attributes[2].custom_relationship').first).to eq(
+      it 'has errors when the relationship is other and other_relationship is blank' do
+        expect(subject.errors.of_kind?('property_owners-attributes[2].other_relationship', :blank)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[2].other_relationship').first).to eq(
           'Enter their relationship'
         )
       end
 
       it 'has errors when percentage_owned is blank' do
-        expect(subject.errors.of_kind?('property_owner-attributes[0].percentage_owned', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owner-attributes[0].percentage_owned').first).to eq(
+        expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :blank)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
           'Enter the percentage of the land they own'
         )
       end
