@@ -1,7 +1,7 @@
 module Steps
   module Income
     class IncomePaymentsForm < Steps::BaseFormObject
-      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::IncomePaymentType.values
+      PAYMENT_TYPES_ORDER = ::LaaCrimeSchemas::Types::IncomePaymentType.values
 
       attribute :income_payments, array: true, default: [] # Used by BaseFormObject
       attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
