@@ -1,15 +1,7 @@
 module Steps
   module Income
     class IncomeBenefitsForm < Steps::BaseFormObject
-      # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
-      PAYMENT_TYPES_ORDER = %w[
-        child
-        working_or_child_tax_credit
-        incapacity
-        industrial_injuries_disablement
-        jsa
-        other
-      ].freeze
+      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::IncomeBenefitType.values
 
       attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
       attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
