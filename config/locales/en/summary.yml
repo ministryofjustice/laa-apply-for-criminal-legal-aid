@@ -2,6 +2,7 @@ en:
   summary:
     dictionary:
       absence_none: &absence_none "None"
+      payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
@@ -34,6 +35,7 @@ en:
       four_weeks: four weeks
       month: month
       annual: year
+    does_not_get: Does not get
     sections:
       overview: Overview
 
@@ -326,26 +328,46 @@ en:
         question: Which of these payments does your client get?
         answers:
           none: My client gets none of these payments
-      maintenance:
+      maintenance_payment:
         question: Maintenance payments
-      private_pension:
+        answers:
+          description: *payment_answer_format
+      private_pension_payment:
         question: Private pensions
-      state_pension:
+        answers:
+          description: *payment_answer_format
+      state_pension_payment:
         question: State pensions
-      interest_investment:
+        answers:
+          description: *payment_answer_format
+      interest_investment_payment:
         question: Interest or income from savings or investments
-      student_loan_grant:
+        answers:
+          description: *payment_answer_format
+      student_loan_grant_payment:
         question: Student grant or loan
-      board_from_family:
+        answers:
+          description: *payment_answer_format
+      board_from_family_payment:
         question: Board from family members living with your client
-      rent:
+        answers:
+          description: *payment_answer_format
+      rent_payment:
         question: Rent from a tenant
-      financial_support_with_access:
+        answers:
+          description: *payment_answer_format
+      financial_support_with_access_payment:
         question: Financial support from someone who allows your client access to their assets or money
-      from_friends_relatives:
+        answers:
+          description: *payment_answer_format
+      from_friends_relatives_payment:
         question: Money from friends or family
-      other:
+        answers:
+          description: *payment_answer_format
+      other_payment:
         question: Other sources of income
+        answers:
+          description: *payment_answer_format
       # END income payments details section
 
       # BEGIN income benefits details section
@@ -353,18 +375,30 @@ en:
         question: Which of these benefits does your client get?
         answers:
           none: My client gets none of these benefits
-      child:
+      child_benefit:
         question: Child Benefit
-      working_or_child_tax_credit:
+        answers:
+          description: *payment_answer_format
+      working_or_child_tax_credit_benefit:
         question: Working Tax Credit or Child Tax Credit
-      incapacity:
+        answers:
+          description: *payment_answer_format
+      incapacity_benefit:
         question: Incapacity Benefit
-      industrial_injuries_disablement:
+        answers:
+          description: *payment_answer_format
+      industrial_injuries_disablement_benefit:
         question: Industrial Injuries Disablement Benefit
-      jsa:
+        answers:
+          description: *payment_answer_format
+      jsa_benefit:
         question: Contribution-based Jobseeker’s Allowance (JSA)
-      other:
+        answers:
+          description: *payment_answer_format
+      other_benefit:
         question: Other benefits (except disregarded benefits)
+        answers:
+          description: *payment_answer_format
       # END income benefits details section
 
       # BEGIN other sources of income details section
@@ -392,20 +426,20 @@ en:
       mortgage:
         question: How much are your client's mortgage payments?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       rent:
         question: How much rent does your client pay, after taking away Housing Benefit?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       # BEGIN board and lodgings section
       board_amount:
         question: How much does your client pay for board and lodgings?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       food_amount:
         question: How much of the board and lodgings payment is for food?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       payee_name:
         question: What is the name of the person your client pays for board and lodgings?
         answers:

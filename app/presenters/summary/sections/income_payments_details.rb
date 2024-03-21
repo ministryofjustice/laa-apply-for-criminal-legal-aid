@@ -24,10 +24,8 @@ module Summary
             income_payments.map do |payment|
               type = "steps-income-income-payments-form-types-#{payment.payment_type.tr('_', '-')}-field"
 
-              Components::FreeTextAnswer.new(
-                payment.payment_type,
-                "£#{payment.amount} every #{I18n.t(payment.frequency, scope: 'summary.payment_frequency')}",
-                show: true,
+              Components::PaymentAnswer.new(
+                "#{payment.payment_type}_payment", payment,
                 change_path: edit_steps_income_income_payments_path(anchor: type)
               )
             end,
@@ -35,9 +33,8 @@ module Summary
               type = "steps-income-income-payments-form-types-#{payment.tr('_', '-')}-field"
 
               Components::FreeTextAnswer.new(
-                payment,
-                'Does not get',
-                show: true,
+                "#{payment}_payment",
+                I18n.t('summary.does_not_get'),
                 change_path: edit_steps_income_income_payments_path(anchor: type)
               )
             end
