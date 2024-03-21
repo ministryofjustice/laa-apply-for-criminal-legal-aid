@@ -145,53 +145,43 @@ describe Summary::Sections::IncomePaymentsDetails do
         let(:rows) {
           [
             [
-              'maintenance',
-              '£300 every month',
+              'maintenance_payment', 300,
               '#steps-income-income-payments-form-types-maintenance-field'
             ],
             [
-              'private_pension',
-              '£300 every month',
+              'private_pension_payment', 300,
               '#steps-income-income-payments-form-types-private-pension-field'
             ],
             [
-              'state_pension',
-              '£300 every month',
+              'state_pension_payment', 300,
               '#steps-income-income-payments-form-types-state-pension-field'
             ],
             [
-              'interest_investment',
-              '£300 every month',
+              'interest_investment_payment', 300,
               '#steps-income-income-payments-form-types-interest-investment-field'
             ],
             [
-              'student_loan_grant',
-              '£300 every month',
+              'student_loan_grant_payment', 300,
               '#steps-income-income-payments-form-types-student-loan-grant-field'
             ],
             [
-              'board_from_family',
-              '£300 every month',
+              'board_from_family_payment', 300,
               '#steps-income-income-payments-form-types-board-from-family-field'
             ],
             [
-              'rent',
-              '£300 every month',
+              'rent_payment', 300,
               '#steps-income-income-payments-form-types-rent-field'
             ],
             [
-              'financial_support_with_access',
-              '£300 every month',
+              'financial_support_with_access_payment', 300,
               '#steps-income-income-payments-form-types-financial-support-with-access-field'
             ],
             [
-              'from_friends_relatives',
-              '£300 every month',
+              'from_friends_relatives_payment', 300,
               '#steps-income-income-payments-form-types-from-friends-relatives-field'
             ],
             [
-              'other',
-              '£300 every month',
+              'other_payment', 300,
               '#steps-income-income-payments-form-types-other-field'
             ]
           ]
@@ -218,64 +208,101 @@ describe Summary::Sections::IncomePaymentsDetails do
         let(:rows) {
           [
             [
-              'student_loan_grant',
-              '£300 every month',
+              Summary::Components::PaymentAnswer,
+              'student_loan_grant_payment', 300,
               '#steps-income-income-payments-form-types-student-loan-grant-field'
             ],
             [
-              'financial_support_with_access',
-              '£300 every month',
+              Summary::Components::PaymentAnswer,
+              'financial_support_with_access_payment', 300,
               '#steps-income-income-payments-form-types-financial-support-with-access-field'
             ],
             [
-              'from_friends_relatives',
-              '£300 every month',
+              Summary::Components::PaymentAnswer,
+              'from_friends_relatives_payment', 300,
               '#steps-income-income-payments-form-types-from-friends-relatives-field'
             ],
             [
-              'maintenance',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'maintenance_payment', 'Does not get',
               '#steps-income-income-payments-form-types-maintenance-field'
             ],
             [
-              'private_pension',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'private_pension_payment', 'Does not get',
               '#steps-income-income-payments-form-types-private-pension-field'
             ],
             [
-              'state_pension',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'state_pension_payment', 'Does not get',
               '#steps-income-income-payments-form-types-state-pension-field'
             ],
             [
-              'interest_investment',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'interest_investment_payment', 'Does not get',
               '#steps-income-income-payments-form-types-interest-investment-field'
             ],
             [
-              'board_from_family',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'board_from_family_payment', 'Does not get',
               '#steps-income-income-payments-form-types-board-from-family-field'
             ],
             [
-              'rent',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'rent_payment', 'Does not get',
               '#steps-income-income-payments-form-types-rent-field'
             ],
             [
-              'other',
-              'Does not get',
+              Summary::Components::FreeTextAnswer,
+              'other_payment', 'Does not get',
               '#steps-income-income-payments-form-types-other-field'
             ]
           ]
         }
 
         it 'has the correct rows' do
+          path = 'applications/12345/steps/income/which_payments_does_client_get'
+
           expect(answers.count).to eq(rows.size)
 
-          rows.each_with_index do |row, i|
-            build_income_payment_row_spec(*row, i)
-          end
+          expect(answers[0]).to be_an_instance_of(rows[0][0])
+          expect(answers[0].question).to eq(rows[0][1])
+          expect(answers[0].value.amount).to eq(rows[0][2])
+          expect(answers[0].value.frequency).to eq('month')
+          expect(answers[0].change_path)
+            .to match(path + rows[0][3])
+
+          expect(answers[1]).to be_an_instance_of(rows[1][0])
+          expect(answers[1].question).to eq(rows[1][1])
+          expect(answers[1].value.amount).to eq(rows[1][2])
+          expect(answers[1].value.frequency).to eq('month')
+          expect(answers[1].change_path)
+            .to match(path + rows[1][3])
+
+          expect(answers[2]).to be_an_instance_of(rows[2][0])
+          expect(answers[2].question).to eq(rows[2][1])
+          expect(answers[2].value.amount).to eq(rows[2][2])
+          expect(answers[2].value.frequency).to eq('month')
+          expect(answers[2].change_path)
+            .to match(path + rows[2][3])
+
+          expect(answers[3]).to be_an_instance_of(rows[3][0])
+          expect(answers[3].question).to eq(rows[3][1])
+          expect(answers[3].value).to eq(rows[3][2])
+          expect(answers[3].change_path)
+            .to match(path + rows[3][3])
+
+          expect(answers[4]).to be_an_instance_of(rows[4][0])
+          expect(answers[4].question).to eq(rows[4][1])
+          expect(answers[4].value).to eq(rows[4][2])
+          expect(answers[4].change_path)
+            .to match(path + rows[4][3])
+
+          expect(answers[5]).to be_an_instance_of(rows[5][0])
+          expect(answers[5].question).to eq(rows[5][1])
+          expect(answers[5].value).to eq(rows[5][2])
+          expect(answers[5].change_path)
+            .to match(path + rows[5][3])
         end
       end
 
@@ -296,10 +323,10 @@ describe Summary::Sections::IncomePaymentsDetails do
 
   def build_income_payment_row_spec(payment, text, anchor, index) # rubocop:disable Metrics/AbcSize
     full_path = "applications/12345/steps/income/which_payments_does_client_get#{anchor}"
-    expect(answers[index]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+    expect(answers[index]).to be_an_instance_of(Summary::Components::PaymentAnswer)
     expect(answers[index].question).to eq(payment)
     expect(answers[index].change_path).to match(full_path)
-    expect(answers[index].value).to eq(text)
+    expect(answers[index].value.amount).to eq(text)
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
