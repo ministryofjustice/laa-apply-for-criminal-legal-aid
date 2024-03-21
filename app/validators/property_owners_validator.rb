@@ -36,7 +36,7 @@ class PropertyOwnersValidator < ActiveModel::Validator
   def error_message(obj, error)
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
-      scope: [:activemodel, :errors, :models], index: 1
+      scope: [:activemodel, :errors, :models]
     )
   end
 end
