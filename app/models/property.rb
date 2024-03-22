@@ -60,7 +60,7 @@ class Property < ApplicationRecord
   end
 
   def address_complete?
-    return true if is_home_address == YesNoAnswer::YES.to_s
+    return true if is_home_address == YesNoAnswer::YES.to_s || is_home_address.nil?
 
     is_home_address == YesNoAnswer::NO.to_s &&
       address.present? &&

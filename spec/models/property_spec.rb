@@ -102,39 +102,48 @@ RSpec.describe Property, type: :model do
   describe '#address_complete?' do
     subject { instance.address_complete? }
 
-    context 'when property address is same as home address' do
-      let(:is_home_address) { 'yes' }
+    context 'when property address question is not asked' do
+      let(:is_home_address) { nil }
       let(:attributes) { required_attributes }
 
       it { is_expected.to be true }
     end
 
-    context 'when property address is different than home address' do
-      let(:is_home_address) { 'no' }
-      let(:address_attributes) do
-        {
-          'address_line_one' => 'address_line_one',
-          'address_line_two' => 'address_line_two',
-          'city' => 'city',
-          'country' => 'country',
-          'postcode' => 'postcode'
-        }
-      end
-
-      context 'with valid address attributes' do
-        let(:attributes) do
-          required_attributes.merge(address: address_attributes)
-        end
+    context 'when property address question is asked' do
+      context 'when property address is same as home address' do
+        let(:is_home_address) { 'yes' }
+        let(:attributes) { required_attributes }
 
         it { is_expected.to be true }
       end
 
-      context 'with invalid address attributes' do
-        let(:attributes) do
-          required_attributes.merge(address: address_attributes.merge('address_line_one' => ''))
+      context 'when property address is different than home address' do
+        let(:is_home_address) { 'no' }
+        let(:address_attributes) do
+          {
+            'address_line_one' => 'address_line_one',
+            'address_line_two' => 'address_line_two',
+            'city' => 'city',
+            'country' => 'country',
+            'postcode' => 'postcode'
+          }
         end
 
-        it { expect(subject).to be false }
+        context 'with valid address attributes' do
+          let(:attributes) do
+            required_attributes.merge(address: address_attributes)
+          end
+
+          it { is_expected.to be true }
+        end
+
+        context 'with invalid address attributes' do
+          let(:attributes) do
+            required_attributes.merge(address: address_attributes.merge('address_line_one' => ''))
+          end
+
+          it { expect(subject).to be false }
+        end
       end
     end
   end
