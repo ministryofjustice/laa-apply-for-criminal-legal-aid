@@ -368,6 +368,8 @@ en:
         question: Other sources of income
         answers:
           description: *payment_answer_format
+      other_payment_details:
+        question: Other sources of income details
       # END income payments details section
 
       # BEGIN income benefits details section

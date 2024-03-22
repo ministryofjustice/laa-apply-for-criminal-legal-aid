@@ -71,7 +71,8 @@ describe Summary::Sections::IncomeBenefitsDetails do
       IncomePayment,
       payment_type: 'other',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      metadata: { details: 'Some details' }
     )
   end
 
@@ -105,38 +106,95 @@ describe Summary::Sections::IncomeBenefitsDetails do
         let(:rows) {
           [
             [
+              Summary::Components::PaymentAnswer,
               'child_benefit', 100,
               '#steps-income-income-benefits-form-types-child-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'working_or_child_tax_credit_benefit', 100,
               '#steps-income-income-benefits-form-types-working-or-child-tax-credit-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'incapacity_benefit', 100,
               '#steps-income-income-benefits-form-types-incapacity-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'industrial_injuries_disablement_benefit', 100,
               '#steps-income-income-benefits-form-types-industrial-injuries-disablement-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'jsa_benefit', 100,
               '#steps-income-income-benefits-form-types-jsa-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'other_benefit', 100,
+              '#steps-income-income-benefits-form-types-other-field'
+            ],
+            [
+              Summary::Components::FreeTextAnswer,
+              :other_payment_details, 'Some details',
               '#steps-income-income-benefits-form-types-other-field'
             ]
           ]
         }
 
         it 'has the correct rows' do
+          path = 'applications/12345/steps/income/which_benefits_does_client_get'
+
           expect(answers.count).to eq(rows.size)
 
-          rows.each_with_index do |row, i|
-            build_income_benefit_row_spec(*row, i)
-          end
+          expect(answers[0]).to be_an_instance_of(rows[0][0])
+          expect(answers[0].question).to eq(rows[0][1])
+          expect(answers[0].value.amount).to eq(rows[0][2])
+          expect(answers[0].value.frequency).to eq('week')
+          expect(answers[0].change_path)
+            .to match(path + rows[0][3])
+
+          expect(answers[1]).to be_an_instance_of(rows[1][0])
+          expect(answers[1].question).to eq(rows[1][1])
+          expect(answers[1].value.amount).to eq(rows[1][2])
+          expect(answers[1].value.frequency).to eq('week')
+          expect(answers[1].change_path)
+            .to match(path + rows[1][3])
+
+          expect(answers[2]).to be_an_instance_of(rows[2][0])
+          expect(answers[2].question).to eq(rows[2][1])
+          expect(answers[2].value.amount).to eq(rows[2][2])
+          expect(answers[2].value.frequency).to eq('week')
+          expect(answers[2].change_path)
+            .to match(path + rows[2][3])
+
+          expect(answers[3]).to be_an_instance_of(rows[3][0])
+          expect(answers[3].question).to eq(rows[3][1])
+          expect(answers[3].value.amount).to eq(rows[3][2])
+          expect(answers[2].value.frequency).to eq('week')
+          expect(answers[3].change_path)
+            .to match(path + rows[3][3])
+
+          expect(answers[4]).to be_an_instance_of(rows[4][0])
+          expect(answers[4].question).to eq(rows[4][1])
+          expect(answers[4].value.amount).to eq(rows[4][2])
+          expect(answers[4].value.frequency).to eq('week')
+          expect(answers[4].change_path)
+            .to match(path + rows[4][3])
+
+          expect(answers[5]).to be_an_instance_of(rows[5][0])
+          expect(answers[5].question).to eq(rows[5][1])
+          expect(answers[5].value.amount).to eq(rows[5][2])
+          expect(answers[5].value.frequency).to eq('week')
+          expect(answers[5].change_path)
+            .to match(path + rows[5][3])
+
+          expect(answers[6]).to be_an_instance_of(rows[6][0])
+          expect(answers[6].question).to eq(rows[6][1])
+          expect(answers[5].value.metadata[:details]).to eq(rows[6][2])
+          expect(answers[6].change_path)
+            .to match(path + rows[6][3])
         end
       end
 
@@ -245,13 +303,6 @@ describe Summary::Sections::IncomeBenefitsDetails do
         end
       end
     end
-  end
-
-  def build_income_benefit_row_spec(benefit, value, anchor, index) # rubocop:disable Metrics/AbcSize
-    full_path = "applications/12345/steps/income/which_benefits_does_client_get#{anchor}"
-    expect(answers[index].question).to eq(benefit)
-    expect(answers[index].change_path).to match(full_path)
-    expect(answers[index].value.amount).to eq(value)
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

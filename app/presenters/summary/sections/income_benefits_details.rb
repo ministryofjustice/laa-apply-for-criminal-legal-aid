@@ -24,10 +24,24 @@ module Summary
             income_benefits.map do |payment|
               type = "steps-income-income-benefits-form-types-#{payment.payment_type.tr('_', '-')}-field"
 
-              Components::PaymentAnswer.new(
-                "#{payment.payment_type}_benefit", payment,
-                change_path: edit_steps_income_income_benefits_path(anchor: type)
-              )
+              if payment.payment_type == 'other'
+                [Components::PaymentAnswer.new(
+                  "#{payment.payment_type}_benefit", payment,
+                  show: true,
+                  change_path: edit_steps_income_income_benefits_path(anchor: type)
+                ),
+                 Components::FreeTextAnswer.new(
+                   :other_payment_details, payment.metadata['details'],
+                   show: payment.payment_type == 'other',
+                   change_path: edit_steps_income_income_benefits_path(anchor: type)
+                 )]
+              else
+                Components::PaymentAnswer.new(
+                  "#{payment.payment_type}_benefit", payment,
+                  show: true,
+                  change_path: edit_steps_income_income_benefits_path(anchor: type)
+                )
+              end
             end,
             absent_payment_types.map do |payment|
               type = "steps-income-income-benefits-form-types-#{payment.tr('_', '-')}-field"
