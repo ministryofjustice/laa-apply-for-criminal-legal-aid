@@ -118,7 +118,7 @@ module Decisions
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       if form_object.has_other_owners.yes?
-        property_owners.create! if incomplete_property_owners.blank?
+        property_owners.create! if create_property_owner?
         return edit(:property_owners, property_id: property)
       end
       edit(:properties_summary)
@@ -126,10 +126,14 @@ module Decisions
 
     def after_property_address
       if form_object.has_other_owners.to_s == YesNoAnswer::YES.to_s
-        property_owners.create! if incomplete_property_owners.blank?
+        property_owners.create! if create_property_owner?
         return edit(:property_owners, property_id: property)
       end
       edit(:properties_summary)
+    end
+
+    def create_property_owner?
+      incomplete_property_owners.empty? && property_owners.empty?
     end
 
     def incomplete_property_owners

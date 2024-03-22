@@ -19,6 +19,7 @@ class Property < ApplicationRecord
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
+  REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
   REQUIRED_ATTRIBUTES = {
     residential: [
       :property_type,
@@ -54,6 +55,19 @@ class Property < ApplicationRecord
   end
 
   def complete?
-    values_at(REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?)
+    values_at(*REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?) &&
+      address_complete? && property_owners_complete?
+  end
+
+  def address_complete?
+    return true if is_home_address == YesNoAnswer::YES.to_s
+
+    is_home_address == YesNoAnswer::NO.to_s &&
+      address.present? &&
+      address.values_at(*REQUIRED_ADDRESS_ATTRIBUTES.map(&:to_s)).all?(&:present?)
+  end
+
+  def property_owners_complete?
+    property_owners.all?(&:complete?)
   end
 end
