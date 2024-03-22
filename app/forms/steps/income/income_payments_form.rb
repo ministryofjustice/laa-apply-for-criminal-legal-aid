@@ -1,19 +1,9 @@
+require 'laa_crime_schemas'
+
 module Steps
   module Income
     class IncomePaymentsForm < Steps::BaseFormObject
-      # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
-      PAYMENT_TYPES_ORDER = %w[
-        maintenance
-        private_pension
-        state_pension
-        interest_investment
-        student_loan_grant
-        board_from_family
-        rent
-        financial_support_with_access
-        from_friends_relatives
-        other
-      ].freeze
+      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::IncomePaymentType.values
 
       attribute :income_payments, array: true, default: [] # Used by BaseFormObject
       attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
