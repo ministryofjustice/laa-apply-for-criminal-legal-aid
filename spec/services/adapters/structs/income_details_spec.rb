@@ -46,7 +46,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
       )
     end
 
-    it 'omits outgoings array' do
+    it 'omits income array' do
       expect(subject.serializable_hash.key?('income_payments')).to be false
     end
   end

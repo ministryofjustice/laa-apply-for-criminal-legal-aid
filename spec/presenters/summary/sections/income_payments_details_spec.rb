@@ -104,11 +104,12 @@ describe Summary::Sections::IncomePaymentsDetails do
   end
 
   let(:other_payment) do
-    instance_double(
+    double(
       IncomePayment,
       payment_type: 'other',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      metadata: { details: 'Some details' }
     )
   end
 
@@ -145,54 +146,143 @@ describe Summary::Sections::IncomePaymentsDetails do
         let(:rows) {
           [
             [
+              Summary::Components::PaymentAnswer,
               'maintenance_payment', 300,
               '#steps-income-income-payments-form-types-maintenance-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'private_pension_payment', 300,
               '#steps-income-income-payments-form-types-private-pension-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'state_pension_payment', 300,
               '#steps-income-income-payments-form-types-state-pension-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'interest_investment_payment', 300,
               '#steps-income-income-payments-form-types-interest-investment-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'student_loan_grant_payment', 300,
               '#steps-income-income-payments-form-types-student-loan-grant-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'board_from_family_payment', 300,
               '#steps-income-income-payments-form-types-board-from-family-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'rent_payment', 300,
               '#steps-income-income-payments-form-types-rent-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'financial_support_with_access_payment', 300,
               '#steps-income-income-payments-form-types-financial-support-with-access-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'from_friends_relatives_payment', 300,
               '#steps-income-income-payments-form-types-from-friends-relatives-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
               'other_payment', 300,
+              '#steps-income-income-payments-form-types-other-field'
+            ],
+            [
+              Summary::Components::FreeTextAnswer,
+              :other_payment_details, 'Some details',
               '#steps-income-income-payments-form-types-other-field'
             ]
           ]
         }
 
         it 'has the correct rows' do
+          path = 'applications/12345/steps/income/which_payments_does_client_get'
+
           expect(answers.count).to eq(rows.size)
 
-          rows.each_with_index do |row, i|
-            build_income_payment_row_spec(*row, i)
-          end
+          expect(answers[0]).to be_an_instance_of(rows[0][0])
+          expect(answers[0].question).to eq(rows[0][1])
+          expect(answers[0].value.amount).to eq(rows[0][2])
+          expect(answers[0].value.frequency).to eq('month')
+          expect(answers[0].change_path)
+            .to match(path + rows[0][3])
+
+          expect(answers[1]).to be_an_instance_of(rows[1][0])
+          expect(answers[1].question).to eq(rows[1][1])
+          expect(answers[1].value.amount).to eq(rows[1][2])
+          expect(answers[1].value.frequency).to eq('month')
+          expect(answers[1].change_path)
+            .to match(path + rows[1][3])
+
+          expect(answers[2]).to be_an_instance_of(rows[2][0])
+          expect(answers[2].question).to eq(rows[2][1])
+          expect(answers[2].value.amount).to eq(rows[2][2])
+          expect(answers[2].value.frequency).to eq('month')
+          expect(answers[2].change_path)
+            .to match(path + rows[2][3])
+
+          expect(answers[3]).to be_an_instance_of(rows[3][0])
+          expect(answers[3].question).to eq(rows[3][1])
+          expect(answers[3].value.amount).to eq(rows[3][2])
+          expect(answers[2].value.frequency).to eq('month')
+          expect(answers[3].change_path)
+            .to match(path + rows[3][3])
+
+          expect(answers[4]).to be_an_instance_of(rows[4][0])
+          expect(answers[4].question).to eq(rows[4][1])
+          expect(answers[4].value.amount).to eq(rows[4][2])
+          expect(answers[4].value.frequency).to eq('month')
+          expect(answers[4].change_path)
+            .to match(path + rows[4][3])
+
+          expect(answers[5]).to be_an_instance_of(rows[5][0])
+          expect(answers[5].question).to eq(rows[5][1])
+          expect(answers[5].value.amount).to eq(rows[5][2])
+          expect(answers[5].value.frequency).to eq('month')
+          expect(answers[5].change_path)
+            .to match(path + rows[5][3])
+
+          expect(answers[6]).to be_an_instance_of(rows[6][0])
+          expect(answers[6].question).to eq(rows[6][1])
+          expect(answers[6].value.amount).to eq(rows[6][2])
+          expect(answers[6].value.frequency).to eq('month')
+          expect(answers[6].change_path)
+            .to match(path + rows[6][3])
+
+          expect(answers[7]).to be_an_instance_of(rows[7][0])
+          expect(answers[7].question).to eq(rows[7][1])
+          expect(answers[7].value.amount).to eq(rows[7][2])
+          expect(answers[7].value.frequency).to eq('month')
+          expect(answers[7].change_path)
+            .to match(path + rows[7][3])
+
+          expect(answers[8]).to be_an_instance_of(rows[8][0])
+          expect(answers[8].question).to eq(rows[8][1])
+          expect(answers[8].value.amount).to eq(rows[8][2])
+          expect(answers[8].value.frequency).to eq('month')
+          expect(answers[8].change_path)
+            .to match(path + rows[8][3])
+
+          expect(answers[9]).to be_an_instance_of(rows[9][0])
+          expect(answers[9].question).to eq(rows[9][1])
+          expect(answers[9].value.amount).to eq(rows[9][2])
+          expect(answers[9].value.frequency).to eq('month')
+          expect(answers[9].change_path)
+            .to match(path + rows[9][3])
+
+          expect(answers[10]).to be_an_instance_of(rows[10][0])
+          expect(answers[10].question).to eq(rows[10][1])
+          expect(answers[9].value.metadata[:details]).to eq(rows[10][2])
+          expect(answers[10].change_path)
+            .to match(path + rows[10][3])
         end
       end
 
@@ -319,14 +409,6 @@ describe Summary::Sections::IncomePaymentsDetails do
         end
       end
     end
-  end
-
-  def build_income_payment_row_spec(payment, text, anchor, index) # rubocop:disable Metrics/AbcSize
-    full_path = "applications/12345/steps/income/which_payments_does_client_get#{anchor}"
-    expect(answers[index]).to be_an_instance_of(Summary::Components::PaymentAnswer)
-    expect(answers[index].question).to eq(payment)
-    expect(answers[index].change_path).to match(full_path)
-    expect(answers[index].value.amount).to eq(text)
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
