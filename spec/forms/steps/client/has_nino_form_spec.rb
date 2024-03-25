@@ -19,8 +19,13 @@ RSpec.describe Steps::Client::HasNinoForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
   let(:not_means_tested) { false }
+  let(:feature_flag_means_journey_enabled) { false }
 
   before do
+    allow(FeatureFlags).to receive(:means_journey) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
+    }
+
     allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
   end
 
@@ -122,8 +127,9 @@ RSpec.describe Steps::Client::HasNinoForm do
                         association_name: :applicant,
                         expected_attributes: {
                           'nino' => 'NC123456A',
-                          :benefit_type => nil,
-                          :passporting_benefit => nil,
+                          'has_nino' => nil,
+                          'benefit_type' => nil,
+                          'passporting_benefit' => nil,
                         }
       end
 
@@ -133,6 +139,121 @@ RSpec.describe Steps::Client::HasNinoForm do
           expect(subject.save).to be(true)
         end
       end
+    end
+  end
+
+  context 'feature flag `means_journey` is enabled' do
+    let(:form_attributes) do
+      { nino:, has_nino: }
+    end
+
+    let(:feature_flag_means_journey_enabled) { true }
+
+    let(:nino) { nil }
+    let(:has_nino) { nil }
+
+    describe '#choices' do
+      it 'returns the possible choices' do
+        expect(
+          subject.choices
+        ).to eq([YesNoAnswer::YES, YesNoAnswer::NO])
+      end
+    end
+
+    describe '#save' do
+      context 'when `has_nino` is not provided' do
+        it 'returns false' do
+          expect(subject.save).to be(false)
+        end
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:has_nino, :inclusion)).to be(true)
+        end
+      end
+
+      context 'when `has_nino` is not valid' do
+        let(:has_nino) { 'maybe' }
+
+        it 'returns false' do
+          expect(subject.save).to be(false)
+        end
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:has_nino, :inclusion)).to be(true)
+        end
+      end
+
+      # rubocop:disable RSpec/NestedGroups
+      context 'when `has_nino` is valid' do
+        let(:has_nino) { YesNoAnswer::NO.to_s }
+
+        it { is_expected.to be_valid }
+
+        it 'passes validation' do
+          expect(subject.errors.of_kind?(:has_nino, :invalid)).to be(false)
+        end
+
+        it_behaves_like 'a has-one-association form',
+                        association_name: :applicant,
+                        expected_attributes: {
+                          'has_nino' => YesNoAnswer::NO,
+                          'nino' => nil,
+                          'benefit_type' => nil,
+                          'passporting_benefit' => nil,
+                        }
+
+        context 'when `has_nino` answer is no' do
+          let(:nino) { 'AB123456C' }
+
+          context 'when a `nino` was previously recorded' do
+            it { is_expected.to be_valid }
+
+            it 'can make nino field nil if no longer required' do
+              attributes = subject.send(:attributes_to_reset)
+              expect(attributes['nino']).to be_nil
+            end
+          end
+        end
+
+        context 'when `has_nino` answer is yes' do
+          let(:has_nino) { YesNoAnswer::YES.to_s }
+          let(:nino) { 'AB123456C' }
+
+          context 'when a `nino` was previously recorded' do
+            it 'is valid' do
+              expect(subject).to be_valid
+              expect(
+                subject.errors.of_kind?(
+                  :nino,
+                  :present
+                )
+              ).to be(false)
+            end
+
+            it 'cannot reset `nino` as it is relevant' do
+              crime_application.applicant.update(has_nino: YesNoAnswer::YES.to_s)
+
+              attributes = subject.send(:attributes_to_reset)
+              expect(attributes['nino']).to eq(nino)
+            end
+          end
+
+          context 'when a `nino` was not previously recorded' do
+            it 'is also valid' do
+              expect(subject).to be_valid
+              expect(
+                subject.errors.of_kind?(
+                  :nino,
+                  :present
+                )
+              ).to be(false)
+            end
+          end
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end
