@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <% # TODO: CRIMAPP-660 clean up code once means journey is enabled %>
+    <%# TODO: CRIMAPP-660 clean up code once means journey is enabled %>
     <%= step_form @form_object do |f| %>
       <% if FeatureFlags.means_journey.enabled? %>
         <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
