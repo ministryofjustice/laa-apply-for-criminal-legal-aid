@@ -5,6 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
+    <% # TODO: CRIMAPP-660 clean up code once means journey is enabled %>
     <%= step_form @form_object do |f| %>
       <% if FeatureFlags.means_journey.enabled? %>
         <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
@@ -14,7 +15,7 @@
                 <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
                                        extra_letter_spacing: true,
                                        label: { text: t('.new_nino_label') },
-                                       hint: {text: t('helpers.hint.steps_client_has_nino_form.new_nino_hint') }%>
+                                       hint: { text: t('helpers.hint.steps_client_has_nino_form.new_nino_hint') }%>
               <% end %>
             <% else %>
               <%= f.govuk_radio_button :has_nino, choice.value, link_errors: index.zero? %>
