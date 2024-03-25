@@ -149,8 +149,8 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
           frequency: PaymentFrequencyType::MONTHLY,
           payee_name: 'John Doe',
           payee_relationship_to_client: 'Landlord',
-          board_amount: 60_000,
-          food_amount: 8_000,
+          board_amount: '600',
+          food_amount: '80',
         )
 
         form.save

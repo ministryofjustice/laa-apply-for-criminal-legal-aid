@@ -4,6 +4,7 @@ module Steps
       attribute :amount, :pence
       attribute :frequency, :value_object, source: PaymentFrequencyType
 
+      validate :number?
       validates :amount, presence: true, numericality: { greater_than: 0 }
       validates :frequency, presence: true, inclusion: { in: PaymentFrequencyType.values }
 
@@ -31,6 +32,12 @@ module Steps
 
       def reset!
         crime_application.outgoings_payments.housing_payments.destroy_all
+      end
+
+      def number?
+        return true unless non_numeric_string?(amount.to_s)
+
+        errors.add(:amount, :not_a_number)
       end
     end
   end
