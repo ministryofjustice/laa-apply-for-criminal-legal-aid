@@ -76,7 +76,7 @@ describe Summary::Sections::ContactDetails do
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[0].question).to eq(:home_address)
       expect(answers[0].change_path).to match('applications/12345/steps/address/details/ff53a8dd')
-      expect(answers[0].value).to eq("Test\r\nHome\r\nPostcode\r\nCity\r\nCountry")
+      expect(answers[0].value).to eq("Test\r\nHome\r\nCity\r\nPostcode\r\nCountry")
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[1].question).to eq(:correspondence_address_type)
@@ -86,7 +86,7 @@ describe Summary::Sections::ContactDetails do
       expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[2].question).to eq(:correspondence_address)
       expect(answers[2].change_path).to match('applications/12345/steps/address/results/e77e4fa3')
-      expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nPostcode\r\nCity\r\nCountry")
+      expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nCity\r\nPostcode\r\nCountry")
 
       expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[3].question).to eq(:telephone_number)
