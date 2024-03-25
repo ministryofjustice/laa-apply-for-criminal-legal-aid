@@ -9,7 +9,6 @@ module Steps
       attribute :has_nino, :value_object, source: YesNoAnswer
       attribute :nino, :string
 
-      # TODO: CRIMAPP-660 clean up code once means journey is enabled
       validates_inclusion_of :has_nino, in: :choices, if: -> { FeatureFlags.means_journey.enabled? }
       validate :validate_nino, if: -> { client_has_nino? }
 

@@ -19,7 +19,6 @@ RSpec.describe Steps::Client::HasNinoForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
   let(:not_means_tested) { false }
-  # TODO: CRIMAPP-660 clean up code once means journey is enabled
   let(:feature_flag_means_journey_enabled) { false }
 
   before do
