@@ -44,6 +44,8 @@ module Decisions
       when :trust_fund
         after_trust_fund
       when :frozen_income_savings_assets_capital
+        edit(:answers)
+      when :answers
         edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
