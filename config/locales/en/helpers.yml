@@ -162,6 +162,9 @@ en:
         nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
       steps_client_benefit_type_form:
         benefit_type: This will help us review your application. It will not affect the DWP check.
+      steps_client_cannot_check_benefit_status_form:
+        will_enter_nino_options:
+          'no': You may not be able to submit your application without the National Insurance number
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing your client's name and their benefit details.
         has_benefit_evidence_options:
@@ -295,6 +298,10 @@ en:
           none: My client does not get any of these passporting benefits
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence_options: *YESNO
+      steps_client_cannot_check_benefit_status_form:
+        will_enter_nino_options:
+          'yes': I will enter the National Insurance number now
+          'no': I will enter the National Insurance number later
       steps_client_contact_details_form:
         telephone_number: Telephone number (optional)
         correspondence_address_type_options:
