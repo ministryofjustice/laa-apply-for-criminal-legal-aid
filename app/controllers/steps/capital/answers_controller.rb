@@ -5,15 +5,19 @@ module Steps
 
       def edit
         @form_object = AnswersForm.build(
-          current_crime_application
+          capital_record, crime_application: current_crime_application
         )
       end
 
       def update
-        update_and_advance(AnswersForm, as: :answers)
+        update_and_advance(AnswersForm, record: capital_record, as: :answers)
       end
 
       private
+
+      def capital_record
+        current_crime_application.capital
+      end
 
       def set_presenter
         @presenter = Summary::HtmlPresenter.new(

@@ -15,7 +15,9 @@
     <%= render @presenter.capital_sections %>
 
     <%= step_form @form_object do |f| %>
-      <%#= render partial: 'steps/shared/ownership_form_fields', locals: { f: } %>
+      <%= f.govuk_check_boxes_fieldset :has_no_other_assets, legend: { size: 'm' } do %>
+        <%= f.govuk_check_box :has_no_other_assets, YesNoAnswer::YES.to_s, multiple: false, label: { text: t('helpers.label.steps_capital_answers_form.has_no_other_assets') } %>
+      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>
