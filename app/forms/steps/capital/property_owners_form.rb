@@ -1,14 +1,15 @@
 module Steps
   module Capital
     class PropertyOwnersForm < Steps::BaseFormObject
-      # transient attribute
-      attr_accessor :property_owners_attributes
+      delegate :property_owners_attributes=, to: :record
 
       validates_with PropertyOwnersValidator, unless: :any_marked_for_destruction?
 
       def property_owners
-        @property_owners ||= property_owners_collection.map do |property_owner|
-          PropertyOwnerFieldsetForm.new(property_owner)
+        @property_owners ||= record.property_owners.map do |property_owner|
+          PropertyOwnerFieldsetForm.build(
+            property_owner, crime_application:
+          )
         end
       end
 
@@ -26,29 +27,11 @@ module Steps
 
       private
 
-      def property_owners_collection
-        if property_owners_attributes
-          # This is a params hash in the format:
-          # {"0"=>
-          #   {"name"=>"ab", "relationship"=>"other", "other_relationship"=>"de", "percentage_owned"=>"32", "id"=>"1"}
-          # }
-          property_owners_attributes.values
-        else
-          # :nocov:
-          # TODO :: ADD Specs for else part
-          record.property_owners.map do |po|
-            po.slice(:id, :name, :relationship, :other_relationship, :percentage_owned)
-          end
-          # :nocov:
-        end
-      end
-
+      # If validation passes, the actual saving of the `property` performs
+      # the updates or destroys of the associated `property_owners` records,
+      # as we are using `accepts_nested_attributes_for`
       def persist!
-        record.update(
-          attributes.merge(
-            property_owners_attributes:
-          )
-        )
+        record.save
       end
     end
   end
