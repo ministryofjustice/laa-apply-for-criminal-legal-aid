@@ -84,6 +84,13 @@ en:
           explanation: We cannot connect to the DWP service to check if your client receives a passporting benefit.
           use_eforms: You can try again later, or use eforms which will allow you to self-certify that your client does receive a passporting benefit.
           saved_answers: We have saved your answers.
+      cannot_check_benefit_status:
+        edit:
+          page_title: Cannot check benefit status
+          heading: We cannot check your client's benefit status without their National Insurance number (NINo)
+          upload_evidence: You must upload evidence that your client gets a passporting benefit.
+          rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
+          deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
       contact_details:
         edit:
           page_title: Client’s contact details

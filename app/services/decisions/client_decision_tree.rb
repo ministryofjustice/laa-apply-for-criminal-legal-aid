@@ -29,6 +29,8 @@ module Decisions
         after_dwp_check
       when :has_benefit_evidence
         after_has_benefit_evidence
+      when :cannot_check_benefit_status
+        after_cannot_check_benefit_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -110,6 +112,8 @@ module Decisions
         else
           show(:benefit_exit)
         end
+      elsif !applicant_has_nino
+        edit(:cannot_check_benefit_status)
       else
         determine_dwp_result_page
       end
@@ -139,6 +143,20 @@ module Decisions
       else
         show(:evidence_exit)
       end
+    end
+
+    def after_cannot_check_benefit_status
+      if form_object.will_enter_nino.yes?
+        edit(:has_nino)
+      else
+        edit('/steps/case/urn')
+      end
+    end
+
+    def applicant_has_nino
+      return true unless FeatureFlags.means_journey.enabled?
+
+      applicant.has_nino == 'yes'
     end
 
     def applicant

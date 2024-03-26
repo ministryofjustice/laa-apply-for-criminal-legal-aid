@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_20_134018) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -248,9 +248,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_134018) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "payment_type", null: false
-    t.integer "amount"
-    t.string "frequency"
-    t.jsonb "metadata", default: {}
+    t.integer "amount", null: false
+    t.string "frequency", null: false
+    t.jsonb "metadata", default: {}, null: false
     t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
   end
@@ -271,6 +271,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_134018) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
+    t.string "will_enter_nino"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
