@@ -507,5 +507,4 @@ en:
         question: Client has no other assets or capital
         absence_answer: *absence_none
         answers:
-          true: Confirmed
-          yes: Confirmed
+          'yes': Confirmed

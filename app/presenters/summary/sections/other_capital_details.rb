@@ -11,14 +11,11 @@ module Summary
             :has_frozen_income_or_assets, capital.has_frozen_income_or_assets,
             change_path: edit_steps_capital_frozen_income_savings_assets_capital_path
           ),
+          Components::ValueAnswer.new(
+            :has_no_other_assets, capital.has_no_other_assets,
+            change_path: edit_steps_capital_answers_path
+          ),
         ].select(&:show?)
-
-        # [
-        #   Components::ValueAnswer.new(
-        #     :has_no_other_assets, capital.has_no_other_assets,
-        #     change_path: edit_steps_capital_answers_path
-        #   ),
-        # ].select(&:show?)
       end
 
       private
