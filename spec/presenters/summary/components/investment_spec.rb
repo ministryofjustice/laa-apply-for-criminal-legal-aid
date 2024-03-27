@@ -21,23 +21,37 @@ RSpec.describe Summary::Components::Investment, type: :component do
   before { component }
 
   describe 'actions' do
-    describe 'change link' do
-      it 'show the correct change link' do
+    context 'when show_record_actions set to false' do
+      it 'show the "Edit" change link' do
         expect(page).to have_link(
-          'Change',
-          href: '/applications/APP123/steps/capital/investments/investment123',
-          exact_text: 'Change Shares'
+          'Edit',
+          href: '/applications/APP123/steps/capital/clients_investments',
+          exact_text: 'Edit Shares'
         )
       end
     end
 
-    describe 'remove link' do
-      it 'show the correct remove link' do
-        expect(page).to have_link(
-          'Remove',
-          href: '/applications/APP123/steps/capital/investments/investment123/confirm_destroy',
-          exact_text: 'Remove Shares'
-        )
+    context 'when show_record_actions true' do
+      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+
+      describe 'change link' do
+        it 'show the correct change link' do
+          expect(page).to have_link(
+            'Change',
+            href: '/applications/APP123/steps/capital/investments/investment123',
+            exact_text: 'Change Shares'
+          )
+        end
+      end
+
+      describe 'remove link' do
+        it 'show the correct remove link' do
+          expect(page).to have_link(
+            'Remove',
+            href: '/applications/APP123/steps/capital/investments/investment123/confirm_destroy',
+            exact_text: 'Remove Shares'
+          )
+        end
       end
     end
   end
@@ -73,15 +87,15 @@ RSpec.describe Summary::Components::Investment, type: :component do
       it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
           'Describe the investment',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'What is the value of the investment?',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'Whose name is the investment in?',
-          'None'
+          ''
         )
       end
     end
