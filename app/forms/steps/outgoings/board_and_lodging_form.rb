@@ -7,23 +7,22 @@ module Steps
       attribute :payee_name, :string
       attribute :payee_relationship_to_client, :string
 
-      validates :board_amount, presence: true
-      validates :food_amount, presence: true
+      validates :board_amount, presence: true, numericality: { greater_than: 0 }
+      validates :food_amount, presence: true, numericality: { greater_than: 0 }
       validates :frequency, inclusion: { in: PaymentFrequencyType.values }
       validates :payee_name, presence: true
       validates :payee_relationship_to_client, presence: true
 
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.board_and_lodging
-
         form = new
 
         if payment
           form.frequency = payment.frequency
-
-          payment.metadata&.each do |attr_name, value|
-            form.send(:"#{attr_name}=", value)
-          end
+          form.food_amount = payment.food_amount
+          form.board_amount = payment.board_amount
+          form.payee_name = payment.payee_name
+          form.payee_relationship_to_client = payment.payee_relationship_to_client
         end
 
         form
@@ -45,8 +44,8 @@ module Steps
             frequency: frequency,
             payee_name: payee_name,
             payee_relationship_to_client: payee_relationship_to_client,
-            board_amount: Type::Pence.new.serialize(board_amount),
-            food_amount: Type::Pence.new.serialize(food_amount),
+            board_amount: board_amount,
+            food_amount: food_amount,
           )
         end
       end
