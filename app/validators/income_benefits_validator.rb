@@ -19,7 +19,7 @@ class IncomeBenefitsValidator < ActiveModel::Validator
   def require_type?
     return false unless record.types.empty?
 
-    record.errors.add(:types, :none_selected)
+    record.errors.add(:none, :none_selected)
   end
 
   def add_indexed_errors(income_benefit, index)
