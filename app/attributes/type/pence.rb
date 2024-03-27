@@ -18,7 +18,7 @@ module Type
       return if value.is_a?(::String) && non_numeric_string?(value)
       return super if value.is_a?(Integer)
 
-      super((value.to_f * 100).round)
+      super((value.to_f * 100).to_i)
     end
 
     def cast(value)
