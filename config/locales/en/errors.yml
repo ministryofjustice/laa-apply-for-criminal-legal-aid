@@ -102,6 +102,8 @@ en:
               future_not_allowed: Date the appeal was lodged must be today or in the past
         steps/client/has_nino_form:
           attributes:
+            has_nino:
+              inclusion: Select yes if your client has a National Insurance number
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
