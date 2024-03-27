@@ -1,8 +1,8 @@
 module Summary
   module Components
     class FreeTextAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/free_text_answer'
+      def answer_text
+        simple_format(value.presence || absence_answer)
       end
     end
   end

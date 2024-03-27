@@ -1,16 +1,22 @@
 <% if FeatureFlags.summary_cards.enabled? && !(section.headless? || section.list?)%>
-  <div class="govuk-summary-card">
-    <div class="govuk-summary-card__title-wrapper">
-      <h2 class="govuk-summary-card__title">
-        <%= t(section.name, scope: 'summary.sections') %>
-      </h2>
-    </div>
-    <div class="govuk-summary-card__content">
-      <dl class="govuk-summary-list">
-        <%= render section.answers, editable: section.editable? %>
-      </dl>
-    </div>
-  </div>
+  <%= govuk_summary_card title: t(section.name, scope: 'summary.sections') do %>
+    <%= govuk_summary_list do |list|
+      section.answers.each do |answer|
+        list.with_row do |row|
+          row.with_key { answer.question_text }
+          row.with_value { answer.answer_text }
+
+          if section.editable? 
+            row.with_action(
+              text: "Change",
+              href: answer.change_path,
+              visually_hidden_text: answer.visually_hidden_action_text
+            )
+          end
+        end
+      end
+    end %>
+  <% end %>
 <% else %>
   <% unless section.headless? %>
     <h2 class="govuk-heading-m">

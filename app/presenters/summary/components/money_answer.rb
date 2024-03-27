@@ -1,8 +1,8 @@
 module Summary
   module Components
     class MoneyAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/money_answer'
+      def answer_text
+        number_to_currency(value) if value
       end
     end
   end
