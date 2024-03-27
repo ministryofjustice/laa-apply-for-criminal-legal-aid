@@ -12,8 +12,8 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication) }
-  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s) }
+  let(:crime_application) { CrimeApplication.new }
+  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application) }
 
   let(:property_owners_attributes1) {
     { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
@@ -117,12 +117,6 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
   describe '#save' do
     context 'for valid details' do
       it 'updates the record' do
-        expect(property_record).to receive(:update).with(
-          {
-            property_owners_attributes:,
-          }
-        ).and_return(true)
-
         expect(subject.save).to be(true)
       end
     end

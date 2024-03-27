@@ -5,16 +5,34 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
+    <%# TODO: CRIMAPP-660 clean up code once means journey is enabled %>
     <%= step_form @form_object do |f| %>
-      <% heading = current_crime_application.not_means_tested? ? '.optional_nino' : '.nino'%>
+      <% if FeatureFlags.means_journey.enabled? %>
+        <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
+          <% @form_object.choices.each_with_index do |choice, index| %>
+            <% if choice == YesNoAnswer::YES %>
+              <%= f.govuk_radio_button :has_nino, choice.value do %>
+                <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
+                                       extra_letter_spacing: true,
+                                       label: { text: t('.new_nino_label') },
+                                       hint: { text: t('helpers.hint.steps_client_has_nino_form.new_nino_hint') }%>
+              <% end %>
+            <% else %>
+              <%= f.govuk_radio_button :has_nino, choice.value, link_errors: index.zero? %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% heading = current_crime_application.not_means_tested? ? '.optional_nino' : '.nino'%>
 
-      <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
-                             extra_letter_spacing: true,
-                             label: { text: t(heading), tag: 'h1', size: 'xl' } %>
+        <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
+                               extra_letter_spacing: true,
+                               label: { text: t(heading), tag: 'h1', size: 'xl' } %>
 
-      <p class='govuk-body govuk-!-margin-bottom-6'>
-        <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>
-      </p>
+        <p class='govuk-body govuk-!-margin-bottom-6'>
+          <%= link_to t('.eforms_link'), steps_client_nino_exit_path %>
+        </p>
+      <% end %>
 
       <%= f.continue_button %>
     <% end %>

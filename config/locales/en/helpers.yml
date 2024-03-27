@@ -52,6 +52,8 @@ en:
         date_of_birth: Date of birth
       steps_client_case_type_form:
         case_type: What is the case type?
+      steps_client_has_nino_form:
+        has_nino: Does your client have a National Insurance number?
       steps_client_appeal_details_form:
         appeal_lodged_date: Date the appeal was lodged
       steps_client_benefit_type_form:
@@ -155,6 +157,8 @@ en:
         other_names: This includes aliases, nicknames or other names your client may be known as.
         date_of_birth: For example, 27 3 2007
       steps_client_has_nino_form:
+        has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+        new_nino_hint: For example, QQ 12 34 56 C
         nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
       steps_client_benefit_type_form:
         benefit_type: This will help us review your application. It will not affect the DWP check.
@@ -276,6 +280,8 @@ en:
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+      steps_client_has_nino_form:
+        has_nino_options: *YESNO
       steps_client_appeal_details_form:
         appeal_maat_id: Previous MAAT ID (optional)
         appeal_with_changes_details: What has changed in your client’s financial circumstances?
