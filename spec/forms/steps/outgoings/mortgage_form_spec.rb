@@ -28,7 +28,7 @@ RSpec.describe Steps::Outgoings::MortgageForm do
       end
 
       it 'loads model if it exists' do
-        expect(subject.amount).to eq(8999)
+        expect(subject.amount).to eq('89.99')
         expect(subject.frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe Steps::Outgoings::MortgageForm do
 
       it 'is valid' do
         expect(subject).to be_valid
-        expect(subject.amount).to eq '91891'
+        expect(subject.amount).to eq '91891.00'
         expect(subject.frequency).to eq PaymentFrequencyType::MONTHLY
       end
     end

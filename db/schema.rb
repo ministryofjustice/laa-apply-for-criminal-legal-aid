@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_165829) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -37,14 +37,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
   create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "has_premium_bonds"
-    t.integer "premium_bonds_total_value"
+    t.bigint "premium_bonds_total_value"
     t.string "premium_bonds_holder_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "has_national_savings_certificates"
     t.string "will_benefit_from_trust_fund"
-    t.integer "trust_fund_amount_held"
-    t.integer "trust_fund_yearly_dividend"
+    t.bigint "trust_fund_amount_held"
+    t.bigint "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
@@ -160,7 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
   create_table "investments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "investment_type", null: false
-    t.integer "value"
+    t.bigint "value"
     t.text "description"
     t.string "ownership_type"
     t.datetime "created_at", null: false
@@ -190,7 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
   create_table "national_savings_certificates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "certificate_number"
-    t.integer "value"
+    t.bigint "value"
     t.string "holder_number"
     t.string "ownership_type"
     t.datetime "created_at", null: false
@@ -223,7 +223,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
     t.uuid "crime_application_id", null: false
     t.string "type", null: false
     t.string "payment_type", null: false
-    t.integer "amount", null: false
+    t.bigint "amount", null: false
     t.string "frequency", null: false
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
@@ -259,8 +259,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
     t.integer "size_in_acres"
     t.string "usage"
     t.integer "bedrooms"
-    t.integer "value"
-    t.integer "outstanding_mortgage"
+    t.bigint "value"
+    t.bigint "outstanding_mortgage"
     t.decimal "percentage_applicant_owned"
     t.decimal "percentage_partner_owned"
     t.string "is_home_address"
@@ -308,7 +308,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
     t.string "provider_name"
     t.string "sort_code"
     t.string "account_number"
-    t.integer "account_balance"
+    t.bigint "account_balance"
     t.string "is_overdrawn"
     t.string "are_wages_paid_into_account"
     t.string "ownership_type"
