@@ -8,10 +8,10 @@ module ErrorHandling
         redirect_to invalid_token_errors_path
       when Errors::InvalidSession
         redirect_to invalid_session_errors_path
-      when Errors::SavingNotFound, Errors::PropertyNotFound
-        redirect_to not_found_errors_path
       when Errors::ApplicationNotFound
         redirect_to application_not_found_errors_path
+      when Errors::NotFound
+        redirect_to not_found_errors_path
       # NOTE: Add more custom errors as they are needed, for instance:
       # when Errors::ApplicationSubmitted
       #   redirect_to application_submitted_errors_path

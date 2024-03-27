@@ -2,8 +2,8 @@ class Address < ApplicationRecord
   ADDRESS_ATTRIBUTES = %i[
     address_line_one
     address_line_two
-    postcode
     city
+    postcode
     country
   ].freeze
 

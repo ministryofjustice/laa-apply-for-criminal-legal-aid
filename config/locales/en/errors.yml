@@ -358,7 +358,7 @@ en:
           attributes:
             income_above_threshold:
               inclusion: Select yes if your client’s income is currently more than £12,475 a year before tax
-        steps/income/frozen_income_savings_assets_form:
+        steps/income/frozen_income_savings_assets_form: &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:
             has_frozen_income_or_assets:
               inclusion: Select yes if your client has any income, savings or assets under a restraint or freezing order
@@ -385,6 +385,10 @@ en:
               blank: "Enter %{ordinal} dependant's age"
               less_than: "The %{ordinal} dependant must be under 18 years old"
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
+        steps/income/income_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
             amount:
@@ -392,12 +396,17 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter the other sources of income they get
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
               blank: Enter an amount
+        steps/income/income_benefits_form:
+          attributes:
+            types:
+              none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
             amount:
@@ -405,6 +414,7 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter what benefits they get and the amount
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
@@ -426,6 +436,7 @@ en:
             amount:
               blank: Enter how much your client's mortgage payments are, after taking away Housing Benefit
               greater_than: Your client's mortgage payments must be more than 0
+              invalid: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
               not_a_number: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
             frequency:
               blank: Select how often they pay mortgage payments
@@ -435,7 +446,8 @@ en:
             amount:
               blank: Enter how much rent your client pays, after taking away Housing Benefit
               greater_than: Your client's rent payments must be more than 0
-              not_a_number: Your client's rent payments, after taking away Housing Benefit, must be a number, like 50
+              invalid: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
+              not_a_number: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
             frequency:
               blank: Select how often they pay rent payments
               inclusion: Select how often they pay rent payments
@@ -457,10 +469,16 @@ en:
           attributes:
             pays_council_tax:
               inclusion: Select yes if your client pays Council Tax where they usually live
-            council_tax_amount:
+              not_payable: Council tax is not payable if your client's housing type is board and lodgings
+            amount:
               blank: Enter how much your client pays yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
+              not_a_number: How much they pay yearly must be a number, like 50
+        steps/outgoings/outgoings_payments_form:
+          attributes:
+            types:
+              none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
@@ -468,6 +486,7 @@ en:
               not_a_number: "%{payment_type} amount is not a number"
             case_reference:
               invalid: "Cannot add case_reference for %{payment_type}"
+              blank: Enter the case reference of the criminal rep order or civil certificate
             frequency:
               blank: "%{payment_type} frequency can't be blank"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
@@ -506,11 +525,12 @@ en:
               blank: Enter the account number
             account_balance:
               blank: Enter the account balance
+              not_a_number: The account balance must be a number, like 50
             is_overdrawn:
               inclusion: Select yes if the account is overdrawn
             are_wages_paid_into_account:
               inclusion: Select yes if your client's wages or benefits are paid into this account
-            account_holder:
+            ownership_type:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
               confirm: Confirm the account is in your client’s name
@@ -525,25 +545,84 @@ en:
             premium_bonds_holder_number:
               blank: Enter the holder number
             has_premium_bonds:
-              blank: Select yes if your client has any Premium Bonds
-        steps/capital/residential_property_form:
+              inclusion: Select yes if your client has any Premium Bonds
+        steps/capital/other_property_type_form:
+          attributes:
+            property_type:
+              blank: Select which other assets your client owns or part-owns inside or outside the UK
+        steps/capital/trust_fund_form:
+          attributes:
+            trust_fund_amount_held:
+              blank: Enter the amount held in the fund
+            trust_fund_yearly_dividend:
+              blank: Enter the yearly dividend
+            will_benefit_from_trust_fund:
+              inclusion: Select yes if your client stands to benefit from a trust fund inside or outside the UK
+        steps/capital/residential_form:
           attributes:
             house_type:
               blank: Enter the type of property
-            custom_house_type:
+            other_house_type:
               blank: Enter the type of property
             bedrooms:
               blank: Enter how many bedrooms are there
             value:
               blank: Enter how much the property is worth
+              not_a_number: How much the property is worth must be a number, like 50
             outstanding_mortgage:
               blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               blank: Enter the percentage of the property your client owns
+              not_a_number: The percentage of the property your client owns must be a number between 0 and 100
             percentage_partner_owned:
               blank: Enter the percentage of the property your client's partner owns
+              not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
+            has_other_owners:
+              inclusion: Select yes if anyone else owns part of the property
+        steps/capital/commercial_form:
+          attributes:
+            usage:
+              blank: Enter what the property is used for
+            value:
+              blank: Enter how much the property is worth
+              not_a_number: How much the property is worth must be a number, like 50
+            outstanding_mortgage:
+              blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+            percentage_applicant_owned:
+              blank: Enter the percentage of the property your client owns
+              not_a_number: The percentage of the property your client owns must be a number between 0 and 100
+            percentage_partner_owned:
+              blank: Enter the percentage of the property your client's partner owns
+              not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
+            is_home_address:
+              inclusion: Select yes if the address of the property is the same as your client's home address
+            has_other_owners:
+              inclusion: Select yes if anyone else owns part of the property
+        steps/capital/land_form:
+          attributes:
+            size_in_acres:
+              blank: Enter the size of the land in acres
+              not_a_number: The size of the land in acres must be a number, like 50
+            usage:
+              blank: Enter how the land is used
+            value:
+              blank: Enter how much the land is worth
+              not_a_number: How much the land is worth must be a number, like 50
+            outstanding_mortgage:
+              blank: Enter how much is left to pay on the mortgage
+              not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+            percentage_applicant_owned:
+              blank: Enter the percentage of the land your client owns
+              not_a_number: The percentage of the land your client owns must be a number between 0 and 100
+            percentage_partner_owned:
+              blank: Enter the percentage of the land your client's partner owns
+              not_a_number: The percentage of the land your client's partner owns must be a number between 0 and 100
+            is_home_address:
+              inclusion: Select yes if the address of the land is the same as your client's home address
             has_other_owners:
               inclusion: Select yes if anyone else owns part of the land
         steps/capital/property_address_form:
@@ -559,14 +638,66 @@ en:
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
-              blank: Enter the name of the [first] other owner
+              # TODO: Change text to -> Enter the name of the %{index} other owner
+              blank: Enter the name of the other owner
             relationship:
               blank: Enter their relationship to your client
-            custom_relationship:
+            other_relationship:
               blank: Enter their relationship
             percentage_owned:
               blank: Enter the percentage of the land they own
           attributes: *shared_property_owner_errors
+        steps/capital/properties_summary_form:
+          attributes:
+            add_property:
+              inclusion: Select yes if you want to add another asset
+        steps/capital/investment_type_form:
+          attributes:
+            investment_type:
+              blank: Select which investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+        steps/capital/other_investment_type_form:
+          attributes:
+            investment_type:
+              blank: Select which other investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+        steps/capital/investments_form:
+          attributes:
+            description:
+              blank: Describe the investment
+            value:
+              blank: Enter the value of the investment
+              not_a_number: The value of their investment must be a number, like 50
+            ownership_type:
+              inclusion: Select whose name the account is in
+            confirm_in_applicants_name:
+              confirm: Confirm the investment is in your client’s name
+        steps/capital/investments_summary_form:
+          attributes:
+            add_investment:
+              inclusion: Select yes if you want to add another investment
+
+        steps/capital/has_national_savings_certificates_form:
+          attributes:
+            has_national_savings_certificates:
+              inclusion: Select yes if your client has any National Savings Certificates
+        steps/capital/national_savings_certificates_form:
+          attributes:
+            holder_number:
+              blank: Enter the customer number or holder number
+            certificate_number:
+              blank: Enter the certificate number
+            value:
+              blank: Enter the value of the certificate
+              not_a_number: The value of their certificate must be a number, like 50
+            ownership_type:
+              inclusion: Select who owns the certifcate
+            confirm_in_applicants_name:
+              confirm: Confirm your client owns the certificate
+        steps/capital/national_savings_certificates_summary_form:
+          attributes:
+            add_national_savings_certificate:
+              inclusion: Select yes if you want to add another National Savings Certificate
+        steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
+
         steps/submission/more_information_form:
           attributes:
             additional_information:

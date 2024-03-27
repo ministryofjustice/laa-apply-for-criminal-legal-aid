@@ -1,0 +1,22 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:will_benefit_from_trust_fund, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_radio_button :will_benefit_from_trust_fund, YesNoAnswer::YES do %>
+          <%= f.govuk_number_field :trust_fund_amount_held, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
+          <%= f.govuk_number_field :trust_fund_yearly_dividend, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
+        <% end %>
+
+        <%= f.govuk_radio_button :will_benefit_from_trust_fund, YesNoAnswer::NO %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

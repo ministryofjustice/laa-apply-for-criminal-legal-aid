@@ -27,8 +27,22 @@ class CrimeApplication < ApplicationRecord
   has_many :dependants, dependent: :destroy
   accepts_nested_attributes_for :dependants, allow_destroy: true
 
-  has_many :properties, dependent: :destroy
+  has_many(:properties,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
   has_many(:savings,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
+  has_many(:investments,
+           -> { order(created_at: :asc) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
+
+  has_many(:national_savings_certificates,
            -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)

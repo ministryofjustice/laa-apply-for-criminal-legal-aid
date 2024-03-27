@@ -13,6 +13,17 @@ module Summary
         super
       end
 
+      def call
+        govuk_summary_card(title:) do |card|
+          if show_actions
+            card.with_action { change_link }
+            card.with_action { remove_link }
+          end
+
+          render answers, editable: show_actions
+        end
+      end
+
       # Human model name of the record. Override in subclass if name is not based
       # on the component.
       # see Summary::Components::Saving where name is based on the saving_type.

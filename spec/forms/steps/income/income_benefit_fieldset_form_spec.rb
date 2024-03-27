@@ -21,11 +21,19 @@ RSpec.describe Steps::Income::IncomeBenefitFieldsetForm do
 
     let(:crime_application) { instance_double(CrimeApplication) }
 
-    context 'when `other` payment type selected' do
+    context 'when `other` payment type selected with details' do
       let(:payment_type) { 'other' }
       let(:details) { 'Side hustle on weekends' }
 
       it { is_expected.to be_valid }
+    end
+
+    context 'when `other` payment type selected without details' do
+      let(:payment_type) { 'other' }
+      let(:details) { '' }
+
+      it { is_expected.not_to be_valid }
+      it { expect(subject.errors.of_kind?(:details, :blank)).to be(true) }
     end
 
     context 'when unsupported payment type selected and `details` provided' do

@@ -17,6 +17,9 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
     %w[child working_or_child_tax_credit incapacity industrial_injuries_disablement jsa other]
   end
 
+  let(:other_type) { 'other' }
+  let(:other_type_attribute_data) { { 'amount' => 23.30, 'frequency' => 'week', 'details' => 'XYZ' } }
+
   let(:fieldset_form_class) { Steps::Income::IncomeBenefitFieldsetForm }
 
   let(:payments) do

@@ -46,7 +46,10 @@ RSpec.describe Datastore::ApplicationRehydration do
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),
         capital: nil,
-        savings: [] # capital and savings tested separately
+        savings: [], # capital and savings tested separately
+        investments: [], # capital and investments tested separately
+        national_savings_certificates: [], # capital and certificates tested separately
+        properties: []
       )
 
       expect(
@@ -325,7 +328,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         {
           'savings' => [{ 'saving_type' => 'bank',
                           'provider_name' => 'Test Bank',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '01-01-01',
                           'account_number' => '01234500',
                           'account_balance' => 10_001,
@@ -333,15 +336,31 @@ RSpec.describe Datastore::ApplicationRehydration do
                           'are_wages_paid_into_account' => 'yes' },
                         { 'saving_type' => 'building_society',
                           'provider_name' => 'Test Building Society',
-                          'account_holder' => 'applicant',
+                          'ownership_type' => 'applicant',
                           'sort_code' => '12-34-56',
                           'account_number' => '01234500',
                           'account_balance' => 200_050,
                           'is_overdrawn' => 'no',
                           'are_wages_paid_into_account' => 'no' }],
+          'properties' => [{ 'property_type' => 'residential',
+                             'house_type' => 'other',
+                             'other_house_type' => 'other house type',
+                             'size_in_acres' => nil,
+                             'usage' => nil,
+                             'bedrooms' => 92,
+                             'value' => 200_000,
+                             'outstanding_mortgage' => 100_000,
+                             'percentage_applicant_owned' => 90.01,
+                             'percentage_partner_owned' => 10.01,
+                             'is_home_address' => 'yes',
+                             'has_other_owners' => 'no',
+                             'address' => nil, 'property_owners' => [] }],
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
-          'premium_bonds_holder_number' => '1234A'
+          'premium_bonds_holder_number' => '1234A',
+          'will_benefit_from_trust_fund' => 'yes',
+          'trust_fund_amount_held' => 1000,
+          'trust_fund_yearly_dividend' => 2000
         }
       end
 
@@ -352,7 +371,8 @@ RSpec.describe Datastore::ApplicationRehydration do
       it 'generates savings' do
         expect(crime_application).to receive(:update!).with(
           hash_including(
-            savings: contain_exactly(Saving, Saving)
+            savings: contain_exactly(Saving, Saving),
+            properties: contain_exactly(Property)
           )
         )
 

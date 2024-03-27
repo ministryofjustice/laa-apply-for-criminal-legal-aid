@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class MeansDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
         Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           next if income.blank?
 
@@ -29,6 +29,7 @@ module SubmissionSerializer
               json.income_tax_rate_above_threshold outgoings&.income_tax_rate_above_threshold
               json.outgoings_more_than_income outgoings&.outgoings_more_than_income
               json.how_manage outgoings&.how_manage
+              json.pays_council_tax outgoings&.pays_council_tax
             end
 
             if capital
@@ -36,7 +37,16 @@ module SubmissionSerializer
                 json.has_premium_bonds capital.has_premium_bonds
                 json.premium_bonds_total_value capital.premium_bonds_total_value_before_type_cast
                 json.premium_bonds_holder_number capital.premium_bonds_holder_number
+                json.will_benefit_from_trust_fund capital.will_benefit_from_trust_fund
+                json.trust_fund_amount_held capital.trust_fund_amount_held_before_type_cast
+                json.trust_fund_yearly_dividend capital.trust_fund_yearly_dividend_before_type_cast
                 json.savings Definitions::Saving.generate(capital.savings)
+                json.investments Definitions::Investment.generate(capital.investments)
+                json.national_savings_certificates Definitions::NationalSavingsCertificate.generate(
+                  capital.national_savings_certificates
+                )
+                json.properties Definitions::Property.generate(capital.properties)
+                json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
               end
             end
           end

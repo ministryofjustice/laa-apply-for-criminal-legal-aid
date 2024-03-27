@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionSerializer::Sections::MeansDetails do
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -14,6 +15,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       income_benefits:,
       capital:,
       savings:,
+      investments:,
+      national_savings_certificates:,
+      properties:
     )
   end
 
@@ -22,6 +26,9 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
   end
 
   let(:savings) { [] }
+  let(:investments) { [] }
+  let(:national_savings_certificates) { [] }
+  let(:properties) { [] }
 
   describe '#generate' do
     let(:income) do
@@ -46,6 +53,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: 'mortgage',
         income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
+        pays_council_tax: 'yes',
         how_manage: 'A description of how they manage'
       )
     end
@@ -99,7 +107,14 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         has_premium_bonds: 'yes',
         premium_bonds_total_value_before_type_cast: 123,
         premium_bonds_holder_number: '123A',
-        savings: []
+        will_benefit_from_trust_fund: 'yes',
+        trust_fund_amount_held_before_type_cast: 1000,
+        trust_fund_yearly_dividend_before_type_cast: 2000,
+        savings: [],
+        investments: [],
+        national_savings_certificates: [],
+        properties: [],
+        has_frozen_income_or_assets: nil
       )
     end
 
@@ -149,13 +164,21 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             housing_payment_type: 'mortgage',
             income_tax_rate_above_threshold: 'no',
             outgoings_more_than_income: 'yes',
-            how_manage: 'A description of how they manage'
+            how_manage: 'A description of how they manage',
+            pays_council_tax: 'yes',
           },
           capital_details: {
             has_premium_bonds: 'yes',
             premium_bonds_total_value: 123,
             premium_bonds_holder_number: '123A',
-            savings: []
+            will_benefit_from_trust_fund: 'yes',
+            trust_fund_amount_held: 1000,
+            trust_fund_yearly_dividend: 2000,
+            savings: [],
+            investments: [],
+            national_savings_certificates: [],
+            properties: [],
+            has_frozen_income_or_assets: nil
           }
         }
       }.as_json
@@ -187,7 +210,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         housing_payment_type: nil,
         income_tax_rate_above_threshold: nil,
         outgoings_more_than_income: nil,
-        how_manage: nil
+        how_manage: nil,
+        pays_council_tax: nil,
       )
     end
 
@@ -214,7 +238,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             housing_payment_type: nil,
             income_tax_rate_above_threshold: nil,
             outgoings_more_than_income: nil,
-            how_manage: nil
+            how_manage: nil,
+            pays_council_tax: nil,
           }
         }
       }.as_json
@@ -240,4 +265,5 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
       expect(subject.generate).to eq(json_output)
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
