@@ -11,14 +11,16 @@
       <%= t(".heading.#{@form_object.property_type}") %>
     </h1>
 
+    <p><%= t('.info') %></p>
+
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :house_type, legend: { size: 's' } do %>
         <% @form_object.house_types.each_with_index do |option, index| %>
           <%= f.govuk_radio_button :house_type, option, link_errors: index.zero? %>
         <% end %>
         <%= f.govuk_radio_divider %>
-        <%= f.govuk_radio_button :house_type, 'custom' do %>
-          <%= f.govuk_text_field :custom_house_type, autocomplete: 'off', width: 'one-third' %>
+        <%= f.govuk_radio_button :house_type, 'other' do %>
+          <%= f.govuk_text_field :other_house_type, autocomplete: 'off', width: 'one-third' %>
         <%end%>
       <% end %>
 

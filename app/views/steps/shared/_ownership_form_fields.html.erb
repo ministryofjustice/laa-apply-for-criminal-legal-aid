@@ -1,0 +1,7 @@
+<% if f.object.include_partner? %>
+  <%= f.govuk_collection_radio_buttons :ownership_type, OwnershipType.values, :value, legend: { size: 's' } %>
+<% else %>
+  <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { size: 'm' } do %>
+  <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false %>
+  <% end %>
+<% end %>

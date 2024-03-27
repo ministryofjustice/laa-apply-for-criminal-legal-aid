@@ -5,13 +5,13 @@ module Steps
       attribute :id, :string
       attribute :name, :string
       attribute :relationship, :string
-      attribute :custom_relationship, :string
-      attribute :percentage_owned, :integer
+      attribute :other_relationship, :string
+      attribute :percentage_owned, :decimal
 
       validates :name, :relationship, :percentage_owned, presence: true
-      validates :custom_relationship, presence: true, if: :custom_relationship?
+      validates :other_relationship, presence: true, if: :other_relationship?
       validates :relationship, inclusion: {
-        in: RelationshipType.values.map(&:to_s).push(PropertyOwner::CUSTOM_RELATIONSHIP)
+        in: RelationshipType.values.map(&:to_s).push(PropertyOwner::OTHER_RELATIONSHIP)
       }
 
       # Needed for `#fields_for` to render the uuids as hidden fields
@@ -19,8 +19,8 @@ module Steps
         id.present?
       end
 
-      def custom_relationship?
-        relationship == PropertyOwner::CUSTOM_RELATIONSHIP
+      def other_relationship?
+        relationship == PropertyOwner::OTHER_RELATIONSHIP
       end
     end
   end

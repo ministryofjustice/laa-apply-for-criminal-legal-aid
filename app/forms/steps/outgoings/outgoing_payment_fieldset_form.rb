@@ -45,10 +45,11 @@ module Steps
       end
 
       def case_ref_when_legal_aid_contribution?
-        return true if payment_type == OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s
-        return true if case_reference.blank?
-
-        errors.add(:case_reference)
+        if (payment_type == OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s) && case_reference.blank?
+          errors.add(:case_reference, :blank)
+        elsif (payment_type != OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s) && case_reference.present?
+          errors.add(:case_reference, :invalid)
+        end
       end
     end
   end

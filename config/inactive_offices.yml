@@ -669,3 +669,31 @@ production:
     - 2A524V
     - 0H995Q
     - 0U131W
+    # Inactive codes for twenty-fifth onboarding tranche - 19/03/2024
+    - 0D135H
+    - 2L580A
+    - 2M252F
+    - 2M074M
+    - 1Y301D
+    - 2E743F
+    - 2P358V
+    - 2M414G
+    - 0N667U
+    - 2P427V
+    - 2Q445B
+    - 0H637B
+    - 0T062J
+    - 2M451X
+    - 2P556K
+    - 2P557L
+    - 1F382A
+    - 2P456B
+    - 2P833L
+    - 0M803E
+    - 0M805G
+    - 2M398P
+    - 0Q058F
+    - 0W836L
+    # Request: Code appeared in a firm's office code list but it's not associated with any of their offices.
+    # Making inactive for time being - 20/03/2024
+    - 2P032Q

@@ -29,10 +29,10 @@ class PropertyOwnersValidator < ActiveModel::Validator
   end
 
   def indexed_attribute(index, attr)
-    "property_owner-attributes[#{index}].#{attr}"
+    "property_owners-attributes[#{index}].#{attr}"
   end
 
-  # `activemodel.errors.models.steps/case/property_owner.summary.x.y`
+  # `activemodel.errors.models.steps/capital/property_owner_fieldset_form.summary.x.y`
   def error_message(obj, error)
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",

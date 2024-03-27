@@ -24,7 +24,7 @@ module Steps
       end
 
       def before_save
-        return if has_premium_bonds.yes?
+        return if has_premium_bonds&.yes?
 
         self.premium_bonds_total_value = nil
         self.premium_bonds_holder_number = nil

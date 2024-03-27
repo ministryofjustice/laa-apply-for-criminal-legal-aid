@@ -7,11 +7,14 @@ RSpec.describe Decisions::CapitalDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
+      income: income,
       capital: capital
     )
   end
 
   let(:capital) { instance_double(Capital) }
+  let(:income) { instance_double(Income, has_frozen_income_or_assets:) }
+  let(:has_frozen_income_or_assets) { nil }
 
   before do
     allow(form_object).to receive_messages(crime_application:)
@@ -65,8 +68,36 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected no to adding a investments account' do
       let(:add_investment) { YesNoAnswer::NO }
 
-      it 'redirects to the case page' do
-        expect(subject).to have_destination('/steps/case/urn', :edit, id: crime_application)
+      it 'redirects to the trust fund page' do
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
+      end
+    end
+  end
+
+  context 'when the step is `national_savings_certificates_summary`' do
+    let(:form_object) { double('FormObject', national_savings_certificate: certificate) }
+    let(:step_name) { :national_savings_certificates_summary }
+    let(:certificate) { 'new_national_savings_certificate' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_national_savings_certificate:)
+    end
+
+    context 'the client has selected yes to adding a certificate' do
+      let(:add_national_savings_certificate) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `national_savings_certificates` page' do
+        expect(subject).to have_destination(
+          :national_savings_certificates, :edit, id: crime_application, national_savings_certificate_id: certificate
+        )
+      end
+    end
+
+    context 'the client has selected no to adding a certificates' do
+      let(:add_national_savings_certificate) { YesNoAnswer::NO }
+
+      it 'redirects to the investment_type page' do
+        expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
       end
     end
   end
@@ -83,11 +114,27 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
 
-    context 'the client has selected a property type' do
+    context 'the client has selected a residential property type' do
       let(:property) { instance_double(Property, property_type: 'residential') }
 
       it 'redirects the edit `residential_property` page' do
         expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
+      end
+    end
+
+    context 'the client has selected a commercial property type' do
+      let(:property) { instance_double(Property, property_type: 'commercial') }
+
+      it 'redirects the edit `residential_property` page' do
+        expect(subject).to have_destination(:commercial_property, :edit, id: crime_application, property_id: property)
+      end
+    end
+
+    context 'the client has selected land' do
+      let(:property) { instance_double(Property, property_type: 'land') }
+
+      it 'redirects the edit `land` page' do
+        expect(subject).to have_destination(:land, :edit, id: crime_application, property_id: property)
       end
     end
   end
@@ -100,13 +147,107 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:record) { instance_double(Property, property_owners: [property_owner]) }
     let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
 
-    context 'is_home_address and has_other_owners' do
+    context 'is_home_address, has_other_owners' do
       context 'when property address is same as home address and have no other owners' do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::NO }
 
-        it 'redirects the edit `saving_type` page' do
-          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is same as home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_owners` page' do
+          expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `commercial_property`' do
+    let(:form_object) do
+      double('FormObject', record:, is_home_address:, has_other_owners:)
+    end
+    let(:step_name) { :commercial_property }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
+
+    context 'is_home_address, has_other_owners' do
+      context 'when property address is same as home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is same as home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_owners` page' do
+          expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::YES }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+
+      context 'when property address is different from home address and have other owners' do
+        let(:is_home_address) { YesNoAnswer::NO }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects the edit `property_address` page' do
+          expect(subject).to have_destination(:property_address, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `land`' do
+    let(:form_object) do
+      double('FormObject', record:, is_home_address:, has_other_owners:)
+    end
+    let(:step_name) { :land }
+    let(:record) { instance_double(Property, property_owners: [property_owner]) }
+    let(:property_owner) { instance_double(PropertyOwner, complete?: false) }
+
+    context 'is_home_address, has_other_owners' do
+      context 'when property address is same as home address and have no other owners' do
+        let(:is_home_address) { YesNoAnswer::YES }
+        let(:has_other_owners) { YesNoAnswer::NO }
+
+        it 'redirects to `clients_assets` page' do
+          expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
         end
       end
 
@@ -150,8 +291,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'when property has no other owners' do
       let(:has_other_owners) { YesNoAnswer::NO }
 
-      it 'redirects the edit `saving_type` page' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      it 'redirects to `clients_assets` page' do
+        expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
       end
     end
 
@@ -171,8 +312,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :property_owners }
     let(:record) { instance_double(Property) }
 
-    it 'redirects the edit `saving_type` page' do
-      expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+    it 'redirects to `clients_assets` page' do
+      expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
     end
   end
 
@@ -194,6 +335,32 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     it 'redirects the edit `property_owners` page' do
       expect(subject).to have_destination(:property_owners, :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `properties_summary`' do
+    let(:form_object) { double('FormObject', property:) }
+    let(:step_name) { :properties_summary }
+    let(:property) { 'new_property' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_property:)
+    end
+
+    context 'the client has selected yes to adding an asset' do
+      let(:add_property) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `property type` page' do
+        expect(subject).to have_destination(:other_property_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding an asset' do
+      let(:add_property) { YesNoAnswer::NO }
+
+      it 'redirects to select saving type' do
+        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      end
     end
   end
 
@@ -226,7 +393,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
       let(:investment) { nil }
 
       it 'redirects premium bonds' do
-        expect(subject).to have_destination(:premium_bonds, :edit, id: crime_application)
+        expect(subject).to have_destination(:trust_fund, :edit, id: crime_application)
       end
     end
 
@@ -235,6 +402,34 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
       it 'redirects the edit `investments` page' do
         expect(subject).to have_destination(:investments, :edit, id: crime_application, investment_id: investment)
+      end
+    end
+  end
+
+  context 'when the step is `has_national_savings_certificates`' do
+    let(:form_object) { double('FormObject', national_savings_certificate: certificate) }
+    let(:step_name) { :has_national_savings_certificates }
+    let(:certificate) { 'new_national_savings_certificate' }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, has_national_savings_certificates:)
+    end
+
+    context 'the client has no certificates' do
+      let(:has_national_savings_certificates) { YesNoAnswer::NO }
+
+      it 'redirects investment_type' do
+        expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected a yes' do
+      let(:has_national_savings_certificates) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `national_savings_certificates` page' do
+        expect(subject).to have_destination(
+          :national_savings_certificates, :edit, id: crime_application, national_savings_certificate_id: certificate
+        )
       end
     end
   end
@@ -257,12 +452,45 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
   end
 
+  context 'when the step is `national_savings_certificates`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :national_savings_certificates }
+
+    context 'has correct next step' do
+      it { is_expected.to have_destination(:national_savings_certificates_summary, :edit, id: crime_application) }
+    end
+  end
+
   context 'when the step is `premium_bonds`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :premium_bonds }
 
     context 'has correct next step' do
-      it { is_expected.to have_destination(:investment_type, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `trust_fund`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :trust_fund }
+
+    context 'when has_frozen_income_or_assets is nil' do
+      it { is_expected.to have_destination(:frozen_income_savings_assets_capital, :edit, id: crime_application) }
+    end
+
+    context 'when has_frozen_income_or_assets is set' do
+      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `frozen_income_savings_assets_capital`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :frozen_income_savings_assets_capital }
+
+    context 'redirects to the evidence upload page' do
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end
 

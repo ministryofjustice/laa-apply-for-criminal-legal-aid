@@ -1,6 +1,6 @@
 <%
   content_for(:row_question, flush: true) do
-    t("summary.questions.#{money_answer.question}.question")
+    t("summary.questions.#{money_answer.question}.question", **money_answer.i18n_opts)
   end
 
   content_for(:row_answer, flush: true) do

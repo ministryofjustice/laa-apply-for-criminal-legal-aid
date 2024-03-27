@@ -8,7 +8,7 @@ module Steps
       end
 
       def form_name
-        ResidentialPropertyForm
+        ResidentialForm
       end
     end
   end

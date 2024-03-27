@@ -10,9 +10,17 @@ class OutgoingsPaymentsValidator < ActiveModel::Validator
       outgoings_payment = record.public_send(type)
       add_indexed_errors(outgoings_payment, index) unless outgoings_payment.valid?
     end
+
+    require_type?
   end
 
   private
+
+  def require_type?
+    return false unless record.types.empty?
+
+    record.errors.add(:types, :none_selected)
+  end
 
   def add_indexed_errors(outgoings_payment, index)
     outgoings_payment.errors.each do |error|

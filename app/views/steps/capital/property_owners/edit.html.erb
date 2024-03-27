@@ -11,17 +11,17 @@
     <h1 class="govuk-heading-xl"><%=t ".heading.#{@form_object.record.property_type}" %></h1>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
-      <%= f.fields_for :property_owners, @form_object.property_owners do |po_field| %>
+      <%= f.fields_for :property_owners do |po_field| %>
         <% index = po_field.index + 1 %>
-        <%= f.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:) } do %>
-          <%= po_field.govuk_text_field :name, autocomplete: 'off' %>
+        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:) }, id: "property_owner_#{index}" do %>
+          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { text: t('helpers.label.steps_capital_property_owners_form.property_owners_attributes.name', index: index.ordinalize_fully) }  %>
           <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { size: 's' } do %>
             <% @form_object.relationships.each_with_index do |option, index| %>
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
             <% end %>
             <%= po_field.govuk_radio_divider %>
-            <%= po_field.govuk_radio_button :relationship, 'custom' do %>
-              <%= po_field.govuk_text_field :custom_relationship, autocomplete: 'off', width: 'one-third' %>
+            <%= po_field.govuk_radio_button :relationship, 'other' do %>
+              <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
             <%end%>
           <% end %>
           <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>

@@ -22,7 +22,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
     let(:complete?) { false }
 
     before do
-      allow(properties).to receive(:create).with(property_type:).and_return new_property
+      allow(properties).to receive(:create!).with(property_type:).and_return new_property
 
       form.property_type = property_type
       form.save
@@ -33,14 +33,14 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
 
       it 'returns true but does not set or create a property' do
         expect(form.property).to be_nil
-        expect(properties).not_to have_received(:create)
+        expect(properties).not_to have_received(:create!)
       end
     end
 
     context 'when there are no properties of the property type' do
       it 'a new property of the property type is created' do
         expect(form.property).to be new_property
-        expect(properties).to have_received(:create).with(property_type:)
+        expect(properties).to have_received(:create!).with(property_type:)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
 
       it 'is set as the property' do
         expect(form.property).to be existing_property
-        expect(properties).not_to have_received(:create)
+        expect(properties).not_to have_received(:create!)
       end
 
       context 'when the existing property is complete' do
@@ -57,7 +57,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
 
         it 'a new property of the property type is created' do
           expect(form.property).to be new_property
-          expect(properties).to have_received(:create).with(property_type:)
+          expect(properties).to have_received(:create!).with(property_type:)
         end
       end
     end

@@ -17,13 +17,8 @@
       <%= f.govuk_text_area :description, autocomplete: 'off' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
 
-      <% if f.object.include_partner? %>
-        <%= f.govuk_collection_radio_buttons :holder, OwnershipType.values, :value, legend: { size: 's' } %>
-      <% else %>
-        <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, legend: { size: 'm' } do %>
-        <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false %>
-        <% end %>
-      <% end %>
+      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: } %>
+
       <%= f.continue_button %>
     <% end %>
   </div>

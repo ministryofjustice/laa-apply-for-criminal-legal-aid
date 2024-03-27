@@ -57,9 +57,17 @@ RSpec.describe Type::Pence do
     context 'when value is a float string' do
       let(:value) { '321.019' }
 
-      it { is_expected.to eq(32_102) }
+      it 'is expected to truncate tenths of pennies' do
+        expect(serialized_value).to eq(32_101)
+      end
 
       it { is_expected.to be_a(Integer) }
+    end
+
+    context 'when value is a negative float string' do
+      let(:value) { '-1.019' }
+
+      it { is_expected.to eq(-101) }
     end
 
     context 'when value is an integer string' do

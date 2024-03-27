@@ -3,6 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>

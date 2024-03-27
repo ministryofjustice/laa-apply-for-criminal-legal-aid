@@ -3,7 +3,7 @@ module Steps
     class InvestmentsSummaryForm < Steps::BaseFormObject
       attr_reader :add_investment
 
-      validates_inclusion_of :add_investment, in: :choices
+      validates :add_investment, inclusion: { in: YesNoAnswer.values }
 
       delegate :investments, to: :crime_application
 

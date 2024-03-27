@@ -96,7 +96,8 @@ RSpec.describe Datastore::ApplicationSubmission do
 
     Capital.create(
       crime_application: app,
-      has_premium_bonds: 'no'
+      has_premium_bonds: 'no',
+      will_benefit_from_trust_fund: 'no'
     )
   end
 
