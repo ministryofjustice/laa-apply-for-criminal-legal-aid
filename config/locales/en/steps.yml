@@ -443,10 +443,12 @@ en:
       residential_property:
         edit:
           page_title: Your client’s residential property
-          heading:
+          property_heading: &PROPERTY_HEADING
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+          heading:
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns residential property.
         destroy:
           success_flash: The asset has been deleted
@@ -454,9 +456,7 @@ en:
         edit:
           page_title: Your client’s commercial property
           heading:
-            residential: Your client’s residential property
-            commercial: Your client’s commercial property
-            land: Your client’s land
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns commercial property.
         destroy:
           success_flash: The asset has been deleted
@@ -464,9 +464,7 @@ en:
         edit:
           page_title: Your client’s land
           heading:
-            residential: Your client’s residential property
-            commercial: Your client’s commercial property
-            land: Your client’s land
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns land.
         destroy:
           success_flash: The asset has been deleted
