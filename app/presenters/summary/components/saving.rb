@@ -6,7 +6,6 @@ module Summary
       private
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        Rails.logger.debug saving.ownership_type
         [
           Components::FreeTextAnswer.new(
             :provider_name, saving.provider_name

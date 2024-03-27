@@ -20,7 +20,14 @@ module Summary
             card.with_action { remove_link }
           end
 
-          render answers, editable: show_actions
+          govuk_summary_list do |list|
+            answers.each do |answer|
+              list.with_row do |row|
+                row.with_key { answer.question_text }
+                row.with_value { answer.answer_text }
+              end
+            end
+          end
         end
       end
 

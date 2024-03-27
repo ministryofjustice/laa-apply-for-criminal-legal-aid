@@ -1,8 +1,8 @@
 module Summary
   module Components
     class DateAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/date_answer'
+      def answer_text
+        I18n.l(value, **i18n_opts)
       end
     end
   end

@@ -7,8 +7,8 @@ module Summary
                :offence_dates,
                :complete?, to: :value
 
-      def to_partial_path
-        'steps/submission/shared/offence_answer'
+      def question_text
+        render partial: 'steps/shared/charge', locals: { charge: value }
       end
     end
   end

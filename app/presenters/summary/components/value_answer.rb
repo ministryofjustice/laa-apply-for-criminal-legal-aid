@@ -1,8 +1,8 @@
 module Summary
   module Components
     class ValueAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/value_answer'
+      def answer_text
+        I18n.t("summary.questions.#{question}.answers.#{value}")
       end
     end
   end
