@@ -51,8 +51,8 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
     end
 
     it 'sets the form attributes from the model metadata' do
-      expect(form.board_amount).to eq(700)
-      expect(form.food_amount).to eq(100)
+      expect(form.board_amount).to eq('7.00')
+      expect(form.food_amount).to eq('1.00')
       expect(form.frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
       expect(form.payee_name).to eq('Joan')
       expect(form.payee_relationship_to_client).to eq('Landlady')

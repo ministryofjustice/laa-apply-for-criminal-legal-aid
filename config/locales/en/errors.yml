@@ -456,9 +456,11 @@ en:
             board_amount:
               blank: Enter how much your client pays for board and lodgings
               invalid: Payments for board and lodgings must be a number, like 50
+              greater_than: Payments for board and lodgings must be more than 0
             food_amount:
               blank: Enter how much of the board and lodgings payment is for food
               invalid: Payments for food must be a number, like 50
+              greater_than: Payments for food must be more than 0
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
