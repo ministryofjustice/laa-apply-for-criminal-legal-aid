@@ -27,4 +27,23 @@ class OutgoingsPayment < Payment
   def self.housing_payments
     where(payment_type: OutgoingsPaymentType::HOUSING_PAYMENT_TYPES.map(&:to_s))
   end
+
+  # Manually cast food_amount and board_amount
+  # because Rails will not convert to :pence as they are
+  # store_accessor attributes
+  def food_amount=(value)
+    super(Type::Pence.new.serialize(value))
+  end
+
+  def food_amount
+    Type::Pence.new.deserialize(super)
+  end
+
+  def board_amount=(value)
+    super(Type::Pence.new.serialize(value))
+  end
+
+  def board_amount
+    Type::Pence.new.deserialize(super)
+  end
 end
