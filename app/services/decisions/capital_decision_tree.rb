@@ -100,7 +100,7 @@ module Decisions
     def after_trust_fund
       return edit(:frozen_income_savings_assets_capital) if income_frozen_assets_unanswered?
 
-      edit('/steps/evidence/upload')
+      edit(:answers)
     end
 
     def after_property_type(property)

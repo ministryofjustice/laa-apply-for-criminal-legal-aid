@@ -481,7 +481,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'when has_frozen_income_or_assets is set' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
