@@ -516,3 +516,9 @@ en:
       trust_fund_yearly_dividend:
         question: Enter the yearly dividend
       # END trust_fund
+
+      has_no_other_assets:
+        question: Client has no other assets or capital
+        absence_answer: *absence_none
+        answers:
+          'yes': Confirmed

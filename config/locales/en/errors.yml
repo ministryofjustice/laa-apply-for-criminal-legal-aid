@@ -701,7 +701,10 @@ en:
             add_national_savings_certificate:
               inclusion: Select yes if you want to add another National Savings Certificate
         steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
-
+        steps/capital/answers_form:
+          attributes:
+            has_no_other_assets:
+              blank: Confirm your client has no other assets or capital
         steps/submission/more_information_form:
           attributes:
             additional_information:
