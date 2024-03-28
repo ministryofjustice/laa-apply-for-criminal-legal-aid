@@ -527,6 +527,10 @@ en:
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
+      steps_submission_cannot_submit_without_nino_form:
+        will_enter_nino_options:
+          'yes': I will enter the National Insurance number now
+          'no': I will save and come back later to enter the National Insurance number
       steps_capital_property_type_form:
         property_type_options: &PROPERTY_TYPE_OPTIONS
           residential: Residential property

@@ -3,10 +3,13 @@ require 'rails_helper'
 RSpec.describe Decisions::SubmissionDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
+  let(:applicant) { instance_double(Applicant) }
+
   let(:crime_application) do
     instance_double(
       CrimeApplication,
       id: 'uuid',
+      applicant: applicant
     )
   end
 
@@ -79,6 +82,23 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     it 'retries the submission of the application' do
       expect(subject).to receive(:submit_application)
       subject.destination
+    end
+  end
+
+  context 'when the step is `after_cannot_submit_without_nino`' do
+    let(:form_object) { double('FormObject', applicant:, will_enter_nino:) }
+    let(:step_name) { :cannot_submit_without_nino }
+
+    context 'and the answer is `yes`' do
+      let(:will_enter_nino) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    end
+
+    context 'and the answer is `no`' do
+      let(:will_enter_nino) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 end

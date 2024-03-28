@@ -218,6 +218,7 @@ Rails.application.routes.draw do
         edit_step :declaration
         edit_step :failure
         show_step :confirmation
+        edit_step :cannot_submit_without_nino
       end
     end
   end
