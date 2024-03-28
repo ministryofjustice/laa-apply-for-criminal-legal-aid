@@ -19,6 +19,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'has_frozen_income_or_assets' => 'no',
           'client_owns_property' => 'no',
           'has_savings' => 'yes',
+          'client_has_dependants' => an_instance_of(YesNoAnswer),
           'manage_without_income' => 'other',
           'manage_other_details' => 'Another way they manage'
         )
@@ -43,6 +44,10 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           client_has_dependants
         ]
       )
+    end
+
+    it 'omits income array' do
+      expect(subject.serializable_hash.key?('income_payments')).to be false
     end
   end
 end
