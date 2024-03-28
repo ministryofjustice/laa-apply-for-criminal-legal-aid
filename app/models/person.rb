@@ -1,5 +1,4 @@
 class Person < ApplicationRecord
-  include PersonWithFullName
   include PersonWithDob
 
   belongs_to :crime_application

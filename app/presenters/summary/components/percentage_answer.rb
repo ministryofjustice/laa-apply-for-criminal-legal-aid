@@ -1,8 +1,8 @@
 module Summary
   module Components
     class PercentageAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/percentage_answer'
+      def answer_text
+        number_to_percentage(value, precision: 2) if value
       end
     end
   end

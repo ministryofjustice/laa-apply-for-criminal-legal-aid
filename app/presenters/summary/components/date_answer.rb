@@ -1,8 +1,10 @@
 module Summary
   module Components
     class DateAnswer < BaseAnswer
-      def to_partial_path
-        'steps/submission/shared/date_answer'
+      include Refinements::LocalizeWithTz
+
+      def answer_text
+        l(value.in_time_zone, **i18n_opts) if value
       end
     end
   end

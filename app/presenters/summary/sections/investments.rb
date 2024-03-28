@@ -10,7 +10,8 @@ module Summary
           items: investments,
           group_by: :investment_type,
           item_component: Summary::Components::Investment,
-          show_actions: editable?
+          show_actions: editable?,
+          show_record_actions: headless?
         )
       end
 

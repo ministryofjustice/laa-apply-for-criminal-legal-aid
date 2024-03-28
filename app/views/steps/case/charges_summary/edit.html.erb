@@ -2,7 +2,7 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column">
     <%= render partial: 'shared/flash_banner' %>
 
     <%= govuk_error_summary(@form_object) %>
@@ -11,11 +11,7 @@
       <%=t '.heading', count: @form_object.charges.size %>
     </h1>
 
-    <dl class="govuk-summary-list">
-      <% @form_object.charges.present_each(ChargePresenter) do |charge| %>
-        <%= render partial: 'offence_details', locals: { charge: charge, show_actions: true } %>
-      <% end %>
-    </dl>
+    <%= render Summary::Sections::Offences.new(current_crime_application, headless: true) %>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :add_offence, @form_object.choices, :value,

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 class MockComponent < ViewComponent::Base
-  def initialize(mock:, mock_counter:, show_actions:)
+  def initialize(mock:, mock_counter:, show_actions:, show_record_actions:)
     @type = mock.type
     @count = mock_counter
     super

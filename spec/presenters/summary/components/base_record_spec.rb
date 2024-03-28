@@ -33,6 +33,16 @@ RSpec.describe Summary::Components::BaseRecord do
     end
   end
 
+  describe '#show_record_actions' do
+    it 'defaults to false' do
+      expect(described_class.new(record:).show_record_actions).to be false
+    end
+
+    it 'can be set on initialisation' do
+      expect(described_class.new(record: record, show_actions: true).show_actions).to be true
+    end
+  end
+
   describe '#name' do
     it 'returns human model name of the record' do
       expect(component.name).to eq('Record human name')

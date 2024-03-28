@@ -30,11 +30,14 @@ en:
 
     sections:
       overview: Overview
+
+      case_details: Case details
       client_details: Client details
       contact_details: Contact details
-      case_details: Case details
-      offences: Offences
       codefendants: Co-defendants
+      codefendant: Co-defendant
+      offences: Offences
+      offence: Offence
       next_court_hearing: Next court hearing
       first_court_hearing: First court hearing
       justification_for_legal_aid: Justification for legal aid
@@ -100,8 +103,10 @@ en:
       # BEGIN client details section
       first_name:
         question: First name
+        absence_answer: ''
       last_name:
         question: Last name
+        absence_answer: ''
       other_names:
         question: Other names
         absence_answer: *absence_none
@@ -189,6 +194,10 @@ en:
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
+      offence_type_and_class:
+        question: Offence type and class
+      offence_date:
+        question: Offence date 
       # END offences section
 
       # BEGIN codefendants section
@@ -196,11 +205,11 @@ en:
         question: Co-defendants
         answers:
           <<: *YESNO
-      codefendant_full_name:
-        question: "Co-defendant %{index}"
       conflict_of_interest:
-        yes_html: <span class="govuk-caption-m">Conflict of interest</span>
-        no_html: <span class="govuk-caption-m">No conflict of interest</span>
+        question: Conflict of interest?
+        answers:
+          <<: *YESNO
+
       # END codefendants section
 
       # BEGIN next court hearing section
@@ -381,28 +390,28 @@ en:
       # BEGIN saving
       account_balance:
         question: What is the account balance?
-        absence_answer: *absence_none
+        absence_answer: '' 
       saving_ownership_type:
         question: Whose name is the account in?
         answers: *OWNERSHIP_TYPE
-        absence_answer: *absence_none
+        absence_answer: '' 
       account_number:
         question: What is the account number?
-        absence_answer: *absence_none
+        absence_answer: '' 
       are_wages_paid_into_account:
         question: Are your client’s wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: *absence_none
+        absence_answer: '' 
       is_overdrawn:
         question: Is the account overdrawn?
         answers: *YESNO
-        absence_answer: *absence_none
+        absence_answer: '' 
       provider_name:
         question: What is the name of the bank, building society or other holder of the savings?
-        absence_answer: *absence_none
+        absence_answer: '' 
       sort_code:
         question: What is the sort code or branch name?
-        absence_answer: *absence_none
+        absence_answer: '' 
       # END saving
       #
       # START premium_bonds
@@ -419,30 +428,30 @@ en:
       # START investments
       description: 
         question: Describe the investment
-        absence_answer: *absence_none
+        absence_answer: '' 
       value: 
         question: What is the value of the investment?
         absence_answer: *absence_none
       ownership_type: 
         question: Whose name is the investment in?
         answers: *OWNERSHIP_TYPE 
-        absence_answer: *absence_none
+        absence_answer: ''
       # END investments
 
       # START national_savings_certificates
       national_savings_certificate_holder_number: 
         question: What is the customer number or holder number?
-        absence_answer: *absence_none
+        absence_answer: ''
       national_savings_certificate_certificate_number:
         question: 'What is the certificate number?'
-        absence_answer: *absence_none
+        absence_answer: ''
       national_savings_certificate_value: 
         question: What is the value of the certificate?
-        absence_answer: *absence_none
+        absence_answer: '' 
       national_savings_certificate_ownership_type: 
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
-        absence_answer: *absence_none
+        absence_answer: '' 
       # END national_savings_certificates
 
       # BEGIN property, address and owners

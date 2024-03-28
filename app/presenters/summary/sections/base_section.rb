@@ -14,7 +14,11 @@ module Summary
       # Used by Rails to determine which partial to render.
       # May be overridden in subclasses.
       def to_partial_path
-        'steps/submission/shared/section'
+        if list?
+          'steps/submission/shared/list_section'
+        else
+          'steps/submission/shared/section'
+        end
       end
 
       def name

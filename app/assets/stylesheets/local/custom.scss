@@ -89,6 +89,10 @@ body.js-enabled {
   }
 }
 
+.app-summary-list__key {
+  width: 45%
+}
+
 .app-summary-list--compact {
   dt, dd {
     margin-bottom: 0 !important;

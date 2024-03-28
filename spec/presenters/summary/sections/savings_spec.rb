@@ -40,7 +40,8 @@ describe Summary::Sections::Savings do
         items: records,
         group_by: :saving_type,
         item_component: Summary::Components::Saving,
-        show_actions: true
+        show_actions: true,
+        show_record_actions: false
       )
     end
 
@@ -56,7 +57,8 @@ describe Summary::Sections::Savings do
           items: records,
           group_by: :saving_type,
           item_component: Summary::Components::Saving,
-          show_actions: false
+          show_actions: false,
+          show_record_actions: false
         )
       end
     end

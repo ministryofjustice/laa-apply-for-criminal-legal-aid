@@ -160,6 +160,10 @@ module Summary
              property_id: record.id)
       end
 
+      def summary_path
+        edit_steps_capital_properties_summary_path(id: record.crime_application_id)
+      end
+
       def remove_path
         confirm_destroy_steps_capital_properties_path(id: record.crime_application_id, property_id: record.id)
       end

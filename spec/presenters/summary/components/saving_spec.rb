@@ -25,23 +25,37 @@ RSpec.describe Summary::Components::Saving, type: :component do
   before { component }
 
   describe 'actions' do
-    describe 'change link' do
-      it 'show the correct change link' do
+    context 'when show_record_actions set to false' do
+      it 'show the "Edit" change link' do
         expect(page).to have_link(
-          'Change',
-          href: '/applications/APP123/steps/capital/savings/SAVING123',
-          exact_text: 'Change Bank account'
+          'Edit',
+          href: '/applications/APP123/steps/capital/clients_savings',
+         exact_text: 'Edit Bank account'
         )
       end
     end
 
-    describe 'remove link' do
-      it 'show the correct remove link' do
-        expect(page).to have_link(
-          'Remove',
-          href: '/applications/APP123/steps/capital/savings/SAVING123/confirm_destroy',
-          exact_text: 'Remove Bank account'
-        )
+    context 'when show_record_actions true' do
+      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+
+      describe 'change link' do
+        it 'show the correct change link' do
+          expect(page).to have_link(
+            'Change',
+            href: '/applications/APP123/steps/capital/savings/SAVING123',
+            exact_text: 'Change Bank account'
+          )
+        end
+      end
+
+      describe 'remove link' do
+        it 'show the correct remove link' do
+          expect(page).to have_link(
+            'Remove',
+            href: '/applications/APP123/steps/capital/savings/SAVING123/confirm_destroy',
+            exact_text: 'Remove Bank account'
+          )
+        end
       end
     end
   end
@@ -97,31 +111,31 @@ RSpec.describe Summary::Components::Saving, type: :component do
       it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
         expect(page).to have_summary_row(
           'What is the name of the bank, building society or other holder of the savings?',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'What is the sort code or branch name?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'What is the account number?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'What is the account balance?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'Is the account overdrawn?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'Are your client’s wages or benefits paid into this account?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'Whose name is the account in?',
-          'None',
+          '',
         )
       end
     end

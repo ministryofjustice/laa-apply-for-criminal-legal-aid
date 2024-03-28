@@ -39,7 +39,7 @@ describe Summary::Sections::NationalSavingsCertificates do
       expect(subject.answers).to be component
 
       expect(Summary::Components::NationalSavingsCertificate).to have_received(:with_collection).with(
-        records, show_actions: true
+        records, show_actions: true, show_record_actions: false
       )
     end
 
@@ -52,7 +52,7 @@ describe Summary::Sections::NationalSavingsCertificates do
         expect(subject.answers).to be component
 
         expect(Summary::Components::NationalSavingsCertificate).to have_received(:with_collection).with(
-          records, show_actions: false
+          records, show_actions: false, show_record_actions: false
         )
       end
     end

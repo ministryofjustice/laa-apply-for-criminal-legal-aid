@@ -6,7 +6,6 @@ module Summary
       private
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        Rails.logger.debug saving.ownership_type
         [
           Components::FreeTextAnswer.new(
             :provider_name, saving.provider_name
@@ -38,6 +37,10 @@ module Summary
 
       def change_path
         edit_steps_capital_savings_path(id: record.crime_application_id, saving_id: record.id)
+      end
+
+      def summary_path
+        edit_steps_capital_savings_summary_path(id: record.crime_application_id)
       end
 
       def remove_path

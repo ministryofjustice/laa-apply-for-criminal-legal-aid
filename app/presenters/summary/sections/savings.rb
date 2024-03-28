@@ -10,7 +10,8 @@ module Summary
           items: savings,
           group_by: :saving_type,
           item_component: Summary::Components::Saving,
-          show_actions: editable?
+          show_actions: editable?,
+          show_record_actions: headless?
         )
       end
 

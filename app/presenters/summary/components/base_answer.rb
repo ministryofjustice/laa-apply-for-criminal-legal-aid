@@ -1,6 +1,8 @@
 module Summary
   module Components
     class BaseAnswer
+      include ActionView::Helpers
+
       attr_reader :question, :value, :show, :change_path, :i18n_opts
 
       DEFAULT_OPTIONS = { default: nil, show: nil, change_path: nil, i18n_opts: {} }.freeze
@@ -27,12 +29,23 @@ module Summary
         change_path.present?
       end
 
-      # Used by Rails to determine which partial to render
+      def question_text
+        I18n.t("summary.questions.#{question}.question", **i18n_opts)
+      end
+
       # :nocov:
-      def to_partial_path
-        raise 'implement in subclasses'
+      def answer_text
+        raise 'must be implemented in subclasses'
       end
       # :nocov:
+
+      def absence_answer
+        I18n.t("summary.questions.#{question}.absence_answer")
+      end
+
+      def visually_hidden_action_text
+        I18n.t("summary.questions.#{question}.question_a11y", default: question_text)
+      end
 
       private
 

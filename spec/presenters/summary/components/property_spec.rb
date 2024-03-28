@@ -50,23 +50,37 @@ RSpec.describe Summary::Components::Property, type: :component do
   before { component }
 
   describe 'actions' do
-    describe 'change link' do
-      it 'show the correct change link' do
+    context 'when show_record_actions set to false' do
+      it 'show the "Edit" change link' do
         expect(page).to have_link(
-          'Change',
-          href: '/applications/APP123/steps/capital/residential_property/PROPERTY123',
-          exact_text: 'Change Residential property'
+          'Edit',
+          href: '/applications/APP123/steps/capital/clients_assets',
+          exact_text: 'Edit Residential property'
         )
       end
     end
 
-    describe 'remove link' do
-      it 'show the correct remove link' do
-        expect(page).to have_link(
-          'Remove',
-          href: '/applications/APP123/steps/capital/properties/PROPERTY123/confirm_destroy',
-          exact_text: 'Remove Residential property'
-        )
+    context 'when show_record_actions true' do
+      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+
+      describe 'change link' do
+        it 'show the correct change link' do
+          expect(page).to have_link(
+            'Change',
+            href: '/applications/APP123/steps/capital/residential_property/PROPERTY123',
+            exact_text: 'Change Residential property'
+          )
+        end
+      end
+
+      describe 'remove link' do
+        it 'show the correct remove link' do
+          expect(page).to have_link(
+            'Remove',
+            href: '/applications/APP123/steps/capital/properties/PROPERTY123/confirm_destroy',
+            exact_text: 'Remove Residential property'
+          )
+        end
       end
     end
   end
@@ -227,20 +241,20 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'How much is the property worth?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'How much is left to pay on the mortgage?',
-          'None',
+          '',
         )
         expect(page).to have_summary_row(
           'What percentage of the property does your client own?',
-          'None',
+          '',
         )
 
         expect(page).to have_summary_row(
           'Does anyone else own part of the property?',
-          'None',
+          '',
         )
       end
     end

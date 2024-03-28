@@ -3,32 +3,28 @@ module Summary
     class BaseRecord < ViewComponent::Base
       with_collection_parameter :record
 
-      attr_reader :record, :record_iteration, :show_actions
+      attr_reader :record, :record_iteration, :show_actions, :show_record_actions
 
-      def initialize(record:, record_iteration: nil, show_actions: true)
+      def initialize(record:, record_iteration: nil, show_actions: true, show_record_actions: false)
         @record = record
         @record_iteration = record_iteration
         @show_actions = show_actions
+        @show_record_actions = show_record_actions
 
         super
       end
 
       def call
-        govuk_summary_card(title:) do |card|
-          if show_actions
-            card.with_action { change_link }
-            card.with_action { remove_link }
+        govuk_summary_card(title:, actions:) do
+          govuk_summary_list do |list|
+            answers.each do |answer|
+              list.with_row do |row|
+                row.with_key(classes: 'app-summary-list__key') { answer.question_text }
+                row.with_value { answer.answer_text }
+              end
+            end
           end
-
-          render answers, editable: show_actions
         end
-      end
-
-      # Human model name of the record. Override in subclass if name is not based
-      # on the component.
-      # see Summary::Components::Saving where name is based on the saving_type.
-      def name
-        record.model_name.human
       end
 
       def title
@@ -44,6 +40,15 @@ module Summary
         )
       end
 
+      def summary_link
+        govuk_link_to(
+          'Edit',
+          summary_path,
+          visually_hidden_suffix: name,
+          no_visited_state: true
+        )
+      end
+
       def remove_link
         govuk_link_to(
           'Remove',
@@ -53,7 +58,27 @@ module Summary
         )
       end
 
+      # Human model name of the record. Override in subclass if name is not based
+      # on the component.
+      # see Summary::Components::Saving where name is based on the saving_type.
+      def name
+        record.model_name.human
+      end
+
       private
+
+      def index
+        return 0 unless record_iteration
+
+        record_iteration.index
+      end
+
+      def actions
+        return [] unless show_actions
+        return [change_link, remove_link] if show_record_actions
+
+        [summary_link]
+      end
 
       # :nocov:
       def answers
@@ -61,6 +86,10 @@ module Summary
       end
 
       def change_path
+        raise 'must be implemented in subclasses'
+      end
+
+      def summary_path
         raise 'must be implemented in subclasses'
       end
 
@@ -73,7 +102,7 @@ module Summary
         return unless record_iteration
         return unless record_iteration.size > 1
 
-        record_iteration.index + 1
+        index + 1
       end
 
       def status_tag

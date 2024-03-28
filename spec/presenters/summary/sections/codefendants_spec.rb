@@ -6,7 +6,7 @@ describe Summary::Sections::Codefendants do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      to_param: '12345',
+      in_progress?: true,
       case: kase,
     )
   end
@@ -15,30 +15,14 @@ describe Summary::Sections::Codefendants do
     instance_double(
       Case,
       has_codefendants: 'yes',
-      codefendants: [codefendant_one, codefendant_two],
+      codefendants: records,
     )
   end
 
-  let(:codefendant_one) do
-    Codefendant.new(
-      first_name: 'John',
-      last_name: 'Doe',
-      conflict_of_interest: conflict_of_interest,
-    )
-  end
+  let(:records) { [Codefendant.new] }
 
-  let(:codefendant_two) do
-    Codefendant.new(
-      first_name: 'Jane',
-      last_name: 'Doe',
-      conflict_of_interest: 'no',
-    )
-  end
-
-  let(:conflict_of_interest) { 'yes' }
-
-  describe '#name' do
-    it { expect(subject.name).to eq(:codefendants) }
+  describe '#list?' do
+    it { expect(subject.list?).to be true }
   end
 
   describe '#show?' do
@@ -58,27 +42,32 @@ describe Summary::Sections::Codefendants do
   end
 
   describe '#answers' do
-    let(:answers) { subject.answers }
+    let(:component) { instance_double(Summary::Components::Codefendant) }
 
-    it 'has the correct rows' do
-      expect(answers.count).to eq(3)
+    before do
+      allow(Summary::Components::Codefendant).to receive(:with_collection) { component }
+    end
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[0].question).to eq(:has_codefendants)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/has_codefendants')
-      expect(answers[0].value).to eq('yes')
+    it 'returns the component with actions' do
+      expect(subject.answers).to be component
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[1].question).to eq(:codefendant_full_name)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/codefendants#codefendant_1')
-      expect(answers[1].value).to eq('John Doe<span class="govuk-caption-m">Conflict of interest</span>')
-      expect(answers[1].i18n_opts).to eq({ index: 1 })
+      expect(Summary::Components::Codefendant).to have_received(:with_collection).with(
+        records, show_actions: true, show_record_actions: false
+      )
+    end
 
-      expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[2].question).to eq(:codefendant_full_name)
-      expect(answers[2].change_path).to match('applications/12345/steps/case/codefendants#codefendant_2')
-      expect(answers[2].value).to eq('Jane Doe<span class="govuk-caption-m">No conflict of interest</span>')
-      expect(answers[2].i18n_opts).to eq({ index: 2 })
+    context 'not in progress' do
+      before do
+        allow(crime_application).to receive(:in_progress?).and_return(false)
+      end
+
+      it 'returns the component without actions' do
+        expect(subject.answers).to be component
+
+        expect(Summary::Components::Codefendant).to have_received(:with_collection).with(
+          records, show_actions: false, show_record_actions: false
+        )
+      end
     end
   end
 end

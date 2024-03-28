@@ -28,7 +28,11 @@
     <div class="govuk-!-margin-top-8 app-no-print">
       <%= link_button t('.print_application'), '#', data: { module: 'print' } %>
     </div>
+  </div>
+</div>
 
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column">
     <%= render @presenter.sections %>
 
     <div class="govuk-button-group govuk-!-margin-top-8 app-no-print">

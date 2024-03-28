@@ -40,7 +40,8 @@ describe Summary::Sections::Investments do
         items: records,
         group_by: :investment_type,
         item_component: Summary::Components::Investment,
-        show_actions: true
+        show_actions: true,
+        show_record_actions: false
       )
     end
 
@@ -56,7 +57,8 @@ describe Summary::Sections::Investments do
           items: records,
           group_by: :investment_type,
           item_component: Summary::Components::Investment,
-          show_actions: false
+          show_actions: false,
+          show_record_actions: false
         )
       end
     end

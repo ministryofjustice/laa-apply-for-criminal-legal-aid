@@ -29,16 +29,10 @@ RSpec.describe 'Charges/offences summary page', :authorized do
 
       assert_select 'h1', 'You have added 1 offence'
 
-      assert_select 'dl.govuk-summary-list' do
-        assert_select 'div.govuk-summary-list__row', 1 do
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
+      assert_select '.govuk-summary-card'
 
-          assert_select 'dd.govuk-summary-list__actions:nth-of-type(1) a', count: 1, text: 'Change offence'
-          assert_select 'dd.govuk-summary-list__actions:nth-of-type(2) a', count: 1, text: 'Remove offence'
-        end
-      end
+      # summary card details tested in the Summary::Components::Offence spec
+      assert_select 'li.govuk-summary-card__action', count: 2
     end
   end
 
@@ -51,15 +45,8 @@ RSpec.describe 'Charges/offences summary page', :authorized do
     end
 
     it 'allows a user to confirm before deleting an offence' do
-      assert_select 'dl.govuk-summary-list.govuk-summary-list--no-border' do
-        assert_select 'div.govuk-summary-list__row', 1 do
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(1)', count: 1, text: 'Robbery'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(2)', count: 1, text: 'Class C'
-          assert_select 'dd.govuk-summary-list__value p:nth-of-type(3)', count: 1, text: '1 Feb 1990 – 5 Feb 1990'
-
-          assert_select 'dd.govuk-summary-list__actions', count: 0
-        end
-      end
+      # summary card details tested in the Summary::Components::Offence spec
+      assert_select 'li.govuk-summary-card__action', count: 0
 
       expect(response.body).to include('Are you sure you want to delete this offence?')
       expect(response.body).to include('Yes, delete it')
