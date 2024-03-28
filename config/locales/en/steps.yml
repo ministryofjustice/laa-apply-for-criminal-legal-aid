@@ -87,7 +87,7 @@ en:
       cannot_check_benefit_status:
         edit:
           page_title: Cannot check benefit status
-          heading: We cannot check your client's benefit status without their National Insurance number (NINo)
+          heading: We cannot check your client's benefit status without their National Insurance number
           upload_evidence: You must upload evidence that your client gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
