@@ -38,6 +38,15 @@ module Summary
         supporting_evidence
         more_information
         legal_representative_details
+      ],
+      capital: %i[
+        properties
+        savings
+        premium_bonds
+        national_savings_certificates
+        investments
+        trust_fund
+        other_capital_details
       ]
     }.freeze
 
@@ -47,6 +56,12 @@ module Summary
 
     def sections
       SECTIONS.fetch(application_type.to_sym).map do |section|
+        Sections.const_get(section.to_s.camelize).new(crime_application)
+      end.select(&:show?)
+    end
+
+    def capital_sections
+      SECTIONS.fetch(:capital).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
     end

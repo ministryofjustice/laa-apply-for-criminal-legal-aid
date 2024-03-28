@@ -114,7 +114,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         investments: [],
         national_savings_certificates: [],
         properties: [],
-        has_frozen_income_or_assets: nil
+        has_frozen_income_or_assets: nil,
+        has_no_other_assets: 'yes'
       )
     end
 
@@ -178,7 +179,8 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             investments: [],
             national_savings_certificates: [],
             properties: [],
-            has_frozen_income_or_assets: nil
+            has_frozen_income_or_assets: nil,
+            has_no_other_assets: 'yes'
           }
         }
       }.as_json
