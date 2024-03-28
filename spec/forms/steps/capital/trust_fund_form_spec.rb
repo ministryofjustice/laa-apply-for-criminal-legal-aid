@@ -54,8 +54,8 @@ RSpec.describe Steps::Capital::TrustFundForm do
         let(:expected_args) do
           {
             will_benefit_from_trust_fund: YesNoAnswer::YES,
-            trust_fund_amount_held: '100023.00',
-            trust_fund_yearly_dividend: '2000.00'
+            trust_fund_amount_held: Money.new(10_002_300),
+            trust_fund_yearly_dividend: Money.new(200_000)
           }
         end
 

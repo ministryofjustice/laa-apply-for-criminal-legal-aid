@@ -95,7 +95,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
           expect(subject.errors.of_kind?('jsa-details', :invalid)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'child-amount')).to eq ''
+          expect(subject.send(:'child-amount')).to be_nil
         end
       end
     end

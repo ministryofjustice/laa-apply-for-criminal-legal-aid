@@ -54,7 +54,7 @@ RSpec.describe Steps::Capital::PremiumBondsForm do
         let(:expected_args) do
           {
             has_premium_bonds: YesNoAnswer::YES,
-            premium_bonds_total_value: '100023.00',
+            premium_bonds_total_value: Money.new(10_002_300),
             premium_bonds_holder_number: '123568A'
           }
         end

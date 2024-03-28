@@ -54,7 +54,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
               'types' => %w[childcare legal_aid_contribution], # Selected payment checkboxes
 
               'childcare' =>  { 'amount' => '56.12', 'frequency' => 'week' }, # Data for selected payment
-              'maintenance' => { 'amount' => '', 'frequency' => '' },
+              'maintenance' => { 'amount' => nil, 'frequency' => nil },
               'legal_aid_contribution' => { 'amount' => '44', 'frequency' => 'week', 'case_reference' => 'CASE1234' },
             }
           }
@@ -88,7 +88,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
           expect(subject.errors.of_kind?('childcare-frequency', :inclusion)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'childcare-amount')).to eq ''
+          expect(subject.send(:'childcare-amount')).to be_nil
         end
       end
     end

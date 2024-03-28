@@ -18,7 +18,7 @@ RSpec.describe Steps::Outgoings::RentForm do
         OutgoingsPayment.new(
           crime_application: crime_application,
           payment_type: OutgoingsPaymentType::RENT.to_s,
-          amount: 8999,
+          amount: 8999.0,
           frequency: 'four_weeks',
         )
       }
@@ -28,7 +28,7 @@ RSpec.describe Steps::Outgoings::RentForm do
       end
 
       it 'loads model if it exists' do
-        expect(subject.amount).to eq(8999)
+        expect(subject.amount).to eq('8999.00')
         expect(subject.frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe Steps::Outgoings::RentForm do
 
       it 'is valid' do
         expect(subject).to be_valid
-        expect(subject.amount).to eq '91891'
+        expect(subject.amount).to eq '91891.00'
         expect(subject.frequency).to eq PaymentFrequencyType::MONTHLY
       end
     end

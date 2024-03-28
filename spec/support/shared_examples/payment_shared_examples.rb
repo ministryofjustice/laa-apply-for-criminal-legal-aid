@@ -55,7 +55,7 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
       let(:amount) { '' }
 
       it { is_expected.not_to be_valid }
-      it { expect(subject.amount).to eq '' }
+      it { expect(subject.amount).to be_nil }
       it { expect(subject.errors.of_kind?(:amount, :not_a_number)).to be(true) }
     end
 
@@ -306,7 +306,7 @@ RSpec.shared_examples 'a basic amount with frequency' do |payment_class|
       end
 
       it 'has amount and frquency' do
-        expect(subject.amount).to eq '12239'
+        expect(subject.amount).to eq '12239.00'
         expect(subject.frequency.to_s).to eq 'month'
       end
     end

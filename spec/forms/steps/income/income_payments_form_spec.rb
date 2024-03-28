@@ -104,7 +104,7 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
           expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)
 
           # Error attributes should respond
-          expect(subject.send(:'maintenance-amount')).to eq ''
+          expect(subject.send(:'maintenance-amount')).to be_nil
         end
       end
     end
