@@ -92,6 +92,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Dependants
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
@@ -127,6 +128,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Dependants
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails

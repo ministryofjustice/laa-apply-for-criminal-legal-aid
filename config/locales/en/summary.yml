@@ -35,6 +35,7 @@ en:
       case_details: Case details
       offences: Offences
       codefendants: Co-defendants
+      dependants: Dependants
       next_court_hearing: Next court hearing
       first_court_hearing: First court hearing
       justification_for_legal_aid: Justification for legal aid
@@ -289,6 +290,19 @@ en:
         answers:
           <<: *YESNO
       # END income details section
+
+      # BEGIN dependants section
+      client_has_dependants:
+        question: Does your client have any dependants?
+        answers:
+          <<: *YESNO
+      dependant:
+        question: How old is the %{ordinal} dependant?
+        answers:
+          age:
+            one: "%{age} year old"
+            other: "%{age} years old"
+      # END dependants section
 
       # BEGIN other sources of income details section
       manage_without_income:
