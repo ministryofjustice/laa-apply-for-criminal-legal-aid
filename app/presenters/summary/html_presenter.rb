@@ -18,6 +18,7 @@ module Summary
         passport_justification_for_legal_aid
         employment_details
         income_details
+        dependants
         other_income_details
         housing_payments
         other_outgoings_details

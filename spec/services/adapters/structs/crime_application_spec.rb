@@ -49,4 +49,10 @@ RSpec.describe Adapters::Structs::CrimeApplication do
       expect(doc.submitted_at).to eq(subject.submitted_at)
     end
   end
+
+  describe '#dependants' do
+    it 'returns dependants' do
+      expect(subject.dependants).to all(be_a(Dependant))
+    end
+  end
 end
