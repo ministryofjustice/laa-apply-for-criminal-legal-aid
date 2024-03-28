@@ -115,6 +115,10 @@ en:
           attributes:
             has_benefit_evidence:
               inclusion: Select yes if you have evidence of your client's benefit
+        steps/client/cannot_check_benefit_status_form:
+          attributes:
+            will_enter_nino:
+              inclusion: Select whether you will enter the National Insurance number now or later
         steps/client/contact_details_form:
           attributes:
             telephone_number:

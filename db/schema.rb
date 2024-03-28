@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -248,6 +248,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_194424) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
+    t.string "will_enter_nino"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
