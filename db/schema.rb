@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_114005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
     t.integer "trust_fund_amount_held"
     t.integer "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
+    t.string "has_no_other_assets"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 

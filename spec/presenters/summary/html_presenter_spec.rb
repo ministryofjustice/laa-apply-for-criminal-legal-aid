@@ -182,4 +182,38 @@ describe Summary::HtmlPresenter do
       end
     end
   end
+
+  describe '#capital_sections' do
+    subject(:capital_sections) { presenter.capital_sections.map { |s| s.class.name.demodulize } }
+
+    before do
+      allow_any_instance_of(
+        Summary::Sections::BaseSection
+      ).to receive(:show?).and_return(true)
+    end
+
+    let(:crime_application) { database_application }
+
+    expected_sections = %w[
+      Investments
+      NationalSavingsCertificates
+      OtherCapitalDetails
+      PremiumBonds
+      Properties
+      Savings
+      TrustFund
+    ]
+
+    context 'when an initial application' do
+      let(:application_type) { 'initial' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+
+    context 'when a PSE application' do
+      let(:application_type) { 'post_submission_evidence' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+  end
 end
