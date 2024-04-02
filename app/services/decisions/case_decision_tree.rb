@@ -1,4 +1,5 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
@@ -138,4 +139,5 @@ module Decisions
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
