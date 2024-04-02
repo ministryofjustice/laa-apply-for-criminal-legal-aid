@@ -40,7 +40,6 @@ describe Summary::Sections::Dependants do
     it { expect(subject.name).to eq(:dependants) }
   end
 
-
   describe '#show?' do
     context 'when there is an income_details' do
       it 'shows this section' do
