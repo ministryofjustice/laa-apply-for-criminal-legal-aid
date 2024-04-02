@@ -307,7 +307,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
 
-        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
     end
 

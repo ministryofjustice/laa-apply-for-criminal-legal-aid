@@ -29,7 +29,7 @@ module Decisions
       when :hearing_details
         after_hearing_details
       when :first_court_hearing
-        ioj_or_passported
+        after_first_court_hearing
       when :ioj, :ioj_passport
         after_ioj
       else
@@ -82,7 +82,19 @@ module Decisions
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
 
-      ioj_or_passported
+      means_test_or_ioj
+    end
+
+    def after_first_court_hearing
+      means_test_or_ioj
+    end
+
+    def means_test_or_ioj
+      if current_crime_application.not_means_tested?
+        ioj_or_passported
+      else
+        edit('/steps/income/employment_status')
+      end
     end
 
     def ioj_or_passported

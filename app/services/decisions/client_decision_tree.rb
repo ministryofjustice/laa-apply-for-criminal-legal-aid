@@ -106,7 +106,7 @@ module Decisions
     def after_benefit_type
       if form_object.benefit_type.none?
         if FeatureFlags.means_journey.enabled?
-          edit('/steps/income/employment_status')
+          edit('/steps/case/urn')
         else
           show(:benefit_exit)
         end
