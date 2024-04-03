@@ -1,0 +1,16 @@
+<%= govuk_summary_list do |list|
+      section.answers.each do |answer|
+        list.with_row do |row|
+          row.with_key(classes: 'app-summary-list__key') { answer.question_text }
+          row.with_value { answer.answer_text }
+
+          if section.editable?
+            row.with_action(
+              text: 'Change',
+              href: answer.change_path,
+              visually_hidden_text: answer.visually_hidden_action_text
+            )
+          end
+        end
+      end
+    end %>

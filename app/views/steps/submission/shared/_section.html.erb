@@ -1,24 +1,12 @@
-<% if FeatureFlags.summary_cards.enabled? && !(section.headless? || section.list?)%>
-  <div class="govuk-summary-card">
-    <div class="govuk-summary-card__title-wrapper">
-      <h2 class="govuk-summary-card__title">
-        <%= t(section.name, scope: 'summary.sections') %>
-      </h2>
-    </div>
-    <div class="govuk-summary-card__content">
-      <dl class="govuk-summary-list">
-        <%= render section.answers, editable: section.editable? %>
-      </dl>
-    </div>
-  </div>
+<% if FeatureFlags.summary_cards.enabled? %>
+  <%= govuk_summary_card title: t(section.name, scope: 'summary.sections') do %>
+    <%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
+  <% end %>
 <% else %>
   <% unless section.headless? %>
     <h2 class="govuk-heading-m">
       <%= t(section.name, scope: 'summary.sections') %>
     </h2>
   <% end %>
-
-  <dl class="govuk-summary-list">
-    <%= render section.answers, editable: section.editable? %>
-  </dl>
+  <%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
 <% end %>
