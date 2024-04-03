@@ -27,7 +27,7 @@ describe Summary::Sections::DWPClientDetails do
   let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
   describe '#name' do
-    it { expect(subject.name).to eq(:dwp_client_details) }
+    it { expect(subject.name).to eq(:client_details) }
   end
 
   describe '#show?' do
