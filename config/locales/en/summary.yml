@@ -36,6 +36,7 @@ en:
       contact_details: Contact details
       codefendants: Co-defendants
       codefendant: Co-defendant
+      dependants: Dependants
       offences: Offences
       offence: Offence
       next_court_hearing: Next court hearing
@@ -298,6 +299,19 @@ en:
         answers:
           <<: *YESNO
       # END income details section
+
+      # BEGIN dependants section
+      client_has_dependants:
+        question: Does your client have any dependants?
+        answers:
+          <<: *YESNO
+      dependant:
+        question: How old is the %{ordinal} dependant?
+        answers:
+          age:
+            one: "%{age} year old"
+            other: "%{age} years old"
+      # END dependants section
 
       # BEGIN other sources of income details section
       manage_without_income:

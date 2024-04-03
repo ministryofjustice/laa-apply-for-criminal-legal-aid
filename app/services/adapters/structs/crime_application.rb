@@ -53,6 +53,12 @@ module Adapters
         end
       end
 
+      def dependants
+        return [] unless means_details.income_details.dependants
+
+        means_details.income_details.dependants.map { |struct| Dependant.new(struct.attributes) }
+      end
+
       alias usn reference
     end
   end
