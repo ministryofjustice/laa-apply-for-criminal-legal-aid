@@ -46,7 +46,7 @@ module Decisions
       when :frozen_income_savings_assets_capital
         edit(:answers)
       when :answers
-        edit('/steps/evidence/upload')
+        edit('/steps/case/urn')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

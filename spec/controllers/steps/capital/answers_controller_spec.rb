@@ -30,9 +30,9 @@ RSpec.describe Steps::Capital::AnswersController, type: :controller do
     context 'when valid capital attributes' do
       let(:has_no_other_assets) { 'yes' }
 
-      it 'redirects to `evidence upload` page' do
+      it 'redirects to urn` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to(%r{/steps/evidence/upload})
+        expect(response).to redirect_to(%r{/steps/case/urn})
       end
     end
 
@@ -40,18 +40,18 @@ RSpec.describe Steps::Capital::AnswersController, type: :controller do
       context 'when `yes`' do
         let(:has_no_other_assets) { 'no' }
 
-        it 'not redirects to the `evidence upload` path' do
+        it 'not redirects to the `urn` path' do
           put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-          expect(response).not_to redirect_to(%r{/steps/evidence/upload})
+          expect(response).not_to redirect_to(%r{/steps/case/urn})
         end
       end
 
       context 'when `nil`' do
         let(:has_no_other_assets) { nil }
 
-        it 'not redirects to the `evidence upload` path' do
+        it 'not redirects to the `urn` path' do
           put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-          expect(response).not_to redirect_to(%r{/steps/evidence/upload})
+          expect(response).not_to redirect_to(%r{/steps/case/urn})
         end
       end
     end

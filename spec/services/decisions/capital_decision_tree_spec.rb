@@ -499,7 +499,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :answers }
 
     context 'redirects to the evidence upload page' do
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 
