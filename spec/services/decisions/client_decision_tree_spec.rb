@@ -279,9 +279,11 @@ RSpec.describe Decisions::ClientDecisionTree do
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
-    let(:applicant_double) { double(Applicant) }
+    let(:applicant_double) { double(Applicant, has_nino:) }
     let(:step_name) { :benefit_type }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
+    let(:has_nino) { YesNoAnswer::YES }
+    let(:feature_flag_means_journey_enabled) { false }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant_double,
@@ -345,6 +347,20 @@ RSpec.describe Decisions::ClientDecisionTree do
         end
       end
     end
+
+    context 'when the applicant does not have a nino' do
+      let(:passporting_benefit) { nil }
+      let(:benefit_check_passported) { false }
+      let(:has_nino) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+
+      context 'and feature flag `means_journey` is enabled' do
+        let(:feature_flag_means_journey_enabled) { true }
+
+        it { is_expected.to have_destination(:cannot_check_benefit_status, :edit, id: crime_application) }
+      end
+    end
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 
@@ -380,5 +396,22 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:step_name) { :benefit_check_result }
 
     it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+  end
+
+  context 'when the step is `after_cannot_check_benefit_status`' do
+    let(:form_object) { double('FormObject', applicant:, will_enter_nino:) }
+    let(:step_name) { :cannot_check_benefit_status }
+
+    context 'and the answer is `yes`' do
+      let(:will_enter_nino) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+    end
+
+    context 'and the answer is `no`' do
+      let(:will_enter_nino) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
   end
 end

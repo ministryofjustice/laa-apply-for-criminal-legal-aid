@@ -2,14 +2,13 @@
 <% step_header(path: edit_steps_case_charges_summary_path) %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column">
     <h1 class="govuk-heading-xl">
       <%=t '.heading' %>
     </h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-      <%= render partial: 'steps/case/charges_summary/offence_details',
-                 locals: { charge: @charge, show_actions: false } %>
+    <dl class='govuk-summary-list'>
+      <%= render Summary::Components::Offence.new(record: @charge, show_actions: false) %>
     </dl>
 
     <%= form_with url: steps_case_charges_path, method: :delete do |f| %>
