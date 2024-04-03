@@ -6,27 +6,22 @@ describe Summary::Sections::Offences do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      to_param: '12345',
       case: kase,
+      in_progress?: true
     )
   end
 
   let(:kase) do
     instance_double(
       Case,
-      charges: [charge],
+      charges: records,
     )
   end
 
-  let(:charge) do
-    instance_double(
-      Charge,
-      to_param: '321',
-    )
-  end
+  let(:records) { [instance_double(Charge)] }
 
-  describe '#name' do
-    it { expect(subject.name).to eq(:offences) }
+  describe '#list?' do
+    it { expect(subject.list?).to be true }
   end
 
   describe '#show?' do
@@ -46,16 +41,32 @@ describe Summary::Sections::Offences do
   end
 
   describe '#answers' do
-    let(:answers) { subject.answers }
+    let(:component) { instance_double(Summary::Components::Offence) }
 
-    it 'has the correct rows' do
-      expect(answers.count).to eq(1)
+    before do
+      allow(Summary::Components::Offence).to receive(:with_collection) { component }
+    end
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::OffenceAnswer)
-      expect(answers[0].question).to eq(:offence_details)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/charges/321')
-      expect(answers[0].value).to be_an_instance_of(ChargePresenter)
-      expect(answers[0].i18n_opts).to eq({ index: 1 })
+    it 'returns the component with actions' do
+      expect(subject.answers).to be component
+
+      expect(Summary::Components::Offence).to have_received(:with_collection).with(
+        records, show_actions: true, show_record_actions: false
+      )
+    end
+
+    context 'not in progress' do
+      before do
+        allow(crime_application).to receive(:in_progress?).and_return(false)
+      end
+
+      it 'returns the component without actions' do
+        expect(subject.answers).to be component
+
+        expect(Summary::Components::Offence).to have_received(:with_collection).with(
+          records, show_actions: false, show_record_actions: false
+        )
+      end
     end
   end
 end

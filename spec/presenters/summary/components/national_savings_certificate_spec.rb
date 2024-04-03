@@ -28,21 +28,35 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
   before { component }
 
   describe 'actions' do
-    let(:path) { '/applications/APP123/steps/capital/national_savings_certificates/national_savings_certificate123' }
-
-    describe 'change link' do
-      it 'show the correct change link' do
+    context 'when show_record_actions set to false' do
+      it 'show the "Edit" change link' do
         expect(page).to have_link(
-          'Change', href: path, exact_text: 'Change National Savings Certificate'
+          'Edit',
+          href: '/applications/APP123/steps/capital/clients_national_savings_certificates',
+          exact_text: 'Edit National Savings Certificate'
         )
       end
     end
 
-    describe 'remove link' do
-      it 'show the correct remove link' do
-        expect(page).to have_link(
-          'Remove', href: "#{path}/confirm_destroy", exact_text: 'Remove National Savings Certificate'
-        )
+    context 'when show_record_actions true' do
+      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+
+      let(:path) { '/applications/APP123/steps/capital/national_savings_certificates/national_savings_certificate123' }
+
+      describe 'change link' do
+        it 'show the correct change link' do
+          expect(page).to have_link(
+            'Change', href: path, exact_text: 'Change National Savings Certificate'
+          )
+        end
+      end
+
+      describe 'remove link' do
+        it 'show the correct remove link' do
+          expect(page).to have_link(
+            'Remove', href: "#{path}/confirm_destroy", exact_text: 'Remove National Savings Certificate'
+          )
+        end
       end
     end
   end
@@ -83,19 +97,19 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
           'What is the customer number or holder number?',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'What is the certificate number?',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'What is the value of the certificate?',
-          'None'
+          ''
         )
         expect(page).to have_summary_row(
           'Whose name is the certificate in?',
-          'None'
+          ''
         )
       end
     end

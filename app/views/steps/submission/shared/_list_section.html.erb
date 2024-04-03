@@ -1,0 +1,7 @@
+<% unless list_section.headless? %>
+  <h2 class="govuk-heading-m">
+    <%= t(list_section.name, scope: 'summary.sections') %>
+  </h2>
+<% end %>
+
+<%= render list_section.answers, editable: list_section.editable? %>

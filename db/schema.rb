@@ -249,6 +249,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_26_165829) do
     t.boolean "passporting_benefit"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
+    t.string "will_enter_nino"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

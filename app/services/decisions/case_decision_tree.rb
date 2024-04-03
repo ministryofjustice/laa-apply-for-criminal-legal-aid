@@ -1,4 +1,5 @@
 module Decisions
+  # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
@@ -29,7 +30,7 @@ module Decisions
       when :hearing_details
         after_hearing_details
       when :first_court_hearing
-        ioj_or_passported
+        after_first_court_hearing
       when :ioj, :ioj_passport
         after_ioj
       else
@@ -82,7 +83,19 @@ module Decisions
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
 
-      ioj_or_passported
+      means_test_or_ioj
+    end
+
+    def after_first_court_hearing
+      means_test_or_ioj
+    end
+
+    def means_test_or_ioj
+      if current_crime_application.benefit_check_passported?
+        edit('/steps/income/employment_status')
+      else
+        ioj_or_passported
+      end
     end
 
     def ioj_or_passported
@@ -126,4 +139,5 @@ module Decisions
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
