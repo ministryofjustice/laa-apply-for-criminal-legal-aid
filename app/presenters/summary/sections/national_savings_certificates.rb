@@ -7,7 +7,7 @@ module Summary
 
       def answers
         Summary::Components::NationalSavingsCertificate.with_collection(
-          national_savings_certificates, show_actions: editable?
+          national_savings_certificates, show_actions: editable?, show_record_actions: headless?
         )
       end
 
