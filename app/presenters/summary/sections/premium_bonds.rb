@@ -3,7 +3,7 @@ module Summary
     # rubocop:disable Naming/PredicateName, Metrics/MethodLength, Metrics/AbcSize
     class PremiumBonds < Sections::BaseSection
       def show?
-        capital.present? && super
+        shown_premium_bonds? && super
       end
 
       def answers
@@ -11,8 +11,7 @@ module Summary
           Components::ValueAnswer.new(
             :has_premium_bonds,
             crime_application.capital.has_premium_bonds,
-            change_path: change_path,
-            show: true
+            change_path:
           ),
           Components::FreeTextAnswer.new(
             :premium_bonds_holder_number,
@@ -30,6 +29,10 @@ module Summary
       end
 
       private
+
+      def shown_premium_bonds?
+        capital.present? && capital.has_premium_bonds.present?
+      end
 
       def have_premium_bonds?
         YesNoAnswer.new(capital.has_premium_bonds).yes?
