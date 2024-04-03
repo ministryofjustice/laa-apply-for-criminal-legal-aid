@@ -285,6 +285,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :ioj }
+    let(:income_present?) { nil }
 
     before do
       allow_any_instance_of(
@@ -294,11 +295,14 @@ RSpec.describe Decisions::CaseDecisionTree do
       allow_any_instance_of(
         Evidence::Requirements
       ).to receive(:any?).and_return(evidence_required)
+
+      allow(crime_application).to receive(:income).and_return(income_present?)
     end
 
     context 'and the application is means-passported' do
       let(:means_passported) { true }
       let(:evidence_required) { false }
+      let(:income_present?) { false }
 
       it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
     end
@@ -306,6 +310,14 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and the application requires evidence upload' do
       let(:means_passported) { false }
       let(:evidence_required) { true }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+
+    context 'and the application has income details' do
+      let(:means_passported) { false }
+      let(:evidence_required) { false }
+      let(:income_present?) { true }
 
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end

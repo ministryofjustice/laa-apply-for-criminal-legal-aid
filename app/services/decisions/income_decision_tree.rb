@@ -43,7 +43,7 @@ module Decisions
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
+          edit('/steps/case/urn')
         else
           edit(:income_before_tax)
         end
@@ -55,7 +55,7 @@ module Decisions
 
     def after_lost_job_in_custody
       if appeal_no_changes?
-        edit('/steps/evidence/upload')
+        edit('/steps/case/urn')
       else
         edit(:income_before_tax)
       end

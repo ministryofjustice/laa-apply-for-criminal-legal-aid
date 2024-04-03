@@ -68,7 +68,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         context 'when case_type is appeal no changes' do
           let(:case_type) { 'appeal_to_crown_court' }
 
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
         end
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when case_type is appeal no changes' do
       let(:case_type) { 'appeal_to_crown_court' }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
   end
 

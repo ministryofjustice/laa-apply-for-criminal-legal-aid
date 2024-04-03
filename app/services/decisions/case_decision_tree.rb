@@ -1,5 +1,5 @@
 module Decisions
-  class CaseDecisionTree < BaseDecisionTree
+  class CaseDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :urn
@@ -94,7 +94,7 @@ module Decisions
     end
 
     def after_ioj
-      return edit('/steps/evidence/upload') if evidence_upload_required?
+      return edit('/steps/evidence/upload') if evidence_upload_required? || income_details_present?
 
       edit('/steps/submission/more_information')
     end
@@ -124,6 +124,10 @@ module Decisions
 
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
+    end
+
+    def income_details_present?
+      current_crime_application.income.present?
     end
   end
 end
