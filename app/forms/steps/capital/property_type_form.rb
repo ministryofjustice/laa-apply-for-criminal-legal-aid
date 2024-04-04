@@ -14,7 +14,10 @@ module Steps
       private
 
       def persist!
-        return true if property_type == 'none'
+        if property_type == 'none'
+          crime_application.properties.destroy_all
+          return true
+        end
 
         @property = incomplete_property_for_type || crime_application.properties.create!(property_type:)
       end
