@@ -10,7 +10,10 @@ module Steps
                 inclusion: { in: :choices }
 
       def choices
-        CaseType.values
+        values = CaseType.values.dup
+        values.delete(CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES)
+
+        values
       end
 
       private
