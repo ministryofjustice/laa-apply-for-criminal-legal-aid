@@ -83,19 +83,15 @@ module Decisions
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
 
-      means_test_or_ioj
+      ioj_or_passported
     end
 
     def after_first_court_hearing
-      means_test_or_ioj
+      ioj_or_passported
     end
 
-    def means_test_or_ioj
-      if current_crime_application.benefit_check_passported?
-        edit('/steps/income/employment_status')
-      else
-        ioj_or_passported
-      end
+    def means_test_required?
+      applicant.has_benefit_evidence == 'no' || applicant.benefit_type == 'none'
     end
 
     def ioj_or_passported
@@ -107,6 +103,8 @@ module Decisions
     end
 
     def after_ioj
+      return edit('/steps/income/employment_status') if means_test_required?
+
       return edit('/steps/evidence/upload') if evidence_upload_required?
 
       edit('/steps/submission/more_information')
@@ -137,6 +135,10 @@ module Decisions
 
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
+    end
+
+    def applicant
+      @applicant ||= current_crime_application.applicant
     end
   end
   # rubocop:enable Metrics/ClassLength

@@ -365,20 +365,10 @@ RSpec.describe Decisions::ClientDecisionTree do
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `has_benefit_evidence`' do
-    let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }
+    let(:form_object) { double('FormObject', applicant:) }
     let(:step_name) { :has_benefit_evidence }
 
-    context 'and the answer is `yes`' do
-      let(:has_benefit_evidence) { YesNoAnswer::YES }
-
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-    end
-
-    context 'and the answer is `no`' do
-      let(:has_benefit_evidence) { YesNoAnswer::NO }
-
-      it { is_expected.to have_destination(:evidence_exit, :show, id: crime_application) }
-    end
+    it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
   end
 
   context 'when the step is `retry_benefit_check`' do
