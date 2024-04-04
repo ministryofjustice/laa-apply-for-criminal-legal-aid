@@ -9,7 +9,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
-  let(:benefit_check_passported) { nil }
+  let(:not_means_tested) { nil }
 
   before do
     allow(
@@ -17,7 +17,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     ).to receive(:crime_application).and_return(crime_application)
 
     allow(crime_application).to receive_messages(update: true, date_stamp: nil,
-                                                 benefit_check_passported?: benefit_check_passported)
+                                                 not_means_tested?: not_means_tested)
   end
 
   it_behaves_like 'a decision tree'
@@ -245,7 +245,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'when court did hear first hearing' do
       let(:is_first_court_hearing) { FirstHearingAnswer::YES }
-      let(:benefit_check_passported) { false }
+      let(:not_means_tested) { true }
 
       before do
         allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(ioj_passported)
@@ -266,7 +266,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'when the application is means tested' do
       let(:is_first_court_hearing) { FirstHearingAnswer::YES }
-      let(:benefit_check_passported) { true }
+      let(:not_means_tested) { false }
 
       it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end
@@ -275,7 +275,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   context 'when the step is `first_court_hearing`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :first_court_hearing }
-    let(:benefit_check_passported) { false }
+    let(:not_means_tested) { true }
 
     it 'runs the `means_test_or_ioj` logic' do
       expect(subject).to receive(:means_test_or_ioj)
@@ -288,7 +288,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
 
     context 'and application is means tested' do
-      let(:benefit_check_passported) { true }
+      let(:not_means_tested) { false }
 
       it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end

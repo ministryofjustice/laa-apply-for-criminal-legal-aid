@@ -91,10 +91,10 @@ module Decisions
     end
 
     def means_test_or_ioj
-      if current_crime_application.benefit_check_passported?
-        edit('/steps/income/employment_status')
-      else
+      if current_crime_application.not_means_tested?
         ioj_or_passported
+      else
+        edit('/steps/income/employment_status')
       end
     end
 
