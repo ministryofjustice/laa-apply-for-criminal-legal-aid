@@ -23,6 +23,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
 
     before do
       allow(properties).to receive(:create!).with(property_type:).and_return new_property
+      allow(properties).to receive(:destroy_all)
 
       form.property_type = property_type
       form.save
@@ -58,6 +59,15 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
         it 'a new property of the property type is created' do
           expect(form.property).to be new_property
           expect(properties).to have_received(:create!).with(property_type:)
+        end
+      end
+
+      context 'when client selects `no assets` option after adding assets' do
+        let(:property_type) { 'none' }
+
+        it 'deletes existing properties' do
+          expect(properties).to have_received(:destroy_all)
+          expect(properties).not_to have_received(:create!)
         end
       end
     end
