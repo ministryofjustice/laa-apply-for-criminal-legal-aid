@@ -137,7 +137,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       let(:case_type) { 'indictable' }
 
       context 'has correct next step' do
-        it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
+        # it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
 
@@ -145,7 +146,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       let(:case_type) { 'summary_only' }
 
       context 'has correct next step' do
-        it { is_expected.to have_destination('/steps/capital/trust_fund', :edit, id: crime_application) }
+        # it { is_expected.to have_destination('/steps/capital/trust_fund', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
   end

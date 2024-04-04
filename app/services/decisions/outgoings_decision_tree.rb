@@ -1,6 +1,6 @@
 module Decisions
   class OutgoingsDecisionTree < BaseDecisionTree
-    def destination # rubocop:disable Metrics/MethodLength
+    def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
       case step_name
       when :housing_payment_type
         after_housing_payment_type
@@ -13,6 +13,8 @@ module Decisions
       when :income_tax_rate
         edit(:outgoings_more_than_income)
       when :outgoings_more_than_income
+        edit(:answers)
+      when :answers
         after_outgoings_more_than_income
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
