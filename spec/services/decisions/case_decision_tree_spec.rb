@@ -9,15 +9,13 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
-  let(:benefit_check_passported) { nil }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive_messages(update: true, date_stamp: nil,
-                                                 benefit_check_passported?: benefit_check_passported)
+    allow(crime_application).to receive_messages(update: true, date_stamp: nil)
   end
 
   it_behaves_like 'a decision tree'
@@ -245,7 +243,6 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'when court did hear first hearing' do
       let(:is_first_court_hearing) { FirstHearingAnswer::YES }
-      let(:benefit_check_passported) { false }
 
       before do
         allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(ioj_passported)
@@ -263,34 +260,15 @@ RSpec.describe Decisions::CaseDecisionTree do
         it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
       end
     end
-
-    context 'when the application is means tested' do
-      let(:is_first_court_hearing) { FirstHearingAnswer::YES }
-      let(:benefit_check_passported) { true }
-
-      it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
-    end
   end
 
   context 'when the step is `first_court_hearing`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :first_court_hearing }
-    let(:benefit_check_passported) { false }
-
-    it 'runs the `means_test_or_ioj` logic' do
-      expect(subject).to receive(:means_test_or_ioj)
-      subject.destination
-    end
 
     it 'runs the `ioj_or_passported` logic' do
       expect(subject).to receive(:ioj_or_passported)
       subject.destination
-    end
-
-    context 'and application is means tested' do
-      let(:benefit_check_passported) { true }
-
-      it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end
   end
 
@@ -304,8 +282,11 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
+    let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+    let(:has_benefit_evidence) { nil }
     let(:step_name) { :ioj }
 
     before do
@@ -316,6 +297,34 @@ RSpec.describe Decisions::CaseDecisionTree do
       allow_any_instance_of(
         Evidence::Requirements
       ).to receive(:any?).and_return(evidence_required)
+
+      allow(applicant_double).to receive_messages(has_benefit_evidence:, benefit_type:)
+    end
+
+    context 'and means test required' do
+      let(:means_passported) { false }
+      let(:evidence_required) { nil }
+
+      context 'when has benefit evidence is no' do
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+        let(:has_benefit_evidence) { 'no' }
+
+        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
+      end
+
+      context 'when benefit type is none' do
+        let(:benefit_type) { 'none' }
+
+        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
+      end
+    end
+
+    context 'and the application requires evidence upload' do
+      let(:means_passported) { false }
+      let(:evidence_required) { true }
+      let(:has_benefit_evidence) { true }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
 
     context 'and the application is means-passported' do
@@ -324,20 +333,6 @@ RSpec.describe Decisions::CaseDecisionTree do
 
       it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
     end
-
-    context 'and the application requires evidence upload' do
-      let(:means_passported) { false }
-      let(:evidence_required) { true }
-
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-    end
-
-    # TODO: means test journey to be implemented
-    context 'and the application is not means-passported' do
-      let(:means_passported) { false }
-      let(:evidence_required) { false }
-
-      it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
-    end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

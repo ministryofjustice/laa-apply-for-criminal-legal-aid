@@ -36,7 +36,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       end
 
       it 'loads model if it exists' do
-        expect(subject.amount).to eq(8999)
+        expect(subject.amount).to eq('89.99')
       end
     end
   end
@@ -96,7 +96,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       before do
         allow(crime_application.outgoings_payments).to receive(:create!).with(
           payment_type: OutgoingsPaymentType::COUNCIL_TAX,
-          amount: 91_891,
+          amount: Money.new(91_891),
           frequency: PaymentFrequencyType::ANNUALLY,
         ).and_return(true)
       end
@@ -116,7 +116,7 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
       it 'creates an outgoings_payment record' do
         expect(crime_application.outgoings_payments).to receive(:create!).with(
           payment_type: OutgoingsPaymentType::COUNCIL_TAX,
-          amount: 91_891,
+          amount: Money.new(91_891),
           frequency: PaymentFrequencyType::ANNUALLY,
         ).once
 

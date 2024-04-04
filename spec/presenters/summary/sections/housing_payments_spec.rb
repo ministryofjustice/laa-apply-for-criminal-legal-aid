@@ -28,7 +28,7 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       OutgoingsPayment,
       payment_type: 'mortgage',
-      amount: 333,
+      amount: 333.0,
       frequency: 'year'
     )
   end
@@ -37,7 +37,7 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       OutgoingsPayment,
       payment_type: 'rent',
-      amount: 5555,
+      amount: 5555.0,
       frequency: 'month'
     )
   end
@@ -46,7 +46,7 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       OutgoingsPayment,
       payment_type: 'council_tax',
-      amount: 6666,
+      amount: 6666.0,
       frequency: 'annual'
     )
   end
@@ -55,10 +55,10 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       OutgoingsPayment,
       payment_type: 'board_and_lodging',
-      amount: 750,
+      amount: 750.0,
       frequency: 'month',
-      board_amount: 800,
-      food_amount: 50,
+      board_amount: 800.0,
+      food_amount: 50.0,
       payee_name: 'George',
       payee_relationship_to_client: 'Friend'
     )
@@ -69,7 +69,7 @@ describe Summary::Sections::HousingPayments do
     instance_double(
       OutgoingsPayment,
       payment_type: 'maintenance',
-      amount: 101,
+      amount: 101.0,
       frequency: 'week'
     )
   end
@@ -240,13 +240,13 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1].question).to eq(:board_amount)
         expect(answers[1].change_path)
           .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
-        expect(answers[1].value.amount).to eq(800)
+        expect(answers[1].value.amount).to eq('800.00')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[2].question).to eq(:food_amount)
         expect(answers[2].change_path)
           .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
-        expect(answers[2].value.amount).to eq(50)
+        expect(answers[2].value.amount).to eq('50.00')
 
         expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[3].question).to eq(:payee_name)

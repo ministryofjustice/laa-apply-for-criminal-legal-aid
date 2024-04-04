@@ -25,10 +25,8 @@ module Decisions
         after_benefit_type
       when :retry_benefit_check
         determine_dwp_result_page
-      when :benefit_check_result
-        after_dwp_check
-      when :has_benefit_evidence
-        after_has_benefit_evidence
+      when :benefit_check_result, :has_benefit_evidence
+        edit('/steps/case/urn')
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
       else
@@ -130,18 +128,6 @@ module Decisions
         edit(:benefit_check_result)
       else
         edit('steps/dwp/confirm_result')
-      end
-    end
-
-    def after_dwp_check
-      edit('/steps/case/urn')
-    end
-
-    def after_has_benefit_evidence
-      if form_object.has_benefit_evidence.yes?
-        edit('/steps/case/urn')
-      else
-        show(:evidence_exit)
       end
     end
 
