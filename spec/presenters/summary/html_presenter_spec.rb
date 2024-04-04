@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
       income: double, outgoings: double, documents: double, application_type: application_type,
-      capital: double, savings: [double], investments: [double],
+      capital: (double has_premium_bonds: 'yes'), savings: [double], investments: [double],
       national_savings_certificates: [double], properties: [double]
     )
   end
@@ -92,6 +92,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Dependants
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
@@ -127,6 +128,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Dependants
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
@@ -180,6 +182,40 @@ describe Summary::HtmlPresenter do
 
         it { is_expected.to match_array(expected_sections) }
       end
+    end
+  end
+
+  describe '#capital_sections' do
+    subject(:capital_sections) { presenter.capital_sections.map { |s| s.class.name.demodulize } }
+
+    before do
+      allow_any_instance_of(
+        Summary::Sections::BaseSection
+      ).to receive(:show?).and_return(true)
+    end
+
+    let(:crime_application) { database_application }
+
+    expected_sections = %w[
+      Investments
+      NationalSavingsCertificates
+      OtherCapitalDetails
+      PremiumBonds
+      Properties
+      Savings
+      TrustFund
+    ]
+
+    context 'when an initial application' do
+      let(:application_type) { 'initial' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+
+    context 'when a PSE application' do
+      let(:application_type) { 'post_submission_evidence' }
+
+      it { is_expected.to match_array(expected_sections) }
     end
   end
 end

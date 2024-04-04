@@ -44,6 +44,8 @@ module Decisions
       when :trust_fund
         after_trust_fund
       when :frozen_income_savings_assets_capital
+        edit(:answers)
+      when :answers
         edit('/steps/evidence/upload')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -98,7 +100,7 @@ module Decisions
     def after_trust_fund
       return edit(:frozen_income_savings_assets_capital) if income_frozen_assets_unanswered?
 
-      edit('/steps/evidence/upload')
+      edit(:answers)
     end
 
     def after_property_type(property)
@@ -118,7 +120,7 @@ module Decisions
       return edit(:property_address) if form_object.is_home_address.nil? || form_object.is_home_address.no?
 
       if form_object.has_other_owners.yes?
-        property_owners.create! if incomplete_property_owners.blank?
+        property_owners.create! if create_property_owner?
         return edit(:property_owners, property_id: property)
       end
       edit(:properties_summary)
@@ -126,10 +128,14 @@ module Decisions
 
     def after_property_address
       if form_object.has_other_owners.to_s == YesNoAnswer::YES.to_s
-        property_owners.create! if incomplete_property_owners.blank?
+        property_owners.create! if create_property_owner?
         return edit(:property_owners, property_id: property)
       end
       edit(:properties_summary)
+    end
+
+    def create_property_owner?
+      incomplete_property_owners.empty? && property_owners.empty?
     end
 
     def incomplete_property_owners

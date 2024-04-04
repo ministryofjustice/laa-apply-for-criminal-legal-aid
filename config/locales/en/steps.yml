@@ -87,7 +87,7 @@ en:
       cannot_check_benefit_status:
         edit:
           page_title: Cannot check benefit status
-          heading: We cannot check your client's benefit status without their National Insurance number (NINo)
+          heading: We cannot check your client's benefit status without their National Insurance number
           upload_evidence: You must upload evidence that your client gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
@@ -451,10 +451,12 @@ en:
       residential_property:
         edit:
           page_title: Your client’s residential property
-          heading:
+          property_heading: &PROPERTY_HEADING
             residential: Your client’s residential property
             commercial: Your client’s commercial property
             land: Your client’s land
+          heading:
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns residential property.
         destroy:
           success_flash: The asset has been deleted
@@ -462,9 +464,7 @@ en:
         edit:
           page_title: Your client’s commercial property
           heading:
-            residential: Your client’s residential property
-            commercial: Your client’s commercial property
-            land: Your client’s land
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns commercial property.
         destroy:
           success_flash: The asset has been deleted
@@ -472,9 +472,7 @@ en:
         edit:
           page_title: Your client’s land
           heading:
-            residential: Your client’s residential property
-            commercial: Your client’s commercial property
-            land: Your client’s land
+            <<: *PROPERTY_HEADING
           info: You told us your client owns or part-owns land.
         destroy:
           success_flash: The asset has been deleted
@@ -507,6 +505,10 @@ en:
             one: You have added %{count} asset
             other: You have added %{count} assets
       frozen_income_savings_assets_capital: *FROZEN_INCOME_ASSETS_PAGE_TEXT
+      answers:
+        edit:
+          page_title: Check your answers - Your client's capital
+          heading: Check your answers
 
     evidence:
       upload:

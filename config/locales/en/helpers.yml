@@ -151,6 +151,8 @@ en:
       steps_capital_property_owners_form:
         property_owners_attributes:
           relationship: What is their relationship to your client?
+      steps_capital_answers_form:
+        has_no_other_assets: Confirm the following
 
     hint:
       steps_client_details_form:
@@ -662,3 +664,5 @@ en:
           percentage_owned: What percentage of the land do they own?
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
+      steps_capital_answers_form: # TODO :: NOT WORKING
+        has_no_other_assets: My client confirms they have no other assets or capital

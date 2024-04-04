@@ -10,7 +10,8 @@ module Summary
           items: properties,
           group_by: :property_type,
           item_component: Summary::Components::Property,
-          show_actions: editable?
+          show_actions: editable?,
+          show_record_actions: headless?
         )
       end
 

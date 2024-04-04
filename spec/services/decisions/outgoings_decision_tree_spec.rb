@@ -7,11 +7,14 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     instance_double(
       CrimeApplication,
       id: 'uuid',
-      outgoings: outgoings
+      outgoings: outgoings,
+      case: kase
     )
   end
 
   let(:outgoings) { instance_double(Outgoings) }
+  let(:kase) { instance_double(Case, case_type:) }
+  let(:case_type) { nil }
 
   before do
     allow(
@@ -130,8 +133,20 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :outgoings_more_than_income }
 
-    context 'has correct next step' do
-      it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
+    context 'when case_type requires full capital assessment' do
+      let(:case_type) { 'indictable' }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
+      end
+    end
+
+    context 'when case_type does not require full capital assessment' do
+      let(:case_type) { 'summary_only' }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination('/steps/capital/trust_fund', :edit, id: crime_application) }
+      end
     end
   end
 end

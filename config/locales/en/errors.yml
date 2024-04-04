@@ -393,7 +393,7 @@ en:
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
         steps/income/income_payments_form:
           attributes:
-            types:
+            none:
               none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
@@ -411,7 +411,7 @@ en:
               blank: Enter an amount
         steps/income/income_benefits_form:
           attributes:
-            types:
+            none:
               none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
@@ -462,9 +462,11 @@ en:
             board_amount:
               blank: Enter how much your client pays for board and lodgings
               invalid: Payments for board and lodgings must be a number, like 50
+              greater_than: Payments for board and lodgings must be more than 0
             food_amount:
               blank: Enter how much of the board and lodgings payment is for food
               invalid: Payments for food must be a number, like 50
+              greater_than: Payments for food must be more than 0
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
@@ -483,7 +485,7 @@ en:
               not_a_number: How much they pay yearly must be a number, like 50
         steps/outgoings/outgoings_payments_form:
           attributes:
-            types:
+            none:
               none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
@@ -644,7 +646,7 @@ en:
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
-              # TODO: Change text to -> Enter the name of the [first] other owner
+              # TODO: Change text to -> Enter the name of the %{index} other owner
               blank: Enter the name of the other owner
             relationship:
               blank: Enter their relationship to your client
@@ -703,7 +705,10 @@ en:
             add_national_savings_certificate:
               inclusion: Select yes if you want to add another National Savings Certificate
         steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
-
+        steps/capital/answers_form:
+          attributes:
+            has_no_other_assets:
+              blank: Confirm your client has no other assets or capital
         steps/submission/more_information_form:
           attributes:
             additional_information:

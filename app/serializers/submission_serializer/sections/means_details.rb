@@ -47,6 +47,7 @@ module SubmissionSerializer
                 )
                 json.properties Definitions::Property.generate(capital.properties)
                 json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
+                json.has_no_other_assets capital.has_no_other_assets
               end
             end
           end

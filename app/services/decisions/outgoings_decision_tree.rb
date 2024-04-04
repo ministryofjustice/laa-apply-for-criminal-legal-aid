@@ -13,7 +13,7 @@ module Decisions
       when :income_tax_rate
         edit(:outgoings_more_than_income)
       when :outgoings_more_than_income
-        edit('/steps/capital/property_type')
+        after_outgoings_more_than_income
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -28,6 +28,26 @@ module Decisions
       when nil, :none
         edit(:council_tax)
       end
+    end
+
+    def after_outgoings_more_than_income
+      if requires_full_capital
+        edit('/steps/capital/property_type')
+      else
+        edit('/steps/capital/trust_fund')
+      end
+    end
+
+    def requires_full_capital
+      [
+        CaseType::EITHER_WAY.to_s,
+        CaseType::INDICTABLE.to_s,
+        CaseType::ALREADY_IN_CROWN_COURT.to_s
+      ].include?(case_type)
+    end
+
+    def case_type
+      current_crime_application.case.case_type
     end
   end
 end

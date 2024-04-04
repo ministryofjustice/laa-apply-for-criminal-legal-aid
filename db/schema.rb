@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_114005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
     t.integer "trust_fund_amount_held"
     t.integer "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
+    t.string "has_no_other_assets"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -139,30 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
-  create_table "income_benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "crime_application_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "payment_type", null: false
-    t.integer "amount", null: false
-    t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.index ["crime_application_id", "payment_type"], name: "index_income_benefits_on_crime_application_id_and_payment_type", unique: true
-    t.index ["crime_application_id"], name: "index_income_benefits_on_crime_application_id"
-  end
-
-  create_table "income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "crime_application_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "payment_type", null: false
-    t.integer "amount", null: false
-    t.string "frequency", null: false
-    t.jsonb "metadata", default: {}, null: false
-    t.index ["crime_application_id", "payment_type"], name: "index_income_payments_on_crime_application_id_and_payment_type", unique: true
-    t.index ["crime_application_id"], name: "index_income_payments_on_crime_application_id"
-  end
-
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
@@ -243,16 +220,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
-  create_table "outgoings_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "type", null: false
     t.string "payment_type", null: false
     t.integer "amount", null: false
     t.string "frequency", null: false
     t.jsonb "metadata", default: {}, null: false
-    t.index ["crime_application_id", "payment_type"], name: "index_crime_application_outgoings_payment_type", unique: true
-    t.index ["crime_application_id"], name: "index_outgoings_payments_on_crime_application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id", "type", "payment_type"], name: "index_payments_crime_application_id_and_payment_type", unique: true
+    t.index ["crime_application_id"], name: "index_payments_on_crime_application_id"
   end
 
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -348,15 +326,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_25_151350) do
   add_foreign_key "codefendants", "cases"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
-  add_foreign_key "income_benefits", "crime_applications"
-  add_foreign_key "income_payments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "investments", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
-  add_foreign_key "outgoings_payments", "crime_applications"
+  add_foreign_key "payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "properties", "crime_applications"
   add_foreign_key "property_owners", "properties"

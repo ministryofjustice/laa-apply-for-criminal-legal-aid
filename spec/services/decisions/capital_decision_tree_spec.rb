@@ -481,13 +481,22 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'when has_frozen_income_or_assets is set' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
   context 'when the step is `frozen_income_savings_assets_capital`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :frozen_income_savings_assets_capital }
+
+    context 'redirects to the answers page' do
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `answers`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :answers }
 
     context 'redirects to the evidence upload page' do
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
