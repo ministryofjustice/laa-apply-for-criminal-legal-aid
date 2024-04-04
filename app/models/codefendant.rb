@@ -5,6 +5,10 @@ class Codefendant < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
   def complete?
-    valid?
+    values_at(
+      :first_name,
+      :last_name,
+      :conflict_of_interest
+    ).all?(&:present?)
   end
 end
