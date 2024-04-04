@@ -1,7 +1,11 @@
 require 'rails_helper'
 
+# forces size
+
 RSpec.describe Type::Pence do
-  subject(:pence) { described_class.new }
+  subject(:pence) { described_class.new(**args) }
+
+  let(:args) { {} }
 
   describe 'registry' do
     it 'is registered with ActiveModel type `:pence`' do
@@ -89,6 +93,14 @@ RSpec.describe Type::Pence do
         expect(subject).to eq(123)
       end
     end
+
+    describe 'when value in pence exceeds 4bytes' do
+      let(:value) { (2**31) * 0.01 }
+
+      it 'is within range' do
+        expect(subject).to eq(2_147_483_648)
+      end
+    end
   end
 
   describe '#deserialize' do
@@ -131,7 +143,7 @@ RSpec.describe Type::Pence do
     context 'when value is an integer' do
       let(:value) { 123 }
 
-      it { is_expected.to eq 123 }
+      it { is_expected.to eq '1.23' }
     end
   end
 end
