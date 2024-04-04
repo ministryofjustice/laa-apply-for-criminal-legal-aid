@@ -168,7 +168,7 @@ module Decisions
       if requires_full_means_assessment?
         edit('/steps/outgoings/housing_payment_type')
       else
-        edit('/steps/case/urn')
+        edit('/steps/evidence/upload')
       end
     end
   end
