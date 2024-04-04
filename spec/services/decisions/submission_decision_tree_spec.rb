@@ -4,12 +4,14 @@ RSpec.describe Decisions::SubmissionDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:applicant) { instance_double(Applicant) }
+  let(:kase) { instance_double(Case) }
 
   let(:crime_application) do
     instance_double(
       CrimeApplication,
       id: 'uuid',
-      applicant: applicant
+      applicant: applicant,
+      case: kase
     )
   end
 
@@ -33,8 +35,25 @@ RSpec.describe Decisions::SubmissionDecisionTree do
   context 'when the step is `review`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :review }
+    let(:benefit_type) { nil }
+    let(:is_client_remanded) { YesNoAnswer::YES.to_s }
 
-    context 'has correct next step' do
+    before do
+      allow(applicant).to receive_messages(has_nino:, benefit_type:)
+      allow(kase).to receive_messages(is_client_remanded:)
+    end
+
+    context 'when nino not provided and is required to submit' do
+      let(:has_nino) { YesNoAnswer::NO.to_s }
+      let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
+      let(:is_client_remanded) { YesNoAnswer::NO.to_s }
+
+      it { is_expected.to have_destination(:cannot_submit_without_nino, :edit, id: crime_application) }
+    end
+
+    context 'when nino is provided' do
+      let(:has_nino) { YesNoAnswer::YES.to_s }
+
       it { is_expected.to have_destination(:declaration, :edit, id: crime_application) }
     end
   end
