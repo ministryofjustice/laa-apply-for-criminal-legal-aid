@@ -9,15 +9,13 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
-  let(:not_means_tested) { nil }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive_messages(update: true, date_stamp: nil,
-                                                 not_means_tested?: not_means_tested)
+    allow(crime_application).to receive_messages(update: true, date_stamp: nil)
   end
 
   it_behaves_like 'a decision tree'
