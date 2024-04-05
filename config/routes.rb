@@ -174,7 +174,7 @@ Rails.application.routes.draw do
         edit_step :mortgage_payments, alias: :mortgage
         edit_step :rent_payments, alias: :rent
         edit_step :board_and_lodging_payments, alias: :board_and_lodging
-        edit_step :check_your_answers_capital, alias: :answers
+        edit_step :check_your_answers_outgoings, alias: :answers
       end
 
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
