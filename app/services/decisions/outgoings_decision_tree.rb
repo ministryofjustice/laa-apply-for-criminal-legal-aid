@@ -15,7 +15,7 @@ module Decisions
       when :outgoings_more_than_income
         edit(:answers)
       when :answers
-        after_outgoings_more_than_income
+        after_answers
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -32,7 +32,7 @@ module Decisions
       end
     end
 
-    def after_outgoings_more_than_income
+    def after_answers
       if requires_full_capital
         edit('/steps/capital/property_type')
       else
