@@ -29,6 +29,8 @@ module Decisions
       when :dependants_finished
         determine_showing_no_income_page
       when :manage_without_income
+        edit(:answers)
+      when :answers
         determine_continuing_means_journey
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -43,7 +45,7 @@ module Decisions
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
+          edit(:answers)
         else
           edit(:income_before_tax)
         end
@@ -55,7 +57,7 @@ module Decisions
 
     def after_lost_job_in_custody
       if appeal_no_changes?
-        edit('/steps/evidence/upload')
+        edit(:answers)
       else
         edit(:income_before_tax)
       end
@@ -89,7 +91,7 @@ module Decisions
       if requires_full_means_assessment?
         edit(:client_has_dependants)
       else
-        determine_showing_no_income_page
+        edit(:answers)
       end
     end
 
@@ -97,7 +99,7 @@ module Decisions
       if form_object.client_has_dependants.yes?
         edit_dependants(add_blank: true)
       else
-        determine_showing_no_income_page
+        edit(:answers)
       end
     end
 
@@ -112,7 +114,7 @@ module Decisions
       if payments.empty?
         edit(:manage_without_income)
       else
-        determine_continuing_means_journey
+        edit(:answers)
       end
     end
 

@@ -54,6 +54,12 @@ module Summary
       outgoings: %i[
         housing_payments
         other_outgoings_details
+      ],
+      income: %i[
+        employment_details
+        income_details
+        other_income_details
+        dependants
       ]
     }.freeze
 
@@ -75,6 +81,12 @@ module Summary
 
     def outgoings_sections
       SECTIONS.fetch(:outgoings).map do |section|
+        Sections.const_get(section.to_s.camelize).new(crime_application)
+      end.select(&:show?)
+    end
+
+    def income_sections
+      SECTIONS.fetch(:income).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
     end
