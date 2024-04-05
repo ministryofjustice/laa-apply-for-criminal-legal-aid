@@ -50,8 +50,8 @@ module Summary
         other_capital_details
       ],
       outgoings: %i[
-        other_outgoings_details
         housing_payments
+        other_outgoings_details
       ]
     }.freeze
 
