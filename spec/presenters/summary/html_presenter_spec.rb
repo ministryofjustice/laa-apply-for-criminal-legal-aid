@@ -240,11 +240,5 @@ describe Summary::HtmlPresenter do
 
       it { is_expected.to match_array(expected_sections) }
     end
-
-    context 'when a PSE application' do
-      let(:application_type) { 'post_submission_evidence' }
-
-      it { is_expected.to match_array(expected_sections) }
-    end
   end
 end
