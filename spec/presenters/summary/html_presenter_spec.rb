@@ -218,4 +218,33 @@ describe Summary::HtmlPresenter do
       it { is_expected.to match_array(expected_sections) }
     end
   end
+
+  describe '#outgoings_sections' do
+    subject(:outgoings_sections) { presenter.outgoings_sections.map { |s| s.class.name.demodulize } }
+
+    before do
+      allow_any_instance_of(
+        Summary::Sections::BaseSection
+      ).to receive(:show?).and_return(true)
+    end
+
+    let(:crime_application) { database_application }
+
+    expected_sections = %w[
+      HousingPayments
+      OtherOutgoingsDetails
+    ]
+
+    context 'when an initial application' do
+      let(:application_type) { 'initial' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+
+    context 'when a PSE application' do
+      let(:application_type) { 'post_submission_evidence' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+  end
 end
