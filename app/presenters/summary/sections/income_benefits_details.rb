@@ -5,7 +5,7 @@ module Summary
         income.present? && super
       end
 
-      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
         if income_benefits.empty?
           [
             Components::ValueAnswer.new(
@@ -14,12 +14,6 @@ module Summary
             )
           ].flatten.select(&:show?)
         else
-          absent_payment_types = IncomeBenefitType.values.filter_map do |type|
-            type.value.to_s unless type.value == :none
-          end
-          reported_payment_types = income_benefits.map(&:payment_type)
-          absent_payment_types -= reported_payment_types
-
           [
             income_benefits.map do |payment|
               type = "steps-income-income-benefits-form-types-#{payment.payment_type.tr('_', '-')}-field"
@@ -43,7 +37,7 @@ module Summary
                 )
               end
             end,
-            absent_payment_types.map do |payment|
+            absent_benefit_types.map do |payment|
               type = "steps-income-income-benefits-form-types-#{payment.tr('_', '-')}-field"
 
               Components::FreeTextAnswer.new(
@@ -64,6 +58,14 @@ module Summary
 
       def income
         @income ||= crime_application.income
+      end
+
+      def absent_benefit_types
+        benefit_types = IncomeBenefitType.values.filter_map do |type|
+          type.value.to_s unless type.value == :none
+        end
+        reported_payment_types = income_benefits.map(&:payment_type)
+        benefit_types - reported_payment_types
       end
     end
   end
