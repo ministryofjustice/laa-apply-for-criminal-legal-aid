@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
       income: double, income_payments: [double], income_benefits: [double], outgoings: double,
-      documents: double, application_type: application_type, 
+      documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes'), savings: [double], investments: [double],
       national_savings_certificates: [double], properties: [double]
     )
