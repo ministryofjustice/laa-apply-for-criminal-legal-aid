@@ -42,7 +42,10 @@ module Decisions
     end
 
     def requires_nino?
-      applicant.benefit_type.present? && applicant.has_nino == 'no' &&
+      return false if current_crime_application.not_means_tested?
+
+      applicant.benefit_type != 'none' &&
+        applicant.has_nino == 'no' &&
         current_crime_application.case.is_client_remanded == 'no'
     end
 

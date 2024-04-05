@@ -37,10 +37,12 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     let(:step_name) { :review }
     let(:benefit_type) { nil }
     let(:is_client_remanded) { YesNoAnswer::YES.to_s }
+    let(:not_means_tested) { false }
 
     before do
       allow(applicant).to receive_messages(has_nino:, benefit_type:)
       allow(kase).to receive_messages(is_client_remanded:)
+      allow(crime_application).to receive_messages(not_means_tested?: not_means_tested)
     end
 
     context 'when nino not provided and is required to submit' do
