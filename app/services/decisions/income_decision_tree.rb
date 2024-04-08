@@ -31,12 +31,17 @@ module Decisions
       when :manage_without_income
         edit(:answers)
       when :answers
-        routes = Rails.application.routes.url_helpers
+        step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
-          routes.edit_steps_income_employment_status_path(crime_application),
-          routes.edit_steps_income_lost_job_in_custody_path(crime_application)
+          step_path.edit_steps_income_employment_status_path(crime_application),
+          step_path.edit_steps_income_lost_job_in_custody_path(crime_application)
         ]
           continuing_evidence_upload
+        elsif previous_step_path.in? [
+          step_path.edit_steps_income_income_benefits_path(crime_application),
+          step_path.edit_steps_income_client_has_dependants_path(crime_application)
+        ]
+          determine_showing_no_income_page
         else
           determine_continuing_means_journey
         end
