@@ -33,15 +33,10 @@ module Decisions
       when :answers
         step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
-          step_path.edit_steps_income_employment_status_path(crime_application),
-          step_path.edit_steps_income_lost_job_in_custody_path(crime_application)
+          step_path.edit_steps_income_employment_status_path(id: crime_application.id),
+          step_path.edit_steps_income_lost_job_in_custody_path(id: crime_application.id)
         ]
           continuing_evidence_upload
-        elsif previous_step_path.in? [
-          step_path.edit_steps_income_income_benefits_path(crime_application),
-          step_path.edit_steps_income_client_has_dependants_path(crime_application)
-        ]
-          determine_showing_no_income_page
         else
           determine_continuing_means_journey
         end
@@ -63,7 +58,6 @@ module Decisions
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         elsif appeal_no_changes?
-          # edit('/steps/evidence/upload')
           edit(:answers)
         else
           edit(:income_before_tax)
@@ -76,7 +70,6 @@ module Decisions
 
     def after_lost_job_in_custody
       if appeal_no_changes?
-        # edit('/steps/evidence/upload')
         edit(:answers)
       else
         edit(:income_before_tax)
