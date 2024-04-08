@@ -114,7 +114,6 @@ Rails.application.routes.draw do
         edit_step :benefit_type
         show_step :benefit_exit
         edit_step :benefit_check_result
-        edit_step :retry_benefit_check
         edit_step :cannot_check_benefit_status
         edit_step :has_benefit_evidence
         show_step :evidence_exit

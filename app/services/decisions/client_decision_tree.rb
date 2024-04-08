@@ -2,7 +2,7 @@ module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :is_means_tested
@@ -23,8 +23,6 @@ module Decisions
         after_has_nino
       when :benefit_type
         after_benefit_type
-      when :retry_benefit_check
-        determine_dwp_result_page
       when :benefit_check_result, :has_benefit_evidence
         edit('/steps/case/urn')
       when :cannot_check_benefit_status
@@ -33,7 +31,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -123,7 +121,7 @@ module Decisions
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit(:retry_benefit_check)
+        edit('steps/dwp/cannot_check_dwp_status')
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else

@@ -48,4 +48,11 @@ RSpec.describe Decisions::DWPDecisionTree do
       it { is_expected.to have_destination('steps/client/details', :edit, id: crime_application) }
     end
   end
+
+  context 'when the step is `cannot_check_dwp_status`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :cannot_check_dwp_status }
+
+    it { is_expected.to have_destination('steps/client/has_benefit_evidence', :edit, id: crime_application) }
+  end
 end
