@@ -137,6 +137,27 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       let(:case_type) { 'indictable' }
 
       context 'has correct next step' do
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when case_type does not require full capital assessment' do
+      let(:case_type) { 'summary_only' }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `answers`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :answers }
+
+    context 'when case_type requires full capital assessment' do
+      let(:case_type) { 'indictable' }
+
+      context 'has correct next step' do
         it { is_expected.to have_destination('/steps/capital/property_type', :edit, id: crime_application) }
       end
     end

@@ -315,6 +315,11 @@ en:
         edit:
           page_title: Are your client’s outgoings more than their income?
           outgoings_more_than_income: Are your client’s outgoings more than their income?
+      answers:
+        edit:
+          page_title: Check your answers - Your client's outgoings
+          heading: Check your answers
+          subheading: Your client’s outgoings
 
     capital:
       caption: Capital assessment
