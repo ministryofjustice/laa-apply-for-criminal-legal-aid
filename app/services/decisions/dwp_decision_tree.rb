@@ -6,6 +6,8 @@ module Decisions
         after_confirm_result
       when :confirm_details
         after_confirm_details
+      when :cannot_check_dwp_status
+        after_confirm_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end

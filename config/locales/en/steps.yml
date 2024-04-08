@@ -108,6 +108,10 @@ en:
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application
+      cannot_check_dwp_status:
+        edit:
+          page_title: Sorry, we cannot check your client’s information with DWP
+          heading: Sorry, we cannot check your client’s information with DWP
 
     address:
       lookup:

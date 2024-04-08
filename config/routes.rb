@@ -125,6 +125,7 @@ Rails.application.routes.draw do
         edit_step :confirm_result
         edit_step :confirm_details
         show_step :benefit_check_result_exit
+        edit_step :cannot_check_dwp_status
       end
 
       namespace :address do
