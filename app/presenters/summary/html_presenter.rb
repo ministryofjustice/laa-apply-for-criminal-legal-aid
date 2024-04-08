@@ -48,6 +48,10 @@ module Summary
         investments
         trust_fund
         other_capital_details
+      ],
+      outgoings: %i[
+        housing_payments
+        other_outgoings_details
       ]
     }.freeze
 
@@ -63,6 +67,12 @@ module Summary
 
     def capital_sections
       SECTIONS.fetch(:capital).map do |section|
+        Sections.const_get(section.to_s.camelize).new(crime_application)
+      end.select(&:show?)
+    end
+
+    def outgoings_sections
+      SECTIONS.fetch(:outgoings).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
     end
