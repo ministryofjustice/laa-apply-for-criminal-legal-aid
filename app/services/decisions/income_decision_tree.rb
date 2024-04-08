@@ -111,7 +111,7 @@ module Decisions
       if requires_full_means_assessment?
         edit(:client_has_dependants)
       else
-        edit(:answers)
+        determine_showing_no_income_page
       end
     end
 
@@ -119,7 +119,7 @@ module Decisions
       if form_object.client_has_dependants.yes?
         edit_dependants(add_blank: true)
       else
-        edit(:answers)
+        determine_showing_no_income_page
       end
     end
 

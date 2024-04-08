@@ -68,7 +68,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         context 'when case_type is appeal no changes' do
           let(:case_type) { 'appeal_to_crown_court' }
 
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+          it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
         end
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when case_type is appeal no changes' do
       let(:case_type) { 'appeal_to_crown_court' }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
@@ -225,7 +225,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when there are payments' do
         let(:income_payments) { [{ amount: 1234 }] }
 
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
   end
@@ -264,7 +264,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:client_owns_property) { YesNoAnswer::NO.to_s }
         let(:has_savings) { YesNoAnswer::NO.to_s }
 
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
 
@@ -347,7 +347,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
       let(:has_savings) { YesNoAnswer::NO.to_s }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
@@ -379,7 +379,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
       let(:has_savings) { YesNoAnswer::NO.to_s }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 end
