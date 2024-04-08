@@ -232,7 +232,7 @@ describe Summary::Sections::IncomePaymentsDetails do
           expect(answers[3]).to be_an_instance_of(rows[3][0])
           expect(answers[3].question).to eq(rows[3][1])
           expect(answers[3].value.amount).to eq(rows[3][2])
-          expect(answers[2].value.frequency).to eq('month')
+          expect(answers[3].value.frequency).to eq('month')
           expect(answers[3].change_path)
             .to match(path + rows[3][3])
 
@@ -298,21 +298,6 @@ describe Summary::Sections::IncomePaymentsDetails do
         let(:rows) {
           [
             [
-              Summary::Components::PaymentAnswer,
-              'student_loan_grant_payment', 300,
-              '#steps-income-income-payments-form-types-student-loan-grant-field'
-            ],
-            [
-              Summary::Components::PaymentAnswer,
-              'financial_support_with_access_payment', 300,
-              '#steps-income-income-payments-form-types-financial-support-with-access-field'
-            ],
-            [
-              Summary::Components::PaymentAnswer,
-              'from_friends_relatives_payment', 300,
-              '#steps-income-income-payments-form-types-from-friends-relatives-field'
-            ],
-            [
               Summary::Components::FreeTextAnswer,
               'maintenance_payment', 'Does not get',
               '#steps-income-income-payments-form-types-maintenance-field'
@@ -333,6 +318,11 @@ describe Summary::Sections::IncomePaymentsDetails do
               '#steps-income-income-payments-form-types-interest-investment-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
+              'student_loan_grant_payment', 300,
+              '#steps-income-income-payments-form-types-student-loan-grant-field'
+            ],
+            [
               Summary::Components::FreeTextAnswer,
               'board_from_family_payment', 'Does not get',
               '#steps-income-income-payments-form-types-board-from-family-field'
@@ -341,6 +331,16 @@ describe Summary::Sections::IncomePaymentsDetails do
               Summary::Components::FreeTextAnswer,
               'rent_payment', 'Does not get',
               '#steps-income-income-payments-form-types-rent-field'
+            ],
+            [
+              Summary::Components::PaymentAnswer,
+              'financial_support_with_access_payment', 300,
+              '#steps-income-income-payments-form-types-financial-support-with-access-field'
+            ],
+            [
+              Summary::Components::PaymentAnswer,
+              'from_friends_relatives_payment', 300,
+              '#steps-income-income-payments-form-types-from-friends-relatives-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
@@ -357,22 +357,19 @@ describe Summary::Sections::IncomePaymentsDetails do
 
           expect(answers[0]).to be_an_instance_of(rows[0][0])
           expect(answers[0].question).to eq(rows[0][1])
-          expect(answers[0].value.amount).to eq(rows[0][2])
-          expect(answers[0].value.frequency).to eq('month')
+          expect(answers[0].value).to eq(rows[0][2])
           expect(answers[0].change_path)
             .to match(path + rows[0][3])
 
           expect(answers[1]).to be_an_instance_of(rows[1][0])
           expect(answers[1].question).to eq(rows[1][1])
-          expect(answers[1].value.amount).to eq(rows[1][2])
-          expect(answers[1].value.frequency).to eq('month')
+          expect(answers[1].value).to eq(rows[1][2])
           expect(answers[1].change_path)
             .to match(path + rows[1][3])
 
           expect(answers[2]).to be_an_instance_of(rows[2][0])
           expect(answers[2].question).to eq(rows[2][1])
-          expect(answers[2].value.amount).to eq(rows[2][2])
-          expect(answers[2].value.frequency).to eq('month')
+          expect(answers[2].value).to eq(rows[2][2])
           expect(answers[2].change_path)
             .to match(path + rows[2][3])
 
@@ -384,7 +381,8 @@ describe Summary::Sections::IncomePaymentsDetails do
 
           expect(answers[4]).to be_an_instance_of(rows[4][0])
           expect(answers[4].question).to eq(rows[4][1])
-          expect(answers[4].value).to eq(rows[4][2])
+          expect(answers[4].value.amount).to eq(rows[4][2])
+          expect(answers[4].value.frequency).to eq('month')
           expect(answers[4].change_path)
             .to match(path + rows[4][3])
 
@@ -393,6 +391,32 @@ describe Summary::Sections::IncomePaymentsDetails do
           expect(answers[5].value).to eq(rows[5][2])
           expect(answers[5].change_path)
             .to match(path + rows[5][3])
+
+          expect(answers[6]).to be_an_instance_of(rows[6][0])
+          expect(answers[6].question).to eq(rows[6][1])
+          expect(answers[6].value).to eq(rows[6][2])
+          expect(answers[6].change_path)
+            .to match(path + rows[6][3])
+
+          expect(answers[7]).to be_an_instance_of(rows[7][0])
+          expect(answers[7].question).to eq(rows[7][1])
+          expect(answers[7].value.amount).to eq(rows[7][2])
+          expect(answers[7].value.frequency).to eq('month')
+          expect(answers[7].change_path)
+            .to match(path + rows[7][3])
+
+          expect(answers[8]).to be_an_instance_of(rows[8][0])
+          expect(answers[8].question).to eq(rows[8][1])
+          expect(answers[8].value.amount).to eq(rows[8][2])
+          expect(answers[8].value.frequency).to eq('month')
+          expect(answers[8].change_path)
+            .to match(path + rows[8][3])
+
+          expect(answers[9]).to be_an_instance_of(rows[9][0])
+          expect(answers[9].question).to eq(rows[9][1])
+          expect(answers[9].value).to eq(rows[9][2])
+          expect(answers[9].change_path)
+            .to match(path + rows[9][3])
         end
       end
 

@@ -209,16 +209,6 @@ describe Summary::Sections::IncomeBenefitsDetails do
         let(:rows) {
           [
             [
-              Summary::Components::PaymentAnswer,
-              'incapacity_benefit', 100,
-              '#steps-income-income-benefits-form-types-incapacity-field'
-            ],
-            [
-              Summary::Components::PaymentAnswer,
-              'jsa_benefit', 100,
-              '#steps-income-income-benefits-form-types-jsa-field'
-            ],
-            [
               Summary::Components::FreeTextAnswer,
               'child_benefit',
               'Does not get',
@@ -231,10 +221,20 @@ describe Summary::Sections::IncomeBenefitsDetails do
               '#steps-income-income-benefits-form-types-working-or-child-tax-credit-field'
             ],
             [
+              Summary::Components::PaymentAnswer,
+              'incapacity_benefit', 100,
+              '#steps-income-income-benefits-form-types-incapacity-field'
+            ],
+            [
               Summary::Components::FreeTextAnswer,
               'industrial_injuries_disablement_benefit',
               'Does not get',
               '#steps-income-income-benefits-form-types-industrial-injuries-disablement-field'
+            ],
+            [
+              Summary::Components::PaymentAnswer,
+              'jsa_benefit', 100,
+              '#steps-income-income-benefits-form-types-jsa-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
@@ -252,21 +252,20 @@ describe Summary::Sections::IncomeBenefitsDetails do
 
           expect(answers[0]).to be_an_instance_of(rows[0][0])
           expect(answers[0].question).to eq(rows[0][1])
-          expect(answers[0].value.amount).to eq(rows[0][2])
-          expect(answers[0].value.frequency).to eq('week')
+          expect(answers[0].value).to eq(rows[0][2])
           expect(answers[0].change_path)
             .to match(path + rows[0][3])
 
           expect(answers[1]).to be_an_instance_of(rows[1][0])
           expect(answers[1].question).to eq(rows[1][1])
-          expect(answers[1].value.amount).to eq(rows[1][2])
-          expect(answers[1].value.frequency).to eq('week')
+          expect(answers[1].value).to eq(rows[1][2])
           expect(answers[1].change_path)
             .to match(path + rows[1][3])
 
           expect(answers[2]).to be_an_instance_of(rows[2][0])
           expect(answers[2].question).to eq(rows[2][1])
-          expect(answers[2].value).to eq(rows[2][2])
+          expect(answers[2].value.amount).to eq(rows[2][2])
+          expect(answers[2].value.frequency).to eq('week')
           expect(answers[2].change_path)
             .to match(path + rows[2][3])
 
@@ -278,7 +277,8 @@ describe Summary::Sections::IncomeBenefitsDetails do
 
           expect(answers[4]).to be_an_instance_of(rows[4][0])
           expect(answers[4].question).to eq(rows[4][1])
-          expect(answers[4].value).to eq(rows[4][2])
+          expect(answers[4].value.amount).to eq(rows[4][2])
+          expect(answers[4].value.frequency).to eq('week')
           expect(answers[4].change_path)
             .to match(path + rows[4][3])
 

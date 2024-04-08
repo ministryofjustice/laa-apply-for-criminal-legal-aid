@@ -1,71 +1,30 @@
 module Summary
   module Sections
-    class IncomePaymentsDetails < Sections::BaseSection
-      def show?
-        income.present? && super
-      end
-
-      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
-        if income_payments.empty?
-          [
-            Components::ValueAnswer.new(
-              :which_payments, 'none',
-              change_path: edit_steps_income_income_payments_path
-            )
-          ].flatten.select(&:show?)
-        else
-          [
-            income_payments.map do |payment|
-              type = "steps-income-income-payments-form-types-#{payment.payment_type.tr('_', '-')}-field"
-
-              if payment.payment_type == 'other'
-                [Components::PaymentAnswer.new(
-                  "#{payment.payment_type}_payment", payment,
-                  show: true,
-                  change_path: edit_steps_income_income_payments_path(anchor: type)
-                ),
-                 Components::FreeTextAnswer.new(
-                   :other_payment_details, payment.metadata['details'],
-                   show: payment.payment_type == 'other',
-                   change_path: edit_steps_income_income_payments_path(anchor: type)
-                 )]
-              else
-                Components::PaymentAnswer.new(
-                  "#{payment.payment_type}_payment", payment,
-                  show: true,
-                  change_path: edit_steps_income_income_payments_path(anchor: type)
-                )
-              end
-            end,
-            absent_payment_types.map do |payment|
-              type = "steps-income-income-payments-form-types-#{payment.tr('_', '-')}-field"
-
-              Components::FreeTextAnswer.new(
-                "#{payment}_payment",
-                I18n.t('summary.does_not_get'),
-                change_path: edit_steps_income_income_payments_path(anchor: type)
-              )
-            end
-          ].flatten.select(&:show?)
-        end
-      end
-
+    class IncomePaymentsDetails < Sections::PaymentDetails
       private
 
-      def income_payments
-        @income_payments ||= crime_application.income_payments
+      def payments
+        @payments ||= crime_application.income_payments
       end
 
-      def income
-        @income ||= crime_application.income
+      def edit_path
+        edit_steps_income_income_payments_path
       end
 
-      def absent_payment_types
-        payment_types = IncomePaymentType.values.filter_map do |type|
-          type.value.to_s unless type.value == :none
-        end
-        reported_payment_types = income_payments.map(&:payment_type)
-        payment_types - reported_payment_types
+      def question
+        :which_payments
+      end
+
+      def anchor_prefix
+        '#steps-income-income-payments-form-types-'
+      end
+
+      def type_suffix
+        '_payment'
+      end
+
+      def payment_types
+        LaaCrimeSchemas::Types::IncomePaymentType.values
       end
     end
   end
