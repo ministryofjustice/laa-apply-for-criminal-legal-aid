@@ -16,7 +16,7 @@ feature_flags:
     staging: true
     production: true
   means_journey:
-    local: false
+    local: true
     staging: true
     production: false
   post_submission_evidence:
