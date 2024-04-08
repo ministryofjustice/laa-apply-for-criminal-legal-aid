@@ -33,9 +33,9 @@ module Decisions
       when :answers
         routes = Rails.application.routes.url_helpers
         if previous_step_path.in? [
-                                    routes.edit_steps_income_employment_status_path(crime_application),
-                                    routes.edit_steps_income_lost_job_in_custody_path(crime_application)
-                                  ]
+          routes.edit_steps_income_employment_status_path(crime_application),
+          routes.edit_steps_income_lost_job_in_custody_path(crime_application)
+        ]
           continuing_evidence_upload
         else
           determine_continuing_means_journey
