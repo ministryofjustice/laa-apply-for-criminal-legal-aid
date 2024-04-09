@@ -115,7 +115,7 @@ en:
           attributes:
             has_benefit_evidence:
               inclusion: Select yes if you have evidence of your client's benefit
-        steps/client/cannot_check_benefit_status_form:
+        steps/client/cannot_check_benefit_status_form: &WILL_ENTER_NINO_VALIDATION
           attributes:
             will_enter_nino:
               inclusion: Select whether you will enter the National Insurance number now or later
@@ -725,3 +725,4 @@ en:
             # fulfillment validation errors
             crime_application:
               invalid: Some application details are missing
+        steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
