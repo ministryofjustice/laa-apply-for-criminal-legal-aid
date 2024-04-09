@@ -425,7 +425,11 @@ en:
         absence_answer: '' 
       sort_code:
         question: What is the sort code or branch name?
-        absence_answer: '' 
+        absence_answer: ''
+      has_capital_savings:
+        question: Which savings does your client have inside or outside the UK?
+        answers:
+          'no': My client does not have any of these savings
       # END saving
       #
       # START premium_bonds
@@ -450,6 +454,10 @@ en:
         question: Whose name is the investment in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: ''
+      has_investments:
+        question: Which investments does your client have inside or outside the UK?
+        answers:
+          'no': My client does not have any of these investments
       # END investments
 
       # START national_savings_certificates
@@ -465,7 +473,11 @@ en:
       national_savings_certificate_ownership_type: 
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
-        absence_answer: '' 
+        absence_answer: ''
+      has_national_savings_certificate:
+        question: Does your client have any National Savings Certificates?
+        answers:
+          <<: *YESNO
       # END national_savings_certificates
 
       # BEGIN property, address and owners
@@ -514,6 +526,10 @@ en:
       percentage_owned:
         question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
+      has_assets:
+        question: Which assets does your client own or part-own inside or outside the UK?
+        answers:
+          'no': My client does not own any of these assets
       # END property, address and owners
 
       # START trust_fund

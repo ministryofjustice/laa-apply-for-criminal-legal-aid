@@ -9,7 +9,7 @@ describe Summary::HtmlPresenter do
 
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
+      CrimeApplication, applicant: double, case: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: double, outgoings: double, documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes'), savings: [double], investments: [double],
       national_savings_certificates: [double], properties: [double]
@@ -58,6 +58,7 @@ describe Summary::HtmlPresenter do
         }
       },
       'application_type' => application_type,
+      'case_details' => { 'case_type' => 'either_way' }
     }
 
     JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
