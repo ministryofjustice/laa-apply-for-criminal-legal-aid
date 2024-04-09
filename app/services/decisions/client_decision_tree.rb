@@ -23,7 +23,7 @@ module Decisions
         after_has_nino
       when :benefit_type
         after_benefit_type
-      when :benefit_check_result, :has_benefit_evidence
+      when :benefit_check_result
         edit('/steps/case/urn')
       when :has_benefit_evidence
         after_has_benefit_evidence
