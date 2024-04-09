@@ -23,8 +23,6 @@ module Decisions
         after_has_nino
       when :benefit_type
         after_benefit_type
-      when :retry_benefit_check
-        determine_dwp_result_page
       when :benefit_check_result
         edit('/steps/case/urn')
       when :has_benefit_evidence
@@ -133,7 +131,7 @@ module Decisions
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit(:retry_benefit_check)
+        edit('steps/dwp/cannot_check_dwp_status')
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else

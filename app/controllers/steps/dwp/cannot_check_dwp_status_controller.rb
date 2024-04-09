@@ -1,12 +1,12 @@
 module Steps
-  module Client
-    class RetryBenefitCheckController < Steps::ClientStepController
+  module DWP
+    class CannotCheckDWPStatusController < Steps::DWPStepController
       include Steps::NoOpAdvanceStep
 
       private
 
       def advance_as
-        :retry_benefit_check
+        :cannot_check_dwp_status
       end
     end
   end
