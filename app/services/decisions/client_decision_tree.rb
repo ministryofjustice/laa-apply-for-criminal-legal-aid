@@ -2,7 +2,7 @@ module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
       when :is_means_tested
@@ -33,7 +33,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
