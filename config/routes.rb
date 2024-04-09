@@ -114,7 +114,6 @@ Rails.application.routes.draw do
         edit_step :benefit_type
         show_step :benefit_exit
         edit_step :benefit_check_result
-        edit_step :retry_benefit_check
         edit_step :cannot_check_benefit_status
         edit_step :has_benefit_evidence
         show_step :evidence_exit
@@ -125,6 +124,7 @@ Rails.application.routes.draw do
         edit_step :confirm_result
         edit_step :confirm_details
         show_step :benefit_check_result_exit
+        edit_step :cannot_check_dwp_status
       end
 
       namespace :address do
@@ -163,6 +163,7 @@ Rails.application.routes.draw do
         edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
         edit_step :which_payments_does_client_get, alias: :income_payments
         edit_step :which_benefits_does_client_get, alias: :income_benefits
+        edit_step :check_your_answers_income, alias: :answers
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
@@ -220,6 +221,7 @@ Rails.application.routes.draw do
         edit_step :declaration
         edit_step :failure
         show_step :confirmation
+        edit_step :cannot_submit_without_nino
       end
     end
   end

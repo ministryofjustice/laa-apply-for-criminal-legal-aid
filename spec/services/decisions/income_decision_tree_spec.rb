@@ -68,7 +68,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         context 'when case_type is appeal no changes' do
           let(:case_type) { 'appeal_to_crown_court' }
 
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+          it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
         end
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when case_type is appeal no changes' do
       let(:case_type) { 'appeal_to_crown_court' }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
@@ -225,7 +225,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when there are payments' do
         let(:income_payments) { [{ amount: 1234 }] }
 
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
   end
@@ -264,7 +264,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:client_owns_property) { YesNoAnswer::NO.to_s }
         let(:has_savings) { YesNoAnswer::NO.to_s }
 
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
 
@@ -347,7 +347,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
       let(:has_savings) { YesNoAnswer::NO.to_s }
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
   end
 
@@ -370,7 +370,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
       let(:has_savings) { YesNoAnswer::NO.to_s }
 
-      it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
 
     context 'when full means assessment does not need completing' do
@@ -379,7 +379,63 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
       let(:has_savings) { YesNoAnswer::NO.to_s }
 
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `answers`' do
+    before do
+      allow(crime_application).to receive(:navigation_stack).and_return(navigation_stack)
+    end
+
+    let(:form_object) { double('FormObject') }
+    let(:destination_url) {
+      Rails.application.routes.url_helpers.edit_steps_income_answers_path(id: crime_application.id)
+    }
+    let(:step_name) { :answers }
+    let(:navigation_stack) {
+      [
+        source_url,
+        destination_url
+      ]
+    }
+
+    context "when source is 'employment_status' path" do
+      let(:source_url) {
+        Rails.application.routes.url_helpers.edit_steps_income_employment_status_path(id: crime_application.id)
+      }
+
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+
+    context "when source is 'lost_job_in_custody' path" do
+      let(:source_url) {
+        Rails.application.routes.url_helpers.edit_steps_income_lost_job_in_custody_path(id: crime_application.id)
+      }
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+
+    context "when source is 'manage_without_income'" do
+      before do
+        allow(subject).to receive(:requires_full_means_assessment?).and_return(requires_full_means_assessment)
+      end
+
+      let(:source_url) {
+        Rails.application.routes.url_helpers.edit_steps_income_manage_without_income_path(crime_application)
+      }
+
+      context 'when full means assessment needs completing' do
+        let(:requires_full_means_assessment) { true }
+
+        it { is_expected.to have_destination('/steps/outgoings/housing_payment_type', :edit, id: crime_application) }
+      end
+
+      context 'when full means assessment does not needs completing' do
+        let(:requires_full_means_assessment) { false }
+
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      end
     end
   end
 end

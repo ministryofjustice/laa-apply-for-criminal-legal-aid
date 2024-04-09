@@ -29,7 +29,17 @@ module Decisions
       when :dependants_finished
         determine_showing_no_income_page
       when :manage_without_income
-        determine_continuing_means_journey
+        edit(:answers)
+      when :answers
+        step_path = Rails.application.routes.url_helpers
+        if previous_step_path.in? [
+          step_path.edit_steps_income_employment_status_path(id: crime_application.id),
+          step_path.edit_steps_income_lost_job_in_custody_path(id: crime_application.id)
+        ]
+          continuing_evidence_upload
+        else
+          determine_continuing_means_journey
+        end
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -38,12 +48,17 @@ module Decisions
 
     private
 
+    def previous_step_path
+      # Second to last element in the array, will be nil for arrays of size 0 or 1
+      current_crime_application&.navigation_stack&.slice(-2) || root_path
+    end
+
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
+          edit(:answers)
         else
           edit(:income_before_tax)
         end
@@ -55,7 +70,7 @@ module Decisions
 
     def after_lost_job_in_custody
       if appeal_no_changes?
-        edit('/steps/evidence/upload')
+        edit(:answers)
       else
         edit(:income_before_tax)
       end
@@ -112,7 +127,7 @@ module Decisions
       if payments.empty?
         edit(:manage_without_income)
       else
-        determine_continuing_means_journey
+        edit(:answers)
       end
     end
 
@@ -170,6 +185,10 @@ module Decisions
       else
         edit('/steps/evidence/upload')
       end
+    end
+
+    def continuing_evidence_upload
+      edit('/steps/evidence/upload')
     end
   end
 end

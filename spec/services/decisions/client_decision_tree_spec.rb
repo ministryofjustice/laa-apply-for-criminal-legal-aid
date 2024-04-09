@@ -343,7 +343,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         context 'has correct next step' do
           let(:passporting_benefit) { nil }
 
-          it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+          it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
         end
       end
     end
@@ -353,7 +353,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       let(:benefit_check_passported) { false }
       let(:has_nino) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination(:retry_benefit_check, :edit, id: crime_application) }
+      it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
 
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
@@ -365,19 +365,33 @@ RSpec.describe Decisions::ClientDecisionTree do
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `has_benefit_evidence`' do
-    let(:form_object) { double('FormObject', applicant:) }
+    let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }
     let(:step_name) { :has_benefit_evidence }
+    let(:feature_flag_means_journey_enabled) { true }
 
-    it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-  end
+    before do
+      allow(FeatureFlags).to receive(:means_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
+      }
+    end
 
-  context 'when the step is `retry_benefit_check`' do
-    let(:form_object) { double('FormObject') }
-    let(:step_name) { :retry_benefit_check }
+    context 'and the answer is `yes`' do
+      let(:has_benefit_evidence) { YesNoAnswer::YES }
 
-    it 'runs the `determine_dwp_result_page` logic' do
-      expect(subject).to receive(:determine_dwp_result_page)
-      subject.destination
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'and the answer is `no`' do
+      let(:has_benefit_evidence) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'and the answer is `no` for a non means tested application' do
+      let(:feature_flag_means_journey_enabled) { false }
+      let(:has_benefit_evidence) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:evidence_exit, :show, id: crime_application) }
     end
   end
 

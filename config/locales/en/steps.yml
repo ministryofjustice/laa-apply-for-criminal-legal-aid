@@ -77,13 +77,6 @@ en:
       evidence_exit:
         show:
           page_title: Use eForms for this application
-      retry_benefit_check:
-        edit:
-          page_title: Unable to connect to DWP
-          heading: Sorry there was a problem connecting to DWP
-          explanation: We cannot connect to the DWP service to check if your client receives a passporting benefit.
-          use_eforms: You can try again later, or use eforms which will allow you to self-certify that your client does receive a passporting benefit.
-          saved_answers: We have saved your answers.
       cannot_check_benefit_status:
         edit:
           page_title: Cannot check benefit status
@@ -108,6 +101,10 @@ en:
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application
+      cannot_check_dwp_status:
+        edit:
+          page_title: Sorry, we cannot check your client’s information with DWP
+          heading: Sorry, we cannot check your client’s information with DWP
 
     address:
       lookup:
@@ -285,6 +282,11 @@ en:
       manage_without_income:
         edit:
           page_title: How does client manage with no income?
+      answers:
+        edit:
+          page_title: Check your answers - Your client's income
+          heading: Check your answers
+          subheading: Your client’s income
 
     outgoings:
       caption: Outgoings assessment
@@ -575,6 +577,10 @@ en:
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence
+      cannot_submit_without_nino:
+        edit:
+          page_title: Cannot submit application without National Insurance number
+          heading: You cannot submit this application yet, as we cannot check your client's benefit status without their National Insurance number
 
 
       failure:

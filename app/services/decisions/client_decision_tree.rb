@@ -23,10 +23,10 @@ module Decisions
         after_has_nino
       when :benefit_type
         after_benefit_type
-      when :retry_benefit_check
-        determine_dwp_result_page
-      when :benefit_check_result, :has_benefit_evidence
+      when :benefit_check_result
         edit('/steps/case/urn')
+      when :has_benefit_evidence
+        after_has_benefit_evidence
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
       else
@@ -117,13 +117,21 @@ module Decisions
       end
     end
 
+    def after_has_benefit_evidence
+      if form_object.has_benefit_evidence.yes? || FeatureFlags.means_journey.enabled?
+        edit('/steps/case/urn')
+      else
+        show(:evidence_exit)
+      end
+    end
+
     def determine_dwp_result_page
       return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
 
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit(:retry_benefit_check)
+        edit('steps/dwp/cannot_check_dwp_status')
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else

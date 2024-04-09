@@ -1,0 +1,25 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <div class="govuk-!-margin-bottom-6">
+        <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
+
+        <p class="govuk-body">
+          You can do one of the following:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>continue with this application to upload supporting evidence</li>
+          <li>save and come back later to try again</li>
+        </ul>
+    </div>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
