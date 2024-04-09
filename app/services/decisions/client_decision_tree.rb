@@ -25,6 +25,8 @@ module Decisions
         after_benefit_type
       when :benefit_check_result, :has_benefit_evidence
         edit('/steps/case/urn')
+      when :has_benefit_evidence
+        after_has_benefit_evidence
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
       else
@@ -112,6 +114,14 @@ module Decisions
         edit(:cannot_check_benefit_status)
       else
         determine_dwp_result_page
+      end
+    end
+
+    def after_has_benefit_evidence
+      if form_object.has_benefit_evidence.yes? || FeatureFlags.means_journey.enabled?
+        edit('/steps/case/urn')
+      else
+        show(:evidence_exit)
       end
     end
 
