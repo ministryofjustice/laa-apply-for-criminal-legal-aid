@@ -137,6 +137,7 @@ describe Summary::Sections::HousingPayments do
         expect(answers[2].change_path)
           .to match('applications/12345/steps/outgoings/does_client_pay_council_tax')
         expect(answers[2].value.amount).to eq(6666)
+        expect(answers[2].value.frequency).to eq('annual')
       end
     end
 
@@ -241,12 +242,14 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1].change_path)
           .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
         expect(answers[1].value.amount).to eq('800.00')
+        expect(answers[2].value.frequency.value).to eq(:month)
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[2].question).to eq(:food_amount)
         expect(answers[2].change_path)
           .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
         expect(answers[2].value.amount).to eq('50.00')
+        expect(answers[2].value.frequency.value).to eq(:month)
 
         expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[3].question).to eq(:payee_name)
