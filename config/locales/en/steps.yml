@@ -282,6 +282,11 @@ en:
       manage_without_income:
         edit:
           page_title: How does client manage with no income?
+      answers:
+        edit:
+          page_title: Check your answers - Your client's income
+          heading: Check your answers
+          subheading: Your client’s income
 
     outgoings:
       caption: Outgoings assessment

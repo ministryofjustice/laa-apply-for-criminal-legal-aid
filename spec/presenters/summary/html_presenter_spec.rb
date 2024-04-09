@@ -258,4 +258,31 @@ describe Summary::HtmlPresenter do
       it { is_expected.to match_array(expected_sections) }
     end
   end
+
+  describe '#income_sections' do
+    subject(:income_sections) { presenter.income_sections.map { |s| s.class.name.demodulize } }
+
+    before do
+      allow_any_instance_of(
+        Summary::Sections::BaseSection
+      ).to receive(:show?).and_return(true)
+    end
+
+    let(:crime_application) { database_application }
+
+    expected_sections = %w[
+      EmploymentDetails
+      IncomeDetails
+      IncomePaymentsDetails
+      IncomeBenefitsDetails
+      Dependants
+      OtherIncomeDetails
+    ]
+
+    context 'when an initial application' do
+      let(:application_type) { 'initial' }
+
+      it { is_expected.to match_array(expected_sections) }
+    end
+  end
 end
