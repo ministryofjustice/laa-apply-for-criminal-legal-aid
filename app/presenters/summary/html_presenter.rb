@@ -58,8 +58,10 @@ module Summary
       income: %i[
         employment_details
         income_details
-        other_income_details
+        income_payments_details
+        income_benefits_details
         dependants
+        other_income_details
       ]
     }.freeze
 
