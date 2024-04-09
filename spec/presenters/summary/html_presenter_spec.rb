@@ -10,7 +10,8 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: double, case: double, ioj: double, status: :in_progress,
-      income: double, outgoings: double, documents: double, application_type: application_type,
+      income: double, income_payments: [double], income_benefits: [double], outgoings: double,
+      documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes'), savings: [double], investments: [double],
       national_savings_certificates: [double], properties: [double]
     )
@@ -19,6 +20,18 @@ describe Summary::HtmlPresenter do
   let(:datastore_application) do
     extra = {
       'means_details' => {
+        'income_details' => {
+          'income_payments' => [{
+            'payment_type' => 'maintenance',
+            'amount' => 10_000,
+            'frequency' => 'week'
+          }],
+          'income_benefits' => [{
+            'payment_type' => 'child',
+            'amount' => 50_000,
+            'frequency' => 'month'
+          }]
+        },
         'capital_details' => {
           'savings' => [{ 'saving_type' => 'bank',
                           'provider_name' => 'Test Bank',
@@ -93,6 +106,8 @@ describe Summary::HtmlPresenter do
             EmploymentDetails
             IncomeDetails
             Dependants
+            IncomePaymentsDetails
+            IncomeBenefitsDetails
             OtherIncomeDetails
             HousingPayments
             OtherOutgoingsDetails
@@ -128,6 +143,8 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            IncomePaymentsDetails
+            IncomeBenefitsDetails
             Dependants
             OtherIncomeDetails
             HousingPayments
