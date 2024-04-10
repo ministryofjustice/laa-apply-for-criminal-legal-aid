@@ -23,6 +23,7 @@ module Summary
         dependants
         other_income_details
         housing_payments
+        outgoings_payments_details
         other_outgoings_details
         properties
         savings
