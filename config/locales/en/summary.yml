@@ -518,7 +518,8 @@ en:
         absence_answer: ''
       has_capital_savings:
         question: Which savings does your client have inside or outside the UK?
-        absence_answer: *absence_none
+        answers:
+          'none': *absence_none
       # END saving
       #
       # START premium_bonds
@@ -545,7 +546,8 @@ en:
         absence_answer: ''
       has_investments:
         question: Which investments does your client have inside or outside the UK?
-        absence_answer: *absence_none
+        answers:
+          'none': *absence_none
       # END investments
 
       # START national_savings_certificates
@@ -616,7 +618,8 @@ en:
         absence_answer: *absence_none
       has_assets:
         question: Which assets does your client own or part-own inside or outside the UK?
-        absence_answer: *absence_none
+        answers:
+          'none': *absence_none
       # END property, address and owners
 
       # START trust_fund
