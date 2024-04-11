@@ -26,7 +26,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:is_means_tested) { 'yes' }
 
-  let(:case) { instance_double(Case, case_type:) }
+  let(:case) { instance_double(Case, case_type: case_type, is_client_remanded: nil, date_client_remanded: nil) }
   let(:case_type) { 'either_way' }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }

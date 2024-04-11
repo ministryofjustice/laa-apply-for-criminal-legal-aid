@@ -3,10 +3,11 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     errors = []
 
-    unless Passporting::MeansPassporter.new(record).call || evidence_present? || means_record_present? || client_remanded_in_custody?
+    unless Passporting::MeansPassporter.new(record).call || evidence_present? ||
+           means_record_present? || client_remanded_in_custody?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
       ]
