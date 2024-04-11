@@ -661,7 +661,9 @@ en:
             property_company: Property company
             other: Their relationship is not listed
           other_relationship: Enter their relationship
-          percentage_owned: What percentage of the land do they own?
+          percentage_owned_land: What percentage of the land do they own?
+          percentage_owned_residential: &percentage_owned_text What percentage of the property do they own?
+          percentage_owned_commercial: *percentage_owned_text
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
       steps_capital_answers_form: # TODO :: NOT WORKING
