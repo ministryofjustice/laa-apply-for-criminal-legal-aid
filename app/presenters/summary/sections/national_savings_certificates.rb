@@ -12,7 +12,7 @@ module Summary
       end
 
       def edit_path
-        edit_steps_capital_has_national_savings_certificates_path
+        edit_steps_capital_national_savings_certificates_summary_path
       end
 
       def list_component
