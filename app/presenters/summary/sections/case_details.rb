@@ -103,6 +103,8 @@ module Summary
       end
 
       def appeal_case_type?
+        return false unless kase&.case_type
+
         CaseType.new(kase.case_type).appeal?
       end
 

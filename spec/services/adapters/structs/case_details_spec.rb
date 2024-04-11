@@ -5,6 +5,28 @@ RSpec.describe Adapters::Structs::CaseDetails do
 
   let(:application_struct) { build_struct_application }
 
+  describe '#case_type' do
+    let(:parent) do
+      super().deep_merge('case_details' => { 'case_type' => case_type })
+    end
+
+    context 'when the case type is `appeal_to_crown_court_with_changes`' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES }
+
+      it 'returns `appeal_to_crown_court`' do
+        expect(subject.case_type).to eq(CaseType::APPEAL_TO_CROWN_COURT.to_s)
+      end
+    end
+
+    context 'when the case type is not `appeal_to_crown_court_with_changes`' do
+      let(:case_type) { CaseType::INDICTABLE }
+
+      it 'returns the same case type' do
+        expect(subject.case_type).to eq(CaseType::INDICTABLE.to_s)
+      end
+    end
+  end
+
   describe '#charges' do
     it 'returns a charges collection' do
       expect(subject.charges).to all(be_an(Charge))

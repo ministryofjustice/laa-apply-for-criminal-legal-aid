@@ -108,12 +108,6 @@ RSpec.describe Decisions::ClientDecisionTree do
       it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
     end
 
-    context 'and the case type is `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
-
-      it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
-    end
-
     context 'and the application already has a date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp) { Time.zone.today }
@@ -170,11 +164,49 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `appeal_details`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', appeal_original_app_submitted:) }
     let(:step_name) { :appeal_details }
 
-    # We've tested this logic for non-appeals, no need to test again
-    # as this step runs the same method/code
+    context 'and a legal aid application was submitted for the original case' do
+      let(:appeal_original_app_submitted) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:appeal_financial_circumstances, :edit, id: crime_application) }
+    end
+
+    context 'and a legal aid application was not submitted for the original case' do
+      let(:appeal_original_app_submitted) { YesNoAnswer::NO }
+
+      it 'performs the date stamp logic' do
+        expect(subject).to receive(:date_stamp_if_needed)
+        subject.destination
+      end
+    end
+  end
+
+  context 'when the step is `appeal_financial_circumstances`' do
+    let(:form_object) { double('FormObject', appeal_financial_circumstances_changed:) }
+    let(:step_name) { :appeal_financial_circumstances }
+
+    context 'and the answer is yes, financial circumstances have changed' do
+      let(:appeal_financial_circumstances_changed) { YesNoAnswer::YES }
+
+      it 'performs the date stamp logic' do
+        expect(subject).to receive(:date_stamp_if_needed)
+        subject.destination
+      end
+    end
+
+    context 'and the answer is no, financial circumstances have not changed' do
+      let(:appeal_financial_circumstances_changed) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:appeal_reference_number, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `appeal_reference_number`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :appeal_reference_number }
+
     it 'performs the date stamp logic' do
       expect(subject).to receive(:date_stamp_if_needed)
       subject.destination
