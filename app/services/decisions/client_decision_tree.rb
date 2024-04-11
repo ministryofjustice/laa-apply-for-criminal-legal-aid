@@ -14,6 +14,10 @@ module Decisions
       when :case_type
         after_case_type
       when :appeal_details
+        after_appeal_details
+      when :appeal_financial_circumstances
+        after_financial_circumstances
+      when :appeal_reference_number
         date_stamp_if_needed
       when :date_stamp
         start_address_journey(HomeAddress)
@@ -71,6 +75,22 @@ module Decisions
       return edit(:appeal_details) if form_object.case_type.appeal?
 
       date_stamp_if_needed
+    end
+
+    def after_appeal_details
+      if form_object.appeal_original_app_submitted.yes?
+        edit(:appeal_financial_circumstances)
+      else
+        date_stamp_if_needed
+      end
+    end
+
+    def after_financial_circumstances
+      if form_object.appeal_financial_circumstances_changed.yes?
+        date_stamp_if_needed
+      else
+        edit(:appeal_reference_number)
+      end
     end
 
     def date_stamp_if_needed
