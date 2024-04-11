@@ -6,7 +6,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.case_details do
             json.urn kase.urn
-            json.case_type kase.case_type
+            json.case_type case_type
             json.has_case_concluded kase.has_case_concluded
             json.date_case_concluded kase.date_case_concluded
             json.is_preorder_work_claimed kase.is_preorder_work_claimed
@@ -34,6 +34,14 @@ module SubmissionSerializer
 
       def kase
         @kase ||= crime_application.case
+      end
+
+      def case_type
+        return kase.case_type unless kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+
+        return unless kase.appeal_financial_circumstances_changed == YesNoAnswer::YES.to_s
+
+        CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s
       end
     end
   end
