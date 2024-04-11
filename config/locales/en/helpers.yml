@@ -55,7 +55,8 @@ en:
       steps_client_has_nino_form:
         has_nino: Does your client have a National Insurance number?
       steps_client_appeal_details_form:
-        appeal_lodged_date: Date the appeal was lodged
+        appeal_lodged_date: When was the appeal lodged?
+        appeal_original_app_submitted: Was a legal aid application submitted for the original case?
       steps_client_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
       steps_client_contact_details_form:

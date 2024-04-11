@@ -82,10 +82,6 @@ en:
               inclusion: Select a case type
         steps/client/appeal_details_form:
           attributes:
-            appeal_with_changes_details:
-              blank: Enter details of changes in financial circumstances
-            appeal_maat_id:
-              invalid: Enter a valid MAAT ID
             appeal_lodged_date:
               blank: Enter the date the appeal was lodged
               blank_day: Date the appeal was lodged must include a day
