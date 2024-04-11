@@ -13,9 +13,11 @@ module Summary
 
       private
 
+      # :nocov:
       def records
         raise 'must be implemented in subclasses'
       end
+      # :nocov:
 
       def capital
         @capital ||= crime_application.capital
