@@ -5,28 +5,6 @@ RSpec.describe Adapters::Structs::CaseDetails do
 
   let(:application_struct) { build_struct_application }
 
-  describe '#case_type' do
-    let(:parent) do
-      super().deep_merge('case_details' => { 'case_type' => case_type })
-    end
-
-    context 'when the case type is `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES }
-
-      it 'returns `appeal_to_crown_court`' do
-        expect(subject.case_type).to eq(CaseType::APPEAL_TO_CROWN_COURT.to_s)
-      end
-    end
-
-    context 'when the case type is not `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::INDICTABLE }
-
-      it 'returns the same case type' do
-        expect(subject.case_type).to eq(CaseType::INDICTABLE.to_s)
-      end
-    end
-  end
-
   describe '#charges' do
     it 'returns a charges collection' do
       expect(subject.charges).to all(be_an(Charge))
@@ -78,9 +56,13 @@ RSpec.describe Adapters::Structs::CaseDetails do
         %w[
           urn
           case_type
-          appeal_maat_id
           appeal_lodged_date
+          appeal_financial_circumstances_changed
           appeal_with_changes_details
+          appeal_original_app_submitted
+          appeal_reference_number
+          appeal_maat_id
+          appeal_usn
           has_case_concluded
           date_case_concluded
           is_preorder_work_claimed

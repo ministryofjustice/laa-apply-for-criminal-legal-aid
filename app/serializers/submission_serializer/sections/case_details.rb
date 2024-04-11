@@ -14,9 +14,12 @@ module SubmissionSerializer
             json.preorder_work_details kase.preorder_work_details
             json.is_client_remanded kase.is_client_remanded
             json.date_client_remanded kase.date_client_remanded
-            json.appeal_maat_id kase.appeal_maat_id
             json.appeal_lodged_date kase.appeal_lodged_date
+            json.appeal_original_app_submitted kase.appeal_original_app_submitted
+            json.appeal_financial_circumstances_changed kase.appeal_financial_circumstances_changed
             json.appeal_with_changes_details kase.appeal_with_changes_details
+            json.appeal_maat_id kase.appeal_maat_id
+            json.appeal_usn kase.appeal_usn
 
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
@@ -39,7 +42,7 @@ module SubmissionSerializer
       def case_type
         return kase.case_type unless kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
 
-        return unless kase.appeal_financial_circumstances_changed == YesNoAnswer::YES.to_s
+        return kase.case_type unless kase.appeal_financial_circumstances_changed == YesNoAnswer::YES.to_s
 
         CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s
       end

@@ -129,7 +129,7 @@ module Summary
       end
 
       def original_app_submitted?
-        appeal_case_type? && kase.appeal_original_app_submitted?
+        kase.appeal_original_app_submitted == 'yes'
       end
 
       def case_concluded?
