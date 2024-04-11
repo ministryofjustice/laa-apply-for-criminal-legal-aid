@@ -6,7 +6,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     errors = []
 
-    unless Passporting::MeansPassporter.new(record).call || evidence_present? || means_record_present?
+    unless Passporting::MeansPassporter.new(record).call || evidence_present? || means_record_present? || client_remanded_in_custody?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
       ]
@@ -33,5 +33,9 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   def means_record_present?
     record.income.present? && record.income&.employment_status&.include?('not_working')
+  end
+
+  def client_remanded_in_custody?
+    (record.case.is_client_remanded == 'yes') && record.case.date_client_remanded.present?
   end
 end
