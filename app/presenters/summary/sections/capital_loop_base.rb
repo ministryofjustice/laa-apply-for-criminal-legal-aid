@@ -5,6 +5,19 @@ module Summary
         capital && requires_full_capital
       end
 
+      def answers
+        if records.empty?
+          [
+            Components::ValueAnswer.new(
+              question, 'no',
+              change_path: edit_path
+            )
+          ]
+        else
+          list_component
+        end
+      end
+
       def list?
         return false if records.empty?
 
