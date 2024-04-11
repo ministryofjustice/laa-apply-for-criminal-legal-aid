@@ -3,10 +3,9 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, capital:, national_savings_certificates:) }
+  let(:crime_application) { instance_double(CrimeApplication, capital:) }
   let(:capital) { instance_double(Capital, has_national_savings_certificates:) }
   let(:has_national_savings_certificates) { YesNoAnswer::YES }
-  let(:national_savings_certificates) { class_double(NationalSavingsCertificate, where: existing_certificates) }
   let(:existing_certificates) { [] }
 
   it { is_expected.to validate_is_a(:has_national_savings_certificates, YesNoAnswer) }
@@ -20,7 +19,6 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
       allow(crime_application).to receive(:national_savings_certificates).and_return(existing_certificates)
       allow(capital).to receive(:update).with({ 'has_national_savings_certificates' =>
                                                   has_national_savings_certificates }).and_return(true)
-      allow(national_savings_certificates).to receive(:destroy_all)
     end
 
     context 'when client has no National Savings Certificates' do
