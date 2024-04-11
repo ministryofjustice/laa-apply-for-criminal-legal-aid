@@ -90,7 +90,7 @@ describe Summary::Sections::Savings do
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:has_capital_savings)
           expect(answers[0].change_path).to match('applications/12345/steps/capital/which_savings_does_client_have')
-          expect(answers[0].value).to eq('no')
+          expect(answers[0].value).to eq('none')
         end
       end
     end

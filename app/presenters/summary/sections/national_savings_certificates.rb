@@ -20,6 +20,10 @@ module Summary
           records, show_actions: editable?, show_record_actions: headless?
         )
       end
+
+      def absence_answer
+        'no'
+      end
     end
   end
 end

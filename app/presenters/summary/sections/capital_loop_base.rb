@@ -9,7 +9,7 @@ module Summary
         if records.empty?
           [
             Components::ValueAnswer.new(
-              question, 'no',
+              question, absence_answer,
               change_path: edit_path
             )
           ]
@@ -42,6 +42,10 @@ module Summary
           CaseType::INDICTABLE.to_s,
           CaseType::ALREADY_IN_CROWN_COURT.to_s
         ].include?(crime_application.case.case_type)
+      end
+
+      def absence_answer
+        'none'
       end
     end
   end
