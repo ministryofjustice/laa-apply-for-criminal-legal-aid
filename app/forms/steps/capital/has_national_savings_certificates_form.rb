@@ -13,6 +13,8 @@ module Steps
       private
 
       def persist!
+        capital.update(attributes)
+
         return true if has_national_savings_certificates.no?
 
         @national_savings_certificate = incomplete_national_savings_certificate ||
