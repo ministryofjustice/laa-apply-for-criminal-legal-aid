@@ -5,6 +5,30 @@ RSpec.describe Adapters::Structs::CapitalDetails do
 
   let(:application_struct) { build_struct_application }
 
+  describe '#savings' do
+    it 'returns a savings collection' do
+      expect(subject.savings).to all(be_an(Saving))
+    end
+  end
+
+  describe '#investments' do
+    it 'returns a investments collection' do
+      expect(subject.investments).to all(be_an(Investment))
+    end
+  end
+
+  describe '#national_savings_certificates' do
+    it 'returns a national_savings_certificates collection' do
+      expect(subject.national_savings_certificates).to all(be_an(NationalSavingsCertificate))
+    end
+  end
+
+  describe '#properties' do
+    it 'returns a properties collection' do
+      expect(subject.properties).to all(be_an(Property))
+    end
+  end
+
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
       expect(
