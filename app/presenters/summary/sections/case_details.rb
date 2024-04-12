@@ -48,7 +48,7 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :appeal_maat_id_or_usn, appeal_reference_value,
-            show: financial_circumstances_not_changed?,
+            show: kase.appeal_reference_number.present?,
             change_path: edit_steps_client_appeal_reference_number_path,
             i18n_opts: { ref_type: appeal_reference_name }
           ),
@@ -110,10 +110,6 @@ module Summary
 
       def financial_circumstances_changed?
         kase.appeal_financial_circumstances_changed == 'yes'
-      end
-
-      def financial_circumstances_not_changed?
-        kase.appeal_financial_circumstances_changed == 'no'
       end
 
       def appeal_reference_name

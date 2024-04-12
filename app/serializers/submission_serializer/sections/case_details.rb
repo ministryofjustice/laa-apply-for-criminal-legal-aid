@@ -20,6 +20,7 @@ module SubmissionSerializer
             json.appeal_with_changes_details kase.appeal_with_changes_details
             json.appeal_maat_id kase.appeal_maat_id
             json.appeal_usn kase.appeal_usn
+            json.appeal_reference_number kase.appeal_reference_number
 
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
