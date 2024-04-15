@@ -2,21 +2,19 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'shared/flash_banner' %>
-    <%= govuk_error_summary(@form_object) %>
+  <%= render partial: 'shared/flash_banner' %>
+  <%= govuk_error_summary(@form_object) %>
 
-    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+  <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
 
-    <h1 class="govuk-heading-xl">
-      <%=t '.heading' %>
-    </h1>
+  <h1 class="govuk-heading-xl">
+    <%=t '.heading' %>
+  </h1>
 
-    <h1 class="govuk-heading-l"><%= t('.subheading') %></h1>
+  <h1 class="govuk-heading-l"><%= t('.subheading') %></h1>
 
-    <%= render @presenter.income_sections %>
-    <%= step_form @form_object do |f| %>
-      <%= f.continue_button %>
-    <% end %>
-  </div>
+  <%= render @presenter.income_sections %>
+  <%= step_form @form_object do |f| %>
+    <%= f.continue_button %>
+  <% end %>
 </div>
