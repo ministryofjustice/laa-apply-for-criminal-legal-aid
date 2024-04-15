@@ -343,7 +343,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         context 'has correct next step' do
           let(:passporting_benefit) { nil }
 
-          it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
+          it { is_expected.to have_destination(:cannot_check_dwp_status, :edit, id: crime_application) }
         end
       end
     end
@@ -353,7 +353,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       let(:benefit_check_passported) { false }
       let(:has_nino) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:cannot_check_dwp_status, :edit, id: crime_application) }
 
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
@@ -417,5 +417,26 @@ RSpec.describe Decisions::ClientDecisionTree do
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
+  end
+
+  context 'when the step is `cannot_check_dwp_status`' do
+    # The dwp check decision tree has been tested for the benefit type step so this does not test all routes
+
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :cannot_check_dwp_status }
+    let(:benefit_check_passported) { false }
+    let(:passporting_benefit) { false }
+    let(:applicant_double) { double(Applicant) }
+
+    before do
+      allow(crime_application).to receive_messages(applicant: applicant_double,
+                                                   benefit_check_passported?: benefit_check_passported)
+
+      allow(applicant_double).to receive_messages(passporting_benefit:)
+
+      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+    end
+
+    it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
   end
 end

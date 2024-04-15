@@ -1,6 +1,6 @@
 module Steps
-  module DWP
-    class CannotCheckDWPStatusController < Steps::DWPStepController
+  module Client
+    class CannotCheckDWPStatusController < Steps::ClientStepController
       include Steps::NoOpAdvanceStep
 
       private
