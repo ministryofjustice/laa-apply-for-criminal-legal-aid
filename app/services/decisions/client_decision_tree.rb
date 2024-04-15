@@ -29,6 +29,8 @@ module Decisions
         after_has_benefit_evidence
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
+      when :cannot_check_dwp_status
+        after_cannot_check_dwp_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -131,7 +133,7 @@ module Decisions
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit('steps/dwp/cannot_check_dwp_status')
+        edit(:cannot_check_dwp_status)
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else
@@ -145,6 +147,10 @@ module Decisions
       else
         edit('/steps/case/urn')
       end
+    end
+
+    def after_cannot_check_dwp_status
+      determine_dwp_result_page
     end
 
     def applicant_has_nino

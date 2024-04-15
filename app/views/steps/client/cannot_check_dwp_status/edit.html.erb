@@ -13,13 +13,22 @@
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
+          <li>
+            <%= step_form @form_object do |f| %>
+              go back and <%= f.button 'try again now', class: 'app-button--link' %>
+            <% end %>
+          </li>
           <li>continue with this application to upload supporting evidence</li>
           <li>save and come back later to try again</li>
         </ul>
     </div>
 
-    <%= step_form @form_object do |f| %>
-      <%= f.continue_button %>
-    <% end %>
+    <div class="govuk-button-group">
+      <%= link_button t('helpers.submit.save_and_continue'), edit_steps_client_has_benefit_evidence_path,
+                      class: 'govuk-button--primary' %>
+
+      <%= link_button t('helpers.submit.save_and_come_back_later'), edit_crime_application_path,
+                      class: 'govuk-button--secondary' %>
+    </div>
   </div>
 </div>
