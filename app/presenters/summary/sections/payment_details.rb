@@ -33,7 +33,7 @@ module Summary
                   change_path: change_path
                 ),
                  Components::FreeTextAnswer.new(
-                   :other_payment_details, payment_details.metadata['details'],
+                   other_details, payment_details.metadata['details'],
                    show: payment_name == 'other',
                    change_path: change_path
                  )]
