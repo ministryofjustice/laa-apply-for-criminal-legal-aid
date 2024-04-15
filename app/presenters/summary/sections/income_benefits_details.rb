@@ -26,7 +26,7 @@ module Summary
       end
 
       def other_details
-        :other_benefit_details
+        :other_benefits_details
       end
 
       def payment_types

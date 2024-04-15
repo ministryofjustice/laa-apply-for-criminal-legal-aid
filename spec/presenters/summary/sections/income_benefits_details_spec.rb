@@ -137,7 +137,7 @@ describe Summary::Sections::IncomeBenefitsDetails do
             ],
             [
               Summary::Components::FreeTextAnswer,
-              :other_benefit_details, 'Some details',
+              :other_benefits_details, 'Some details',
               '#steps-income-income-benefits-form-types-other-field'
             ]
           ]
