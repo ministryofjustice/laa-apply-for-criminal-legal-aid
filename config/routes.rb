@@ -118,13 +118,13 @@ Rails.application.routes.draw do
         edit_step :has_benefit_evidence
         show_step :evidence_exit
         edit_step :contact_details
+        edit_step :cannot_check_dwp_status
       end
 
       namespace :dwp do
         edit_step :confirm_result
         edit_step :confirm_details
         show_step :benefit_check_result_exit
-        edit_step :cannot_check_dwp_status
       end
 
       namespace :address do
