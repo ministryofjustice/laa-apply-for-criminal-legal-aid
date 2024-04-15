@@ -251,6 +251,7 @@ describe Summary::HtmlPresenter do
 
     expected_sections = %w[
       HousingPayments
+      OutgoingsPaymentsDetails
       OtherOutgoingsDetails
     ]
 

@@ -54,6 +54,7 @@ module Summary
       ],
       outgoings: %i[
         housing_payments
+        outgoings_payments_details
         other_outgoings_details
       ],
       income: %i[

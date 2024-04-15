@@ -63,7 +63,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
     let(:answers) { subject.answers }
 
     context 'when there are outgoings details' do
-      context 'when all outgoings are reported' do
+      context 'when all outgoings payments are reported' do
         let(:outgoings_payments) do
           [
             childcare_outgoing,
@@ -131,7 +131,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         end
       end
 
-      context 'when some outgoings are reported' do
+      context 'when some outgoings payments are reported' do
         let(:outgoings_payments) do
           [
             maintenance_outgoing
@@ -184,10 +184,19 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         end
       end
 
-      context 'when no outgoings are reported' do
-        let(:outgoings_payments) { [] }
+      context 'when no outgoings payments are reported' do
+        let(:rent_outgoing) do
+          instance_double(
+            OutgoingsPayment,
+            payment_type: 'rent',
+            amount: 1000,
+            frequency: 'month'
+          )
+        end
 
-        it 'has the correct rows' do
+        let(:outgoings_payments) { [rent_outgoing] }
+
+        it 'filters out the housing payments to show correct output' do
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)

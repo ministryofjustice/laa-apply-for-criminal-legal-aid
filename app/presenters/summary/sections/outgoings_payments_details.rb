@@ -8,7 +8,7 @@ module Summary
       end
 
       def payments
-        @payments ||= crime_application.outgoings_payments
+        @payments ||= crime_application.outgoings_payments.select { |p| payment_types.include? p.payment_type }
       end
 
       def edit_path
