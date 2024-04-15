@@ -1,3 +1,5 @@
+require 'laa_crime_schemas'
+
 module Summary
   module Sections
     class IncomePaymentsDetails < Sections::PaymentDetails

@@ -11,6 +11,7 @@ module Test
   end
 end
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe ApplicationFulfilmentValidator, type: :model do
   subject { Test::CrimeApplicationValidatable.new(arguments) }
 
@@ -26,7 +27,12 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:is_means_tested) { 'yes' }
 
-  let(:case) { instance_double(Case, case_type:) }
+  let(:case) {
+    instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
+  }
+  let(:is_client_remanded) { nil }
+  let(:date_client_remanded) { nil }
+
   let(:case_type) { 'either_way' }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
@@ -46,7 +52,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
     end
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when the application is means-passported' do
       let(:means_result) { true }
 
@@ -93,6 +98,15 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
           expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
         end
       end
+
+      context 'and applicant is in Court Custody' do
+        let(:is_client_remanded) { 'yes' }
+        let(:date_client_remanded) { Time.zone.today }
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
+      end
     end
   end
 
@@ -132,7 +146,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'CaseType validation' do
     before do
@@ -173,3 +186,4 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
