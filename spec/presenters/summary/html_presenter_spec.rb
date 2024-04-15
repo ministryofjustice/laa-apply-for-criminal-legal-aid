@@ -110,6 +110,7 @@ describe Summary::HtmlPresenter do
             IncomeBenefitsDetails
             OtherIncomeDetails
             HousingPayments
+            OutgoingsPaymentsDetails
             OtherOutgoingsDetails
             Savings
             Properties
@@ -148,6 +149,7 @@ describe Summary::HtmlPresenter do
             Dependants
             OtherIncomeDetails
             HousingPayments
+            OutgoingsPaymentsDetails
             OtherOutgoingsDetails
             Savings
             Properties
@@ -249,6 +251,7 @@ describe Summary::HtmlPresenter do
 
     expected_sections = %w[
       HousingPayments
+      OutgoingsPaymentsDetails
       OtherOutgoingsDetails
     ]
 
