@@ -12,7 +12,7 @@ module Summary
       end
 
       def edit_path
-        edit_steps_capital_investment_type_path
+        edit_steps_capital_investments_summary_path
       end
 
       def list_component

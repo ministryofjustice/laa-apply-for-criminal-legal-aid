@@ -77,7 +77,7 @@ case: (double case_type:), to_param: 12_345)
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
-          change_path = 'applications/12345/steps/capital/does_client_have_national_savings_certificates'
+          change_path = 'applications/12345/steps/capital/clients_national_savings_certificates'
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
