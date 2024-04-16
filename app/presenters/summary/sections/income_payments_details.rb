@@ -25,10 +25,6 @@ module Summary
         '_payment'
       end
 
-      def other_details
-        :other_payment_details
-      end
-
       def payment_types
         LaaCrimeSchemas::Types::IncomePaymentType.values
       end

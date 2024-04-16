@@ -25,10 +25,6 @@ module Summary
         '_benefit'
       end
 
-      def other_details
-        :other_benefit_details
-      end
-
       def payment_types
         LaaCrimeSchemas::Types::IncomeBenefitType.values
       end
