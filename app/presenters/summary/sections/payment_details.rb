@@ -15,7 +15,6 @@ module Summary
           ].flatten.select(&:show?)
         else
           [
-            # rubocop:disable Metrics/BlockLength
             ordered_payments.map do |payment_name, payment_details|
               change_path = "#{edit_path}#{anchor_prefix}#{payment_name.tr('_', '-')}-field"
               formatted_payment_name = payment_name + type_suffix
@@ -26,26 +25,12 @@ module Summary
                   I18n.t('summary.does_not_get'),
                   change_path:
                 )
-              elsif payment_name == 'other'
-                [Components::PaymentAnswer.new(
-                  formatted_payment_name, payment_details,
-                  show: true,
-                  change_path: change_path
-                ),
-                 Components::FreeTextAnswer.new(
-                   other_details, payment_details.metadata['details'],
-                   show: payment_name == 'other',
-                   change_path: change_path
-                 )]
+              elsif requires_extra_details(payment_name)
+                payment_answer_with_details_components(formatted_payment_name, payment_details, change_path)
               else
-                Components::PaymentAnswer.new(
-                  formatted_payment_name, payment_details,
-                  show: true,
-                  change_path: change_path
-                )
+                payment_answer_component(formatted_payment_name, payment_details, change_path)
               end
             end
-            # rubocop:enable Metrics/BlockLength
           ].flatten.select(&:show?)
         end
       end
@@ -63,6 +48,30 @@ module Summary
 
       def payment_of_type(type)
         payments.detect { |payment| payment.payment_type == type }
+      end
+
+      def payment_answer_component(name, details, change_path)
+        Components::PaymentAnswer.new(
+          name, details,
+          show: true,
+          change_path: change_path
+        )
+      end
+
+      def payment_answer_with_details_components(name, details, change_path)
+        answer = payment_answer_component(name, details, change_path)
+        key = name == 'legal_aid_contribution_outgoing' ? 'case_reference' : 'details'
+
+        details_component = Components::FreeTextAnswer.new(
+          "#{name}_details".to_sym, details.metadata[key],
+          show: true,
+          change_path: change_path
+        )
+        [answer, details_component]
+      end
+
+      def requires_extra_details(name)
+        %w[other legal_aid_contribution].include?(name)
       end
     end
   end
