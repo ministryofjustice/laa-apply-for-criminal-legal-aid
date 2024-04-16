@@ -29,15 +29,13 @@ module Steps
 
       def persist!
         self.case.update(
-          attributes.merge(attributes_to_reset)
+          attributes
         )
       end
 
-      def attributes_to_reset
-        {
-          'appeal_maat_id' => (appeal_maat_id unless usn_selected?),
-          'appeal_usn' => (appeal_usn unless maat_id_selected?)
-        }
+      def before_save
+        self.appeal_maat_id = nil unless maat_id_selected?
+        self.appeal_usn = nil unless usn_selected?
       end
     end
   end

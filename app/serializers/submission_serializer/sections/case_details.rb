@@ -41,11 +41,19 @@ module SubmissionSerializer
       end
 
       def case_type
-        return kase.case_type unless kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+        if appeal_to_crown_court_case? && financial_circumstances_changed?
+          return CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s
+        end
 
-        return kase.case_type unless kase.appeal_financial_circumstances_changed == YesNoAnswer::YES.to_s
+        kase.case_type
+      end
 
-        CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s
+      def appeal_to_crown_court_case?
+        kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+      end
+
+      def financial_circumstances_changed?
+        kase.appeal_financial_circumstances_changed == YesNoAnswer::YES.to_s
       end
     end
   end
