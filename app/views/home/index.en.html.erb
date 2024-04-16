@@ -10,26 +10,24 @@
 
     <% if FeatureFlags.means_journey.enabled? %>
       <p class="govuk-body">
-      Use this service to apply for criminal legal aid in ongoing cases. The application will be means tested.
+      Use this service to apply for criminal legal aid. The application will be means tested.
       </p>
       <p class="govuk-body">
-      Your client cannot have a partner.
-      </p>
-      <p class="govuk-body">
-      They must be one of the following:
+      To use this service, your client must not have a partner and must be either:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>receiving a passporting benefit, like Universal Credit</li>
+        <li>receiving a passporting benefit, for example Universal Credit</li>
         <li>not working</li>
       </ul>
 
       <p class="govuk-body">
-        <%= link_to 'Use eForms for all other applications', Settings.eforms_url %>.
+        If your client does not meet these criteria or you need to tell us about a change in financial circumstances,
+        <%= link_to 'apply using eForms', Settings.eforms_url %>.
       </p>
     <% else %>
       <p class="govuk-body">
-      Use this service to apply for criminal legal aid if:
+        Use this service to apply for criminal legal aid if:
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
@@ -40,7 +38,7 @@
       </ul>
 
       <p class="govuk-body">
-      Use <%= link_to 'eForms', Settings.eforms_url %> for all other applications.
+        Use <%= link_to 'eForms', Settings.eforms_url %> for all other applications.
       </p>
     <% end %>
 
