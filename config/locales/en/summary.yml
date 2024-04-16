@@ -140,6 +140,8 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: None
+      last_jsa_appointment_date:
+        question: Date of latest JSA appointment
       # END client details section
 
       # BEGIN contact details section
