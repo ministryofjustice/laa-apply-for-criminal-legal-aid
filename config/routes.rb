@@ -108,6 +108,8 @@ Rails.application.routes.draw do
         edit_step :details
         edit_step :case_type
         edit_step :appeal_details
+        edit_step :appeal_financial_circumstances
+        edit_step :appeal_reference_number
         edit_step :date_stamp
         edit_step :has_nino
         show_step :nino_exit

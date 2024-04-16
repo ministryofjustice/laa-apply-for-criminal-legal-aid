@@ -82,10 +82,6 @@ en:
               inclusion: Select a case type
         steps/client/appeal_details_form:
           attributes:
-            appeal_with_changes_details:
-              blank: Enter details of changes in financial circumstances
-            appeal_maat_id:
-              invalid: Enter a valid MAAT ID
             appeal_lodged_date:
               blank: Enter the date the appeal was lodged
               blank_day: Date the appeal was lodged must include a day
@@ -100,6 +96,23 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date the appeal was lodged is too far in the past
               future_not_allowed: Date the appeal was lodged must be today or in the past
+            appeal_original_app_submitted:
+              inclusion: Select yes if a legal aid application was submitted for the original case
+        steps/client/appeal_financial_circumstances_form:
+          attributes:
+            appeal_financial_circumstances_changed:
+              inclusion: Select yes if your client’s financial circumstances changed since the original application
+            appeal_with_changes_details:
+              blank: Enter details of changes in financial circumstances
+        steps/client/appeal_reference_number_form:
+          attributes:
+            appeal_reference_number:
+              blank: Select MAAT ID or USN
+            appeal_maat_id:
+              blank: Enter MAAT ID
+              invalid: Enter a valid MAAT ID
+            appeal_usn:
+              blank: Enter USN
         steps/client/has_nino_form:
           attributes:
             has_nino:

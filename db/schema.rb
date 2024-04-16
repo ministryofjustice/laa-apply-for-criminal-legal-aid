@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_26_165829) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_04_110928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -71,6 +71,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_26_165829) do
     t.string "is_preorder_work_claimed"
     t.date "preorder_work_date"
     t.text "preorder_work_details"
+    t.string "appeal_original_app_submitted"
+    t.string "appeal_financial_circumstances_changed"
+    t.string "appeal_reference_number"
+    t.string "appeal_usn"
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 
