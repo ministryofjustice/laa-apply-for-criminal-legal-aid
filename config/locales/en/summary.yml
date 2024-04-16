@@ -38,7 +38,6 @@ en:
     does_not_get: Does not get
     sections:
       overview: Overview
-
       case_details: Case details
       client_details: Client details
       contact_details: Contact details
@@ -58,6 +57,7 @@ en:
       income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
+      outgoings_payments_details: Payments your client pays
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: More information
@@ -369,7 +369,7 @@ en:
         answers:
           description: *payment_answer_format
       other_payment_details:
-        question: Other sources of income details
+        question: Details of other sources of income
       # END income payments details section
 
       # BEGIN income benefits details section
@@ -401,6 +401,8 @@ en:
         question: Other benefits (except disregarded benefits)
         answers:
           description: *payment_answer_format
+      other_benefit_details:
+        question: Details of other benefits
       # END income benefits details section
 
       # BEGIN other sources of income details section
@@ -460,6 +462,27 @@ en:
         answers:
           description: "%{amount}"
       # END housing payments section
+
+      # BEGIN  outgoings payments section
+      which_outgoings:
+        question: Which of these payments does your client pay?
+        answers:
+          none: My client does not pay any of these payments
+      childcare_outgoing:
+        question: Childcare payments
+        answers:
+          description: *payment_answer_format
+      maintenance_outgoing:
+        question: Maintenance payments to a former partner
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing:
+        question: Contributions towards criminal or civil legal aid
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing_details:
+        question: What is the case reference of the criminal rep order or civil certificate?
+      # END outgoings payments section
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
