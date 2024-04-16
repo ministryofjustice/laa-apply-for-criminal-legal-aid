@@ -401,7 +401,7 @@ en:
         question: Other benefits
         answers:
           description: *payment_answer_format
-      other_benefits_details:
+      other_benefit_details:
         question: Other benefits details
       # END income benefits details section
 
