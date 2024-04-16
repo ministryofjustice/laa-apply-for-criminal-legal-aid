@@ -12,7 +12,7 @@ module Summary
       end
 
       def edit_path
-        edit_steps_capital_property_type_path
+        edit_steps_capital_properties_summary_path
       end
 
       def list_component

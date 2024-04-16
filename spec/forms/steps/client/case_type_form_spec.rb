@@ -35,6 +35,15 @@ RSpec.describe Steps::Client::CaseTypeForm do
       end
     end
 
+    context 'when `case_type` is `appeal to crown court with changes`' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:case_type, :inclusion)).to be(true)
+      end
+    end
+
     context 'when `case_type` is valid' do
       it { is_expected.to be_valid }
     end
@@ -52,9 +61,13 @@ RSpec.describe Steps::Client::CaseTypeForm do
                       association_name: :case,
                       expected_attributes: {
                         'case_type' => CaseType::INDICTABLE,
-                        :appeal_maat_id => nil,
                         :appeal_lodged_date => nil,
+                        :appeal_original_app_submitted => nil,
+                        :appeal_financial_circumstances_changed => nil,
                         :appeal_with_changes_details => nil,
+                        :appeal_reference_number => nil,
+                        :appeal_maat_id => nil,
+                        :appeal_usn => nil,
                       }
     end
 

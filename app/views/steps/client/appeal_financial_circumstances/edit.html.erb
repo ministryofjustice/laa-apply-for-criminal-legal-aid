@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :appeal_financial_circumstances_changed, legend: { tag: 'h1', size: 'xl' } do %>
+          <%= f.govuk_radio_button :appeal_financial_circumstances_changed, YesNoAnswer::YES.to_s, link_errors: true do %>
+            <%= f.govuk_text_area :appeal_with_changes_details %>
+          <% end %>
+          <%= f.govuk_radio_button :appeal_financial_circumstances_changed, YesNoAnswer::NO.to_s %>
+        <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -1,126 +1,66 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Client::AppealDetailsForm do
-  subject { described_class.new(arguments) }
+  subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
     {
       crime_application:,
-      appeal_maat_id:,
       appeal_lodged_date:,
-      appeal_with_changes_details:,
+      appeal_original_app_submitted:,
     }
   end
 
   let(:crime_application) { instance_double(CrimeApplication, case: case_record) }
-  let(:case_record) { Case.new(case_type:) }
+  let(:case_record) { Case.new(case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s) }
 
-  let(:case_type) { nil }
-  let(:appeal_maat_id) { nil }
   let(:appeal_lodged_date) { nil }
-  let(:appeal_with_changes_details) { nil }
+  let(:appeal_original_app_submitted) { nil }
 
   describe 'validations' do
-    context 'when case type is `appeal_to_crown_court`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+    it { is_expected.to validate_presence_of(:appeal_lodged_date) }
 
-      it { is_expected.to validate_presence_of(:appeal_lodged_date) }
-
-      it { is_expected.not_to validate_presence_of(:appeal_with_changes_details) }
-      it { is_expected.not_to validate_presence_of(:appeal_maat_id) }
-
-      it_behaves_like 'a multiparam date validation',
-                      attribute_name: :appeal_lodged_date,
-                      allow_past: true, allow_future: false
-    end
-
-    context 'when case type is `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
-      let(:appeal_with_changes_details) { 'mandatory details' }
-
-      it { is_expected.to validate_presence_of(:appeal_lodged_date) }
-      it { is_expected.to validate_presence_of(:appeal_with_changes_details) }
-
-      it { is_expected.not_to validate_presence_of(:appeal_maat_id) }
-
-      it_behaves_like 'a multiparam date validation',
-                      attribute_name: :appeal_lodged_date,
-                      allow_past: true, allow_future: false
-    end
-
-    context 'previous MAAT ID format' do
-      # It behaves the same for both appeal types
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
-
-      context 'when `appeal_maat_id` is not numeric' do
-        let(:appeal_maat_id) { 'X123Z' }
-
-        it 'has a validation error on the field' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
-        end
-      end
-
-      context 'when `appeal_maat_id` is out of bounds' do
-        context 'not enough digits' do
-          let(:appeal_maat_id) { '12345' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
-          end
-        end
-
-        context 'too many digits' do
-          let(:appeal_maat_id) { '1234567890' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:appeal_maat_id, :invalid)).to be(true)
-          end
-        end
-      end
-    end
+    it_behaves_like 'a multiparam date validation',
+                    attribute_name: :appeal_lodged_date,
+                    allow_past: true, allow_future: false
   end
 
   describe '#save' do
-    before do
-      allow(subject).to receive(:kase).and_return(case_record)
-    end
+    context 'when `appeal_lodged_date` is not provided' do
+      it 'returns false' do
+        expect(form.save).to be(false)
+      end
 
-    let(:appeal_lodged_date) { Time.zone.today }
-    let(:appeal_maat_id) { '12345678' }
-
-    context 'when case type is `appeal_to_crown_court`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
-
-      it 'updates the record' do
-        expect(case_record).to receive(:update).with(
-          {
-            'appeal_maat_id' => appeal_maat_id,
-            'appeal_lodged_date' => appeal_lodged_date,
-            'appeal_with_changes_details' => nil,
-          }
-        ).and_return(true)
-
-        expect(subject.save).to be(true)
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:appeal_lodged_date, :blank)).to be(true)
       end
     end
 
-    context 'when case type is `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
-      let(:appeal_with_changes_details) { 'mandatory details' }
+    context 'when `appeal_original_app_submitted` is not provided' do
+      it 'returns false' do
+        expect(form.save).to be(false)
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:appeal_original_app_submitted, :inclusion)).to be(true)
+      end
+    end
+
+    context 'when all args are provided' do
+      let(:appeal_lodged_date) { Time.zone.today }
+      let(:appeal_original_app_submitted) { YesNoAnswer::YES }
 
       it 'updates the record' do
         expect(case_record).to receive(:update).with(
           {
-            'appeal_maat_id' => appeal_maat_id,
             'appeal_lodged_date' => appeal_lodged_date,
-            'appeal_with_changes_details' => appeal_with_changes_details,
+            'appeal_original_app_submitted' => appeal_original_app_submitted,
           }
         ).and_return(true)
 
-        expect(subject.save).to be(true)
+        expect(form.save).to be(true)
       end
     end
   end
