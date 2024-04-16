@@ -398,11 +398,11 @@ en:
         answers:
           description: *payment_answer_format
       other_benefit:
-        question: Other benefits (except disregarded benefits)
+        question: Other benefits
         answers:
           description: *payment_answer_format
       other_benefit_details:
-        question: Details of other benefits
+        question: Other benefits details
       # END income benefits details section
 
       # BEGIN other sources of income details section
