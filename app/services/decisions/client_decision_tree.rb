@@ -14,21 +14,27 @@ module Decisions
       when :case_type
         after_case_type
       when :appeal_details
+        after_appeal_details
+      when :appeal_financial_circumstances
+        after_financial_circumstances
+      when :appeal_reference_number
         date_stamp_if_needed
       when :date_stamp
-        start_address_journey(HomeAddress)
+        after_date_stamp
       when :contact_details
         after_contact_details
       when :has_nino
         after_has_nino
       when :benefit_type
         after_benefit_type
-      when :retry_benefit_check
-        determine_dwp_result_page
-      when :benefit_check_result, :has_benefit_evidence
+      when :benefit_check_result
         edit('/steps/case/urn')
+      when :has_benefit_evidence
+        after_has_benefit_evidence
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
+      when :cannot_check_dwp_status
+        after_cannot_check_dwp_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -71,9 +77,33 @@ module Decisions
       date_stamp_if_needed
     end
 
+    def after_appeal_details
+      if form_object.appeal_original_app_submitted.yes?
+        edit(:appeal_financial_circumstances)
+      else
+        date_stamp_if_needed
+      end
+    end
+
+    def after_financial_circumstances
+      if form_object.appeal_financial_circumstances_changed.yes?
+        date_stamp_if_needed
+      else
+        edit(:appeal_reference_number)
+      end
+    end
+
     def date_stamp_if_needed
       if DateStamper.new(form_object.crime_application, case_type: form_object.case.case_type).call
         edit(:date_stamp)
+      else
+        after_date_stamp
+      end
+    end
+
+    def after_date_stamp
+      if entered_appeal_reference_number?
+        edit('/steps/case/urn')
       else
         start_address_journey(HomeAddress)
       end
@@ -117,13 +147,21 @@ module Decisions
       end
     end
 
+    def after_has_benefit_evidence
+      if form_object.has_benefit_evidence.yes? || FeatureFlags.means_journey.enabled?
+        edit('/steps/case/urn')
+      else
+        show(:evidence_exit)
+      end
+    end
+
     def determine_dwp_result_page
       return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
 
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit(:retry_benefit_check)
+        edit(:cannot_check_dwp_status)
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else
@@ -137,6 +175,16 @@ module Decisions
       else
         edit('/steps/case/urn')
       end
+    end
+
+    def after_cannot_check_dwp_status
+      determine_dwp_result_page
+    end
+
+    def entered_appeal_reference_number?
+      kase = current_crime_application.case
+      case_type = CaseType.new(kase.case_type)
+      case_type&.appeal? && kase.appeal_reference_number.present?
     end
 
     def applicant_has_nino

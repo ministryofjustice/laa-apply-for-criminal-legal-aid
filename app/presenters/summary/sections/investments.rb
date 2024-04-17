@@ -1,28 +1,28 @@
 module Summary
   module Sections
-    class Investments < Sections::BaseSection
-      def show?
-        !investments.empty?
+    class Investments < Sections::CapitalLoopBase
+      private
+
+      def records
+        @records ||= crime_application.investments
       end
 
-      def answers
+      def question
+        :has_investments
+      end
+
+      def edit_path
+        edit_steps_capital_investments_summary_path
+      end
+
+      def list_component
         Summary::Components::GroupedList.new(
-          items: investments,
+          items: records,
           group_by: :investment_type,
           item_component: Summary::Components::Investment,
           show_actions: editable?,
           show_record_actions: headless?
         )
-      end
-
-      def list?
-        true
-      end
-
-      private
-
-      def investments
-        @investments ||= crime_application.investments
       end
     end
   end

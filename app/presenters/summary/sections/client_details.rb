@@ -43,6 +43,13 @@ module Summary
                        ))
         end
 
+        if jsa?
+          answers.push(Components::DateAnswer.new(
+                         :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
+                         change_path: edit_steps_client_benefit_type_path
+                       ))
+        end
+
         answers.select(&:show?)
         answers
       end
@@ -64,6 +71,10 @@ module Summary
 
       def no_benefit?
         crime_application.applicant.benefit_type.nil?
+      end
+
+      def jsa?
+        crime_application.applicant.benefit_type == 'jsa'
       end
     end
   end

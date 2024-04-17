@@ -82,10 +82,6 @@ en:
               inclusion: Select a case type
         steps/client/appeal_details_form:
           attributes:
-            appeal_with_changes_details:
-              blank: Enter details of changes in financial circumstances
-            appeal_maat_id:
-              invalid: Enter a valid MAAT ID
             appeal_lodged_date:
               blank: Enter the date the appeal was lodged
               blank_day: Date the appeal was lodged must include a day
@@ -100,6 +96,23 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date the appeal was lodged is too far in the past
               future_not_allowed: Date the appeal was lodged must be today or in the past
+            appeal_original_app_submitted:
+              inclusion: Select yes if a legal aid application was submitted for the original case
+        steps/client/appeal_financial_circumstances_form:
+          attributes:
+            appeal_financial_circumstances_changed:
+              inclusion: Select yes if your client’s financial circumstances changed since the original application
+            appeal_with_changes_details:
+              blank: Enter details of changes in financial circumstances
+        steps/client/appeal_reference_number_form:
+          attributes:
+            appeal_reference_number:
+              blank: Select MAAT ID or USN
+            appeal_maat_id:
+              blank: Enter MAAT ID
+              invalid: Enter a valid MAAT ID
+            appeal_usn:
+              blank: Enter USN
         steps/client/has_nino_form:
           attributes:
             has_nino:
@@ -111,11 +124,25 @@ en:
           attributes:
             benefit_type:
               inclusion: Select a benefit type
+            last_jsa_appointment_date:
+              blank: Enter the date your client last attended an appointment with their JSA work coach
+              blank_day: Date your client last attended an appointment with their JSA work coach must include a day
+              blank_month: Date your client last attended an appointment with their JSA work coach must include a month
+              blank_year: Date your client last attended an appointment with their JSA work coach must include a year
+              blank_day_month: Date your client last attended an appointment with their JSA work coach must include a day and month
+              blank_day_year: Date your client last attended an appointment with their JSA work coach must include a day and year
+              blank_month_year: Date your client last attended an appointment with their JSA work coach must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date your client last attended an appointment with their JSA work coach is too far in the past
+              future_not_allowed: Date your client last attended an appointment with their JSA work coach must be today or in the past
         steps/client/has_benefit_evidence_form:
           attributes:
             has_benefit_evidence:
               inclusion: Select yes if you have evidence of your client's benefit
-        steps/client/cannot_check_benefit_status_form:
+        steps/client/cannot_check_benefit_status_form: &WILL_ENTER_NINO_VALIDATION
           attributes:
             will_enter_nino:
               inclusion: Select whether you will enter the National Insurance number now or later
@@ -725,3 +752,4 @@ en:
             # fulfillment validation errors
             crime_application:
               invalid: Some application details are missing
+        steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION

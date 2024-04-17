@@ -187,6 +187,17 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
       end
 
+      context 'when land' do
+        let(:property_type) { 'land' }
+
+        it 'renders correct percentage ownership text' do
+          expect(page).to have_summary_row(
+            'What percentage of the land do they own?',
+            '10.57%',
+          )
+        end
+      end
+
       context 'when other relationship' do
         let(:relationship) { 'other' }
 

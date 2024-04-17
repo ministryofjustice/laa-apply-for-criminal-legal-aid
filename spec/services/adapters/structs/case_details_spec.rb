@@ -56,9 +56,13 @@ RSpec.describe Adapters::Structs::CaseDetails do
         %w[
           urn
           case_type
-          appeal_maat_id
           appeal_lodged_date
+          appeal_financial_circumstances_changed
           appeal_with_changes_details
+          appeal_original_app_submitted
+          appeal_reference_number
+          appeal_maat_id
+          appeal_usn
           has_case_concluded
           date_case_concluded
           is_preorder_work_claimed

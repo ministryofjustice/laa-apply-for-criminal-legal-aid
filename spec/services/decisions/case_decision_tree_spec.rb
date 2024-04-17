@@ -288,6 +288,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
     let(:has_benefit_evidence) { nil }
     let(:step_name) { :ioj }
+    let(:feature_flag_means_journey_enabled) { true }
 
     before do
       allow_any_instance_of(
@@ -299,6 +300,10 @@ RSpec.describe Decisions::CaseDecisionTree do
       ).to receive(:any?).and_return(evidence_required)
 
       allow(applicant_double).to receive_messages(has_benefit_evidence:, benefit_type:)
+
+      allow(FeatureFlags).to receive(:means_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
+      }
     end
 
     context 'and means test required' do
@@ -317,21 +322,37 @@ RSpec.describe Decisions::CaseDecisionTree do
 
         it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
       end
+
+      context 'and the application requires evidence upload' do
+        let(:means_passported) { false }
+        let(:evidence_required) { true }
+        let(:has_benefit_evidence) { true }
+
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      end
+
+      context 'and the application is means-passported' do
+        let(:means_passported) { true }
+        let(:evidence_required) { false }
+
+        it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+      end
     end
 
-    context 'and the application requires evidence upload' do
+    context 'and means test is not required' do
+      let(:feature_flag_means_journey_enabled) { true }
       let(:means_passported) { false }
-      let(:evidence_required) { true }
-      let(:has_benefit_evidence) { true }
-
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-    end
-
-    context 'and the application is means-passported' do
-      let(:means_passported) { true }
-      let(:evidence_required) { false }
+      let(:evidence_required) { nil }
 
       it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+
+      context 'when feature flag is not set' do
+        context 'routes to evidence upload if evidence required' do
+          let(:evidence_required) { true }
+
+          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+        end
+      end
     end
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers

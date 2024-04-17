@@ -2,6 +2,7 @@ en:
   summary:
     dictionary:
       absence_none: &absence_none "None"
+      payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
@@ -28,9 +29,15 @@ en:
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
+    payment_frequency:
+      week: week
+      fortnight: two weeks
+      four_weeks: four weeks
+      month: month
+      annual: year
+    does_not_get: Does not get
     sections:
       overview: Overview
-
       case_details: Case details
       client_details: Client details
       contact_details: Contact details
@@ -46,8 +53,11 @@ en:
       legal_representative_details: Legal representative
       employment_details: Employment
       income_details: Income
+      income_payments_details: Payments your client gets
+      income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
+      outgoings_payments_details: Payments your client pays
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: More information
@@ -130,6 +140,8 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: None
+      last_jsa_appointment_date:
+        question: Date of latest JSA appointment
       # END client details section
 
       # BEGIN contact details section
@@ -153,26 +165,6 @@ en:
       case_urn:
         question: Unique reference number
         absence_answer: *absence_none
-      has_case_concluded:
-        question: Has the case concluded?
-        answers:
-          <<: *YESNO
-      date_case_concluded:
-        question: Date the case concluded
-      is_preorder_work_claimed:
-        question: Do you intend to claim pre-order work?
-        answers:
-          <<: *YESNO
-      preorder_work_date:
-        question: When you or your firm were first instructed
-      preorder_work_details:
-        question: Details about the urgency of the work
-      is_client_remanded:
-        question: Has a court remanded your client in custody?
-        answers:
-          <<: *YESNO
-      date_client_remanded:
-        question: Date they were remanded
       case_type:
         question: Case type
         answers:
@@ -182,14 +174,41 @@ en:
           already_in_crown_court: Trial already in crown court
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
-          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
-      previous_maat_id:
-        question: Previous MAAT ID
-        absence_answer: *absence_none
+          appeal_to_crown_court_with_changes: Appeal to crown court
       appeal_lodged_date:
-        question: Date lodged
+        question: Date appeal lodged
+      appeal_original_app_submitted:
+        question: Legal aid application for original case?
+        answers:
+          <<: *YESNO
+      appeal_financial_circumstances_changed:
+        question: Changes to financial circumstances since original application?
+        answers:
+          <<: *YESNO
       appeal_with_changes_details:
         question: Changes details
+      appeal_maat_id_or_usn:
+        question: "Original application %{ref_type}"
+      has_case_concluded:
+        question: Case concluded?
+        answers:
+          <<: *YESNO
+      date_case_concluded:
+        question: Date case concluded
+      is_preorder_work_claimed:
+        question: Claim for pre-order work?
+        answers:
+          <<: *YESNO
+      preorder_work_date:
+        question: Date firm first instructed
+      preorder_work_details:
+        question: Urgency details
+      is_client_remanded:
+        question: Client in custody?
+        answers:
+          <<: *YESNO
+      date_client_remanded:
+        question: Date client remanded
       # END case details section
 
       # BEGIN offences section
@@ -313,6 +332,88 @@ en:
             other: "%{age} years old"
       # END dependants section
 
+      # BEGIN income payments details section
+      which_payments:
+        question: Which of these payments does your client get?
+        answers:
+          none: My client gets none of these payments
+      maintenance_payment:
+        question: Maintenance payments
+        answers:
+          description: *payment_answer_format
+      private_pension_payment:
+        question: Private pensions
+        answers:
+          description: *payment_answer_format
+      state_pension_payment:
+        question: State pensions
+        answers:
+          description: *payment_answer_format
+      interest_investment_payment:
+        question: Interest or income from savings or investments
+        answers:
+          description: *payment_answer_format
+      student_loan_grant_payment:
+        question: Student grant or loan
+        answers:
+          description: *payment_answer_format
+      board_from_family_payment:
+        question: Board from family members living with your client
+        answers:
+          description: *payment_answer_format
+      rent_payment:
+        question: Rent from a tenant
+        answers:
+          description: *payment_answer_format
+      financial_support_with_access_payment:
+        question: Financial support from someone who allows your client access to their assets or money
+        answers:
+          description: *payment_answer_format
+      from_friends_relatives_payment:
+        question: Money from friends or family
+        answers:
+          description: *payment_answer_format
+      other_payment:
+        question: Other sources of income
+        answers:
+          description: *payment_answer_format
+      other_payment_details:
+        question: Details of other sources of income
+      # END income payments details section
+
+      # BEGIN income benefits details section
+      which_benefits:
+        question: Which of these benefits does your client get?
+        answers:
+          none: My client gets none of these benefits
+      child_benefit:
+        question: Child Benefit
+        answers:
+          description: *payment_answer_format
+      working_or_child_tax_credit_benefit:
+        question: Working Tax Credit or Child Tax Credit
+        answers:
+          description: *payment_answer_format
+      incapacity_benefit:
+        question: Incapacity Benefit
+        answers:
+          description: *payment_answer_format
+      industrial_injuries_disablement_benefit:
+        question: Industrial Injuries Disablement Benefit
+        answers:
+          description: *payment_answer_format
+      jsa_benefit:
+        question: Contribution-based Jobseeker’s Allowance (JSA)
+        answers:
+          description: *payment_answer_format
+      other_benefit:
+        question: Other benefits
+        answers:
+          description: *payment_answer_format
+      other_benefit_details:
+        question: Other benefits details
+      # END income benefits details section
+
       # BEGIN other sources of income details section
       manage_without_income:
         question: How does your client manage with no income?
@@ -338,20 +439,20 @@ en:
       mortgage:
         question: How much are your client's mortgage payments?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       rent:
         question: How much rent does your client pay, after taking away Housing Benefit?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       # BEGIN board and lodgings section
       board_amount:
         question: How much does your client pay for board and lodgings?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       food_amount:
         question: How much of the board and lodgings payment is for food?
         answers:
-          description: "%{amount} every %{frequency}"
+          description: *payment_answer_format
       payee_name:
         question: What is the name of the person your client pays for board and lodgings?
         answers:
@@ -370,6 +471,27 @@ en:
         answers:
           description: "%{amount}"
       # END housing payments section
+
+      # BEGIN  outgoings payments section
+      which_outgoings:
+        question: Which of these payments does your client pay?
+        answers:
+          none: My client does not pay any of these payments
+      childcare_outgoing:
+        question: Childcare payments
+        answers:
+          description: *payment_answer_format
+      maintenance_outgoing:
+        question: Maintenance payments to a former partner
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing:
+        question: Contributions towards criminal or civil legal aid
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing_details:
+        question: What is the case reference of the criminal rep order or civil certificate?
+      # END outgoings payments section
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
@@ -425,7 +547,11 @@ en:
         absence_answer: '' 
       sort_code:
         question: What is the sort code or branch name?
-        absence_answer: '' 
+        absence_answer: ''
+      has_capital_savings:
+        question: Which savings does your client have inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END saving
       #
       # START premium_bonds
@@ -450,6 +576,10 @@ en:
         question: Whose name is the investment in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: ''
+      has_investments:
+        question: Which investments does your client have inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END investments
 
       # START national_savings_certificates
@@ -465,7 +595,11 @@ en:
       national_savings_certificate_ownership_type: 
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
-        absence_answer: '' 
+        absence_answer: ''
+      has_national_savings_certificate:
+        question: Does your client have any National Savings Certificates?
+        answers:
+          <<: *YESNO
       # END national_savings_certificates
 
       # BEGIN property, address and owners
@@ -514,6 +648,10 @@ en:
       percentage_owned:
         question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
+      has_assets:
+        question: Which assets does your client own or part-own inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END property, address and owners
 
       # START trust_fund
