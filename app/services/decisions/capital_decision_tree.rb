@@ -26,7 +26,7 @@ module Decisions
       when :delete_property_owner
         edit(:property_owners, property_id: property)
       when :premium_bonds
-        edit(:has_national_savings_certificates)
+        after_premium_bonds
       when :has_national_savings_certificates
         after_has_national_savings_certificates
       when :national_savings_certificates
@@ -74,15 +74,21 @@ module Decisions
     end
 
     def after_has_national_savings_certificates
-      return edit(:investment_type) if form_object.has_national_savings_certificates.no?
+      return investments_routing if form_object.has_national_savings_certificates.no?
 
       edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
     end
 
     def after_national_savings_certificates_summary
-      return edit(:investment_type) if form_object.add_national_savings_certificate.no?
+      return investments_routing if form_object.add_national_savings_certificate.no?
 
       edit(:national_savings_certificates, national_savings_certificate_id: form_object.national_savings_certificate)
+    end
+
+    def investments_routing
+      return edit(:investments_summary) if current_crime_application.investments.present?
+
+      edit(:investment_type)
     end
 
     def after_investments_summary
@@ -92,7 +98,7 @@ module Decisions
     end
 
     def after_properties_summary
-      return edit(:saving_type) if form_object.add_property.no?
+      return savings_routing if form_object.add_property.no?
 
       edit(:other_property_type)
     end
@@ -104,7 +110,7 @@ module Decisions
     end
 
     def after_property_type(property)
-      return edit(:saving_type) unless property
+      return savings_routing unless property
 
       redirect_path = if property.property_type == PropertyType::LAND.to_s
                         property.property_type.to_sym
@@ -113,6 +119,12 @@ module Decisions
                       end
 
       edit(redirect_path, property_id: property)
+    end
+
+    def savings_routing
+      return edit(:savings_summary) if current_crime_application.savings.present?
+
+      edit(:saving_type)
     end
 
     # TODO: : Fix nested conditions
@@ -157,6 +169,14 @@ module Decisions
 
     def income_frozen_assets_unanswered?
       form_object.crime_application.income.has_frozen_income_or_assets.nil?
+    end
+
+    def after_premium_bonds
+      if current_crime_application.national_savings_certificates.present?
+        return edit(:national_savings_certificates_summary)
+      end
+
+      edit(:has_national_savings_certificates)
     end
   end
 end

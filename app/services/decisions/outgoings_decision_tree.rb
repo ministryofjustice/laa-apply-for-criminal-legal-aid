@@ -34,6 +34,8 @@ module Decisions
 
     def after_answers
       if requires_full_capital
+        return edit('/steps/capital/clients_assets') if current_crime_application.properties.present?
+
         edit('/steps/capital/property_type')
       else
         edit('/steps/capital/trust_fund')

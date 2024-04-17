@@ -153,6 +153,11 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
   context 'when the step is `answers`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :answers }
+    let(:properties) { [] }
+
+    before do
+      allow(crime_application).to receive(:properties).and_return(properties)
+    end
 
     context 'when case_type requires full capital assessment' do
       let(:case_type) { 'indictable' }
@@ -167,6 +172,15 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
 
       context 'has correct next step' do
         it { is_expected.to have_destination('/steps/capital/trust_fund', :edit, id: crime_application) }
+      end
+    end
+
+    context 'when properties present' do
+      let(:case_type) { 'indictable' }
+      let(:properties) { class_double(Property) }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination('/steps/capital/clients_assets', :edit, id: crime_application) }
       end
     end
   end

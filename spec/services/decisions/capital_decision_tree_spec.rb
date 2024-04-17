@@ -95,9 +95,24 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     context 'the client has selected no to adding a certificates' do
       let(:add_national_savings_certificate) { YesNoAnswer::NO }
+      let(:investments) { [] }
 
-      it 'redirects to the investment_type page' do
-        expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
+      before do
+        allow(crime_application).to receive(:investments).and_return(investments)
+      end
+
+      context 'the client does not have investments' do
+        it 'redirects investment_type' do
+          expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
+        end
+      end
+
+      context 'the client has investments' do
+        let(:investments) { class_double(Investment) }
+
+        it 'redirects to investment summary page' do
+          expect(subject).to have_destination(:investments_summary, :edit, id: crime_application)
+        end
       end
     end
   end
@@ -105,12 +120,27 @@ RSpec.describe Decisions::CapitalDecisionTree do
   context 'when the step is `property_type`' do
     let(:form_object) { double('FormObject', property:) }
     let(:step_name) { :property_type }
+    let(:savings) { [] }
+
+    before do
+      allow(crime_application).to receive(:savings).and_return(savings)
+    end
 
     context 'the client has no properties' do
       let(:property) { nil }
 
-      it 'redirects to select saving type' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      context 'the client has no savings' do
+        it 'redirects to select saving type' do
+          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        end
+      end
+
+      context 'the client has savings' do
+        let(:savings) { class_double(Saving) }
+
+        it 'redirects to the savings summary page' do
+          expect(subject).to have_destination(:savings_summary, :edit, id: crime_application)
+        end
       end
     end
 
@@ -342,9 +372,11 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:form_object) { double('FormObject', property:) }
     let(:step_name) { :properties_summary }
     let(:property) { 'new_property' }
+    let(:savings) { [] }
 
     before do
       allow(form_object).to receive_messages(crime_application:, add_property:)
+      allow(crime_application).to receive(:savings).and_return(savings)
     end
 
     context 'the client has selected yes to adding an asset' do
@@ -358,8 +390,18 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected no to adding an asset' do
       let(:add_property) { YesNoAnswer::NO }
 
-      it 'redirects to select saving type' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      context 'the client has no savings' do
+        it 'redirects to select saving type' do
+          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        end
+      end
+
+      context 'the client has savings' do
+        let(:savings) { class_double(Saving) }
+
+        it 'redirects to the savings summary page' do
+          expect(subject).to have_destination(:savings_summary, :edit, id: crime_application)
+        end
       end
     end
   end
@@ -410,16 +452,28 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:form_object) { double('FormObject', national_savings_certificate: certificate) }
     let(:step_name) { :has_national_savings_certificates }
     let(:certificate) { 'new_national_savings_certificate' }
+    let(:investments) { [] }
 
     before do
       allow(form_object).to receive_messages(crime_application:, has_national_savings_certificates:)
+      allow(crime_application).to receive(:investments).and_return(investments)
     end
 
     context 'the client has no certificates' do
       let(:has_national_savings_certificates) { YesNoAnswer::NO }
 
-      it 'redirects investment_type' do
-        expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
+      context 'the client does not have investments' do
+        it 'redirects investment_type' do
+          expect(subject).to have_destination(:investment_type, :edit, id: crime_application)
+        end
+      end
+
+      context 'the client has investments' do
+        let(:investments) { class_double(Investment) }
+
+        it 'redirects to investment summary page' do
+          expect(subject).to have_destination(:investments_summary, :edit, id: crime_application)
+        end
       end
     end
 
@@ -464,9 +518,24 @@ RSpec.describe Decisions::CapitalDecisionTree do
   context 'when the step is `premium_bonds`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :premium_bonds }
+    let(:national_savings_certificates) { [] }
 
-    context 'has correct next step' do
-      it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+    before do
+      allow(crime_application).to receive(:national_savings_certificates).and_return(national_savings_certificates)
+    end
+
+    context 'when national savings certificate(s) not present' do
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when national savings certificate(s) present' do
+      let(:national_savings_certificates) { class_double(NationalSavingsCertificate) }
+
+      context 'has correct next step' do
+        it { is_expected.to have_destination(:national_savings_certificates_summary, :edit, id: crime_application) }
+      end
     end
   end
 
