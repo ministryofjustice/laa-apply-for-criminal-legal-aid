@@ -1,21 +1,44 @@
-<div class="govuk-grid-row app-inverted--card app-inverted-text">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l app-inverted-text">Use eForms for this application</h1>
+<% if FeatureFlags.means_journey.enabled? %>
+  <div class="govuk-grid-row app-inverted--card app-inverted-text">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l app-inverted-text">You need to apply using eForms</h1>
 
-    <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
+      <p class="govuk-body app-inverted-text">This is because one or more of the following applies to your client:</p>
 
-    <ul class="govuk-list govuk-list--bullet app-inverted-text">
-      <li>has a partner</li>
-      <li>does not have a National Insurance number (if they are 18 years old or over)</li>
-      <li>does not receive a passporting benefit based on DWP records, including Universal Credit</li>
-      <li>is employed, including self-employed, business partner, company director or shareholder</li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet app-inverted-text">
+        <li>they have a partner</li>
+        <li>they do not get a passporting benefit, based on DWP records</li>
+        <li>they are working</li>
+      </ul>
 
-    <div class="govuk-button-group govuk-!-margin-top-6">
-      <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
-                      class: 'app-button--m app-button--inverted' %>
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
+                        class: 'app-button--m app-button--inverted' %>
+      </div>
+
+      <%= link_to t('helpers.back_to_applications'), crime_applications_path, class: 'app-link--inverted govuk-!-font-size-19' %>
     </div>
-
-    <%= link_to t('helpers.back_to_applications'), crime_applications_path, class: 'app-link--inverted govuk-!-font-size-19' %>
   </div>
-</div>
+<% else %>
+  <div class="govuk-grid-row app-inverted--card app-inverted-text">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l app-inverted-text">Use eForms for this application</h1>
+
+      <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
+
+      <ul class="govuk-list govuk-list--bullet app-inverted-text">
+        <li>has a partner</li>
+        <li>does not have a National Insurance number (if they are 18 years old or over)</li>
+        <li>does not receive a passporting benefit based on DWP records, including Universal Credit</li>
+        <li>is employed, including self-employed, business partner, company director or shareholder</li>
+      </ul>
+
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
+                        class: 'app-button--m app-button--inverted' %>
+      </div>
+
+      <%= link_to t('helpers.back_to_applications'), crime_applications_path, class: 'app-link--inverted govuk-!-font-size-19' %>
+    </div>
+  </div>
+<% end %>
