@@ -5,16 +5,18 @@ RSpec.describe Steps::Client::BenefitTypeForm do
 
   let(:arguments) do
     {
-      crime_application: crime_application,
-      record: applicant_record,
-      benefit_type: benefit_type,
+      crime_application:,
+      record:,
+      benefit_type:,
+      last_jsa_appointment_date:
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
-  let(:applicant_record) { Applicant.new }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: record) }
+  let(:record) { Applicant.new }
 
   let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+  let(:last_jsa_appointment_date) { nil }
 
   describe 'validations' do
     context 'when `benefit_type` is blank' do
@@ -36,13 +38,78 @@ RSpec.describe Steps::Client::BenefitTypeForm do
     end
 
     context 'when `benefit_type` is valid' do
+      let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
       it { is_expected.to be_valid }
+
+      it 'passes validation' do
+        expect(form.errors.of_kind?(:benefit_type, :invalid)).to be(false)
+      end
+
+      it_behaves_like 'a has-one-association form',
+                      association_name: :applicant,
+                      expected_attributes: {
+                        'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                        'last_jsa_appointment_date' => nil
+                      }
+
+      context 'when `benefit_type` answer is not jsa' do
+        context 'when a `last_jsa_appointment_date` was previously recorded' do
+          let(:last_jsa_appointment_date) { 1.month.ago.to_date }
+
+          it { is_expected.to be_valid }
+
+          it 'can make last_jsa_appointment_date field nil if no longer required' do
+            attributes = form.send(:attributes_to_reset)
+            expect(attributes['last_jsa_appointment_date']).to be_nil
+          end
+        end
+      end
+
+      context 'when `benefit_type` answer is jsa' do
+        context 'when a `last_jsa_appointment_date` was previously recorded' do
+          let(:benefit_type) { BenefitType::JSA.to_s }
+          let(:last_jsa_appointment_date) { 1.month.ago.to_date }
+
+          it 'is valid' do
+            expect(form).to be_valid
+            expect(
+              form.errors.of_kind?(
+                :last_jsa_appointment_date,
+                :present
+              )
+            ).to be(false)
+          end
+
+          it 'cannot reset `last_jsa_appointment_date` as it is relevant' do
+            record.update(benefit_type: BenefitType::JSA.to_s)
+
+            attributes = form.send(:attributes_to_reset)
+            expect(attributes['last_jsa_appointment_date']).to eq(last_jsa_appointment_date)
+          end
+        end
+
+        context 'when a `last_jsa_appointment_date` was not previously recorded' do
+          let(:benefit_type) { BenefitType::JSA.to_s }
+          let(:last_jsa_appointment_date) { 1.month.ago.to_date }
+
+          it 'is also valid' do
+            expect(form).to be_valid
+            expect(
+              form.errors.of_kind?(
+                :last_jsa_appointment_date,
+                :present
+              )
+            ).to be(false)
+          end
+        end
+      end
     end
   end
 
   describe '#save' do
     before do
-      allow(applicant_record).to receive(:benefit_type).and_return(previous_benefit_type)
+      allow(record).to receive(:benefit_type).and_return(previous_benefit_type)
     end
 
     context 'when the benefit type has changed' do
@@ -52,6 +119,7 @@ RSpec.describe Steps::Client::BenefitTypeForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                        'last_jsa_appointment_date' => nil
                       }
     end
 
@@ -59,7 +127,7 @@ RSpec.describe Steps::Client::BenefitTypeForm do
       let(:previous_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
       it 'does not save the record but returns true' do
-        expect(applicant_record).not_to receive(:update)
+        expect(record).not_to receive(:update)
         expect(subject.save).to be(true)
       end
     end
