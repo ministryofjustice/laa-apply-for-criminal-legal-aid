@@ -90,6 +90,20 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
       end
     end
 
+    context 'when `food_amount` is greater than `board_amount`' do
+      let(:board_amount) { '400' }
+      let(:food_amount) { '450' }
+
+      it 'returns false' do
+        expect(form.save).to be(false)
+      end
+
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:food_amount, :more_than_board)).to be(true)
+      end
+    end
+
     context 'when `frequency` is not valid' do
       let(:frequency) { 'every six weeks' }
 
@@ -154,6 +168,20 @@ RSpec.describe Steps::Outgoings::BoardAndLodgingForm do
         )
 
         form.save
+      end
+
+      context 'when `food_amount` is entered as 0' do
+        let(:food_amount) { '0' }
+
+        it 'returns true' do
+          expect(form.save).to be(true)
+        end
+
+        it { is_expected.to be_valid }
+
+        it 'does not have an error' do
+          expect(form.errors.of_kind?(:food_amount, :greater_than_or_equal_to)).to be(false)
+        end
       end
 
       context 'when amounts were previously recorded' do

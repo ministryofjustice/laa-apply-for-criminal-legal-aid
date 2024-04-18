@@ -3,9 +3,20 @@ require 'rails_helper'
 RSpec.describe Passporting::MeansPassporter do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, resubmission?: resubmission?) }
+  let(:crime_application) {
+    instance_double(
+      CrimeApplication,
+      case: case_record,
+      applicant: applicant,
+      resubmission?: resubmission?
+    )
+  }
 
+  let(:case_record) { instance_double(Case, case_type:, appeal_financial_circumstances_changed:) }
   let(:applicant) { instance_double(Applicant, under18?: under18, passporting_benefit: passporting_benefit) }
+
+  let(:case_type) { 'either_way' }
+  let(:appeal_financial_circumstances_changed) { nil }
 
   let(:resubmission?) { false }
   let(:under18) { nil }
@@ -26,6 +37,28 @@ RSpec.describe Passporting::MeansPassporter do
         expect(subject).to receive(:passported?)
 
         subject.call
+      end
+    end
+
+    context 'for a appeal to crown court' do
+      let(:case_type) { 'appeal_to_crown_court' }
+
+      context 'with no financial changes' do
+        let(:appeal_financial_circumstances_changed) { 'no' }
+
+        it 'uses the existing values' do
+          expect(crime_application).not_to receive(:update)
+          expect(subject.call).to be(true)
+        end
+      end
+
+      context 'with financial changes' do
+        let(:appeal_financial_circumstances_changed) { 'yes' }
+
+        it 'uses the existing values' do
+          expect(crime_application).to receive(:update)
+          expect(subject.call).to be(false)
+        end
       end
     end
 
