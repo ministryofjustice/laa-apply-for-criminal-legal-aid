@@ -15,7 +15,11 @@ module Decisions
 
     def after_confirm_result
       if form_object.confirm_result.yes?
-        show(:benefit_check_result_exit)
+        if FeatureFlags.means_journey.enabled?
+          edit('steps/case/urn')
+        else
+          show(:benefit_check_result_exit)
+        end
       else
         edit(:confirm_details)
       end
