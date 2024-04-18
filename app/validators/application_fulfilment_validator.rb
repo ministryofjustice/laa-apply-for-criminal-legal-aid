@@ -1,4 +1,6 @@
 class ApplicationFulfilmentValidator < BaseFulfilmentValidator
+  include TypeOfMeansAssessment
+
   private
 
   # More validations can be added here
@@ -13,7 +15,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
-    if record.is_means_tested == 'yes' && record.case.case_type.nil?
+    if record.is_means_tested == 'yes' && kase.case_type.nil?
       errors << [
         :base, :case_type_missing, { change_path: edit_steps_client_case_type_path }
       ]
@@ -25,6 +27,12 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
+    unless all_sections_complete?
+      errors << [
+        :base, :incomplete_records, { change_path: edit_steps_submission_review_path }
+      ]
+    end
+
     errors
   end
 
@@ -33,10 +41,18 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def means_record_present?
-    record.income.present? && record.income&.employment_status&.include?('not_working')
+    income.present? && income&.employment_status&.include?('not_working')
   end
 
   def client_remanded_in_custody?
-    (record.case.is_client_remanded == 'yes') && record.case.date_client_remanded.present?
+    kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
   end
+
+  def all_sections_complete?
+    return false if requires_full_means_assessment? && !capital&.complete?
+
+    kase.complete?
+  end
+
+  alias crime_application record
 end

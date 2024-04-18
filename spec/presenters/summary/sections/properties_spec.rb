@@ -3,10 +3,17 @@ require 'rails_helper'
 describe Summary::Sections::Properties do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double(CrimeApplication, properties: records, in_progress?: true, capital: double,
-                    case: (double case_type:), to_param: 12_345)
-  }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      properties: records,
+      in_progress?: true,
+      capital: double,
+      kase: (double case_type:),
+      to_param: 12_345
+    )
+  end
+
   let(:records) { [Property.new] }
   let(:case_type) { 'either_way' }
 

@@ -683,5 +683,6 @@ en:
           percentage_owned_commercial: *percentage_owned_text
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
-      steps_capital_answers_form: # TODO :: NOT WORKING
-        has_no_other_assets: My client confirms they have no other assets or capital
+      steps_capital_answers_form:
+        has_no_other_assets_options: 
+          'yes': My client confirms they have no other assets or capital

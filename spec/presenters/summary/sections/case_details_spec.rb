@@ -8,7 +8,7 @@ describe Summary::Sections::CaseDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      case: kase,
+      kase: kase,
     )
   end
 

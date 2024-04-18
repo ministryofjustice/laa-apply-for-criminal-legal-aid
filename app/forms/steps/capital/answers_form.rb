@@ -3,11 +3,14 @@ module Steps
     class AnswersForm < Steps::BaseFormObject
       attribute :has_no_other_assets
 
-      validates :has_no_other_assets, presence: true
-      validates :has_no_other_assets, inclusion: { in: [YesNoAnswer::YES.to_s] }
+      validate do
+        CapitalAssessment::ConfirmationValidator.new(self).validate
+      end
+
+      delegate :capital, to: :crime_application
 
       def persist!
-        record.update(attributes)
+        record.valid?(:check_answers) && record.update(attributes)
       end
     end
   end

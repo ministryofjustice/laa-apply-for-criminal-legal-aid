@@ -19,6 +19,8 @@ module Adapters
         Structs::CaseDetails.new(case_details)
       end
 
+      alias kase case
+
       def ioj
         Structs::InterestsOfJustice.new(interests_of_justice)
       end

@@ -6,7 +6,7 @@ describe Summary::Sections::Offences do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      case: kase,
+      kase: kase,
       in_progress?: true
     )
   end

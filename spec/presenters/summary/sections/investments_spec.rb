@@ -5,7 +5,7 @@ describe Summary::Sections::Investments do
 
   let(:crime_application) {
     instance_double(CrimeApplication, investments: records, in_progress?: true, capital: double,
-   case: (double case_type:), to_param: 12_345)
+   kase: (double case_type:), to_param: 12_345)
   }
   let(:records) { [Investment.new] }
   let(:case_type) { 'either_way' }

@@ -56,7 +56,7 @@ module Summary
       end
 
       def show_overview_details?
-        crime_application.case.present?
+        crime_application.kase.present?
       end
     end
   end
