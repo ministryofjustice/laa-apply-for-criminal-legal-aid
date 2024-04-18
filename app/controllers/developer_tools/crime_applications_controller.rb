@@ -48,6 +48,7 @@ module DeveloperTools
         dob: rand(15..17).years.ago,
         nino: nil,
         benefit_type: nil,
+        last_jsa_appointment_date: nil,
         passporting_benefit: nil,
       ).update(
         correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
@@ -89,6 +90,7 @@ module DeveloperTools
           date_of_birth: overrides.fetch(:dob, details[:dob]),
           nino: overrides.fetch(:nino, details[:nino]),
           benefit_type: overrides.fetch(:benefit_type, 'universal_credit'),
+          last_jsa_appointment_date: overrides.fetch(:last_jsa_appointment_date, nil),
           passporting_benefit: overrides.fetch(:passporting_benefit, true),
         )
       end
