@@ -236,7 +236,7 @@ en:
           jsa: This includes New Style JSA.
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
       steps_outgoings_board_and_lodging_form:
-        food_amount_in_pounds: For example, '0' or '50'.
+        food_amount: Enter '0' if none.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
       steps_capital_property_type_form:

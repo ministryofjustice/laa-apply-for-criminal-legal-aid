@@ -8,10 +8,18 @@ module Steps
       attribute :payee_relationship_to_client, :string
 
       validates :board_amount, presence: true, numericality: { greater_than: 0 }
-      validates :food_amount, presence: true, numericality: { greater_than: 0 }
+      validates :food_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
       validates :frequency, inclusion: { in: PaymentFrequencyType.values }
       validates :payee_name, presence: true
       validates :payee_relationship_to_client, presence: true
+
+      validate :board_greater_than_food
+
+      def board_greater_than_food
+        return unless board_amount.present? && food_amount.present?
+
+        errors.add(:food_amount, :more_than_board) if food_amount.to_f > board_amount.to_f
+      end
 
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.board_and_lodging
