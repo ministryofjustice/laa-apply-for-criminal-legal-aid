@@ -1,9 +1,0 @@
-<% unless record.valid?(:check_answers) %>
-  <div class="govuk-error-summary">
-    <% record.errors.each do |e| %>
-      <h2 class="govuk-error-summary__title govuk-!-margin-bottom-0">
-        <%= e.message %>
-      </h2>
-    <% end %>
-  </div>
-<% end %>
