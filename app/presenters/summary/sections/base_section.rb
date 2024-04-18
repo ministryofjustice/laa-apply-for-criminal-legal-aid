@@ -52,6 +52,8 @@ module Summary
 
       private
 
+      delegate :kase, to: :crime_application
+
       # :nocov:
       def answers
         raise 'must be implemented in subclasses'

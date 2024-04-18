@@ -7,4 +7,7 @@ class Capital < ApplicationRecord
   has_many :investments, through: :crime_application
   has_many :national_savings_certificates, through: :crime_application
   has_many :properties, through: :crime_application
+
+  validates_with CapitalAssessment::AnswersValidator, on: [:submission, :check_answers]
+  validates_with CapitalAssessment::ConfirmationValidator, on: :submission
 end

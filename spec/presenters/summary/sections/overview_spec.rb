@@ -19,7 +19,7 @@ describe Summary::Sections::Overview do
   let(:status) { :submitted }
 
   before do
-    allow(crime_application).to receive_messages(case: Case.new, in_progress?: false, is_means_tested: 'yes')
+    allow(crime_application).to receive_messages(kase: Case.new, in_progress?: false, is_means_tested: 'yes')
     allow(provider_details).to receive_messages(provider_email: 'provider@example.com', office_code: '123AA')
   end
 

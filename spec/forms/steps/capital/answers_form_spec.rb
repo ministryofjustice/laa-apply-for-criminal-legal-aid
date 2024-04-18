@@ -12,7 +12,7 @@ RSpec.describe Steps::Capital::AnswersForm do
 
   let(:attributes) { {} }
 
-  let(:crime_application) { instance_double(CrimeApplication, capital:) }
+  let(:crime_application) { CrimeApplication.new(capital:) }
   let(:capital) { Capital.new }
 
   context 'with valid attributes' do
@@ -40,6 +40,19 @@ RSpec.describe Steps::Capital::AnswersForm do
       let(:attributes) { { has_no_other_assets: nil } }
 
       it 'does not update capital record' do
+        expect(capital).not_to receive(:update)
+        expect(subject.save).to be(false)
+      end
+    end
+
+    context 'when `has_no_other_assets` is `yes` but capital is not valid for submission' do
+      let(:attributes) { { has_no_other_assets: YesNoAnswer::YES.to_s } }
+
+      before do
+        allow(capital).to receive(:valid?).with(:check_answers).and_return(false)
+      end
+
+      it 'updates capital record' do
         expect(capital).not_to receive(:update)
         expect(subject.save).to be(false)
       end

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :case, :ioj, :income, :documents, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :capital, :ioj, :income, :documents,
+                                           keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -18,18 +19,24 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:arguments) do
     {
       is_means_tested:,
-      case:,
+      kase:,
       ioj:,
       income:,
+      capital:,
       documents:
     }
   end
 
   let(:is_means_tested) { 'yes' }
 
-  let(:case) {
+  let(:kase) {
     instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
   }
+
+  let(:capital) {
+    instance_double(Capital)
+  }
+
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
 
@@ -38,11 +45,18 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
 
-  let(:income) { instance_double(Income, employment_status:) }
+  let(:income) { instance_double(Income, employment_status: employment_status, income_above_threshold: 'yes') }
+
   let(:employment_status) { [] }
 
   let(:documents) { double(stored: stored_documents) }
   let(:stored_documents) { [] }
+
+  before do
+    allow(capital).to receive(:valid?).with(:submission).and_return(true)
+    allow(kase).to receive(:valid?).with(:submission).and_return(true)
+    allow(kase).to receive(:valid?).with(:submission).and_return(true)
+  end
 
   context 'MeansPassporter validation' do
     before do
@@ -182,6 +196,41 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
           expect(subject.errors.of_kind?(:base, :case_type_missing)).to be(true)
           expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case_type')
         end
+      end
+    end
+  end
+
+  describe 'validating section completeness' do
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+    end
+
+    it { is_expected.to be_valid }
+
+    context 'when capital section is not complete' do
+      before do
+        expect(capital).to receive(:valid?).with(:submission).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when case section is not complete' do
+      before do
+        expect(kase).to receive(:valid?).with(:submission).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
       end
     end
   end

@@ -34,6 +34,8 @@ module SubmissionSerializer
         raise 'must be implemented in subclasses'
       end
       # :nocov:
+
+      delegate :kase, to: :crime_application
     end
   end
 end

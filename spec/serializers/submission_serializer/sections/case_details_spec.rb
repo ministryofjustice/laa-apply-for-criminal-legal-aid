@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, case: kase) }
+  let(:crime_application) { instance_double(CrimeApplication, kase:) }
   let(:case_concluded_date) { DateTime.new(2023, 3, 2) }
   let(:client_remand_date) { DateTime.new(2023, 3, 2) }
   let(:preorder_work_date) { DateTime.new(2023, 3, 2) }
