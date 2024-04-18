@@ -79,6 +79,7 @@ module DeveloperTools
       )
     end
 
+    # rubocop:disable Metrics/MethodLength
     def find_or_create_applicant(overrides = {})
       Applicant.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
         surname, details = DWP::MockBenefitCheckService::KNOWN.to_a.sample
@@ -95,6 +96,7 @@ module DeveloperTools
         )
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def find_or_create_case
       Case.find_or_initialize_by(crime_application_id: crime_application.id)

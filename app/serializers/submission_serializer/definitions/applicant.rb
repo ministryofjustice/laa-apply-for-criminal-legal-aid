@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Definitions
     class Applicant < Definitions::BaseDefinition
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
           json.first_name first_name
@@ -18,7 +18,7 @@ module SubmissionSerializer
           json.correspondence_address Definitions::Address.generate(correspondence_address)
         end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end
