@@ -8,6 +8,24 @@ class Capital < ApplicationRecord
   has_many :national_savings_certificates, through: :crime_application
   has_many :properties, through: :crime_application
 
-  validates_with CapitalAssessment::AnswersValidator, on: [:submission, :check_answers]
-  validates_with CapitalAssessment::ConfirmationValidator, on: :submission
+  validate on: :submission do
+    answers_validator.validate
+    confirmation_validator.validate
+  end
+
+  validate on: :check_answers do
+    answers_validator.validate
+  end
+
+  def complete?
+    confirmation_validator.confirmed? && answers_validator.all_complete?
+  end
+
+  def confirmation_validator
+    @confirmation_validator ||= CapitalAssessment::ConfirmationValidator.new(self)
+  end
+
+  def answers_validator
+    @answers_validator ||= CapitalAssessment::AnswersValidator.new(self)
+  end
 end

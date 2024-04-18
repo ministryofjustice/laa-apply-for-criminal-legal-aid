@@ -1,12 +1,16 @@
 module CapitalAssessment
-  class ConfirmationValidator < ActiveModel::Validator
-    def validate(record)
-      record.errors.add :has_no_other_assets, :blank unless confirmed?(record)
+  class ConfirmationValidator
+    def initialize(record)
+      @record = record
     end
 
-    private
+    attr_reader :record
 
-    def confirmed?(record)
+    def validate
+      record.errors.add :has_no_other_assets, :blank unless confirmed?
+    end
+
+    def confirmed?
       record.has_no_other_assets == YesNoAnswer::YES.to_s
     end
   end

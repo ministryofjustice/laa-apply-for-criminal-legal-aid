@@ -55,6 +55,8 @@ class Property < ApplicationRecord
   end
 
   def complete?
+    return false unless property_type
+
     values_at(*REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?) &&
       address_complete? && property_owners_complete?
   end

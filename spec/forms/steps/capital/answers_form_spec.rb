@@ -21,7 +21,7 @@ RSpec.describe Steps::Capital::AnswersForm do
 
       it 'updates capital record' do
         expect(capital).to receive(:update).and_return(true)
-        expect(subject.save).to be(true)
+        expect(subject.save!).to be(true)
       end
     end
   end
@@ -45,12 +45,10 @@ RSpec.describe Steps::Capital::AnswersForm do
       end
     end
 
-    context 'when `has_no_other_assets` is `yes` but capital is not valid for submission' do
+    context 'when `has_no_other_assets` is `yes` but answers are incomplete' do
       let(:attributes) { { has_no_other_assets: YesNoAnswer::YES.to_s } }
 
-      before do
-        allow(capital).to receive(:valid?).with(:check_answers).and_return(false)
-      end
+      before { capital.properties.build }
 
       it 'updates capital record' do
         expect(capital).not_to receive(:update)

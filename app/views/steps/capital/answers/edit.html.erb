@@ -5,7 +5,15 @@
   <div class="govuk-grid-column">
     <%= render partial: 'shared/flash_banner' %>
 
-    <%= render partial: 'shared/submission_error_warning', locals: { record: @form_object.capital } %>
+    <% unless @form_object.capital.valid?(:check_answers) %>
+      <div class="govuk-error-summary">
+        <% @form_object.capital.errors.each do |e| %>
+          <h2 class="govuk-error-summary__title govuk-!-margin-bottom-0">
+            <%= e.message %>
+          </h2>
+        <% end %>
+      </div>
+    <% end %>
 
     <%= govuk_error_summary(@form_object) %>
 

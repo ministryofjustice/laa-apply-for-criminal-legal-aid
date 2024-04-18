@@ -98,8 +98,6 @@ module Summary
 
       private
 
-      delegate :kase, to: :crime_application
-
       def appeal_case_type?
         return false unless kase&.case_type
 

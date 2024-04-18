@@ -3,7 +3,9 @@ module Steps
     class AnswersForm < Steps::BaseFormObject
       attribute :has_no_other_assets
 
-      validates_with CapitalAssessment::ConfirmationValidator
+      validate do
+        CapitalAssessment::ConfirmationValidator.new(self).validate
+      end
 
       delegate :capital, to: :crime_application
 

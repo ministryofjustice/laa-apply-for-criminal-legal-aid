@@ -1,21 +1,20 @@
 module CapitalAssessment
-  class AnswersValidator < ActiveModel::Validator
-    def validate(record)
-      record.errors.add :base, :incomplete_records if any_incomplete_records?(record)
+  class AnswersValidator
+    def initialize(record)
+      @record = record
     end
 
-    private
+    attr_reader :record
 
-    def any_incomplete_records?(capital)
-      incomplete?(capital.properties) ||
-        incomplete?(capital.savings) ||
-        incomplete?(capital.investments) ||
-        incomplete?(capital.national_savings_certificates) ||
-        incomplete?(capital.national_savings_certificates)
+    def validate
+      record.errors.add :base, :incomplete_records unless all_complete?
     end
 
-    def incomplete?(records)
-      records.any? { |p| !p.complete? }
+    def all_complete? # rubocop:disable Metrics/CyclomaticComplexity
+      record.properties.all?(&:complete?) &&
+        record.savings.all?(&:complete?) &&
+        record.investments.all?(&:complete?) &&
+        record.national_savings_certificates.all?(&:complete?)
     end
   end
 end

@@ -53,9 +53,8 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:stored_documents) { [] }
 
   before do
-    allow(capital).to receive(:valid?).with(:submission).and_return(true)
-    allow(kase).to receive(:valid?).with(:submission).and_return(true)
-    allow(kase).to receive(:valid?).with(:submission).and_return(true)
+    allow(capital).to receive(:complete?).and_return(true)
+    allow(kase).to receive(:complete?).and_return(true)
   end
 
   context 'MeansPassporter validation' do
@@ -210,7 +209,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'when capital section is not complete' do
       before do
-        expect(capital).to receive(:valid?).with(:submission).and_return(false)
+        expect(capital).to receive(:complete?).and_return(false)
       end
 
       it { is_expected.not_to be_valid }
@@ -223,7 +222,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'when case section is not complete' do
       before do
-        expect(kase).to receive(:valid?).with(:submission).and_return(false)
+        expect(kase).to receive(:complete?).and_return(false)
       end
 
       it { is_expected.not_to be_valid }
