@@ -46,6 +46,9 @@ Style/TrailingCommaInArguments:
 Layout/HashAlignment:
   Enabled: false
 
+Naming/VariableNumber:
+  Enabled: false
+
 # Rspec cops
 ############
 

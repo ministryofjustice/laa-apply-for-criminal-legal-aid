@@ -10,10 +10,39 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <%# TODO: dynamic list depending on evidence requirements %>
     <p class="govuk-body">
       <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
     </p>
+
+    <!-- Client & Partner evidence -->
+    <% ::Evidence::Rule::GROUPS.each do |group| %>
+      <% (::Evidence::Rule::PERSONAS - [:other]).each do |persona| %>
+        <% if @form_object.prompt.send("#{persona}?", group) %>
+          <h2 class="govuk-heading-s"><%= t("evidence.group.#{persona}.#{group}") %></h2>
+
+          <ul class="govuk-body">
+            <% @form_object.prompt.send(persona, group).each do |result| %>
+              <li data-rule-name="<%=result[:rule_id] %>">
+                <%= t("evidence.rule.#{result[:rule_id]}.#{persona}") %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <!-- Other evidence -->
+    <% if @form_object.prompt.other? %>
+      <h2 class="govuk-heading-s"><%= t("evidence.group.other") %></h2>
+
+      <ul class="govuk-body">
+        <% @form_object.prompt.other.each do |result| %>
+          <li data-rule-name="<%=result[:rule_id] %>">
+            <%= t("evidence.rule.#{result[:rule_id]}.other") %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>

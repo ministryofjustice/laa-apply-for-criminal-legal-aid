@@ -3,6 +3,10 @@ module Steps
     class UploadForm < Steps::BaseFormObject
       delegate :documents, to: :crime_application
 
+      def prompt
+        @prompt ||= ::Evidence::RulesRunner.new(crime_application).prompt
+      end
+
       private
 
       # :nocov:
