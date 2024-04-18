@@ -202,6 +202,40 @@ describe Summary::HtmlPresenter do
         it { is_expected.to match_array(expected_sections) }
       end
     end
+
+    context 'when it is an appeal to crown court case type with no changes in financial circumstances' do
+      let(:crime_application) { instance_double(CrimeApplication, case: kase) }
+      let(:kase) { instance_double(Case) }
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      before do
+        # allow(subject).to receive(:appeal_no_changes?).and_return(true)
+        allow(crime_application).to receive(:case).and_return(kase)
+        allow(kase).to receive(:case_type).and_return(case_type)
+        allow(kase).to receive(:appeal_financial_circumstances_changed).and_return('no')
+      end
+
+      let(:expected_sections) do
+        %w[
+          overview
+          client_details
+          contact_details
+          case_details
+          offences
+          codefendants
+          next_court_hearing
+          first_court_hearing
+          justification_for_legal_aid
+          passport_justification_for_legal_aid
+          employment_details
+          supporting_evidence
+          more_information
+          legal_representative_details
+        ]
+      end
+
+      it { is_expected.to match_array(expected_sections) }
+    end
   end
 
   describe '#capital_sections' do

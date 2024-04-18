@@ -1,4 +1,5 @@
 module Summary
+  # rubocop:disable Metrics/ClassLength
   class HtmlPresenter
     attr_reader :crime_application
 
@@ -43,6 +44,22 @@ module Summary
         more_information
         legal_representative_details
       ],
+      appeal_with_no_changes: %i[
+        overview
+        client_details
+        contact_details
+        case_details
+        offences
+        codefendants
+        next_court_hearing
+        first_court_hearing
+        justification_for_legal_aid
+        passport_justification_for_legal_aid
+        employment_details
+        supporting_evidence
+        more_information
+        legal_representative_details
+      ],
       capital: %i[
         properties
         savings
@@ -71,10 +88,17 @@ module Summary
       @crime_application = Adapters::BaseApplication.build(crime_application)
     end
 
+    # TODO: refactor
     def sections
-      SECTIONS.fetch(application_type.to_sym).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
+      if appeal_no_changes?
+        SECTIONS.fetch(:appeal_with_no_changes).map do |section|
+          Sections.const_get(section.to_s.camelize).new(crime_application)
+        end.select(&:show?)
+      else
+        SECTIONS.fetch(application_type.to_sym).map do |section|
+          Sections.const_get(section.to_s.camelize).new(crime_application)
+        end.select(&:show?)
+      end
     end
 
     def capital_sections
@@ -94,5 +118,11 @@ module Summary
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
     end
+
+    def appeal_no_changes?
+      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        (crime_application.case.appeal_financial_circumstances_changed == 'no')
+    end
   end
+  # rubocop:enable
 end
