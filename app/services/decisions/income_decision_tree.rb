@@ -140,7 +140,8 @@ module Decisions
     end
 
     def appeal_no_changes?
-      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
+      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        crime_application.case.appeal_financial_circumstances_changed == 'no'
     end
 
     def summary_only?
