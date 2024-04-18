@@ -493,7 +493,8 @@ en:
             food_amount:
               blank: Enter how much of the board and lodgings payment is for food
               invalid: Payments for food must be a number, like 50
-              greater_than: Payments for food must be more than 0
+              greater_than_or_equal_to: Payments for food must be 0 or more
+              more_than_board: Payments for food cannot be more than payments for board and lodgings.
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
