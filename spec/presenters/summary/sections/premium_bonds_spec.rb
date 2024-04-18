@@ -39,7 +39,7 @@ describe Summary::Sections::PremiumBonds do
 
     context 'when client has premium bonds' do
       let(:expected_change_path) do
-        'applications/12345/steps/capital/does_client_have_premium_bonds'
+        'applications/12345/steps/capital/any_premium_bonds'
       end
 
       it 'shows all answers' do

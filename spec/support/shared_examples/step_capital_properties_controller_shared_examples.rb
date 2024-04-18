@@ -152,7 +152,7 @@ RSpec.shared_examples 'capital properties controller' do |parameter|
           it 'renders the property page again' do
             delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
             expect(Property.count).to be 1
-            expect(response).to redirect_to(%r{/steps/capital/clients_assets})
+            expect(response).to redirect_to edit_steps_capital_properties_summary_path
           end
         end
       end

@@ -98,7 +98,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = '/applications/12345/steps/outgoings/which_payments_does_client_pay'
+          path = '/applications/12345/steps/outgoings/which_payments'
 
           expect(answers.count).to eq(rows.size)
 
@@ -159,7 +159,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = '/applications/12345/steps/outgoings/which_payments_does_client_pay'
+          path = '/applications/12345/steps/outgoings/which_payments'
 
           expect(answers.count).to eq(rows.size)
 
@@ -201,7 +201,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:which_outgoings)
-          expect(answers[0].change_path).to match('applications/12345/steps/outgoings/which_payments_does_client_pay')
+          expect(answers[0].change_path).to match('applications/12345/steps/outgoings/which_payments')
           expect(answers[0].value).to eq('none')
         end
       end
