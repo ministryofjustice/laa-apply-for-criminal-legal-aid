@@ -123,7 +123,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
         { '0' => { name: nil, relationship: 'friends', percentage_owned: 10 } }
       end
 
-      it 'not redirects to the `properties_summary` path' do
+      it 'does not redirect to the `properties_summary` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).not_to redirect_to edit_steps_capital_properties_summary_path
       end
