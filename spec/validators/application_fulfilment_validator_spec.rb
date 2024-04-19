@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Test
   CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :capital, :ioj, :income, :documents,
-                                           keyword_init: true) do
+                                           :means_passport, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -23,11 +23,13 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       ioj:,
       income:,
       capital:,
-      documents:
+      documents:,
+      means_passport:
     }
   end
 
   let(:is_means_tested) { 'yes' }
+  let(:means_passport) { nil }
 
   let(:kase) {
     instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
@@ -201,43 +203,13 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   describe 'validating section completeness' do
     before do
-      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_result)
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
     end
 
+    let(:means_result) { true }
+
     it { is_expected.to be_valid }
-
-    context 'when capital section is not complete' do
-      before do
-        expect(capital).to receive(:complete?).and_return(false)
-      end
-
-      it { is_expected.not_to be_valid }
-
-      it 'adds the incomplete record error to base' do
-        subject.valid?
-        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
-      end
-    end
-
-    context 'when capital section is not required' do
-      let(:income) do
-        instance_double(
-          Income,
-          employment_status: employment_status,
-          income_above_threshold: 'no',
-          has_frozen_income_or_assets: 'no',
-          client_owns_property: 'no',
-          has_savings: 'no'
-        )
-      end
-
-      before do
-        expect(capital).not_to receive(:complete?)
-      end
-
-      it { is_expected.to be_valid }
-    end
 
     context 'when case section is not complete' do
       before do
@@ -249,6 +221,53 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       it 'adds the incomplete record error to base' do
         subject.valid?
         expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when not means tested' do
+      let(:is_means_tested) { 'no' }
+
+      context 'and capital section is not complete' do
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context 'when means tested' do
+      let(:means_result) { false }
+      let(:employment_status) { ['not_working'] }
+
+      context 'and capital section is not complete' do
+        before do
+          expect(capital).to receive(:complete?).and_return(false)
+        end
+
+        it { is_expected.not_to be_valid }
+
+        it 'adds the incomplete record error to base' do
+          subject.valid?
+          expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+        end
+      end
+
+      context 'and capital section is not required' do
+        let(:income) do
+          instance_double(
+            Income,
+            employment_status: employment_status,
+            income_above_threshold: 'no',
+            has_frozen_income_or_assets: 'no',
+            client_owns_property: 'no',
+            has_savings: 'no'
+          )
+        end
+
+        before do
+          expect(capital).not_to receive(:complete?)
+
+          subject.valid?
+        end
+
+        it { is_expected.to be_valid }
       end
     end
   end
