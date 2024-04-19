@@ -49,7 +49,7 @@ describe Summary::Sections::OtherOutgoingsDetails do
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:income_tax_rate_above_threshold)
         expect(answers[0].change_path)
-          .to match('applications/12345/steps/outgoings/paid_income_tax_rate')
+          .to match('applications/12345/steps/outgoings/client_paid_income_tax_rate')
         expect(answers[0].value).to eq('no')
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[1].question).to eq(:outgoings_more_than_income)

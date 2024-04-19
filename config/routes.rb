@@ -162,16 +162,16 @@ Rails.application.routes.draw do
         edit_step :any_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
         edit_step :dependants, alias: :dependants
-        edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
-        edit_step :which_payments, alias: :income_payments
-        edit_step :which_benefits, alias: :income_benefits
+        edit_step :how_manage_with_no_income, alias: :manage_without_income
+        edit_step :which_payments_client, alias: :income_payments
+        edit_step :which_benefits_client, alias: :income_benefits
         edit_step :check_your_answers_income, alias: :answers
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :housing_payments_where_lives, alias: :housing_payment_type
         edit_step :pay_council_tax, alias: :council_tax
-        edit_step :paid_income_tax_rate, alias: :income_tax_rate
+        edit_step :client_paid_income_tax_rate, alias: :income_tax_rate
         edit_step :are_outgoings_more_than_income, alias: :outgoings_more_than_income
         edit_step :which_payments, alias: :outgoings_payments
         edit_step :mortgage_payments, alias: :mortgage
@@ -205,8 +205,8 @@ Rails.application.routes.draw do
         crud_step :investments, param: :investment_id
         edit_step :add_investments, alias: :investments_summary
 
-        edit_step :any_premium_bonds, alias: :premium_bonds
-        edit_step :benefit_from_trust_fund, alias: :trust_fund
+        edit_step :client_any_premium_bonds, alias: :premium_bonds
+        edit_step :client_benefit_from_trust_fund, alias: :trust_fund
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets_capital
 
         edit_step :check_your_answers_capital, alias: :answers

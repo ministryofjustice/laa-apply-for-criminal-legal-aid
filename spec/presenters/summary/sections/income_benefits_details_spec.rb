@@ -144,7 +144,7 @@ describe Summary::Sections::IncomeBenefitsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_benefits'
+          path = 'applications/12345/steps/income/which_benefits_client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -246,7 +246,7 @@ describe Summary::Sections::IncomeBenefitsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_benefits'
+          path = 'applications/12345/steps/income/which_benefits_client'
 
           expect(answers.count).to eq(rows.size)
 

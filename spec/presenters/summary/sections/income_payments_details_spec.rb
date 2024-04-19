@@ -204,7 +204,7 @@ describe Summary::Sections::IncomePaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_payments'
+          path = 'applications/12345/steps/income/which_payments_client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -351,7 +351,7 @@ describe Summary::Sections::IncomePaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_payments'
+          path = 'applications/12345/steps/income/which_payments_client'
 
           expect(answers.count).to eq(rows.size)
 
