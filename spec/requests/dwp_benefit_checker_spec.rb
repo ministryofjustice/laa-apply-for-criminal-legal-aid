@@ -50,7 +50,7 @@ RSpec.describe 'DWP passporting sub journey', :authorized do
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(4)' do
           assert_select 'dt', 'Date of birth'
-          assert_select 'dd', '1 Feb 1990'
+          assert_select 'dd', '1 February 1990'
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(5)' do

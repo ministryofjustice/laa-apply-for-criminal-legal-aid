@@ -63,7 +63,7 @@ RSpec.describe Summary::Components::Offence, type: :component do
       )
       expect(page).to have_summary_row(
         'Offence date',
-        '28 Mar 2023 – 18 Dec 202318 Dec 2023'
+        '28 March 2023 – 18 December 202318 December 2023'
       )
     end
 

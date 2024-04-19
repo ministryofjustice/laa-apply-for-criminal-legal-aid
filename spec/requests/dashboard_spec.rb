@@ -303,7 +303,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(3)', 'Doe'
 
         assert_select 'h3:nth-of-type(4)', 'Date of birth'
-        assert_select 'p:nth-of-type(4)', '1 Feb 1990'
+        assert_select 'p:nth-of-type(4)', '1 February 1990'
 
         assert_select 'h3:nth-of-type(5)', 'Date stamp'
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'
