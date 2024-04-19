@@ -19,6 +19,13 @@ module Steps
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
       validates :percentage_partner_owned, presence: true, if: :include_partner?
 
+      validates_numericality_of :percentage_applicant_owned, greater_than_or_equal_to: 1.0,
+                                less_than_or_equal_to: 100.0
+      validates_numericality_of :percentage_partner_owned, greater_than_or_equal_to: 1.0,
+                                less_than_or_equal_to: 100.0, if: :include_partner?
+
+      validates_with CapitalAssessment::PropertyOwnershipValidator
+
       def persist!
         record.update(attributes)
       end

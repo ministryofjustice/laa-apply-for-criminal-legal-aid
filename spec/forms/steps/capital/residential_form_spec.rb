@@ -13,14 +13,17 @@ RSpec.describe Steps::Capital::ResidentialForm do
   let(:attributes) { {} }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:)
+    instance_double(CrimeApplication, applicant:, client_has_partner:)
   end
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
   let(:record) {
-    instance_double(Property, include_partner?: client_has_partner, 'other_house_type=': nil, 'address=': nil)
+    instance_double(Property, include_partner?: client_has_partner, 'other_house_type=': nil, 'address=': nil,
+                    property_owners: [property_owner])
   }
+  let(:property_owner) { instance_double(PropertyOwner, percentage_owned: percentage_owned, complete?: true) }
   let(:client_has_partner) { false }
   let(:home_address?) { true }
+  let(:percentage_owned) { 10 }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:house_type) }
@@ -75,7 +78,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
         bedrooms: 2,
         value: 170_000,
         outstanding_mortgage: 100_000,
-        percentage_applicant_owned: 10,
+        percentage_applicant_owned: 90,
         is_home_address: 'yes',
         has_other_owners: 'yes',
       }
@@ -130,6 +133,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
 
       context 'for valid details' do
         let(:attributes) { required_attributes.merge(percentage_partner_owned: 10) }
+        let(:percentage_owned) { 0 }
 
         it 'updates the record' do
           expect(record).to receive(:update).and_return(true)
@@ -144,6 +148,26 @@ RSpec.describe Steps::Capital::ResidentialForm do
         expect(subject.house_types.map(&:to_s)).to eq(
           %w[bungalow detached flat_or_maisonette semidetached terraced]
         )
+      end
+    end
+
+    context 'when total percentage ownership is not valid' do
+      context 'with invalid attributes' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 50, percentage_partner_owned: 50) }
+
+        it 'updates the record' do
+          expect(record).not_to receive(:update)
+          expect(subject.save).to be(false)
+        end
+      end
+
+      context 'with valid attributes' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 40, percentage_partner_owned: 50) }
+
+        it 'updates the record' do
+          expect(record).to receive(:update).and_return(true)
+          expect(subject.save).to be(true)
+        end
       end
     end
   end

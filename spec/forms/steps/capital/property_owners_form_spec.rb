@@ -19,7 +19,7 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
     { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '20' }
+    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes3) {
     { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '10' }
@@ -73,6 +73,24 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
         expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :blank)).to be(true)
         expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
           'Enter the percentage of the land they own'
+        )
+      end
+    end
+
+    context 'when total percentage ownership is not valid' do
+      let(:property_owners_attributes3) {
+        { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '100' }
+      }
+
+      before do
+        expect(subject).not_to be_valid
+        expect(subject.save).to be(false)
+      end
+
+      it 'has errors when when total percentage ownership is over 100' do
+        expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :invalid)).to be(true)
+        expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
+          'Percentages entered need to total 100%'
         )
       end
     end

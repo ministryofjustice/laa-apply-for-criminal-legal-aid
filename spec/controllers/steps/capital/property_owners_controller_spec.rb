@@ -109,7 +109,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
 
     context 'when valid property owners attributes' do
       let(:property_owners_attributes) do
-        { '0' => { name: 'name 1', relationship: 'friends', percentage_owned: 10 } }
+        { '0' => { name: 'name 1', relationship: 'friends', percentage_owned: 100 } }
       end
 
       it 'redirects to the `clients_assets` path' do
@@ -120,7 +120,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
 
     context 'when invalid property owners attributes' do
       let(:property_owners_attributes) do
-        { '0' => { name: nil, relationship: 'friends', percentage_owned: 10 } }
+        { '0' => { name: nil, relationship: 'friends', percentage_owned: 100 } }
       end
 
       it 'not redirects to the `clients_assets` path' do
