@@ -57,7 +57,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   def means_sections_complete?
     return true if income.blank?
 
-    !requires_full_means_assessment? || capital&.complete?
+    !requires_full_means_assessment? || kase.appeal_reference_number.present? || capital&.complete?
   end
 
   alias crime_application record

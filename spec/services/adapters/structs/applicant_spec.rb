@@ -58,6 +58,7 @@ RSpec.describe Adapters::Structs::Applicant do
           date_of_birth
           nino
           benefit_type
+          last_jsa_appointment_date
           correspondence_address_type
           telephone_number
           home_address

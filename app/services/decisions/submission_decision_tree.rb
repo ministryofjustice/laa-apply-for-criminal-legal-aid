@@ -43,6 +43,7 @@ module Decisions
 
     def requires_nino?
       return false if current_crime_application.not_means_tested?
+      return false if entered_appeal_reference_number?
 
       applicant.benefit_type != 'none' &&
         applicant.has_nino == 'no' &&

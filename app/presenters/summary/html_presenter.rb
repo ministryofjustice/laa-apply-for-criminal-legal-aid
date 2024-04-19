@@ -1,5 +1,5 @@
 module Summary
-  class HtmlPresenter
+  class HtmlPresenter # rubocop:disable Metrics/ClassLength
     attr_reader :crime_application
 
     delegate :application_type, to: :crime_application
@@ -43,6 +43,22 @@ module Summary
         more_information
         legal_representative_details
       ],
+      appeal_with_no_changes: %i[
+        overview
+        client_details
+        contact_details
+        case_details
+        offences
+        codefendants
+        next_court_hearing
+        first_court_hearing
+        justification_for_legal_aid
+        passport_justification_for_legal_aid
+        employment_details
+        supporting_evidence
+        more_information
+        legal_representative_details
+      ],
       capital: %i[
         properties
         savings
@@ -72,27 +88,36 @@ module Summary
     end
 
     def sections
-      SECTIONS.fetch(application_type.to_sym).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
-    end
-
-    def capital_sections
-      SECTIONS.fetch(:capital).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
-    end
-
-    def outgoings_sections
-      SECTIONS.fetch(:outgoings).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
+      if appeal_no_changes?
+        build_sections(:appeal_with_no_changes)
+      else
+        build_sections(application_type.to_sym)
+      end
     end
 
     def income_sections
-      SECTIONS.fetch(:income).map do |section|
+      build_sections(:income)
+    end
+
+    def outgoings_sections
+      build_sections(:outgoings)
+    end
+
+    def capital_sections
+      build_sections(:capital)
+    end
+
+    private
+
+    def build_sections(relevant_sections)
+      SECTIONS.fetch(relevant_sections).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
+    end
+
+    def appeal_no_changes?
+      crime_application.kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        (crime_application.kase.appeal_financial_circumstances_changed == 'no')
     end
   end
 end

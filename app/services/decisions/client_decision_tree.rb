@@ -112,7 +112,7 @@ module Decisions
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
-      elsif current_crime_application.age_passported?
+      elsif current_crime_application.age_passported? || entered_appeal_reference_number?
         edit('/steps/case/urn')
       else
         edit(:has_nino)
@@ -179,14 +179,6 @@ module Decisions
 
     def after_cannot_check_dwp_status
       determine_dwp_result_page
-    end
-
-    def entered_appeal_reference_number?
-      kase = current_crime_application.case
-      return false if kase&.case_type.nil?
-
-      case_type = CaseType.new(kase.case_type)
-      case_type&.appeal? && kase.appeal_reference_number.present?
     end
 
     def applicant_has_nino
