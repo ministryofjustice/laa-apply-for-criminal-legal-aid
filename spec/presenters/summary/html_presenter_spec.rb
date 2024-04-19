@@ -125,6 +125,39 @@ describe Summary::HtmlPresenter do
         end
 
         it { is_expected.to match_array(expected_sections) }
+
+        context 'when it is an appeal with no changes in financial circumstances' do
+          let(:database_application) do
+            instance_double(
+              CrimeApplication, applicant: double, kase: (
+                double case_type: 'appeal_to_crown_court',
+                       appeal_financial_circumstances_changed: 'no'
+              ),
+              ioj: double, status: :in_progress,
+              income: double, documents: double, application_type: application_type
+            )
+          end
+
+          let(:expected_sections) do
+            %w[
+              Overview
+              ClientDetails
+              ContactDetails
+              CaseDetails
+              Offences
+              Codefendants
+              NextCourtHearing
+              FirstCourtHearing
+              JustificationForLegalAid
+              PassportJustificationForLegalAid
+              EmploymentDetails
+              SupportingEvidence
+              MoreInformation
+            ]
+          end
+
+          it { is_expected.to match_array(expected_sections) }
+        end
       end
 
       context 'for a "submitted" datastore application' do
@@ -165,6 +198,47 @@ describe Summary::HtmlPresenter do
         end
 
         it { is_expected.to match_array(expected_sections) }
+
+        context 'when it is an appeal with no changes in financial circumstances' do
+          let(:datastore_application) do
+            extra = {
+              'means_details' => {
+                'income_details' => {
+                  'employment_status' => 'not_working',
+                  'ended_employment_within_three_months' => 'no'
+                }
+              },
+              'application_type' => application_type,
+              'case_details' => {
+                'case_type' => 'appeal_to_crown_court',
+                'appeal_financial_circumstances_changed' => 'no'
+              }
+            }
+
+            JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
+          end
+
+          let(:expected_sections) do
+            %w[
+              Overview
+              ClientDetails
+              ContactDetails
+              CaseDetails
+              Offences
+              Codefendants
+              NextCourtHearing
+              FirstCourtHearing
+              JustificationForLegalAid
+              PassportJustificationForLegalAid
+              EmploymentDetails
+              SupportingEvidence
+              MoreInformation
+              LegalRepresentativeDetails
+            ]
+          end
+
+          it { is_expected.to match_array(expected_sections) }
+        end
       end
     end
 
@@ -201,40 +275,6 @@ describe Summary::HtmlPresenter do
 
         it { is_expected.to match_array(expected_sections) }
       end
-    end
-
-    context 'when it is an appeal to crown court case type with no changes in financial circumstances' do
-      let(:crime_application) { instance_double(CrimeApplication, case: kase) }
-      let(:kase) { instance_double(Case) }
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
-
-      before do
-        # allow(subject).to receive(:appeal_no_changes?).and_return(true)
-        allow(crime_application).to receive(:case).and_return(kase)
-        allow(kase).to receive(:case_type).and_return(case_type)
-        allow(kase).to receive(:appeal_financial_circumstances_changed).and_return('no')
-      end
-
-      let(:expected_sections) do
-        %w[
-          overview
-          client_details
-          contact_details
-          case_details
-          offences
-          codefendants
-          next_court_hearing
-          first_court_hearing
-          justification_for_legal_aid
-          passport_justification_for_legal_aid
-          employment_details
-          supporting_evidence
-          more_information
-          legal_representative_details
-        ]
-      end
-
-      it { is_expected.to match_array(expected_sections) }
     end
   end
 

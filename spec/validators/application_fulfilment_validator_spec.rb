@@ -32,7 +32,8 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:means_passport) { nil }
 
   let(:kase) {
-    instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
+    instance_double(Case, case_type:, appeal_original_app_submitted:, appeal_reference_number:, appeal_usn:,
+is_client_remanded:, date_client_remanded:)
   }
 
   let(:capital) {
@@ -43,6 +44,9 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:date_client_remanded) { nil }
 
   let(:case_type) { 'either_way' }
+  let(:appeal_original_app_submitted) { nil }
+  let(:appeal_reference_number) { nil }
+  let(:appeal_usn) { nil }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }

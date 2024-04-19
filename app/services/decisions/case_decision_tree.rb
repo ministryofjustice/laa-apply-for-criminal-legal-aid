@@ -92,7 +92,7 @@ module Decisions
 
     def means_test_required?
       FeatureFlags.means_journey.enabled? && (applicant.has_benefit_evidence == 'no' ||
-        applicant.benefit_type == 'none')
+        ['none', nil].include?(applicant.benefit_type))
     end
 
     def ioj_or_passported

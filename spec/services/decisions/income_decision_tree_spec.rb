@@ -70,7 +70,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
           let(:case_type) { 'appeal_to_crown_court' }
           let(:appeal_financial_circumstances_changed) { 'no' }
 
-          it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
         end
       end
     end
@@ -90,7 +90,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:case_type) { 'appeal_to_crown_court' }
       let(:appeal_financial_circumstances_changed) { 'no' }
 
-      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end
 

@@ -38,6 +38,6 @@ module TypeOfMeansAssessment
   end
 
   def income_below_threshold?
-    income.income_above_threshold == 'no'
+    income&.income_above_threshold == 'no'
   end
 end

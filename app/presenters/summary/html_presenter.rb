@@ -1,6 +1,5 @@
 module Summary
-  # rubocop:disable Metrics/ClassLength
-  class HtmlPresenter
+  class HtmlPresenter # rubocop:disable Metrics/ClassLength
     attr_reader :crime_application
 
     delegate :application_type, to: :crime_application
@@ -88,41 +87,37 @@ module Summary
       @crime_application = Adapters::BaseApplication.build(crime_application)
     end
 
-    # TODO: refactor
     def sections
       if appeal_no_changes?
-        SECTIONS.fetch(:appeal_with_no_changes).map do |section|
-          Sections.const_get(section.to_s.camelize).new(crime_application)
-        end.select(&:show?)
+        build_sections(:appeal_with_no_changes)
       else
-        SECTIONS.fetch(application_type.to_sym).map do |section|
-          Sections.const_get(section.to_s.camelize).new(crime_application)
-        end.select(&:show?)
+        build_sections(application_type.to_sym)
       end
     end
 
-    def capital_sections
-      SECTIONS.fetch(:capital).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
+    def income_sections
+      build_sections(:income)
     end
 
     def outgoings_sections
-      SECTIONS.fetch(:outgoings).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
-      end.select(&:show?)
+      build_sections(:outgoings)
     end
 
-    def income_sections
-      SECTIONS.fetch(:income).map do |section|
+    def capital_sections
+      build_sections(:capital)
+    end
+
+    private
+
+    def build_sections(relevant_sections)
+      SECTIONS.fetch(relevant_sections).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
     end
 
     def appeal_no_changes?
-      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        (crime_application.case.appeal_financial_circumstances_changed == 'no')
+      crime_application.kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        (crime_application.kase.appeal_financial_circumstances_changed == 'no')
     end
   end
-  # rubocop:enable
 end
