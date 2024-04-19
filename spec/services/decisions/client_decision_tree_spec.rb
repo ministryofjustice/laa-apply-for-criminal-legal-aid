@@ -223,14 +223,58 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(crime_application).to receive(:date_stamp)
     end
 
-    it {
-      expect(subject).to have_destination(
-        '/steps/address/lookup',
-        :edit,
-        id: crime_application,
-        address_id: 'address'
-      )
-    }
+    context 'when the case type is not appeal to crown court' do
+      let(:case_type) { CaseType::INDICTABLE }
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
+      }
+    end
+
+    context 'when the case type is appeal_to_crown_court and a reference number was entered' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
+
+      before do
+        allow(kase).to receive(:appeal_reference_number).and_return('appeal_maat_id')
+      end
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'when the case type is appeal_to_crown_court and no reference number was entered' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
+
+      before do
+        allow(kase).to receive(:appeal_reference_number).and_return(nil)
+      end
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
+      }
+    end
+
+    context 'when the case type is not present' do
+      let(:case_type) { nil }
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
+      }
+    end
   end
 
   context 'when the step is `contact_details`' do
@@ -256,7 +300,6 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
 
-    # rubocop:disable RSpec/NestedGroups
     context 'and applicant is not `age_passported`' do
       before do
         allow(crime_application).to receive(:age_passported?).and_return(false)
@@ -273,48 +316,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
         it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
       end
-
-      context 'and case_type is appeal to crown court' do
-        before do
-          allow(kase).to receive(:appeal_reference_number).and_return(appeal_reference_number)
-        end
-
-        let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-
-        context 'and there is a previous application ID' do
-          let(:appeal_reference_number) { 'appeal_maat_id' }
-
-          context 'and answer is `home_address`' do
-            let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
-
-            it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-          end
-
-          context 'and answer is `providers_office_address`' do
-            let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
-
-            it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-          end
-        end
-
-        context 'and there is no previous application ID' do
-          let(:appeal_reference_number) { nil }
-
-          context 'and answer is `home_address`' do
-            let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
-
-            it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
-          end
-
-          context 'and answer is `providers_office_address`' do
-            let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
-
-            it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
-          end
-        end
-      end
     end
-    # rubocop:enable RSpec/NestedGroups
 
     context 'and applicant is `age_passported`' do
       before do

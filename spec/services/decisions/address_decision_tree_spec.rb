@@ -3,10 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::AddressDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, case: kase) }
-  let(:kase) { instance_double(Case, case_type:, appeal_reference_number:) }
-  let(:case_type) { CaseType::SUMMARY_ONLY }
-  let(:appeal_reference_number) { nil }
+  let(:crime_application) { instance_double(CrimeApplication) }
 
   before do
     allow(
@@ -50,13 +47,6 @@ RSpec.describe Decisions::AddressDecisionTree do
         let(:age_passported) { false }
 
         it { is_expected.to have_destination('/steps/client/has_nino', :edit, id: crime_application) }
-
-        context 'and `case_type` is appeal and there is a previous application id' do
-          let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-          let(:appeal_reference_number) { 'appeal_maat_id' }
-
-          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-        end
       end
     end
   end

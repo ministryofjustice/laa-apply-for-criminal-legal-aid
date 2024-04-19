@@ -20,7 +20,7 @@ module Decisions
       when :appeal_reference_number
         date_stamp_if_needed
       when :date_stamp
-        start_address_journey(HomeAddress)
+        after_date_stamp
       when :contact_details
         after_contact_details
       when :has_nino
@@ -96,6 +96,14 @@ module Decisions
     def date_stamp_if_needed
       if DateStamper.new(form_object.crime_application, case_type: form_object.case.case_type).call
         edit(:date_stamp)
+      else
+        after_date_stamp
+      end
+    end
+
+    def after_date_stamp
+      if entered_appeal_reference_number?
+        edit('/steps/case/urn')
       else
         start_address_journey(HomeAddress)
       end
