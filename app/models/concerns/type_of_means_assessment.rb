@@ -21,6 +21,10 @@ module TypeOfMeansAssessment
 
   private
 
+  def summary_only?
+    kase.case_type == CaseType::SUMMARY_ONLY.to_s
+  end
+
   def no_property?
     income.client_owns_property == 'no'
   end

@@ -146,10 +146,6 @@ module Decisions
         kase.appeal_financial_circumstances_changed == 'no'
     end
 
-    def summary_only?
-      kase.case_type == CaseType::SUMMARY_ONLY.to_s
-    end
-
     def crime_application
       form_object.crime_application
     end

@@ -220,6 +220,25 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       end
     end
 
+    context 'when capital section is not required' do
+      let(:income) do
+        instance_double(
+          Income,
+          employment_status: employment_status,
+          income_above_threshold: 'no',
+          has_frozen_income_or_assets: 'no',
+          client_owns_property: 'no',
+          has_savings: 'no'
+        )
+      end
+
+      before do
+        expect(capital).not_to receive(:complete?)
+      end
+
+      it { is_expected.to be_valid }
+    end
+
     context 'when case section is not complete' do
       before do
         expect(kase).to receive(:complete?).and_return(false)
