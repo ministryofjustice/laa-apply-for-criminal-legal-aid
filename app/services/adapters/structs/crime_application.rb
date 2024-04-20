@@ -16,6 +16,8 @@ module Adapters
       end
 
       def case
+        return if pse?
+
         Structs::CaseDetails.new(case_details)
       end
 
