@@ -10,7 +10,7 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <p class="govuk-body">
+    <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
       <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
     </p>
 

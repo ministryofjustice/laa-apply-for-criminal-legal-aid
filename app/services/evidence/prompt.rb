@@ -1,15 +1,15 @@
 module Evidence
   class Prompt
-    attr_reader :crime_application, :rules
+    attr_reader :crime_application, :ruleset
 
-    def initialize(crime_application, rules)
-      @crime_application = crime_application
-      @rules = rules
+    def initialize(ruleset)
+      @ruleset = ruleset
+      @crime_application = ruleset.crime_application
 
       results
 
       ::CrimeApplication.transaction do
-        @crime_application.evidence_ruleset = @rules
+        @crime_application.evidence_ruleset = @ruleset.rules
         @crime_application.evidence_prompts = @results
         @crime_application.evidence_last_run_at = DateTime.now
 
@@ -18,7 +18,7 @@ module Evidence
     end
 
     def results
-      @results ||= rules.map do |rule|
+      @results ||= ruleset.map do |rule|
         definition = rule.new(crime_application)
 
         {
