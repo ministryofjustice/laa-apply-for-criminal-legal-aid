@@ -8,7 +8,7 @@ RSpec.describe Tasks::CaseDetails do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      case: kase,
+      kase: kase,
     )
   end
 

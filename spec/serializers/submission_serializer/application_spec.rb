@@ -61,7 +61,7 @@ RSpec.describe SubmissionSerializer::Application do
     let(:documents_scope) { double(stored: [Document.new]) }
 
     before do
-      allow(crime_application).to receive_messages(case: kase, documents: documents_scope,
+      allow(crime_application).to receive_messages(kase: kase, documents: documents_scope,
                                                    income: income, capital: capital)
     end
 

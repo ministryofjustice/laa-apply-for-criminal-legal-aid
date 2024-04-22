@@ -23,6 +23,12 @@ module Steps
           attributes
         )
       end
+
+      def before_save
+        return if outgoings_more_than_income&.yes?
+
+        self.how_manage = nil
+      end
     end
   end
 end

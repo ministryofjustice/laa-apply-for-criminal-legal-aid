@@ -91,5 +91,18 @@ RSpec.describe Steps::Outgoings::OutgoingsMoreThanIncomeForm do
         end
       end
     end
+
+    context 'when text for `how_manage` was previously recorded' do
+      let(:how_manage) { 'Details entered previously' }
+
+      context 'when NO is selected for `outgoings_more_than_income`' do
+        let(:outgoings_more_than_income) { YesNoAnswer::NO.to_s }
+
+        it 'resets `how_manage` to nil before saving' do
+          form.send(:before_save)
+          expect(form.attributes['how_manage']).to be_nil
+        end
+      end
+    end
   end
 end

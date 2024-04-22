@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord
   attr_readonly :application_type
 
   has_one :case, dependent: :destroy
+  alias kase case
 
   has_one :applicant, dependent: :destroy
   has_one :partner, dependent: :destroy

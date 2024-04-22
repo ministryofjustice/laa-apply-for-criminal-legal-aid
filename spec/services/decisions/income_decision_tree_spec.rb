@@ -9,15 +9,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      case: kase,
+      kase: kase,
     )
   end
 
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
-  let(:kase) { instance_double(Case, case_type:) }
+  let(:kase) { instance_double(Case, case_type:, appeal_financial_circumstances_changed:) }
   let(:case_type) { nil }
+  let(:appeal_financial_circumstances_changed) { nil }
 
   before do
     allow(
@@ -67,8 +68,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'when case_type is appeal no changes' do
           let(:case_type) { 'appeal_to_crown_court' }
+          let(:appeal_financial_circumstances_changed) { 'no' }
 
-          it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
         end
       end
     end
@@ -86,8 +88,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
     context 'when case_type is appeal no changes' do
       let(:case_type) { 'appeal_to_crown_court' }
+      let(:appeal_financial_circumstances_changed) { 'no' }
 
-      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
   end
 

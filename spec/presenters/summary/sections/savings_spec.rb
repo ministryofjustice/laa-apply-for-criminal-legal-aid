@@ -4,7 +4,7 @@ describe Summary::Sections::Savings do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) {
-    instance_double(CrimeApplication, savings: records, in_progress?: true, capital: double, case: (double case_type:),
+    instance_double(CrimeApplication, savings: records, in_progress?: true, capital: double, kase: (double case_type:),
    to_param: 12_345)
   }
   let(:records) { [Saving.new] }

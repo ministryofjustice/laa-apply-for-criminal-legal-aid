@@ -2,8 +2,19 @@
 <% step_header %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column">
     <%= render partial: 'shared/flash_banner' %>
+
+    <% unless @form_object.capital.valid?(:check_answers) %>
+      <div class="govuk-error-summary">
+        <% @form_object.capital.errors.each do |e| %>
+          <h2 class="govuk-error-summary__title govuk-!-margin-bottom-0">
+            <%= e.message %>
+          </h2>
+        <% end %>
+      </div>
+    <% end %>
+
     <%= govuk_error_summary(@form_object) %>
 
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
@@ -15,8 +26,8 @@
     <%= render @presenter.capital_sections %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :has_no_other_assets, legend: { size: 'm' } do %>
-        <%= f.govuk_check_box :has_no_other_assets, YesNoAnswer::YES.to_s, multiple: false, label: { text: t('helpers.label.steps_capital_answers_form.has_no_other_assets') } %>
+      <%= f.govuk_check_boxes_fieldset :has_no_other_assets, multiple: false do %>
+        <%= f.govuk_check_box :has_no_other_assets, YesNoAnswer::YES, multiple: false, link_errors: true %>
       <% end %>
       <%= f.continue_button %>
     <% end %>

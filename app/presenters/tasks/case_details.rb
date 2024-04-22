@@ -12,13 +12,15 @@ module Tasks
       fulfilled?(ClientDetails)
     end
 
+    delegate :kase, to: :crime_application
+
     # If we have a `case` record we consider this in progress
     def in_progress?
-      crime_application.case.present?
+      kase.present?
     end
 
     def completed?
-      crime_application.case.complete?
+      kase.complete?
     end
   end
 end

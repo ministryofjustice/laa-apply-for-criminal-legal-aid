@@ -98,10 +98,6 @@ module Summary
 
       private
 
-      def kase
-        @kase ||= crime_application.case
-      end
-
       def appeal_case_type?
         return false unless kase&.case_type
 
