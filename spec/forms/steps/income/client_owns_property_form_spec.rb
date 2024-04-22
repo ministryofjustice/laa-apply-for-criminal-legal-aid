@@ -51,9 +51,10 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
         expect(form.errors.of_kind?(:client_owns_property, :invalid)).to be(false)
       end
 
-      it 'updates the record' do
+      it 'updates the record and resets relevant attributes' do
         expect(income).to receive(:update)
-          .with({ 'client_owns_property' => YesNoAnswer::YES })
+          .with({ 'client_owns_property' => YesNoAnswer::YES,
+                  'has_savings' => nil })
           .and_return(true)
 
         expect(subject.save).to be(true)
@@ -63,7 +64,24 @@ RSpec.describe Steps::Income::ClientOwnsPropertyForm do
                       association_name: :income,
                       expected_attributes: {
                         'client_owns_property' => YesNoAnswer::YES,
+                        'has_savings' => nil,
                       }
+
+      context 'when `client_owns_property` answer is no' do
+        let(:client_owns_property) { YesNoAnswer::NO.to_s }
+
+        it 'updates the record' do
+          expect(income).to receive(:update)
+            .with({ 'client_owns_property' => YesNoAnswer::NO })
+            .and_return(true)
+
+          expect(subject.save).to be(true)
+        end
+
+        it_behaves_like 'a has-one-association form',
+                        association_name: :income,
+                        expected_attributes: { 'client_owns_property' => YesNoAnswer::NO }
+      end
     end
   end
 end
