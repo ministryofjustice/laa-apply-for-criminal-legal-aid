@@ -3,6 +3,9 @@ module Evidence
     attr_reader :crime_application, :ruleset
 
     def initialize(ruleset)
+      raise ArgumentError, 'Ruleset must provide rule definitions' unless ruleset.respond_to?(:each)
+      raise ArgumentError, 'CrimeApplication required' unless ruleset.crime_application
+
       @ruleset = ruleset
       @crime_application = ruleset.crime_application
 

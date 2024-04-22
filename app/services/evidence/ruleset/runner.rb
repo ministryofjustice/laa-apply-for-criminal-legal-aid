@@ -17,7 +17,7 @@ module Evidence
       def initialize(crime_application)
         @crime_application = crime_application
 
-        load_rule_definitions
+        self.class.load_rules!
         validate!
       end
 
@@ -40,11 +40,11 @@ module Evidence
         KEYS
       end
 
-      private
-
-      def load_rule_definitions
+      def self.load_rules!
         Dir.glob(RULES_DIR).each { |file| load file }
       end
+
+      private
 
       def validate!
         ruleset.each do |rule|

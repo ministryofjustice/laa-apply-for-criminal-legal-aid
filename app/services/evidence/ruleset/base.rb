@@ -36,7 +36,7 @@ module Evidence
 
       def each(&block)
         if block
-          rules.each(&block)
+          Array.wrap(rules).each(&block)
         else
           to_enum(:each)
         end
