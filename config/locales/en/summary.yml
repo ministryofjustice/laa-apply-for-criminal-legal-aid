@@ -75,7 +75,7 @@ en:
         pep: Personal equity plan (PEP)
         share: Shares
         share_isa: Share ISA
-        stock: Stock, including gilts and government bonds
+        stock: Stocks, including gilts and government bonds
         unit_trust: Unit trust
         other: Other lump sum investment
       national_savings_certificates: National Savings Certificates
@@ -346,7 +346,7 @@ en:
         answers:
           description: *payment_answer_format
       state_pension_payment:
-        question: State pensions
+        question: State pension
         answers:
           description: *payment_answer_format
       interest_investment_payment:
@@ -559,9 +559,9 @@ en:
         question: Does your client have any Premium Bonds?
         answers: *YESNO
       premium_bonds_total_value:
-        question: Enter the total value of their bonds
+        question: What is the total value of their bonds?
       premium_bonds_holder_number:
-        question: Enter the holder number
+        question: What is the holder number?
         absence_answer: ''
       # END premium_bonds
 

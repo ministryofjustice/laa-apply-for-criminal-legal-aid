@@ -129,7 +129,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
     context 'when Stocks' do
       let(:investment_type) { :stock }
 
-      it { is_expected.to eq 'Stock, including gilts and government bonds' }
+      it { is_expected.to eq 'Stocks, including gilts and government bonds' }
     end
 
     context 'when Share ISA' do
