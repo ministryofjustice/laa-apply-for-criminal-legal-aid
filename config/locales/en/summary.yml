@@ -40,7 +40,7 @@ en:
       overview: Overview
       case_details: Case details
       client_details: Client details
-      contact_details: Contact details
+      contact_details: Client contact details
       codefendants: Co-defendants
       codefendant: Co-defendant
       dependants: Dependants
@@ -60,7 +60,7 @@ en:
       outgoings_payments_details: Payments your client pays
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
-      more_information: More information
+      more_information: Further information
       savings: Savings
       saving:
         bank: Bank account
@@ -98,7 +98,7 @@ en:
       reference:
         question: LAA reference number
       means_tested:
-        question: Application is subject to the usual means test
+        question: Means tested application
         answers:
           <<: *YESNO
       date_stamp:
