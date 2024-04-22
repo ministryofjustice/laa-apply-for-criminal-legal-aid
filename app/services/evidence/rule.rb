@@ -2,6 +2,7 @@ module Evidence
   class Rule
     GROUPS = %i[income outgoings capital none].freeze
     PERSONAS = %i[client partner other].freeze
+    TIMESTAMP_FORMAT = '%Y%m%d%H%M%S'.freeze
 
     attr_reader :crime_application
 
@@ -21,7 +22,7 @@ module Evidence
         match = filename.match(/(\d{14})_/)&.captures&.first
 
         if match
-          DateTime.strptime(match, '%Y%m%d%H%M%S')
+          DateTime.strptime(match, TIMESTAMP_FORMAT)
         else
           DateTime.now
         end
@@ -34,10 +35,10 @@ module Evidence
       end
 
       def valid?
-        @errors = []
-        @errors << "Invalid group #{group} defined" unless GROUPS.include?(group)
+        @@errors = [] # rubocop:disable Style/ClassVars
+        @@errors << "Invalid group #{group} defined" unless GROUPS.include?(group)
 
-        @errors.empty?
+        @@errors.empty?
       end
     end
 
@@ -56,7 +57,7 @@ module Evidence
     end
 
     def key
-      self.class.key if self.class.respond_to?(:key)
+      self.class.key.to_sym if self.class.respond_to?(:key)
     end
 
     def group
@@ -70,19 +71,38 @@ module Evidence
     def client_predicate
       return false unless self.class.respond_to?(:execute_client)
 
-      self.class.execute_client(crime_application)
+      result = self.class.execute_client(crime_application)
+
+      allowable!(
+        result: result,
+        persona: :client
+      )
     end
 
     def partner_predicate
       return false unless self.class.respond_to?(:execute_partner)
 
-      self.class.execute_partner(crime_application)
+      allowable!(
+        result: self.class.execute_partner(crime_application),
+        persona: :partner
+      )
     end
 
     def other_predicate
       return false unless self.class.respond_to?(:execute_other)
 
-      self.class.execute_other(crime_application)
+      allowable!(
+        result: self.class.execute_other(crime_application),
+        persona: :partner
+      )
+    end
+
+    private
+
+    def allowable!(result:, persona:)
+      return result if [true, false].include?(result)
+
+      raise Errors::UnsupportedPredicate, "Predicate for `#{self.class.name}-#{persona}` must evaluate to True or False"
     end
   end
 end

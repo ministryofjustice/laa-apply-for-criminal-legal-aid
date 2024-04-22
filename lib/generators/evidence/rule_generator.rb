@@ -5,7 +5,7 @@ module Evidence
 
     desc 'Creates new Evidence upload Rule in app/services/evidence/rules'
     def create_evidence_rule
-      timestamp = DateTime.now.strftime('%Y%m%d%H%M%S')
+      timestamp = DateTime.now.strftime(Evidence::Rule::TIMESTAMP_FORMAT)
       rule_key = options['key']
       class_name = options['class'].blank? ? 'MyRule' : options['class']
       filename = "#{timestamp}_#{class_name}".underscore

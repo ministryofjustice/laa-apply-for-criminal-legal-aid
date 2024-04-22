@@ -7,6 +7,7 @@ module Evidence
     module ClassMethods
       DEFAULT_PREDICATE = ->(_crime_application) { false }
       DEFAULT_KEY = :UNKNOWN_KEY
+      DEFAULT_GROUP = :none
 
       def key(value = nil)
         if value.nil?
@@ -18,7 +19,7 @@ module Evidence
 
       def group(value = nil)
         if value.nil?
-          @group ||= DEFAULT_KEY
+          @group ||= DEFAULT_GROUP
         else
           @group = value
         end
