@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase) }
-  let(:kase) { instance_double(Case, codefendants: codefendants_double, charges: charges_double) }
+  let(:crime_application) {
+    instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase,
+   not_means_tested?: not_means_tested?)
+  }
+  let(:kase) { instance_double(Case, case_type: case_type, codefendants: codefendants_double, charges: charges_double) }
 
+  let(:case_type) { CaseType::SUMMARY_ONLY }
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:applicant_double) { double('applicant') }
+  let(:not_means_tested?) { false }
 
   before do
     allow(
@@ -210,6 +215,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `add_offence_date`' do
     context 'has correct next step' do
       let(:step_name) { :add_offence_date }
@@ -282,7 +288,6 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
@@ -323,15 +328,17 @@ RSpec.describe Decisions::CaseDecisionTree do
         it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
       end
 
-      context 'and the application requires evidence upload' do
+      context 'and the applicant has a passporting benefit that requires evidence' do
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
         let(:means_passported) { false }
-        let(:evidence_required) { true }
         let(:has_benefit_evidence) { true }
+        let(:evidence_required) { true }
 
         it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
       end
 
       context 'and the application is means-passported' do
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
         let(:means_passported) { true }
         let(:evidence_required) { false }
 
@@ -340,18 +347,22 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
 
     context 'and means test is not required' do
-      let(:feature_flag_means_journey_enabled) { true }
       let(:means_passported) { false }
       let(:evidence_required) { nil }
 
-      it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+      context 'when application is not means tested' do
+        let(:benefit_type) { nil }
+        let(:has_benefit_evidence) { nil }
+        let(:not_means_tested?) { true }
+        let(:evidence_required) { false }
 
-      context 'when feature flag is not set' do
-        context 'routes to evidence upload if evidence required' do
-          let(:evidence_required) { true }
+        it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+      end
 
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-        end
+      context 'when evidence required' do
+        let(:evidence_required) { true }
+
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
       end
     end
   end
