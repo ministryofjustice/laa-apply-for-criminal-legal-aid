@@ -63,9 +63,8 @@ module CapitalAssessment
       percentage_ownerships = record.property_owners.filter_map do |po|
         po.percentage_owned unless po.percentage_owned.nil?
       end
-      unless record.record.percentage_applicant_owned.nil?
-        percentage_ownerships << record.record.percentage_applicant_owned
-      end
+
+      percentage_ownerships << record.record.percentage_applicant_owned
       percentage_ownerships << record.record.percentage_partner_owned unless record.record.percentage_partner_owned.nil?
 
       percentage_ownerships

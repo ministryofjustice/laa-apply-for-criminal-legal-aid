@@ -5,8 +5,10 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
   let(:crime_application) { CrimeApplication.create }
   let(:property) do
-    Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application)
+    Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application,
+                     percentage_applicant_owned: percentage_applicant_owned)
   end
+  let(:percentage_applicant_owned) { 10 }
 
   describe 'property owner actions' do
     let(:form_class_params_name) { form_class.name.underscore }
@@ -109,7 +111,7 @@ RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
 
     context 'when valid property owners attributes' do
       let(:property_owners_attributes) do
-        { '0' => { name: 'name 1', relationship: 'friends', percentage_owned: 100 } }
+        { '0' => { name: 'name 1', relationship: 'friends', percentage_owned: 90 } }
       end
 
       it 'redirects to the `clients_assets` path' do

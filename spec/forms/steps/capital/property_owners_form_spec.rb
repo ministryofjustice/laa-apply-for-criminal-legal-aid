@@ -13,10 +13,10 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
   end
 
   let(:crime_application) { CrimeApplication.new }
-  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application) }
+  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application, percentage_applicant_owned: percentage_applicant_owned) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
+    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes2) {
     { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
@@ -32,6 +32,7 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       '2' => property_owners_attributes3
     }
   end
+  let(:percentage_applicant_owned) { 10 }
 
   describe 'validations' do
     context 'property owners' do
