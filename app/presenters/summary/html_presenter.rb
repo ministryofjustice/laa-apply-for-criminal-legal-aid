@@ -116,8 +116,8 @@ module Summary
     end
 
     def appeal_no_changes?
-      crime_application.kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        (crime_application.kase.appeal_financial_circumstances_changed == 'no')
+      crime_application.kase&.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        (crime_application.kase&.appeal_financial_circumstances_changed == 'no')
     end
   end
 end
