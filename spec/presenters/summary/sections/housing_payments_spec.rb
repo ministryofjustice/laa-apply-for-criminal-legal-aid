@@ -123,19 +123,19 @@ describe Summary::Sections::HousingPayments do
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:housing_payment_type)
         expect(answers[0].change_path)
-          .to match('applications/12345/steps/outgoings/housing_payments_where_client_lives')
+          .to match('applications/12345/steps/outgoings/housing_payments_where_lives')
         expect(answers[0].value).to eq('rent')
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[1].question).to eq(:pays_council_tax)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/does_client_pay_council_tax')
+          .to match('applications/12345/steps/outgoings/pay_council_tax')
         expect(answers[1].value).to eq('yes')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[2].question).to eq(:council_tax)
         expect(answers[2].change_path)
-          .to match('applications/12345/steps/outgoings/does_client_pay_council_tax')
+          .to match('applications/12345/steps/outgoings/pay_council_tax')
         expect(answers[2].value.amount).to eq(6666)
         expect(answers[2].value.frequency).to eq('annual')
       end

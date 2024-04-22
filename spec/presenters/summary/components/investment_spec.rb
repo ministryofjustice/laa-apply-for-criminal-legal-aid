@@ -25,7 +25,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_investments',
+          href: '/applications/APP123/steps/capital/add_investments',
           exact_text: 'Edit Shares'
         )
       end
