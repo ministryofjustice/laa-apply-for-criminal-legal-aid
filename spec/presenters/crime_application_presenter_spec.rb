@@ -87,7 +87,7 @@ RSpec.describe CrimeApplicationPresenter do
     end
 
     it 'can output the applicant date of birth in the correct format' do
-      expect(subject.applicant_dob).to eq('1 Feb 1990')
+      expect(subject.applicant_dob).to eq('1 February 1990')
     end
 
     it 'has a reference number' do
