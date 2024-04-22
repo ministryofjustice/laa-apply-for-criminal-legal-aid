@@ -615,13 +615,13 @@ en:
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the property your client owns
-              not_a_number: &property_client_percentage_error The percentage of the property your client owns must be a number between 1 and 100
+              not_a_number: &property_client_percentage_error The percentage of the property your client owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_client_percentage_error
               less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the property your client's partner owns
-              not_a_number: &property_partner_percentage_error The percentage of the property your client's partner owns must be a number between 1 and 100
+              not_a_number: &property_partner_percentage_error The percentage of the property your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_partner_percentage_error
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
@@ -642,10 +642,14 @@ en:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: The percentage of the property your client owns must be a number between 0 and 100
+              greater_than_or_equal_to: *property_client_percentage_error
+              less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the property your client's partner owns
               not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
+              greater_than_or_equal_to: *property_partner_percentage_error
+              less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
             has_other_owners:
@@ -666,13 +670,13 @@ en:
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land your client owns
-              not_a_number: &land_client_percentage_error The percentage of the land your client owns must be a number between 1 and 100
+              not_a_number: &land_client_percentage_error The percentage of the land your client owns must be a number between 0 and 100
               greater_than_or_equal_to: *land_client_percentage_error
               less_than_or_equal_to: *land_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land your client's partner owns
-              not_a_number: &land_partner_percentage_error The percentage of the land your client's partner owns must be a number between 1 and 100
+              not_a_number: &land_partner_percentage_error The percentage of the land your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *land_partner_percentage_error
               less_than_or_equal_to: *land_partner_percentage_error
             is_home_address:
@@ -701,8 +705,8 @@ en:
             percentage_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land they own
-              greater_than_or_equal_to: The percentage of the property they own must be a number between 1 and 100
-              less_than_or_equal_to: The percentage of the property they own must be a number between 1 and 100
+              greater_than_or_equal_to: The percentage of the property they own must be a number between 0 and 100
+              less_than_or_equal_to: The percentage of the property they own must be a number between 0 and 100
           attributes: *shared_property_owner_errors
         steps/capital/properties_summary_form:
           attributes:

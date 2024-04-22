@@ -14,7 +14,7 @@ module Steps
         in: RelationshipType.values.map(&:to_s).push(PropertyOwner::OTHER_RELATIONSHIP)
       }
 
-      validates_numericality_of :percentage_owned, greater_than_or_equal_to: 1.0, less_than_or_equal_to: 100.0
+      validates_numericality_of :percentage_owned, greater_than_or_equal_to: 0.0, less_than_or_equal_to: 100.0
 
       # Needed for `#fields_for` to render the uuids as hidden fields
       def persisted?
