@@ -18,8 +18,10 @@ class Capital < ApplicationRecord
   end
 
   def complete?
-    confirmation_validator.confirmed? && answers_validator.all_complete?
+    valid?(:submission)
   end
+
+  private
 
   def confirmation_validator
     @confirmation_validator ||= CapitalAssessment::ConfirmationValidator.new(self)

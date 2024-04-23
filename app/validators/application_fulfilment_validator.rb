@@ -5,11 +5,10 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     errors = []
 
-    unless Passporting::MeansPassporter.new(record).call || evidence_present? ||
-           means_record_present? || client_remanded_in_custody?
+    unless means_valid?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
       ]
@@ -36,6 +35,12 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     errors
   end
 
+  def means_valid?
+    return true if Passporting::MeansPassporter.new(record).call
+
+    evidence_present? || means_record_present? || client_remanded_in_custody?
+  end
+
   def ioj_present?
     record.ioj.present? && record.ioj.types.any?
   end
@@ -57,7 +62,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   def means_sections_complete?
     return true if income.blank?
 
-    !requires_full_means_assessment? || kase.appeal_reference_number.present? || capital&.complete?
+    !requires_means_assessment? || means_assessment_complete?
   end
 
   alias crime_application record

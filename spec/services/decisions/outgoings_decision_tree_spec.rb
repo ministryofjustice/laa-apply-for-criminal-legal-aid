@@ -8,7 +8,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       CrimeApplication,
       id: 'uuid',
       outgoings: outgoings,
-      case: kase
+      kase: kase
     )
   end
 

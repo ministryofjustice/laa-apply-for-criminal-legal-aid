@@ -4,10 +4,15 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
   let(:crime_application) { instance_double(CrimeApplication, savings:) }
-  let(:savings) { class_double(Saving, where: existing_savings) }
-  let(:existing_savings) { [instance_double(Saving, complete?: false)] }
-  let(:saving_type) { SavingType.values.sample }
+  let(:savings) { double }
+  let(:saving_type) { SavingType.values.sample.to_s }
   let(:new_saving) { instance_double(Saving) }
+
+  describe '#choices' do
+    it 'returns saving types' do
+      expect(form.choices).to match SavingType.values
+    end
+  end
 
   describe '#save' do
     before do

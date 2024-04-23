@@ -97,7 +97,7 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
   end
 end
 
-RSpec.shared_examples 'a payment form' do |payment_class|
+RSpec.shared_examples 'a payment form' do |payment_class, has_none_attr|
   subject { payment_class.new(arguments) }
 
   let(:arguments) do
@@ -107,9 +107,10 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     }
   end
 
-  let(:crime_application) { CrimeApplication.new(case: case_record) }
+  let(:crime_application) { CrimeApplication.new(case: case_record, income: income) }
   let(:record_id) { '12345' }
   let(:case_record) { Case.new }
+  let(:income) { Income.new }
 
   describe 'types' do
     let(:example_attribute_data) do
@@ -174,15 +175,52 @@ RSpec.shared_examples 'a payment form' do |payment_class|
     end
   end
 
-  describe '#checked?' do
-    context 'when persisted record exists' do
-      before do
-        # Persist
-        subject.public_send(:"#{allowed_types.first}=", { 'amount' => 105.50, 'frequency' => 'four_weeks' })
+  describe 'initialising attributes' do
+    subject(:form) do
+      described_class.new(crime_application:)
+    end
+
+    context 'when a payment of type exists' do
+      it 'sets attribute from existing' do
+        expect(IncomePayment).not_to receive(:new).with(payment_type: existing_payment.payment_type)
+        subject.public_send(existing_payment.payment_type)
+      end
+    end
+  end
+
+  describe '#types' do
+    context 'when nothing persisted' do
+      subject(:form) do
+        described_class.new(crime_application:)
       end
 
-      it 'returns true' do
-        expect(subject.checked?(allowed_types.first)).to be true
+      it 'includes the payment type' do
+        expect(subject.types).to eq([])
+      end
+    end
+
+    context 'when has_none persisted' do
+      subject(:form) do
+        described_class.new(crime_application:)
+      end
+
+      before do
+        subject.record.update(has_none_attr => 'yes')
+      end
+
+      it 'includes the payment type' do
+        expect(subject.types).to eq(['none'])
+      end
+    end
+
+    context 'when persisted record exists' do
+      subject(:form) do
+        described_class.new(crime_application:)
+      end
+
+      it 'includes the payment type' do
+        existing_payment
+        expect(subject.types).to eq([existing_payment.payment_type])
       end
     end
 
@@ -196,23 +234,15 @@ RSpec.shared_examples 'a payment form' do |payment_class|
         )
       end
 
-      it 'returns true for submitted value' do
-        expect(subject.checked?(allowed_types.first)).to be true
-      end
-
-      it 'returns false for unsubmitted value' do
-        expect(subject.checked?(allowed_types.second)).to be false
-      end
-    end
-
-    context 'with invalid type' do
-      it 'throws exception' do
-        expect { subject.checked?('bad type') }.to raise_error(NoMethodError, /undefined method `bad type'/)
+      it 'returns the submitted values' do
+        expect(subject.types).to eq([allowed_types.first])
       end
     end
   end
 
   describe '#save' do
+    before { subject.valid? }
+
     context 'when `none` type' do
       subject(:form) do
         described_class.new(
@@ -221,16 +251,10 @@ RSpec.shared_examples 'a payment form' do |payment_class|
         )
       end
 
-      before do
-        subject.valid?
-      end
-
-      it 'saves nothing' do
-        expect(payments.size).to eq 0
-
-        # Always true because child records must already be persisted beforehand.
-        # The `.save` is called as part of the BaseFormObject lifecycle
+      it 'saves the has_none' do
         expect(subject.save).to be true
+
+        expect(payments.size).to eq 0
 
         expect(subject.errors.size).to eq 0
       end
@@ -245,10 +269,10 @@ RSpec.shared_examples 'a payment form' do |payment_class|
       end
 
       it 'saves nothing' do
-        expect(payments.size).to eq 0
+        expect(subject.save).to be false
 
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:none, :none_selected)).to be(true)
+        expect(payments.size).to eq 0
+        expect(subject.errors.of_kind?(:base, :none_selected)).to be(true)
       end
     end
   end

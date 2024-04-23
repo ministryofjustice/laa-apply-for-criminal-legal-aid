@@ -12,7 +12,7 @@ module TaskList
       initial: [
         [:client_details,   [:client_details]],
         [:case_details,     [:case_details, :ioj]],
-        [:means_assessment, [:income_assessment, :capital_assessment, :check_your_answers, :check_assessment_result]],
+        [:means_assessment, [:income_assessment, :outgoings_assessment, :capital_assessment]],
         [:support_evidence, [:evidence_upload]],
         [:more_information, [:more_information]],
         [:review_confirm,   [:review, :declaration]],
