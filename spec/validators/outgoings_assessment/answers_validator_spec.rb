@@ -24,7 +24,8 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
         allow(record).to receive_messages(
           housing_payment_type: 'rent',
           pays_council_tax: 'no',
-          has_no_other_outgoings: 'yes',
+          has_no_other_outgoings: nil,
+          other_payments: [instance_double(Payment, complete?: true)],
           income_tax_rate_above_threshold: true,
           outgoings_more_than_income: 'yes',
           how_manage: 'budgeting'
@@ -48,10 +49,6 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
           instance_double(Payment, complete?: false)
         }
 
-        allow(record).to receive_message_chain(:outgoings_payments, :other) {
-          [instance_double(Payment, complete?: false)]
-        }
-
         allow(record).to receive_message_chain(:outgoings_payments, :council_tax) {
           instance_double(Payment, complete?: false)
         }
@@ -59,6 +56,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
         allow(record).to receive_messages(
           housing_payment_type: 'rent',
           pays_council_tax: nil,
+          other_payments: [],
           has_no_other_outgoings: nil,
           income_tax_rate_above_threshold: false,
           outgoings_more_than_income: nil
