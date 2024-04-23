@@ -51,9 +51,12 @@ RSpec.describe Steps::Income::IncomeBeforeTaxForm do
         expect(form.errors.of_kind?(:income_above_threshold, :invalid)).to be(false)
       end
 
-      it 'updates the record' do
+      it 'updates the record and resets relevant attributes' do
         expect(income).to receive(:update)
-          .with({ 'income_above_threshold' => YesNoAnswer::YES })
+          .with({ 'income_above_threshold' => YesNoAnswer::YES,
+                  'client_owns_property' => nil,
+                  'has_frozen_income_or_assets' => nil,
+                  'has_savings' => nil })
           .and_return(true)
 
         expect(subject.save).to be(true)
@@ -63,7 +66,26 @@ RSpec.describe Steps::Income::IncomeBeforeTaxForm do
                       association_name: :income,
                       expected_attributes: {
                         'income_above_threshold' => YesNoAnswer::YES,
+                        'client_owns_property' => nil,
+                        'has_frozen_income_or_assets' => nil,
+                        'has_savings' => nil,
                       }
+
+      context 'when `income_above_threshold` answer is no' do
+        let(:income_above_threshold) { YesNoAnswer::NO.to_s }
+
+        it 'updates the record' do
+          expect(income).to receive(:update)
+            .with({ 'income_above_threshold' => YesNoAnswer::NO })
+            .and_return(true)
+
+          expect(subject.save).to be(true)
+        end
+
+        it_behaves_like 'a has-one-association form',
+                        association_name: :income,
+                        expected_attributes: { 'income_above_threshold' => YesNoAnswer::NO }
+      end
     end
   end
 end
