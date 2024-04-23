@@ -16,10 +16,12 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
     instance_double(
       Outgoings,
       housing_payment_type: 'none',
+      has_no_other_outgoings: has_no_other_outgoings
     )
   end
 
   let(:outgoings_payments) { [] }
+  let(:has_no_other_outgoings) { nil }
 
   let(:childcare_outgoing) do
     instance_double(
@@ -195,6 +197,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         end
 
         let(:outgoings_payments) { [rent_outgoing] }
+        let(:has_no_other_outgoings) { 'yes' }
 
         it 'filters out the housing payments to show correct output' do
           expect(answers.count).to eq(1)
