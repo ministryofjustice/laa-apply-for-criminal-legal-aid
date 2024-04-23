@@ -204,18 +204,37 @@ RSpec.describe Evidence::Rule do
       Rails.root.join('app/services/evidence/rules/*')
     end
 
-    let(:klasses) do
+    let!(:klasses) do
       @_klasses ||= Evidence::Ruleset::Runner.load_rules!
 
       Evidence::Rules.constants
     end
 
-    let(:rules) do
+    let!(:rules) do
       klasses.map { |klass| "Evidence::Rules::#{klass}".constantize }
     end
 
-    it 'must load rules' do
-      expect(rules.size).to eq 14 # Includes rules in /fixtures
+    it 'must load rule definitions' do
+      expected_klasses = [
+        Evidence::Rules::IncomeSalary0a,
+        Evidence::Rules::IncomeSalary0b,
+        Evidence::Rules::IncomeSalary0aRevised,
+        Evidence::Rules::IncomeBenefitBasicCheck,
+        Evidence::Rules::IncomeSalary0aNewButArchived,
+        Evidence::Rules::NationalInsuranceProof,
+        Evidence::Rules::P60TaxApril2024,
+        Evidence::Rules::P60TaxApril2025,
+        Evidence::Rules::P45ProofApril2024,
+        Evidence::Rules::P45ProofApril2025,
+
+        # Includes test rules in /fixtures
+        Evidence::Rules::ExampleRule1,
+        Evidence::Rules::ExampleRule2,
+        Evidence::Rules::ExampleRule2Budget2024,
+        Evidence::Rules::BadRuleDefinition,
+      ]
+
+      expect(rules).to match_array(expected_klasses)
     end
 
     it 'must inherit from Evidence::Rule' do
