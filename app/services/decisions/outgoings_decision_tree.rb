@@ -1,5 +1,7 @@
 module Decisions
   class OutgoingsDecisionTree < BaseDecisionTree
+    include TypeOfMeansAssessment
+
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
       case step_name
       when :housing_payment_type
@@ -33,23 +35,15 @@ module Decisions
     end
 
     def after_answers
-      if requires_full_capital
+      if requires_full_capital?
         edit('/steps/capital/property_type')
       else
         edit('/steps/capital/trust_fund')
       end
     end
 
-    def requires_full_capital
-      [
-        CaseType::EITHER_WAY.to_s,
-        CaseType::INDICTABLE.to_s,
-        CaseType::ALREADY_IN_CROWN_COURT.to_s
-      ].include?(case_type)
-    end
-
-    def case_type
-      current_crime_application.case.case_type
+    def crime_application
+      form_object.crime_application
     end
   end
 end

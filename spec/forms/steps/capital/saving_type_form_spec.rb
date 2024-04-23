@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::SavingTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, savings:) }
+  let(:crime_application) { instance_double(CrimeApplication, capital:, savings:,) }
+  let(:capital) { instance_double(Capital) }
   let(:savings) { class_double(Saving, where: existing_savings) }
   let(:existing_savings) { [] }
 
@@ -16,14 +17,31 @@ RSpec.describe Steps::Capital::SavingTypeForm do
     end
   end
 
+  describe '#saving_type' do
+    subject(:saving_type) { form.saving_type }
+
+    context 'when the quesiton has not been answered' do
+      before { allow(capital).to receive(:has_no_savings).and_return(nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when capital#has_no_savings "yes"' do
+      before { allow(capital).to receive(:has_no_savings).and_return('yes') }
+
+      it { is_expected.to eq 'none' }
+    end
+  end
+
   describe '#save' do
-    let(:saving_type) { SavingType.values.sample }
+    let(:saving_type) { SavingType.values.sample.to_s }
     let(:new_saving) { instance_double(Saving) }
     let(:existing_saving) { instance_double(Saving, complete?: complete?) }
     let(:complete?) { false }
 
     before do
       allow(savings).to receive(:create!).with(saving_type:).and_return new_saving
+      allow(capital).to receive(:update).and_return true
 
       form.saving_type = saving_type
       form.save
@@ -32,9 +50,13 @@ RSpec.describe Steps::Capital::SavingTypeForm do
     context 'when client has no savings' do
       let(:saving_type) { 'none' }
 
-      it 'returns true but does not set or create a saving' do
+      it 'does not set or create a saving' do
         expect(form.saving).to be_nil
         expect(savings).not_to have_received(:create!)
+      end
+
+      it 'updates the capita#has_no_savings to "yes"' do
+        expect(capital).to have_received(:update).with(has_no_savings: 'yes')
       end
     end
 
@@ -42,6 +64,10 @@ RSpec.describe Steps::Capital::SavingTypeForm do
       it 'a new saving record of the saving type is created' do
         expect(form.saving).to be new_saving
         expect(savings).to have_received(:create!).with(saving_type:)
+      end
+
+      it 'sets capital#has_no_savings to nil' do
+        expect(capital).to have_received(:update).with(has_no_savings: nil)
       end
     end
 

@@ -22,6 +22,8 @@ class CrimeApplication < ApplicationRecord
   has_many :outgoings_payments, dependent: :destroy
   accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
 
+  has_one :rent, -> { order(created_at: :desc) }, through: :outgoings_payments
+
   has_many :income_benefits, dependent: :destroy
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
 

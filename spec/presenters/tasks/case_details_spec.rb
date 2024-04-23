@@ -15,8 +15,6 @@ RSpec.describe Tasks::CaseDetails do
   let(:applicant) { nil }
   let(:kase) { nil }
 
-  # We assume the completeness of the client details here, as
-  # their statuses are tested in its own spec, no need to repeat
   let(:client_details_fulfilled) { true }
 
   before do

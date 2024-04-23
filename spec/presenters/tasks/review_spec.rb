@@ -28,24 +28,33 @@ RSpec.describe Tasks::Review do
   end
 
   describe '#can_start?' do
-    # We assume the completeness of the Ioj here, as
-    # their statuses are tested in its own spec, no need to repeat
-
     context 'when an initial application' do
       before do
         allow(
           subject
-        ).to receive(:fulfilled?).with(Tasks::Ioj).and_return(ioj_fulfilled)
+        ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
+
+        allow(crime_application).to receive(:valid?).with(:submission) { valid_for_submission }
       end
 
-      context 'when the Ioj task has been completed' do
-        let(:ioj_fulfilled) { true }
+      context 'when the Case details have been completed' do
+        let(:case_details_fulfilled) { true }
 
-        it { expect(subject.can_start?).to be(true) }
+        context 'and the application is valid for submsission' do
+          let(:valid_for_submission) { true }
+
+          it { expect(subject.can_start?).to be(true) }
+        end
+
+        context 'and the application is not valid for submsission' do
+          let(:valid_for_submission) { false }
+
+          it { expect(subject.can_start?).to be(false) }
+        end
       end
 
-      context 'when the Ioj task has not been completed yet' do
-        let(:ioj_fulfilled) { false }
+      context 'when the Case details have not been completed' do
+        let(:case_details_fulfilled) { false }
 
         it { expect(subject.can_start?).to be(false) }
       end

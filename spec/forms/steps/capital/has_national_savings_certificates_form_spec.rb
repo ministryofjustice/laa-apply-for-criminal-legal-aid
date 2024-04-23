@@ -17,8 +17,7 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
 
     before do
       allow(crime_application).to receive(:national_savings_certificates).and_return(existing_certificates)
-      allow(capital).to receive(:update).with({ 'has_national_savings_certificates' =>
-                                                  has_national_savings_certificates }).and_return(true)
+      allow(capital).to receive(:update).with(has_national_savings_certificates:).and_return(true)
     end
 
     context 'when client has no National Savings Certificates' do
