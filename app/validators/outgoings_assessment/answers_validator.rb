@@ -68,9 +68,9 @@ module OutgoingsAssessment
 
     def outgoings_payments_complete?
       return true if record.has_no_other_outgoings == 'yes'
-      return false if record.outgoings_payments.other.empty?
+      return false if record.other_payments.empty?
 
-      record.outgoings_payments.other.all?(&:complete?)
+      record.other_payments.all?(&:complete?)
     end
 
     def income_tax_rate_complete?

@@ -59,7 +59,7 @@ module Steps
         return @types if @types
         return ['none'] if outgoings.has_no_other_outgoings == 'yes'
 
-        outgoings.outgoings_payments.pluck(:payment_type)
+        outgoings.other_payments.pluck(:payment_type)
       end
 
       def has_no_other_outgoings
@@ -75,7 +75,7 @@ module Steps
           return OutgoingsPayment.new(payment_type: type.to_s, **attrs)
         end
 
-        outgoings_payment = crime_application.outgoings_payments.find_by(payment_type: type.value.to_s)
+        outgoings_payment = outgoings.other_payments.find_by(payment_type: type.value.to_s)
         return outgoings_payment if outgoings_payment
 
         OutgoingsPayment.new(payment_type: type.to_s)
