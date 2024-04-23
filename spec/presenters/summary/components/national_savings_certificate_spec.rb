@@ -32,7 +32,7 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_national_savings_certificates',
+          href: '/applications/APP123/steps/capital/add_national_savings_certificates',
           exact_text: 'Edit National Savings Certificate'
         )
       end

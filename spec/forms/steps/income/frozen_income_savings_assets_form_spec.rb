@@ -51,9 +51,11 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
         expect(form.errors.of_kind?(:has_frozen_income_or_assets, :invalid)).to be(false)
       end
 
-      it 'updates the record' do
+      it 'updates the record and resets relevant attributes' do
         expect(income).to receive(:update)
-          .with({ 'has_frozen_income_or_assets' => YesNoAnswer::YES })
+          .with({ 'has_frozen_income_or_assets' => YesNoAnswer::YES,
+                  'client_owns_property' => nil,
+                  'has_savings' => nil })
           .and_return(true)
 
         expect(subject.save).to be(true)
@@ -63,7 +65,25 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
                       association_name: :income,
                       expected_attributes: {
                         'has_frozen_income_or_assets' => YesNoAnswer::YES,
+                        'client_owns_property' => nil,
+                        'has_savings' => nil,
                       }
+
+      context 'when `has_frozen_income_or_assets` answer is no' do
+        let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+
+        it 'updates the record' do
+          expect(income).to receive(:update)
+            .with({ 'has_frozen_income_or_assets' => YesNoAnswer::NO })
+            .and_return(true)
+
+          expect(subject.save).to be(true)
+        end
+
+        it_behaves_like 'a has-one-association form',
+                        association_name: :income,
+                        expected_attributes: { 'has_frozen_income_or_assets' => YesNoAnswer::NO }
+      end
     end
   end
 end

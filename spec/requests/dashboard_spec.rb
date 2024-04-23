@@ -111,7 +111,7 @@ RSpec.describe 'Dashboard', :authorized do
           assert_select 'dd:nth-of-type(1)', '6000001'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dt:nth-of-type(1)', 'Means tested application'
           assert_select 'dd:nth-of-type(1)', 'Yes'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
@@ -252,7 +252,7 @@ RSpec.describe 'Dashboard', :authorized do
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dt:nth-of-type(1)', 'Means tested application'
           assert_select 'dd:nth-of-type(1)', 'Yes'
         end
       end
@@ -303,7 +303,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(3)', 'Doe'
 
         assert_select 'h3:nth-of-type(4)', 'Date of birth'
-        assert_select 'p:nth-of-type(4)', '1 Feb 1990'
+        assert_select 'p:nth-of-type(4)', '1 February 1990'
 
         assert_select 'h3:nth-of-type(5)', 'Date stamp'
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'

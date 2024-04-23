@@ -29,7 +29,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_savings',
+          href: '/applications/APP123/steps/capital/add_savings_accounts',
          exact_text: 'Edit Bank account'
         )
       end

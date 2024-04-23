@@ -40,7 +40,7 @@ en:
       overview: Overview
       case_details: Case details
       client_details: Client details
-      contact_details: Contact details
+      contact_details: Client contact details
       codefendants: Co-defendants
       codefendant: Co-defendant
       dependants: Dependants
@@ -60,7 +60,7 @@ en:
       outgoings_payments_details: Payments your client pays
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
-      more_information: More information
+      more_information: Further information
       savings: Savings
       saving:
         bank: Bank account
@@ -75,7 +75,7 @@ en:
         pep: Personal equity plan (PEP)
         share: Shares
         share_isa: Share ISA
-        stock: Stock, including gilts and government bonds
+        stock: Stocks, including gilts and government bonds
         unit_trust: Unit trust
         other: Other lump sum investment
       national_savings_certificates: National Savings Certificates
@@ -98,7 +98,7 @@ en:
       reference:
         question: LAA reference number
       means_tested:
-        question: Application is subject to the usual means test
+        question: Means tested application
         answers:
           <<: *YESNO
       date_stamp:
@@ -346,7 +346,7 @@ en:
         answers:
           description: *payment_answer_format
       state_pension_payment:
-        question: State pensions
+        question: State pension
         answers:
           description: *payment_answer_format
       interest_investment_payment:
@@ -559,9 +559,9 @@ en:
         question: Does your client have any Premium Bonds?
         answers: *YESNO
       premium_bonds_total_value:
-        question: Enter the total value of their bonds
+        question: What is the total value of their bonds?
       premium_bonds_holder_number:
-        question: Enter the holder number
+        question: What is the holder number?
         absence_answer: ''
       # END premium_bonds
 

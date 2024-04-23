@@ -152,7 +152,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::NO }
 
-        it 'redirects to `clients_assets` page' do
+        it 'redirects to `properties_summary` page' do
           expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
         end
       end
@@ -199,7 +199,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::NO }
 
-        it 'redirects to `clients_assets` page' do
+        it 'redirects to `properties_summary` page' do
           expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
         end
       end
@@ -246,7 +246,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
         let(:is_home_address) { YesNoAnswer::YES }
         let(:has_other_owners) { YesNoAnswer::NO }
 
-        it 'redirects to `clients_assets` page' do
+        it 'redirects to `properties_summary` page' do
           expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
         end
       end
@@ -291,7 +291,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'when property has no other owners' do
       let(:has_other_owners) { YesNoAnswer::NO }
 
-      it 'redirects to `clients_assets` page' do
+      it 'redirects to `properties_summary` page' do
         expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
       end
     end
@@ -312,7 +312,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :property_owners }
     let(:record) { instance_double(Property) }
 
-    it 'redirects to `clients_assets` page' do
+    it 'redirects to `properties_summary` page' do
       expect(subject).to have_destination(:properties_summary, :edit, id: crime_application)
     end
   end

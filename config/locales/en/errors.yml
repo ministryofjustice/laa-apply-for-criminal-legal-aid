@@ -389,7 +389,7 @@ en:
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
-              over_three_months_ago: Date they lost their job must be within the last 3 months
+              year_too_early: Date is too far in the past
               future_not_allowed: Date they lost their job must be today or in the past
         steps/income/income_before_tax_form:
           attributes:
@@ -498,7 +498,7 @@ en:
               blank: Enter how much of the board and lodgings payment is for food
               invalid: Payments for food must be a number, like 50
               greater_than_or_equal_to: Payments for food must be 0 or more
-              more_than_board: Payments for food cannot be more than payments for board and lodgings.
+              more_than_board: Payments for food cannot be more than payments for board and lodgings
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
