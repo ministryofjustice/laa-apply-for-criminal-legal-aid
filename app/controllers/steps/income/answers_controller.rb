@@ -1,14 +1,17 @@
 module Steps
   module Income
     class AnswersController < Steps::IncomeStepController
-      include Steps::NoOpAdvanceStep
       before_action :set_presenter
 
-      private
-
-      def advance_as
-        :answers
+      def edit
+        @form_object = AnswersForm.build(current_crime_application)
       end
+
+      def update
+        update_and_advance(AnswersForm, as: :answers)
+      end
+
+      private
 
       def set_presenter
         @presenter = Summary::HtmlPresenter.new(

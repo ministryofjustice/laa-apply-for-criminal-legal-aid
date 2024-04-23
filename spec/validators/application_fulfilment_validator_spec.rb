@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :capital, :ioj, :income, :documents,
-                                           :means_passport, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :outgoings,
+                                           :capital, :documents, :means_passport, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -22,6 +22,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       kase:,
       ioj:,
       income:,
+      outgoings:,
       capital:,
       documents:,
       means_passport:
@@ -36,9 +37,8 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 is_client_remanded:, date_client_remanded:)
   }
 
-  let(:capital) {
-    instance_double(Capital)
-  }
+  let(:outgoings) { instance_double(Outgoings) }
+  let(:capital) { instance_double(Capital) }
 
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
@@ -59,8 +59,10 @@ is_client_remanded:, date_client_remanded:)
   let(:stored_documents) { [] }
 
   before do
-    allow(capital).to receive(:complete?).and_return(true)
     allow(kase).to receive(:complete?).and_return(true)
+    allow(capital).to receive(:complete?).and_return(true)
+    allow(outgoings).to receive(:complete?).and_return(true)
+    allow(income).to receive(:complete?).and_return(true)
   end
 
   context 'MeansPassporter validation' do
@@ -236,7 +238,8 @@ is_client_remanded:, date_client_remanded:)
       end
     end
 
-    context 'when means tested' do
+    context 'when means tested and not means-passported' do
+      let(:is_means_tested) { 'yes' }
       let(:means_result) { false }
       let(:employment_status) { ['not_working'] }
 
@@ -267,6 +270,7 @@ is_client_remanded:, date_client_remanded:)
 
         before do
           expect(capital).not_to receive(:complete?)
+          expect(outgoings).not_to receive(:complete?)
 
           subject.valid?
         end
