@@ -6,6 +6,12 @@ class Outgoings < ApplicationRecord
     answers_validator.validate
   end
 
+  def other_payments
+    outgoings_payments.where(
+      payment_type: OutgoingsPaymentType::OTHER_PAYMENT_TYPES.map(&:to_s)
+    )
+  end
+
   def complete?
     valid?(:submission)
   end
