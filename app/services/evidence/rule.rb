@@ -97,12 +97,40 @@ module Evidence
       )
     end
 
+    # TODO: Consider replacing the hash with an LAA Struct
+    def to_h # rubocop:disable Metrics/MethodLength
+      {
+        id: id,
+        group: group,
+        ruleset: nil,
+        run: {
+          client: {
+            result: client_predicate,
+            prompt: to_sentences(persona: :client),
+          },
+          partner: {
+            result: partner_predicate,
+            prompt: to_sentences(persona: :partner),
+          },
+          other: {
+            result: other_predicate,
+            prompt: to_sentences(persona: :other),
+          },
+        }
+      }
+    end
+
     private
 
     def allowable!(result:, persona:)
       return result if [true, false].include?(result)
 
       raise Errors::UnsupportedPredicate, "Predicate for `#{self.class.name}-#{persona}` must evaluate to True or False"
+    end
+
+    # Allow multiple sentences to be output per rule
+    def to_sentences(persona:)
+      [I18n.t("evidence.rule.#{id}.#{persona}", default: nil)].flatten.compact
     end
   end
 end

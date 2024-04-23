@@ -10,39 +10,23 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
-      <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
-    </p>
+    <% if @form_object.prompt.required? %>
+      <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>"><%= t('.required') %></p>
+    <% else %>
+      <p class="govuk-body" data-ruleset="None"><%= t('.optional') %></p>
+    <% end %>
 
     <!-- Client & Partner evidence -->
-    <% ::Evidence::Rule::GROUPS.each do |group| %>
-      <% (::Evidence::Rule::PERSONAS - [:other]).each do |persona| %>
-        <% if @form_object.prompt.send("#{persona}?", group) %>
-          <h2 class="govuk-heading-s"><%= t("evidence.group.#{persona}.#{group}") %></h2>
-
-          <ul class="govuk-body">
-            <% @form_object.prompt.send(persona, group).each do |result| %>
-              <li data-rule-name="<%=result[:rule_id] %>">
-                <%= t("evidence.rule.#{result[:rule_id]}.#{persona}") %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
+    <% [:client, :partner].each do |persona| %>
+      <% [:income, :outgoings, :capital].each do |group| %>
+        <%= render partial: 'steps/evidence/upload/prompt',
+                   locals: { prompt: @form_object.prompt, group: group, persona: persona, title: t("evidence.group.#{persona}.#{group}") } %>
       <% end %>
     <% end %>
 
     <!-- Other evidence -->
-    <% if @form_object.prompt.other? %>
-      <h2 class="govuk-heading-s"><%= t("evidence.group.other") %></h2>
-
-      <ul class="govuk-body">
-        <% @form_object.prompt.other.each do |result| %>
-          <li data-rule-name="<%=result[:rule_id] %>">
-            <%= t("evidence.rule.#{result[:rule_id]}.other") %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+    <%= render partial: 'steps/evidence/upload/prompt',
+               locals: { prompt: @form_object.prompt, group: :none, persona: :other, title: t('evidence.group.other') } %>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>

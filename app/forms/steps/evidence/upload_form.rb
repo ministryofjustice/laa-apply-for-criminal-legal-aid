@@ -4,7 +4,7 @@ module Steps
       delegate :documents, to: :crime_application
 
       def prompt
-        @prompt ||= ::Evidence::Ruleset::Runner.new(crime_application).prompt
+        @prompt ||= ::Evidence::Prompt.new(crime_application).run!
       end
 
       private

@@ -7,7 +7,12 @@ module Evidence
       # DELETING A KEY COULD CAUSE SUBMITTED APPLICATIONS TO USE INCORRECT RULES!
       # Controls which rules are executed for a fresh CrimeApplication
       # Determines order of output on the Evidence Upload page
+      # In effect the KEYS are the ruleset to be executed. Having a different
+      # KEY list would generate a different ruleset, allowing ruleset versioning.
       KEYS = %i[
+        income_salary_0a
+        income_salary_0b
+
         p45_proof_33
         national_insurance_32
       ].freeze
@@ -21,15 +26,11 @@ module Evidence
         validate!
       end
 
-      def prompt
-        @prompt ||= Prompt.new(ruleset)
-      end
-
       # NOTE: The MTR process due in 2024 may result in providers being allowed to select
       # whether to use the latest ruleset or select more amenable versions of changed rules.
       def ruleset
         @ruleset ||=
-          if !Array.wrap(crime_application.evidence_ruleset).empty? && crime_application.resubmission?
+          if crime_application.resubmission? && !Array.wrap(crime_application.evidence_prompts).empty?
             Ruleset::Hydrated.new(crime_application, keys)
           else
             Ruleset::Latest.new(crime_application, keys)
