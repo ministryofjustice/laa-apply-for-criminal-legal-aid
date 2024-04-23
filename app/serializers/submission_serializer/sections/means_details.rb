@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class MeansDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           next if income.blank?
 

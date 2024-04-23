@@ -5,8 +5,9 @@ module Summary
         shown_investments?
       end
 
+      # rubocop:disable Metrics/MethodLength
       def answers
-        if has_no_investments?
+        if no_investments?
           [
             Components::ValueAnswer.new(
               :has_investments, 'none',
@@ -23,6 +24,7 @@ module Summary
           )
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def list?
         return false if investments.empty?
@@ -41,10 +43,10 @@ module Summary
       end
 
       def shown_investments?
-        capital.present? && (has_no_investments? || investments.present?)
+        capital.present? && (no_investments? || investments.present?)
       end
 
-      def has_no_investments?
+      def no_investments?
         return false if capital.has_no_investments.nil?
 
         YesNoAnswer.new(capital.has_no_investments).yes?

@@ -5,8 +5,9 @@ module Summary
         shown_savings?
       end
 
+      # rubocop:disable Metrics/MethodLength
       def answers
-        if has_no_savings?
+        if no_savings?
           [
             Components::ValueAnswer.new(
               :has_capital_savings, 'none',
@@ -23,6 +24,7 @@ module Summary
           )
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def list?
         return false if savings.empty?
@@ -41,10 +43,10 @@ module Summary
       end
 
       def shown_savings?
-        capital.present? && (has_no_savings? || savings.present?)
+        capital.present? && (no_savings? || savings.present?)
       end
 
-      def has_no_savings?
+      def no_savings?
         return false if capital.has_no_savings.nil?
 
         YesNoAnswer.new(capital.has_no_savings).yes?

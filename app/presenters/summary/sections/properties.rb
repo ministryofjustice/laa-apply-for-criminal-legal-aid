@@ -5,8 +5,9 @@ module Summary
         shown_question?
       end
 
+      # rubocop:disable Metrics/MethodLength
       def answers
-        if has_no_properties?
+        if no_properties?
           [
             Components::ValueAnswer.new(
               :has_assets, 'none',
@@ -23,6 +24,7 @@ module Summary
           )
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def list?
         return false if properties.empty?
@@ -41,10 +43,10 @@ module Summary
       end
 
       def shown_question?
-        capital.present? && (has_no_properties? || properties.present?)
+        capital.present? && (no_properties? || properties.present?)
       end
 
-      def has_no_properties?
+      def no_properties?
         return false if capital.has_no_properties.nil?
 
         YesNoAnswer.new(capital.has_no_properties).yes?

@@ -6,7 +6,7 @@ module Summary
       end
 
       def answers
-        if has_no_certificates?
+        if no_certificates?
           [
             Components::ValueAnswer.new(
               :has_national_savings_certificate, 'no',
@@ -37,10 +37,10 @@ module Summary
       end
 
       def shown_question?
-        capital.present? && (has_no_certificates? || national_savings_certificates.present?)
+        capital.present? && (no_certificates? || national_savings_certificates.present?)
       end
 
-      def has_no_certificates?
+      def no_certificates?
         return false if capital.has_national_savings_certificates.nil?
 
         YesNoAnswer.new(capital.has_national_savings_certificates).no?
