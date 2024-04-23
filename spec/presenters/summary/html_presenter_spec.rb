@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: double, kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: double, income_payments: [double], income_benefits: [double], outgoings: double, documents: double,
-      application_type: application_type, capital: (double has_premium_bonds: 'yes'), savings: [double],
+      application_type: application_type, capital: (double has_premium_bonds: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'), savings: [double],
       investments: [double], national_savings_certificates: [double], properties: [double]
     )
   end
@@ -66,7 +66,11 @@ describe Summary::HtmlPresenter do
           'premium_bonds_holder_number' => '1234A',
           'will_benefit_from_trust_fund' => 'yes',
           'trust_fund_amount_held' => 1000,
-          'trust_fund_yearly_dividend' => 2000
+          'trust_fund_yearly_dividend' => 2000,
+          'has_no_properties' => nil,
+          'has_no_savings' => nil,
+          'has_no_investments' => nil,
+          'has_national_savings_certificates' => 'yes',
         }
       },
       'application_type' => application_type,

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Investments summary page', :authorized do
   before :all do
-    app = CrimeApplication.create
+    app = CrimeApplication.create(capital: Capital.new)
     app.investments.create!(investment_type: InvestmentType::BOND,
                             description: 'About the Bond',
                             value: 10_001,

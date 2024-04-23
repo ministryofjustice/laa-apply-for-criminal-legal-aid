@@ -4,11 +4,14 @@ describe Summary::Sections::Investments do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) {
-    instance_double(CrimeApplication, investments: records, in_progress?: true, capital: double,
-   kase: (double case_type:), to_param: 12_345)
+    instance_double(CrimeApplication,
+                    investments: records,
+                    in_progress?: true,
+                    capital: double(Capital, has_no_investments:),
+                    to_param: 12_345)
   }
   let(:records) { [Investment.new] }
-  let(:case_type) { 'either_way' }
+  let(:has_no_investments) { nil }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -25,14 +28,14 @@ describe Summary::Sections::Investments do
       let(:records) { [] }
 
       context 'when the full capital journey was shown' do
+        let(:has_no_investments) { 'yes' }
+
         it 'shows this section' do
           expect(subject.show?).to be true
         end
       end
 
       context 'when the full capital journey was not shown' do
-        let(:case_type) { 'summary_only' }
-
         it 'does not show this section' do
           expect(subject.show?).to be false
         end
@@ -82,6 +85,7 @@ describe Summary::Sections::Investments do
     context 'when there are no investments' do
       let(:records) { [] }
       let(:answers) { subject.answers }
+      let(:has_no_investments) { 'yes' }
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do

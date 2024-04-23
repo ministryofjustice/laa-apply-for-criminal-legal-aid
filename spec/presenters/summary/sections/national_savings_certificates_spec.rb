@@ -8,14 +8,13 @@ describe Summary::Sections::NationalSavingsCertificates do
       CrimeApplication,
       national_savings_certificates: records,
       in_progress?: true,
-      capital: double,
-      kase: (double case_type:),
+      capital: double(Capital, has_national_savings_certificates:),
       to_param: 12_345
     )
   end
 
   let(:records) { [NationalSavingsCertificate.new] }
-  let(:case_type) { 'either_way' }
+  let(:has_national_savings_certificates) { 'yes' }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -32,13 +31,15 @@ describe Summary::Sections::NationalSavingsCertificates do
       let(:records) { [] }
 
       context 'when the full capital journey was shown' do
+        let(:has_national_savings_certificates) { 'no' }
+
         it 'shows this section' do
           expect(subject.show?).to be true
         end
       end
 
       context 'when the full capital journey was not shown' do
-        let(:case_type) { 'summary_only' }
+        let(:has_national_savings_certificates) { nil }
 
         it 'does not show this section' do
           expect(subject.show?).to be false
@@ -81,6 +82,7 @@ describe Summary::Sections::NationalSavingsCertificates do
     context 'when there are no certificates' do
       let(:records) { [] }
       let(:answers) { subject.answers }
+      let(:has_national_savings_certificates) { 'no' }
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
