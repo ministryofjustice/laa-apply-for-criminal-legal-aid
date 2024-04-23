@@ -11,7 +11,7 @@ module Summary
           [
             Components::ValueAnswer.new(
               :has_investments, 'none',
-              change_path: edit_steps_capital_investments_summary_path
+              change_path: edit_steps_capital_investment_type_path
             )
           ]
         else

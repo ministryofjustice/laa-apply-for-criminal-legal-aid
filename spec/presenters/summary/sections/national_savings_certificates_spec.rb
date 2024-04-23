@@ -86,7 +86,7 @@ describe Summary::Sections::NationalSavingsCertificates do
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
-          change_path = 'applications/12345/steps/capital/add_national_savings_certificates'
+          change_path = 'applications/12345/steps/capital/any_national_savings_certificates'
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)

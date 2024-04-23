@@ -11,7 +11,7 @@ module Summary
           [
             Components::ValueAnswer.new(
               :has_capital_savings, 'none',
-              change_path: edit_steps_capital_savings_summary_path
+              change_path: edit_steps_capital_saving_type_path
             )
           ]
         else

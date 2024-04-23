@@ -10,7 +10,7 @@ module Summary
           [
             Components::ValueAnswer.new(
               :has_national_savings_certificate, 'no',
-              change_path: edit_steps_capital_national_savings_certificates_summary_path
+              change_path: edit_steps_capital_has_national_savings_certificates_path
             )
           ]
         else
