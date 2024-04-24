@@ -17,10 +17,12 @@ describe Summary::Sections::IncomePaymentsDetails do
     instance_double(
       Income,
       income_above_threshold: 'yes',
+      has_no_income_payments: has_no_income_payments
     )
   end
 
   let(:income_payments) { [] }
+  let(:has_no_income_payments) { nil }
 
   let(:maintenance_payment) do
     instance_double(
@@ -422,6 +424,7 @@ describe Summary::Sections::IncomePaymentsDetails do
 
       context 'when no payments are reported' do
         let(:income_payments) { [] }
+        let(:has_no_income_payments) { 'yes' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(1)

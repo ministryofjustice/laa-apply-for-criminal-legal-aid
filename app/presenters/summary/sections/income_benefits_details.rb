@@ -9,6 +9,12 @@ module Summary
         @payments ||= crime_application.income_benefits
       end
 
+      def no_payments?
+        return false if section.has_no_income_benefits.nil?
+
+        YesNoAnswer.new(section.has_no_income_benefits).yes?
+      end
+
       def edit_path
         edit_steps_income_income_benefits_path
       end

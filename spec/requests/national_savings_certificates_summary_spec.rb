@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'NationalSavingsCertificates summary page', :authorized do
   before :all do
-    app = CrimeApplication.create
+    app = CrimeApplication.create(capital: Capital.new)
     app.national_savings_certificates.create!(
       holder_number: 'A!',
       certificate_number: 'B2',
