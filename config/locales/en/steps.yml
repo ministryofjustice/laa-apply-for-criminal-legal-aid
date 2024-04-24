@@ -527,8 +527,8 @@ en:
     evidence:
       upload:
         edit:
-          page_title: Add supporting evidence
-          heading: Add supporting evidence
+          page_title: Upload supporting evidence
+          heading: Upload supporting evidence
           optional: No supporting evidence is required based on your current application, but you may upload any documents that will help your application.
           required: 'Based on your answers, use this page to provide:'
           recent_docs: All evidence must be from the last 3 months.
