@@ -33,6 +33,7 @@ gem 'clamby', '1.6.10', require: false
 # Exceptions notifications
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'stackprof'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'

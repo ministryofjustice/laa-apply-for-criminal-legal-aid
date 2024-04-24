@@ -9,11 +9,9 @@ module Evidence
       # Determines order of output on the Evidence Upload page
       # In effect the KEYS are the ruleset to be executed. Having a different
       # KEY list would generate a different ruleset, allowing ruleset versioning.
+      #
+      # When a new rule is created add the key to this list
       KEYS = %i[
-        income_salary_0a
-        income_salary_0b
-
-        p45_proof_33
         national_insurance_32
       ].freeze
 

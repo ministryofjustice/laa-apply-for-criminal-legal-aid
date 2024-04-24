@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Savings summary page', :authorized do
   before :all do
-    app = CrimeApplication.create
+    app = CrimeApplication.create(capital: Capital.new)
     app.savings.create!(saving_type: SavingType::BANK,
                         provider_name: 'Bank of Test',
                         ownership_type: OwnershipType::APPLICANT,

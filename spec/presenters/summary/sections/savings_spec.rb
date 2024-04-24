@@ -4,11 +4,11 @@ describe Summary::Sections::Savings do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) {
-    instance_double(CrimeApplication, savings: records, in_progress?: true, capital: double, kase: (double case_type:),
+    instance_double(CrimeApplication, savings: records, in_progress?: true, capital: double(Capital, has_no_savings:),
    to_param: 12_345)
   }
   let(:records) { [Saving.new] }
-  let(:case_type) { 'either_way' }
+  let(:has_no_savings) { nil }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -25,14 +25,14 @@ describe Summary::Sections::Savings do
       let(:records) { [] }
 
       context 'when the full capital journey was shown' do
+        let(:has_no_savings) { 'yes' }
+
         it 'shows this section' do
           expect(subject.show?).to be true
         end
       end
 
       context 'when the full capital journey was not shown' do
-        let(:case_type) { 'summary_only' }
-
         it 'does not show this section' do
           expect(subject.show?).to be false
         end
@@ -82,6 +82,7 @@ describe Summary::Sections::Savings do
     context 'when there are no savings' do
       let(:records) { [] }
       let(:answers) { subject.answers }
+      let(:has_no_savings) { 'yes' }
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
@@ -89,7 +90,7 @@ describe Summary::Sections::Savings do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:has_capital_savings)
-          expect(answers[0].change_path).to match('applications/12345/steps/capital/add_savings_accounts')
+          expect(answers[0].change_path).to match('applications/12345/steps/capital/which_savings')
           expect(answers[0].value).to eq('none')
         end
       end
