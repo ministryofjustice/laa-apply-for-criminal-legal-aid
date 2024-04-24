@@ -231,8 +231,6 @@ RSpec.describe Evidence::Rule do
     end
 
     let!(:klasses) do
-      @_klasses ||= Evidence::Ruleset::Runner.load_rules!
-
       Evidence::Rules.constants
     end
 

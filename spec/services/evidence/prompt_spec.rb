@@ -39,8 +39,6 @@ RSpec.describe Evidence::Prompt do
     stub_const('EmptyRuleset', empty_ruleset)
     stub_const('WalesRuleset', wales_ruleset)
 
-    Evidence::Ruleset::Runner.load_rules!
-
     Rails.root.glob('spec/fixtures/files/evidence/rules/*.rb') do |file|
       load file
     end
