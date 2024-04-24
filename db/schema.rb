@@ -262,7 +262,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
-    t.string "can_submit_without_nino"
     t.date "last_jsa_appointment_date"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
