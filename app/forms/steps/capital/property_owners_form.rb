@@ -3,7 +3,7 @@ module Steps
     class PropertyOwnersForm < Steps::BaseFormObject
       delegate :property_owners_attributes=, to: :record
 
-      validates_with PropertyOwnersValidator, unless: :any_marked_for_destruction?
+      validates_with CapitalAssessment::PropertyOwnersValidator, unless: :any_marked_for_destruction?
 
       def property_owners
         @property_owners ||= record.property_owners.map do |property_owner|
