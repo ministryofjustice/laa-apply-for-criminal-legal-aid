@@ -210,8 +210,13 @@ RSpec.describe Evidence::Rule do
       it 'evaluates to false', :aggregate_failures do
         offside_rule = OffsideRule.new(crime_application)
 
+        expect(OffsideRule.client).to be_nil
         expect(offside_rule.client_predicate).to be false
+
+        expect(OffsideRule.partner).to be_nil
         expect(offside_rule.partner_predicate).to be false
+
+        expect(Evidence::Rules::ExampleRule1.other).to be_nil
         expect(example_rule1.other_predicate).to be false
       end
     end
