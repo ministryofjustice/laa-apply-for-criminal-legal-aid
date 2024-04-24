@@ -240,7 +240,7 @@ RSpec.describe Evidence::Rule do
       klasses.map { |klass| "Evidence::Rules::#{klass}".constantize }
     end
 
-    it 'must load rule definitions' do
+    it 'must load rule definitions' do # rubocop:disable RSpec/ExampleLength
       expected_klasses = [
         Evidence::Rules::IncomeSalary0a,
         Evidence::Rules::IncomeSalary0b,
@@ -256,6 +256,7 @@ RSpec.describe Evidence::Rule do
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
         Evidence::Rules::ExampleRule2,
+        Evidence::Rules::ExampleRule2Budget2023,
         Evidence::Rules::ExampleRule2Budget2024,
         Evidence::Rules::ExampleRule2Budget2025,
         Evidence::Rules::BadRuleDefinition,

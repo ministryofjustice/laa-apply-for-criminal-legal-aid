@@ -42,7 +42,9 @@ module Evidence
         if block
           Array.wrap(rules).each(&block)
         else
+          # :nocov:
           to_enum(:each)
+          # :nocov:
         end
       end
 
