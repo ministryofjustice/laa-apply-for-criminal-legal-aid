@@ -25,6 +25,8 @@ module TypeOfMeansAssessment
   end
 
   def requires_full_capital?
+    return false unless kase&.case_type
+
     [
       CaseType::EITHER_WAY,
       CaseType::INDICTABLE,

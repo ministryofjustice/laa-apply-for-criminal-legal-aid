@@ -1,29 +1,29 @@
 module CapitalAssessment
   class AnswersValidator
+    include TypeOfMeansAssessment
+
     def initialize(record)
       @record = record
     end
 
     attr_reader :record
 
-    delegate :errors, to: :record
+    delegate :errors, :crime_application, to: :record
 
-    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      errors.add :property_type, :blank unless property_type_complete?
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+      if requires_full_capital?
+        errors.add :property_type, :blank unless property_type_complete?
+        errors.add :properties, :incomplete_records unless properties_complete?
+        errors.add :saving_type, :blank unless saving_type_complete?
+        errors.add :savings, :incomplete_records unless savings_complete?
+        errors.add :investment_type, :blank unless investment_type_complete?
+        errors.add :investments, :incomplete_records unless investments_complete?
+        errors.add :has_national_savings_certificates, :blank unless has_national_savings_certificates_complete?
+        errors.add :national_savings_certificates, :incomplete_records unless national_savings_certificates_complete?
+      end
 
-      errors.add :properties, :incomplete_records unless properties_complete?
-
-      errors.add :saving_type, :blank unless saving_type_complete?
-
-      errors.add :savings, :incomplete_records unless savings_complete?
-
-      errors.add :investment_type, :blank unless investment_type_complete?
-
-      errors.add :investments, :incomplete_records unless investments_complete?
-
-      errors.add :has_national_savings_certificates, :blank unless has_national_savings_certificates_complete?
-
-      errors.add :national_savings_certificates, :incomplete_records unless national_savings_certificates_complete?
+      errors.add :trust_fund, :blank unless trust_fund_complete?
+      errors.add :frozen_income_savings_assets_capital, :blank unless frozen_income_savings_assets_complete?
 
       errors.add(:base, :incomplete_records) if errors.present?
     end
@@ -72,6 +72,17 @@ module CapitalAssessment
       return true if record.has_national_savings_certificates == 'no'
 
       record.national_savings_certificates.present? && record.national_savings_certificates.all?(&:complete?)
+    end
+
+    def trust_fund_complete?
+      return true if record.will_benefit_from_trust_fund == 'no'
+      return false unless record.will_benefit_from_trust_fund == 'yes'
+
+      record.trust_fund_amount_held.present? && record.trust_fund_yearly_dividend.present?
+    end
+
+    def frozen_income_savings_assets_complete?
+      record.has_frozen_income_or_assets.present? || income&.has_frozen_income_or_assets.present?
     end
   end
 end
