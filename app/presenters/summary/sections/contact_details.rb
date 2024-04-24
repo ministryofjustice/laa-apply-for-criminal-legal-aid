@@ -11,16 +11,16 @@ module Summary
 
         if residence_type?
           answers.push(Components::ValueAnswer.new(
-            :residence_type, applicant.residence_type,
-            change_path: edit_steps_client_residence_type_path
-          ))
+                         :residence_type, applicant.residence_type,
+                         change_path: edit_steps_client_residence_type_path
+                       ))
         end
 
         if someone_else_residence_type?
           answers.push(Components::FreeTextAnswer.new(
-            :relationship_to_someone_else, applicant.relationship_to_someone_else,
-            change_path: edit_steps_client_residence_type_path
-          ))
+                         :relationship_to_someone_else, applicant.relationship_to_someone_else,
+                         change_path: edit_steps_client_residence_type_path
+                       ))
         end
 
         answers << [

@@ -100,7 +100,6 @@ describe Summary::Sections::ContactDetails do
       end
     end
 
-
     context 'when there is a residence type' do
       let(:residence_type) { ResidenceType::PARENTS.to_s }
 

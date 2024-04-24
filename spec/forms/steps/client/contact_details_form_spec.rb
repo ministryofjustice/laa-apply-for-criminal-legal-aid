@@ -53,9 +53,9 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
       it 'returns all correspondence address types' do
         expect(subject.choices.map(&:value)).to match(
-                                                  [:providers_office_address,
-                                                   :other_address]
-                                                )
+          [:providers_office_address,
+           :other_address]
+        )
       end
     end
   end
