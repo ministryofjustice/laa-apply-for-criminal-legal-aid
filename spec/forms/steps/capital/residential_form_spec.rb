@@ -13,7 +13,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
   let(:attributes) { {} }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:)
+    instance_double(CrimeApplication, applicant:, client_has_partner:)
   end
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
   let(:record) {
@@ -75,7 +75,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
         bedrooms: 2,
         value: 170_000,
         outstanding_mortgage: 100_000,
-        percentage_applicant_owned: 10,
+        percentage_applicant_owned: 90,
         is_home_address: 'yes',
         has_other_owners: 'yes',
       }
