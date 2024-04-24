@@ -25,9 +25,9 @@ module Summary
 
         unless residence_of_type?('none')
           answers.push(Components::FreeTextAnswer.new(
-            :home_address, full_address(home_address), show: true,
+                         :home_address, full_address(home_address), show: true,
             change_path: change_path(home_address)
-          ))
+                       ))
         end
 
         answers << [
