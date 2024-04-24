@@ -21,6 +21,7 @@ module Evidence
 
       def initialize(crime_application)
         @crime_application = crime_application
+        raise ArgumentError, 'CrimeApplication required' unless @crime_application
 
         self.class.load_rules!
         validate!
