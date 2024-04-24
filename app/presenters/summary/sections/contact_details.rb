@@ -16,19 +16,21 @@ module Summary
                        ))
         end
 
-        if someone_else_residence_type?
+        if residence_of_type?('someone_else')
           answers.push(Components::FreeTextAnswer.new(
                          :relationship_to_someone_else, applicant.relationship_to_someone_else,
                          change_path: edit_steps_client_residence_type_path
                        ))
         end
 
-        answers << [
-          Components::FreeTextAnswer.new(
+        unless residence_of_type?('none')
+          answers.push(Components::FreeTextAnswer.new(
             :home_address, full_address(home_address), show: true,
             change_path: change_path(home_address)
-          ),
+          ))
+        end
 
+        answers << [
           Components::ValueAnswer.new(
             :correspondence_address_type, applicant.correspondence_address_type,
             change_path: edit_steps_client_contact_details_path
@@ -86,8 +88,8 @@ module Summary
         ).compact_blank.join("\r\n")
       end
 
-      def someone_else_residence_type?
-        crime_application.applicant.residence_type == 'someone_else'
+      def residence_of_type?(type)
+        crime_application.applicant.residence_type == type
       end
 
       def residence_type?
