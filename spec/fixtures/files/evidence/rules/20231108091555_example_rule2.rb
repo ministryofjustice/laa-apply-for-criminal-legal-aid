@@ -10,8 +10,12 @@ module Evidence
 
       # Completely made-up rules
       client do |crime_application|
-        crime_application.responds_to?(:outgoings) &&
-          crime_application.is_means_tested?
+        crime_application.respond_to?(:outgoings) &&
+          crime_application.outgoings.housing_payment_type == 'rent'
+      end
+
+      partner do |_crime_application|
+        false
       end
     end
   end

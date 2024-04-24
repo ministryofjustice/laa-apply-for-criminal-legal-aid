@@ -7,10 +7,10 @@ module Evidence
       raise ArgumentError, 'CrimeApplication required' unless @crime_application
 
       @ruleset = ruleset || ::Evidence::Ruleset::Runner.new(crime_application).ruleset
-      raise InvalidRuleset, 'Ruleset must provide rule definitions' unless @ruleset.respond_to?(:each)
+      raise Errors::InvalidRuleset, 'Ruleset must provide rule definitions' unless @ruleset.respond_to?(:each)
     end
 
-    def dry_run!
+    def run
       results
 
       self
@@ -20,17 +20,17 @@ module Evidence
       results
 
       ::CrimeApplication.transaction do
-        @crime_application.evidence_prompts = @results
-        @crime_application.evidence_last_run_at = DateTime.now
+        crime_application.evidence_prompts = @results
+        crime_application.evidence_last_run_at = DateTime.now
 
-        @crime_application.save!
+        crime_application.save!
       end
 
       self
     end
 
     def required?
-      dry_run!
+      run
 
       !@results.empty?
     end
@@ -43,11 +43,11 @@ module Evidence
       results.select { |r| (r[:group] == group.to_sym) && (r[:run][persona.to_sym][:result] == true) }
     end
 
-    private
-
     def results
       @results ||= ruleset.map do |rule|
-        rule.new(crime_application).to_h.merge(ruleset: ruleset.to_s)
+        rule.new(crime_application).to_h.merge(
+          ruleset: ruleset.to_s,
+        )
       end
     end
   end

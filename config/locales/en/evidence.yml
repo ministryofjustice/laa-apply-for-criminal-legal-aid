@@ -11,5 +11,18 @@ en:
         capital: Evidence of the partner's capital
       other: Other evidence
     rule:
+      # Test rules
+      ExampleRule1:
+        client: a bank statement for your client
+        partner: a bank statement for the partner
+      ExampleRule2:
+        client: this client rule is archived
+        partner: this partner rule is archived
+      ExampleRule2Budget2024:
+        client:
+          - a birth certificate
+          - a driving licence
+
+      # Live rules
       NationalInsuranceProof:
         other: their National Insurance number

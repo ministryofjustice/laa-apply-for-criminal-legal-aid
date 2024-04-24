@@ -18,15 +18,20 @@ module Evidence
       private
 
       def persisted
-        crime_application.evidence_ruleset.filter_map do |klass|
-          definition = all_rules.find { |rule| rule.name == klass.to_s }
+        @persisted ||=
+          crime_application.evidence_prompts.filter_map do |prompt|
+            next unless prompt.is_a?(Hash)
 
-          unless definition
-            Rails.logger.error("Rule definition for persisted ruleset #{klass} not found - has it been deleted?")
+            id = prompt.with_indifferent_access[:id]
+            klass = "Evidence::Rules::#{id}"
+            definition = all_rules.find { |rule| rule.name == klass }
+
+            unless definition
+              Rails.logger.error("Rule definition for persisted ruleset #{id} not found - has it been deleted?")
+            end
+
+            definition
           end
-
-          definition
-        end
       end
     end
   end

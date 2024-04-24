@@ -9,7 +9,8 @@ module Evidence
 
       # Completely made-up rules
       client do |crime_application|
-        crime_application.is_means_tested? &&
+        crime_application.respond_to?(:outgoings) &&
+          crime_application.outgoings.housing_payment_type == 'mortgage' &&
           crime_application.applicant.has_nino == 'yes'
       end
     end

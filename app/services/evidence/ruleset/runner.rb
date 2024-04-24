@@ -30,7 +30,7 @@ module Evidence
       # whether to use the latest ruleset or select more amenable versions of changed rules.
       def ruleset
         @ruleset ||=
-          if crime_application.resubmission? && !Array.wrap(crime_application.evidence_prompts).empty?
+          if !Array.wrap(crime_application.evidence_prompts).empty? && crime_application.resubmission?
             Ruleset::Hydrated.new(crime_application, keys)
           else
             Ruleset::Latest.new(crime_application, keys)

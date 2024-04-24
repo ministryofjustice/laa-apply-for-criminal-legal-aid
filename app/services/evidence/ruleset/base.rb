@@ -10,11 +10,15 @@ module Evidence
     class Base
       include Enumerable
 
-      attr_reader :crime_application, :rules, :keys
+      attr_reader :crime_application, :keys
 
-      def initialize(crime_application, keys)
+      def initialize(crime_application, keys = Evidence::Ruleset::Runner::KEYS)
         @crime_application = crime_application
         @keys = keys
+      end
+
+      def rules
+        raise NotImplementedError, 'Child class must implement #rules'
       end
 
       def all_rules

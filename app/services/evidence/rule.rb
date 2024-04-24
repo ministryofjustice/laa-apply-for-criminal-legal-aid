@@ -68,53 +68,42 @@ module Evidence
       self.class.archived if self.class.respond_to?(:archived)
     end
 
-    def client_predicate
-      return false unless self.class.respond_to?(:execute_client)
-
-      result = self.class.execute_client(crime_application)
-
-      allowable!(
-        result: result,
-        persona: :client
-      )
+    # Generates client_predicate, partner_predicate, other_predicate
+    PERSONAS.each do |persona|
+      define_method :"#{persona}_predicate" do
+        dsl_predicate = :"execute_#{persona}"
+        if self.class.respond_to?(dsl_predicate)
+          allowable!(
+            result: self.class.send(dsl_predicate, crime_application),
+            persona: persona
+          )
+        else
+          # :nocov:
+          false
+          # :nocov:
+        end
+      end
     end
 
-    def partner_predicate
-      return false unless self.class.respond_to?(:execute_partner)
-
-      allowable!(
-        result: self.class.execute_partner(crime_application),
-        persona: :partner
-      )
-    end
-
-    def other_predicate
-      return false unless self.class.respond_to?(:execute_other)
-
-      allowable!(
-        result: self.class.execute_other(crime_application),
-        persona: :partner
-      )
-    end
-
-    # TODO: Consider replacing the hash with an LAA Struct
+    # TODO: Consider replacing the hash with an LAA Struct or dedicated class
     def to_h # rubocop:disable Metrics/MethodLength
       {
         id: id,
         group: group,
         ruleset: nil,
+        key: key,
         run: {
           client: {
             result: client_predicate,
-            prompt: to_sentences(persona: :client),
+            prompt: (show?(client_predicate) ? to_sentences(persona: :client) : []),
           },
           partner: {
             result: partner_predicate,
-            prompt: to_sentences(persona: :partner),
+            prompt: (show?(partner_predicate) ? to_sentences(persona: :partner) : []),
           },
           other: {
             result: other_predicate,
-            prompt: to_sentences(persona: :other),
+            prompt: (show?(other_predicate) ? to_sentences(persona: :other) : []),
           },
         }
       }
@@ -126,6 +115,10 @@ module Evidence
       return result if [true, false].include?(result)
 
       raise Errors::UnsupportedPredicate, "Predicate for `#{self.class.name}-#{persona}` must evaluate to True or False"
+    end
+
+    def show?(result)
+      result == true
     end
 
     # Allow multiple sentences to be output per rule

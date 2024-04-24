@@ -136,6 +136,10 @@ RSpec.describe Evidence::Rule do
     end
   end
 
+  # TODO: Not sure whether `id` should just be called `klass`. Storing the
+  # fully qualified class name including module could mean allowing Rule definitions
+  # from different modules to be executed, but currently assuming all Rule definitions
+  # belong to Evidence::Rules module
   describe '#id' do
     it 'as the class name without module' do
       expect(OffsideRule.new(crime_application).id).to eq('OffsideRule')
@@ -165,6 +169,28 @@ RSpec.describe Evidence::Rule do
   describe '#archived?' do
     it 'as defined by the DSL' do
       expect(OffsideRule.new(crime_application).archived?).to be false
+    end
+  end
+
+  describe '#to_h' do
+    subject { Evidence::Rules::ExampleRule1.new(crime_application).to_h }
+
+    let(:expected_hash) do
+      {
+        id: 'ExampleRule1',
+        group: :capital,
+        ruleset: nil, # Populated when Prompt is generated
+        key: :example1,
+        run: {
+          client: { result: true, prompt: ['a bank statement for your client'] },
+          partner: { result: true, prompt: ['a bank statement for the partner'] },
+          other: { result: false, prompt: [] },
+        }
+      }
+    end
+
+    it 'only generates prompts for `true` predicates' do
+      expect(subject).to eq expected_hash
     end
   end
 
