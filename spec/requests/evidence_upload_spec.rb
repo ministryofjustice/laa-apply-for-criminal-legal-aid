@@ -53,7 +53,7 @@ RSpec.describe 'Evidence upload page', :authorized do
     it 'lists the uploaded documents with their details' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Add supporting evidence'
+      assert_select 'h1', 'Upload supporting evidence'
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row:nth-of-type(1)' do
