@@ -73,7 +73,7 @@ module Evidence
       define_method :"#{persona}_predicate" do
         predicate = :"execute_#{persona}"
 
-        memoized_predicate(predicate) do
+        memoized(predicate) do
           if self.class.respond_to?(predicate)
             allowable!(
               result: self.class.send(predicate, crime_application),
@@ -131,7 +131,7 @@ module Evidence
       [I18n.t("evidence.rule.#{id}.#{persona}", default:)].flatten.compact
     end
 
-    def memoized_predicate(var)
+    def memoized(var)
       instance_var = :"@#{var}"
       return instance_variable_get(instance_var) if instance_variable_defined?(instance_var)
 
