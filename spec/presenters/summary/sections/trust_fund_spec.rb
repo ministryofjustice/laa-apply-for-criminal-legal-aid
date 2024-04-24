@@ -70,5 +70,15 @@ describe Summary::Sections::TrustFund do
         expect(answers.count).to eq(1)
       end
     end
+
+    context 'when question has not yet been answered' do
+      before do
+        allow(capital).to receive(:will_benefit_from_trust_fund).and_return(nil)
+      end
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(1)
+      end
+    end
   end
 end
