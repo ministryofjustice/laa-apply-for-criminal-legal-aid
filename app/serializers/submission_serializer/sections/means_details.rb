@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class MeansDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           next if income.blank?
 
@@ -20,6 +20,8 @@ module SubmissionSerializer
               json.dependants Definitions::Dependant.generate(crime_application.dependants.with_ages)
               json.income_payments Definitions::Payment.generate(crime_application.income_payments)
               json.income_benefits Definitions::Payment.generate(crime_application.income_benefits)
+              json.has_no_income_payments income.has_no_income_payments
+              json.has_no_income_benefits income.has_no_income_benefits
             end
 
             json.outgoings_details do
@@ -30,6 +32,7 @@ module SubmissionSerializer
               json.outgoings_more_than_income outgoings&.outgoings_more_than_income
               json.how_manage outgoings&.how_manage
               json.pays_council_tax outgoings&.pays_council_tax
+              json.has_no_other_outgoings outgoings&.has_no_other_outgoings
             end
 
             if capital
@@ -40,11 +43,15 @@ module SubmissionSerializer
                 json.will_benefit_from_trust_fund capital.will_benefit_from_trust_fund
                 json.trust_fund_amount_held capital.trust_fund_amount_held_before_type_cast
                 json.trust_fund_yearly_dividend capital.trust_fund_yearly_dividend_before_type_cast
+                json.has_no_savings capital.has_no_savings
                 json.savings Definitions::Saving.generate(capital.savings)
+                json.has_no_investments capital.has_no_investments
                 json.investments Definitions::Investment.generate(capital.investments)
+                json.has_national_savings_certificates capital.has_national_savings_certificates
                 json.national_savings_certificates Definitions::NationalSavingsCertificate.generate(
                   capital.national_savings_certificates
                 )
+                json.has_no_properties capital.has_no_properties
                 json.properties Definitions::Property.generate(capital.properties)
                 json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
                 json.has_no_other_assets capital.has_no_other_assets
