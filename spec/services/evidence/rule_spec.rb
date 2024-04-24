@@ -226,16 +226,8 @@ RSpec.describe Evidence::Rule do
   end
 
   describe 'rules interface' do
-    let(:definitions) do
-      Rails.root.join('app/services/evidence/rules/*')
-    end
-
-    let!(:klasses) do
-      Evidence::Rules.constants
-    end
-
     let!(:rules) do
-      klasses.map { |klass| "Evidence::Rules::#{klass}".constantize }
+      Evidence::Rules.constants.map { |klass| "Evidence::Rules::#{klass}".constantize }
     end
 
     it 'must load rule definitions' do # rubocop:disable RSpec/ExampleLength
@@ -274,7 +266,9 @@ RSpec.describe Evidence::Rule do
     end
 
     it 'has a timestamped filename' do
-      timestamped = Dir.glob(definitions).map do |filepath|
+      filenames = Rails.root.join('app/services/evidence/rules/*')
+
+      timestamped = Dir.glob(filenames).map do |filepath|
         filepath.match?(%r{/(\d{14})_\w*.\.rb})
       end
 
