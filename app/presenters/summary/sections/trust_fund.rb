@@ -16,13 +16,13 @@ module Summary
           ),
           Components::MoneyAnswer.new(
             :trust_fund_amount_held,
-            crime_application.capital.trust_fund_amount_held,
+            cast_to_pounds(crime_application.capital.trust_fund_amount_held),
             change_path: change_path,
             show: will_benefit_from_trust_fund?
           ),
           Components::MoneyAnswer.new(
             :trust_fund_yearly_dividend,
-            crime_application.capital.trust_fund_yearly_dividend,
+            cast_to_pounds(crime_application.capital.trust_fund_yearly_dividend),
             change_path: change_path,
             show: will_benefit_from_trust_fund?
           )
@@ -30,6 +30,11 @@ module Summary
       end
 
       private
+
+      # TODO: figure out why casting from pence is not happening automatically
+      def cast_to_pounds(value)
+        Money.new(value)
+      end
 
       def will_benefit_from_trust_fund?
         YesNoAnswer.new(capital.will_benefit_from_trust_fund.to_s).yes?

@@ -57,7 +57,7 @@ describe Summary::Sections::PremiumBonds do
         expect(answers[2]).to be_an_instance_of(Summary::Components::MoneyAnswer)
         expect(answers[2].question).to eq(:premium_bonds_total_value)
         expect(answers[1].change_path).to match(expected_change_path)
-        expect(answers[2].value).to eq('10.01')
+        expect(answers[2].value.value).to eq('10.01')
       end
     end
 
