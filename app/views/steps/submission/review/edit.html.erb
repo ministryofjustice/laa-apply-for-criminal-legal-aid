@@ -4,13 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column">
     <% unless current_crime_application.valid?(:submission) %>
-      <div class="govuk-error-summary">
-        <% current_crime_application.errors.each do |e| %>
-          <h2 class="govuk-error-summary__title govuk-!-margin-bottom-0">
-            <%= e.message %>
-          </h2>
-        <% end %>
-      </div>
+      <%= render partial: 'steps/shared/error_warning' %>
     <% end %>
 
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>

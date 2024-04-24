@@ -6,13 +6,7 @@
     <%= render partial: 'shared/flash_banner' %>
 
     <% unless @form_object.capital.valid?(:check_answers) %>
-      <div class="govuk-error-summary">
-        <% @form_object.capital.errors.each do |e| %>
-          <h2 class="govuk-error-summary__title govuk-!-margin-bottom-0">
-            <%= e.message %>
-          </h2>
-        <% end %>
-      </div>
+      <%= render partial: 'steps/shared/error_warning' %>
     <% end %>
 
     <%= govuk_error_summary(@form_object) %>

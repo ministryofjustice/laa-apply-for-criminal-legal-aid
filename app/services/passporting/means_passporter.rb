@@ -57,6 +57,8 @@ module Passporting
     end
 
     def appeal_no_changes?
+      return false unless crime_application.case
+
       (crime_application.case.case_type == 'appeal_to_crown_court') &&
         (crime_application.case.appeal_financial_circumstances_changed == 'no')
     end

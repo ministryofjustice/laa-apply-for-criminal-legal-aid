@@ -1,17 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
-  subject(:form) { described_class.new(arguments) }
+  subject(:form) { described_class.new(crime_application:) }
 
-  let(:arguments) do
-    {
-      crime_application: crime_application,
-      types: allowed_types,
-    }
-  end
-
-  let(:crime_application) { CrimeApplication.new(case: case_record) }
-  let(:case_record) { Case.new }
+  let(:crime_application) { CrimeApplication.new(case: Case.new, income: Income.new) }
 
   let(:allowed_types) do
     %w[childcare maintenance legal_aid_contribution]
@@ -26,7 +18,16 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
     subject.crime_application.outgoings_payments
   end
 
-  it_behaves_like 'a payment form', described_class
+  let(:existing_payment) do
+    OutgoingsPayment.create!(
+      payment_type: 'legal_aid_contribution',
+      crime_application: crime_application,
+      amount: '123',
+      frequency: 'four_weeks'
+    )
+  end
+
+  it_behaves_like 'a payment form', described_class, :has_no_other_outgoings
 
   describe '#save' do
     context 'with form submission' do
@@ -41,6 +42,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
       before do
         allowed_types.each do |type|
           subject.public_send(:"#{type}=", form_data.dig('steps_outgoings_outgoings_payments_form', type))
+          subject.public_send(type.to_s)
         end
 
         subject.valid?

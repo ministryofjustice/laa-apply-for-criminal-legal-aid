@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::PropertyTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, properties:) }
+  let(:crime_application) { instance_double(CrimeApplication, properties:, capital:) }
+  let(:capital) { instance_double(Capital) }
   let(:properties) { class_double(Property, where: existing_properties) }
   let(:existing_properties) { [] }
 
@@ -15,6 +16,22 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
     end
   end
 
+  describe '#property_type' do
+    subject(:property_type) { form.property_type }
+
+    context 'when the quesiton has not been answered' do
+      before { allow(capital).to receive(:has_no_properties).and_return(nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when capital#has_no_properties "yes"' do
+      before { allow(capital).to receive(:has_no_properties).and_return('yes') }
+
+      it { is_expected.to eq 'none' }
+    end
+  end
+
   describe '#save' do
     let(:property_type) { PropertyType::RESIDENTIAL.to_s }
     let(:new_property) { instance_double(Property, property_type:) }
@@ -23,6 +40,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
 
     before do
       allow(properties).to receive(:create!).with(property_type:).and_return new_property
+      allow(capital).to receive(:update).and_return true
       allow(properties).to receive(:destroy_all)
 
       form.property_type = property_type
@@ -36,12 +54,20 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
         expect(form.property).to be_nil
         expect(properties).not_to have_received(:create!)
       end
+
+      it 'updates the capital#has_no_properties to "yes"' do
+        expect(capital).to have_received(:update).with(has_no_properties: 'yes')
+      end
     end
 
     context 'when there are no properties of the property type' do
       it 'a new property of the property type is created' do
         expect(form.property).to be new_property
         expect(properties).to have_received(:create!).with(property_type:)
+      end
+
+      it 'sets capital#has_no_properties to nil' do
+        expect(capital).to have_received(:update).with(has_no_properties: nil)
       end
     end
 

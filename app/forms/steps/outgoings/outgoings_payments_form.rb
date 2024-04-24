@@ -1,6 +1,9 @@
 module Steps
   module Outgoings
     class OutgoingsPaymentsForm < Steps::BaseFormObject
+      include Steps::HasOneAssociation
+      has_one_association :outgoings
+
       # NOTE: Remember to add any new types to this list otherwise it will not show on page edit
       PAYMENT_TYPES_ORDER = %w[
         childcare
@@ -8,9 +11,10 @@ module Steps
         legal_aid_contribution
       ].freeze
 
-      attribute :outgoings_payments, array: true, default: [] # Used by BaseFormObject
-      attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
+      attr_writer :types
       attr_reader :new_payments
+
+      attribute :outgoings_payments, array: true, default: [] # Used by BaseFormObject
 
       validates_with OutgoingsPaymentsValidator
 
@@ -51,8 +55,15 @@ module Steps
         OutgoingsPaymentType::OTHER_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
-      def checked?(type)
-        types.include?(type) || send(type.to_s)&.id.present?
+      def types
+        return @types if @types
+        return ['none'] if outgoings.has_no_other_outgoings == 'yes'
+
+        outgoings.other_payments.pluck(:payment_type)
+      end
+
+      def has_no_other_outgoings
+        'yes' if types.include?('none')
       end
 
       private
@@ -64,7 +75,7 @@ module Steps
           return OutgoingsPayment.new(payment_type: type.to_s, **attrs)
         end
 
-        outgoings_payment = crime_application.outgoings_payments.find_by(payment_type: type.value.to_s)
+        outgoings_payment = outgoings.other_payments.find_by(payment_type: type.value.to_s)
         return outgoings_payment if outgoings_payment
 
         OutgoingsPayment.new(payment_type: type.to_s)
@@ -72,7 +83,7 @@ module Steps
 
       # Individual outgoing_payment_fieldset_form are in charge of saving themselves
       def persist!
-        true
+        outgoings.update(has_no_other_outgoings:)
       end
     end
   end

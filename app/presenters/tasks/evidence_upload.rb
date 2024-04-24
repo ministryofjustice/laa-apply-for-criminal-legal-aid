@@ -5,6 +5,8 @@ module Tasks
     end
 
     def not_applicable?
+      return false unless fulfilled?(ClientDetails)
+
       Evidence::Requirements.new(crime_application).none?
     end
 

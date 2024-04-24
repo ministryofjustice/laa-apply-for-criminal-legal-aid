@@ -16,6 +16,10 @@ RSpec.describe Steps::Capital::AnswersForm do
   let(:capital) { Capital.new }
 
   context 'with valid attributes' do
+    before do
+      allow(capital).to receive(:valid?).with(:check_answers).and_return(true)
+    end
+
     context 'when `has_no_other_assets` is `yes`' do
       let(:attributes) { { has_no_other_assets: YesNoAnswer::YES.to_s } }
 

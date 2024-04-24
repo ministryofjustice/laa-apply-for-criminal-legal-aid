@@ -24,8 +24,7 @@ RSpec.describe TaskList::Collection do
     it 'has the `means_assessment` section' do
       expect(subject[2].index).to eq(3)
       expect(subject[2].name).to eq(:means_assessment)
-      expect(subject[2].tasks).to eq([:income_assessment, :capital_assessment, :check_your_answers,
-                                      :check_assessment_result])
+      expect(subject[2].tasks).to eq([:income_assessment, :outgoings_assessment, :capital_assessment])
     end
 
     it 'has the `support_evidence` section' do

@@ -1,9 +1,18 @@
 module TypeOfMeansAssessment
   extend ActiveSupport::Concern
 
-  delegate :kase, :income, :income_payments, :income_benefits, :capital, to: :crime_application
+  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits, :capital, to: :crime_application
+
+  def requires_means_assessment?
+    return false unless FeatureFlags.means_journey.enabled?
+    return false if kase.appeal_reference_number.present?
+
+    !Passporting::MeansPassporter.new(crime_application).call
+  end
 
   def requires_full_means_assessment?
+    return false unless requires_means_assessment?
+
     if income_below_threshold? && no_frozen_assets?
       !(summary_only? || (no_property? && no_savings?))
     else
@@ -11,7 +20,13 @@ module TypeOfMeansAssessment
     end
   end
 
+  def means_assessment_complete?
+    income.complete? && (!requires_full_means_assessment? || (outgoings&.complete? && capital&.complete?))
+  end
+
   def requires_full_capital?
+    return false unless kase&.case_type
+
     [
       CaseType::EITHER_WAY,
       CaseType::INDICTABLE,

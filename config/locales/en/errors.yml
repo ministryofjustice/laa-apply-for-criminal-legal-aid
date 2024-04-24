@@ -6,13 +6,15 @@ en:
 
     error_summary:
       heading: There is a problem on this page
+      incomplete_records_heading: There is a problem
+
+    incomplete_records: You need to complete all questions before you can submit the application
 
   activerecord:
     errors:
       models:
         # fulfillment validation errors
         crime_application:
-          incomplete_records: You need to complete all questions before you can submit the application
           attributes:
             base:
               case_type_missing: A case type needs to be selected
@@ -22,8 +24,6 @@ en:
               blank: Justification for legal aid needs to be completed
             documents:
               blank: Upload supporting evidence
-        capital:
-          incomplete_records: You need to complete all questions before you can submit the application
         # evidence upload data model
         document:
           attributes:
@@ -424,7 +424,7 @@ en:
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
         steps/income/income_payments_form:
           attributes:
-            none:
+            base:
               none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
@@ -442,7 +442,7 @@ en:
               blank: Enter an amount
         steps/income/income_benefits_form:
           attributes:
-            none:
+            base:
               none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
@@ -517,7 +517,7 @@ en:
               not_a_number: How much they pay yearly must be a number, like 50
         steps/outgoings/outgoings_payments_form:
           attributes:
-            none:
+            base:
               none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
