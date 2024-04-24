@@ -32,7 +32,7 @@ module Summary
       private
 
       def will_benefit_from_trust_fund?
-        YesNoAnswer.new(capital.will_benefit_from_trust_fund).yes?
+        YesNoAnswer.new(capital.will_benefit_from_trust_fund.to_s).yes?
       end
 
       def change_path
