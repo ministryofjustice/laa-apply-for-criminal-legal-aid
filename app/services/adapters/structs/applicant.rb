@@ -16,7 +16,8 @@ module Adapters
       def serializable_hash(options = {})
         super(
           options.merge(
-            methods: [:has_nino]
+            methods: [:has_nino],
+            except: [:relationship_to_someone_else, :residence_type]
           )
         )
       end

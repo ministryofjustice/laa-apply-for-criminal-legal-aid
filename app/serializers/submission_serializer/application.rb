@@ -12,12 +12,14 @@ module SubmissionSerializer
         case_details
         ioj_details
         means_details
+        evidence_details
         supporting_evidence
       ],
       post_submission_evidence: %i[
         pse_application_details
         provider_details
         client_details
+        evidence_details
         supporting_evidence
       ]
     }.freeze
