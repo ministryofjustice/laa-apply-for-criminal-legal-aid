@@ -1,19 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Ruleset::Runner do
-  let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
-  let(:income) { instance_double(Income, client_owns_property: 'yes') }
-  let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
-  let(:capital) { instance_double(Capital, has_premium_bonds: 'yes') }
-
   let(:crime_application) do
-    instance_double(
-      CrimeApplication,
-      applicant:,
-      income:,
-      outgoings:,
-      capital:,
-    )
+    instance_double(CrimeApplication)
   end
 
   before do
