@@ -426,7 +426,7 @@ en:
       national_savings_certificates:
         edit:
           page_title: Add investment details
-          heading: Your client’s National Savings Certificates 
+          heading: Your client’s National Savings Certificates
           info: You told us your client has  National Savings Certificates.
         confirm_destroy:
           page_title: Delete National Savings Certificate confirmation
@@ -527,9 +527,10 @@ en:
     evidence:
       upload:
         edit:
-          page_title: Add supporting evidence
-          heading: Add supporting evidence
-          explanation: Use this page to provide
+          page_title: Upload supporting evidence
+          heading: Upload supporting evidence
+          optional: No supporting evidence is required based on your current application, but you may upload any documents that will help your application.
+          required: 'Based on your answers, use this page to provide:'
           recent_docs: All evidence must be from the last 3 months.
           rename_files: Files often have long, meaningless names by default, but if you rename them to a friendly name it will make it easier for us to assess your case. For example, Client-bank-statement.PDF instead of File23.PDF.
           upload_file_button: Upload file

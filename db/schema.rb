@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_19_132853) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -116,7 +116,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_132853) do
     t.string "is_means_tested"
     t.string "application_type", default: "initial", null: false
     t.text "additional_information"
-    t.jsonb "evidence_ruleset", default: []
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
@@ -263,7 +262,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_132853) do
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
-    t.string "can_submit_without_nino"
     t.date "last_jsa_appointment_date"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end

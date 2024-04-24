@@ -42,10 +42,6 @@ RSpec.describe CrimeApplication, type: :model do
   end
 
   describe 'evidence' do
-    it 'has an initial empty ruleset' do
-      expect(subject.evidence_ruleset).to eq []
-    end
-
     it 'has an initial empty prompts' do
       expect(subject.evidence_prompts).to eq []
     end

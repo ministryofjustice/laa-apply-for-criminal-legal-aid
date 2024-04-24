@@ -1,6 +1,6 @@
 en:
   evidence:
-    section:
+    group:
       client:
         income: Evidence of your client's income
         outgoings: Evidence of your client's outgoings
@@ -11,9 +11,18 @@ en:
         capital: Evidence of the partner's capital
       other: Other evidence
     rule:
-      Income0a:
-        client: wage slips, salary advice, or a letter from their employer if they're paid by cash
-        partner: wage slips, salary advice, or a letter from their employer if they're paid by cash
-      Income0b:
-        client: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
-        partner: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits the partner receives
+      # Test rules
+      ExampleRule1:
+        client: a bank statement for your client
+        partner: a bank statement for the partner
+      ExampleRule2:
+        client: this client rule is archived
+        partner: this partner rule is archived
+      ExampleRule2Budget2024:
+        client:
+          - a birth certificate
+          - a driving licence
+
+      # Live rules
+      NationalInsuranceProof:
+        other: their National Insurance number

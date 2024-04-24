@@ -46,6 +46,9 @@ Style/TrailingCommaInArguments:
 Layout/HashAlignment:
   Enabled: false
 
+Naming/VariableNumber:
+  Enabled: false
+
 # Rspec cops
 ############
 
@@ -84,6 +87,14 @@ RSpec/NoExpectationExample:
 
 RSpec/Rails/InferredSpecType:
   Enabled: false
+
+RSpec/FilePath: # Deprecated
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: true
+  Exclude:
+    - '**/spec/services/evidence/rules/*'
 
 # Enabled but tweaked cops
 ##########################
