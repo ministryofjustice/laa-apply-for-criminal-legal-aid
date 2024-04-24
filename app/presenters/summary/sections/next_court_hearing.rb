@@ -25,12 +25,6 @@ module Summary
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength
-
-      private
-
-      def kase
-        @kase ||= crime_application.case
-      end
     end
   end
 end

@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -48,6 +47,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.bigint "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
     t.string "has_no_other_assets"
+    t.string "has_no_properties"
+    t.string "has_no_savings"
+    t.string "has_no_investments"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -162,6 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
+    t.string "has_no_income_payments"
+    t.string "has_no_income_benefits"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -224,6 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.string "income_tax_rate_above_threshold"
     t.string "housing_payment_type"
     t.string "pays_council_tax"
+    t.string "has_no_other_outgoings"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
@@ -257,6 +262,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
+    t.string "can_submit_without_nino"
     t.date "last_jsa_appointment_date"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end

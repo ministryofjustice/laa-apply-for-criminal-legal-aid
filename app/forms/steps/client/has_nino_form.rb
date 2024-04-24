@@ -45,6 +45,7 @@ module Steps
         {
           # The following are dependent attributes that need to be reset
           'benefit_type' => nil,
+          'last_jsa_appointment_date' => nil,
           'passporting_benefit' => nil,
           'nino' => nino_attr
         }

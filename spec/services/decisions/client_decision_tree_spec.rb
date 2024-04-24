@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, case: kase) }
   let(:applicant) { instance_double(Applicant) }
-  let(:kase) { instance_double(Case) }
+  let(:kase) { instance_double(Case, case_type:) }
+  let(:case_type) { CaseType::SUMMARY_ONLY }
 
   let(:not_means_tested) { nil }
 
@@ -111,8 +112,6 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'and the application already has a date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp) { Time.zone.today }
-        allow(crime_application).to receive(:case).and_return(kase)
-        allow(kase).to receive(:case_type).and_return(case_type)
 
         allow(
           Address
@@ -134,8 +133,6 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'and the application has no date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp)
-        allow(crime_application).to receive(:case).and_return(kase)
-        allow(kase).to receive(:case_type).and_return(case_type)
       end
 
       context 'and the case type is "date stampable"' do
@@ -224,8 +221,6 @@ RSpec.describe Decisions::ClientDecisionTree do
         Address
       ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
       allow(crime_application).to receive(:date_stamp)
-      allow(crime_application).to receive(:case).and_return(kase)
-      allow(kase).to receive(:case_type).and_return(case_type)
     end
 
     context 'when the case type is not appeal to crown court' do

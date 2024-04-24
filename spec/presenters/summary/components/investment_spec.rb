@@ -25,7 +25,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_investments',
+          href: '/applications/APP123/steps/capital/add_investments',
           exact_text: 'Edit Shares'
         )
       end
@@ -129,7 +129,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
     context 'when Stocks' do
       let(:investment_type) { :stock }
 
-      it { is_expected.to eq 'Stock, including gilts and government bonds' }
+      it { is_expected.to eq 'Stocks, including gilts and government bonds' }
     end
 
     context 'when Share ISA' do

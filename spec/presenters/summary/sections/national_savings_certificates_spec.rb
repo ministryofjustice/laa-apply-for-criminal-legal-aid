@@ -3,10 +3,17 @@ require 'rails_helper'
 describe Summary::Sections::NationalSavingsCertificates do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double(CrimeApplication, national_savings_certificates: records, in_progress?: true, capital: double,
-case: (double case_type:), to_param: 12_345)
-  }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      national_savings_certificates: records,
+      in_progress?: true,
+      capital: double,
+      kase: (double case_type:),
+      to_param: 12_345
+    )
+  end
+
   let(:records) { [NationalSavingsCertificate.new] }
   let(:case_type) { 'either_way' }
 
@@ -77,7 +84,7 @@ case: (double case_type:), to_param: 12_345)
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
-          change_path = 'applications/12345/steps/capital/clients_national_savings_certificates'
+          change_path = 'applications/12345/steps/capital/add_national_savings_certificates'
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)

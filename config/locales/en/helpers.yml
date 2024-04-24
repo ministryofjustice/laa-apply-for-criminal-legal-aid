@@ -253,6 +253,8 @@ en:
         description: For example, which companies your client has invested in, the value of each share owned, or when they can access the investment.
       steps_capital_national_savings_certificates_form:
         value: Give an estimate if you do not know the exact value.
+      steps_capital_premium_bonds_form:
+        premium_bonds_total_value: Give an estimate if you do not know the exact value.
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Select all that apply.
         types_options:
@@ -594,7 +596,7 @@ en:
         ownership_type: Whose name is the investment in?
         ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm that the account is in my client's name
+          'true': I confirm that the investment is in my client's name
       steps_capital_national_savings_certificates_form:
         holder_number: What is the customer number or holder number?
         certificate_number: What is the certificate number?
@@ -610,8 +612,8 @@ en:
       steps_capital_national_savings_certificates_summary_form:
         add_national_savings_certificate_options: *YESNO
       steps_capital_premium_bonds_form:
-        premium_bonds_holder_number: Enter the holder number
-        premium_bonds_total_value: Enter the total value of their bonds
+        premium_bonds_holder_number: What is the holder number?
+        premium_bonds_total_value: What is the total value of their bonds?
         has_premium_bonds_options: *YESNO
       steps_capital_has_national_savings_certificates_form:
         has_national_savings_certificates_options: *YESNO
@@ -683,5 +685,6 @@ en:
           percentage_owned_commercial: *percentage_owned_text
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
-      steps_capital_answers_form: # TODO :: NOT WORKING
-        has_no_other_assets: My client confirms they have no other assets or capital
+      steps_capital_answers_form:
+        has_no_other_assets_options: 
+          'yes': My client confirms they have no other assets or capital

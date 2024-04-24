@@ -3,7 +3,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column">
-    <%= govuk_error_summary(@form_object) %>
+    <% unless current_crime_application.valid?(:submission) %>
+      <%= render partial: 'steps/shared/error_warning' %>
+    <% end %>
 
     <h1 class="govuk-heading-xl"><%= t('.heading')%></h1>
 

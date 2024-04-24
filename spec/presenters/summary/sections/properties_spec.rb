@@ -3,10 +3,17 @@ require 'rails_helper'
 describe Summary::Sections::Properties do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double(CrimeApplication, properties: records, in_progress?: true, capital: double,
-                    case: (double case_type:), to_param: 12_345)
-  }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      properties: records,
+      in_progress?: true,
+      capital: double,
+      kase: (double case_type:),
+      to_param: 12_345
+    )
+  end
+
   let(:records) { [Property.new] }
   let(:case_type) { 'either_way' }
 
@@ -89,7 +96,7 @@ describe Summary::Sections::Properties do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:has_assets)
-          expect(answers[0].change_path).to match('applications/12345/steps/capital/clients_assets')
+          expect(answers[0].change_path).to match('applications/12345/steps/capital/add_assets')
           expect(answers[0].value).to eq('none')
         end
       end

@@ -1,14 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::IncomeBenefitsForm do
-  subject(:form) { described_class.new(arguments) }
-
-  let(:arguments) do
-    {
-      crime_application: crime_application,
-      types: allowed_types,
-    }
-  end
+  subject(:form) { described_class.new(crime_application:) }
 
   let(:crime_application) { CrimeApplication.new(case: case_record) }
   let(:case_record) { Case.new }
@@ -22,11 +15,20 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
 
   let(:fieldset_form_class) { Steps::Income::IncomeBenefitFieldsetForm }
 
+  let(:existing_payment) do
+    IncomeBenefit.create!(
+      payment_type: 'jsa',
+      crime_application: crime_application,
+      amount: '123',
+      frequency: 'four_weeks'
+    )
+  end
+
   let(:payments) do
     subject.crime_application.income_benefits
   end
 
-  it_behaves_like 'a payment form', described_class
+  it_behaves_like 'a payment form', described_class, :has_no_income_benefits
 
   describe '#save' do
     context 'with form submission' do
@@ -41,6 +43,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
       before do
         allowed_types.each do |type|
           subject.public_send("#{type}=", form_data.dig('steps_income_income_benefits_form', type))
+          subject.public_send(type.to_s)
         end
 
         subject.valid?

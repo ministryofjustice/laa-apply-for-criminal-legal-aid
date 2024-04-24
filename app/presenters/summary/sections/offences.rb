@@ -2,7 +2,7 @@ module Summary
   module Sections
     class Offences < Sections::BaseSection
       def show?
-        crime_application.case.present? && super
+        crime_application.kase.present? && super
       end
 
       def answers
@@ -18,7 +18,7 @@ module Summary
       private
 
       def offences
-        @offences ||= crime_application.case.charges
+        @offences ||= crime_application.kase.charges
       end
     end
   end

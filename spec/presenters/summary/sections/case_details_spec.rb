@@ -8,7 +8,7 @@ describe Summary::Sections::CaseDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      case: kase,
+      kase: kase,
     )
   end
 
@@ -338,13 +338,13 @@ describe Summary::Sections::CaseDetails do
           answer = answers[4]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:appeal_financial_circumstances_changed)
-          expect(answer.change_path).to match('applications/12345/steps/client/appeal_financial_circumstances')
+          expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
           expect(answer.value).to eq(appeal_financial_circumstances_changed)
 
           answer = answers[5]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:appeal_with_changes_details)
-          expect(answer.change_path).to match('applications/12345/steps/client/appeal_financial_circumstances')
+          expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
           expect(answer.value).to eq(appeal_with_changes_details)
         end
       end
@@ -373,7 +373,7 @@ describe Summary::Sections::CaseDetails do
             answer = answers[4]
             expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
             expect(answer.question).to eq(:appeal_financial_circumstances_changed)
-            expect(answer.change_path).to match('applications/12345/steps/client/appeal_financial_circumstances')
+            expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
             expect(answer.value).to eq(appeal_financial_circumstances_changed)
 
             answer = answers[5]

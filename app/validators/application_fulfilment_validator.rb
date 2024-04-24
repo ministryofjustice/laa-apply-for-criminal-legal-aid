@@ -1,19 +1,20 @@
 class ApplicationFulfilmentValidator < BaseFulfilmentValidator
+  include TypeOfMeansAssessment
+
   private
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def perform_validations # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     errors = []
 
-    unless Passporting::MeansPassporter.new(record).call || evidence_present? ||
-           means_record_present? || client_remanded_in_custody?
+    unless means_valid?
       errors << [
         :means_passport, :blank, { change_path: edit_steps_client_details_path }
       ]
     end
 
-    if record.is_means_tested == 'yes' && record.case.case_type.nil?
+    if record.is_means_tested == 'yes' && kase.case_type.nil?
       errors << [
         :base, :case_type_missing, { change_path: edit_steps_client_case_type_path }
       ]
@@ -25,7 +26,19 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
+    unless all_sections_complete?
+      errors << [
+        :base, :incomplete_records, { change_path: edit_steps_submission_review_path }
+      ]
+    end
+
     errors
+  end
+
+  def means_valid?
+    return true if Passporting::MeansPassporter.new(record).call
+
+    evidence_present? || means_record_present? || client_remanded_in_custody?
   end
 
   def ioj_present?
@@ -33,10 +46,24 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def means_record_present?
-    record.income.present? && record.income&.employment_status&.include?('not_working')
+    income.present? && income&.employment_status&.include?('not_working')
   end
 
   def client_remanded_in_custody?
-    (record.case.is_client_remanded == 'yes') && record.case.date_client_remanded.present?
+    kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
   end
+
+  def all_sections_complete?
+    return false unless kase.complete?
+
+    means_sections_complete?
+  end
+
+  def means_sections_complete?
+    return true if income.blank?
+
+    !requires_means_assessment? || means_assessment_complete?
+  end
+
+  alias crime_application record
 end

@@ -6,6 +6,9 @@ en:
 
     error_summary:
       heading: There is a problem on this page
+      incomplete_records_heading: There is a problem
+
+    incomplete_records: You need to complete all questions before you can submit the application
 
   activerecord:
     errors:
@@ -264,9 +267,10 @@ en:
               blank: Enter or select an offence
         steps/case/charges_summary_form:
           attributes:
+            base:
+              missing_details: You must complete all offence details in order to proceed
             add_offence:
               inclusion: Select yes if you want to add another offence
-              missing_details: You must complete all offence details in order to proceed
         steps/case/offence_date_fieldset_form:
           shared_date_errors: &shared_date_errors
             blank: Date cannot be blank
@@ -385,7 +389,7 @@ en:
               invalid_day: Enter a valid day
               invalid_month: Enter a valid month
               invalid_year: Enter a valid year
-              over_three_months_ago: Date they lost their job must be within the last 3 months
+              year_too_early: Date is too far in the past
               future_not_allowed: Date they lost their job must be today or in the past
         steps/income/income_before_tax_form:
           attributes:
@@ -420,7 +424,7 @@ en:
               greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
         steps/income/income_payments_form:
           attributes:
-            none:
+            base:
               none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
@@ -438,7 +442,7 @@ en:
               blank: Enter an amount
         steps/income/income_benefits_form:
           attributes:
-            none:
+            base:
               none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
@@ -494,7 +498,7 @@ en:
               blank: Enter how much of the board and lodgings payment is for food
               invalid: Payments for food must be a number, like 50
               greater_than_or_equal_to: Payments for food must be 0 or more
-              more_than_board: Payments for food cannot be more than payments for board and lodgings.
+              more_than_board: Payments for food cannot be more than payments for board and lodgings
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
@@ -513,7 +517,7 @@ en:
               not_a_number: How much they pay yearly must be a number, like 50
         steps/outgoings/outgoings_payments_form:
           attributes:
-            none:
+            base:
               none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
@@ -735,6 +739,8 @@ en:
         steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
         steps/capital/answers_form:
           attributes:
+            base:
+              incomplete_records: You need to complete all questions before you can submit the application
             has_no_other_assets:
               blank: Confirm your client has no other assets or capital
         steps/submission/more_information_form:

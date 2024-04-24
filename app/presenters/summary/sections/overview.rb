@@ -14,7 +14,7 @@ module Summary
             ),
           ]
 
-        if FeatureFlags.means_journey.enabled?
+        if FeatureFlags.means_journey.enabled? && !pse?
           relevant_answers.push(Components::ValueAnswer.new(
                                   :means_tested, crime_application.is_means_tested,
                                   change_path: edit_steps_client_is_means_tested_path
@@ -42,6 +42,10 @@ module Summary
                 :office_code, provider_details.office_code,
               ),
             ]
+
+          # PSE submissions do not have a datestamp:
+          completed_answers.shift if pse?
+
           (relevant_answers += completed_answers).select(&:show?)
         end
 
@@ -56,7 +60,13 @@ module Summary
       end
 
       def show_overview_details?
-        crime_application.case.present?
+        return true if pse?
+
+        crime_application.kase.present?
+      end
+
+      def pse?
+        crime_application.application_type == 'post_submission_evidence'
       end
     end
   end

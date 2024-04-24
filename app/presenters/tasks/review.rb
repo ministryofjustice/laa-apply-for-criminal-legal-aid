@@ -12,7 +12,7 @@ module Tasks
       if crime_application.pse?
         fulfilled?(EvidenceUpload)
       else
-        fulfilled?(Ioj)
+        fulfilled?(CaseDetails) && crime_application.valid?(:submission)
       end
     end
 

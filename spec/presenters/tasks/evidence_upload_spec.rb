@@ -19,6 +19,10 @@ RSpec.describe Tasks::EvidenceUpload do
 
   describe '#not_applicable?' do
     before do
+      allow(
+        subject
+      ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(true)
+
       allow_any_instance_of(
         Evidence::Requirements
       ).to receive(:none?).and_return(no_evidence_required)

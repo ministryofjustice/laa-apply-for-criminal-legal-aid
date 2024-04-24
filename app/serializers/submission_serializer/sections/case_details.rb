@@ -36,10 +36,6 @@ module SubmissionSerializer
 
       private
 
-      def kase
-        @kase ||= crime_application.case
-      end
-
       def case_type
         if appeal_to_crown_court_case? && financial_circumstances_changed?
           return CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s

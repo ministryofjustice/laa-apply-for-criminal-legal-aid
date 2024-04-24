@@ -5,7 +5,7 @@ describe Summary::Sections::Investments do
 
   let(:crime_application) {
     instance_double(CrimeApplication, investments: records, in_progress?: true, capital: double,
-   case: (double case_type:), to_param: 12_345)
+   kase: (double case_type:), to_param: 12_345)
   }
   let(:records) { [Investment.new] }
   let(:case_type) { 'either_way' }
@@ -89,7 +89,7 @@ describe Summary::Sections::Investments do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:has_investments)
-          expect(answers[0].change_path).to match('applications/12345/steps/capital/clients_investments')
+          expect(answers[0].change_path).to match('applications/12345/steps/capital/add_investments')
           expect(answers[0].value).to eq('none')
         end
       end

@@ -41,6 +41,7 @@ module Decisions
     private
 
     def after_has_case_concluded
+      return charges_summary_or_edit_new_charge if current_crime_application.not_means_tested?
       return edit(:is_client_remanded) if form_object.has_case_concluded.no?
 
       edit(:is_preorder_work_claimed)
@@ -91,8 +92,10 @@ module Decisions
     end
 
     def means_test_required?
+      return false if current_crime_application.not_means_tested?
+
       FeatureFlags.means_journey.enabled? && (applicant.has_benefit_evidence == 'no' ||
-        applicant.benefit_type == 'none')
+        ['none', nil].include?(applicant.benefit_type))
     end
 
     def ioj_or_passported
