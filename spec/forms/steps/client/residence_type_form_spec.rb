@@ -141,7 +141,8 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
 
     before do
       allow(record).to receive_messages(home_address?: true)
-      allow(record).to receive(:update).with({ 'residence_type' => ResidenceType::NONE, 'relationship_to_someone_else' => nil }).and_return true
+      allow(record).to receive(:update).with({ 'residence_type' => ResidenceType::NONE,
+                                               'relationship_to_someone_else' => nil }).and_return true
       allow(home_address).to receive(:destroy!)
       subject.save
     end

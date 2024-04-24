@@ -12,7 +12,7 @@
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
 
-      <p class="govuk-body govuk-!-margin-bottom-2">
+      <p class="govuk-body govuk-!-margin-bottom-6">
         <%= link_to t('.manual_entry'), edit_steps_address_details_path %>
       </p>
 
