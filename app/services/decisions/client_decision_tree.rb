@@ -21,6 +21,8 @@ module Decisions
         date_stamp_if_needed
       when :date_stamp
         after_date_stamp
+      when :residence_type
+        after_residence_type
       when :contact_details
         after_contact_details
       when :has_nino
@@ -104,6 +106,14 @@ module Decisions
     def after_date_stamp
       if entered_appeal_reference_number?
         edit('/steps/case/urn')
+      else
+        edit(:residence_type)
+      end
+    end
+
+    def after_residence_type
+      if form_object.residence_type.none?
+        edit(:contact_details)
       else
         start_address_journey(HomeAddress)
       end

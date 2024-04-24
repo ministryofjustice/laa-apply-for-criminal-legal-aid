@@ -19,6 +19,8 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       correspondence_address: correspondence_address,
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
+      residence_type: 'rented',
+      relationship_to_someone_else: nil
     )
   end
 
@@ -63,6 +65,8 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           correspondence_address: nil,
           telephone_number: '123456789',
           correspondence_address_type: 'home_address',
+          residence_type: 'rented',
+          relationship_to_someone_else: nil
         }
       }
     }.as_json

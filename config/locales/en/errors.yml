@@ -116,6 +116,12 @@ en:
               invalid: Enter a valid MAAT ID
             appeal_usn:
               blank: Enter USN
+        steps/client/residence_type_form:
+          attributes:
+            residence_type:
+              inclusion: Select where your client usually lives or if they have no fixed address
+            relationship_to_someone_else:
+              blank: Enter your client's relationship to the person whose home they live in
         steps/client/has_nino_form:
           attributes:
             has_nino:

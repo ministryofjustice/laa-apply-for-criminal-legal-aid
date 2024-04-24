@@ -63,6 +63,8 @@ en:
         appeal_reference_number: What is the reference number of the original application?
       steps_client_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
+      steps_client_residence_type_form:
+        residence_type: Where does your client usually live?
       steps_client_contact_details_form:
         correspondence_address_type: Correspondence address
       steps_dwp_confirm_result_form:
@@ -317,6 +319,17 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: My client does not get any of these passporting benefits
+      steps_client_residence_type_form:
+        residence_type_options:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+        relationship_to_someone_else: What is your client's relationship to that person?
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence_options: *YESNO
       steps_client_cannot_check_benefit_status_form:

@@ -7,7 +7,23 @@ module Summary
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
-        [
+        answers = []
+
+        if residence_type?
+          answers.push(Components::ValueAnswer.new(
+            :residence_type, applicant.residence_type,
+            change_path: edit_steps_client_residence_type_path
+          ))
+        end
+
+        if someone_else_residence_type?
+          answers.push(Components::FreeTextAnswer.new(
+            :relationship_to_someone_else, applicant.relationship_to_someone_else,
+            change_path: edit_steps_client_residence_type_path
+          ))
+        end
+
+        answers << [
           Components::FreeTextAnswer.new(
             :home_address, full_address(home_address), show: true,
             change_path: change_path(home_address)
@@ -27,7 +43,9 @@ module Summary
             :telephone_number, applicant.telephone_number, show: true,
             change_path: edit_steps_client_contact_details_path
           ),
-        ].select(&:show?)
+        ]
+
+        answers.flatten.select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
@@ -66,6 +84,14 @@ module Summary
         address.values_at(
           *Address::ADDRESS_ATTRIBUTES
         ).compact_blank.join("\r\n")
+      end
+
+      def someone_else_residence_type?
+        crime_application.applicant.residence_type == 'someone_else'
+      end
+
+      def residence_type?
+        crime_application.applicant.residence_type.present?
       end
     end
   end

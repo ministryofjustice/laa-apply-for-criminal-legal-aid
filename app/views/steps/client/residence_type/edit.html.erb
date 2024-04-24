@@ -1,0 +1,24 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :residence_type, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each_with_index do |option, index| %>
+          <% if option.someone_else? %>
+            <%= f.govuk_radio_button :residence_type, option.value do %>
+              <%= f.govuk_text_field :relationship_to_someone_else, autocomplete: 'off', width: 'one-third' %>
+            <% end %>
+          <% else %>
+            <%= f.govuk_radio_button :residence_type, option, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

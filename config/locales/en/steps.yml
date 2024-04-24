@@ -91,6 +91,9 @@ en:
           upload_evidence: You must upload evidence that your client gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
+      residence_type:
+        edit:
+          page_title: Where does your client usually live?
       contact_details:
         edit:
           page_title: Client’s contact details
@@ -124,7 +127,6 @@ en:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
-          no_address: My client does not have a home address
           manual_entry: Enter address manually
       results:
         edit:

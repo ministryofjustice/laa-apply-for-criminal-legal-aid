@@ -145,6 +145,19 @@ en:
       # END client details section
 
       # BEGIN contact details section
+      residence_type:
+        question: Where the client lives
+        answers:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+      relationship_to_someone_else:
+        question: Relationship to client
       home_address:
         question: Home address
         absence_answer: *absence_none

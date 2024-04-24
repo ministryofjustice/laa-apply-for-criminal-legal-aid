@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_19_132853) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_24_103714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -265,6 +265,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_132853) do
     t.string "will_enter_nino"
     t.string "can_submit_without_nino"
     t.date "last_jsa_appointment_date"
+    t.string "residence_type"
+    t.string "relationship_to_someone_else"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
