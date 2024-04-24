@@ -26,9 +26,7 @@ module Evidence
             klass = "Evidence::Rules::#{id}"
             definition = all_rules.find { |rule| rule.name == klass }
 
-            unless definition
-              Rails.logger.error("Rule definition for persisted ruleset #{id} not found - has it been deleted?")
-            end
+            Rails.logger.warn("Rule definition #{id} not found - has it been deleted?") unless definition
 
             definition
           end

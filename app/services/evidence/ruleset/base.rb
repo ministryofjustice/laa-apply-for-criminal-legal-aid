@@ -33,7 +33,7 @@ module Evidence
         elsif definitions.size == 1
           definitions.first
         else
-          Rails.logger.warn "Key #{key} does not have a Rule definition - generate one"
+          Rails.logger.error "Key #{key} does not have a Rule definition - generate one"
           nil
         end
       end

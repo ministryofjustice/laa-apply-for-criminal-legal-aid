@@ -257,6 +257,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::ExampleRule1,
         Evidence::Rules::ExampleRule2,
         Evidence::Rules::ExampleRule2Budget2024,
+        Evidence::Rules::ExampleRule2Budget2025,
         Evidence::Rules::BadRuleDefinition,
       ]
 
