@@ -12,16 +12,14 @@ module CapitalAssessment
     private
 
     def valid_ownership_total?(form)
-      return true if yet_to_add_other_owners?(form)
-      return true unless complete_property_owners?(form)
+      return true if other_owners?(form)
 
       percentage_ownerships = all_percentage_ownerships(form)
-
       percentage_ownerships.sum == 100
     end
 
     def all_percentage_ownerships(form)
-      percentage_ownerships = property_owners?(form) ? include_property_owners(form) : []
+      percentage_ownerships = []
       percentage_ownerships << form.percentage_applicant_owned unless form.percentage_applicant_owned.nil?
       percentage_ownerships << form.percentage_partner_owned unless form.percentage_partner_owned.nil?
 
@@ -32,23 +30,8 @@ module CapitalAssessment
       form.crime_application.client_has_partner == 'yes'
     end
 
-    def property_owners?(form)
-      property_owners = form.record.property_owners
-      form.has_other_owners&.yes? && property_owners.present? && property_owners.all?(&:complete?)
-    end
-
-    def include_property_owners(form)
-      form.record.property_owners.filter_map do |po|
-        po.percentage_owned unless po.percentage_owned.nil?
-      end
-    end
-
-    def yet_to_add_other_owners?(form)
-      form.has_other_owners&.yes? && form.record.property_owners.empty?
-    end
-
-    def complete_property_owners?(form)
-      form.record.property_owners.all?(&:complete?)
+    def other_owners?(form)
+      form.has_other_owners&.yes?
     end
   end
 end
