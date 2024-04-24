@@ -238,14 +238,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'when the case type is not present' do
       let(:case_type) { nil }
 
-      it {
-        expect(subject).to have_destination(
-          '/steps/address/lookup',
-          :edit,
-          id: crime_application,
-          address_id: 'address'
-        )
-      }
+      it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
     end
   end
 

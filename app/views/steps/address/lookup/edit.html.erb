@@ -16,10 +16,6 @@
         <%= link_to t('.manual_entry'), edit_steps_address_details_path %>
       </p>
 
-      <p class="govuk-body govuk-!-margin-bottom-6">
-        <%= button_tag t('.no_address'), name: :clear_address, class: 'app-button--link' if @form_object.home_address? %>
-      </p>
-
       <%= f.continue_button(primary: :find_address) %>
     <% end %>
   </div>

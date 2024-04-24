@@ -29,6 +29,7 @@ module Steps
       def persist!
         return true unless changed?
 
+        reset_home_address if residence_type&.none?
         applicant.update(attributes.merge(attributes_to_reset))
       end
 
@@ -40,6 +41,12 @@ module Steps
 
       def someone_else?
         residence_type&.someone_else?
+      end
+
+      def reset_home_address
+        return unless crime_application.applicant.home_address?
+
+        crime_application.applicant.home_address.destroy!
       end
     end
   end

@@ -13,10 +13,11 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
   end
 
   let(:crime_application) { instance_double(CrimeApplication, applicant: record) }
-  let(:record) { Applicant.new }
+  let(:record) { instance_double(Applicant, home_address:, relationship_to_someone_else:, residence_type:) }
 
   let(:residence_type) { ResidenceType::RENTED.to_s }
   let(:relationship_to_someone_else) { nil }
+  let(:home_address) { instance_double HomeAddress }
 
   describe 'validations' do
     context 'when `residence_type` is blank' do
@@ -68,6 +69,10 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
         context 'when a `relationship_to_someone_else` was previously recorded' do
           let(:residence_type) { ResidenceType::SOMEONE_ELSE.to_s }
           let(:relationship_to_someone_else) { 'A friend' }
+
+          before do
+            allow(record).to receive(:update).and_return true
+          end
 
           it 'is valid' do
             expect(form).to be_valid
@@ -128,6 +133,21 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
         expect(record).not_to receive(:update)
         expect(subject.save).to be(true)
       end
+    end
+  end
+
+  context 'when residence type is none and a home address was previously recorded' do
+    let(:residence_type) { ResidenceType::NONE }
+
+    before do
+      allow(record).to receive_messages(home_address?: true)
+      allow(record).to receive(:update).with({ 'residence_type' => ResidenceType::NONE, 'relationship_to_someone_else' => nil }).and_return true
+      allow(home_address).to receive(:destroy!)
+      subject.save
+    end
+
+    it 'deletes existing home address' do
+      expect(home_address).to have_received(:destroy!)
     end
   end
 end
