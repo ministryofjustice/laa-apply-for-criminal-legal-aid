@@ -7,6 +7,12 @@ module Summary
         @section ||= crime_application.outgoings
       end
 
+      def no_payments?
+        return false if section.has_no_other_outgoings.nil?
+
+        YesNoAnswer.new(section.has_no_other_outgoings).yes?
+      end
+
       def payments
         @payments ||= crime_application.outgoings_payments.select { |p| payment_types.include? p.payment_type }
       end

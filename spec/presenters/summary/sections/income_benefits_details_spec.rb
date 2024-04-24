@@ -16,10 +16,12 @@ describe Summary::Sections::IncomeBenefitsDetails do
     instance_double(
       Income,
       income_above_threshold: 'yes',
+      has_no_income_benefits: has_no_income_benefits
     )
   end
 
   let(:income_benefits) { [] }
+  let(:has_no_income_benefits) { nil }
 
   let(:child_benefit_payment) do
     instance_double(
@@ -292,6 +294,7 @@ describe Summary::Sections::IncomeBenefitsDetails do
 
       context 'when no payments are reported' do
         let(:income_benefits) { [] }
+        let(:has_no_income_benefits) { 'yes' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(1)
