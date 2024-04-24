@@ -10,6 +10,7 @@ module Evidence
       class_name = options['class'].blank? ? 'MyRule' : options['class']
       filename = "#{timestamp}_#{class_name}".underscore
 
+      # Main class
       create_file "app/services/evidence/rules/#{filename}.rb", <<~RUBY
         module Evidence
           module Rules
@@ -30,13 +31,13 @@ module Evidence
               #   - partner
               #   - other
               #
-              # # 'predicate' is a lambda method executed and expected to return true or false.
+              # # 'predicate' is a lambda method executed and expected to evaluate to true or false.
               #
-              # An evidence upload prompt is displayed if the predicate returns true.
+              # An evidence upload prompt is displayed if the predicate is true.
 
               client do |_crime_application|
                 # Predicate must return true or false
-                false
+                true
               end
 
               partner do |_crime_application|
@@ -51,6 +52,65 @@ module Evidence
             end
           end
         end
+      RUBY
+
+
+      # Generate corresponding spec
+      spec_filename = "#{timestamp}_#{class_name}_spec".underscore
+
+      create_file "spec/services/evidence/rules/#{spec_filename}.rb", <<~RUBY
+        require 'rails_helper'
+
+        RSpec.describe Evidence::Rules::#{class_name} do
+          subject { described_class.new(crime_application) }
+
+          let(:crime_application) do
+            instance_double(
+              CrimeApplication,
+            )
+          end
+
+          let(:expected_hash) do
+            {
+              id: '#{class_name}',
+              group: :income,
+              ruleset: nil,
+              key: :#{rule_key},
+              run: {
+                client: {
+                  result: true,
+                  prompt: ['Add sentences to evidence.yml'],
+                },
+                partner: {
+                  result: false,
+                  prompt: [],
+                },
+                other: {
+                  result: false,
+                  prompt: [],
+                },
+              }
+            }
+          end
+
+          it { expect(described_class.key).to eq :#{rule_key} }
+          it { expect(described_class.group).to eq :income }
+          it { expect(described_class.archived).to be false }
+          it { expect(described_class.active?).to be true }
+
+          describe '.client' do
+            it { expect(subject.client_predicate).to be true }
+          end
+
+          describe '.partner' do
+            it { expect(subject.partner_predicate).to be false }
+          end
+
+          describe '.other' do
+            it { expect(subject.other_predicate).to be false }
+          end
+        end
+
       RUBY
     end
   end

@@ -1,5 +1,5 @@
 module Evidence
-  class Rule
+  class Rule # rubocop:disable Metrics/ClassLength
     GROUPS = %i[income outgoings capital none].freeze
     PERSONAS = %i[client partner other].freeze
     TIMESTAMP_FORMAT = '%Y%m%d%H%M%S'.freeze
@@ -68,19 +68,22 @@ module Evidence
       self.class.archived if self.class.respond_to?(:archived)
     end
 
-    # Generates client_predicate, partner_predicate, other_predicate
+    # Generates memoized client_predicate, partner_predicate, other_predicate
     PERSONAS.each do |persona|
       define_method :"#{persona}_predicate" do
-        dsl_predicate = :"execute_#{persona}"
-        if self.class.respond_to?(dsl_predicate)
-          allowable!(
-            result: self.class.send(dsl_predicate, crime_application),
-            persona: persona
-          )
-        else
-          # :nocov:
-          false
-          # :nocov:
+        predicate = :"execute_#{persona}"
+
+        memoized_predicate(predicate) do
+          if self.class.respond_to?(predicate)
+            allowable!(
+              result: self.class.send(predicate, crime_application),
+              persona: persona
+            )
+          else
+            # :nocov:
+            false
+            # :nocov:
+          end
         end
       end
     end
@@ -123,7 +126,16 @@ module Evidence
 
     # Allow multiple sentences to be output per rule
     def to_sentences(persona:)
-      [I18n.t("evidence.rule.#{id}.#{persona}", default: nil)].flatten.compact
+      default = 'Add evidence.yml entry'
+
+      [I18n.t("evidence.rule.#{id}.#{persona}", default:)].flatten.compact
+    end
+
+    def memoized_predicate(var)
+      instance_var = :"@#{var}"
+      return instance_variable_get(instance_var) if instance_variable_defined?(instance_var)
+
+      instance_variable_set instance_var, yield
     end
   end
 end

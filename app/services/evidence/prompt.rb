@@ -32,7 +32,9 @@ module Evidence
     def required?
       run
 
-      !@results.empty?
+      @results.any? do |prompt|
+        prompt[:run].any? { |_persona, predicate| predicate[:result] == true }
+      end
     end
 
     def result_for?(group:, persona:)

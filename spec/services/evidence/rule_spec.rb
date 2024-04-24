@@ -235,18 +235,9 @@ RSpec.describe Evidence::Rule do
       Evidence::Rules.constants.map { |klass| "Evidence::Rules::#{klass}".constantize }
     end
 
-    it 'must load rule definitions' do # rubocop:disable RSpec/ExampleLength
+    it 'must load rule definitions' do
       expected_klasses = [
-        Evidence::Rules::IncomeSalary0a,
-        Evidence::Rules::IncomeSalary0b,
-        Evidence::Rules::IncomeSalary0aRevised,
-        Evidence::Rules::IncomeBenefitBasicCheck,
-        Evidence::Rules::IncomeSalary0aNewButArchived,
         Evidence::Rules::NationalInsuranceProof,
-        Evidence::Rules::P60TaxApril2024,
-        Evidence::Rules::P60TaxApril2025,
-        Evidence::Rules::P45ProofApril2024,
-        Evidence::Rules::P45ProofApril2025,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
