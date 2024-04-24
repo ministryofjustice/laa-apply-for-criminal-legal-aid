@@ -6,7 +6,7 @@ module Summary
       end
 
       def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
-        if payments.empty?
+        if no_payments?
           [
             Components::ValueAnswer.new(
               question, 'none',
@@ -41,6 +41,12 @@ module Summary
       def section
         @section ||= crime_application.income
       end
+
+      # :nocov:
+      def no_payments?
+        raise 'must be implemented in subclasses'
+      end
+      # :nocov:
 
       def ordered_payments
         payment_types.index_with { |val| payment_of_type(val) }
