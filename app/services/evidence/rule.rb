@@ -126,7 +126,7 @@ module Evidence
 
     # Allow multiple sentences to be output per rule
     def to_sentences(persona:)
-      default = 'Add evidence.yml entry'
+      default = "Add evidence.yml entry for rule #{id}: #{persona}"
 
       [I18n.t("evidence.rule.#{id}.#{persona}", default:)].flatten.compact
     end
