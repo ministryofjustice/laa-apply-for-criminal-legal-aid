@@ -3,7 +3,7 @@ module Evidence
     class BenefitsRecipient < Rule
       include Evidence::RuleDsl
 
-      key :income_employed_0b
+      key :income_benefits_0b
       group :income
 
       client do |crime_application|

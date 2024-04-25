@@ -13,7 +13,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
   let(:income) { Income.new }
   let(:income_benefits) { [] }
 
-  it { expect(described_class.key).to eq :income_employed_0b }
+  it { expect(described_class.key).to eq :income_benefits_0b }
   it { expect(described_class.group).to eq :income }
   it { expect(described_class.archived).to be false }
   it { expect(described_class.active?).to be true }
@@ -99,7 +99,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
         id: 'BenefitsRecipient',
         group: :income,
         ruleset: nil,
-        key: :income_employed_0b,
+        key: :income_benefits_0b,
         run: {
           client: {
             result: true,
