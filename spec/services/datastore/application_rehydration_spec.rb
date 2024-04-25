@@ -66,7 +66,6 @@ RSpec.describe Datastore::ApplicationRehydration do
         hash_including(
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => '2023-09-01'.to_date,
-          'client_has_dependants' => YesNoAnswer::NO,
         )
       ).and_call_original
 
@@ -145,7 +144,10 @@ RSpec.describe Datastore::ApplicationRehydration do
 
     context 'when means_details contains dependants' do
       let(:dependants) do
-        { 'dependants' => [{ 'age' => 0 }, { 'age' => 17 }] }
+        {
+          'dependants' => [{ 'age' => 0 }, { 'age' => 17 }],
+          'client_has_dependants' => 'yes'
+        }
       end
 
       let(:parent) do
@@ -155,7 +157,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       it 'sets `income.client_has_dependants` field' do
         expect(Income).to receive(:new).with(
           hash_including(
-            'client_has_dependants' => YesNoAnswer::YES,
+            'client_has_dependants' => 'yes',
           )
         ).and_call_original
 
