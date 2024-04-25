@@ -20,7 +20,7 @@ module Tasks
     end
 
     def completed?
-      kase.complete?
+      ClientDetails::AnswersValidator.new(crime_application).valid?
     end
   end
 end

@@ -26,16 +26,6 @@ module Tasks
     # if the address record exists.
     #
     def completed?
-      case applicant.correspondence_address_type
-      when CorrespondenceType::HOME_ADDRESS.to_s
-        applicant.home_address?
-      when CorrespondenceType::OTHER_ADDRESS.to_s
-        applicant.correspondence_address?
-      when CorrespondenceType::PROVIDERS_OFFICE_ADDRESS.to_s
-        true
-      else
-        false
-      end
     end
   end
 end
