@@ -29,3 +29,6 @@ en:
       HousingCosts:
         client: their rental, tenancy agreement or mortgage statement
         partner: their rental, tenancy agreement or mortgage statement
+      CouncilTaxPayments:
+        client: their Council Tax statement
+        partner: their Council Tax statement

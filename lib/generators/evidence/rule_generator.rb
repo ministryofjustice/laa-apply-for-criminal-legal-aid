@@ -114,7 +114,6 @@ module Evidence
             it { expect(subject.other_predicate).to be false }
           end
         end
-
       RUBY
     end
   end

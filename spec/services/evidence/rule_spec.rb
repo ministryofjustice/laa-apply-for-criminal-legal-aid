@@ -240,6 +240,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::NationalInsuranceProof,
 
         Evidence::Rules::HousingCosts,
+        Evidence::Rules::CouncilTaxPayments,
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
         Evidence::Rules::ExampleRule2,

@@ -83,7 +83,17 @@ RSpec.describe Evidence::Rules::HousingCosts do
       it { is_expected.to be false }
     end
 
-    context 'when there are no payments' do
+    context 'when there are no housing payments' do
+      let(:outgoings_payments) do
+        [
+          OutgoingsPayment.new(
+            payment_type: OutgoingsPaymentType::COUNCIL_TAX,
+            frequency: PaymentFrequencyType::FORTNIGHTLY,
+            amount: 231.00,
+          ),
+        ]
+      end
+
       it { is_expected.to be false }
     end
 
@@ -118,5 +128,42 @@ RSpec.describe Evidence::Rules::HousingCosts do
 
   describe '.other' do
     it { expect(subject.other_predicate).to be false }
+  end
+
+  describe '#to_h' do
+    let(:outgoings_payments) do
+      [
+        OutgoingsPayment.new(
+          payment_type: OutgoingsPaymentType::MORTGAGE,
+          frequency: PaymentFrequencyType::FOUR_WEEKLY,
+          amount: 600.00,
+        ),
+      ]
+    end
+
+    let(:expected_hash) do
+      {
+        id: 'HousingCosts',
+        group: :outgoings,
+        ruleset: nil,
+        key: :outgoings_housing_11,
+        run: {
+          client: {
+            result: true,
+            prompt: ['their rental, tenancy agreement or mortgage statement'],
+          },
+          partner: {
+            result: false,
+            prompt: [],
+          },
+          other: {
+            result: false,
+            prompt: [],
+          },
+        }
+      }
+    end
+
+    it { expect(subject.to_h).to eq expected_hash }
   end
 end
