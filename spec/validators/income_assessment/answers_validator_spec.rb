@@ -15,6 +15,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     allow(crime_application).to receive(:kase) {
       double(case_type: 'summary_only', appeal_reference_number: nil)
     }
+    allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
   end
 
   describe '#validate' do

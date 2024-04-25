@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% if FeatureFlags.means_journey.enabled? %>
+<% if FeatureFlags.non_means_tested.enabled? %>
   <% step_header %>
 <% else %>
   <% step_header(path: crime_applications_path) %>

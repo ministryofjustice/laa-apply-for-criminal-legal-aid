@@ -5,7 +5,7 @@ module Summary
         section.present? && super
       end
 
-      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         if no_payments?
           [
             Components::ValueAnswer.new(
@@ -22,7 +22,7 @@ module Summary
               if payment_details.nil?
                 Components::FreeTextAnswer.new(
                   formatted_payment_name,
-                  I18n.t('summary.does_not_get'),
+                  type_suffix.include?('outgoing') ? I18n.t('summary.does_not_pay') : I18n.t('summary.does_not_get'),
                   change_path:
                 )
               elsif requires_extra_details(payment_name)

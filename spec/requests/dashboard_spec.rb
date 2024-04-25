@@ -10,9 +10,9 @@ RSpec.describe 'Dashboard', :authorized do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
 
   describe 'start a new application' do
-    context 'when means journey feature flag is enabled' do
+    context 'when non_means_tested feature flag is enabled' do
       before do
-        allow(FeatureFlags).to receive(:means_journey) {
+        allow(FeatureFlags).to receive(:non_means_tested) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         }
       end
@@ -25,9 +25,9 @@ RSpec.describe 'Dashboard', :authorized do
       end
     end
 
-    context 'when means journey feature flag is not enabled' do
+    context 'when `non means tested` feature flag is not enabled' do
       before do
-        allow(FeatureFlags).to receive(:means_journey) {
+        allow(FeatureFlags).to receive(:non_means_tested) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: false)
         }
       end

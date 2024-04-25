@@ -5,9 +5,9 @@ module TypeOfMeansAssessment
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
-    return false if kase.appeal_reference_number.present?
+    return false if Passporting::MeansPassporter.new(crime_application).call
 
-    !Passporting::MeansPassporter.new(crime_application).call
+    !evidence_of_passporting_means_forthcoming?
   end
 
   def requires_full_means_assessment?
@@ -32,6 +32,11 @@ module TypeOfMeansAssessment
       CaseType::INDICTABLE,
       CaseType::ALREADY_IN_CROWN_COURT
     ].include?(CaseType.new(kase.case_type))
+  end
+
+  def evidence_of_passporting_means_forthcoming?
+    applicant.has_benefit_evidence == 'yes' &&
+      BenefitType.passporting.include?(BenefitType.new(applicant.benefit_type.to_s))
   end
 
   private

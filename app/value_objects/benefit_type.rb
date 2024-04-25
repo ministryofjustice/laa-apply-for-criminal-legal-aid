@@ -7,4 +7,8 @@ class BenefitType < ValueObject
     INCOME_SUPPORT = new(:income_support),
     NONE = new(:none),
   ].freeze
+
+  def self.passporting
+    VALUES.excluding([NONE])
+  end
 end
