@@ -5,14 +5,14 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   let(:crime_application) {
     instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase,
-   not_means_tested?: not_means_tested?)
+                    kase: kase, not_means_tested?: not_means_tested?)
   }
   let(:kase) { instance_double(Case, case_type: case_type, codefendants: codefendants_double, charges: charges_double) }
 
   let(:case_type) { CaseType::SUMMARY_ONLY }
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
-  let(:applicant_double) { double('applicant') }
+  let(:applicant_double) { instance_double(Applicant) }
   let(:not_means_tested?) { false }
 
   before do
@@ -329,16 +329,16 @@ RSpec.describe Decisions::CaseDecisionTree do
       end
 
       context 'and the applicant has a passporting benefit that requires evidence' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
         let(:means_passported) { false }
-        let(:has_benefit_evidence) { true }
+        let(:has_benefit_evidence) { 'yes' }
         let(:evidence_required) { true }
 
         it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
       end
 
       context 'and the application is means-passported' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
         let(:means_passported) { true }
         let(:evidence_required) { false }
 
@@ -347,7 +347,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
 
     context 'and means test is not required' do
-      let(:means_passported) { false }
+      let(:means_passported) { true }
       let(:evidence_required) { nil }
 
       context 'when application is not means tested' do

@@ -34,6 +34,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
+    allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
   end
 
