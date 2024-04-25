@@ -32,3 +32,6 @@ en:
       CouncilTaxPayments:
         client: their Council Tax statement
         partner: their Council Tax statement
+      ChildcareCosts:
+        client: proof of childcare costs, for example receipts or bank statements
+        partner: proof of childcare costs, for example receipts or bank statements

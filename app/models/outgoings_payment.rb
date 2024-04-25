@@ -28,6 +28,10 @@ class OutgoingsPayment < Payment
     where(payment_type: OutgoingsPaymentType::HOUSING_PAYMENT_TYPES.map(&:to_s))
   end
 
+  def self.childcare
+    where(payment_type: OutgoingsPaymentType::CHILDCARE.value).order(created_at: :desc).first
+  end
+
   # Manually cast food_amount and board_amount
   # because Rails will not convert to :pence as they are
   # store_accessor attributes
