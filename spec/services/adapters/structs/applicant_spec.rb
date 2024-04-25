@@ -64,6 +64,7 @@ RSpec.describe Adapters::Structs::Applicant do
           telephone_number
           home_address
           correspondence_address
+          has_nino
           residence_type
           relationship_to_owner_of_usual_home_address
         ]

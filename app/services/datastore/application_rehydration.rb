@@ -33,7 +33,9 @@ module Datastore
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],
         national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
-        properties: capital ? parent.capital.properties : []
+        properties: capital ? parent.capital.properties : [],
+        evidence_last_run_at: evidence_last_run_at,
+        evidence_prompts: evidence_prompts,
       )
     end
 
@@ -131,6 +133,18 @@ module Datastore
       return true if means_tested.value == :no
 
       false
+    end
+
+    def evidence_last_run_at
+      return [] unless parent&.evidence_details&.last_run_at
+
+      parent.evidence_details.last_run_at
+    end
+
+    def evidence_prompts
+      return [] unless parent&.evidence_details&.evidence_prompts
+
+      parent.evidence_details.evidence_prompts
     end
   end
   # rubocop:enable Metrics/ClassLength
