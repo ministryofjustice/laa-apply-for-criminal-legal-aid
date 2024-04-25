@@ -18,14 +18,8 @@ module Tasks
       applicant.present?
     end
 
-    # The last step of the applicant details task is the contact details
-    # Only `correspondence_address_type` is mandatory, `telephone_number`
-    # is not mandatory and can be left blank.
-    #
-    # Depending on the selected `correspondence_address_type`, we check
-    # if the address record exists.
-    #
     def completed?
+      crime_application.valid?(:client_details)
     end
   end
 end

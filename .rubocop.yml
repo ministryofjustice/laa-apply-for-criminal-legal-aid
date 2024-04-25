@@ -145,6 +145,7 @@ Naming/PredicateName:
     - has_no_investments
     - has_no_national_savings_certificates
     - has_national_savings_certificates_complete?
+    - has_nino_complete?
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:

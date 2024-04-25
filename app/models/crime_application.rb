@@ -69,4 +69,8 @@ class CrimeApplication < ApplicationRecord
   # validation to ensure some key details are fulfilled
   validates_with ApplicationFulfilmentValidator, on: :submission, unless: :post_submission_evidence?
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
+
+  validate on: :client_details do
+    ::ClientDetails::AnswersValidator.new(self).validate
+  end
 end

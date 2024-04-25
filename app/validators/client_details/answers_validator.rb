@@ -1,5 +1,7 @@
 module ClientDetails
   class AnswersValidator
+    include TypeOfMeansAssessment
+
     def initialize(record)
       @record = record
     end
@@ -8,15 +10,21 @@ module ClientDetails
 
     delegate :errors, :applicant, :kase, :crime_application, to: :record
 
+    # add the error to the first step name a user would need to go to to
+    # address the issue.
     def validate
-    end
+      errors.add(:details, :blank) unless applicant_details_complete?
+      errors.add(:case_type, :blank) unless case_type_complete?
+      errors.add(:residence_type, :blank) unless address_complete?
+      errors.add(:has_nino, :blank) unless has_nino_complete?
+      errors.add(:benefit_type, :blank) unless passporting_complete?
 
-    def valid?
-      validate
-      errors.any?
+      errors.add :base, :incomplete_records unless errors.empty?
     end
 
     def address_complete?
+      return false if applicant.residence_type.blank?
+
       case applicant.correspondence_address_type
       when CorrespondenceType::HOME_ADDRESS.to_s
         applicant.home_address?
@@ -29,61 +37,32 @@ module ClientDetails
       end
     end
 
-    def property_type_complete?
-      return true if record.has_no_properties == 'yes'
-
-      !record.properties.empty?
+    def applicant_details_complete?
+      applicant.values_at(
+        :date_of_birth, :first_name, :last_name,
+      ).all?(&:present?)
     end
 
-    def properties_complete?
-      return true if record.has_no_properties == 'yes'
+    def case_type_complete?
+      return false unless kase
 
-      record.properties.present? && record.properties.all?(&:complete?)
+      kase.case_type.present?
     end
 
-    def saving_type_complete?
-      return true if record.has_no_savings == 'yes'
+    def passporting_complete?
+      return true if applicant.benefit_type == 'none'
+      return true if evidence_of_passporting_means_forthcoming?
 
-      !record.savings.empty?
+      Passporting::MeansPassporter.new(crime_application).call
     end
 
-    def savings_complete?
-      return true if record.has_no_savings == 'yes'
+    def has_nino_complete?
+      return false if applicant.has_nino.blank?
+      return true if applicant.has_nino == 'no'
 
-      record.savings.present? && record.savings.all?(&:complete?)
+      applicant.nino.present?
     end
 
-    def investment_type_complete?
-      return true if record.has_no_investments == 'yes'
-
-      !record.investments.empty?
-    end
-
-    def investments_complete?
-      return true if record.has_no_investments == 'yes'
-
-      record.investments.present? & record.investments.all?(&:complete?)
-    end
-
-    def has_national_savings_certificates_complete?
-      record.has_national_savings_certificates.present?
-    end
-
-    def national_savings_certificates_complete?
-      return true if record.has_national_savings_certificates == 'no'
-
-      record.national_savings_certificates.present? && record.national_savings_certificates.all?(&:complete?)
-    end
-
-    def trust_fund_complete?
-      return true if record.will_benefit_from_trust_fund == 'no'
-      return false unless record.will_benefit_from_trust_fund == 'yes'
-
-      record.trust_fund_amount_held.present? && record.trust_fund_yearly_dividend.present?
-    end
-
-    def frozen_income_savings_assets_complete?
-      record.has_frozen_income_or_assets.present? || income&.has_frozen_income_or_assets.present?
-    end
+    alias crime_application record
   end
 end
