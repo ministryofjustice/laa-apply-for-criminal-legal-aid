@@ -67,7 +67,7 @@ module Decisions
       if DateStamper.new(form_object.crime_application).call
         edit(:date_stamp)
       elsif form_object.crime_application.not_means_tested?
-        start_address_journey(HomeAddress)
+        edit(:residence_type)
       else
         edit(:case_type)
       end

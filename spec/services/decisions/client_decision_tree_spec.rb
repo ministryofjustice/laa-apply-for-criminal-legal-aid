@@ -87,14 +87,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         let(:is_means_tested) { YesNoAnswer::NO }
         let(:not_means_tested) { true }
 
-        it {
-          expect(subject).to have_destination(
-            '/steps/address/lookup',
-            :edit,
-            id: crime_application,
-            address_id: 'address'
-          )
-        }
+        it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
       end
     end
   end
