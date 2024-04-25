@@ -4,7 +4,7 @@ module Steps
       delegate :property_owners_attributes=, to: :record
 
       validates_with CapitalAssessment::PropertyOwnersValidator,
-                     unless: [:any_marked_for_destruction?, :incomplete_property_owners?]
+                     unless: [:any_marked_for_destruction?, :adding_property_owner?]
 
       def property_owners
         @property_owners ||= record.property_owners.map do |property_owner|
@@ -35,7 +35,7 @@ module Steps
         record.save
       end
 
-      def incomplete_property_owners?
+      def adding_property_owner?
         step_name.eql?(:add_property_owner)
       end
     end
