@@ -41,3 +41,6 @@ en:
       SalariedEmployee:
         client: wage slips, salary advice, or a letter from their employer if they're paid by cash
         partner: wage slips, salary advice, or a letter from their employer if they're paid by cash
+      BenefitsRecipient:
+        client: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+        partner: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives

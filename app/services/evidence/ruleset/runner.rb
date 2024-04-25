@@ -14,6 +14,7 @@ module Evidence
       KEYS = %i[
         # Income
         income_employed_0a
+        income_employed_0b
 
         # Outgoings
         outgoings_housing_11
