@@ -102,7 +102,9 @@ module Decisions
     end
 
     def after_ioj
-      return edit('/steps/income/employment_status') if requires_means_assessment?
+      if requires_means_assessment? || kase.appeal_reference_number.present?
+        return edit('/steps/income/employment_status')
+      end
       return edit('/steps/evidence/upload') if Evidence::Requirements.new(current_crime_application).any?
 
       edit('/steps/submission/more_information')

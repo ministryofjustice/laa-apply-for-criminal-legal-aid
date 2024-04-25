@@ -7,7 +7,16 @@ RSpec.describe Decisions::CaseDecisionTree do
     instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase,
                     kase: kase, not_means_tested?: not_means_tested?)
   }
-  let(:kase) { instance_double(Case, case_type: case_type, codefendants: codefendants_double, charges: charges_double) }
+
+  let(:kase) do
+    instance_double(
+      Case,
+      case_type: case_type,
+      codefendants: codefendants_double,
+      charges: charges_double,
+      appeal_reference_number: nil
+    )
+  end
 
   let(:case_type) { CaseType::SUMMARY_ONLY }
   let(:codefendants_double) { double('codefendants_collection') }
@@ -21,6 +30,7 @@ RSpec.describe Decisions::CaseDecisionTree do
     ).to receive(:crime_application).and_return(crime_application)
 
     allow(crime_application).to receive_messages(update: true, date_stamp: nil)
+    allow(kase).to receive(:appeal_reference_number).and_return(nil)
   end
 
   it_behaves_like 'a decision tree'
@@ -343,6 +353,19 @@ RSpec.describe Decisions::CaseDecisionTree do
         let(:evidence_required) { false }
 
         it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+      end
+    end
+
+    context 'and when case is appeal' do
+      before do
+        allow(kase).to receive(:appeal_reference_number).and_return('1231asdf')
+      end
+
+      let(:means_passported) { true }
+      let(:evidence_required) { nil }
+
+      context 'when has benefit evidence is no' do
+        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
       end
     end
 
