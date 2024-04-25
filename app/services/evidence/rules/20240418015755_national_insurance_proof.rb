@@ -7,11 +7,11 @@ module Evidence
 
       group :none
 
-      # :nocov
+      # :nocov:
       other do |crime_application|
         crime_application&.applicant&.has_nino == 'yes'
       end
-      # :nocov
+      # :nocov:
     end
   end
 end
