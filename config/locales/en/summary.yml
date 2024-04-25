@@ -36,6 +36,7 @@ en:
       month: month
       annual: year
     does_not_get: Does not get
+    does_not_pay: Does not pay
     sections:
       overview: Overview
       case_details: Case details
