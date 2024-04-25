@@ -33,4 +33,8 @@ class Money
   end
 
   delegate :to_d, to: :to_f
+
+  def zero?
+    value.to_f.zero?
+  end
 end
