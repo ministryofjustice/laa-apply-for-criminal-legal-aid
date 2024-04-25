@@ -3,7 +3,7 @@ en:
   tasklist:
     heading_text:
       initial: Make a new application
-      post_submission_evidence: Add supporting evidence
+      post_submission_evidence: Upload supporting evidence
     heading:
       client_details: About your client
       case_details: About the case

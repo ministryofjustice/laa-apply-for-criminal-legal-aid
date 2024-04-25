@@ -7,4 +7,6 @@ module Errors
   class InvestmentNotFound < NotFound; end
   class NationalSavingsCertificateNotFound < NotFound; end
   class PropertyNotFound < NotFound; end
+  class UnsupportedPredicate < StandardError; end
+  class InvalidRuleset < StandardError; end
 end

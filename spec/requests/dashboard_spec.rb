@@ -63,8 +63,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'button.govuk-button', count: 0, text: 'Update application'
     end
 
-    it 'does not have a button to "Add supporting evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+    it 'does not have a button to "Upload supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
     end
 
     context 'when the application has been reviewed' do
@@ -72,8 +72,8 @@ RSpec.describe 'Dashboard', :authorized do
         LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
       end
 
-      it 'has a button to "Add supporting evidence"' do
-        assert_select 'button.govuk-button', count: 1, text: 'Add supporting evidence'
+      it 'has a button to "Upload supporting evidence"' do
+        assert_select 'button.govuk-button', count: 1, text: 'Upload supporting evidence'
       end
 
       it 'creates a new PSE application' do
@@ -85,7 +85,7 @@ RSpec.describe 'Dashboard', :authorized do
 
         follow_redirect!
 
-        assert_select 'h1', 'Add supporting evidence'
+        assert_select 'h1', 'Upload supporting evidence'
       end
 
       context 'when PSE feature flag is not enabled' do
@@ -97,8 +97,8 @@ RSpec.describe 'Dashboard', :authorized do
           get completed_crime_application_path(application_fixture_id)
         end
 
-        it 'does not have a button to "Add supporting evidence"' do
-          assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+        it 'does not have a button to "Upload supporting evidence"' do
+          assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
         end
       end
     end
@@ -216,8 +216,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
-    it 'does not have a button to "Add supporting evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+    it 'does not have a button to "Upload supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
     end
 
     # rubocop:disable Layout/LineLength

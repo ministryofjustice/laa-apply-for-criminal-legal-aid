@@ -120,7 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_103714) do
     t.string "is_means_tested"
     t.string "application_type", default: "initial", null: false
     t.text "additional_information"
-    t.jsonb "evidence_ruleset", default: []
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
@@ -267,7 +266,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_24_103714) do
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
-    t.string "can_submit_without_nino"
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
