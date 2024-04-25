@@ -1,6 +1,8 @@
 module Decisions
   # rubocop:disable Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
+    include TypeOfMeansAssessment
+
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :urn
@@ -91,13 +93,6 @@ module Decisions
       ioj_or_passported
     end
 
-    def means_test_required?
-      return false if current_crime_application.not_means_tested?
-
-      FeatureFlags.means_journey.enabled? && (applicant.has_benefit_evidence == 'no' ||
-        ['none', nil].include?(applicant.benefit_type))
-    end
-
     def ioj_or_passported
       if Passporting::IojPassporter.new(current_crime_application).call
         edit(:ioj_passport)
@@ -107,16 +102,12 @@ module Decisions
     end
 
     def after_ioj
-      return edit('/steps/income/employment_status') if means_test_required?
-
-      return edit('/steps/evidence/upload') if evidence_upload_required?
+      if requires_means_assessment? || kase.appeal_reference_number.present?
+        return edit('/steps/income/employment_status')
+      end
+      return edit('/steps/evidence/upload') if Evidence::Requirements.new(current_crime_application).any?
 
       edit('/steps/submission/more_information')
-    end
-
-    def evidence_upload_required?
-      Evidence::Requirements.new(current_crime_application).any? &&
-        !Passporting::MeansPassporter.new(current_crime_application).call
     end
 
     def edit_new_charge
@@ -141,8 +132,8 @@ module Decisions
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
     end
 
-    def applicant
-      @applicant ||= current_crime_application.applicant
+    def crime_application
+      form_object.crime_application
     end
   end
   # rubocop:enable Metrics/ClassLength
