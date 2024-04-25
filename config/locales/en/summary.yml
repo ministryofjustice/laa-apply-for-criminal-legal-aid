@@ -145,6 +145,19 @@ en:
       # END client details section
 
       # BEGIN contact details section
+      residence_type:
+        question: Where the client lives
+        answers:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+      relationship_to_owner_of_usual_home_address:
+        question: Relationship to client
       home_address:
         question: Home address
         absence_answer: *absence_none
@@ -153,7 +166,7 @@ en:
       correspondence_address_type:
         question: Where to send correspondence
         answers:
-          home_address: Same as home address
+          home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
       telephone_number:

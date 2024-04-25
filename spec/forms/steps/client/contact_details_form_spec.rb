@@ -10,7 +10,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       correspondence_address_type:
     }
   end
-  let(:applicant_double) { instance_double(Applicant) }
+  let(:applicant_double) { instance_double(Applicant, residence_type:) }
+  let(:residence_type) { ResidenceType::PARENTS.to_s }
 
   let(:crime_application) { instance_double(CrimeApplication) }
 
@@ -38,6 +39,17 @@ RSpec.describe Steps::Client::ContactDetailsForm do
 
     context 'when applicant has no home address' do
       let(:has_home_address) { false }
+
+      it 'returns all correspondence address types' do
+        expect(subject.choices.map(&:value)).to match(
+          [:providers_office_address,
+           :other_address]
+        )
+      end
+    end
+
+    context 'when applicant has no residence type' do
+      let(:residence_type) { ResidenceType::NONE.to_s }
 
       it 'returns all correspondence address types' do
         expect(subject.choices.map(&:value)).to match(
