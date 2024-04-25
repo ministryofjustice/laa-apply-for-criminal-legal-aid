@@ -63,8 +63,10 @@ en:
         appeal_reference_number: What is the reference number of the original application?
       steps_client_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
+      steps_client_residence_type_form:
+        residence_type: Where does your client usually live?
       steps_client_contact_details_form:
-        correspondence_address_type: Correspondence address
+        correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form:
         confirm_result: Are the DWP records correct?
       steps_dwp_confirm_details_form:
@@ -182,8 +184,6 @@ en:
         has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing your client's name and their benefit details.
         has_benefit_evidence_options:
           'yes': You'll need to upload evidence at the end of this application.
-      steps_client_contact_details_form:
-        telephone_number: For example, 01632 960 001 or +44 808 157 0192
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
@@ -317,6 +317,17 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: My client does not get any of these passporting benefits
+      steps_client_residence_type_form:
+        residence_type_options:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+        relationship_to_owner_of_usual_home_address: What is your client's relationship to that person?
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence_options: *YESNO
       steps_client_cannot_check_benefit_status_form:
@@ -324,9 +335,9 @@ en:
           'yes': I will enter the National Insurance number now
           'no': I will enter the National Insurance number later
       steps_client_contact_details_form:
-        telephone_number: Telephone number (optional)
+        telephone_number: What is your client's telephone number? (optional)
         correspondence_address_type_options:
-          home_address: Same as home address
+          home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
       steps_dwp_confirm_result_form:

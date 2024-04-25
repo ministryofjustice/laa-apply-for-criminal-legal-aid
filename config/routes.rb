@@ -121,6 +121,7 @@ Rails.application.routes.draw do
         show_step :evidence_exit
         edit_step :contact_details
         edit_step :cannot_check_dwp_status
+        edit_step :residence_type
       end
 
       namespace :dwp do
