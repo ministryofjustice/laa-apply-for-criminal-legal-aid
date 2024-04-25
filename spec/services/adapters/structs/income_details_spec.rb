@@ -3,13 +3,11 @@ require 'rails_helper'
 RSpec.describe Adapters::Structs::IncomeDetails do
   subject { application_struct.income }
 
-  let(:application_struct) { build_struct_application }
+  let(:application_struct) { build_struct_application(with_full_means: true) }
 
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
-      expect(
-        subject.serializable_hash
-      ).to match(
+      expect(subject.serializable_hash).to match(
         a_hash_including(
           'employment_status' => ['not_working'],
           'ended_employment_within_three_months' => 'yes',
@@ -19,19 +17,20 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'has_frozen_income_or_assets' => 'no',
           'client_owns_property' => 'no',
           'has_savings' => 'yes',
-          'client_has_dependants' => an_instance_of(YesNoAnswer),
           'manage_without_income' => 'other',
-          'manage_other_details' => 'Another way they manage'
+          'manage_other_details' => 'Another way they manage',
+          'client_has_dependants' => 'yes',
+          'has_no_income_benefits' => 'no',
+          'has_no_income_payments' => 'no'
         )
       )
     end
 
     it 'contains all required attributes' do
-      expect(
-        subject.serializable_hash.keys
-      ).to match_array(
+      expect(subject.serializable_hash.keys).to match_array(
         %w[
           employment_status
+          employment_details
           ended_employment_within_three_months
           lost_job_in_custody
           date_job_lost
@@ -42,6 +41,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           manage_without_income
           manage_other_details
           client_has_dependants
+          has_no_income_benefits
+          has_no_income_payments
         ]
       )
     end

@@ -17,6 +17,7 @@ module SubmissionSerializer
               json.has_savings income.has_savings
               json.manage_without_income income.manage_without_income
               json.manage_other_details income.manage_other_details
+              json.client_has_dependants income.client_has_dependants
               json.dependants Definitions::Dependant.generate(crime_application.dependants.with_ages)
               json.income_payments Definitions::Payment.generate(crime_application.income_payments)
               json.income_benefits Definitions::Payment.generate(crime_application.income_benefits)
