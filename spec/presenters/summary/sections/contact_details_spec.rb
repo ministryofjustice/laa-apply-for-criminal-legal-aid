@@ -144,6 +144,17 @@ describe Summary::Sections::ContactDetails do
         expect(answers[0].change_path).to match('applications/12345/steps/address/lookup/ff53a8dd')
         expect(answers[0].value).to eq('')
       end
+
+      context 'when residence type = none' do
+        let(:residence_type) { ResidenceType::NONE.to_s }
+
+        it 'does not display home address as it was not asked' do
+          expect(answers.count).to eq(4)
+
+          expect(answers[0].question).not_to eq(:home_address)
+          expect(answers[0].question).to eq(:residence_type)
+        end
+      end
     end
 
     context 'for `home_address` correspondence type' do
