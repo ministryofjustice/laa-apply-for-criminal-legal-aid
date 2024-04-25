@@ -239,6 +239,7 @@ RSpec.describe Evidence::Rule do
       expected_klasses = [
         Evidence::Rules::NationalInsuranceProof,
 
+        Evidence::Rules::HousingCosts,
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
         Evidence::Rules::ExampleRule2,

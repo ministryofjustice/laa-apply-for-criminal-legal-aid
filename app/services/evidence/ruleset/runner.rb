@@ -12,6 +12,12 @@ module Evidence
       #
       # When a new rule is created add the key to this list
       KEYS = %i[
+        # Income
+
+        # Outgoings
+        outgoings_housing_11
+
+        # Other
         national_insurance_32
       ].freeze
 

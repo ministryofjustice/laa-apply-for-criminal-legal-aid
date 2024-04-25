@@ -26,3 +26,6 @@ en:
       # Live rules
       NationalInsuranceProof:
         other: their National Insurance number
+      HousingCosts:
+        client: their rental, tenancy agreement or mortgage statement
+        partner: their rental, tenancy agreement or mortgage statement
