@@ -120,7 +120,7 @@ en:
           attributes:
             residence_type:
               inclusion: Select where your client usually lives or if they have no fixed address
-            relationship_to_someone_else:
+            relationship_to_owner_of_usual_home_address:
               blank: Enter your client's relationship to the person whose home they live in
         steps/client/has_nino_form:
           attributes:

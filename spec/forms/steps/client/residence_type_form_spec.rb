@@ -8,15 +8,17 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
       crime_application:,
       record:,
       residence_type:,
-      relationship_to_someone_else:
+      relationship_to_owner_of_usual_home_address:
     }
   end
 
   let(:crime_application) { instance_double(CrimeApplication, applicant: record) }
-  let(:record) { instance_double(Applicant, home_address:, relationship_to_someone_else:, residence_type:) }
+  let(:record) {
+    instance_double(Applicant, home_address:, relationship_to_owner_of_usual_home_address:, residence_type:)
+  }
 
   let(:residence_type) { ResidenceType::RENTED.to_s }
-  let(:relationship_to_someone_else) { nil }
+  let(:relationship_to_owner_of_usual_home_address) { nil }
   let(:home_address) { instance_double HomeAddress }
 
   describe 'validations' do
@@ -49,26 +51,26 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'residence_type' => ResidenceType::RENTED,
-                        'relationship_to_someone_else' => nil
+                        'relationship_to_owner_of_usual_home_address' => nil
                       }
 
       context 'when `residence_type` answer is not someone_else' do
-        context 'when a `relationship_to_someone_else` was previously recorded' do
-          let(:relationship_to_someone_else) { 'A friend' }
+        context 'when a `relationship_to_owner_of_usual_home_address` was previously recorded' do
+          let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
 
           it { is_expected.to be_valid }
 
-          it 'can make relationship_to_someone_else field nil if no longer required' do
+          it 'can make relationship_to_owner_of_usual_home_address field nil if no longer required' do
             attributes = form.send(:attributes_to_reset)
-            expect(attributes['relationship_to_someone_else']).to be_nil
+            expect(attributes['relationship_to_owner_of_usual_home_address']).to be_nil
           end
         end
       end
 
       context 'when `residence_type` answer is someone else' do
-        context 'when a `relationship_to_someone_else` was previously recorded' do
+        context 'when a `relationship_to_owner_of_usual_home_address` was previously recorded' do
           let(:residence_type) { ResidenceType::SOMEONE_ELSE.to_s }
-          let(:relationship_to_someone_else) { 'A friend' }
+          let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
 
           before do
             allow(record).to receive(:update).and_return true
@@ -78,29 +80,31 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :relationship_to_someone_else,
+                :relationship_to_owner_of_usual_home_address,
                 :present
               )
             ).to be(false)
           end
 
-          it 'cannot reset `relationship_to_someone_else` as it is relevant' do
+          # rubocop:disable Layout/LineLength
+          it 'cannot reset `relationship_to_owner_of_usual_home_address` as it is relevant' do
             record.update(residence_type: ResidenceType::SOMEONE_ELSE.to_s)
 
             attributes = form.send(:attributes_to_reset)
-            expect(attributes['relationship_to_someone_else']).to eq(relationship_to_someone_else)
+            expect(attributes['relationship_to_owner_of_usual_home_address']).to eq(relationship_to_owner_of_usual_home_address)
           end
+          # rubocop:enable Layout/LineLength
         end
 
-        context 'when a `relationship_to_someone_else` was not previously recorded' do
+        context 'when a `relationship_to_owner_of_usual_home_address` was not previously recorded' do
           let(:residence_type) { ResidenceType::SOMEONE_ELSE.to_s }
-          let(:relationship_to_someone_else) { 'A friend' }
+          let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
 
           it 'is also valid' do
             expect(form).to be_valid
             expect(
               form.errors.of_kind?(
-                :relationship_to_someone_else,
+                :relationship_to_owner_of_usual_home_address,
                 :present
               )
             ).to be(false)
@@ -122,7 +126,7 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'residence_type' => ResidenceType::RENTED,
-                        'relationship_to_someone_else' => nil
+                        'relationship_to_owner_of_usual_home_address' => nil
                       }
     end
 
@@ -142,7 +146,7 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
     before do
       allow(record).to receive_messages(home_address?: true)
       allow(record).to receive(:update).with({ 'residence_type' => ResidenceType::NONE,
-                                               'relationship_to_someone_else' => nil }).and_return true
+                                               'relationship_to_owner_of_usual_home_address' => nil }).and_return true
       allow(home_address).to receive(:destroy!)
       subject.save
     end

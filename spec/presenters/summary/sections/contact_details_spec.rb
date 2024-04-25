@@ -19,14 +19,14 @@ describe Summary::Sections::ContactDetails do
       correspondence_address_type:,
       telephone_number:,
       residence_type:,
-      relationship_to_someone_else:
+      relationship_to_owner_of_usual_home_address:
     )
   end
 
   let(:telephone_number) { '123456789' }
   let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
   let(:residence_type) { nil }
-  let(:relationship_to_someone_else) { nil }
+  let(:relationship_to_owner_of_usual_home_address) { nil }
 
   let(:home_address) do
     HomeAddress.new(
@@ -74,7 +74,7 @@ describe Summary::Sections::ContactDetails do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    context 'when there is no residence type' do
+    context 'when there is no residence type record' do
       it 'has the correct rows' do
         expect(answers.count).to eq(4)
 
@@ -114,7 +114,7 @@ describe Summary::Sections::ContactDetails do
 
       context 'when residence type is `someone else`' do
         let(:residence_type) { ResidenceType::SOMEONE_ELSE.to_s }
-        let(:relationship_to_someone_else) { 'A friend' }
+        let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(6)
@@ -125,7 +125,7 @@ describe Summary::Sections::ContactDetails do
           expect(answers[0].value).to eq('someone_else')
 
           expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-          expect(answers[1].question).to eq(:relationship_to_someone_else)
+          expect(answers[1].question).to eq(:relationship_to_owner_of_usual_home_address)
           expect(answers[1].change_path).to match('/applications/12345/steps/client/residence_type')
           expect(answers[1].value).to eq('A friend')
         end

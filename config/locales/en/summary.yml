@@ -156,7 +156,7 @@ en:
           joint_owned: In a property they and their partner both own
           someone_else: In someone else's home
           none: They do not have a fixed home address
-      relationship_to_someone_else:
+      relationship_to_owner_of_usual_home_address:
         question: Relationship to client
       home_address:
         question: Home address

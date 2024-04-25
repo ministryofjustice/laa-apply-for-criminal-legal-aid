@@ -10,7 +10,7 @@
         <% @form_object.choices.each_with_index do |option, index| %>
           <% if option.someone_else? %>
             <%= f.govuk_radio_button :residence_type, option.value do %>
-              <%= f.govuk_text_field :relationship_to_someone_else, autocomplete: 'off', width: 'one-third' %>
+              <%= f.govuk_text_field :relationship_to_owner_of_usual_home_address, autocomplete: 'off', width: 'one-third' %>
             <% end %>
           <% else %>
             <%= f.govuk_radio_button :residence_type, option, link_errors: index.zero? %>

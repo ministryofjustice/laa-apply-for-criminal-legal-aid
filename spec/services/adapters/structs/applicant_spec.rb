@@ -65,7 +65,7 @@ RSpec.describe Adapters::Structs::Applicant do
           home_address
           correspondence_address
           residence_type
-          relationship_to_someone_else
+          relationship_to_owner_of_usual_home_address
         ]
       )
     end

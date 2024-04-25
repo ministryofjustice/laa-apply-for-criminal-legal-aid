@@ -18,7 +18,8 @@ module Summary
 
         if residence_of_type?('someone_else')
           answers.push(Components::FreeTextAnswer.new(
-                         :relationship_to_someone_else, applicant.relationship_to_someone_else,
+                         :relationship_to_owner_of_usual_home_address,
+                         applicant.relationship_to_owner_of_usual_home_address,
                          change_path: edit_steps_client_residence_type_path
                        ))
         end

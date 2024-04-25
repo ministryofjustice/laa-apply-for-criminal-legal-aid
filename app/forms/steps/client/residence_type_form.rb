@@ -5,12 +5,12 @@ module Steps
       has_one_association :applicant
 
       attribute :residence_type, :value_object, source: ResidenceType
-      attribute :relationship_to_someone_else, :string
+      attribute :relationship_to_owner_of_usual_home_address, :string
 
       validates :residence_type,
                 inclusion: { in: :choices }
 
-      validates :relationship_to_someone_else,
+      validates :relationship_to_owner_of_usual_home_address,
                 presence: true,
                 if: -> { someone_else? }
 
@@ -23,7 +23,7 @@ module Steps
       def changed?
         # The attribute is a `value_object`, overriding generic `#changed?`
         !applicant.residence_type.eql?(residence_type.to_s) ||
-          !applicant.relationship_to_someone_else.eql?(relationship_to_someone_else)
+          !applicant.relationship_to_owner_of_usual_home_address.eql?(relationship_to_owner_of_usual_home_address)
       end
 
       def persist!
@@ -35,7 +35,9 @@ module Steps
 
       def attributes_to_reset
         {
-          'relationship_to_someone_else' => (relationship_to_someone_else if someone_else?)
+          'relationship_to_owner_of_usual_home_address' => (if someone_else?
+                                                              relationship_to_owner_of_usual_home_address
+                                                            end)
         }
       end
 

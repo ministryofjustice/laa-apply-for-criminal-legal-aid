@@ -327,7 +327,7 @@ en:
           joint_owned: In a property they and their partner both own
           someone_else: In someone else's home
           none: They do not have a fixed home address
-        relationship_to_someone_else: What is your client's relationship to that person?
+        relationship_to_owner_of_usual_home_address: What is your client's relationship to that person?
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence_options: *YESNO
       steps_client_cannot_check_benefit_status_form:
