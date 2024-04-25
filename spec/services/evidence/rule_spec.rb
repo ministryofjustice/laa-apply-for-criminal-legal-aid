@@ -243,6 +243,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::HousingCosts,
         Evidence::Rules::CouncilTaxPayments,
         Evidence::Rules::ChildcareCosts,
+        Evidence::Rules::SalariedEmployee,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,

@@ -38,3 +38,6 @@ en:
       ChildMaintenanceCosts:
         client: proof of maintenance payments, for example bank statements showing payments
         partner: proof of maintenance payments, for example bank statements showing payments
+      SalariedEmployee:
+        client: wage slips, salary advice, or a letter from their employer if they're paid by cash
+        partner: wage slips, salary advice, or a letter from their employer if they're paid by cash

@@ -13,6 +13,7 @@ module Evidence
       # When a new rule is created add the key to this list
       KEYS = %i[
         # Income
+        income_employed_0a
 
         # Outgoings
         outgoings_housing_11
