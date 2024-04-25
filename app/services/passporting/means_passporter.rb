@@ -6,10 +6,7 @@ module Passporting
 
       means_passport = []
 
-      if app_not_means_tested? && FeatureFlags.non_means_tested.enabled?
-        means_passport << MeansPassportType::ON_NOT_MEANS_TESTED
-      end
-
+      means_passport << MeansPassportType::ON_NOT_MEANS_TESTED if app_not_means_tested?
       means_passport << MeansPassportType::ON_AGE_UNDER18      if applicant_under18?
       means_passport << MeansPassportType::ON_BENEFIT_CHECK    if benefit_check_passed?
 
@@ -47,6 +44,7 @@ module Passporting
     private
 
     def app_not_means_tested?
+      return false unless FeatureFlags.non_means_tested.enabled?
       return true if crime_application.is_means_tested == 'no'
 
       false
