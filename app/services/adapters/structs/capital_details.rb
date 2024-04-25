@@ -1,6 +1,18 @@
 module Adapters
   module Structs
     class CapitalDetails < BaseStructAdapter
+      def trust_fund_yearly_dividend
+        cast_to_pounds(super)
+      end
+
+      def trust_fund_amount_held
+        cast_to_pounds(super)
+      end
+
+      def premium_bonds_total_value
+        cast_to_pounds(super)
+      end
+
       def savings
         return [] unless __getobj__
 
@@ -35,6 +47,11 @@ module Adapters
       def serializable_hash(options = {})
         except = %i[savings investments national_savings_certificates properties]
         super options.merge(except:)
+      end
+
+      # TODO: figure out why casting from pence is not happening automatically
+      def cast_to_pounds(value)
+        Money.new(value)
       end
     end
   end

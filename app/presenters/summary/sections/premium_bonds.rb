@@ -21,7 +21,7 @@ module Summary
           ),
           Components::MoneyAnswer.new(
             :premium_bonds_total_value,
-            cast_to_pounds(crime_application.capital.premium_bonds_total_value),
+            crime_application.capital.premium_bonds_total_value,
             change_path: change_path,
             show: have_premium_bonds?
           )
@@ -29,13 +29,6 @@ module Summary
       end
 
       private
-
-      # TODO: figure out why casting from pence is not happening automatically
-      def cast_to_pounds(value)
-        return value if value.is_a?(Money)
-
-        Money.new(value)
-      end
 
       def shown_premium_bonds?
         capital.present? && capital.has_premium_bonds.present?
