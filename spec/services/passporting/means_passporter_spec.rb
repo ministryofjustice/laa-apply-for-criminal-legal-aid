@@ -8,7 +8,8 @@ RSpec.describe Passporting::MeansPassporter do
       CrimeApplication,
       case: case_record,
       applicant: applicant,
-      resubmission?: resubmission?
+      resubmission?: resubmission?,
+      is_means_tested: is_means_tested
     )
   }
 
@@ -21,10 +22,10 @@ RSpec.describe Passporting::MeansPassporter do
   let(:resubmission?) { false }
   let(:under18) { nil }
   let(:passporting_benefit) { nil }
+  let(:is_means_tested) { 'yes' }
 
   before do
     allow(crime_application).to receive(:update)
-    allow(crime_application).to receive(:is_means_tested)
     allow(crime_application).to receive(:means_passport).and_return([])
   end
 
@@ -59,6 +60,24 @@ RSpec.describe Passporting::MeansPassporter do
           expect(crime_application).to receive(:update)
           expect(subject.call).to be(false)
         end
+      end
+    end
+
+    context 'means passporting on non-means tested' do
+      let(:is_means_tested) { 'no' }
+
+      before do
+        allow(FeatureFlags).to receive(:non_means_tested) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it 'does not add an age passported type to the array' do
+        expect(crime_application).to receive(:update).with(
+          means_passport: [MeansPassportType::ON_NOT_MEANS_TESTED]
+        )
+
+        subject.call
       end
     end
 

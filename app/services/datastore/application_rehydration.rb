@@ -51,6 +51,8 @@ module Datastore
 
     # `is_means_tested` is not part of Schema, requires calculation
     def means_tested
+      return nil unless FeatureFlags.non_means_tested.enabled?
+
       parent.means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
     end
 
