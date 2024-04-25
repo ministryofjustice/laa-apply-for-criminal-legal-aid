@@ -144,7 +144,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
           [
             [
               Summary::Components::FreeTextAnswer,
-              'childcare_outgoing', 'Does not get',
+              'childcare_outgoing', 'Does not pay',
               '#steps-outgoings-outgoings-payments-form-types-childcare-field'
             ],
             [
@@ -154,7 +154,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'legal_aid_contribution_outgoing', 'Does not get',
+              'legal_aid_contribution_outgoing', 'Does not pay',
               '#steps-outgoings-outgoings-payments-form-types-legal-aid-contribution-field'
             ]
           ]
