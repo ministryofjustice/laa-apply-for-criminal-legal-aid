@@ -49,7 +49,9 @@ RSpec.describe Datastore::ApplicationRehydration do
         savings: [], # capital and savings tested separately
         investments: [], # capital and investments tested separately
         national_savings_certificates: [], # capital and certificates tested separately
-        properties: []
+        properties: [],
+        evidence_last_run_at: an_instance_of(DateTime),
+        evidence_prompts: an_instance_of(Array),
       )
 
       expect(

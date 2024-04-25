@@ -9,10 +9,14 @@ module Adapters
         CorrespondenceAddress.new(super.attributes) if super
       end
 
+      def has_nino
+        nino.present? ? 'yes' : 'no'
+      end
+
       def serializable_hash(options = {})
         super(
           options.merge(
-            methods: []
+            methods: [:has_nino],
           )
         )
       end
