@@ -17,7 +17,6 @@ module Adapters
         super(
           options.merge(
             methods: [:has_nino],
-            except: [:relationship_to_someone_else, :residence_type]
           )
         )
       end
