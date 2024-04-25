@@ -47,7 +47,7 @@ module Evidence
       end
 
       def self.load_rules!
-        Dir.glob(RULES_DIR).each { |file| load file }
+        Dir.glob(RULES_DIR).each { |file| require file }
       end
 
       private
