@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_24_103714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -47,9 +47,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.bigint "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
     t.string "has_no_other_assets"
+    t.string "has_savings"
+    t.string "has_investments"
+    t.string "has_properties"
     t.string "has_no_properties"
     t.string "has_no_savings"
     t.string "has_no_investments"
+    t.string "has_no_national_savings_certificates"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -263,6 +267,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_122739) do
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
     t.date "last_jsa_appointment_date"
+    t.string "residence_type"
+    t.string "relationship_to_owner_of_usual_home_address"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

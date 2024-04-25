@@ -4,7 +4,7 @@ module Decisions
       case step_name
       when :lookup
         edit(:results)
-      when :results, :details, :clear_address
+      when :results, :details
         after_address_entered
       else
         raise InvalidStep, "Invalid step '#{step_name}'"

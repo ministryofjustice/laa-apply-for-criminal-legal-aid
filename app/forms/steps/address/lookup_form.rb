@@ -2,17 +2,17 @@ module Steps
   module Address
     class LookupForm < Steps::BaseFormObject
       attribute :postcode, :string
-      validates :postcode, presence: true, uk_postcode: true, unless: :clear_address?
+      validates :postcode, presence: true, uk_postcode: true
 
       private
 
       def persist!
-        return true unless clear_address? || changed?
+        return true unless changed?
 
         record.update(
           # The following are dependent attributes that need to be reset
           attributes_to_reset.merge(
-            postcode: (postcode unless clear_address?)
+            postcode:
           )
         )
       end
@@ -21,10 +21,6 @@ module Steps
         ::Address::ADDRESS_ATTRIBUTES.zip([]).to_h.merge(
           lookup_id: nil
         )
-      end
-
-      def clear_address?
-        step_name.eql?(:clear_address)
       end
     end
   end

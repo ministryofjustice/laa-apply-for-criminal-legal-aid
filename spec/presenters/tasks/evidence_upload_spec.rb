@@ -18,59 +18,11 @@ RSpec.describe Tasks::EvidenceUpload do
   end
 
   describe '#not_applicable?' do
-    before do
-      allow(
-        subject
-      ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(true)
-
-      allow_any_instance_of(
-        Evidence::Requirements
-      ).to receive(:none?).and_return(no_evidence_required)
-    end
-
-    context 'when evidence is deemed required' do
-      let(:no_evidence_required) { false }
-
-      it { expect(subject.not_applicable?).to be(false) }
-    end
-
-    context 'when evidence is deemed not required' do
-      let(:no_evidence_required) { true }
-
-      it { expect(subject.not_applicable?).to be(true) }
-    end
+    it { expect(subject.not_applicable?).to be(false) }
   end
 
   describe '#can_start?' do
-    # We assume the completeness of the Case Details here, as
-    # their statuses are tested in its own spec, no need to repeat
-    before do
-      allow(
-        subject
-      ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
-
-      allow(crime_application).to receive(:pse?).and_return(pse?)
-    end
-
-    let(:pse?) { false }
-
-    context 'when the Case Details task has been completed' do
-      let(:case_details_fulfilled) { true }
-
-      it { expect(subject.can_start?).to be(true) }
-    end
-
-    context 'when the Case Details task has not been completed yet' do
-      let(:case_details_fulfilled) { false }
-
-      it { expect(subject.can_start?).to be(false) }
-
-      context 'but the application is pse' do
-        let(:pse?) { true }
-
-        it { expect(subject.can_start?).to be(true) }
-      end
-    end
+    it { expect(subject.can_start?).to be(true) }
   end
 
   describe '#in_progress?' do
