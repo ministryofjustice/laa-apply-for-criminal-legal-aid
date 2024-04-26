@@ -18,6 +18,7 @@ module Evidence
         income_p60_sa302_2
         income_selfemployed_3
         income_noncash_benefit_4
+        income_private_pension_5
 
         # Outgoings
         outgoings_housing_11

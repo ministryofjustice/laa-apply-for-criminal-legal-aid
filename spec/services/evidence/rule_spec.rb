@@ -248,6 +248,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::SelfAssessed,
         Evidence::Rules::SelfEmployed,
         Evidence::Rules::BenefitsInKind,
+        Evidence::Rules::PrivatePensionIncome,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
