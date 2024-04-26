@@ -83,3 +83,6 @@ en:
       NationalSavingsAccount:
         client: National Savings or Post Office account statements covering the last 3 months, for each account
         partner: National Savings or Post Office account statements covering the last 3 months, for each account
+      CashInvestments:
+        client: statement, passbook, or certificate of cash investments covering the last 3 months
+        partner: statement, passbook, or certificate of cash investments covering the last 3 months

@@ -36,6 +36,7 @@ module Evidence
         capital_building_society_accounts_17
         capital_cash_isa_18
         capital_nsa_19
+        capital_cash_investments_20
 
         # Other
         national_insurance_32
