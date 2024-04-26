@@ -71,3 +71,6 @@ en:
       TrustFund:
         client: the trust document, or a certified copy
         partner: the trust document, or a certified copy
+      BankAccounts:
+        client: bank statements for the last 3 months, for each account declared by the applicant
+        partner: bank statements for the last 3 months, for each account declared by the applicant

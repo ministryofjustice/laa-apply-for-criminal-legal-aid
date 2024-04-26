@@ -31,6 +31,9 @@ module Evidence
         outgoings_childcare_14
         outgoings_maintenance_15
 
+        # Capital
+        capital_bank_accounts_16
+
         # Other
         national_insurance_32
       ].freeze
