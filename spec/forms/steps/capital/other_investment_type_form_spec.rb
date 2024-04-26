@@ -28,5 +28,13 @@ RSpec.describe Steps::Capital::OtherInvestmentTypeForm do
         expect(investments).to have_received(:create!).with(investment_type:)
       end
     end
+
+    context 'when investment type is an empty string' do
+      let(:investment_type) { '' }
+
+      it 'does not create an investment' do
+        expect(investments).not_to have_received(:create!).with(investment_type:)
+      end
+    end
   end
 end
