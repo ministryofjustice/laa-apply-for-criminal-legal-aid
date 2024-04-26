@@ -57,7 +57,7 @@ RSpec.describe 'Evidence upload page', :authorized do
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row:nth-of-type(1)' do
-          assert_select 'span:nth-of-type(1)', 'test.pdf'
+          assert_select 'span._uploaded_file__filename', 'test.pdf'
           assert_select 'strong.govuk-tag:nth-of-type(1)', 'Uploaded'
         end
       end

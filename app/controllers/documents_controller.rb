@@ -14,6 +14,8 @@ class DocumentsController < ApplicationController
 
     Datastore::Documents::Upload.new(document:, log_context:).call if document.valid?(:criteria)
 
+    document.url = download_crime_application_document_path(current_crime_application, document)
+
     respond_with(document, location: evidence_upload_step) do |format|
       if document.invalid?(:scan) || document.invalid?(:storage)
         format.html { redirect_to evidence_upload_step }
@@ -29,8 +31,9 @@ class DocumentsController < ApplicationController
   def download
     presign_download = Datastore::Documents::Download.new(document: @document, log_context: log_context).call
 
-    unless presign_download.respond_to?(:url)
-      raise Errors::NotFound, "Could not download `#{@document.filename}` with object_key: `#{@document.s3_object_key}`"
+    unless presign_download
+      raise Errors::DocumentUnavailable,
+            "Could not download `#{@document.filename}` with object_key: `#{@document.s3_object_key}`"
     end
 
     redirect_to(presign_download.url, allow_other_host: true)
@@ -45,7 +48,7 @@ class DocumentsController < ApplicationController
 
     return if current_crime_application.documents.find { |document| document.id == @document.id }
 
-    raise Errors::NotFound, 'CrimeApplication/Document mismatch'
+    raise Errors::DocumentUnavailable, 'CrimeApplication/Document mismatch'
   end
 
   def log_context
