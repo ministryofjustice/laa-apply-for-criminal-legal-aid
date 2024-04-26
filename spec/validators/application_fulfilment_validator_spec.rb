@@ -9,6 +9,10 @@ module Test
     def to_param
       '12345'
     end
+
+    def client_details_complete?
+      true
+    end
   end
 end
 
@@ -222,6 +226,19 @@ is_client_remanded:, date_client_remanded:)
     context 'when case section is not complete' do
       before do
         expect(kase).to receive(:complete?).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when client details section is not complete' do
+      before do
+        expect(subject).to receive(:client_details_complete?).and_return(false)
       end
 
       it { is_expected.not_to be_valid }

@@ -35,6 +35,14 @@ RSpec.describe Steps::Capital::OtherPropertyTypeForm do
       end
     end
 
+    context 'when property type is an empty string' do
+      let(:property_type) { '' }
+
+      it 'does not create a property' do
+        expect(properties).not_to have_received(:create!)
+      end
+    end
+
     context 'when a property of the type exists' do
       let(:existing_properties) { [existing_property] }
 
