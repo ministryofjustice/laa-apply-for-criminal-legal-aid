@@ -5,7 +5,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:) }
   let(:errors) { double(:errors, empty?: false) }
-  let(:applicant) { instance_double(Applicant, benefit_type: nil, residence_type: 'house') }
+  let(:applicant) { instance_double(Applicant, residence_type: 'house') }
   let(:kase) { instance_double(Case, case_type: 'case_type') }
 
   describe '#validate' do
@@ -13,7 +13,8 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       before do
         allow(applicant).to receive(:values_at).with(:date_of_birth, :first_name,
                                                      :last_name).and_return(['2000-11-11', nil, 'Tim'])
-        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil, has_benefit_evidence: nil)
+        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil, benefit_type: nil,
+                                             has_benefit_evidence: nil)
         allow(record).to receive(:kase).and_return(nil)
         allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
       end
@@ -28,7 +29,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
           income_payments: [],
           income_benefits: [],
           client_has_dependants: nil,
-          manage_without_income: nil
+          manage_without_income: nil,
         }
       end
 
@@ -71,6 +72,16 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
       context 'for other address' do
         let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
+
+        before do
+          allow(applicant).to receive(:correspondence_address?).and_return(true)
+        end
+
+        it { expect(subject.address_complete?).to be(true) }
+      end
+
+      context 'for providers address' do
+        let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS.to_s }
 
         before do
           allow(applicant).to receive(:correspondence_address?).and_return(true)
@@ -128,17 +139,43 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       end
     end
 
-    context 'when evidence of passporting means is forthcoming' do
-      before { allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(true) }
+    context 'when the dwp check fails but they have a passporting benefit' do
+      let(:has_benefit_evidence) { nil }
 
-      it 'returns true' do
-        expect(subject.passporting_complete?).to be(true)
+      before do
+        allow(applicant).to receive_messages(
+          benefit_type: BenefitType::UNIVERSAL_CREDIT,
+          has_benefit_evidence: has_benefit_evidence
+        )
+        allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: false))
+      end
+
+      context 'when applicant has not answered the question yet' do
+        it 'returns false' do
+          expect(subject.passporting_complete?).to be(false)
+        end
+      end
+
+      context 'when applicant has benefit evidence' do
+        let(:has_benefit_evidence) { 'yes' }
+
+        it 'returns true' do
+          expect(subject.passporting_complete?).to be(true)
+        end
+      end
+
+      context 'when applicant does not have benefit evidence' do
+        let(:has_benefit_evidence) { 'no' }
+
+        it 'returns true' do
+          expect(subject.passporting_complete?).to be(true)
+        end
       end
     end
 
     context 'when Passporting::MeansPassporter returns true' do
       before do
-        allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
+        allow(applicant).to receive(:benefit_type).and_return(nil)
         allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: true))
       end
 
@@ -149,7 +186,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
     context 'when Passporting::MeansPassporter returns false' do
       before do
-        allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
+        allow(applicant).to receive(:benefit_type).and_return(nil)
         allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: false))
       end
 

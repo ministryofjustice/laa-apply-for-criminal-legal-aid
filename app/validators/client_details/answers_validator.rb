@@ -53,6 +53,7 @@ module ClientDetails
     def passporting_complete?
       return true if applicant.benefit_type == 'none'
       return true if evidence_of_passporting_means_forthcoming?
+      return true if means_assessment_in_lieu_of_passporting?
 
       Passporting::MeansPassporter.new(crime_application).call
     end

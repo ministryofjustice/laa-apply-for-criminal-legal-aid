@@ -73,4 +73,8 @@ class CrimeApplication < ApplicationRecord
   validate on: :client_details do
     ::ClientDetails::AnswersValidator.new(self).validate
   end
+
+  def client_details_complete?
+    valid?(:client_details)
+  end
 end

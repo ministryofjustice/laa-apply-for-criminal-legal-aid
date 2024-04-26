@@ -43,7 +43,7 @@ RSpec.describe Tasks::ClientDetails do
 
       expect(subject.completed?).to be(true)
     end
-    
+
     it 'returns false when client details are not complete' do
       allow(crime_application).to receive(:valid?).with(:client_details).and_return(false)
 

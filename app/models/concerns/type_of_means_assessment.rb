@@ -35,11 +35,18 @@ module TypeOfMeansAssessment
   end
 
   def evidence_of_passporting_means_forthcoming?
-    applicant.has_benefit_evidence == 'yes' &&
-      BenefitType.passporting.include?(BenefitType.new(applicant.benefit_type.to_s))
+    has_passporting_benefit? && applicant.has_benefit_evidence == 'yes'
+  end
+
+  def means_assessment_in_lieu_of_passporting?
+    has_passporting_benefit? && applicant.has_benefit_evidence == 'no'
   end
 
   private
+
+  def has_passporting_benefit?
+    BenefitType.passporting.include?(BenefitType.new(applicant.benefit_type.to_s))
+  end
 
   def summary_only?
     kase.case_type == CaseType::SUMMARY_ONLY.to_s
