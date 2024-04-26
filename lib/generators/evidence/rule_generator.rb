@@ -79,15 +79,21 @@ module Evidence
           it { expect(described_class.active?).to be true }
 
           describe '.client' do
-            it { expect(subject.client_predicate).to be true }
+            subject { described_class.new(crime_application).client_predicate }
+
+            it { expect(subject).to be true }
           end
 
           describe '.partner' do
-            it { expect(subject.partner_predicate).to be false }
+            subject { described_class.new(crime_application).partner_predicate }
+
+            it { expect(subject).to be false }
           end
 
           describe '.other' do
-            it { expect(subject.other_predicate).to be false }
+            subject { described_class.new(crime_application).other_predicate }
+
+            it { expect(subject).to be false }
           end
 
           describe '#to_h' do
