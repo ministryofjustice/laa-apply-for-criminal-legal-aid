@@ -7,7 +7,13 @@ module Evidence
       group :income
 
       client do |crime_application|
-        crime_application.income&.employment_status == [EmploymentStatus::EMPLOYED.to_s]
+        if crime_application.income
+          [EmploymentStatus::EMPLOYED.to_s].intersect?(
+            Array.wrap(crime_application.income.employment_status)
+          )
+        else
+          false
+        end
       end
 
       # TODO: Awaiting partner implementation
