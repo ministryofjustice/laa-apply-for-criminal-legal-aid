@@ -98,4 +98,41 @@ RSpec.describe 'Evidence upload page', :authorized do
       end
     end
   end
+
+  describe 'download' do
+    let(:crime_application) { CrimeApplication.first }
+
+    before do
+      stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_download')
+        .to_return(status: 200, body: '{"object_key":"123/abcdef1234", "url":"https://secure.com/123/abcdef1234?fileinfo"}')
+
+      get download_crime_application_document_path(crime_application, document)
+    end
+
+    context 'when document belongs to application' do
+      let(:document) { crime_application.documents.first }
+
+      it 'allows download' do
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to('https://secure.com/123/abcdef1234?fileinfo')
+      end
+    end
+
+    context 'when document does not belong to application' do
+      let(:document) do
+        doc = Document.create_from_file(
+          file: fixture_file_upload('uploads/test.pdf', 'application/pdf'),
+          crime_application: CrimeApplication.create
+        )
+
+        doc.update(s3_object_key: '123/abcdef1234')
+        doc
+      end
+
+      it 'disallows download' do
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(%r{/errors/not_found})
+      end
+    end
+  end
 end
