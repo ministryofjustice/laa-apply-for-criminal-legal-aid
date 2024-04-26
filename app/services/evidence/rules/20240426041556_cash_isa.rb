@@ -1,21 +1,25 @@
 module Evidence
   module Rules
-    class BuildingSocietyAccounts < Rule
+    class CashIsa < Rule
       include Evidence::RuleDsl
 
-      key :capital_building_society_accounts_17
+      key :capital_cash_isa_18
       group :capital
 
       client do |crime_application|
         if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::BUILDING_SOCIETY.value).size.positive?
+          crime_application.savings.where(saving_type: SavingType::CASH_ISA.value).size.positive?
         else
           false
         end
       end
 
-      # TODO: Awaiting partner implementation
       partner do |_crime_application|
+        false
+      end
+
+      other do |_crime_application|
+        # Predicate must return true or false
         false
       end
     end

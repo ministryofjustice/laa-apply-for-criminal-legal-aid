@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Evidence::Rules::BuildingSocietyAccounts do
+RSpec.describe Evidence::Rules::CashIsa do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -11,7 +11,7 @@ RSpec.describe Evidence::Rules::BuildingSocietyAccounts do
 
   let(:savings) { [] }
 
-  it { expect(described_class.key).to eq :capital_building_society_accounts_17 }
+  it { expect(described_class.key).to eq :capital_cash_isa_18 }
   it { expect(described_class.group).to eq :capital }
   it { expect(described_class.archived).to be false }
   it { expect(described_class.active?).to be true }
@@ -19,24 +19,13 @@ RSpec.describe Evidence::Rules::BuildingSocietyAccounts do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
-    context 'with 1 building society account' do
-      let(:savings) { [Saving.new(saving_type: 'building_society')] }
+    context 'with cash isa account' do
+      let(:savings) { [Saving.new(saving_type: 'cash_isa')] }
 
       it { is_expected.to be true }
     end
 
-    context 'with 2 building society accounts' do
-      let(:savings) do
-        [
-          Saving.new(saving_type: 'building_society'),
-          Saving.new(saving_type: 'building_society'),
-        ]
-      end
-
-      it { is_expected.to be true }
-    end
-
-    context 'with 0 building_society accounts' do
+    context 'with 0 cash isa accounts' do
       it { is_expected.to be false }
     end
   end
@@ -50,19 +39,18 @@ RSpec.describe Evidence::Rules::BuildingSocietyAccounts do
   end
 
   describe '#to_h' do
-    let(:savings) { [Saving.new(saving_type: 'building_society')] }
+    let(:savings) { [Saving.new(saving_type: 'cash_isa')] }
 
-    # rubocop:disable Layout/LineLength
     let(:expected_hash) do
       {
-        id: 'BuildingSocietyAccounts',
+        id: 'CashIsa',
         group: :capital,
         ruleset: nil,
-        key: :capital_building_society_accounts_17,
+        key: :capital_cash_isa_18,
         run: {
           client: {
             result: true,
-            prompt: ['building society statement or passbook showing transactions for the last 3 months, for each account'],
+            prompt: ['cash ISA statements showing transactions for the last 3 months, for each account'],
           },
           partner: {
             result: false,
@@ -75,7 +63,6 @@ RSpec.describe Evidence::Rules::BuildingSocietyAccounts do
         }
       }
     end
-    # rubocop:enable Layout/LineLength
 
     it { expect(subject.to_h).to eq expected_hash }
   end
