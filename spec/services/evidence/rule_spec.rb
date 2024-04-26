@@ -259,6 +259,15 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::CashIsa,
         Evidence::Rules::NationalSavingsAccount,
         Evidence::Rules::CashInvestments,
+        Evidence::Rules::PremiumBonds,
+        Evidence::Rules::SavingsCerts,
+        Evidence::Rules::StocksAndGilts,
+        Evidence::Rules::OwnShares,
+        Evidence::Rules::PepPlans,
+        Evidence::Rules::ShareIsa,
+        Evidence::Rules::UnitTrusts,
+        Evidence::Rules::InvestmentBonds,
+        Evidence::Rules::OtherLumpSums,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,

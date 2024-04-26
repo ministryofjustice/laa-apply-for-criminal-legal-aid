@@ -1,17 +1,13 @@
 module Evidence
   module Rules
-    class BankAccounts < Rule
+    class ShareIsa < Rule
       include Evidence::RuleDsl
 
-      key :capital_bank_accounts_16
+      key :capital_share_isa_26
       group :capital
 
       client do |crime_application|
-        if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::BANK.value).any?
-        else
-          false
-        end
+        crime_application.investments.where(investment_type: InvestmentType::SHARE_ISA.value).any?
       end
 
       # TODO: Awaiting partner implementation

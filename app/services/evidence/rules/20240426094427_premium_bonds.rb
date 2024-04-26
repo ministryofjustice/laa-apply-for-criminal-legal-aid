@@ -1,14 +1,14 @@
 module Evidence
   module Rules
-    class BuildingSocietyAccounts < Rule
+    class PremiumBonds < Rule
       include Evidence::RuleDsl
 
-      key :capital_building_society_accounts_17
+      key :capital_premium_bonds_21
       group :capital
 
       client do |crime_application|
-        if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::BUILDING_SOCIETY.value).any?
+        if crime_application.capital
+          crime_application.capital.has_premium_bonds == 'yes'
         else
           false
         end

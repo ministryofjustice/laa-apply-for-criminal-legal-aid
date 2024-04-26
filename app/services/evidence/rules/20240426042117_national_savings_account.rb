@@ -8,7 +8,7 @@ module Evidence
 
       client do |crime_application|
         if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE.value).size.positive?
+          crime_application.savings.where(saving_type: SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE.value).any?
         else
           false
         end

@@ -37,6 +37,15 @@ module Evidence
         capital_cash_isa_18
         capital_nsa_19
         capital_cash_investments_20
+        capital_premium_bonds_21
+        capital_savings_certs_22
+        capital_stocks_gilts_23
+        capital_shares_24
+        capital_pep_25
+        capital_share_isa_26
+        capital_unit_trusts_27
+        capital_investment_bonds_28
+        capital_other_lump_sums_29
 
         # Other
         national_insurance_32
