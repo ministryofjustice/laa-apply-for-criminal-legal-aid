@@ -74,3 +74,6 @@ en:
       BankAccounts:
         client: bank statements for the last 3 months, for each account declared by the applicant
         partner: bank statements for the last 3 months, for each account declared by the applicant
+      BuildingSocietyAccounts:
+        client: building society statement or passbook showing transactions for the last 3 months, for each account
+        partner: building society statement or passbook showing transactions for the last 3 months, for each account

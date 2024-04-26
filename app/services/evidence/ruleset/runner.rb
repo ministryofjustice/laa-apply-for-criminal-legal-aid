@@ -33,6 +33,7 @@ module Evidence
 
         # Capital
         capital_bank_accounts_16
+        capital_building_society_accounts_17
 
         # Other
         national_insurance_32
