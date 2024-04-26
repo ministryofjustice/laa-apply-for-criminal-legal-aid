@@ -20,20 +20,44 @@ RSpec.describe Evidence::Rules::InvestmentBonds do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with investment bond investments' do
-      let(:investments) { [Investment.new(investment_type: 'bond')] }
+      let(:investments) { [Investment.new(investment_type: 'bond', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
     context 'without investment bond investments' do
-      let(:investments) { [Investment.new(investment_type: 'stock')] }
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:investments) { [Investment.new(investment_type: 'bond', ownership_type: :partner)] }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with investment bond investments' do
+      let(:investments) { [Investment.new(investment_type: 'bond', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without investment bond investments' do
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:investments) { [Investment.new(investment_type: 'bond', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -41,7 +65,12 @@ RSpec.describe Evidence::Rules::InvestmentBonds do
   end
 
   describe '#to_h' do
-    let(:investments) { [Investment.new(investment_type: 'bond')] }
+    let(:investments) do
+      [
+        Investment.new(investment_type: 'bond', ownership_type: :applicant),
+        Investment.new(investment_type: 'bond', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -55,8 +84,8 @@ RSpec.describe Evidence::Rules::InvestmentBonds do
             prompt: ['certificate or statement for each investment bond'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['certificate or statement for each investment bond'],
           },
           other: {
             result: false,

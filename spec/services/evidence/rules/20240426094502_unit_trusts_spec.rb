@@ -20,20 +20,44 @@ RSpec.describe Evidence::Rules::UnitTrusts do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with unit trust investments' do
-      let(:investments) { [Investment.new(investment_type: 'unit_trust')] }
+      let(:investments) { [Investment.new(investment_type: 'unit_trust', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
     context 'without unit trust investments' do
-      let(:investments) { [Investment.new(investment_type: 'stock')] }
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:investments) { [Investment.new(investment_type: 'unit_trust', ownership_type: :partner)] }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with unit trust investments' do
+      let(:investments) { [Investment.new(investment_type: 'unit_trust', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without unit trust investments' do
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:investments) { [Investment.new(investment_type: 'unit_trust', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -41,7 +65,12 @@ RSpec.describe Evidence::Rules::UnitTrusts do
   end
 
   describe '#to_h' do
-    let(:investments) { [Investment.new(investment_type: 'unit_trust')] }
+    let(:investments) do
+      [
+        Investment.new(investment_type: 'unit_trust', ownership_type: :applicant),
+        Investment.new(investment_type: 'unit_trust', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -55,8 +84,8 @@ RSpec.describe Evidence::Rules::UnitTrusts do
             prompt: ['certificate or statement for each Unit Trust investment'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['certificate or statement for each Unit Trust investment'],
           },
           other: {
             result: false,

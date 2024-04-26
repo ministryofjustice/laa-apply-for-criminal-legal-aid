@@ -20,20 +20,44 @@ RSpec.describe Evidence::Rules::OtherLumpSums do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with other investments' do
-      let(:investments) { [Investment.new(investment_type: 'other')] }
+      let(:investments) { [Investment.new(investment_type: 'other', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
     context 'without other investments' do
-      let(:investments) { [Investment.new(investment_type: 'stock')] }
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:investments) { [Investment.new(investment_type: 'other', ownership_type: :partner)] }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with other investments' do
+      let(:investments) { [Investment.new(investment_type: 'other', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without other investments' do
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:investments) { [Investment.new(investment_type: 'other', ownership_type: :client)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -41,7 +65,12 @@ RSpec.describe Evidence::Rules::OtherLumpSums do
   end
 
   describe '#to_h' do
-    let(:investments) { [Investment.new(investment_type: 'other')] }
+    let(:investments) do
+      [
+        Investment.new(investment_type: 'other', ownership_type: :applicant),
+        Investment.new(investment_type: 'other', ownership_type: :partner),
+      ]
+    end
 
     # rubocop:disable Layout/LineLength
     let(:expected_hash) do
@@ -56,8 +85,8 @@ RSpec.describe Evidence::Rules::OtherLumpSums do
             prompt: ['statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months'],
           },
           other: {
             result: false,

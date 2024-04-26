@@ -20,20 +20,44 @@ RSpec.describe Evidence::Rules::OwnShares do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with share investments' do
-      let(:investments) { [Investment.new(investment_type: 'share')] }
+      let(:investments) { [Investment.new(investment_type: 'share', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
     context 'without share investments' do
-      let(:investments) { [Investment.new(investment_type: 'stock')] }
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:investments) { [Investment.new(investment_type: 'share', ownership_type: :partner)] }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with share investments' do
+      let(:investments) { [Investment.new(investment_type: 'share', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without share investments' do
+      let(:investments) { [Investment.new(investment_type: 'stock', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:investments) { [Investment.new(investment_type: 'share', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -41,7 +65,12 @@ RSpec.describe Evidence::Rules::OwnShares do
   end
 
   describe '#to_h' do
-    let(:investments) { [Investment.new(investment_type: 'share')] }
+    let(:investments) do
+      [
+        Investment.new(investment_type: 'share', ownership_type: :applicant),
+        Investment.new(investment_type: 'share', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -55,8 +84,8 @@ RSpec.describe Evidence::Rules::OwnShares do
             prompt: ['share certificate or latest dividend counterfoil for each company they hold shares in'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['share certificate or latest dividend counterfoil for each company they hold shares in'],
           },
           other: {
             result: false,

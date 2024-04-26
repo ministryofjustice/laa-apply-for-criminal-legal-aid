@@ -6,6 +6,7 @@ module Evidence
       key :income_benefits_0b
       group :income
 
+      # TODO: Rule requires clarification re: passporting benefits
       client do |crime_application|
         crime_application.income&.has_no_income_benefits == 'no' ||
           crime_application.income_benefits.any?

@@ -20,18 +20,44 @@ RSpec.describe Evidence::Rules::NationalSavingsAccount do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with national savings account' do
-      let(:savings) { [Saving.new(saving_type: 'national_savings_or_post_office')] }
+      let(:savings) { [Saving.new(saving_type: 'national_savings_or_post_office', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
-    context 'with national savings accounts' do
+    context 'without national savings accounts' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :partner)] }
+
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with national savings account' do
+      let(:savings) { [Saving.new(saving_type: 'national_savings_or_post_office', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without national savings accounts' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -39,7 +65,12 @@ RSpec.describe Evidence::Rules::NationalSavingsAccount do
   end
 
   describe '#to_h' do
-    let(:savings) { [Saving.new(saving_type: 'national_savings_or_post_office')] }
+    let(:savings) do
+      [
+        Saving.new(saving_type: 'national_savings_or_post_office', ownership_type: :applicant),
+        Saving.new(saving_type: 'national_savings_or_post_office', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -53,8 +84,8 @@ RSpec.describe Evidence::Rules::NationalSavingsAccount do
             prompt: ['National Savings or Post Office account statements covering the last 3 months, for each account'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['National Savings or Post Office account statements covering the last 3 months, for each account'],
           },
           other: {
             result: false,

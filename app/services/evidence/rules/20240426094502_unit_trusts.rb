@@ -7,12 +7,11 @@ module Evidence
       group :capital
 
       client do |crime_application|
-        crime_application.investments.where(investment_type: InvestmentType::UNIT_TRUST.value).any?
+        crime_application.investments.for_client.where(investment_type: InvestmentType::UNIT_TRUST.value).any?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        crime_application.investments.for_partner.where(investment_type: InvestmentType::UNIT_TRUST.value).any?
       end
     end
   end

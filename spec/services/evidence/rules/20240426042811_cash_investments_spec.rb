@@ -20,18 +20,44 @@ RSpec.describe Evidence::Rules::CashInvestments do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with other cash investments' do
-      let(:savings) { [Saving.new(saving_type: 'other')] }
+      let(:savings) { [Saving.new(saving_type: 'other', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
     context 'without other cash investments' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:savings) { [Saving.new(saving_type: 'other', ownership_type: :partner)] }
+
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with other cash investments' do
+      let(:savings) { [Saving.new(saving_type: 'other', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without other cash investments' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:savings) { [Saving.new(saving_type: 'other', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -39,7 +65,12 @@ RSpec.describe Evidence::Rules::CashInvestments do
   end
 
   describe '#to_h' do
-    let(:savings) { [Saving.new(saving_type: 'other')] }
+    let(:savings) do
+      [
+        Saving.new(saving_type: 'other', ownership_type: :applicant),
+        Saving.new(saving_type: 'other', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -53,8 +84,8 @@ RSpec.describe Evidence::Rules::CashInvestments do
             prompt: ['statement, passbook, or certificate of cash investments covering the last 3 months'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['statement, passbook, or certificate of cash investments covering the last 3 months'],
           },
           other: {
             result: false,

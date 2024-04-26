@@ -20,18 +20,44 @@ RSpec.describe Evidence::Rules::CashIsa do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with cash isa account' do
-      let(:savings) { [Saving.new(saving_type: 'cash_isa')] }
+      let(:savings) { [Saving.new(saving_type: 'cash_isa', ownership_type: :applicant)] }
 
       it { is_expected.to be true }
     end
 
-    context 'with 0 cash isa accounts' do
+    context 'without cash isa accounts' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by client' do
+      let(:savings) { [Saving.new(saving_type: 'cash_isa', ownership_type: :partner)] }
+
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'with cash isa account' do
+      let(:savings) { [Saving.new(saving_type: 'cash_isa', ownership_type: :partner)] }
+
+      it { is_expected.to be true }
+    end
+
+    context 'without cash isa accounts' do
+      let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: :partner)] }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not owned by partner' do
+      let(:savings) { [Saving.new(saving_type: 'cash_isa', ownership_type: :applicant)] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -39,7 +65,12 @@ RSpec.describe Evidence::Rules::CashIsa do
   end
 
   describe '#to_h' do
-    let(:savings) { [Saving.new(saving_type: 'cash_isa')] }
+    let(:savings) do
+      [
+        Saving.new(saving_type: 'cash_isa', ownership_type: :applicant),
+        Saving.new(saving_type: 'cash_isa', ownership_type: :partner),
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -53,8 +84,8 @@ RSpec.describe Evidence::Rules::CashIsa do
             prompt: ['cash ISA statements showing transactions for the last 3 months, for each account'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['cash ISA statements showing transactions for the last 3 months, for each account'],
           },
           other: {
             result: false,

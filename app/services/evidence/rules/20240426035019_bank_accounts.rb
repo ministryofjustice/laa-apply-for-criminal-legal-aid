@@ -7,16 +7,11 @@ module Evidence
       group :capital
 
       client do |crime_application|
-        if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::BANK.value).any?
-        else
-          false
-        end
+        crime_application.savings.for_client.where(saving_type: SavingType::BANK.value).any?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        crime_application.savings.for_partner.where(saving_type: SavingType::BANK.value).any?
       end
     end
   end
