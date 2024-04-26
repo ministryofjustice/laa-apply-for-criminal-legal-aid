@@ -13,7 +13,7 @@ module ClientDetails
     # Adds the error to the first step name a user would need to go to
     # fix the issue.
 
-    def validate # rubocop:disable Metrics/AbcSize:
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity:
       errors.add(:details, :blank) unless applicant_details_complete?
       errors.add(:case_type, :blank) unless case_type_complete?
 
