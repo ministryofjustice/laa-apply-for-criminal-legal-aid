@@ -59,3 +59,6 @@ en:
       MaintenanceIncome:
         client: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
         partner: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+      InterestAndInvestments:
+        client: bank statements showing interest from their savings or investments
+        partner: bank statements showing interest from their savings or investments

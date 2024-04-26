@@ -250,6 +250,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::BenefitsInKind,
         Evidence::Rules::PrivatePensionIncome,
         Evidence::Rules::MaintenanceIncome,
+        Evidence::Rules::InterestAndInvestments,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,

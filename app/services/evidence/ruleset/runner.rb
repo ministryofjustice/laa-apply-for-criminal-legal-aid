@@ -20,6 +20,7 @@ module Evidence
         income_noncash_benefit_4
         income_private_pension_5
         income_maintenance_6
+        income_investments_7
 
         # Outgoings
         outgoings_housing_11
