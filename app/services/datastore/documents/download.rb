@@ -11,7 +11,7 @@ module Datastore
       end
 
       def call
-        Rails.error.handle(fallback: -> { false }, context: @log_context, severity: :error) do
+        Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
           DatastoreApi::Requests::Documents::PresignDownload.new(
             object_key:, expires_in:, response_content_disposition:
           ).call
@@ -31,6 +31,11 @@ module Datastore
       def response_content_disposition
         # To force download of file rather than opening in another window
         "attachment; filename=#{@document.filename}"
+      end
+
+      def context
+        log_context << { file_type: document.content_type, s3_object_key: object_key }
+        log_context.to_h
       end
     end
   end

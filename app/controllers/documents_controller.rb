@@ -26,20 +26,14 @@ class DocumentsController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-  # Code borrowed from Review
   def download
     presign_download = Datastore::Documents::Download.new(document: @document, log_context: log_context).call
 
-    if presign_download.respond_to?(:url)
-      set_flash(:cannot_download_try_again, file_name: @document.filename, success: false)
-      redirect_to crime_application_path(params[:crime_application_id])
-
-
-#      redirect_to(presign_download.url, allow_other_host: true)
-    else
-      set_flash(:cannot_download_try_again, file_name: @document.filename, success: false)
-      redirect_to crime_application_path(params[:crime_application_id])
+    unless presign_download.respond_to?(:url)
+      raise Errors::NotFound, "Could not download `#{@document.filename}` with object_key: `#{@document.s3_object_key}`"
     end
+
+    redirect_to(presign_download.url, allow_other_host: true)
   end
 
   def destroy; end
