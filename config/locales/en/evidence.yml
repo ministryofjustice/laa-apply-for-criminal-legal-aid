@@ -64,4 +64,7 @@ en:
         partner: bank statements showing interest from their savings or investments
       RentalIncome:
         client: bank statements showing the rental income
-        partner: bank statements showing the rental income
+        partner:
+      AnyOtherIncome:
+        client: bank statements showing the income from other sources
+        partner: bank statements showing the income from other sources

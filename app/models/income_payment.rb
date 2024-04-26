@@ -14,4 +14,8 @@ class IncomePayment < Payment
   def self.rent
     where(payment_type: IncomePaymentType::RENT.value).order(created_at: :desc).first
   end
+
+  def self.other
+    where(payment_type: IncomePaymentType::OTHER.value).order(created_at: :desc).first
+  end
 end

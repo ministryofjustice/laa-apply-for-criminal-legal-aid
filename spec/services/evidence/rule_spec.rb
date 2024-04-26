@@ -252,6 +252,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::MaintenanceIncome,
         Evidence::Rules::InterestAndInvestments,
         Evidence::Rules::RentalIncome,
+        Evidence::Rules::AnyOtherIncome,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
