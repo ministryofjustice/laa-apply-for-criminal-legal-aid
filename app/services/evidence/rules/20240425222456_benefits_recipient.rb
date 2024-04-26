@@ -6,7 +6,7 @@ module Evidence
       key :income_benefits_0b
       group :income
 
-      # NOTE: client/partner rule triggered when they statey
+      # NOTE: client/partner rule triggered when they state
       # they are in receipt of a passporting benefit and the
       # DWP check returns a No or Undetermined result and they
       # state they have evidence of receipt of the benefit
