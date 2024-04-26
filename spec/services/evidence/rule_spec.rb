@@ -246,6 +246,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::SalariedEmployee,
         Evidence::Rules::BenefitsRecipient,
         Evidence::Rules::SelfAssessed,
+        Evidence::Rules::SelfEmployed,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,

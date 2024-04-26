@@ -47,3 +47,6 @@ en:
       SelfAssessed:
         client: either their P60 or their Self Assessment tax calculation (SA302)
         partner: either their P60 or their Self Assessment tax calculation (SA302)
+      SelfEmployed:
+        client: complete financial accounts, tax return, bank statements, cash book or other business records
+        partner: complete financial accounts, tax return, bank statements, cash book or other business records

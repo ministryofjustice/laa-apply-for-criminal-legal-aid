@@ -13,7 +13,6 @@ module Evidence
 
       # TODO: Awaiting partner implementation
       partner do |_crime_application|
-        # Predicate must return true or false
         false
       end
     end
