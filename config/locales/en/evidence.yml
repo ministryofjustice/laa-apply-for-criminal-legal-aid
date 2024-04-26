@@ -50,3 +50,6 @@ en:
       SelfEmployed:
         client: complete financial accounts, tax return, bank statements, cash book or other business records
         partner: complete financial accounts, tax return, bank statements, cash book or other business records
+      BenefitsInKind:
+        client: their P11D form for 'benefits in kind'
+        partner: their P11D form for 'benefits in kind'
