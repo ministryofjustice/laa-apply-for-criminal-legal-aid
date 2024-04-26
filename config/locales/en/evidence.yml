@@ -44,3 +44,6 @@ en:
       BenefitsRecipient:
         client: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
         partner: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+      SelfAssessed:
+        client: either their P60 or their Self Assessment tax calculation (SA302)
+        partner: either their P60 or their Self Assessment tax calculation (SA302)

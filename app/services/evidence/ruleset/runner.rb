@@ -15,6 +15,7 @@ module Evidence
         # Income
         income_employed_0a
         income_benefits_0b
+        income_p60_sa302_2
 
         # Outgoings
         outgoings_housing_11
