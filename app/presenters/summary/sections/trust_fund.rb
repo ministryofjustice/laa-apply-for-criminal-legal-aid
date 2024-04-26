@@ -38,10 +38,6 @@ module Summary
       def change_path
         edit_steps_capital_trust_fund_path(crime_application)
       end
-
-      def capital
-        @capital ||= crime_application.capital
-      end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end

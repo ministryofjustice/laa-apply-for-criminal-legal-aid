@@ -2,7 +2,7 @@ module Summary
   module Sections
     class PaymentDetails < Sections::BaseSection
       def show?
-        section.present? && super
+        payments.present?
       end
 
       def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
@@ -36,11 +36,6 @@ module Summary
       end
 
       private
-
-      # May be overridden in subclasses if the presence of another section is relevant
-      def section
-        @section ||= crime_application.income
-      end
 
       # :nocov:
       def no_payments?
