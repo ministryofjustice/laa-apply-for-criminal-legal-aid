@@ -2,9 +2,9 @@
   <td id="<%=document.id%>" class="govuk-table__cell">
     <span class="_uploaded_file__filename">
       <%= govuk_link_to(
-          document.filename,
-          download_crime_application_document_path(document.crime_application, document),
-        ) %>
+            document.filename,
+            download_crime_application_document_path(document.crime_application, document),
+          ) %>
     </span>
 
     <% if document.s3_object_key %>
