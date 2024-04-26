@@ -257,6 +257,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::BankAccounts,
         Evidence::Rules::BuildingSocietyAccounts,
         Evidence::Rules::CashIsa,
+        Evidence::Rules::NationalSavingsAccount,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,

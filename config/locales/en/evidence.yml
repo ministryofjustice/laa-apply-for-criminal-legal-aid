@@ -80,3 +80,6 @@ en:
       CashIsa:
         client: cash ISA statements showing transactions for the last 3 months, for each account
         partner: cash ISA statements showing transactions for the last 3 months, for each account
+      NationalSavingsAccount:
+        client: National Savings or Post Office account statements covering the last 3 months, for each account
+        partner: National Savings or Post Office account statements covering the last 3 months, for each account

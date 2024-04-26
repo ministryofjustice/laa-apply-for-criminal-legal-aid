@@ -1,14 +1,14 @@
 module Evidence
   module Rules
-    class CashIsa < Rule
+    class NationalSavingsAccount < Rule
       include Evidence::RuleDsl
 
-      key :capital_cash_isa_18
+      key :capital_nsa_19
       group :capital
 
       client do |crime_application|
         if crime_application.savings
-          crime_application.savings.where(saving_type: SavingType::CASH_ISA.value).size.positive?
+          crime_application.savings.where(saving_type: SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE.value).size.positive?
         else
           false
         end
