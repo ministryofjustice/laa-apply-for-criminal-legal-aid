@@ -1,6 +1,7 @@
 # :nocov:
 class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
+  before_action :set_document, only: :download
   before_action :require_document
 
   respond_to :html, :json, :js
@@ -25,11 +26,33 @@ class DocumentsController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-  def download; end
+  # Code borrowed from Review
+  def download
+    presign_download = Datastore::Documents::Download.new(document: @document, log_context: log_context).call
+
+    if presign_download.respond_to?(:url)
+      set_flash(:cannot_download_try_again, file_name: @document.filename, success: false)
+      redirect_to crime_application_path(params[:crime_application_id])
+
+
+#      redirect_to(presign_download.url, allow_other_host: true)
+    else
+      set_flash(:cannot_download_try_again, file_name: @document.filename, success: false)
+      redirect_to crime_application_path(params[:crime_application_id])
+    end
+  end
 
   def destroy; end
 
   private
+
+  def set_document
+    @document = Document.find(params[:document_id])
+
+    return if current_crime_application.documents.find { |document| document.id == @document.id }
+
+    raise Errors::NotFound, 'CrimeApplication/Document mismatch'
+  end
 
   def log_context
     LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
@@ -42,7 +65,9 @@ class DocumentsController < ApplicationController
   # Handles scenario where user clicks upload button without having selected a file to upload on non-JS form
   # Needs to be handled in future with an appropriate error message but this is not easily feasible with current setup
   def require_document
-    redirect_to evidence_upload_step unless params.key?(:document) || params.key?(:steps_evidence_upload_form)
+    return if params.key?(:document) || params.key?(:document_id) || params.key?(:steps_evidence_upload_form)
+
+    redirect_to evidence_upload_step
   end
 
   def error_for(document)

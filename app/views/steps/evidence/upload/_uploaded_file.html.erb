@@ -1,6 +1,12 @@
 <tr class="govuk-table__row">
   <td id="<%=document.id%>" class="govuk-table__cell">
-    <span><%= document.filename %></span>
+    <span>
+      <%= link_to(
+          document.filename,
+          download_crime_application_document_path(document.crime_application, document)
+       ) %>
+    </span>
+
 
     <% if document.s3_object_key %>
       <strong class="govuk-tag govuk-tag--green"><%= t('steps.evidence.upload.edit.uploaded') %></strong>
