@@ -10,4 +10,8 @@ class IncomePayment < Payment
   def self.interest_investment
     where(payment_type: IncomePaymentType::INTEREST_INVESTMENT.value).order(created_at: :desc).first
   end
+
+  def self.rent
+    where(payment_type: IncomePaymentType::RENT.value).order(created_at: :desc).first
+  end
 end

@@ -21,6 +21,7 @@ module Evidence
         income_private_pension_5
         income_maintenance_6
         income_investments_7
+        income_rent_8
 
         # Outgoings
         outgoings_housing_11
