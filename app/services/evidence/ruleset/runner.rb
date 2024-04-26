@@ -23,6 +23,7 @@ module Evidence
         income_investments_7
         income_rent_8
         income_other_9
+        income_trust_10
 
         # Outgoings
         outgoings_housing_11

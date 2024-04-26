@@ -68,3 +68,6 @@ en:
       AnyOtherIncome:
         client: bank statements showing the income from other sources
         partner: bank statements showing the income from other sources
+      TrustFund:
+        client: the trust document, or a certified copy
+        partner: the trust document, or a certified copy
