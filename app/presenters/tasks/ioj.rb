@@ -1,7 +1,11 @@
 module Tasks
   class Ioj < BaseTask
     def path
-      edit_steps_case_ioj_path
+      if crime_application.ioj_passported?
+        edit_steps_case_ioj_passport_path
+      else
+        edit_steps_case_ioj_path
+      end
     end
 
     def not_applicable?

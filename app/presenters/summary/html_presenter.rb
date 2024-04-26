@@ -2,7 +2,7 @@ module Summary
   class HtmlPresenter # rubocop:disable Metrics/ClassLength
     attr_reader :crime_application
 
-    delegate :application_type, to: :crime_application
+    delegate :application_type, :appeal_no_changes?, to: :crime_application
 
     SECTIONS = {
       initial: %i[
@@ -113,11 +113,6 @@ module Summary
       SECTIONS.fetch(relevant_sections).map do |section|
         Sections.const_get(section.to_s.camelize).new(crime_application)
       end.select(&:show?)
-    end
-
-    def appeal_no_changes?
-      crime_application.kase&.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        (crime_application.kase&.appeal_financial_circumstances_changed == 'no')
     end
   end
 end
