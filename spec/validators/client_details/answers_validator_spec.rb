@@ -7,6 +7,11 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, residence_type: 'house') }
   let(:kase) { instance_double(Case, case_type: 'case_type') }
+  let(:appeal_no_changes?) { false }
+
+  before do
+    allow(subject).to receive(:appeal_no_changes?) { appeal_no_changes? }
+  end
 
   describe '#validate' do
     context 'when validation fails' do
@@ -42,6 +47,18 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
+      end
+
+      context 'when application is appeal to crown court no changes' do
+        let(:appeal_no_changes?) { true }
+
+        it 'does not add any errors' do
+          expect(errors).to receive(:add).with(:details, :blank)
+          expect(errors).to receive(:add).with(:case_type, :blank)
+          expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+          subject.validate
+        end
       end
     end
   end

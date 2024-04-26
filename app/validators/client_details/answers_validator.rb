@@ -8,7 +8,7 @@ module ClientDetails
 
     attr_reader :record
 
-    delegate :errors, :applicant, :kase, :crime_application, to: :record
+    delegate :errors, :applicant, :kase, :crime_application, :appeal_no_changes?, to: :record
 
     # Adds the error to the first step name a user would need to go to
     # fix the issue.
@@ -16,9 +16,12 @@ module ClientDetails
     def validate # rubocop:disable Metrics/AbcSize:
       errors.add(:details, :blank) unless applicant_details_complete?
       errors.add(:case_type, :blank) unless case_type_complete?
-      errors.add(:residence_type, :blank) unless address_complete?
-      errors.add(:has_nino, :blank) unless has_nino_complete?
-      errors.add(:benefit_type, :blank) unless passporting_complete?
+
+      unless appeal_no_changes?
+        errors.add(:residence_type, :blank) unless address_complete?
+        errors.add(:has_nino, :blank) unless has_nino_complete?
+        errors.add(:benefit_type, :blank) unless passporting_complete?
+      end
 
       errors.add :base, :incomplete_records unless errors.empty?
     end
