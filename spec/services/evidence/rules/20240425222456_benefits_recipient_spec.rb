@@ -5,13 +5,11 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      income:,
-      income_benefits:,
+      applicant:
     )
   end
 
-  let(:income) { Income.new }
-  let(:income_benefits) { [] }
+  let(:applicant) { Applicant.new }
 
   it { expect(described_class.key).to eq :income_benefits_0b }
   it { expect(described_class.group).to eq :income }
@@ -21,53 +19,40 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
-    context 'with income benefit' do
-      let(:income) { Income.new(has_no_income_benefits: 'no') }
-      let(:income_benefits) do
-        [
-          IncomeBenefit.new(
-            payment_type: IncomeBenefitType::CHILD,
-            frequency: PaymentFrequencyType::FOUR_WEEKLY,
-            amount: 50.00,
-          ),
-        ]
+    context 'when they have passported benefit but failed DWP check' do
+      let(:applicant) do
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: false)
       end
 
       it { is_expected.to be true }
     end
 
-    # Cannot rely on `has_no_income_benefits` alone because it
-    # is only set when user selected 'none' option
-    context 'without has_no_income_benefits set' do
-      let(:income) { Income.new(has_no_income_benefits: nil) }
-      let(:income_benefits) do
-        [
-          IncomeBenefit.new(
-            payment_type: IncomeBenefitType::INCAPACITY,
-            frequency: PaymentFrequencyType::ANNUALLY,
-            amount: 50.00,
-          ),
-        ]
+    context 'when they have passported benefit but passed DWP check' do
+      let(:applicant) do
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: true)
       end
-
-      it { is_expected.to be true }
-    end
-
-    context 'with has_no_income_benefits but without income_benefit entries' do
-      let(:income) { Income.new(has_no_income_benefits: 'no') }
-
-      it { is_expected.to be true }
-    end
-
-    context 'without has_no_income_benefits or any income_benefit entries' do
-      let(:income) { Income.new(has_no_income_benefits: nil) }
-      let(:income_benefits) { [] }
 
       it { is_expected.to be false }
     end
 
-    context 'when there is no income' do
-      let(:income) { nil }
+    context 'when they have passported benefit but non-passported benefit type' do
+      let(:applicant) do
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'none', passporting_benefit: nil)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when they have no benefit evidence' do
+      let(:applicant) do
+        Applicant.new(has_benefit_evidence: nil)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no applicant' do
+      let(:applicant) { nil }
 
       it { is_expected.to be false }
     end
@@ -82,15 +67,8 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
   end
 
   describe '#to_h' do
-    let(:income) { Income.new(has_no_income_benefits: 'no') }
-    let(:income_benefits) do
-      [
-        IncomeBenefit.new(
-          payment_type: IncomeBenefitType::JSA,
-          frequency: PaymentFrequencyType::MONTHLY,
-          amount: 100.00,
-        ),
-      ]
+    let(:applicant) do
+      Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: false)
     end
 
     # rubocop:disable Layout/LineLength
