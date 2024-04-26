@@ -56,3 +56,6 @@ en:
       PrivatePensionIncome:
         client: either bank statements or their pension statement
         partner: either bank statements or their pension statement
+      MaintenanceIncome:
+        client: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+        partner: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement

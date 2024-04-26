@@ -19,6 +19,7 @@ module Evidence
         income_selfemployed_3
         income_noncash_benefit_4
         income_private_pension_5
+        income_maintenance_6
 
         # Outgoings
         outgoings_housing_11
