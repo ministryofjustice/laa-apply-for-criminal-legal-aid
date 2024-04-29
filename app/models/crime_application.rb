@@ -3,7 +3,7 @@ class CrimeApplication < ApplicationRecord
   include Passportable
 
   attr_readonly :application_type
-  attribute :date_stamp, :string
+  attribute :date_stamp, :datetime
 
   has_one :case, dependent: :destroy
   alias kase case
