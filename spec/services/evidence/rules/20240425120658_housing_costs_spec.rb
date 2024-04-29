@@ -41,20 +41,6 @@ RSpec.describe Evidence::Rules::HousingCosts do
       it { is_expected.to be true }
     end
 
-    context 'when threshold met with board and lodging' do
-      let(:outgoings_payments) do
-        [
-          OutgoingsPayment.new(
-            payment_type: OutgoingsPaymentType::BOARD_AND_LODGING,
-            frequency: PaymentFrequencyType::WEEKLY,
-            amount: 115.99,
-          ),
-        ]
-      end
-
-      it { is_expected.to be true }
-    end
-
     context 'when threshold met with rent' do
       let(:outgoings_payments) do
         [
@@ -67,6 +53,20 @@ RSpec.describe Evidence::Rules::HousingCosts do
       end
 
       it { is_expected.to be true }
+    end
+
+    context 'when threshold met with board and lodging it is ignored' do
+      let(:outgoings_payments) do
+        [
+          OutgoingsPayment.new(
+            payment_type: OutgoingsPaymentType::BOARD_AND_LODGING,
+            frequency: PaymentFrequencyType::WEEKLY,
+            amount: 115.99,
+          ),
+        ]
+      end
+
+      it { is_expected.to be false }
     end
 
     context 'when exactly at threshold' do

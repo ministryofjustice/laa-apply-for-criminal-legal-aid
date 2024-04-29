@@ -56,8 +56,36 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
   end
 
   describe '#show?' do
-    it 'shows this section' do
-      expect(subject.show?).to be(true)
+    context 'when there are no outgoings' do
+      let(:outgoings) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
+    context 'when there are outgoings payments' do
+      let(:outgoings_payments) { [childcare_outgoing] }
+
+      it 'shows this section' do
+        expect(subject.show?).to be true
+      end
+    end
+
+    context 'when there are no outgoings payments' do
+      context 'when the question was shown' do
+        let(:has_no_other_outgoings) { 'yes' }
+
+        it 'shows this section' do
+          expect(subject.show?).to be true
+        end
+      end
+
+      context 'when the question was not shown' do
+        it 'does not show this section' do
+          expect(subject.show?).to be false
+        end
+      end
     end
   end
 
@@ -187,6 +215,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
       end
 
       context 'when no outgoings payments are reported' do
+        # Rent is not a type of other outgoing payment so is filtered out of the outgoing payments
         let(:rent_outgoing) do
           instance_double(
             OutgoingsPayment,

@@ -54,6 +54,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def all_sections_complete?
+    return false unless crime_application.client_details_complete?
     return false unless kase.complete?
 
     means_sections_complete?

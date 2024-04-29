@@ -7,6 +7,8 @@ module Tasks
     end
 
     def not_applicable?
+      return false unless fulfilled?(ClientDetails)
+      return true unless requires_means_assessment?
       return false unless fulfilled?(IncomeAssessment)
 
       !requires_full_means_assessment?
