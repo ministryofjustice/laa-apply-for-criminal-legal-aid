@@ -7,8 +7,8 @@ module Evidence
       group :none
 
       client do |crime_application|
-        crime_application.capital&.has_frozen_income_or_assets == 'yes' ||
-          crime_application.income&.has_frozen_income_or_assets == 'yes'
+        (crime_application.capital&.has_frozen_income_or_assets == 'yes' ||
+          crime_application.income&.has_frozen_income_or_assets == 'yes') || false
       end
 
       # TODO: Awaiting partner implementation
