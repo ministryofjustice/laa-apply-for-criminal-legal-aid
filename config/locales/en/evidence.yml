@@ -26,7 +26,10 @@ en:
       # Live rules
       NationalInsuranceProof:
         other: their National Insurance number
-      RestraintOrFreezingOrder:
+      CapitalRestraintOrFreezingOrder: &RESTRAINT_EVIDENCE_PROMPT
+        client: the restraint or freezing order
+        partner: the restraint or freezing order
+      IncomeRestraintOrFreezingOrder:
         client: the restraint or freezing order
         partner: the restraint or freezing order
       HousingCosts:
