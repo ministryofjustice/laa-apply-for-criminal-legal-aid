@@ -7,7 +7,7 @@ module Evidence
       group :none
 
       client do |crime_application|
-        crime_application&.applicant_requires_nino_evidence? || false
+        crime_application&.applicant_requires_nino_evidence?
       end
 
       # TODO: Awaiting partner implementation

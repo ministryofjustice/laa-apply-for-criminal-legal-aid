@@ -55,7 +55,7 @@ RSpec.describe CrimeApplication, type: :model do
     expect(subject.status).to eq('in_progress')
   end
 
-  describe '#applicant_18_or_over' do
+  describe '#applicant_18_or_over_at_date_stamp' do
     let(:applicant) { nil }
     let(:attributes) {
       {
@@ -68,7 +68,7 @@ RSpec.describe CrimeApplication, type: :model do
       let(:applicant) { Applicant.new(date_of_birth: Date.new(1994, 5, 12)) }
 
       it 'returns true' do
-        expect(subject.applicant_18_or_over?).to be true
+        expect(subject.applicant_18_or_over_at_date_stamp?).to be true
       end
     end
 
@@ -76,7 +76,15 @@ RSpec.describe CrimeApplication, type: :model do
       let(:applicant) { Applicant.new(date_of_birth: Date.new(2015, 5, 12)) }
 
       it 'returns false' do
-        expect(subject.applicant_18_or_over?).to be false
+        expect(subject.applicant_18_or_over_at_date_stamp?).to be false
+      end
+    end
+
+    context 'when there is no date stamp' do
+      let(:applicant) { Applicant.new(date_of_birth: Date.new(1994, 5, 12)) }
+
+      it 'calls the `under18?` method' do
+        expect(subject.applicant_18_or_over_at_date_stamp?).to be true
       end
     end
   end
