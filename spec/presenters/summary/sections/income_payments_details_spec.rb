@@ -120,6 +120,14 @@ describe Summary::Sections::IncomePaymentsDetails do
   end
 
   describe '#show?' do
+    context 'when there is no income data' do
+      let(:income) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
     context 'when there are income payments' do
       let(:income_payments) { [maintenance_payment] }
 
