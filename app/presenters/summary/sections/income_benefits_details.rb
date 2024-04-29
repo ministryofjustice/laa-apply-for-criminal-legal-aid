@@ -4,7 +4,7 @@ module Summary
   module Sections
     class IncomeBenefitsDetails < Sections::PaymentDetails
       def show?
-        income.has_no_income_benefits == 'yes' || super
+        income&.has_no_income_benefits == 'yes' || super
       end
 
       private

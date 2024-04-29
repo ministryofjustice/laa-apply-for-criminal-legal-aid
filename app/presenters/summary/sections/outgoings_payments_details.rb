@@ -2,7 +2,7 @@ module Summary
   module Sections
     class OutgoingsPaymentsDetails < Sections::PaymentDetails
       def show?
-        outgoings.has_no_other_outgoings == 'yes' || super
+        outgoings&.has_no_other_outgoings == 'yes' || super
       end
 
       private
