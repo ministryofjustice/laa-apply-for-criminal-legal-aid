@@ -16,7 +16,9 @@ class Document < ApplicationRecord
   validates :s3_object_key, presence: true, on: :storage
 
   # Transient attribute
-  attr_accessor :tempfile
+  attr_accessor :tempfile, :url
+
+  serialize :url # Allow url to be sent to UI
 
   scope :stored, -> { where.not(s3_object_key: nil) }
   scope :not_submitted, -> { where(submitted_at: nil) }

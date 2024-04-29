@@ -23,12 +23,6 @@ module Summary
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength
-
-      private
-
-      def outgoings
-        @outgoings ||= crime_application.outgoings
-      end
     end
   end
 end

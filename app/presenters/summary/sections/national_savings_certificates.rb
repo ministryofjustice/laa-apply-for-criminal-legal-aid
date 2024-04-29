@@ -32,10 +32,6 @@ module Summary
         @national_savings_certificates ||= crime_application.national_savings_certificates
       end
 
-      def capital
-        @capital ||= crime_application.capital
-      end
-
       def shown_question?
         capital.present? && (no_certificates? || national_savings_certificates.present?)
       end
