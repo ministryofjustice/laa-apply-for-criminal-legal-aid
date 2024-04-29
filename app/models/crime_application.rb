@@ -3,6 +3,7 @@ class CrimeApplication < ApplicationRecord
   include Passportable
 
   attr_readonly :application_type
+  attribute :date_stamp, :string
 
   has_one :case, dependent: :destroy
   alias kase case
@@ -76,5 +77,31 @@ class CrimeApplication < ApplicationRecord
 
   def client_details_complete?
     valid?(:client_details)
+  end
+
+  def applicant_requires_nino_evidence?
+    # the applicant is over 18 and no NINO has been entered
+    # plus any one or more of the following apply:
+    # - they are passported on means
+    # - they receive any non-passporting benefit
+    # - the case type is `indictable` or `already_in_crown_court`
+    return false unless applicant_18_or_over? && applicant&.nino.blank?
+
+    case_types = [
+      CaseType::INDICTABLE.to_s,
+      CaseType::ALREADY_IN_CROWN_COURT.to_s
+    ]
+
+    applicant.benefit_type.present? || case_types.include?(self.case.case_type) || income_benefits.any?
+  end
+
+  def applicant_18_or_over?
+    return false if date_stamp.nil? || applicant.blank?
+
+    dob = applicant&.date_of_birth
+    date_stamp = self.date_stamp&.to_date
+
+    age = date_stamp.year - dob.year - (dob.change(year: date_stamp.year) > date_stamp ? 1 : 0)
+    age >= 18
   end
 end
