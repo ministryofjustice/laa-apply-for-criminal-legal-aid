@@ -12,7 +12,7 @@ RSpec.describe Evidence::Rules::TrustFund do
   let(:capital) { Capital.new }
 
   it { expect(described_class.key).to eq :income_trust_10 }
-  it { expect(described_class.group).to eq :income }
+  it { expect(described_class.group).to eq :capital }
   it { expect(described_class.archived).to be false }
   it { expect(described_class.active?).to be true }
 
@@ -78,7 +78,7 @@ RSpec.describe Evidence::Rules::TrustFund do
     let(:expected_hash) do
       {
         id: 'TrustFund',
-        group: :income,
+        group: :capital,
         ruleset: nil,
         key: :income_trust_10,
         run: {

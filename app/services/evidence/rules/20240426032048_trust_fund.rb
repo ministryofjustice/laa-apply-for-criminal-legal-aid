@@ -4,7 +4,7 @@ module Evidence
       include Evidence::RuleDsl
 
       key :income_trust_10
-      group :income
+      group :capital
 
       client do |crime_application|
         if crime_application.capital
