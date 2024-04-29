@@ -34,10 +34,6 @@ module Summary
 
       private
 
-      def capital
-        @capital ||= crime_application.capital
-      end
-
       def properties
         @properties ||= crime_application.properties
       end

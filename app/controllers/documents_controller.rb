@@ -1,6 +1,7 @@
 # :nocov:
 class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
+  before_action :set_document, only: :download
   before_action :require_document
 
   respond_to :html, :json, :js
@@ -12,6 +13,8 @@ class DocumentsController < ApplicationController
     )
 
     Datastore::Documents::Upload.new(document:, log_context:).call if document.valid?(:criteria)
+
+    document.url = download_crime_application_document_path(current_crime_application, document)
 
     respond_with(document, location: evidence_upload_step) do |format|
       if document.invalid?(:scan) || document.invalid?(:storage)
@@ -25,11 +28,26 @@ class DocumentsController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-  def download; end
+  def download
+    presign_download = Datastore::Documents::Download.new(document: @document, log_context: log_context).call
+
+    unless presign_download
+      raise Errors::DocumentUnavailable,
+            "Could not download `#{@document.filename}` with object_key: `#{@document.s3_object_key}`"
+    end
+
+    redirect_to(presign_download.url, allow_other_host: true)
+  end
 
   def destroy; end
 
   private
+
+  def set_document
+    @document = current_crime_application.documents.find(params[:document_id])
+  rescue ActiveRecord::RecordNotFound
+    raise Errors::DocumentUnavailable, 'CrimeApplication/Document mismatch'
+  end
 
   def log_context
     LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
@@ -42,7 +60,9 @@ class DocumentsController < ApplicationController
   # Handles scenario where user clicks upload button without having selected a file to upload on non-JS form
   # Needs to be handled in future with an appropriate error message but this is not easily feasible with current setup
   def require_document
-    redirect_to evidence_upload_step unless params.key?(:document) || params.key?(:steps_evidence_upload_form)
+    return if params.key?(:document) || params.key?(:document_id) || params.key?(:steps_evidence_upload_form)
+
+    redirect_to evidence_upload_step
   end
 
   def error_for(document)

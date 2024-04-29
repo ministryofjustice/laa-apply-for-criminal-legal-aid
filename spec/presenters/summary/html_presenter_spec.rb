@@ -11,8 +11,9 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: double, kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: double, income_payments: [double], income_benefits: [double], outgoings: double, documents: double,
-      application_type: application_type,
+      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
+      outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
+      documents: double, application_type: application_type, appeal_no_changes?: false,
       capital: (double has_premium_bonds: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
@@ -32,7 +33,12 @@ describe Summary::HtmlPresenter do
             'payment_type' => 'child',
             'amount' => 50_000,
             'frequency' => 'month'
-          }]
+          }],
+          'outgoings_payments' => [{
+            'payment_type' => 'childcare',
+            'amount' => 200,
+            'frequency' => 'month'
+          }],
         },
         'capital_details' => {
           'savings' => [{ 'saving_type' => 'bank',
@@ -136,6 +142,7 @@ describe Summary::HtmlPresenter do
                 double case_type: 'appeal_to_crown_court',
                        appeal_financial_circumstances_changed: 'no'
               ),
+              appeal_no_changes?: true,
               ioj: double, status: :in_progress,
               income: double, documents: double, application_type: application_type
             )

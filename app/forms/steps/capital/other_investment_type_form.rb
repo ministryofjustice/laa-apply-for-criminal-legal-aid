@@ -15,6 +15,8 @@ module Steps
       private
 
       def persist!
+        return true if investment_type == ''
+
         @investment = crime_application.investments.create!(investment_type:)
       end
     end

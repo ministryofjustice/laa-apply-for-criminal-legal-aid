@@ -13,7 +13,6 @@ module Evidence
         costs = [
           crime_application.outgoings_payments.mortgage,
           crime_application.outgoings_payments.rent,
-          crime_application.outgoings_payments.board_and_lodging,
         ]
 
         total = costs.compact.sum { |x| x.prorated_monthly.to_f }

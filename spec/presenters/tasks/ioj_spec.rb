@@ -27,7 +27,21 @@ RSpec.describe Tasks::Ioj do
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/case/ioj') }
+    before do
+      allow(crime_application).to receive(:ioj_passported?).and_return(passporter_result)
+    end
+
+    context 'when the application is Ioj passported (and there is no override)' do
+      let(:passporter_result) { true }
+
+      it { expect(subject.path).to eq('/applications/12345/steps/case/ioj_passport') }
+    end
+
+    context 'when the application is not Ioj passported (or there is override)' do
+      let(:passporter_result) { false }
+
+      it { expect(subject.path).to eq('/applications/12345/steps/case/ioj') }
+    end
   end
 
   describe '#not_applicable?' do

@@ -25,17 +25,17 @@ RSpec.describe Tasks::IncomeAssessment do
     subject(:not_applicable) { task.not_applicable? }
 
     before do
-      allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails) { fulfiled }
+      allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails) { fulfilled }
     end
 
-    context 'client details are not fulfiled' do
-      let(:fulfiled) { false }
+    context 'client details are not fulfilled' do
+      let(:fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'client details are fulfiled' do
-      let(:fulfiled) { true }
+    context 'client details are fulfilled' do
+      let(:fulfilled) { true }
 
       context 'and means assessment required' do
         let(:needs_means) { true }
@@ -63,17 +63,17 @@ RSpec.describe Tasks::IncomeAssessment do
     subject(:can_start) { task.can_start? }
 
     before do
-      allow(task).to receive(:fulfilled?).with(Tasks::CaseDetails) { fulfiled }
+      allow(task).to receive(:fulfilled?).with(Tasks::CaseDetails) { fulfilled }
     end
 
-    context 'case details are not fulfiled' do
-      let(:fulfiled) { false }
+    context 'case details are not fulfilled' do
+      let(:fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'case details are fulfiled' do
-      let(:fulfiled) { true }
+    context 'case details are fulfilled' do
+      let(:fulfilled) { true }
 
       context 'and means assessment required' do
         let(:needs_means) { true }

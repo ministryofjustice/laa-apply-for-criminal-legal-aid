@@ -28,5 +28,13 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
         expect(savings).to have_received(:create!).with(saving_type:)
       end
     end
+
+    context 'when saving type is an empty string' do
+      let(:saving_type) { '' }
+
+      it 'does not create a saving' do
+        expect(savings).not_to have_received(:create!).with(saving_type:)
+      end
+    end
   end
 end

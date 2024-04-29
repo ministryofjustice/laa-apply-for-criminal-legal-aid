@@ -84,8 +84,36 @@ describe Summary::Sections::IncomeBenefitsDetails do
   end
 
   describe '#show?' do
-    it 'shows this section' do
-      expect(subject.show?).to be(true)
+    context 'when there is no income data' do
+      let(:income) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
+    context 'when there are income benefits' do
+      let(:income_benefits) { [child_benefit_payment] }
+
+      it 'shows this section' do
+        expect(subject.show?).to be true
+      end
+    end
+
+    context 'when there are no income benefits' do
+      context 'when the question was shown' do
+        let(:has_no_income_benefits) { 'yes' }
+
+        it 'shows this section' do
+          expect(subject.show?).to be true
+        end
+      end
+
+      context 'when the question was not shown' do
+        it 'does not show this section' do
+          expect(subject.show?).to be false
+        end
+      end
     end
   end
 
