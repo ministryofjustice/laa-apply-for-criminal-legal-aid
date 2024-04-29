@@ -46,20 +46,20 @@ RSpec.describe Evidence::Ruleset::Runner do
       before do
         persisted_evidence_prompt = [
           {
-            'id' => 'NationalInsuranceProof',
-            'key' => 'national_insurance_32',
+            'id' => 'Example1',
+            'key' => 'ExampleRule1',
             'run' => {
               'other' => {
-                'prompt' => ['their National Insurance number'],
-                'result' => true
+                'prompt' => [],
+                'result' => false
               },
               'client' => {
-                'prompt' => [],
-                'result' => false
+                'prompt' => ['a bank statement for your client'],
+                'result' => true
               },
               'partner' => {
-                'prompt' => [],
-                'result' => false
+                'prompt' => ['a bank statement for the partner'],
+                'result' => true
               }
             },
             'group' => 'none',
