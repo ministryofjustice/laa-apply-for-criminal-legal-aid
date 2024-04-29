@@ -3,11 +3,15 @@ require 'laa_crime_schemas'
 module Steps
   module Income
     class IncomeBenefitsForm < Steps::BaseFormObject
+      include Steps::HasOneAssociation
+      has_one_association :income
+
       PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::IncomeBenefitType.values
 
-      attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
-      attribute :types, array: true, default: [] # Used by edit.html.erb to represent selected checkbox value
+      attr_writer :types
       attr_reader :new_payments
+
+      attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
 
       validates_with IncomeBenefitsValidator
 
@@ -48,8 +52,15 @@ module Steps
         IncomeBenefitType.values.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
-      def checked?(type)
-        types.include?(type) || send(type.to_s)&.id.present?
+      def types
+        return @types if @types
+        return ['none'] if income.has_no_income_benefits == 'yes'
+
+        income.income_benefits.pluck(:payment_type)
+      end
+
+      def has_no_income_benefits
+        'yes' if types.include?('none')
       end
 
       private
@@ -69,7 +80,7 @@ module Steps
 
       # Individual income_benefits_fieldset_forms are in charge of saving themselves
       def persist!
-        true
+        crime_application.income.update(has_no_income_benefits:)
       end
     end
   end

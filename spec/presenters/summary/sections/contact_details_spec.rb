@@ -18,11 +18,15 @@ describe Summary::Sections::ContactDetails do
       correspondence_address:,
       correspondence_address_type:,
       telephone_number:,
+      residence_type:,
+      relationship_to_owner_of_usual_home_address:
     )
   end
 
   let(:telephone_number) { '123456789' }
   let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
+  let(:residence_type) { nil }
+  let(:relationship_to_owner_of_usual_home_address) { nil }
 
   let(:home_address) do
     HomeAddress.new(
@@ -70,28 +74,62 @@ describe Summary::Sections::ContactDetails do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    it 'has the correct rows' do
-      expect(answers.count).to eq(4)
+    context 'when there is no residence type record' do
+      it 'has the correct rows' do
+        expect(answers.count).to eq(4)
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[0].question).to eq(:home_address)
-      expect(answers[0].change_path).to match('applications/12345/steps/address/details/ff53a8dd')
-      expect(answers[0].value).to eq("Test\r\nHome\r\nCity\r\nPostcode\r\nCountry")
+        expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[0].question).to eq(:home_address)
+        expect(answers[0].change_path).to match('applications/12345/steps/address/details/ff53a8dd')
+        expect(answers[0].value).to eq("Test\r\nHome\r\nCity\r\nPostcode\r\nCountry")
 
-      expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[1].question).to eq(:correspondence_address_type)
-      expect(answers[1].change_path).to match('applications/12345/steps/client/contact_details')
-      expect(answers[1].value).to eq('other_address')
+        expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[1].question).to eq(:correspondence_address_type)
+        expect(answers[1].change_path).to match('applications/12345/steps/client/contact_details')
+        expect(answers[1].value).to eq('other_address')
 
-      expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[2].question).to eq(:correspondence_address)
-      expect(answers[2].change_path).to match('applications/12345/steps/address/results/e77e4fa3')
-      expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nCity\r\nPostcode\r\nCountry")
+        expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[2].question).to eq(:correspondence_address)
+        expect(answers[2].change_path).to match('applications/12345/steps/address/results/e77e4fa3')
+        expect(answers[2].value).to eq("Test\r\nCorrespondence\r\nCity\r\nPostcode\r\nCountry")
 
-      expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[3].question).to eq(:telephone_number)
-      expect(answers[3].change_path).to match('applications/12345/steps/client/contact_details')
-      expect(answers[3].value).to eq('123456789')
+        expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[3].question).to eq(:telephone_number)
+        expect(answers[3].change_path).to match('applications/12345/steps/client/contact_details')
+        expect(answers[3].value).to eq('123456789')
+      end
+    end
+
+    context 'when there is a residence type' do
+      let(:residence_type) { ResidenceType::PARENTS.to_s }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(5)
+
+        expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[0].question).to eq(:residence_type)
+        expect(answers[0].change_path).to match('/applications/12345/steps/client/residence_type')
+        expect(answers[0].value).to eq('parents')
+      end
+
+      context 'when residence type is `someone else`' do
+        let(:residence_type) { ResidenceType::SOMEONE_ELSE.to_s }
+        let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(6)
+
+          expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[0].question).to eq(:residence_type)
+          expect(answers[0].change_path).to match('/applications/12345/steps/client/residence_type')
+          expect(answers[0].value).to eq('someone_else')
+
+          expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answers[1].question).to eq(:relationship_to_owner_of_usual_home_address)
+          expect(answers[1].change_path).to match('/applications/12345/steps/client/residence_type')
+          expect(answers[1].value).to eq('A friend')
+        end
+      end
     end
 
     context 'when client has no home address' do
@@ -105,6 +143,17 @@ describe Summary::Sections::ContactDetails do
         expect(answers[0].question).to eq(:home_address)
         expect(answers[0].change_path).to match('applications/12345/steps/address/lookup/ff53a8dd')
         expect(answers[0].value).to eq('')
+      end
+
+      context 'when residence type = none' do
+        let(:residence_type) { ResidenceType::NONE.to_s }
+
+        it 'does not display home address as it was not asked' do
+          expect(answers.count).to eq(4)
+
+          expect(answers[0].question).not_to eq(:home_address)
+          expect(answers[0].question).to eq(:residence_type)
+        end
       end
     end
 

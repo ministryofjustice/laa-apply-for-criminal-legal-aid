@@ -16,8 +16,20 @@ module Steps
 
       def persist!
         income.update(
-          attributes
+          attributes.merge(attributes_to_reset)
         )
+      end
+
+      def attributes_to_reset
+        return {} unless client_owns_property?
+
+        {
+          'has_savings' => nil,
+        }
+      end
+
+      def client_owns_property?
+        client_owns_property&.yes?
       end
     end
   end

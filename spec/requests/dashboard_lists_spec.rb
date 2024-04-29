@@ -64,7 +64,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'tbody.govuk-table__body' do
           assert_select 'tr.govuk-table__row', 2 do
             assert_select 'a', count: 1, text: 'John Doe'
-            assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 Oct 2022'
+            assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 October 2022'
             assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
             assert_select 'td.govuk-table__cell:nth-of-type(4)' do
               assert_select 'button.govuk-button', count: 2, text: 'Delete'
@@ -169,7 +169,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'Kit Pound'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '24 Oct 2022'
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '24 October 2022'
         assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000001'
       end
     end
@@ -221,7 +221,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'tr.govuk-table__row', 1 do
           assert_select 'a', count: 1, text: 'John POTTER'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 Sep 2022'
+        assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 September 2022'
         assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000002'
       end
     end

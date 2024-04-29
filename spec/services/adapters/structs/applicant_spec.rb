@@ -47,6 +47,7 @@ RSpec.describe Adapters::Structs::Applicant do
       )
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(
         subject.serializable_hash.keys
@@ -58,13 +59,18 @@ RSpec.describe Adapters::Structs::Applicant do
           date_of_birth
           nino
           benefit_type
+          last_jsa_appointment_date
           correspondence_address_type
           telephone_number
           home_address
           correspondence_address
+          has_nino
+          residence_type
+          relationship_to_owner_of_usual_home_address
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     context 'home_address relationship' do
       it 'has the expected address from the fixture' do

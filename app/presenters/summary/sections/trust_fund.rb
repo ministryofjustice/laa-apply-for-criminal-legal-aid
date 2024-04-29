@@ -32,15 +32,11 @@ module Summary
       private
 
       def will_benefit_from_trust_fund?
-        YesNoAnswer.new(capital.will_benefit_from_trust_fund).yes?
+        YesNoAnswer.new(capital.will_benefit_from_trust_fund.to_s).yes?
       end
 
       def change_path
         edit_steps_capital_trust_fund_path(crime_application)
-      end
-
-      def capital
-        @capital ||= crime_application.capital
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

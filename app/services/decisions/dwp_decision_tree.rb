@@ -6,8 +6,6 @@ module Decisions
         after_confirm_result
       when :confirm_details
         after_confirm_details
-      when :cannot_check_dwp_status
-        after_cannot_check_dwp_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -15,13 +13,13 @@ module Decisions
 
     private
 
-    def after_cannot_check_dwp_status
-      edit('steps/client/has_benefit_evidence')
-    end
-
     def after_confirm_result
-      if form_object.confirm_result.yes?
-        show(:benefit_check_result_exit)
+      if form_object.confirm_result.yes? # Do we want to reset their ppt benefit to None if they select Yes here?
+        if FeatureFlags.means_journey.enabled?
+          edit('steps/case/urn')
+        else
+          show(:benefit_check_result_exit)
+        end
       else
         edit(:confirm_details)
       end

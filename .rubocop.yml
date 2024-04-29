@@ -46,6 +46,9 @@ Style/TrailingCommaInArguments:
 Layout/HashAlignment:
   Enabled: false
 
+Naming/VariableNumber:
+  Enabled: false
+
 # Rspec cops
 ############
 
@@ -84,6 +87,14 @@ RSpec/NoExpectationExample:
 
 RSpec/Rails/InferredSpecType:
   Enabled: false
+
+RSpec/FilePath: # Deprecated
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: true
+  Exclude:
+    - '**/spec/services/evidence/rules/*'
 
 # Enabled but tweaked cops
 ##########################
@@ -126,6 +137,16 @@ Naming/PredicateName:
     - has_nino
     - has_codefendants
     - has_one_association
+    - has_no_income_payments
+    - has_no_income_benefits
+    - has_no_other_outgoings
+    - has_no_properties
+    - has_no_savings
+    - has_no_investments
+    - has_no_national_savings_certificates
+    - has_national_savings_certificates_complete?
+    - has_nino_complete?
+    - has_passporting_benefit?
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:

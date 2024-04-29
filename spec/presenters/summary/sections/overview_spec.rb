@@ -12,14 +12,16 @@ describe Summary::Sections::Overview do
       date_stamp: Date.new(2023, 1, 20),
       submitted_at: Date.new(2023, 1, 21),
       provider_details: provider_details,
+      application_type: application_type,
     )
   end
 
   let(:provider_details) { double }
   let(:status) { :submitted }
+  let(:application_type) { 'initial' }
 
   before do
-    allow(crime_application).to receive_messages(case: Case.new, in_progress?: false, is_means_tested: 'yes')
+    allow(crime_application).to receive_messages(kase: Case.new, in_progress?: false, is_means_tested: 'yes')
     allow(provider_details).to receive_messages(provider_email: 'provider@example.com', office_code: '123AA')
   end
 
@@ -85,6 +87,34 @@ describe Summary::Sections::Overview do
         expect(answer.question).to eq(:office_code)
         expect(answer.value).to eq('123AA')
       end
+
+      context 'when application_type is pse' do
+        let(:application_type) { 'post_submission_evidence' }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(4)
+
+          answer = answers[0]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:reference)
+          expect(answer.value).to eq('12345')
+
+          answer = answers[1]
+          expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answer.question).to eq(:date_submitted)
+          expect(answer.value).to eq(Date.new(2023, 1, 21))
+
+          answer = answers[2]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:provider_email)
+          expect(answer.value).to eq('provider@example.com')
+
+          answer = answers[3]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:office_code)
+          expect(answer.value).to eq('123AA')
+        end
+      end
     end
 
     context 'when the application is in_progress' do
@@ -105,6 +135,19 @@ describe Summary::Sections::Overview do
         expect(answer.question).to eq(:means_tested)
         expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
         expect(answer.value).to eq('yes')
+      end
+
+      context 'when application_type is pse' do
+        let(:application_type) { 'post_submission_evidence' }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(1)
+
+          answer = answers[0]
+          expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+          expect(answer.question).to eq(:reference)
+          expect(answer.value).to eq('12345')
+        end
       end
     end
   end

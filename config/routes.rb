@@ -100,7 +100,7 @@ Rails.application.routes.draw do
   scope 'applications/:id' do
     namespace :steps do
       namespace :client do
-        if FeatureFlags.means_journey.enabled?
+        if FeatureFlags.non_means_tested.enabled?
           edit_step :is_application_means_tested, alias: :is_means_tested
         end
         edit_step :has_partner
@@ -108,6 +108,8 @@ Rails.application.routes.draw do
         edit_step :details
         edit_step :case_type
         edit_step :appeal_details
+        edit_step :financial_circumstances_changed, alias: :appeal_financial_circumstances
+        edit_step :appeal_reference_number
         edit_step :date_stamp
         edit_step :has_nino
         show_step :nino_exit
@@ -118,13 +120,14 @@ Rails.application.routes.draw do
         edit_step :has_benefit_evidence
         show_step :evidence_exit
         edit_step :contact_details
+        edit_step :cannot_check_dwp_status
+        edit_step :residence_type
       end
 
       namespace :dwp do
         edit_step :confirm_result
         edit_step :confirm_details
         show_step :benefit_check_result_exit
-        edit_step :cannot_check_dwp_status
       end
 
       namespace :address do
@@ -154,24 +157,24 @@ Rails.application.routes.draw do
         edit_step :what_is_clients_employment_status, alias: :employment_status
         show_step :employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
-        edit_step :clients_income_before_tax, alias: :income_before_tax
+        edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
-        edit_step :does_client_own_home_land_property, alias: :client_owns_property
-        edit_step :does_client_have_savings_investments, alias: :has_savings
+        edit_step :own_home_land_property, alias: :client_owns_property
+        edit_step :any_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
         edit_step :dependants, alias: :dependants
-        edit_step :how_does_client_manage_with_no_income, alias: :manage_without_income
-        edit_step :which_payments_does_client_get, alias: :income_payments
-        edit_step :which_benefits_does_client_get, alias: :income_benefits
+        edit_step :how_manage_with_no_income, alias: :manage_without_income
+        edit_step :which_payments_client, alias: :income_payments
+        edit_step :which_benefits_client, alias: :income_benefits
         edit_step :check_your_answers_income, alias: :answers
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
-        edit_step :housing_payments_where_client_lives, alias: :housing_payment_type
-        edit_step :does_client_pay_council_tax, alias: :council_tax
-        edit_step :has_client_paid_income_tax_rate, alias: :income_tax_rate
-        edit_step :are_clients_outgoings_more_than_income, alias: :outgoings_more_than_income
-        edit_step :which_payments_does_client_pay, alias: :outgoings_payments
+        edit_step :housing_payments_where_lives, alias: :housing_payment_type
+        edit_step :pay_council_tax, alias: :council_tax
+        edit_step :client_paid_income_tax_rate, alias: :income_tax_rate
+        edit_step :are_outgoings_more_than_income, alias: :outgoings_more_than_income
+        edit_step :which_payments, alias: :outgoings_payments
         edit_step :mortgage_payments, alias: :mortgage
         edit_step :rent_payments, alias: :rent
         edit_step :board_and_lodging_payments, alias: :board_and_lodging
@@ -179,36 +182,35 @@ Rails.application.routes.draw do
       end
 
       namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
-        edit_step :which_assets_does_client_own, alias: :property_type
-
-        edit_step :which_savings_does_client_have, alias: :saving_type
-        edit_step :which_other_savings_does_client_have, alias: :other_saving_type
-        crud_step :savings, param: :saving_id
-        edit_step :clients_savings, alias: :savings_summary
-
-        edit_step :does_client_have_premium_bonds, alias: :premium_bonds
-        edit_step :does_client_stand_to_benefit_from_trust_fund, alias: :trust_fund
-
+        edit_step :which_assets_owned, alias: :property_type
         crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :commercial_property, alias: :commercial_property, param: :property_id
         crud_step :land, alias: :land, param: :property_id
-        crud_step :address_of_clients_residential_property, alias: :property_address, param: :property_id, except: [:destroy]
-        crud_step :other_people_who_own_clients_residential_property, alias: :property_owners, param: :property_id, except: [:destroy]
-        
-        edit_step :does_client_have_national_savings_certificates, alias: :has_national_savings_certificates
-        crud_step :national_savings_certificates, param: :national_savings_certificate_id
-        edit_step :clients_national_savings_certificates, alias: :national_savings_certificates_summary
-
-        edit_step :which_investments_does_client_have, alias: :investment_type
-        edit_step :which_other_investments_does_client_have, alias: :other_investment_type
-        crud_step :investments, param: :investment_id
-        edit_step :clients_investments, alias: :investments_summary
-        edit_step :clients_assets, alias: :properties_summary
-        edit_step :check_your_answers_capital, alias: :answers
+        crud_step :asset_address, alias: :property_address, param: :property_id, except: [:destroy]
+        crud_step :asset_owners, alias: :property_owners, param: :property_id, except: [:destroy]
+        edit_step :add_assets, alias: :properties_summary
         crud_step :properties, param: :property_id
-        edit_step :which_other_assets_does_client_have, alias: :other_property_type
+        edit_step :which_other_assets_owned, alias: :other_property_type
 
+        edit_step :which_savings, alias: :saving_type
+        edit_step :which_other_savings, alias: :other_saving_type
+        crud_step :savings, param: :saving_id
+        edit_step :add_savings_accounts, alias: :savings_summary
+
+        edit_step :any_national_savings_certificates, alias: :has_national_savings_certificates
+        crud_step :national_savings_certificates, param: :national_savings_certificate_id
+        edit_step :add_national_savings_certificates, alias: :national_savings_certificates_summary
+
+        edit_step :which_investments, alias: :investment_type
+        edit_step :which_other_investments, alias: :other_investment_type
+        crud_step :investments, param: :investment_id
+        edit_step :add_investments, alias: :investments_summary
+
+        edit_step :client_any_premium_bonds, alias: :premium_bonds
+        edit_step :client_benefit_from_trust_fund, alias: :trust_fund
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets_capital
+
+        edit_step :check_your_answers_capital, alias: :answers
       end
 
       namespace :evidence do

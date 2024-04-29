@@ -70,7 +70,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { CrimeApplication.create }
+      let(:existing_case) { CrimeApplication.create } unless method_defined?(:existing_case)
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)

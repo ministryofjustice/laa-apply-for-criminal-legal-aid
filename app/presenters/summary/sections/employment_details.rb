@@ -28,12 +28,6 @@ module Summary
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
-
-      private
-
-      def income
-        @income ||= crime_application.income
-      end
     end
   end
 end

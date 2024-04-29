@@ -17,10 +17,12 @@ describe Summary::Sections::IncomePaymentsDetails do
     instance_double(
       Income,
       income_above_threshold: 'yes',
+      has_no_income_payments: has_no_income_payments
     )
   end
 
   let(:income_payments) { [] }
+  let(:has_no_income_payments) { nil }
 
   let(:maintenance_payment) do
     instance_double(
@@ -118,8 +120,36 @@ describe Summary::Sections::IncomePaymentsDetails do
   end
 
   describe '#show?' do
-    it 'shows this section' do
-      expect(subject.show?).to be(true)
+    context 'when there is no income data' do
+      let(:income) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
+    context 'when there are income payments' do
+      let(:income_payments) { [maintenance_payment] }
+
+      it 'shows this section' do
+        expect(subject.show?).to be true
+      end
+    end
+
+    context 'when there are no income payments' do
+      context 'when the question was shown' do
+        let(:has_no_income_payments) { 'yes' }
+
+        it 'shows this section' do
+          expect(subject.show?).to be true
+        end
+      end
+
+      context 'when the question was not shown' do
+        it 'does not show this section' do
+          expect(subject.show?).to be false
+        end
+      end
     end
   end
 
@@ -204,7 +234,7 @@ describe Summary::Sections::IncomePaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_payments_does_client_get'
+          path = 'applications/12345/steps/income/which_payments_client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -351,7 +381,7 @@ describe Summary::Sections::IncomePaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_payments_does_client_get'
+          path = 'applications/12345/steps/income/which_payments_client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -422,13 +452,14 @@ describe Summary::Sections::IncomePaymentsDetails do
 
       context 'when no payments are reported' do
         let(:income_payments) { [] }
+        let(:has_no_income_payments) { 'yes' }
 
         it 'has the correct rows' do
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:which_payments)
-          expect(answers[0].change_path).to match('applications/12345/steps/income/which_payments_does_client_get')
+          expect(answers[0].change_path).to match('applications/12345/steps/income/which_payments')
           expect(answers[0].value).to eq('none')
         end
       end

@@ -39,7 +39,7 @@ describe Summary::Sections::TrustFund do
 
     context 'when client benefits from a trust fund' do
       let(:expected_change_path) do
-        'applications/12345/steps/capital/does_client_stand_to_benefit_from_trust_fund'
+        'applications/12345/steps/capital/client_benefit_from_trust_fund'
       end
 
       it 'shows all answers' do
@@ -64,6 +64,16 @@ describe Summary::Sections::TrustFund do
     context 'when client does not benefit from a trust fund' do
       before do
         allow(capital).to receive(:will_benefit_from_trust_fund).and_return('no')
+      end
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(1)
+      end
+    end
+
+    context 'when question has not yet been answered' do
+      before do
+        allow(capital).to receive(:will_benefit_from_trust_fund).and_return(nil)
       end
 
       it 'has the correct rows' do

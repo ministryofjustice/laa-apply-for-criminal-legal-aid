@@ -5,13 +5,11 @@ module Tasks
     end
 
     def not_applicable?
-      Evidence::Requirements.new(crime_application).none?
+      false
     end
 
     def can_start?
-      return true if crime_application.pse?
-
-      fulfilled?(CaseDetails)
+      true
     end
 
     def in_progress?

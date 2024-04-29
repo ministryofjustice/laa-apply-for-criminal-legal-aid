@@ -54,7 +54,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_assets',
+          href: '/applications/APP123/steps/capital/add_assets',
           exact_text: 'Edit Residential property'
         )
       end
@@ -185,6 +185,17 @@ RSpec.describe Summary::Components::Property, type: :component do
           'What percentage of the property do they own?',
           '10.57%',
         )
+      end
+
+      context 'when land' do
+        let(:property_type) { 'land' }
+
+        it 'renders correct percentage ownership text' do
+          expect(page).to have_summary_row(
+            'What percentage of the land do they own?',
+            '10.57%',
+          )
+        end
       end
 
       context 'when other relationship' do

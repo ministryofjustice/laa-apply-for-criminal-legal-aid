@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, case: kase) }
   let(:applicant) { instance_double(Applicant) }
-  let(:kase) { instance_double(Case) }
+  let(:kase) { instance_double(Case, case_type:) }
+  let(:case_type) { CaseType::SUMMARY_ONLY }
 
   let(:not_means_tested) { nil }
 
@@ -86,14 +87,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         let(:is_means_tested) { YesNoAnswer::NO }
         let(:not_means_tested) { true }
 
-        it {
-          expect(subject).to have_destination(
-            '/steps/address/lookup',
-            :edit,
-            id: crime_application,
-            address_id: 'address'
-          )
-        }
+        it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
       end
     end
   end
@@ -108,16 +102,9 @@ RSpec.describe Decisions::ClientDecisionTree do
       it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
     end
 
-    context 'and the case type is `appeal_to_crown_court_with_changes`' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
-
-      it { is_expected.to have_destination(:appeal_details, :edit, id: crime_application) }
-    end
-
     context 'and the application already has a date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp) { Time.zone.today }
-        allow(kase).to receive(:case_type).and_return(case_type)
 
         allow(
           Address
@@ -126,20 +113,12 @@ RSpec.describe Decisions::ClientDecisionTree do
 
       let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
-      it {
-        expect(subject).to have_destination(
-          '/steps/address/lookup',
-          :edit,
-          id: crime_application,
-          address_id: 'address'
-        )
-      }
+      it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
     end
 
     context 'and the application has no date stamp' do
       before do
         allow(crime_application).to receive(:date_stamp)
-        allow(kase).to receive(:case_type).and_return(case_type)
       end
 
       context 'and the case type is "date stampable"' do
@@ -157,24 +136,55 @@ RSpec.describe Decisions::ClientDecisionTree do
           ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
         end
 
-        it {
-          expect(subject).to have_destination(
-            '/steps/address/lookup',
-            :edit,
-            id: crime_application,
-            address_id: 'address'
-          )
-        }
+        it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
       end
     end
   end
 
   context 'when the step is `appeal_details`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', appeal_original_app_submitted:) }
     let(:step_name) { :appeal_details }
 
-    # We've tested this logic for non-appeals, no need to test again
-    # as this step runs the same method/code
+    context 'and a legal aid application was submitted for the original case' do
+      let(:appeal_original_app_submitted) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:appeal_financial_circumstances, :edit, id: crime_application) }
+    end
+
+    context 'and a legal aid application was not submitted for the original case' do
+      let(:appeal_original_app_submitted) { YesNoAnswer::NO }
+
+      it 'performs the date stamp logic' do
+        expect(subject).to receive(:date_stamp_if_needed)
+        subject.destination
+      end
+    end
+  end
+
+  context 'when the step is `appeal_financial_circumstances`' do
+    let(:form_object) { double('FormObject', appeal_financial_circumstances_changed:) }
+    let(:step_name) { :appeal_financial_circumstances }
+
+    context 'and the answer is yes, financial circumstances have changed' do
+      let(:appeal_financial_circumstances_changed) { YesNoAnswer::YES }
+
+      it 'performs the date stamp logic' do
+        expect(subject).to receive(:date_stamp_if_needed)
+        subject.destination
+      end
+    end
+
+    context 'and the answer is no, financial circumstances have not changed' do
+      let(:appeal_financial_circumstances_changed) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:appeal_reference_number, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `appeal_reference_number`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :appeal_reference_number }
+
     it 'performs the date stamp logic' do
       expect(subject).to receive(:date_stamp_if_needed)
       subject.destination
@@ -189,16 +199,40 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(
         Address
       ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+      allow(crime_application).to receive(:date_stamp)
     end
 
-    it {
-      expect(subject).to have_destination(
-        '/steps/address/lookup',
-        :edit,
-        id: crime_application,
-        address_id: 'address'
-      )
-    }
+    context 'when the case type is not appeal to crown court' do
+      let(:case_type) { CaseType::INDICTABLE }
+
+      it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
+    end
+
+    context 'when the case type is appeal_to_crown_court and a reference number was entered' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
+
+      before do
+        allow(kase).to receive(:appeal_reference_number).and_return('appeal_maat_id')
+      end
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'when the case type is appeal_to_crown_court and no reference number was entered' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
+
+      before do
+        allow(kase).to receive(:appeal_reference_number).and_return(nil)
+      end
+
+      it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
+    end
+
+    context 'when the case type is not present' do
+      let(:case_type) { nil }
+
+      it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `contact_details`' do
@@ -343,7 +377,7 @@ RSpec.describe Decisions::ClientDecisionTree do
         context 'has correct next step' do
           let(:passporting_benefit) { nil }
 
-          it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
+          it { is_expected.to have_destination(:cannot_check_dwp_status, :edit, id: crime_application) }
         end
       end
     end
@@ -353,7 +387,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       let(:benefit_check_passported) { false }
       let(:has_nino) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination('steps/dwp/cannot_check_dwp_status', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:cannot_check_dwp_status, :edit, id: crime_application) }
 
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
@@ -416,6 +450,57 @@ RSpec.describe Decisions::ClientDecisionTree do
       let(:will_enter_nino) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `cannot_check_dwp_status`' do
+    # The dwp check decision tree has been tested for the benefit type step so this does not test all routes
+
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :cannot_check_dwp_status }
+    let(:benefit_check_passported) { false }
+    let(:passporting_benefit) { false }
+    let(:applicant_double) { double(Applicant) }
+
+    before do
+      allow(crime_application).to receive_messages(applicant: applicant_double,
+                                                   benefit_check_passported?: benefit_check_passported)
+
+      allow(applicant_double).to receive_messages(passporting_benefit:)
+
+      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+    end
+
+    it { is_expected.to have_destination('steps/dwp/confirm_result', :edit, id: crime_application) }
+  end
+
+  context 'when the step is `residence_type`' do
+    let(:form_object) { double('FormObject', applicant:, residence_type:) }
+    let(:step_name) { :residence_type }
+
+    context 'and the answer is `none`' do
+      let(:residence_type) { ResidenceType::NONE }
+
+      it { is_expected.to have_destination(:contact_details, :edit, id: crime_application) }
+    end
+
+    context 'and the answer is any other type' do
+      let(:residence_type) { ResidenceType::PARENTS }
+
+      before do
+        allow(
+          Address
+        ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
+      end
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/lookup',
+          :edit,
+          id: crime_application,
+          address_id: 'address'
+        )
+      }
     end
   end
 end

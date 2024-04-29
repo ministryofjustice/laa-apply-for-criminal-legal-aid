@@ -55,11 +55,18 @@ en:
       steps_client_has_nino_form:
         has_nino: Does your client have a National Insurance number?
       steps_client_appeal_details_form:
-        appeal_lodged_date: Date the appeal was lodged
+        appeal_lodged_date: When was the appeal lodged?
+        appeal_original_app_submitted: Was a legal aid application submitted for the original case?
+      steps_client_appeal_financial_circumstances_form:
+        appeal_financial_circumstances_changed: Have your client's financial circumstances changed since the initial application?
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number: What is the reference number of the original application?
       steps_client_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
+      steps_client_residence_type_form:
+        residence_type: Where does your client usually live?
       steps_client_contact_details_form:
-        correspondence_address_type: Correspondence address
+        correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form:
         confirm_result: Are the DWP records correct?
       steps_dwp_confirm_details_form:
@@ -158,12 +165,18 @@ en:
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.
         date_of_birth: For example, 27 3 2007
+      steps_client_appeal_details_form:
+        appeal_lodged_date: For example, 27 3 2007
+        appeal_original_app_submitted: This is the case with the outcome your client wants to appeal.
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
       steps_client_has_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         new_nino_hint: For example, QQ 12 34 56 C
         nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
       steps_client_benefit_type_form:
         benefit_type: This will help us review your application. It will not affect the DWP check.
+        last_jsa_appointment_date: This is sometimes known as ‘signing on’.
       steps_client_cannot_check_benefit_status_form:
         will_enter_nino_options:
           'no': You may not be able to submit your application without the National Insurance number
@@ -171,14 +184,10 @@ en:
         has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing your client's name and their benefit details.
         has_benefit_evidence_options:
           'yes': You'll need to upload evidence at the end of this application.
-      steps_client_contact_details_form:
-        telephone_number: For example, 01632 960 001 or +44 808 157 0192
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
         urn: For example, ‘12 AB 3456789’.
-      steps_case_appeal_details_form:
-        appeal_lodged_date: For example, 27 3 2007
       steps_case_has_case_concluded_form:
         date_case_concluded: For example, 27 3 2007
       steps_case_is_preorder_work_claimed_form:
@@ -227,7 +236,7 @@ en:
           jsa: This includes New Style JSA.
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
       steps_outgoings_board_and_lodging_form:
-        food_amount_in_pounds: For example, '0' or '50'.
+        food_amount: Enter '0' if none.
       steps_submission_declaration_form:
         legal_rep_telephone: For example, 01632 960 001 or +44 808 157 0192
       steps_capital_property_type_form:
@@ -244,6 +253,8 @@ en:
         description: For example, which companies your client has invested in, the value of each share owned, or when they can access the investment.
       steps_capital_national_savings_certificates_form:
         value: Give an estimate if you do not know the exact value.
+      steps_capital_premium_bonds_form:
+        premium_bonds_total_value: Give an estimate if you do not know the exact value.
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Select all that apply.
         types_options:
@@ -288,8 +299,16 @@ en:
       steps_client_has_nino_form:
         has_nino_options: *YESNO
       steps_client_appeal_details_form:
-        appeal_maat_id: Previous MAAT ID (optional)
-        appeal_with_changes_details: What has changed in your client’s financial circumstances?
+        appeal_original_app_submitted_options: *YESNO
+      steps_client_appeal_financial_circumstances_form:
+        appeal_with_changes_details: What has changed in your client's financial circumstances?
+        appeal_financial_circumstances_changed_options: *YESNO
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number_options:
+          appeal_maat_id: MAAT ID
+          appeal_usn: USN
+        appeal_maat_id: Enter MAAT ID
+        appeal_usn: Enter USN
       steps_client_benefit_type_form:
         benefit_type_options:
           universal_credit: Universal Credit
@@ -298,6 +317,17 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: My client does not get any of these passporting benefits
+      steps_client_residence_type_form:
+        residence_type_options:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+        relationship_to_owner_of_usual_home_address: What is your client's relationship to that person?
       steps_client_has_benefit_evidence_form:
         has_benefit_evidence_options: *YESNO
       steps_client_cannot_check_benefit_status_form:
@@ -305,9 +335,9 @@ en:
           'yes': I will enter the National Insurance number now
           'no': I will enter the National Insurance number later
       steps_client_contact_details_form:
-        telephone_number: Telephone number (optional)
+        telephone_number: What is your client's telephone number? (optional)
         correspondence_address_type_options:
-          home_address: Same as home address
+          home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
       steps_dwp_confirm_result_form:
@@ -577,7 +607,7 @@ en:
         ownership_type: Whose name is the investment in?
         ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm that the account is in my client's name
+          'true': I confirm that the investment is in my client's name
       steps_capital_national_savings_certificates_form:
         holder_number: What is the customer number or holder number?
         certificate_number: What is the certificate number?
@@ -593,8 +623,8 @@ en:
       steps_capital_national_savings_certificates_summary_form:
         add_national_savings_certificate_options: *YESNO
       steps_capital_premium_bonds_form:
-        premium_bonds_holder_number: Enter the holder number
-        premium_bonds_total_value: Enter the total value of their bonds
+        premium_bonds_holder_number: What is the holder number?
+        premium_bonds_total_value: What is the total value of their bonds?
         has_premium_bonds_options: *YESNO
       steps_capital_has_national_savings_certificates_form:
         has_national_savings_certificates_options: *YESNO
@@ -661,8 +691,11 @@ en:
             property_company: Property company
             other: Their relationship is not listed
           other_relationship: Enter their relationship
-          percentage_owned: What percentage of the land do they own?
+          percentage_owned_land: What percentage of the land do they own?
+          percentage_owned_residential: &percentage_owned_text What percentage of the property do they own?
+          percentage_owned_commercial: *percentage_owned_text
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
-      steps_capital_answers_form: # TODO :: NOT WORKING
-        has_no_other_assets: My client confirms they have no other assets or capital
+      steps_capital_answers_form:
+        has_no_other_assets_options: 
+          'yes': My client confirms they have no other assets or capital

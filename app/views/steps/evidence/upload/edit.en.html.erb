@@ -10,10 +10,23 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <%# TODO: dynamic list depending on evidence requirements %>
-    <p class="govuk-body">
-      <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
-    </p>
+    <% if @form_object.prompt.required? %>
+      <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>"><%= t('.required') %></p>
+    <% else %>
+      <p class="govuk-body" data-ruleset="None"><%= t('.optional') %></p>
+    <% end %>
+
+    <!-- Client & Partner evidence -->
+    <% [:client, :partner].each do |persona| %>
+      <% [:income, :outgoings, :capital].each do |group| %>
+        <%= render partial: 'steps/evidence/upload/prompt',
+                   locals: { prompt: @form_object.prompt, group: group, persona: persona, title: t("evidence.group.#{persona}.#{group}") } %>
+      <% end %>
+    <% end %>
+
+    <!-- Other evidence -->
+    <%= render partial: 'steps/evidence/upload/prompt',
+               locals: { prompt: @form_object.prompt, group: :none, persona: :other, title: t('evidence.group.other') } %>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>

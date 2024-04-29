@@ -1,13 +1,17 @@
 module Steps
   module Capital
     class AnswersForm < Steps::BaseFormObject
+      include Steps::HasOneAssociation
+      has_one_association :capital
+
       attribute :has_no_other_assets
 
-      validates :has_no_other_assets, presence: true
-      validates :has_no_other_assets, inclusion: { in: [YesNoAnswer::YES.to_s] }
+      validate do
+        CapitalAssessment::ConfirmationValidator.new(self).validate
+      end
 
       def persist!
-        record.update(attributes)
+        capital.valid?(:check_answers) && capital.update(has_no_other_assets:)
       end
     end
   end

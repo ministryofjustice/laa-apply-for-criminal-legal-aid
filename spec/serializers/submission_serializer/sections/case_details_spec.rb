@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, case: kase) }
+  let(:crime_application) { instance_double(CrimeApplication, kase:) }
   let(:case_concluded_date) { DateTime.new(2023, 3, 2) }
   let(:client_remand_date) { DateTime.new(2023, 3, 2) }
   let(:preorder_work_date) { DateTime.new(2023, 3, 2) }
@@ -22,6 +22,10 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       date_client_remanded: client_remand_date,
       appeal_maat_id: '123',
       appeal_lodged_date: appeal_lodged_date,
+      appeal_original_app_submitted: 'yes',
+      appeal_financial_circumstances_changed: appeal_financial_circumstances_changed,
+      appeal_reference_number: '',
+      appeal_usn: '',
       appeal_with_changes_details: 'appeal changes',
       hearing_court_name: 'Court',
       hearing_date: hearing_date,
@@ -35,6 +39,7 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
   let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
   let(:appeal_lodged_date) { DateTime.new(2021, 5, 8) }
   let(:hearing_date) { DateTime.new(2023, 3, 2) }
+  let(:appeal_financial_circumstances_changed) { 'yes' }
 
   let(:json_output) do
     {
@@ -51,6 +56,10 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         appeal_maat_id: '123',
         appeal_lodged_date: appeal_lodged_date,
         appeal_with_changes_details: 'appeal changes',
+        appeal_original_app_submitted: 'yes',
+        appeal_financial_circumstances_changed: appeal_financial_circumstances_changed,
+        appeal_reference_number: '',
+        appeal_usn: '',
         hearing_court_name: 'Court',
         hearing_date: hearing_date,
         is_first_court_hearing: 'no',
@@ -63,5 +72,35 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
 
   describe '#generate' do
     it { expect(subject.generate).to eq(json_output) }
+  end
+
+  describe '#case_type' do
+    context 'when the case type is `appeal_to_crown_court`' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+      context 'when `appeal_financial_circumstances_changed==yes`' do
+        let(:appeal_financial_circumstances_changed) { 'yes' }
+
+        it 'returns the case type appeal_to_crown_court_with_changes' do
+          expect(subject.send(:case_type)).to eq(CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s)
+        end
+      end
+
+      context 'when `appeal_financial_circumstances_changed==no`' do
+        let(:appeal_financial_circumstances_changed) { 'no' }
+
+        it 'returns the case type appeal_to_crown_court' do
+          expect(subject.send(:case_type)).to eq(CaseType::APPEAL_TO_CROWN_COURT.to_s)
+        end
+      end
+    end
+
+    context 'when the case type is not `appeal_to_crown_court`' do
+      let(:case_type) { CaseType::INDICTABLE.to_s }
+
+      it 'returns the case type appeal_to_crown_court' do
+        expect(subject.send(:case_type)).to eq(CaseType::INDICTABLE.to_s)
+      end
+    end
   end
 end

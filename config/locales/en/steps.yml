@@ -46,6 +46,12 @@ en:
         edit:
           page_title: Your client’s appeal to Crown Court
           heading: Your client’s appeal to Crown Court
+      appeal_financial_circumstances:
+        edit:
+          page_title: Have your client's financial circumstances changed since the initial application?
+      appeal_reference_number:
+        edit:
+          page_title: What is the reference number of the original application?
       date_stamp:
         edit:
           page_title: Your application has been date stamped
@@ -63,6 +69,7 @@ en:
       benefit_type:
         edit:
           page_title: Does your client get one of these passporting benefits?
+          last_jsa_appointment_date: Enter when your client last attended an appointment with their JSA work coach
       benefit_exit:
         show:
           page_title: Use eForms for this application
@@ -84,10 +91,17 @@ en:
           upload_evidence: You must upload evidence that your client gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
+      residence_type:
+        edit:
+          page_title: Where does your client usually live?
       contact_details:
         edit:
           page_title: Client’s contact details
-          heading: Enter your client’s contact details
+          heading: Your client’s contact details
+      cannot_check_dwp_status:
+        edit:
+          page_title: Sorry, we cannot check your client’s information with DWP
+          heading: Sorry, we cannot check your client’s information with DWP
 
     dwp:
       confirm_result:
@@ -101,10 +115,6 @@ en:
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application
-      cannot_check_dwp_status:
-        edit:
-          page_title: Sorry, we cannot check your client’s information with DWP
-          heading: Sorry, we cannot check your client’s information with DWP
 
     address:
       lookup:
@@ -115,9 +125,8 @@ en:
               correspondence_address: Client’s correspondence address
           heading:
             applicant:
-              home_address: Enter your client’s home address
+              home_address: Enter the address where your client usually lives
               correspondence_address: Enter your client’s correspondence address
-          no_address: My client does not have a home address
           manual_entry: Enter address manually
       results:
         edit:
@@ -127,7 +136,7 @@ en:
               correspondence_address: Client’s correspondence address selection
           heading:
             applicant:
-              home_address: Enter your client’s home address
+              home_address: Enter the address where your client usually lives
               correspondence_address: Enter your client’s correspondence address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
@@ -419,7 +428,7 @@ en:
       national_savings_certificates:
         edit:
           page_title: Add investment details
-          heading: Your client’s National Savings Certificates 
+          heading: Your client’s National Savings Certificates
           info: You told us your client has  National Savings Certificates.
         confirm_destroy:
           page_title: Delete National Savings Certificate confirmation
@@ -520,9 +529,10 @@ en:
     evidence:
       upload:
         edit:
-          page_title: Add supporting evidence
-          heading: Add supporting evidence
-          explanation: Use this page to provide
+          page_title: Upload supporting evidence
+          heading: Upload supporting evidence
+          optional: No supporting evidence is required based on your current application, but you may upload any documents that will help your application.
+          required: 'Based on your answers, use this page to provide:'
           recent_docs: All evidence must be from the last 3 months.
           rename_files: Files often have long, meaningless names by default, but if you rename them to a friendly name it will make it easier for us to assess your case. For example, Client-bank-statement.PDF instead of File23.PDF.
           upload_file_button: Upload file

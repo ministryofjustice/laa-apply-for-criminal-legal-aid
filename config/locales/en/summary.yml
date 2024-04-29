@@ -36,12 +36,12 @@ en:
       month: month
       annual: year
     does_not_get: Does not get
+    does_not_pay: Does not pay
     sections:
       overview: Overview
-
       case_details: Case details
       client_details: Client details
-      contact_details: Contact details
+      contact_details: Client contact details
       codefendants: Co-defendants
       codefendant: Co-defendant
       dependants: Dependants
@@ -58,9 +58,10 @@ en:
       income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
+      outgoings_payments_details: Payments your client pays
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
-      more_information: More information
+      more_information: Further information
       savings: Savings
       saving:
         bank: Bank account
@@ -75,7 +76,7 @@ en:
         pep: Personal equity plan (PEP)
         share: Shares
         share_isa: Share ISA
-        stock: Stock, including gilts and government bonds
+        stock: Stocks, including gilts and government bonds
         unit_trust: Unit trust
         other: Other lump sum investment
       national_savings_certificates: National Savings Certificates
@@ -98,7 +99,7 @@ en:
       reference:
         question: LAA reference number
       means_tested:
-        question: Application is subject to the usual means test
+        question: Means tested application
         answers:
           <<: *YESNO
       date_stamp:
@@ -140,9 +141,24 @@ en:
           esa: Income-related Employment and Support Allowance (ESA)
           income_support: Income Support
           none: None
+      last_jsa_appointment_date:
+        question: Date of latest JSA appointment
       # END client details section
 
       # BEGIN contact details section
+      residence_type:
+        question: Where the client lives
+        answers:
+          rented: In rented accommodation
+          temporary: In temporary accommodation
+          parents: With their parents
+          applicant_owned: In a property they own
+          partner_owned: In a property their partner owns
+          joint_owned: In a property they and their partner both own
+          someone_else: In someone else's home
+          none: They do not have a fixed home address
+      relationship_to_owner_of_usual_home_address:
+        question: Relationship to client
       home_address:
         question: Home address
         absence_answer: *absence_none
@@ -151,7 +167,7 @@ en:
       correspondence_address_type:
         question: Where to send correspondence
         answers:
-          home_address: Same as home address
+          home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
       telephone_number:
@@ -163,26 +179,6 @@ en:
       case_urn:
         question: Unique reference number
         absence_answer: *absence_none
-      has_case_concluded:
-        question: Has the case concluded?
-        answers:
-          <<: *YESNO
-      date_case_concluded:
-        question: Date the case concluded
-      is_preorder_work_claimed:
-        question: Do you intend to claim pre-order work?
-        answers:
-          <<: *YESNO
-      preorder_work_date:
-        question: When you or your firm were first instructed
-      preorder_work_details:
-        question: Details about the urgency of the work
-      is_client_remanded:
-        question: Has a court remanded your client in custody?
-        answers:
-          <<: *YESNO
-      date_client_remanded:
-        question: Date they were remanded
       case_type:
         question: Case type
         answers:
@@ -192,14 +188,41 @@ en:
           already_in_crown_court: Trial already in crown court
           committal: Committal for sentence
           appeal_to_crown_court: Appeal to crown court
-          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
-      previous_maat_id:
-        question: Previous MAAT ID
-        absence_answer: *absence_none
+          appeal_to_crown_court_with_changes: Appeal to crown court
       appeal_lodged_date:
-        question: Date lodged
+        question: Date appeal lodged
+      appeal_original_app_submitted:
+        question: Legal aid application for original case?
+        answers:
+          <<: *YESNO
+      appeal_financial_circumstances_changed:
+        question: Changes to financial circumstances since original application?
+        answers:
+          <<: *YESNO
       appeal_with_changes_details:
         question: Changes details
+      appeal_maat_id_or_usn:
+        question: "Original application %{ref_type}"
+      has_case_concluded:
+        question: Case concluded?
+        answers:
+          <<: *YESNO
+      date_case_concluded:
+        question: Date case concluded
+      is_preorder_work_claimed:
+        question: Claim for pre-order work?
+        answers:
+          <<: *YESNO
+      preorder_work_date:
+        question: Date firm first instructed
+      preorder_work_details:
+        question: Urgency details
+      is_client_remanded:
+        question: Client in custody?
+        answers:
+          <<: *YESNO
+      date_client_remanded:
+        question: Date client remanded
       # END case details section
 
       # BEGIN offences section
@@ -337,7 +360,7 @@ en:
         answers:
           description: *payment_answer_format
       state_pension_payment:
-        question: State pensions
+        question: State pension
         answers:
           description: *payment_answer_format
       interest_investment_payment:
@@ -369,7 +392,7 @@ en:
         answers:
           description: *payment_answer_format
       other_payment_details:
-        question: Other sources of income details
+        question: Details of other sources of income
       # END income payments details section
 
       # BEGIN income benefits details section
@@ -398,9 +421,11 @@ en:
         answers:
           description: *payment_answer_format
       other_benefit:
-        question: Other benefits (except disregarded benefits)
+        question: Other benefits
         answers:
           description: *payment_answer_format
+      other_benefit_details:
+        question: Other benefits details
       # END income benefits details section
 
       # BEGIN other sources of income details section
@@ -461,6 +486,27 @@ en:
           description: "%{amount}"
       # END housing payments section
 
+      # BEGIN  outgoings payments section
+      which_outgoings:
+        question: Which of these payments does your client pay?
+        answers:
+          none: My client does not pay any of these payments
+      childcare_outgoing:
+        question: Childcare payments
+        answers:
+          description: *payment_answer_format
+      maintenance_outgoing:
+        question: Maintenance payments to a former partner
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing:
+        question: Contributions towards criminal or civil legal aid
+        answers:
+          description: *payment_answer_format
+      legal_aid_contribution_outgoing_details:
+        question: What is the case reference of the criminal rep order or civil certificate?
+      # END outgoings payments section
+
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
         question: In the last 2 years, has your client paid the 40% income tax rate?
@@ -515,7 +561,11 @@ en:
         absence_answer: '' 
       sort_code:
         question: What is the sort code or branch name?
-        absence_answer: '' 
+        absence_answer: ''
+      has_capital_savings:
+        question: Which savings does your client have inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END saving
       #
       # START premium_bonds
@@ -523,9 +573,9 @@ en:
         question: Does your client have any Premium Bonds?
         answers: *YESNO
       premium_bonds_total_value:
-        question: Enter the total value of their bonds
+        question: What is the total value of their bonds?
       premium_bonds_holder_number:
-        question: Enter the holder number
+        question: What is the holder number?
         absence_answer: ''
       # END premium_bonds
 
@@ -540,6 +590,10 @@ en:
         question: Whose name is the investment in?
         answers: *OWNERSHIP_TYPE 
         absence_answer: ''
+      has_investments:
+        question: Which investments does your client have inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END investments
 
       # START national_savings_certificates
@@ -555,7 +609,11 @@ en:
       national_savings_certificate_ownership_type: 
         question: Whose name is the certificate in?
         answers: *OWNERSHIP_TYPE 
-        absence_answer: '' 
+        absence_answer: ''
+      has_national_savings_certificate:
+        question: Does your client have any National Savings Certificates?
+        answers:
+          <<: *YESNO
       # END national_savings_certificates
 
       # BEGIN property, address and owners
@@ -604,6 +662,10 @@ en:
       percentage_owned:
         question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
+      has_assets:
+        question: Which assets does your client own or part-own inside or outside the UK?
+        answers:
+          'none': *absence_none
       # END property, address and owners
 
       # START trust_fund

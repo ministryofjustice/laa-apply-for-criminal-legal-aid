@@ -3,17 +3,29 @@ require 'rails_helper'
 RSpec.describe Passporting::MeansPassporter do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, resubmission?: resubmission?) }
+  let(:crime_application) {
+    instance_double(
+      CrimeApplication,
+      case: case_record,
+      applicant: applicant,
+      resubmission?: resubmission?,
+      is_means_tested: is_means_tested
+    )
+  }
 
+  let(:case_record) { instance_double(Case, case_type:, appeal_financial_circumstances_changed:) }
   let(:applicant) { instance_double(Applicant, under18?: under18, passporting_benefit: passporting_benefit) }
+
+  let(:case_type) { 'either_way' }
+  let(:appeal_financial_circumstances_changed) { nil }
 
   let(:resubmission?) { false }
   let(:under18) { nil }
   let(:passporting_benefit) { nil }
+  let(:is_means_tested) { 'yes' }
 
   before do
     allow(crime_application).to receive(:update)
-    allow(crime_application).to receive(:is_means_tested)
     allow(crime_application).to receive(:means_passport).and_return([])
   end
 
@@ -24,6 +36,46 @@ RSpec.describe Passporting::MeansPassporter do
       it 'uses the existing values' do
         expect(crime_application).not_to receive(:update)
         expect(subject).to receive(:passported?)
+
+        subject.call
+      end
+    end
+
+    context 'for a appeal to crown court' do
+      let(:case_type) { 'appeal_to_crown_court' }
+
+      context 'with no financial changes' do
+        let(:appeal_financial_circumstances_changed) { 'no' }
+
+        it 'uses the existing values' do
+          expect(crime_application).not_to receive(:update)
+          expect(subject.call).to be(true)
+        end
+      end
+
+      context 'with financial changes' do
+        let(:appeal_financial_circumstances_changed) { 'yes' }
+
+        it 'uses the existing values' do
+          expect(crime_application).to receive(:update)
+          expect(subject.call).to be(false)
+        end
+      end
+    end
+
+    context 'means passporting on non-means tested' do
+      let(:is_means_tested) { 'no' }
+
+      before do
+        allow(FeatureFlags).to receive(:non_means_tested) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it 'does not add an age passported type to the array' do
+        expect(crime_application).to receive(:update).with(
+          means_passport: [MeansPassportType::ON_NOT_MEANS_TESTED]
+        )
 
         subject.call
       end

@@ -17,10 +17,6 @@ module Summary
 
       private
 
-      def kase
-        @kase ||= crime_application.case
-      end
-
       def codefendants
         @codefendants ||= kase.codefendants
       end

@@ -16,17 +16,29 @@ class Case < ApplicationRecord
               mapping: %i[hearing_court_name name],
               constructor: :find_by_name, allow_nil: true
 
+  validates_with CaseDetails::AnswersValidator, on: [:check_answers, :submission]
+
   def complete?
     case_hearing_attributes_present? &&
       case_concluded_attributes_present? &&
       client_remanded_attributes_present? &&
-      preorder_work_attributes_present?
+      preorder_work_attributes_present? &&
+      all_codefendants_complete? &&
+      all_charges_complete?
   end
 
   private
 
   def case_hearing_attributes_present?
     values_at(:hearing_court_name, :hearing_date).all?(&:present?)
+  end
+
+  def all_codefendants_complete?
+    codefendants.all?(&:complete?)
+  end
+
+  def all_charges_complete?
+    charges.all?(&:complete?)
   end
 
   def case_concluded_attributes_present?

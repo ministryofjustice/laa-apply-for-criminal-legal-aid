@@ -24,6 +24,7 @@ module Steps
       def choices
         values = CorrespondenceType.values.dup
         values.delete(CorrespondenceType::HOME_ADDRESS) unless applicant.home_address?
+        values.delete(CorrespondenceType::HOME_ADDRESS) if no_residence_type?
 
         values
       end
@@ -42,6 +43,10 @@ module Steps
         {}.tap do |attrs|
           attrs.merge!(correspondence_address: nil) unless correspondence_address_type.other_address?
         end
+      end
+
+      def no_residence_type?
+        applicant.residence_type.present? && applicant.residence_type == 'none'
       end
     end
   end

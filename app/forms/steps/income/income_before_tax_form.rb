@@ -17,8 +17,22 @@ module Steps
 
       def persist!
         income.update(
-          attributes
+          attributes.merge(attributes_to_reset)
         )
+      end
+
+      def attributes_to_reset
+        return {} unless income_above_threshold?
+
+        {
+          'client_owns_property' => nil,
+          'has_frozen_income_or_assets' => nil,
+          'has_savings' => nil,
+        }
+      end
+
+      def income_above_threshold?
+        income_above_threshold&.yes?
       end
     end
   end

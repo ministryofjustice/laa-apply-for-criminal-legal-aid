@@ -14,10 +14,13 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       date_of_birth: date_of_birth,
       nino: 'AB123456A',
       benefit_type: 'universal_credit',
+      last_jsa_appointment_date: nil,
       home_address: home_address,
       correspondence_address: correspondence_address,
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
+      residence_type: 'rented',
+      relationship_to_owner_of_usual_home_address: nil
     )
   end
 
@@ -50,6 +53,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           date_of_birth: date_of_birth,
           nino: 'AB123456A',
           benefit_type: 'universal_credit',
+          last_jsa_appointment_date: nil,
           home_address: {
             address_line_one: 'Test',
             address_line_two: 'Home',
@@ -61,6 +65,8 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           correspondence_address: nil,
           telephone_number: '123456789',
           correspondence_address_type: 'home_address',
+          residence_type: 'rented',
+          relationship_to_owner_of_usual_home_address: nil
         }
       }
     }.as_json

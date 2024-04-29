@@ -14,9 +14,15 @@ module Decisions
       when :case_type
         after_case_type
       when :appeal_details
+        after_appeal_details
+      when :appeal_financial_circumstances
+        after_financial_circumstances
+      when :appeal_reference_number
         date_stamp_if_needed
       when :date_stamp
-        start_address_journey(HomeAddress)
+        after_date_stamp
+      when :residence_type
+        after_residence_type
       when :contact_details
         after_contact_details
       when :has_nino
@@ -29,6 +35,8 @@ module Decisions
         after_has_benefit_evidence
       when :cannot_check_benefit_status
         after_cannot_check_benefit_status
+      when :cannot_check_dwp_status
+        after_cannot_check_dwp_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -59,7 +67,7 @@ module Decisions
       if DateStamper.new(form_object.crime_application).call
         edit(:date_stamp)
       elsif form_object.crime_application.not_means_tested?
-        start_address_journey(HomeAddress)
+        edit(:residence_type)
       else
         edit(:case_type)
       end
@@ -71,9 +79,41 @@ module Decisions
       date_stamp_if_needed
     end
 
+    def after_appeal_details
+      if form_object.appeal_original_app_submitted.yes?
+        edit(:appeal_financial_circumstances)
+      else
+        date_stamp_if_needed
+      end
+    end
+
+    def after_financial_circumstances
+      if form_object.appeal_financial_circumstances_changed.yes?
+        date_stamp_if_needed
+      else
+        edit(:appeal_reference_number)
+      end
+    end
+
     def date_stamp_if_needed
       if DateStamper.new(form_object.crime_application, case_type: form_object.case.case_type).call
         edit(:date_stamp)
+      else
+        after_date_stamp
+      end
+    end
+
+    def after_date_stamp
+      if entered_appeal_reference_number?
+        edit('/steps/case/urn')
+      else
+        edit(:residence_type)
+      end
+    end
+
+    def after_residence_type
+      if form_object.residence_type.none?
+        edit(:contact_details)
       else
         start_address_journey(HomeAddress)
       end
@@ -82,7 +122,7 @@ module Decisions
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
-      elsif current_crime_application.age_passported?
+      elsif current_crime_application.age_passported? || entered_appeal_reference_number?
         edit('/steps/case/urn')
       else
         edit(:has_nino)
@@ -131,7 +171,7 @@ module Decisions
       DWP::UpdateBenefitCheckResultService.call(applicant)
 
       if applicant.passporting_benefit.nil?
-        edit('steps/dwp/cannot_check_dwp_status')
+        edit(:cannot_check_dwp_status)
       elsif applicant.passporting_benefit
         edit(:benefit_check_result)
       else
@@ -145,6 +185,10 @@ module Decisions
       else
         edit('/steps/case/urn')
       end
+    end
+
+    def after_cannot_check_dwp_status
+      determine_dwp_result_page
     end
 
     def applicant_has_nino
