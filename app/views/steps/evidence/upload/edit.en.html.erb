@@ -18,15 +18,15 @@
 
     <!-- Client & Partner evidence -->
     <% [:client, :partner].each do |persona| %>
-      <% [:income, :outgoings, :capital].each do |group| %>
+      <% [:income, :outgoings, :capital, :none].each do |group| %>
         <%= render partial: 'steps/evidence/upload/prompt',
-                   locals: { prompt: @form_object.prompt, group: group, persona: persona, title: t("evidence.group.#{persona}.#{group}") } %>
+                   locals: { prompt: @form_object.prompt, group: group, persona: persona, title: t("evidence.persona.#{persona}.#{group}") } %>
       <% end %>
     <% end %>
 
-    <!-- Other evidence -->
+    <!-- Other evidence only shows :none group -->
     <%= render partial: 'steps/evidence/upload/prompt',
-               locals: { prompt: @form_object.prompt, group: :none, persona: :other, title: t('evidence.group.other') } %>
+               locals: { prompt: @form_object.prompt, group: :none, persona: :other, title: t('evidence.persona.other') } %>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>

@@ -278,6 +278,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::ExampleRule2Budget2024,
         Evidence::Rules::ExampleRule2Budget2025,
         Evidence::Rules::BadRuleDefinition,
+        Evidence::Rules::ExampleOfOther,
       ]
 
       expect(rules).to match_array(expected_klasses)
