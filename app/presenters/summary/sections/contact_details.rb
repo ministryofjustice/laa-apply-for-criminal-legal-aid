@@ -24,6 +24,7 @@ module Summary
                        ))
         end
 
+        # TODO: display home address and telephone number always?
         unless residence_of_type?('none')
           answers.push(Components::FreeTextAnswer.new(
                          :home_address, full_address(home_address), show: true,

@@ -47,6 +47,7 @@ module DeveloperTools
       find_or_create_applicant(
         dob: rand(15..17).years.ago,
         nino: nil,
+        will_enter_nino: nil,
         benefit_type: nil,
         last_jsa_appointment_date: nil,
         passporting_benefit: nil,
