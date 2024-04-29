@@ -13,7 +13,7 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   let(:income) { Income.new }
 
   it { expect(described_class.key).to eq :restraint_freezing_order_31 }
-  it { expect(described_class.group).to eq :capital }
+  it { expect(described_class.group).to eq :none }
   it { expect(described_class.archived).to be false }
   it { expect(described_class.active?).to be true }
 
@@ -22,17 +22,13 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
 
     context 'when client does not have a restraining or freezing order in place' do
       context 'when question was not answered in the capital section' do
-        let(:capital) do
-          Capital.new(has_frozen_income_or_assets: 'no')
-        end
+        let(:capital) { Capital.new(has_frozen_income_or_assets: 'no') }
 
         it { is_expected.to be false }
       end
 
       context 'when question was not answered in the income section' do
-        let(:income) do
-          Income.new(has_frozen_income_or_assets: 'no')
-        end
+        let(:income) { Income.new(has_frozen_income_or_assets: 'no') }
 
         it { is_expected.to be false }
       end
@@ -40,9 +36,8 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
 
     context 'when client has a restraining or freezing order in place' do
       context 'when question was answered in the capital section' do
-        let(:capital) do
-          Capital.new(has_frozen_income_or_assets: 'yes')
-        end
+        let(:capital) { Capital.new(has_frozen_income_or_assets: 'yes') }
+        let(:income) { Income.new(has_frozen_income_or_assets: nil) }
 
         it { is_expected.to be true }
       end
@@ -73,20 +68,18 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   end
 
   describe '#to_h' do
-    let(:capital) do
-      Capital.new(has_frozen_income_or_assets: 'yes')
-    end
+    let(:capital) { Capital.new(has_frozen_income_or_assets: 'yes') }
 
     let(:expected_hash) do
       {
         id: 'RestraintOrFreezingOrder',
-        group: :capital,
+        group: :none,
         ruleset: nil,
         key: :restraint_freezing_order_31,
         run: {
           client: {
             result: true,
-            prompt: ['the restraint or freezing order'],
+            prompt: ['the restraint or freezing order']
           },
           partner: {
             result: false,

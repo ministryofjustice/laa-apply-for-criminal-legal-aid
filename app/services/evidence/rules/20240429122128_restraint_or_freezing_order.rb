@@ -4,8 +4,7 @@ module Evidence
       include Evidence::RuleDsl
 
       key :restraint_freezing_order_31
-      # TODO: change to none
-      group :capital
+      group :none
 
       client do |crime_application|
         crime_application.capital&.has_frozen_income_or_assets == 'yes' ||
