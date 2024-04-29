@@ -38,3 +38,36 @@ en:
       ChildMaintenanceCosts:
         client: proof of maintenance payments, for example bank statements showing payments
         partner: proof of maintenance payments, for example bank statements showing payments
+      SalariedEmployee:
+        client: wage slips, salary advice, or a letter from their employer if they're paid by cash
+        partner: wage slips, salary advice, or a letter from their employer if they're paid by cash
+      BenefitsRecipient:
+        client: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+        partner: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+      SelfAssessed:
+        client: either their P60 or their Self Assessment tax calculation (SA302)
+        partner: either their P60 or their Self Assessment tax calculation (SA302)
+      SelfEmployed:
+        client: complete financial accounts, tax return, bank statements, cash book or other business records
+        partner: complete financial accounts, tax return, bank statements, cash book or other business records
+      BenefitsInKind:
+        client: their P11D form for 'benefits in kind'
+        partner: their P11D form for 'benefits in kind'
+      PrivatePensionIncome:
+        client: either bank statements or their pension statement
+        partner: either bank statements or their pension statement
+      MaintenanceIncome:
+        client: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+        partner: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+      InterestAndInvestments:
+        client: bank statements showing interest from their savings or investments
+        partner: bank statements showing interest from their savings or investments
+      RentalIncome:
+        client: bank statements showing the rental income
+        partner:
+      AnyOtherIncome:
+        client: bank statements showing the income from other sources
+        partner: bank statements showing the income from other sources
+      TrustFund:
+        client: the trust document, or a certified copy
+        partner: the trust document, or a certified copy

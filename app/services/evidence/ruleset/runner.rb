@@ -13,6 +13,17 @@ module Evidence
       # When a new rule is created add the key to this list
       KEYS = %i[
         # Income
+        income_employed_0a
+        income_benefits_0b
+        income_p60_sa302_2
+        income_selfemployed_3
+        income_noncash_benefit_4
+        income_private_pension_5
+        income_maintenance_6
+        income_investments_7
+        income_rent_8
+        income_other_9
+        income_trust_10
 
         # Outgoings
         outgoings_housing_11

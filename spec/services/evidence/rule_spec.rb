@@ -235,7 +235,7 @@ RSpec.describe Evidence::Rule do
       Evidence::Rules.constants.map { |klass| "Evidence::Rules::#{klass}".constantize }
     end
 
-    it 'must load rule definitions' do
+    it 'must load rule definitions' do # rubocop:disable RSpec/ExampleLength
       expected_klasses = [
         Evidence::Rules::NationalInsuranceProof,
 
@@ -243,6 +243,17 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::HousingCosts,
         Evidence::Rules::CouncilTaxPayments,
         Evidence::Rules::ChildcareCosts,
+        Evidence::Rules::SalariedEmployee,
+        Evidence::Rules::BenefitsRecipient,
+        Evidence::Rules::SelfAssessed,
+        Evidence::Rules::SelfEmployed,
+        Evidence::Rules::BenefitsInKind,
+        Evidence::Rules::PrivatePensionIncome,
+        Evidence::Rules::MaintenanceIncome,
+        Evidence::Rules::InterestAndInvestments,
+        Evidence::Rules::RentalIncome,
+        Evidence::Rules::AnyOtherIncome,
+        Evidence::Rules::TrustFund,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
