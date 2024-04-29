@@ -12,6 +12,15 @@ module Evidence
       #
       # When a new rule is created add the key to this list
       KEYS = %i[
+        # Income
+
+        # Outgoings
+        outgoings_housing_11
+        outgoings_counciltax_12
+        outgoings_childcare_14
+        outgoings_maintenance_15
+
+        # Other
         national_insurance_32
       ].freeze
 
@@ -40,7 +49,14 @@ module Evidence
         KEYS
       end
 
+      # NOTE: Manually checking if Evidence::Rules modules have been loaded
+      # rather than relying on using `require`. Rails seems to have the filepaths
+      # for /rules/* in $LOADED_FEATURES even though there is the autoload exception
+      # in zeitwerk.rb. Trying to prevent repeated loading (and possible SimpleCov
+      # inaccurate results)
       def self.load_rules!
+        return if Evidence.constants.include?(:Rules)
+
         Dir.glob(RULES_DIR).each { |file| load file }
       end
 

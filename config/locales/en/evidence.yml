@@ -26,3 +26,15 @@ en:
       # Live rules
       NationalInsuranceProof:
         other: their National Insurance number
+      HousingCosts:
+        client: their rental, tenancy agreement or mortgage statement
+        partner: their rental, tenancy agreement or mortgage statement
+      CouncilTaxPayments:
+        client: their Council Tax statement
+        partner: their Council Tax statement
+      ChildcareCosts:
+        client: proof of childcare costs, for example receipts or bank statements
+        partner: proof of childcare costs, for example receipts or bank statements
+      ChildMaintenanceCosts:
+        client: proof of maintenance payments, for example bank statements showing payments
+        partner: proof of maintenance payments, for example bank statements showing payments

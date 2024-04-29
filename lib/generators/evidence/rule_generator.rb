@@ -65,6 +65,8 @@ module Evidence
         RSpec.describe Evidence::Rules::#{class_name} do
           subject { described_class.new(crime_application) }
 
+          # A double may not always be appropriate for testing,
+          # consider using real objects
           let(:crime_application) do
             instance_double(
               CrimeApplication,
@@ -80,7 +82,7 @@ module Evidence
               run: {
                 client: {
                   result: true,
-                  prompt: ['Add sentences to evidence.yml'],
+                  prompt: ['Add evidence.yml entry for rule #{class_name}: client'],
                 },
                 partner: {
                   result: false,
@@ -98,6 +100,7 @@ module Evidence
           it { expect(described_class.group).to eq :income }
           it { expect(described_class.archived).to be false }
           it { expect(described_class.active?).to be true }
+          it { expect(subject.to_h).to eq expected_hash }
 
           describe '.client' do
             it { expect(subject.client_predicate).to be true }
@@ -111,7 +114,6 @@ module Evidence
             it { expect(subject.other_predicate).to be false }
           end
         end
-
       RUBY
     end
   end
