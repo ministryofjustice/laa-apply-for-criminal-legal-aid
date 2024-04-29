@@ -56,6 +56,7 @@ module Evidence
         under18?,
         case_in_court?,
         case_indictable?,
+        remanded_in_custody?,
       ].any?(true)
     end
 
@@ -105,6 +106,11 @@ module Evidence
       @exempt_reasons << I18n.t('evidence.exempt.case_indictable') if result
 
       result
+    end
+
+    # TODO:Evidence is not required if the applicant is remanded in Court Custody (Evidence: 1 section)
+    def remanded_in_custody?
+      false
     end
   end
 end
