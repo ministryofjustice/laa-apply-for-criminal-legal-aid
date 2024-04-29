@@ -31,7 +31,7 @@ RSpec.describe Decisions::DWPDecisionTree do
       context 'with means journey enabled' do
         let(:means_enabled?) { true }
 
-        it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/client/benefit_type', :edit, id: crime_application) }
       end
 
       context 'with means journey disabled' do

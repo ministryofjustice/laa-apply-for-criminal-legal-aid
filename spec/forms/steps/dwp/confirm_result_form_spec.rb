@@ -4,7 +4,10 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
   # NOTE: not using shared examples for form objects yet, to be added
   # once we have some more form objects and some patterns emerge
 
-  subject { described_class.new }
+  subject { described_class.new(crime_application:) }
+
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:applicant) { instance_double(Applicant) }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -27,10 +30,37 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
     end
 
     context 'when `confirm_result` is provided' do
-      it 'returns true' do
-        subject.choices.each do |choice|
-          subject.confirm_result = choice
+      context 'when `confirm_result` is `no`' do
+        it 'returns true' do
+          subject.confirm_result = 'no'
           expect(subject.save).to be(true)
+        end
+      end
+
+      context 'when `confirm_result` is `yes`' do
+        before do
+          subject.confirm_result = 'yes'
+        end
+
+        context 'and benefit type was nil' do
+          before do
+            allow(applicant).to receive(:benefit_type)
+          end
+
+          it 'returns true' do
+            expect(subject.save).to be(true)
+          end
+        end
+
+        context 'and benefit type was set set' do
+          before do
+            allow(applicant).to receive(:benefit_type).and_return('JSA')
+          end
+
+          it 'returns true and sets the benefit type to nil' do
+            expect(applicant).to receive(:update).with(benefit_type: nil).and_return(true)
+            expect(subject.save).to be(true)
+          end
         end
       end
     end

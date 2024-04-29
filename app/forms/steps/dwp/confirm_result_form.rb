@@ -12,7 +12,15 @@ module Steps
       private
 
       def persist!
+        return reset_benfit_type! if confirm_result.yes?
+
         true
+      end
+
+      def reset_benfit_type!
+        return true if crime_application.applicant.benefit_type.blank?
+
+        crime_application.applicant.update(benefit_type: nil)
       end
     end
   end
