@@ -6,7 +6,7 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   let(:crime_application) do
     CrimeApplication.create!(
       capital:, income:
-      )
+    )
   end
 
   let(:capital) { Capital.new }
