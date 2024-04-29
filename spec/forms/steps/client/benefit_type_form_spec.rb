@@ -50,7 +50,8 @@ RSpec.describe Steps::Client::BenefitTypeForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                        'last_jsa_appointment_date' => nil
+                        'last_jsa_appointment_date' => nil,
+                        'has_benefit_evidence' => nil,
                       }
 
       context 'when `benefit_type` answer is not jsa' do
@@ -119,7 +120,8 @@ RSpec.describe Steps::Client::BenefitTypeForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                        'last_jsa_appointment_date' => nil
+                        'last_jsa_appointment_date' => nil,
+                        'has_benefit_evidence' => nil,
                       }
     end
 

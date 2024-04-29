@@ -28,6 +28,10 @@ module Steps
       end
 
       def persist!
+        reset_home_address
+        reset_correspondence_address
+        crime_application.applicant.update(applicant_attributes_to_reset)
+
         self.case.update(
           attributes
         )
@@ -36,6 +40,34 @@ module Steps
       def before_save
         self.appeal_maat_id = nil unless maat_id_selected?
         self.appeal_usn = nil unless usn_selected?
+      end
+
+      def applicant_attributes_to_reset
+        {
+          'residence_type' => nil,
+          'correspondence_address_type' => nil,
+          'telephone_number' => nil,
+          'has_nino' => nil,
+          'nino' => nil,
+          'will_enter_nino' => nil,
+          'benefit_type' => nil,
+          'last_jsa_appointment_date' => nil,
+          'passporting_benefit' => nil,
+          'has_benefit_evidence' => nil
+        }
+      end
+
+      # TODO: Duplicate of method in residence type form, is there somewhere this could live?
+      def reset_home_address
+        return unless crime_application.applicant.home_address?
+
+        crime_application.applicant.home_address.destroy!
+      end
+
+      def reset_correspondence_address
+        return unless crime_application.applicant.correspondence_address?
+
+        crime_application.applicant.correspondence_address.destroy!
       end
     end
   end

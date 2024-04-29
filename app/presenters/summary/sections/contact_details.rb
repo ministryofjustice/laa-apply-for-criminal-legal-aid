@@ -24,12 +24,10 @@ module Summary
                        ))
         end
 
-        unless residence_of_type?('none')
-          answers.push(Components::FreeTextAnswer.new(
-                         :home_address, full_address(home_address), show: true,
-            change_path: change_path(home_address)
-                       ))
-        end
+        answers.push(Components::FreeTextAnswer.new(
+                       :home_address, full_address(home_address), show: show_home_address?,
+          change_path: change_path(home_address)
+                     ))
 
         answers << [
           Components::ValueAnswer.new(
@@ -95,6 +93,10 @@ module Summary
 
       def residence_type?
         crime_application.applicant.residence_type.present?
+      end
+
+      def show_home_address?
+        !residence_of_type?('none')
       end
     end
   end
