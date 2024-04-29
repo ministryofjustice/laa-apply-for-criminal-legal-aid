@@ -17,12 +17,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-
-      private
-
-      def income
-        @income ||= crime_application.income
-      end
     end
   end
 end

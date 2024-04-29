@@ -26,10 +26,6 @@ module Summary
 
       private
 
-      def outgoings
-        @outgoings ||= crime_application.outgoings
-      end
-
       def board_and_lodging_info # rubocop:disable Metrics/MethodLength
         return [] unless board_and_lodging
 

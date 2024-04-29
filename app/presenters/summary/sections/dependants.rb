@@ -34,10 +34,6 @@ module Summary
       def dependants
         @dependants ||= crime_application.dependants
       end
-
-      def income
-        @income ||= crime_application.income
-      end
     end
   end
 end

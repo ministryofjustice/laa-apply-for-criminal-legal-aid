@@ -52,7 +52,7 @@ module Summary
 
       private
 
-      delegate :kase, to: :crime_application
+      delegate :kase, :income, :outgoings, :capital, to: :crime_application
 
       # :nocov:
       def answers
