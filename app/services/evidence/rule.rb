@@ -136,10 +136,10 @@ module Evidence
       instance_variable_set instance_var, yield
     end
 
-    # Partner evidence not required if they are
+    # TODO: Partner evidence not required if they are
     # a victim/witness/co-defendant with a conflict of interest
     def partner_evidence_exempt?
-      # false
+      false
     end
 
     def client_evidence_exempt?
