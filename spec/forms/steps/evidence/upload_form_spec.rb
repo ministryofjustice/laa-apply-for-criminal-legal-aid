@@ -10,7 +10,12 @@ RSpec.describe Steps::Evidence::UploadForm do
   end
 
   let(:crime_application) do
-    CrimeApplication.new(applicant: Applicant.new(has_nino: 'yes'))
+    CrimeApplication.new(
+      applicant: Applicant.new(
+        has_nino: 'yes',
+        date_of_birth: '200-01-01'
+      )
+    )
   end
 
   describe '#prompt' do
