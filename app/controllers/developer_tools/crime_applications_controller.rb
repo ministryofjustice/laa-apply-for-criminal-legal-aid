@@ -48,6 +48,7 @@ module DeveloperTools
         dob: rand(15..17).years.ago,
         nino: nil,
         will_enter_nino: nil,
+        has_benefit_evidence: nil,
         benefit_type: nil,
         last_jsa_appointment_date: nil,
         passporting_benefit: nil,
