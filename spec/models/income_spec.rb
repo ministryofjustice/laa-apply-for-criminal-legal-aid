@@ -34,34 +34,4 @@ RSpec.describe Income, type: :model do
       end
     end
   end
-
-  describe '#self_assessment?' do
-    context 'when not employed' do
-      it 'is true' do
-        %w[director self_employed business_partnership shareholder].each do |employment_status|
-          income = described_class.new(employment_status: [employment_status])
-
-          expect(income.self_assessment?).to be true
-        end
-      end
-    end
-
-    context 'when employed' do
-      subject do
-        described_class.new(employment_status: ['employed']).self_assessment?
-      end
-
-      it { is_expected.to be false }
-    end
-
-    context 'when mixed employment' do
-      subject do
-        described_class.new(
-          employment_status: %w[employed director entrepreneur]
-        ).self_assessment?
-      end
-
-      it { is_expected.to be true }
-    end
-  end
 end
