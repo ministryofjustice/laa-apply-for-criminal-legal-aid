@@ -9,6 +9,7 @@ RSpec.describe Steps::Evidence::UploadForm do
     }
   end
 
+  # Expect the StocksAndGilts and OwnShares rules to be triggered
   let(:crime_application) do
     CrimeApplication.create!(
       investments: [
@@ -21,7 +22,6 @@ RSpec.describe Steps::Evidence::UploadForm do
   describe '#prompt' do
     subject { form.prompt }
 
-    # Expect
     it 'generates sentences for the client' do
       sentences = subject.result_for(group: :capital, persona: :client).last.dig(:run, :client, :prompt)
 
