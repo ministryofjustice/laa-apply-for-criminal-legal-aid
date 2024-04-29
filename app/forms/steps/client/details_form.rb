@@ -43,6 +43,8 @@ module Steps
         {
           has_nino: nil,
           nino: nil,
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
           benefit_type: nil,
           last_jsa_appointment_date: nil,
           passporting_benefit: nil,

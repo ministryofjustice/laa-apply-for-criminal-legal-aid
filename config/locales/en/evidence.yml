@@ -35,6 +35,9 @@ en:
       # Live rules
       NationalInsuranceProof:
         other: their National Insurance number
+      RestraintOrFreezingOrder:
+        client: the restraint or freezing order
+        partner: the restraint or freezing order
       HousingCosts:
         client: their rental, tenancy agreement or mortgage statement
         partner: their rental, tenancy agreement or mortgage statement
