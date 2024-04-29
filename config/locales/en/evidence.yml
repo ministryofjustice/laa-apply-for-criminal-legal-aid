@@ -71,3 +71,45 @@ en:
       TrustFund:
         client: the trust document, or a certified copy
         partner: the trust document, or a certified copy
+      BankAccounts:
+        client: bank statements for the last 3 months, for each account declared by the applicant
+        partner: bank statements for the last 3 months, for each account declared by the applicant
+      BuildingSocietyAccounts:
+        client: building society statement or passbook showing transactions for the last 3 months, for each account
+        partner: building society statement or passbook showing transactions for the last 3 months, for each account
+      CashIsa:
+        client: cash ISA statements showing transactions for the last 3 months, for each account
+        partner: cash ISA statements showing transactions for the last 3 months, for each account
+      NationalSavingsAccount:
+        client: National Savings or Post Office account statements covering the last 3 months, for each account
+        partner: National Savings or Post Office account statements covering the last 3 months, for each account
+      CashInvestments:
+        client: statement, passbook, or certificate of cash investments covering the last 3 months
+        partner: statement, passbook, or certificate of cash investments covering the last 3 months
+      PremiumBonds:
+        client: copy of the Premium Savings Bonds or a Bond record
+        partner: copy of the Premium Savings Bonds or a Bond record
+      SavingsCerts:
+        client: the National Savings Certificates or passbook
+        partner: the National Savings Certificates or passbook
+      StocksAndGilts:
+        client: certificate or statement for each stock, gilt or government bond
+        partner: certificate or statement for each stock, gilt or government bond
+      OwnShares:
+        client: share certificate or latest dividend counterfoil for each company they hold shares in
+        partner: share certificate or latest dividend counterfoil for each company they hold shares in
+      PepPlans:
+        client: certificate or statement for each Personal Equity Plan investment
+        partner: certificate or statement for each Personal Equity Plan investment
+      ShareIsa:
+        client: certificate or statement for each Share ISA
+        partner: certificate or statement for each Share ISA
+      UnitTrusts:
+        client: certificate or statement for each Unit Trust investment
+        partner: certificate or statement for each Unit Trust investment
+      InvestmentBonds:
+        client: certificate or statement for each investment bond
+        partner: certificate or statement for each investment bond
+      OtherLumpSums:
+        client: statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months
+        partner: statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months
