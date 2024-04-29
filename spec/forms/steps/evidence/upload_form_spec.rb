@@ -12,8 +12,10 @@ RSpec.describe Steps::Evidence::UploadForm do
   let(:attributes) { {} }
 
   let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
+  let(:case) { instance_double(Case, case_type: CaseType::EITHER_WAY) }
+
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:)
+    instance_double(CrimeApplication, applicant:, case:)
   end
 
   describe '#prompt' do
@@ -26,6 +28,10 @@ RSpec.describe Steps::Evidence::UploadForm do
         :evidence_last_run_at => [],
         :evidence_last_run_at= => nil,
         :save! => true,
+      )
+
+      allow(applicant).to receive_messages(
+        under18?: false,
       )
     end
 

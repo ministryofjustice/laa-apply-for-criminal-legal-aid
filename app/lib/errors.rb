@@ -10,4 +10,5 @@ module Errors
   class UnsupportedPredicate < StandardError; end
   class InvalidRuleset < StandardError; end
   class DocumentUnavailable < NotFound; end
+  class DateOfBirthPending < StandardError; end
 end
