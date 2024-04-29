@@ -56,6 +56,14 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
   end
 
   describe '#show?' do
+    context 'when there are no outgoings' do
+      let(:outgoings) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
     context 'when there are outgoings payments' do
       let(:outgoings_payments) { [childcare_outgoing] }
 
