@@ -24,7 +24,6 @@ module Evidence
         income_rent_8
         income_other_9
         income_trust_10
-        income_restraint_freezing_order_31
 
         # Outgoings
         outgoings_housing_11
@@ -47,10 +46,10 @@ module Evidence
         capital_unit_trusts_27
         capital_investment_bonds_28
         capital_other_lump_sums_29
-        capital_restraint_freezing_order_31
 
         # Other
         national_insurance_32
+        restraint_freezing_order_31
       ].freeze
 
       attr_reader :crime_application

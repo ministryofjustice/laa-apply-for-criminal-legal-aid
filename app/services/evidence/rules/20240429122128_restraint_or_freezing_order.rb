@@ -1,13 +1,15 @@
 module Evidence
   module Rules
-    class CapitalRestraintOrFreezingOrder < Rule
+    class RestraintOrFreezingOrder < Rule
       include Evidence::RuleDsl
 
-      key :capital_restraint_freezing_order_31
+      key :restraint_freezing_order_31
+      # TODO: change to none
       group :capital
 
       client do |crime_application|
-        crime_application.capital&.has_frozen_income_or_assets == 'yes'
+        crime_application.capital&.has_frozen_income_or_assets == 'yes' ||
+          crime_application.income&.has_frozen_income_or_assets == 'yes'
       end
 
       # TODO: Awaiting partner implementation
