@@ -5,16 +5,16 @@ RSpec.describe Evidence::Prompt do
   let(:income) { instance_double(Income, client_owns_property: 'yes') }
   let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
   let(:capital) { instance_double(Capital, has_premium_bonds: 'yes') }
-  let(:case) { instance_double(Case, case_type: CaseType::EITHER_WAY) }
+  let(:kase) { nil }
 
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      case:,
       applicant:,
       income:,
       outgoings:,
       capital:,
+      kase:
     )
   end
 
@@ -50,11 +50,11 @@ RSpec.describe Evidence::Prompt do
       :evidence_prompts= => nil,
       :evidence_last_run_at => [],
       :evidence_last_run_at= => nil,
-      :save! => true,
+      :save! => true
     )
 
     allow(applicant).to receive_messages(
-      under18?: false,
+      under18?: false
     )
   end
 
@@ -199,6 +199,41 @@ RSpec.describe Evidence::Prompt do
         prompt = described_class.new(crime_application, ruleset).run
 
         expect(prompt.results).to eq persisted_evidence_prompts
+      end
+    end
+  end
+
+  describe '#exempt?' do
+    subject(:prompt) { described_class.new(crime_application) }
+
+    context 'when there are no exempt reasons' do
+      it 'returns false' do
+        expect(prompt.exempt?).to be false
+        expect(prompt.exempt_reasons).to be_empty
+      end
+    end
+
+    context 'when the client is under 18' do
+      before do
+        allow(applicant).to receive(:under18?).and_return true
+      end
+
+      it 'returns true and sets the reason' do
+        expect(prompt.exempt?).to be true
+        expect(prompt.exempt_reasons).to contain_exactly(
+          'your client was under 18 when the application was first made'
+        )
+      end
+    end
+
+    context 'when the client is in custody' do
+      let(:kase) { instance_double(Case, is_client_remanded: 'yes') }
+
+      it 'returns true and sets the reason' do
+        expect(prompt.exempt?).to be true
+        expect(prompt.exempt_reasons).to contain_exactly(
+          'you have told us they are remanded in custody'
+        )
       end
     end
   end

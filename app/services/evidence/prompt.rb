@@ -54,9 +54,7 @@ module Evidence
 
       [
         under18?,
-        case_in_court?,
-        case_indictable?,
-        remanded_in_custody?,
+        in_custody?
       ].any?(true)
     end
 
@@ -88,29 +86,21 @@ module Evidence
     private
 
     def under18?
+      return false unless crime_application.applicant
+
       result = crime_application.applicant&.under18?
       @exempt_reasons << I18n.t('evidence.exempt.under_18') if result
 
       result
     end
 
-    def case_in_court?
-      result = crime_application.case&.case_type.to_s == CaseType::ALREADY_IN_CROWN_COURT.to_s
-      @exempt_reasons << I18n.t('evidence.exempt.case_in_court') if result
+    def in_custody?
+      return false unless crime_application.kase&.is_client_remanded
+
+      result = crime_application.kase&.is_client_remanded == 'yes'
+      @exempt_reasons << I18n.t('evidence.exempt.in_custody') if result
 
       result
-    end
-
-    def case_indictable?
-      result = crime_application.case&.case_type.to_s == CaseType::INDICTABLE.to_s
-      @exempt_reasons << I18n.t('evidence.exempt.case_indictable') if result
-
-      result
-    end
-
-    # TODO:Evidence is not required if the applicant is remanded in Court Custody (Evidence: 1 section)
-    def remanded_in_custody?
-      false
     end
   end
 end

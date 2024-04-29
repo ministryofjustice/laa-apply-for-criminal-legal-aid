@@ -13,10 +13,8 @@ en:
         none: Other evidence of the partner's income, outgoings or capital
       other: Other evidence
     exempt:
-      under_18: your applicant was under 18 when the application was first made
-      partner_exempt: the partner is also a victim or codefendant
-      case_in_court: the case is already in court
-      case_indictable: the case is indictable
+      under_18: your client was under 18 when the application was first made
+      in_custody: you have told us they are remanded in custody
     rule:
       # Test rules
       ExampleRule1:
