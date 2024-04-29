@@ -5,12 +5,10 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      income:,
       outgoings:,
     )
   end
 
-  let(:income) { Income.new }
   let(:outgoings) { Outgoings.new }
 
   it { expect(described_class.key).to eq :income_p60_sa302_2 }
@@ -21,32 +19,16 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
-    context 'when self-assesment employment status' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::DIRECTOR]) }
-      let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'no') }
-
-      it { is_expected.to be true }
-    end
-
     context 'when high tax earner' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::EMPLOYED]) }
       let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'yes') }
 
       it { is_expected.to be true }
     end
 
-    context 'when employed and not high tax earner' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::EMPLOYED]) }
+    context 'when not high tax earner' do
       let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'no') }
 
       it { is_expected.to be false }
-    end
-
-    context 'when mixed employment status' do
-      let(:income) { Income.new(employment_status: %w[director employed]) }
-      let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: nil) }
-
-      it { is_expected.to be true }
     end
   end
 

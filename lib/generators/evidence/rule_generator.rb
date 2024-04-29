@@ -146,6 +146,33 @@ module Evidence
 
             it { expect(subject.to_h).to eq expected_hash }
           end
+
+          describe '#to_h' do
+            let(:expected_hash) do
+              {
+                id: '#{class_name}',
+                group: :income,
+                ruleset: nil,
+                key: :#{rule_key},
+                run: {
+                  client: {
+                    result: true,
+                    prompt: ['Add evidence.yml entry for rule #{class_name}: client'],
+                  },
+                  partner: {
+                    result: false,
+                    prompt: [],
+                  },
+                  other: {
+                    result: false,
+                    prompt: [],
+                  },
+                }
+              }
+            end
+
+            it { expect(subject.to_h).to eq expected_hash }
+          end
         end
       RUBY
     end

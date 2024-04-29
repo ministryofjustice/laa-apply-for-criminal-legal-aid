@@ -6,10 +6,22 @@ module Evidence
       key :income_benefits_0b
       group :income
 
-      # TODO: Rule requires clarification re: passporting benefits
+      # NOTE: client/partner rule triggered when they state
+      # they are in receipt of a passporting benefit and the
+      # DWP check returns a No or Undetermined result and they
+      # state they have evidence of receipt of the benefit
       client do |crime_application|
-        crime_application.income&.has_no_income_benefits == 'no' ||
-          crime_application.income_benefits.any?
+        if crime_application.applicant
+          conditions = [
+            crime_application.applicant.has_benefit_evidence == 'yes',
+            BenefitType.passporting.map(&:value).include?(crime_application.applicant.benefit_type&.to_sym),
+            [nil, false].include?(crime_application.applicant.passporting_benefit)
+          ]
+
+          conditions.all?
+        else
+          false
+        end
       end
 
       # TODO: Awaiting partner implementation
