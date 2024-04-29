@@ -1,14 +1,16 @@
 en:
   evidence:
-    group:
+    persona:
       client:
         income: Evidence of your client's income
         outgoings: Evidence of your client's outgoings
         capital: Evidence of your client's capital
+        none: Other evidence of your client\'s income, outgoings or capital
       partner:
         income: Evidence of the partner's income
         outgoings: Evidence of the partner's outgoings
         capital: Evidence of the partner's capital
+        none: Other evidence of the partner\'s income, outgoings or capital
       other: Other evidence
     rule:
       # Test rules
@@ -25,7 +27,8 @@ en:
 
       # Live rules
       NationalInsuranceProof:
-        other: their National Insurance number
+        client: your client National Insurance number
+        partner: your partner National Insurance number
       HousingCosts:
         client: their rental, tenancy agreement or mortgage statement
         partner: their rental, tenancy agreement or mortgage statement
