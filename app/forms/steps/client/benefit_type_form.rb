@@ -37,7 +37,8 @@ module Steps
 
       def attributes_to_reset
         {
-          'last_jsa_appointment_date' => (last_jsa_appointment_date if jsa?)
+          'last_jsa_appointment_date' => (last_jsa_appointment_date if jsa?),
+          'has_benefit_evidence' => nil,
         }
       end
 
