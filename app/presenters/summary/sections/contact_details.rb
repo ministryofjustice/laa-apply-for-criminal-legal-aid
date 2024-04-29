@@ -25,9 +25,9 @@ module Summary
         end
 
         answers.push(Components::FreeTextAnswer.new(
-          :home_address, full_address(home_address), show: show_home_address?,
+                       :home_address, full_address(home_address), show: show_home_address?,
           change_path: change_path(home_address)
-        ))
+                     ))
 
         answers << [
           Components::ValueAnswer.new(
