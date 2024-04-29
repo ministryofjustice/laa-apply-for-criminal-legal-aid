@@ -3,6 +3,10 @@ require 'laa_crime_schemas'
 module Summary
   module Sections
     class IncomePaymentsDetails < Sections::PaymentDetails
+      def show?
+        income&.has_no_income_payments == 'yes' || super
+      end
+
       private
 
       def payments
@@ -10,9 +14,9 @@ module Summary
       end
 
       def no_payments?
-        return false if section.has_no_income_payments.nil?
+        return false if income.has_no_income_payments.nil?
 
-        YesNoAnswer.new(section.has_no_income_payments).yes?
+        YesNoAnswer.new(income.has_no_income_payments).yes?
       end
 
       def edit_path
