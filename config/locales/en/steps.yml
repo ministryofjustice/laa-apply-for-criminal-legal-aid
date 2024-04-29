@@ -531,6 +531,7 @@ en:
         edit:
           page_title: Upload supporting evidence
           heading: Upload supporting evidence
+          exempt: Your client's application does not need any supporting evidence because %{reasons}. You may still upload any documents that will help your application.
           optional: No supporting evidence is required based on your current application, but you may upload any documents that will help your application.
           required: 'Based on your answers, use this page to provide:'
           recent_docs: All evidence must be from the last 3 months.

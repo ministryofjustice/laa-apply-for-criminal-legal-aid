@@ -74,15 +74,13 @@ module Evidence
         predicate = :"execute_#{persona}"
 
         memoized(predicate) do
-          if self.class.respond_to?(predicate)
+          if send(:"#{persona}_evidence_exempt?")
+            false
+          else
             allowable!(
               result: self.class.send(predicate, crime_application),
               persona: persona
             )
-          else
-            # :nocov:
-            false
-            # :nocov:
           end
         end
       end
@@ -136,6 +134,20 @@ module Evidence
       return instance_variable_get(instance_var) if instance_variable_defined?(instance_var)
 
       instance_variable_set instance_var, yield
+    end
+
+    # Partner evidence not required if they are
+    # a victim/witness/co-defendant with a conflict of interest
+    def partner_evidence_exempt?
+      # false
+    end
+
+    def client_evidence_exempt?
+      false
+    end
+
+    def other_evidence_exempt?
+      false
     end
   end
 end

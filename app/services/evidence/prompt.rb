@@ -1,6 +1,6 @@
 module Evidence
   class Prompt
-    attr_reader :crime_application, :ruleset
+    attr_reader :crime_application, :ruleset, :exempt_reasons
 
     def initialize(crime_application, ruleset = nil)
       @crime_application = crime_application
@@ -8,15 +8,19 @@ module Evidence
 
       @ruleset = ruleset || ::Evidence::Ruleset::Runner.new(crime_application).ruleset
       raise Errors::InvalidRuleset, 'Ruleset must provide rule definitions' unless @ruleset.respond_to?(:each)
+
+      @exempt_reasons = []
     end
 
-    def run
+    def run(ignore_exempt: true)
+      exempt! unless ignore_exempt
       results
 
       self
     end
 
-    def run!
+    def run!(ignore_exempt: true)
+      exempt! unless ignore_exempt
       results
 
       ::CrimeApplication.transaction do
@@ -29,12 +33,30 @@ module Evidence
       self
     end
 
+    # Check `#required?` for any rule predicates that evaluated to true
     def required?
-      run
+      return false if exempt?
 
-      @results.any? do |prompt|
-        prompt[:run].any? { |_persona, predicate| predicate[:result] == true }
-      end
+      run
+      results?
+    end
+
+    def exempt!
+      @results = [] if exempt?
+    end
+
+    # Partner evidence exempted per rule because it is not a reason to
+    # skip prompt result generatation.
+    #
+    # See Rule#partner_evidence_exempt?
+    def exempt?
+      @exempt_reasons = []
+
+      [
+        under18?,
+        case_in_court?,
+        case_indictable?,
+      ].any?(true)
     end
 
     def result_for?(group:, persona:)
@@ -45,12 +67,44 @@ module Evidence
       results.select { |r| (r[:group] == group.to_sym) && (r[:run][persona.to_sym][:result] == true) }
     end
 
+    def results?
+      Array.wrap(@results).any? do |prompt|
+        prompt[:run].any? { |_persona, predicate| predicate[:result] == true }
+      end
+    end
+
+    # If exempt! has been run then @results will already be set
+    # and therefore the ruleset will never be executed which may
+    # not be very useful?
     def results
       @results ||= ruleset.map do |rule|
         rule.new(crime_application).to_h.merge(
           ruleset: ruleset.to_s,
         )
       end
+    end
+
+    private
+
+    def under18?
+      result = crime_application.applicant&.under18?
+      @exempt_reasons << I18n.t('evidence.exempt.under_18') if result
+
+      result
+    end
+
+    def case_in_court?
+      result = crime_application.case&.case_type.to_s == CaseType::ALREADY_IN_CROWN_COURT.to_s
+      @exempt_reasons << I18n.t('evidence.exempt.case_in_court') if result
+
+      result
+    end
+
+    def case_indictable?
+      result = crime_application.case&.case_type.to_s == CaseType::INDICTABLE.to_s
+      @exempt_reasons << I18n.t('evidence.exempt.case_indictable') if result
+
+      result
     end
   end
 end
