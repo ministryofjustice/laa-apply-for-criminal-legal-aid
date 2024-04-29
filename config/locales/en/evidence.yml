@@ -24,11 +24,14 @@ en:
         client:
           - a birth certificate
           - a driving licence
+      ExampleOfOther:
+        client: your client's extra evidence
+        partner: the partner's other evidence
+        other: any useful information about your legal practice
 
       # Live rules
       NationalInsuranceProof:
-        client: your client National Insurance number
-        partner: your partner National Insurance number
+        other: their National Insurance number
       HousingCosts:
         client: their rental, tenancy agreement or mortgage statement
         partner: their rental, tenancy agreement or mortgage statement
