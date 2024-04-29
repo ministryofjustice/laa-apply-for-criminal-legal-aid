@@ -5,12 +5,12 @@ en:
         income: Evidence of your client's income
         outgoings: Evidence of your client's outgoings
         capital: Evidence of your client's capital
-        none: Other evidence of your client\'s income, outgoings or capital
+        none: Other evidence of your client's income, outgoings or capital
       partner:
         income: Evidence of the partner's income
         outgoings: Evidence of the partner's outgoings
         capital: Evidence of the partner's capital
-        none: Other evidence of the partner\'s income, outgoings or capital
+        none: Other evidence of the partner's income, outgoings or capital
       other: Other evidence
     rule:
       # Test rules
