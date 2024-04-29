@@ -57,7 +57,7 @@ RSpec.describe 'Evidence upload page', :authorized do
 
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row:nth-of-type(1)' do
-          assert_select 'span:nth-of-type(1)', 'test.pdf'
+          assert_select 'span._uploaded_file__filename', 'test.pdf'
           assert_select 'strong.govuk-tag:nth-of-type(1)', 'Uploaded'
         end
       end
@@ -95,6 +95,45 @@ RSpec.describe 'Evidence upload page', :authorized do
           assert_select 'p:nth-of-type(1)',
                         "Error: #{I18n.t('activerecord.errors.models.document.attributes.s3_object_key.blank')}"
         end
+      end
+    end
+  end
+
+  describe 'download' do
+    let(:crime_application) { CrimeApplication.first }
+
+    before do
+      stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_download')
+        .to_return(status: 200, body: '{"object_key":"123/abcdef1234", "url":"https://secure.com/123/abcdef1234?fileinfo"}')
+
+      get download_crime_application_document_path(crime_application, document)
+    end
+
+    context 'when document belongs to application' do
+      let(:document) { crime_application.documents.first }
+
+      it 'allows download' do
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to('https://secure.com/123/abcdef1234?fileinfo')
+      end
+    end
+
+    context 'when document does not belong to application' do
+      let(:document) do
+        doc = Document.create_from_file(
+          file: fixture_file_upload('uploads/test.pdf', 'application/pdf'),
+          crime_application: CrimeApplication.create
+        )
+
+        doc.update(s3_object_key: '123/abcdef1234')
+        doc
+      end
+
+      it 'disallows download' do
+        expect(document.crime_application).not_to eq crime_application
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(%r{/errors/not_found})
       end
     end
   end
