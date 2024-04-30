@@ -92,7 +92,7 @@ class CrimeApplication < ApplicationRecord
       CaseType::ALREADY_IN_CROWN_COURT.to_s
     ]
 
-    applicant.benefit_type.present? || case_types.include?(self.case&.case_type) || income_benefits.any?
+    applicant.has_passporting_benefit? || case_types.include?(self.case&.case_type) || income_benefits.any?
   end
 
   # rubocop:disable Metrics/AbcSize
