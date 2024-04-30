@@ -33,11 +33,12 @@ en:
         other: any useful information about your legal practice
 
       # Live rules
-      NationalInsuranceProof:
-        other: their National Insurance number
       RestraintOrFreezingOrder:
         client: the restraint or freezing order
         partner: the restraint or freezing order
+      NationalInsuranceNumber:
+        client: their National Insurance number
+        partner: their National Insurance number
       HousingCosts:
         client: their rental, tenancy agreement or mortgage statement
         partner: their rental, tenancy agreement or mortgage statement

@@ -19,139 +19,15 @@ RSpec.describe Steps::Client::HasNinoForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
   let(:applicant_record) { Applicant.new }
   let(:not_means_tested) { false }
-  # TODO: CRIMAPP-660 clean up code once means journey is enabled
-  let(:feature_flag_means_journey_enabled) { false }
 
   before do
-    allow(FeatureFlags).to receive(:means_journey) {
-      instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-    }
-
     allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
   end
 
-  describe '#save' do
-    context 'validations' do
-      context 'when `nino` is blank' do
-        let(:nino) { '' }
-
-        it 'has a validation error on the field' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:nino, :blank)).to be(true)
-        end
-      end
-
-      context 'when `nino` is invalid' do
-        context 'with a random string' do
-          let(:nino) { 'not a NINO' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
-          end
-        end
-
-        context 'with an unused prefix' do
-          let(:nino) { 'BG123456C' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
-          end
-        end
-      end
-
-      context 'when `nino` is valid' do
-        context 'with spaces between numbers' do
-          let(:nino) { 'AB 12 34 56 C' }
-
-          it 'passes validation' do
-            expect(subject).to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
-          end
-
-          it 'removes spaces from input' do
-            expect(subject.nino).to eq('AB123456C')
-          end
-        end
-
-        context 'with trailing spaces' do
-          let(:nino) { ' AB 1234 56C ' }
-
-          it 'passed validation' do
-            expect(subject).to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
-          end
-        end
-      end
-
-      context 'when application is not means tested' do
-        let(:not_means_tested) { true }
-
-        context 'when `nino` is blank' do
-          let(:nino) { '' }
-
-          it 'does not have a validation error on the field' do
-            expect(subject).to be_valid
-            expect(subject.errors.of_kind?(:nino, :blank)).to be(false)
-          end
-        end
-
-        context 'when `nino` a random string' do
-          let(:nino) { 'not a NINO' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
-          end
-        end
-
-        context 'when `nino` has an unused prefix' do
-          let(:nino) { 'BG123456C' }
-
-          it 'has a validation error on the field' do
-            expect(subject).not_to be_valid
-            expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
-          end
-        end
-      end
-    end
-
-    context 'when validations pass' do
-      let(:applicant_record) { Applicant.new(form_attributes) }
-      let(:nino) { 'AB123456C' }
-
-      context 'when NINO has changed' do
-        let(:form_attributes) { super().merge(nino: 'NC123456A') }
-
-        it_behaves_like 'a has-one-association form',
-                        association_name: :applicant,
-                        expected_attributes: {
-                          'nino' => 'NC123456A',
-                          'has_nino' => nil,
-                          'benefit_type' => nil,
-                          'last_jsa_appointment_date' => nil,
-                          'passporting_benefit' => nil,
-                          'will_enter_nino' => nil,
-                          'has_benefit_evidence' => nil,
-                        }
-      end
-
-      context 'when NINO is the same as in the persisted record' do
-        it 'does not save the record but returns true' do
-          expect(applicant_record).not_to receive(:update)
-          expect(subject.save).to be(true)
-        end
-      end
-    end
-  end
-
-  context 'feature flag `means_journey` is enabled' do
+  describe 'Has nino form' do
     let(:form_attributes) do
       { nino:, has_nino: }
     end
-
-    let(:feature_flag_means_journey_enabled) { true }
 
     let(:nino) { nil }
     let(:has_nino) { nil }
@@ -227,6 +103,90 @@ RSpec.describe Steps::Client::HasNinoForm do
         context 'when `has_nino` answer is yes' do
           let(:has_nino) { YesNoAnswer::YES.to_s }
           let(:nino) { 'AB123456C' }
+
+          context 'when `nino` is blank' do
+            let(:nino) { '' }
+
+            it 'has a validation error on the field' do
+              expect(subject).not_to be_valid
+              expect(subject.errors.of_kind?(:nino, :blank)).to be(true)
+            end
+          end
+
+          context 'when `nino` is invalid' do
+            context 'with a random string' do
+              let(:nino) { 'not a NINO' }
+
+              it 'has a validation error on the field' do
+                expect(subject).not_to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+              end
+            end
+
+            context 'with an unused prefix' do
+              let(:nino) { 'BG123456C' }
+
+              it 'has a validation error on the field' do
+                expect(subject).not_to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+              end
+            end
+          end
+
+          context 'when `nino` is valid' do
+            context 'with spaces between numbers' do
+              let(:nino) { 'AB 12 34 56 C' }
+
+              it 'passes validation' do
+                expect(subject).to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
+              end
+
+              it 'removes spaces from input' do
+                expect(subject.nino).to eq('AB123456C')
+              end
+            end
+
+            context 'with trailing spaces' do
+              let(:nino) { ' AB 1234 56C ' }
+
+              it 'passed validation' do
+                expect(subject).to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
+              end
+            end
+          end
+
+          context 'when application is not means tested' do
+            let(:not_means_tested) { true }
+
+            context 'when `nino` is blank' do
+              let(:nino) { '' }
+
+              it 'does not have a validation error on the field' do
+                expect(subject).to be_valid
+                expect(subject.errors.of_kind?(:nino, :blank)).to be(false)
+              end
+            end
+
+            context 'when `nino` a random string' do
+              let(:nino) { 'not a NINO' }
+
+              it 'has a validation error on the field' do
+                expect(subject).not_to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+              end
+            end
+
+            context 'when `nino` has an unused prefix' do
+              let(:nino) { 'BG123456C' }
+
+              it 'has a validation error on the field' do
+                expect(subject).not_to be_valid
+                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+              end
+            end
+          end
 
           context 'when a `nino` was previously recorded' do
             it 'is valid' do
