@@ -7,7 +7,7 @@ describe Summary::Sections::Codefendants do
     instance_double(
       CrimeApplication,
       in_progress?: true,
-      case: kase,
+      kase: kase,
     )
   end
 

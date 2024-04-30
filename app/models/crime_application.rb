@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord
   attr_readonly :application_type
 
   has_one :case, dependent: :destroy
+  alias kase case
 
   has_one :applicant, dependent: :destroy
   has_one :partner, dependent: :destroy
@@ -68,4 +69,12 @@ class CrimeApplication < ApplicationRecord
   # validation to ensure some key details are fulfilled
   validates_with ApplicationFulfilmentValidator, on: :submission, unless: :post_submission_evidence?
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
+
+  validate on: :client_details do
+    ::ClientDetails::AnswersValidator.new(self).validate
+  end
+
+  def client_details_complete?
+    valid?(:client_details)
+  end
 end

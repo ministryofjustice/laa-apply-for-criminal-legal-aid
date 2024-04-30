@@ -8,18 +8,19 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
     {
       crime_application: crime_application,
       record: property_record,
-      property_owners_attributes: property_owners_attributes
+      property_owners_attributes: property_owners_attributes,
+      step_name: step_name,
     }
   end
 
   let(:crime_application) { CrimeApplication.new }
-  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application) }
+  let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application, percentage_applicant_owned: percentage_applicant_owned) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '50' }
+    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '20' }
+    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes3) {
     { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '10' }
@@ -32,6 +33,8 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       '2' => property_owners_attributes3
     }
   end
+  let(:percentage_applicant_owned) { 10 }
+  let(:step_name) { :property_owners }
 
   describe 'validations' do
     context 'property owners' do
@@ -77,6 +80,35 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       end
     end
 
+    context 'when total percentage ownership is not valid' do
+      let(:property_owners_attributes3) {
+        { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '100' }
+      }
+
+      context 'when saving form' do
+        before do
+          expect(subject).not_to be_valid
+          expect(subject.save).to be(false)
+        end
+
+        it 'has errors when when total percentage ownership is over 100' do
+          expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :invalid)).to be(true)
+          expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
+            'Percentages entered need to total 100%'
+          )
+        end
+      end
+
+      context 'when adding a property owner' do
+        let(:step_name) { :add_property_owner }
+
+        it 'does not perform the validation' do
+          expect(subject).to be_valid
+        end
+      end
+    end
+
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     describe '#any_marked_for_destruction?' do
       # NOTE: this scenario requires real DB records to exercise nested attributes
       context 'there are property owners marked for destruction' do
@@ -113,6 +145,7 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe '#save' do
     context 'for valid details' do

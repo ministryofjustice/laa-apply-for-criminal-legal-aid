@@ -3,7 +3,7 @@ en:
   tasklist:
     heading_text:
       initial: Make a new application
-      post_submission_evidence: Add supporting evidence
+      post_submission_evidence: Upload supporting evidence
     heading:
       client_details: About your client
       case_details: About the case
@@ -17,9 +17,8 @@ en:
       case_details: Case details
       ioj: Justification for legal aid
       income_assessment: Income assessment
+      outgoings_assessment: Outgoings assessment
       capital_assessment: Capital assessment
-      check_your_answers: Check your answers
-      check_assessment_result: Check means assessment result
       evidence_upload: Upload evidence
       review: Review the application
       declaration: Confirm declaration and submit application

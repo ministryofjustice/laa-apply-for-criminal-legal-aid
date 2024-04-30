@@ -2,8 +2,10 @@ module Passporting
   class MeansPassporter < BasePassporter
     def call
       return passported? if resubmission?
+      return true if appeal_no_changes?
 
       means_passport = []
+
       means_passport << MeansPassportType::ON_NOT_MEANS_TESTED if app_not_means_tested?
       means_passport << MeansPassportType::ON_AGE_UNDER18      if applicant_under18?
       means_passport << MeansPassportType::ON_BENEFIT_CHECK    if benefit_check_passed?
@@ -42,6 +44,7 @@ module Passporting
     private
 
     def app_not_means_tested?
+      return false unless FeatureFlags.non_means_tested.enabled?
       return true if crime_application.is_means_tested == 'no'
 
       false
@@ -53,6 +56,13 @@ module Passporting
 
     def benefit_check_passed?
       applicant.passporting_benefit.present?
+    end
+
+    def appeal_no_changes?
+      return false unless crime_application.case
+
+      (crime_application.case.case_type == 'appeal_to_crown_court') &&
+        (crime_application.case.appeal_financial_circumstances_changed == 'no')
     end
   end
 end

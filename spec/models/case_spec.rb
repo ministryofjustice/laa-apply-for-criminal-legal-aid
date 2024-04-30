@@ -1,9 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Case, type: :model do
-  subject { described_class.new(attributes) }
+  subject(:instance) { described_class.new(attributes) }
 
   let(:attributes) { {} }
+
+  let(:case_attributes) do
+    {
+      crime_application: CrimeApplication.new,
+      hearing_court_name: 'court name',
+      hearing_date: Time.zone.today,
+      is_first_court_hearing: nil,
+      first_court_hearing_name: nil,
+      has_case_concluded: nil,
+      date_case_concluded: nil,
+      is_client_remanded: nil,
+      date_client_remanded: nil,
+      is_preorder_work_claimed: nil,
+      preorder_work_date: nil,
+      preorder_work_details: nil
+    }
+  end
 
   describe '#hearing_court' do
     let(:attributes) { { hearing_court_name: court_name } }
@@ -63,22 +80,6 @@ RSpec.describe Case, type: :model do
 
   # rubocop:disable RSpec/PredicateMatcher
   describe 'complete?' do
-    let(:case_attributes) do
-      {
-        hearing_court_name: 'court name',
-        hearing_date: Time.zone.today,
-        is_first_court_hearing: nil,
-        first_court_hearing_name: nil,
-        has_case_concluded: nil,
-        date_case_concluded: nil,
-        is_client_remanded: nil,
-        date_client_remanded: nil,
-        is_preorder_work_claimed: nil,
-        preorder_work_date: nil,
-        preorder_work_details: nil
-      }
-    end
-
     context 'case hearing attributes' do
       let(:attributes) { case_attributes }
 
@@ -173,4 +174,23 @@ RSpec.describe Case, type: :model do
     end
   end
   # rubocop:enable RSpec/PredicateMatcher
+
+  describe 'valid?(:submission)' do
+    subject(:valid?) { instance.valid?(:submission) }
+
+    context 'when not complete?' do
+      it { is_expected.to be false }
+
+      it 'has errors on base' do
+        valid?
+        expect(instance.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when complete?' do
+      let(:attributes) { case_attributes }
+
+      it { is_expected.to be true }
+    end
+  end
 end

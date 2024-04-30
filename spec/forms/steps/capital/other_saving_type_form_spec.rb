@@ -4,10 +4,15 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
   let(:crime_application) { instance_double(CrimeApplication, savings:) }
-  let(:savings) { class_double(Saving, where: existing_savings) }
-  let(:existing_savings) { [instance_double(Saving, complete?: false)] }
-  let(:saving_type) { SavingType.values.sample }
+  let(:savings) { double }
+  let(:saving_type) { SavingType.values.sample.to_s }
   let(:new_saving) { instance_double(Saving) }
+
+  describe '#choices' do
+    it 'returns saving types' do
+      expect(form.choices).to match SavingType.values
+    end
+  end
 
   describe '#save' do
     before do
@@ -21,6 +26,14 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
       it 'a new saving of the saving type is created' do
         expect(form.saving).to be new_saving
         expect(savings).to have_received(:create!).with(saving_type:)
+      end
+    end
+
+    context 'when saving type is an empty string' do
+      let(:saving_type) { '' }
+
+      it 'does not create a saving' do
+        expect(savings).not_to have_received(:create!).with(saving_type:)
       end
     end
   end

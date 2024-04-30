@@ -41,10 +41,6 @@ module Summary
       def change_path
         edit_steps_capital_premium_bonds_path(crime_application)
       end
-
-      def capital
-        @capital ||= crime_application.capital
-      end
     end
     # rubocop:enable Naming/PredicateName, Metrics/MethodLength, Metrics/AbcSize
   end

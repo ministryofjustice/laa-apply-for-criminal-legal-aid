@@ -18,7 +18,7 @@ module Steps
       private
 
       def all_charges_have_details
-        errors.add(:add_offence, :missing_details) unless charges.all?(&:complete?)
+        errors.add(:base, :missing_details) unless charges.all?(&:complete?)
       end
 
       # NOTE: this step is not persisting anything to DB.

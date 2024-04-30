@@ -19,12 +19,6 @@ RSpec.describe Steps::Address::LookupForm do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:postcode) }
-
-    context 'when clearing an address' do
-      let(:step_name) { :clear_address }
-
-      it { is_expected.not_to validate_presence_of(:postcode) }
-    end
   end
 
   describe '#save' do
@@ -77,25 +71,6 @@ RSpec.describe Steps::Address::LookupForm do
       context 'when the postcode is the same as in the persisted record' do
         it 'does not save the record but returns true' do
           expect(address_record).not_to receive(:update)
-          expect(subject.save).to be(true)
-        end
-      end
-
-      context 'when clearing an address' do
-        let(:step_name) { :clear_address }
-
-        it 'updates the record clearing all address attributes' do
-          expect(address_record).to receive(:update).with(
-            {
-              postcode: nil,
-              address_line_one: nil,
-              address_line_two: nil,
-              city: nil,
-              country: nil,
-              lookup_id: nil,
-            }
-          ).and_return(true)
-
           expect(subject.save).to be(true)
         end
       end

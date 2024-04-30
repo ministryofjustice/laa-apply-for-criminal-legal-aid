@@ -9,8 +9,8 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:has_premium_bonds, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }) do %>
         <%= f.govuk_radio_button :has_premium_bonds, YesNoAnswer::YES do %>
-          <%= f.govuk_number_field :premium_bonds_total_value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
           <%= f.govuk_text_field :premium_bonds_holder_number, autocomplete: 'off', extra_letter_spacing: true, width: 'one-third' %>
+          <%= f.govuk_number_field :premium_bonds_total_value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
         <% end %>
 
         <%= f.govuk_radio_button :has_premium_bonds, YesNoAnswer::NO %>

@@ -54,7 +54,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/clients_assets',
+          href: '/applications/APP123/steps/capital/add_assets',
           exact_text: 'Edit Residential property'
         )
       end

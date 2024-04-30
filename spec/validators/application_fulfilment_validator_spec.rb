@@ -1,12 +1,17 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :case, :ioj, :income, :documents, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :outgoings,
+                                           :applicant, :capital, :documents, :means_passport, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
     def to_param
       '12345'
+    end
+
+    def client_details_complete?
+      true
     end
   end
 end
@@ -18,31 +23,53 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:arguments) do
     {
       is_means_tested:,
-      case:,
+      kase:,
       ioj:,
       income:,
-      documents:
+      outgoings:,
+      capital:,
+      documents:,
+      means_passport:,
+      applicant:
     }
   end
 
   let(:is_means_tested) { 'yes' }
+  let(:means_passport) { nil }
 
-  let(:case) {
-    instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
+  let(:kase) {
+    instance_double(Case, case_type:, appeal_original_app_submitted:, appeal_reference_number:, appeal_usn:,
+is_client_remanded:, date_client_remanded:)
   }
+
+  let(:outgoings) { instance_double(Outgoings) }
+  let(:capital) { instance_double(Capital) }
+
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
 
   let(:case_type) { 'either_way' }
+  let(:appeal_original_app_submitted) { nil }
+  let(:appeal_reference_number) { nil }
+  let(:appeal_usn) { nil }
+  let(:applicant) { instance_double(Applicant, has_benefit_evidence: nil, benefit_type: nil) }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
 
-  let(:income) { instance_double(Income, employment_status:) }
+  let(:income) { instance_double(Income, employment_status: employment_status, income_above_threshold: 'yes') }
+
   let(:employment_status) { [] }
 
   let(:documents) { double(stored: stored_documents) }
   let(:stored_documents) { [] }
+
+  before do
+    allow(kase).to receive(:complete?).and_return(true)
+    allow(capital).to receive(:complete?).and_return(true)
+    allow(outgoings).to receive(:complete?).and_return(true)
+    allow(income).to receive(:complete?).and_return(true)
+  end
 
   context 'MeansPassporter validation' do
     before do
@@ -182,6 +209,92 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
           expect(subject.errors.of_kind?(:base, :case_type_missing)).to be(true)
           expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case_type')
         end
+      end
+    end
+  end
+
+  describe 'validating section completeness' do
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_result)
+      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+    end
+
+    let(:means_result) { true }
+
+    it { is_expected.to be_valid }
+
+    context 'when case section is not complete' do
+      before do
+        expect(kase).to receive(:complete?).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when client details section is not complete' do
+      before do
+        expect(subject).to receive(:client_details_complete?).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when not means tested' do
+      let(:is_means_tested) { 'no' }
+
+      context 'and capital section is not complete' do
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context 'when means tested and not means-passported' do
+      let(:is_means_tested) { 'yes' }
+      let(:means_result) { false }
+      let(:employment_status) { ['not_working'] }
+
+      context 'and capital section is not complete' do
+        before do
+          expect(capital).to receive(:complete?).and_return(false)
+        end
+
+        it { is_expected.not_to be_valid }
+
+        it 'adds the incomplete record error to base' do
+          subject.valid?
+          expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+        end
+      end
+
+      context 'and capital section is not required' do
+        let(:income) do
+          instance_double(
+            Income,
+            employment_status: employment_status,
+            income_above_threshold: 'no',
+            has_frozen_income_or_assets: 'no',
+            client_owns_property: 'no',
+            has_savings: 'no'
+          )
+        end
+
+        before do
+          expect(capital).not_to receive(:complete?)
+          expect(outgoings).not_to receive(:complete?)
+
+          subject.valid?
+        end
+
+        it { is_expected.to be_valid }
       end
     end
   end

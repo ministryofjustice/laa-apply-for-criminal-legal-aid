@@ -13,7 +13,7 @@ module Steps
       private
 
       def persist!
-        capital.update(attributes)
+        capital.update(has_national_savings_certificates:)
 
         return true if has_national_savings_certificates.no?
 

@@ -41,6 +41,16 @@ RSpec.describe CrimeApplication, type: :model do
     end
   end
 
+  describe 'evidence' do
+    it 'has an initial empty prompts' do
+      expect(subject.evidence_prompts).to eq []
+    end
+
+    it 'has no evidence last run at' do
+      expect(subject.evidence_last_run_at).to be_nil
+    end
+  end
+
   it 'has an initial status value of "in_progress"' do
     expect(subject.status).to eq('in_progress')
   end

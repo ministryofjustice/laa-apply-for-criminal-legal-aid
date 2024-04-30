@@ -13,12 +13,6 @@ module Summary
           )
         ].select(&:show?)
       end
-
-      private
-
-      def capital
-        @capital ||= crime_application.capital
-      end
     end
   end
 end

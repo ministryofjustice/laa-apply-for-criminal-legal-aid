@@ -18,7 +18,7 @@ module Steps
         fieldset_attributes = Steps::Income::IncomeBenefitFieldsetForm.attribute_names
 
         [
-          payment_types.product([fieldset_attributes]).to_h.merge('types' => [], 'benefit_payments' => [])
+          payment_types.product([fieldset_attributes]).to_h.merge('types' => [], 'income_benefits' => [])
         ]
       end
     end

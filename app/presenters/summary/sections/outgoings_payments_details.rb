@@ -1,10 +1,18 @@
 module Summary
   module Sections
     class OutgoingsPaymentsDetails < Sections::PaymentDetails
+      def show?
+        return false if outgoings.blank?
+
+        outgoings.has_no_other_outgoings == 'yes' || super
+      end
+
       private
 
-      def section
-        @section ||= crime_application.outgoings
+      def no_payments?
+        return false if outgoings.has_no_other_outgoings.nil?
+
+        YesNoAnswer.new(outgoings.has_no_other_outgoings).yes?
       end
 
       def payments

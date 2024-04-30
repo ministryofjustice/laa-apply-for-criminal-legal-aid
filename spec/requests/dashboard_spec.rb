@@ -10,9 +10,9 @@ RSpec.describe 'Dashboard', :authorized do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
 
   describe 'start a new application' do
-    context 'when means journey feature flag is enabled' do
+    context 'when non_means_tested feature flag is enabled' do
       before do
-        allow(FeatureFlags).to receive(:means_journey) {
+        allow(FeatureFlags).to receive(:non_means_tested) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         }
       end
@@ -25,9 +25,9 @@ RSpec.describe 'Dashboard', :authorized do
       end
     end
 
-    context 'when means journey feature flag is not enabled' do
+    context 'when `non means tested` feature flag is not enabled' do
       before do
-        allow(FeatureFlags).to receive(:means_journey) {
+        allow(FeatureFlags).to receive(:non_means_tested) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: false)
         }
       end
@@ -63,8 +63,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'button.govuk-button', count: 0, text: 'Update application'
     end
 
-    it 'does not have a button to "Add supporting evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+    it 'does not have a button to "Upload supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
     end
 
     context 'when the application has been reviewed' do
@@ -72,8 +72,8 @@ RSpec.describe 'Dashboard', :authorized do
         LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
       end
 
-      it 'has a button to "Add supporting evidence"' do
-        assert_select 'button.govuk-button', count: 1, text: 'Add supporting evidence'
+      it 'has a button to "Upload supporting evidence"' do
+        assert_select 'button.govuk-button', count: 1, text: 'Upload supporting evidence'
       end
 
       it 'creates a new PSE application' do
@@ -85,7 +85,7 @@ RSpec.describe 'Dashboard', :authorized do
 
         follow_redirect!
 
-        assert_select 'h1', 'Add supporting evidence'
+        assert_select 'h1', 'Upload supporting evidence'
       end
 
       context 'when PSE feature flag is not enabled' do
@@ -97,8 +97,8 @@ RSpec.describe 'Dashboard', :authorized do
           get completed_crime_application_path(application_fixture_id)
         end
 
-        it 'does not have a button to "Add supporting evidence"' do
-          assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+        it 'does not have a button to "Upload supporting evidence"' do
+          assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
         end
       end
     end
@@ -111,7 +111,7 @@ RSpec.describe 'Dashboard', :authorized do
           assert_select 'dd:nth-of-type(1)', '6000001'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dt:nth-of-type(1)', 'Means tested application'
           assert_select 'dd:nth-of-type(1)', 'Yes'
         end
         assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
@@ -216,8 +216,8 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'h1', 'Application for a criminal legal aid representation order'
     end
 
-    it 'does not have a button to "Add supporting evidence"' do
-      assert_select 'button.govuk-button', count: 0, text: 'Add supporting evidence'
+    it 'does not have a button to "Upload supporting evidence"' do
+      assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
     end
 
     # rubocop:disable Layout/LineLength
@@ -252,7 +252,7 @@ RSpec.describe 'Dashboard', :authorized do
         end
 
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row:nth-of-type(2)' do
-          assert_select 'dt:nth-of-type(1)', 'Application is subject to the usual means test'
+          assert_select 'dt:nth-of-type(1)', 'Means tested application'
           assert_select 'dd:nth-of-type(1)', 'Yes'
         end
       end
@@ -303,7 +303,7 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'p:nth-of-type(3)', 'Doe'
 
         assert_select 'h3:nth-of-type(4)', 'Date of birth'
-        assert_select 'p:nth-of-type(4)', '1 Feb 1990'
+        assert_select 'p:nth-of-type(4)', '1 February 1990'
 
         assert_select 'h3:nth-of-type(5)', 'Date stamp'
         assert_select 'p:nth-of-type(5)', '21 April 2023 12:15am'

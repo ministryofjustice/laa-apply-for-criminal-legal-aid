@@ -55,6 +55,9 @@ RSpec.describe Steps::Client::DetailsForm do
                             :nino => nil,
                             :benefit_type => nil,
                             :passporting_benefit => nil,
+                            :last_jsa_appointment_date => nil,
+                            :will_enter_nino => nil,
+                            :has_benefit_evidence => nil,
                           }
         end
 
@@ -73,6 +76,9 @@ RSpec.describe Steps::Client::DetailsForm do
                             :nino => nil,
                             :benefit_type => nil,
                             :passporting_benefit => nil,
+                            :last_jsa_appointment_date => nil,
+                            :will_enter_nino => nil,
+                            :has_benefit_evidence => nil,
                           }
         end
       end

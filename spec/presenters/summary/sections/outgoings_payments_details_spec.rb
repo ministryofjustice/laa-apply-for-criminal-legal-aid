@@ -16,10 +16,12 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
     instance_double(
       Outgoings,
       housing_payment_type: 'none',
+      has_no_other_outgoings: has_no_other_outgoings
     )
   end
 
   let(:outgoings_payments) { [] }
+  let(:has_no_other_outgoings) { nil }
 
   let(:childcare_outgoing) do
     instance_double(
@@ -54,8 +56,36 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
   end
 
   describe '#show?' do
-    it 'shows this section' do
-      expect(subject.show?).to be(true)
+    context 'when there are no outgoings' do
+      let(:outgoings) { nil }
+
+      it 'shows this section' do
+        expect(subject.show?).to be false
+      end
+    end
+
+    context 'when there are outgoings payments' do
+      let(:outgoings_payments) { [childcare_outgoing] }
+
+      it 'shows this section' do
+        expect(subject.show?).to be true
+      end
+    end
+
+    context 'when there are no outgoings payments' do
+      context 'when the question was shown' do
+        let(:has_no_other_outgoings) { 'yes' }
+
+        it 'shows this section' do
+          expect(subject.show?).to be true
+        end
+      end
+
+      context 'when the question was not shown' do
+        it 'does not show this section' do
+          expect(subject.show?).to be false
+        end
+      end
     end
   end
 
@@ -98,7 +128,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         }
 
         it 'has the correct rows' do
-          path = '/applications/12345/steps/outgoings/which_payments_does_client_pay'
+          path = '/applications/12345/steps/outgoings/which_payments'
 
           expect(answers.count).to eq(rows.size)
 
@@ -142,7 +172,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
           [
             [
               Summary::Components::FreeTextAnswer,
-              'childcare_outgoing', 'Does not get',
+              'childcare_outgoing', 'Does not pay',
               '#steps-outgoings-outgoings-payments-form-types-childcare-field'
             ],
             [
@@ -152,14 +182,14 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'legal_aid_contribution_outgoing', 'Does not get',
+              'legal_aid_contribution_outgoing', 'Does not pay',
               '#steps-outgoings-outgoings-payments-form-types-legal-aid-contribution-field'
             ]
           ]
         }
 
         it 'has the correct rows' do
-          path = '/applications/12345/steps/outgoings/which_payments_does_client_pay'
+          path = '/applications/12345/steps/outgoings/which_payments'
 
           expect(answers.count).to eq(rows.size)
 
@@ -185,6 +215,7 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
       end
 
       context 'when no outgoings payments are reported' do
+        # Rent is not a type of other outgoing payment so is filtered out of the outgoing payments
         let(:rent_outgoing) do
           instance_double(
             OutgoingsPayment,
@@ -195,13 +226,14 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
         end
 
         let(:outgoings_payments) { [rent_outgoing] }
+        let(:has_no_other_outgoings) { 'yes' }
 
         it 'filters out the housing payments to show correct output' do
           expect(answers.count).to eq(1)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:which_outgoings)
-          expect(answers[0].change_path).to match('applications/12345/steps/outgoings/which_payments_does_client_pay')
+          expect(answers[0].change_path).to match('applications/12345/steps/outgoings/which_payments')
           expect(answers[0].value).to eq('none')
         end
       end

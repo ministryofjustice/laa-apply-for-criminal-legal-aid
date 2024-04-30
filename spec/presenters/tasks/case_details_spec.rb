@@ -8,15 +8,13 @@ RSpec.describe Tasks::CaseDetails do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      case: kase,
+      kase: kase,
     )
   end
 
   let(:applicant) { nil }
   let(:kase) { nil }
 
-  # We assume the completeness of the client details here, as
-  # their statuses are tested in its own spec, no need to repeat
   let(:client_details_fulfilled) { true }
 
   before do

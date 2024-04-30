@@ -21,6 +21,8 @@ module Decisions
         date_stamp_if_needed
       when :date_stamp
         after_date_stamp
+      when :residence_type
+        after_residence_type
       when :contact_details
         after_contact_details
       when :has_nino
@@ -65,7 +67,7 @@ module Decisions
       if DateStamper.new(form_object.crime_application).call
         edit(:date_stamp)
       elsif form_object.crime_application.not_means_tested?
-        start_address_journey(HomeAddress)
+        edit(:residence_type)
       else
         edit(:case_type)
       end
@@ -105,6 +107,14 @@ module Decisions
       if entered_appeal_reference_number?
         edit('/steps/case/urn')
       else
+        edit(:residence_type)
+      end
+    end
+
+    def after_residence_type
+      if form_object.residence_type.none?
+        edit(:contact_details)
+      else
         start_address_journey(HomeAddress)
       end
     end
@@ -112,7 +122,7 @@ module Decisions
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
-      elsif current_crime_application.age_passported?
+      elsif current_crime_application.age_passported? || entered_appeal_reference_number?
         edit('/steps/case/urn')
       else
         edit(:has_nino)
@@ -179,12 +189,6 @@ module Decisions
 
     def after_cannot_check_dwp_status
       determine_dwp_result_page
-    end
-
-    def entered_appeal_reference_number?
-      kase = current_crime_application.case
-      case_type = CaseType.new(kase.case_type)
-      case_type&.appeal? && kase.appeal_reference_number.present?
     end
 
     def applicant_has_nino

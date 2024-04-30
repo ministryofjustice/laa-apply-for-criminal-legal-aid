@@ -47,7 +47,10 @@ module DeveloperTools
       find_or_create_applicant(
         dob: rand(15..17).years.ago,
         nino: nil,
+        will_enter_nino: nil,
+        has_benefit_evidence: nil,
         benefit_type: nil,
+        last_jsa_appointment_date: nil,
         passporting_benefit: nil,
       ).update(
         correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
@@ -78,6 +81,7 @@ module DeveloperTools
       )
     end
 
+    # rubocop:disable Metrics/MethodLength
     def find_or_create_applicant(overrides = {})
       Applicant.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
         surname, details = DWP::MockBenefitCheckService::KNOWN.to_a.sample
@@ -89,10 +93,12 @@ module DeveloperTools
           date_of_birth: overrides.fetch(:dob, details[:dob]),
           nino: overrides.fetch(:nino, details[:nino]),
           benefit_type: overrides.fetch(:benefit_type, 'universal_credit'),
+          last_jsa_appointment_date: overrides.fetch(:last_jsa_appointment_date, nil),
           passporting_benefit: overrides.fetch(:passporting_benefit, true),
         )
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def find_or_create_case
       Case.find_or_initialize_by(crime_application_id: crime_application.id)

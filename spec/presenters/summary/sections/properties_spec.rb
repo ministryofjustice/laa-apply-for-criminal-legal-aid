@@ -3,12 +3,18 @@ require 'rails_helper'
 describe Summary::Sections::Properties do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double(CrimeApplication, properties: records, in_progress?: true, capital: double,
-                    case: (double case_type:), to_param: 12_345)
-  }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      properties: records,
+      in_progress?: true,
+      capital: double(Capital, has_no_properties:),
+      to_param: 12_345
+    )
+  end
+
   let(:records) { [Property.new] }
-  let(:case_type) { 'either_way' }
+  let(:has_no_properties) { nil }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -25,14 +31,14 @@ describe Summary::Sections::Properties do
       let(:records) { [] }
 
       context 'when the full capital journey was shown' do
+        let(:has_no_properties) { 'yes' }
+
         it 'shows this section' do
           expect(subject.show?).to be true
         end
       end
 
       context 'when the full capital journey was not shown' do
-        let(:case_type) { 'summary_only' }
-
         it 'does not show this section' do
           expect(subject.show?).to be false
         end
@@ -82,6 +88,7 @@ describe Summary::Sections::Properties do
     context 'when there are no properties' do
       let(:records) { [] }
       let(:answers) { subject.answers }
+      let(:has_no_properties) { 'yes' }
 
       context 'when full capital journey was required' do
         it 'has the correct rows' do
@@ -89,7 +96,7 @@ describe Summary::Sections::Properties do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:has_assets)
-          expect(answers[0].change_path).to match('applications/12345/steps/capital/clients_assets')
+          expect(answers[0].change_path).to match('applications/12345/steps/capital/which_assets_owned')
           expect(answers[0].value).to eq('none')
         end
       end

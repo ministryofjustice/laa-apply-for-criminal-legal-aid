@@ -41,7 +41,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         income_above_threshold: 'no',
         has_frozen_income_or_assets: 'no',
         client_owns_property: 'no',
+        client_has_dependants: 'no',
         has_savings: 'yes',
+        has_no_income_payments: nil,
+        has_no_income_benefits: nil,
         manage_without_income: 'other',
         manage_other_details: 'Another way that they manage',
       )
@@ -54,6 +57,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         income_tax_rate_above_threshold: 'no',
         outgoings_more_than_income: 'yes',
         pays_council_tax: 'yes',
+        has_no_other_outgoings: nil,
         how_manage: 'A description of how they manage'
       )
     end
@@ -115,6 +119,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         national_savings_certificates: [],
         properties: [],
         has_frozen_income_or_assets: nil,
+        has_no_investments: nil,
+        has_no_savings: nil,
+        has_national_savings_certificates: nil,
+        has_no_properties: nil,
         has_no_other_assets: 'yes'
       )
     end
@@ -130,10 +138,13 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             income_above_threshold: 'no',
             has_frozen_income_or_assets: 'no',
             client_owns_property: 'no',
+            client_has_dependants: 'no',
             has_savings: 'yes',
             manage_without_income: 'other',
             manage_other_details: 'Another way that they manage',
             dependants: [],
+            has_no_income_payments: nil,
+            has_no_income_benefits: nil,
             income_payments: [{
               payment_type: 'other',
               amount: 1802,
@@ -167,6 +178,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             outgoings_more_than_income: 'yes',
             how_manage: 'A description of how they manage',
             pays_council_tax: 'yes',
+            has_no_other_outgoings: nil,
           },
           capital_details: {
             has_premium_bonds: 'yes',
@@ -180,6 +192,10 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             national_savings_certificates: [],
             properties: [],
             has_frozen_income_or_assets: nil,
+            has_no_investments: nil,
+            has_no_savings: nil,
+            has_national_savings_certificates: nil,
+            has_no_properties: nil,
             has_no_other_assets: 'yes'
           }
         }
@@ -200,9 +216,12 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         income_above_threshold: 'no',
         has_frozen_income_or_assets: nil,
         client_owns_property: nil,
+        client_has_dependants: nil,
         has_savings: nil,
         manage_without_income: nil,
-        manage_other_details: nil
+        manage_other_details: nil,
+        has_no_income_payments: nil,
+        has_no_income_benefits: nil,
       )
     end
 
@@ -214,6 +233,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
         outgoings_more_than_income: nil,
         how_manage: nil,
         pays_council_tax: nil,
+        has_no_other_outgoings: nil,
       )
     end
 
@@ -228,12 +248,15 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             income_above_threshold: 'no',
             has_frozen_income_or_assets: nil,
             client_owns_property: nil,
+            client_has_dependants: nil,
             has_savings: nil,
             manage_without_income: nil,
             manage_other_details: nil,
             dependants: [],
             income_payments: nil,
             income_benefits: nil,
+            has_no_income_payments: nil,
+            has_no_income_benefits: nil
           },
           outgoings_details: {
             outgoings: nil,
@@ -242,6 +265,7 @@ RSpec.describe SubmissionSerializer::Sections::MeansDetails do
             outgoings_more_than_income: nil,
             how_manage: nil,
             pays_council_tax: nil,
+            has_no_other_outgoings: nil,
           }
         }
       }.as_json

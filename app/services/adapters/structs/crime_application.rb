@@ -16,8 +16,12 @@ module Adapters
       end
 
       def case
+        return if pse?
+
         Structs::CaseDetails.new(case_details)
       end
+
+      alias kase case
 
       def ioj
         Structs::InterestsOfJustice.new(interests_of_justice)
@@ -59,7 +63,8 @@ module Adapters
         @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
       end
 
-      delegate :savings, :investments, :national_savings_certificates, :properties, to: :capital
+      delegate :savings, :investments, :national_savings_certificates, :properties,
+               :premium_bonds_total_value, :trust_fund_amount_held, :trust_fund_yearly_dividend, to: :capital
 
       def documents
         supporting_evidence.map do |struct|

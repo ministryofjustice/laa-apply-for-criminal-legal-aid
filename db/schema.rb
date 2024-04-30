@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_24_103714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -47,6 +47,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
     t.bigint "trust_fund_yearly_dividend"
     t.string "has_frozen_income_or_assets"
     t.string "has_no_other_assets"
+    t.string "has_no_properties"
+    t.string "has_no_savings"
+    t.string "has_no_investments"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -113,6 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
     t.string "is_means_tested"
     t.string "application_type", default: "initial", null: false
     t.text "additional_information"
+    t.jsonb "evidence_prompts", default: []
+    t.datetime "evidence_last_run_at"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
@@ -159,6 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
     t.string "ended_employment_within_three_months"
     t.string "client_has_dependants"
     t.string "has_savings"
+    t.string "has_no_income_payments"
+    t.string "has_no_income_benefits"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -221,6 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
     t.string "income_tax_rate_above_threshold"
     t.string "housing_payment_type"
     t.string "pays_council_tax"
+    t.string "has_no_other_outgoings"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
@@ -255,6 +263,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_15_145143) do
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
     t.date "last_jsa_appointment_date"
+    t.string "residence_type"
+    t.string "relationship_to_owner_of_usual_home_address"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 

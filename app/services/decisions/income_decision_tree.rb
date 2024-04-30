@@ -1,6 +1,8 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    #
+    include TypeOfMeansAssessment
 
     def destination
       case step_name
@@ -58,7 +60,7 @@ module Decisions
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         elsif appeal_no_changes?
-          edit(:answers)
+          edit('/steps/evidence/upload')
         else
           edit(:income_before_tax)
         end
@@ -70,7 +72,7 @@ module Decisions
 
     def after_lost_job_in_custody
       if appeal_no_changes?
-        edit(:answers)
+        edit('/steps/evidence/upload')
       else
         edit(:income_before_tax)
       end
@@ -124,7 +126,7 @@ module Decisions
     end
 
     def determine_showing_no_income_page
-      if payments.empty?
+      if income_payments.empty? && income_benefits.empty?
         edit(:manage_without_income)
       else
         edit(:answers)
@@ -140,43 +142,12 @@ module Decisions
     end
 
     def appeal_no_changes?
-      crime_application.case.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s
-    end
-
-    def summary_only?
-      crime_application.case.case_type == CaseType::SUMMARY_ONLY.to_s
-    end
-
-    def income_below_threshold?
-      crime_application.income.income_above_threshold == 'no'
-    end
-
-    def no_frozen_assets?
-      crime_application.income.has_frozen_income_or_assets == 'no'
-    end
-
-    def no_property?
-      crime_application.income.client_owns_property == 'no'
-    end
-
-    def no_savings?
-      crime_application.income.has_savings == 'no'
-    end
-
-    def payments
-      crime_application.income_payments + crime_application.income_benefits
+      kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+        kase.appeal_financial_circumstances_changed == 'no'
     end
 
     def crime_application
       form_object.crime_application
-    end
-
-    def requires_full_means_assessment?
-      if income_below_threshold? && no_frozen_assets?
-        !(summary_only? || (no_property? && no_savings?))
-      else
-        true
-      end
     end
 
     def determine_continuing_means_journey

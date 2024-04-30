@@ -29,6 +29,11 @@ module TypeOfApplication
   end
   alias pse? post_submission_evidence?
 
+  def appeal_no_changes?
+    kase&.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+      (kase&.appeal_financial_circumstances_changed == 'no')
+  end
+
   private
 
   def application_type_eql?(other_type)

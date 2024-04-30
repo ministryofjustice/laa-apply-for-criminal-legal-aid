@@ -5,7 +5,6 @@ class IncomeBenefitType < ValueObject
     INCAPACITY = new(:incapacity),
     INDUSTRIAL_INJURIES = new(:industrial_injuries_disablement),
     JSA = new(:jsa),
-    OTHER = new(:other),
-    NONE = new(:none)
+    OTHER = new(:other)
   ].freeze
 end

@@ -76,7 +76,7 @@ RSpec.describe Steps::Case::ChargesSummaryForm do
 
         it 'has a validation error' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:add_offence, :missing_details)).to be(true)
+          expect(subject.errors.of_kind?(:base, :missing_details)).to be(true)
         end
 
         it 'returns false' do

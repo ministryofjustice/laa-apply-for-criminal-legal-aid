@@ -60,14 +60,4 @@ RSpec.describe Decisions::AddressDecisionTree do
       subject.destination
     end
   end
-
-  context 'when the step is `clear_address`' do
-    let(:form_object) { double('FormObject') }
-    let(:step_name) { :clear_address }
-
-    it 'runs the same logic as the `results` step' do
-      expect(subject).to receive(:after_address_entered)
-      subject.destination
-    end
-  end
 end

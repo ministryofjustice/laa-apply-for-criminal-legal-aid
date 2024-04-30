@@ -10,10 +10,33 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <%# TODO: dynamic list depending on evidence requirements %>
-    <p class="govuk-body">
-      <%= t('.explanation') %> <%= 'evidence your client gets a passporting benefit.' %>
-    </p>
+    <% if @form_object.prompt.exempt? %>
+      <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
+        <%= t('.exempt', reasons: @form_object.prompt.exempt_reasons.to_sentence) %>
+      </p>
+    <% elsif @form_object.prompt.required? %>
+      <%= govuk_warning_text(text: t('.reject_warning')) %>
+
+      <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
+        <%= t('.required') %>
+      </p>
+    <% else %>
+      <p class="govuk-body" data-ruleset="None">
+        <%= t('.optional') %>
+      </p>
+    <% end %>
+
+    <!-- Client & Partner evidence -->
+    <% [:client, :partner].each do |persona| %>
+      <% [:income, :outgoings, :capital, :none].each do |group| %>
+        <%= render partial: 'steps/evidence/upload/prompt',
+                   locals: { prompt: @form_object.prompt, group: group, persona: persona, title: t("evidence.persona.#{persona}.#{group}") } %>
+      <% end %>
+    <% end %>
+
+    <!-- Other evidence only shows :none group -->
+    <%= render partial: 'steps/evidence/upload/prompt',
+               locals: { prompt: @form_object.prompt, group: :none, persona: :other, title: t('evidence.persona.other') } %>
 
     <p class="govuk-body">
       <%= t('.recent_docs') %>

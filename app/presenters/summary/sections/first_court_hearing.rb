@@ -13,12 +13,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-
-      private
-
-      def kase
-        @kase ||= crime_application.case
-      end
     end
   end
 end

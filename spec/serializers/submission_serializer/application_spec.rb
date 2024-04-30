@@ -24,6 +24,7 @@ RSpec.describe SubmissionSerializer::Application do
           SubmissionSerializer::Sections::CaseDetails,
           SubmissionSerializer::Sections::IojDetails,
           SubmissionSerializer::Sections::MeansDetails,
+          SubmissionSerializer::Sections::EvidenceDetails,
           SubmissionSerializer::Sections::SupportingEvidence,
         ]
       )
@@ -40,6 +41,7 @@ RSpec.describe SubmissionSerializer::Application do
             SubmissionSerializer::Sections::PseApplicationDetails,
             SubmissionSerializer::Sections::ProviderDetails,
             SubmissionSerializer::Sections::ClientDetails,
+            SubmissionSerializer::Sections::EvidenceDetails,
             SubmissionSerializer::Sections::SupportingEvidence
           ]
         )
@@ -61,8 +63,14 @@ RSpec.describe SubmissionSerializer::Application do
     let(:documents_scope) { double(stored: [Document.new]) }
 
     before do
-      allow(crime_application).to receive_messages(case: kase, documents: documents_scope,
-                                                   income: income, capital: capital)
+      allow(crime_application).to receive_messages(
+        kase: kase,
+        documents: documents_scope,
+        income: income,
+        capital: capital,
+        evidence_last_run_at: DateTime.now,
+        evidence_prompts: [],
+      )
     end
 
     it 'generates a serialized version of the application' do
@@ -78,6 +86,7 @@ RSpec.describe SubmissionSerializer::Application do
           'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
           'interests_of_justice' => [],
           'means_details' => a_hash_including('income_details', 'capital_details'),
+          'evidence_details' => a_hash_including('last_run_at', 'evidence_prompts'),
           'supporting_evidence' => be_an(Array),
         )
       )
