@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tasks::CaseDetails do
-  subject { described_class.new(crime_application:) }
+  subject(:task) { described_class.new(crime_application:) }
 
   let(:crime_application) do
     instance_double(
@@ -18,64 +18,56 @@ RSpec.describe Tasks::CaseDetails do
   let(:client_details_fulfilled) { true }
 
   before do
-    allow(
-      subject
-    ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+    allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/case/urn') }
+    it { expect(task.path).to eq('/applications/12345/steps/case/urn') }
   end
 
   describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to be(false) }
+    it { expect(task.not_applicable?).to be(false) }
   end
 
   describe '#can_start?' do
     context 'when the client details task has been completed' do
-      it { expect(subject.can_start?).to be(true) }
+      it { expect(task.can_start?).to be(true) }
     end
 
     context 'when the client details task has not been completed yet' do
       let(:client_details_fulfilled) { false }
 
-      it { expect(subject.can_start?).to be(false) }
+      it { expect(task.can_start?).to be(false) }
     end
   end
 
   describe '#in_progress?' do
     context 'when we have a case record' do
-      let(:kase) { double }
+      let(:kase) { instance_double(Case) }
 
-      it { expect(subject.in_progress?).to be(true) }
+      it { expect(task.in_progress?).to be(true) }
     end
 
     context 'when we do not have yet a case record' do
-      it { expect(subject.in_progress?).to be(false) }
+      it { expect(task.in_progress?).to be(false) }
     end
   end
 
   describe '#completed?' do
-    context 'when we have completed court hearing details' do
-      let(:kase) do
-        Case.new(
-          hearing_court_name: 'Court name',
-          hearing_date: Date.tomorrow,
-        )
-      end
+    subject(:completed) { task.completed? }
 
-      it { expect(subject.completed?).to be(true) }
+    let(:kase) { instance_double(Case) }
+
+    context 'kase is not completed' do
+      before { allow(kase).to receive(:complete?).and_return(false) }
+
+      it { is_expected.to be false }
     end
 
-    context 'when we have not completed yet court hearing details' do
-      let(:kase) do
-        Case.new(
-          hearing_court_name: 'Court name',
-          hearing_date: nil,
-        )
-      end
+    context 'kase is completed' do
+      before { allow(kase).to receive(:complete?).and_return(true) }
 
-      it { expect(subject.completed?).to be(false) }
+      it { is_expected.to be true }
     end
   end
 end

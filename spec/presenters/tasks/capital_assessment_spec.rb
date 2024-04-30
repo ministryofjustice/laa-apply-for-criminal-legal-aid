@@ -132,7 +132,7 @@ RSpec.describe Tasks::CapitalAssessment do
   end
 
   describe '#completed?' do
-    subject(:in_progress) { task.completed? }
+    subject(:completed) { task.completed? }
 
     let(:capital) { instance_double(Capital) }
 
