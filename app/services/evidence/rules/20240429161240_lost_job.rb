@@ -37,11 +37,3 @@ module Evidence
     end
   end
 end
-=begin
-"Clarification by chris:
-
-- My client is not working
-- Has your client ended employment in the last 3 months? = 'Yes'
-- Did your client lose their job as a result of being in custody? = 'Yes'
-- When did they lose their job? = Date is less than 3 months ago (from datestamp or today)"
-=end
