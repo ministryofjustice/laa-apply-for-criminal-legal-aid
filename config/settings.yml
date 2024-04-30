@@ -19,10 +19,6 @@ feature_flags:
     local: true
     staging: true
     production: true
-  summary_cards:
-    local: true
-    staging: true
-    production: true
   non_means_tested:
     local: false
     staging: false
