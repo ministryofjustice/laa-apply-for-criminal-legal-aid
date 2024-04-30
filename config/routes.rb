@@ -86,7 +86,7 @@ Rails.application.routes.draw do
       get :index, on: :collection
       get :show, on: :member
       put :recreate, on: :member
-      post(:create_pse, on: :member) if FeatureFlags.post_submission_evidence.enabled?
+      post(:create_pse, on: :member)
     end
   end
 

@@ -40,7 +40,7 @@
       <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
     </div>
 
-    <% if @crime_application.can_receive_pse? && FeatureFlags.post_submission_evidence.enabled? %>
+    <% if @crime_application.can_receive_pse? %>
       <div class="govuk-button-group govuk-!-margin-top-5 app-no-print">
           <%= button_to create_pse_completed_crime_application_path,
                         class: 'govuk-button app-button--blue govuk-!-margin-bottom-2 app-no-print',

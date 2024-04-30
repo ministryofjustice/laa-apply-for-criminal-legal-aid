@@ -87,20 +87,6 @@ RSpec.describe 'Dashboard', :authorized do
 
         assert_select 'h1', 'Upload supporting evidence'
       end
-
-      context 'when PSE feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:post_submission_evidence) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-
-          get completed_crime_application_path(application_fixture_id)
-        end
-
-        it 'does not have a button to "Upload supporting evidence"' do
-          assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
-        end
-      end
     end
 
     # rubocop:disable RSpec/ExampleLength
