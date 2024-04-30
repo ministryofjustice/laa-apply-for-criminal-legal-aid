@@ -3,7 +3,7 @@ module Evidence
     class LostJob < Rule
       include Evidence::RuleDsl
 
-      REMANDED_MONTHS_THRESHOLD = 3
+      LOST_JOB_THRESHOLD = 3.months.freeze
 
       key :lost_job_33
       group :none
@@ -11,22 +11,16 @@ module Evidence
       client do |crime_application|
         required_fields = [
           crime_application.income,
-          crime_application.case,
-          crime_application.case&.date_client_remanded,
           crime_application.income&.employment_status,
           crime_application.income&.ended_employment_within_three_months,
+          crime_application.income&.lost_job_in_custody,
+          crime_application.income&.date_job_lost,
         ]
 
         if required_fields.all?
-          from = (crime_application.date_stamp || Time.zone.today).to_time
-          to = crime_application.case.date_client_remanded.to_time
-          from, to = to, from if to > from
-          parts = ActiveSupport::Duration.build((from - to).to_i).parts.slice(:months, :days)
-
-          within_threshold =
-            parts[:months].nil? || # Assume must be 0 months
-            parts[:months] < REMANDED_MONTHS_THRESHOLD ||
-            (parts[:months] == REMANDED_MONTHS_THRESHOLD && (parts[:days] || 0) <= 0)
+          to = (crime_application.date_stamp || Time.zone.today).to_london_time
+          from = crime_application.income.date_job_lost.to_london_time
+          within_threshold = from > (to - LOST_JOB_THRESHOLD)
 
           conditions = [
             crime_application.income.employment_status == [EmploymentStatus::NOT_WORKING.to_s],
@@ -43,3 +37,11 @@ module Evidence
     end
   end
 end
+=begin
+"Clarification by chris:
+
+- My client is not working
+- Has your client ended employment in the last 3 months? = 'Yes'
+- Did your client lose their job as a result of being in custody? = 'Yes'
+- When did they lose their job? = Date is less than 3 months ago (from datestamp or today)"
+=end
