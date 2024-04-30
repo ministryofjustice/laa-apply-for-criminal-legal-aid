@@ -79,6 +79,8 @@ DropzoneCfg.prototype.init = function () {
     let uploadTable = document.getElementById('upload-table')
     uploadTable.classList.remove("app-evidence-upload-hidden")
 
+    createDownloadLink(file, response)
+
     this.$statusTag = document.getElementById(file.upload.uuid).querySelector(".govuk-tag")
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
@@ -101,9 +103,11 @@ DropzoneCfg.prototype.init = function () {
     removeErrorMessages()
   })
 }
+
 function createTableRow(file) {
   let row = document.createElement("tr")
   let cell = document.createElement("td")
+  let span = document.createElement("span")
   let statusTag = createStatusTag("Uploading")
   let errorLink = createDeleteLink()
 
@@ -111,8 +115,10 @@ function createTableRow(file) {
 
   row.classList.add("govuk-table__row")
   cell.classList.add("govuk-table__cell")
+  span.classList.add("_uploaded_file__filename")
 
-  cell.append(file.name)
+  span.append(file.name)
+  cell.append(span)
   cell.append(statusTag)
   row.append(cell)
   row.append(errorLink)
@@ -124,6 +130,18 @@ function createStatusTag(text) {
   tag.classList.add("govuk-tag", "govuk-tag--yellow")
   tag.textContent = text
   return tag
+}
+
+function createDownloadLink(file, response) {
+  const fileEntry = document.getElementById(file.upload.uuid).querySelector("._uploaded_file__filename");
+
+  if (!fileEntry) { return; }
+
+  fileEntry.innerText = "";
+  const anchor = document.createElement("a");
+  anchor.href = response.url;
+  anchor.textContent = file.name;
+  fileEntry.append(anchor);
 }
 
 function createErrorSummary (msg) {

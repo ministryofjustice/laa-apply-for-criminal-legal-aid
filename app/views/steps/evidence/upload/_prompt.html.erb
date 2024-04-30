@@ -4,7 +4,11 @@
   <ul class="govuk-body">
     <% prompt.result_for(group:, persona:).each do |rule| %>
       <% rule[:run][persona][:prompt].each do |sentence| %>
-        <li data-rule-name="<%=rule[:id] %>"><%= sentence %></li>
+        <li
+          data-rule-name="<%=rule[:id] %>"
+          data-rule-key="<%=rule[:key] %>">
+          <%= sentence %>
+        </li>
       <% end %>
     <% end %>
   </ul>

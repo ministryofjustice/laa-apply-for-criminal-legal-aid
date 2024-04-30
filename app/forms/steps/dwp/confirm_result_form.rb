@@ -12,7 +12,9 @@ module Steps
       private
 
       def persist!
-        true
+        return true if confirm_result.no?
+
+        crime_application.applicant.update(benefit_type: BenefitType::NONE)
       end
     end
   end

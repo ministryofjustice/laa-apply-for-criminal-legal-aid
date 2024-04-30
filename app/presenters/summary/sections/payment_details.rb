@@ -2,10 +2,10 @@ module Summary
   module Sections
     class PaymentDetails < Sections::BaseSection
       def show?
-        section.present? && super
+        payments.present?
       end
 
-      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+      def answers # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
         if no_payments?
           [
             Components::ValueAnswer.new(
@@ -22,7 +22,7 @@ module Summary
               if payment_details.nil?
                 Components::FreeTextAnswer.new(
                   formatted_payment_name,
-                  I18n.t('summary.does_not_get'),
+                  type_suffix.include?('outgoing') ? I18n.t('summary.does_not_pay') : I18n.t('summary.does_not_get'),
                   change_path:
                 )
               elsif requires_extra_details(payment_name)
@@ -36,11 +36,6 @@ module Summary
       end
 
       private
-
-      # May be overridden in subclasses if the presence of another section is relevant
-      def section
-        @section ||= crime_application.income
-      end
 
       # :nocov:
       def no_payments?

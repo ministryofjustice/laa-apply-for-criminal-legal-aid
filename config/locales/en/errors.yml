@@ -15,6 +15,7 @@ en:
       models:
         # fulfillment validation errors
         crime_application:
+          incomplete_records: You need to complete all questions before you can submit the application
           attributes:
             base:
               case_type_missing: A case type needs to be selected

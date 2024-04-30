@@ -6,33 +6,25 @@ RSpec.describe Steps::Evidence::UploadForm do
   let(:arguments) do
     {
       crime_application:
-    }.merge(attributes)
+    }
   end
 
-  let(:attributes) { {} }
-
-  let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:)
+    CrimeApplication.new(
+      applicant: Applicant.new(
+        has_nino: 'yes',
+        date_of_birth: '200-01-01'
+      )
+    )
   end
 
   describe '#prompt' do
     subject { form.prompt }
 
-    before do
-      allow(crime_application).to receive_messages(
-        :evidence_prompts => [],
-        :evidence_prompts= => nil,
-        :evidence_last_run_at => [],
-        :evidence_last_run_at= => nil,
-        :save! => true,
-      )
-    end
-
     it 'generates a set of sentences' do
-      prompt_text = subject.result_for(group: :none, persona: :other).last.dig(:run, :other, :prompt).first
+      sentences = subject.result_for(group: :none, persona: :other).last.dig(:run, :other, :prompt)
 
-      expect(prompt_text).to eq 'their National Insurance number'
+      expect(sentences).to eq ['their National Insurance number']
     end
   end
 end

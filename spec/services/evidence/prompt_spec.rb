@@ -5,6 +5,7 @@ RSpec.describe Evidence::Prompt do
   let(:income) { instance_double(Income, client_owns_property: 'yes') }
   let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
   let(:capital) { instance_double(Capital, has_premium_bonds: 'yes') }
+  let(:kase) { nil }
 
   let(:crime_application) do
     instance_double(
@@ -13,6 +14,7 @@ RSpec.describe Evidence::Prompt do
       income:,
       outgoings:,
       capital:,
+      kase:
     )
   end
 
@@ -48,7 +50,11 @@ RSpec.describe Evidence::Prompt do
       :evidence_prompts= => nil,
       :evidence_last_run_at => [],
       :evidence_last_run_at= => nil,
-      :save! => true,
+      :save! => true
+    )
+
+    allow(applicant).to receive_messages(
+      under18?: false
     )
   end
 
@@ -140,12 +146,13 @@ RSpec.describe Evidence::Prompt do
     it 'generates results' do
       prompt = described_class.new(crime_application, WalesRuleset.new(crime_application)).run
 
-      expect(prompt.results).not_to be_empty
+      expect(prompt.results?).to be true
+      expect(prompt.result_for?(group: :capital, persona: :client)).to be true
     end
 
     context 'with Latest ruleset' do
       it 'generates results' do
-        ruleset = Evidence::Ruleset::Latest.new(crime_application, [:example1, :national_insurance_32])
+        ruleset = Evidence::Ruleset::Latest.new(crime_application, [:example1, :other_example])
         prompt = described_class.new(crime_application, ruleset).run
 
         expect(prompt.results.size).to eq 2
@@ -170,14 +177,14 @@ RSpec.describe Evidence::Prompt do
             }
           },
           {
-            id: 'NationalInsuranceProof',
+            id: 'ExampleOfOther',
             group: :none,
             ruleset: 'Hydrated',
-            key: :national_insurance_32,
+            key: :other_example,
             run: {
-              client: { result: false, prompt: [] },
-              partner: { result: false, prompt: [] },
-              other: { result: true, prompt: ['their National Insurance number'] },
+              client: { result: true, prompt: ['your client\'s extra evidence'] },
+              partner: { result: true, prompt: ['the partner\'s other evidence'] },
+              other: { result: true, prompt: ['any useful information about your legal practice'] },
             }
           },
         ]
@@ -188,10 +195,45 @@ RSpec.describe Evidence::Prompt do
       end
 
       it 'generates results' do
-        ruleset = Evidence::Ruleset::Hydrated.new(crime_application, [:example2, :national_insurance_32])
+        ruleset = Evidence::Ruleset::Hydrated.new(crime_application, [:example2, :other_example])
         prompt = described_class.new(crime_application, ruleset).run
 
         expect(prompt.results).to eq persisted_evidence_prompts
+      end
+    end
+  end
+
+  describe '#exempt?' do
+    subject(:prompt) { described_class.new(crime_application) }
+
+    context 'when there are no exempt reasons' do
+      it 'returns false' do
+        expect(prompt.exempt?).to be false
+        expect(prompt.exempt_reasons).to be_empty
+      end
+    end
+
+    context 'when the client is under 18' do
+      before do
+        allow(applicant).to receive(:under18?).and_return true
+      end
+
+      it 'returns true and sets the reason' do
+        expect(prompt.exempt?).to be true
+        expect(prompt.exempt_reasons).to contain_exactly(
+          'your client was under 18 when the application was first made'
+        )
+      end
+    end
+
+    context 'when the client is in custody' do
+      let(:kase) { instance_double(Case, is_client_remanded: 'yes') }
+
+      it 'returns true and sets the reason' do
+        expect(prompt.exempt?).to be true
+        expect(prompt.exempt_reasons).to contain_exactly(
+          'you have told us they are remanded in custody'
+        )
       end
     end
   end
@@ -214,7 +256,7 @@ RSpec.describe Evidence::Prompt do
     subject(:prompt) { described_class.new(crime_application, ruleset).run }
 
     let(:ruleset) do
-      Evidence::Ruleset::Latest.new(crime_application, [:example1, :national_insurance_32])
+      Evidence::Ruleset::Latest.new(crime_application, [:example1, :other_example])
     end
 
     it 'returns true when available' do
@@ -222,7 +264,9 @@ RSpec.describe Evidence::Prompt do
       expect(prompt.result_for?(group: :capital, persona: :client)).to be true
       expect(prompt.result_for?(group: :capital, persona: :partner)).to be true
 
-      # NationalInsuranceProof
+      # ExampleOfOther
+      expect(prompt.result_for?(group: :none, persona: :client)).to be true
+      expect(prompt.result_for?(group: :none, persona: :partner)).to be true
       expect(prompt.result_for?(group: :none, persona: :other)).to be true
     end
 
@@ -230,9 +274,7 @@ RSpec.describe Evidence::Prompt do
       # ExampleRule1
       expect(prompt.result_for?(group: :capital, persona: :other)).to be false
 
-      # NationalInsuranceProof
-      expect(prompt.result_for?(group: :none, persona: :client)).to be false
-      expect(prompt.result_for?(group: :none, persona: :partner)).to be false
+      # ExampleOfOther shows groups for all 3 personas
 
       # Random
       expect(prompt.result_for?(group: :what, persona: :who)).to be false
@@ -243,7 +285,7 @@ RSpec.describe Evidence::Prompt do
     subject(:prompt) { described_class.new(crime_application, ruleset).run }
 
     let(:ruleset) do
-      Evidence::Ruleset::Latest.new(crime_application, [:example1, :national_insurance_32])
+      Evidence::Ruleset::Latest.new(crime_application, [:example1, :other_example])
     end
 
     it 'returns the matching rule entry list' do # rubocop:disable RSpec/ExampleLength

@@ -38,10 +38,6 @@ module Summary
         @investments ||= crime_application.investments
       end
 
-      def capital
-        @capital ||= crime_application.capital
-      end
-
       def shown_investments?
         capital.present? && (no_investments? || investments.present?)
       end

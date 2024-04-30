@@ -2,12 +2,16 @@ require 'rails_helper'
 
 module Test
   CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :outgoings,
-                                           :capital, :documents, :means_passport, keyword_init: true) do
+                                           :applicant, :capital, :documents, :means_passport, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
     def to_param
       '12345'
+    end
+
+    def client_details_complete?
+      true
     end
   end
 end
@@ -25,7 +29,8 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       outgoings:,
       capital:,
       documents:,
-      means_passport:
+      means_passport:,
+      applicant:
     }
   end
 
@@ -47,6 +52,7 @@ is_client_remanded:, date_client_remanded:)
   let(:appeal_original_app_submitted) { nil }
   let(:appeal_reference_number) { nil }
   let(:appeal_usn) { nil }
+  let(:applicant) { instance_double(Applicant, has_benefit_evidence: nil, benefit_type: nil) }
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
@@ -220,6 +226,19 @@ is_client_remanded:, date_client_remanded:)
     context 'when case section is not complete' do
       before do
         expect(kase).to receive(:complete?).and_return(false)
+      end
+
+      it { is_expected.not_to be_valid }
+
+      it 'adds the incomplete record error to base' do
+        subject.valid?
+        expect(subject.errors.of_kind?(:base, :incomplete_records)).to be(true)
+      end
+    end
+
+    context 'when client details section is not complete' do
+      before do
+        expect(subject).to receive(:client_details_complete?).and_return(false)
       end
 
       it { is_expected.not_to be_valid }

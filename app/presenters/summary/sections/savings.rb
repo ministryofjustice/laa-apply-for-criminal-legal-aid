@@ -38,10 +38,6 @@ module Summary
         @savings ||= crime_application.savings
       end
 
-      def capital
-        @capital ||= crime_application.capital
-      end
-
       def shown_savings?
         capital.present? && (no_savings? || savings.present?)
       end

@@ -18,7 +18,9 @@ RSpec.describe Tasks::OutgoingsAssessment do
   let(:outgoings) { nil }
 
   before do
-    allow(task).to receive(:fulfilled?).with(Tasks::IncomeAssessment) { income_fulfiled }
+    allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails) { client_details_fulfilled }
+    allow(task).to receive(:requires_means_assessment?) { needs_means }
+    allow(task).to receive(:fulfilled?).with(Tasks::IncomeAssessment) { income_fulfilled }
     allow(task).to receive(:requires_full_means_assessment?) { needs_full_means }
   end
 
@@ -29,14 +31,31 @@ RSpec.describe Tasks::OutgoingsAssessment do
   describe '#not_applicable?' do
     subject(:not_applicable) { task.not_applicable? }
 
-    context 'income is not fulfiled' do
-      let(:income_fulfiled) { false }
+    context 'client details is not fulfilled' do
+      let(:client_details_fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'income is fulfiled' do
-      let(:income_fulfiled) { true }
+    context 'means assessment details is not required' do
+      let(:client_details_fulfilled) { true }
+      let(:needs_means) { false }
+
+      it { is_expected.to be true }
+    end
+
+    context 'income is not fulfilled' do
+      let(:client_details_fulfilled) { true }
+      let(:needs_means) { true }
+      let(:income_fulfilled) { false }
+
+      it { is_expected.to be false }
+    end
+
+    context 'income is fulfilled' do
+      let(:income_fulfilled) { true }
+      let(:needs_means) { true }
+      let(:client_details_fulfilled) { true }
 
       context 'and full means assessment required' do
         let(:needs_full_means) { true }
@@ -55,14 +74,14 @@ RSpec.describe Tasks::OutgoingsAssessment do
   describe '#can_start?' do
     subject(:can_start) { task.can_start? }
 
-    context 'case details are not fulfiled' do
-      let(:income_fulfiled) { false }
+    context 'case details are not fulfilled' do
+      let(:income_fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'case details are fulfiled' do
-      let(:income_fulfiled) { true }
+    context 'case details are fulfilled' do
+      let(:income_fulfilled) { true }
 
       context 'and means assessment required' do
         let(:needs_full_means) { true }

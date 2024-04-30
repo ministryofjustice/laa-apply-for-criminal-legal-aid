@@ -1,15 +1,20 @@
 en:
   evidence:
-    group:
+    persona:
       client:
         income: Evidence of your client's income
         outgoings: Evidence of your client's outgoings
         capital: Evidence of your client's capital
+        none: Other evidence of your client's income, outgoings or capital
       partner:
         income: Evidence of the partner's income
         outgoings: Evidence of the partner's outgoings
         capital: Evidence of the partner's capital
+        none: Other evidence of the partner's income, outgoings or capital
       other: Other evidence
+    exempt:
+      under_18: your client was under 18 when the application was first made
+      in_custody: you have told us they are remanded in custody
     rule:
       # Test rules
       ExampleRule1:
@@ -22,7 +27,101 @@ en:
         client:
           - a birth certificate
           - a driving licence
+      ExampleOfOther:
+        client: your client's extra evidence
+        partner: the partner's other evidence
+        other: any useful information about your legal practice
 
       # Live rules
       NationalInsuranceProof:
         other: their National Insurance number
+      RestraintOrFreezingOrder:
+        client: the restraint or freezing order
+        partner: the restraint or freezing order
+      HousingCosts:
+        client: their rental, tenancy agreement or mortgage statement
+        partner: their rental, tenancy agreement or mortgage statement
+      CouncilTaxPayments:
+        client: their Council Tax statement
+        partner: their Council Tax statement
+      ChildcareCosts:
+        client: proof of childcare costs, for example receipts or bank statements
+        partner: proof of childcare costs, for example receipts or bank statements
+      ChildMaintenanceCosts:
+        client: proof of maintenance payments, for example bank statements showing payments
+        partner: proof of maintenance payments, for example bank statements showing payments
+      SalariedEmployee:
+        client: wage slips, salary advice, or a letter from their employer if they're paid by cash
+        partner: wage slips, salary advice, or a letter from their employer if they're paid by cash
+      BenefitsRecipient:
+        client: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+        partner: benefit book or notice of entitlement or letter from Jobcentre Plus stating the benefits your client receives
+      SelfAssessed:
+        client: either their P60 or their Self Assessment tax calculation (SA302)
+        partner: either their P60 or their Self Assessment tax calculation (SA302)
+      SelfEmployed:
+        client: complete financial accounts, tax return, bank statements, cash book or other business records
+        partner: complete financial accounts, tax return, bank statements, cash book or other business records
+      BenefitsInKind:
+        client: their P11D form for 'benefits in kind'
+        partner: their P11D form for 'benefits in kind'
+      PrivatePensionIncome:
+        client: either bank statements or their pension statement
+        partner: either bank statements or their pension statement
+      MaintenanceIncome:
+        client: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+        partner: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+      InterestAndInvestments:
+        client: bank statements showing interest from their savings or investments
+        partner: bank statements showing interest from their savings or investments
+      RentalIncome:
+        client: bank statements showing the rental income
+        partner:
+      AnyOtherIncome:
+        client: bank statements showing the income from other sources
+        partner: bank statements showing the income from other sources
+      TrustFund:
+        client: the trust document, or a certified copy
+        partner: the trust document, or a certified copy
+      BankAccounts:
+        client: bank statements for the last 3 months, for each account declared by the applicant
+        partner: bank statements for the last 3 months, for each account declared by the applicant
+      BuildingSocietyAccounts:
+        client: building society statement or passbook showing transactions for the last 3 months, for each account
+        partner: building society statement or passbook showing transactions for the last 3 months, for each account
+      CashIsa:
+        client: cash ISA statements showing transactions for the last 3 months, for each account
+        partner: cash ISA statements showing transactions for the last 3 months, for each account
+      NationalSavingsAccount:
+        client: National Savings or Post Office account statements covering the last 3 months, for each account
+        partner: National Savings or Post Office account statements covering the last 3 months, for each account
+      CashInvestments:
+        client: statement, passbook, or certificate of cash investments covering the last 3 months
+        partner: statement, passbook, or certificate of cash investments covering the last 3 months
+      PremiumBonds:
+        client: copy of the Premium Savings Bonds or a Bond record
+        partner: copy of the Premium Savings Bonds or a Bond record
+      SavingsCerts:
+        client: the National Savings Certificates or passbook
+        partner: the National Savings Certificates or passbook
+      StocksAndGilts:
+        client: certificate or statement for each stock, gilt or government bond
+        partner: certificate or statement for each stock, gilt or government bond
+      OwnShares:
+        client: share certificate or latest dividend counterfoil for each company they hold shares in
+        partner: share certificate or latest dividend counterfoil for each company they hold shares in
+      PepPlans:
+        client: certificate or statement for each Personal Equity Plan investment
+        partner: certificate or statement for each Personal Equity Plan investment
+      ShareIsa:
+        client: certificate or statement for each Share ISA
+        partner: certificate or statement for each Share ISA
+      UnitTrusts:
+        client: certificate or statement for each Unit Trust investment
+        partner: certificate or statement for each Unit Trust investment
+      InvestmentBonds:
+        client: certificate or statement for each investment bond
+        partner: certificate or statement for each investment bond
+      OtherLumpSums:
+        client: statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months
+        partner: statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months
