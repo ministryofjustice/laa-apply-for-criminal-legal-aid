@@ -268,6 +268,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::UnitTrusts,
         Evidence::Rules::InvestmentBonds,
         Evidence::Rules::OtherLumpSums,
+        Evidence::Rules::RestraintOrFreezingOrder,
 
         # Includes test rules in /fixtures
         Evidence::Rules::ExampleRule1,
@@ -276,6 +277,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::ExampleRule2Budget2024,
         Evidence::Rules::ExampleRule2Budget2025,
         Evidence::Rules::BadRuleDefinition,
+        Evidence::Rules::ExampleOfOther,
       ]
 
       expect(rules).to match_array(expected_klasses)

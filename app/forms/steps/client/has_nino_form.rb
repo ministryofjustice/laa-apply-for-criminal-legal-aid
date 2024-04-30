@@ -47,6 +47,8 @@ module Steps
           'benefit_type' => nil,
           'last_jsa_appointment_date' => nil,
           'passporting_benefit' => nil,
+          'will_enter_nino' => nil,
+          'has_benefit_evidence' => nil,
           'nino' => nino_attr
         }
       end
