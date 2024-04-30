@@ -10,7 +10,14 @@ RSpec.describe Evidence::Rules::LostJob do
     )
   end
 
-  let(:income) { Income.new }
+  let(:income) do
+    Income.new(
+      employment_status: [EmploymentStatus::NOT_WORKING],
+      lost_job_in_custody: 'yes',
+      ended_employment_within_three_months: 'yes',
+    )
+  end
+
   let(:case) { Case.new }
 
   it { expect(described_class.key).to eq :lost_job_33 }
@@ -27,43 +34,38 @@ RSpec.describe Evidence::Rules::LostJob do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
-    context 'when they lost job in custody, with date stamp and remanded within 3 months' do
+    context 'when they lost job' do
       before do
-        crime_application.income.lost_job_in_custody = 'yes'
-        crime_application.date_stamp = DateTime.new(2024, 1, 14, 13, 23, 55)
-        crime_application.case.date_client_remanded = Date.new(2024, 1, 1)
-        now = Time.zone.local(2024, 4, 14, 13, 23, 55)
+        crime_application.date_stamp = date_stamp
+        crime_application.case.date_client_remanded = date_remanded
 
         travel_to now
       end
 
-      it { expect(subject).to be true }
-    end
+      context 'with date stamp and remanded within 3 months' do
+        let(:now) { Time.zone.local(2024, 4, 14, 13, 23, 55) }
+        let(:date_stamp) { DateTime.new(2024, 1, 14, 13, 23, 55) }
+        let(:date_remanded) { Date.new(2024, 1, 1) }
 
-    context 'when they lost job in custody, without date stamp and remanded within 3 months and on threshold' do
-      before do
-        crime_application.income.lost_job_in_custody = 'yes'
-        crime_application.date_stamp = nil
-        crime_application.case.date_client_remanded = Date.new(2024, 1, 1)
-        now = Time.zone.local(2024, 4, 2, 13, 23, 55) # TODO: Seems to allow 1 extra day?
-
-        travel_to now
+        it { expect(subject).to be true }
       end
 
-      it { expect(subject).to be true }
-    end
+      # TODO: Seems Rails Duration is calculating 1 month and 1 day as '3 months ago'?
+      context 'without date stamp and remanded within 3 months and on threshold' do
+        let(:now) { Time.zone.local(2024, 4, 2, 13, 23, 55) }
+        let(:date_stamp) { nil }
+        let(:date_remanded) { Date.new(2024, 1, 1) }
 
-    context 'when they lost job in custody, with date stamp and not in threshold' do
-      before do
-        crime_application.income.lost_job_in_custody = 'yes'
-        crime_application.date_stamp = DateTime.new(2024, 1, 14, 13, 23, 55)
-        crime_application.case.date_client_remanded = Date.new(2023, 10, 13)
-        now = Time.zone.local(2024, 4, 14, 13, 23, 55)
-
-        travel_to now
+        it { expect(subject).to be true }
       end
 
-      it { expect(subject).to be false }
+      context 'with date stamp and not in threshold' do
+        let(:now) { Time.zone.local(2024, 4, 14, 13, 23, 55) }
+        let(:date_stamp) { DateTime.new(2024, 1, 14, 13, 23, 55) }
+        let(:date_remanded) { Date.new(2023, 10, 13) }
+
+        it { expect(subject).to be false }
+      end
     end
 
     context 'when income is nil' do
@@ -85,6 +87,24 @@ RSpec.describe Evidence::Rules::LostJob do
 
       it { expect(subject).to be false }
     end
+
+    context 'when client has not lost job' do
+      before do
+        income.lost_job_in_custody = 'no'
+        crime_application.case.date_client_remanded = 2.months.ago
+      end
+
+      it { expect(subject).to be false }
+    end
+
+    context 'when client said they did not lose job within 3 months' do
+      before do
+        income.ended_employment_within_three_months = 'no'
+        crime_application.case.date_client_remanded = 2.months.ago
+      end
+
+      it { expect(subject).to be false }
+    end
   end
 
   describe '.partner' do
@@ -101,7 +121,6 @@ RSpec.describe Evidence::Rules::LostJob do
 
   describe '#to_h' do
     before do
-      crime_application.income.lost_job_in_custody = 'yes'
       crime_application.case.date_client_remanded = 3.months.ago
     end
 
