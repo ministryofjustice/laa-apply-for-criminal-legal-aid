@@ -75,6 +75,10 @@ class CrimeApplication < ApplicationRecord
     ::ClientDetails::AnswersValidator.new(self).validate
   end
 
+  validate on: :submission_review, unless: :post_submission_evidence? do
+    ::SectionsCompletenessValidator.new(self).validate
+  end
+
   def client_details_complete?
     valid?(:client_details)
   end
