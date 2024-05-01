@@ -106,9 +106,7 @@ module Decisions
         return edit('/steps/income/employment_status')
       end
 
-      return edit('/steps/evidence/upload') if Evidence::Requirements.new(current_crime_application).any?
-
-      edit('/steps/submission/more_information')
+      edit('/steps/evidence/upload')
     end
 
     def edit_new_charge
