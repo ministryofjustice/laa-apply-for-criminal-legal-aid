@@ -55,7 +55,6 @@ module Evidence
         end
       RUBY
 
-
       # Generate corresponding spec
       spec_filename = "#{timestamp}_#{class_name}_spec".underscore
 
@@ -73,34 +72,10 @@ module Evidence
             )
           end
 
-          let(:expected_hash) do
-            {
-              id: '#{class_name}',
-              group: :income,
-              ruleset: nil,
-              key: :#{rule_key},
-              run: {
-                client: {
-                  result: true,
-                  prompt: ['Add evidence.yml entry for rule #{class_name}: client'],
-                },
-                partner: {
-                  result: false,
-                  prompt: [],
-                },
-                other: {
-                  result: false,
-                  prompt: [],
-                },
-              }
-            }
-          end
-
           it { expect(described_class.key).to eq :#{rule_key} }
           it { expect(described_class.group).to eq :income }
           it { expect(described_class.archived).to be false }
           it { expect(described_class.active?).to be true }
-          it { expect(subject.to_h).to eq expected_hash }
 
           describe '.client' do
             subject { described_class.new(crime_application).client_predicate }
@@ -118,33 +93,6 @@ module Evidence
             subject { described_class.new(crime_application).other_predicate }
 
             it { expect(subject).to be false }
-          end
-
-          describe '#to_h' do
-            let(:expected_hash) do
-              {
-                id: '#{class_name}',
-                group: :income,
-                ruleset: nil,
-                key: :#{rule_key},
-                run: {
-                  client: {
-                    result: true,
-                    prompt: ['Add evidence.yml entry for rule #{class_name}: client'],
-                  },
-                  partner: {
-                    result: false,
-                    prompt: [],
-                  },
-                  other: {
-                    result: false,
-                    prompt: [],
-                  },
-                }
-              }
-            end
-
-            it { expect(subject.to_h).to eq expected_hash }
           end
 
           describe '#to_h' do

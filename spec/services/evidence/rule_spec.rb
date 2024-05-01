@@ -268,6 +268,7 @@ RSpec.describe Evidence::Rule do
         Evidence::Rules::UnitTrusts,
         Evidence::Rules::InvestmentBonds,
         Evidence::Rules::OtherLumpSums,
+        Evidence::Rules::LostJob,
         Evidence::Rules::RestraintOrFreezingOrder,
 
         # Includes test rules in /fixtures

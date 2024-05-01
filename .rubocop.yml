@@ -103,6 +103,10 @@ RSpec/SpecFilePathFormat:
 Metrics/MethodLength:
   Max: 12
 
+Metrics/BlockLength:
+  Exclude:
+    - '**/app/services/evidence/rules/*'
+
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
   Max: 18
