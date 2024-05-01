@@ -237,7 +237,7 @@ RSpec.describe Evidence::Rule do
 
     it 'must load rule definitions' do # rubocop:disable RSpec/ExampleLength
       expected_klasses = [
-        Evidence::Rules::NationalInsuranceProof,
+        Evidence::Rules::NationalInsuranceNumber,
 
         Evidence::Rules::ChildMaintenanceCosts,
         Evidence::Rules::HousingCosts,
