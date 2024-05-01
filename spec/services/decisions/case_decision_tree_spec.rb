@@ -300,6 +300,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
+    let(:has_nino) { nil }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
     let(:has_benefit_evidence) { nil }
     let(:step_name) { :ioj }
@@ -314,7 +315,11 @@ RSpec.describe Decisions::CaseDecisionTree do
         Evidence::Requirements
       ).to receive(:any?).and_return(evidence_required)
 
-      allow(applicant_double).to receive_messages(has_benefit_evidence:, benefit_type:)
+      allow(applicant_double).to receive_messages(
+        has_benefit_evidence:,
+        benefit_type:,
+        has_nino:
+      )
 
       allow(FeatureFlags).to receive(:means_journey) {
         instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
@@ -325,9 +330,10 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:means_passported) { false }
       let(:evidence_required) { nil }
 
-      context 'when has benefit evidence is no' do
+      context 'when has a passporting benefit no evidence or nino forthcoming' do
         let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
         let(:has_benefit_evidence) { 'no' }
+        let(:has_nino) { 'yes' }
 
         it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
       end

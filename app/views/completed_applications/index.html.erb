@@ -27,9 +27,7 @@
             %>
             </th>
             <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
-            <% if FeatureFlags.post_submission_evidence.enabled? %>
-              <th scope="col" class="govuk-table__header"><%= t('.table_headings.application_type') %></th>
-            <% end %>
+            <th scope="col" class="govuk-table__header"><%= t('.table_headings.application_type') %></th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -45,9 +43,7 @@
               <td class="govuk-table__cell">
                 <%= app.reference %>
               </td>
-              <% if FeatureFlags.post_submission_evidence.enabled? %>
-                <td class="govuk-table__cell"><%= app.application_type.humanize %></td>
-              <% end %>
+              <td class="govuk-table__cell"><%= app.application_type.humanize %></td>
             </tr>
           <% end %>
         </tbody>

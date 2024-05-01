@@ -9,7 +9,7 @@ RSpec.describe Steps::Submission::ReviewForm do
   describe '#save' do
     context 'when no submission validation issues' do
       before do
-        allow(crime_application).to receive(:valid?).with(:submission).and_return(true)
+        allow(crime_application).to receive(:valid?).with(:submission_review).and_return(true)
       end
 
       it 'succeeds' do
@@ -19,7 +19,7 @@ RSpec.describe Steps::Submission::ReviewForm do
 
     context 'when submission validation issues' do
       before do
-        allow(crime_application).to receive(:valid?).with(:submission).and_return(false)
+        allow(crime_application).to receive(:valid?).with(:submission_review).and_return(false)
       end
 
       it 'fails to save' do
