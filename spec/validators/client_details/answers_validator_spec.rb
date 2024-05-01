@@ -158,11 +158,15 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
     context 'when the dwp check fails but they have a passporting benefit' do
       let(:has_benefit_evidence) { nil }
+      let(:has_nino) { nil }
+      let(:will_enter_nino) { nil }
 
       before do
         allow(applicant).to receive_messages(
           benefit_type: BenefitType::UNIVERSAL_CREDIT,
-          has_benefit_evidence: has_benefit_evidence
+          has_benefit_evidence: has_benefit_evidence,
+          has_nino: has_nino,
+          will_enter_nino: will_enter_nino
         )
         allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: false))
       end
@@ -182,10 +186,24 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       end
 
       context 'when applicant does not have benefit evidence' do
-        let(:has_benefit_evidence) { 'no' }
+        let(:has_benefit_evidence) { nil }
 
-        it 'returns true' do
-          expect(subject.passporting_complete?).to be(true)
+        context 'when nino forthcoming' do
+          let(:has_nino) { 'no' }
+          let(:will_enter_nino) { 'no' }
+
+          it 'returns true' do
+            expect(subject.passporting_complete?).to be(true)
+          end
+        end
+
+        context 'when nino not forthcoming' do
+          let(:has_nino) { 'no' }
+          let(:will_enter_nino) { 'yes' }
+
+          it 'returns false' do
+            expect(subject.passporting_complete?).to be(false)
+          end
         end
       end
     end
@@ -214,16 +232,34 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   end
 
   describe '#has_nino_complete?' do
-    context 'when has NINO is missing' do
-      before { allow(applicant).to receive(:has_nino).and_return(nil) }
+    let(:has_nino) { nil }
+    let(:nino) { nil }
+    let(:will_enter_nino) { nil }
+    let(:benefit_type) { nil }
 
+    before do
+      allow(applicant).to receive_messages(
+        benefit_type:, has_nino:, will_enter_nino:, nino:
+      )
+    end
+
+    context 'when NINO is forthcoming' do
+      let(:has_nino) { 'no' }
+      let(:will_enter_nino) { 'no' }
+
+      it 'returns true' do
+        expect(subject.has_nino_complete?).to be(true)
+      end
+    end
+
+    context 'when has NINO is missing' do
       it 'returns false' do
         expect(subject.has_nino_complete?).to be(false)
       end
     end
 
     context 'when has NINO is no' do
-      before { allow(applicant).to receive(:has_nino).and_return('no') }
+      let(:has_nino) { 'no' }
 
       it 'returns true' do
         expect(subject.has_nino_complete?).to be(true)
@@ -231,9 +267,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when has NINO is yes but NINO is missing' do
-      before do
-        allow(applicant).to receive_messages(has_nino: 'yes', nino: nil)
-      end
+      let(:has_nino) { 'yes' }
 
       it 'returns false' do
         expect(subject.has_nino_complete?).to be(false)
@@ -241,9 +275,8 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when has NINO is yes and NINO is present' do
-      before do
-        allow(applicant).to receive_messages(has_nino: 'yes', nino: 'ABC123')
-      end
+      let(:has_nino) { 'yes' }
+      let(:nino) { 'ABC12312' }
 
       it 'returns true' do
         expect(subject.has_nino_complete?).to be(true)

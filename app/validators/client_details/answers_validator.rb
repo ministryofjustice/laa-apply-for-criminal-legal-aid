@@ -63,7 +63,8 @@ module ClientDetails
 
     def has_nino_complete?
       return false if applicant.has_nino.blank?
-      return true if applicant.has_nino == 'no'
+      return true if applicant.has_nino == 'no' && !has_passporting_benefit?
+      return true if nino_forthcoming?
 
       applicant.nino.present?
     end

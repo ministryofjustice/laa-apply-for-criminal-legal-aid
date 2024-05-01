@@ -20,10 +20,6 @@ module TypeOfMeansAssessment
     end
   end
 
-  def means_assessment_complete?
-    income.complete? && (!requires_full_means_assessment? || (outgoings&.complete? && capital&.complete?))
-  end
-
   def requires_full_capital?
     return false unless kase&.case_type
 
@@ -35,7 +31,22 @@ module TypeOfMeansAssessment
   end
 
   def evidence_of_passporting_means_forthcoming?
-    has_passporting_benefit? && applicant.has_benefit_evidence == 'yes'
+    return false unless has_passporting_benefit?
+
+    benefit_evidence_forthcoming? || nino_forthcoming?
+  end
+
+  # Relevant when there's a passporting benefit but the NINO is unknown.
+  # We consider the application to be passported on benefits until the
+  # submission declaration.
+  # However, if the applicant is not in court custody, submission will be
+  # blocked until the NINO or benefit evidence is provided.
+  def nino_forthcoming?
+    applicant.has_nino == 'no' && applicant.will_enter_nino == 'no'
+  end
+
+  def benefit_evidence_forthcoming?
+    applicant.has_benefit_evidence == 'yes'
   end
 
   def means_assessment_in_lieu_of_passporting?
