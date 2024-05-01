@@ -1,12 +1,3 @@
-<% if FeatureFlags.summary_cards.enabled? %>
-  <%= govuk_summary_card title: t(section.name, scope: 'summary.sections') do %>
-    <%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
-  <% end %>
-<% else %>
-  <% unless section.headless? %>
-    <h2 class="govuk-heading-m">
-      <%= t(section.name, scope: 'summary.sections') %>
-    </h2>
-  <% end %>
-  <%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
+<%= govuk_summary_card title: t(section.name, scope: 'summary.sections') do %>
+<%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
 <% end %>
