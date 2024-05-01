@@ -358,7 +358,7 @@ RSpec.describe Decisions::CaseDecisionTree do
         let(:means_passported) { true }
         let(:evidence_required) { false }
 
-        it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
       end
     end
 
@@ -385,7 +385,7 @@ RSpec.describe Decisions::CaseDecisionTree do
         let(:not_means_tested?) { true }
         let(:evidence_required) { false }
 
-        it { is_expected.to have_destination('/steps/submission/more_information', :edit, id: crime_application) }
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
       end
 
       context 'when evidence required' do
