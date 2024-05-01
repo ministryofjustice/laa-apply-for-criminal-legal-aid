@@ -45,8 +45,21 @@ RSpec.describe Decisions::CaseDecisionTree do
       }
     end
 
-    it 'redirects to the `has_case_concluded` page' do
-      expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
+    context 'feature flag `means_journey` is enabled' do
+      let(:feature_flag_means_journey_enabled) { true }
+
+      it 'redirects to the `has_case_concluded` page' do
+        expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
+      end
+    end
+
+    context 'feature flag `means_journey` is disabled' do
+      let(:feature_flag_means_journey_enabled) { false }
+      let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
+
+      it 'redirects to the edit `charges` page' do
+        expect(subject).to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge')
+      end
     end
   end
 

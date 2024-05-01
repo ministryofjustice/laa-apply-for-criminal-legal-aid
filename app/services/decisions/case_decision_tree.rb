@@ -6,7 +6,7 @@ module Decisions
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :urn
-        edit(:has_case_concluded)
+        FeatureFlags.means_journey.enabled? ? edit(:has_case_concluded) : charges_summary_or_edit_new_charge
       when :has_case_concluded
         after_has_case_concluded
       when :is_preorder_work_claimed

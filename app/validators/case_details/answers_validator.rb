@@ -20,7 +20,7 @@ module CaseDetails
         errors.add(:is_client_remanded, :blank) unless client_remanded_complete?
       end
 
-      errors.add(:charges, :blank) unless what_charges_complete?
+      errors.add(:charges, :blank) unless has_charges_complete?
       errors.add(:charges_summary, :incomplete_records) unless all_charges_complete?
       errors.add(:has_codefendants, :blank) unless has_codefendants_complete?
       errors.add(:codefendants_summary, :incomplete_records) unless all_codefendants_complete?
@@ -54,10 +54,10 @@ module CaseDetails
       return false if kase.is_client_remanded.blank?
       return true if kase.is_client_remanded == 'no'
 
-      kase.values_at(:date_client_remanded).all?(&:present?)
+      kase.date_client_remanded.present?
     end
 
-    def what_charges_complete?
+    def has_charges_complete?
       kase.charges.any?(&:complete?)
     end
 

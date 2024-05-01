@@ -277,8 +277,8 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
     end
 
     context 'when there are no charges' do
-      it '#what_charges_complete? returns false' do
-        expect(subject.what_charges_complete?).to be(false)
+      it '#has_charges_complete? returns false' do
+        expect(subject.has_charges_complete?).to be(false)
       end
 
       it '#all_charges_complete? returns false' do
@@ -291,8 +291,8 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
       let(:charge2) { double('Charge', complete?: false) }
       let(:charges) { [charge1, charge2] }
 
-      it '#what_charges_complete? returns true' do
-        expect(subject.what_charges_complete?).to be(true)
+      it '#has_charges_complete? returns true' do
+        expect(subject.has_charges_complete?).to be(true)
       end
 
       it '#all_charges_complete? returns false' do
@@ -305,8 +305,8 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
       let(:charge2) { double('Charge', complete?: true) }
       let(:charges) { [charge1, charge2] }
 
-      it '#what_charges_complete? returns true' do
-        expect(subject.what_charges_complete?).to be(true)
+      it '#has_charges_complete? returns true' do
+        expect(subject.has_charges_complete?).to be(true)
       end
 
       it '#all_charges_complete? returns true' do
