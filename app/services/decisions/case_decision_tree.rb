@@ -32,7 +32,7 @@ module Decisions
       when :hearing_details
         after_hearing_details
       when :first_court_hearing
-        after_first_court_hearing
+        ioj_or_passported
       when :ioj, :ioj_passport
         after_ioj
       else
@@ -86,10 +86,6 @@ module Decisions
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
 
-      ioj_or_passported
-    end
-
-    def after_first_court_hearing
       ioj_or_passported
     end
 
