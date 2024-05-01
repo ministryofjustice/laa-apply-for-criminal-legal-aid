@@ -29,7 +29,9 @@ RSpec.describe Steps::Submission::DeclarationController, type: :controller do
     end
 
     context 'when application is found' do
-      let(:existing_case) { CrimeApplication.create(legal_rep_attrs) }
+      let(:existing_case) {
+        CrimeApplication.create(applicant: Applicant.new(date_of_birth: '2000-10-10'), **legal_rep_attrs)
+      }
 
       context 'when it has been reviewed' do
         before do

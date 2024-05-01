@@ -27,7 +27,6 @@ module ClientDetails
     end
 
     def address_complete?
-      return false unless applicant
       return false if applicant.residence_type.blank?
 
       case applicant.correspondence_address_type
@@ -43,8 +42,6 @@ module ClientDetails
     end
 
     def applicant_details_complete?
-      return false unless applicant
-
       applicant.values_at(
         :date_of_birth, :first_name, :last_name,
       ).all?(&:present?)
@@ -57,7 +54,6 @@ module ClientDetails
     end
 
     def passporting_complete?
-      return false unless applicant
       return true if applicant.benefit_type == 'none'
       return true if evidence_of_passporting_means_forthcoming?
       return true if means_assessment_in_lieu_of_passporting?
@@ -66,7 +62,6 @@ module ClientDetails
     end
 
     def has_nino_complete?
-      return false unless applicant
       return false if applicant.has_nino.blank?
       return true if applicant.has_nino == 'no' && !has_passporting_benefit?
       return true if nino_forthcoming?
