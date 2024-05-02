@@ -1,5 +1,5 @@
 module Steps
-  module Client
+  module DWP
     class CannotCheckBenefitStatusForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :applicant

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Client::BenefitTypeForm do
+RSpec.describe Steps::DWP::BenefitTypeForm do
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do

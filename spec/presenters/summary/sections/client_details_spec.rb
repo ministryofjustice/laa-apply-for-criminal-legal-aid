@@ -88,12 +88,12 @@ describe Summary::Sections::ClientDetails do
 
       expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[5].question).to eq(:passporting_benefit)
-      expect(answers[5].change_path).to match('applications/12345/steps/client/benefit_type')
+      expect(answers[5].change_path).to match('applications/12345/steps/dwp/benefit_type')
       expect(answers[5].value).to eq('jsa')
 
       expect(answers[6]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[6].question).to eq(:last_jsa_appointment_date)
-      expect(answers[6].change_path).to match('applications/12345/steps/client/benefit_type')
+      expect(answers[6].change_path).to match('applications/12345/steps/dwp/benefit_type')
       expect(answers[6].value).to eq(Date.new(2024, 2, 21))
     end
 

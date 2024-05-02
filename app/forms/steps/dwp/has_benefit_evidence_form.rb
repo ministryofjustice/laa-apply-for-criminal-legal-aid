@@ -1,5 +1,5 @@
 module Steps
-  module Client
+  module DWP
     class HasBenefitEvidenceForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :applicant

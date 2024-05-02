@@ -63,6 +63,15 @@ en:
       nino_exit:
         show:
           page_title: Use eForms for this application
+      residence_type:
+        edit:
+          page_title: Where does your client usually live?
+      contact_details:
+        edit:
+          page_title: Client’s contact details
+          heading: Your client’s contact details
+
+    dwp:
       benefit_type:
         edit:
           page_title: Does your client get one of these passporting benefits?
@@ -88,19 +97,10 @@ en:
           upload_evidence: You must upload evidence that your client gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
-      residence_type:
-        edit:
-          page_title: Where does your client usually live?
-      contact_details:
-        edit:
-          page_title: Client’s contact details
-          heading: Your client’s contact details
       cannot_check_dwp_status:
         edit:
           page_title: Sorry, we cannot check your client’s information with DWP
           heading: Sorry, we cannot check your client’s information with DWP
-
-    dwp:
       confirm_result:
         edit:
           heading: DWP records show that your client does not receive a passporting benefit

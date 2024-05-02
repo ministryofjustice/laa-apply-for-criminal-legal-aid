@@ -39,14 +39,14 @@ module Summary
         unless no_benefit?
           answers.push(Components::ValueAnswer.new(
                          :passporting_benefit, applicant.benefit_type,
-                         change_path: edit_steps_client_benefit_type_path
+                         change_path: edit_steps_dwp_benefit_type_path
                        ))
         end
 
         if jsa?
           answers.push(Components::DateAnswer.new(
                          :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
-                         change_path: edit_steps_client_benefit_type_path
+                         change_path: edit_steps_dwp_benefit_type_path
                        ))
         end
 
