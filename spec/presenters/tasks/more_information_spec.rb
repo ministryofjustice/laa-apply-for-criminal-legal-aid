@@ -51,37 +51,39 @@ RSpec.describe Tasks::MoreInformation do
     before do
       allow(
         crime_application
-      ).to receive(:additional_information).and_return additional_information
+      ).to receive(:additional_information_required).and_return additional_information_required
     end
 
-    context 'when additional information is given' do
-      let(:additional_information) { 'Some info' }
+    context 'when additional information required has been answered' do
+      let(:additional_information_required) { 'Yes' }
 
       it { expect(subject.in_progress?).to be(true) }
     end
 
-    context 'when additional information has not yet been given' do
-      let(:additional_information) { nil }
+    context 'when additional information has not been answered' do
+      let(:additional_information_required) { nil }
 
       it { expect(subject.in_progress?).to be(false) }
     end
   end
 
   describe '#completed?' do
+    let(:additional_information_required) { nil }
+
     before do
       allow(
         crime_application
-      ).to receive(:additional_information).and_return additional_information
+      ).to receive(:additional_information_required).and_return additional_information_required
     end
 
-    context 'when additional information is given' do
-      let(:additional_information) { 'Some info' }
+    context 'when additional information required has been answered' do
+      let(:additional_information_required) { 'Yes' }
 
       it { expect(subject.completed?).to be(true) }
     end
 
-    context 'when additional information has not yet been given' do
-      let(:additional_information) { nil }
+    context 'when additional information has not been answered' do
+      let(:additional_information_required) { nil }
 
       it { expect(subject.completed?).to be(false) }
     end

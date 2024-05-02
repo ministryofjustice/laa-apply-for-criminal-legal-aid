@@ -13,7 +13,7 @@ module Tasks
     end
 
     def in_progress?
-      crime_application.additional_information.present?
+      crime_application.additional_information_required.present?
     end
 
     def completed?
