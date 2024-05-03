@@ -151,6 +151,8 @@ Naming/PredicateName:
     - has_national_savings_certificates_complete?
     - has_nino_complete?
     - has_passporting_benefit?
+    - has_codefendants_complete?
+    - has_charges_complete?
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
