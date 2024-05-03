@@ -1,6 +1,6 @@
 module Steps
-  module Client
-    class CannotCheckBenefitStatusController < Steps::ClientStepController
+  module DWP
+    class CannotCheckBenefitStatusController < Steps::DWPStepController
       def edit
         @form_object = CannotCheckBenefitStatusForm.build(
           current_crime_application

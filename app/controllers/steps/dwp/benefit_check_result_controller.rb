@@ -1,6 +1,6 @@
 module Steps
-  module Client
-    class BenefitCheckResultController < Steps::ClientStepController
+  module DWP
+    class BenefitCheckResultController < Steps::DWPStepController
       include Steps::NoOpAdvanceStep
 
       private

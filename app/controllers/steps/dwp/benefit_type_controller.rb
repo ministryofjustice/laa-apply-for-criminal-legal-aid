@@ -1,6 +1,6 @@
 module Steps
-  module Client
-    class BenefitTypeController < Steps::ClientStepController
+  module DWP
+    class BenefitTypeController < Steps::DWPStepController
       def edit
         @form_object = BenefitTypeForm.build(
           current_crime_application

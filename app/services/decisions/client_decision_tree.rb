@@ -2,7 +2,7 @@ module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :is_means_tested
@@ -27,21 +27,11 @@ module Decisions
         after_contact_details
       when :has_nino
         after_has_nino
-      when :benefit_type
-        after_benefit_type
-      when :benefit_check_result
-        edit('/steps/case/urn')
-      when :has_benefit_evidence
-        after_has_benefit_evidence
-      when :cannot_check_benefit_status
-        after_cannot_check_benefit_status
-      when :cannot_check_dwp_status
-        after_cannot_check_dwp_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -139,62 +129,8 @@ module Decisions
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
       else
-        edit(:benefit_type)
+        edit('/steps/dwp/benefit_type')
       end
-    end
-
-    def after_benefit_type
-      if form_object.benefit_type.none?
-        if FeatureFlags.means_journey.enabled?
-          edit('/steps/case/urn')
-        else
-          show(:benefit_exit)
-        end
-      elsif !applicant_has_nino
-        edit(:cannot_check_benefit_status)
-      else
-        determine_dwp_result_page
-      end
-    end
-
-    def after_has_benefit_evidence
-      if form_object.has_benefit_evidence.yes? || FeatureFlags.means_journey.enabled?
-        edit('/steps/case/urn')
-      else
-        show(:evidence_exit)
-      end
-    end
-
-    def determine_dwp_result_page
-      return edit(:benefit_check_result) if current_crime_application.benefit_check_passported?
-
-      DWP::UpdateBenefitCheckResultService.call(applicant)
-
-      if applicant.passporting_benefit.nil?
-        edit(:cannot_check_dwp_status)
-      elsif applicant.passporting_benefit
-        edit(:benefit_check_result)
-      else
-        edit('steps/dwp/confirm_result')
-      end
-    end
-
-    def after_cannot_check_benefit_status
-      if form_object.will_enter_nino.yes?
-        edit(:has_nino)
-      else
-        edit('/steps/case/urn')
-      end
-    end
-
-    def after_cannot_check_dwp_status
-      determine_dwp_result_page
-    end
-
-    def applicant_has_nino
-      return true unless FeatureFlags.means_journey.enabled?
-
-      applicant.has_nino == 'yes'
     end
 
     def applicant
