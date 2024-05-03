@@ -176,7 +176,7 @@ en:
       steps_dwp_benefit_type_form:
         benefit_type: This will help us review your application. It will not affect the DWP check.
         last_jsa_appointment_date: This is sometimes known as ‘signing on’.
-      steps_client_cannot_check_benefit_status_form:
+      steps_dwp_cannot_check_benefit_status_form:
         will_enter_nino_options:
           'no': You may not be able to submit your application without the National Insurance number
       steps_dwp_has_benefit_evidence_form:
