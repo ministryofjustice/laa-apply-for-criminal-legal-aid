@@ -49,9 +49,9 @@ module TypeOfMeansAssessment
     applicant.has_benefit_evidence == 'yes'
   end
 
-  def means_assessment_in_lieu_of_passporting?
-    has_passporting_benefit? && applicant.has_benefit_evidence == 'no'
-  end
+  # def means_assessment_in_lieu_of_passporting?
+  #   has_passporting_benefit? && applicant.has_benefit_evidence == 'no'
+  # end
 
   private
 

@@ -18,7 +18,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :confirm_result, @form_object.choices, :value,
+      <%= f.govuk_collection_radio_buttons :confirm_dwp_result, @form_object.choices, :value,
                                            inline: false,
                                            legend: { 'aria-describedby': 'dwp-confirm-result-desc' }%>
 
