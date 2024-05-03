@@ -41,7 +41,8 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
         let(:confirm_dwp_result) { 'no' }
 
         it 'saves `confirm_dwp_result` value and returns true' do
-          expect(crime_application).to receive(:update).with({ 'confirm_dwp_result' => YesNoAnswer::NO }).and_return(true)
+          expect(crime_application).to receive(:update)
+            .with({ 'confirm_dwp_result' => YesNoAnswer::NO }).and_return(true)
           expect(subject.save).to be(true)
         end
       end
@@ -50,7 +51,8 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
         let(:confirm_dwp_result) { 'yes' }
 
         it 'saves `confirm_dwp_result` value and returns true' do
-          expect(crime_application).to receive(:update).with({ 'confirm_dwp_result' => YesNoAnswer::YES }).and_return(true)
+          expect(crime_application).to receive(:update)
+            .with({ 'confirm_dwp_result' => YesNoAnswer::YES }).and_return(true)
           expect(subject.save).to be(true)
         end
       end

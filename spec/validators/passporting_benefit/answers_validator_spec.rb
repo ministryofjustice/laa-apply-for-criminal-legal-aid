@@ -5,7 +5,9 @@ RSpec.describe PassportingBenefit::AnswersValidator, type: :model do
 
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:, confirm_dwp_result:) }
   let(:errors) { double(:errors, empty?: false) }
-  let(:applicant) { instance_double(Applicant, benefit_type:, has_benefit_evidence:, has_nino:, will_enter_nino:, passporting_benefit:) }
+  let(:applicant) {
+    instance_double(Applicant, benefit_type:, has_benefit_evidence:, has_nino:, will_enter_nino:, passporting_benefit:)
+  }
   let(:kase) { instance_double(Case) }
   let(:benefit_type) { nil }
   let(:has_benefit_evidence) { nil }

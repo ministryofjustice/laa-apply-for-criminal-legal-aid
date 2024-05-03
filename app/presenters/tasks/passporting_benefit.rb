@@ -19,6 +19,5 @@ module Tasks
     def completed?
       crime_application.valid?(:passporting_benefit)
     end
-
   end
 end

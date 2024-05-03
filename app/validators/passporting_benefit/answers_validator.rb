@@ -30,10 +30,10 @@ module PassportingBenefit
 
       errors.add(:will_enter_nino, :blank) unless will_enter_nino_complete?
 
-      unless dwp_check_not_undertaken?
-        errors.add(:confirm_dwp_result, :blank) unless confirm_dwp_result_complete?
-        errors.add(:has_benefit_evidence, :blank) unless has_benefit_evidence_complete?
-      end
+      return false if dwp_check_not_undertaken?
+
+      errors.add(:confirm_dwp_result, :blank) unless confirm_dwp_result_complete?
+      errors.add(:has_benefit_evidence, :blank) unless has_benefit_evidence_complete?
     end
 
     def will_enter_nino_complete?
