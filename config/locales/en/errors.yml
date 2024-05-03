@@ -774,7 +774,9 @@ en:
         steps/submission/more_information_form:
           attributes:
             additional_information:
-              blank: Enter details you need to add to the application or select no
+              blank: Enter details you need to add to the application
+            additional_information_required:
+              inclusion: Select yes if you need to add any more information to this application
         steps/submission/declaration_form:
           attributes:
             legal_rep_first_name:
