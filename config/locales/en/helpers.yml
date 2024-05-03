@@ -115,7 +115,7 @@ en:
       steps_outgoings_outgoings_payments_form:
         outgoings_payments: Which of these payments does your client pay?
       steps_submission_more_information_form:
-        need_more_information: Do you need to add any more information to this application?
+        additional_information_required: Do you need to add any more information to this application?
       steps_capital_property_type_form:
         property_type: Which assets does your client own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
@@ -553,7 +553,7 @@ en:
       steps_evidence_upload_form:
         upload_files: Upload files
       steps_submission_more_information_form:
-        need_more_information_options: *YESNO
+        additional_information_required_options: *YESNO
         additional_information: Enter details that will help us process this application
       steps_submission_declaration_form:
         legal_rep_first_name: First name

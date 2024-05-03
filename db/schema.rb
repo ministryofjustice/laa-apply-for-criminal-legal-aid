@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
     t.string "confirm_dwp_result"
+    t.string "additional_information_required"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end

@@ -10,12 +10,6 @@ module Steps
       def update
         update_and_advance(MoreInformationForm, as: :more_information)
       end
-
-      private
-
-      def additional_permitted_params
-        [:need_more_information]
-      end
     end
   end
 end
