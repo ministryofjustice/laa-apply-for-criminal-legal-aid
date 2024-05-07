@@ -215,7 +215,7 @@ RSpec.describe Steps::Client::HasNinoForm do
       # rubocop:enable RSpec/NestedGroups
     end
 
-    context 'when nino has is unchanged' do
+    context 'when has nino is unchanged' do
       before do
         allow(record).to receive_messages(has_nino: previous_has_nino, nino: previous_nino)
       end

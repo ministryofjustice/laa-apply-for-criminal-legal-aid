@@ -66,7 +66,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         allow(subject).to receive_messages(requires_means_assessment?: true, requires_full_means_assessment?: true)
       end
 
-      context 'when passporting complete' do
+      context 'when all sections complete' do
         let(:errors) { [] }
 
         let(:attributes) do

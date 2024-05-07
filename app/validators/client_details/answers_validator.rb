@@ -61,8 +61,9 @@ module ClientDetails
 
     def has_nino_complete?
       return false if applicant.has_nino.blank?
+      return true if applicant.has_nino == 'no'
 
-      applicant.nino.present? || applicant.has_nino == 'no'
+      applicant.nino.present?
     end
 
     alias crime_application record
