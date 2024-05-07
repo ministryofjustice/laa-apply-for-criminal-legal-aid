@@ -13,7 +13,8 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, confirm_dwp_result:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:, confirm_dwp_result:) }
+  let(:applicant) { instance_double(Applicant) }
   let(:confirm_dwp_result) { nil }
 
   describe '#choices' do
@@ -53,6 +54,7 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
         it 'saves `confirm_dwp_result` value and returns true' do
           expect(crime_application).to receive(:update)
             .with({ 'confirm_dwp_result' => YesNoAnswer::YES }).and_return(true)
+          expect(applicant).to receive(:update).with(benefit_type: BenefitType::NONE).and_return(true)
           expect(subject.save).to be(true)
         end
       end

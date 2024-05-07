@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tasks::PassportingBenefit do
+RSpec.describe Tasks::PassportingBenefitCheck do
   subject { described_class.new(crime_application:) }
 
   let(:crime_application) do

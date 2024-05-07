@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PassportingBenefit::AnswersValidator, type: :model do
+RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:, confirm_dwp_result:) }
@@ -157,7 +157,7 @@ RSpec.describe PassportingBenefit::AnswersValidator, type: :model do
     end
 
     describe '#dwp_check_not_undertaken?' do
-      context 'when passporting_benefit present' do
+      context 'when passporting_benefit_check present' do
         let(:passporting_benefit) { false }
 
         it 'returns false' do
@@ -165,7 +165,7 @@ RSpec.describe PassportingBenefit::AnswersValidator, type: :model do
         end
       end
 
-      context 'when passporting_benefit not present' do
+      context 'when passporting_benefit_check not present' do
         it 'returns true' do
           expect(subject.dwp_check_not_undertaken?).to be(true)
         end

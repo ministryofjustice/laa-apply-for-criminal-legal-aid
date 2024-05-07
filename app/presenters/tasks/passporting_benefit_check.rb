@@ -1,5 +1,5 @@
 module Tasks
-  class PassportingBenefit < BaseTask
+  class PassportingBenefitCheck < BaseTask
     def path
       edit_steps_dwp_benefit_type_path
     end

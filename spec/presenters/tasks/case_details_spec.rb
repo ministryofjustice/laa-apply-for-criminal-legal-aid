@@ -27,7 +27,7 @@ RSpec.describe Tasks::CaseDetails do
     ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
     allow(
       task
-    ).to receive(:fulfilled?).with(Tasks::PassportingBenefit).and_return(passporting_benefit_fulfilled)
+    ).to receive(:fulfilled?).with(Tasks::PassportingBenefitCheck).and_return(passporting_benefit_fulfilled)
   end
 
   describe '#path' do

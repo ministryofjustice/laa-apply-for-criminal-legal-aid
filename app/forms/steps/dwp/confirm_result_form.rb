@@ -14,7 +14,9 @@ module Steps
       def persist!
         crime_application.update(attributes)
 
-        # crime_application.applicant.update(benefit_type: BenefitType::NONE) if confirm_dwp_result.yes?
+        return true if confirm_dwp_result.no?
+
+        crime_application.applicant.update(benefit_type: BenefitType::NONE) if confirm_dwp_result.yes?
       end
     end
   end

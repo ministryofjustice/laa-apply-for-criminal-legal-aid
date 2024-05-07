@@ -11,7 +11,7 @@ module Tasks
     def can_start?
       return fulfilled?(ClientDetails) if appeal_no_changes? || applicant&.under18?
 
-      fulfilled?(PassportingBenefit)
+      fulfilled?(PassportingBenefitCheck)
     end
 
     delegate :kase, :appeal_no_changes?, to: :crime_application

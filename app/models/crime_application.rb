@@ -76,7 +76,7 @@ class CrimeApplication < ApplicationRecord
   end
 
   validate on: :passporting_benefit do
-    ::PassportingBenefit::AnswersValidator.new(self).validate
+    ::PassportingBenefitCheck::AnswersValidator.new(self).validate
   end
 
   validate on: :submission_review, unless: :post_submission_evidence? do

@@ -1,4 +1,4 @@
-module PassportingBenefit
+module PassportingBenefitCheck
   class AnswersValidator
     include TypeOfMeansAssessment
 
