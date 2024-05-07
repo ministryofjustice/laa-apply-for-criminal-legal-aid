@@ -181,4 +181,15 @@ RSpec.describe CrimeApplication, type: :model do
       end
     end
   end
+
+  describe '#passporting_benefit_complete?' do
+    # Validation tested in validator spec
+    let(:benefit_type) { nil }
+    let(:applicant) { Applicant.new(benefit_type:) }
+    let(:attributes) { { applicant: } }
+
+    it 'returns false' do
+      expect(subject.passporting_benefit_complete?).to be false
+    end
+  end
 end
