@@ -5,7 +5,7 @@ en:
       initial: Make a new application
       post_submission_evidence: Upload supporting evidence
     heading:
-      applicant_details: Applicant details
+      about_your_client: About your client
       case_details: Case details
       means_assessment: Means assessment
       support_evidence: Supporting evidence
@@ -15,7 +15,7 @@ en:
       more_information: Add any more information
       client_details: Client details
       case_details: Case details
-      passporting_benefit: Passporting benefits
+      passporting_benefit_check: Passporting benefit check
       ioj: Justification for legal aid
       income_assessment: Income assessment
       outgoings_assessment: Outgoings assessment

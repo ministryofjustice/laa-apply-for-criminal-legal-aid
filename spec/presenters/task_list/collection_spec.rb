@@ -11,8 +11,8 @@ RSpec.describe TaskList::Collection do
   describe 'collection of sections' do
     it 'has the `client_details` section' do
       expect(subject[0].index).to eq(1)
-      expect(subject[0].name).to eq(:applicant_details)
-      expect(subject[0].tasks).to eq([:client_details, :passporting_benefit])
+      expect(subject[0].name).to eq(:about_your_client)
+      expect(subject[0].tasks).to eq([:client_details, :passporting_benefit_check])
     end
 
     it 'has the `case_details` section' do
