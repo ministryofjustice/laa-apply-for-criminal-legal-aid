@@ -29,9 +29,7 @@ module PassportingBenefitCheck
       return true if applicant.passporting_benefit == true
 
       errors.add(:will_enter_nino, :blank) unless will_enter_nino_complete?
-
-      return false if dwp_check_not_undertaken?
-
+      errors.add(:passporting_benefit, :blank) if dwp_check_not_undertaken?
       errors.add(:confirm_dwp_result, :blank) unless confirm_dwp_result_complete?
       errors.add(:has_benefit_evidence, :blank) unless has_benefit_evidence_complete?
     end
@@ -56,6 +54,8 @@ module PassportingBenefitCheck
     end
 
     def dwp_check_not_undertaken?
+      return false if applicant.has_nino == 'no'
+
       applicant.passporting_benefit.nil?
     end
 

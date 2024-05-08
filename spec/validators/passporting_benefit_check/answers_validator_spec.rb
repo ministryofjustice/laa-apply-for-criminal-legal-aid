@@ -79,6 +79,22 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
           end
         end
       end
+
+      context 'when dwp check forthcoming' do
+        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
+        let(:has_nino) { 'yes' }
+        let(:passporting_benefit) { nil }
+
+        context 'when passporting_benefit is blank' do
+          it 'adds errors for all failed validations' do
+            expect(errors).to receive(:add).with(:passporting_benefit, :blank)
+            expect(errors).to receive(:add).with(:confirm_dwp_result, :blank)
+            expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+            subject.validate
+          end
+        end
+      end
     end
 
     describe '#benefit_type_complete?' do
@@ -196,6 +212,14 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
     end
 
     describe '#dwp_check_not_undertaken?' do
+      context 'when applicant has no nino' do
+        let(:has_nino) { 'no' }
+
+        it 'returns false' do
+          expect(subject.dwp_check_not_undertaken?).to be(false)
+        end
+      end
+
       context 'when passporting_benefit_check present' do
         let(:passporting_benefit) { false }
 
