@@ -17,6 +17,19 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   let(:passporting_benefit) { nil }
 
   describe '#validate' do
+    context 'when dwp check completed successfully' do
+      let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
+      let(:passporting_benefit) { true }
+
+      before do
+        allow(errors).to receive(:empty?).and_return(true)
+      end
+
+      it 'adds errors for all failed validations' do
+        subject.validate
+      end
+    end
+
     context 'when validation fails' do
       context 'when section has not been started' do
         it 'adds errors for all failed validations' do

@@ -25,8 +25,8 @@ module PassportingBenefitCheck
     end
 
     def benefit_questions_complete?
-      # passed the dwp check
-      return true if applicant.passporting_benefit == 'true'
+      # Applicant#passporting_benefit is stored as a boolean
+      return true if applicant.passporting_benefit == true
 
       errors.add(:will_enter_nino, :blank) unless will_enter_nino_complete?
 
@@ -54,7 +54,6 @@ module PassportingBenefitCheck
     end
 
     def dwp_check_not_undertaken?
-      # could be because the checker is down or applicant has no pp benefit or nino
       applicant.passporting_benefit.nil?
     end
 
