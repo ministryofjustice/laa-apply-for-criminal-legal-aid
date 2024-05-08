@@ -20,11 +20,10 @@ module Passporting
     end
 
     def not_means_tested?
-      return passported_on?(MeansPassportType::ON_NOT_MEANS_TESTED) if resubmission?
-
       app_not_means_tested?
     end
 
+    # Age based passporting persists on resubmission
     def age_passported?
       return passported_on?(MeansPassportType::ON_AGE_UNDER18) if resubmission?
 
@@ -32,8 +31,6 @@ module Passporting
     end
 
     def benefit_check_passported?
-      return passported_on?(MeansPassportType::ON_BENEFIT_CHECK) if resubmission?
-
       benefit_check_passed?
     end
 

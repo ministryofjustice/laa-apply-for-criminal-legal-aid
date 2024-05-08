@@ -216,7 +216,7 @@ RSpec.describe Passporting::MeansPassporter do
       context 'passported on benefit check' do
         let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
 
-        it { expect(subject.benefit_check_passported?).to be(true) }
+        it { expect(subject.benefit_check_passported?).to be(false) }
       end
 
       context 'not passported on benefit check' do
