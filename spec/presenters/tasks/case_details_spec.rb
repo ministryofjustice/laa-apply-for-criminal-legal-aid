@@ -9,16 +9,25 @@ RSpec.describe Tasks::CaseDetails do
       to_param: '12345',
       applicant: applicant,
       kase: kase,
+      appeal_no_changes?: appeal_no_changes,
     )
   end
 
-  let(:applicant) { nil }
+  let(:applicant) { double under18?: under18? }
   let(:kase) { nil }
 
   let(:client_details_fulfilled) { true }
+  let(:passporting_benefit_fulfilled) { true }
+  let(:appeal_no_changes) { false }
+  let(:under18?) { false }
 
   before do
-    allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+    allow(
+      task
+    ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+    allow(
+      task
+    ).to receive(:fulfilled?).with(Tasks::PassportingBenefitCheck).and_return(passporting_benefit_fulfilled)
   end
 
   describe '#path' do
@@ -30,12 +39,40 @@ RSpec.describe Tasks::CaseDetails do
   end
 
   describe '#can_start?' do
-    context 'when the client details task has been completed' do
+    context 'when the case type is appeal no changes' do
+      let(:appeal_no_changes) { true }
+
+      context 'when the client details task has been completed' do
+        it { expect(task.can_start?).to be(true) }
+      end
+
+      context 'when the client details task has not been completed yet' do
+        let(:client_details_fulfilled) { false }
+
+        it { expect(task.can_start?).to be(false) }
+      end
+    end
+
+    context 'when the applicant is under 18' do
+      let(:under18?) { true }
+
+      context 'when the client details task has been completed' do
+        it { expect(task.can_start?).to be(true) }
+      end
+
+      context 'when the client details task has not been completed yet' do
+        let(:client_details_fulfilled) { false }
+
+        it { expect(task.can_start?).to be(false) }
+      end
+    end
+
+    context 'when the passporting benefit task has been completed' do
       it { expect(task.can_start?).to be(true) }
     end
 
-    context 'when the client details task has not been completed yet' do
-      let(:client_details_fulfilled) { false }
+    context 'when the passporting benefit task has not been completed yet' do
+      let(:passporting_benefit_fulfilled) { false }
 
       it { expect(task.can_start?).to be(false) }
     end

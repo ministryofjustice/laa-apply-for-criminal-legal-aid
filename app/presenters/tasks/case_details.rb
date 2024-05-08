@@ -9,10 +9,12 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(ClientDetails)
+      return fulfilled?(ClientDetails) if appeal_no_changes? || applicant&.under18?
+
+      fulfilled?(PassportingBenefitCheck)
     end
 
-    delegate :kase, to: :crime_application
+    delegate :kase, :appeal_no_changes?, to: :crime_application
 
     # If we have a `case` record we consider this in progress
     def in_progress?

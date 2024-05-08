@@ -16,11 +16,11 @@ RSpec.describe Decisions::DWPDecisionTree do
   it_behaves_like 'a decision tree'
 
   context 'when the step is `confirm_result`' do
-    let(:form_object) { double('FormObject', applicant:, confirm_result:) }
+    let(:form_object) { double('FormObject', applicant:, confirm_dwp_result:) }
     let(:step_name) { :confirm_result }
 
     context 'and the answer is `yes`' do
-      let(:confirm_result) { YesNoAnswer::YES }
+      let(:confirm_dwp_result) { YesNoAnswer::YES }
 
       before do
         allow(FeatureFlags).to receive(:means_journey) {
@@ -42,7 +42,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     end
 
     context 'and the answer is `no`' do
-      let(:confirm_result) { YesNoAnswer::NO }
+      let(:confirm_dwp_result) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination(:confirm_details, :edit, id: crime_application) }
     end

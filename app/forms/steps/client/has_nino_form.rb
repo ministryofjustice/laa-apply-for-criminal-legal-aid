@@ -30,6 +30,16 @@ module Steps
         errors.add(:nino, :invalid) unless NINO_REGEXP.match?(nino)
       end
 
+      def changed?
+        !applicant.has_nino.eql?(has_nino.to_s) || nino_changed?
+      end
+
+      def nino_changed?
+        return false if applicant.nino.nil? && nino == ''
+
+        applicant.nino != nino
+      end
+
       def persist!
         return true unless changed?
 

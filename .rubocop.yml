@@ -153,6 +153,7 @@ Naming/PredicateName:
     - has_passporting_benefit?
     - has_codefendants_complete?
     - has_charges_complete?
+    - has_benefit_evidence_complete?
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:

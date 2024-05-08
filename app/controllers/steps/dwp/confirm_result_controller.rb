@@ -2,8 +2,8 @@ module Steps
   module DWP
     class ConfirmResultController < Steps::DWPStepController
       def edit
-        @form_object = ConfirmResultForm.new(
-          crime_application: current_crime_application
+        @form_object = ConfirmResultForm.build(
+          current_crime_application
         )
       end
 

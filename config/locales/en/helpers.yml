@@ -68,7 +68,7 @@ en:
       steps_client_contact_details_form:
         correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form:
-        confirm_result: Are the DWP records correct?
+        confirm_dwp_result: Are the DWP records correct?
       steps_dwp_confirm_details_form:
         confirm_details: Are these details correct?
       steps_case_has_case_concluded_form:
@@ -341,7 +341,7 @@ en:
           'yes': I will enter the National Insurance number now
           'no': I will enter the National Insurance number later
       steps_dwp_confirm_result_form:
-        confirm_result_options:
+        confirm_dwp_result_options:
           'yes': 'Yes'
           'no': 'No, my client receives a passporting benefit'
       steps_dwp_confirm_details_form:

@@ -18,7 +18,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         let(:errors) { [] }
 
         let(:attributes) do
-          { client_details_complete?: true, kase: double(complete?: true) }
+          { client_details_complete?: true, passporting_benefit_complete?: true, kase: double(complete?: true) }
         end
 
         it 'does not add any errors' do
@@ -50,6 +50,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       let(:attributes) do
         {
           client_details_complete?: true,
+          passporting_benefit_complete?: true,
           kase: double(complete?: true),
           income: double(complete?: true)
         }
@@ -71,6 +72,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         let(:attributes) do
           {
             client_details_complete?: true,
+            passporting_benefit_complete?: true,
             kase: double(complete?: true),
             income: double(complete?: true),
             outgoings: double(complete?: true),
@@ -83,10 +85,11 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         end
       end
 
-      context 'when kase, income, outgoings and capital incomplete' do
+      context 'when passporting benefit, case, income, outgoings and capital incomplete' do
         let(:attributes) do
           {
             client_details_complete?: true,
+            passporting_benefit_complete?: false,
             kase: double(complete?: false),
             income: double(complete?: false),
             outgoings: double(complete?: false),
@@ -95,6 +98,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         end
 
         it 'adds errors to all sections and base' do
+          expect(errors).to receive(:add).with(:benefit_type, :incomplete)
           expect(errors).to receive(:add).with(:case_details, :incomplete)
           expect(errors).to receive(:add).with(:income_assessment, :incomplete)
           expect(errors).to receive(:add).with(:outgoings_assessment, :incomplete)
@@ -109,6 +113,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         let(:attributes) do
           {
             client_details_complete?: true,
+            passporting_benefit_complete?: true,
             kase: double(complete?: true),
             income: nil,
             outgoings: nil,

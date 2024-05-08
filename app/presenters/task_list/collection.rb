@@ -10,7 +10,7 @@ module TaskList
     # Implement each task logic in individual classes in `app/presenters/tasks`
     SECTIONS = {
       initial: [
-        [:client_details,   [:client_details]],
+        [:about_your_client, [:client_details, :passporting_benefit_check]],
         [:case_details,     [:case_details, :ioj]],
         [:means_assessment, [:income_assessment, :outgoings_assessment, :capital_assessment]],
         [:support_evidence, [:evidence_upload]],

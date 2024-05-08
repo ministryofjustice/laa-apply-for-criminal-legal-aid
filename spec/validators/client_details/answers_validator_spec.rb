@@ -5,9 +5,10 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:) }
   let(:errors) { double(:errors, empty?: false) }
-  let(:applicant) { instance_double(Applicant, residence_type: 'house') }
+  let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
   let(:kase) { instance_double(Case, case_type: 'case_type') }
   let(:appeal_no_changes?) { false }
+  let(:under18?) { false }
 
   before do
     allow(subject).to receive(:appeal_no_changes?) { appeal_no_changes? }
@@ -18,24 +19,8 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       before do
         allow(applicant).to receive(:values_at).with(:date_of_birth, :first_name,
                                                      :last_name).and_return(['2000-11-11', nil, 'Tim'])
-        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil, benefit_type: nil,
-                                             has_benefit_evidence: nil)
+        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil)
         allow(record).to receive(:kase).and_return(nil)
-        allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
-      end
-
-      let(:attributes) do
-        {
-          employment_status: nil,
-          income_above_threshold: nil,
-          has_frozen_income_or_assets: nil,
-          has_no_income_payments: 'no',
-          has_no_income_benefits: 'no',
-          income_payments: [],
-          income_benefits: [],
-          client_has_dependants: nil,
-          manage_without_income: nil,
-        }
       end
 
       it 'adds errors for all failed validations' do
@@ -43,7 +28,6 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:case_type, :blank)
         expect(errors).to receive(:add).with(:residence_type, :blank)
         expect(errors).to receive(:add).with(:has_nino, :blank)
-        expect(errors).to receive(:add).with(:benefit_type, :blank)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
@@ -55,6 +39,19 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         it 'does not add any errors' do
           expect(errors).to receive(:add).with(:details, :blank)
           expect(errors).to receive(:add).with(:case_type, :blank)
+          expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+          subject.validate
+        end
+      end
+
+      context 'when applicant is under 18' do
+        let(:under18?) { true }
+
+        it 'does not add any errors' do
+          expect(errors).to receive(:add).with(:details, :blank)
+          expect(errors).to receive(:add).with(:case_type, :blank)
+          expect(errors).to receive(:add).with(:residence_type, :blank)
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
@@ -147,109 +144,13 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
   end
 
-  describe '#passporting_complete?' do
-    context 'when benefit type is none' do
-      before { allow(applicant).to receive(:benefit_type).and_return('none') }
-
-      it 'returns true' do
-        expect(subject.passporting_complete?).to be(true)
-      end
-    end
-
-    context 'when the dwp check fails but they have a passporting benefit' do
-      let(:has_benefit_evidence) { nil }
-      let(:has_nino) { nil }
-      let(:will_enter_nino) { nil }
-
-      before do
-        allow(applicant).to receive_messages(
-          benefit_type: BenefitType::UNIVERSAL_CREDIT,
-          has_benefit_evidence: has_benefit_evidence,
-          has_nino: has_nino,
-          will_enter_nino: will_enter_nino
-        )
-        allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: false))
-      end
-
-      context 'when applicant has not answered the question yet' do
-        it 'returns false' do
-          expect(subject.passporting_complete?).to be(false)
-        end
-      end
-
-      context 'when applicant has benefit evidence' do
-        let(:has_benefit_evidence) { 'yes' }
-
-        it 'returns true' do
-          expect(subject.passporting_complete?).to be(true)
-        end
-      end
-
-      context 'when applicant does not have benefit evidence' do
-        let(:has_benefit_evidence) { nil }
-
-        context 'when nino forthcoming' do
-          let(:has_nino) { 'no' }
-          let(:will_enter_nino) { 'no' }
-
-          it 'returns true' do
-            expect(subject.passporting_complete?).to be(true)
-          end
-        end
-
-        context 'when nino not forthcoming' do
-          let(:has_nino) { 'no' }
-          let(:will_enter_nino) { 'yes' }
-
-          it 'returns false' do
-            expect(subject.passporting_complete?).to be(false)
-          end
-        end
-      end
-    end
-
-    context 'when Passporting::MeansPassporter returns true' do
-      before do
-        allow(applicant).to receive(:benefit_type).and_return(nil)
-        allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: true))
-      end
-
-      it 'returns true' do
-        expect(subject.passporting_complete?).to be(true)
-      end
-    end
-
-    context 'when Passporting::MeansPassporter returns false' do
-      before do
-        allow(applicant).to receive(:benefit_type).and_return(nil)
-        allow(Passporting::MeansPassporter).to receive(:new).and_return(double(call: false))
-      end
-
-      it 'returns false' do
-        expect(subject.passporting_complete?).to be(false)
-      end
-    end
-  end
-
   describe '#has_nino_complete?' do
     let(:has_nino) { nil }
     let(:nino) { nil }
     let(:will_enter_nino) { nil }
-    let(:benefit_type) { nil }
 
     before do
-      allow(applicant).to receive_messages(
-        benefit_type:, has_nino:, will_enter_nino:, nino:
-      )
-    end
-
-    context 'when NINO is forthcoming' do
-      let(:has_nino) { 'no' }
-      let(:will_enter_nino) { 'no' }
-
-      it 'returns true' do
-        expect(subject.has_nino_complete?).to be(true)
-      end
+      allow(applicant).to receive_messages(has_nino:, nino:)
     end
 
     context 'when has NINO is missing' do

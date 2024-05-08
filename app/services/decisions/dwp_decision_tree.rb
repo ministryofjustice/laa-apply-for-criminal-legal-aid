@@ -26,7 +26,7 @@ module Decisions
     private
 
     def after_confirm_result
-      if form_object.confirm_result.yes? # Do we want to reset their ppt benefit to None if they select Yes here?
+      if form_object.confirm_dwp_result.yes?
         if FeatureFlags.means_journey.enabled?
           edit('steps/case/urn')
         else

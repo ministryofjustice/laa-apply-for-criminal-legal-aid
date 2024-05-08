@@ -5,33 +5,25 @@ RSpec.describe Steps::Client::HasNinoForm do
 
   let(:arguments) do
     {
-      crime_application: crime_application,
-      record: applicant_record,
-    }.merge(
-      form_attributes
-    )
+      crime_application:,
+      record:,
+      nino:,
+      has_nino:
+    }
   end
 
-  let(:form_attributes) do
-    { nino: }
-  end
+  let(:crime_application) { instance_double(CrimeApplication, applicant: record) }
+  let(:record) { Applicant.new }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
-  let(:applicant_record) { Applicant.new }
   let(:not_means_tested) { false }
+  let(:nino) { nil }
+  let(:has_nino) { nil }
 
   before do
     allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
   end
 
   describe 'Has nino form' do
-    let(:form_attributes) do
-      { nino:, has_nino: }
-    end
-
-    let(:nino) { nil }
-    let(:has_nino) { nil }
-
     describe '#choices' do
       it 'returns the possible choices' do
         expect(
@@ -221,6 +213,24 @@ RSpec.describe Steps::Client::HasNinoForm do
         end
       end
       # rubocop:enable RSpec/NestedGroups
+    end
+
+    context 'when has nino is unchanged' do
+      before do
+        allow(record).to receive_messages(has_nino: previous_has_nino, nino: previous_nino)
+      end
+
+      context 'when has nino is the same as in the persisted record' do
+        let(:previous_has_nino) { YesNoAnswer::YES.to_s }
+        let(:previous_nino) { 'AB123456C' }
+        let(:has_nino) { YesNoAnswer::YES }
+        let(:nino) { 'AB123456C' }
+
+        it 'does not save the record but returns true' do
+          expect(record).not_to receive(:update)
+          expect(subject.save).to be(true)
+        end
+      end
     end
   end
 end
