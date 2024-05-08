@@ -37,7 +37,9 @@ module PassportingBenefitCheck
     end
 
     def will_enter_nino_complete?
-      applicant.has_nino == 'no' ? applicant.will_enter_nino.present? : true
+      return true unless applicant.has_nino == 'no'
+
+      nino_forthcoming?
     end
 
     def confirm_dwp_result_complete?

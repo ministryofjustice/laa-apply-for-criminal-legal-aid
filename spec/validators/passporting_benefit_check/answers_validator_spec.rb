@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
@@ -8,13 +9,14 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   let(:applicant) {
     instance_double(Applicant, benefit_type:, has_benefit_evidence:, has_nino:, will_enter_nino:, passporting_benefit:)
   }
-  let(:kase) { instance_double(Case) }
+  let(:kase) { instance_double(Case, is_client_remanded:) }
   let(:benefit_type) { nil }
   let(:has_benefit_evidence) { nil }
   let(:has_nino) { nil }
   let(:will_enter_nino) { nil }
   let(:confirm_dwp_result) { nil }
   let(:passporting_benefit) { nil }
+  let(:is_client_remanded) { nil }
 
   describe '#validate' do
     context 'when dwp check completed successfully' do
@@ -98,6 +100,14 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
     describe '#will_enter_nino_complete?' do
       let(:has_nino) { 'no' }
 
+      context 'when has_nino' do
+        let(:has_nino) { 'yes' }
+
+        it 'returns true' do
+          expect(subject.will_enter_nino_complete?).to be(true)
+        end
+      end
+
       context 'when will enter nino present' do
         let(:will_enter_nino) { 'no' }
 
@@ -109,6 +119,22 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
       context 'when will_enter_nino not present' do
         it 'returns false' do
           expect(subject.will_enter_nino_complete?).to be(false)
+        end
+
+        context 'when we know applicant is in court custody?' do
+          let(:is_client_remanded) { 'yes' }
+
+          it 'returns true' do
+            expect(subject.will_enter_nino_complete?).to be(true)
+          end
+        end
+
+        context 'when we know applicant is not in court custody?' do
+          let(:is_client_remanded) { 'no' }
+
+          it 'returns true' do
+            expect(subject.will_enter_nino_complete?).to be(false)
+          end
         end
       end
     end
@@ -186,3 +212,5 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
     end
   end
 end
+
+# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -42,7 +42,9 @@ module TypeOfMeansAssessment
   # However, if the applicant is not in court custody, submission will be
   # blocked until the NINO or benefit evidence is provided.
   def nino_forthcoming?
-    applicant.has_nino == 'no' && applicant.will_enter_nino == 'no'
+    return false unless applicant.has_nino == 'no'
+
+    applicant.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
   end
 
   def benefit_evidence_forthcoming?
