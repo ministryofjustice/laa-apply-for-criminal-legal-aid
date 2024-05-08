@@ -24,9 +24,6 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
       ).to eq([
                 EmploymentStatus::EMPLOYED,
                 EmploymentStatus::SELF_EMPLOYED,
-                EmploymentStatus::BUSINESS_PARTNERSHIP,
-                EmploymentStatus::DIRECTOR,
-                EmploymentStatus::SHAREHOLDER,
                 EmploymentStatus::NOT_WORKING
               ])
     end
@@ -55,14 +52,14 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
       end
+    end
 
-      context 'when `employment_status` selected has a valid and an invalid option' do
-        let(:employment_status) { %w[foo EmploymentStatus::EMPLOYED] }
+    context 'when `employment_status` selected has a valid and an invalid option' do
+      let(:employment_status) { %w[foo EmploymentStatus::EMPLOYED] }
 
-        it 'has is a validation error on the field' do
-          expect(form).not_to be_valid
-          expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
-        end
+      it 'has a validation error on the field' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:employment_status, :invalid)).to be(true)
       end
     end
 

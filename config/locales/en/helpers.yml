@@ -219,7 +219,9 @@ en:
       steps_income_employment_status_form:
         employment_status: Select all that apply.
         employment_status_options:
-          not_working: This includes anyone who has ended employment in the last 3 months, has never had a job, or is a pensioner.
+          employed: They have a job where they are paid by an employer.
+          self_employed: Includes if they are in a business partnership, or are a director or shareholder in a private company.
+          not_working: Includes if they have ended employment in the last 3 months, never had a job, or they are a pensioner.
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_income_income_payments_form:
@@ -411,10 +413,7 @@ en:
         employment_status_options:
           employed: Employed
           self_employed: Self-employed
-          business_partnership: In a business partnership
-          director: Company director in a private company
-          shareholder: Shareholder in a private company
-          not_working: My client is not working
+          not_working: Not working
         ended_employment_within_three_months_options: *YESNO
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO

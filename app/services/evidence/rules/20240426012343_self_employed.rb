@@ -9,8 +9,6 @@ module Evidence
       client do |crime_application|
         self_employed_status = [
           EmploymentStatus::SELF_EMPLOYED.to_s,
-          EmploymentStatus::BUSINESS_PARTNERSHIP.to_s,
-          EmploymentStatus::SHAREHOLDER.to_s,
         ]
 
         self_employed_status.intersect?(
