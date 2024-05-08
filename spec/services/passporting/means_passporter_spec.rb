@@ -213,10 +213,10 @@ RSpec.describe Passporting::MeansPassporter do
         allow(crime_application).to receive(:means_passport).and_return(means_passport)
       end
 
-      context 'origionally passported on benefit check' do
+      context 'originally passported on benefit check' do
         let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
 
-        it 'ignores the origional means_passport' do
+        it 'ignores the original means_passport' do
           expect(subject.benefit_check_passported?).to be(false)
         end
       end
