@@ -188,6 +188,10 @@ RSpec.describe CrimeApplication, type: :model do
     let(:applicant) { Applicant.new(benefit_type:) }
     let(:attributes) { { applicant: } }
 
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
+    end
+
     it 'returns false' do
       expect(subject.passporting_benefit_complete?).to be false
     end
