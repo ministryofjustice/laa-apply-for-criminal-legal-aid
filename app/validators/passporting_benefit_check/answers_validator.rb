@@ -13,6 +13,8 @@ module PassportingBenefitCheck
     # Adds the error to the first step name a user would need to go to fix the issue.
 
     def validate
+      return true if Passporting::MeansPassporter.new(crime_application).call
+
       errors.add(:benefit_type, :blank) unless benefit_type_complete?
 
       benefit_questions_complete? if has_passporting_benefit?

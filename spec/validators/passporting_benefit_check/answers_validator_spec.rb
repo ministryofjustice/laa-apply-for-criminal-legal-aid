@@ -19,12 +19,26 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   let(:is_client_remanded) { nil }
 
   describe '#validate' do
+    before do
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
+    end
+
     context 'when dwp check completed successfully' do
       let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
       let(:passporting_benefit) { true }
 
       before do
         allow(errors).to receive(:empty?).and_return(true)
+      end
+
+      it 'adds errors for all failed validations' do
+        subject.validate
+      end
+    end
+
+    context 'when applicant is passported' do
+      before do
+        allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
       end
 
       it 'adds errors for all failed validations' do
