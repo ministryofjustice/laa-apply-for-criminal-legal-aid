@@ -7,6 +7,10 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     it 'returns the applicant struct' do
       expect(subject.applicant).to be_a(Adapters::Structs::Applicant)
     end
+
+    it 'sets the passporting_benefit from them means attribute' do
+      expect(subject.applicant.passporting_benefit).to be true
+    end
   end
 
   describe '#case' do
