@@ -10,9 +10,22 @@ module Adapters
         means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
       end
       # rubocop:enable Naming/PredicateName
+      #
+
+      # `passporting_benefit` not part of schema, infer true value if
+      # means passport is on benefit check. We cannot infer false from
+      # the information we have, so default to nil
+      def infer_passporting_benefit
+        true if means_passport.include?(MeansPassportType::ON_BENEFIT_CHECK.to_s)
+      end
 
       def applicant
-        Structs::Applicant.new(client_details.applicant)
+        return @applicant if @applicant
+
+        struct = Structs::Applicant.new(client_details.applicant)
+        struct.passporting_benefit = infer_passporting_benefit
+
+        @applicant = struct
       end
 
       def case
