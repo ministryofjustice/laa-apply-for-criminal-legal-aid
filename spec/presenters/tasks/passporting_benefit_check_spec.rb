@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tasks::PassportingBenefitCheck do
-  subject { described_class.new(crime_application:) }
+  subject(:task) { described_class.new(crime_application:) }
 
   let(:crime_application) do
     instance_double(
@@ -19,24 +19,24 @@ RSpec.describe Tasks::PassportingBenefitCheck do
   let(:client_details_fulfilled) { true }
 
   before do
-    allow(
-      subject
-    ).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+    allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/dwp/benefit_type') }
+    it { expect(task.path).to eq('/applications/12345/steps/dwp/benefit_type') }
   end
 
   describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to be(false) }
+    subject(:not_applicable?) { task.not_applicable? }
+
+    it { is_expected.to be(false) }
 
     context 'when applicant is under 18' do
       before do
         allow(applicant).to receive(:under18?).and_return(true)
       end
 
-      it { expect(subject.not_applicable?).to be(true) }
+      it { is_expected.to be(true) }
     end
 
     context 'when case type is appeal no changes' do
@@ -44,35 +44,43 @@ RSpec.describe Tasks::PassportingBenefitCheck do
         allow(crime_application).to receive(:appeal_no_changes?).and_return true
       end
 
-      it { expect(subject.not_applicable?).to be(true) }
+      it { is_expected.to be(true) }
     end
   end
 
   describe '#can_start?, #in_progress?' do
     context 'when the client details task has been completed' do
-      it { expect(subject.can_start?).to be(true) }
-      it { expect(subject.in_progress?).to be(true) }
+      it { expect(task.can_start?).to be(true) }
+      it { expect(task.in_progress?).to be(true) }
     end
 
     context 'when the client details task has not been completed yet' do
       let(:client_details_fulfilled) { false }
 
-      it { expect(subject.can_start?).to be(false) }
-      it { expect(subject.in_progress?).to be(false) }
+      it { expect(task.can_start?).to be(false) }
+      it { expect(task.in_progress?).to be(false) }
     end
   end
 
   describe '#completed?' do
-    it 'returns true when passporting benefit complete' do
-      allow(crime_application).to receive(:valid?).with(:passporting_benefit).and_return(true)
+    subject(:completed?) { task.completed? }
 
-      expect(subject.completed?).to be(true)
+    before do
+      allow(PassportingBenefitCheck::AnswersValidator).to receive(:new).with(crime_application).and_return(
+        instance_double(PassportingBenefitCheck::AnswersValidator, complete?: complete?)
+      )
     end
 
-    it 'returns false when passporting benefit is not complete' do
-      allow(crime_application).to receive(:valid?).with(:passporting_benefit).and_return(false)
+    context 'answers are complete' do
+      let(:complete?) { true }
 
-      expect(subject.completed?).to be(false)
+      it { is_expected.to be true }
+    end
+
+    context 'answers are nicomplete' do
+      let(:complete?) { false }
+
+      it { is_expected.to be false }
     end
   end
 end

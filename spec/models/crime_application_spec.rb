@@ -183,10 +183,11 @@ RSpec.describe CrimeApplication, type: :model do
   end
 
   describe '#passporting_benefit_complete?' do
-    # Validation tested in validator spec
-    let(:benefit_type) { nil }
-    let(:applicant) { Applicant.new(benefit_type:) }
     let(:attributes) { { applicant: } }
+
+    let(:applicant) do
+      Applicant.new(benefit_type: nil, date_of_birth: '1970-05-05')
+    end
 
     before do
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)

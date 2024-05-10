@@ -24,18 +24,12 @@ RSpec.describe Tasks::IncomeAssessment do
   describe '#not_applicable?' do
     subject(:not_applicable) { task.not_applicable? }
 
-    before do
-      allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails) { fulfilled }
-    end
-
-    context 'client details are not fulfilled' do
-      let(:fulfilled) { false }
-
+    context 'applicant is nil' do
       it { is_expected.to be false }
     end
 
-    context 'client details are fulfilled' do
-      let(:fulfilled) { true }
+    context 'applicant exists' do
+      let(:applicant) { instance_double(Applicant) }
 
       context 'and means assessment required' do
         let(:needs_means) { true }
