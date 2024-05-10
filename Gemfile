@@ -18,7 +18,7 @@ gem 'uk_postcode'
 
 # Authentication
 gem 'devise', '~> 4.8'
-gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-rails_csrf_protection', '>= 1.0.2'
 gem 'omniauth-saml', '~> 2.1.0'
 
 # Accessing soap apis
