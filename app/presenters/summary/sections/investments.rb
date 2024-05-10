@@ -2,6 +2,7 @@ module Summary
   module Sections
     class Investments < Sections::BaseSection
       def show?
+        return false
         shown_investments?
       end
 

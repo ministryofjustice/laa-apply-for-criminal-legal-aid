@@ -1,10 +1,9 @@
 module Summary
   module Sections
-    class IncomeDetails < Sections::BaseSection
+    class IncomeDetails < MeansBaseSection
       def show?
-        income.present? && super
+        false
       end
-
       def answers # rubocop:disable  Metrics/MethodLength
         [
           Components::ValueAnswer.new(

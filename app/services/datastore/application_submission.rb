@@ -11,6 +11,8 @@ module Datastore
       submitted_at = Time.current
       date_stamp = crime_application.date_stamp || submitted_at
 
+      throw pp application_payload
+
       Rails.error.handle(fallback: -> { false }) do
         CrimeApplication.transaction do
           crime_application.assign_attributes(

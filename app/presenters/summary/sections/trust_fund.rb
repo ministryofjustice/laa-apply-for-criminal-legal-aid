@@ -1,11 +1,7 @@
 module Summary
   module Sections
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    class TrustFund < Sections::BaseSection
-      def show?
-        capital.present? && super
-      end
-
+    class TrustFund < Sections::MeansBaseSection
       def answers
         [
           Components::ValueAnswer.new(

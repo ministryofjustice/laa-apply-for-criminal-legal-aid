@@ -48,7 +48,9 @@ module TypeOfMeansAssessment
   end
 
   def benefit_evidence_forthcoming?
-    applicant.has_benefit_evidence == 'yes'
+    return false unless applicant.nino.present? 
+
+    applicant.confirm_dwp_result == 'no' && applicant.has_benefit_evidence == 'yes'
   end
 
   private

@@ -1,10 +1,6 @@
 module Summary
   module Sections
-    class OtherOutgoingsDetails < Sections::BaseSection
-      def show?
-        outgoings.present? && super
-      end
-
+    class OtherOutgoingsDetails < Sections::MeansBaseSection
       # rubocop:disable Metrics/MethodLength
       def answers
         [

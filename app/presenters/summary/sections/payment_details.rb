@@ -1,7 +1,8 @@
 module Summary
   module Sections
-    class PaymentDetails < Sections::BaseSection
+    class PaymentDetails < MeansBaseSection
       def show?
+        super
         payments.present?
       end
 

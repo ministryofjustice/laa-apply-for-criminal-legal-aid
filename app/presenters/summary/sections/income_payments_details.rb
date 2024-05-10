@@ -4,8 +4,6 @@ module Summary
   module Sections
     class IncomePaymentsDetails < Sections::PaymentDetails
       def show?
-        return false if income.blank?
-
         income.has_no_income_payments == 'yes' || super
       end
 

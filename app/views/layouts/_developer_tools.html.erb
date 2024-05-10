@@ -16,6 +16,7 @@
         <p>Speed up some common application actions</p>
 
         <div class="govuk-button-group">
+          <%= crime_application.errors.attribute_names %>
           <% if crime_application.in_progress? && crime_application.case&.charges&.empty? %>
             <%= button_to bypass_dwp_developer_tools_crime_application_path, method: :put,
                           class: 'govuk-button govuk-!-margin-right-1',

@@ -1,10 +1,6 @@
 module Summary
   module Sections
-    class OtherCapitalDetails < Sections::BaseSection
-      def show?
-        capital.present? && super
-      end
-
+    class OtherCapitalDetails < Sections::MeansBaseSection
       def answers
         [
           Components::ValueAnswer.new(
