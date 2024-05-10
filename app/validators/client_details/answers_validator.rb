@@ -15,24 +15,14 @@ module ClientDetails
     def validate
       errors.add(:details, :blank) unless applicant_details_complete?
       errors.add(:case_type, :blank) unless case_type_complete?
-
-      applicant.under18? ? validate_u18 : validate_other
+      errors.add(:residence_type, :blank) unless address_complete?
+      errors.add(:has_nino, :blank) unless has_nino_complete?
 
       errors.add :base, :incomplete_records unless errors.empty?
     end
 
-    def validate_u18
-      errors.add(:residence_type, :blank) unless address_complete?
-    end
-
-    def validate_other
-      return if appeal_no_changes?
-
-      errors.add(:residence_type, :blank) unless address_complete?
-      errors.add(:has_nino, :blank) unless has_nino_complete?
-    end
-
     def address_complete?
+      return true if appeal_no_changes?
       return false if applicant.residence_type.blank?
 
       case applicant.correspondence_address_type
@@ -60,6 +50,7 @@ module ClientDetails
     end
 
     def has_nino_complete?
+      return true if appeal_no_changes? || applicant.under18?
       return false if applicant.has_nino.blank?
       return true if applicant.has_nino == 'no'
 
