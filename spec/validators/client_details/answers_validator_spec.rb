@@ -65,6 +65,13 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       allow(applicant).to receive(:correspondence_address_type) { correspondence_address_type }
     end
 
+    context 'when appeal_no_changes' do
+      let(:correspondence_address_type) { nil }
+      let(:appeal_no_changes?) { true }
+
+      it { expect(subject.address_complete?).to be(true) }
+    end
+
     context 'when we have completed mandatory contact details' do
       context 'for a home address' do
         let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS.to_s }
