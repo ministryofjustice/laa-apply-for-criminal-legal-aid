@@ -66,7 +66,8 @@ module Decisions
         end
       else
         # TODO: Update exit page content to include unemployed
-        show(:employed_exit)
+        current_crime_application.employments.create! if current_crime_application.employments.empty?
+        edit(:employer_details, employment_id: current_crime_application.employments.first)
       end
     end
 

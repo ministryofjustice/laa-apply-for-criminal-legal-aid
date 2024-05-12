@@ -11,4 +11,5 @@ module Errors
   class InvalidRuleset < StandardError; end
   class DocumentUnavailable < NotFound; end
   class DateOfBirthPending < StandardError; end
+  class EmploymentNotFound < NotFound; end
 end
