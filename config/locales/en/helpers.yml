@@ -415,6 +415,8 @@ en:
           self_employed: Self-employed
           not_working: Not working
         ended_employment_within_three_months_options: *YESNO
+      steps_income_employer_details_form:
+        employer_name: Employer's name
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
