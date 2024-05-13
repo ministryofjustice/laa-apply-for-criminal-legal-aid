@@ -153,6 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_222640) do
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
+    t.string "ownership_type", default: "applicant", null: false
     t.string "employer_name"
     t.jsonb "address"
     t.datetime "created_at", null: false

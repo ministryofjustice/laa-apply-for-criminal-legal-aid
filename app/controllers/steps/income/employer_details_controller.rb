@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(EmployerDetailsForm, record: employment_record, as: :employer_details)
+        update_and_advance(EmployerDetailsForm, record: employment_record, as: :client_employer_details)
       end
 
       private

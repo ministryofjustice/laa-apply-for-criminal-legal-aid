@@ -8,8 +8,8 @@ module Decisions
       case step_name
       when :employment_status
         after_employment_status
-      when :employer_details
-        after_employer_details
+      when :client_employer_details
+        after_client_employer_details
       when :lost_job_in_custody
         after_lost_job_in_custody
       when :income_before_tax
@@ -178,7 +178,7 @@ module Decisions
       edit('/steps/evidence/upload')
     end
 
-    def after_employer_details
+    def after_client_employer_details
       # TODO: Add employment details page to complete the journey
       show(:employed_exit)
     end
