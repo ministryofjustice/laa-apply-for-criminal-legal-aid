@@ -57,7 +57,7 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
@@ -80,7 +80,7 @@ module Decisions
         end
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
     def start_employment_journey?
       form_object.employment_status.any? do |status|
