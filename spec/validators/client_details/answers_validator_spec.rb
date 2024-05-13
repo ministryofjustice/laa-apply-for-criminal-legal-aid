@@ -6,19 +6,22 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:) }
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
-  let(:kase) { instance_double(Case, case_type: 'case_type') }
+  let(:kase) { instance_double(Case, case_type:) }
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }
+  let(:case_type) { nil }
 
   before do
-    allow(subject).to receive(:appeal_no_changes?) { appeal_no_changes? }
+    allow(validator).to receive(:appeal_no_changes?) { appeal_no_changes? }
   end
 
   describe '#validate' do
     context 'when validation fails' do
       before do
-        allow(applicant).to receive(:values_at).with(:date_of_birth, :first_name,
-                                                     :last_name).and_return(['2000-11-11', nil, 'Tim'])
+        allow(applicant).to receive(:values_at).with(
+          :date_of_birth, :first_name, :last_name
+        ).and_return(['2000-11-11', 'Tim', nil])
+
         allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil)
         allow(record).to receive(:kase).and_return(nil)
       end
@@ -137,7 +140,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   describe '#case_type_complete?' do
     context 'when case type is missing' do
-      before { allow(kase).to receive(:case_type).and_return(nil) }
+      let(:case_type) { nil }
 
       it 'returns false' do
         expect(subject.case_type_complete?).to be(false)
@@ -145,6 +148,8 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when case type is present' do
+      let(:case_type) { CaseType::EITHER_WAY }
+
       it 'returns true' do
         expect(subject.case_type_complete?).to be(true)
       end
