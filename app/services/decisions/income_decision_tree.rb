@@ -57,7 +57,6 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
@@ -68,25 +67,23 @@ module Decisions
           edit(:income_before_tax)
         end
       else
+        # TODO: Update exit page content to include unemployed
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
-        # TODO: Update exit page content to include unemployed
-        if start_employment_journey?
-          employments = current_crime_application.employments
-          current_crime_application.employments.create! if employments.empty?
-          edit('steps/income/client/employer_details', employment_id: employments.first)
-        else
-          edit(:income_before_tax)
-        end
+        start_employment_journey
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
-    def start_employment_journey?
-      form_object.employment_status.any? do |status|
-        (status == EmploymentStatus::EMPLOYED.to_s ||
-          (status == EmploymentStatus::EMPLOYED.to_s && status == EmploymentStatus::SELF_EMPLOYED.to_s)
-        )
+    def start_employment_journey
+      case form_object.employment_status
+      when [EmploymentStatus::EMPLOYED.to_s]
+        edit(:income_before_tax)
+      when [EmploymentStatus::SELF_EMPLOYED.to_s]
+        show(:employed_exit)
+      when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        employments = current_crime_application.employments
+        current_crime_application.employments.create! if employments.empty?
+        edit('steps/income/client/employer_details', employment_id: employments.first)
       end
     end
 
