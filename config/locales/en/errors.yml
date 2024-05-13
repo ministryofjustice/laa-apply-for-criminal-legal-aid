@@ -700,7 +700,7 @@ en:
               blank:  Enter country
             postcode:
               blank: Enter postcode
-        steps/income/employer_details_form:
+        steps/income/client/employer_details_form:
           attributes:
             employer_name:
               blank: Enter employer's name

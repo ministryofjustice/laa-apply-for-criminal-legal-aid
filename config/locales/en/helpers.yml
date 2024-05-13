@@ -415,7 +415,7 @@ en:
           self_employed: Self-employed
           not_working: Not working
         ended_employment_within_three_months_options: *YESNO
-      steps_income_employer_details_form:
+      steps_income_client_employer_details_form:
         employer_name: Employer's name
         address:
           address_line_one: Address line 1
