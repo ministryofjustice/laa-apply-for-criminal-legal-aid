@@ -700,6 +700,18 @@ en:
               blank:  Enter country
             postcode:
               blank: Enter postcode
+        steps/income/employer_details_form:
+          attributes:
+            employer_name:
+              blank: Enter employer's name
+            address_line_one:
+              blank: Enter address line 1, typically the building and street
+            city:
+              blank: Enter town or city
+            country:
+              blank: Enter country
+            postcode:
+              blank: Enter postcode
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
