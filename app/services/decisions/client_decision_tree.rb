@@ -94,7 +94,7 @@ module Decisions
     end
 
     def after_date_stamp
-      if entered_appeal_reference_number?
+      if current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
         edit(:residence_type)
@@ -112,7 +112,7 @@ module Decisions
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
-      elsif current_crime_application.age_passported? || entered_appeal_reference_number?
+      elsif current_crime_application.age_passported? || current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
         edit(:has_nino)

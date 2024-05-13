@@ -9,13 +9,19 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:case_type) { CaseType::SUMMARY_ONLY }
 
   let(:not_means_tested) { nil }
+  let(:appeal_no_changes?) { nil }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive_messages(update: true, date_stamp: nil, not_means_tested?: not_means_tested)
+    allow(crime_application).to receive_messages(
+      update: true,
+      date_stamp: nil,
+      not_means_tested?: not_means_tested,
+      appeal_no_changes?: appeal_no_changes?,
+    )
   end
 
   it_behaves_like 'a decision tree'
@@ -209,21 +215,13 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
 
     context 'when the case type is appeal_to_crown_court and a reference number was entered' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-
-      before do
-        allow(kase).to receive(:appeal_reference_number).and_return('appeal_maat_id')
-      end
+      let(:appeal_no_changes?) { true }
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
 
     context 'when the case type is appeal_to_crown_court and no reference number was entered' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-
-      before do
-        allow(kase).to receive(:appeal_reference_number).and_return(nil)
-      end
+      let(:appeal_no_changes?) { false }
 
       it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
     end
