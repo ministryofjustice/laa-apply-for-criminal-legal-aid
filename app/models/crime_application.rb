@@ -54,7 +54,7 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 
-  has_many :employments
+  has_many :employments, dependent: :destroy
 
   enum status: ApplicationStatus.enum_values
 
