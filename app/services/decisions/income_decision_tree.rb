@@ -69,6 +69,8 @@ module Decisions
           edit(:income_before_tax)
         end
       else
+        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
+
         # TODO: Update exit page content to include unemployed
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 

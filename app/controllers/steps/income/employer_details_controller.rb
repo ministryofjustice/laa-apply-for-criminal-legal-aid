@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(EmployerDetailsForm, as: :employer_details)
+        update_and_advance(EmployerDetailsForm, record: employment_record, as: :employer_details)
       end
 
       def employment_record
@@ -19,6 +19,10 @@ module Steps
 
       def employments
         @employments ||= current_crime_application.employments
+      end
+
+      def additional_permitted_params
+        [address: [:address_line_one, :address_line_two, :city, :country, :postcode]]
       end
     end
   end
