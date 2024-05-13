@@ -11,7 +11,7 @@ module Steps
       validates :name, :relationship, :percentage_owned, presence: true
       validates :other_relationship, presence: true, if: :other_relationship?
       validates :relationship, inclusion: {
-        in: RelationshipType.values.map(&:to_s).push(PropertyOwner::OTHER_RELATIONSHIP)
+        in: PropertyRelationshipType.values.map(&:to_s).push(PropertyOwner::OTHER_RELATIONSHIP)
       }
 
       validates_numericality_of :percentage_owned, greater_than_or_equal_to: 0.0, less_than: 100.0
