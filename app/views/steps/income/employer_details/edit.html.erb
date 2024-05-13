@@ -13,14 +13,13 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :employer_name, autocomplete: 'off', width: 'one-third' %>
       <%# NOTE: Address is just a replacement of OpenStruct rubocop was complaining about %>
-      <%#= f.fields_for :address, Address.new(@form_object.address) do |address_field| %>
-        <%#= address_field.govuk_text_field :address_line_one, autocomplete: 'off' %>
-        <%#= address_field.govuk_text_field :address_line_two, autocomplete: 'off' %>
-        <%#= address_field.govuk_text_field :city, autocomplete: 'off' %>
-        <%#= address_field.govuk_text_field :country, autocomplete: 'off' %>
-        <%#= address_field.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
-      <%# end %>
-
+      <%= f.fields_for :address, Address.new(@form_object.address) do |address_field| %>
+        <%= address_field.govuk_text_field :address_line_one, autocomplete: 'off' %>
+        <%= address_field.govuk_text_field :address_line_two, autocomplete: 'off' %>
+        <%= address_field.govuk_text_field :city, autocomplete: 'off' %>
+        <%= address_field.govuk_text_field :country, autocomplete: 'off' %>
+        <%= address_field.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
+      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>

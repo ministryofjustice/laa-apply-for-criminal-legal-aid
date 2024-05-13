@@ -8,6 +8,8 @@ module Decisions
       case step_name
       when :employment_status
         after_employment_status
+      when :employer_details
+        after_employer_details
       when :lost_job_in_custody
         after_lost_job_in_custody
       when :income_before_tax
@@ -65,9 +67,22 @@ module Decisions
           edit(:income_before_tax)
         end
       else
+        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
+
         # TODO: Update exit page content to include unemployed
-        current_crime_application.employments.create! if current_crime_application.employments.empty?
-        edit(:employer_details, employment_id: current_crime_application.employments.first)
+        if start_employment_journey?
+          employments = current_crime_application.employments
+          current_crime_application.employments.create! if employments.empty?
+          edit(:employer_details, employment_id: employments.first)
+        else
+          edit(:income_before_tax)
+        end
+      end
+    end
+
+    def start_employment_journey?
+      form_object.employment_status.any? do |status|
+        (status == EmploymentStatus::EMPLOYED.to_s || (status == EmploymentStatus::EMPLOYED.to_s && status == EmploymentStatus::SELF_EMPLOYED.to_s))
       end
     end
 
@@ -161,6 +176,11 @@ module Decisions
 
     def continuing_evidence_upload
       edit('/steps/evidence/upload')
+    end
+
+    def after_employer_details
+      # TODO: Add employment details page to complete the journey
+      show(:employed_exit)
     end
   end
 end

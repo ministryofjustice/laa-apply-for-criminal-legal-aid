@@ -23,6 +23,10 @@ feature_flags:
     local: false
     staging: false
     production: false
+  employment_journey:
+    local: true
+    staging: true
+    production: false
 
 
 # NOTE: consider if the setting you are adding here
