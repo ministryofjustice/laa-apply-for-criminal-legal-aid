@@ -293,11 +293,12 @@ en:
           page_title: Check your answers - Your client's income
           heading: Check your answers
           subheading: Your client’s income
-      employer_details:
-        edit:
-          page_title: Who is your client employed by?
-          heading: Who does the client work for?
-          subheading: Add the name and address of your client’s employer. If they have more than one employer, you can add more.
+      client:
+        employer_details:
+          edit:
+            page_title: Who is your client employed by?
+            heading: Who does the client work for?
+            subheading: Add the name and address of your client’s employer. If they have more than one employer, you can add more.
 
     outgoings:
       caption: Outgoings assessment

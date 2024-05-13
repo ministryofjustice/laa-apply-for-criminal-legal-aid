@@ -57,6 +57,7 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
@@ -73,16 +74,19 @@ module Decisions
         if start_employment_journey?
           employments = current_crime_application.employments
           current_crime_application.employments.create! if employments.empty?
-          edit(:employer_details, employment_id: employments.first)
+          edit('steps/income/client/employer_details', employment_id: employments.first)
         else
           edit(:income_before_tax)
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def start_employment_journey?
       form_object.employment_status.any? do |status|
-        (status == EmploymentStatus::EMPLOYED.to_s || (status == EmploymentStatus::EMPLOYED.to_s && status == EmploymentStatus::SELF_EMPLOYED.to_s))
+        (status == EmploymentStatus::EMPLOYED.to_s ||
+          (status == EmploymentStatus::EMPLOYED.to_s && status == EmploymentStatus::SELF_EMPLOYED.to_s)
+        )
       end
     end
 
@@ -180,7 +184,7 @@ module Decisions
 
     def after_client_employer_details
       # TODO: Add employment details page to complete the journey
-      show(:employed_exit)
+      show('/steps/income/employed_exit')
     end
   end
 end
