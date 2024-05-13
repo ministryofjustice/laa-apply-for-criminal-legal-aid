@@ -59,7 +59,6 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
@@ -70,15 +69,12 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
-
         # TODO: Update exit page content to include unemployed
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
         start_employment_journey
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
     def start_employment_journey
       case form_object.employment_status
