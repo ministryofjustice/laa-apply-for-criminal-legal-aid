@@ -11,6 +11,8 @@ module Steps
         update_and_advance(EmployerDetailsForm, record: employment_record, as: :employer_details)
       end
 
+      private
+
       def employment_record
         @employment_record ||= employments.find(params[:employment_id])
       rescue ActiveRecord::RecordNotFound
