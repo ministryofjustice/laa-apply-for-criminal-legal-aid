@@ -1,8 +1,6 @@
 module Steps
   module Income
     class EmployerDetailsForm < Steps::BaseFormObject
-      validates :employer_name, presence: true
-
       attribute :employer_name
       attribute :address
 
@@ -12,6 +10,7 @@ module Steps
       attribute :country
       attribute :postcode
 
+      validates :employer_name, presence: true
       validates_with AddressValidator
 
       def persist!
