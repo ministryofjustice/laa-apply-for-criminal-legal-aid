@@ -75,6 +75,9 @@ RSpec.describe Adapters::Structs::Applicant do
           residence_type
           relationship_to_owner_of_usual_home_address
           passporting_benefit
+          relationship_status
+          relationship_to_partner
+          separation_date
         ]
       )
     end

@@ -26,6 +26,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
       )
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(subject.serializable_hash.keys).to match_array(
         %w[
@@ -43,9 +44,11 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           client_has_dependants
           has_no_income_benefits
           has_no_income_payments
+          partner_employment_status
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it 'omits income array' do
       expect(subject.serializable_hash.key?('income_payments')).to be false
