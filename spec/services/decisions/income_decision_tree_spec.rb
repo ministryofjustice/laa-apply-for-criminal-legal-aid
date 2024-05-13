@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::IncomeDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -9,7 +10,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
+      employments: [employment_double],
       kase: kase
+    )
+  end
+
+  let(:employment_double) do
+    instance_double(
+      Employment,
+      id: 'uuid'
     )
   end
 
@@ -44,14 +53,34 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :employment_status }
 
+    before do
+      allow(FeatureFlags).to receive(:employment_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_employment_journey_enabled)
+      }
+    end
+
     context 'when status selected is an employed option' do
       let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
       before do
-        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED])
+        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
       end
 
-      it { is_expected.to have_destination(:employed_exit, :show, id: crime_application) }
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('steps/income/client/employer_details', :edit, id: crime_application)
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+        end
+      end
     end
 
     context 'when status selected is not working' do
@@ -210,7 +239,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
       )
     end
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when dependants are relevant' do
       let(:income_above_threshold) { YesNoAnswer::YES.to_s }
       let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
