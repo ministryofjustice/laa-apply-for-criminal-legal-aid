@@ -9,10 +9,10 @@ module Steps
         end
 
         def update
-          employment_record.payments.destroy_all
-          current_crime_application.income_payments
-                                   .where(payment_type: IncomePaymentType::EMPLOYMENT_DETAILS.to_s)
-                                   .destroy_all
+          if employment_record.income_payment
+            employment_record.income_payment.destroy
+            employment_record.update(payment_id: nil)
+          end
           update_and_advance(EmploymentDetailsForm, record: employment_record, as: :client_employment_details)
         end
 
@@ -29,7 +29,7 @@ module Steps
         end
 
         def additional_permitted_params
-          [payments_attributes: Steps::Income::Client::PaymentFieldsetForm.attribute_names]
+          [income_payment_attributes: Steps::Income::Client::PaymentFieldsetForm.attribute_names]
         end
       end
     end

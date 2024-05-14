@@ -433,7 +433,7 @@ en:
           postcode: Postcode
       steps_income_client_employment_details_form:
         job_title: What is your client’s job title?
-        payments_attributes:
+        income_payment_attributes:
           amount: What is their salary or wage?
           frequency: How often do they get this payment?
           frequency_options: *frequency_options

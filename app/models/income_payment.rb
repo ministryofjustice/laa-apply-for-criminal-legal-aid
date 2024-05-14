@@ -1,6 +1,7 @@
 class IncomePayment < Payment
   store_accessor :metadata,
                  [:before_or_after_tax]
+  has_one :employment
 
   def self.private_pension
     where(payment_type: IncomePaymentType::PRIVATE_PENSION.value).order(created_at: :desc).first

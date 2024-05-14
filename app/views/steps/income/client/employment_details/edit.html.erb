@@ -10,12 +10,12 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :job_title, autocomplete: 'off', width: 'one-third' %>
-      <%= f.fields_for :payments, @form_object.payments do |payment_field| %>
+      <%= f.fields_for :income_payment do |payment_field| %>
         <%= payment_field.govuk_number_field :amount, autocomplete: 'off', inputmode: 'numeric', width: 'one-third', prefix_text: '£' %>
         <%= payment_field.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-        <%= payment_field.govuk_text_field :type, value: 'IncomePayment', autocomplete: 'off', width: 'one-third' %>
-        <%= payment_field.govuk_text_field :payment_type, value: IncomePaymentType::EMPLOYMENT_DETAILS.to_s, autocomplete: 'off', width: 'one-third' %>
-        <%= payment_field.govuk_text_field :crime_application_id, value: @form_object.crime_application.id, autocomplete: 'off', width: 'one-third' %>
+        <%= payment_field.govuk_text_field :type, autocomplete: 'off', width: 'one-third' %>
+        <%= payment_field.govuk_text_field :payment_type, autocomplete: 'off', width: 'one-third' %>
+        <%= payment_field.govuk_text_field :crime_application_id, autocomplete: 'off', width: 'one-third' %>
       <% end %>
       <%= f.continue_button %>
     <% end %>
