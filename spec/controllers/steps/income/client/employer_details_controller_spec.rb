@@ -58,7 +58,7 @@ RSpec.describe Steps::Income::Client::EmployerDetailsController, type: :controll
     context 'when valid address attributes' do
       it 'redirects to `employed_exit` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to steps_income_employed_exit_path
+        expect(response).to redirect_to edit_steps_income_client_employment_details_path
       end
     end
 

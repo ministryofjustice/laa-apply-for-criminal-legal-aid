@@ -10,6 +10,7 @@ class IncomePaymentType < ValueObject
     FINANCIAL_SUPPORT_WITH_ACCESS = new(:financial_support_with_access),
     FROM_FRIENDS_RELATIVES = new(:from_friends_relatives),
     EMPLOYMENT = new(:employment),
+    EMPLOYMENT_DETAILS = new(:employment_details),
     OTHER = new(:other)
   ].freeze
 end

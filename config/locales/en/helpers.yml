@@ -431,6 +431,12 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
+      steps_income_client_employment_details_form:
+        job_title: What is your client’s job title?
+        payments_attributes:
+          amount: What is their salary or wage?
+          frequency: How often do they get this payment?
+          frequency_options: *frequency_options
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
