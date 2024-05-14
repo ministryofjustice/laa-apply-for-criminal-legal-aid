@@ -33,10 +33,10 @@ module Steps
 
         def persist!
           ::IncomePayment.transaction do
-            # reset!
+            reset!
 
             crime_application.income_payments.create!(
-              payment_type: IncomePayment::EMPLOYMENT.value,
+              payment_type: IncomePaymentType::EMPLOYMENT.value,
               amount: amount,
               frequency: frequency,
               before_or_after_tax: before_or_after_tax,
@@ -44,9 +44,9 @@ module Steps
           end
         end
 
-        # def reset!
-        #   crime_application.income_payments.employment_payments.destroy_all
-        # end
+        def reset!
+          crime_application.income_payments.employment&.destroy_all
+        end
       end
     end
   end
