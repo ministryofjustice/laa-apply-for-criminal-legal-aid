@@ -77,7 +77,7 @@ RSpec.describe Tasks::PassportingBenefitCheck do
       it { is_expected.to be true }
     end
 
-    context 'answers are nicomplete' do
+    context 'answers are incomplete' do
       let(:complete?) { false }
 
       it { is_expected.to be false }

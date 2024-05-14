@@ -165,11 +165,20 @@ RSpec.describe TypeOfMeansAssessment do
     end
 
     context 'when will enter NINO' do
-      it 'returns false' do
+      before do
         allow(applicant).to receive(:will_enter_nino).and_return('yes')
+      end
 
-        expect(kase).to receive(:is_client_remanded)
+      it 'returns false' do
+        allow(kase).to receive(:is_client_remanded)
         expect(subject).to be false
+      end
+
+      context 'when remanded in custody' do
+        it 'returns false' do
+          allow(kase).to receive(:is_client_remanded).and_return('yes')
+          expect(subject).to be false
+        end
       end
     end
 

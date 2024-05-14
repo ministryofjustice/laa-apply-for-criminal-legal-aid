@@ -40,6 +40,7 @@ module TypeOfMeansAssessment
   def nino_forthcoming?
     return false unless has_passporting_benefit?
     return false unless applicant.has_nino == 'no'
+    return false if applicant.will_enter_nino == 'yes'
 
     applicant.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
   end
