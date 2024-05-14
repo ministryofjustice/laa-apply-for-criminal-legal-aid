@@ -19,6 +19,8 @@ module Decisions
       when :client_owns_property
         after_client_owns_property
       when :has_savings
+        after_has_savings
+      when :client_employment_income
         edit(:income_payments)
       when :income_payments
         edit(:income_benefits)
@@ -57,7 +59,7 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
     def after_employment_status
       if not_working?
         if ended_employment_within_three_months?
@@ -80,7 +82,7 @@ module Decisions
         end
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
 
     def start_employment_journey?
       form_object.employment_status.any? do |status|
@@ -109,6 +111,14 @@ module Decisions
     def after_frozen_income_savings_assets
       if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
+      else
+        edit(:income_payments)
+      end
+    end
+
+    def after_has_savings
+      if employed?
+        edit('steps/income/client/employment_income')
       else
         edit(:income_payments)
       end
@@ -151,6 +161,10 @@ module Decisions
       else
         edit(:answers)
       end
+    end
+
+    def employed?
+      crime_application.income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s)
     end
 
     def not_working?

@@ -299,6 +299,11 @@ en:
             page_title: Who is your client employed by?
             heading: Who does the client work for?
             subheading: Add the name and address of your client’s employer. If they have more than one employer, you can add more.
+        employment_income:
+          edit:
+            page_title: Your client's employment income
+            heading: Your client's employment income
+            page_text: You told us your client is employed.
 
     outgoings:
       caption: Outgoings assessment
