@@ -78,6 +78,7 @@ RSpec.describe Adapters::Structs::Applicant do
           relationship_status
           relationship_to_partner
           separation_date
+          has_partner
         ]
       )
     end

@@ -175,6 +175,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_150029) do
     t.string "has_no_income_payments"
     t.string "has_no_income_benefits"
     t.string "partner_employment_status", default: [], array: true
+    t.string "partner_has_no_income_payments"
+    t.string "partner_has_no_income_benefits"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -279,6 +281,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_150029) do
     t.string "relationship_to_partner"
     t.string "separation_date"
     t.date "relationship_status"
+    t.string "has_partner", default: "no"
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.string "has_same_address_as_client"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
