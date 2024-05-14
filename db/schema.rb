@@ -244,6 +244,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_150029) do
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
+  create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "relationship_to_partner"
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.string "has_same_address_as_client"
+    t.string "relationship_status"
+    t.date "separation_date"
+    t.string "has_partner", default: "no", null: false
+    t.uuid "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_partner_details_on_crime_application_id", unique: true
+  end
+
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "type", null: false
@@ -278,14 +293,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_150029) do
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
-    t.string "relationship_to_partner"
-    t.string "separation_date"
-    t.date "relationship_status"
-    t.string "has_partner", default: "no"
-    t.string "involvement_in_case"
-    t.string "conflict_of_interest"
-    t.string "has_same_address_as_client"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -367,6 +375,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_150029) do
   add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
+  add_foreign_key "partner_details", "crime_applications"
   add_foreign_key "payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "properties", "crime_applications"
