@@ -10,7 +10,9 @@ module Steps
 
         def update
           employment_record.payments.destroy_all
-          current_crime_application.income_payments.where(payment_type: IncomePaymentType::EMPLOYMENT_DETAILS.to_s).destroy_all
+          current_crime_application.income_payments
+                                   .where(payment_type: IncomePaymentType::EMPLOYMENT_DETAILS.to_s)
+                                   .destroy_all
           update_and_advance(EmploymentDetailsForm, record: employment_record, as: :client_employment_details)
         end
 
