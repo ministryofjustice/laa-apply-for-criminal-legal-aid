@@ -30,8 +30,10 @@ module TypeOfApplication
   alias pse? post_submission_evidence?
 
   def appeal_no_changes?
-    kase&.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-      (kase&.appeal_financial_circumstances_changed == 'no')
+    return false unless kase
+
+    kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
+      kase.appeal_financial_circumstances_changed == 'no'
   end
 
   private
