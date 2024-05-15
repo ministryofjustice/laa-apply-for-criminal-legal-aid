@@ -838,6 +838,7 @@ en:
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
               inclusion: Select before or after tax
             frequency:
@@ -846,6 +847,7 @@ en:
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
               inclusion: Select before or after tax
             frequency:

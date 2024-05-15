@@ -41,7 +41,10 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
       {
         id: crime_application,
         employment_id: employment,
-        steps_income_client_employment_details_form: { job_title: 'manager', income_payment_attributes: income_payment_attributes }
+        steps_income_client_employment_details_form: {
+          job_title: 'manager',
+          income_payment_attributes: income_payment_attributes
+        }
       }
     end
 

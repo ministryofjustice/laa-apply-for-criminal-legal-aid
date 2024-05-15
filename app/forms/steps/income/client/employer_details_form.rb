@@ -11,7 +11,7 @@ module Steps
         attribute :country
         attribute :postcode
 
-        validates :employer_name, presence: true
+        validates :employer_name, :address, presence: true
         validates_with AddressValidator
 
         def persist!
