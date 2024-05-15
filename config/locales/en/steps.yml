@@ -75,11 +75,11 @@ en:
       benefit_type:
         edit:
           page_title: Does your client get one of these passporting benefits?
-          last_jsa_appointment_date: Enter when your client last attended an appointment with their JSA work coach
+          last_jsa_appointment_date: &JSA_DATE_QUESTION When did they last attend an appointment with their JSA work coach?
       partner_benefit_type:
         edit:
           page_title: Does the partner get one of these passporting benefits?
-          last_jsa_appointment_date: Enter when the partner last attended an appointment with their JSA work coach
+          last_jsa_appointment_date: *JSA_DATE_QUESTION
       benefit_exit:
         show:
           page_title: Use eForms for this application
