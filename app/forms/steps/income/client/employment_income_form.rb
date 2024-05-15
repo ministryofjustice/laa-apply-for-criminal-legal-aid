@@ -22,7 +22,7 @@ module Steps
 
           if payment
             form.amount = payment.amount
-            form.before_or_after_tax = payment.before_or_after_tax
+            form.before_or_after_tax = payment.before_or_after_tax['value']
             form.frequency = payment.frequency
           end
 
@@ -45,7 +45,7 @@ module Steps
         end
 
         def reset!
-          crime_application.income_payments.employment&.destroy_all
+          crime_application.income_payments.employment&.destroy
         end
       end
     end

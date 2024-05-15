@@ -21,7 +21,7 @@ module Decisions
       when :has_savings
         after_has_savings
       when :client_employment_income
-        edit(:income_payments)
+        edit('/steps/income/income_payments')
       when :income_payments
         edit(:income_benefits)
       when :income_benefits

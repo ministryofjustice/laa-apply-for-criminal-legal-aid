@@ -47,7 +47,7 @@ RSpec.describe Steps::Income::Client::EmploymentIncomeForm do
                         payment_type: IncomePaymentType::EMPLOYMENT.to_s,
                         amount: 600,
                         frequency: 'four_weeks',
-                        metadata: { 'before_or_after_tax' => BeforeOrAfterTax::AFTER.to_s })
+                        metadata: { 'before_or_after_tax' => { value: BeforeOrAfterTax::AFTER.to_s } })
     }
 
     before do
