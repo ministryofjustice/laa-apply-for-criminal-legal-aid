@@ -52,7 +52,7 @@ module Summary
 
       private
 
-      delegate :kase, :income, :outgoings, :capital, to: :crime_application
+      delegate :requires_means_assessment?, :kase, :income, :outgoings, :capital, to: :crime_application
 
       # :nocov:
       def answers

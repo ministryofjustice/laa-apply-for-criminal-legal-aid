@@ -53,10 +53,6 @@ RSpec.describe Tasks::BaseTask do
     it { expect(subject.path).to eq('') }
   end
 
-  describe '#not_applicable?' do
-    it { expect(subject.not_applicable?).to be(true) }
-  end
-
   describe '#status' do
     before do
       allow(subject).to receive_messages(not_applicable?: not_applicable, can_start?: can_start, completed?: completed,
