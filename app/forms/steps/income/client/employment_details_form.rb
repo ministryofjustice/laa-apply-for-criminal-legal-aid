@@ -10,7 +10,7 @@ module Steps
         def income_payment
           payment = if record.income_payment.nil?
                       record.build_income_payment(
-                        payment_type: IncomePaymentType::EMPLOYMENT_DETAILS.to_s,
+                        payment_type: IncomePaymentType::EMPLOYMENT_INCOME.to_s,
                         crime_application: crime_application
                       )
                     else
