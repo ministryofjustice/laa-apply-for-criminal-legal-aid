@@ -43,7 +43,7 @@ module Decisions
     private
 
     def after_has_case_concluded
-      return charges_summary_or_edit_new_charge if current_crime_application.not_means_tested?
+      return charges_summary_or_edit_new_charge if crime_application.not_means_tested?
       return edit(:is_client_remanded) if form_object.has_case_concluded.no?
 
       edit(:is_preorder_work_claimed)
@@ -90,7 +90,7 @@ module Decisions
     end
 
     def ioj_or_passported
-      if Passporting::IojPassporter.new(current_crime_application).call
+      if Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)
       else
         edit(:ioj)
@@ -98,7 +98,7 @@ module Decisions
     end
 
     def after_ioj
-      if requires_means_assessment? || kase.appeal_reference_number.present?
+      if requires_means_assessment? || crime_application.appeal_no_changes?
         return edit('/steps/income/employment_status')
       end
 
@@ -116,7 +116,7 @@ module Decisions
     end
 
     def case_charges
-      @case_charges ||= current_crime_application.case.charges
+      @case_charges ||= crime_application.case.charges
     end
 
     def current_charge

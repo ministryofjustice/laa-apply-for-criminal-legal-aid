@@ -4,8 +4,14 @@ RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
   let(:crime_application) {
-    instance_double(CrimeApplication, id: '10', applicant: applicant_double, case: kase,
-                    kase: kase, not_means_tested?: not_means_tested?)
+    instance_double(
+      CrimeApplication,
+      id: '10',
+      applicant: applicant_double,
+      case: kase,
+      kase: kase,
+      not_means_tested?: not_means_tested?
+    )
   }
 
   let(:kase) do
@@ -14,7 +20,6 @@ RSpec.describe Decisions::CaseDecisionTree do
       case_type: case_type,
       codefendants: codefendants_double,
       charges: charges_double,
-      appeal_reference_number: nil
     )
   end
 
@@ -30,7 +35,6 @@ RSpec.describe Decisions::CaseDecisionTree do
     ).to receive(:crime_application).and_return(crime_application)
 
     allow(crime_application).to receive_messages(update: true, date_stamp: nil)
-    allow(kase).to receive(:appeal_reference_number).and_return(nil)
   end
 
   it_behaves_like 'a decision tree'
@@ -300,99 +304,37 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
-    let(:has_nino) { nil }
-    let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
-    let(:has_benefit_evidence) { nil }
     let(:step_name) { :ioj }
     let(:feature_flag_means_journey_enabled) { true }
 
     before do
-      allow_any_instance_of(
-        Passporting::MeansPassporter
-      ).to receive(:call).and_return(means_passported)
-
-      allow_any_instance_of(
-        Evidence::Requirements
-      ).to receive(:any?).and_return(evidence_required)
-
-      allow(applicant_double).to receive_messages(
-        has_benefit_evidence:,
-        benefit_type:,
-        has_nino:
+      allow(subject).to receive(:requires_means_assessment?).and_return(
+        requires_means_assessment?
       )
-
-      allow(FeatureFlags).to receive(:means_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-      }
+      allow(crime_application).to receive(:appeal_no_changes?).and_return(
+        appeal_no_changes?
+      )
     end
 
-    context 'and means test required' do
-      let(:means_passported) { false }
-      let(:evidence_required) { nil }
+    context 'when requires means assessment' do
+      let(:requires_means_assessment?) { true }
+      let(:appeal_no_changes?) { false }
 
-      context 'when has a passporting benefit no evidence or nino forthcoming' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
-        let(:has_benefit_evidence) { 'no' }
-        let(:has_nino) { 'yes' }
-
-        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
-      end
-
-      context 'when benefit type is none' do
-        let(:benefit_type) { 'none' }
-
-        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
-      end
-
-      context 'and the applicant has a passporting benefit that requires evidence' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
-        let(:means_passported) { false }
-        let(:has_benefit_evidence) { 'yes' }
-        let(:evidence_required) { true }
-
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-      end
-
-      context 'and the application is means-passported' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
-        let(:means_passported) { true }
-        let(:evidence_required) { false }
-
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end
 
-    context 'and when case is appeal' do
-      before do
-        allow(kase).to receive(:appeal_reference_number).and_return('1231asdf')
-      end
+    context 'when does not require mean assessment' do
+      let(:requires_means_assessment?) { false }
+      let(:appeal_no_changes?) { false }
 
-      let(:means_passported) { true }
-      let(:evidence_required) { nil }
-
-      context 'when has benefit evidence is no' do
-        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
 
-    context 'and means test is not required' do
-      let(:means_passported) { true }
-      let(:evidence_required) { nil }
+    context 'when requires means assessment but case is appeal no changes' do
+      let(:requires_means_assessment?) { false }
+      let(:appeal_no_changes?) { true }
 
-      context 'when application is not means tested' do
-        let(:benefit_type) { nil }
-        let(:has_benefit_evidence) { nil }
-        let(:not_means_tested?) { true }
-        let(:evidence_required) { false }
-
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-      end
-
-      context 'when evidence required' do
-        let(:evidence_required) { true }
-
-        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
