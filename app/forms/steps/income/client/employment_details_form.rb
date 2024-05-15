@@ -22,6 +22,10 @@ module Steps
         validates :job_title, presence: true
         validates_with EmploymentPaymentValidator
 
+        def before_or_after_tax_options
+          BeforeOrAfterTax.values
+        end
+
         def persist!
           record.job_title = attributes['job_title']
           record.save

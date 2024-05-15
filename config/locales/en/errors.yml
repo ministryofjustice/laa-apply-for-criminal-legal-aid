@@ -837,10 +837,16 @@ en:
           summary:
             amount:
               blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+            before_or_after_tax:
+              inclusion: Select before or after tax
             frequency:
               inclusion: Select how often they get this payment
           attributes:
             amount:
               blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+            before_or_after_tax:
+              inclusion: Select before or after tax
             frequency:
               inclusion: Select how often they get this payment
