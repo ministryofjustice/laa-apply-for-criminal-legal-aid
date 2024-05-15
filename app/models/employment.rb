@@ -1,6 +1,8 @@
 class Employment < ApplicationRecord
   belongs_to :crime_application
-  belongs_to :income_payment, dependent: :destroy, class_name: 'IncomePayment', foreign_key: 'payment_id', optional: true
+  belongs_to :income_payment, dependent: :destroy,
+             class_name: 'IncomePayment', foreign_key: 'payment_id', inverse_of: :employment,
+             optional: true
 
   accepts_nested_attributes_for :income_payment
 

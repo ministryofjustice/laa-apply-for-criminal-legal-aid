@@ -28,11 +28,8 @@ module Steps
         end
 
         def reset!
-          Employment.transaction do
-            crime_application.employments.where(id: record.id).each do |employment|
-              employment.income_payment&.destroy
-              employment.update(payment_id: nil)
-            end
+          crime_application.employments.where(id: record.id).find_each do |employment|
+            employment.income_payment&.destroy
           end
         end
       end
