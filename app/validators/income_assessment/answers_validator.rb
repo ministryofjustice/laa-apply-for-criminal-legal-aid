@@ -11,21 +11,20 @@ module IncomeAssessment
     delegate :errors, to: :record
 
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      return unless applicable?
+
       errors.add(:employment_status, :incomplete) unless employment_status_complete?
-
       errors.add(:income_before_tax, :incomplete) unless income_before_tax_complete?
-
       errors.add(:frozen_income_savings_assets, :incomplete) unless frozen_income_savings_assets_complete?
-
       errors.add(:income_payments, :incomplete) unless income_payments_complete?
-
       errors.add(:income_benefits, :incomplete) unless income_benefits_complete?
-
       errors.add(:dependants, :incomplete) unless dependants_complete?
-
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
-
       errors.add(:base, :incomplete_records) if errors.present?
+    end
+
+    def applicable?
+      requires_means_assessment?
     end
 
     def employment_status_complete?

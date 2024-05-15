@@ -7,27 +7,24 @@ RSpec.describe Decisions::CaseDecisionTree do
     instance_double(
       CrimeApplication,
       id: '10',
-      applicant: applicant_double,
+      applicant: instance_double(Applicant),
       case: kase,
       kase: kase,
-      not_means_tested?: not_means_tested?
+      not_means_tested?: false
     )
   }
 
   let(:kase) do
     instance_double(
       Case,
-      case_type: case_type,
+      case_type: CaseType::SUMMARY_ONLY,
       codefendants: codefendants_double,
       charges: charges_double,
     )
   end
 
-  let(:case_type) { CaseType::SUMMARY_ONLY }
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
-  let(:applicant_double) { instance_double(Applicant) }
-  let(:not_means_tested?) { false }
 
   before do
     allow(
@@ -229,7 +226,6 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `add_offence_date`' do
     context 'has correct next step' do
       let(:step_name) { :add_offence_date }
@@ -311,31 +307,18 @@ RSpec.describe Decisions::CaseDecisionTree do
       allow(subject).to receive(:requires_means_assessment?).and_return(
         requires_means_assessment?
       )
-      allow(crime_application).to receive(:appeal_no_changes?).and_return(
-        appeal_no_changes?
-      )
     end
 
     context 'when requires means assessment' do
       let(:requires_means_assessment?) { true }
-      let(:appeal_no_changes?) { false }
 
       it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
     end
 
     context 'when does not require mean assessment' do
       let(:requires_means_assessment?) { false }
-      let(:appeal_no_changes?) { false }
 
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
     end
-
-    context 'when requires means assessment but case is appeal no changes' do
-      let(:requires_means_assessment?) { false }
-      let(:appeal_no_changes?) { true }
-
-      it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
-    end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

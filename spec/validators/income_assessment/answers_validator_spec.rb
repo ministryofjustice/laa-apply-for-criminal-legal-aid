@@ -1,21 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
-  subject { described_class.new(record) }
+  subject(:validator) { described_class.new(record) }
 
   let(:record) { instance_double(Income, crime_application:, errors:) }
   let(:crime_application) { instance_double CrimeApplication }
 
   let(:errors) { double(:errors) }
+  let(:requires_means_assessment?) { true }
 
   before do
-    allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
-    allow(crime_application).to receive(:income) { record }
+    allow(crime_application).to receive_messages(
+      income: record,
+      kase: double(case_type: 'summary_only')
+    )
 
-    allow(crime_application).to receive(:kase) {
-      double(case_type: 'summary_only', appeal_reference_number: nil)
-    }
-    allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
+    allow(validator).to receive_messages(
+      evidence_of_passporting_means_forthcoming?: false,
+      requires_means_assessment?: requires_means_assessment?
+    )
+  end
+
+  describe '#applicable?' do
+    subject(:applicable?) { validator.applicable? }
+
+    context 'when means assessment not required' do
+      let(:requires_means_assessment?) { false }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when means assessment required' do
+      let(:requires_means_assessment?) { true }
+
+      it { is_expected.to be(true) }
+    end
   end
 
   describe '#validate' do
