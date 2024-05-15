@@ -274,9 +274,40 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_savings }
 
-    context 'has correct next step' do
+    before do
+      allow(FeatureFlags).to receive(:employment_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_employment_journey_enabled)
+      }
+    end
+
+    context 'when the employed journey is not enabled' do
+      let(:feature_flag_employment_journey_enabled) { false }
+
       it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
+
+    context 'when the employed journey is enabled' do
+      let(:feature_flag_employment_journey_enabled) { true }
+
+      context 'when client is employed' do
+        let(:employment_status) { ['employed'] }
+
+        it { is_expected.to have_destination('steps/income/client/employment_income', :edit, id: crime_application) }
+      end
+
+      context 'when client is not working' do
+        let(:employment_status) { ['not_working'] }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `client_employment_income`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_employment_income }
+
+    it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
   end
 
   context 'when the step is `income payments`' do
