@@ -1,7 +1,7 @@
 module Steps
   module Income
     module Client
-      class PaymentFieldsetForm < Steps::BaseFormObject
+      class EmploymentPaymentFieldsetForm < Steps::BaseFormObject
         attribute :amount
         attribute :frequency
         attribute :type

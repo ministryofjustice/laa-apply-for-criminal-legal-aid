@@ -29,7 +29,7 @@ module Steps
         end
 
         def additional_permitted_params
-          [income_payment_attributes: Steps::Income::Client::PaymentFieldsetForm.attribute_names]
+          [income_payment_attributes: Steps::Income::Client::EmploymentPaymentFieldsetForm.attribute_names]
         end
       end
     end

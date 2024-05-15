@@ -16,10 +16,11 @@ module Steps
                     else
                       record.income_payment
                     end
-          @income_payment ||= PaymentFieldsetForm.build(payment, crime_application:)
+          @income_payment ||= EmploymentPaymentFieldsetForm.build(payment, crime_application:)
         end
 
         validates :job_title, presence: true
+        validates_with EmploymentPaymentValidator
 
         def persist!
           record.job_title = attributes['job_title']

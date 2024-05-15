@@ -828,3 +828,10 @@ en:
             crime_application:
               invalid: Some application details are missing
         steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
+
+        steps/income/client/employment_payment_fieldset_form:
+          summary:
+            amount:
+              blank: Enter their salary or wage
+            frequency:
+              blank: Select how often they get this payment
