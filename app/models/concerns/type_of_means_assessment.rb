@@ -6,18 +6,18 @@ module TypeOfMeansAssessment
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
-    return false if appeal_no_changes?
     return false if Passporting::MeansPassporter.new(crime_application).call
+    return true if appeal_no_changes?
 
     !evidence_of_passporting_means_forthcoming?
   end
 
   def requires_full_means_assessment?
     return false unless requires_means_assessment?
-    return true if income_above_threshold?
-    return true unless no_frozen_assets?
+    return false if appeal_no_changes?
+    return true if income_above_threshold? || has_frozen_assets?
 
-    !(summary_only? || (no_property? && no_savings?))
+    !summary_only? && !(no_property? && no_savings?)
   end
 
   def requires_full_capital?
@@ -79,8 +79,8 @@ module TypeOfMeansAssessment
     income.has_savings == 'no'
   end
 
-  def no_frozen_assets?
-    income.has_frozen_income_or_assets == 'no'
+  def has_frozen_assets?
+    income.has_frozen_income_or_assets == 'yes'
   end
 
   def income_below_threshold?

@@ -277,12 +277,12 @@ RSpec.describe TypeOfMeansAssessment do
       before { allow(applicant).to receive(:benefit_type).and_return('none') }
 
       it { is_expected.to be true }
+    end
 
-      context 'when appeal no changes' do
-        before { allow(crime_application).to receive(:appeal_no_changes?).and_return(true) }
+    context 'when appeal no changes' do
+      before { allow(crime_application).to receive(:appeal_no_changes?).and_return(true) }
 
-        it { is_expected.to be false }
-      end
+      it { is_expected.to be true }
     end
 
     context 'when evidence of passporting means forthcoming?' do
@@ -324,6 +324,12 @@ RSpec.describe TypeOfMeansAssessment do
         end
 
         it { is_expected.to be true }
+      end
+
+      context 'when appeal no changes' do
+        before { allow(crime_application).to receive(:appeal_no_changes?).and_return(true) }
+
+        it { is_expected.to be false }
       end
 
       context 'client has frozen assets' do

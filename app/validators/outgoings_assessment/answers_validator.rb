@@ -1,14 +1,28 @@
 module OutgoingsAssessment
   class AnswersValidator
-    def initialize(record)
-      @record = record
+    include TypeOfMeansAssessment
+
+    def initialize(crime_application)
+      @record = crime_application.outgoings
+      @crime_application = crime_application
     end
 
-    attr_reader :record
+    attr_reader :record, :crime_application
 
     delegate :errors, to: :record
 
+    def applicable?
+      requires_full_means_assessment?
+    end
+
+    def complete?
+      validate
+      errors.empty?
+    end
+
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      return unless applicable?
+
       errors.add(:housing_payment_type, :incomplete) unless housing_payment_type_complete?
 
       errors.add(:mortgage, :incomplete) unless mortgage_complete?

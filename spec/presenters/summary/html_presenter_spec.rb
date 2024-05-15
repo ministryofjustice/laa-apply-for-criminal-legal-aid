@@ -138,13 +138,15 @@ describe Summary::HtmlPresenter do
         context 'when it is an appeal with no changes in financial circumstances' do
           let(:database_application) do
             instance_double(
-              CrimeApplication, applicant: double, kase: (
-                double case_type: 'appeal_to_crown_court',
-                       appeal_financial_circumstances_changed: 'no'
-              ),
+              CrimeApplication,
+              applicant: double,
+              kase: double,
               appeal_no_changes?: true,
-              ioj: double, status: :in_progress,
-              income: double, documents: double, application_type: application_type
+              ioj: double,
+              status: :in_progress,
+              income: double,
+              documents: double,
+              application_type: application_type
             )
           end
 
@@ -221,6 +223,7 @@ describe Summary::HtmlPresenter do
               'application_type' => application_type,
               'case_details' => {
                 'case_type' => 'appeal_to_crown_court',
+                'appeal_original_app_submitted' => 'yes',
                 'appeal_financial_circumstances_changed' => 'no'
               }
             }

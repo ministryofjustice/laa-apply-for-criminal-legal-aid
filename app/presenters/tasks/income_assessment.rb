@@ -7,9 +7,7 @@ module Tasks
     end
 
     def not_applicable?
-      return false unless applicant
-
-      !requires_means_assessment?
+      applicant && super
     end
 
     def can_start?
@@ -20,8 +18,10 @@ module Tasks
       income.present?
     end
 
-    def completed?
-      income.complete?
+    private
+
+    def validator
+      @validator ||= ::IncomeAssessment::AnswersValidator.new(crime_application)
     end
   end
 end

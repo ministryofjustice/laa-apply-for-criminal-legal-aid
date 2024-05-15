@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
-  subject(:validator) { described_class.new(record) }
+  subject(:validator) { described_class.new(crime_application) }
 
   let(:record) { instance_double(Income, crime_application:, errors:) }
   let(:crime_application) { instance_double CrimeApplication }
@@ -38,7 +38,10 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
   end
 
   describe '#validate' do
-    before { allow(record).to receive_messages(**attributes) }
+    before do
+      allow(validator).to receive(:applicable?).and_return(true)
+      allow(record).to receive_messages(**attributes)
+    end
 
     context 'when all validations pass' do
       let(:errors) { [] }
@@ -89,24 +92,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
-      end
-    end
-  end
-
-  describe '#employment_status_complete?' do
-    context 'when employment_status is present' do
-      before { allow(record).to receive(:employment_status).and_return('not_working') }
-
-      it 'returns true' do
-        expect(subject.employment_status_complete?).to be(true)
-      end
-    end
-
-    context 'when employment_status is empty' do
-      before { allow(record).to receive(:employment_status).and_return([]) }
-
-      it 'returns false' do
-        expect(subject.employment_status_complete?).to be(false)
       end
     end
   end

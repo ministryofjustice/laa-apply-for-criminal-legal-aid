@@ -2,18 +2,31 @@ module IncomeAssessment
   class AnswersValidator
     include TypeOfMeansAssessment
 
-    def initialize(record)
-      @record = record
+    def initialize(crime_application)
+      @record = crime_application.income
+      @crime_application = crime_application
     end
 
-    attr_reader :record
+    attr_reader :record, :crime_application
 
     delegate :errors, to: :record
+
+    def applicable?
+      requires_means_assessment?
+    end
+
+    def complete?
+      validate
+      errors.empty?
+    end
 
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return unless applicable?
 
-      errors.add(:employment_status, :incomplete) unless employment_status_complete?
+      EmploymentDetails::AnswersValidator.new(record).validate
+
+      return if appeal_no_changes?
+
       errors.add(:income_before_tax, :incomplete) unless income_before_tax_complete?
       errors.add(:frozen_income_savings_assets, :incomplete) unless frozen_income_savings_assets_complete?
       errors.add(:income_payments, :incomplete) unless income_payments_complete?
@@ -21,14 +34,6 @@ module IncomeAssessment
       errors.add(:dependants, :incomplete) unless dependants_complete?
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
       errors.add(:base, :incomplete_records) if errors.present?
-    end
-
-    def applicable?
-      requires_means_assessment?
-    end
-
-    def employment_status_complete?
-      record.employment_status.present?
     end
 
     def income_before_tax_complete?
@@ -65,7 +70,5 @@ module IncomeAssessment
 
       record.manage_without_income.present?
     end
-
-    delegate :crime_application, to: :record
   end
 end

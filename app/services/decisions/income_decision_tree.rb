@@ -174,10 +174,7 @@ module Decisions
       form_object.ended_employment_within_three_months&.yes?
     end
 
-    def appeal_no_changes?
-      kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        kase.appeal_financial_circumstances_changed == 'no'
-    end
+    delegate :appeal_no_changes?, to: :crime_application
 
     def crime_application
       form_object.crime_application

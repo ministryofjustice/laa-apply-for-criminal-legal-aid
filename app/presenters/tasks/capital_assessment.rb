@@ -11,25 +11,21 @@ module Tasks
     end
 
     def not_applicable?
-      return false unless fulfilled?(ClientDetails)
-      return true unless requires_means_assessment?
-      return false unless fulfilled?(IncomeAssessment)
-
-      !requires_full_means_assessment?
+      applicant.present? && super
     end
 
     def can_start?
       fulfilled?(IncomeAssessment) && requires_full_means_assessment?
     end
 
-    delegate :capital, to: :crime_application
-
     def in_progress?
       capital.present?
     end
 
-    def completed?
-      capital.complete?
+    private
+
+    def validator
+      @validator ||= ::CapitalAssessment::AnswersValidator.new(crime_application)
     end
   end
 end

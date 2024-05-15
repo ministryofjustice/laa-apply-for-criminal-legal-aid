@@ -1,7 +1,7 @@
 module TaskList
   class Task < BaseRenderer
     delegate :status, to: :task
-    delegate :completed?, to: :status
+    delegate :completed?, :not_applicable?, to: :status
 
     def render
       tag.li class: 'moj-task-list__item' do
