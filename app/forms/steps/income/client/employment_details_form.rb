@@ -23,7 +23,7 @@ module Steps
 
           record.income_payment.crime_application = crime_application
           record.income_payment.payment_type = IncomePaymentType::EMPLOYMENT_INCOME.to_s
-          record.job_title = attributes['job_title']
+          record.job_title = job_title
           record.save
         end
 
