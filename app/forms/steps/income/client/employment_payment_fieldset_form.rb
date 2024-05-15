@@ -2,8 +2,8 @@ module Steps
   module Income
     module Client
       class EmploymentPaymentFieldsetForm < Steps::BaseFormObject
-        attribute :amount
-        attribute :frequency
+        attribute :amount, :pence
+        attribute :frequency, :value_object, source: PaymentFrequencyType
         attribute :type
         attribute :payment_type
         attribute :crime_application_id
