@@ -9,10 +9,6 @@ module Steps
         end
 
         def update
-          if employment_record.income_payment
-            employment_record.income_payment.destroy
-            employment_record.update(payment_id: nil)
-          end
           update_and_advance(EmploymentDetailsForm, record: employment_record, as: :client_employment_details)
         end
 

@@ -3,19 +3,11 @@ module Steps
     module Client
       class EmploymentDetailsForm < Steps::BaseFormObject
         attribute :job_title
-        #attribute :income_payment
 
         delegate :income_payment_attributes=, to: :record
 
         def income_payment
-          payment = if record.income_payment.nil?
-                      record.build_income_payment(
-                        payment_type: IncomePaymentType::EMPLOYMENT_INCOME.to_s,
-                        crime_application: crime_application
-                      )
-                    else
-                      record.income_payment
-                    end
+          payment = record.income_payment.nil? ? record.build_income_payment : record.income_payment
           @income_payment ||= EmploymentPaymentFieldsetForm.build(payment, crime_application:)
         end
 
@@ -27,8 +19,21 @@ module Steps
         end
 
         def persist!
+          reset!
+
+          record.income_payment.crime_application = crime_application
+          record.income_payment.payment_type = IncomePaymentType::EMPLOYMENT_INCOME.to_s
           record.job_title = attributes['job_title']
           record.save
+        end
+
+        def reset!
+          Employment.transaction do
+            crime_application.employments.where(id: record.id).each do |employment|
+              employment.income_payment&.destroy
+              employment.update(payment_id: nil)
+            end
+          end
         end
       end
     end

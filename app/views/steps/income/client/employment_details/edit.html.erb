@@ -18,9 +18,6 @@
                                              legend: { size: 's',
                                                        class: 'govuk-!-font-weight-regular' }) %>
         <%= payment_field.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-        <%= payment_field.govuk_text_field :type, autocomplete: 'off', width: 'one-third' %>
-        <%= payment_field.govuk_text_field :payment_type, autocomplete: 'off', width: 'one-third' %>
-        <%= payment_field.govuk_text_field :crime_application_id, autocomplete: 'off', width: 'one-third' %>
       <% end %>
       <%= f.continue_button %>
     <% end %>
