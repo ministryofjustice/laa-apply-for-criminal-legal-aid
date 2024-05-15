@@ -27,6 +27,14 @@ feature_flags:
     local: true
     staging: true
     production: false
+  passported_partner_journey:
+    local: true
+    staging: true
+    production: false
+  unemployment_partner_journey:
+    local: true
+    staging: true
+    production: false
 
 
 # NOTE: consider if the setting you are adding here

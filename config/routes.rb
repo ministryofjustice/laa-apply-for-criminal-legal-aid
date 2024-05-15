@@ -119,6 +119,7 @@ Rails.application.routes.draw do
 
       namespace :dwp do
         edit_step :benefit_type
+        edit_step :partner_benefit_type
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :cannot_check_benefit_status
