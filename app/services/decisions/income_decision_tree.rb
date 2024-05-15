@@ -114,6 +114,8 @@ module Decisions
     end
 
     def after_has_savings
+      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled?
+
       if employed?
         edit('steps/income/client/employment_income')
       else
