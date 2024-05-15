@@ -8,7 +8,8 @@ module Steps
         attribute :payment_type
         attribute :crime_application_id
 
-        validates :amount, :frequency, presence: true
+        validates :amount, presence: true
+        validates :frequency, presence: true, inclusion: { in: PaymentFrequencyType.values }
 
         def persist!
           id.present?
