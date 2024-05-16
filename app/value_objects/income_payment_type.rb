@@ -9,6 +9,7 @@ class IncomePaymentType < ValueObject
     RENT = new(:rent),
     FINANCIAL_SUPPORT_WITH_ACCESS = new(:financial_support_with_access),
     FROM_FRIENDS_RELATIVES = new(:from_friends_relatives),
+    EMPLOYMENT = new(:employment),
     OTHER = new(:other)
   ].freeze
 end

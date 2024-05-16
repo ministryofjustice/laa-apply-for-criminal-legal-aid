@@ -19,7 +19,9 @@ module Decisions
       when :client_owns_property
         after_client_owns_property
       when :has_savings
-        edit(:income_payments)
+        after_has_savings
+      when :client_employment_income
+        edit('/steps/income/income_payments')
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
@@ -111,6 +113,16 @@ module Decisions
       end
     end
 
+    def after_has_savings
+      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled?
+
+      if employed?
+        edit('steps/income/client/employment_income')
+      else
+        edit(:income_payments)
+      end
+    end
+
     def after_client_owns_property
       if no_property?
         edit(:has_savings)
@@ -148,6 +160,10 @@ module Decisions
       else
         edit(:answers)
       end
+    end
+
+    def employed?
+      crime_application.income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s)
     end
 
     def not_working?
