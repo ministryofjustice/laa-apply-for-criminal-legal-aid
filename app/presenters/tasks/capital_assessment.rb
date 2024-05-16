@@ -15,7 +15,7 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(IncomeAssessment) && requires_full_means_assessment?
+      fulfilled?(IncomeAssessment)
     end
 
     def in_progress?
@@ -25,7 +25,7 @@ module Tasks
     private
 
     def validator
-      @validator ||= ::CapitalAssessment::AnswersValidator.new(crime_application)
+      @validator ||= ::CapitalAssessment::AnswersValidator.new(crime_application:)
     end
   end
 end

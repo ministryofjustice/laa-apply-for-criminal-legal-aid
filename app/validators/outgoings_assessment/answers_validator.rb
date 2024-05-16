@@ -24,21 +24,13 @@ module OutgoingsAssessment
       return unless applicable?
 
       errors.add(:housing_payment_type, :incomplete) unless housing_payment_type_complete?
-
       errors.add(:mortgage, :incomplete) unless mortgage_complete?
-
       errors.add(:rent, :incomplete) unless rent_complete?
-
       errors.add(:board_and_lodging, :incomplete) unless board_and_lodging_complete?
-
       errors.add(:council_tax, :incomplete) unless council_tax_complete?
-
       errors.add(:outgoings_payments, :incomplete) unless outgoings_payments_complete?
-
       errors.add(:income_tax_rate, :incomplete) unless income_tax_rate_complete?
-
       errors.add(:outgoings_more_than, :incomplete) unless outgoings_more_than_income_complete?
-
       errors.add(:base, :incomplete_records) if errors.present?
     end
 

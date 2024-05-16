@@ -3,10 +3,37 @@ require 'rails_helper'
 RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
   # rubocop:disable RSpec/MessageChain
   #
-  subject { described_class.new(record) }
+  subject(:validator) { described_class.new(crime_application) }
 
-  let(:record) { instance_double(Outgoings, errors:) }
+  let(:record) { instance_double(Outgoings, crime_application:, errors:) }
+  let(:crime_application) { instance_double CrimeApplication }
+
   let(:errors) { [] }
+  let(:requires_full_means_assessment?) { true }
+
+  before do
+    allow(crime_application).to receive_messages(outgoings: record)
+
+    allow(validator).to receive_messages(
+      requires_full_means_assessment?: requires_full_means_assessment?
+    )
+  end
+
+  describe '#applicable?' do
+    subject(:applicable?) { validator.applicable? }
+
+    context 'when means assessment not required' do
+      let(:requires_full_means_assessment?) { false }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when means assessment required' do
+      let(:requires_full_means_assessment?) { true }
+
+      it { is_expected.to be(true) }
+    end
+  end
 
   describe '#validate' do
     context 'when all validations pass' do

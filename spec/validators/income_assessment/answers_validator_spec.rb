@@ -8,6 +8,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
   let(:errors) { double(:errors) }
   let(:requires_means_assessment?) { true }
+  let(:employment_validator) do
+    instance_double(EmploymentDetails::AnswersValidator, validate: nil)
+  end
 
   before do
     allow(crime_application).to receive_messages(
@@ -18,6 +21,10 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     allow(validator).to receive_messages(
       evidence_of_passporting_means_forthcoming?: false,
       requires_means_assessment?: requires_means_assessment?
+    )
+
+    allow(EmploymentDetails::AnswersValidator).to receive(:new).and_return(
+      employment_validator
     )
   end
 
@@ -39,9 +46,14 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
   describe '#validate' do
     before do
-      allow(validator).to receive(:applicable?).and_return(true)
+      allow(validator).to receive_messages(
+        applicable?: true,
+        appeal_no_changes?: appeal_no_changes?
+      )
       allow(record).to receive_messages(**attributes)
     end
+
+    let(:appeal_no_changes?) { false }
 
     context 'when all validations pass' do
       let(:errors) { [] }
@@ -70,7 +82,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
       let(:attributes) do
         {
-          employment_status: nil,
           income_above_threshold: nil,
           has_frozen_income_or_assets: nil,
           has_no_income_payments: 'no',
@@ -83,7 +94,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'adds errors for all failed validations' do
-        expect(errors).to receive(:add).with(:employment_status, :incomplete)
         expect(errors).to receive(:add).with(:income_before_tax, :incomplete)
         expect(errors).to receive(:add).with(:income_payments, :incomplete)
         expect(errors).to receive(:add).with(:income_benefits, :incomplete)
@@ -92,6 +102,17 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
+      end
+
+      context 'when appeal no changes' do
+        let(:appeal_no_changes?) { true }
+
+        it 'only validates employment details' do
+          expect(employment_validator).to receive(:validate)
+          expect(errors).not_to receive(:add)
+
+          subject.validate
+        end
       end
     end
   end

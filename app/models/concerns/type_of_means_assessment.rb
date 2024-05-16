@@ -82,6 +82,10 @@ module TypeOfMeansAssessment
   def has_frozen_assets?
     income.has_frozen_income_or_assets == 'yes'
   end
+  
+  def no_frozen_assets?
+    income.has_frozen_income_or_assets == 'no'
+  end
 
   def income_below_threshold?
     income&.income_above_threshold == 'no'

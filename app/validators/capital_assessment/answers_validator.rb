@@ -2,8 +2,8 @@ module CapitalAssessment
   class AnswersValidator
     include TypeOfMeansAssessment
 
-    def initialize(crime_application)
-      @record = crime_application.capital
+    def initialize(record=nil, crime_application: nil)
+      @record = record || crime_application.capital
       @crime_application = crime_application
     end
 

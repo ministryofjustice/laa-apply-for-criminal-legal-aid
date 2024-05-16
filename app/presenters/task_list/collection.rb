@@ -40,15 +40,15 @@ module TaskList
     def completed
       all_tasks.select(&:completed?)
     end
-    
+
     def applicable
-      all_tasks.select { |task| !task.not_applicable? }
+      all_tasks.reject(&:not_applicable?)
     end
 
     private
 
     def all_tasks
-      @all_tasts ||= map(&:items).flatten
+      @all_tasks ||= map(&:items).flatten
     end
 
     def collection

@@ -5,13 +5,13 @@ module Tasks
     def path
       edit_steps_outgoings_housing_payment_type_path
     end
-    
+
     def not_applicable?
       applicant.present? && super
     end
 
     def can_start?
-      fulfilled?(IncomeAssessment) && requires_full_means_assessment?
+      fulfilled?(IncomeAssessment)
     end
 
     def in_progress?
