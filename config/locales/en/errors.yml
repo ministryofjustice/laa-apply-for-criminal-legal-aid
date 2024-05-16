@@ -148,6 +148,24 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date your client last attended an appointment with their JSA work coach is too far in the past
               future_not_allowed: Date your client last attended an appointment with their JSA work coach must be today or in the past
+        steps/dwp/partner_benefit_type_form:
+          attributes:
+            benefit_type:
+              inclusion: Select a benefit type
+            last_jsa_appointment_date:
+              blank: Enter the date the partner last attended an appointment with their JSA work coach
+              blank_day: Date the partner last attended an appointment with their JSA work coach must include a day
+              blank_month: Date the partner last attended an appointment with their JSA work coach must include a month
+              blank_year: Date the partner last attended an appointment with their JSA work coach must include a year
+              blank_day_month: Date the partner last attended an appointment with their JSA work coach must include a day and month
+              blank_day_year: Date the partner last attended an appointment with their JSA work coach must include a day and year
+              blank_month_year: Date the partner last attended an appointment with their JSA work coach must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date the partner last attended an appointment with their JSA work coach is too far in the past
+              future_not_allowed: Date the partner last attended an appointment with their JSA work coach must be today or in the past
         steps/dwp/has_benefit_evidence_form:
           attributes:
             has_benefit_evidence:
