@@ -1,0 +1,21 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_text_field :job_title, autocomplete: 'off', width: 'one-third' %>
+      <%= f.fields_for :income_payment, @form_object.income_payment do |payment_field| %>
+        <%= payment_field.govuk_number_field :amount, autocomplete: 'off', inputmode: 'numeric', width: 'one-third', prefix_text: '£' %>
+        <%= payment_field.govuk_collection_radio_buttons(:before_or_after_tax, @form_object.before_or_after_tax_options, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' }) %>
+        <%= payment_field.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

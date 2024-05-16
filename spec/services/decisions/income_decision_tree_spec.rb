@@ -174,6 +174,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :client_employer_details }
     let(:record) { instance_double(Employment) }
 
+    it 'redirects to `client_employer_details` page' do
+      expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `client_employment_details`' do
+    let(:form_object) do
+      double('FormObject', record:)
+    end
+    let(:step_name) { :client_employment_details }
+    let(:record) { instance_double(Employment) }
+
     it 'redirects to `employed_exit` page' do
       expect(subject).to have_destination('/steps/income/employed_exit', :show, id: crime_application)
     end

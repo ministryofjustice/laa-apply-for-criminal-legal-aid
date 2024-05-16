@@ -828,3 +828,27 @@ en:
             crime_application:
               invalid: Some application details are missing
         steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
+
+        steps/income/client/employment_details_form:
+          attributes:
+            job_title:
+              blank: Enter your client's job title
+        steps/income/client/employment_payment_fieldset_form:
+          summary:
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
+            before_or_after_tax:
+              inclusion: Select before or after tax
+            frequency:
+              inclusion: Select how often they get this payment
+          attributes:
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
+            before_or_after_tax:
+              inclusion: Select before or after tax
+            frequency:
+              inclusion: Select how often they get this payment
