@@ -1,0 +1,32 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :benefit_type, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each_with_index do |option, index| %>
+
+        <% if option.jsa? %>
+            <%= f.govuk_radio_button :benefit_type, option.value do %>
+              <%= f.govuk_date_field :last_jsa_appointment_date, maxlength_enabled: true,
+                                      legend: {
+                                        text: t('.last_jsa_appointment_date'),
+                                        size: 's', class: 'govuk-!-font-weight-regular'
+                                      } %>
+            <% end %>
+          <% elsif option.none? %>
+            <%= f.govuk_radio_divider %>
+            <%= f.govuk_radio_button :benefit_type, option, link_errors: index.zero? %>
+          <% else %>
+            <%= f.govuk_radio_button :benefit_type, option, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
