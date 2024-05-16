@@ -2,13 +2,15 @@ module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
       when :is_means_tested
         after_is_means_tested
       when :has_partner
         after_has_partner
+      when :relationship_status
+        edit(:details)
       when :details
         after_client_details
       when :case_type
@@ -31,7 +33,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
@@ -45,11 +47,14 @@ module Decisions
     end
 
     def after_has_partner
-      if form_object.client_has_partner.yes?
+      if current_crime_application.client_has_partner.nil?
+        edit(:relationship_status)
+      elsif current_crime_application.client_has_partner == 'yes' && FeatureFlags.partner_journey.enabled?
+        edit('/steps/partner/relationship')
+      elsif current_crime_application.client_has_partner == 'yes'
         show(:partner_exit)
       else
-        # Task list
-        edit('/crime_applications')
+        edit(:details)
       end
     end
 

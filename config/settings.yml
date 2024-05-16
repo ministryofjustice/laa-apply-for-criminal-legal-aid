@@ -20,10 +20,17 @@ feature_flags:
     staging: true
     production: true
   non_means_tested:
-    local: false
-    staging: false
+    local: true
+    staging: true
     production: false
-
+  unemployed_partner_journey:
+    local: true
+    staging: true
+    production: false
+  partner_journey:
+    local: true
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

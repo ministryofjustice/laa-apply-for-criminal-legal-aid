@@ -1,0 +1,30 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :client_relationship_status, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each_with_index do |choice, index| %>
+          <%= f.govuk_radio_divider if choice == ClientRelationshipStatusType::NOT_SAYING %>
+
+          <% if choice == ClientRelationshipStatusType::SEPARATED %>
+            <%= f.govuk_radio_button :client_relationship_status, choice.value do %>
+              <%= f.govuk_date_field :client_relationship_separated_date, maxlength_enabled: true,
+                                      legend: {
+                                        text: t('.client_relationship_separated_date'),
+                                        size: 's', class: 'govuk-!-font-weight-regular'
+                                      } %>
+            <% end %>
+          <% else %>
+            <%= f.govuk_radio_button :client_relationship_status, choice.value, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -23,6 +23,10 @@ module Decisions
 
     private
 
+    def partner
+      @partner ||= current_crime_application.partner
+    end
+
     # :nocov:
     def show(step_controller, params = {})
       url_options(step_controller, :show, params)

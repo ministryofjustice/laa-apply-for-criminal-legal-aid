@@ -1,0 +1,2 @@
+class PartnerAddress < Address
+end

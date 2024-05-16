@@ -15,7 +15,11 @@ module Decisions
 
     def after_address_entered
       if form_object.record.is_a?(HomeAddress)
-        edit('/steps/client/contact_details')
+        if form_object.record.person.is_a?(Partner)
+          edit('/steps/client/has_nino') # TODO: Check if correct entry point
+        else
+          edit('/steps/client/contact_details')
+        end
       elsif current_crime_application.age_passported?
         edit('/steps/case/urn')
       else

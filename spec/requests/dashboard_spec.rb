@@ -36,7 +36,7 @@ RSpec.describe 'Dashboard', :authorized do
         expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
 
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(/has_partner/)
+        expect(response).to redirect_to(/does_client_have_partner/)
       end
     end
   end

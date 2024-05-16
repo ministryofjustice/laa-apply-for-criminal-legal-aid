@@ -31,6 +31,10 @@ en:
             definition_2: is in a civil partnership with
             definition_3: normally lives with as a couple, even if they are not living together right now - for example, if one person is in hospital, prison or abroad
             exclusion: Do not include anyone who is separated from your client in a way that is likely to be permanent.
+      relationship_status:
+        edit:
+          page_title: What is your client's relationship status?
+          client_relationship_separated_date: When did your client separate from their partner?
       partner_exit:
         show:
           page_title: Use eForms for this application
@@ -70,6 +74,34 @@ en:
         edit:
           page_title: Client’s contact details
           heading: Your client’s contact details
+
+    partner:
+      relationship:
+        edit:
+          page_title: What is the client’s relationship to their partner?
+      details:
+        edit:
+          page_title: Enter the partner’s details
+          heading: Enter the partner’s details
+          full_name_legend: Partner’s full name
+      nino:
+        edit:
+          page_title: Does the partner have a National Insurance number?
+          heading: Does the partner have a National Insurance number?
+          nino: What is their National Insurance number?
+      involvement:
+        edit:
+          page_title: Is the partner involved in your client’s case?
+      conflict:
+        edit:
+          page_title: Does the partner have a conflict of interest?
+      same_address:
+        edit:
+          page_title: Does your client and their partner live at the same address?
+      address:
+        edit:
+          page_title: Enter the partner’s home address
+          heading: Enter the partner’s home address
 
     dwp:
       benefit_type:
@@ -120,10 +152,16 @@ en:
             applicant:
               home_address: Client’s home address
               correspondence_address: Client’s correspondence address
+            partner:
+              home_address: Partner’s home address
+              correspondence_address: Partner’s correspondence address
           heading:
             applicant:
               home_address: Enter the address where your client usually lives
               correspondence_address: Enter your client’s correspondence address
+            partner:
+              home_address: Enter the partner's home address
+              correspondence_address: Enter the partner's home address
           manual_entry: Enter address manually
       results:
         edit:
@@ -131,10 +169,16 @@ en:
             applicant:
               home_address: Client’s home address selection
               correspondence_address: Client’s correspondence address selection
+            partner:
+              home_address: Partner’s home address selection
+              correspondence_address: Partner’s correspondence address selection
           heading:
             applicant:
               home_address: Enter the address where your client usually lives
               correspondence_address: Enter your client’s correspondence address
+            partner:
+              home_address: Enter the address where the partner usually lives
+              correspondence_address: Enter the partner’s correspondence address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
@@ -150,10 +194,16 @@ en:
             applicant:
               home_address: Client’s home address
               correspondence_address: Client’s correspondence address
+            partner:
+              home_address: Partner’s home address
+              correspondence_address: Partner’s correspondence address
           heading:
             applicant:
               home_address: Enter your client’s home address
               correspondence_address: Enter your client’s correspondence address
+            partner:
+              home_address: Enter your partner’s home address
+              correspondence_address: Enter your partner’s correspondence address
 
     case:
       urn:

@@ -58,6 +58,24 @@ en:
           attributes:
             client_has_partner:
               inclusion: Select yes if your client has a partner
+        steps/client/relationship_status_form:
+          attributes:
+            client_relationship_status:
+              inclusion: Select your client's relationship status or if they prefer not to say
+            client_relationship_separated_date:
+              blank: Enter the date your client separated
+              blank_day: Date your client separated must include a day
+              blank_month: Date your client separated must include a month
+              blank_year: Date your client separated must include a year
+              blank_day_month: Date your client separated must include a day and month
+              blank_day_year: Date your client separated must include a day and year
+              blank_month_year: Date your client separated must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date your client separated is too far in the past
+              future_not_allowed: Date your client separated must be today or in the past
         steps/client/details_form:
           attributes:
             first_name:
@@ -130,6 +148,50 @@ en:
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+        steps/partner/relationship_form:
+          attributes:
+            relationship_to_partner:
+              inclusion: Select what your client's relationship to their partner is
+        steps/partner/nino_form:
+          attributes:
+            has_nino:
+              inclusion: Select yes if the partner has a National Insurance number
+            nino:
+              blank: Enter the partner's National Insurance number
+              invalid: Enter a National Insurance number in the correct format
+        steps/partner/involvement_form:
+          attributes:
+            involvement_in_case:
+              inclusion: Select how the partner is involved in your client's case or select 'no, the partner is not involved'
+        steps/partner/conflict_form:
+          attributes:
+            conflict_of_interest:
+              inclusion: Select yes if the partner has a confilct of interest
+        steps/partner/same_address_form:
+          attributes:
+            same_address_as_client:
+              inclusion: Select yes if your client and their partner live at the same address
+        steps/partner/details_form:
+          attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name
+            date_of_birth:
+              blank: Enter a date of birth
+              blank_day: Date of birth must include a day
+              blank_month: Date of birth must include a month
+              blank_year: Date of birth must include a year
+              blank_day_month: Date of birth must include a day and month
+              blank_day_year: Date of birth must include a day and year
+              blank_month_year: Date of birth must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_late: Date of birth is too far in the future
+              year_too_early: Date of birth is too far in the past
+              future_not_allowed: Date of birth must be in the past
         steps/dwp/benefit_type_form:
           attributes:
             benefit_type:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_07_002720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -118,8 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.text "additional_information"
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
-    t.string "confirm_dwp_result"
     t.string "additional_information_required"
+    t.string "confirm_dwp_result"
+    t.string "client_relationship_status"
+    t.date "client_relationship_separated_date"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
@@ -234,6 +236,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
+  create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "relationship_to_partner"
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.string "same_address_as_client"
+    t.uuid "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_partner_details_on_crime_application_id", unique: true
+  end
+
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "type", null: false
@@ -267,7 +281,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -349,6 +363,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
   add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
+  add_foreign_key "partner_details", "crime_applications"
   add_foreign_key "payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "properties", "crime_applications"

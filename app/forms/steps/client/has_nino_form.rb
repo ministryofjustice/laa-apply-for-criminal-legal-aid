@@ -11,6 +11,7 @@ module Steps
 
       validates_inclusion_of :has_nino, in: :choices
       validate :validate_nino, if: -> { client_has_nino? }
+      # TODO: Use NinoValidator
 
       def choices
         YesNoAnswer.values

@@ -1,0 +1,27 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+
+      <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
+        <% @form_object.choices.each_with_index do |choice, index| %>
+          <% if choice == YesNoAnswer::YES %>
+            <%= f.govuk_radio_button :has_nino, choice.value do %>
+              <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
+                                     extra_letter_spacing: true,
+                                     label: { text: t('.nino') } %>
+            <% end %>
+          <% else %>
+            <%= f.govuk_radio_button :has_nino, choice.value, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
