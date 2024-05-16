@@ -18,10 +18,12 @@ class EmploymentPaymentValidator < ActiveModel::Validator
         message: error_message(payment, error), ordinal: (index + 1).ordinalize_fully
       )
 
+      # :nocov:
       # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
         payment.public_send(error.attribute)
       end
+      # :nocov:
     end
   end
 
