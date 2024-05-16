@@ -31,7 +31,7 @@ class EmploymentPaymentValidator < ActiveModel::Validator
     "income-payment-attributes[#{index}].#{attr}"
   end
 
-  # `activemodel.errors.models.steps/income/dependant_fieldset_form.summary.x.y`
+  # `activemodel.errors.models.steps/income/client/employment_payment_fieldset_form.summary.x.y`
   def error_message(obj, error)
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
