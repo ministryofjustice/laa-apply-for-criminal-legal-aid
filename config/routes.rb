@@ -158,6 +158,7 @@ Rails.application.routes.draw do
         edit_step :what_is_clients_employment_status, alias: :employment_status
         namespace :client do
           crud_step :employer_details, alias: :employer_details, param: :employment_id
+          edit_step :employment_income
         end
         show_step :employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody

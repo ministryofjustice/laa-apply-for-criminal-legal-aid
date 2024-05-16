@@ -432,6 +432,14 @@ en:
           attributes:
             has_savings:
               inclusion: Select yes if your client has savings or investments
+        steps/income/client/employment_income_form:
+          attributes:
+            amount:
+              not_a_number: Enter their salary or wage
+            before_or_after_tax:
+              inclusion: Select before or after tax
+            frequency:
+              inclusion: Select how often they get this payment
         steps/income/client_has_dependants_form:
           attributes:
             client_has_dependants:

@@ -96,6 +96,9 @@ en:
         types: Why should your client get legal aid?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
+      steps_income_client_employment_income_form:
+        before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
       steps_income_income_benefits_form:
@@ -438,6 +441,12 @@ en:
         client_owns_property_options: *YESNO
       steps_income_has_savings_form:
         has_savings_options: *YESNO
+      steps_income_client_employment_income_form:
+        amount: What is their salary or wage?
+        before_or_after_tax_options:
+          before_tax: Before tax
+          after_tax: After tax
+        frequency_options: *frequency_options
       steps_income_income_payments_form:
         types_options:
           maintenance: Maintenance payments
