@@ -10,6 +10,8 @@ module Decisions
         after_employment_status
       when :client_employer_details
         after_client_employer_details
+      when :client_employment_details
+        after_client_employment_details
       when :lost_job_in_custody
         after_lost_job_in_custody
       when :income_before_tax
@@ -196,7 +198,10 @@ module Decisions
     end
 
     def after_client_employer_details
-      # TODO: Add employment details page to complete the journey
+      edit('steps/income/client/employment_details', employment_id: current_crime_application.employments.first)
+    end
+
+    def after_client_employment_details
       show('/steps/income/employed_exit')
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_12_222640) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -164,7 +164,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_222640) do
     t.jsonb "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "job_title"
+    t.uuid "payment_id"
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
+    t.index ["payment_id"], name: "index_employments_on_payment_id"
   end
 
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

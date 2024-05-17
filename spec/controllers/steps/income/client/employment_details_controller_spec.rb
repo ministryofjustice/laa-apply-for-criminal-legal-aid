@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Income::Client::EmployerDetailsController, type: :controller do
-  let(:form_class) { Steps::Income::Client::EmployerDetailsForm }
+RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :controller do
+  let(:form_class) { Steps::Income::Client::EmploymentDetailsForm }
   let(:decision_tree_class) { Decisions::IncomeDecisionTree }
   let(:crime_application) { CrimeApplication.create }
   let(:employment) do
@@ -41,33 +41,34 @@ RSpec.describe Steps::Income::Client::EmployerDetailsController, type: :controll
       {
         id: crime_application,
         employment_id: employment,
-        steps_income_client_employer_details_form: { employer_name: 'abc', address: address_attributes }
+        steps_income_client_employment_details_form: {
+          job_title: 'manager',
+          income_payment_attributes: income_payment_attributes
+        }
       }
     end
 
-    let(:address_attributes) do
+    let(:income_payment_attributes) do
       {
-        address_line_one: 'address_line_one',
-        address_line_two: 'address_line_two',
-        city: 'city',
-        country: 'country',
-        postcode: 'postcode'
+        amount: 600,
+        frequency: 'four_weeks',
+        before_or_after_tax: BeforeOrAfterTax::AFTER.to_s,
       }
     end
 
-    context 'when valid address attributes' do
-      it 'redirects to `employment_details` page' do
+    context 'when valid income_payment attributes' do
+      it 'redirects to `employed_exit` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to edit_steps_income_client_employment_details_path
+        expect(response).to redirect_to steps_income_employed_exit_path
       end
     end
 
     context 'when invalid address attributes' do
-      before { address_attributes.merge!(address_line_one: nil, city: nil) }
+      before { income_payment_attributes.merge!(amount: nil, frequency: nil) }
 
-      it 'does not redirect to the `employment_details` path' do
+      it 'does not redirect to the `properties_summary` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).not_to redirect_to edit_steps_income_client_employment_details_path
+        expect(response).not_to redirect_to steps_income_employed_exit_path
       end
     end
   end
