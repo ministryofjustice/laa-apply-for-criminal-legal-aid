@@ -320,6 +320,11 @@ en:
             page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?
             heading: Does your client pay a Self Assessment tax bill received in the last 2 years?
             page_text: This will be a bill from HM Revenue and Customs (HMRC).
+        deductions:
+          edit:
+            page_title: Deductions from your client's pay
+            heading: Deductions from your client’s pay
+            page_text: You told us your client is employed.
 
     outgoings:
       caption: Outgoings assessment

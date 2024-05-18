@@ -200,7 +200,7 @@ module Decisions
     end
 
     def after_client_employment_details
-      show('/steps/income/employed_exit')
+      edit('/steps/income/client/deductions', employment_id: current_crime_application.employments.first)
     end
   end
 end
