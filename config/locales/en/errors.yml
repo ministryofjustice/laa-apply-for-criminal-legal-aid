@@ -887,7 +887,8 @@ en:
               greater_than: Enter amount greater than 0
             frequency:
               blank: Select how often the amount gets deducted
-              inclusion: Select how often the amount gets deducted
+              inclusion: Select how often they get this payment
             details:
               blank: Enter details
               invalid: Details not required
+              
