@@ -10,7 +10,7 @@ module Steps
         end
 
         def update
-          update_and_advance(DeductionsForm, as: :client_employer_details)
+          update_and_advance(DeductionsForm, as: :client_deductions)
         end
 
         private

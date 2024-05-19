@@ -12,6 +12,8 @@ module Decisions
         after_client_employer_details
       when :client_employment_details
         after_client_employment_details
+      when :client_deductions
+        after_client_deductions
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -201,6 +203,10 @@ module Decisions
 
     def after_client_employment_details
       edit('/steps/income/client/deductions', employment_id: current_crime_application.employments.first)
+    end
+
+    def after_client_deductions
+      show('/steps/income/employed_exit')
     end
   end
 end

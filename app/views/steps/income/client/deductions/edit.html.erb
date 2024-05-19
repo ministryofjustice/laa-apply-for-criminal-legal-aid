@@ -23,6 +23,7 @@
                                                      :value,
                                                      legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
                 <%= g.govuk_text_area :details if type == DeductionType::OTHER.to_s %>
+                <%= g.govuk_text_field :employment_id, autocomplete: 'off', hidden: true, label: { hidden: true } %>
               <% end %>
             <% end %>
           <% end %>

@@ -864,3 +864,28 @@ en:
             frequency:
               blank: Select how often they get this payment
               inclusion: Select how often they get this payment
+        steps/income/client/deductions_form:
+          attributes:
+            base:
+              none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
+        steps/income/client/deduction_fieldset_form:
+          summary:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Enter amount greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often the amount gets deducted
+            details:
+              blank: Enter details
+          attributes:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Enter amount greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often the amount gets deducted
+            details:
+              blank: Enter details

@@ -4,8 +4,6 @@ module Steps
       class DeductionsForm < Steps::BaseFormObject
         attr_accessor :employment
 
-        PAYMENT_TYPES_ORDER = DeductionType::VALUES.map(&:to_s)
-
         attr_writer :types
         attr_reader :new_deductions
 
@@ -20,6 +18,7 @@ module Steps
           # for each type (on page load). Trigger validation on load.
           define_method :"#{type}" do
             DeductionFieldsetForm.build(find_or_create_deduction(type), crime_application:).tap do |record|
+              self.employment = record.employment
               record.valid? if types.include?(type.to_s)
             end
           end
@@ -32,6 +31,7 @@ module Steps
               Deduction.new(employment: employment, deduction_type: type.to_s, **attrs),
               crime_application:
             )
+            self.employment = record.employment
 
             # Save on demand, not at end to allow partial updates of the form
             if types.include?(type.to_s)
@@ -47,7 +47,7 @@ module Steps
         end
 
         def ordered_deductions
-          DeductionType.values.map(&:to_s) #& PAYMENT_TYPES_ORDER
+          DeductionType.values.map(&:to_s)
         end
 
         def types
@@ -63,7 +63,7 @@ module Steps
 
         private
 
-        # Precedence: submitted values, stored values, empty IncomePayment
+        # Precedence: submitted values, stored values, empty Deduction
         def find_or_create_deduction(type) # rubocop:disable Metrics/AbcSize
           if types.include?(type.to_s) && @new_deductions&.key?(type.value.to_s)
             attrs = @new_deductions[type.value.to_s].attributes
@@ -78,7 +78,7 @@ module Steps
 
         # Individual deductions_fieldset_forms are in charge of saving themselves
         def persist!
-          record.update(has_no_deductions:)
+          employment.update(has_no_deductions:)
         end
       end
     end

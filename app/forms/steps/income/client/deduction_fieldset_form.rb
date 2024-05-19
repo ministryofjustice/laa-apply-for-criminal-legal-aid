@@ -7,6 +7,7 @@ module Steps
         attribute :amount, :pence
         attribute :frequency, :string
         attribute :details, :string
+        attribute :employment_id, :string
 
         validates :amount, numericality: {
           greater_than: 0
@@ -33,14 +34,18 @@ module Steps
         def persist!
           unless persisted?
             delete
-            #record.employment = employment
+            record.employment = employment
           end
 
           record.save!
         end
 
+        def employment
+          crime_application.employments.find(employment_id)
+        end
+
         def delete
-          record.employment.deductions.find_by(deduction_type:)&.delete
+          employment.deductions.find_by(deduction_type:)&.delete
         end
 
         private

@@ -101,6 +101,13 @@ en:
       steps_income_client_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
+      steps_income_client_deductions_form:
+        income_tax:
+          frequency: Select how often this gets deducted
+        national_insurance:
+          frequency: Select how often this gets deducted
+        other:
+          frequency: Select how often this gets deducted  
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
         frequency: How often do they pay this amount?
@@ -233,6 +240,9 @@ en:
           employed: They have a job where they are paid by an employer.
           self_employed: Includes if they are in a business partnership, or are a director or shareholder in a private company.
           not_working: Includes if they have ended employment in the last 3 months, never had a job, or they are a pensioner.
+      steps_income_client_deductions_form:
+        types_options:
+          other: For example, Student Loans, pensions or employee benefits
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_income_income_payments_form:
@@ -438,15 +448,35 @@ en:
           postcode: Postcode
       steps_income_client_employment_details_form:
         job_title: What is your client’s job title?
-        amount: What is their salary or wage?
-        before_or_after_tax_options:
-          before_tax: Before tax
-          after_tax: After tax
-        frequency_options: *frequency_options
+        income_payment_attributes:
+          amount: What is their salary or wage?
+          before_or_after_tax_options:
+            before_tax: Before tax
+            after_tax: After tax
+          frequency_options: *frequency_options
+      steps_income_client_deductions_form:
+        #deductions: Select all that apply.
+        types_options:
+          income_tax: Income Tax
+          national_insurance: National Insurance
+          other: Other deductions
+          none: The client does not have deductions taken from their pay
+        deduction_attributes:
+          amount: What is their salary or wage?
+        income_tax:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        national_insurance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Enter total amount of all other deductions
+          frequency_options: *frequency_options
+          details: Enter details of other deductions
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill_options: *YESNO
         amount: How much do they pay?
-        frequency_options: *frequency_options
+        frequency_options: *frequency_options    
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
