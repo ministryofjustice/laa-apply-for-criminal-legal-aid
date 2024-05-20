@@ -6,6 +6,7 @@ module Summary
         benefit_selected? && super
       end
 
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         answers = [
           Components::ValueAnswer.new(
@@ -16,34 +17,31 @@ module Summary
 
         if jsa?
           answers.push(Components::DateAnswer.new(
-            :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
-            show: jsa?
-          ))
+                         :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
+                         show: jsa?
+                       ))
         end
 
         answers.push(Components::ValueAnswer.new(
-          :passporting_benefit_check_outcome, benefit_check_outcome
-        ))
+                       :passporting_benefit_check_outcome, benefit_check_outcome
+                     ))
 
         if applicant.confirm_details
           answers.push(Components::ValueAnswer.new(
-            :confirmed_client_details, applicant.confirm_details
-          ))
+                         :confirmed_client_details, applicant.confirm_details
+                       ))
         end
 
         if applicant.has_benefit_evidence
           answers.push(Components::ValueAnswer.new(
-            :has_benefit_evidence, applicant.has_benefit_evidence
-          ))
+                         :has_benefit_evidence, applicant.has_benefit_evidence
+                       ))
         end
 
         answers.select(&:show?)
         answers
       end
-
-      def editable?
-        crime_application.initial? && super
-      end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       private
 

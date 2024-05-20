@@ -108,7 +108,7 @@ describe Summary::Sections::PassportingBenefitCheck do
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
-        expect(answers[2].value).to eq(true)
+        expect(answers[2].value).to be(true)
       end
     end
 

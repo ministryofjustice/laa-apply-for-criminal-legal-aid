@@ -33,12 +33,17 @@ module Steps
         applicant.update(
           attributes.merge(attributes_to_reset)
         )
+
+        crime_application.update(confirm_dwp_result: nil)
       end
 
       def attributes_to_reset
         {
           'last_jsa_appointment_date' => (last_jsa_appointment_date if jsa?),
           'has_benefit_evidence' => nil,
+          'will_enter_nino' => nil,
+          'passporting_benefit' => nil,
+          'confirm_details' => nil
         }
       end
 

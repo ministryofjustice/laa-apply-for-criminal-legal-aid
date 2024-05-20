@@ -46,13 +46,19 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
         expect(form.errors.of_kind?(:benefit_type, :invalid)).to be(false)
       end
 
-      it_behaves_like 'a has-one-association form',
-                      association_name: :partner,
-                      expected_attributes: {
-                        'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                        'last_jsa_appointment_date' => nil,
-                        'has_benefit_evidence' => nil,
-                      }
+      it 'saves `benefit_type` value and returns true' do
+        expect(crime_application).to receive(:update)
+          .with({ confirm_dwp_result: nil }).and_return(true)
+        expect(record).to receive(:update).with({
+                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                  'last_jsa_appointment_date' => nil,
+                                                  'has_benefit_evidence' => nil,
+                                                  'will_enter_nino' => nil,
+                                                  'passporting_benefit' => nil,
+                                                  'confirm_details' => nil
+                                                }).and_return(true)
+        expect(subject.save).to be(true)
+      end
 
       context 'when `benefit_type` answer is not jsa' do
         context 'when a `last_jsa_appointment_date` was previously recorded' do
@@ -116,13 +122,19 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
     context 'when the benefit type has changed' do
       let(:previous_benefit_type) { BenefitType::GUARANTEE_PENSION.to_s }
 
-      it_behaves_like 'a has-one-association form',
-                      association_name: :partner,
-                      expected_attributes: {
-                        'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                        'last_jsa_appointment_date' => nil,
-                        'has_benefit_evidence' => nil,
-                      }
+      it 'saves `benefit_type` value and returns true' do
+        expect(crime_application).to receive(:update)
+          .with({ confirm_dwp_result: nil }).and_return(true)
+        expect(record).to receive(:update).with({
+                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                  'last_jsa_appointment_date' => nil,
+                                                  'has_benefit_evidence' => nil,
+                                                  'will_enter_nino' => nil,
+                                                  'passporting_benefit' => nil,
+                                                  'confirm_details' => nil
+                                                }).and_return(true)
+        expect(subject.save).to be(true)
+      end
     end
 
     context 'when benefit type is the same as in the persisted record' do
