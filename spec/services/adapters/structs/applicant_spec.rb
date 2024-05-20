@@ -5,10 +5,10 @@ RSpec.describe Adapters::Structs::Applicant do
 
   let(:application_struct) { build_struct_application }
 
-  describe '#passporting_benefit=' do
+  describe '#benefit_check_result=' do
     it 'can be set' do
-      subject.passporting_benefit = true
-      expect(subject.passporting_benefit).to be true
+      subject.benefit_check_result = true
+      expect(subject.benefit_check_result).to be true
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe Adapters::Structs::Applicant do
           has_nino
           residence_type
           relationship_to_owner_of_usual_home_address
-          passporting_benefit
+          benefit_check_result
         ]
       )
     end

@@ -74,7 +74,7 @@ RSpec.describe Steps::Client::HasNinoForm do
                           'nino' => nil,
                           'benefit_type' => nil,
                           'last_jsa_appointment_date' => nil,
-                          'passporting_benefit' => nil,
+                          'benefit_check_result' => nil,
                           'will_enter_nino' => nil,
                           'has_benefit_evidence' => nil,
                         }

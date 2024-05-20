@@ -14,14 +14,14 @@ RSpec.describe Passporting::MeansPassporter do
   }
 
   let(:case_record) { instance_double(Case, case_type:, appeal_financial_circumstances_changed:) }
-  let(:applicant) { instance_double(Applicant, under18?: under18, passporting_benefit: passporting_benefit) }
+  let(:applicant) { instance_double(Applicant, under18?: under18, benefit_check_result: benefit_check_result) }
 
   let(:case_type) { 'either_way' }
   let(:appeal_financial_circumstances_changed) { nil }
 
   let(:resubmission?) { false }
   let(:under18) { nil }
-  let(:passporting_benefit) { nil }
+  let(:benefit_check_result) { nil }
   let(:is_means_tested) { 'yes' }
 
   before do
@@ -111,7 +111,7 @@ RSpec.describe Passporting::MeansPassporter do
       let(:under18) { false }
 
       context 'when DWP benefit check has been successful' do
-        let(:passporting_benefit) { true }
+        let(:benefit_check_result) { true }
 
         it 'adds a benefit passported type to the array' do
           expect(
@@ -125,7 +125,7 @@ RSpec.describe Passporting::MeansPassporter do
       end
 
       context 'when DWP benefit check has failed' do
-        let(:passporting_benefit) { false }
+        let(:benefit_check_result) { false }
 
         it 'does not add a benefit passported type to the array' do
           expect(crime_application).to receive(:update).with(means_passport: [])
@@ -135,7 +135,7 @@ RSpec.describe Passporting::MeansPassporter do
       end
 
       context 'when DWP benefit check has not been performed' do
-        let(:passporting_benefit) { nil }
+        let(:benefit_check_result) { nil }
 
         it 'does not add a benefit passported type to the array' do
           expect(crime_application).to receive(:update).with(means_passport: [])
@@ -194,13 +194,13 @@ RSpec.describe Passporting::MeansPassporter do
   describe '#benefit_check_passported?' do
     context 'for a new application' do
       context 'with benefit check passed' do
-        let(:passporting_benefit) { true }
+        let(:benefit_check_result) { true }
 
         it { expect(subject.benefit_check_passported?).to be(true) }
       end
 
       context 'with benefit check failed' do
-        let(:passporting_benefit) { false }
+        let(:benefit_check_result) { false }
 
         it { expect(subject.benefit_check_passported?).to be(false) }
       end

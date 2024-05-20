@@ -52,7 +52,7 @@ module Passporting
     end
 
     def benefit_check_passed?
-      applicant.passporting_benefit.present?
+      applicant.benefit_check_result.present?
     end
 
     def appeal_no_changes?
