@@ -22,8 +22,7 @@ module AppealDetails
       return true if kase.appeal_original_app_submitted == 'no'
       return true if kase.appeal_financial_circumstances_changed == 'yes' && kase.appeal_with_changes_details.present?
 
-      kase.appeal_financial_circumstances_changed == 'no' &&
-        kase.values_at(:appeal_maat_id, :appeal_usn).any?(&:present?)
+      record.appeal_no_changes?
     end
 
     def applicable?

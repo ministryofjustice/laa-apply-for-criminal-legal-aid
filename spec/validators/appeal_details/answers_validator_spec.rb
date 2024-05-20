@@ -40,6 +40,7 @@ RSpec.describe AppealDetails::AnswersValidator, type: :model do
     subject(:complete?) { validator.complete? }
 
     before do
+      allow(record).to receive(:appeal_no_changes?).and_return(appeal_no_changes?)
       allow(kase).to receive_messages(
         appeal_lodged_date:,
         appeal_original_app_submitted:
@@ -48,6 +49,7 @@ RSpec.describe AppealDetails::AnswersValidator, type: :model do
 
     let(:appeal_lodged_date) { '2023-11-11' }
     let(:appeal_original_app_submitted) { 'yes' }
+    let(:appeal_no_changes?) { false }
 
     context 'when a general details is missing' do
       let(:appeal_lodged_date) { nil }
@@ -94,8 +96,8 @@ RSpec.describe AppealDetails::AnswersValidator, type: :model do
           allow(kase).to receive(:appeal_financial_circumstances_changed).and_return('no')
         end
 
-        context 'and appeal reference given' do
-          let(:appeal_reference) { [nil, '1231'] }
+        context 'appeal no changes' do
+          let(:appeal_no_changes?) { true }
 
           it { is_expected.to be true }
         end
