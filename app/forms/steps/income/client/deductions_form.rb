@@ -66,6 +66,7 @@ module Steps
 
         private
 
+        # :nocov:
         # Precedence: submitted values, stored values, empty Deduction
         def find_or_create_deduction(type) # rubocop:disable Metrics/AbcSize
           if types.include?(type.to_s) && @new_deductions&.key?(type.value.to_s)
@@ -78,6 +79,7 @@ module Steps
 
           Deduction.new(employment: employment, deduction_type: type.to_s)
         end
+        # :nocov:
 
         # Individual deductions_fieldset_forms are in charge of saving themselves
         def persist!

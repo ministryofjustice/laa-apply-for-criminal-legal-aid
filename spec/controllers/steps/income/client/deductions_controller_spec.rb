@@ -41,14 +41,18 @@ RSpec.describe Steps::Income::Client::DeductionsController, type: :controller do
       {
         id: crime_application,
         employment_id: employment.id,
-        steps_income_client_deductions_form: {
-          income_tax:,
-          national_insurance:,
-          types:,
-          other:
-        }
+        steps_income_client_deductions_form: steps_income_client_deductions_form
       }
     end
+
+    let(:steps_income_client_deductions_form) {
+      {
+        income_tax:,
+        national_insurance:,
+        types:,
+        other:
+      }
+    }
 
     let(:income_tax) { { amount: '', frequency: '', employment_id: employment.id } }
     let(:national_insurance) { { amount: '', frequency: '', employment_id: employment.id } }

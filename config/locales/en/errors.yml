@@ -879,6 +879,7 @@ en:
               inclusion: Select how often the amount gets deducted
             details:
               blank: Enter details
+              invalid: Details not required
           attributes:
             amount:
               blank: Enter amount
@@ -889,3 +890,4 @@ en:
               inclusion: Select how often the amount gets deducted
             details:
               blank: Enter details
+              invalid: Details not required

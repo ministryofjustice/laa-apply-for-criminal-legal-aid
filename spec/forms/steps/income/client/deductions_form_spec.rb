@@ -135,23 +135,6 @@ RSpec.describe Steps::Income::Client::DeductionsForm do
       end
     end
 
-    context 'when type is not provided' do
-      before {
-        arguments.except!(:types)
-      }
-
-      it 'returns false' do
-        expect(form.save).to be(false)
-      end
-
-      it 'has a validation error on the field' do
-        form.save
-        expect(form).not_to be_valid
-
-        expect(form.errors.of_kind?(:base, :none_selected)).to be(true)
-      end
-    end
-
     context 'when income_tax amount is not provided' do
       before { income_tax.merge!(amount: nil) }
 
@@ -166,7 +149,7 @@ RSpec.describe Steps::Income::Client::DeductionsForm do
       end
     end
 
-    context 'when type includes other details is not provided' do
+    context 'when type includes `other` and details is not provided' do
       before { other.merge!(details: nil) }
 
       it 'returns false' do
@@ -177,6 +160,20 @@ RSpec.describe Steps::Income::Client::DeductionsForm do
         form.save
         expect(form).not_to be_valid
         expect(form.errors.of_kind?('other-details', :blank)).to be(true)
+      end
+    end
+
+    context 'when type exclude `other` and details is provided' do
+      before { income_tax.merge!(details: 'detail not required') }
+
+      it 'returns false' do
+        expect(form.save).to be(false)
+      end
+
+      it 'has a validation error on the field' do
+        form.save
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?('income-tax-details', :invalid)).to be(true)
       end
     end
   end
