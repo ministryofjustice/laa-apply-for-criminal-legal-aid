@@ -41,28 +41,6 @@ RSpec.describe Passporting::MeansPassporter do
       end
     end
 
-    context 'for a appeal to crown court' do
-      let(:case_type) { 'appeal_to_crown_court' }
-
-      context 'with no financial changes' do
-        let(:appeal_financial_circumstances_changed) { 'no' }
-
-        it 'uses the existing values' do
-          expect(crime_application).not_to receive(:update)
-          expect(subject.call).to be(true)
-        end
-      end
-
-      context 'with financial changes' do
-        let(:appeal_financial_circumstances_changed) { 'yes' }
-
-        it 'uses the existing values' do
-          expect(crime_application).to receive(:update)
-          expect(subject.call).to be(false)
-        end
-      end
-    end
-
     context 'means passporting on non-means tested' do
       let(:is_means_tested) { 'no' }
 
@@ -213,16 +191,12 @@ RSpec.describe Passporting::MeansPassporter do
         allow(crime_application).to receive(:means_passport).and_return(means_passport)
       end
 
-      context 'passported on benefit check' do
+      context 'originally passported on benefit check' do
         let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
 
-        it { expect(subject.benefit_check_passported?).to be(true) }
-      end
-
-      context 'not passported on benefit check' do
-        let(:means_passport) { [MeansPassportType::ON_AGE_UNDER18.to_s] }
-
-        it { expect(subject.benefit_check_passported?).to be(false) }
+        it 'ignores the original means_passport' do
+          expect(subject.benefit_check_passported?).to be(false)
+        end
       end
     end
   end

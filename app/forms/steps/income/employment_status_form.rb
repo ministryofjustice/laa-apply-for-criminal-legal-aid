@@ -29,7 +29,7 @@ module Steps
       private
 
       def validate_statuses
-        return unless employment_status.empty? || (employment_status - EmploymentStatus.values.map(&:to_s)).any?
+        return unless employment_status.empty? || (employment_status - choices.map(&:to_s)).any?
 
         errors.add(:employment_status,
                    :invalid)

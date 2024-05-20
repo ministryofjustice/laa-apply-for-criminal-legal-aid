@@ -9,19 +9,25 @@ RSpec.describe Tasks::OutgoingsAssessment do
       to_param: '12345',
       applicant: applicant,
       outgoings: outgoings,
-      kase: kase,
     )
   end
 
   let(:applicant) { nil }
-  let(:kase) { nil }
   let(:outgoings) { nil }
 
+  let(:validator) do
+    instance_double(
+      OutgoingsAssessment::AnswersValidator,
+      complete?: complete?, applicable?: applicable?
+    )
+  end
+
+  let(:applicable?) { false }
+  let(:complete?) { false }
+
   before do
-    allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails) { client_details_fulfilled }
-    allow(task).to receive(:requires_means_assessment?) { needs_means }
-    allow(task).to receive(:fulfilled?).with(Tasks::IncomeAssessment) { income_fulfilled }
-    allow(task).to receive(:requires_full_means_assessment?) { needs_full_means }
+    allow(OutgoingsAssessment::AnswersValidator).to receive(:new)
+      .with(crime_application: crime_application, record: nil).and_return(validator)
   end
 
   describe '#path' do
@@ -29,44 +35,37 @@ RSpec.describe Tasks::OutgoingsAssessment do
   end
 
   describe '#not_applicable?' do
-    subject(:not_applicable) { task.not_applicable? }
+    subject(:not_applicable?) { task.not_applicable? }
 
-    context 'client details is not fulfilled' do
-      let(:client_details_fulfilled) { false }
+    context 'when validator applicable' do
+      let(:applicable?) { true }
 
-      it { is_expected.to be false }
-    end
-
-    context 'means assessment details is not required' do
-      let(:client_details_fulfilled) { true }
-      let(:needs_means) { false }
-
-      it { is_expected.to be true }
-    end
-
-    context 'income is not fulfilled' do
-      let(:client_details_fulfilled) { true }
-      let(:needs_means) { true }
-      let(:income_fulfilled) { false }
-
-      it { is_expected.to be false }
-    end
-
-    context 'income is fulfilled' do
-      let(:income_fulfilled) { true }
-      let(:needs_means) { true }
-      let(:client_details_fulfilled) { true }
-
-      context 'and full means assessment required' do
-        let(:needs_full_means) { true }
+      context 'when applicant nil' do
+        let(:applicant) { nil }
 
         it { is_expected.to be false }
       end
 
-      context 'and means assessment is not required' do
-        let(:needs_full_means) { false }
+      context 'when applicant present' do
+        let(:applicant) { instance_double(Applicant) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when validator not applicable' do
+      let(:applicable?) { false }
+
+      context 'when applicant present' do
+        let(:applicant) { instance_double(Applicant) }
 
         it { is_expected.to be true }
+      end
+
+      context 'when applicant nil' do
+        let(:applicant) { nil }
+
+        it { is_expected.to be false }
       end
     end
   end
@@ -74,30 +73,22 @@ RSpec.describe Tasks::OutgoingsAssessment do
   describe '#can_start?' do
     subject(:can_start) { task.can_start? }
 
-    context 'case details are not fulfilled' do
+    before do
+      allow(task).to receive(:fulfilled?).with(Tasks::IncomeAssessment).and_return(
+        income_fulfilled
+      )
+    end
+
+    context 'when income is not fulfilled' do
       let(:income_fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'case details are fulfilled' do
+    context 'when income is fulfilled' do
       let(:income_fulfilled) { true }
 
-      context 'and means assessment required' do
-        let(:needs_full_means) { true }
-
-        before do
-          allow(task).to receive(:requires_means_assessment?) { needs_means }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context 'and means assessment is not required' do
-        let(:needs_full_means) { false }
-
-        it { is_expected.to be false }
-      end
+      it { is_expected.to be true }
     end
   end
 
@@ -118,20 +109,18 @@ RSpec.describe Tasks::OutgoingsAssessment do
   end
 
   describe '#completed?' do
-    subject(:in_progress) { task.completed? }
+    subject(:completed?) { task.completed? }
 
-    let(:outgoings) { instance_double(Outgoings) }
-
-    context 'outgoings is not completed' do
-      before { allow(outgoings).to receive(:complete?).and_return(false) }
-
-      it { is_expected.to be false }
-    end
-
-    context 'outgoings is completed' do
-      before { allow(outgoings).to receive(:complete?).and_return(true) }
+    context 'answers are complete' do
+      let(:complete?) { true }
 
       it { is_expected.to be true }
+    end
+
+    context 'answers are incomplete' do
+      let(:complete?) { false }
+
+      it { is_expected.to be false }
     end
   end
 end

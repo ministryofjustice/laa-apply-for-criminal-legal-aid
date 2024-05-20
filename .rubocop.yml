@@ -154,6 +154,7 @@ Naming/PredicateName:
     - has_codefendants_complete?
     - has_charges_complete?
     - has_benefit_evidence_complete?
+    - has_frozen_assets?
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:

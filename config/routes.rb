@@ -135,6 +135,7 @@ Rails.application.routes.draw do
 
       namespace :dwp do
         edit_step :benefit_type
+        edit_step :partner_benefit_type
         show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :cannot_check_benefit_status
@@ -171,6 +172,11 @@ Rails.application.routes.draw do
 
       namespace :income, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :what_is_clients_employment_status, alias: :employment_status
+        namespace :client do
+          crud_step :employer_details, alias: :employer_details, param: :employment_id
+          crud_step :employment_details, alias: :employment_details, param: :employment_id
+          edit_step :employment_income
+        end
         show_step :employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
         edit_step :current_income_before_tax, alias: :income_before_tax

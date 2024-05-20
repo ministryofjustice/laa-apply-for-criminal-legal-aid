@@ -13,14 +13,6 @@ module Decisions
       form_object.crime_application
     end
 
-    def entered_appeal_reference_number?
-      kase = current_crime_application.case
-      return false if kase&.case_type.nil?
-
-      case_type = CaseType.new(kase.case_type)
-      case_type&.appeal? && kase.appeal_reference_number.present?
-    end
-
     private
 
     def partner

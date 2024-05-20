@@ -28,17 +28,9 @@ RSpec.describe Evidence::Rules::SalariedEmployee do
     end
 
     context 'when not employed' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::DIRECTOR]) }
+      let(:income) { Income.new(employment_status: [EmploymentStatus::NOT_WORKING]) }
 
       it { is_expected.to be false }
-    end
-
-    context 'when employed and a director' do
-      let(:income) do
-        Income.new(employment_status: [EmploymentStatus::DIRECTOR, EmploymentStatus::EMPLOYED])
-      end
-
-      it { is_expected.to be true }
     end
 
     context 'when there is no employment status' do

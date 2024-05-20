@@ -38,36 +38,49 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     let(:benefit_type) { nil }
     let(:is_client_remanded) { YesNoAnswer::YES.to_s }
     let(:not_means_tested) { nil }
-    let(:appeal_reference_number) { nil }
+    let(:appeal_no_changes?) { false }
     let(:case_type) { CaseType::SUMMARY_ONLY }
 
     before do
       allow(applicant).to receive_messages(has_nino:, benefit_type:)
-      allow(kase).to receive_messages(is_client_remanded:, case_type:, appeal_reference_number:)
-      allow(crime_application).to receive_messages(not_means_tested?: not_means_tested)
+      allow(kase).to receive_messages(is_client_remanded:, case_type:)
+      allow(crime_application).to receive_messages(
+        not_means_tested?: not_means_tested,
+        appeal_no_changes?: appeal_no_changes?
+      )
     end
 
     # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when nino not provided' do
       let(:has_nino) { YesNoAnswer::NO.to_s }
 
-      context 'and is required to submit' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
-        let(:is_client_remanded) { YesNoAnswer::NO.to_s }
+      context 'but is forthcoming' do
         let(:not_means_tested) { false }
 
-        it { is_expected.to have_destination(:cannot_submit_without_nino, :edit, id: crime_application) }
+        before do
+          allow(subject).to receive(:nino_forthcoming?).and_return(true)
+        end
+
+        context 'when in custody' do
+          let(:is_client_remanded) { YesNoAnswer::YES.to_s }
+
+          it { is_expected.to have_destination(:declaration, :edit, id: crime_application) }
+        end
+
+        context 'when not in custody' do
+          let(:is_client_remanded) { YesNoAnswer::NO.to_s }
+
+          it { is_expected.to have_destination(:cannot_submit_without_nino, :edit, id: crime_application) }
+        end
       end
 
       context 'and is not required to submit for an appeal no changes' do
-        let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-        let(:appeal_reference_number) { 'appeal_usn' }
+        let(:appeal_no_changes?) { true }
 
         it { is_expected.to have_destination(:declaration, :edit, id: crime_application) }
       end
 
       context 'and is not required to submit for a non-means tested application' do
-        let(:case_type) { nil }
         let(:not_means_tested) { true }
 
         it { is_expected.to have_destination(:declaration, :edit, id: crime_application) }

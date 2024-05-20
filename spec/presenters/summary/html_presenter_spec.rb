@@ -13,7 +13,7 @@ describe Summary::HtmlPresenter do
       CrimeApplication, applicant: double, kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
-      documents: double, application_type: application_type, appeal_no_changes?: false,
+      documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
@@ -134,40 +134,6 @@ describe Summary::HtmlPresenter do
         end
 
         it { is_expected.to match_array(expected_sections) }
-
-        context 'when it is an appeal with no changes in financial circumstances' do
-          let(:database_application) do
-            instance_double(
-              CrimeApplication, applicant: double, kase: (
-                double case_type: 'appeal_to_crown_court',
-                       appeal_financial_circumstances_changed: 'no'
-              ),
-              appeal_no_changes?: true,
-              ioj: double, status: :in_progress,
-              income: double, documents: double, application_type: application_type
-            )
-          end
-
-          let(:expected_sections) do
-            %w[
-              Overview
-              ClientDetails
-              ContactDetails
-              CaseDetails
-              Offences
-              Codefendants
-              NextCourtHearing
-              FirstCourtHearing
-              JustificationForLegalAid
-              PassportJustificationForLegalAid
-              EmploymentDetails
-              SupportingEvidence
-              MoreInformation
-            ]
-          end
-
-          it { is_expected.to match_array(expected_sections) }
-        end
       end
 
       context 'for a "submitted" datastore application' do
@@ -208,47 +174,6 @@ describe Summary::HtmlPresenter do
         end
 
         it { is_expected.to match_array(expected_sections) }
-
-        context 'when it is an appeal with no changes in financial circumstances' do
-          let(:datastore_application) do
-            extra = {
-              'means_details' => {
-                'income_details' => {
-                  'employment_status' => 'not_working',
-                  'ended_employment_within_three_months' => 'no'
-                }
-              },
-              'application_type' => application_type,
-              'case_details' => {
-                'case_type' => 'appeal_to_crown_court',
-                'appeal_financial_circumstances_changed' => 'no'
-              }
-            }
-
-            JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
-          end
-
-          let(:expected_sections) do
-            %w[
-              Overview
-              ClientDetails
-              ContactDetails
-              CaseDetails
-              Offences
-              Codefendants
-              NextCourtHearing
-              FirstCourtHearing
-              JustificationForLegalAid
-              PassportJustificationForLegalAid
-              EmploymentDetails
-              SupportingEvidence
-              MoreInformation
-              LegalRepresentativeDetails
-            ]
-          end
-
-          it { is_expected.to match_array(expected_sections) }
-        end
       end
     end
 

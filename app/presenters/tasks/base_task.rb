@@ -43,7 +43,11 @@ module Tasks
     end
 
     def not_applicable?
-      true
+      !validator.applicable?
+    end
+
+    def completed?
+      validator.complete?
     end
 
     # :nocov:
@@ -55,7 +59,9 @@ module Tasks
       raise 'implement in task subclasses'
     end
 
-    def completed?
+    private
+
+    def validator
       raise 'implement in task subclasses'
     end
     # :nocov:

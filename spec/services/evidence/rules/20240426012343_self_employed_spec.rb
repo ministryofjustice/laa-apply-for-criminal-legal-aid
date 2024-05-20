@@ -19,19 +19,19 @@ RSpec.describe Evidence::Rules::SelfEmployed do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
-    context 'when self-employed or shareholder or partnership' do
-      it 'is false' do
-        %w[self_employed shareholder business_partnership].each do |employment_status|
-          crime_application = CrimeApplication.new(income: Income.new(employment_status: [employment_status]))
+    context 'when self-employed' do
+      let(:employment_status) { 'self_employed' }
 
-          expect(described_class.new(crime_application).client_predicate).to be true
-        end
+      it 'is false' do
+        crime_application = CrimeApplication.new(income: Income.new(employment_status: [employment_status]))
+
+        expect(described_class.new(crime_application).client_predicate).to be true
       end
     end
 
-    context 'when employed or director or not working' do
+    context 'when employed or not working' do
       it 'is false' do
-        %w[director not_working employed].each do |employment_status|
+        %w[not_working employed].each do |employment_status|
           crime_application = CrimeApplication.new(income: Income.new(employment_status: [employment_status]))
 
           expect(described_class.new(crime_application).client_predicate).to be false
@@ -56,7 +56,7 @@ RSpec.describe Evidence::Rules::SelfEmployed do
 
   describe '#to_h' do
     let(:income) do
-      Income.new(employment_status: [EmploymentStatus::SHAREHOLDER])
+      Income.new(employment_status: [EmploymentStatus::SELF_EMPLOYED])
     end
 
     let(:expected_hash) do

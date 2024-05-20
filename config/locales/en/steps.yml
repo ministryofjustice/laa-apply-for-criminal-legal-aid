@@ -107,7 +107,11 @@ en:
       benefit_type:
         edit:
           page_title: Does your client get one of these passporting benefits?
-          last_jsa_appointment_date: Enter when your client last attended an appointment with their JSA work coach
+          last_jsa_appointment_date: &JSA_DATE_QUESTION When did they last attend an appointment with their JSA work coach?
+      partner_benefit_type:
+        edit:
+          page_title: Does the partner get one of these passporting benefits?
+          last_jsa_appointment_date: *JSA_DATE_QUESTION
       benefit_exit:
         show:
           page_title: Use eForms for this application
@@ -343,6 +347,21 @@ en:
           page_title: Check your answers - Your client's income
           heading: Check your answers
           subheading: Your client’s income
+      client:
+        employer_details:
+          edit:
+            page_title: Who is your client employed by?
+            heading: Who does the client work for?
+            subheading: Add the name and address of your client’s employer. If they have more than one employer, you can add more.
+        employment_details:
+          edit:
+            page_title: Your client's employment details
+            heading: Your client’s employment details
+        employment_income:
+          edit:
+            page_title: Your client's employment income
+            heading: Your client's employment income
+            page_text: You told us your client is employed.
 
     outgoings:
       caption: Outgoings assessment

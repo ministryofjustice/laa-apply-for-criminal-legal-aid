@@ -17,6 +17,6 @@ class Outgoings < ApplicationRecord
   end
 
   def answers_validator
-    @answers_validator ||= OutgoingsAssessment::AnswersValidator.new(self)
+    @answers_validator ||= OutgoingsAssessment::AnswersValidator.new(record: self)
   end
 end

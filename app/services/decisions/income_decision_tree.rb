@@ -8,8 +8,12 @@ module Decisions
       case step_name
       when :employment_status
         after_employment_status
+      when :client_employer_details
+        after_client_employer_details
+      when :client_employment_details
+        after_client_employment_details
       when :lost_job_in_custody
-        after_lost_job_in_custody
+        edit(:income_before_tax)
       when :income_before_tax
         after_income_before_tax
       when :frozen_income_savings_assets
@@ -17,7 +21,9 @@ module Decisions
       when :client_owns_property
         after_client_owns_property
       when :has_savings
-        edit(:income_payments)
+        after_has_savings
+      when :client_employment_income
+        edit('/steps/income/income_payments')
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
@@ -59,28 +65,39 @@ module Decisions
       if not_working?
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
-        elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
         else
           edit(:income_before_tax)
         end
       else
         # TODO: Update exit page content to include unemployed
-        show(:employed_exit)
+        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
+
+        start_employment_journey
       end
     end
 
-    def after_lost_job_in_custody
-      if appeal_no_changes?
-        edit('/steps/evidence/upload')
-      else
+    def start_employment_journey
+      case form_object.employment_status
+      when [EmploymentStatus::EMPLOYED.to_s]
         edit(:income_before_tax)
+      when [EmploymentStatus::SELF_EMPLOYED.to_s]
+        show(:employed_exit)
+      when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        redirect_to_employer_details
       end
+    end
+
+    def redirect_to_employer_details
+      employments = current_crime_application.employments
+      current_crime_application.employments.create! if employments.empty?
+      edit('/steps/income/client/employer_details', employment_id: employments.first)
     end
 
     def after_income_before_tax
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
       end
@@ -89,14 +106,28 @@ module Decisions
     def after_frozen_income_savings_assets
       if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
+      end
+    end
+
+    def after_has_savings
+      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
+
+      if requires_full_means_assessment?
+        redirect_to_employer_details
+      else
+        edit('/steps/income/client/employment_income')
       end
     end
 
     def after_client_owns_property
       if no_property?
         edit(:has_savings)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
       end
@@ -133,17 +164,16 @@ module Decisions
       end
     end
 
+    def employed?
+      !!crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s)
+    end
+
     def not_working?
       form_object.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
-    end
-
-    def appeal_no_changes?
-      kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        kase.appeal_financial_circumstances_changed == 'no'
     end
 
     def crime_application
@@ -160,6 +190,14 @@ module Decisions
 
     def continuing_evidence_upload
       edit('/steps/evidence/upload')
+    end
+
+    def after_client_employer_details
+      edit('steps/income/client/employment_details', employment_id: current_crime_application.employments.first)
+    end
+
+    def after_client_employment_details
+      show('/steps/income/employed_exit')
     end
   end
 end

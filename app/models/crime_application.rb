@@ -55,6 +55,8 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 
+  has_many :employments, dependent: :destroy
+
   enum status: ApplicationStatus.enum_values
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }

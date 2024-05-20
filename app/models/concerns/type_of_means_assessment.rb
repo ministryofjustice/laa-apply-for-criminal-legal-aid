@@ -1,23 +1,22 @@
 module TypeOfMeansAssessment
   extend ActiveSupport::Concern
 
-  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits, :capital, to: :crime_application
+  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits, :capital, :appeal_no_changes?,
+           to: :crime_application
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
     return false if Passporting::MeansPassporter.new(crime_application).call
+    return false if appeal_no_changes?
 
     !evidence_of_passporting_means_forthcoming?
   end
 
   def requires_full_means_assessment?
     return false unless requires_means_assessment?
+    return true if income_above_threshold? || has_frozen_assets?
 
-    if income_below_threshold? && no_frozen_assets?
-      !(summary_only? || (no_property? && no_savings?))
-    else
-      true
-    end
+    !summary_only? && !(no_property? && no_savings?)
   end
 
   def requires_full_capital?
@@ -31,8 +30,6 @@ module TypeOfMeansAssessment
   end
 
   def evidence_of_passporting_means_forthcoming?
-    return false unless has_passporting_benefit?
-
     benefit_evidence_forthcoming? || nino_forthcoming?
   end
 
@@ -42,11 +39,25 @@ module TypeOfMeansAssessment
   # However, if the applicant is not in court custody, submission will be
   # blocked until the NINO or benefit evidence is provided.
   def nino_forthcoming?
-    applicant.has_nino == 'no' && applicant.will_enter_nino == 'no'
+    return false unless has_passporting_benefit?
+    return false unless applicant.has_nino == 'no'
+    return false if applicant.will_enter_nino == 'yes'
+
+    applicant.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
   end
 
   def benefit_evidence_forthcoming?
-    applicant.has_benefit_evidence == 'yes'
+    return false unless has_passporting_benefit?
+    return false if applicant.nino.blank?
+
+    crime_application.confirm_dwp_result == 'no' && applicant.has_benefit_evidence == 'yes'
+  end
+
+  def means_assessment_as_benefit_evidence?
+    return false unless has_passporting_benefit?
+    return false if applicant.nino.blank?
+
+    crime_application.confirm_dwp_result == 'no' && applicant.has_benefit_evidence == 'no'
   end
 
   private
@@ -67,11 +78,19 @@ module TypeOfMeansAssessment
     income.has_savings == 'no'
   end
 
+  def has_frozen_assets?
+    income.has_frozen_income_or_assets == 'yes'
+  end
+
   def no_frozen_assets?
     income.has_frozen_income_or_assets == 'no'
   end
 
   def income_below_threshold?
     income&.income_above_threshold == 'no'
+  end
+
+  def income_above_threshold?
+    !income_below_threshold?
   end
 end
