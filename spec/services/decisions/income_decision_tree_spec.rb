@@ -15,28 +15,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
     )
   end
 
-  let(:employment_double) do
-    instance_double(
-      Employment,
-      id: 'uuid'
-    )
-  end
-
+  let(:employment_double) { instance_double(Employment, id: 'uuid') }
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
-
-  let(:kase) do
-    instance_double(
-      Case,
-      case_type: case_type,
-      appeal_financial_circumstances_changed: appeal_financial_circumstances_changed,
-      appeal_reference_number: nil
-    )
-  end
+  let(:kase) { instance_double(Case, case_type:) }
 
   let(:case_type) { nil }
-  let(:appeal_financial_circumstances_changed) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
 
   before do
@@ -150,18 +135,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                  ended_employment_within_three_months: YesNoAnswer::NO)
         end
 
-        context 'when case_type is not appeal no changes' do
-          let(:case_type) { 'summary_only' }
+        let(:case_type) { 'summary_only' }
 
-          it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
-        end
-
-        context 'when case_type is appeal no changes' do
-          let(:case_type) { 'appeal_to_crown_court' }
-          let(:appeal_financial_circumstances_changed) { 'no' }
-
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
       end
     end
   end
@@ -193,19 +169,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `lost_job_in_custody`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :lost_job_in_custody }
+    let(:case_type) { 'summary_only' }
 
-    context 'when case_type is not appeal no changes' do
-      let(:case_type) { 'summary_only' }
-
-      it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
-    end
-
-    context 'when case_type is appeal no changes' do
-      let(:case_type) { 'appeal_to_crown_court' }
-      let(:appeal_financial_circumstances_changed) { 'no' }
-
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-    end
+    it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
   end
 
   context 'when the step is `income_before_tax`' do
@@ -399,29 +365,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :income_benefits }
 
     before do
-      allow(income).to receive_messages(
-        income_above_threshold:,
-        has_frozen_income_or_assets:,
-        client_owns_property:,
-        has_savings:
-      )
+      allow(subject).to receive(:requires_full_means_assessment?).and_return(requires_full_means_assessment)
     end
 
-    context 'when dependants are relevant' do
-      let(:income_above_threshold) { YesNoAnswer::YES.to_s }
-      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
-      let(:client_owns_property) { YesNoAnswer::NO.to_s }
-      let(:has_savings) { YesNoAnswer::NO.to_s }
+    context 'when full means assessment needs completing' do
+      let(:requires_full_means_assessment) { true }
 
       it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
     end
 
-    context 'when dependants are not relevant' do
-      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
-      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
-      let(:client_owns_property) { YesNoAnswer::NO.to_s }
-      let(:has_savings) { YesNoAnswer::NO.to_s }
-      let(:income_benefits) { [] }
+    context 'when does not require full means assessment' do
+      let(:requires_full_means_assessment) { false }
 
       before do
         allow(crime_application).to receive_messages(income_payments:, income_benefits:)
@@ -429,12 +383,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when there are no payments' do
         let(:income_payments) { [] }
+        let(:income_benefits) { [] }
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
       end
 
-      context 'when there are payments' do
+      context 'when there are payments or benefits' do
         let(:income_payments) { [{ amount: 1234 }] }
+        let(:income_benefits) { [] }
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end

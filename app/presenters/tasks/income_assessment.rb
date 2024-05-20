@@ -1,27 +1,28 @@
 module Tasks
   class IncomeAssessment < BaseTask
-    include TypeOfMeansAssessment
-
     def path
       edit_steps_income_employment_status_path
     end
 
     def not_applicable?
-      return false unless applicant
-
-      !requires_means_assessment?
+      applicant.present? && super
     end
 
     def can_start?
-      fulfilled?(CaseDetails) && requires_means_assessment?
+      fulfilled?(CaseDetails)
     end
 
     def in_progress?
-      income.present?
+      crime_application.income.present?
     end
 
-    def completed?
-      income.complete?
+    private
+
+    def validator
+      @validator ||= ::IncomeAssessment::AnswersValidator.new(
+        record: crime_application.income,
+        crime_application: crime_application
+      )
     end
   end
 end

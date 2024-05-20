@@ -13,6 +13,6 @@ class Income < ApplicationRecord
   end
 
   def answers_validator
-    @answers_validator ||= IncomeAssessment::AnswersValidator.new(self)
+    @answers_validator ||= IncomeAssessment::AnswersValidator.new(record: self)
   end
 end

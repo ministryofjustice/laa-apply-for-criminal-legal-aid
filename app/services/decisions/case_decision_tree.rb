@@ -98,11 +98,11 @@ module Decisions
     end
 
     def after_ioj
-      if requires_means_assessment? || crime_application.appeal_no_changes?
-        return edit('/steps/income/employment_status')
+      if requires_means_assessment?
+        edit('/steps/income/employment_status')
+      else
+        edit('/steps/evidence/upload')
       end
-
-      edit('/steps/evidence/upload')
     end
 
     def edit_new_charge
