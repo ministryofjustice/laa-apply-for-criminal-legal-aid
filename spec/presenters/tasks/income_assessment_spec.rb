@@ -8,47 +8,63 @@ RSpec.describe Tasks::IncomeAssessment do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      income: income,
-      kase: kase,
+      income: income
     )
   end
 
+  let(:validator) do
+    instance_double(
+      IncomeAssessment::AnswersValidator,
+      complete?: complete?, applicable?: applicable?
+    )
+  end
+
+  let(:applicable?) { false }
+  let(:complete?) { false }
   let(:applicant) { nil }
-  let(:kase) { nil }
   let(:income) { nil }
+
+  before do
+    allow(IncomeAssessment::AnswersValidator).to receive(:new).with(crime_application: crime_application,
+                                                                    record: nil).and_return(validator)
+  end
 
   describe '#path' do
     it { expect(subject.path).to eq('/applications/12345/steps/income/what_is_clients_employment_status') }
   end
 
   describe '#not_applicable?' do
-    subject(:not_applicable) { task.not_applicable? }
+    subject(:not_applicable?) { task.not_applicable? }
 
-    context 'applicant is nil' do
-      it { is_expected.to be false }
-    end
+    context 'when validator applicable' do
+      let(:applicable?) { true }
 
-    context 'applicant exists' do
-      let(:applicant) { instance_double(Applicant) }
-
-      context 'and means assessment required' do
-        let(:needs_means) { true }
-
-        before do
-          allow(task).to receive(:requires_means_assessment?) { needs_means }
-        end
+      context 'when applicant nil' do
+        let(:applicant) { nil }
 
         it { is_expected.to be false }
       end
 
-      context 'and means assessment is not required' do
-        let(:needs_means) { false }
+      context 'when applicant present' do
+        let(:applicant) { instance_double(Applicant) }
 
-        before do
-          allow(task).to receive(:requires_means_assessment?) { needs_means }
-        end
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when validator not applicable' do
+      let(:applicable?) { false }
+
+      context 'when applicant present' do
+        let(:applicant) { instance_double(Applicant) }
 
         it { is_expected.to be true }
+      end
+
+      context 'when applicant nil' do
+        let(:applicant) { nil }
+
+        it { is_expected.to be false }
       end
     end
   end
@@ -60,34 +76,16 @@ RSpec.describe Tasks::IncomeAssessment do
       allow(task).to receive(:fulfilled?).with(Tasks::CaseDetails) { fulfilled }
     end
 
-    context 'case details are not fulfilled' do
+    context 'when income is not fulfilled' do
       let(:fulfilled) { false }
 
       it { is_expected.to be false }
     end
 
-    context 'case details are fulfilled' do
+    context 'when income is fulfilled' do
       let(:fulfilled) { true }
 
-      context 'and means assessment required' do
-        let(:needs_means) { true }
-
-        before do
-          allow(task).to receive(:requires_means_assessment?) { needs_means }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context 'and means assessment is not required' do
-        let(:needs_means) { false }
-
-        before do
-          allow(task).to receive(:requires_means_assessment?) { needs_means }
-        end
-
-        it { is_expected.to be false }
-      end
+      it { is_expected.to be true }
     end
   end
 
@@ -108,20 +106,18 @@ RSpec.describe Tasks::IncomeAssessment do
   end
 
   describe '#completed?' do
-    subject(:in_progress) { task.completed? }
+    subject(:completed?) { task.completed? }
 
-    let(:income) { instance_double(Income) }
-
-    context 'income is not completed' do
-      before { allow(income).to receive(:complete?).and_return(false) }
-
-      it { is_expected.to be false }
-    end
-
-    context 'income is completed' do
-      before { allow(income).to receive(:complete?).and_return(true) }
+    context 'answers are complete' do
+      let(:complete?) { true }
 
       it { is_expected.to be true }
+    end
+
+    context 'answers are incomplete' do
+      let(:complete?) { false }
+
+      it { is_expected.to be false }
     end
   end
 end

@@ -10,9 +10,11 @@ RSpec.describe TypeOfMeansAssessment do
       include TypeOfMeansAssessment
     end
   end
+
   let(:crime_application) do
     instance_double(CrimeApplication, applicant:, kase:, income:)
   end
+
   let(:applicant) { instance_double(Applicant) }
   let(:kase) { instance_double(Case) }
   let(:income) { instance_double(Income) }
@@ -22,6 +24,7 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   before do
+    allow(crime_application).to receive(:appeal_no_changes?)
     allow(Passporting::MeansPassporter).to receive(:new).and_return(means_passporter)
   end
 
@@ -51,15 +54,6 @@ RSpec.describe TypeOfMeansAssessment do
       let(:nino) { nil }
 
       it { is_expected.to be false }
-    end
-
-    context 'when dwp result contested and has evidence' do
-      before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('yes')
-      end
-
-      it { is_expected.to be true }
     end
 
     context 'when dwp result contested but has not evidence' do
@@ -275,6 +269,18 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when means passported' do
       let(:means_passporter_result) { true }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when benefit none' do
+      before { allow(applicant).to receive(:benefit_type).and_return('none') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when appeal no changes' do
+      before { allow(crime_application).to receive(:appeal_no_changes?).and_return(true) }
 
       it { is_expected.to be false }
     end

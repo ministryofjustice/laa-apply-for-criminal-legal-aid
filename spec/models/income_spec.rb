@@ -7,7 +7,8 @@ RSpec.describe Income, type: :model do
     let(:answers_validator) { double('answers_validator') }
 
     before do
-      allow(IncomeAssessment::AnswersValidator).to receive(:new).with(income).and_return(answers_validator)
+      allow(IncomeAssessment::AnswersValidator).to receive(:new).with(record: income)
+                                                                .and_return(answers_validator)
     end
 
     describe 'valid?(:submission)' do

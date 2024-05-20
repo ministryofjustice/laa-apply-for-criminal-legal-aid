@@ -7,7 +7,8 @@ RSpec.describe Outgoings, type: :model do
     let(:answers_validator) { double('answers_validator') }
 
     before do
-      allow(OutgoingsAssessment::AnswersValidator).to receive(:new).with(outgoings).and_return(answers_validator)
+      allow(OutgoingsAssessment::AnswersValidator).to receive(:new).with(record: outgoings)
+                                                                   .and_return(answers_validator)
     end
 
     describe 'valid?(:submission)' do

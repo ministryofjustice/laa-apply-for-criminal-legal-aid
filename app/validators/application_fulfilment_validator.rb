@@ -30,7 +30,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def means_valid?
-    return true if Passporting::MeansPassporter.new(record).call
+    return true unless requires_means_assessment?
 
     evidence_present? || means_record_present? || client_remanded_in_custody?
   end

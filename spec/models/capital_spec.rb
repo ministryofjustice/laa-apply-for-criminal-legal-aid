@@ -8,8 +8,10 @@ RSpec.describe Capital, type: :model do
     let(:confirmation_validator) { double('confirmation_validator') }
 
     before do
-      allow(CapitalAssessment::AnswersValidator).to receive(:new).with(capital).and_return(answers_validator)
-      allow(CapitalAssessment::ConfirmationValidator).to receive(:new).with(capital).and_return(confirmation_validator)
+      allow(CapitalAssessment::AnswersValidator).to receive(:new).with(record: capital)
+                                                                 .and_return(answers_validator)
+      allow(CapitalAssessment::ConfirmationValidator).to receive(:new).with(capital)
+                                                                      .and_return(confirmation_validator)
     end
 
     describe 'valid?(:submission)' do
