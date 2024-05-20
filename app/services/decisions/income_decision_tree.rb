@@ -13,7 +13,7 @@ module Decisions
       when :client_employment_details
         after_client_employment_details
       when :lost_job_in_custody
-        after_lost_job_in_custody
+        edit(:income_before_tax)
       when :income_before_tax
         after_income_before_tax
       when :frozen_income_savings_assets
@@ -65,8 +65,6 @@ module Decisions
       if not_working?
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
-        elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
         else
           edit(:income_before_tax)
         end
@@ -93,14 +91,6 @@ module Decisions
       employments = current_crime_application.employments
       current_crime_application.employments.create! if employments.empty?
       edit('/steps/income/client/employer_details', employment_id: employments.first)
-    end
-
-    def after_lost_job_in_custody
-      if appeal_no_changes?
-        edit('/steps/evidence/upload')
-      else
-        edit(:income_before_tax)
-      end
     end
 
     def after_income_before_tax
@@ -184,11 +174,6 @@ module Decisions
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
-    end
-
-    def appeal_no_changes?
-      kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        kase.appeal_financial_circumstances_changed == 'no'
     end
 
     def crime_application

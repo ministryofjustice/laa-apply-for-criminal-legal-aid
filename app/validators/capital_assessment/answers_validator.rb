@@ -1,14 +1,15 @@
 module CapitalAssessment
-  class AnswersValidator
+  class AnswersValidator < BaseAnswerValidator
     include TypeOfMeansAssessment
 
-    def initialize(record)
-      @record = record
+    def applicable?
+      requires_full_means_assessment?
     end
 
-    attr_reader :record
-
-    delegate :errors, :crime_application, to: :record
+    def complete?
+      validate
+      errors.empty?
+    end
 
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
       if requires_full_capital?
