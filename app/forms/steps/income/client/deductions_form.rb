@@ -47,7 +47,8 @@ module Steps
         end
 
         def ordered_deductions
-          DeductionType.values.map(&:to_s)
+          # sort alphabetically
+          DeductionType.values.map(&:to_s).sort
         end
 
         def types
