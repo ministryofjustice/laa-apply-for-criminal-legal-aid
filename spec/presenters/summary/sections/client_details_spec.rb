@@ -20,14 +20,11 @@ describe Summary::Sections::ClientDetails do
       last_name: 'last name',
       other_names: '',
       date_of_birth: Date.new(1999, 1, 20),
-      nino: nino,
-      benefit_type: benefit_type,
-      last_jsa_appointment_date: Date.new(2024, 2, 21)
+      nino: nino
     )
   end
 
   let(:nino) { '123456' }
-  let(:benefit_type) { BenefitType::JSA.to_s }
   let(:application_type) { ApplicationType::INITIAL }
   let(:pse?) { false }
 
@@ -59,7 +56,7 @@ describe Summary::Sections::ClientDetails do
     let(:answers) { subject.answers }
 
     it 'has the correct rows' do
-      expect(answers.count).to eq(7)
+      expect(answers.count).to eq(5)
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[0].question).to eq(:first_name)
@@ -85,16 +82,6 @@ describe Summary::Sections::ClientDetails do
       expect(answers[4].question).to eq(:nino)
       expect(answers[4].change_path).to match('applications/12345/steps/client/has_nino')
       expect(answers[4].value).to eq('123456')
-
-      expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[5].question).to eq(:passporting_benefit)
-      expect(answers[5].change_path).to match('applications/12345/steps/dwp/benefit_type')
-      expect(answers[5].value).to eq('jsa')
-
-      expect(answers[6]).to be_an_instance_of(Summary::Components::DateAnswer)
-      expect(answers[6].question).to eq(:last_jsa_appointment_date)
-      expect(answers[6].change_path).to match('applications/12345/steps/dwp/benefit_type')
-      expect(answers[6].value).to eq(Date.new(2024, 2, 21))
     end
 
     context 'when there is no `benefit_type` value' do
@@ -110,7 +97,7 @@ describe Summary::Sections::ClientDetails do
       let(:pse?) { true }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(6)
+        expect(answers.count).to eq(4)
       end
     end
   end

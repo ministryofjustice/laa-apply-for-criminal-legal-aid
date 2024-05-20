@@ -10,7 +10,7 @@ describe Summary::HtmlPresenter do
   # rubocop:disable Layout/LineLength
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: double, kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
+      CrimeApplication, applicant: (double benefit_type: 'universal_credit'), kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type, appeal_no_changes?: false,
@@ -105,6 +105,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             ContactDetails
+            PassportingBenefitCheck
             CaseDetails
             Offences
             Codefendants
@@ -178,6 +179,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             ContactDetails
+            PassportingBenefitCheck
             CaseDetails
             Offences
             Codefendants

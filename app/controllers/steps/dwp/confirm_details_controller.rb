@@ -4,9 +4,7 @@ module Steps
       before_action :set_presenter
 
       def edit
-        @form_object = ConfirmDetailsForm.new(
-          crime_application: current_crime_application
-        )
+        @form_object = ConfirmDetailsForm.build(current_crime_application)
       end
 
       def update

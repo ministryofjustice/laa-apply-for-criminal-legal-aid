@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_17_154536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -280,6 +280,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
+    t.string "confirm_details"
     t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
   end
 
