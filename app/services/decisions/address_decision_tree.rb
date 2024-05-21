@@ -16,7 +16,7 @@ module Decisions
     def after_address_entered
       if form_object.record.is_a?(HomeAddress)
         if form_object.record.person.is_a?(Partner)
-          edit('/steps/client/has_nino') # TODO: Check if correct entry point
+          edit('/steps/dwp/benefit_type')
         else
           edit('/steps/client/contact_details')
         end

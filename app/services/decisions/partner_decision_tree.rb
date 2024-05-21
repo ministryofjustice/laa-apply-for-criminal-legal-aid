@@ -55,7 +55,6 @@ module Decisions
       edit('/steps/address/lookup', address_id: address)
     end
 
-    # Same as /steps/client/has_nino
     def exit_partner_journey
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')

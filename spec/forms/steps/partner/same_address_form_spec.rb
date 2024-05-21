@@ -6,18 +6,57 @@ RSpec.describe Steps::Partner::SameAddressForm do
   let(:arguments) do
     {
       crime_application:,
-      record:,
+      has_same_address_as_client:
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, partner: record) }
-  let(:partner) {
-    instance_double(Applicant, home_address:, relationship_to_owner_of_usual_home_address:, residence_type:)
-  }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      partner_detail:
+    )
+  end
 
-  describe 'validations' do
+  let(:partner_detail) { instance_double(PartnerDetail) }
+  let(:has_same_address_as_client) { nil }
+
+  describe '#choices' do
+    it 'returns the possible choices' do
+      expect(
+        subject.choices
+      ).to eq([YesNoAnswer::YES, YesNoAnswer::NO])
+    end
   end
 
   describe '#save' do
+    context 'when `has_same_address_as_client` is not provided' do
+      it 'has a validation error on the field' do
+        expect(subject.save).to be(false)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:has_same_address_as_client, :inclusion)).to be(true)
+      end
+    end
+
+    context 'when `has_same_address_as_client` is invalid' do
+      let(:has_same_address_as_client) { 'maybe' }
+
+      it 'has a validation error on the field' do
+        expect(subject.save).to be(false)
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:has_same_address_as_client, :inclusion)).to be(true)
+      end
+    end
+
+    context 'when `has_same_address_as_client` is valid' do
+      let(:has_same_address_as_client) { 'no' }
+
+      it 'saves the record' do
+        expect(partner_detail).to receive(:update).with(
+          { 'has_same_address_as_client' => YesNoAnswer::NO }
+        ).and_return(true)
+
+        expect(subject.save).to be(true)
+      end
+    end
   end
 end

@@ -14,7 +14,7 @@ module Steps
       private
 
       def persist!
-        partner_detail.update!(attributes)
+        partner_detail.update(attributes)
       end
     end
   end

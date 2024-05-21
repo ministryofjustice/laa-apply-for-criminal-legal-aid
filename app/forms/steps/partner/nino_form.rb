@@ -21,7 +21,11 @@ module Steps
       private
 
       def persist!
-        partner.update(attributes)
+        if has_nino.no?
+          partner.update(attributes.except('nino'))
+        else
+          partner.update(attributes)
+        end
       end
 
       def partner_has_nino?
