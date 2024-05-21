@@ -4,6 +4,7 @@ class Payment < ApplicationRecord
   attribute :amount, :pence
   attribute :payment_type
   attribute :frequency, :value_object, source: PaymentFrequencyType
+  attribute :ownership_type
 
   store_accessor :metadata, :details
 

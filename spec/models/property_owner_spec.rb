@@ -6,7 +6,7 @@ RSpec.describe PropertyOwner, type: :model do
   let(:attributes) do
     {
       name: 'Joe',
-      relationship: RelationshipType::FRIENDS.to_s,
+      relationship: PropertyRelationshipType::FRIENDS.to_s,
       percentage_owned: 10,
       property_id: double(Property, id: 1).id
     }

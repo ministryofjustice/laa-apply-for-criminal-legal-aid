@@ -1,9 +1,14 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, keyword_init: true) do
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, :applicant,
+                                           keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
+
+    def appeal_no_changes?
+      false
+    end
 
     def to_param
       '12345'
@@ -19,6 +24,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     {
       is_means_tested:,
       kase:,
+      applicant:,
       ioj:,
       income:,
       documents:
@@ -30,6 +36,9 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:kase) {
     instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
   }
+
+  let(:applicant) { instance_double(Applicant, benefit_type: 'none') }
+
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
 

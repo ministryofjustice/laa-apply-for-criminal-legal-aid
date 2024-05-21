@@ -70,7 +70,10 @@ module Datastore
     end
 
     def applicant
-      Applicant.new(parent.applicant.serializable_hash)
+      # TODO: set has_partner in partner_details
+      partner_attributes = %w[has_partner relationship_to_partner relationship_status separation_date]
+      applicant_json = parent.applicant.serializable_hash.except!(*partner_attributes)
+      Applicant.new(applicant_json)
     end
 
     def ioj

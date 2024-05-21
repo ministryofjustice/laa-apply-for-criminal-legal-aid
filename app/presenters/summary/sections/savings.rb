@@ -5,34 +5,32 @@ module Summary
         shown_savings?
       end
 
-      # rubocop:disable Metrics/MethodLength
       def answers
-        if no_savings?
-          [
-            Components::ValueAnswer.new(
-              :has_capital_savings, 'none',
-              change_path: edit_steps_capital_saving_type_path
-            )
-          ]
-        else
-          Summary::Components::GroupedList.new(
-            items: savings,
-            group_by: :saving_type,
-            item_component: Summary::Components::Saving,
-            show_actions: editable?,
-            show_record_actions: headless?
+        return savings_list_component unless no_savings?
+
+        [
+          Components::ValueAnswer.new(
+            :has_capital_savings, 'none',
+            change_path: edit_steps_capital_saving_type_path
           )
-        end
+        ]
       end
-      # rubocop:enable Metrics/MethodLength
 
       def list?
-        return false if savings.empty?
-
-        true
+        !no_savings?
       end
 
       private
+
+      def savings_list_component
+        Summary::Components::GroupedList.new(
+          items: savings,
+          group_by: :saving_type,
+          item_component: Summary::Components::Saving,
+          show_actions: editable?,
+          show_record_actions: headless?
+        )
+      end
 
       def savings
         @savings ||= crime_application.savings

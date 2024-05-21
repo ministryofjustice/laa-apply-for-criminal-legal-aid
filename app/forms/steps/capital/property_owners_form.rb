@@ -23,7 +23,7 @@ module Steps
       end
 
       def relationships
-        RelationshipType.values
+        PropertyRelationshipType.values
       end
 
       private

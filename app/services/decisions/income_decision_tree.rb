@@ -13,7 +13,7 @@ module Decisions
       when :client_employment_details
         after_client_employment_details
       when :lost_job_in_custody
-        after_lost_job_in_custody
+        edit(:income_before_tax)
       when :income_before_tax
         after_income_before_tax
       when :frozen_income_savings_assets
@@ -65,8 +65,6 @@ module Decisions
       if not_working?
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
-        elsif appeal_no_changes?
-          edit('/steps/evidence/upload')
         else
           edit(:income_before_tax)
         end
@@ -85,23 +83,21 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        employments = current_crime_application.employments
-        current_crime_application.employments.create! if employments.empty?
-        edit('steps/income/client/employer_details', employment_id: employments.first)
+        redirect_to_employer_details
       end
     end
 
-    def after_lost_job_in_custody
-      if appeal_no_changes?
-        edit('/steps/evidence/upload')
-      else
-        edit(:income_before_tax)
-      end
+    def redirect_to_employer_details
+      employments = current_crime_application.employments
+      current_crime_application.employments.create! if employments.empty?
+      edit('/steps/income/client/employer_details', employment_id: employments.first)
     end
 
     def after_income_before_tax
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
       end
@@ -110,24 +106,28 @@ module Decisions
     def after_frozen_income_savings_assets
       if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
       end
     end
 
     def after_has_savings
-      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled?
+      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
-      if employed?
-        edit('steps/income/client/employment_income')
+      if requires_full_means_assessment?
+        redirect_to_employer_details
       else
-        edit(:income_payments)
+        edit('/steps/income/client/employment_income')
       end
     end
 
     def after_client_owns_property
       if no_property?
         edit(:has_savings)
+      elsif employed? && FeatureFlags.employment_journey.enabled?
+        redirect_to_employer_details
       else
         edit(:income_payments)
       end
@@ -165,7 +165,7 @@ module Decisions
     end
 
     def employed?
-      crime_application.income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s)
+      !!crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s)
     end
 
     def not_working?
@@ -174,11 +174,6 @@ module Decisions
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
-    end
-
-    def appeal_no_changes?
-      kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
-        kase.appeal_financial_circumstances_changed == 'no'
     end
 
     def crime_application

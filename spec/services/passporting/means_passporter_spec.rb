@@ -41,28 +41,6 @@ RSpec.describe Passporting::MeansPassporter do
       end
     end
 
-    context 'for a appeal to crown court' do
-      let(:case_type) { 'appeal_to_crown_court' }
-
-      context 'with no financial changes' do
-        let(:appeal_financial_circumstances_changed) { 'no' }
-
-        it 'uses the existing values' do
-          expect(crime_application).not_to receive(:update)
-          expect(subject.call).to be(true)
-        end
-      end
-
-      context 'with financial changes' do
-        let(:appeal_financial_circumstances_changed) { 'yes' }
-
-        it 'uses the existing values' do
-          expect(crime_application).to receive(:update)
-          expect(subject.call).to be(false)
-        end
-      end
-    end
-
     context 'means passporting on non-means tested' do
       let(:is_means_tested) { 'no' }
 

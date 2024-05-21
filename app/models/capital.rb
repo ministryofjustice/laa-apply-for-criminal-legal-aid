@@ -28,6 +28,6 @@ class Capital < ApplicationRecord
   end
 
   def answers_validator
-    @answers_validator ||= CapitalAssessment::AnswersValidator.new(self)
+    @answers_validator ||= CapitalAssessment::AnswersValidator.new(record: self)
   end
 end

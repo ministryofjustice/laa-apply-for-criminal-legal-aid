@@ -11,8 +11,7 @@ module PassportingBenefitCheck
     delegate :errors, :applicant, :crime_application, to: :record
 
     def validate
-      return unless applicable?
-      return if complete?
+      return if !applicable? || complete?
 
       errors.add :benefit_type, :incomplete
       errors.add :base, :incomplete_records
