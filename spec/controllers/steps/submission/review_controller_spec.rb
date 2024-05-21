@@ -16,8 +16,7 @@ RSpec.describe Steps::Submission::ReviewController, type: :controller do
 
     it 'reports the Dry Struct error' do
       expect(Rails.error).to have_received(:report).with(
-        '[LaaCrimeSchemas::Structs::Applicant.new] :first_name is missing in Hash input',
-        { handled: true }
+        kind_of(Dry::Struct::Error), { handled: true }
       )
     end
   end
