@@ -29,7 +29,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       benefit_type: 'universal_credit',
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
-      passporting_benefit: true,
+      benefit_check_result: true,
     )
 
     HomeAddress.create(

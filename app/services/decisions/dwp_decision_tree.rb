@@ -101,9 +101,9 @@ module Decisions
 
       DWP::UpdateBenefitCheckResultService.call(person)
 
-      if person.passporting_benefit.nil?
+      if person.benefit_check_result.nil?
         edit(:cannot_check_dwp_status)
-      elsif person.passporting_benefit
+      elsif person.benefit_check_result
         edit(:benefit_check_result)
       else
         edit(:confirm_result)
