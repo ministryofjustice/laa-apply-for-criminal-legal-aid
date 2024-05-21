@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component do
-  subject(:component) { render_inline(described_class.new(record:)) }
+  subject(:component) { render_summary_component(described_class.new(record:)) }
 
   let(:record) do
     instance_double(
@@ -39,7 +39,9 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
     end
 
     context 'when show_record_actions true' do
-      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+      subject(:component) do
+        render_summary_component(described_class.new(record: record, show_record_actions: true))
+      end
 
       let(:path) { '/applications/APP123/steps/capital/national_savings_certificates/national_savings_certificate123' }
 

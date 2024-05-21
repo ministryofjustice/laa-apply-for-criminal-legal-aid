@@ -19,7 +19,6 @@ module Summary
 
       def change_path
         edit_steps_case_codefendants_path(
-          id: record.case.crime_application_id,
           anchor: "codefendant_#{index}"
         )
       end

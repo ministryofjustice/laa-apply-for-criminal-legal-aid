@@ -3,6 +3,9 @@ require 'jbuilder'
 module SubmissionSerializer
   module Sections
     class BaseSection
+      include TypeOfApplication
+      include TypeOfMeansAssessment
+
       attr_reader :crime_application
 
       def initialize(crime_application)
@@ -34,8 +37,6 @@ module SubmissionSerializer
         raise 'must be implemented in subclasses'
       end
       # :nocov:
-
-      delegate :kase, to: :crime_application
     end
   end
 end

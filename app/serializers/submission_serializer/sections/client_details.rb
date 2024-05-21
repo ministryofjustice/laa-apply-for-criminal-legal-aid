@@ -4,7 +4,9 @@ module SubmissionSerializer
       def to_builder
         Jbuilder.new do |json|
           json.client_details do
-            json.applicant Definitions::Applicant.generate(crime_application.applicant)
+            json.applicant(
+              Definitions::Applicant.generate(crime_application.applicant)
+            )
           end
         end
       end
