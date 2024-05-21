@@ -65,6 +65,7 @@ RSpec.describe Adapters::Structs::CapitalDetails do
       )
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(
         subject.serializable_hash.keys
@@ -78,9 +79,16 @@ RSpec.describe Adapters::Structs::CapitalDetails do
           trust_fund_amount_held
           trust_fund_yearly_dividend
           will_benefit_from_trust_fund
+          partner_has_premium_bonds
+          partner_premium_bonds_total_value
+          partner_premium_bonds_holder_number
+          partner_trust_fund_yearly_dividend
+          partner_trust_fund_amount_held
+          partner_will_benefit_from_trust_fund
         ]
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it 'omits savings array' do
       expect(subject.serializable_hash.key?('savings')).to be false
