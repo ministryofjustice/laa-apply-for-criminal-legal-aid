@@ -54,12 +54,24 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     context 'when nino not provided' do
       let(:has_nino) { YesNoAnswer::NO.to_s }
 
-      context 'and is required to submit' do
-        let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
-        let(:is_client_remanded) { YesNoAnswer::NO.to_s }
+      context 'but is forthcoming' do
         let(:not_means_tested) { false }
 
-        it { is_expected.to have_destination(:cannot_submit_without_nino, :edit, id: crime_application) }
+        before do
+          allow(subject).to receive(:nino_forthcoming?).and_return(true)
+        end
+
+        context 'when in custody' do
+          let(:is_client_remanded) { YesNoAnswer::YES.to_s }
+
+          it { is_expected.to have_destination(:declaration, :edit, id: crime_application) }
+        end
+
+        context 'when not in custody' do
+          let(:is_client_remanded) { YesNoAnswer::NO.to_s }
+
+          it { is_expected.to have_destination(:cannot_submit_without_nino, :edit, id: crime_application) }
+        end
       end
 
       context 'and is not required to submit for an appeal no changes' do

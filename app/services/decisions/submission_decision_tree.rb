@@ -1,5 +1,9 @@
 module Decisions
   class SubmissionDecisionTree < BaseDecisionTree
+    include TypeOfMeansAssessment
+
+    alias crime_application current_crime_application
+
     def destination
       case step_name
       when :more_information
@@ -42,11 +46,10 @@ module Decisions
     end
 
     def requires_nino?
-      return false if current_crime_application.not_means_tested? || current_crime_application.appeal_no_changes?
+      return false if current_crime_application.not_means_tested?
+      return false if current_crime_application.appeal_no_changes?
 
-      applicant.benefit_type != 'none' &&
-        applicant.has_nino == 'no' &&
-        current_crime_application.case.is_client_remanded == 'no'
+      nino_forthcoming? && current_crime_application.case.is_client_remanded != 'yes'
     end
 
     def applicant
