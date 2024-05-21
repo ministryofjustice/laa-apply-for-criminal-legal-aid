@@ -27,17 +27,20 @@ describe Summary::HtmlPresenter do
           'income_payments' => [{
             'payment_type' => 'maintenance',
             'amount' => 10_000,
-            'frequency' => 'week'
+            'frequency' => 'week',
+            'ownership_type' => 'applicant'
           }],
           'income_benefits' => [{
             'payment_type' => 'child',
             'amount' => 50_000,
-            'frequency' => 'month'
+            'frequency' => 'month',
+            'ownership_type' => 'applicant'
           }],
           'outgoings_payments' => [{
             'payment_type' => 'childcare',
             'amount' => 200,
-            'frequency' => 'month'
+            'frequency' => 'month',
+            'ownership_type' => 'applicant_and_partner'
           }],
         },
         'capital_details' => {

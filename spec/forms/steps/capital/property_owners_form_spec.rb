@@ -17,10 +17,10 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
   let(:property_record) { Property.new(property_type: PropertyType::RESIDENTIAL.to_s, crime_application: crime_application, percentage_applicant_owned: percentage_applicant_owned) }
 
   let(:property_owners_attributes1) {
-    { 'name' => 'a', 'relationship' => RelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
+    { 'name' => 'a', 'relationship' => PropertyRelationshipType::FRIENDS.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes2) {
-    { 'name' => 'b', 'relationship' => RelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
+    { 'name' => 'b', 'relationship' => PropertyRelationshipType::EX_PARTNER.to_s, 'other_relationship' => nil, 'percentage_owned' => '40' }
   }
   let(:property_owners_attributes3) {
     { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '10' }

@@ -15,6 +15,7 @@ RSpec.describe Datastore::ApplicationRehydration do
   let(:means_passport) { [] }
 
   before do
+    # pp parent
     allow(crime_application).to receive(:update!).and_return(true)
   end
 
@@ -183,6 +184,7 @@ RSpec.describe Datastore::ApplicationRehydration do
               'payment_type' => 'other',
               'amount' => 1289,
               'frequency' => 'fortnight',
+              'ownership_type' => 'applicant',
               'metadata' => { 'details' => "A note\n2022" },
             },
           ]
@@ -210,6 +212,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'other',
           amount: 1289,
           frequency: 'fortnight',
+          ownership_type: 'applicant',
           metadata: { details: "A note\n2022" },
         )
 
@@ -225,12 +228,14 @@ RSpec.describe Datastore::ApplicationRehydration do
               'payment_type' => 'other',
               'amount' => 1289,
               'frequency' => 'fortnight',
+              'ownership_type' => 'applicant',
               'metadata' => { 'details' => "A note\n2022" },
             },
             {
               'payment_type' => 'child',
               'amount' => 89_101,
               'frequency' => 'annual',
+              'ownership_type' => 'applicant'
             },
           ]
         }
@@ -257,6 +262,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'other',
           amount: 1289,
           frequency: 'fortnight',
+          ownership_type: 'applicant',
           metadata: { details: "A note\n2022" },
         )
 
@@ -266,6 +272,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'child',
           amount: 89_101,
           frequency: 'annual',
+          ownership_type: 'applicant',
         )
 
         subject.call
@@ -280,12 +287,14 @@ RSpec.describe Datastore::ApplicationRehydration do
               'payment_type' => 'legal_aid_contribution',
               'amount' => 12_344,
               'frequency' => 'annual',
+              'ownership_type' => 'applicant_and_partner',
               'metadata' => { 'case_reference' => "CASE101\n2023-12-02" },
             },
             {
               'payment_type' => 'rent',
               'amount' => 56_432,
               'frequency' => 'month',
+              'ownership_type' => 'applicant_and_partner',
             },
           ]
         }
@@ -312,6 +321,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'legal_aid_contribution',
           amount: 12_344,
           frequency: 'annual',
+          ownership_type: 'applicant_and_partner',
           metadata: { case_reference: "CASE101\n2023-12-02" },
         )
 
@@ -321,6 +331,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           payment_type: 'rent',
           amount: 56_432,
           frequency: 'month',
+          ownership_type: 'applicant_and_partner'
         )
 
         subject.call
@@ -332,16 +343,20 @@ RSpec.describe Datastore::ApplicationRehydration do
         {
           'income_payments' => [{ 'payment_type' => 'maintenance',
                                   'amount' => 20_000,
-                                  'frequency' => 'week' },
+                                  'frequency' => 'week',
+                                  'ownership_type' => 'applicant' },
                                 { 'payment_type' => 'rent',
                                   'amount' => 60_000,
-                                  'frequency' => 'month' }],
+                                  'frequency' => 'month',
+                                  'ownership_type' => 'applicant' }],
           'income_benefits' => [{ 'payment_type' => 'child',
                                   'amount' => 10_000,
-                                  'frequency' => 'month' },
+                                  'frequency' => 'month',
+                                  'ownership_type' => 'applicant' },
                                 { 'payment_type' => 'incapacity',
                                   'amount' => 5_000,
-                                  'frequency' => 'month' }],
+                                  'frequency' => 'month',
+                                  'ownership_type' => 'applicant' }],
           'employment_status' => ['not_working'],
           'ended_employment_within_three_months' => 'yes',
           'lost_job_in_custody' => 'yes',
