@@ -75,6 +75,14 @@ RSpec.describe Adapters::Structs::Applicant do
           residence_type
           relationship_to_owner_of_usual_home_address
           passporting_benefit
+          has_partner
+          relationship_status
+          relationship_to_partner
+          separation_date
+          will_enter_nino
+          has_benefit_evidence
+          confirm_details
+          confirm_dwp_result
         ]
       )
     end

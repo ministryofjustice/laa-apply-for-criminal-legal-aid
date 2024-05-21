@@ -57,6 +57,7 @@ RSpec.describe SubmissionSerializer::Application do
     # There is a full serialization test with real DB records
     # in spec `services/application_submission_spec.rb`
 
+    let(:applicant) { Applicant.new }
     let(:kase) { Case.new }
     let(:income) { Income.new }
     let(:capital) { Capital.new }
@@ -64,6 +65,7 @@ RSpec.describe SubmissionSerializer::Application do
 
     before do
       allow(crime_application).to receive_messages(
+        applicant: applicant,
         kase: kase,
         documents: documents_scope,
         income: income,

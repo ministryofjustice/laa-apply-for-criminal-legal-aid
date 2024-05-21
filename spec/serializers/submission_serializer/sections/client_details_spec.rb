@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:, confirm_dwp_result: 'no') }
 
   let(:applicant) do
     instance_double(
@@ -12,6 +12,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       last_name: 'Mustermann',
       other_names: '',
       date_of_birth: date_of_birth,
+      has_nino: 'yes',
       nino: 'AB123456A',
       benefit_type: 'universal_credit',
       last_jsa_appointment_date: nil,
@@ -20,7 +21,11 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
       residence_type: 'rented',
-      relationship_to_owner_of_usual_home_address: nil
+      relationship_to_owner_of_usual_home_address: nil,
+      passporting_benefit: false,
+      will_enter_nino: nil,
+      has_benefit_evidence: 'yes',
+      confirm_details: 'yes'
     )
   end
 
@@ -51,6 +56,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           last_name: 'Mustermann',
           other_names: '',
           date_of_birth: date_of_birth,
+          has_nino: 'yes',
           nino: 'AB123456A',
           benefit_type: 'universal_credit',
           last_jsa_appointment_date: nil,
@@ -66,7 +72,12 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           telephone_number: '123456789',
           correspondence_address_type: 'home_address',
           residence_type: 'rented',
-          relationship_to_owner_of_usual_home_address: nil
+          relationship_to_owner_of_usual_home_address: nil,
+          passporting_benefit: false,
+          will_enter_nino: nil,
+          has_benefit_evidence: 'yes',
+          confirm_details: 'yes',
+          confirm_dwp_result: 'no'
         }
       }
     }.as_json

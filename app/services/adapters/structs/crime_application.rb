@@ -10,7 +10,12 @@ module Adapters
         means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
       end
       # rubocop:enable Naming/PredicateName
-      #
+
+      # `confirm_dwp_result` is saved in the applicant/partner part of Schema, requires calculation
+      # TODO: amend for partner
+      def confirm_dwp_result
+        client_details.applicant.respond_to?(:confirm_dwp_result) ? client_details.applicant.confirm_dwp_result : nil
+      end
 
       # `passporting_benefit` not part of schema, infer true value if
       # means passport is on benefit check. We cannot infer false from
