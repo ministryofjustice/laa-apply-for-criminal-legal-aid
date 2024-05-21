@@ -8,8 +8,8 @@ RSpec.describe Adapters::Structs::CrimeApplication do
       expect(subject.applicant).to be_a(Adapters::Structs::Applicant)
     end
 
-    it 'sets the passporting_benefit from them means attribute' do
-      expect(subject.applicant.passporting_benefit).to be true
+    it 'sets the benefit_check_result from the means attribute' do
+      expect(subject.applicant.benefit_check_result).to be true
     end
   end
 

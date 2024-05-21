@@ -21,7 +21,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
 
     context 'when they have passported benefit but failed DWP check' do
       let(:applicant) do
-        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: false)
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', benefit_check_result: false)
       end
 
       it { is_expected.to be true }
@@ -29,7 +29,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
 
     context 'when they have passported benefit but passed DWP check' do
       let(:applicant) do
-        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: true)
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', benefit_check_result: true)
       end
 
       it { is_expected.to be false }
@@ -37,7 +37,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
 
     context 'when they have passported benefit but non-passported benefit type' do
       let(:applicant) do
-        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'none', passporting_benefit: nil)
+        Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'none', benefit_check_result: nil)
       end
 
       it { is_expected.to be false }
@@ -68,7 +68,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
 
   describe '#to_h' do
     let(:applicant) do
-      Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', passporting_benefit: false)
+      Applicant.new(has_benefit_evidence: 'yes', benefit_type: 'jsa', benefit_check_result: false)
     end
 
     # rubocop:disable Layout/LineLength

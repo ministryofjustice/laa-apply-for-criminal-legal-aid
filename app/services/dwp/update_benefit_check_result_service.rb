@@ -9,9 +9,9 @@ module DWP
     end
 
     def call
-      passporting_benefit = BenefitCheckService.passporting_benefit?(@applicant)
+      benefit_check_result = BenefitCheckService.passporting_benefit?(@applicant)
 
-      @applicant.update(passporting_benefit:)
+      @applicant.update(benefit_check_result:)
     end
   end
 end
