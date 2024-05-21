@@ -6,7 +6,6 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-
       <%= f.govuk_radio_buttons_fieldset :involvement_in_case, legend: { tag: 'h1', size: 'xl' } do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
           <%= f.govuk_radio_divider if choice == PartnerInvolvementType::NONE %>

@@ -6,12 +6,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-
-      <%= f.govuk_collection_radio_buttons :relationship_to_partner,
-            @form_object.choices,
-            :value,
-            legend: { tag: 'h1', size: 'xl' } %>
-
+      <%= f.govuk_collection_radio_buttons :relationship_to_partner, @form_object.choices, :value, legend: { tag: 'h1', size: 'xl' } %>
       <%= f.continue_button %>
     <% end %>
   </div>
