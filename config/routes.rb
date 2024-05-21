@@ -159,7 +159,8 @@ Rails.application.routes.draw do
         namespace :client do
           crud_step :employer_details, alias: :employer_details, param: :employment_id
           crud_step :employment_details, alias: :employment_details, param: :employment_id
-          edit_step :employment_income
+          edit_step :employment_income, alias: :employment_income
+          edit_step :self_assessment_client, alias: :self_assessment_tax_bill
         end
         show_step :employed_exit
         show_step :self_employed_exit

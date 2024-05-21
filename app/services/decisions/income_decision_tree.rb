@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
     #
     include TypeOfMeansAssessment
 
@@ -23,6 +23,8 @@ module Decisions
       when :has_savings
         after_has_savings
       when :client_employment_income
+        edit('/steps/income/income_payments')
+      when :client_self_assessment_tax_bill
         edit('/steps/income/income_payments')
       when :income_payments
         edit(:income_benefits)
@@ -52,7 +54,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
 
     private
 
