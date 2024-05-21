@@ -1,4 +1,4 @@
-class RelationshipType < ValueObject
+class PropertyRelationshipType < ValueObject
   VALUES = [
     BUSINESS_ASSOCIATES = new(:business_associates),
     EX_PARTNER = new(:ex_partner),

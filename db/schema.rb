@@ -50,6 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.string "has_no_properties"
     t.string "has_no_savings"
     t.string "has_no_investments"
+    t.string "partner_will_benefit_from_trust_fund"
+    t.bigint "partner_trust_fund_yearly_dividend"
+    t.bigint "partner_trust_fund_amount_held"
+    t.string "partner_has_premium_bonds"
+    t.bigint "partner_premium_bonds_total_value"
+    t.string "partner_premium_bonds_holder_number"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -183,6 +189,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.string "has_savings"
     t.string "has_no_income_payments"
     t.string "has_no_income_benefits"
+    t.string "partner_employment_status", default: [], array: true
+    t.string "partner_has_no_income_payments"
+    t.string "partner_has_no_income_benefits"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -246,6 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.string "housing_payment_type"
     t.string "pays_council_tax"
     t.string "has_no_other_outgoings"
+    t.string "partner_income_tax_rate_above_threshold"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
@@ -254,7 +264,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.string "relationship_to_partner"
     t.string "involvement_in_case"
     t.string "conflict_of_interest"
-    t.string "same_address_as_client"
+    t.string "has_same_address_as_client"
+    t.string "relationship_status"
+    t.date "separation_date"
+    t.string "has_partner", default: "no", null: false
     t.uuid "partner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -270,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_112015) do
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ownership_type", default: "applicant"
     t.index ["crime_application_id", "type", "payment_type"], name: "index_payments_crime_application_id_and_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_payments_on_crime_application_id"
   end
