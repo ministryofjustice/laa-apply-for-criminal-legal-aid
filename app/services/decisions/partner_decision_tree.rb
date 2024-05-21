@@ -1,6 +1,6 @@
 module Decisions
   class PartnerDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
     def destination
       case step_name
       when :relationship
@@ -15,18 +15,15 @@ module Decisions
         after_conflict
       when :same_address
         after_same_address
-      when :address
-        after_address
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
 
     private
 
     def after_involvement
-      # TODO: Move to model
       if form_object.involvement_in_case == PartnerInvolvementType::CODEFENDANT
         edit(:conflict)
       elsif form_object.involvement_in_case == PartnerInvolvementType::NONE
@@ -37,7 +34,7 @@ module Decisions
     end
 
     def after_conflict
-      if form_object.conflict_of_interest.yes? # TODO: Move to model
+      if form_object.conflict_of_interest.yes?
         exit_partner_journey
       else
         edit(:same_address)

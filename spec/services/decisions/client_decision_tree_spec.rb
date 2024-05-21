@@ -10,6 +10,7 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   let(:not_means_tested) { nil }
   let(:appeal_no_changes?) { nil }
+  let(:client_has_partner) { nil }
 
   before do
     allow(
@@ -20,7 +21,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       update: true,
       date_stamp: nil,
       not_means_tested?: not_means_tested,
-      appeal_no_changes?: appeal_no_changes?,
+      appeal_no_changes?: appeal_no_changes?
     )
   end
 
@@ -44,20 +45,55 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `has_partner`' do
-    let(:form_object) { double('FormObject', client_has_partner:) }
+    let(:form_object) { double('FormObject') }
     let(:step_name) { :has_partner }
 
-    context 'and answer is `no`' do
-      let(:client_has_partner) { YesNoAnswer::NO }
+    before do
+      allow(FeatureFlags).to receive(:partner_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
+      }
 
-      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+      allow(crime_application).to receive(:client_has_partner).and_return(client_has_partner)
     end
 
-    context 'and answer is `yes`' do
-      let(:client_has_partner) { YesNoAnswer::YES }
+    context 'with partner_journey enabled' do
+      let(:partner_journey_enabled) { true }
 
-      it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination('/steps/partner/relationship', :edit, id: crime_application) }
+      end
     end
+
+    context 'with partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
+
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is relationship status' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :relationship_status }
+
+    it { is_expected.to have_destination(:details, :edit, id: crime_application) }
   end
 
   context 'when the step is `details`' do
