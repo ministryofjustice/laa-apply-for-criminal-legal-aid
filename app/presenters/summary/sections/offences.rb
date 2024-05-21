@@ -7,7 +7,9 @@ module Summary
 
       def answers
         Summary::Components::Offence.with_collection(
-          offences, show_actions: editable?, show_record_actions: headless?
+          offences,
+          show_actions: editable?,
+          show_record_actions: headless?
         )
       end
 

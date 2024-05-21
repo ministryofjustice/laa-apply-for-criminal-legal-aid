@@ -24,22 +24,15 @@ module Summary
       end
 
       def change_path
-        edit_steps_capital_investments_path(
-          id: record.crime_application_id, investment_id: record.id
-        )
+        edit_steps_capital_investments_path(investment_id: record.id)
       end
 
       def summary_path
-        edit_steps_capital_investments_summary_path(
-          id: record.crime_application_id
-        )
+        edit_steps_capital_investments_summary_path
       end
 
       def remove_path
-        confirm_destroy_steps_capital_investments_path(
-          id: record.crime_application_id,
-          investment_id: record.id
-        )
+        confirm_destroy_steps_capital_investments_path(investment_id: record.id)
       end
     end
   end

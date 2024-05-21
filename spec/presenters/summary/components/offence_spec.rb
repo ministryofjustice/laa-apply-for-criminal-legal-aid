@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::Offence, type: :component do
-  subject(:component) { render_inline(described_class.new(record:)) }
+  subject(:component) { render_summary_component(described_class.new(record:)) }
 
-  let(:record) { instance_double(Charge, complete?: true, to_param: 'OFF123', case: kase, **attributes) }
+  let(:record) { instance_double(Charge, complete?: true, to_param: 'OFF123', **attributes) }
 
-  let(:kase) { instance_double(Case, crime_application_id: 'APP123') }
+  let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
+
   let(:attributes) do
     { offence_name: 'Common assault', offence_dates: offence_dates, offence_class: 'C' }
   end
@@ -31,7 +32,7 @@ RSpec.describe Summary::Components::Offence, type: :component do
     end
 
     context 'when show_record_actions true' do
-      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+      subject(:component) { render_summary_component(described_class.new(record: record, show_record_actions: true)) }
 
       describe 'change link' do
         it 'show the correct change link' do

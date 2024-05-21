@@ -17,8 +17,18 @@ module Steps
 
       def set_presenter
         @presenter = Summary::HtmlPresenter.new(
-          crime_application: current_crime_application
+          crime_application: JSON.parse(draft_json_application)
         )
+      rescue Dry::Struct::Error => e
+        Rails.error.report(e.message, handled: true)
+
+        redirect_to edit_crime_application_path(current_crime_application)
+      end
+
+      def draft_json_application
+        draft = SubmissionSerializer::Application.new(current_crime_application).to_builder
+        draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
+        draft.target!
       end
     end
   end
