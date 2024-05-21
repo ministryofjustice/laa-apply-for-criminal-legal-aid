@@ -168,7 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_21_142354) do
     t.uuid "payment_id"
     t.bigint "amount"
     t.string "frequency"
-    t.jsonb "metadata"
+    t.jsonb "metadata", default: {}, null: false
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
   end
 
