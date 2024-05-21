@@ -37,8 +37,12 @@ module Decisions
 
     private
 
+    # TODO: New partner details journey will cause the existing `has_partner` question
+    # to move further along the client journey rather than at the beginning
     def after_is_means_tested
-      if form_object.is_means_tested.yes?
+      if form_object.is_means_tested.yes? && FeatureFlags.partner_journey.enabled?
+        edit(:details)
+      elsif form_object.is_means_tested.yes?
         edit(:has_partner)
       else
         # Task list
@@ -46,13 +50,15 @@ module Decisions
       end
     end
 
-    def after_has_partner
+    def after_has_partner # rubocop:disable Metrics/AbcSize
       if form_object.client_has_partner.yes? && FeatureFlags.partner_journey.enabled?
         edit('/steps/partner/relationship')
+      elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
+        edit(:relationship_status)
       elsif form_object.client_has_partner.yes?
         show(:partner_exit)
       else
-        edit(:relationship_status)
+        edit(:details)
       end
     end
 
@@ -131,6 +137,8 @@ module Decisions
     def after_has_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
+      elsif FeatureFlags.partner_journey.enabled?
+        edit(:has_partner)
       else
         edit('/steps/dwp/benefit_type')
       end

@@ -11,6 +11,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:not_means_tested) { nil }
   let(:appeal_no_changes?) { nil }
   let(:client_has_partner) { nil }
+  let(:partner_journey_enabled) { false }
 
   before do
     allow(
@@ -23,21 +24,35 @@ RSpec.describe Decisions::ClientDecisionTree do
       not_means_tested?: not_means_tested,
       appeal_no_changes?: appeal_no_changes?
     )
+
+    allow(FeatureFlags).to receive(:partner_journey) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
+    }
   end
 
   it_behaves_like 'a decision tree'
+
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `is_means_tested`' do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
 
-    context 'and answer is `yes`' do
+    context 'when answer is `yes` and partner_journey enabled' do
+      let(:partner_journey_enabled) { true }
+      let(:is_means_tested) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:details, :edit, id: crime_application) }
+    end
+
+    context 'when answer is `yes` and partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
       let(:is_means_tested) { YesNoAnswer::YES }
 
       it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
     end
 
-    context 'and answer is `no`' do
+    context 'when answer is `no`' do
       let(:is_means_tested) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
@@ -76,7 +91,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'and answer is `no`' do
         let(:client_has_partner) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
+        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
       end
 
       context 'and answer is `yes`' do
@@ -331,8 +346,20 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_nino }
 
-    context 'when the application is means tested' do
-      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+    context 'with partner_journey enabled' do
+      let(:partner_journey_enabled) { true }
+
+      context 'when the application is means tested' do
+        it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+      end
+    end
+
+    context 'with partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
+
+      context 'when the application is means tested' do
+        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      end
     end
 
     context 'when the application is not means tested' do
@@ -371,4 +398,6 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
   end
+
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
