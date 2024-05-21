@@ -62,7 +62,7 @@ en:
       steps_client_appeal_reference_number_form:
         appeal_reference_number: What is the reference number of the original application?
       steps_client_relationship_status_form:
-        client_relationship_status: What is your client's relationship status?
+        relationship_status: What is your client's relationship status?
       steps_partner_relationship_form:
         relationship_to_partner: What is the client’s relationship to their partner?
       steps_partner_details_form:
@@ -74,7 +74,7 @@ en:
       steps_partner_conflict_form:
         conflict_of_interest: Does the partner have a conflict of interest?
       steps_partner_same_address_form:
-        same_address_as_client: Do your client and their partner live at the same address?
+        has_same_address_as_client: Do your client and their partner live at the same address?
       steps_dwp_benefit_type_form:
         benefit_type: Does your client get one of these passporting benefits?
       steps_dwp_partner_benefit_type_form:
@@ -185,7 +185,7 @@ en:
 
     hint:
       steps_client_relationship_status_form:
-        client_relationship_separated_date:
+        separation_date:
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.
         date_of_birth: For example, 27 3 2007
@@ -358,7 +358,7 @@ en:
           providers_office_address: Provider’s office
           other_address: Somewhere else
       steps_client_relationship_status_form:
-        client_relationship_status_options:
+        relationship_status_options:
           single: Single
           widowed: Widowed
           divorced: Divorced
@@ -386,7 +386,7 @@ en:
         conflict_of_interest_options:
           <<: *YESNO
       steps_partner_same_address_form:
-        same_address_as_client_options:
+        has_same_address_as_client_options:
           <<: *YESNO
       steps_partner_address_form:
         address_line_one: Address line 1

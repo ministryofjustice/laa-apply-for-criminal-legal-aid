@@ -42,7 +42,7 @@ module Decisions
     end
 
     def after_same_address
-      if form_object.same_address_as_client.yes?
+      if form_object.has_same_address_as_client.yes?
         exit_partner_journey
       else
         start_address_journey(HomeAddress)

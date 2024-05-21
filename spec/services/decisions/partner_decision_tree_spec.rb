@@ -16,7 +16,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
       relationship_to_partner: nil,
       involvement_in_case: nil,
       conflict_of_interest: nil,
-      same_address_as_client: nil,
+      has_same_address_as_client: nil,
     )
   end
 
@@ -150,11 +150,11 @@ RSpec.describe Decisions::PartnerDecisionTree do
     let(:form_object) { double('FormObject', partner_id: partner.id) }
     let(:step_name) { :same_address }
 
-    let(:partner_detail) { double(PartnerDetail, same_address_as_client:) }
+    let(:partner_detail) { double(PartnerDetail, has_same_address_as_client:) }
     let(:partner) { instance_double(Partner, id: SecureRandom.uuid.to_s) }
 
     before do
-      allow(form_object).to receive(:same_address_as_client).and_return(same_address_as_client)
+      allow(form_object).to receive(:has_same_address_as_client).and_return(has_same_address_as_client)
       allow(crime_application).to receive_messages(
         not_means_tested?: not_means_tested,
         partner: partner,
@@ -166,13 +166,13 @@ RSpec.describe Decisions::PartnerDecisionTree do
       let(:not_means_tested) { true }
 
       context 'when same address as client' do
-        let(:same_address_as_client) { YesNoAnswer::YES }
+        let(:has_same_address_as_client) { YesNoAnswer::YES }
 
         it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
 
       context 'when partner does not have same address as client' do
-        let(:same_address_as_client) { YesNoAnswer::NO }
+        let(:has_same_address_as_client) { YesNoAnswer::NO }
 
         it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application) }
       end
@@ -182,13 +182,13 @@ RSpec.describe Decisions::PartnerDecisionTree do
       let(:not_means_tested) { false }
 
       context 'when same address as client' do
-        let(:same_address_as_client) { YesNoAnswer::YES }
+        let(:has_same_address_as_client) { YesNoAnswer::YES }
 
         it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
       end
 
       context 'when partner does not have same address as client' do
-        let(:same_address_as_client) { YesNoAnswer::NO }
+        let(:has_same_address_as_client) { YesNoAnswer::NO }
 
         it { is_expected.to have_destination('/steps/address/lookup', :edit, id: crime_application) }
       end

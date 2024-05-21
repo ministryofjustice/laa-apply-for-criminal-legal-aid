@@ -60,9 +60,9 @@ en:
               inclusion: Select yes if your client has a partner
         steps/client/relationship_status_form:
           attributes:
-            client_relationship_status:
+            relationship_status:
               inclusion: Select your client's relationship status or if they prefer not to say
-            client_relationship_separated_date:
+            separation_date:
               blank: Enter the date your client separated
               blank_day: Date your client separated must include a day
               blank_month: Date your client separated must include a month
@@ -169,7 +169,7 @@ en:
               inclusion: Select yes if the partner has a confilct of interest
         steps/partner/same_address_form:
           attributes:
-            same_address_as_client:
+            has_same_address_as_client:
               inclusion: Select yes if your client and their partner live at the same address
         steps/partner/details_form:
           attributes:
