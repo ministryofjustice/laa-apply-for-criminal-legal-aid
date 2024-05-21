@@ -51,7 +51,7 @@ module DeveloperTools
         has_benefit_evidence: nil,
         benefit_type: nil,
         last_jsa_appointment_date: nil,
-        passporting_benefit: nil,
+        benefit_check_result: nil,
       ).update(
         correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
         telephone_number: '123456789',
@@ -94,7 +94,7 @@ module DeveloperTools
           nino: overrides.fetch(:nino, details[:nino]),
           benefit_type: overrides.fetch(:benefit_type, 'universal_credit'),
           last_jsa_appointment_date: overrides.fetch(:last_jsa_appointment_date, nil),
-          passporting_benefit: overrides.fetch(:passporting_benefit, true),
+          benefit_check_result: overrides.fetch(:benefit_check_result, true),
         )
       end
     end

@@ -47,7 +47,7 @@ module Steps
           has_benefit_evidence: nil,
           benefit_type: nil,
           last_jsa_appointment_date: nil,
-          passporting_benefit: nil,
+          benefit_check_result: nil,
         }
       end
     end

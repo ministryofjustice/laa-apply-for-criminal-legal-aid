@@ -1,4 +1,4 @@
-<% if FeatureFlags.means_journey.enabled? %>
+<% if FeatureFlags.employment_journey.enabled? %>
   <div class="govuk-grid-row app-inverted--card app-inverted-text">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l app-inverted-text">You need to apply using eForms</h1>
@@ -8,7 +8,7 @@
       <ul class="govuk-list govuk-list--bullet app-inverted-text">
         <li>they have a partner</li>
         <li>they do not get a passporting benefit, based on DWP records</li>
-        <li>they are working</li>
+        <li>they are self-employed, in a business partnership, or a director or shareholder in a private company</li>
       </ul>
 
       <div class="govuk-button-group govuk-!-margin-top-6">
@@ -22,15 +22,14 @@
 <% else %>
   <div class="govuk-grid-row app-inverted--card app-inverted-text">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l app-inverted-text">Use eForms for this application</h1>
+      <h1 class="govuk-heading-l app-inverted-text">You need to apply using eForms</h1>
 
-      <p class="govuk-body app-inverted-text">You cannot use this service if your client:</p>
+      <p class="govuk-body app-inverted-text">This is because one or more of the following applies to your client:</p>
 
       <ul class="govuk-list govuk-list--bullet app-inverted-text">
-        <li>has a partner</li>
-        <li>does not have a National Insurance number (if they are 18 years old or over)</li>
-        <li>does not receive a passporting benefit based on DWP records, including Universal Credit</li>
-        <li>is employed, including self-employed, business partner, company director or shareholder</li>
+        <li>they have a partner</li>
+        <li>they do not get a passporting benefit, based on DWP records</li>
+        <li>they are working</li>
       </ul>
 
       <div class="govuk-button-group govuk-!-margin-top-6">

@@ -69,23 +69,24 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        # TODO: Update exit page content to include unemployed
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
         start_employment_journey
       end
     end
 
+    # rubocop:disable Lint/DuplicateBranch <- to make it easier to reimplement when we do self-employed
     def start_employment_journey
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         edit(:income_before_tax)
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        show(:employed_exit)
+        show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_employer_details
+        show(:self_employed_exit)
       end
     end
+    # rubocop:enable Lint/DuplicateBranch
 
     def redirect_to_employer_details
       employments = current_crime_application.employments

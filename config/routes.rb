@@ -162,6 +162,7 @@ Rails.application.routes.draw do
           edit_step :employment_income
         end
         show_step :employed_exit
+        show_step :self_employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
         edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets

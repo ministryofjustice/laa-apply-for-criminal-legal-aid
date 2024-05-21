@@ -39,7 +39,7 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
       'will_enter_nino' => nil,
       'benefit_type' => nil,
       'last_jsa_appointment_date' => nil,
-      'passporting_benefit' => nil,
+      'benefit_check_result' => nil,
       'has_benefit_evidence' => nil
     }
   }
