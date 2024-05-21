@@ -10,8 +10,7 @@ module Summary
       def answers
         answers = [
           Components::ValueAnswer.new(
-            :passporting_benefit, applicant.benefit_type,
-            change_path: edit_steps_dwp_benefit_type_path
+            :passporting_benefit, applicant.benefit_type
           )
         ]
 
@@ -42,6 +41,10 @@ module Summary
         answers
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+      def change_path
+        edit_steps_dwp_benefit_type_path
+      end
 
       private
 

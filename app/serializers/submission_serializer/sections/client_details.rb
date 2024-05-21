@@ -3,6 +3,8 @@ module SubmissionSerializer
     class ClientDetails < Sections::BaseSection
       def to_builder
         Jbuilder.new do |json|
+          next unless applicant
+
           json.client_details do
             json.applicant Definitions::Applicant.generate(crime_application)
           end

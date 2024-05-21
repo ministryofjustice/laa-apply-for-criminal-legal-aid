@@ -71,8 +71,9 @@ module Datastore
 
     def applicant
       # TODO: set has_partner in partner_details
-      partner_attributes = %w[has_partner relationship_to_partner relationship_status separation_date]
-      applicant_json = parent.applicant.serializable_hash.except!(*partner_attributes)
+      attributes_to_ignore = %w[has_partner relationship_to_partner relationship_status separation_date
+                                confirm_dwp_result]
+      applicant_json = parent.applicant.serializable_hash.except!(*attributes_to_ignore)
       Applicant.new(applicant_json)
     end
 

@@ -30,6 +30,12 @@ module Summary
         answers.any?
       end
 
+      def change_path
+        # Can be overridden in subclass
+        # The path set here will be used as a global change link for the rendered summary card
+        nil
+      end
+
       # If action links are allowed (i.e. `change` links)
       def editable?
         crime_application.in_progress? && @editable

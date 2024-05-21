@@ -77,7 +77,6 @@ describe Summary::Sections::PassportingBenefitCheck do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:passporting_benefit)
-        expect(answers[0].change_path).to match('applications/12345/steps/dwp/benefit_type')
         expect(answers[0].value).to eq('jsa')
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)

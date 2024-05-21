@@ -15,7 +15,6 @@ RSpec.describe Datastore::ApplicationRehydration do
   let(:means_passport) { [] }
 
   before do
-    # pp parent
     allow(crime_application).to receive(:update!).and_return(true)
   end
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:, confirm_dwp_result: 'no') }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, confirm_dwp_result: 'no') }
 
   let(:applicant) do
     instance_double(
