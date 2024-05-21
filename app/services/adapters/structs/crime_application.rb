@@ -41,6 +41,8 @@ module Adapters
       end
 
       def income
+        return nil unless means_details
+
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
@@ -61,6 +63,8 @@ module Adapters
       end
 
       def outgoings
+        return nil unless means_details
+
         Structs::OutgoingsDetails.new(means_details.outgoings_details)
       end
 
@@ -73,6 +77,8 @@ module Adapters
       end
 
       def capital
+        return nil unless means_details
+
         @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
       end
 
