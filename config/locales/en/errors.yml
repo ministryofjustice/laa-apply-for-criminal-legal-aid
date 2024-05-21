@@ -846,8 +846,10 @@ en:
               not_a_number: Enter their salary or wage
               greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
+              blank: Select before or after tax
               inclusion: Select before or after tax
             frequency:
+              blank: Select how often they get this payment
               inclusion: Select how often they get this payment
           summary:
             job_title:
@@ -857,6 +859,8 @@ en:
               not_a_number: Enter their salary or wage
               greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
+              blank: Select before or after tax
               inclusion: Select before or after tax
             frequency:
+              blank: Select how often they get this payment
               inclusion: Select how often they get this payment
