@@ -38,8 +38,6 @@ module SubmissionSerializer
       end.select(&:generate?)
     end
 
-    private
-
     def to_builder
       Jbuilder.new do |json|
         sections.each do |section|

@@ -32,20 +32,16 @@ module Summary
 
       def change_path
         edit_steps_capital_national_savings_certificates_path(
-          id: record.crime_application_id,
           national_savings_certificate_id: record.id
         )
       end
 
       def summary_path
-        edit_steps_capital_national_savings_certificates_summary_path(
-          id: record.crime_application_id
-        )
+        edit_steps_capital_national_savings_certificates_summary_path
       end
 
       def remove_path
         confirm_destroy_steps_capital_national_savings_certificates_path(
-          id: record.crime_application_id,
           national_savings_certificate_id: record.id
         )
       end

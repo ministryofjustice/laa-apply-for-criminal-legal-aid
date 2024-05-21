@@ -1,295 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionSerializer::Sections::MeansDetails do
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    instance_double(
-      CrimeApplication,
-      income:,
-      outgoings:,
-      outgoings_payments:,
-      dependants:,
-      income_payments:,
-      income_benefits:,
-      capital:,
-      savings:,
-      investments:,
-      national_savings_certificates:,
-      properties:
-    )
-  end
+  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:income) { instance_double(Income) }
+  let(:requires_means_assessment?) { true }
 
-  let(:dependants) do
-    double(Array, with_ages: [])
+  before do
+    allow(subject).to receive(:requires_means_assessment?)
+      .and_return(requires_means_assessment?)
   end
-
-  let(:savings) { [] }
-  let(:investments) { [] }
-  let(:national_savings_certificates) { [] }
-  let(:properties) { [] }
 
   describe '#generate' do
-    let(:income) do
-      instance_double(
-        Income,
-        employment_status: ['not_working'],
-        ended_employment_within_three_months: 'yes',
-        lost_job_in_custody: 'yes',
-        date_job_lost: '2023-10-01',
-        income_above_threshold: 'no',
-        has_frozen_income_or_assets: 'no',
-        client_owns_property: 'no',
-        client_has_dependants: 'no',
-        has_savings: 'yes',
-        has_no_income_payments: nil,
-        has_no_income_benefits: nil,
-        manage_without_income: 'other',
-        manage_other_details: 'Another way that they manage',
-      )
+    context 'when income present and means assessment not required' do
+      let(:requires_means_assessment?) { false }
+      let(:json_output) { {} }
+
+      it { expect(subject.generate).to eq(json_output) }
     end
 
-    let(:outgoings) do
-      instance_double(
-        Outgoings,
-        housing_payment_type: 'mortgage',
-        income_tax_rate_above_threshold: 'no',
-        outgoings_more_than_income: 'yes',
-        pays_council_tax: 'yes',
-        has_no_other_outgoings: nil,
-        how_manage: 'A description of how they manage'
-      )
-    end
-
-    let(:outgoings_payments) do
-      [
-        instance_double(
-          OutgoingsPayment,
-          payment_type: 'council_tax',
-          amount_before_type_cast: 14_744,
-          frequency: 'month',
-          metadata: {},
-        ),
-        instance_double(
-          OutgoingsPayment,
-          payment_type: HousingPaymentType::MORTGAGE,
-          amount_before_type_cast: 3_292_900,
-          frequency: 'annual',
-          metadata: {},
-        )
-      ]
-    end
-
-    let(:income_payments) do
-      [
-        instance_double(
-          IncomePayment,
-          payment_type: 'other',
-          amount_before_type_cast: 1802,
-          frequency: 'annual',
-          metadata: { 'details' => 'Side hustle' }
-        )
-      ]
-    end
-
-    let(:income_benefits) do
-      [
-        instance_double(
-          IncomeBenefit,
-          payment_type: 'child',
-          amount_before_type_cast: 123,
-          frequency: 'month',
-          metadata: { 'details' => 'Extra topup' },
-        )
-      ]
-    end
-
-    let(:capital) do
-      instance_double(
-        Capital,
-        has_premium_bonds: 'yes',
-        premium_bonds_total_value_before_type_cast: 123,
-        premium_bonds_holder_number: '123A',
-        will_benefit_from_trust_fund: 'yes',
-        trust_fund_amount_held_before_type_cast: 1000,
-        trust_fund_yearly_dividend_before_type_cast: 2000,
-        savings: [],
-        investments: [],
-        national_savings_certificates: [],
-        properties: [],
-        has_frozen_income_or_assets: nil,
-        has_no_investments: nil,
-        has_no_savings: nil,
-        has_national_savings_certificates: nil,
-        has_no_properties: nil,
-        has_no_other_assets: 'yes'
-      )
-    end
-
-    let(:json_output) do
-      {
-        means_details: {
-          income_details: {
-            employment_type: ['not_working'],
-            ended_employment_within_three_months: 'yes',
-            lost_job_in_custody: 'yes',
-            date_job_lost: '2023-10-01',
-            income_above_threshold: 'no',
-            has_frozen_income_or_assets: 'no',
-            client_owns_property: 'no',
-            client_has_dependants: 'no',
-            has_savings: 'yes',
-            manage_without_income: 'other',
-            manage_other_details: 'Another way that they manage',
-            dependants: [],
-            has_no_income_payments: nil,
-            has_no_income_benefits: nil,
-            income_payments: [{
-              payment_type: 'other',
-              amount: 1802,
-              frequency: 'annual',
-              metadata: { 'details' => 'Side hustle' }
-            }],
-            income_benefits: [
-              payment_type: 'child',
-              amount: 123,
-              frequency: 'month',
-              metadata: { 'details' => 'Extra topup' },
-            ],
-          },
-          outgoings_details: {
-            outgoings: [
-              {
-                payment_type: 'council_tax',
-                amount: 14_744,
-                frequency: 'month',
-                metadata: {},
-              },
-              {
-                payment_type: 'mortgage',
-                amount: 3_292_900,
-                frequency: 'annual',
-                metadata: {},
-              }
-            ],
-            housing_payment_type: 'mortgage',
-            income_tax_rate_above_threshold: 'no',
-            outgoings_more_than_income: 'yes',
-            how_manage: 'A description of how they manage',
-            pays_council_tax: 'yes',
-            has_no_other_outgoings: nil,
-          },
-          capital_details: {
-            has_premium_bonds: 'yes',
-            premium_bonds_total_value: 123,
-            premium_bonds_holder_number: '123A',
-            will_benefit_from_trust_fund: 'yes',
-            trust_fund_amount_held: 1000,
-            trust_fund_yearly_dividend: 2000,
-            savings: [],
-            investments: [],
-            national_savings_certificates: [],
-            properties: [],
-            has_frozen_income_or_assets: nil,
-            has_no_investments: nil,
-            has_no_savings: nil,
-            has_national_savings_certificates: nil,
-            has_no_properties: nil,
-            has_no_other_assets: 'yes'
+    context 'when income present and means assessment required' do
+      let(:json_output) do
+        {
+          means_details: {
+            income_details: 'INCOME',
+            outgoings_details: 'OUTGOINGS',
+            capital_details: 'CAPITAL',
           }
-        }
-      }.as_json
-    end
+        }.as_json
+      end
 
-    it { expect(subject.generate).to eq(json_output) }
-  end
+      before do
+        allow(SubmissionSerializer::Sections::IncomeDetails).to receive(:new)
+          .with(crime_application).and_return(double(to_builder: 'INCOME'))
+        allow(SubmissionSerializer::Sections::OutgoingsDetails).to receive(:new)
+          .with(crime_application).and_return(double(to_builder: 'OUTGOINGS'))
+        allow(SubmissionSerializer::Sections::CapitalDetails).to receive(:new)
+          .with(crime_application).and_return(double(to_builder: 'CAPITAL'))
+      end
 
-  context 'when optional fields are not supplied' do
-    let(:income) do
-      instance_double(
-        Income,
-        employment_status: ['not_working'],
-        ended_employment_within_three_months: nil,
-        lost_job_in_custody: nil,
-        date_job_lost: nil,
-        income_above_threshold: 'no',
-        has_frozen_income_or_assets: nil,
-        client_owns_property: nil,
-        client_has_dependants: nil,
-        has_savings: nil,
-        manage_without_income: nil,
-        manage_other_details: nil,
-        has_no_income_payments: nil,
-        has_no_income_benefits: nil,
-      )
-    end
-
-    let(:outgoings) do
-      instance_double(
-        Outgoings,
-        housing_payment_type: nil,
-        income_tax_rate_above_threshold: nil,
-        outgoings_more_than_income: nil,
-        how_manage: nil,
-        pays_council_tax: nil,
-        has_no_other_outgoings: nil,
-      )
-    end
-
-    let(:json_output) do
-      {
-        means_details: {
-          income_details: {
-            employment_type: ['not_working'],
-            ended_employment_within_three_months: nil,
-            lost_job_in_custody: nil,
-            date_job_lost: nil,
-            income_above_threshold: 'no',
-            has_frozen_income_or_assets: nil,
-            client_owns_property: nil,
-            client_has_dependants: nil,
-            has_savings: nil,
-            manage_without_income: nil,
-            manage_other_details: nil,
-            dependants: [],
-            income_payments: nil,
-            income_benefits: nil,
-            has_no_income_payments: nil,
-            has_no_income_benefits: nil
-          },
-          outgoings_details: {
-            outgoings: nil,
-            housing_payment_type: nil,
-            income_tax_rate_above_threshold: nil,
-            outgoings_more_than_income: nil,
-            how_manage: nil,
-            pays_council_tax: nil,
-            has_no_other_outgoings: nil,
-          }
-        }
-      }.as_json
-    end
-
-    let(:income_payments) do
-      nil
-    end
-
-    let(:income_benefits) do
-      nil
-    end
-
-    let(:outgoings_payments) do
-      nil
-    end
-
-    let(:capital) do
-      nil
-    end
-
-    it 'does not output lost_job_in_custody_fields' do
-      expect(subject.generate).to eq(json_output)
+      it { expect(subject.generate).to eq(json_output) }
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

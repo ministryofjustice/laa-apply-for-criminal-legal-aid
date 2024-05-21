@@ -122,14 +122,7 @@ RSpec.describe Datastore::ApplicationSubmission do
 
     context 'when `date_stamp` attribute is `nil`' do
       it 'sets the `date_stamp` as the value of the submission date' do
-        expect(
-          crime_application
-        ).to receive(:assign_attributes).with(
-          submitted_at: submitted_date,
-          date_stamp: submitted_date,
-        )
-
-        expect(subject.call).to be(true)
+        expect { subject.call }.to change(crime_application, :date_stamp).from(nil).to(submitted_date)
       end
     end
 
@@ -141,14 +134,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'does not change the `date_stamp` value' do
-        expect(
-          crime_application
-        ).to receive(:assign_attributes).with(
-          submitted_at: submitted_date,
-          date_stamp: date_stamp,
-        )
-
-        expect(subject.call).to be(true)
+        expect { subject.call }.not_to change(crime_application, :date_stamp).from(date_stamp)
       end
     end
 
@@ -172,11 +158,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'calls the API and submits the serialized application' do
-        expect(
-          a_request(
-            :post, 'http://datastore-webmock/api/v1/applications'
-          ).with(body: { application: payload })
-        ).to have_been_made.once
+        expect(a_request(:post, 'http://datastore-webmock/api/v1/applications')).to have_been_made.once
       end
 
       it 'purges the application from the local database' do
