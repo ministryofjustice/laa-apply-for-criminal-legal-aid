@@ -47,9 +47,9 @@ module Decisions
     end
 
     def after_has_partner
-      if current_crime_application.client_has_partner.yes? && FeatureFlags.partner_journey.enabled?
+      if form_object.client_has_partner.yes? && FeatureFlags.partner_journey.enabled?
         edit('/steps/partner/relationship')
-      elsif current_crime_application.client_has_partner.yes?
+      elsif form_object.client_has_partner.yes?
         show(:partner_exit)
       else
         edit(:relationship_status)

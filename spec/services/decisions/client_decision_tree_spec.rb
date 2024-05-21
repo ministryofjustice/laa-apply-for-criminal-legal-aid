@@ -45,15 +45,13 @@ RSpec.describe Decisions::ClientDecisionTree do
   end
 
   context 'when the step is `has_partner`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }
 
     before do
       allow(FeatureFlags).to receive(:partner_journey) {
         instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
       }
-
-      allow(crime_application).to receive(:client_has_partner).and_return(client_has_partner)
     end
 
     context 'with partner_journey enabled' do

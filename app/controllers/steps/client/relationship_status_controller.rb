@@ -8,7 +8,7 @@ module Steps
       end
 
       def update
-        update_and_advance(RelationshipStatusForm, as: :has_partner)
+        update_and_advance(RelationshipStatusForm, as: :relationship_status)
       end
     end
   end
