@@ -9,11 +9,7 @@ module Tasks
     end
 
     def can_start?
-      if crime_application.pse?
-        fulfilled?(EvidenceUpload)
-      else
-        fulfilled?(CaseDetails) && crime_application.valid?(:submission)
-      end
+      fulfilled?(Review)
     end
 
     def in_progress?

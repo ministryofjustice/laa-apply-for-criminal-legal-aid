@@ -17,7 +17,10 @@ module Tasks
     end
 
     def completed?
-      in_progress?
+      return false if crime_application.additional_information_required.blank?
+      return true if crime_application.additional_information_required == 'no'
+
+      crime_application.additional_information.present?
     end
   end
 end

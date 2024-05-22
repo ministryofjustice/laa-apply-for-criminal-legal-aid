@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tasks::Review do
-  subject { described_class.new(crime_application:) }
+  subject(:task) { described_class.new(crime_application:) }
 
   let(:crime_application) do
     CrimeApplication.new(
@@ -28,56 +28,68 @@ RSpec.describe Tasks::Review do
   end
 
   describe '#can_start?' do
-    context 'when an initial application' do
-      before do
-        allow(
-          subject
-        ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
+    subject(:can_start?) { task.can_start? }
 
-        allow(crime_application).to receive(:valid?).with(:submission) { valid_for_submission }
+    context 'when an initial application' do
+      let(:required_task_classes) do
+        [
+          Tasks::ClientDetails,
+          Tasks::PassportingBenefitCheck,
+          Tasks::CaseDetails,
+          Tasks::Ioj,
+          Tasks::IncomeAssessment,
+          Tasks::OutgoingsAssessment,
+          Tasks::CapitalAssessment,
+          Tasks::MoreInformation
+        ]
       end
 
-      context 'when the Case details have been completed' do
-        let(:case_details_fulfilled) { true }
+      before do
+        required_task_classes.each do |klass|
+          allow(task).to receive(:fulfilled?).with(klass).and_return(true)
+        end
+      end
 
-        context 'and the application is valid for submsission' do
-          let(:valid_for_submission) { true }
-
-          it { expect(subject.can_start?).to be(true) }
+      context 'when all the required tasks have been completed or are not applicable' do
+        before do
+          required_task_classes.each do |klass|
+            allow(task).to receive(:fulfilled?).with(klass).and_return(true)
+          end
         end
 
-        context 'and the application is not valid for submsission' do
-          let(:valid_for_submission) { false }
-
-          it { expect(subject.can_start?).to be(false) }
-        end
+        it { is_expected.to be(true) }
       end
 
       context 'when the Case details have not been completed' do
-        let(:case_details_fulfilled) { false }
+        before do
+          allow(task).to receive(:fulfilled?).with(required_task_classes.first).and_return(false)
+        end
 
-        it { expect(subject.can_start?).to be(false) }
+        it { is_expected.to be(false) }
       end
     end
 
     context 'when the application is PSE' do
       before do
-        allow(subject).to receive(:fulfilled?).with(Tasks::EvidenceUpload).and_return(
+        allow(task).to receive(:fulfilled?).with(Tasks::EvidenceUpload).and_return(
           evidence_fulfilled
         )
+
+        allow(task).to receive(:fulfilled?).with(Tasks::MoreInformation).and_return(true)
+
         allow(crime_application).to receive(:pse?).and_return(true)
       end
 
       context 'when the evidence task has been completed' do
         let(:evidence_fulfilled) { true }
 
-        it { expect(subject.can_start?).to be(true) }
+        it { is_expected.to be(true) }
       end
 
       context 'when the evidence task has not been completed yet' do
         let(:evidence_fulfilled) { false }
 
-        it { expect(subject.can_start?).to be(false) }
+        it { is_expected.to be(false) }
       end
     end
   end
