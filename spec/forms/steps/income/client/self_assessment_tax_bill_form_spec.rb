@@ -56,7 +56,7 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
   describe '#save' do
     before do
       allow(crime_application.outgoings_payments).to receive(:create!).and_return(true)
-      allow(crime_application.income).to receive(:update).and_return(true)
+      allow(crime_application).to receive(:income).and_return(income)
     end
 
     context 'when `applicant_self_assessment_tax_bill` is not provided' do
