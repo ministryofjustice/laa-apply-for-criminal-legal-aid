@@ -315,6 +315,11 @@ en:
             page_title: Your client's employment income
             heading: Your client's employment income
             page_text: You told us your client is employed.
+        self_assessment_tax_bill:
+          edit:
+            page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?
+            heading: Does your client pay a Self Assessment tax bill received in the last 2 years?
+            page_text: This will be a bill from HM Revenue and Customs (HMRC).
 
     outgoings:
       caption: Outgoings assessment

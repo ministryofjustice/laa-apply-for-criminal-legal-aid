@@ -6,7 +6,8 @@ class OutgoingsPaymentType < ValueObject
     COUNCIL_TAX = new(:council_tax),
     CHILDCARE = new(:childcare),
     MAINTENANCE = new(:maintenance),
-    LEGAL_AID_CONTRIBUTION = new(:legal_aid_contribution)
+    LEGAL_AID_CONTRIBUTION = new(:legal_aid_contribution),
+    SELF_ASSESSMENT_TAX_BILL = new(:self_assessment_tax_bill)
   ].freeze
 
   OTHER_PAYMENT_TYPES = [
