@@ -9,12 +9,9 @@ module Steps
         attribute :details, :string
         attribute :employment_id, :string
 
-        validates :amount, numericality: {
-          greater_than: 0
-        }
-
-        validates :deduction_types, presence: true, inclusion: { in: :deduction_types }
+        validates :amount, numericality: { greater_than: 0 }
         validates :frequency, presence: true, inclusion: { in: :frequencies }
+        validates :deduction_type, presence: true, inclusion: { in: :deduction_types }
 
         validate :details_only_when_other?
 

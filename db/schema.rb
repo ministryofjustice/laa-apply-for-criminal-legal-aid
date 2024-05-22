@@ -177,11 +177,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_21_142354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_title"
-    t.uuid "payment_id"
+    t.string "has_no_deductions"
     t.bigint "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}, null: false
-    t.string "has_no_deductions"
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
   end
 
