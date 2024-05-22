@@ -342,6 +342,17 @@ en:
             cancel_delete_button_a11y: No, do not remove this job
           destroy:
             success_flash: You removed the job
+        other_work_benefits:
+          edit:
+            page_title: Does your client receive any other benefits from work?
+            heading: Does your client receive any other benefits from work?
+            page_text: 'These could be, for example:'
+            list: |
+              childcare vouchers
+              a company vehicle
+              relocation payments
+              private health insurance
+
     outgoings:
       caption: Outgoings assessment
       housing_payment_type:

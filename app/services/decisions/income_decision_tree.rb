@@ -29,6 +29,8 @@ module Decisions
       when :client_employment_income
         edit('/steps/income/income_payments')
       when :client_self_assessment_tax_bill
+        edit(:other_work_benefits)
+      when :client_other_work_benefits
         edit('/steps/income/income_payments')
       when :income_payments
         edit(:income_benefits)
