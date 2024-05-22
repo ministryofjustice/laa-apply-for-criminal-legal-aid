@@ -12,6 +12,7 @@ module Adapters
       # rubocop:enable Naming/PredicateName
       #
 
+      # TODO: add benefit_check_result to schema
       # `passporting_benefit` not part of schema, infer true value if
       # means passport is on benefit check. We cannot infer false from
       # the information we have, so default to nil
@@ -23,7 +24,7 @@ module Adapters
         return @applicant if @applicant
 
         struct = Structs::Applicant.new(client_details.applicant)
-        struct.passporting_benefit = infer_passporting_benefit
+        struct.benefit_check_result = infer_passporting_benefit
 
         @applicant = struct
       end
@@ -41,6 +42,8 @@ module Adapters
       end
 
       def income
+        return nil unless means_details
+
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
@@ -61,6 +64,8 @@ module Adapters
       end
 
       def outgoings
+        return nil unless means_details
+
         Structs::OutgoingsDetails.new(means_details.outgoings_details)
       end
 
@@ -73,6 +78,8 @@ module Adapters
       end
 
       def capital
+        return nil unless means_details
+
         @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
       end
 

@@ -4,6 +4,8 @@ module SubmissionSerializer
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def to_builder
         Jbuilder.new do |json|
+          next unless kase
+
           json.case_details do
             json.urn kase.urn
             json.case_type case_type
@@ -21,7 +23,6 @@ module SubmissionSerializer
             json.appeal_maat_id kase.appeal_maat_id
             json.appeal_usn kase.appeal_usn
             json.appeal_reference_number kase.appeal_reference_number
-
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
             json.is_first_court_hearing kase.is_first_court_hearing

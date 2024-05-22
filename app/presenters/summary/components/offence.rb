@@ -19,25 +19,21 @@ module Summary
       end
 
       def summary_path
-        edit_steps_case_charges_summary_path(id: crime_application_id)
+        edit_steps_case_charges_summary_path
       end
 
       def change_path
-        edit_steps_case_charges_path(id: crime_application_id, charge_id: offence)
+        edit_steps_case_charges_path(charge_id: offence)
       end
 
       def remove_path
-        confirm_destroy_steps_case_charges_path(id: crime_application_id, charge_id: offence)
+        confirm_destroy_steps_case_charges_path(charge_id: offence)
       end
 
       def offence
         return record unless record.is_a? Charge
 
         @offence ||= ChargePresenter.new(record)
-      end
-
-      def crime_application_id
-        offence.case.crime_application_id
       end
     end
   end
