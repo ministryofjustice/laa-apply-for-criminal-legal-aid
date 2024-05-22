@@ -502,6 +502,14 @@ en:
               inclusion: Select before or after tax
             frequency:
               inclusion: Select how often they get this payment
+        steps/income/client/self_assessment_tax_bill_form:
+          attributes:
+            applicant_self_assessment_tax_bill:
+              inclusion: Select yes if your client pays a Self Assessment tax bill received in the last 2 years
+            amount:
+              not_a_number: Enter the amount they pay
+            frequency:
+              inclusion: Select how often they pay this amount
         steps/income/client_has_dependants_form:
           attributes:
             client_has_dependants:

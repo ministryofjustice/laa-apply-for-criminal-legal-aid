@@ -116,6 +116,9 @@ en:
         income_payment_attributes:
           before_or_after_tax: Is this before or after tax?
           frequency: How often do they get this payment?
+      steps_income_client_self_assessment_tax_bill_form:
+        applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
+        frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
       steps_income_income_benefits_form:
@@ -499,6 +502,10 @@ en:
             before_tax: Before tax
             after_tax: After tax
           frequency_options: *frequency_options
+      steps_income_client_self_assessment_tax_bill_form:
+        applicant_self_assessment_tax_bill_options: *YESNO
+        amount: How much do they pay?
+        frequency_options: *frequency_options
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
