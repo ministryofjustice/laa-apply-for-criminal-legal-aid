@@ -22,7 +22,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       update: true,
       date_stamp: nil,
       not_means_tested?: not_means_tested,
-      appeal_no_changes?: appeal_no_changes?
+      appeal_no_changes?: appeal_no_changes?,
     )
 
     allow(FeatureFlags).to receive(:partner_journey) {
@@ -63,14 +63,10 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }
 
-    before do
-      allow(FeatureFlags).to receive(:partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
-      }
-    end
-
-    context 'with partner_journey enabled' do
+    context 'with partner_journey enabled and means tested and over 18' do
       let(:partner_journey_enabled) { true }
+      let(:not_means_tested) { false }
+      let(:applicant) { instance_double(Applicant, under18?: false) }
 
       context 'and answer is `no`' do
         let(:client_has_partner) { YesNoAnswer::NO }
@@ -85,8 +81,27 @@ RSpec.describe Decisions::ClientDecisionTree do
       end
     end
 
+    context 'with partner_journey enabled and not means tested and under 18' do
+      let(:partner_journey_enabled) { true }
+      let(:not_means_tested) { true }
+      let(:applicant) { instance_double(Applicant, under18?: true) }
+
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
+      end
+    end
+
     context 'with partner_journey disabled' do
       let(:partner_journey_enabled) { false }
+      let(:applicant) { instance_double(Applicant, under18?: false) }
 
       context 'and answer is `no`' do
         let(:client_has_partner) { YesNoAnswer::NO }

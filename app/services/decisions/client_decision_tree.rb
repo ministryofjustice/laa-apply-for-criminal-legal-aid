@@ -50,8 +50,8 @@ module Decisions
       end
     end
 
-    def after_has_partner # rubocop:disable Metrics/AbcSize
-      if form_object.client_has_partner.yes? && FeatureFlags.partner_journey.enabled?
+    def after_has_partner
+      if start_partner_journey? && FeatureFlags.partner_journey.enabled?
         edit('/steps/partner/relationship')
       elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
         edit(:relationship_status)
@@ -154,6 +154,13 @@ module Decisions
 
     def applicant
       @applicant ||= current_crime_application.applicant
+    end
+
+    # TODO: Consider whether !crime_application.age_passported? is more appropriate?
+    def start_partner_journey?
+      form_object.client_has_partner.yes? &&
+        !current_crime_application.not_means_tested? &&
+        !applicant.under18?
     end
   end
   # rubocop:enable Metrics/ClassLength
