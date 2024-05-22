@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title legend_t(:property_type) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -6,7 +6,7 @@
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :property_type, legend: { tag: 'h1', size: 'xl' } do %>
+      <%= f.govuk_radio_buttons_fieldset :property_type, legend: { tag: 'h1', size: 'xl', text: legend_t(:property_type) } do %>
         <% @form_object.choices.each_with_index do |option, index| %>
           <%= f.govuk_radio_button :property_type, option, link_errors: index.zero? %>
         <% end %>

@@ -32,6 +32,33 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
     end
   end
 
+  describe '#validations' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      form.property_type = nil
+    end
+
+    let(:include_partner?) { false }
+
+    let(:error_message) do
+      'Select which assets your client owns or part-owns inside or outside the UK, ' \
+        "or select 'They do not own any of these assets'"
+    end
+
+    it { is_expected.to validate_presence_of(:property_type, :blank, error_message) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:error_message) do
+        'Select which assets your client or their partner owns or part-owns inside ' \
+          "or outside the UK, or select 'They do not own any of these assets'"
+      end
+
+      it { is_expected.to validate_presence_of(:property_type, :blank, error_message) }
+    end
+  end
+
   describe '#save' do
     let(:property_type) { PropertyType::RESIDENTIAL.to_s }
     let(:new_property) { instance_double(Property, property_type:) }

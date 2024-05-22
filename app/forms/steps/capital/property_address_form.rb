@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class PropertyAddressForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
+
       delegate :property_type, :has_other_owners, to: :record
 
       attribute :address

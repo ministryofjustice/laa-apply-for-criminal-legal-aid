@@ -2,7 +2,8 @@ require 'rails_helper'
 
 module Test
   PropertyFormValidatable = Struct.new(:has_other_owners, :crime_application, :record, :percentage_applicant_owned,
-                                       :percentage_partner_owned, keyword_init: true) do
+                                       :percentage_partner_owned, :include_partner_in_means_assessment?,
+                                       keyword_init: true) do
     include ActiveModel::Validations
     validates_with CapitalAssessment::PropertyOwnershipValidator
 
@@ -17,23 +18,26 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
 
   let(:arguments) do
     {
-      has_other_owners:,
-      record:,
-      crime_application:,
-      percentage_applicant_owned:,
-      percentage_partner_owned:,
+      has_other_owners: has_other_owners,
+      record: record,
+      crime_application: crime_application,
+      percentage_applicant_owned: percentage_applicant_owned,
+      include_partner_in_means_assessment?: include_partner?,
+      percentage_partner_owned: percentage_partner_owned,
     }
   end
 
   let(:has_other_owners) { YesNoAnswer::NO }
   let(:record) { instance_double(Property) }
-  let(:crime_application) {
-    instance_double(CrimeApplication,
-                    id: '12345', client_has_partner: client_has_partner)
-  }
-  let(:client_has_partner) { false }
+  let(:crime_application) { instance_double(CrimeApplication, id: '12345') }
+  let(:include_partner?) { false }
   let(:percentage_applicant_owned) { 100 }
   let(:percentage_partner_owned) { nil }
+
+  before do
+    allow(subject).to receive(:include_partner_in_means_assessment?)
+      .and_return(include_partner?)
+  end
 
   describe 'Property ownership validation' do
     context 'when the client solely owns the property' do
@@ -51,7 +55,7 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
     end
 
     context "when the client's partner also owns the property" do
-      let(:client_has_partner) { true }
+      let(:include_partner?) { true }
       let(:percentage_applicant_owned) { 90 }
       let(:percentage_partner_owned) { 10 }
 

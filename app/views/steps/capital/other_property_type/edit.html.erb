@@ -1,4 +1,4 @@
-<% title t('.page_title')  %>
+<% title legend_t(:property_type) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -10,7 +10,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :property_type, @form_object.choices,
-                                           :value, legend: { tag: 'h1', size: 'xl' } %>
+                                           :value, legend: { text: legend_t(:property_type), tag: 'h1', size: 'xl' } %>
 
       <%= f.continue_button %>
     <% end %>
