@@ -126,12 +126,6 @@ en:
         outgoings_payments: Which of these payments does your client pay?
       steps_submission_more_information_form:
         additional_information_required: Do you need to add any more information to this application?
-      steps_capital_property_type_form:
-        property_type: Which assets does your client own or part-own inside or outside the UK?
-      steps_capital_saving_type_form:
-        saving_type: Which savings does your client have inside or outside the UK?
-      steps_capital_other_saving_type_form:
-        saving_type: Which other savings does your client have inside or outside the UK?
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
@@ -153,8 +147,6 @@ en:
         add_national_savings_certificate: Do you want to add another National Savings Certificate?
       steps_capital_properties_summary_form:
         add_property: Do you want to add another asset?
-      steps_capital_other_property_type_form:
-        property_type: Which other assets does your client own or part-own inside or outside the UK?
       steps_capital_residential_form:
         house_type: Which type of property is it?
         is_home_address: Is the address of the property the same as your client’s home address?
@@ -475,7 +467,7 @@ en:
           financial_support_with_access: Financial support from someone who allows your client access to their assets or money
           from_friends_relatives: Money from friends or family
           other: Other sources of income
-          none: My client does not get any of these payments
+          none: They do not get any of these payments
         maintenance:
           amount: *amount_label
           frequency_options: *frequency_options
@@ -515,7 +507,7 @@ en:
           industrial_injuries_disablement: Industrial Injuries Disablement Benefit
           jsa: Contribution-based Jobseeker’s Allowance (JSA)
           other: Other benefits (except disregarded benefits)
-          none: My client does not get any of these benefits
+          none: They do not get any of these benefits
         child:
           amount: *amount_label
           frequency_options: *frequency_options
@@ -550,7 +542,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: My client does not pay any of these payments
+          none: They do not pay any of these payments
       steps_outgoings_mortgage_form:
         amount: How much are your client's mortgage payments?
         frequency_options: *frequency_options
@@ -573,7 +565,7 @@ en:
           childcare: Childcare payments
           maintenance: Maintenance payments to a former partner
           legal_aid_contribution: Contributions to criminal or civil legal aid
-          none: My client does not pay any of these payments
+          none: They do not pay any of these payments
         childcare:
           amount: *amount_label
           frequency_options: *frequency_options
@@ -605,7 +597,9 @@ en:
           residential: Residential property
           commercial: Commercial property
           land: Land
-          none: My client does not own any of these assets
+          none: They do not own any of these assets
+      steps_capital_other_property_type_form:
+        property_type_options: *PROPERTY_TYPE_OPTIONS
       steps_capital_saving_type_form:
         saving_type_options: &SAVING_TYPE_OPTIONS
           bank: Bank accounts
@@ -613,7 +607,7 @@ en:
           cash_isa: Cash ISAs
           national_savings_or_post_office: National Savings or Post Office accounts
           other: Any other cash investment
-          none: My client does not have any of these savings
+          none: They do not have any of these savings
       steps_capital_investment_type_form:
         investment_type_options: &INVESTMENT_TYPE_OPTIONS
           bond: Investment bonds
@@ -623,7 +617,7 @@ en:
           stock: Stocks, including gilts and government bonds
           unit_trust: Unit trusts
           other: Any other lump sum investments
-          none: My client does not have any of these investments
+          none: They do not have any of these investments
       steps_capital_other_saving_type_form:
         saving_type_options: *SAVING_TYPE_OPTIONS
       steps_capital_other_investment_type_form:
@@ -665,8 +659,6 @@ en:
         has_premium_bonds_options: *YESNO
       steps_capital_has_national_savings_certificates_form:
         has_national_savings_certificates_options: *YESNO
-      steps_capital_other_property_type_form:
-        property_type_options: *PROPERTY_TYPE_OPTIONS
       steps_capital_properties_summary_form:
         add_property_options: *YESNO
       steps_capital_trust_fund_form:

@@ -28,4 +28,15 @@ module ApplicationHelper
   def present(model, presenter_class = nil)
     (presenter_class || [model.class, :Presenter].join.demodulize.constantize).new(model)
   end
+
+  def qt(question, i18n_opts = {})
+    subject_text = I18n.t("summary.questions.#{question}.subject.#{ownership_type}")
+    i18n_opts = i18n_opts.merge(subject: subject_text)
+    I18n.t("summary.questions.#{question}.question", **i18n_opts)
+  end
+
+  # TODO: for testing
+  def ownership_type
+    OwnershipType.values[1].to_s
+  end
 end

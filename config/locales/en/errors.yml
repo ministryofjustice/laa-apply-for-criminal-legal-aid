@@ -41,6 +41,10 @@ en:
 
   activemodel:
     errors:
+      SUBJECT_OR: &OR_PARTNER
+        applicant: 'your client'
+        applicant_and_partner: 'your client or their partner'
+        partner: 'the partner'
       models:
         steps/provider/confirm_office_form:
           attributes:
@@ -466,7 +470,7 @@ en:
         steps/income/income_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client gets, or select 'My client does not get any of these payments'
+              none_selected: Select which payments your client gets, or select 'They do not get any of these payments'
         steps/income/income_payment_fieldset_form:
           summary:
             amount:
@@ -484,7 +488,7 @@ en:
         steps/income/income_benefits_form:
           attributes:
             base:
-              none_selected: Select which benefits your client gets, or select 'My client does not get any of these benefits'
+              none_selected: Select which benefits your client gets, or select 'They do not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
           summary:
             amount:
@@ -559,7 +563,7 @@ en:
         steps/outgoings/outgoings_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client pays, or select 'My client does not pay any of these payments'
+              none_selected: Select which payments your client pays, or select 'They do not pay any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
@@ -586,16 +590,17 @@ en:
               blank: Enter how your client manages if their outgoings are more than their income
         steps/capital/property_type_form:
           attributes:
+            subject: *OR_PARTNER
             property_type:
-              blank: Select which assets your client owns or part-owns inside or outside the UK, or select 'My client does not own any of these assets'
+              blank: Select which assets %{subject} owns or part-owns inside or outside the UK, or select 'They do not own any of these assets'
         steps/capital/saving_type_form:
           attributes:
             saving_type:
-              blank: Select which savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
+              blank: Select which savings your client has inside or outside the UK, or select 'They do not have any of these savings'
         steps/capital/other_saving_type_form:
           attributes:
             saving_type:
-              blank: Select which other savings your client has inside or outside the UK, or select 'My client does not have any of these savings'
+              blank: Select which other savings your client has inside or outside the UK, or select 'They do not have any of these savings'
         steps/capital/savings_form:
           attributes:
             provider_name:
@@ -628,9 +633,10 @@ en:
             has_premium_bonds:
               inclusion: Select yes if your client has any Premium Bonds
         steps/capital/other_property_type_form:
+          subject: *OR_PARTNER
           attributes:
             property_type:
-              blank: Select which other assets your client owns or part-owns inside or outside the UK
+              blank: Select which other assets %{subject} owns or part-owns inside or outside the UK
         steps/capital/trust_fund_form:
           attributes:
             trust_fund_amount_held:
@@ -768,11 +774,11 @@ en:
         steps/capital/investment_type_form:
           attributes:
             investment_type:
-              blank: Select which investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+              blank: Select which investments your client has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/other_investment_type_form:
           attributes:
             investment_type:
-              blank: Select which other investments your client has inside or outside the UK, or select 'My client does not have any of these investments'
+              blank: Select which other investments your client has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/investments_form:
           attributes:
             description:

@@ -367,12 +367,6 @@ en:
       other_saving_type:
         edit:
           page_title: Which other savings does your client have inside or outside the UK?
-      property_type:
-        edit:
-          page_title: Which assets does your client own or part-own inside or outside the UK?
-      other_property_type:
-        edit:
-          page_title: Which other assets does your client own or part-own inside or outside the UK?
       savings:
         edit:
           page_title: Add savings account details

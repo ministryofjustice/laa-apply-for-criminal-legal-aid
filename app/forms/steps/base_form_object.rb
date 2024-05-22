@@ -88,5 +88,20 @@ module Steps
 
     # Override in subclass where needed. For example, to reset attributes.
     def before_save; end
+
+    # TODO: mix this in to steps where applicable rather than the base class
+    def subject_aware_error_message(attr, error: 'blank')
+      scope = [:activemodel, :errors, :models, model_name.to_s.underscore, :attributes]
+
+      subject = I18n.t("subject.#{ownership_type}", scope:)
+
+      I18n.t("#{attr}.#{error}", subject:, scope:)
+    end
+
+    # TODO: replace when the real thing when partner details merged
+    #
+    def ownership_type
+      OwnershipType.values[1].to_s
+    end
   end
 end

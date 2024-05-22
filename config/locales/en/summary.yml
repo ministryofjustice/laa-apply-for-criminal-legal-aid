@@ -10,6 +10,14 @@ en:
         applicant: 'Client'
         applicant_and_partner: 'Client and partner'
         partner: 'Partner'
+      SUBJECT_OR: &OR_PARTNER
+        applicant: 'your client'
+        applicant_and_partner: 'your client or their partner'
+        partner: 'the partner'
+      SUBJECT_AND: &AND_PARTNER
+        applicant: 'your client'
+        applicant_and_partner: 'your client and their partner'
+        partner: 'the partner'
       HOUSE_TYPE: &HOUSE_TYPE
         bungalow: Bungalow
         detached: Detached
@@ -320,9 +328,9 @@ en:
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
-        question: Does your client have any income, savings or assets under a restraint or freezing order?
-        answers:
-          <<: *YESNO
+        question: Does %{subject} have any income, savings or assets under a restraint or freezing order?
+        subject: *OR_PARTNER
+        answers: *YESNO
       client_owns_property:
         question: Does your client own their home, or any other land or property?
         answers:
@@ -563,7 +571,8 @@ en:
         question: What is the sort code or branch name?
         absence_answer: ''
       has_capital_savings:
-        question: Which savings does your client have inside or outside the UK?
+        question: Which savings does %{subject} have inside or outside the UK?
+        subject: *OR_PARTNER
         answers:
           'none': *absence_none
       # END saving
@@ -663,9 +672,13 @@ en:
         question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
       has_assets:
-        question: Which assets does your client own or part-own inside or outside the UK?
+        question: Which assets does %{subject} own or part-own inside or outside the UK?
+        subject: *OR_PARTNER
         answers:
           'none': *absence_none
+      has_other_assets:
+        question: Which other assets does %{subject} own or part-own inside or outside the UK?
+        subject: *OR_PARTNER
       # END property, address and owners
 
       # START trust_fund

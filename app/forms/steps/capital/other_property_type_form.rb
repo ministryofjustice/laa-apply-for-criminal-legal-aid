@@ -4,14 +4,19 @@ module Steps
       attr_accessor :property_type
       attr_reader :property
 
-      validates :property_type, presence: true
-      validates :property_type, inclusion: { in: PropertyType.values.map(&:to_s) }
+      validate :property_type_selected
 
       def choices
         PropertyType.values
       end
 
       private
+
+      def property_type_selected
+        return if PropertyType.values.map(&:to_s).include? property_type.to_s
+
+        errors.add(:property_type, subject_aware_error_message(:property_type))
+      end
 
       def persist!
         return true if property_type == ''

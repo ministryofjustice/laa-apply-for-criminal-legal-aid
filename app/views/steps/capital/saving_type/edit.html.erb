@@ -8,12 +8,12 @@
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :saving_type, legend: { tag: 'h1', size: 'xl' } do %>
+      <%= f.govuk_radio_buttons_fieldset :saving_type, legend: { tag: 'h1', size: 'xl', text: qt(:has_capital_savings) } do %>
         <% @form_object.choices.each_with_index do |option, index| %>
           <%= f.govuk_radio_button :saving_type, option, link_errors: index.zero? %>
         <% end %>
         <%= f.govuk_radio_divider %>
-        <%= f.govuk_radio_button :saving_type, 'none' %>
+        <%= f.govuk_radio_button :saving_type, 'none', label: { text: nil} %>
       <% end %>
 
       <%= f.continue_button %>
