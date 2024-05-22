@@ -2,6 +2,7 @@ module Summary
   module Components
     class BaseAnswer
       include ActionView::Helpers
+      include ApplicationHelper
 
       attr_reader :question, :value, :show, :change_path, :i18n_opts
 
@@ -30,7 +31,9 @@ module Summary
       end
 
       def question_text
-        I18n.t("summary.questions.#{question}.question", **i18n_opts)
+        translate_with_subject(
+          "summary.questions.#{question}.question", **i18n_opts
+        )
       end
 
       # :nocov:

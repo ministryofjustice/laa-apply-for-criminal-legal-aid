@@ -32,6 +32,14 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
     end
   end
 
+  describe '#validations' do
+    let(:error) do
+      "Select which assets your client or their partner owns or part-owns inside or outside the UK, or select 'They do not own any of these assets'"
+    end
+
+    it { is_expected.to validate_presence_of(:property_type, error) }
+  end
+
   describe '#save' do
     let(:property_type) { PropertyType::RESIDENTIAL.to_s }
     let(:new_property) { instance_double(Property, property_type:) }

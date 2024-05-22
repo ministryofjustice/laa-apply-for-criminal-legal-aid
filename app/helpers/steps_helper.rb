@@ -8,7 +8,7 @@ module StepsHelper
 
     # Support appending optional css classes, maintaining the default ones
     opts.merge!(
-      html: { class: dom_class(record, :edit) }
+      html: { class: dom_class(record, :edit) },
     ) do |_key, old_value, new_value|
       { class: old_value.values | new_value.values }
     end

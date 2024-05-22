@@ -28,4 +28,25 @@ module ApplicationHelper
   def present(model, presenter_class = nil)
     (presenter_class || [model.class, :Presenter].join.demodulize.constantize).new(model)
   end
+
+  # :nocov:
+  # TODO: waiting on partner details so we can detemine if partner without contrary interest exists.
+  def legend_t(attr, **options)
+    form_translate(attr, :legend, **options)
+  end
+
+  def label_t(attr, **options)
+    form_translate(attr, :label, **options)
+  end
+
+  def form_translate(attr, context, **options)
+    options[:scope] ||= ['helpers', context, @form_object.model_name.singular].join('.')
+
+    translate_with_subject(attr, **options)
+  end
+
+  def ownership_type
+    OwnershipType.values[1].to_s
+  end
+  # :nocov:
 end
