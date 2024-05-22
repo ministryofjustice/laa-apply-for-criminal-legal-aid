@@ -69,7 +69,7 @@ module Decisions
     end
 
     def after_employments_summary
-      return show('/steps/income/employed_exit') if form_object.add_client_employment.no?
+      return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
 
       employment = current_crime_application.employments.create!
       redirect_to_employer_details(employment)

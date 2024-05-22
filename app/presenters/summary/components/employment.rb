@@ -16,22 +16,17 @@ module Summary
             ),
             Components::FreeTextAnswer.new(
               :job_title, employment.job_title
+            ),
+            Components::MoneyAnswer.new(
+              :amount, employment.amount
+            ),
+            Components::FreeTextAnswer.new(
+              :frequency, employment.frequency.to_s
+            ),
+            Components::PaymentAnswer.new(
+              :frequency, employment
             )
           ]
-
-
-        if employment.income_payment.present?
-          attributes << Components::MoneyAnswer.new(
-          :amount, employment.income_payment.amount
-        )
-          attributes << Components::FreeTextAnswer.new(
-            :frequency, employment.income_payment.frequency.to_s
-          )
-          attributes << Components::PaymentAnswer.new(
-            :frequency, employment.income_payment
-          )
-        end
-
 
         employment.deductions.each do |deduction|
           attributes << Components::FreeTextAnswer.new(
@@ -58,15 +53,15 @@ module Summary
       end
 
       def change_path
-        edit_steps_income_client_employer_details_path(id: record.crime_application_id, employment_id: employment.id)
+        edit_steps_income_client_employer_details_path(employment_id: employment.id)
       end
 
       def summary_path
-        edit_steps_income_client_employments_summary_path(id: record.crime_application_id, employment_id: employment.id)
+        edit_steps_income_client_employments_summary_path(employment_id: employment.id)
       end
 
       def remove_path
-        confirm_destroy_steps_income_client_employments_path(id: record.crime_application_id, employment_id: employment.id)
+        confirm_destroy_steps_income_client_employments_path(employment_id: employment.id)
       end
     end
   end
