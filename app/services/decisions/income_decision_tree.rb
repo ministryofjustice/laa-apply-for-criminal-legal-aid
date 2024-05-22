@@ -14,6 +14,10 @@ module Decisions
         after_client_employment_details
       when :client_deductions
         after_client_deductions
+      when :employments_summary
+        after_employments_summary
+      when :add_client_employment
+        after_add_client_employment
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -60,6 +64,17 @@ module Decisions
 
     private
 
+    def employment
+      @employment ||= form_object.record
+    end
+
+    def after_employments_summary
+      return show('/steps/income/employed_exit') if form_object.add_client_employment.no?
+
+      employment = current_crime_application.employments.create!
+      redirect_to_employer_details(employment)
+    end
+
     def previous_step_path
       # Second to last element in the array, will be nil for arrays of size 0 or 1
       current_crime_application&.navigation_stack&.slice(-2) || root_path
@@ -87,14 +102,15 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_employer_details
+        employment = current_crime_application.employments.create!
+        redirect_to_employer_details(employment)
       end
     end
 
-    def redirect_to_employer_details
-      employments = current_crime_application.employments
-      current_crime_application.employments.create! if employments.empty?
-      edit('/steps/income/client/employer_details', employment_id: employments.first)
+    def redirect_to_employer_details(employment)
+      # employments = current_crime_application.employments
+      # current_crime_application.employments.create! if employments.empty?
+      edit('/steps/income/client/employer_details', employment_id: employment)
     end
 
     def after_income_before_tax
@@ -197,15 +213,15 @@ module Decisions
     end
 
     def after_client_employer_details
-      edit('steps/income/client/employment_details', employment_id: current_crime_application.employments.first)
+      edit('steps/income/client/employment_details', employment_id: employment)
     end
 
     def after_client_employment_details
-      edit('/steps/income/client/deductions', employment_id: current_crime_application.employments.first)
+      edit('/steps/income/client/deductions', employment_id: employment)
     end
 
     def after_client_deductions
-      show('/steps/income/employed_exit')
+      edit('/steps/income/client/employments_summary')
     end
   end
 end

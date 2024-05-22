@@ -325,7 +325,23 @@ en:
             page_title: Deductions from your client's pay
             heading: Deductions from your client’s pay
             page_text: You told us your client is employed.
-
+        employments_summary:
+          edit:
+            page_title: Your jobs
+            heading:
+              zero: You have not added jobs yet
+              one: You have added %{count} job
+              other: You have added %{count} jobs
+        employments:
+          confirm_destroy:
+            page_title: Delete job confirmation
+            heading: Are you sure you want to remove this job?
+            confirm_delete_button: Yes, remove it
+            cancel_delete_button: No, do not remove it
+            confirm_delete_button_a11y: Yes, remove this job
+            cancel_delete_button_a11y: No, do not remove this job
+          destroy:
+            success_flash: You removed the job
     outgoings:
       caption: Outgoings assessment
       housing_payment_type:

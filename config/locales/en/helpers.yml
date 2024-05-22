@@ -476,6 +476,8 @@ en:
         applicant_self_assessment_tax_bill_options: *YESNO
         amount: How much do they pay?
         frequency_options: *frequency_options
+      steps_income_client_employments_summary_form:
+        add_employment_options: *YESNO
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
