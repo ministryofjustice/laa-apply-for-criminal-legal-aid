@@ -10,7 +10,7 @@ module Decisions
       when :has_partner
         after_has_partner
       when :relationship_status
-        edit(:details)
+        after_relationship_status
       when :details
         after_client_details
       when :case_type
@@ -59,6 +59,14 @@ module Decisions
         show(:partner_exit)
       else
         edit(:details)
+      end
+    end
+
+    def after_relationship_status
+      if current_crime_application.not_means_tested?
+        edit('/steps/case/urn')
+      else
+        edit('/steps/dwp/benefit_type')
       end
     end
 

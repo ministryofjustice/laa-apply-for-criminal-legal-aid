@@ -106,7 +106,17 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :relationship_status }
 
-    it { is_expected.to have_destination(:details, :edit, id: crime_application) }
+    context 'and application is not means tested' do
+      let(:not_means_tested) { true }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'application is means tested' do
+      let(:not_means_tested) { false }
+
+      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `details`' do
