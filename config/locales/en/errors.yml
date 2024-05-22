@@ -903,22 +903,26 @@ en:
           attributes:
             job_title:
               blank: Enter your client's job title
-        steps/income/client/employment_payment_fieldset_form:
-          summary:
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
               greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
+              blank: Select before or after tax
               inclusion: Select before or after tax
             frequency:
+              blank: Select how often they get this payment
               inclusion: Select how often they get this payment
-          attributes:
+          summary:
+            job_title:
+              blank: Enter your client's job title
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
               greater_than: Enter their salary or wage greater than 0
             before_or_after_tax:
+              blank: Select before or after tax
               inclusion: Select before or after tax
             frequency:
+              blank: Select how often they get this payment
               inclusion: Select how often they get this payment

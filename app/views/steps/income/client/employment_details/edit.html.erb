@@ -7,14 +7,12 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-
+    <% @form_object.before_or_after_tax = @form_object.record.before_or_after_tax['value'] if @form_object.record.before_or_after_tax %>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :job_title, autocomplete: 'off', width: 'one-third' %>
-      <%= f.fields_for :income_payment, @form_object.income_payment do |payment_field| %>
-        <%= payment_field.govuk_number_field :amount, autocomplete: 'off', inputmode: 'numeric', width: 'one-third', prefix_text: '£' %>
-        <%= payment_field.govuk_collection_radio_buttons(:before_or_after_tax, @form_object.before_or_after_tax_options, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' }) %>
-        <%= payment_field.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-      <% end %>
+      <%= f.govuk_number_field :amount, autocomplete: 'off', inputmode: 'numeric', width: 'one-third', prefix_text: '£' %>
+      <%= f.govuk_collection_radio_buttons(:before_or_after_tax, @form_object.before_or_after_tax_options, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' }) %>
+      <%= f.govuk_collection_radio_buttons :frequency, PaymentFrequencyType.values, :value, legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
       <%= f.continue_button %>
     <% end %>
   </div>
