@@ -9,37 +9,27 @@ module Summary
         attributes =
           [
             Components::FreeTextAnswer.new(
-              :employer_name, employment.employer_name
+              'employment.employer_name', employment.employer_name
             ),
             Components::FreeTextAnswer.new(
-              :address, full_address(employment.address)
+              'employment.address', full_address(employment.address)
             ),
             Components::FreeTextAnswer.new(
-              :job_title, employment.job_title
-            ),
-            Components::MoneyAnswer.new(
-              :amount, employment.amount
-            ),
-            Components::FreeTextAnswer.new(
-              :frequency, employment.frequency.to_s
+              'employment.job_title', employment.job_title
             ),
             Components::PaymentAnswer.new(
-              :frequency, employment
+              'employment.salary_or_wage', employment
             )
           ]
 
         employment.deductions.each do |deduction|
-          attributes << Components::FreeTextAnswer.new(
-            :deduction_type, deduction.deduction_type
+          attributes << Components::PaymentAnswer.new(
+            "deduction.#{deduction.deduction_type}", deduction
           )
-          attributes << Components::MoneyAnswer.new(
-            :amount, deduction.amount
-          )
+          next unless deduction.other?
+
           attributes << Components::FreeTextAnswer.new(
-            :frequency, deduction.frequency
-          )
-          attributes << Components::FreeTextAnswer.new(
-            :details, deduction.details
+            "deduction.#{deduction.deduction_type}.details", deduction.details
           )
         end
 
