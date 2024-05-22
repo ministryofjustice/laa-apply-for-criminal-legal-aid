@@ -43,16 +43,10 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
         employment_id: employment,
         steps_income_client_employment_details_form: {
           job_title: 'manager',
-          income_payment_attributes: income_payment_attributes
+          amount: 600,
+          frequency: 'four_weeks',
+          before_or_after_tax: BeforeOrAfterTax::AFTER.to_s,
         }
-      }
-    end
-
-    let(:income_payment_attributes) do
-      {
-        amount: 600,
-        frequency: 'four_weeks',
-        before_or_after_tax: BeforeOrAfterTax::AFTER.to_s,
       }
     end
 
@@ -64,7 +58,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
     end
 
     context 'when invalid address attributes' do
-      before { income_payment_attributes.merge!(amount: nil, frequency: nil) }
+      before { expected_params[:steps_income_client_employment_details_form].merge!(amount: nil, frequency: nil) }
 
       it 'does not redirect to the `properties_summary` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }

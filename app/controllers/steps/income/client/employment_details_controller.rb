@@ -23,10 +23,6 @@ module Steps
         def employments
           @employments ||= current_crime_application.employments
         end
-
-        def additional_permitted_params
-          [income_payment_attributes: Steps::Income::Client::EmploymentPaymentFieldsetForm.attribute_names]
-        end
       end
     end
   end
