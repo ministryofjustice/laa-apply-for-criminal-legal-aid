@@ -448,12 +448,11 @@ en:
           postcode: Postcode
       steps_income_client_employment_details_form:
         job_title: What is your client’s job title?
-        income_payment_attributes:
-          amount: What is their salary or wage?
-          before_or_after_tax_options:
-            before_tax: Before tax
-            after_tax: After tax
-          frequency_options: *frequency_options
+        amount: What is their salary or wage?
+        before_or_after_tax_options:
+          before_tax: Before tax
+          after_tax: After tax
+        frequency_options: *frequency_options
       steps_income_client_deductions_form:
         #deductions: Select all that apply.
         types_options:
