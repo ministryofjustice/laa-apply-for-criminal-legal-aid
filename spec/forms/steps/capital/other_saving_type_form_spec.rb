@@ -16,6 +16,7 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
 
   describe '#save' do
     before do
+      allow(form).to receive(:include_partner_in_means_assessment?).and_return(true)
       allow(savings).to receive(:create!).with(saving_type:).and_return new_saving
 
       form.saving_type = saving_type
@@ -35,6 +36,31 @@ RSpec.describe Steps::Capital::OtherSavingTypeForm do
       it 'does not create a saving' do
         expect(savings).not_to have_received(:create!).with(saving_type:)
       end
+    end
+  end
+
+  describe '#validations' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      form.saving_type = nil
+    end
+
+    let(:include_partner?) { false }
+
+    let(:error_message) do
+      'Select which other savings your client has inside or outside the UK'
+    end
+
+    it { is_expected.to validate_presence_of(:saving_type, :blank, error_message) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:error_message) do
+        'Select which other savings your client or their partner has inside or outside the UK'
+      end
+
+      it { is_expected.to validate_presence_of(:saving_type, :blank, error_message) }
     end
   end
 end

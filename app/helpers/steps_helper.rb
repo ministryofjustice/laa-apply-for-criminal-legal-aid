@@ -83,15 +83,14 @@ module StepsHelper
   end
 
   def translate_with_subject(key, **options)
-    options[:subject] ||= translate('dictionary.subject', ownership_type:)
+    options[:subject] ||= translate(
+      'dictionary.subject',
+      ownership_type: current_form_object.try(:subject_ownership_type)
+    )
 
     translate(key, **options)
   end
   alias t translate_with_subject
-
-  def ownership_type
-    current_form_object.try(:ownership_type)
-  end
 
   def current_form_object
     controller.try(:current_form_object)

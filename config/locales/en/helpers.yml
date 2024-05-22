@@ -154,9 +154,9 @@ en:
       steps_capital_other_property_type_form:
         property_type: Which other assets does %{subject} own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
-        saving_type: Which savings does your client have inside or outside the UK?
+        saving_type: Which savings does %{subject} have inside or outside the UK?
       steps_capital_other_saving_type_form:
-        saving_type: Which other savings does your client have inside or outside the UK?
+        saving_type: Which other savings does %{subject} have inside or outside the UK?
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?

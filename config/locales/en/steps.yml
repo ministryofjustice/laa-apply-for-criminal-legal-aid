@@ -436,20 +436,20 @@ en:
       caption: Capital assessment
       saving_type:
         edit:
-          page_title: Which savings does your client have inside or outside the UK?
+          page_title: Which savings does %{subject} have inside or outside the UK?
       other_saving_type:
         edit:
-          page_title: Which other savings does your client have inside or outside the UK?
+          page_title: Which other savings does %{subject} have inside or outside the UK?
       savings:
         edit:
           page_title: Add savings account details
           heading:
-            bank: Your client’s bank account
-            building_society: Your client’s building society account
-            cash_isa: Your client’s cash ISA
-            national_savings_or_post_office: Your client’s National Savings or Post Office account
-            other: Your client’s other cash investment
-          info: You told us your client has savings.
+            bank: Your %{subject}’s bank account
+            building_society: Your %{subject}’s building society account
+            cash_isa: Your %{subject}’s cash ISA
+            national_savings_or_post_office: Your %{subject}’s National Savings or Post Office account
+            other: Your %{subject}’s other cash investment
+          info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
           heading: Are you sure you want to remove this savings account?
@@ -461,7 +461,7 @@ en:
           success_flash: You removed the savings account
       savings_summary:
         edit:
-          page_title: Your client’s savings
+          page_title: Your %{subject}’s savings
           heading:
             zero: You have not added savings yet
             one: You have added %{count} saving
