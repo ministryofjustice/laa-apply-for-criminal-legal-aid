@@ -1,6 +1,6 @@
 <%= govuk_summary_card title: t(section.name, scope: 'summary.sections') do |card| %>
   <% if section.editable? && section.change_path %>
-      <% card.with_action { govuk_link_to( 'Change', section.change_path, no_visited_state: true )} %>
+      <% card.with_action { govuk_link_to('Change', section.change_path, no_visited_state: true) } %>
   <% end %>
 <%= render partial: 'steps/submission/shared/summary_list', locals: { section: } %>
 <% end %>

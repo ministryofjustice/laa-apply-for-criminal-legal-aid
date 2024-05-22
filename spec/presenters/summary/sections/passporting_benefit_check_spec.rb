@@ -20,7 +20,7 @@ describe Summary::Sections::PassportingBenefitCheck do
       Applicant,
       benefit_type:,
       last_jsa_appointment_date:,
-      passporting_benefit:,
+      benefit_check_result:,
       has_nino:,
       nino:,
       will_enter_nino:,
@@ -34,7 +34,7 @@ describe Summary::Sections::PassportingBenefitCheck do
   let(:has_nino) { nil }
   let(:nino) { nil }
   let(:will_enter_nino) { nil }
-  let(:passporting_benefit) { nil }
+  let(:benefit_check_result) { nil }
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
@@ -67,7 +67,7 @@ describe Summary::Sections::PassportingBenefitCheck do
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
       let(:has_nino) { YesNoAnswer::YES.to_s }
       let(:nino) { '123456' }
-      let(:passporting_benefit) { false }
+      let(:benefit_check_result) { false }
       let(:confirm_details) { YesNoAnswer::YES.to_s }
       let(:has_benefit_evidence) { YesNoAnswer::YES.to_s }
       let(:confirm_dwp_result) { YesNoAnswer::NO.to_s }
@@ -100,7 +100,7 @@ describe Summary::Sections::PassportingBenefitCheck do
     context 'when applicant benefit has been confirmed by benefit checker' do
       let(:benefit_type) { BenefitType::JSA.to_s }
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
-      let(:passporting_benefit) { true }
+      let(:benefit_check_result) { true }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(3)

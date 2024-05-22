@@ -11,19 +11,19 @@ module Summary
           Components::ValueAnswer.new(
             :will_benefit_from_trust_fund,
             crime_application.capital.will_benefit_from_trust_fund,
-            change_path: change_path,
+            change_path: edit_steps_capital_trust_fund_path(crime_application),
             show: true
           ),
           Components::MoneyAnswer.new(
             :trust_fund_amount_held,
             crime_application.capital.trust_fund_amount_held,
-            change_path: change_path,
+            change_path: edit_steps_capital_trust_fund_path(crime_application),
             show: will_benefit_from_trust_fund?
           ),
           Components::MoneyAnswer.new(
             :trust_fund_yearly_dividend,
             crime_application.capital.trust_fund_yearly_dividend,
-            change_path: change_path,
+            change_path: edit_steps_capital_trust_fund_path(crime_application),
             show: will_benefit_from_trust_fund?
           )
         ].select(&:show?)
@@ -33,10 +33,6 @@ module Summary
 
       def will_benefit_from_trust_fund?
         YesNoAnswer.new(capital.will_benefit_from_trust_fund.to_s).yes?
-      end
-
-      def change_path
-        edit_steps_capital_trust_fund_path(crime_application)
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

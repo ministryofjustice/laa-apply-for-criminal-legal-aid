@@ -54,7 +54,7 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
                                                   'last_jsa_appointment_date' => nil,
                                                   'has_benefit_evidence' => nil,
                                                   'will_enter_nino' => nil,
-                                                  'passporting_benefit' => nil,
+                                                  'benefit_check_result' => nil,
                                                   'confirm_details' => nil
                                                 }).and_return(true)
         expect(subject.save).to be(true)
@@ -130,7 +130,7 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
                                                   'last_jsa_appointment_date' => nil,
                                                   'has_benefit_evidence' => nil,
                                                   'will_enter_nino' => nil,
-                                                  'passporting_benefit' => nil,
+                                                  'benefit_check_result' => nil,
                                                   'confirm_details' => nil
                                                 }).and_return(true)
         expect(subject.save).to be(true)

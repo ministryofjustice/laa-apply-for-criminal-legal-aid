@@ -22,7 +22,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       correspondence_address_type: 'home_address',
       residence_type: 'rented',
       relationship_to_owner_of_usual_home_address: nil,
-      passporting_benefit: false,
+      benefit_check_result: false,
       will_enter_nino: nil,
       has_benefit_evidence: 'yes',
       confirm_details: 'yes'
@@ -73,7 +73,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           correspondence_address_type: 'home_address',
           residence_type: 'rented',
           relationship_to_owner_of_usual_home_address: nil,
-          passporting_benefit: false,
+          benefit_check_result: false,
           will_enter_nino: nil,
           has_benefit_evidence: 'yes',
           confirm_details: 'yes',

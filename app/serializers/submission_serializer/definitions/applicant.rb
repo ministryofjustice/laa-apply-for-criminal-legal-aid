@@ -19,7 +19,7 @@ module SubmissionSerializer
           json.nino applicant.nino
           json.benefit_type applicant.benefit_type
           json.last_jsa_appointment_date applicant.last_jsa_appointment_date
-          json.passporting_benefit applicant.passporting_benefit
+          json.benefit_check_result applicant.benefit_check_result
           json.will_enter_nino applicant.will_enter_nino
           json.has_benefit_evidence applicant.has_benefit_evidence
           json.confirm_details applicant.confirm_details

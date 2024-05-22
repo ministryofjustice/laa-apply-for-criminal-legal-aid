@@ -42,7 +42,7 @@ module Steps
           'last_jsa_appointment_date' => (last_jsa_appointment_date if jsa?),
           'has_benefit_evidence' => nil,
           'will_enter_nino' => nil,
-          'passporting_benefit' => nil,
+          'benefit_check_result' => nil,
           'confirm_details' => nil
         }
       end

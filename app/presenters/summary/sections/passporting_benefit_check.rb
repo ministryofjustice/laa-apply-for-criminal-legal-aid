@@ -65,9 +65,9 @@ module Summary
         return 'undetermined' if benefit_evidence_forthcoming?
         return 'no_record_found' if means_assessment_as_benefit_evidence?
         return 'no_check_required' if applicant.benefit_type == 'none'
-        return 'checker_unavailable' if applicant.passporting_benefit.nil? && applicant.has_benefit_evidence.present?
+        return 'checker_unavailable' if applicant.benefit_check_result.nil? && applicant.has_benefit_evidence.present?
 
-        applicant.passporting_benefit
+        applicant.benefit_check_result
       end
     end
   end

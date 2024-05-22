@@ -307,7 +307,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_20_102040) do
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
     t.string "confirm_details"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
