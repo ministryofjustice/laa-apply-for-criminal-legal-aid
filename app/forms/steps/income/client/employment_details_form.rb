@@ -3,34 +3,27 @@ module Steps
     module Client
       class EmploymentDetailsForm < Steps::BaseFormObject
         attribute :job_title
+        attribute :amount, :pence
+        attribute :before_or_after_tax, :value_object, source: BeforeOrAfterTax
+        attribute :frequency, :string
 
-        delegate :income_payment_attributes=, to: :record
+        validates :job_title, :before_or_after_tax, presence: true
+        validates :amount, numericality: {
+          greater_than: 0
+        }
+        validates :frequency, presence: true, inclusion: { in: :frequencies }
+        validates :before_or_after_tax, presence: true, inclusion: { in: :before_or_after_tax_options }
 
-        def income_payment
-          payment = record.income_payment.nil? ? record.build_income_payment : record.income_payment
-          @income_payment ||= EmploymentPaymentFieldsetForm.build(payment, crime_application:)
+        def frequencies
+          PaymentFrequencyType.values.map(&:to_s)
         end
-
-        validates :job_title, presence: true
-        validates_with EmploymentPaymentValidator
 
         def before_or_after_tax_options
           BeforeOrAfterTax.values
         end
 
         def persist!
-          reset!
-
-          record.income_payment.crime_application = crime_application
-          record.income_payment.payment_type = IncomePaymentType::EMPLOYMENT_INCOME.to_s
-          record.job_title = job_title
-          record.save
-        end
-
-        def reset!
-          crime_application.employments.where(id: record.id).find_each do |employment|
-            employment.income_payment&.destroy
-          end
+          record.update(attributes)
         end
       end
     end

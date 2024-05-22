@@ -8,7 +8,9 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsForm do
       crime_application: crime_application,
       record: employment,
       job_title: job_title,
-      income_payment_attributes: income_payment_attributes,
+      amount: 100,
+      frequency: PaymentFrequencyType::MONTHLY.to_s,
+      before_or_after_tax: BeforeOrAfterTax::AFTER.to_s
     }
   end
 
@@ -16,24 +18,12 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsForm do
   let(:employment) { Employment.new(crime_application:) }
   let(:job_title) { nil }
 
-  let(:income_payment_attributes) do
-    {
-      amount: 100,
-      frequency: PaymentFrequencyType::MONTHLY.to_s,
-      metadata: { before_or_after_tax: BeforeOrAfterTax::AFTER.to_s }
-    }
-  end
-
   describe '#save' do
     context 'when valid attributes are provided' do
       let(:job_title) { 'abc' }
 
       it 'returns true' do
         expect(form.save).to be(true)
-      end
-
-      it 'create associated income payment' do
-        expect(form.record.income_payment).to be_a IncomePayment
       end
     end
 
@@ -52,7 +42,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsForm do
       let(:job_title) { 'abc' }
 
       before {
-        income_payment_attributes.merge!(amount: nil)
+        arguments.merge!(amount: nil)
       }
 
       it 'returns false' do
@@ -62,7 +52,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsForm do
       it 'has a validation error on the field' do
         form.save
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?('income-payment-attributes[1].amount', :not_a_number)).to be(true)
+        expect(form.errors.of_kind?(:amount, :not_a_number)).to be(true)
       end
     end
   end
