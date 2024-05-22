@@ -3,7 +3,7 @@ module Summary
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class TrustFund < Sections::BaseSection
       def show?
-        capital.present? && super
+        capital.present? && capital.will_benefit_from_trust_fund.present?
       end
 
       def answers

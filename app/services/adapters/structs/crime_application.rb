@@ -17,19 +17,10 @@ module Adapters
         client_details.applicant.respond_to?(:confirm_dwp_result) ? client_details.applicant.confirm_dwp_result : nil
       end
 
-      # TODO: add benefit_check_result to schema
-      # `passporting_benefit` not part of schema, infer true value if
-      # means passport is on benefit check. We cannot infer false from
-      # the information we have, so default to nil
-      def infer_passporting_benefit
-        true if means_passport.include?(MeansPassportType::ON_BENEFIT_CHECK.to_s)
-      end
-
       def applicant
         return @applicant if @applicant
 
         struct = Structs::Applicant.new(client_details.applicant)
-        struct.benefit_check_result = infer_passporting_benefit
 
         @applicant = struct
       end

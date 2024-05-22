@@ -12,6 +12,7 @@ describe Summary::Sections::PassportingBenefitCheck do
       confirm_dwp_result: confirm_dwp_result,
       applicant: applicant,
       application_type: ApplicationType::INITIAL,
+      means_passport: means_passport
     )
   end
 
@@ -38,6 +39,7 @@ describe Summary::Sections::PassportingBenefitCheck do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
+  let(:means_passport) { [] }
 
   describe '#name' do
     it { expect(subject.name).to eq(:passporting_benefit_check) }
@@ -46,6 +48,7 @@ describe Summary::Sections::PassportingBenefitCheck do
   describe '#show?' do
     context 'when there is a benefit type' do
       let(:benefit_type) { BenefitType::JSA.to_s }
+      let(:has_passporting_benefit?) { true }
 
       it 'shows this section' do
         expect(subject.show?).to be(true)
@@ -149,6 +152,29 @@ describe Summary::Sections::PassportingBenefitCheck do
         expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
         expect(answers[2].value).to eq('no_check_no_nino')
+      end
+    end
+
+    context 'when returned app is passported on benefit check' do
+      let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
+      let(:benefit_type) { BenefitType::JSA.to_s }
+      let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(3)
+
+        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
+        expect(answers[2].value).to be(true)
+      end
+    end
+
+    context 'for a historical application' do
+      let(:benefit_type) { BenefitType::JSA.to_s }
+      let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(2)
       end
     end
   end

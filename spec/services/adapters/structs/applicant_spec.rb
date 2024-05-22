@@ -5,13 +5,6 @@ RSpec.describe Adapters::Structs::Applicant do
 
   let(:application_struct) { build_struct_application }
 
-  describe '#benefit_check_result=' do
-    it 'can be set' do
-      subject.benefit_check_result = true
-      expect(subject.benefit_check_result).to be true
-    end
-  end
-
   describe '#first_name' do
     it 'returns the applicant first name' do
       expect(subject.first_name).to eq('Kit')

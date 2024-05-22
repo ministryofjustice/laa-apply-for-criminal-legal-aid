@@ -14,7 +14,7 @@ describe Summary::HtmlPresenter do
       income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
-      capital: (double has_premium_bonds: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
+      capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
   end
