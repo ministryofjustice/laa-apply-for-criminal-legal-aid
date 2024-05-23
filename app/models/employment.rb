@@ -1,6 +1,9 @@
 class Employment < ApplicationRecord
   belongs_to :crime_application
 
+  # Using UUIDs as the record IDs. We can't trust sequential ordering by ID
+  default_scope { order(created_at: :asc) }
+
   has_many :deductions, -> { order(deduction_type: :asc) }, inverse_of: :employment, dependent: :destroy do
     def complete
       select(&:complete?)
@@ -31,6 +34,8 @@ class Employment < ApplicationRecord
   end
 
   def deductions_complete?
-    deductions.all?(&:complete?) && deductions
+    return true if has_no_deductions == YesNoAnswer::YES.to_s
+
+    deductions.present? && deductions.all?(&:complete?)
   end
 end

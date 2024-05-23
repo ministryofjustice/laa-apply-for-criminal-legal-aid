@@ -102,7 +102,13 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        employment = current_crime_application.employments.create!
+
+        employment = if incomplete_employments.empty?
+                       current_crime_application.employments.create!
+                     else
+                       incomplete_employments.first
+                     end
+
         redirect_to_employer_details(employment)
       end
     end
@@ -182,6 +188,10 @@ module Decisions
       else
         edit(:answers)
       end
+    end
+
+    def incomplete_employments
+      crime_application.employments.reject(&:complete?)
     end
 
     def employed?

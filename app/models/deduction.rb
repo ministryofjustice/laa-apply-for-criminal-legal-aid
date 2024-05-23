@@ -1,4 +1,7 @@
 class Deduction < ApplicationRecord
+  # Ordering using deduction_type maintains the deduction order income_tax, national_insurance and other
+  default_scope { order(deduction_type: :asc) }
+
   belongs_to :employment
   validates :employment_id, uniqueness: { scope: :deduction_type }
   attribute :amount, :pence
