@@ -9,10 +9,8 @@ module Tasks
     end
 
     def can_start?
-      if crime_application.pse?
-        fulfilled?(EvidenceUpload)
-      else
-        fulfilled?(CaseDetails) && crime_application.valid?(:submission)
+      required_task_classes.all? do |klass|
+        fulfilled?(klass)
       end
     end
 
@@ -25,6 +23,25 @@ module Tasks
       crime_application.values_at(
         :legal_rep_first_name, :legal_rep_last_name, :legal_rep_telephone
       ).any?
+    end
+
+    private
+
+    def required_task_classes # rubocop:disable Metrics/MethodLength
+      if crime_application.pse?
+        [EvidenceUpload, MoreInformation]
+      else
+        [
+          ClientDetails,
+          PassportingBenefitCheck,
+          CaseDetails,
+          Ioj,
+          IncomeAssessment,
+          OutgoingsAssessment,
+          CapitalAssessment,
+          MoreInformation
+        ]
+      end
     end
   end
 end
