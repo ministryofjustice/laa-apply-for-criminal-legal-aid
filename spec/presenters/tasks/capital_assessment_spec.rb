@@ -26,7 +26,7 @@ RSpec.describe Tasks::CapitalAssessment do
 
   before do
     allow(CapitalAssessment::AnswersValidator).to receive(:new)
-      .with(record: nil, crime_application: crime_application).and_return(validator)
+      .with(record: capital, crime_application: crime_application).and_return(validator)
   end
 
   describe '#path' do
@@ -124,10 +124,18 @@ RSpec.describe Tasks::CapitalAssessment do
   describe '#completed?' do
     subject(:completed?) { task.completed? }
 
-    context 'answers are complete' do
+    context 'when answers and confirmation are complete' do
+      let(:capital) { instance_double(Capital, complete?: true) }
       let(:complete?) { true }
 
       it { is_expected.to be true }
+    end
+
+    context 'when answers are complete but confirmation is not' do
+      let(:capital) { instance_double(Capital, complete?: false) }
+      let(:complete?) { true }
+
+      it { is_expected.to be false }
     end
 
     context 'answers are incomplete' do
