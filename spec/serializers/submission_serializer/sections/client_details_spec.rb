@@ -74,6 +74,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           residence_type: 'rented',
           relationship_to_owner_of_usual_home_address: nil,
           benefit_check_result: false,
+          benefit_check_status: 'undetermined',
           will_enter_nino: nil,
           has_benefit_evidence: 'yes',
           confirm_details: 'yes',

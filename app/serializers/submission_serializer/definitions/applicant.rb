@@ -24,6 +24,7 @@ module SubmissionSerializer
           json.has_benefit_evidence applicant.has_benefit_evidence
           json.confirm_details applicant.confirm_details
           json.confirm_dwp_result confirm_dwp_result
+          json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

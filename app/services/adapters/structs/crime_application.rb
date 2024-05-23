@@ -11,12 +11,6 @@ module Adapters
       end
       # rubocop:enable Naming/PredicateName
 
-      # `confirm_dwp_result` is saved in the applicant/partner part of Schema, requires calculation
-      # TODO: amend for partner
-      def confirm_dwp_result
-        client_details.applicant.respond_to?(:confirm_dwp_result) ? client_details.applicant.confirm_dwp_result : nil
-      end
-
       def applicant
         return @applicant if @applicant
 

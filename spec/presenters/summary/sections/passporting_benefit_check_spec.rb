@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::PassportingBenefitCheck do
   subject { described_class.new(crime_application) }
 
@@ -8,38 +7,29 @@ describe Summary::Sections::PassportingBenefitCheck do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      client_has_partner: 'no',
-      confirm_dwp_result: confirm_dwp_result,
-      applicant: applicant,
-      application_type: ApplicationType::INITIAL,
-      means_passport: means_passport
+      applicant: applicant
     )
   end
 
   let(:applicant) do
-    instance_double(
+    double(
       Applicant,
       benefit_type:,
       last_jsa_appointment_date:,
-      benefit_check_result:,
-      has_nino:,
-      nino:,
-      will_enter_nino:,
       confirm_details:,
-      has_benefit_evidence:,
+      has_benefit_evidence:
     )
   end
 
   let(:benefit_type) { nil }
   let(:last_jsa_appointment_date) { nil }
-  let(:has_nino) { nil }
-  let(:nino) { nil }
-  let(:will_enter_nino) { nil }
-  let(:benefit_check_result) { nil }
+  let(:benefit_check_status) { nil }
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
-  let(:confirm_dwp_result) { nil }
-  let(:means_passport) { [] }
+
+  before do
+    allow(applicant).to receive(:benefit_check_status).and_return(benefit_check_status)
+  end
 
   describe '#name' do
     it { expect(subject.name).to eq(:passporting_benefit_check) }
@@ -68,54 +58,72 @@ describe Summary::Sections::PassportingBenefitCheck do
     context 'when benefit check outcome undetermined' do
       let(:benefit_type) { BenefitType::JSA.to_s }
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
-      let(:has_nino) { YesNoAnswer::YES.to_s }
-      let(:nino) { '123456' }
-      let(:benefit_check_result) { false }
       let(:confirm_details) { YesNoAnswer::YES.to_s }
-      let(:has_benefit_evidence) { YesNoAnswer::YES.to_s }
-      let(:confirm_dwp_result) { YesNoAnswer::NO.to_s }
 
-      it 'has the correct rows' do
-        expect(answers.count).to eq(5)
+      context 'and has benefit evidence is yes' do
+        let(:has_benefit_evidence) { YesNoAnswer::YES.to_s }
+        let(:benefit_check_status) { 'undetermined' }
 
-        expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[0].question).to eq(:passporting_benefit)
-        expect(answers[0].value).to eq('jsa')
+        it 'has the correct rows' do
+          expect(answers.count).to eq(5)
 
-        expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
-        expect(answers[1].question).to eq(:last_jsa_appointment_date)
-        expect(answers[1].value).to eq(Date.new(2024, 2, 21))
+          expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[0].question).to eq(:passporting_benefit)
+          expect(answers[0].value).to eq('jsa')
 
-        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
-        expect(answers[2].value).to eq('undetermined')
+          expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
+          expect(answers[1].question).to eq(:last_jsa_appointment_date)
+          expect(answers[1].value).to eq(Date.new(2024, 2, 21))
 
-        expect(answers[3]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[3].question).to eq(:confirmed_client_details)
-        expect(answers[3].value).to eq('yes')
+          expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
+          expect(answers[2].value).to eq('undetermined')
 
-        expect(answers[4]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[4].question).to eq(:has_benefit_evidence)
-        expect(answers[4].value).to eq('yes')
+          expect(answers[3]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[3].question).to eq(:confirmed_client_details)
+          expect(answers[3].value).to eq('yes')
+
+          expect(answers[4]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[4].question).to eq(:has_benefit_evidence)
+          expect(answers[4].value).to eq('yes')
+        end
+      end
+
+      context 'and has benefit evidence is no' do
+        let(:has_benefit_evidence) { YesNoAnswer::NO.to_s }
+        let(:benefit_check_status) { 'no_record_found' }
+
+        it 'has the correct rows' do
+          expect(answers.count).to eq(5)
+
+          expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
+          expect(answers[2].value).to eq('no_record_found')
+
+          expect(answers[4]).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answers[4].question).to eq(:has_benefit_evidence)
+          expect(answers[4].value).to eq('no')
+        end
       end
     end
 
     context 'when applicant benefit has been confirmed by benefit checker' do
       let(:benefit_type) { BenefitType::JSA.to_s }
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
-      let(:benefit_check_result) { true }
+      let(:benefit_check_status) { 'confirmed' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(3)
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
-        expect(answers[2].value).to be(true)
+        expect(answers[2].value).to eq('confirmed')
       end
     end
 
     context 'when benefit check not required' do
       let(:benefit_type) { 'none' }
+      let(:benefit_check_status) { 'no_check_required' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(2)
@@ -130,6 +138,7 @@ describe Summary::Sections::PassportingBenefitCheck do
       let(:benefit_type) { BenefitType::JSA.to_s }
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
       let(:has_benefit_evidence) { YesNoAnswer::YES.to_s }
+      let(:benefit_check_status) { 'checker_unavailable' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(4)
@@ -143,8 +152,7 @@ describe Summary::Sections::PassportingBenefitCheck do
     context 'when nino forthcoming' do
       let(:benefit_type) { BenefitType::JSA.to_s }
       let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
-      let(:has_nino) { YesNoAnswer::NO.to_s }
-      let(:will_enter_nino) { YesNoAnswer::NO.to_s }
+      let(:benefit_check_status) { 'no_check_no_nino' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(3)
@@ -152,20 +160,6 @@ describe Summary::Sections::PassportingBenefitCheck do
         expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
         expect(answers[2].value).to eq('no_check_no_nino')
-      end
-    end
-
-    context 'when returned app is passported on benefit check' do
-      let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
-      let(:benefit_type) { BenefitType::JSA.to_s }
-      let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(3)
-
-        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[2].question).to eq(:passporting_benefit_check_outcome)
-        expect(answers[2].value).to be(true)
       end
     end
 
@@ -179,4 +173,3 @@ describe Summary::Sections::PassportingBenefitCheck do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

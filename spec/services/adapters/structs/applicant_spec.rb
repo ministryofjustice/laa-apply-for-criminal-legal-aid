@@ -69,6 +69,7 @@ RSpec.describe Adapters::Structs::Applicant do
           relationship_to_owner_of_usual_home_address
           has_partner
           benefit_check_result
+          benefit_check_status
           relationship_status
           relationship_to_partner
           separation_date

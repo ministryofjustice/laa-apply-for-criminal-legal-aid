@@ -175,7 +175,7 @@ en:
       passporting_benefit_check_outcome:
         question: Passporting benefit check outcome
         answers:
-          true: Confirmed
+          confirmed: Confirmed
           no_check_required: No check required
           undetermined: No match - check details are correct
           no_record_found: No record of passporting benefit found
