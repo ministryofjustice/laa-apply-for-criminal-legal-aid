@@ -22,8 +22,7 @@ module Steps
           if employments.reload.any?
             redirect_to edit_steps_income_client_employments_summary_path, success: t('.success_flash')
           else
-            new_employment = current_crime_application.employments.create!
-            redirect_to edit_steps_income_client_employer_details_path(employment_id: new_employment.id), success: t('.success_flash')
+            redirect_to edit_steps_income_employment_status_path, success: t('.success_flash')
           end
         end
 

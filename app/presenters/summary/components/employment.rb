@@ -1,10 +1,11 @@
 module Summary
   module Components
-    class Employment < BaseRecord # rubocop:disable Metrics/ClassLength
+    class Employment < BaseRecord
       alias employment record
 
       private
 
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         attributes =
           [
@@ -35,6 +36,7 @@ module Summary
 
         attributes
       end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def full_address(address)
         return unless address
