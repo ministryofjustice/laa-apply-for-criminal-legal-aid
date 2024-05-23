@@ -65,7 +65,11 @@ module Decisions
     private
 
     def employment
-      @employment ||= form_object.record
+      @employment ||= if incomplete_employments.empty?
+                        current_crime_application.employments.create!
+                      else
+                        incomplete_employments.first
+                      end
     end
 
     def after_employments_summary
@@ -103,13 +107,6 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-
-        employment = if incomplete_employments.empty?
-                       current_crime_application.employments.create!
-                     else
-                       incomplete_employments.first
-                     end
-
         redirect_to_employer_details(employment)
       end
     end
@@ -125,7 +122,7 @@ module Decisions
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -135,7 +132,7 @@ module Decisions
       if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -145,7 +142,7 @@ module Decisions
       return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
       if requires_full_means_assessment?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit('/steps/income/client/employment_income')
       end
@@ -155,7 +152,7 @@ module Decisions
       if no_property?
         edit(:has_savings)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -225,11 +222,11 @@ module Decisions
     end
 
     def after_client_employer_details
-      edit('steps/income/client/employment_details', employment_id: employment)
+      edit('steps/income/client/employment_details', employment_id: form_object.record.id)
     end
 
     def after_client_employment_details
-      edit('/steps/income/client/deductions', employment_id: employment)
+      edit('/steps/income/client/deductions', employment_id: form_object.record.id)
     end
 
     def after_client_deductions
