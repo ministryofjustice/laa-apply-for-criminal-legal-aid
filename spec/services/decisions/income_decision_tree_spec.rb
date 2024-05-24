@@ -10,12 +10,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      employments: [employment_double],
+      employments: [employment],
       kase: kase
     )
   end
 
-  let(:employment_double) { instance_double(Employment, id: 'uuid') }
+  let(:employment) { Employment.new }
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
@@ -144,10 +144,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employer_details`' do
     let(:form_object) do
-      double('FormObject', record:)
+      double('FormObject', record: employment)
     end
     let(:step_name) { :client_employer_details }
-    let(:record) { instance_double(Employment) }
 
     it 'redirects to `client_employer_details` page' do
       expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
@@ -156,10 +155,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employment_details`' do
     let(:form_object) do
-      double('FormObject', record:)
+      double('FormObject', record: employment)
     end
     let(:step_name) { :client_employment_details }
-    let(:record) { instance_double(Employment) }
 
     it 'redirects to `client deductions` page' do
       expect(subject).to have_destination('/steps/income/client/deductions', :edit, id: crime_application)
@@ -168,13 +166,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_deductions`' do
     let(:form_object) do
-      double('FormObject', record:)
+      double('FormObject', record: employment)
     end
     let(:step_name) { :client_deductions }
-    let(:record) { instance_double(Employment) }
 
     it 'redirects to `employed_exit` page' do
-      expect(subject).to have_destination('/steps/income/employed_exit', :show, id: crime_application)
+      expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
     end
   end
 
