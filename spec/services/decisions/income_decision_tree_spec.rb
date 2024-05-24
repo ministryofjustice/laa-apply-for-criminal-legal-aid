@@ -10,15 +10,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      employments: [employment],
+      employments: employments_double,
       kase: kase
     )
   end
 
-  let(:employment) { Employment.new }
+  let(:employment_double) { instance_double(Employment, id: 'uuid') }
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
+  let(:employments_double) { double('employments_collection', create!: true, reject: []) }
   let(:kase) { instance_double(Case, case_type:) }
 
   let(:case_type) { nil }
@@ -144,7 +145,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employer_details`' do
     let(:form_object) do
-      double('FormObject', record: employment)
+      double('FormObject', record: employment_double)
     end
     let(:step_name) { :client_employer_details }
 
@@ -155,7 +156,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employment_details`' do
     let(:form_object) do
-      double('FormObject', record: employment)
+      double('FormObject', record: employment_double)
     end
     let(:step_name) { :client_employment_details }
 
@@ -166,12 +167,37 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_deductions`' do
     let(:form_object) do
-      double('FormObject', record: employment)
+      double('FormObject', record: employment_double)
     end
     let(:step_name) { :client_deductions }
 
-    it 'redirects to `employed_exit` page' do
+    it 'redirects to `employments_summary` page' do
       expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `employments_summary`' do
+    let(:form_object) { double('FormObject', record: employment_double) }
+    let(:step_name) { :employments_summary }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_client_employment:)
+    end
+
+    context 'the client has selected yes to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `employer_details` page' do
+        expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::NO }
+
+      it 'redirects to self_assessment_tax_bill page' do
+        expect(subject).to have_destination(:self_assessment_tax_bill, :edit, id: crime_application)
+      end
     end
   end
 

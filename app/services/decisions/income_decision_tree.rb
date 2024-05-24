@@ -16,8 +16,6 @@ module Decisions
         after_client_deductions
       when :employments_summary
         after_employments_summary
-      when :add_client_employment
-        after_add_client_employment
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -98,7 +96,6 @@ module Decisions
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
     # <- to make it easier to reimplement when we do self-employed
     def start_employment_journey
       case form_object.employment_status
@@ -110,7 +107,6 @@ module Decisions
         redirect_to_employer_details(employment)
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     def redirect_to_employer_details(employment)
       # employments = current_crime_application.employments

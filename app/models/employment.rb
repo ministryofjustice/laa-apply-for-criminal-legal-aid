@@ -20,7 +20,8 @@ class Employment < ApplicationRecord
     :employer_name,
     :job_title,
     :amount,
-    :frequency
+    :frequency,
+    :before_or_after_tax
   ].freeze
 
   def complete?
