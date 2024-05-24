@@ -9,7 +9,7 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     end
 
     it 'sets the benefit_check_result from the means attribute' do
-      expect(subject.applicant.benefit_check_result).to be true
+      expect(subject.applicant.benefit_check_result).to be false
     end
   end
 

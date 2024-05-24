@@ -16,7 +16,15 @@ module Steps
 
         return true if confirm_dwp_result.no?
 
-        crime_application.applicant.update(benefit_type: BenefitType::NONE) if confirm_dwp_result.yes?
+        crime_application.applicant.update(attributes_to_update) if confirm_dwp_result.yes?
+      end
+
+      def attributes_to_update
+        {
+          'benefit_type' => BenefitType::NONE,
+          'has_benefit_evidence' => nil,
+          'confirm_details' => nil
+        }
       end
     end
   end

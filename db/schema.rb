@@ -309,6 +309,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_21_142354) do
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
+    t.string "confirm_details"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 

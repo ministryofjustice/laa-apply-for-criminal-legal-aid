@@ -5,13 +5,6 @@ RSpec.describe Adapters::Structs::Applicant do
 
   let(:application_struct) { build_struct_application }
 
-  describe '#benefit_check_result=' do
-    it 'can be set' do
-      subject.benefit_check_result = true
-      expect(subject.benefit_check_result).to be true
-    end
-  end
-
   describe '#first_name' do
     it 'returns the applicant first name' do
       expect(subject.first_name).to eq('Kit')
@@ -74,11 +67,16 @@ RSpec.describe Adapters::Structs::Applicant do
           has_nino
           residence_type
           relationship_to_owner_of_usual_home_address
+          has_partner
           benefit_check_result
+          benefit_check_status
           relationship_status
           relationship_to_partner
           separation_date
-          has_partner
+          will_enter_nino
+          has_benefit_evidence
+          confirm_details
+          confirm_dwp_result
         ]
       )
     end

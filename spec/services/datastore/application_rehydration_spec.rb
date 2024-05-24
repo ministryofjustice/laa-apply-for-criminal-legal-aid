@@ -15,7 +15,6 @@ RSpec.describe Datastore::ApplicationRehydration do
   let(:means_passport) { [] }
 
   before do
-    # pp parent
     allow(crime_application).to receive(:update!).and_return(true)
   end
 
@@ -53,6 +52,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         properties: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
+        confirm_dwp_result: YesNoAnswer::NO,
       )
 
       expect(

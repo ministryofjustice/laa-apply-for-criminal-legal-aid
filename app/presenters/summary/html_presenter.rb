@@ -9,6 +9,7 @@ module Summary
         overview
         client_details
         contact_details
+        passporting_benefit_check
         case_details
         offences
         codefendants
