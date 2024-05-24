@@ -9,10 +9,9 @@ class Deduction < ApplicationRecord
                          national_insurance: DeductionType::NATIONAL_INSURANCE.to_s,
                          other: DeductionType::OTHER.to_s }
 
-  REQUIRED_ATTRIBUTES = [:deduction_type, :amount, :frequency]
-
   def complete?
-    REQUIRED_ATTRIBUTES << :details if deduction_type == DeductionType::OTHER.to_s
-    values_at(*REQUIRED_ATTRIBUTES).all?(&:present?)
+    required_attributes = [:deduction_type, :amount, :frequency]
+    required_attributes << :details if deduction_type == DeductionType::OTHER.to_s
+    values_at(*required_attributes).all?(&:present?)
   end
 end
