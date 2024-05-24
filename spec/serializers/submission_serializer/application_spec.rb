@@ -77,9 +77,6 @@ RSpec.describe SubmissionSerializer::Application do
           legal_rep_last_name: nil,
           legal_rep_telephone: nil
         },
-        client_details: {
-          applicant: nil
-        },
         interests_of_justice: [],
         evidence_details: {
           evidence_prompts: []

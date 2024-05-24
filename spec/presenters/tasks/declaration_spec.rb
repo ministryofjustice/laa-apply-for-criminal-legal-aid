@@ -24,58 +24,15 @@ RSpec.describe Tasks::Declaration do
   end
 
   describe '#can_start?' do
-    context 'when an initial application' do
-      before do
-        allow(
-          subject
-        ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
-
-        allow(crime_application).to receive(:valid?).with(:submission) { valid_for_submission }
-      end
-
-      context 'when the Case details have been completed' do
-        let(:case_details_fulfilled) { true }
-
-        context 'and the application is valid for submsission' do
-          let(:valid_for_submission) { true }
-
-          it { expect(subject.can_start?).to be(true) }
-        end
-
-        context 'and the application is not valid for submsission' do
-          let(:valid_for_submission) { false }
-
-          it { expect(subject.can_start?).to be(false) }
-        end
-      end
-
-      context 'when the Case details have not been completed' do
-        let(:case_details_fulfilled) { false }
-
-        it { expect(subject.can_start?).to be(false) }
-      end
+    before do
+      allow(subject).to receive(:fulfilled?).with(Tasks::Review)
+                                            .and_return(fulfilled)
     end
 
-    context 'when a post submission evidence application' do
-      before do
-        crime_application.application_type = ApplicationType::POST_SUBMISSION_EVIDENCE
+    context 'when Review has been not been fulfilled' do
+      let(:fulfilled) { false }
 
-        allow(
-          subject
-        ).to receive(:fulfilled?).with(Tasks::EvidenceUpload).and_return(evidence_uploaded?)
-      end
-
-      context 'when supporting evidence has been uploaded' do
-        let(:evidence_uploaded?) { true }
-
-        it { expect(subject.can_start?).to be(true) }
-      end
-
-      context 'when supporting evidence has not been uploaded' do
-        let(:evidence_uploaded?) { false }
-
-        it { expect(subject.can_start?).to be(false) }
-      end
+      it { expect(subject.can_start?).to be(false) }
     end
   end
 

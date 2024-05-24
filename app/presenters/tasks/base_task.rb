@@ -21,7 +21,8 @@ module Tasks
     end
 
     def fulfilled?(task_class)
-      task_class.new(crime_application:).status.completed?
+      task_status = task_class.new(crime_application:).status
+      task_status.not_applicable? || task_status.completed?
     end
 
     # Used by the `Routing` module to build the urls
