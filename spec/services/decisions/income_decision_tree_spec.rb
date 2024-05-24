@@ -19,8 +19,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
-  let(:employments_double) { double('employments_collection', create!: true, reject: []) }
+  let(:employments_double) { double('employments_collection', create!: true, reject: income_employments) }
   let(:kase) { instance_double(Case, case_type:) }
+  let(:income_employments) { [employment_double] }
 
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
@@ -106,6 +107,24 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         it 'redirects to the `employer_details` page' do
           expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        end
+
+        context 'with incomplete employments' do
+          let(:income_employments) { [employment_double] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with no incomplete employments' do
+          let(:income_employments) { [] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).to have_received(:create!)
+          end
         end
       end
 
