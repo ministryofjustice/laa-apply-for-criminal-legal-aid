@@ -3,21 +3,22 @@ require 'rails_helper'
 RSpec.describe Deduction, type: :model do
   subject { described_class.new(attributes) }
 
+  let(:crime_application) { CrimeApplication.create! }
+  let(:employment) { Employment.create!(crime_application:) }
+
   let(:attributes) do
     {
       deduction_type: 'income_tax',
       amount: 500,
       frequency: 'week',
       details: nil,
-      employment_id: instance_double(Employment, id: 'uuid').id
+      employment: employment
     }
   end
 
   describe '#complete?' do
     context 'with valid attributes' do
       it 'returns true' do
-        puts 'hiii'
-        puts subject.inspect
         expect(subject.complete?).to be(true)
       end
 
