@@ -20,15 +20,15 @@ module Summary
             )
           ]
 
-        if employment.amount.present?
-          attributes << Components::PaymentAnswer.new(
-            'employment.salary_or_wage', employment
-          )
-        else
-          attributes << Components::FreeTextAnswer.new(
-            'employment.salary_or_wage', employment.amount
-          )
-        end
+        attributes << if employment.amount.present?
+                        Components::PaymentAnswer.new(
+                          'employment.salary_or_wage', employment
+                        )
+                      else
+                        Components::FreeTextAnswer.new(
+                          'employment.salary_or_wage', employment.amount
+                        )
+                      end
 
         employment.deductions.each do |deduction|
           attributes << Components::PaymentAnswer.new(

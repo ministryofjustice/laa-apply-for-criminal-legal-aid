@@ -104,7 +104,6 @@ RSpec.describe Summary::Components::Employment, type: :component do
     end
 
     context 'when property has deductions' do
-
       it 'renders as summary list with other deductions' do
         expect(page).to have_summary_row(
           'Income Tax',
