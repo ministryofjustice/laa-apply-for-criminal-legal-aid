@@ -95,6 +95,7 @@ en:
       trust_fund: Trust funds
       other_capital_details: Other capital
       employments: Jobs
+      employment: Job
 
     questions:
       # BEGIN overview section
@@ -704,18 +705,18 @@ en:
       employment:
         employer_name:
           question: Employer’s name
-          absence_answer: *absence_none
+          absence_answer: ''
         address:
           question: Employer’s address
-          absence_answer: *absence_none
+          absence_answer: ''
         job_title:
           question: Job title
-          absence_answer: *absence_none
+          absence_answer: ''
         salary_or_wage:
           question: Salary or wage
           answers:
             description: *payment_answer_format
-          absence_answer: *absence_none
+          absence_answer: ''
       deduction:
         income_tax:
           question: Income Tax
@@ -723,21 +724,21 @@ en:
             description: *payment_answer_format
           details:
             question: income_tax details
-            absence_answer: nil
+            absence_answer: ''
         national_insurance:
           question: National Insurance
           answers:
             description: *payment_answer_format
           details:
             question: national_insurance details
-            absence_answer: nil
+            absence_answer: ''
         other:
           question: Other deductions total
           answers:
             description: *payment_answer_format
           details:
             question: Details of other deductions
-            absence_answer: nil
+            absence_answer: ''
 
 
       deduction_type:

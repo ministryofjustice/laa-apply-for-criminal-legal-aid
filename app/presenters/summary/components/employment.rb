@@ -17,11 +17,18 @@ module Summary
             ),
             Components::FreeTextAnswer.new(
               'employment.job_title', employment.job_title
-            ),
-            Components::PaymentAnswer.new(
-              'employment.salary_or_wage', employment
             )
           ]
+
+        if employment.amount.present?
+          attributes << Components::PaymentAnswer.new(
+            'employment.salary_or_wage', employment
+          )
+        else
+          attributes << Components::FreeTextAnswer.new(
+            'employment.salary_or_wage', employment.amount
+          )
+        end
 
         employment.deductions.each do |deduction|
           attributes << Components::PaymentAnswer.new(
@@ -37,6 +44,10 @@ module Summary
         attributes
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+      def name
+        I18n.t('summary.sections.employment')
+      end
 
       def full_address(address)
         return unless address
