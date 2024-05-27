@@ -28,21 +28,17 @@ describe Summary::Sections::Employments do
 
   describe '#answers' do
     context 'when there are employments' do
-      let(:component) { instance_double(Summary::Components::GroupedList) }
+      let(:component) { instance_double(Summary::Components::Employment) }
 
       before do
-        allow(Summary::Components::GroupedList).to receive(:new) { component }
+        allow(Summary::Components::Employment).to receive(:with_collection) { component }
       end
 
       it 'returns the grouped list component with actions' do
         expect(subject.answers).to be component
 
-        expect(Summary::Components::GroupedList).to have_received(:new).with(
-          items: records,
-          group_by: :ownership_type,
-          item_component: Summary::Components::Employment,
-          show_actions: true,
-          show_record_actions: false
+        expect(Summary::Components::Employment).to have_received(:with_collection).with(
+          records, show_actions: true, show_record_actions: false
         )
       end
 
@@ -54,12 +50,8 @@ describe Summary::Sections::Employments do
         it 'returns the grouped list component without actions' do
           expect(subject.answers).to be component
 
-          expect(Summary::Components::GroupedList).to have_received(:new).with(
-            items: records,
-            group_by: :ownership_type,
-            item_component: Summary::Components::Employment,
-            show_actions: false,
-            show_record_actions: false
+          expect(Summary::Components::Employment).to have_received(:with_collection).with(
+            records, show_actions: false, show_record_actions: false
           )
         end
       end

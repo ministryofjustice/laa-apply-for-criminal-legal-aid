@@ -4,12 +4,8 @@ module Summary
       def answers
         return [] if employments.empty?
 
-        Summary::Components::GroupedList.new(
-          items: employments,
-          group_by: :ownership_type,
-          item_component: Summary::Components::Employment,
-          show_actions: editable?,
-          show_record_actions: headless?
+        Components::Employment.with_collection(
+          employments, show_actions: editable?, show_record_actions: headless?
         )
       end
 
