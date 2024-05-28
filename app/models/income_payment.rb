@@ -22,6 +22,10 @@ class IncomePayment < Payment
     where(payment_type: IncomePaymentType::EMPLOYMENT.value).order(created_at: :desc).first
   end
 
+  def self.work_benefits
+    where(payment_type: IncomePaymentType::WORK_BENEFITS.value).order(created_at: :desc).first
+  end
+
   def self.other
     where(payment_type: IncomePaymentType::OTHER.value).order(created_at: :desc).first
   end

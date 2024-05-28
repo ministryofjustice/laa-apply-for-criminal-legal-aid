@@ -480,6 +480,9 @@ en:
         frequency_options: *frequency_options
       steps_income_client_employments_summary_form:
         add_client_employment_options: *YESNO
+      steps_income_client_other_work_benefits_form:
+        applicant_other_work_benefit_received_options: *YESNO
+        amount: How much is the total yearly value?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
