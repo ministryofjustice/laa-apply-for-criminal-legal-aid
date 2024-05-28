@@ -10,7 +10,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      employments: [employment_double],
+      employments: employments_double,
       kase: kase
     )
   end
@@ -19,7 +19,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
+  let(:employments_double) { double('employments_collection', create!: true, reject: income_employments) }
   let(:kase) { instance_double(Case, case_type:) }
+  let(:income_employments) { [employment_double] }
 
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
@@ -103,8 +105,26 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        end
+
+        context 'with incomplete employments' do
+          let(:income_employments) { [employment_double] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with no incomplete employments' do
+          let(:income_employments) { [] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).to have_received(:create!)
+          end
         end
       end
 
@@ -144,10 +164,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employer_details`' do
     let(:form_object) do
-      double('FormObject', record:)
+      double('FormObject', record: employment_double)
     end
     let(:step_name) { :client_employer_details }
-    let(:record) { instance_double(Employment) }
 
     it 'redirects to `client_employer_details` page' do
       expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
@@ -156,13 +175,48 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   context 'when the step is `client_employment_details`' do
     let(:form_object) do
-      double('FormObject', record:)
+      double('FormObject', record: employment_double)
     end
     let(:step_name) { :client_employment_details }
-    let(:record) { instance_double(Employment) }
 
-    it 'redirects to `employed_exit` page' do
-      expect(subject).to have_destination('/steps/income/employed_exit', :show, id: crime_application)
+    it 'redirects to `client deductions` page' do
+      expect(subject).to have_destination('/steps/income/client/deductions', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `client_deductions`' do
+    let(:form_object) do
+      double('FormObject', record: employment_double)
+    end
+    let(:step_name) { :client_deductions }
+
+    it 'redirects to `employments_summary` page' do
+      expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `employments_summary`' do
+    let(:form_object) { double('FormObject', record: employment_double) }
+    let(:step_name) { :employments_summary }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_client_employment:)
+    end
+
+    context 'the client has selected yes to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `employer_details` page' do
+        expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::NO }
+
+      it 'redirects to self_assessment_tax_bill page' do
+        expect(subject).to have_destination(:self_assessment_tax_bill, :edit, id: crime_application)
+      end
     end
   end
 
@@ -354,6 +408,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `client_self_assessment_tax_bill`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_self_assessment_tax_bill }
+
+    it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
+  end
+
+  context 'when the step is `client_other_work_benefits`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_other_work_benefits }
 
     it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
   end

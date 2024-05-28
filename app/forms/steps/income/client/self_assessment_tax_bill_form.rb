@@ -36,7 +36,7 @@ module Steps
             applicant_self_assessment_tax_bill:,
           )
 
-          persist_outgoings_payment if pays_self_assessment_tax_bill?
+          pays_self_assessment_tax_bill? ? persist_outgoings_payment : reset!
         end
 
         def persist_outgoings_payment
@@ -53,13 +53,6 @@ module Steps
 
         def reset!
           crime_application.outgoings_payments.self_assessment_tax_bill&.destroy
-        end
-
-        def before_save
-          return if pays_self_assessment_tax_bill?
-
-          self.amount = nil
-          self.frequency = nil
         end
       end
     end

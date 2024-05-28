@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EmploymentStatus do
+RSpec.describe DeductionType do
   subject { described_class.new(value) }
 
   let(:value) { :foo }
@@ -9,9 +9,9 @@ RSpec.describe EmploymentStatus do
     it 'returns all possible values' do
       expect(described_class.values.map(&:to_s)).to eq(
         %w[
-          employed
-          self_employed
-          not_working
+          income_tax
+          national_insurance
+          other
         ]
       )
     end
