@@ -77,7 +77,7 @@ module Datastore
     end
 
     def applicant
-      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date]
+      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date confirm_dwp_result benefit_check_status]
       filtered_attributes = parent.applicant.serializable_hash.except!(*partner_detail_attributes)
 
       Applicant.new(filtered_attributes)
