@@ -107,7 +107,9 @@ en:
         national_insurance:
           frequency: Select how often this gets deducted
         other:
-          frequency: Select how often this gets deducted  
+          frequency: Select how often this gets deducted
+      steps_income_client_employments_summary_form:
+        add_client_employment: Do you want to add another job?
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
         frequency: How often do they pay this amount?
@@ -476,6 +478,8 @@ en:
         applicant_self_assessment_tax_bill_options: *YESNO
         amount: How much do they pay?
         frequency_options: *frequency_options
+      steps_income_client_employments_summary_form:
+        add_client_employment_options: *YESNO
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:

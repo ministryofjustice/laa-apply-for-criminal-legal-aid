@@ -14,6 +14,8 @@ module Decisions
         after_client_employment_details
       when :client_deductions
         after_client_deductions
+      when :employments_summary
+        after_employments_summary
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -60,6 +62,21 @@ module Decisions
 
     private
 
+    def employment
+      @employment ||= if incomplete_employments.empty?
+                        current_crime_application.employments.create!
+                      else
+                        incomplete_employments.first
+                      end
+    end
+
+    def after_employments_summary
+      return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
+
+      employment = current_crime_application.employments.create!
+      redirect_to_employer_details(employment)
+    end
+
     def previous_step_path
       # Second to last element in the array, will be nil for arrays of size 0 or 1
       current_crime_application&.navigation_stack&.slice(-2) || root_path
@@ -87,21 +104,19 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       end
     end
 
-    def redirect_to_employer_details
-      employments = current_crime_application.employments
-      current_crime_application.employments.create! if employments.empty?
-      edit('/steps/income/client/employer_details', employment_id: employments.first)
+    def redirect_to_employer_details(employment)
+      edit('/steps/income/client/employer_details', employment_id: employment)
     end
 
     def after_income_before_tax
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -111,7 +126,7 @@ module Decisions
       if no_frozen_assets? && !summary_only?
         edit(:client_owns_property)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -121,7 +136,7 @@ module Decisions
       return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
       if requires_full_means_assessment?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit('/steps/income/client/employment_income')
       end
@@ -131,7 +146,7 @@ module Decisions
       if no_property?
         edit(:has_savings)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details
+        redirect_to_employer_details(employment)
       else
         edit(:income_payments)
       end
@@ -168,6 +183,10 @@ module Decisions
       end
     end
 
+    def incomplete_employments
+      crime_application.employments.reject(&:complete?)
+    end
+
     def employed?
       !!crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s)
     end
@@ -197,15 +216,15 @@ module Decisions
     end
 
     def after_client_employer_details
-      edit('steps/income/client/employment_details', employment_id: current_crime_application.employments.first)
+      edit('steps/income/client/employment_details', employment_id: form_object.record.id)
     end
 
     def after_client_employment_details
-      edit('/steps/income/client/deductions', employment_id: current_crime_application.employments.first)
+      edit('/steps/income/client/deductions', employment_id: form_object.record.id)
     end
 
     def after_client_deductions
-      show('/steps/income/employed_exit')
+      edit('/steps/income/client/employments_summary')
     end
   end
 end
