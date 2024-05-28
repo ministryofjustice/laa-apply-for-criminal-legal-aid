@@ -31,7 +31,7 @@ RSpec.describe Steps::Income::Client::EmploymentsController, type: :controller d
       end
 
       context 'when deleting an employment' do
-        context 'when employment the last remaining employment' do
+        context 'when employment is the last remaining employment' do
           it 'renders the employment status page again' do
             delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
             expect(Employment.count).to be 0
@@ -39,12 +39,12 @@ RSpec.describe Steps::Income::Client::EmploymentsController, type: :controller d
           end
         end
 
-        context 'when not the last remaining employment' do
+        context 'when employment is not the last remaining employment' do
           before do
             Employment.create!(crime_application:)
           end
 
-          it 'renders the employment page again' do
+          it 'redirects to `employments_summary` page' do
             delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
             expect(Employment.count).to be 1
             expect(response).to redirect_to edit_steps_income_client_employments_summary_path

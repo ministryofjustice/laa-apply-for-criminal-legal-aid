@@ -21,7 +21,7 @@ RSpec.describe Steps::Income::Client::EmploymentsSummaryForm do
     context 'when value is not set' do
       let(:value) { nil }
 
-      it 'does not set `#add_property`' do
+      it 'does not set `#add_client_employment`' do
         expect { add_client_employment }.not_to(change(form, :add_client_employment))
       end
     end

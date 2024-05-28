@@ -60,7 +60,7 @@ RSpec.describe Steps::Income::Client::DeductionsController, type: :controller do
     let(:types) { ['other'] }
 
     context 'when valid deduction attributes' do
-      it 'redirects to `employed_exit` page' do
+      it 'redirects to `employments_summary` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).to redirect_to steps_income_client_employments_summary_path
         expect(employment.deductions.count).to eq(1)
@@ -75,7 +75,7 @@ RSpec.describe Steps::Income::Client::DeductionsController, type: :controller do
     context 'when invalid deduction attributes' do
       before { other.merge!(amount: nil, frequency: nil) }
 
-      it 'redirects not to `employed_exit` page' do
+      it 'redirects not to `employments_summary` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).not_to redirect_to steps_income_client_employments_summary_path
         expect(employment.deductions.count).to eq(0)
