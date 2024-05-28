@@ -10,6 +10,8 @@ class Employment < ApplicationRecord
     end
   end
 
+  attribute :amount, :pence
+
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
   store_accessor :metadata, [:before_or_after_tax]
 
