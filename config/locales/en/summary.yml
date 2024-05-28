@@ -91,8 +91,11 @@ en:
       property_owners:
         relationship:
           <<: *RELATIONSHIP
+      passporting_benefit_check: Passporting benefit check
       trust_fund: Trust funds
       other_capital_details: Other capital
+      employments: Jobs
+      employment: Job
 
     questions:
       # BEGIN overview section
@@ -127,22 +130,6 @@ en:
       nino:
         question: National Insurance number
         absence_answer: *absence_none
-      means_passporting:
-        question: Passporting benefit
-        answers:
-          'true': 'Yes'
-          'false': 'No'
-      passporting_benefit:
-        question: Passporting benefit
-        answers:
-          universal_credit: Universal Credit
-          guarantee_pension: Guarantee Credit element of Pension Credit
-          jsa: Income-based Jobseeker’s Allowance (JSA)
-          esa: Income-related Employment and Support Allowance (ESA)
-          income_support: Income Support
-          none: None
-      last_jsa_appointment_date:
-        question: Date of latest JSA appointment
       # END client details section
 
       # BEGIN contact details section
@@ -174,6 +161,37 @@ en:
         question: Telephone number
         absence_answer: *absence_none
       # END contact details section
+
+      # BEGIN passporting benefit check section
+      passporting_benefit:
+        question: Passporting benefit?
+        answers:
+          universal_credit: Universal Credit
+          guarantee_pension: Guarantee Credit element of Pension Credit
+          jsa: Income-based Jobseeker’s Allowance (JSA)
+          esa: Income-related Employment and Support Allowance (ESA)
+          income_support: Income Support
+          none: None
+      last_jsa_appointment_date:
+        question: Date of latest JSA appointment
+      passporting_benefit_check_outcome:
+        question: Passporting benefit check outcome
+        answers:
+          confirmed: Confirmed
+          no_check_required: No check required
+          undetermined: No match - check details are correct
+          no_record_found: No record of passporting benefit found
+          checker_unavailable: DWP was unavailable, you can try again
+          no_check_no_nino: No check made as no National Insurance number provided
+      confirmed_client_details:
+        question: Confirmed client details correct?
+        answers:
+          <<: *YESNO
+      has_benefit_evidence:
+        question: Evidence can be provided?
+        answers:
+          <<: *YESNO
+      # END passporting benefit check section
 
       # BEGIN case details section
       case_urn:
@@ -683,3 +701,47 @@ en:
         absence_answer: *absence_none
         answers:
           'yes': Confirmed
+
+      employment:
+        employer_name:
+          question: Employer’s name
+          absence_answer: ''
+        address:
+          question: Employer’s address
+          absence_answer: ''
+        job_title:
+          question: Job title
+          absence_answer: ''
+        salary_or_wage:
+          question: Salary or wage
+          answers:
+            description: *payment_answer_format
+          absence_answer: ''
+        has_no_deductions:
+          question: Deductions
+          answers:
+            'yes': 'None'
+          absence_answer: *absence_none
+          
+      deduction:
+        income_tax:
+          question: Income Tax
+          answers:
+            description: *payment_answer_format
+          details:
+            question: income_tax details
+            absence_answer: ''
+        national_insurance:
+          question: National Insurance
+          answers:
+            description: *payment_answer_format
+          details:
+            question: national_insurance details
+            absence_answer: ''
+        other:
+          question: Other deductions total
+          answers:
+            description: *payment_answer_format
+          details:
+            question: Details of other deductions
+            absence_answer: ''

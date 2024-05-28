@@ -1,17 +1,17 @@
 module ClientDetails
-  class AnswersValidator
+  class AnswersValidator < BaseAnswerValidator
     include TypeOfMeansAssessment
 
-    def initialize(record)
-      @record = record
+    def complete?
+      validate
+      errors.empty?
     end
 
-    attr_reader :record
-
-    delegate :errors, :applicant, :kase, :crime_application, :appeal_no_changes?, to: :record
+    def applicable?
+      true
+    end
 
     # Adds the error to the first step name a user would need to go to fix the issue.
-
     def validate # rubocop:disable Metrics/AbcSize
       errors.add(:details, :blank) unless applicant_details_complete?
       errors.add(:case_type, :blank) unless case_type_complete?

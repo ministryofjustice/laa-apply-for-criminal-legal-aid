@@ -132,6 +132,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
 
+  create_table "deductions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "employment_id", null: false
+    t.string "deduction_type", null: false
+    t.bigint "amount", null: false
+    t.string "frequency", null: false
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deduction_type", "employment_id"], name: "index_deductions_on_deduction_type_and_employment_id", unique: true
+    t.index ["employment_id"], name: "index_deductions_on_employment_id"
+  end
+
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.datetime "created_at", null: false
@@ -167,6 +179,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_title"
+    t.string "has_no_deductions"
     t.bigint "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}, null: false
@@ -194,6 +207,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.string "partner_has_no_income_payments"
     t.string "partner_has_no_income_benefits"
     t.string "applicant_self_assessment_tax_bill"
+    t.string "applicant_other_work_benefit_received"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -309,6 +323,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
+    t.string "confirm_details"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
@@ -383,6 +398,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
+  add_foreign_key "deductions", "employments"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
   add_foreign_key "employments", "crime_applications"

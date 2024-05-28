@@ -22,6 +22,12 @@ module Tasks
       capital.present?
     end
 
+    # Capital task is only complete when both the AnswersValidator
+    # AND the ConfirmationValidators are complete
+    def completed?
+      super && capital.complete?
+    end
+
     private
 
     def validator

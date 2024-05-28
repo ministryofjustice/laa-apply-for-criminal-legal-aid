@@ -54,7 +54,11 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
         it 'saves `confirm_dwp_result` value and returns true' do
           expect(crime_application).to receive(:update)
             .with({ 'confirm_dwp_result' => YesNoAnswer::YES }).and_return(true)
-          expect(applicant).to receive(:update).with(benefit_type: BenefitType::NONE).and_return(true)
+          expect(applicant).to receive(:update).with({
+                                                       'benefit_type' => BenefitType::NONE,
+                                                       'has_benefit_evidence' => nil,
+                                                       'confirm_details' => nil
+                                                     }).and_return(true)
           expect(subject.save).to be(true)
         end
       end

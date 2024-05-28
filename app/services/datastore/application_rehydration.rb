@@ -37,6 +37,7 @@ module Datastore
         properties: capital ? parent.capital.properties : [],
         evidence_last_run_at: evidence_last_run_at,
         evidence_prompts: evidence_prompts,
+        confirm_dwp_result: confirm_dwp_result
       )
     end
 
@@ -55,6 +56,13 @@ module Datastore
       return YesNoAnswer::YES unless FeatureFlags.non_means_tested.enabled?
 
       parent.means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
+    end
+
+    # `confirm_dwp_result` is saved in the applicant/partner part of Schema, requires calculation
+    # TODO: amend for partner
+    def confirm_dwp_result
+      applicant = parent.client_details.applicant
+      applicant.respond_to?(:confirm_dwp_result) ? YesNoAnswer.new(applicant.confirm_dwp_result) : nil
     end
 
     def client_has_partner

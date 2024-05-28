@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ClientDetails::AnswersValidator, type: :model do
-  subject(:validator) { described_class.new(record) }
+  subject(:validator) { described_class.new(record: record, crime_application: record) }
 
   let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:) }
   let(:errors) { double(:errors, empty?: false) }
