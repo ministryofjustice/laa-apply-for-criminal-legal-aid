@@ -12,7 +12,6 @@ module Datastore
       return if already_recreated?
 
       crime_application.update!(
-        # TODO: Update partner rehydration when partner introduced and stored
         client_has_partner: client_has_partner,
         parent_id: parent.id,
         is_means_tested: means_tested,
@@ -21,6 +20,8 @@ module Datastore
         means_passport: parent.means_passport,
         dependants: dependants,
         applicant: applicant,
+        partner: partner,
+        partner_detail: partner_detail,
         case: case_with_ioj,
         income: income,
         outgoings: outgoings,
@@ -57,9 +58,7 @@ module Datastore
     end
 
     def client_has_partner
-      return if not_means_tested?
-
-      YesNoAnswer::NO
+      parent.client_details.applicant.has_partner
     end
 
     # For re-hydration of returned applications, we keep the original
@@ -70,10 +69,25 @@ module Datastore
     end
 
     def applicant
-      # TODO: set has_partner in partner_details
-      partner_attributes = %w[has_partner relationship_to_partner relationship_status separation_date]
-      applicant_json = parent.applicant.serializable_hash.except!(*partner_attributes)
-      Applicant.new(applicant_json)
+      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date]
+      filtered_attributes = parent.applicant.serializable_hash.except!(*partner_detail_attributes)
+
+      Applicant.new(filtered_attributes)
+    end
+
+    def partner
+      return nil unless parent.partner
+
+      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date involvement_in_case conflict_of_interest has_same_address_as_client]
+      filtered_attributes = parent.partner.serializable_hash.except!(*partner_detail_attributes)
+
+      Partner.new(filtered_attributes)
+    end
+
+    def partner_detail
+      filtered_attributes = parent.partner.serializable_hash.slice(*%w[has_partner relationship_to_partner relationship_status separation_date involvement_in_case conflict_of_interest has_same_address_as_client])
+
+      PartnerDetail.new(filtered_attributes)
     end
 
     def ioj

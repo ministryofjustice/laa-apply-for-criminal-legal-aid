@@ -4,7 +4,7 @@ module Adapters
     delegate :case_type, to: :case, allow_nil: true
 
     def self.build(object)
-      if object.respond_to?(:applicant)
+      if object.respond_to?(:applicant) || object.respond_to?(:partner)
         Adapters::DatabaseApplication
       else
         Adapters::JsonApplication

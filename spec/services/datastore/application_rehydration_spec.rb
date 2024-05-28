@@ -6,16 +6,17 @@ RSpec.describe Datastore::ApplicationRehydration do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      applicant:
+      applicant:,
+      partner:,
     )
   end
 
   let(:applicant) { nil }
+  let(:partner) { nil }
   let(:parent) { JSON.parse(LaaCrimeSchemas.fixture(1.0, name: 'application_returned').read) }
   let(:means_passport) { [] }
 
   before do
-    # pp parent
     allow(crime_application).to receive(:update!).and_return(true)
   end
 
@@ -37,6 +38,8 @@ RSpec.describe Datastore::ApplicationRehydration do
         ioj_passport: an_instance_of(Array),
         means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),
+        partner: an_instance_of(Partner),
+        partner_detail: an_instance_of(PartnerDetail),
         case: an_instance_of(Case),
         income: an_instance_of(Income),
         documents: all(be_a(Document)),

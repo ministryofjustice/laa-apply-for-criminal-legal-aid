@@ -10,7 +10,6 @@ module Adapters
         means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
       end
       # rubocop:enable Naming/PredicateName
-      #
 
       # TODO: add benefit_check_result to schema
       # `passporting_benefit` not part of schema, infer true value if
@@ -27,6 +26,14 @@ module Adapters
         struct.benefit_check_result = infer_passporting_benefit
 
         @applicant = struct
+      end
+
+      def partner
+        return @partner if @partner
+
+        struct = Structs::Partner.new(client_details.partner)
+
+        @partner = struct
       end
 
       def case
