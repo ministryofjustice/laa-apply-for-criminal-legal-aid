@@ -745,21 +745,3 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
-
-
-      deduction_type:
-        amount:
-          question: ff
-        question: Income Tax
-        answers:
-          description: *payment_answer_format
-
-#      deduction_type:
-#        question: Income Tax
-#        answers:
-#          description: *payment_answer_format
-#
-#      deduction_type:
-#        question: Income Tax
-#        answers:
-#          description: *payment_answer_format

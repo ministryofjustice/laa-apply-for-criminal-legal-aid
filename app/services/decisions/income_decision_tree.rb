@@ -109,8 +109,6 @@ module Decisions
     end
 
     def redirect_to_employer_details(employment)
-      # employments = current_crime_application.employments
-      # current_crime_application.employments.create! if employments.empty?
       edit('/steps/income/client/employer_details', employment_id: employment)
     end
 
