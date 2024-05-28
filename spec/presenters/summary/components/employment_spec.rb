@@ -6,7 +6,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
   let(:record) {
     instance_double(Employment,
                     complete?: true,
-                    deductions: [deduction1, deduction2],
+                    deductions: deductions,
                     has_no_deductions: has_no_deductions,
                     crime_application: crime_application, **attributes)
   }
@@ -44,6 +44,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
   end
 
   let(:has_no_deductions) { nil }
+  let(:deductions) { [deduction1, deduction2] }
 
   before { component }
 
@@ -103,7 +104,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
       )
     end
 
-    context 'when property has deductions' do
+    context 'when employment has deductions' do
       it 'renders as summary list with other deductions' do
         expect(page).to have_summary_row(
           'Income Tax',
@@ -116,6 +117,18 @@ RSpec.describe Summary::Components::Employment, type: :component do
         expect(page).to have_summary_row(
           'Details of other deductions',
           'deduction details',
+        )
+      end
+    end
+
+    context 'when employment has no deductions' do
+      let(:has_no_deductions) { 'yes' }
+      let(:deductions) { [] }
+
+      it 'renders as summary list with other deductions' do
+        expect(page).to have_summary_row(
+          'Deductions',
+          'None',
         )
       end
     end

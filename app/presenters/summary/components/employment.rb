@@ -30,15 +30,19 @@ module Summary
                         )
                       end
 
-        employment.deductions.each do |deduction|
-          attributes << Components::PaymentAnswer.new(
-            "deduction.#{deduction.deduction_type}", deduction
-          )
-          next unless deduction.other?
+        if employment.deductions.present?
+          employment.deductions.each do |deduction|
+            attributes << Components::PaymentAnswer.new(
+              "deduction.#{deduction.deduction_type}", deduction
+            )
+            next unless deduction.other?
 
-          attributes << Components::FreeTextAnswer.new(
-            "deduction.#{deduction.deduction_type}.details", deduction.details
-          )
+            attributes << Components::FreeTextAnswer.new(
+              "deduction.#{deduction.deduction_type}.details", deduction.details
+            )
+          end
+        else
+          attributes << Components::ValueAnswer.new('employment.has_no_deductions', employment.has_no_deductions)
         end
 
         attributes

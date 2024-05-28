@@ -717,6 +717,12 @@ en:
           answers:
             description: *payment_answer_format
           absence_answer: ''
+        has_no_deductions:
+          question: Deductions
+          answers:
+            'yes': 'None'
+          absence_answer: *absence_none
+          
       deduction:
         income_tax:
           question: Income Tax
