@@ -53,7 +53,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
     context 'when valid income_payment attributes' do
       it 'redirects to `employed_exit` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to steps_income_employed_exit_path
+        expect(response).to redirect_to edit_steps_income_client_deductions_from_pay_path
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
 
       it 'does not redirect to the `properties_summary` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).not_to redirect_to steps_income_employed_exit_path
+        expect(response).not_to redirect_to edit_steps_income_client_deductions_from_pay_path
       end
     end
   end

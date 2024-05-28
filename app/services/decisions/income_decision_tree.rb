@@ -12,6 +12,8 @@ module Decisions
         after_client_employer_details
       when :client_employment_details
         after_client_employment_details
+      when :client_deductions
+        after_client_deductions
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -77,7 +79,7 @@ module Decisions
       end
     end
 
-    # rubocop:disable Lint/DuplicateBranch <- to make it easier to reimplement when we do self-employed
+    # <- to make it easier to reimplement when we do self-employed
     def start_employment_journey
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
@@ -85,10 +87,9 @@ module Decisions
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        show(:self_employed_exit)
+        redirect_to_employer_details
       end
     end
-    # rubocop:enable Lint/DuplicateBranch
 
     def redirect_to_employer_details
       employments = current_crime_application.employments
@@ -200,6 +201,10 @@ module Decisions
     end
 
     def after_client_employment_details
+      edit('/steps/income/client/deductions', employment_id: current_crime_application.employments.first)
+    end
+
+    def after_client_deductions
       show('/steps/income/employed_exit')
     end
   end
