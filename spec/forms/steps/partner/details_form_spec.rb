@@ -19,8 +19,6 @@ RSpec.describe Steps::Partner::DetailsForm do
     }
   end
 
-  let(:partner_id) { nil }
-
   let(:crime_application) do
     instance_double(
       CrimeApplication,
@@ -30,7 +28,7 @@ RSpec.describe Steps::Partner::DetailsForm do
   end
 
   let(:partner_record) { Partner.new }
-  let(:partner_detail) { instance_double(PartnerDetail, partner_id:) }
+  let(:partner_detail) { instance_double(PartnerDetail) }
 
   describe '#save' do
     context 'validations' do
@@ -51,11 +49,8 @@ RSpec.describe Steps::Partner::DetailsForm do
         partner_record.crime_application = CrimeApplication.new
       end
 
-      it 'saves the record and generates a partner_id' do
+      it 'saves the record' do
         expect(partner_record).to receive(:update!).with(form_attributes.stringify_keys).and_return(true)
-        expect(partner_detail).to receive(:update!).with(
-          { partner_id: partner_record.id }
-        ).and_return(true)
 
         partner_record.first_name = 'Ella'
         expect(subject.save).to be(true)
