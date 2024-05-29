@@ -290,6 +290,7 @@ describe Summary::HtmlPresenter do
     expected_sections = %w[
       EmploymentDetails
       IncomeDetails
+      Employments
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants
