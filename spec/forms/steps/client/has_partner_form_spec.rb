@@ -68,7 +68,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
         ).and_return(true)
 
         expect(partner_detail).to receive(:update!).with(
-          { 'relationship_status' => nil, 'separation_date' => nil }
+          { 'relationship_status' => nil, 'separation_date' => nil, 'has_partner' => 'yes' }
         ).and_return(true)
 
         expect(partner_detail).not_to receive(:destroy!)

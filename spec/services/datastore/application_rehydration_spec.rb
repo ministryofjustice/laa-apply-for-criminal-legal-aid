@@ -454,6 +454,37 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
     end
 
+    context 'when applicant has no partner', skip: 'Interferes with already_recreated? implementation' do
+      let(:partner) do
+        { 'partner' => nil }
+      end
+
+      let(:applicant) do
+        {
+          'applicant' => {
+            'has_partner' => 'no',
+            'relationship_status' => 'separated',
+            'separation_date' => '1990-01-12',
+          }
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('client_details' => { 'applicant' => applicant, 'partner' => partner })
+      end
+
+      it 'generates a partner_detail but not a partner record' do
+        expect(Partner).not_to receive(:new)
+        expect(PartnerDetail).to receive(:new).with(
+          has_partner: 'no',
+          relationship_status: 'separated',
+          separated_date: '1990-01-12'
+        ).and_call_original
+
+        subject.call
+      end
+    end
+
     context 'for an already re-hydrated application' do
       let(:applicant) { 'something' }
 
