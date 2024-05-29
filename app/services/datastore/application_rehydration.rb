@@ -66,7 +66,7 @@ module Datastore
     end
 
     def client_has_partner
-      parent.client_details.applicant.has_partner
+      parent.client_details.applicant.has_partner == 'yes' ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     # For re-hydration of returned applications, we keep the original
@@ -77,25 +77,23 @@ module Datastore
     end
 
     def applicant
-      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date confirm_dwp_result benefit_check_status]
-      filtered_attributes = parent.applicant.serializable_hash.except!(*partner_detail_attributes)
+      attributes_to_ignore = PartnerDetail.fields + %w[confirm_dwp_result benefit_check_status]
+      attributes = parent.applicant.serializable_hash.except!(*attributes_to_ignore)
 
-      Applicant.new(filtered_attributes)
+      Applicant.new(attributes)
     end
 
     def partner
       return nil unless parent.partner
 
-      partner_detail_attributes = %w[has_partner relationship_to_partner relationship_status separation_date involvement_in_case conflict_of_interest has_same_address_as_client]
-      filtered_attributes = parent.partner.serializable_hash.except!(*partner_detail_attributes)
-
-      Partner.new(filtered_attributes)
+      attributes = parent.partner.serializable_hash.except!(*PartnerDetail.fields)
+      Partner.new(attributes)
     end
 
     def partner_detail
-      filtered_attributes = parent.partner.serializable_hash.slice(*%w[has_partner relationship_to_partner relationship_status separation_date involvement_in_case conflict_of_interest has_same_address_as_client])
+      attributes = parent.partner.serializable_hash.slice(*PartnerDetail.fields)
 
-      PartnerDetail.new(filtered_attributes)
+      PartnerDetail.new(attributes)
     end
 
     def ioj

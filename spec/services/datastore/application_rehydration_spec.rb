@@ -7,12 +7,10 @@ RSpec.describe Datastore::ApplicationRehydration do
     instance_double(
       CrimeApplication,
       applicant:,
-      partner:,
     )
   end
 
   let(:applicant) { nil }
-  let(:partner) { nil }
   let(:parent) { JSON.parse(LaaCrimeSchemas.fixture(1.0, name: 'application_returned').read) }
   let(:means_passport) { [] }
 
@@ -31,7 +29,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       expect(
         crime_application
       ).to receive(:update!).with(
-        client_has_partner: YesNoAnswer::NO,
+        client_has_partner: YesNoAnswer::YES,
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         is_means_tested: an_instance_of(YesNoAnswer),
         date_stamp: an_instance_of(DateTime),
