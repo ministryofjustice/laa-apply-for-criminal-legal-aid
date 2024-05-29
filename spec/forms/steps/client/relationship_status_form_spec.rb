@@ -29,7 +29,7 @@ RSpec.describe Steps::Client::RelationshipStatusForm do
     it 'returns the possible choices' do
       expect(
         subject.choices.map(&:to_s)
-      ).to match_array(%w[single widowed divorced separated not_saying])
+      ).to match_array(%w[single widowed divorced separated prefer_not_to_say])
     end
   end
 

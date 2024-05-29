@@ -24,7 +24,7 @@ RSpec.describe Steps::Partner::RelationshipForm do
     it 'returns the possible choices' do
       expect(
         subject.choices.map(&:to_s)
-      ).to match_array(%w[married_or_civil living_together not_saying])
+      ).to match_array(%w[married_or_partnership living_together prefer_not_to_say])
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe Steps::Partner::RelationshipForm do
     end
 
     context 'when `relationship_to_partner` is valid' do
-      let(:relationship_to_partner) { 'not_saying' }
+      let(:relationship_to_partner) { 'prefer_not_to_say' }
 
       it 'saves the record' do
         expect(partner_detail).to receive(:update).with(

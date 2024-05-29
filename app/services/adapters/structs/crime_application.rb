@@ -4,6 +4,7 @@ module Adapters
   module Structs
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
       include TypeOfApplication
+
       # `is_means_tested` is not part of Schema, requires calculation
       # rubocop:disable Naming/PredicateName
       def is_means_tested
