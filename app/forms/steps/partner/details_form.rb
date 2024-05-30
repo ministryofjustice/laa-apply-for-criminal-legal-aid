@@ -18,13 +18,7 @@ module Steps
       def persist!
         return true unless changed?
 
-        ::Partner.transaction do
-          partner.update!(attributes)
-
-          crime_application.partner_detail.update!(partner_id: partner.id)
-
-          true
-        end
+        partner.update!(attributes)
       end
     end
   end

@@ -4,6 +4,6 @@ class ClientRelationshipStatusType < ValueObject
     WIDOWED = new(:widowed),
     DIVORCED = new(:divorced),
     SEPARATED = new(:separated),
-    NOT_SAYING = new(:not_saying),
+    NOT_SAYING = new(:prefer_not_to_say),
   ].freeze
 end

@@ -17,6 +17,7 @@ module SubmissionSerializer
 
           json.has_nino applicant.has_nino
           json.nino applicant.nino
+
           json.benefit_type applicant.benefit_type
           json.last_jsa_appointment_date applicant.last_jsa_appointment_date
           json.benefit_check_result applicant.benefit_check_result
@@ -25,9 +26,20 @@ module SubmissionSerializer
           json.confirm_details applicant.confirm_details
           json.confirm_dwp_result confirm_dwp_result
           json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
+
+          partner_attributes(json)
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+      def partner_attributes(json)
+        return nil unless partner_detail
+
+        json.has_partner client_has_partner
+        json.relationship_to_partner partner_detail.relationship_to_partner
+        json.relationship_status partner_detail.relationship_status
+        json.separation_date partner_detail.separation_date
+      end
     end
   end
 end

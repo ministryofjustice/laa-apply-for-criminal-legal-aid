@@ -32,7 +32,8 @@ module Steps
         elsif client_has_partner.yes?
           crime_application.partner_detail&.update!(
             'relationship_status' => nil,
-            'separation_date' => nil
+            'separation_date' => nil,
+            'has_partner' => 'yes',
           )
         end
       end

@@ -377,12 +377,12 @@ en:
           widowed: Widowed
           divorced: Divorced
           separated: Separated
-          not_saying: They prefer not to say
+          prefer_not_to_say: They prefer not to say
       steps_partner_relationship_form:
         relationship_to_partner_options:
-          married_or_civil: Married or in a civil partnership
+          married_or_partnership: Married or in a civil partnership
           living_together: Living together
-          not_saying: They prefer not to say
+          prefer_not_to_say: They prefer not to say
       steps_partner_details_form:
         first_name: First name
         last_name: Last name
