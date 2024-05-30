@@ -103,7 +103,7 @@ Rails.application.routes.draw do
         if FeatureFlags.non_means_tested.enabled?
           edit_step :is_application_means_tested, alias: :is_means_tested
         end
-        edit_step :has_partner
+        edit_step :does_client_have_partner, alias: :has_partner
         show_step :partner_exit
         edit_step :details
         edit_step :case_type
@@ -115,6 +115,22 @@ Rails.application.routes.draw do
         show_step :nino_exit
         edit_step :contact_details
         edit_step :residence_type
+        edit_step :relationship_status
+      end
+
+      if FeatureFlags.partner_journey.enabled?
+        namespace :partner do
+          edit_step :client_relationship_to_partner, alias: :relationship
+          edit_step :partner_details, alias: :details
+          edit_step :partner_nino, alias: :nino
+          edit_step :partner_involved_in_case, alias: :involvement
+          edit_step :partner_conflict_of_interest, alias: :conflict
+          edit_step :do_client_and_partner_live_same_address, alias: :same_address
+          edit_step :enter_partner_address, alias: :address
+
+          if FeatureFlags.unemployed_partner_journey.enabled?
+          end
+        end
       end
 
       namespace :dwp do

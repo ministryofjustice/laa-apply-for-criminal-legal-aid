@@ -49,6 +49,13 @@ RSpec.describe Decisions::AddressDecisionTree do
         it { is_expected.to have_destination('/steps/client/has_nino', :edit, id: crime_application) }
       end
     end
+
+    context 'if we come from a partner details address journey' do
+      let(:form_object) { double('FormObject', record: address_record) }
+      let(:address_record) { HomeAddress.new(person: Partner.new) }
+
+      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `details`' do

@@ -18,6 +18,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: '123456789',
+      client_has_partner: 'yes',
     )
 
     client = Applicant.create(
@@ -35,6 +36,33 @@ RSpec.describe Datastore::ApplicationSubmission do
     HomeAddress.create(
       person: client,
       address_line_one: '10, PRIME MINISTER & FIRST LORD OF THE TREASURY',
+      address_line_two: 'DOWNING STREET',
+      city: 'LONDON',
+      country: 'UNITED KINGDOM',
+      postcode: 'SW1A 2AA',
+      lookup_id: '23747771',
+    )
+
+    partner = Partner.create(
+      crime_application: app,
+      first_name: 'Joe',
+      last_name: 'Bloggs',
+      date_of_birth: 30.years.ago,
+      nino: 'JL333498C',
+      correspondence_address_type: 'home_address',
+    )
+
+    partner_details = PartnerDetail.create( # rubocop:disable Lint/UselessAssignment
+      crime_application: app,
+      relationship_to_partner: 'married_or_partnership',
+      involvement_in_case: 'none',
+      has_same_address_as_client: 'no',
+      conflict_of_interest: 'no',
+    )
+
+    HomeAddress.create(
+      person: partner,
+      address_line_one: '11 (Next Door)',
       address_line_two: 'DOWNING STREET',
       city: 'LONDON',
       country: 'UNITED KINGDOM',

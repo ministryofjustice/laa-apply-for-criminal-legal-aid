@@ -3,7 +3,16 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant, confirm_dwp_result: 'no') }
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      applicant: applicant,
+      partner: partner,
+      partner_detail: partner_detail,
+      confirm_dwp_result: 'no',
+      client_has_partner: client_has_partner,
+    )
+  end
 
   let(:applicant) do
     instance_double(
@@ -25,7 +34,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       benefit_check_result: false,
       will_enter_nino: nil,
       has_benefit_evidence: 'yes',
-      confirm_details: 'yes'
+      confirm_details: 'yes',
     )
   end
 
@@ -48,7 +57,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
     CorrespondenceAddress.new(postcode: 'A11 1XX')
   end
 
-  let(:json_output) do
+  let(:applicant_without_partner) do
     {
       client_details: {
         applicant: {
@@ -78,13 +87,91 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           will_enter_nino: nil,
           has_benefit_evidence: 'yes',
           confirm_details: 'yes',
-          confirm_dwp_result: 'no'
-        }
+          confirm_dwp_result: 'no',
+          has_partner: client_has_partner,
+          relationship_to_partner: relationship_to_partner,
+          relationship_status: relationship_status,
+          separation_date: nil,
+        },
+        partner: nil,
       }
-    }.as_json
+    }
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#generate' do
-    it { expect(subject.generate).to eq(json_output) }
+    context 'without partner' do
+      let(:client_has_partner) { 'no' }
+      let(:relationship_to_partner) { nil }
+      let(:relationship_status) { 'divorced' }
+      let(:partner) { nil }
+
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          relationship_to_partner: relationship_to_partner,
+          relationship_status: relationship_status,
+          separation_date: nil,
+        )
+      end
+
+      it { expect(subject.generate).to eq(applicant_without_partner.as_json) }
+    end
+
+    context 'with partner' do
+      let(:client_has_partner) { 'yes' }
+      let(:relationship_to_partner) { 'married_or_partnership' }
+      let(:relationship_status) { nil }
+
+      let(:partner) do
+        instance_double(
+          Partner,
+          first_name: 'Fred',
+          last_name: 'Flint',
+          other_names: nil,
+          date_of_birth: nil,
+          has_nino: 'no',
+          nino: nil,
+        )
+      end
+
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          involvement_in_case: 'victim',
+          conflict_of_interest: nil,
+          has_same_address_as_client: nil,
+          relationship_to_partner: relationship_to_partner,
+          relationship_status: relationship_status,
+          separation_date: nil,
+        )
+      end
+
+      let(:applicant_with_partner) do
+        partner_attributes = {
+          first_name: 'Fred',
+          last_name: 'Flint',
+          other_names: nil,
+          date_of_birth: nil,
+          has_nino: 'no',
+          nino: nil,
+          involvement_in_case: 'victim',
+          conflict_of_interest: nil,
+          has_same_address_as_client: nil,
+          home_address: nil,
+        }
+
+        applicant_without_partner.deep_merge(client_details: { partner: partner_attributes })
+      end
+
+      before do
+        allow(partner).to receive_messages(
+          home_address: nil,
+        )
+      end
+
+      it { expect(subject.generate).to eq(applicant_with_partner.as_json) }
+    end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

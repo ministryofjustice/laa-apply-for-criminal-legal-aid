@@ -1,0 +1,20 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :involvement_in_case, legend: { tag: 'h1', size: 'xl' } do %>
+        <% @form_object.choices.each_with_index do |choice, index| %>
+          <%= f.govuk_radio_divider if choice == PartnerInvolvementType::NONE %>
+
+          <%= f.govuk_radio_button :involvement_in_case, choice.value, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

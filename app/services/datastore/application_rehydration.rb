@@ -12,7 +12,6 @@ module Datastore
       return if already_recreated?
 
       crime_application.update!(
-        # TODO: Update partner rehydration when partner introduced and stored
         client_has_partner: client_has_partner,
         parent_id: parent.id,
         is_means_tested: means_tested,
@@ -21,6 +20,8 @@ module Datastore
         means_passport: parent.means_passport,
         dependants: dependants,
         applicant: applicant,
+        partner: partner,
+        partner_detail: partner_detail,
         case: case_with_ioj,
         income: income,
         outgoings: outgoings,
@@ -65,9 +66,7 @@ module Datastore
     end
 
     def client_has_partner
-      return if not_means_tested?
-
-      YesNoAnswer::NO
+      parent.client_details.applicant.has_partner == 'yes' ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     # For re-hydration of returned applications, we keep the original
@@ -78,11 +77,28 @@ module Datastore
     end
 
     def applicant
-      # TODO: set has_partner in partner_details
-      attributes_to_ignore = %w[has_partner relationship_to_partner relationship_status separation_date
-                                confirm_dwp_result benefit_check_status]
-      applicant_json = parent.applicant.serializable_hash.except!(*attributes_to_ignore)
-      Applicant.new(applicant_json)
+      attributes_to_ignore = PartnerDetail.fields + %w[confirm_dwp_result benefit_check_status]
+      attributes = parent.applicant.serializable_hash.except!(*attributes_to_ignore)
+
+      Applicant.new(attributes)
+    end
+
+    def partner
+      return nil unless parent.partner && parent.applicant.has_partner == 'yes'
+
+      attributes = parent.partner.serializable_hash.except!(*PartnerDetail.fields)
+      Partner.new(attributes)
+    end
+
+    # NOTE: Actual partner_detail fields are mixed between the Applicant and Partner Structs
+    def partner_detail
+      fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
+      fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
+
+      from_applicant = parent.applicant.serializable_hash.slice(*fields_from_applicant)
+      from_partner = parent.partner.serializable_hash.slice(*fields_from_partner)
+
+      PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
     end
 
     def ioj

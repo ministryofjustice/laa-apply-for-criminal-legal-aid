@@ -1,11 +1,7 @@
 module Tasks
   class ClientDetails < BaseTask
     def path
-      if FeatureFlags.non_means_tested.enabled? && FeatureFlags.passported_partner_journey.enabled?
-        edit_steps_client_is_means_tested_path
-      else
-        edit_steps_client_details_path
-      end
+      edit_steps_client_details_path
     end
 
     # Client details is the first thing a provider can do so it is always true

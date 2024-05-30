@@ -2,11 +2,15 @@ module Decisions
   # rubocop:disable Metrics/ClassLength
   # TODO: Break to new `initial_details` tree
   class ClientDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
       when :is_means_tested
         after_is_means_tested
+      when :has_partner
+        after_has_partner
+      when :relationship_status
+        after_relationship_status
       when :details
         after_client_details
       when :case_type
@@ -25,24 +29,32 @@ module Decisions
         after_contact_details
       when :has_nino
         after_has_nino
-      when :has_partner
-        after_has_partner
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
     private
 
+    # TODO: New partner details journey will cause the existing `has_partner` question
+    # to move further along the client journey rather than at the beginning
     def after_is_means_tested
-      if FeatureFlags.passported_partner_journey.enabled?
+      if form_object.is_means_tested.yes? && FeatureFlags.partner_journey.enabled?
         edit(:details)
       elsif form_object.is_means_tested.yes?
         edit(:has_partner)
       else
         # Task list
         edit('/crime_applications')
+      end
+    end
+
+    def after_relationship_status
+      if current_crime_application.not_means_tested?
+        edit('/steps/case/urn')
+      else
+        edit('/steps/dwp/benefit_type')
       end
     end
 
@@ -121,7 +133,7 @@ module Decisions
     def after_has_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
-      elsif FeatureFlags.passported_partner_journey.enabled?
+      elsif FeatureFlags.partner_journey.enabled?
         edit(:has_partner)
       else
         edit('/steps/dwp/benefit_type')
@@ -129,24 +141,26 @@ module Decisions
     end
 
     def after_has_partner
-      if form_object.client_has_partner.yes?
-        if FeatureFlags.passported_partner_journey.enabled?
-          # TODO: route to relationship to partner page
-          edit('/steps/dwp/benefit_type') # placeholder
-        else
-          show(:partner_exit)
-        end
-      elsif FeatureFlags.passported_partner_journey.enabled? # i.e. has_partner: no
-        # TODO: route to relationship to partner page
-        edit('/steps/dwp/benefit_type')
+      if start_partner_journey? && FeatureFlags.partner_journey.enabled?
+        edit('/steps/partner/relationship')
+      elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
+        edit(:relationship_status)
+      elsif form_object.client_has_partner.yes?
+        show(:partner_exit)
       else
-        # Task list
-        edit('/crime_applications')
+        edit(:details)
       end
     end
 
     def applicant
       @applicant ||= current_crime_application.applicant
+    end
+
+    # TODO: Consider whether !crime_application.age_passported? is more appropriate?
+    def start_partner_journey?
+      form_object.client_has_partner.yes? &&
+        !current_crime_application.not_means_tested? &&
+        !applicant.under18?
     end
   end
   # rubocop:enable Metrics/ClassLength
