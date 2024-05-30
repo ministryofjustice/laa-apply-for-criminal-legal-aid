@@ -57,39 +57,34 @@ RSpec.describe SubmissionSerializer::Application do
     # There is a full serialization test with real DB records
     # in spec `services/application_submission_spec.rb`
 
-    let(:kase) { Case.new }
-    let(:income) { Income.new }
-    let(:capital) { Capital.new }
-    let(:documents_scope) { double(stored: [Document.new]) }
-
-    before do
-      allow(crime_application).to receive_messages(
-        kase: kase,
-        documents: documents_scope,
-        income: income,
-        capital: capital,
-        evidence_last_run_at: DateTime.now,
-        evidence_prompts: [],
-      )
+    let(:json_output) do
+      {
+        id: nil,
+        parent_id: nil,
+        schema_version: 1.0,
+        reference: nil,
+        application_type: 'initial',
+        created_at: nil,
+        submitted_at: nil,
+        date_stamp: nil,
+        ioj_passport: [],
+        means_passport: [],
+        additional_information: nil,
+        provider_details: {
+          office_code: nil,
+          provider_email: nil,
+          legal_rep_first_name: nil,
+          legal_rep_last_name: nil,
+          legal_rep_telephone: nil
+        },
+        interests_of_justice: [],
+        evidence_details: {
+          evidence_prompts: []
+        },
+        supporting_evidence: []
+      }.as_json
     end
 
-    it 'generates a serialized version of the application' do
-      expect(
-        subject.generate
-      ).to match(
-        a_hash_including(
-          'schema_version' => 1.0,
-          'ioj_passport' => be_an(Array),
-          'means_passport' => be_an(Array),
-          'provider_details' => be_a(Hash),
-          'client_details' => a_hash_including('applicant'),
-          'case_details' => a_hash_including('offences' => [], 'codefendants' => []),
-          'interests_of_justice' => [],
-          'means_details' => a_hash_including('income_details', 'capital_details'),
-          'evidence_details' => a_hash_including('last_run_at', 'evidence_prompts'),
-          'supporting_evidence' => be_an(Array),
-        )
-      )
-    end
+    it { expect(subject.generate).to eq(json_output) }
   end
 end

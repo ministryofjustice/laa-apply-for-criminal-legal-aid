@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_22_140430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -50,6 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.string "has_no_properties"
     t.string "has_no_savings"
     t.string "has_no_investments"
+    t.string "partner_will_benefit_from_trust_fund"
+    t.bigint "partner_trust_fund_yearly_dividend"
+    t.bigint "partner_trust_fund_amount_held"
+    t.string "partner_has_premium_bonds"
+    t.bigint "partner_premium_bonds_total_value"
+    t.string "partner_premium_bonds_holder_number"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -118,10 +124,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.text "additional_information"
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
-    t.string "confirm_dwp_result"
     t.string "additional_information_required"
+    t.string "confirm_dwp_result"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
+  end
+
+  create_table "deductions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "employment_id", null: false
+    t.string "deduction_type", null: false
+    t.bigint "amount", null: false
+    t.string "frequency", null: false
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deduction_type", "employment_id"], name: "index_deductions_on_deduction_type_and_employment_id", unique: true
+    t.index ["employment_id"], name: "index_deductions_on_employment_id"
   end
 
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -151,6 +169,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.index ["crime_application_id"], name: "index_documents_on_crime_application_id"
   end
 
+  create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "ownership_type", default: "applicant", null: false
+    t.string "employer_name"
+    t.jsonb "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "job_title"
+    t.string "has_no_deductions"
+    t.bigint "amount"
+    t.string "frequency"
+    t.jsonb "metadata", default: {}, null: false
+    t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
+  end
+
   create_table "incomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "income_above_threshold"
@@ -168,6 +201,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.string "has_savings"
     t.string "has_no_income_payments"
     t.string "has_no_income_benefits"
+    t.string "partner_employment_status", default: [], array: true
+    t.string "partner_has_no_income_payments"
+    t.string "partner_has_no_income_benefits"
+    t.string "applicant_self_assessment_tax_bill"
+    t.string "applicant_other_work_benefit_received"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -231,7 +269,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.string "housing_payment_type"
     t.string "pays_council_tax"
     t.string "has_no_other_outgoings"
+    t.string "partner_income_tax_rate_above_threshold"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
+  end
+
+  create_table "partner_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "relationship_to_partner"
+    t.string "involvement_in_case"
+    t.string "conflict_of_interest"
+    t.string "has_same_address_as_client"
+    t.string "relationship_status"
+    t.date "separation_date"
+    t.string "has_partner", default: "no", null: false
+    t.uuid "partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_partner_details_on_crime_application_id", unique: true
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -243,6 +297,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.jsonb "metadata", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ownership_type", default: "applicant"
     t.index ["crime_application_id", "type", "payment_type"], name: "index_payments_crime_application_id_and_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_payments_on_crime_application_id"
   end
@@ -260,14 +315,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
     t.string "nino"
     t.string "telephone_number"
     t.string "correspondence_address_type"
-    t.boolean "passporting_benefit"
+    t.boolean "benefit_check_result"
     t.string "benefit_type"
     t.string "has_benefit_evidence"
     t.string "will_enter_nino"
     t.date "last_jsa_appointment_date"
     t.string "residence_type"
     t.string "relationship_to_owner_of_usual_home_address"
-    t.index ["crime_application_id"], name: "index_people_on_crime_application_id", unique: true
+    t.string "confirm_details"
+    t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -341,14 +397,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_132542) do
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"
   add_foreign_key "codefendants", "cases"
+  add_foreign_key "deductions", "employments"
   add_foreign_key "dependants", "crime_applications"
   add_foreign_key "documents", "crime_applications"
+  add_foreign_key "employments", "crime_applications"
   add_foreign_key "incomes", "crime_applications"
   add_foreign_key "investments", "crime_applications"
   add_foreign_key "iojs", "cases"
   add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
   add_foreign_key "outgoings", "crime_applications"
+  add_foreign_key "partner_details", "crime_applications"
   add_foreign_key "payments", "crime_applications"
   add_foreign_key "people", "crime_applications"
   add_foreign_key "properties", "crime_applications"

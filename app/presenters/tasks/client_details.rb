@@ -1,11 +1,11 @@
 module Tasks
   class ClientDetails < BaseTask
     def path
-      edit_steps_client_details_path
-    end
-
-    def not_applicable?
-      false
+      if FeatureFlags.non_means_tested.enabled? && FeatureFlags.passported_partner_journey.enabled?
+        edit_steps_client_is_means_tested_path
+      else
+        edit_steps_client_details_path
+      end
     end
 
     # Client details is the first thing a provider can do so it is always true
@@ -18,8 +18,14 @@ module Tasks
       applicant.present?
     end
 
-    def completed?
-      crime_application.valid?(:client_details)
+    private
+
+    def validator
+      @validator ||= ::ClientDetails::AnswersValidator.new(
+        record:, crime_application:
+      )
     end
+
+    alias record crime_application
   end
 end

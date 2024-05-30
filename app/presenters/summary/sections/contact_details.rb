@@ -26,7 +26,7 @@ module Summary
 
         answers.push(Components::FreeTextAnswer.new(
                        :home_address, full_address(home_address), show: show_home_address?,
-          change_path: change_path(home_address)
+          change_path: change_address_path(home_address)
                      ))
 
         answers << [
@@ -37,7 +37,7 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :correspondence_address, full_address(correspondence_address),
-            change_path: change_path(correspondence_address)
+            change_path: change_address_path(correspondence_address)
           ),
 
           Components::FreeTextAnswer.new(
@@ -64,7 +64,7 @@ module Summary
         applicant.correspondence_address
       end
 
-      def change_path(address)
+      def change_address_path(address)
         return unless address.try(:to_param)
 
         if address.lookup_id.present?

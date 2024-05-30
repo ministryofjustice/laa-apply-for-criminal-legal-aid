@@ -9,13 +9,19 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:case_type) { CaseType::SUMMARY_ONLY }
 
   let(:not_means_tested) { nil }
+  let(:appeal_no_changes?) { nil }
 
   before do
     allow(
       form_object
     ).to receive(:crime_application).and_return(crime_application)
 
-    allow(crime_application).to receive_messages(update: true, date_stamp: nil, not_means_tested?: not_means_tested)
+    allow(crime_application).to receive_messages(
+      update: true,
+      date_stamp: nil,
+      not_means_tested?: not_means_tested,
+      appeal_no_changes?: appeal_no_changes?,
+    )
   end
 
   it_behaves_like 'a decision tree'
@@ -24,16 +30,48 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
 
-    context 'and answer is `yes`' do
-      let(:is_means_tested) { YesNoAnswer::YES }
-
-      it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+    before do
+      allow(FeatureFlags).to receive(:passported_partner_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
+      }
     end
 
-    context 'and answer is `no`' do
-      let(:is_means_tested) { YesNoAnswer::NO }
+    context 'and the passported partner feature flag is enabled' do
+      let(:feature_flag_passported_partner_journey_enabled) { true }
 
-      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+      context 'and answer is `yes`' do
+        let(:is_means_tested) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `no`' do
+        let(:is_means_tested) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
+      end
+    end
+
+    context 'and the passported partner feature flag is not enabled' do
+      before do
+        allow(FeatureFlags).to receive(:passported_partner_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
+        }
+      end
+
+      let(:feature_flag_passported_partner_journey_enabled) { false }
+
+      context 'and answer is `yes`' do
+        let(:is_means_tested) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `no`' do
+        let(:is_means_tested) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+      end
     end
   end
 
@@ -41,16 +79,42 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }
 
-    context 'and answer is `no`' do
-      let(:client_has_partner) { YesNoAnswer::NO }
-
-      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+    before do
+      allow(FeatureFlags).to receive(:passported_partner_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
+      }
     end
 
-    context 'and answer is `yes`' do
-      let(:client_has_partner) { YesNoAnswer::YES }
+    context 'and the passported partner feature flag is not enabled' do
+      let(:feature_flag_passported_partner_journey_enabled) { false }
 
-      it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
+      end
+    end
+
+    context 'and the passported partner feature flag is enabled' do
+      let(:feature_flag_passported_partner_journey_enabled) { true }
+
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      end
     end
   end
 
@@ -209,21 +273,13 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
 
     context 'when the case type is appeal_to_crown_court and a reference number was entered' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-
-      before do
-        allow(kase).to receive(:appeal_reference_number).and_return('appeal_maat_id')
-      end
+      let(:appeal_no_changes?) { true }
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
 
     context 'when the case type is appeal_to_crown_court and no reference number was entered' do
-      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
-
-      before do
-        allow(kase).to receive(:appeal_reference_number).and_return(nil)
-      end
+      let(:appeal_no_changes?) { false }
 
       it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
     end
@@ -299,8 +355,24 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_nino }
 
+    before do
+      allow(FeatureFlags).to receive(:passported_partner_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
+      }
+    end
+
     context 'when the application is means tested' do
-      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      context 'and the passported partner feature flag is enabled' do
+        let(:feature_flag_passported_partner_journey_enabled) { true }
+
+        it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+      end
+
+      context 'and the passported partner feature flag is not enabled' do
+        let(:feature_flag_passported_partner_journey_enabled) { false }
+
+        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      end
     end
 
     context 'when the application is not means tested' do

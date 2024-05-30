@@ -7,8 +7,6 @@ module Decisions
       case step_name
       when :is_means_tested
         after_is_means_tested
-      when :has_partner
-        after_has_partner
       when :details
         after_client_details
       when :case_type
@@ -27,6 +25,8 @@ module Decisions
         after_contact_details
       when :has_nino
         after_has_nino
+      when :has_partner
+        after_has_partner
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -36,17 +36,10 @@ module Decisions
     private
 
     def after_is_means_tested
-      if form_object.is_means_tested.yes?
+      if FeatureFlags.passported_partner_journey.enabled?
+        edit(:details)
+      elsif form_object.is_means_tested.yes?
         edit(:has_partner)
-      else
-        # Task list
-        edit('/crime_applications')
-      end
-    end
-
-    def after_has_partner
-      if form_object.client_has_partner.yes?
-        show(:partner_exit)
       else
         # Task list
         edit('/crime_applications')
@@ -94,7 +87,7 @@ module Decisions
     end
 
     def after_date_stamp
-      if entered_appeal_reference_number?
+      if current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
         edit(:residence_type)
@@ -112,7 +105,7 @@ module Decisions
     def after_contact_details
       if form_object.correspondence_address_type.other_address?
         start_address_journey(CorrespondenceAddress)
-      elsif current_crime_application.age_passported? || entered_appeal_reference_number?
+      elsif current_crime_application.age_passported? || current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
         edit(:has_nino)
@@ -128,8 +121,27 @@ module Decisions
     def after_has_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
+      elsif FeatureFlags.passported_partner_journey.enabled?
+        edit(:has_partner)
       else
         edit('/steps/dwp/benefit_type')
+      end
+    end
+
+    def after_has_partner
+      if form_object.client_has_partner.yes?
+        if FeatureFlags.passported_partner_journey.enabled?
+          # TODO: route to relationship to partner page
+          edit('/steps/dwp/benefit_type') # placeholder
+        else
+          show(:partner_exit)
+        end
+      elsif FeatureFlags.passported_partner_journey.enabled? # i.e. has_partner: no
+        # TODO: route to relationship to partner page
+        edit('/steps/dwp/benefit_type')
+      else
+        # Task list
+        edit('/crime_applications')
       end
     end
 

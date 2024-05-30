@@ -148,6 +148,24 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date your client last attended an appointment with their JSA work coach is too far in the past
               future_not_allowed: Date your client last attended an appointment with their JSA work coach must be today or in the past
+        steps/dwp/partner_benefit_type_form:
+          attributes:
+            benefit_type:
+              inclusion: Select a benefit type
+            last_jsa_appointment_date:
+              blank: Enter the date the partner last attended an appointment with their JSA work coach
+              blank_day: Date the partner last attended an appointment with their JSA work coach must include a day
+              blank_month: Date the partner last attended an appointment with their JSA work coach must include a month
+              blank_year: Date the partner last attended an appointment with their JSA work coach must include a year
+              blank_day_month: Date the partner last attended an appointment with their JSA work coach must include a day and month
+              blank_day_year: Date the partner last attended an appointment with their JSA work coach must include a day and year
+              blank_month_year: Date the partner last attended an appointment with their JSA work coach must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date the partner last attended an appointment with their JSA work coach is too far in the past
+              future_not_allowed: Date the partner last attended an appointment with their JSA work coach must be today or in the past
         steps/dwp/has_benefit_evidence_form:
           attributes:
             has_benefit_evidence:
@@ -414,6 +432,28 @@ en:
           attributes:
             has_savings:
               inclusion: Select yes if your client has savings or investments
+        steps/income/client/employment_income_form:
+          attributes:
+            amount:
+              not_a_number: Enter their salary or wage
+            before_or_after_tax:
+              inclusion: Select before or after tax
+            frequency:
+              inclusion: Select how often they get this payment
+        steps/income/client/self_assessment_tax_bill_form:
+          attributes:
+            applicant_self_assessment_tax_bill:
+              inclusion: Select yes if your client pays a Self Assessment tax bill received in the last 2 years
+            amount:
+              not_a_number: Enter the amount they pay
+            frequency:
+              inclusion: Select how often they pay this amount
+        steps/income/client/other_work_benefits_form:
+          attributes:
+            applicant_other_work_benefit_received:
+              inclusion: Select yes if your client receives any other benefits from work
+            amount:
+              not_a_number: Enter the total yearly value of their other work benefits
         steps/income/client_has_dependants_form:
           attributes:
             client_has_dependants:
@@ -700,6 +740,18 @@ en:
               blank:  Enter country
             postcode:
               blank: Enter postcode
+        steps/income/client/employer_details_form:
+          attributes:
+            employer_name:
+              blank: Enter employer's name
+            address_line_one:
+              blank: Enter address line 1, typically the building and street
+            city:
+              blank: Enter town or city
+            country:
+              blank: Enter country
+            postcode:
+              blank: Enter postcode
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
@@ -790,3 +842,59 @@ en:
             crime_application:
               invalid: Some application details are missing
         steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
+
+        steps/income/client/employment_details_form:
+          attributes:
+            job_title:
+              blank: Enter your client's job title
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
+            before_or_after_tax:
+              blank: Select before or after tax
+              inclusion: Select before or after tax
+            frequency:
+              blank: Select how often they get this payment
+              inclusion: Select how often they get this payment
+          summary:
+            job_title:
+              blank: Enter your client's job title
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Enter their salary or wage greater than 0
+            before_or_after_tax:
+              blank: Select before or after tax
+              inclusion: Select before or after tax
+            frequency:
+              blank: Select how often they get this payment
+              inclusion: Select how often they get this payment
+        steps/income/client/deductions_form:
+          attributes:
+            base:
+              none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
+        steps/income/client/deduction_fieldset_form:
+          summary:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Enter amount greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often the amount gets deducted
+            details:
+              blank: Enter details
+              invalid: Details not required
+          attributes:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Enter amount greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often they get this payment
+            details:
+              blank: Enter details
+              invalid: Details not required
+              

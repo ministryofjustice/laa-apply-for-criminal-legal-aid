@@ -12,17 +12,13 @@ module Summary
 
             Components::FreeTextAnswer.new(
               :supporting_evidence, document.filename,
-              change_path:
+              change_path: edit_steps_evidence_upload_path(crime_application)
             )
           end
         ].flatten.compact.select(&:show?)
       end
 
       private
-
-      def change_path
-        edit_steps_evidence_upload_path(crime_application)
-      end
 
       def documents
         @documents ||= crime_application.documents

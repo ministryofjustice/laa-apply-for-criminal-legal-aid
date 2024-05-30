@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::Property, type: :component do
-  subject(:component) { render_inline(described_class.new(record:)) }
+  subject(:component) { render_summary_component(described_class.new(record:)) }
 
   let(:record) {
     instance_double(Property,
@@ -61,7 +61,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     end
 
     context 'when show_record_actions true' do
-      subject(:component) { render_inline(described_class.new(record: record, show_record_actions: true)) }
+      subject(:component) { render_summary_component(described_class.new(record: record, show_record_actions: true)) }
 
       describe 'change link' do
         it 'show the correct change link' do

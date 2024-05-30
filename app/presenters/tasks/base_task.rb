@@ -21,7 +21,8 @@ module Tasks
     end
 
     def fulfilled?(task_class)
-      task_class.new(crime_application:).status.completed?
+      task_status = task_class.new(crime_application:).status
+      task_status.not_applicable? || task_status.completed?
     end
 
     # Used by the `Routing` module to build the urls
@@ -43,7 +44,11 @@ module Tasks
     end
 
     def not_applicable?
-      true
+      !validator.applicable?
+    end
+
+    def completed?
+      validator.complete?
     end
 
     # :nocov:
@@ -55,7 +60,9 @@ module Tasks
       raise 'implement in task subclasses'
     end
 
-    def completed?
+    private
+
+    def validator
       raise 'implement in task subclasses'
     end
     # :nocov:

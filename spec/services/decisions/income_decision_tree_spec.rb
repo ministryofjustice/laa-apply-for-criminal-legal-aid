@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::IncomeDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -9,25 +10,21 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
+      employments: employments_double,
       kase: kase
     )
   end
 
+  let(:employment_double) { instance_double(Employment, id: 'uuid') }
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
-
-  let(:kase) do
-    instance_double(
-      Case,
-      case_type: case_type,
-      appeal_financial_circumstances_changed: appeal_financial_circumstances_changed,
-      appeal_reference_number: nil
-    )
-  end
+  let(:employments_double) { double('employments_collection', create!: true, reject: income_employments) }
+  let(:kase) { instance_double(Case, case_type:) }
+  let(:income_employments) { [employment_double] }
 
   let(:case_type) { nil }
-  let(:appeal_financial_circumstances_changed) { nil }
+  let(:feature_flag_employment_journey_enabled) { false }
 
   before do
     allow(
@@ -36,6 +33,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
     allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
+
+    allow(FeatureFlags).to receive(:employment_journey) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_employment_journey_enabled)
+    }
   end
 
   it_behaves_like 'a decision tree'
@@ -48,10 +49,92 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
       before do
-        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED])
+        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
       end
 
-      it { is_expected.to have_destination(:employed_exit, :show, id: crime_application) }
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+
+        it 'redirects to the `income_before_tax` page' do
+          expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+        end
+      end
+    end
+
+    context 'when status selected is self-employed option' do
+      let(:employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::SELF_EMPLOYED.to_s])
+      end
+
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+
+        it 'redirects to the `self employed_exit` page' do
+          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+        end
+      end
+    end
+
+    context 'when status selected is both employed and self_employed options' do
+      let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:employment_status).and_return(
+          [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        )
+      end
+
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        end
+
+        context 'with incomplete employments' do
+          let(:income_employments) { [employment_double] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with no incomplete employments' do
+          let(:income_employments) { [] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).to have_received(:create!)
+          end
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+        end
+      end
     end
 
     context 'when status selected is not working' do
@@ -72,18 +155,67 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                  ended_employment_within_three_months: YesNoAnswer::NO)
         end
 
-        context 'when case_type is not appeal no changes' do
-          let(:case_type) { 'summary_only' }
+        let(:case_type) { 'summary_only' }
 
-          it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
+      end
+    end
+  end
 
-        context 'when case_type is appeal no changes' do
-          let(:case_type) { 'appeal_to_crown_court' }
-          let(:appeal_financial_circumstances_changed) { 'no' }
+  context 'when the step is `client_employer_details`' do
+    let(:form_object) do
+      double('FormObject', record: employment_double)
+    end
+    let(:step_name) { :client_employer_details }
 
-          it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-        end
+    it 'redirects to `client_employer_details` page' do
+      expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `client_employment_details`' do
+    let(:form_object) do
+      double('FormObject', record: employment_double)
+    end
+    let(:step_name) { :client_employment_details }
+
+    it 'redirects to `client deductions` page' do
+      expect(subject).to have_destination('/steps/income/client/deductions', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `client_deductions`' do
+    let(:form_object) do
+      double('FormObject', record: employment_double)
+    end
+    let(:step_name) { :client_deductions }
+
+    it 'redirects to `employments_summary` page' do
+      expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
+    end
+  end
+
+  context 'when the step is `employments_summary`' do
+    let(:form_object) { double('FormObject', record: employment_double) }
+    let(:step_name) { :employments_summary }
+
+    before do
+      allow(form_object).to receive_messages(crime_application:, add_client_employment:)
+    end
+
+    context 'the client has selected yes to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::YES }
+
+      it 'redirects to the edit `employer_details` page' do
+        expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+      end
+    end
+
+    context 'the client has selected no to adding an employment' do
+      let(:add_client_employment) { YesNoAnswer::NO }
+
+      it 'redirects to self_assessment_tax_bill page' do
+        expect(subject).to have_destination(:self_assessment_tax_bill, :edit, id: crime_application)
       end
     end
   end
@@ -91,19 +223,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `lost_job_in_custody`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :lost_job_in_custody }
+    let(:case_type) { 'summary_only' }
 
-    context 'when case_type is not appeal no changes' do
-      let(:case_type) { 'summary_only' }
-
-      it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
-    end
-
-    context 'when case_type is appeal no changes' do
-      let(:case_type) { 'appeal_to_crown_court' }
-      let(:appeal_financial_circumstances_changed) { 'no' }
-
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
-    end
+    it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
   end
 
   context 'when the step is `income_before_tax`' do
@@ -117,7 +239,26 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when income is above the threshold' do
       let(:income_above_threshold) { YesNoAnswer::YES.to_s }
 
-      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      context 'when the client is employed and the employed feature flag is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+        let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+        it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
+      end
+
+      context 'when the client is not employed and employed feature flag is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+        let(:employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
+
+      context 'when the client is employed and employed feature flag NOT enabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+        let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
     end
 
     context 'when income below the threshold' do
@@ -135,12 +276,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
       allow(income).to receive_messages(has_frozen_income_or_assets:)
     end
 
-    context 'when they have frozen income or assets' do
-      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
-
-      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
-    end
-
     context 'when they do not have frozen income or assets' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
 
@@ -156,6 +291,32 @@ RSpec.describe Decisions::IncomeDecisionTree do
         it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
       end
     end
+
+    context 'when they have frozen income or assets' do
+      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+      context 'when the client is employed' do
+        let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+
+        context 'when the employed feature flag is enabled' do
+          let(:feature_flag_employment_journey_enabled) { true }
+
+          it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
+        end
+
+        context 'when the employed feature flag is NOT enabled' do
+          let(:feature_flag_employment_journey_enabled) { false }
+
+          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+        end
+      end
+
+      context 'when the client is not employed' do
+        let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
+    end
   end
 
   context 'when the step is `client_owns_property`' do
@@ -166,16 +327,36 @@ RSpec.describe Decisions::IncomeDecisionTree do
       allow(income).to receive_messages(client_owns_property:)
     end
 
-    context 'when they have property' do
-      let(:client_owns_property) { YesNoAnswer::YES.to_s }
-
-      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
-    end
-
     context 'when they do not have property' do
       let(:client_owns_property) { YesNoAnswer::NO.to_s }
 
       it { is_expected.to have_destination(:has_savings, :edit, id: crime_application) }
+    end
+
+    context 'when they have property' do
+      let(:client_owns_property) { YesNoAnswer::YES.to_s }
+
+      context 'when the client is employed' do
+        let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+
+        context 'when the employed feature flag is enabled' do
+          let(:feature_flag_employment_journey_enabled) { true }
+
+          it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
+        end
+
+        context 'when the employed feature flag is NOT enabled' do
+          let(:feature_flag_employment_journey_enabled) { false }
+
+          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+        end
+      end
+
+      context 'when the client is not employed' do
+        let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
     end
   end
 
@@ -183,9 +364,59 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_savings }
 
-    context 'has correct next step' do
+    context 'when the employed journey is not enabled' do
+      let(:feature_flag_employment_journey_enabled) { false }
+
       it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
+
+    context 'when the client is not employed' do
+      let(:employment_status) { ['not_working'] }
+
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+    end
+
+    context 'when the employed journey is enabled and client is employed' do
+      let(:feature_flag_employment_journey_enabled) { true }
+      let(:employment_status) { ['employed'] }
+
+      context 'when they have savings' do
+        before { allow(subject).to receive(:requires_full_means_assessment?).and_return(true) }
+
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        end
+      end
+
+      context 'when they do not have savings' do
+        before { allow(subject).to receive(:requires_full_means_assessment?).and_return(false) }
+
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `client_employment_income`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_employment_income }
+
+    it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
+  end
+
+  context 'when the step is `client_self_assessment_tax_bill`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_self_assessment_tax_bill }
+
+    it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
+  end
+
+  context 'when the step is `client_other_work_benefits`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_other_work_benefits }
+
+    it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
   end
 
   context 'when the step is `income payments`' do
@@ -202,30 +433,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :income_benefits }
 
     before do
-      allow(income).to receive_messages(
-        income_above_threshold:,
-        has_frozen_income_or_assets:,
-        client_owns_property:,
-        has_savings:
-      )
+      allow(subject).to receive(:requires_full_means_assessment?).and_return(requires_full_means_assessment)
     end
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
-    context 'when dependants are relevant' do
-      let(:income_above_threshold) { YesNoAnswer::YES.to_s }
-      let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
-      let(:client_owns_property) { YesNoAnswer::NO.to_s }
-      let(:has_savings) { YesNoAnswer::NO.to_s }
+    context 'when full means assessment needs completing' do
+      let(:requires_full_means_assessment) { true }
 
       it { is_expected.to have_destination(:client_has_dependants, :edit, id: crime_application) }
     end
 
-    context 'when dependants are not relevant' do
-      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
-      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
-      let(:client_owns_property) { YesNoAnswer::NO.to_s }
-      let(:has_savings) { YesNoAnswer::NO.to_s }
-      let(:income_benefits) { [] }
+    context 'when does not require full means assessment' do
+      let(:requires_full_means_assessment) { false }
 
       before do
         allow(crime_application).to receive_messages(income_payments:, income_benefits:)
@@ -233,12 +451,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when there are no payments' do
         let(:income_payments) { [] }
+        let(:income_benefits) { [] }
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
       end
 
-      context 'when there are payments' do
+      context 'when there are payments or benefits' do
         let(:income_payments) { [{ amount: 1234 }] }
+        let(:income_benefits) { [] }
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end

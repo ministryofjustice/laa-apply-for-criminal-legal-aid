@@ -59,6 +59,20 @@ RSpec.describe TaskList::Collection do
     end
   end
 
+  describe '#applicable' do
+    let(:applicable_task) { double(not_applicable?: false) }
+
+    before do
+      allow(TaskList::Task).to receive(:new).and_return(
+        applicable_task, double(not_applicable?: true)
+      )
+    end
+
+    it 'returns only the applicable tasks' do
+      expect(subject.applicable).to eq([applicable_task])
+    end
+  end
+
   describe '#render' do
     before do
       # We test the Section separately, here we don't need to

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe EmploymentStatus do
   subject { described_class.new(value) }
 
@@ -9,9 +11,6 @@ RSpec.describe EmploymentStatus do
         %w[
           employed
           self_employed
-          business_partnership
-          director
-          shareholder
           not_working
         ]
       )

@@ -1,25 +1,77 @@
 require 'rails_helper'
 
 RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
-  subject { described_class.new(record) }
+  subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { instance_double(Income, crime_application:, errors:) }
   let(:crime_application) { instance_double CrimeApplication }
 
   let(:errors) { double(:errors) }
+  let(:requires_means_assessment?) { true }
+  let(:employment_validator) do
+    instance_double(EmploymentDetails::AnswersValidator, validate: nil)
+  end
 
   before do
-    allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
-    allow(crime_application).to receive(:income) { record }
+    allow(crime_application).to receive_messages(
+      income: record,
+      kase: double(case_type: 'summary_only')
+    )
 
-    allow(crime_application).to receive(:kase) {
-      double(case_type: 'summary_only', appeal_reference_number: nil)
-    }
-    allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
+    allow(validator).to receive_messages(
+      evidence_of_passporting_means_forthcoming?: false,
+      requires_means_assessment?: requires_means_assessment?
+    )
+
+    allow(EmploymentDetails::AnswersValidator).to receive(:new).and_return(
+      employment_validator
+    )
+  end
+
+  describe '#applicable?' do
+    subject(:applicable?) { validator.applicable? }
+
+    context 'when means assessment not required' do
+      let(:requires_means_assessment?) { false }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when means assessment required' do
+      let(:requires_means_assessment?) { true }
+
+      it { is_expected.to be(true) }
+    end
+  end
+
+  describe '#complete?' do
+    subject(:complete?) { validator.complete? }
+
+    before do
+      expect(validator).to receive(:validate)
+      expect(errors).to receive(:empty?) { !errors_added? }
+    end
+
+    context 'when validate does not add errors' do
+      let(:errors_added?) { false }
+
+      it { is_expected.to be(true) }
+    end
+
+    context 'when validate adds errors' do
+      let(:errors_added?) { true }
+
+      it { is_expected.to be(false) }
+    end
   end
 
   describe '#validate' do
-    before { allow(record).to receive_messages(**attributes) }
+    before do
+      allow(validator).to receive_messages(
+        applicable?: true
+      )
+      allow(record).to receive_messages(**attributes)
+    end
 
     context 'when all validations pass' do
       let(:errors) { [] }
@@ -48,7 +100,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
       let(:attributes) do
         {
-          employment_status: nil,
           income_above_threshold: nil,
           has_frozen_income_or_assets: nil,
           has_no_income_payments: 'no',
@@ -61,7 +112,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'adds errors for all failed validations' do
-        expect(errors).to receive(:add).with(:employment_status, :incomplete)
         expect(errors).to receive(:add).with(:income_before_tax, :incomplete)
         expect(errors).to receive(:add).with(:income_payments, :incomplete)
         expect(errors).to receive(:add).with(:income_benefits, :incomplete)
@@ -70,24 +120,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
-      end
-    end
-  end
-
-  describe '#employment_status_complete?' do
-    context 'when employment_status is present' do
-      before { allow(record).to receive(:employment_status).and_return('not_working') }
-
-      it 'returns true' do
-        expect(subject.employment_status_complete?).to be(true)
-      end
-    end
-
-    context 'when employment_status is empty' do
-      before { allow(record).to receive(:employment_status).and_return([]) }
-
-      it 'returns false' do
-        expect(subject.employment_status_complete?).to be(false)
       end
     end
   end

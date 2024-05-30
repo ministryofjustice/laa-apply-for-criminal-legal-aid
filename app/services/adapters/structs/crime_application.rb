@@ -10,20 +10,11 @@ module Adapters
         means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
       end
       # rubocop:enable Naming/PredicateName
-      #
-
-      # `passporting_benefit` not part of schema, infer true value if
-      # means passport is on benefit check. We cannot infer false from
-      # the information we have, so default to nil
-      def infer_passporting_benefit
-        true if means_passport.include?(MeansPassportType::ON_BENEFIT_CHECK.to_s)
-      end
 
       def applicant
         return @applicant if @applicant
 
         struct = Structs::Applicant.new(client_details.applicant)
-        struct.passporting_benefit = infer_passporting_benefit
 
         @applicant = struct
       end
@@ -41,6 +32,8 @@ module Adapters
       end
 
       def income
+        return nil unless means_details
+
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
@@ -61,6 +54,8 @@ module Adapters
       end
 
       def outgoings
+        return nil unless means_details
+
         Structs::OutgoingsDetails.new(means_details.outgoings_details)
       end
 
@@ -73,6 +68,8 @@ module Adapters
       end
 
       def capital
+        return nil unless means_details
+
         @capital ||= Structs::CapitalDetails.new(means_details.capital_details)
       end
 

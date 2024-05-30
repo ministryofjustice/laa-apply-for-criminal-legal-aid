@@ -6,13 +6,17 @@ module Adapters
         employment_type || []
       end
 
+      def partner_employment_status
+        partner_employment_type || []
+      end
+
       def serializable_hash(options = {})
         super(
           options.merge(
-            methods: [:employment_status],
+            methods: [:employment_status, :partner_employment_status],
             # `employment_type` is the name for employment_status
             # in the datastore, we don't use it
-            except: [:employment_type, :dependants, :income_payments, :income_benefits]
+            except: [:employment_type, :partner_employment_type, :dependants, :income_payments, :income_benefits]
           )
         )
       end

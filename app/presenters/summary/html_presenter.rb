@@ -1,5 +1,5 @@
 module Summary
-  class HtmlPresenter # rubocop:disable Metrics/ClassLength
+  class HtmlPresenter
     attr_reader :crime_application
 
     delegate :application_type, :appeal_no_changes?, to: :crime_application
@@ -9,6 +9,7 @@ module Summary
         overview
         client_details
         contact_details
+        passporting_benefit_check
         case_details
         offences
         codefendants
@@ -43,22 +44,6 @@ module Summary
         more_information
         legal_representative_details
       ],
-      appeal_with_no_changes: %i[
-        overview
-        client_details
-        contact_details
-        case_details
-        offences
-        codefendants
-        next_court_hearing
-        first_court_hearing
-        justification_for_legal_aid
-        passport_justification_for_legal_aid
-        employment_details
-        supporting_evidence
-        more_information
-        legal_representative_details
-      ],
       capital: %i[
         properties
         savings
@@ -88,11 +73,7 @@ module Summary
     end
 
     def sections
-      if appeal_no_changes?
-        build_sections(:appeal_with_no_changes)
-      else
-        build_sections(application_type.to_sym)
-      end
+      build_sections(application_type.to_sym)
     end
 
     def income_sections

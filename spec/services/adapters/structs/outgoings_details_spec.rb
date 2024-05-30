@@ -30,6 +30,7 @@ RSpec.describe Adapters::Structs::OutgoingsDetails do
           outgoings_more_than_income
           how_manage
           pays_council_tax
+          partner_income_tax_rate_above_threshold
         ]
       )
     end

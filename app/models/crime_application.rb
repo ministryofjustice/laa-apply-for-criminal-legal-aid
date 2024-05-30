@@ -54,6 +54,8 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 
+  has_many :employments, dependent: :destroy
+
   enum status: ApplicationStatus.enum_values
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
@@ -72,7 +74,8 @@ class CrimeApplication < ApplicationRecord
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
 
   validate on: :client_details do
-    ::ClientDetails::AnswersValidator.new(self).validate
+    ::ClientDetails::AnswersValidator.new(record: self, crime_application: self)
+                                     .validate
   end
 
   validate on: :passporting_benefit do

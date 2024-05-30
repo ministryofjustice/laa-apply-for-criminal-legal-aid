@@ -9,8 +9,6 @@ module Adapters
         CorrespondenceAddress.new(super.attributes) if super
       end
 
-      attr_accessor :passporting_benefit
-
       def has_nino
         nino.present? ? 'yes' : 'no'
       end
@@ -18,7 +16,7 @@ module Adapters
       def serializable_hash(options = {})
         super(
           options.merge(
-            methods: [:has_nino, :passporting_benefit],
+            methods: [:has_nino],
           )
         )
       end

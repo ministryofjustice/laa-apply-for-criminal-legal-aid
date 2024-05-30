@@ -1,6 +1,9 @@
 module Steps
   module DWP
     class ConfirmDetailsForm < Steps::BaseFormObject
+      include Steps::HasOneAssociation
+      has_one_association :applicant
+
       attribute :confirm_details, :value_object, source: YesNoAnswer
       validates :confirm_details, inclusion: { in: :choices }
 
@@ -11,7 +14,9 @@ module Steps
       private
 
       def persist!
-        true
+        applicant.update(
+          attributes
+        )
       end
     end
   end

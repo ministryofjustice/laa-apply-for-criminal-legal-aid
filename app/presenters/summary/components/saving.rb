@@ -36,15 +36,15 @@ module Summary
       end
 
       def change_path
-        edit_steps_capital_savings_path(id: record.crime_application_id, saving_id: record.id)
+        edit_steps_capital_savings_path(saving_id: record.id)
       end
 
       def summary_path
-        edit_steps_capital_savings_summary_path(id: record.crime_application_id)
+        edit_steps_capital_savings_summary_path
       end
 
       def remove_path
-        confirm_destroy_steps_capital_savings_path(id: record.crime_application_id, saving_id: record.id)
+        confirm_destroy_steps_capital_savings_path(saving_id: record.id)
       end
     end
   end

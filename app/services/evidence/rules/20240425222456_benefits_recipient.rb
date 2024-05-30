@@ -15,7 +15,7 @@ module Evidence
           conditions = [
             crime_application.applicant.has_benefit_evidence == 'yes',
             BenefitType.passporting.map(&:value).include?(crime_application.applicant.benefit_type&.to_sym),
-            [nil, false].include?(crime_application.applicant.passporting_benefit)
+            [nil, false].include?(crime_application.applicant.benefit_check_result)
           ]
 
           conditions.all?
