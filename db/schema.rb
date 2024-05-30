@@ -126,8 +126,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.datetime "evidence_last_run_at"
     t.string "additional_information_required"
     t.string "confirm_dwp_result"
-    t.string "client_relationship_status"
-    t.date "client_relationship_separated_date"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end

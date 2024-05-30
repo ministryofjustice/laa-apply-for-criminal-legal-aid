@@ -158,7 +158,6 @@ en:
               correspondence_address: Client’s correspondence address
             partner:
               home_address: Partner’s home address
-              correspondence_address: Partner’s correspondence address
           heading:
             applicant:
               home_address: Enter the address where your client usually lives
@@ -175,7 +174,6 @@ en:
               correspondence_address: Client’s correspondence address selection
             partner:
               home_address: Partner’s home address selection
-              correspondence_address: Partner’s correspondence address selection
           heading:
             applicant:
               home_address: Enter the address where your client usually lives
@@ -200,7 +198,6 @@ en:
               correspondence_address: Client’s correspondence address
             partner:
               home_address: Partner’s home address
-              correspondence_address: Partner’s correspondence address
           heading:
             applicant:
               home_address: Enter your client’s home address

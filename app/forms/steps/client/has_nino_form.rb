@@ -11,7 +11,7 @@ module Steps
 
       validates_inclusion_of :has_nino, in: :choices
       validate :validate_nino, if: -> { client_has_nino? }
-      # TODO: Use NinoValidator
+      # TODO: Use NinoValidato CRIMAPP-970
 
       def choices
         YesNoAnswer.values
