@@ -10,82 +10,33 @@ RSpec.describe 'Dashboard', :authorized do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
 
   describe 'start a new application' do
-    # before do
-    #   allow(FeatureFlags).to receive(:non_means_tested) {
-    #     instance_double(FeatureFlags::EnabledFeature, enabled?: non_means_tested_enabled)
-    #   }
-    #   allow(FeatureFlags).to receive(:passported_partner_journey) {
-    #                            instance_double(FeatureFlags::EnabledFeature,
-    #                                            enabled?: passported_partner_journey_enabled)
-    #                          }
-    # end
-    before do
-      allow(FeatureFlags).to receive_messages(
-        non_means_tested: instance_double(FeatureFlags::EnabledFeature, enabled?: non_means_tested_enabled),
-        passported_partner_journey: instance_double(FeatureFlags::EnabledFeature,
-                                                    enabled?: passported_partner_journey_enabled)
-      )
-    end
-
-    let(:non_means_tested_enabled) { nil }
-
-    context 'when passported partner journey feature flag is not enabled' do
-      let(:passported_partner_journey_enabled) { false }
-
-      context 'when non_means_tested feature flag is enabled' do
-        let(:non_means_tested_enabled) { true }
-
-        it 'creates a new `crime_application` record' do
-          expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
-
-          expect(response).to have_http_status(:redirect)
-          expect(response).to redirect_to(/is_application_means_tested/)
-        end
+    context 'when non_means_tested feature flag is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:non_means_tested) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
       end
 
-      context 'when `non means tested` feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:non_means_tested) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
+      it 'creates a new `crime_application` record' do
+        expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
 
-        it 'creates a new `crime_application` record' do
-          expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
-
-          expect(response).to have_http_status(:redirect)
-          expect(response).to redirect_to(/has_partner/)
-        end
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/is_application_means_tested/)
       end
     end
 
-    context 'when passported partner journey feature flag is enabled' do
-      let(:passported_partner_journey_enabled) { true }
-
-      context 'when non_means_tested feature flag is enabled' do
-        let(:non_means_tested_enabled) { true }
-
-        it 'creates a new `crime_application` record' do
-          expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
-
-          expect(response).to have_http_status(:redirect)
-          expect(response).to redirect_to(/applications/)
-        end
+    context 'when `non means tested` feature flag is not enabled' do
+      before do
+        allow(FeatureFlags).to receive(:non_means_tested) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
       end
 
-      context 'when `non means tested` feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:non_means_tested) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
+      it 'creates a new `crime_application` record' do
+        expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
 
-        it 'creates a new `crime_application` record' do
-          expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
-
-          expect(response).to have_http_status(:redirect)
-          expect(response).to redirect_to(/applications/)
-        end
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/does_client_have_partner/)
       end
     end
   end

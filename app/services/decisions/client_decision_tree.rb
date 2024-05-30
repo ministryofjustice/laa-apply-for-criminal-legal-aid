@@ -50,18 +50,6 @@ module Decisions
       end
     end
 
-    def after_has_partner
-      if start_partner_journey? && FeatureFlags.partner_journey.enabled?
-        edit('/steps/partner/relationship')
-      elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
-        edit(:relationship_status)
-      elsif form_object.client_has_partner.yes?
-        show(:partner_exit)
-      else
-        edit(:details)
-      end
-    end
-
     def after_relationship_status
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
@@ -149,6 +137,18 @@ module Decisions
         edit(:has_partner)
       else
         edit('/steps/dwp/benefit_type')
+      end
+    end
+
+    def after_has_partner
+      if start_partner_journey? && FeatureFlags.partner_journey.enabled?
+        edit('/steps/partner/relationship')
+      elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
+        edit(:relationship_status)
+      elsif form_object.client_has_partner.yes?
+        show(:partner_exit)
+      else
+        edit(:details)
       end
     end
 

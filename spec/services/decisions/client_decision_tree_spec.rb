@@ -38,12 +38,6 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
 
-    before do
-      allow(FeatureFlags).to receive(:passported_partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-      }
-    end
-
     context 'when answer is `yes` and partner_journey enabled' do
       let(:partner_journey_enabled) { true }
       let(:is_means_tested) { YesNoAnswer::YES }
@@ -61,55 +55,7 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'when answer is `no`' do
       let(:is_means_tested) { YesNoAnswer::NO }
 
-      context 'and answer is `yes`' do
-        let(:is_means_tested) { YesNoAnswer::YES }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
-
-      context 'and answer is `no`' do
-        let(:is_means_tested) { YesNoAnswer::NO }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
-    end
-
-    context 'and the passported partner feature flag is enabled' do
-      let(:feature_flag_passported_partner_journey_enabled) { true }
-
-      context 'and answer is `yes`' do
-        let(:is_means_tested) { YesNoAnswer::YES }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
-
-      context 'and answer is `no`' do
-        let(:is_means_tested) { YesNoAnswer::NO }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
-    end
-
-    context 'and the passported partner feature flag is not enabled' do
-      before do
-        allow(FeatureFlags).to receive(:passported_partner_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-        }
-      end
-
-      let(:feature_flag_passported_partner_journey_enabled) { false }
-
-      context 'and answer is `yes`' do
-        let(:is_means_tested) { YesNoAnswer::YES }
-
-        it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
-      end
-
-      context 'and answer is `no`' do
-        let(:is_means_tested) { YesNoAnswer::NO }
-
-        it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
     end
   end
 
