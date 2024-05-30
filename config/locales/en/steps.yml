@@ -98,10 +98,6 @@ en:
       same_address:
         edit:
           page_title: Does your client and their partner live at the same address?
-      address:
-        edit:
-          page_title: Enter the partner’s home address
-          heading: Enter the partner’s home address
 
     dwp:
       benefit_type:
@@ -163,8 +159,7 @@ en:
               home_address: Enter the address where your client usually lives
               correspondence_address: Enter your client’s correspondence address
             partner:
-              home_address: Enter the partner's home address
-              correspondence_address: Enter the partner's home address
+              home_address: Enter the address where the partner usually lives
           manual_entry: Enter address manually
       results:
         edit:
@@ -180,7 +175,6 @@ en:
               correspondence_address: Enter your client’s correspondence address
             partner:
               home_address: Enter the address where the partner usually lives
-              correspondence_address: Enter the partner’s correspondence address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
