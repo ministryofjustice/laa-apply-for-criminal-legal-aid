@@ -319,7 +319,9 @@ en:
       employment_status:
         question: What is your client’s employment status?
         answers:
-          'not_working': Not working
+          not_working: Not working
+          employed: Employed
+          self_employed: Self-employed
       ended_employment_within_three_months:
         question: Has your client ended employment in the last 3 months?
         answers:

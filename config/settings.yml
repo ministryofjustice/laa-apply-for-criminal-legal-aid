@@ -44,7 +44,6 @@ feature_flags:
     staging: true
     production: false
 
-
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
 # usually the case if it varies per environment.
