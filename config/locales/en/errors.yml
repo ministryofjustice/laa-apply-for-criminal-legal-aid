@@ -162,7 +162,7 @@ en:
         steps/partner/involvement_form:
           attributes:
             involvement_in_case:
-              inclusion: Select how the partner is involved in your client's case or select no, they're not involved
+              inclusion: Select how the partner is involved in your client's case or select 'no, the partner is not involved'
         steps/partner/conflict_form:
           attributes:
             conflict_of_interest:
