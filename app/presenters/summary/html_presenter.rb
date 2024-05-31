@@ -61,6 +61,7 @@ module Summary
       income: %i[
         employment_details
         income_details
+        employments
         income_payments_details
         income_benefits_details
         dependants
