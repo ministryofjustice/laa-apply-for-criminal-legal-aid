@@ -66,6 +66,11 @@ module Adapters
         return [] unless means_details.income_details.employments
 
         means_details.income_details.employments.map do |struct|
+          if struct.respond_to?(:deductions)
+            struct.deductions.map! do |deduction|
+              Deduction.new(**deduction)
+            end
+          end
           Employment.new(struct.attributes)
         end
       end
