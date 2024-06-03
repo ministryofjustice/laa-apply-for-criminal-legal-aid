@@ -21,7 +21,7 @@ feature_flags:
     production: true
   non_means_tested:
     local: false
-    staging: true
+    staging: false
     production: false
   unemployed_partner_journey:
     local: true
@@ -32,14 +32,6 @@ feature_flags:
     staging: true
     production: false
   employment_journey:
-    local: true
-    staging: true
-    production: false
-  passported_partner_journey:
-    local: true
-    staging: true
-    production: false
-  unemployment_partner_journey:
     local: true
     staging: true
     production: false
