@@ -10,19 +10,6 @@ module Adapters
         partner_employment_type || []
       end
 
-      # def employments
-      #   return [] unless __getobj__
-      #
-      #   super.map do |attrs|
-      #     if attrs.respond_to?(:deductions)
-      #       attrs.deductions.map! do |po|
-      #         Deduction.new(**po)
-      #       end
-      #     end
-      #     Employment.new(**attrs)
-      #   end
-      # end
-
       def serializable_hash(options = {})
         super(
           options.merge(
