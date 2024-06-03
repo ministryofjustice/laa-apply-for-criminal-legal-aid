@@ -62,6 +62,14 @@ module Adapters
         end
       end
 
+      def employments
+        return [] unless means_details.income_details.employments
+
+        means_details.income_details.employments.map do |struct|
+          Employment.new(struct.attributes)
+        end
+      end
+
       def outgoings
         return nil unless means_details
 
