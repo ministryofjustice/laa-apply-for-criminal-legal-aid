@@ -21,7 +21,7 @@ feature_flags:
     production: true
   non_means_tested:
     local: false
-    staging: true
+    staging: false
     production: false
   unemployed_partner_journey:
     local: true

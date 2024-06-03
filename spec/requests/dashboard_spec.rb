@@ -32,11 +32,26 @@ RSpec.describe 'Dashboard', :authorized do
         }
       end
 
-      it 'creates a new `crime_application` record' do
+      context 'when the `partner journey` feature flag is enabled' do
+        before do
+          allow(FeatureFlags).to receive(:partner_journey) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+          }
+        end
+
+        it 'creates a new `crime_application` record and redirects to the does client have partner screen' do
+          expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+
+          expect(response).to have_http_status(:redirect)
+          expect(response).to redirect_to(/does_client_have_partner/)
+        end
+      end
+
+      it 'creates a new `crime_application` record and redirects to the task list' do
         expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
 
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(/does_client_have_partner/)
+        expect(response).to redirect_to(/edit/)
       end
     end
   end
