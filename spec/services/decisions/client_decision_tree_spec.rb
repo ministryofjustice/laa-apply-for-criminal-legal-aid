@@ -10,6 +10,8 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   let(:not_means_tested) { nil }
   let(:appeal_no_changes?) { nil }
+  let(:client_has_partner) { nil }
+  let(:partner_journey_enabled) { false }
 
   before do
     allow(
@@ -22,56 +24,38 @@ RSpec.describe Decisions::ClientDecisionTree do
       not_means_tested?: not_means_tested,
       appeal_no_changes?: appeal_no_changes?,
     )
+
+    allow(FeatureFlags).to receive(:partner_journey) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
+    }
   end
 
   it_behaves_like 'a decision tree'
+
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `is_means_tested`' do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
 
-    before do
-      allow(FeatureFlags).to receive(:passported_partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-      }
+    context 'when answer is `yes` and partner_journey enabled' do
+      let(:partner_journey_enabled) { true }
+      let(:is_means_tested) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:details, :edit, id: crime_application) }
     end
 
-    context 'and the passported partner feature flag is enabled' do
-      let(:feature_flag_passported_partner_journey_enabled) { true }
+    context 'when answer is `yes` and partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
+      let(:is_means_tested) { YesNoAnswer::YES }
 
-      context 'and answer is `yes`' do
-        let(:is_means_tested) { YesNoAnswer::YES }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
-
-      context 'and answer is `no`' do
-        let(:is_means_tested) { YesNoAnswer::NO }
-
-        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
     end
 
-    context 'and the passported partner feature flag is not enabled' do
-      before do
-        allow(FeatureFlags).to receive(:passported_partner_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-        }
-      end
+    context 'when answer is `no`' do
+      let(:is_means_tested) { YesNoAnswer::NO }
 
-      let(:feature_flag_passported_partner_journey_enabled) { false }
-
-      context 'and answer is `yes`' do
-        let(:is_means_tested) { YesNoAnswer::YES }
-
-        it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
-      end
-
-      context 'and answer is `no`' do
-        let(:is_means_tested) { YesNoAnswer::NO }
-
-        it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
     end
   end
 
@@ -79,19 +63,33 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject', client_has_partner:) }
     let(:step_name) { :has_partner }
 
-    before do
-      allow(FeatureFlags).to receive(:passported_partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-      }
-    end
-
-    context 'and the passported partner feature flag is not enabled' do
-      let(:feature_flag_passported_partner_journey_enabled) { false }
+    context 'with partner_journey enabled and means tested and over 18' do
+      let(:partner_journey_enabled) { true }
+      let(:not_means_tested) { false }
+      let(:applicant) { instance_double(Applicant, under18?: false) }
 
       context 'and answer is `no`' do
         let(:client_has_partner) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
+      end
+
+      context 'and answer is `yes`' do
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination('/steps/partner/relationship', :edit, id: crime_application) }
+      end
+    end
+
+    context 'with partner_journey enabled and not means tested and under 18' do
+      let(:partner_journey_enabled) { true }
+      let(:not_means_tested) { true }
+      let(:applicant) { instance_double(Applicant, under18?: true) }
+
+      context 'and answer is `no`' do
+        let(:client_has_partner) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
       end
 
       context 'and answer is `yes`' do
@@ -101,20 +99,38 @@ RSpec.describe Decisions::ClientDecisionTree do
       end
     end
 
-    context 'and the passported partner feature flag is enabled' do
-      let(:feature_flag_passported_partner_journey_enabled) { true }
+    context 'with partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
+      let(:applicant) { instance_double(Applicant, under18?: false) }
 
       context 'and answer is `no`' do
         let(:client_has_partner) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:details, :edit, id: crime_application) }
       end
 
       context 'and answer is `yes`' do
         let(:client_has_partner) { YesNoAnswer::YES }
 
-        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+        it { is_expected.to have_destination(:partner_exit, :show, id: crime_application) }
       end
+    end
+  end
+
+  context 'when the step is relationship status' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :relationship_status }
+
+    context 'and application is not means tested' do
+      let(:not_means_tested) { true }
+
+      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+    end
+
+    context 'application is means tested' do
+      let(:not_means_tested) { false }
+
+      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
     end
   end
 
@@ -355,22 +371,18 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_nino }
 
-    before do
-      allow(FeatureFlags).to receive(:passported_partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_passported_partner_journey_enabled)
-      }
-    end
+    context 'with partner_journey enabled' do
+      let(:partner_journey_enabled) { true }
 
-    context 'when the application is means tested' do
-      context 'and the passported partner feature flag is enabled' do
-        let(:feature_flag_passported_partner_journey_enabled) { true }
-
+      context 'when the application is means tested' do
         it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
       end
+    end
 
-      context 'and the passported partner feature flag is not enabled' do
-        let(:feature_flag_passported_partner_journey_enabled) { false }
+    context 'with partner_journey disabled' do
+      let(:partner_journey_enabled) { false }
 
+      context 'when the application is means tested' do
         it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
       end
     end
@@ -411,4 +423,6 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
   end
+
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

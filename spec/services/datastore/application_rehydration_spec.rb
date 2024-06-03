@@ -6,7 +6,7 @@ RSpec.describe Datastore::ApplicationRehydration do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      applicant:
+      applicant:,
     )
   end
 
@@ -29,13 +29,15 @@ RSpec.describe Datastore::ApplicationRehydration do
       expect(
         crime_application
       ).to receive(:update!).with(
-        client_has_partner: YesNoAnswer::NO,
+        client_has_partner: YesNoAnswer::YES,
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         is_means_tested: an_instance_of(YesNoAnswer),
         date_stamp: an_instance_of(DateTime),
         ioj_passport: an_instance_of(Array),
         means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),
+        partner: an_instance_of(Partner),
+        partner_detail: an_instance_of(PartnerDetail),
         case: an_instance_of(Case),
         income: an_instance_of(Income),
         documents: all(be_a(Document)),
@@ -447,6 +449,37 @@ RSpec.describe Datastore::ApplicationRehydration do
             properties: contain_exactly(Property)
           )
         )
+
+        subject.call
+      end
+    end
+
+    context 'when applicant has no partner', skip: 'Interferes with already_recreated? implementation' do
+      let(:partner) do
+        { 'partner' => nil }
+      end
+
+      let(:applicant) do
+        {
+          'applicant' => {
+            'has_partner' => 'no',
+            'relationship_status' => 'separated',
+            'separation_date' => '1990-01-12',
+          }
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('client_details' => { 'applicant' => applicant, 'partner' => partner })
+      end
+
+      it 'generates a partner_detail but not a partner record' do
+        expect(Partner).not_to receive(:new)
+        expect(PartnerDetail).to receive(:new).with(
+          has_partner: 'no',
+          relationship_status: 'separated',
+          separated_date: '1990-01-12'
+        ).and_call_original
 
         subject.call
       end
