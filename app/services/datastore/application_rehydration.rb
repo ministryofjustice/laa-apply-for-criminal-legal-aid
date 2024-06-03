@@ -62,7 +62,10 @@ module Datastore
     # TODO: amend for partner
     def confirm_dwp_result
       applicant = parent.client_details.applicant
-      applicant.respond_to?(:confirm_dwp_result) ? YesNoAnswer.new(applicant.confirm_dwp_result) : nil
+
+      return unless applicant.respond_to?(:confirm_dwp_result) && applicant.confirm_dwp_result.present?
+
+      YesNoAnswer.new(applicant.confirm_dwp_result)
     end
 
     def client_has_partner

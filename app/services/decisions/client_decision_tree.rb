@@ -158,6 +158,8 @@ module Decisions
 
     # TODO: Consider whether !crime_application.age_passported? is more appropriate?
     def start_partner_journey?
+      return false unless FeatureFlags.partner_journey.enabled?
+
       form_object.client_has_partner.yes? &&
         !current_crime_application.not_means_tested? &&
         !applicant.under18?

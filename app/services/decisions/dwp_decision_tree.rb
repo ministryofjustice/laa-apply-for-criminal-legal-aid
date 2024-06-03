@@ -76,7 +76,7 @@ module Decisions
       # TODO: refactor to use has_partner in partner_details table instead of client_has_partner
 
       form_object.benefit_type.none? &&
-        FeatureFlags.passported_partner_journey.enabled? &&
+        FeatureFlags.partner_journey.enabled? &&
         current_crime_application.client_has_partner == 'yes'
     end
 
