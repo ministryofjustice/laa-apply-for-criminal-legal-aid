@@ -514,13 +514,11 @@ en:
           heading:  Does your client have any Premium Bonds?
       has_national_savings_certificates:
         edit:
-          page_title: Does your client have any National Savings Certificates?
-          heading:  Does your client have any National Savings Certificates?
+          heading:  Does your %{subject} have any National Savings Certificates?
       national_savings_certificates:
         edit:
-          page_title: Add investment details
-          heading: Your client’s National Savings Certificates
-          info: You told us your client has  National Savings Certificates.
+          heading: Your %{subject}’s National Savings Certificates
+          info: You told us %{subject} has National Savings Certificates.
         confirm_destroy:
           page_title: Delete National Savings Certificate confirmation
           heading: Are you sure you want to remove this National Savings Certificate?
@@ -532,7 +530,7 @@ en:
           success_flash: You removed the National Savings Certificate
       national_savings_certificates_summary:
         edit:
-          page_title: Your client’s National Savings Certificates
+          page_title: Your %{subject}’s National Savings Certificates
           heading:
             zero: You have not added National Savings Certificates yet
             one: You have added %{count} National Savings Certificate

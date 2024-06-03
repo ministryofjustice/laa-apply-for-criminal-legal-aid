@@ -8,7 +8,27 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
   let(:has_national_savings_certificates) { YesNoAnswer::YES }
   let(:existing_certificates) { [] }
 
-  it { is_expected.to validate_is_a(:has_national_savings_certificates, YesNoAnswer) }
+  describe '#validations' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      form.has_national_savings_certificates = nil
+    end
+
+    let(:include_partner?) { false }
+    let(:error_message) { "Select yes if your client has any National Savings Certificates" }
+
+    it { is_expected.to validate_presence_of(:has_national_savings_certificates, :blank, error_message) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:error_message) do
+        "Select yes if your client or their partner has any National Savings Certificates"
+      end
+
+      it { is_expected.to validate_presence_of(:has_national_savings_certificates, :blank, error_message) }
+    end
+  end
 
   describe '#save' do
     let(:new_certificate) { instance_double(NationalSavingsCertificate) }

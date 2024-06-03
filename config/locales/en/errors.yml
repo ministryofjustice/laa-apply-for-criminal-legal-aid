@@ -860,7 +860,7 @@ en:
         steps/capital/has_national_savings_certificates_form:
           attributes:
             has_national_savings_certificates:
-              inclusion: Select yes if your client has any National Savings Certificates
+              blank: Select yes if %{subject} has any National Savings Certificates
         steps/capital/national_savings_certificates_form:
           attributes:
             holder_number:
