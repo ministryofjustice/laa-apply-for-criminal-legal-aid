@@ -1,6 +1,7 @@
 module SubmissionSerializer
   module Definitions
     class Employment < Definitions::BaseDefinition
+      # rubocop:disable Metrics/AbcSize
       def to_builder
         Jbuilder.new do |json|
           json.employer_name employer_name
@@ -14,6 +15,7 @@ module SubmissionSerializer
           json.deductions Definitions::Deduction.generate(deductions.complete)
         end
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
