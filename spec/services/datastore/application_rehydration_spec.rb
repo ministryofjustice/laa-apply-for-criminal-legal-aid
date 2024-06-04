@@ -187,7 +187,7 @@ RSpec.describe Datastore::ApplicationRehydration do
               'employer_name' =>  'Joe Goodwin',
               'job_title' =>  'Supervisor',
               'has_no_deductions' =>  nil,
-              'address' =>  { 'address_line_one' =>  'address_line_one_y',
+              'address' =>  { 'address_line_one' => 'address_line_one_y',
                            'address_line_two' =>  'address_line_two_y',
                            'city' =>  'city_y',
                            'country' =>  'country_y',
@@ -195,7 +195,7 @@ RSpec.describe Datastore::ApplicationRehydration do
               'amount' =>  25_000,
               'frequency' =>  'annual',
               'ownership_type' =>  'applicant',
-              'metadata' =>  { 'before_or_after_tax' =>  'before_tax' },
+              'metadata' =>  { 'before_or_after_tax' => 'before_tax' },
               'deductions' =>  [
                 {
                   'deduction_type' =>  'income_tax',
