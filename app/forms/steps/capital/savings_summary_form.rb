@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class SavingsSummaryForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       attr_reader :add_saving
 
       validates_inclusion_of :add_saving, in: :choices

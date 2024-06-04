@@ -14,7 +14,7 @@
     <p><%= t('.info') %></p>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_area :description, autocomplete: 'off' %>
+      <%= f.govuk_text_area :description, autocomplete: 'off', hint: { text: hint_t(:description) }  %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
 
       <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: } %>

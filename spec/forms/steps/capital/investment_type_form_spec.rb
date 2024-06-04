@@ -32,6 +32,33 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
     end
   end
 
+  describe '#validations' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      form.investment_type = nil
+    end
+
+    let(:include_partner?) { false }
+
+    let(:error_message) do
+      'Select which investments your client has inside or outside the UK, ' \
+        "or select 'They do not have any of these investments'"
+    end
+
+    it { is_expected.to validate_presence_of(:investment_type, :blank, error_message) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:error_message) do
+        'Select which investments your client or their partner has inside or outside the UK, ' \
+          "or select 'They do not have any of these investments'"
+      end
+
+      it { is_expected.to validate_presence_of(:investment_type, :blank, error_message) }
+    end
+  end
+
   describe '#save' do
     let(:investment_type) { InvestmentType.values.sample.to_s }
     let(:new_investment) { instance_double(Investment) }

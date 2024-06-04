@@ -17,6 +17,32 @@ RSpec.describe Steps::Capital::SavingTypeForm do
     end
   end
 
+  describe '#validations' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      form.saving_type = nil
+    end
+
+    let(:include_partner?) { false }
+
+    let(:error_message) do
+      "Select which savings your client has inside or outside the UK, or select 'They do not have any of these savings'"
+    end
+
+    it { is_expected.to validate_presence_of(:saving_type, :blank, error_message) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:error_message) do
+        'Select which savings your client or their partner has inside or outside the UK, ' \
+          "or select 'They do not have any of these savings'"
+      end
+
+      it { is_expected.to validate_presence_of(:saving_type, :blank, error_message) }
+    end
+  end
+
   describe '#saving_type' do
     subject(:saving_type) { form.saving_type }
 

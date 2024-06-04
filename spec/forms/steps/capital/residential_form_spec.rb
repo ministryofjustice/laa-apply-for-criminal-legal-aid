@@ -3,24 +3,20 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::ResidentialForm do
   subject(:form) { described_class.new(arguments) }
 
-  let(:arguments) do
-    {
-      crime_application:,
-      record:,
-    }.merge(attributes)
-  end
-
+  let(:arguments) { { crime_application:, record: }.merge(attributes) }
   let(:attributes) { {} }
-
-  let(:crime_application) do
-    instance_double(CrimeApplication, applicant:, client_has_partner:)
-  end
+  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
-  let(:record) {
-    instance_double(Property, include_partner?: client_has_partner, 'other_house_type=': nil, 'address=': nil)
-  }
-  let(:client_has_partner) { false }
+  let(:record) do
+    instance_double(Property, 'other_house_type=': nil, 'address=': nil)
+  end
   let(:home_address?) { true }
+  let(:include_partner?) { false }
+
+  before do
+    allow(form).to receive(:include_partner_in_means_assessment?)
+      .and_return(include_partner?)
+  end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:house_type) }
@@ -31,9 +27,17 @@ RSpec.describe Steps::Capital::ResidentialForm do
     it { is_expected.to validate_is_a(:has_other_owners, YesNoAnswer) }
 
     describe '#percentage_partner_owned' do
-      before { allow(subject).to receive(:include_partner?).and_return(true) }
+      context 'when partner included in means assessment' do
+        let(:include_partner?) { true }
 
-      it { is_expected.to validate_presence_of(:percentage_partner_owned) }
+        it { is_expected.to validate_presence_of(:percentage_partner_owned) }
+      end
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.not_to validate_presence_of(:percentage_partner_owned) }
+      end
     end
 
     describe '#other_house_type' do
@@ -102,7 +106,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
     end
 
     context 'when client has no partner' do
-      let(:client_has_partner) { false }
+      let(:include_partner?) { false }
 
       context 'for valid details' do
         let(:attributes) { required_attributes }
@@ -116,7 +120,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
     end
 
     context 'when client has a partner' do
-      let(:client_has_partner) { true }
+      let(:include_partner?) { true }
 
       context 'for invalid details' do
         let(:attributes) { required_attributes }

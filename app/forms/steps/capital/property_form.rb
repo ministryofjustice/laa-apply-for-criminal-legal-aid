@@ -1,7 +1,10 @@
 module Steps
   module Capital
     class PropertyForm < Steps::BaseFormObject
-      delegate :property_type, :include_partner?, to: :record
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
+
+      delegate :property_type, to: :record
 
       attribute :value, :pence
       attribute :outstanding_mortgage, :pence
@@ -17,12 +20,12 @@ module Steps
       validates :is_home_address, presence: true, if: :person_has_home_address?
       validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: :person_has_home_address?
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
-      validates :percentage_partner_owned, presence: true, if: :include_partner?
+      validates :percentage_partner_owned, presence: true, if: :include_partner_in_means_assessment?
 
       validates_numericality_of :percentage_applicant_owned, greater_than_or_equal_to: 0.0,
                                 less_than_or_equal_to: 100.0
       validates_numericality_of :percentage_partner_owned, greater_than_or_equal_to: 0.0,
-                                less_than_or_equal_to: 100.0, if: :include_partner?
+                                less_than_or_equal_to: 100.0, if: :include_partner_in_means_assessment?
 
       validates_with CapitalAssessment::PropertyOwnershipValidator
 

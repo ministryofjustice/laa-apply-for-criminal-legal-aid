@@ -173,4 +173,38 @@ data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
       )
     end
   end
+
+  describe '#hint_t' do
+    it 'sources hint translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.hint.steps_base_form_object'
+      )
+
+      helper.hint_t(:attribute)
+    end
+  end
+
+  describe '#label_t' do
+    it 'sources label translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.label.steps_base_form_object'
+      )
+
+      helper.label_t(:attribute)
+    end
+  end
+
+  describe '#legend_t' do
+    it 'sources legend translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.legend.steps_base_form_object'
+      )
+
+      helper.legend_t(:attribute)
+    end
+  end
 end

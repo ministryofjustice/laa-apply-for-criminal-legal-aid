@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class PropertiesSummaryForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       attr_reader :add_property
 
       validates_inclusion_of :add_property, in: :choices

@@ -1,7 +1,9 @@
 module Steps
   module Capital
     class SavingsForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
       include OwnershipConfirmation
+      include ApplicantOrPartner
 
       delegate :saving_type, to: :record
 

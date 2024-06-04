@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::Property, type: :component do
-  subject(:component) { render_summary_component(described_class.new(record:)) }
+  subject(:component) { described_class.new(record:) }
 
   let(:record) {
     instance_double(Property,
                     complete?: true,
                     property_owners: [property_owner],
-                    include_partner?: client_has_partner,
                     crime_application: crime_application,
                     address: nil, **attributes)
   }
@@ -47,7 +46,10 @@ RSpec.describe Summary::Components::Property, type: :component do
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'yes' }
 
-  before { component }
+  before do
+    allow(component).to receive(:include_partner_in_means_assessment?) { client_has_partner }
+    render_summary_component(component)
+  end
 
   describe 'actions' do
     context 'when show_record_actions set to false' do
@@ -61,7 +63,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     end
 
     context 'when show_record_actions true' do
-      subject(:component) { render_summary_component(described_class.new(record: record, show_record_actions: true)) }
+      subject(:component) { described_class.new(record: record, show_record_actions: true) }
 
       describe 'change link' do
         it 'show the correct change link' do
@@ -143,25 +145,23 @@ RSpec.describe Summary::Components::Property, type: :component do
       end
     end
 
-    context 'when client has partner' do
-      let(:client_has_partner) { true }
+    describe 'summary list partner percentage' do
+      let(:partner_percent_text) { 'What percentage of the property does your client’s partner own?' }
 
-      it 'renders as summary list with partner percentage' do
-        expect(page).to have_summary_row(
-          'What percentage of the property does your client’s partner own?',
-          '50.00%',
-        )
+      context 'when client has partner' do
+        let(:client_has_partner) { true }
+
+        it 'renders as summary list with partner percentage' do
+          expect(page).to have_summary_row(partner_percent_text, '50.00%')
+        end
       end
-    end
 
-    context 'when client has no partner' do
-      let(:client_has_partner) { false }
+      context 'when client has no partner' do
+        let(:client_has_partner) { false }
 
-      it 'renders as summary list without partner percentage', pending: 'to investigate why `not_to` is not working' do
-        expect(page).not_to have_summary_row(
-          'What percentage of the property does your client’s partner own?',
-          '50.00%',
-        )
+        it 'renders as summary list without partner percentage' do
+          expect(page).not_to have_content(partner_percent_text)
+        end
       end
     end
 
@@ -258,11 +258,6 @@ RSpec.describe Summary::Components::Property, type: :component do
           'How much is left to pay on the mortgage?',
           '',
         )
-        expect(page).to have_summary_row(
-          'What percentage of the property does your client own?',
-          '',
-        )
-
         expect(page).to have_summary_row(
           'Does anyone else own part of the property?',
           '',

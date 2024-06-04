@@ -7,13 +7,8 @@ module Steps
 
       attribute :ownership_type, :value_object, source: OwnershipType
 
-      validates :ownership_type, inclusion: { in: OwnershipType.values, if: :include_partner? }
-      validate :owned_by_applicant, unless: :include_partner?
-    end
-
-    # TODO: use proper partner policy once we have one.
-    def include_partner?
-      YesNoAnswer.new(crime_application.client_has_partner.to_s).yes?
+      validates :ownership_type, inclusion: { in: OwnershipType.values, if: :include_partner_in_means_assessment? }
+      validate :owned_by_applicant, unless: :include_partner_in_means_assessment?
     end
 
     def owned_by_applicant
@@ -25,7 +20,7 @@ module Steps
     private
 
     def set_ownership
-      return if include_partner?
+      return if include_partner_in_means_assessment?
 
       self.ownership_type = if confirm_in_applicants_name.blank?
                               nil
