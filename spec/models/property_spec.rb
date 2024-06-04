@@ -4,8 +4,6 @@ RSpec.describe Property, type: :model do
   subject(:instance) { described_class.new(attributes) }
 
   let(:attributes) { { id: nil } }
-  let(:crime_application) { CrimeApplication.create(client_has_partner:) }
-  let(:client_has_partner) { 'no' }
   let(:property_type) { PropertyType::RESIDENTIAL.to_s }
   let(:is_home_address) { 'yes' }
   let(:has_other_owners) { 'no' }
@@ -13,7 +11,6 @@ RSpec.describe Property, type: :model do
   let(:required_attributes) do
     {
       id: SecureRandom.uuid,
-      crime_application: crime_application,
       property_type: property_type,
       house_type: HouseType.values.sample.to_s,
       bedrooms: 2,
@@ -78,24 +75,6 @@ RSpec.describe Property, type: :model do
 
         it { is_expected.to be false }
       end
-    end
-  end
-
-  describe '#include_partner?' do
-    subject { instance.include_partner? }
-
-    let(:attributes) { required_attributes }
-
-    context 'when client has partner' do
-      let(:client_has_partner) { 'yes' }
-
-      it { is_expected.to be true }
-    end
-
-    context 'when client has no partner' do
-      let(:client_has_partner) { 'no' }
-
-      it { is_expected.to be false }
     end
   end
 

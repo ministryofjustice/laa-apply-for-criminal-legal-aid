@@ -1,6 +1,7 @@
 module Steps
   module Capital
     class NationalSavingsCertificatesForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
       include OwnershipConfirmation
 
       delegate :national_savings_certificate_type, to: :record

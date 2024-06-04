@@ -2,13 +2,15 @@ module Steps
   module Capital
     class PropertyTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       has_one_association :capital
 
       attr_writer :property_type
       attr_reader :property
 
-      validates :property_type, presence: true
-      validates :property_type, inclusion: { in: PropertyType.values.map(&:to_s) << 'none' }
+      validate :property_type_selected
       validates :has_no_properties, inclusion: { in: ['yes', nil] }
 
       def choices
@@ -26,6 +28,12 @@ module Steps
       end
 
       private
+
+      def property_type_selected
+        return if (PropertyType.values.map(&:to_s) << 'none').include? property_type.to_s
+
+        errors.add(:property_type, :blank, subject:)
+      end
 
       def persist!
         capital.update(has_no_properties:)

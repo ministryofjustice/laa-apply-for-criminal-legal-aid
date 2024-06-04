@@ -4,14 +4,41 @@ RSpec.describe Steps::Capital::OtherPropertyTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
   let(:crime_application) { instance_double(CrimeApplication, properties:) }
+  let(:include_partner?) { false }
   let(:properties) { class_double(Property, where: existing_properties) }
   let(:existing_properties) { [] }
+
+  before do
+    allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+  end
 
   describe '#choices' do
     it 'returns the possible choices' do
       expect(
         form.choices
       ).to eq([PropertyType::RESIDENTIAL, PropertyType::COMMERCIAL, PropertyType::LAND])
+    end
+  end
+
+  describe '#validations' do
+    before do
+      form.property_type = nil
+    end
+
+    let(:msg) do
+      'Select which other assets your client owns or part-owns inside or outside the UK'
+    end
+
+    it { is_expected.to validate_presence_of(:property_type, :blank, msg) }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      let(:msg) do
+        'Select which other assets your client or their partner owns or part-owns inside or outside the UK'
+      end
+
+      it { is_expected.to validate_presence_of(:property_type, :blank, msg) }
     end
   end
 

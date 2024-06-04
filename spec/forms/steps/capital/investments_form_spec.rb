@@ -9,15 +9,18 @@ RSpec.describe Steps::Capital::InvestmentsForm do
       record:,
     }.merge(attributes)
   end
+  let(:record) { Investment.new }
+  let(:include_partner?) { false }
 
   let(:attributes) { {} }
 
   let(:crime_application) do
-    instance_double(CrimeApplication, client_has_partner:)
+    instance_double(CrimeApplication)
   end
 
-  let(:record) { Investment.new }
-  let(:client_has_partner) { 'no' }
+  before do
+    allow(form).to receive(:include_partner_in_means_assessment?) { include_partner? }
+  end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:description) }
@@ -61,7 +64,7 @@ RSpec.describe Steps::Capital::InvestmentsForm do
     end
 
     context 'when client has a partner' do
-      let(:client_has_partner) { 'yes' }
+      let(:include_partner?) { true }
 
       it { is_expected.to validate_is_a(:ownership_type, OwnershipType) }
     end
@@ -85,7 +88,7 @@ RSpec.describe Steps::Capital::InvestmentsForm do
       end
 
       context 'when client has parter' do
-        let(:client_has_partner) { 'yes' }
+        let(:include_partner?) { true }
 
         it 'does not set the account ownership_type' do
           expect { confirm }.not_to(change(form, :ownership_type))

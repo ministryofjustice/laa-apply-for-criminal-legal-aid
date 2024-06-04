@@ -65,5 +65,10 @@ module Steps
       current_crime_application.navigation_stack = stack_until_current_page + [request.fullpath]
       current_crime_application.save!(touch: false)
     end
+
+    def current_form_object
+      @form_object
+    end
+    helper_method :current_form_object
   end
 end

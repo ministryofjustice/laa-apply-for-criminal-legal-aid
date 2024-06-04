@@ -1,6 +1,7 @@
 module Steps
   module Capital
     class InvestmentsForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
       include OwnershipConfirmation
 
       delegate :investment_type, to: :record

@@ -3,21 +3,16 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::SavingsForm do
   subject(:form) { described_class.new(arguments) }
 
-  let(:arguments) do
-    {
-      crime_application:,
-      record:,
-    }.merge(attributes)
-  end
-
+  let(:arguments) { { crime_application:, record: }.merge(attributes) }
   let(:attributes) { {} }
-
-  let(:crime_application) do
-    instance_double(CrimeApplication, client_has_partner:)
-  end
-
+  let(:crime_application) { instance_double(CrimeApplication) }
   let(:record) { Saving.new }
-  let(:client_has_partner) { 'no' }
+  let(:include_partner?) { false }
+
+  before do
+    allow(form).to receive(:include_partner_in_means_assessment?)
+      .and_return(include_partner?)
+  end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:provider_name) }
@@ -65,7 +60,7 @@ RSpec.describe Steps::Capital::SavingsForm do
     end
 
     context 'when client has a partner' do
-      let(:client_has_partner) { 'yes' }
+      let(:include_partner?) { true }
 
       it { is_expected.to validate_is_a(:ownership_type, OwnershipType) }
     end
@@ -89,7 +84,7 @@ RSpec.describe Steps::Capital::SavingsForm do
       end
 
       context 'when client has partner' do
-        let(:client_has_partner) { 'yes' }
+        let(:include_partner?) { true }
 
         it 'does not set the account ownership_type' do
           expect { confirm }.not_to(change(form, :ownership_type))
