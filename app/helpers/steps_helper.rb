@@ -74,6 +74,11 @@ module StepsHelper
   end
   alias label_t label_translate
 
+  def hint_translate(attr, **options)
+    form_translate(attr, :hint, **options)
+  end
+  alias hint_t hint_translate
+
   def form_translate(attr, context, **options)
     return unless current_form_object
 

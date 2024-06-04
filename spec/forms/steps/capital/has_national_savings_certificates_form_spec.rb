@@ -15,7 +15,7 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
     end
 
     let(:include_partner?) { false }
-    let(:error_message) { "Select yes if your client has any National Savings Certificates" }
+    let(:error_message) { 'Select yes if your client has any National Savings Certificates' }
 
     it { is_expected.to validate_presence_of(:has_national_savings_certificates, :blank, error_message) }
 
@@ -23,7 +23,7 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesForm do
       let(:include_partner?) { true }
 
       let(:error_message) do
-        "Select yes if your client or their partner has any National Savings Certificates"
+        'Select yes if your client or their partner has any National Savings Certificates'
       end
 
       it { is_expected.to validate_presence_of(:has_national_savings_certificates, :blank, error_message) }

@@ -836,11 +836,11 @@ en:
         steps/capital/investment_type_form:
           attributes:
             investment_type:
-              blank: Select which investments your client has inside or outside the UK, or select 'They do not have any of these investments'
+              blank: Select which investments %{subject} has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/other_investment_type_form:
           attributes:
             investment_type:
-              blank: Select which other investments your client has inside or outside the UK, or select 'They do not have any of these investments'
+              blank: Select which other investments %{subject} has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/investments_form:
           attributes:
             description:

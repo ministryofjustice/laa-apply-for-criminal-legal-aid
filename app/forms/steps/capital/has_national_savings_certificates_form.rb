@@ -28,7 +28,7 @@ module Steps
       end
 
       def has_national_savings_certificates_selected
-        return if YesNoAnswer.values.include?(has_national_savings_certificates)
+        return if YesNoAnswer.values.include?(has_national_savings_certificates) # rubocop:disable Performance/InefficientHashSearch
 
         errors.add(:has_national_savings_certificates, :blank, subject:)
       end

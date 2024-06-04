@@ -155,6 +155,7 @@ Naming/PredicateName:
     - has_charges_complete?
     - has_benefit_evidence_complete?
     - has_frozen_assets?
+    - has_national_savings_certificates_selected
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:
