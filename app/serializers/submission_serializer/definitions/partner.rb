@@ -5,7 +5,7 @@ module SubmissionSerializer
         super && partner.present?
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
           json.first_name partner.first_name
@@ -31,7 +31,7 @@ module SubmissionSerializer
           json.has_same_address_as_client partner_detail.has_same_address_as_client
         end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       private
 
