@@ -90,8 +90,9 @@ module StepsHelper
   def translate_with_subject(key, **options)
     options[:subject] ||= translate(
       'dictionary.subject',
-      ownership_type: current_form_object.try(:subject_ownership_type)
+      ownership_type: current_form_object.try(:subject_ownership_type),
     )
+    options[:Subject] = options[:subject].capitalize
 
     translate(key, **options)
   end

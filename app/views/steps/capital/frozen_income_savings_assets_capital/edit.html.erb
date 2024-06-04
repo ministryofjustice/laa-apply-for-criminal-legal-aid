@@ -8,7 +8,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :has_frozen_income_or_assets, @form_object.choices,
                                            :value, inline: false,
-                                           legend: { text: qt(:has_frozen_income_or_assets), tag: 'h1', size: 'xl' },
+                                           legend: { text: t('.has_frozen_income_or_assets'), tag: 'h1', size: 'xl' },
                                            hint: { text: t('.hint') } do %>
         <% end %>
       <%= f.continue_button %>

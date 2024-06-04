@@ -461,7 +461,7 @@ en:
           success_flash: You removed the savings account
       savings_summary:
         edit:
-          page_title: Your %{subject}’s savings
+          page_title: "%{Subject}’s savings"
           heading:
             zero: You have not added savings yet
             one: You have added %{count} saving
@@ -493,7 +493,7 @@ en:
           success_flash: You removed the investment
       investments_summary:
         edit:
-          page_title: Your %{subject}’s investments
+          page_title: "%{Subject}’s investments"
           heading:
             zero: You have not added investments yet
             one: You have added %{count} investment
@@ -524,7 +524,7 @@ en:
           success_flash: You removed the National Savings Certificate
       national_savings_certificates_summary:
         edit:
-          page_title: Your %{subject}’s National Savings Certificates
+          page_title: "%{Subject}’s National Savings Certificates"
           heading:
             zero: You have not added National Savings Certificates yet
             one: You have added %{count} National Savings Certificate
@@ -594,7 +594,7 @@ en:
 
       properties_summary:
         edit:
-          page_title: Your %{subject}’s assets
+          page_title: "%{Subject}’s assets"
           heading:
             zero: You have not added assets yet
             one: You have added %{count} asset
