@@ -29,7 +29,6 @@ module Steps
         def persist!
           ::IncomePayment.transaction do
             reset!
-            update_income_attribute!
 
             if receives_other_work_benefit?
               crime_application.income_payments.create!(
@@ -38,6 +37,8 @@ module Steps
                 frequency: PaymentFrequencyType::ANNUALLY,
               )
             end
+
+            update_income_attribute!
           end
         end
 
