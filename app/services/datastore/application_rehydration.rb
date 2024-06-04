@@ -87,6 +87,7 @@ module Datastore
     end
 
     def partner
+      return nil unless FeatureFlags.partner_journey.enabled?
       return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
       attributes = parent.partner.serializable_hash.except!(*PartnerDetail.fields)
@@ -95,11 +96,13 @@ module Datastore
 
     # NOTE: Actual partner_detail fields are mixed between the Applicant and Partner Structs
     def partner_detail
+      return nil unless FeatureFlags.partner_journey.enabled?
+
       fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
       fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
 
       from_applicant = parent.applicant.serializable_hash.slice(*fields_from_applicant)
-      from_partner = parent.partner.serializable_hash.slice(*fields_from_partner)
+      from_partner = parent.partner.serializable_hash.slice(*fields_from_partner) if parent.partner
 
       PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
     end
