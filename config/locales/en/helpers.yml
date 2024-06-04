@@ -84,9 +84,20 @@ en:
       steps_client_contact_details_form:
         correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form:
+        heading: DWP records show that %{subject} does not receive a passporting benefit
         confirm_dwp_result: Are the DWP records correct?
-      steps_dwp_confirm_details_form:
+      steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
+        page_title: Confirm %{subject}’s details
+        heading: Check %{subject}’s details
         confirm_details: Are these details correct?
+      steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_LEGEND
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_LEGEND
+        benefit_type: Do you have evidence %{subject} gets %{benefit_type}?
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_LEGEND
+      steps_dwp_cannot_check_benefit_status_form:  &CANNOT_CHECK_BENEFIT_STATUS_LEGEND
+        heading: We cannot check %{subject}'s benefit status without their National Insurance number
+        upload_evidence: You must upload evidence that %{subject} gets a passporting benefit.
+      steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
       steps_case_has_case_concluded_form:
         has_case_concluded: Has the case concluded?
       steps_case_is_preorder_work_claimed_form:
@@ -194,7 +205,10 @@ en:
         relationship: What their relationship to %{subject}?
       steps_capital_answers_form:
         has_no_other_assets: Confirm the following
-
+      steps_shared_no_op_form:
+        benefit_check_result: DWP records show that %{subject} receives a passporting benefit
+        cannot_check_dwp_status_page_title: Sorry, we cannot check %{subject}’s information with DWP
+        cannot_check_dwp_status_heading: Sorry, we cannot check %{subject}’s information with DWP
     hint:
       steps_client_relationship_status_form:
         separation_date:
@@ -212,19 +226,24 @@ en:
       steps_partner_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
-      steps_dwp_benefit_type_form:
       steps_dwp_benefit_type_form: &BENEFIT_TYPE_HINT
         benefit_type: This will help us review your application. It will not affect the DWP check.
         last_jsa_appointment_date: This is sometimes known as ‘signing on’.
       steps_dwp_partner_benefit_type_form: *BENEFIT_TYPE_HINT
-      steps_dwp_cannot_check_benefit_status_form:
+      steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_HINT
         will_enter_nino_options:
           'no': You may not be able to submit your application without the National Insurance number
-      steps_dwp_has_benefit_evidence_form:
-        has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing your client's name and their benefit details.
+      steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
+        has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing %{subject}'s name and their benefit details.
         has_benefit_evidence_options:
           'yes': You'll need to upload evidence at the end of this application.
-          'no': You'll need to tell us about your client's income if you do not have evidence.
+          # TODO: check with design
+          'no': You'll need to tell us about their income if you do not have evidence.
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
+      steps_dwp_cannot_check_dwp_status_form:
+        page_title: Sorry, we cannot check %{subject}’s information with DWP
+        heading: Sorry, we cannot check %{subject}’s information with DWP
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
@@ -419,20 +438,24 @@ en:
           none: None of these
       steps_dwp_partner_benefit_type_form:
         benefit_type_options: *BENEFIT_TYPE_OPTIONS
-      steps_dwp_has_benefit_evidence_form:
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_OPTIONS
         has_benefit_evidence_options: *YESNO
-      steps_dwp_cannot_check_benefit_status_form:
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_OPTIONS
+      steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_OPTIONS
         will_enter_nino_options:
           'yes': I will enter the National Insurance number now
           'no': I will enter the National Insurance number later
+      steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
       steps_dwp_confirm_result_form:
         confirm_dwp_result_options:
           'yes': 'Yes'
-          'no': 'No, my client receives a passporting benefit'
-      steps_dwp_confirm_details_form:
+          # TODO: Check with design
+          'no': No, they receive a passporting benefit
+      steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           'yes': 'Yes'
           'no': 'No, I need to change these details'
+      steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_OPTIONS
       steps_address_lookup_form:
         postcode: Postcode
       steps_address_results_form:

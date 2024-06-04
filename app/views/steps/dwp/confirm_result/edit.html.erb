@@ -10,7 +10,7 @@
 <div class="govuk-grid-row app-inverted--card app-inverted-text govuk-!-margin-bottom-5">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0" id="dwp-confirm-result-desc">
-      <%= t '.heading' %>
+      <%= legend_t(:heading) %>
     </h1>
   </div>
 </div>
@@ -20,7 +20,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :confirm_dwp_result, @form_object.choices, :value,
                                            inline: false,
-                                           legend: { 'aria-describedby': 'dwp-confirm-result-desc' }%>
+                                           legend: { 'aria-describedby': 'dwp-confirm-result-desc' } %>
 
       <%= f.continue_button %>
     <% end %>

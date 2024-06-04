@@ -40,6 +40,12 @@ module SubmissionSerializer
         json.relationship_status partner_detail.relationship_status
         json.separation_date partner_detail.separation_date
       end
+
+      def confirm_dwp_result
+        return unless applicant.respond_to?(:confirm_dwp_result) && applicant.confirm_dwp_result.present?
+
+        YesNoAnswer.new(applicant.confirm_dwp_result)
+      end
     end
   end
 end

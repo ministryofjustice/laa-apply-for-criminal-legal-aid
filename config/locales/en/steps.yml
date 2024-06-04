@@ -114,33 +114,33 @@ en:
       benefit_check_result:
         edit:
           page_title: Benefit check result
-          heading: DWP records show that your client receives a passporting benefit
+          heading: DWP records show that %{subject} receives a passporting benefit
       has_benefit_evidence:
         edit:
           page_title: Client's passporting benefit evidence
-          heading: Do you have evidence your client gets %{benefit_type}?
+          heading: Do you have evidence %{subject} gets %{benefit_type}?
       evidence_exit:
         show:
           page_title: Use eForms for this application
       cannot_check_benefit_status:
         edit:
           page_title: Cannot check benefit status
-          heading: We cannot check your client's benefit status without their National Insurance number
-          upload_evidence: You must upload evidence that your client gets a passporting benefit.
+          heading: We cannot check %{subject}'s benefit status without their National Insurance number
+          upload_evidence: You must upload evidence that %{subject} gets a passporting benefit.
           rejection_warning: If the trial is not in a Crown Court, your application may be rejected after you submit your application.
           deadline: If the trial is in a Crown Court, you have 14 days to submit the evidence.
       cannot_check_dwp_status:
         edit:
-          page_title: Sorry, we cannot check your client’s information with DWP
-          heading: Sorry, we cannot check your client’s information with DWP
+          page_title: Sorry, we cannot check %{subject} information with DWP
+          heading: Sorry, we cannot check %{subject} information with DWP
       confirm_result:
         edit:
-          heading: DWP records show that your client does not receive a passporting benefit
+          heading: DWP records show that %{subject} does not receive a passporting benefit
           page_title: Benefit check result
       confirm_details:
         edit:
-          page_title: Confirm your client’s details
-          heading: Check your client’s details
+          page_title: Confirm %{subject} details
+          heading: Check %{subject} details
       benefit_check_result_exit:
         show:
           page_title: Use eForms for this application

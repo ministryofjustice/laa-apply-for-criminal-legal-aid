@@ -13,8 +13,9 @@ RSpec.describe Steps::DWP::ConfirmResultForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant:, confirm_dwp_result:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:, partner:, confirm_dwp_result:) }
   let(:applicant) { instance_double(Applicant) }
+  let(:partner) { instance_double(Partner) }
   let(:confirm_dwp_result) { nil }
 
   describe '#choices' do

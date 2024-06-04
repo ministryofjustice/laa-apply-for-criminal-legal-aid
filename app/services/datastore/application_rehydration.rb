@@ -61,11 +61,21 @@ module Datastore
     # `confirm_dwp_result` is saved in the applicant/partner part of Schema, requires calculation
     # TODO: amend for partner
     def confirm_dwp_result
-      applicant = parent.client_details.applicant
+      person = benefit_check_recipient
 
-      return unless applicant.respond_to?(:confirm_dwp_result) && applicant.confirm_dwp_result.present?
+      return unless person.respond_to?(:confirm_dwp_result) && person.confirm_dwp_result.present?
 
-      YesNoAnswer.new(applicant.confirm_dwp_result)
+      YesNoAnswer.new(person.confirm_dwp_result)
+    end
+
+    def benefit_check_recipient
+      return parent.client_details.partner if partner_has_passporting_benefit?
+
+      parent.client_details.applicant
+    end
+
+    def partner_has_passporting_benefit?
+      BenefitType.passporting.include?(BenefitType.new(parent.client_details.partner.benefit_type.to_s))
     end
 
     def client_has_partner
@@ -90,7 +100,8 @@ module Datastore
       return nil unless FeatureFlags.partner_journey.enabled?
       return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
-      attributes = parent.partner.serializable_hash.except!(*PartnerDetail.fields)
+      attributes_to_ignore = PartnerDetail.fields + %w[confirm_dwp_result benefit_check_status]
+      attributes = parent.partner.serializable_hash.except!(*attributes_to_ignore)
       Partner.new(attributes)
     end
 

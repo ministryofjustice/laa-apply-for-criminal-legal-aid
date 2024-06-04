@@ -37,7 +37,7 @@ module Summary
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def name
-        :client_details
+        :details
       end
 
       private
