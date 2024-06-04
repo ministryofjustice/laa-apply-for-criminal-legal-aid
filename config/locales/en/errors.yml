@@ -659,11 +659,11 @@ en:
         steps/capital/saving_type_form:
           attributes:
             saving_type:
-              blank: Select which savings your client has inside or outside the UK, or select 'They do not have any of these savings'
+              blank: Select which savings %{subject} has inside or outside the UK, or select 'They do not have any of these savings'
         steps/capital/other_saving_type_form:
           attributes:
             saving_type:
-              blank: Select which other savings your client has inside or outside the UK, or select 'They do not have any of these savings'
+              blank: Select which other savings %{subject} has inside or outside the UK
         steps/capital/savings_form:
           attributes:
             provider_name:
@@ -836,11 +836,11 @@ en:
         steps/capital/investment_type_form:
           attributes:
             investment_type:
-              blank: Select which investments your client has inside or outside the UK, or select 'They do not have any of these investments'
+              blank: Select which investments %{subject} has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/other_investment_type_form:
           attributes:
             investment_type:
-              blank: Select which other investments your client has inside or outside the UK, or select 'They do not have any of these investments'
+              blank: Select which other investments %{subject} has inside or outside the UK, or select 'They do not have any of these investments'
         steps/capital/investments_form:
           attributes:
             description:
@@ -860,7 +860,7 @@ en:
         steps/capital/has_national_savings_certificates_form:
           attributes:
             has_national_savings_certificates:
-              inclusion: Select yes if your client has any National Savings Certificates
+              blank: Select yes if %{subject} has any National Savings Certificates
         steps/capital/national_savings_certificates_form:
           attributes:
             holder_number:

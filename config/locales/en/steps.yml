@@ -436,20 +436,20 @@ en:
       caption: Capital assessment
       saving_type:
         edit:
-          page_title: Which savings does your client have inside or outside the UK?
+          page_title: Which savings does %{subject} have inside or outside the UK?
       other_saving_type:
         edit:
-          page_title: Which other savings does your client have inside or outside the UK?
+          page_title: Which other savings does %{subject} have inside or outside the UK?
       savings:
         edit:
           page_title: Add savings account details
           heading:
-            bank: Your client’s bank account
-            building_society: Your client’s building society account
-            cash_isa: Your client’s cash ISA
-            national_savings_or_post_office: Your client’s National Savings or Post Office account
-            other: Your client’s other cash investment
-          info: You told us your client has savings.
+            bank: Bank accounts
+            building_society: Building society accounts
+            cash_isa: Cash ISA
+            national_savings_or_post_office: National Savings or Post Office accounts
+            other: Other cash investments
+          info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
           heading: Are you sure you want to remove this savings account?
@@ -461,7 +461,7 @@ en:
           success_flash: You removed the savings account
       savings_summary:
         edit:
-          page_title: Your client’s savings
+          page_title: "%{Subject}’s savings"
           heading:
             zero: You have not added savings yet
             one: You have added %{count} saving
@@ -470,24 +470,18 @@ en:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
 
-      investment_type:
-        edit:
-          page_title: Which investments does your client have inside or outside the UK?
-      other_investment_type:
-        edit:
-          page_title: Which other investments does your client have inside or outside the UK?
       investments:
         edit:
           page_title: Add investment details
           heading:
-            bond: Your client’s investment bonds
-            pep: Your client’s personal equity plans (PEPs)
-            share: Your client’s shares
-            share_isa: Your client’s share ISAs
-            stock: Your client’s stocks, including gilts and government bonds
-            unit_trust: Your client’s unit trusts
-            other: Your client’s other lump sum investments
-          info: You told us your client has investments.
+            bond: Investment bonds
+            pep: Personal equity plans (PEPs)
+            share: Shares
+            share_isa: Share ISAs
+            stock: Stocks, including gilts and government bonds
+            unit_trust: Unit trusts
+            other: Other lump sum investments
+          info: You told us your %{subject} has investments.
         confirm_destroy:
           page_title: Delete investment confirmation
           heading: Are you sure you want to remove this investment?
@@ -499,7 +493,7 @@ en:
           success_flash: You removed the investment
       investments_summary:
         edit:
-          page_title: Your client’s investments
+          page_title: "%{Subject}’s investments"
           heading:
             zero: You have not added investments yet
             one: You have added %{count} investment
@@ -514,13 +508,11 @@ en:
           heading:  Does your client have any Premium Bonds?
       has_national_savings_certificates:
         edit:
-          page_title: Does your client have any National Savings Certificates?
-          heading:  Does your client have any National Savings Certificates?
+          heading:  Does your %{subject} have any National Savings Certificates?
       national_savings_certificates:
         edit:
-          page_title: Add investment details
-          heading: Your client’s National Savings Certificates
-          info: You told us your client has  National Savings Certificates.
+          heading: National Savings Certificates
+          info: You told us %{subject} has National Savings Certificates.
         confirm_destroy:
           page_title: Delete National Savings Certificate confirmation
           heading: Are you sure you want to remove this National Savings Certificate?
@@ -532,7 +524,7 @@ en:
           success_flash: You removed the National Savings Certificate
       national_savings_certificates_summary:
         edit:
-          page_title: Your client’s National Savings Certificates
+          page_title: "%{Subject}’s National Savings Certificates"
           heading:
             zero: You have not added National Savings Certificates yet
             one: You have added %{count} National Savings Certificate
@@ -602,7 +594,7 @@ en:
 
       properties_summary:
         edit:
-          page_title: Your %{subject}’s assets
+          page_title: "%{Subject}’s assets"
           heading:
             zero: You have not added assets yet
             one: You have added %{count} asset

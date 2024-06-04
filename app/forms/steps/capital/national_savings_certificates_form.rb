@@ -3,6 +3,7 @@ module Steps
     class NationalSavingsCertificatesForm < Steps::BaseFormObject
       include TypeOfMeansAssessment
       include OwnershipConfirmation
+      include ApplicantOrPartner
 
       delegate :national_savings_certificate_type, to: :record
 

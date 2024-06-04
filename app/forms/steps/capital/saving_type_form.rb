@@ -2,12 +2,13 @@ module Steps
   module Capital
     class SavingTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
       has_one_association :capital
 
       attr_writer :saving_type
 
-      validates :saving_type, presence: true
-      validates :saving_type, inclusion: { in: SavingType.values.map(&:to_s) << 'none' }
+      validate :saving_type_selected
       validates :has_no_savings, inclusion: { in: ['yes', nil] }
 
       attr_reader :saving
@@ -40,6 +41,12 @@ module Steps
         return nil unless saving_type
 
         crime_application.savings.where(saving_type:).reject(&:complete?).first
+      end
+
+      def saving_type_selected
+        return if (SavingType.values.map(&:to_s) << 'none').include? saving_type.to_s
+
+        errors.add(:saving_type, :blank, subject:)
       end
     end
   end
