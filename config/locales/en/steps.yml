@@ -295,9 +295,8 @@ en:
           income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
       frozen_income_savings_assets: &FROZEN_INCOME_ASSETS_PAGE_TEXT
         edit:
-          page_title:  Does your client have any income, savings or assets under a restraint or freezing order?
-          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
-          hint: When your client has a court order preventing them from accessing, using or moving certain assets without permission.
+          has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
+          hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
       client_owns_property:
         edit:
           page_title: Does your client own their home, or any other land or property?
