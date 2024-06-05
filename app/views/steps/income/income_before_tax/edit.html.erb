@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title legend_t(:income_above_threshold) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -8,10 +8,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :income_above_threshold, @form_object.choices,
                                            :value, inline: false,
-                                           legend: { text: t('.income_above_threshold'), tag: 'h1', size: 'xl' } do %>
-           <span class="govuk-caption-m govuk-!-margin-bottom-4">
-             <%= t('.income_above_threshold_info') %>
-           </span>
+                                           legend: { text: legend_t(:income_above_threshold), tag: 'h1', size: 'xl' } do %>
         <% end %>
       <%= f.continue_button %>
     <% end %>

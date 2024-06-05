@@ -88,11 +88,11 @@ module StepsHelper
   end
 
   def translate_with_subject(key, **options)
-    options[:subject] ||= translate(
-      'dictionary.subject',
-      ownership_type: current_form_object.try(:subject_ownership_type),
-    )
+    subject_type = current_form_object.try(:subject_ownership_type)
+
+    options[:subject] ||= translate('dictionary.subject', subject_type:)
     options[:Subject] = options[:subject].capitalize
+    options[:count] ||= subject_type&.applicant_and_partner? ? 2 : 1
 
     translate(key, **options)
   end
