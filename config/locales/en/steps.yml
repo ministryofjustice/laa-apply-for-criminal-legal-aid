@@ -441,13 +441,12 @@ en:
           page_title: Which other savings does %{subject} have inside or outside the UK?
       savings:
         edit:
-          page_title: Add savings account details
           heading:
-            bank: Bank accounts
-            building_society: Building society accounts
-            cash_isa: Cash ISA
-            national_savings_or_post_office: National Savings or Post Office accounts
-            other: Other cash investments
+            bank: Add the bank account details
+            building_society: Add the building society account details
+            cash_isa: Add the Cash ISA account details
+            national_savings_or_post_office: Add the National Savings or Post Office account details
+            other: Add the other cash investment account details
           info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
