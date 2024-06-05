@@ -9,15 +9,15 @@ gem 'govuk-components', '~> 5.2.1'
 gem 'govuk_design_system_formbuilder', '~> 5.0.0'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
-gem 'lograge'
+gem 'lograge', '>= 0.14.0'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.0.8', '>= 7.0.8.4'
 gem 'uk_postcode'
 
 # Authentication
-gem 'devise', '~> 4.8'
+gem 'devise', '~> 4.9', '>= 4.9.3'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
 
@@ -31,7 +31,7 @@ gem 'prometheus_exporter'
 gem 'clamby', '1.6.10', require: false
 
 # Exceptions notifications
-gem 'sentry-rails'
+gem 'sentry-rails', '>= 5.12.0'
 gem 'sentry-ruby'
 gem 'stackprof'
 
@@ -39,7 +39,7 @@ gem 'stackprof'
 gem 'sprockets-rails'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
+gem 'importmap-rails', '>= 1.2.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -55,9 +55,9 @@ gem 'laa-criminal-legal-aid-schemas',
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '>= 3.0.0'
   gem 'pry'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 6.0.4'
 end
 
 group :development do
