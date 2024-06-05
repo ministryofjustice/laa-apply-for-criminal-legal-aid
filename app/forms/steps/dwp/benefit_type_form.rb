@@ -34,6 +34,8 @@ module Steps
           attributes.merge(attributes_to_reset)
         )
 
+        crime_application.partner&.update(attributes_to_reset)
+
         crime_application.update(confirm_dwp_result: nil)
       end
 

@@ -1,8 +1,9 @@
 module TypeOfMeansAssessment
   extend ActiveSupport::Concern
 
-  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits,
-           :capital, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
+  delegate :applicant, :partner, :kase, :income, :outgoings, :income_payments, :income_benefits,
+           :capital, :appeal_no_changes?, :partner_detail,
+           :benefit_check_recipient, to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
@@ -47,30 +48,30 @@ module TypeOfMeansAssessment
   # blocked until the NINO or benefit evidence is provided.
   def nino_forthcoming?
     return false unless has_passporting_benefit?
-    return false unless applicant.has_nino == 'no'
-    return false if applicant.will_enter_nino == 'yes'
+    return false unless benefit_check_recipient.has_nino == 'no'
+    return false if benefit_check_recipient.will_enter_nino == 'yes'
 
-    applicant.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
+    benefit_check_recipient.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
   end
 
   def benefit_evidence_forthcoming?
     return false unless has_passporting_benefit?
-    return false if applicant.nino.blank?
+    return false if benefit_check_recipient.nino.blank?
 
-    crime_application.confirm_dwp_result == 'no' && applicant.has_benefit_evidence == 'yes'
+    benefit_check_recipient.has_benefit_evidence == 'yes'
   end
 
   def means_assessment_as_benefit_evidence?
     return false unless has_passporting_benefit?
-    return false if applicant.nino.blank?
+    return false if benefit_check_recipient.nino.blank?
 
-    crime_application.confirm_dwp_result == 'no' && applicant.has_benefit_evidence == 'no'
+    benefit_check_recipient.has_benefit_evidence == 'no'
   end
 
   private
 
   def has_passporting_benefit?
-    BenefitType.passporting.include?(BenefitType.new(applicant.benefit_type.to_s))
+    BenefitType.passporting.include?(BenefitType.new(benefit_check_recipient.benefit_type.to_s))
   end
 
   def summary_only?

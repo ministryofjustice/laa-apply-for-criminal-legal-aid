@@ -11,12 +11,14 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       partner_detail: partner_detail,
       confirm_dwp_result: 'no',
       client_has_partner: client_has_partner,
+      benefit_check_recipient: applicant
     )
   end
 
   let(:applicant) do
     instance_double(
       Applicant,
+      id: '1234',
       first_name: 'Max',
       last_name: 'Mustermann',
       other_names: '',
@@ -126,12 +128,19 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       let(:partner) do
         instance_double(
           Partner,
+          id: '123',
           first_name: 'Fred',
           last_name: 'Flint',
           other_names: nil,
           date_of_birth: nil,
           has_nino: 'no',
           nino: nil,
+          benefit_type: nil,
+          last_jsa_appointment_date: nil,
+          benefit_check_result: false,
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
+          confirm_details: nil,
         )
       end
 
@@ -159,6 +168,14 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           conflict_of_interest: nil,
           has_same_address_as_client: nil,
           home_address: nil,
+          benefit_type: nil,
+          last_jsa_appointment_date: nil,
+          benefit_check_result: false,
+          benefit_check_status: nil,
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
+          confirm_details: nil,
+          confirm_dwp_result: nil,
         }
 
         applicant_without_partner.deep_merge(client_details: { partner: partner_attributes })

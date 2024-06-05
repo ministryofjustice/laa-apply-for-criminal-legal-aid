@@ -1,6 +1,8 @@
 module Steps
   module DWP
-    class CannotCheckBenefitStatusForm < Steps::DWP::DWPBaseForm
+    class CannotCheckBenefitStatusForm < Steps::BaseFormObject
+      include Steps::ApplicantOrPartnerExclusive
+
       include Steps::HasOneAssociation
       has_one_association :applicant
 

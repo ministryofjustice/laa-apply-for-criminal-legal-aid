@@ -231,7 +231,7 @@ en:
         steps/dwp/has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_VALIDATION
           attributes:
             has_benefit_evidence:
-              blank: Select yes if you have evidence of %{subject}'s benefit
+              inclusion: Select yes if you have evidence of %{subject}'s benefit
         steps/dwp/has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_VALIDATION
         steps/dwp/cannot_check_benefit_status_form: &WILL_ENTER_NINO_VALIDATION
           attributes:

@@ -2,20 +2,22 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe DWP::BenefitCheckStatusService do
-  subject { described_class.new(crime_application, applicant) }
+  subject { described_class.new(crime_application, benefit_check_recipient) }
 
   let(:crime_application) do
     instance_double(
       CrimeApplication,
       to_param: '12345',
       confirm_dwp_result: confirm_dwp_result,
-      applicant: applicant
+      applicant: applicant,
+      benefit_check_recipient: benefit_check_recipient
     )
   end
 
   let(:applicant) do
     double(
       Applicant,
+      id:,
       benefit_type:,
       last_jsa_appointment_date:,
       benefit_check_result:,
@@ -27,6 +29,14 @@ RSpec.describe DWP::BenefitCheckStatusService do
     )
   end
 
+  let(:partner) do
+    double(
+      Partner,
+      id:
+    )
+  end
+
+  let(:id) { '1234' }
   let(:benefit_type) { nil }
   let(:last_jsa_appointment_date) { nil }
   let(:has_nino) { nil }
@@ -36,6 +46,8 @@ RSpec.describe DWP::BenefitCheckStatusService do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
+
+  let(:benefit_check_recipient) { applicant }
 
   describe '#call' do
     context 'when benefit check outcome undetermined' do

@@ -117,7 +117,7 @@ en:
           heading: DWP records show that %{subject} receives a passporting benefit
       has_benefit_evidence:
         edit:
-          page_title: Client's passporting benefit evidence
+          page_title: "%{Subject}'s passporting benefit evidence"
           heading: Do you have evidence %{subject} gets %{benefit_type}?
       evidence_exit:
         show:
@@ -671,7 +671,6 @@ en:
       cannot_submit_without_nino:
         edit:
           page_title: Cannot submit application without National Insurance number
-          heading: You cannot submit this application yet, as we cannot check your client's benefit status without their National Insurance number
 
 
       failure:

@@ -160,6 +160,8 @@ en:
         outgoings_payments: Which of these payments does your client pay?
       steps_submission_more_information_form:
         additional_information_required: Do you need to add any more information to this application?
+      steps_submission_cannot_submit_without_nino_form:
+        heading: You cannot submit this application yet, as we cannot check %{subject}'s benefit status without their National Insurance number
       steps_capital_property_type_form:
         property_type: Which assets does %{subject} own or part-own inside or outside the UK?
       steps_capital_other_property_type_form:

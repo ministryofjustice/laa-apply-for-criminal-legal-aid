@@ -12,10 +12,12 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:, kase:, income:)
+    instance_double(CrimeApplication, applicant:, kase:, income:, benefit_check_recipient:)
   end
 
-  let(:applicant) { instance_double(Applicant) }
+  let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }
+  let(:benefit_check_recipient) { applicant }
+  let(:has_benefit_evidence) { nil }
   let(:kase) { instance_double(Case) }
   let(:income) { instance_double(Income) }
   let(:means_passporter_result) { false }
@@ -28,6 +30,7 @@ RSpec.describe TypeOfMeansAssessment do
     allow(Passporting::MeansPassporter).to receive(:new).and_return(means_passporter)
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#benefit_evidence_forthcoming?' do
     subject(:benefit_evidence_forthcoming?) { assessable.benefit_evidence_forthcoming? }
 
@@ -57,9 +60,10 @@ RSpec.describe TypeOfMeansAssessment do
     end
 
     context 'when dwp result contested but has not evidence' do
+      let(:has_benefit_evidence) { 'no' }
+
       before do
         allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('no')
       end
 
       it { is_expected.to be false }
@@ -474,4 +478,5 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

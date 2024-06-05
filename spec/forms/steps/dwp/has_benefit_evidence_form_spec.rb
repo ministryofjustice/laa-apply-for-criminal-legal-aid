@@ -16,8 +16,9 @@ RSpec.describe Steps::DWP::HasBenefitEvidenceForm do
     { has_benefit_evidence: }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: applicant_record, partner: partner_record) }
   let(:applicant_record) { Applicant.new }
+  let(:partner_record) { Partner.new }
   let(:has_benefit_evidence) { 'yes' }
 
   describe '#choices' do

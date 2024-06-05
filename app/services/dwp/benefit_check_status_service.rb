@@ -2,9 +2,9 @@ module DWP
   class BenefitCheckStatusService
     include TypeOfMeansAssessment
 
-    def initialize(crime_application, applicant)
+    def initialize(crime_application, person)
       @crime_application = crime_application
-      @applicant = applicant
+      @person = person
     end
 
     def self.call(*args)
@@ -12,25 +12,42 @@ module DWP
     end
 
     def call
+      return nil unless person_is_recipient?
+
       benefit_check_status
     end
 
     private
 
-    attr_reader :crime_application, :applicant
+    attr_reader :crime_application, :person
+
+    delegate :benefit_check_recipient, to: :crime_application
 
     def benefit_check_status
       return BenefitCheckStatus::NO_CHECK_NO_NINO.to_s if nino_forthcoming?
-      return BenefitCheckStatus::UNDETERMINED.to_s if benefit_evidence_forthcoming?
-      return BenefitCheckStatus::NO_RECORD_FOUND.to_s if means_assessment_as_benefit_evidence?
-      return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s if applicant.benefit_type == 'none'
+      return undetermined_status if dwp_undetermined
+      return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s if benefit_check_recipient.benefit_type == 'none'
       return BenefitCheckStatus::CHECKER_UNAVAILABLE.to_s if checker_down
 
-      BenefitCheckStatus::CONFIRMED.to_s if applicant.benefit_check_result
+      BenefitCheckStatus::CONFIRMED.to_s if benefit_check_recipient.benefit_check_result
+    end
+
+    def undetermined_status
+      return BenefitCheckStatus::UNDETERMINED.to_s if benefit_evidence_forthcoming?
+
+      BenefitCheckStatus::NO_RECORD_FOUND.to_s if means_assessment_as_benefit_evidence?
+    end
+
+    def dwp_undetermined
+      crime_application.confirm_dwp_result == 'no'
     end
 
     def checker_down
-      applicant.benefit_check_result.nil? && applicant.has_benefit_evidence.present?
+      benefit_check_recipient.benefit_check_result.nil? && benefit_check_recipient.has_benefit_evidence.present?
+    end
+
+    def person_is_recipient?
+      benefit_check_recipient.id == person.id
     end
   end
 end

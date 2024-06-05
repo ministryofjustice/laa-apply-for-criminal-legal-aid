@@ -12,8 +12,9 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: record) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant: record, partner: partner_record) }
   let(:record) { Applicant.new }
+  let(:partner_record) { Partner.new }
 
   let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
   let(:last_jsa_appointment_date) { nil }

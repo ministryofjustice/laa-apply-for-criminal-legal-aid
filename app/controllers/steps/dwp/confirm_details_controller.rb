@@ -14,13 +14,9 @@ module Steps
       private
 
       def set_presenter
-        @dwp_details = [dwp_details_section.new(
+        @dwp_details = [Summary::Sections::DWPDetails.new(
           current_crime_application, editable: false, headless: true
         )].select(&:show?)
-      end
-
-      def dwp_details_section
-        benefit_check_on_partner? ? Summary::Sections::DWPPartnerDetails : Summary::Sections::DWPClientDetails
       end
 
       def form

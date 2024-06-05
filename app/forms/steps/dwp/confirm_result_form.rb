@@ -1,9 +1,11 @@
 module Steps
   module DWP
-    class ConfirmResultForm < Steps::DWP::DWPBaseForm
+    class ConfirmResultForm < Steps::BaseFormObject
+      include Steps::ApplicantOrPartnerExclusive
+
       attribute :confirm_dwp_result, :value_object, source: YesNoAnswer
 
-      validate :confirm_dwp_result_selected
+      validates :confirm_dwp_result, inclusion: { in: :choices }
 
       def choices
         YesNoAnswer.values
@@ -20,8 +22,6 @@ module Steps
       end
 
       def update_person_attributes
-        return crime_application.partner.update(attributes_to_update) if partner_has_benefit?
-
         crime_application.applicant.update(attributes_to_update)
       end
 
@@ -31,12 +31,6 @@ module Steps
           'has_benefit_evidence' => nil,
           'confirm_details' => nil
         }
-      end
-
-      def confirm_dwp_result_selected
-        return if YesNoAnswer.values.include?(confirm_dwp_result) # rubocop:disable Performance/InefficientHashSearch
-
-        errors.add(:confirm_dwp_result, :blank, subject:)
       end
     end
   end

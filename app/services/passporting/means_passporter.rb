@@ -50,7 +50,7 @@ module Passporting
     end
 
     def benefit_check_passed?
-      applicant.benefit_check_result.present?
+      crime_application.benefit_check_recipient.benefit_check_result.present?
     end
   end
 end

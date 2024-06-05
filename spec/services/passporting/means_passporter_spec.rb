@@ -9,7 +9,8 @@ RSpec.describe Passporting::MeansPassporter do
       case: case_record,
       applicant: applicant,
       resubmission?: resubmission?,
-      is_means_tested: is_means_tested
+      is_means_tested: is_means_tested,
+      benefit_check_recipient: applicant
     )
   }
 
