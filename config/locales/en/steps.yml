@@ -295,9 +295,8 @@ en:
           income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
       frozen_income_savings_assets: &FROZEN_INCOME_ASSETS_PAGE_TEXT
         edit:
-          page_title:  Does your client have any income, savings or assets under a restraint or freezing order?
-          has_frozen_income_or_assets: Does your client have any income, savings or assets under a restraint or freezing order?
-          hint: When your client has a court order preventing them from accessing, using or moving certain assets without permission.
+          has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
+          hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
       client_owns_property:
         edit:
           page_title: Does your client own their home, or any other land or property?
@@ -442,13 +441,12 @@ en:
           page_title: Which other savings does %{subject} have inside or outside the UK?
       savings:
         edit:
-          page_title: Add savings account details
           heading:
-            bank: Bank accounts
-            building_society: Building society accounts
-            cash_isa: Cash ISA
-            national_savings_or_post_office: National Savings or Post Office accounts
-            other: Other cash investments
+            bank: Add the bank account details
+            building_society: Add the building society account details
+            cash_isa: Add the Cash ISA account details
+            national_savings_or_post_office: Add the National Savings or Post Office account details
+            other: Add the other cash investment account details
           info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation

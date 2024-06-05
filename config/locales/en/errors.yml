@@ -488,7 +488,7 @@ en:
         steps/income/frozen_income_savings_assets_form: &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:
             has_frozen_income_or_assets:
-              inclusion: Select yes if your client has any income, savings or assets under a restraint or freezing order
+              blank: Select yes if %{subject} has any income, savings or assets under a restraint or freezing order
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:

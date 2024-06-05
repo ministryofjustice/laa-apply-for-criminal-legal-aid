@@ -78,6 +78,10 @@ module TypeOfMeansAssessment
     kase.case_type == CaseType::SUMMARY_ONLY.to_s
   end
 
+  def committal?
+    kase.case_type == CaseType::COMMITTAL.to_s
+  end
+
   def no_property?
     income.client_owns_property == 'no'
   end
@@ -88,10 +92,6 @@ module TypeOfMeansAssessment
 
   def has_frozen_assets?
     income.has_frozen_income_or_assets == 'yes'
-  end
-
-  def no_frozen_assets?
-    income.has_frozen_income_or_assets == 'no'
   end
 
   def income_below_threshold?

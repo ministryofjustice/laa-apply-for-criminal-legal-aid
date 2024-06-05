@@ -341,7 +341,7 @@ en:
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
-        question: Does %{subject} have any income, savings or assets under a restraint or freezing order?
+        question: Income, savings or assets under a restraint or freezing order
         answers: *YESNO
       client_owns_property:
         question: Does your client own their home, or any other land or property?
