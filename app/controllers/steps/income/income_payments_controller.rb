@@ -14,7 +14,7 @@ module Steps
       end
 
       def additional_permitted_params
-        payment_types = IncomePaymentType.values.map(&:to_s)
+        payment_types = IncomePaymentType::OTHER_PAYMENT_TYPES.values.map(&:to_s)
         fieldset_attributes = Steps::Income::IncomePaymentFieldsetForm.attribute_names
 
         [

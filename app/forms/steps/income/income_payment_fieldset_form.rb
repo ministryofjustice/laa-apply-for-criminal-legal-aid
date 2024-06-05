@@ -17,7 +17,7 @@ module Steps
       validate :details_only_when_other?
 
       def payment_types
-        IncomePaymentType.values.map(&:to_s) - ['none']
+        IncomePaymentType::OTHER_PAYMENT_TYPES.values.map(&:to_s) - ['none']
       end
 
       def frequencies

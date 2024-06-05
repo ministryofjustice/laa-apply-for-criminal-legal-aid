@@ -13,4 +13,11 @@ class IncomePaymentType < ValueObject
     WORK_BENEFITS = new(:work_benefits),
     OTHER = new(:other)
   ].freeze
+
+  EMPLOYMENT_PAYMENT_TYPES = [
+    IncomePaymentType::EMPLOYMENT,
+    IncomePaymentType::WORK_BENEFITS
+  ].freeze
+
+  OTHER_PAYMENT_TYPES = VALUES - EMPLOYMENT_PAYMENT_TYPES
 end
