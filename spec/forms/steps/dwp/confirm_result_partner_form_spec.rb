@@ -22,10 +22,10 @@ RSpec.describe Steps::DWP::ConfirmResultPartnerForm do
         expect(crime_application).to receive(:update)
           .with({ 'confirm_dwp_result' => YesNoAnswer::YES }).and_return(true)
         expect(partner).to receive(:update).with({
-                                                     'benefit_type' => BenefitType::NONE,
+                                                   'benefit_type' => BenefitType::NONE,
                                                      'has_benefit_evidence' => nil,
                                                      'confirm_details' => nil
-                                                   }).and_return(true)
+                                                 }).and_return(true)
         expect(subject.save).to be(true)
       end
     end
