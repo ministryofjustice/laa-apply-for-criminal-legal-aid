@@ -679,6 +679,8 @@ en:
               inclusion: Select yes if the account is overdrawn
             are_wages_paid_into_account:
               inclusion: Select yes if your client's wages or benefits are paid into this account
+            are_partners_wages_paid_into_account:
+              inclusion: Select yes if the partner's wages or benefits are paid into this account
             ownership_type:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:

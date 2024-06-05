@@ -568,7 +568,11 @@ en:
         question: What is the account number?
         absence_answer: '' 
       are_wages_paid_into_account:
-        question: Are your client’s wages or benefits paid into this account?
+        question: Client's wages or benefits paid into this account?
+        answers: *YESNO
+        absence_answer: '' 
+      are_partners_wages_paid_into_account:
+        question: Partner's wages or benefits paid into this account?
         answers: *YESNO
         absence_answer: '' 
       is_overdrawn:

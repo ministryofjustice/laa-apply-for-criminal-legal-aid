@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_05_084904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -177,10 +177,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_title"
-    t.string "has_no_deductions"
     t.bigint "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}, null: false
+    t.string "has_no_deductions"
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
   end
 
@@ -388,6 +388,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_23_202937) do
     t.string "ownership_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "are_partners_wages_paid_into_account"
     t.index ["crime_application_id"], name: "index_savings_on_crime_application_id"
   end
 
