@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::Saving, type: :component do
-  subject(:component) { render_summary_component(described_class.new(record:)) }
+  subject(:component) { described_class.new(record:) }
 
   let(:record) { instance_double(Saving, complete?: true, crime_application: crime_application, **attributes) }
 
@@ -18,11 +18,17 @@ RSpec.describe Summary::Components::Saving, type: :component do
       account_balance: '100.01',
       is_overdrawn: YesNoAnswer::NO,
       are_wages_paid_into_account: YesNoAnswer::YES,
+      are_partners_wages_paid_into_account: YesNoAnswer::NO,
       saving_type: :bank
     }
   end
 
-  before { component }
+  let(:include_partner?) { false }
+
+  before do
+    allow(component).to receive(:include_partner_in_means_assessment?) { include_partner? }
+    render_summary_component(component)
+  end
 
   describe 'actions' do
     context 'when show_record_actions set to false' do
@@ -36,7 +42,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
     end
 
     context 'when show_record_actions true' do
-      subject(:component) { render_summary_component(described_class.new(record: record, show_record_actions: true)) }
+      subject(:component) { described_class.new(record: record, show_record_actions: true) }
 
       describe 'change link' do
         it 'show the correct change link' do
@@ -83,13 +89,33 @@ RSpec.describe Summary::Components::Saving, type: :component do
         'No',
       )
       expect(page).to have_summary_row(
-        'Are your client’s wages or benefits paid into this account?',
+        "Client's wages or benefits paid into this account?",
         'Yes',
       )
       expect(page).to have_summary_row(
         'Whose name is the account in?',
         'Client'
       )
+    end
+
+    describe 'the partner wages question' do
+      let(:wages_text) { "Partner's wages or benefits paid into this account?" }
+
+      context 'when partner is included in means assessment' do
+        let(:include_partner?) { true }
+
+        it 'is shown' do
+          expect(page).to have_summary_row(wages_text, 'No')
+        end
+      end
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it 'is not shown' do
+          expect(page).not_to have_content(wages_text)
+        end
+      end
     end
 
     context 'when answers are missing' do
@@ -104,38 +130,33 @@ RSpec.describe Summary::Components::Saving, type: :component do
           account_balance: nil,
           is_overdrawn: nil,
           are_wages_paid_into_account: nil,
+          are_partners_wages_paid_into_account: nil,
           saving_type: :bank
         }
       end
 
       it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
         expect(page).to have_summary_row(
-          'What is the name of the bank, building society or other holder of the savings?',
-          ''
+          'What is the name of the bank, building society or other holder of the savings?', ''
         )
         expect(page).to have_summary_row(
-          'What is the sort code or branch name?',
-          '',
+          'What is the sort code or branch name?', ''
         )
         expect(page).to have_summary_row(
-          'What is the account number?',
-          '',
+          'What is the account number?', ''
         )
         expect(page).to have_summary_row(
           'What is the account balance?',
           '',
         )
         expect(page).to have_summary_row(
-          'Is the account overdrawn?',
-          '',
+          'Is the account overdrawn?', ''
         )
         expect(page).to have_summary_row(
-          'Are your client’s wages or benefits paid into this account?',
-          '',
+          "Client's wages or benefits paid into this account?", ''
         )
         expect(page).to have_summary_row(
-          'Whose name is the account in?',
-          '',
+          'Whose name is the account in?', ''
         )
       end
     end

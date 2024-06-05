@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Saving < BaseRecord
+      include TypeOfMeansAssessment
+
       alias saving record
 
       private
@@ -8,27 +10,34 @@ module Summary
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         [
           Components::FreeTextAnswer.new(
-            :provider_name, saving.provider_name
+            :provider_name, saving.provider_name, show: true
           ),
           Components::FreeTextAnswer.new(
-            :sort_code, saving.sort_code
+            :sort_code, saving.sort_code, show: true
           ),
           Components::FreeTextAnswer.new(
-            :account_number, saving.account_number
+            :account_number, saving.account_number, show: true
           ),
           Components::MoneyAnswer.new(
-            :account_balance, saving.account_balance
+            :account_balance, saving.account_balance, show: true
           ),
           Components::ValueAnswer.new(
-            :is_overdrawn, saving.is_overdrawn
+            :is_overdrawn, saving.is_overdrawn, show: true
           ),
           Components::ValueAnswer.new(
-            :are_wages_paid_into_account, saving.are_wages_paid_into_account
+            :are_wages_paid_into_account,
+            saving.are_wages_paid_into_account,
+            show: true
           ),
           Components::ValueAnswer.new(
-            :saving_ownership_type, saving.ownership_type
+            :are_partners_wages_paid_into_account,
+            saving.are_partners_wages_paid_into_account,
+            show: include_partner_in_means_assessment?
+          ),
+          Components::ValueAnswer.new(
+            :saving_ownership_type, saving.ownership_type, show: true
           )
-        ]
+        ].select(&:show?)
       end
 
       def name
@@ -46,6 +55,8 @@ module Summary
       def remove_path
         confirm_destroy_steps_capital_savings_path(saving_id: record.id)
       end
+
+      delegate :crime_application, to: :record
     end
   end
 end
