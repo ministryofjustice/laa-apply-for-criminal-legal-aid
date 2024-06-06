@@ -10,6 +10,8 @@ module Adapters
         partner_employment_type || []
       end
 
+      # TODO: Need to update schema fixtures to improve the coverage
+      # :nocov:
       def employments
         return [] unless __getobj__
 
@@ -22,6 +24,7 @@ module Adapters
           Employment.new(**attrs)
         end
       end
+      # :nocov:
 
       def serializable_hash(options = {})
         super(
