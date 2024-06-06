@@ -101,9 +101,6 @@ en:
       other_capital_details: Other capital
       employments: Jobs
       employment: Job
-      employment_income: Pay from employment
-      self_assessment_tax: Self Assessment tax
-      work_benefits: Other work benefits
 
     questions:
       # BEGIN overview section
@@ -760,23 +757,3 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
-
-      employments:
-        applicant_employment_income:
-          question: Salary or wage
-          answers:
-            description: *payment_answer_format
-        applicant_self_assessment_tax_bill_question:
-          question: Does your client pay a Self Assessment tax bill?
-          answers: *YESNO
-        applicant_self_assessment_tax_bill_amount:
-          question: Enter the amount
-          answers:
-            description: *payment_answer_format
-        applicant_work_benefit_question:
-          question: Does your client receive any other benefits from work?
-          answers: *YESNO
-        applicant_work_benefit_amount:
-          question: Enter the total value every year
-          answers:
-            description: *payment_answer_format

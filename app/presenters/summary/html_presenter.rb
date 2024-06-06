@@ -20,9 +20,6 @@ module Summary
         employment_details
         income_details
         employments
-        employment_income
-        self_assessment_tax
-        work_benefits
         income_payments_details
         income_benefits_details
         dependants
@@ -65,9 +62,6 @@ module Summary
       income: %i[
         employment_details
         income_details
-        employment_income
-        self_assessment_tax
-        work_benefits
         employments
         income_payments_details
         income_benefits_details

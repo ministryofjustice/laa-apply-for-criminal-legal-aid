@@ -37,7 +37,7 @@ describe Summary::HtmlPresenter do
               'amount' => 25_000,
               'frequency' => 'annual',
               'ownership_type' => 'applicant',
-              'metadata' => { 'before_or_after_tax' => { 'value' => 'before_tax' } },
+              'metadata' => { 'before_or_after_tax' => {'value' => 'before_tax'} },
               'deductions' => [
                 {
                   'deduction_type' => 'income_tax',
