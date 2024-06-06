@@ -174,6 +174,7 @@ en:
       steps_capital_savings_form:
         is_overdrawn: Is the account overdrawn?
         are_wages_paid_into_account: Are your client’s wages or benefits paid into this account?
+        are_partners_wages_paid_into_account: Are the partner’s wages or benefits paid into this account?
         confirm_in_applicants_name: Confirm the following
         ownership_type: Whose name is the account in?
       steps_capital_savings_summary_form:
@@ -759,6 +760,7 @@ en:
         account_balance: What is the account balance?
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
+        are_partners_wages_paid_into_account_options: *YESNO
         ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name

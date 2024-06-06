@@ -13,9 +13,15 @@ module Steps
       attribute :account_number, :string
       attribute :is_overdrawn, :value_object, source: YesNoAnswer
       attribute :are_wages_paid_into_account, :value_object, source: YesNoAnswer
+      attribute :are_partners_wages_paid_into_account, :value_object, source: YesNoAnswer
 
       validates :provider_name, :sort_code, :account_number, :account_balance, presence: true
       validates :is_overdrawn, :are_wages_paid_into_account, inclusion: { in: YesNoAnswer.values }
+
+      validates(
+        :are_partners_wages_paid_into_account,
+        inclusion: { in: YesNoAnswer.values, if: :include_partner_in_means_assessment? }
+      )
 
       def persist!
         record.update(attributes)
