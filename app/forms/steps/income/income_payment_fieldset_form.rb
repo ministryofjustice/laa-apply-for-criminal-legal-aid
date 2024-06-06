@@ -17,7 +17,7 @@ module Steps
       validate :details_only_when_other?
 
       def payment_types
-        IncomePaymentType.values.map(&:to_s) - ['none']
+        LaaCrimeSchemas::Types::OtherIncomePaymentType.values - ['none']
       end
 
       def frequencies
