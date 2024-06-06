@@ -9,7 +9,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
     it 'returns a serializable hash, including relationships' do
       expect(subject.serializable_hash).to match(
         a_hash_including(
-          'employment_status' => ['not_working'],
+          'employment_status' => ['employed'],
           'ended_employment_within_three_months' => 'yes',
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => Date.new(2023, 9, 1),
