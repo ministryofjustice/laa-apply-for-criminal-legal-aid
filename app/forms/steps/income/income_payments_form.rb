@@ -15,7 +15,7 @@ module Steps
 
       validates_with IncomePaymentsValidator
 
-      IncomePaymentType::OTHER_INCOME_PAYMENT_TYPES.each do |type| # rubocop:disable Style/HashEachMethods
+      IncomePaymentType::OTHER_INCOME_PAYMENT_TYPES.each do |type|
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for

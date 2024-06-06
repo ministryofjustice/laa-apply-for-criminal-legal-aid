@@ -15,15 +15,15 @@ class IncomePaymentType < ValueObject
   ].freeze
 
   OTHER_INCOME_PAYMENT_TYPES = [
-    IncomePaymentType::MAINTENANCE,
-    IncomePaymentType::PRIVATE_PENSION,
-    IncomePaymentType::STATE_PENSION,
-    IncomePaymentType::INTEREST_INVESTMENT,
-    IncomePaymentType::STUDENT_LOAN_GRANT,
-    IncomePaymentType::BOARD,
-    IncomePaymentType::RENT,
-    IncomePaymentType::FINANCIAL_SUPPORT_WITH_ACCESS,
-    IncomePaymentType::FROM_FRIENDS_RELATIVES,
-    IncomePaymentType::OTHER
+    MAINTENANCE,
+    PRIVATE_PENSION,
+    STATE_PENSION,
+    INTEREST_INVESTMENT,
+    STUDENT_LOAN_GRANT,
+    BOARD,
+    RENT,
+    FINANCIAL_SUPPORT_WITH_ACCESS,
+    FROM_FRIENDS_RELATIVES,
+    OTHER
   ].freeze
 end
