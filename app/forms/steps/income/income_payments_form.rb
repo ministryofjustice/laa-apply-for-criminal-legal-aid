@@ -6,7 +6,7 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :income
 
-      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::IncomePaymentType.values
+      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::OtherIncomePaymentType.values
 
       attr_writer :types
       attr_reader :new_payments
@@ -15,7 +15,7 @@ module Steps
 
       validates_with IncomePaymentsValidator
 
-      IncomePaymentType.values.each do |type| # rubocop:disable Style/HashEachMethods
+      IncomePaymentType::OTHER_INCOME_PAYMENT_TYPES.each do |type| # rubocop:disable Style/HashEachMethods
         attribute type.to_s, :string
 
         # Used by govuk form component to retrieve values to populate the fields_for
@@ -49,7 +49,7 @@ module Steps
       end
 
       def ordered_payment_types
-        LaaCrimeSchemas::Types::OtherIncomePaymentType.values & PAYMENT_TYPES_ORDER
+        IncomePaymentType::OTHER_INCOME_PAYMENT_TYPES.map(&:to_s) & PAYMENT_TYPES_ORDER
       end
 
       def types
