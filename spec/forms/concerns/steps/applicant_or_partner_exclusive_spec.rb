@@ -19,16 +19,18 @@ RSpec.describe Steps::ApplicantOrPartnerExclusive do
   let(:has_passporting_benefit) { true }
 
   describe '#subject' do
-    subject(:subject) { assessable.subject }
-
     context 'when partner has passporting benefit' do
-      it { is_expected.to eq 'the partner' }
+      it 'returns partner subject' do
+        expect(assessable.subject).to eq 'the partner'
+      end
     end
 
     context 'when partner does not have passporting benefit' do
       let(:has_passporting_benefit) { false }
 
-      it { is_expected.to eq 'your client' }
+      it 'returns applicant subject' do
+        expect(assessable.subject).to eq 'your client'
+      end
     end
   end
 
