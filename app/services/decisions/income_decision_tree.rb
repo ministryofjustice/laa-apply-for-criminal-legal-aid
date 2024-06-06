@@ -125,12 +125,12 @@ module Decisions
     end
 
     def after_frozen_income_savings_assets
-      if no_frozen_assets? && !summary_only?
-        edit(:client_owns_property)
-      elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details(employment)
+      if has_frozen_assets?
+        employed? ? redirect_to_employer_details(employment) : edit(:income_payments)
+      elsif summary_only? || committal?
+        employed? ? edit('/steps/income/client/employment_income') : edit(:income_payments)
       else
-        edit(:income_payments)
+        edit(:client_owns_property)
       end
     end
 
@@ -190,7 +190,8 @@ module Decisions
     end
 
     def employed?
-      !!crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s)
+      crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s) &&
+        FeatureFlags.employment_journey.enabled?
     end
 
     def not_working?

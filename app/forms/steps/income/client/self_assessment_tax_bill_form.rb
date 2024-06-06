@@ -32,23 +32,25 @@ module Steps
         end
 
         def persist!
-          crime_application.income.update(
-            applicant_self_assessment_tax_bill:,
-          )
-
-          pays_self_assessment_tax_bill? ? persist_outgoings_payment : reset!
-        end
-
-        def persist_outgoings_payment
           ::OutgoingsPayment.transaction do
             reset!
 
-            crime_application.outgoings_payments.create!(
-              payment_type: OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.value,
-              amount: amount,
-              frequency: frequency,
-            )
+            if pays_self_assessment_tax_bill?
+              crime_application.outgoings_payments.create!(
+                payment_type: OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.value,
+                amount: amount,
+                frequency: frequency,
+              )
+            end
+
+            update_income_attribute!
           end
+        end
+
+        def update_income_attribute!
+          crime_application.income.update(
+            applicant_self_assessment_tax_bill:,
+          )
         end
 
         def reset!

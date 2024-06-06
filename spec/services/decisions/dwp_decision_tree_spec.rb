@@ -74,7 +74,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:has_nino) { YesNoAnswer::YES }
     let(:feature_flag_means_journey_enabled) { false }
     let(:client_has_partner) { 'no' }
-    let(:passported_partner_journey_enabled) { false }
+    let(:partner_journey_enabled) { false }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant_double,
@@ -89,8 +89,8 @@ RSpec.describe Decisions::DWPDecisionTree do
         instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
       }
 
-      allow(FeatureFlags).to receive(:passported_partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: passported_partner_journey_enabled)
+      allow(FeatureFlags).to receive(:partner_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
       }
     end
 
@@ -107,8 +107,8 @@ RSpec.describe Decisions::DWPDecisionTree do
         it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
 
-      context 'and feature flag `passported_partner_journey` is enabled and client has a partner' do
-        let(:passported_partner_journey_enabled) { true }
+      context 'and feature flag `partner_journey` is enabled and client has a partner' do
+        let(:partner_journey_enabled) { true }
         let(:client_has_partner) { 'yes' }
 
         it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }

@@ -26,6 +26,11 @@ en:
         local_authority: Local authority
         partner_with_a_contrary_interest: Partner with a contrary interest
         property_company: Property company
+      subjects:
+        applicant: 'client'
+        applicant_and_partner: 'client and their partner'
+        applicant_or_partner: 'client or their partner'
+        partner: 'partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -361,19 +366,18 @@ en:
 
       # BEGIN income details section
       income_above_threshold:
-        question: Is your client’s income currently more than £12,475 a year before tax?
+        question: Income more than £12,475 a year before tax?
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
-        question: Does your client have any income, savings or assets under a restraint or freezing order?
-        answers:
-          <<: *YESNO
+        question: Income, savings or assets under a restraint or freezing order
+        answers: *YESNO
       client_owns_property:
-        question: Does your client own their home, or any other land or property?
+        question: "%{Subject} owns home, land or property?"
         answers:
           <<: *YESNO
       has_savings:
-        question: Does your client have any savings or investments?
+        question: Savings or investments?
         answers:
           <<: *YESNO
       # END income details section
@@ -475,7 +479,9 @@ en:
 
       # BEGIN other sources of income details section
       manage_without_income:
-        question: How does your client manage with no income?
+        question: 
+          one: How %{subject} lives with no income?
+          other: How %{subject} live with no income?
         answers:
           friends_sofa: They sleep on a friend's sofa for free
           family: They stay with family for free
@@ -594,7 +600,11 @@ en:
         question: What is the account number?
         absence_answer: ''
       are_wages_paid_into_account:
-        question: Are your client’s wages or benefits paid into this account?
+        question: Client's wages or benefits paid into this account?
+        answers: *YESNO
+        absence_answer: '' 
+      are_partners_wages_paid_into_account:
+        question: Partner's wages or benefits paid into this account?
         answers: *YESNO
         absence_answer: ''
       is_overdrawn:
@@ -608,7 +618,7 @@ en:
         question: What is the sort code or branch name?
         absence_answer: ''
       has_capital_savings:
-        question: Which savings does your client have inside or outside the UK?
+        question: Which savings does %{subject} have inside or outside the UK?
         answers:
           'none': *absence_none
       # END saving
@@ -708,7 +718,7 @@ en:
         question: What percentage of the %{asset} do they own?
         absence_answer: *absence_none
       has_assets:
-        question: Which assets does your client own or part-own inside or outside the UK?
+        question: Assets %{subject} owns
         answers:
           'none': *absence_none
       # END property, address and owners

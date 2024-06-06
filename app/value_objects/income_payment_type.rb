@@ -9,8 +9,21 @@ class IncomePaymentType < ValueObject
     RENT = new(:rent),
     FINANCIAL_SUPPORT_WITH_ACCESS = new(:financial_support_with_access),
     FROM_FRIENDS_RELATIVES = new(:from_friends_relatives),
+    OTHER = new(:other),
     EMPLOYMENT = new(:employment),
-    WORK_BENEFITS = new(:work_benefits),
-    OTHER = new(:other)
+    WORK_BENEFITS = new(:work_benefits)
+  ].freeze
+
+  OTHER_INCOME_PAYMENT_TYPES = [
+    MAINTENANCE,
+    PRIVATE_PENSION,
+    STATE_PENSION,
+    INTEREST_INVESTMENT,
+    STUDENT_LOAN_GRANT,
+    BOARD,
+    RENT,
+    FINANCIAL_SUPPORT_WITH_ACCESS,
+    FROM_FRIENDS_RELATIVES,
+    OTHER
   ].freeze
 end

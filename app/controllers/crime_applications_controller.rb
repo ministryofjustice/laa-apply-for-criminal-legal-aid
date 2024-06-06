@@ -18,6 +18,8 @@ class CrimeApplicationsController < DashboardController
     initialize_crime_application do |crime_application|
       if FeatureFlags.non_means_tested.enabled?
         redirect_to edit_steps_client_is_means_tested_path(crime_application)
+      elsif FeatureFlags.partner_journey.enabled?
+        redirect_to edit_crime_application_path(crime_application)
       else
         redirect_to edit_steps_client_has_partner_path(crime_application)
       end

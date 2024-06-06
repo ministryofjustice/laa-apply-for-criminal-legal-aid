@@ -24,12 +24,16 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
   end
 
   describe '#save' do
+    before do
+      allow(form).to receive(:include_partner_in_means_assessment?)
+    end
+
     context 'when `has_frozen_income_or_assets` is blank' do
       let(:has_frozen_income_or_assets) { '' }
 
       it 'has is a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:has_frozen_income_or_assets, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:has_frozen_income_or_assets, :blank)).to be(true)
       end
     end
 
@@ -38,7 +42,7 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:has_frozen_income_or_assets, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:has_frozen_income_or_assets, :blank)).to be(true)
       end
     end
 
@@ -46,10 +50,6 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
       let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
 
       it { is_expected.to be_valid }
-
-      it 'passes validation' do
-        expect(form.errors.of_kind?(:has_frozen_income_or_assets, :invalid)).to be(false)
-      end
 
       it 'updates the record and resets relevant attributes' do
         expect(income).to receive(:update)

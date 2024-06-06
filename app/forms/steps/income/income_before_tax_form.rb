@@ -2,6 +2,9 @@ module Steps
   module Income
     class IncomeBeforeTaxForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       has_one_association :income
 
       # threshold being £12,475 as of Nov 2023

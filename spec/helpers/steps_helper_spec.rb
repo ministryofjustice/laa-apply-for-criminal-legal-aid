@@ -173,4 +173,103 @@ data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
       )
     end
   end
+
+  describe '#hint_t' do
+    it 'sources hint translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.hint.steps_base_form_object'
+      )
+
+      helper.hint_t(:attribute)
+    end
+  end
+
+  describe '#label_t' do
+    it 'sources label translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.label.steps_base_form_object'
+      )
+
+      helper.label_t(:attribute)
+    end
+  end
+
+  describe '#legend_t' do
+    it 'sources label translations from the same source as the GOV.UK Form Builder' do
+      allow(view).to receive(:current_form_object) { Steps::BaseFormObject.new }
+      expect(helper).to receive(:t).with(
+        :attribute, scope: 'helpers.label.steps_base_form_object'
+      )
+
+      helper.label_t(:attribute)
+    end
+
+    # We've included a concrete example here in lieu of an
+    # integration spec to illustrate the use of the I18n helper.
+    #
+    # TODO: consider integration specs for the dynamic subject form content.
+    #
+    context 'when subject could be plural, e.g. ApplicantAndPartner' do
+      before do
+        form_object = Steps::Income::ManageWithoutIncomeForm.new
+        allow(view).to receive(:current_form_object) { form_object }
+        allow(form_object).to receive(:include_partner_in_means_assessment?) { include_partner? }
+      end
+
+      context 'when subject is applicant AND partner' do
+        let(:include_partner?) { true }
+
+        it 'returns the pluralized translation' do
+          expect(helper.legend_t(:manage_without_income)).to eq(
+            'How do your client and their partner manage with no income?'
+          )
+        end
+      end
+
+      context 'when subject is applicant only' do
+        let(:include_partner?) { false }
+
+        it 'returns the singular translation' do
+          expect(helper.legend_t(:manage_without_income)).to eq(
+            'How does your client manage with no income?'
+          )
+        end
+      end
+    end
+  end
+
+  describe '#translate_with_subject' do
+    before do
+      form_object = double(
+        :mock_form_object,
+        model_name: Steps::BaseFormObject,
+        subject_ownership_type: subject_ownership_type
+      )
+
+      allow(view).to receive(:current_form_object).and_return(form_object)
+    end
+
+    let(:subject_ownership_type) { nil }
+
+    it 'injects "subject", capitalized subject ("Subject") and "count" into the I18n options' do
+      expect(helper).to receive(:translate).with(
+        :translation_key,
+        { Subject: 'The subject', count: 1, subject: 'the subject' }
+      )
+
+      helper.translate_with_subject(:translation_key, subject: 'the subject')
+    end
+
+    context 'when form subject is ApplicantAndPartner' do
+      let(:subject_ownership_type) { SubjectType::APPLICANT_AND_PARTNER }
+
+      it 'sets the count to 2' do
+        expect(helper).to receive(:translate).with(:translation_key, hash_including(count: 2))
+
+        helper.translate_with_subject(:translation_key, subject: 'the subject')
+      end
+    end
+  end
 end

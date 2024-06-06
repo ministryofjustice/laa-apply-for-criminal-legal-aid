@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class NationalSavingsCertificatesSummaryForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       attr_reader :add_national_savings_certificate, :national_savings_certificate
 
       validates :add_national_savings_certificate, inclusion: { in: YesNoAnswer.values }

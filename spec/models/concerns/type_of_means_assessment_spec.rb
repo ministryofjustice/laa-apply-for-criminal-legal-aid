@@ -74,6 +74,76 @@ RSpec.describe TypeOfMeansAssessment do
     end
   end
 
+  describe '#include_partner_in_means_assessment?' do
+    subject(:include_partner_in_means_assessment?) do
+      assessable.include_partner_in_means_assessment?
+    end
+
+    let(:partner_detail) { nil }
+
+    before do
+      allow(crime_application).to receive_messages(client_has_partner:, partner_detail:)
+    end
+
+    context 'when it is not yet known if the client has a partner' do
+      let(:client_has_partner) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the client does not have partner' do
+      let(:client_has_partner) { 'no' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when client has a partner but we do not know thier involvement' do
+      let(:client_has_partner) { 'yes' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when client has a partner and they are not involved in the case' do
+      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when client has a partner and they are a prosecution witness' do
+      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'prosecution_witness') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when client has a partner and they are a victim' do
+      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when client has a partner and they are a codefendant' do
+      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) {
+        instance_double(PartnerDetail, involvement_in_case: 'codefendant', conflict_of_interest: conflict_of_interest)
+      }
+
+      context 'when there is a conflict of interest' do
+        let(:conflict_of_interest) { 'yes' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when there is no conflict of interest' do
+        let(:conflict_of_interest) { 'no' }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
   describe '#means_assessment_as_benefit_evidence?' do
     subject(:means_assessment_as_benefit_evidence?) { assessable.means_assessment_as_benefit_evidence? }
 

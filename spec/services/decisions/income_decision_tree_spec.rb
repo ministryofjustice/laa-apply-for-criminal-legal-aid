@@ -279,16 +279,48 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when they do not have frozen income or assets' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
 
-      context 'when case type is not summary only' do
-        let(:case_type) { 'indictable' }
-
-        it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
-      end
-
       context 'when case type is summary only' do
         let(:case_type) { 'summary_only' }
 
-        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+        context 'when the client is employed' do
+          let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+          let(:feature_flag_employment_journey_enabled) { true }
+
+          it 'redirects to the `employment_income` page' do
+            expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
+          end
+        end
+
+        context 'when the client is not employed' do
+          let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+        end
+      end
+
+      context 'when case type is committal' do
+        let(:case_type) { 'committal' }
+
+        context 'when the client is employed' do
+          let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+          let(:feature_flag_employment_journey_enabled) { true }
+
+          it 'redirects to the `employment_income` page' do
+            expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
+          end
+        end
+
+        context 'when the client is not employed' do
+          let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+        end
+      end
+
+      context 'when case type is not summary only or committal' do
+        let(:case_type) { 'indictable' }
+
+        it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
       end
     end
 
@@ -391,7 +423,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when they do not have savings' do
         before { allow(subject).to receive(:requires_full_means_assessment?).and_return(false) }
 
-        it 'redirects to the `employer_details` page' do
+        it 'redirects to the `employment_income` page' do
           expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
         end
       end

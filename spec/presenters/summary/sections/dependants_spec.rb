@@ -87,13 +87,13 @@ describe Summary::Sections::Dependants do
         expect(answers[1].question).to eq(:dependant)
         expect(answers[1].change_path).to match('/applications/12345/steps/income/dependants')
         expect(answers[1].value).to eq('17 years old')
-        expect(answers[1].i18n_opts).to eq({ ordinal: 'first' })
+        expect(answers[1].i18n_opts[:ordinal]).to eq('first')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[2].question).to eq(:dependant)
         expect(answers[2].change_path).to match('/applications/12345/steps/income/dependants')
         expect(answers[2].value).to eq('1 year old')
-        expect(answers[2].i18n_opts).to eq({ ordinal: 'second' })
+        expect(answers[2].i18n_opts[:ordinal]).to eq('second')
       end
     end
   end

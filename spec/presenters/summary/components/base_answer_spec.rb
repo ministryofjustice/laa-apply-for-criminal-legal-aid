@@ -77,7 +77,7 @@ describe Summary::Components::BaseAnswer do
       subject { described_class.new(question, value, i18n_opts: { name: 'John' }) }
 
       it 'returns the options' do
-        expect(subject.i18n_opts).to eq({ name: 'John' })
+        expect(subject.i18n_opts[:name]).to eq('John')
       end
     end
   end

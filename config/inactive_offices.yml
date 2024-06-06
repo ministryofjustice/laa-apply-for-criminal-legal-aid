@@ -961,3 +961,21 @@ production:
     # Inactive code request - 10/05/2024
     # Code appeared in a firm's list but does not exist and is not associated with any of their offices.
     - 2P039Y
+    # Inactive codes for thirty-first onboarding tranche - 04/06/2024
+    - 2M161G
+    - 0N722D
+    - 0X383F
+    - 2N183T
+    - 2M950P
+    - 0W570X
+    - 0W087X
+    - 0N119Y
+    - 0N132M
+    - 0N655F
+    - 2L944W
+    - 2F021H
+    - 0E871V
+    - 0F809P
+    - 0X337F
+    - 2M237P
+    - 2P072J

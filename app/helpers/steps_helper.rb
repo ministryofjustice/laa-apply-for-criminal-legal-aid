@@ -8,7 +8,7 @@ module StepsHelper
 
     # Support appending optional css classes, maintaining the default ones
     opts.merge!(
-      html: { class: dom_class(record, :edit) }
+      html: { class: dom_class(record, :edit) },
     ) do |_key, old_value, new_value|
       { class: old_value.values | new_value.values }
     end
@@ -63,4 +63,45 @@ module StepsHelper
     end
   end
   # rubocop:enable Metrics/MethodLength
+
+  def legend_translate(attr, **options)
+    form_translate(attr, :legend, **options)
+  end
+  alias legend_t legend_translate
+
+  def label_translate(attr, **options)
+    form_translate(attr, :label, **options)
+  end
+  alias label_t label_translate
+
+  def hint_translate(attr, **options)
+    form_translate(attr, :hint, **options)
+  end
+  alias hint_t hint_translate
+
+  def form_translate(attr, context, **options)
+    return unless current_form_object
+
+    options[:scope] ||= ['helpers', context, current_form_object.model_name.singular].join('.')
+
+    t(attr, **options)
+  end
+
+  def translate_with_subject(key, **options)
+    subject_type = options.fetch(
+      :subject_type,
+      current_form_object.try(:subject_ownership_type)
+    )
+
+    options[:subject] ||= translate('dictionary.subject', subject_type:)
+    options[:Subject] = options[:subject].capitalize
+    options[:count] ||= subject_type&.applicant_and_partner? ? 2 : 1
+
+    translate(key, **options)
+  end
+  alias t translate_with_subject
+
+  def current_form_object
+    controller.try(:current_form_object)
+  end
 end

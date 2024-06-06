@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class InvestmentsSummaryForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       attr_reader :add_investment
 
       validates :add_investment, inclusion: { in: YesNoAnswer.values }

@@ -2,6 +2,9 @@ module Steps
   module Income
     class ClientOwnsPropertyForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
+
       has_one_association :income
 
       attribute :client_owns_property, :value_object, source: YesNoAnswer

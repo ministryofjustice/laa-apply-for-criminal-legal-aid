@@ -1,11 +1,13 @@
 module Summary
   module Sections
     class IncomeDetails < Sections::BaseSection
+      include TypeOfMeansAssessment
+
       def show?
         income.present? && super
       end
 
-      def answers # rubocop:disable  Metrics/MethodLength
+      def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         [
           Components::ValueAnswer.new(
             :income_above_threshold, income.income_above_threshold,
@@ -17,13 +19,22 @@ module Summary
           ),
           Components::ValueAnswer.new(
             :client_owns_property, income.client_owns_property,
-            change_path: edit_steps_income_client_owns_property_path
+            change_path: edit_steps_income_client_owns_property_path,
+            subject_ownership_type: property_ownership_type
           ),
           Components::ValueAnswer.new(
             :has_savings, income.has_savings,
             change_path: edit_steps_income_has_savings_path
           ),
         ].select(&:show?)
+      end
+
+      private
+
+      def property_ownership_type
+        return unless include_partner_in_means_assessment?
+
+        SubjectType.new(:applicant_or_partner)
       end
     end
   end

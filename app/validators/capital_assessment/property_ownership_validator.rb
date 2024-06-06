@@ -6,7 +6,10 @@ module CapitalAssessment
       @form = form
 
       form.errors.add :percentage_applicant_owned, :invalid unless valid_ownership_total?(form)
-      form.errors.add :percentage_partner_owned, :invalid if client_has_partner(form) && !valid_ownership_total?(form)
+
+      return unless form.include_partner_in_means_assessment? && !valid_ownership_total?(form)
+
+      form.errors.add :percentage_partner_owned, :invalid
     end
 
     private
@@ -24,10 +27,6 @@ module CapitalAssessment
       percentage_ownerships << form.percentage_partner_owned unless form.percentage_partner_owned.nil?
 
       percentage_ownerships
-    end
-
-    def client_has_partner(form)
-      form.crime_application.client_has_partner == 'yes'
     end
 
     def other_owners?(form)

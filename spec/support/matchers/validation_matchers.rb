@@ -1,9 +1,13 @@
-RSpec::Matchers.define :validate_presence_of do |attribute, error = :blank|
+RSpec::Matchers.define :validate_presence_of do |attribute, error = :blank, msg = nil|
   include ValidationHelpers
 
   match do |object|
     object.send("#{attribute}=", '')
     check_errors(object, attribute, error)
+
+    return true if check_errors(object, attribute, error) && msg.nil?
+
+    object.errors.full_messages_for(attribute).include? msg
   end
 
   chain :on_context, :validation_context
@@ -13,7 +17,13 @@ RSpec::Matchers.define :validate_presence_of do |attribute, error = :blank|
   end
 
   failure_message do |object|
-    "expected `#{attribute}` to have error `#{error}` but got `#{errors_for(attribute, object)}`"
+    if msg
+      "expected `#{attribute}` to have error `#{error}` with message `#{msg}` \
+      but got errors `#{errors_for(attribute, object)}` with messages \
+      `#{object.errors.full_messages_for(attribute)}`"
+    else
+      "expected `#{attribute}` to have error `#{error}` but got `#{errors_for(attribute, object)}`"
+    end
   end
 
   failure_message_when_negated do |object|

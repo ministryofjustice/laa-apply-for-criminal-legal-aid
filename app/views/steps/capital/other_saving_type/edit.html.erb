@@ -10,7 +10,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :saving_type, @form_object.choices,
-                                           :value, legend: { tag: 'h1', size: 'xl' } %>
+                                           :value, legend: { text: legend_t(:saving_type), tag: 'h1', size: 'xl' } %>
 
       <%= f.continue_button %>
     <% end %>

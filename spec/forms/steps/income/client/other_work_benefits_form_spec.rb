@@ -53,7 +53,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
   describe '#save' do
     before do
       allow(crime_application.income_payments).to receive(:create!).and_return(true)
-      allow(crime_application.income).to receive(:update).and_return(true)
+      allow(crime_application).to receive(:income).and_return(income)
     end
 
     context 'when `applicant_other_work_benefit_received` is not provided' do

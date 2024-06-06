@@ -2,6 +2,9 @@ module Steps
   module Income
     class ManageWithoutIncomeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       has_one_association :income
 
       attribute :manage_without_income, :value_object, source: ManageWithoutIncomeType

@@ -4,7 +4,11 @@ en:
       default: '%-d %B %Y'  # 3 January 2019
       compact: '%d/%m/%Y'   # 03/01/2019
       datetime: '%-d %B %Y %-l:%M%P'  # 3 January 2019 2:45pm
-
+    subjects:
+      applicant: 'your client'
+      applicant_and_partner: 'your client and their partner'
+      applicant_or_partner: 'your client or their partner'
+      partner: 'the partner'
   service:
     name: Apply for criminal legal aid
 

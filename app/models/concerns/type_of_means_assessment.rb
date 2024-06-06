@@ -1,8 +1,8 @@
 module TypeOfMeansAssessment
   extend ActiveSupport::Concern
 
-  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits, :capital, :appeal_no_changes?,
-           to: :crime_application
+  delegate :applicant, :kase, :income, :outgoings, :income_payments, :income_benefits,
+           :capital, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
@@ -27,6 +27,13 @@ module TypeOfMeansAssessment
       CaseType::INDICTABLE,
       CaseType::ALREADY_IN_CROWN_COURT
     ].include?(CaseType.new(kase.case_type))
+  end
+
+  def include_partner_in_means_assessment?
+    return true if partner_detail&.involvement_in_case == PartnerInvolvementType::NONE.to_s
+    return false unless partner_detail&.involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
+
+    partner_detail.conflict_of_interest == 'no'
   end
 
   def evidence_of_passporting_means_forthcoming?
@@ -70,6 +77,10 @@ module TypeOfMeansAssessment
     kase.case_type == CaseType::SUMMARY_ONLY.to_s
   end
 
+  def committal?
+    kase.case_type == CaseType::COMMITTAL.to_s
+  end
+
   def no_property?
     income.client_owns_property == 'no'
   end
@@ -80,10 +91,6 @@ module TypeOfMeansAssessment
 
   def has_frozen_assets?
     income.has_frozen_income_or_assets == 'yes'
-  end
-
-  def no_frozen_assets?
-    income.has_frozen_income_or_assets == 'no'
   end
 
   def income_below_threshold?

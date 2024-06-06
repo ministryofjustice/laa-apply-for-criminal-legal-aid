@@ -5,11 +5,18 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   let(:application_struct) { build_struct_application(with_full_means: true) }
 
+  describe '#employments' do
+    it 'returns a employments collection' do
+      # TODO: Need to update schema fixtures to improve the coverage
+      # expect(subject.employments).to all(be_an(Employment))
+    end
+  end
+
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
       expect(subject.serializable_hash).to match(
         a_hash_including(
-          'employment_status' => ['not_working'],
+          'employment_status' => ['employed'],
           'ended_employment_within_three_months' => 'yes',
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => Date.new(2023, 9, 1),
