@@ -120,7 +120,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
       let(:benefit_check_recipient) { partner }
 
       it 'returns nil' do
-        expect(subject.call).to eq(nil)
+        expect(subject.call).to be_nil
       end
     end
   end

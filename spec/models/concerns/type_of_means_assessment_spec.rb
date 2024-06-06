@@ -178,8 +178,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result contested and has evidence' do
       before do
-        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('yes')
+        allow(applicant).to receive_messages(confirm_dwp_result: 'no', has_benefit_evidence: 'yes')
       end
 
       it { is_expected.to be false }
@@ -187,8 +186,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result contested and has no evidence' do
       before do
-        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('no')
+        allow(applicant).to receive_messages(confirm_dwp_result: 'no', has_benefit_evidence: 'no')
       end
 
       it { is_expected.to be true }
