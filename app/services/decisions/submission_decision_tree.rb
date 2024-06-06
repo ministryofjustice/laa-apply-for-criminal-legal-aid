@@ -51,9 +51,5 @@ module Decisions
 
       nino_forthcoming? && current_crime_application.case.is_client_remanded != 'yes'
     end
-
-    def applicant
-      @applicant ||= current_crime_application.applicant
-    end
   end
 end

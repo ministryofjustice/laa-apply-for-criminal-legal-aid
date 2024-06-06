@@ -20,10 +20,6 @@ module Steps
           attributes
         )
       end
-
-      def has_benefit_evidence_selected
-        errors.add(:has_benefit_evidence, :inclusion, subject:)
-      end
     end
   end
 end

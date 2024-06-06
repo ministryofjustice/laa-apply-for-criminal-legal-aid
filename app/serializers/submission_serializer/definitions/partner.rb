@@ -23,7 +23,7 @@ module SubmissionSerializer
           json.will_enter_nino partner.will_enter_nino
           json.has_benefit_evidence partner.has_benefit_evidence
           json.confirm_details partner.confirm_details
-          json.confirm_dwp_result confirm_dwp_result
+          json.confirm_dwp_result partner.confirm_dwp_result
           json.benefit_check_status DWP::BenefitCheckStatusService.call(self, partner)
 
           json.involvement_in_case partner_detail.involvement_in_case
@@ -32,14 +32,6 @@ module SubmissionSerializer
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-      private
-
-      def confirm_dwp_result
-        return unless partner.respond_to?(:confirm_dwp_result) && partner.confirm_dwp_result.present?
-
-        YesNoAnswer.new(partner.confirm_dwp_result)
-      end
     end
   end
 end

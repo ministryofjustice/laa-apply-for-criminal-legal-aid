@@ -54,7 +54,6 @@ RSpec.describe Datastore::ApplicationRehydration do
         properties: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
-        confirm_dwp_result: YesNoAnswer::NO,
       )
 
       expect(

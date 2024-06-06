@@ -9,7 +9,6 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       applicant: applicant,
       partner: partner,
       partner_detail: partner_detail,
-      confirm_dwp_result: 'no',
       client_has_partner: client_has_partner,
       benefit_check_recipient: applicant
     )
@@ -33,6 +32,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       correspondence_address_type: 'home_address',
       residence_type: 'rented',
       relationship_to_owner_of_usual_home_address: nil,
+      confirm_dwp_result: 'no',
       benefit_check_result: false,
       will_enter_nino: nil,
       has_benefit_evidence: 'yes',
@@ -141,6 +141,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           will_enter_nino: nil,
           has_benefit_evidence: nil,
           confirm_details: nil,
+          confirm_dwp_result: nil,
         )
       end
 

@@ -68,7 +68,6 @@ RSpec.describe Steps::Client::HasNinoForm do
         end
 
         it 'saves `has_nino` value and returns true' do
-          expect(crime_application).to receive(:update).with({ confirm_dwp_result: nil }).and_return(true)
           expect(record).to receive(:update).with({
                                                     'has_nino' => YesNoAnswer::NO,
                                                     'nino' => nil,
@@ -78,6 +77,7 @@ RSpec.describe Steps::Client::HasNinoForm do
                                                     'will_enter_nino' => nil,
                                                     'has_benefit_evidence' => nil,
                                                     'confirm_details' => nil,
+                                                    'confirm_dwp_result' => nil,
                                                   }).and_return(true)
           expect(subject.save).to be(true)
         end

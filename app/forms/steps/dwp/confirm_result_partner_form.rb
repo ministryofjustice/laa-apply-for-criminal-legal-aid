@@ -1,10 +1,13 @@
 module Steps
   module DWP
     class ConfirmResultPartnerForm < Steps::DWP::ConfirmResultForm
+      include Steps::HasOneAssociation
+      has_one_association :partner
+
       private
 
       def update_person_attributes
-        crime_application.partner.update(attributes_to_update)
+        partner.update(attributes_to_update)
       end
     end
   end

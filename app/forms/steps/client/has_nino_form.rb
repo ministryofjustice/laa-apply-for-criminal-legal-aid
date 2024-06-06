@@ -47,7 +47,6 @@ module Steps
         applicant.update(
           attributes.merge(attributes_to_reset)
         )
-        crime_application.update(confirm_dwp_result: nil)
       end
 
       def attributes_to_reset
@@ -61,6 +60,7 @@ module Steps
           'will_enter_nino' => nil,
           'has_benefit_evidence' => nil,
           'confirm_details' => nil,
+          'confirm_dwp_result' => nil,
           'nino' => nino_attr
         }
       end

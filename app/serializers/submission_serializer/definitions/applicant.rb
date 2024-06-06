@@ -24,7 +24,7 @@ module SubmissionSerializer
           json.will_enter_nino applicant.will_enter_nino
           json.has_benefit_evidence applicant.has_benefit_evidence
           json.confirm_details applicant.confirm_details
-          json.confirm_dwp_result confirm_dwp_result
+          json.confirm_dwp_result applicant.confirm_dwp_result
           json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
 
           partner_attributes(json)
@@ -39,12 +39,6 @@ module SubmissionSerializer
         json.relationship_to_partner partner_detail.relationship_to_partner
         json.relationship_status partner_detail.relationship_status
         json.separation_date partner_detail.separation_date
-      end
-
-      def confirm_dwp_result
-        return unless applicant.respond_to?(:confirm_dwp_result) && applicant.confirm_dwp_result.present?
-
-        YesNoAnswer.new(applicant.confirm_dwp_result)
       end
     end
   end

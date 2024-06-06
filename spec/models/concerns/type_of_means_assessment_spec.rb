@@ -59,11 +59,11 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
 
-    context 'when dwp result contested but has not evidence' do
+    context 'when dwp result contested and has no evidence' do
       let(:has_benefit_evidence) { 'no' }
 
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
       end
 
       it { is_expected.to be false }
@@ -71,7 +71,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result confirmed' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('yes')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('yes')
       end
 
       it { is_expected.to be false }
@@ -178,16 +178,16 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result contested and has evidence' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
         allow(applicant).to receive(:has_benefit_evidence).and_return('yes')
       end
 
       it { is_expected.to be false }
     end
 
-    context 'when dwp result contested but has not evidence' do
+    context 'when dwp result contested and has no evidence' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
         allow(applicant).to receive(:has_benefit_evidence).and_return('no')
       end
 
@@ -196,7 +196,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result confirmed' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('yes')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('yes')
       end
 
       it { is_expected.to be false }

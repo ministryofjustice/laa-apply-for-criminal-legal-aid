@@ -12,6 +12,7 @@ module DWP
     end
 
     def call
+      # TODO: determine when status should be calculated
       return nil unless person_is_recipient?
 
       benefit_check_status
@@ -39,7 +40,7 @@ module DWP
     end
 
     def dwp_undetermined
-      crime_application.confirm_dwp_result == 'no'
+      crime_application.benefit_check_recipient.confirm_dwp_result == 'no'
     end
 
     def checker_down
