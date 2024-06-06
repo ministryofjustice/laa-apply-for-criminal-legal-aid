@@ -5,6 +5,12 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   let(:application_struct) { build_struct_application(with_full_means: true) }
 
+  describe '#employments' do
+    it 'returns a employments collection' do
+      expect(subject.employments).to all(be_an(Employment))
+    end
+  end
+
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
       expect(subject.serializable_hash).to match(
