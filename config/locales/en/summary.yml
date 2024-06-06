@@ -575,7 +575,11 @@ en:
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
-        question: In the last 2 years, has your client paid the 40% income tax rate?
+        question: Client paid 40% Income Tax in last 2 years?
+        answers:
+          <<: *YESNO
+      partner_income_tax_rate_above_threshold:
+        question: Partner paid 40% Income Tax in last 2 years?
         answers:
           <<: *YESNO
       outgoings_more_than_income:
