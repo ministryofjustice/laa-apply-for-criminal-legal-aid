@@ -12,6 +12,7 @@ class SectionsCompletenessValidator
 
   def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     if client_details_complete?
+      errors.add(:partner_detail, :incomplete) unless partner_detail_complete?
       errors.add(:benefit_type, :incomplete) unless passporting_benefit_complete?
       errors.add(:case_details, :incomplete) unless kase&.complete?
       errors.add(:income_assessment, :incomplete) unless income_assessment_complete?
@@ -46,5 +47,9 @@ class SectionsCompletenessValidator
     return false unless capital
 
     capital.complete?
+  end
+
+  def partner_detail_complete?
+    partner_detail.complete?
   end
 end

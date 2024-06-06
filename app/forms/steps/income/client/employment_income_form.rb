@@ -22,7 +22,7 @@ module Steps
 
           if payment
             form.amount = payment.amount
-            form.before_or_after_tax = payment.before_or_after_tax['value']
+            form.before_or_after_tax = payment.before_or_after_tax['value'] if payment.before_or_after_tax.is_a?(Array)
             form.frequency = payment.frequency
           end
 
