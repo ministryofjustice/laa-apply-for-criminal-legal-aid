@@ -12,7 +12,7 @@ GIT
   revision: e0548d4d659d742887a2ad2e5c7f019367ca0b22
   tag: v1.1.8
   specs:
-    laa-criminal-legal-aid-schemas (1.1.7)
+    laa-criminal-legal-aid-schemas (1.1.8)
       dry-schema (~> 1.13)
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
