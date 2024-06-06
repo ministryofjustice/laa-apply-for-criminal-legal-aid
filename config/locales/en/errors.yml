@@ -481,7 +481,7 @@ en:
         steps/income/income_before_tax_form:
           attributes:
             income_above_threshold:
-              inclusion: Select yes if your client’s income is currently more than £12,475 a year before tax
+              inclusion: Select yes if their income is currently more than £12,475 a year before tax
         steps/income/frozen_income_savings_assets_form: &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:
             has_frozen_income_or_assets:
@@ -489,11 +489,11 @@ en:
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:
-              inclusion: Select yes if your client owns their home, or any other land or property
+              inclusion: Select yes if they own their home, or any other land or property
         steps/income/has_savings_form:
           attributes:
             has_savings:
-              inclusion: Select yes if your client has savings or investments
+              inclusion: Select yes if they have savings or investments
         steps/income/client/employment_income_form:
           attributes:
             amount:
@@ -570,9 +570,9 @@ en:
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
-              inclusion: Select how your client manages with no income
+              inclusion: Select how they manage with no income
             manage_other_details:
-              blank: Enter details on how your client manages with no income
+              blank: Enter details on how they manage with no income
         steps/outgoings/housing_payment_type_form:
           attributes:
             housing_payment_type:

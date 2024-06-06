@@ -110,6 +110,11 @@ en:
         types: Why should your client get legal aid?
       steps_income_income_before_tax_form:
         income_above_threshold: "Is %{subject}'s income currently more than £12,475 a year before tax?"
+      steps_income_client_owns_property_form:
+        client_owns_property: Does %{subject} own their home, or any other land or property?
+        client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
+      steps_income_has_savings_form:
+        has_savings: Does %{subject} have any savings or investments?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
       steps_income_client_employment_income_form:
@@ -264,6 +269,10 @@ en:
         other_justification: *ioj_justification_hint
       steps_income_income_before_tax_form:
         income_above_threshold: Do not include any employment income if your client has lost their job or ended employment.
+      steps_income_client_owns_property_form:
+        client_owns_property: Include land or property fully or partly owned, inside or outside the UK.
+      steps_income_has_savings_form:
+        has_savings: Include any UK or overseas savings and investments.
       steps_income_employment_status_form:
         employment_status: Select all that apply.
         employment_status_options:

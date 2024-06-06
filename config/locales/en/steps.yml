@@ -292,16 +292,6 @@ en:
         edit:
           has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
           hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
-      client_owns_property:
-        edit:
-          page_title: Does your client own their home, or any other land or property?
-          client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
-          client_owns_property: Does your client own their home, or any other land or property?
-      has_savings:
-        edit:
-          page_title: Does your client have any savings or investments?
-          has_savings_info: Include savings or investments they have inside or outside the UK.
-          has_savings: Does your client have any savings or investments?
       income_payments:
         edit:
           page_title: Which of these payments does your client get?

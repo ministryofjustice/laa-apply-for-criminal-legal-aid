@@ -2,6 +2,9 @@ module Steps
   module Income
     class HasSavingsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
+
       has_one_association :income
 
       attribute :has_savings, :value_object, source: YesNoAnswer
