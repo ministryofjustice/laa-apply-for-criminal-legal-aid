@@ -45,7 +45,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
           job_title: 'manager',
           amount: 600,
           frequency: 'four_weeks',
-          before_or_after_tax: BeforeOrAfterTax::AFTER.to_s,
+          before_or_after_tax: BeforeOrAfterTax::AFTER,
         }
       }
     end

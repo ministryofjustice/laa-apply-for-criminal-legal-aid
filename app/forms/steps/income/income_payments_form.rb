@@ -49,7 +49,7 @@ module Steps
       end
 
       def ordered_payment_types
-        IncomePaymentType.values.map(&:to_s) & PAYMENT_TYPES_ORDER
+        LaaCrimeSchemas::Types::OtherIncomePaymentType.values & PAYMENT_TYPES_ORDER
       end
 
       def types
