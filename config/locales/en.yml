@@ -6,7 +6,8 @@ en:
       datetime: '%-d %B %Y %-l:%M%P'  # 3 January 2019 2:45pm
     subjects:
       applicant: 'your client'
-      applicant_and_partner: 'your client %{conjunction} their partner'
+      applicant_and_partner: 'your client and their partner'
+      applicant_or_partner: 'your client or their partner'
       partner: 'the partner'
   service:
     name: Apply for criminal legal aid

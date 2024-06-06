@@ -108,6 +108,13 @@ en:
         is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
+      steps_income_income_before_tax_form:
+        income_above_threshold: "Is %{subject}'s income currently more than £12,475 a year before tax?"
+      steps_income_client_owns_property_form:
+        client_owns_property: Does %{subject} own their home, or any other land or property?
+        client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
+      steps_income_has_savings_form:
+        has_savings: Does %{subject} have any savings or investments?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
       steps_income_client_employment_income_form:
@@ -134,7 +141,9 @@ en:
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
-        manage_without_income: How does your client manage with no income?
+        manage_without_income: 
+          one: How does %{subject} manage with no income?
+          other: How do %{subject} manage with no income?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does your client pay where they usually live?
       steps_outgoings_mortgage_form:
@@ -258,6 +267,12 @@ en:
         expert_examination_justification: *ioj_justification_hint
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
+      steps_income_income_before_tax_form:
+        income_above_threshold: Do not include any employment income if your client has lost their job or ended employment.
+      steps_income_client_owns_property_form:
+        client_owns_property: Include land or property fully or partly owned, inside or outside the UK.
+      steps_income_has_savings_form:
+        has_savings: Include any UK or overseas savings and investments.
       steps_income_employment_status_form:
         employment_status: Select all that apply.
         employment_status_options:
@@ -639,7 +654,9 @@ en:
           living_on_streets: They are living on the streets or homeless
           custody: They have been in custody for more than 3 months
           other: Other
-        manage_other_details: Tell us how your client manages with no income
+        manage_other_details: 
+          one: Tell us how %{subject} manages with no income
+          other: Tell us how %{subject} manage with no income
       steps_outgoings_housing_payment_type_form:
         housing_payment_type_options:
           rent: Rent

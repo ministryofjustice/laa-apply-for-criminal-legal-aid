@@ -26,6 +26,11 @@ en:
         local_authority: Local authority
         partner_with_a_contrary_interest: Partner with a contrary interest
         property_company: Property company
+      subjects:
+        applicant: 'client'
+        applicant_and_partner: 'client and their partner'
+        applicant_or_partner: 'client or their partner'
+        partner: 'partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -336,18 +341,18 @@ en:
 
       # BEGIN income details section
       income_above_threshold:
-        question: Is your client’s income currently more than £12,475 a year before tax?
+        question: Income more than £12,475 a year before tax?
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
         question: Income, savings or assets under a restraint or freezing order
         answers: *YESNO
       client_owns_property:
-        question: Does your client own their home, or any other land or property?
+        question: "%{Subject} owns home, land or property?"
         answers:
           <<: *YESNO
       has_savings:
-        question: Does your client have any savings or investments?
+        question: Savings or investments?
         answers:
           <<: *YESNO
       # END income details section
@@ -449,7 +454,9 @@ en:
 
       # BEGIN other sources of income details section
       manage_without_income:
-        question: How does your client manage with no income?
+        question: 
+          one: How %{subject} lives with no income?
+          other: How %{subject} live with no income?
         answers:
           friends_sofa: They sleep on a friend's sofa for free
           family: They stay with family for free

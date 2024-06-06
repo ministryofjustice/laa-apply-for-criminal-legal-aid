@@ -22,11 +22,7 @@ module Steps
     def set_ownership
       return if include_partner_in_means_assessment?
 
-      self.ownership_type = if confirm_in_applicants_name.blank?
-                              nil
-                            else
-                              OwnershipType::APPLICANT
-                            end
+      self.ownership_type = confirm_in_applicants_name.blank? ? nil : OwnershipType::APPLICANT
     end
   end
 end

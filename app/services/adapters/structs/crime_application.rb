@@ -5,6 +5,11 @@ module Adapters
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
       include TypeOfApplication
 
+      # TODO: remove when partner details CYA work is available
+      def partner_detail
+        nil
+      end
+
       # `is_means_tested` is not part of Schema, requires calculation
       # rubocop:disable Naming/PredicateName
       def is_means_tested

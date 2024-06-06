@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title legend_t(:has_savings) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -9,11 +9,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :has_savings, @form_object.choices,
                                            :value, inline: false,
-                                           legend: { text: t('.has_savings'), tag: 'h1', size: 'xl' } do %>
-           <span class="govuk-caption-m govuk-!-margin-bottom-4">
-             <%= t('.has_savings_info') %>
-           </span>
-        <% end %>
+                                           legend: { text: legend_t(:has_savings), tag: 'h1', size: 'xl' } %>
       <%= f.continue_button %>
     <% end %>
   </div>
