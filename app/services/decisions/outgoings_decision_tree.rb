@@ -13,6 +13,8 @@ module Decisions
       when :outgoings_payments
         edit(:income_tax_rate)
       when :income_tax_rate
+        after_income_tax_rate
+      when :partner_income_tax_rate
         edit(:outgoings_more_than_income)
       when :outgoings_more_than_income
         edit(:answers)
@@ -34,6 +36,14 @@ module Decisions
       end
     end
 
+    def after_income_tax_rate
+      if FeatureFlags.partner_journey.enabled? && partner_relevant
+        edit(:partner_income_tax_rate)
+      else
+        edit(:outgoings_more_than_income)
+      end
+    end
+
     def after_answers
       if requires_full_capital?
         edit('/steps/capital/property_type')
@@ -44,6 +54,13 @@ module Decisions
 
     def crime_application
       form_object.crime_application
+    end
+
+    def partner_relevant
+      return if partner_detail.nil?
+
+      partner_detail.involvement_in_case == 'none' ||
+        (partner_detail.involvement_in_case == 'codefendant' && partner_detail.conflict_of_interest == 'no')
     end
   end
 end

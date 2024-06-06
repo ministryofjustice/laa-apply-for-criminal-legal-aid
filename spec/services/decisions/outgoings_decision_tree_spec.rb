@@ -8,13 +8,17 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       CrimeApplication,
       id: 'uuid',
       outgoings: outgoings,
-      kase: kase
+      kase: kase,
+      partner_detail: partner_detail
     )
   end
 
   let(:outgoings) { instance_double(Outgoings) }
   let(:kase) { instance_double(Case, case_type:) }
   let(:case_type) { nil }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
+  let(:involvement_in_case) { nil }
+  let(:conflict_of_interest) { nil }
 
   before do
     allow(
@@ -123,6 +127,41 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
   context 'when the step is `income_tax_rate`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_tax_rate }
+
+    context 'and there is no relevant partner' do
+      context 'when there is no partner' do
+        let(:partner_detail) { nil }
+
+        it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
+      end
+
+      context 'when partner is victim' do
+        let(:involvement_in_case) { 'victim' }
+        let(:conflict_of_interest) { nil }
+
+        it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
+      end
+
+      context 'when partner is codefendant with a conflict' do
+        let(:involvement_in_case) { 'codefendant' }
+        let(:conflict_of_interest) { 'yes' }
+
+        it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
+      end
+    end
+
+    context 'and there is a relvant partner' do
+      context 'has correct next step' do
+        let(:involvement_in_case) { 'none' }
+
+        it { is_expected.to have_destination(:partner_income_tax_rate, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `partner_income_tax_rate`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_income_tax_rate }
 
     context 'has correct next step' do
       it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
