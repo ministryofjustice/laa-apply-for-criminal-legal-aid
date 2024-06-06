@@ -42,6 +42,7 @@ en:
       case_details: Case details
       client_details: Client details
       contact_details: Client contact details
+      partner_details: Partner details
       codefendants: Co-defendants
       codefendant: Co-defendant
       dependants: Dependants
@@ -71,7 +72,7 @@ en:
         other: Other cash investment
       premium_bonds: Premium Bonds
       investments: Investments
-      investment: 
+      investment:
         bond: Investment bond
         pep: Personal equity plan (PEP)
         share: Shares
@@ -243,13 +244,37 @@ en:
         question: Date client remanded
       # END case details section
 
+      # BEGIN partner details section
+      relationship_to_partner:
+        question: Relationship to partner
+        answers:
+          married_or_civil: Married or civil
+          living_together: Living together
+          not_saying: They prefer not to say
+      involvement_in_case:
+        question: Involvement in case
+        answers:
+          victim: Victim
+          prosecution_witness: Prosecution witness
+          codefendant: Co-defendant
+          none: No involvement
+      conflict_of_interest:
+        question: Conflict of interest
+        answers:
+          <<: *YESNO
+      has_same_address_as_client:
+        question: Same address as client
+        answers:
+          <<: *YESNO
+      # END partner details section
+
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
       offence_type_and_class:
         question: Offence type and class
       offence_date:
-        question: Offence date 
+        question: Offence date
       # END offences section
 
       # BEGIN codefendants section
@@ -560,25 +585,25 @@ en:
       # BEGIN saving
       account_balance:
         question: What is the account balance?
-        absence_answer: '' 
+        absence_answer: ''
       saving_ownership_type:
         question: Whose name is the account in?
         answers: *OWNERSHIP_TYPE
-        absence_answer: '' 
+        absence_answer: ''
       account_number:
         question: What is the account number?
-        absence_answer: '' 
+        absence_answer: ''
       are_wages_paid_into_account:
         question: Are your client’s wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       is_overdrawn:
         question: Is the account overdrawn?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       provider_name:
         question: What is the name of the bank, building society or other holder of the savings?
-        absence_answer: '' 
+        absence_answer: ''
       sort_code:
         question: What is the sort code or branch name?
         absence_answer: ''
@@ -600,15 +625,15 @@ en:
       # END premium_bonds
 
       # START investments
-      description: 
+      description:
         question: Describe the investment
-        absence_answer: '' 
-      value: 
+        absence_answer: ''
+      value:
         question: What is the value of the investment?
         absence_answer: *absence_none
-      ownership_type: 
+      ownership_type:
         question: Whose name is the investment in?
-        answers: *OWNERSHIP_TYPE 
+        answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_investments:
         question: Which investments does your client have inside or outside the UK?
@@ -617,18 +642,18 @@ en:
       # END investments
 
       # START national_savings_certificates
-      national_savings_certificate_holder_number: 
+      national_savings_certificate_holder_number:
         question: What is the customer number or holder number?
         absence_answer: ''
       national_savings_certificate_certificate_number:
         question: 'What is the certificate number?'
         absence_answer: ''
-      national_savings_certificate_value: 
+      national_savings_certificate_value:
         question: What is the value of the certificate?
-        absence_answer: '' 
-      national_savings_certificate_ownership_type: 
+        absence_answer: ''
+      national_savings_certificate_ownership_type:
         question: Whose name is the certificate in?
-        answers: *OWNERSHIP_TYPE 
+        answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_national_savings_certificate:
         question: Does your client have any National Savings Certificates?
@@ -724,7 +749,7 @@ en:
           answers:
             'yes': 'None'
           absence_answer: *absence_none
-          
+
       deduction:
         income_tax:
           question: Income Tax

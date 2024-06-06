@@ -123,4 +123,8 @@ class CrimeApplication < ApplicationRecord
     age >= 18
   end
   # rubocop:enable Metrics/AbcSize
+
+  def client_separated?
+    client_relationship_status == ClientRelationshipStatusType::SEPARATED.to_s
+  end
 end

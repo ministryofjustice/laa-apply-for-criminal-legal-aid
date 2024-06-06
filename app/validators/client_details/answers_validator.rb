@@ -18,6 +18,7 @@ module ClientDetails
       errors.add(:residence_type, :blank) unless address_complete?
       AppealDetails::AnswersValidator.new(record).validate
       errors.add(:has_nino, :blank) unless has_nino_complete?
+      errors.add(:client_has_partner, :blank) unless relationship_status_complete?
       errors.add :base, :incomplete_records unless errors.empty?
     end
 
@@ -55,6 +56,13 @@ module ClientDetails
       return true if applicant.has_nino == 'no'
 
       applicant.nino.present?
+    end
+
+    def relationship_status_complete?
+      return true if record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?
+      return true if record.client_has_partner == 'yes'
+
+      false
     end
 
     alias crime_application record
