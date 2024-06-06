@@ -13,4 +13,17 @@ class IncomePaymentType < ValueObject
     EMPLOYMENT = new(:employment),
     WORK_BENEFITS = new(:work_benefits)
   ].freeze
+
+  OTHER_INCOME_PAYMENT_TYPES = [
+    MAINTENANCE,
+    PRIVATE_PENSION,
+    STATE_PENSION,
+    INTEREST_INVESTMENT,
+    STUDENT_LOAN_GRANT,
+    BOARD,
+    RENT,
+    FINANCIAL_SUPPORT_WITH_ACCESS,
+    FROM_FRIENDS_RELATIVES,
+    OTHER
+  ].freeze
 end
