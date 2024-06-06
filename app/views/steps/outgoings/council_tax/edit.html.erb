@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title legend_t(:council_tax) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -8,7 +8,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:council_tax, legend: { tag: 'h1', size: 'xl' }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:council_tax, legend: { text: legend_t(:council_tax), tag: 'h1', size: 'xl' }) do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
           <% if choice.yes? %>
             <%= f.govuk_radio_button :pays_council_tax, choice.value do %>

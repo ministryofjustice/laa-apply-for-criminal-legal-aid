@@ -580,27 +580,27 @@ en:
         steps/outgoings/mortgage_form:
           attributes:
             amount:
-              blank: Enter how much your client's mortgage payments are, after taking away Housing Benefit
-              greater_than: Your client's mortgage payments must be more than 0
-              invalid: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
-              not_a_number: Your client's mortgage payments, after taking away Housing Benefit, must be a number, like 50
+              blank: Enter how much their mortgage payments are, after taking away Housing Benefit
+              greater_than: Their mortgage payments must be more than 0
+              invalid: Their mortgage payments, after taking away Housing Benefit, must be a number, like 50
+              not_a_number: Their mortgage payments, after taking away Housing Benefit, must be a number, like 50
             frequency:
-              blank: Select how often they pay mortgage payments
-              inclusion: Select how often they pay mortgage payments
+              blank: Select how often they make mortgage payments
+              inclusion: Select how often they make mortgage payments
         steps/outgoings/rent_form:
           attributes:
             amount:
-              blank: Enter how much rent your client pays, after taking away Housing Benefit
-              greater_than: Your client's rent payments must be more than 0
-              invalid: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
-              not_a_number: Rent your client pays, after taking away Housing Benefit, must be a number, like 50
+              blank: Enter how much rent they pay, after taking away Housing Benefit
+              greater_than: Rent payments must be more than 0
+              invalid: Rent they pay, after taking away Housing Benefit, must be a number, like 50
+              not_a_number: Rent they pay, after taking away Housing Benefit, must be a number, like 50
             frequency:
-              blank: Select how often they pay rent payments
-              inclusion: Select how often they pay rent payments
+              blank: Select how often they make rent payments
+              inclusion: Select how often they make rent payments
         steps/outgoings/board_and_lodging_form:
           attributes:
             board_amount:
-              blank: Enter how much your client pays for board and lodgings
+              blank: Enter how much they pay for board and lodgings
               invalid: Payments for board and lodgings must be a number, like 50
               greater_than: Payments for board and lodgings must be more than 0
             food_amount:
@@ -611,16 +611,16 @@ en:
             frequency:
               inclusion: Select how often they pay for board and lodgings, and food
             payee_name:
-              blank: Enter the name of the person your client pays for board and lodgings
+              blank: Enter the name of the person they pay for board and lodgings
             payee_relationship_to_client:
-              blank: Enter your client's relationship to this person
+              blank: Enter their relationship
         steps/outgoings/council_tax_form:
           attributes:
             pays_council_tax:
-              inclusion: Select yes if your client pays Council Tax where they usually live
-              not_payable: Council tax is not payable if your client's housing type is board and lodgings
+              inclusion: Select yes if they pay Council Tax where they usually live
+              not_payable: Council tax is not payable if their housing type is board and lodgings
             amount:
-              blank: Enter how much your client pays yearly
+              blank: Enter how much they pay yearly
               greater_than: How much they pay yearly must be more than 0
               invalid: How much they pay yearly must be a number, like 50
               not_a_number: How much they pay yearly must be a number, like 50
@@ -649,9 +649,9 @@ en:
         steps/outgoings/outgoings_more_than_income_form:
           attributes:
             outgoings_more_than_income:
-              inclusion: Select yes if your client’s outgoings are more than their income
+              inclusion: Select yes their outgoings are more than their income
             how_manage:
-              blank: Enter how your client manages if their outgoings are more than their income
+              blank: Enter how they manage if their outgoings are more than their income
         steps/capital/property_type_form:
           attributes:
             property_type:

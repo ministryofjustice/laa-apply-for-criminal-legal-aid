@@ -377,9 +377,6 @@ en:
 
     outgoings:
       caption: Outgoings assessment
-      housing_payment_type:
-        edit:
-          page_title: Which of these payments does your client pay where they usually live?
       mortgage:
         edit:
           page_title: Mortgage payments
@@ -393,20 +390,10 @@ en:
       board_and_lodging:
         edit:
           page_title: Board and lodgings payments
-      council_tax:
-        edit:
-          page_title: Does your client pay Council Tax where they usually live?
-      outgoings_payments:
-        edit:
-          page_title: Which of these payments does your client pay?
       income_tax_rate:
         edit:
           page_title: In the last 2 years, has your client paid the 40% income tax rate?
           income_tax_rate_above_threshold: In the last 2 years, has your client paid the 40% income tax rate?
-      outgoings_more_than_income:
-        edit:
-          page_title: Are your client’s outgoings more than their income?
-          outgoings_more_than_income: Are your client’s outgoings more than their income?
       answers:
         edit:
           page_title: Check your answers - Your client's outgoings
