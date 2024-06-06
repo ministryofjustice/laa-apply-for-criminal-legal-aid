@@ -44,7 +44,7 @@ module Decisions
       if form_object.confirm_details.yes?
         edit(:has_benefit_evidence)
       else
-        edit('steps/client/details')
+        determine_client_details_routing
       end
     end
 
@@ -90,10 +90,22 @@ module Decisions
 
     def after_cannot_check_benefit_status
       if form_object.will_enter_nino.yes?
-        edit('steps/client/has_nino')
+        determine_nino_routing
       else
         edit('/steps/case/urn')
       end
+    end
+
+    def determine_nino_routing
+      return edit('steps/partner/nino') if partner_is_recipient?
+
+      edit('steps/client/has_nino')
+    end
+
+    def determine_client_details_routing
+      return edit('steps/partner/details') if partner_is_recipient?
+
+      edit('steps/client/details')
     end
 
     def determine_dwp_result_page(person)
@@ -131,9 +143,11 @@ module Decisions
     end
 
     def benefit_check_recipient
-      return partner if partner&.has_passporting_benefit?
+      current_crime_application.benefit_check_recipient
+    end
 
-      applicant
+    def partner_is_recipient?
+      partner&.has_passporting_benefit?
     end
   end
   # rubocop:enable Metrics/ClassLength

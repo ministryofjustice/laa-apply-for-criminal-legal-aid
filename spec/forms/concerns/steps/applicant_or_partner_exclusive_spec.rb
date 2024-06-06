@@ -38,13 +38,13 @@ RSpec.describe Steps::ApplicantOrPartnerExclusive do
     subject(:subject_ownership_type) { assessable.subject_ownership_type }
 
     context 'when partner has passporting benefit' do
-      it { is_expected.to eq OwnershipType::PARTNER.to_s }
+      it { is_expected.to eq SubjectType::PARTNER }
     end
 
     context 'when partner does not have passporting benefit' do
       let(:has_passporting_benefit) { false }
 
-      it { is_expected.to eq OwnershipType::APPLICANT.to_s }
+      it { is_expected.to eq SubjectType::APPLICANT }
     end
   end
 end
