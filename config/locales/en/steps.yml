@@ -288,25 +288,10 @@ en:
         edit:
           page_title: Did your client lose their job as a result of being in custody?
           date_job_lost: When did they lose their job?
-      income_before_tax:
-        edit:
-          page_title: Is your client's income currently more than £12,475 a year before tax?
-          income_above_threshold_info: Do not include any employment income if your client has lost their job or ended employment.
-          income_above_threshold: Is your client's income currently more than £12,475 a year before tax?
       frozen_income_savings_assets: &FROZEN_INCOME_ASSETS_PAGE_TEXT
         edit:
           has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
           hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
-      client_owns_property:
-        edit:
-          page_title: Does your client own their home, or any other land or property?
-          client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
-          client_owns_property: Does your client own their home, or any other land or property?
-      has_savings:
-        edit:
-          page_title: Does your client have any savings or investments?
-          has_savings_info: Include savings or investments they have inside or outside the UK.
-          has_savings: Does your client have any savings or investments?
       income_payments:
         edit:
           page_title: Which of these payments does your client get?
@@ -332,9 +317,6 @@ en:
           remove_button: Remove %{ordinal} dependant
           add_button: Add another dependant
           deleted_flash: The dependant has been deleted
-      manage_without_income:
-        edit:
-          page_title: How does client manage with no income?
       answers:
         edit:
           page_title: Check your answers - Your client's income

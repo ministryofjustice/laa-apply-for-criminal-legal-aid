@@ -11,14 +11,14 @@ class OutgoingsPaymentType < ValueObject
   ].freeze
 
   OTHER_PAYMENT_TYPES = [
-    OutgoingsPaymentType::CHILDCARE,
-    OutgoingsPaymentType::MAINTENANCE,
-    OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION,
+    CHILDCARE,
+    MAINTENANCE,
+    LEGAL_AID_CONTRIBUTION,
   ].freeze
 
   HOUSING_PAYMENT_TYPES = [
-    OutgoingsPaymentType::RENT,
-    OutgoingsPaymentType::MORTGAGE,
-    OutgoingsPaymentType::BOARD_AND_LODGING,
+    RENT,
+    MORTGAGE,
+    BOARD_AND_LODGING,
   ].freeze
 end

@@ -52,6 +52,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         investments: [], # capital and investments tested separately
         national_savings_certificates: [], # capital and certificates tested separately
         properties: [],
+        employments: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
       )
@@ -170,6 +171,63 @@ RSpec.describe Datastore::ApplicationRehydration do
         expect(crime_application).to receive(:update!).with(
           hash_including(
             dependants: contain_exactly(Dependant, Dependant)
+          )
+        )
+
+        subject.call
+      end
+    end
+
+    context 'when means_details contains employments' do
+      let(:employments) do
+        {
+          'employments' =>  [
+            {
+              'employer_name' =>  'Joe Goodwin',
+              'job_title' =>  'Supervisor',
+              'has_no_deductions' =>  nil,
+              'address' =>  { 'address_line_one' => 'address_line_one_y',
+                           'address_line_two' =>  'address_line_two_y',
+                           'city' =>  'city_y',
+                           'country' =>  'country_y',
+                           'postcode' =>  'postcode_y' },
+              'amount' =>  25_000,
+              'frequency' =>  'annual',
+              'ownership_type' =>  'applicant',
+              'metadata' =>  { 'before_or_after_tax' => { 'value' => 'before_tax' } },
+              'deductions' =>  [
+                {
+                  'deduction_type' =>  'income_tax',
+                  'amount' =>  1000,
+                  'frequency' =>  'week',
+                  'details' =>  nil
+                },
+                {
+                  'deduction_type' =>  'national_insurance',
+                  'amount' =>  2000,
+                  'frequency' =>  'fortnight',
+                  'details' =>  nil
+                },
+                {
+                  'deduction_type' =>  'other',
+                  'amount' =>  3000,
+                  'frequency' =>  'annual',
+                  'details' =>  'deduction details'
+                }
+              ]
+            }
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge('means_details' => { 'income_details' => employments })
+      end
+
+      it 'generates employments' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            employments: contain_exactly(Employment)
           )
         )
 

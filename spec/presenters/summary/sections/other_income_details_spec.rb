@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe Summary::Sections::OtherIncomeDetails do
-  subject { described_class.new(crime_application) }
+  subject(:section) { described_class.new(crime_application) }
+
+  let(:include_partner?) { false }
 
   let(:crime_application) do
     instance_double(
@@ -19,14 +21,18 @@ describe Summary::Sections::OtherIncomeDetails do
     )
   end
 
+  before do
+    allow(section).to receive(:include_partner_in_means_assessment?).and_return(include_partner?)
+  end
+
   describe '#name' do
-    it { expect(subject.name).to eq(:other_income_details) }
+    it { expect(section.name).to eq(:other_income_details) }
   end
 
   describe '#show?' do
     context 'when there is an income_details' do
       it 'shows this section' do
-        expect(subject.show?).to be(true)
+        expect(section.show?).to be(true)
       end
     end
 
@@ -34,13 +40,13 @@ describe Summary::Sections::OtherIncomeDetails do
       let(:income) { nil }
 
       it 'does not show this section' do
-        expect(subject.show?).to be(false)
+        expect(section.show?).to be(false)
       end
     end
   end
 
   describe '#answers' do
-    let(:answers) { subject.answers }
+    let(:answers) { section.answers }
 
     context 'when there are income details' do
       it 'has the correct rows' do
@@ -54,6 +60,22 @@ describe Summary::Sections::OtherIncomeDetails do
         expect(answers[1].change_path).to match('applications/12345/steps/income/how_manage_with_no_income')
         expect(answers[1].value).to eq('Another way they manage')
       end
+    end
+  end
+
+  describe 'the manage without income label' do
+    subject(:label) { section.answers.first.question_text }
+
+    context 'when partner is included in means assessment' do
+      let(:include_partner?) { true }
+
+      it { is_expected.to eq 'How client and their partner live with no income?' }
+    end
+
+    context 'when partner is not included means assessment' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to eq 'How client lives with no income?' }
     end
   end
 end

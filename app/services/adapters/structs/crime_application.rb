@@ -5,6 +5,11 @@ module Adapters
     class CrimeApplication < LaaCrimeSchemas::Structs::CrimeApplication
       include TypeOfApplication
 
+      # TODO: remove when partner details CYA work is available
+      def partner_detail
+        nil
+      end
+
       # `is_means_tested` is not part of Schema, requires calculation
       # rubocop:disable Naming/PredicateName
       def is_means_tested
@@ -59,6 +64,19 @@ module Adapters
 
         means_details.income_details.income_benefits.map do |struct|
           IncomeBenefit.new(struct.attributes)
+        end
+      end
+
+      def employments
+        return [] unless means_details.income_details.employments
+
+        means_details.income_details.employments.map do |struct|
+          if struct.respond_to?(:deductions)
+            struct.deductions.map! do |deduction|
+              Deduction.new(**deduction)
+            end
+          end
+          Employment.new(struct.attributes)
         end
       end
 

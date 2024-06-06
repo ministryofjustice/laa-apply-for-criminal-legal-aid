@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit'), kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
+      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double], employments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
@@ -24,6 +24,42 @@ describe Summary::HtmlPresenter do
     extra = {
       'means_details' => {
         'income_details' => {
+          'employments' => [
+            {
+              'employer_name' => 'Joe Goodwin',
+              'job_title' => 'Supervisor',
+              'has_no_deductions' => nil,
+              'address' => { 'address_line_one' => 'address_line_one_y',
+                             'address_line_two' => 'address_line_two_y',
+                             'city' => 'city_y',
+                             'country' => 'country_y',
+                             'postcode' => 'postcode_y' },
+              'amount' => 25_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'applicant',
+              'metadata' => { 'before_or_after_tax' => { 'value' => 'before_tax' } },
+              'deductions' => [
+                {
+                  'deduction_type' => 'income_tax',
+                  'amount' => 1000,
+                  'frequency' => 'week',
+                  'details' => nil
+                },
+                {
+                  'deduction_type' => 'national_insurance',
+                  'amount' => 2000,
+                  'frequency' => 'fortnight',
+                  'details' => nil
+                },
+                {
+                  'deduction_type' => 'other',
+                  'amount' => 3000,
+                  'frequency' => 'annual',
+                  'details' => 'deduction details'
+                }
+              ]
+            }
+          ],
           'income_payments' => [{
             'payment_type' => 'maintenance',
             'amount' => 10_000,
@@ -118,6 +154,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Employments
             Dependants
             IncomePaymentsDetails
             IncomeBenefitsDetails
@@ -158,6 +195,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
+            Employments
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
