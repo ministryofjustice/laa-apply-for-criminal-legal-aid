@@ -2,6 +2,7 @@ en:
   summary:
     dictionary:
       absence_none: &absence_none "None"
+      absence_not_provided: &absence_not_provided "Not provided"
       payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
       YESNO: &YESNO
         'yes': 'Yes'
@@ -135,7 +136,21 @@ en:
         question: Date of birth
       nino:
         question: National Insurance number
-        absence_answer: *absence_none
+        absence_answer: *absence_not_provided
+      has_partner:
+        question: Partner
+        answers:
+          <<: *YESNO
+      relationship_status:
+        question: Relationship status
+        answers:
+          single: Single
+          widowed: Widowed
+          divorced: Divorced
+          separated: Separated
+          prefer_not_to_say: They prefer not to say
+      separation_date:
+        question: Date client separated from partner
       # END client details section
 
       # BEGIN contact details section
@@ -167,6 +182,27 @@ en:
         question: Telephone number
         absence_answer: *absence_none
       # END contact details section
+
+      # BEGIN partner details section
+      # NOTE: conflict_of_interest defined by co-defendants section
+      relationship_to_partner:
+        question: Relationship to client
+        answers:
+          married_or_partnership: Married or in a civil partnership
+          living_together: Living together
+          prefer_not_to_say: They prefer not to say
+      involvement_in_case:
+        question: Partner involved in the case?
+        answers:
+          victim: Victim
+          prosecution_witness: Prosecution witness
+          codefendant: Co-defendant
+          none: 'No'
+      has_same_address_as_client:
+        question: Lives at same address as client?
+        answers:
+          <<: *YESNO
+      # END partner details section
 
       # BEGIN passporting benefit check section
       passporting_benefit:
@@ -248,30 +284,6 @@ en:
       date_client_remanded:
         question: Date client remanded
       # END case details section
-
-      # BEGIN partner details section
-      relationship_to_partner:
-        question: Relationship to partner
-        answers:
-          married_or_civil: Married or civil
-          living_together: Living together
-          not_saying: They prefer not to say
-      involvement_in_case:
-        question: Involvement in case
-        answers:
-          victim: Victim
-          prosecution_witness: Prosecution witness
-          codefendant: Co-defendant
-          none: No involvement
-      conflict_of_interest:
-        question: Conflict of interest
-        answers:
-          <<: *YESNO
-      has_same_address_as_client:
-        question: Same address as client
-        answers:
-          <<: *YESNO
-      # END partner details section
 
       # BEGIN offences section
       offence_details:
@@ -479,7 +491,7 @@ en:
 
       # BEGIN other sources of income details section
       manage_without_income:
-        question: 
+        question:
           one: How %{subject} lives with no income?
           other: How %{subject} live with no income?
         answers:
@@ -602,7 +614,7 @@ en:
       are_wages_paid_into_account:
         question: Client's wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       are_partners_wages_paid_into_account:
         question: Partner's wages or benefits paid into this account?
         answers: *YESNO

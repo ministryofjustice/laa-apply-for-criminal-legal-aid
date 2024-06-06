@@ -1,5 +1,5 @@
 module Summary
-  class HtmlPresenter
+  class HtmlPresenter # rubocop:disable Metrics/ClassLength
     attr_reader :crime_application
 
     delegate :application_type, :appeal_no_changes?, to: :crime_application
@@ -9,8 +9,8 @@ module Summary
         overview
         client_details
         contact_details
-        passporting_benefit_check
         partner_details
+        passporting_benefit_check
         case_details
         offences
         codefendants

@@ -16,7 +16,8 @@ module Tasks
 
     def validator
       @validator ||= ::PartnerDetails::AnswersValidator.new(
-        crime_application
+        record: crime_application.partner_detail,
+        crime_application: crime_application
       )
     end
   end

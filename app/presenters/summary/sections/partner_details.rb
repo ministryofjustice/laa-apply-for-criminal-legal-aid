@@ -2,92 +2,68 @@ module Summary
   module Sections
     class PartnerDetails < Sections::BaseSection
       def show?
-        show_partner_detail? && super
+        partner.present? && client.present? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           Components::ValueAnswer.new(
-            :relationship_to_partner, partner_detail.relationship_to_partner,
+            :relationship_to_partner, client.relationship_to_partner,
             change_path: edit_steps_partner_relationship_path
           ),
           Components::FreeTextAnswer.new(
-            :first_name, partner&.first_name, show: partner.present?,
+            :first_name, partner.first_name,
             change_path: edit_steps_partner_details_path
           ),
           Components::FreeTextAnswer.new(
-            :last_name, partner&.last_name, show: partner.present?,
+            :last_name, partner.last_name,
             change_path: edit_steps_partner_details_path
           ),
           Components::FreeTextAnswer.new(
-            :other_names, partner&.other_names, show: partner.present?,
-            change_path: edit_steps_partner_details_path,
+            :other_names, partner.other_names,
+            change_path: edit_steps_partner_details_path, show: true,
           ),
           Components::DateAnswer.new(
-            :date_of_birth, partner&.date_of_birth, show: partner.present?,
+            :date_of_birth, partner.date_of_birth,
             change_path: edit_steps_partner_details_path
           ),
+          Components::FreeTextAnswer.new(
+            :nino, partner.nino,
+            change_path: edit_steps_partner_nino_path, show: true,
+          ),
           Components::ValueAnswer.new(
-            :involvement_in_case, partner_detail.involvement_in_case,
+            :involvement_in_case, partner.involvement_in_case,
             change_path: edit_steps_partner_involvement_path
           ),
           Components::ValueAnswer.new(
-            :conflict_of_interest, partner_detail.conflict_of_interest,
+            :conflict_of_interest, partner.conflict_of_interest,
             change_path: edit_steps_partner_conflict_path
           ),
           Components::ValueAnswer.new(
-            :same_address_as_client, partner_detail.same_address_as_client,
+            :has_same_address_as_client, partner.has_same_address_as_client,
             change_path: edit_steps_partner_same_address_path
           ),
           Components::FreeTextAnswer.new(
-            :home_address, full_address(home_address), show: home_address.present?,
-            change_path: change_path(home_address)
+            :home_address, partner_home_address,
           ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-      private
-
-      def partner_detail
-        @partner_detail ||= crime_application.partner_detail
-      end
-
       def partner
-        @partner ||= partner_detail&.partner
+        @partner ||= crime_application.client_details&.partner
       end
 
-      def show_partner_detail?
-        crime_application.partner_detail.present?
+      def client
+        @client ||= crime_application.client_details&.applicant
       end
 
-      def home_address
-        partner&.home_address
-      end
-
-      # Copied from contact_details.rb
-      def change_path(address)
-        return unless address.try(:to_param)
-
-        if address.lookup_id.present?
-          # A postcode lookup was performed and an address was selected
-          edit_steps_address_results_path(address)
-        elsif address.address_line_one.present?
-          # Postcode lookup didn't return correct results, failed, or manual address
-          edit_steps_address_details_path(address)
-        else
-          # No address present, we take them to the postcode lookup
-          edit_steps_address_lookup_path(address)
-        end
-      end
-
-      def full_address(address)
+      def partner_home_address
+        address = partner&.home_address
         return unless address
 
-        address.values_at(
-          *Address::ADDRESS_ATTRIBUTES
-        ).compact_blank.join("\r\n")
+        address.attributes.slice(*Address::ADDRESS_ATTRIBUTES).values.compact_blank.join("\r\n")
       end
     end
   end

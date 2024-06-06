@@ -52,8 +52,8 @@ module Summary
 
         answers.push(
           Components::ValueAnswer.new(
-            :client_has_partner,
-            crime_application.client_has_partner,
+            :has_partner,
+            crime_application.applicant.has_partner,
             change_path: edit_steps_client_has_partner_path
           )
         )
@@ -61,21 +61,18 @@ module Summary
         if no_partner?
           answers.push(
             Components::ValueAnswer.new(
-              :client_relationship_status,
-              crime_application.partner_detail&.relationship_status,
+              :relationship_status,
+              crime_application.applicant.relationship_status,
               change_path: edit_steps_client_relationship_status_path,
-              show: crime_application.partner_detail&.relationship_status.present?
             )
           )
-        end
 
-        if crime_application.client_separated?
           answers.push(
             Components::DateAnswer.new(
-              :client_relationship_separated_date,
-              crime_application.partner_detail&.separated_date,
+              :separation_date,
+              crime_application.applicant.separation_date,
               change_path: edit_steps_client_relationship_status_path,
-              show: crime_application.partner_detail&.separated_date.present?
+              show: client_separated?,
             )
           )
         end
@@ -108,7 +105,11 @@ module Summary
       end
 
       def no_partner?
-        crime_application.client_has_partner == 'no'
+        crime_application.applicant.has_partner == 'no'
+      end
+
+      def client_separated?
+        crime_application.applicant.relationship_status == ClientRelationshipStatusType::SEPARATED.to_s
       end
     end
   end

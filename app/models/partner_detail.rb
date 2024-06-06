@@ -14,6 +14,6 @@ class PartnerDetail < ApplicationRecord
   end
 
   def answers_validator
-    @answers_validator ||= PartnerDetail::AnswersValidator.new(record: self)
+    @answers_validator ||= PartnerDetails::AnswersValidator.new(record: self)
   end
 end
