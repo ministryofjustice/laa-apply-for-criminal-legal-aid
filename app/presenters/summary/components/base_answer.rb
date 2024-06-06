@@ -5,9 +5,9 @@ module Summary
       include ApplicationHelper
       include StepsHelper
 
-      attr_reader :question, :value, :show, :change_path, :i18n_opts
+      attr_reader :question, :value, :show, :change_path
 
-      DEFAULT_OPTIONS = { default: nil, show: nil, change_path: nil, i18n_opts: {} }.freeze
+      DEFAULT_OPTIONS = { default: nil, show: nil, change_path: nil, i18n_opts: {}, subject_ownership_type: nil }.freeze
 
       def initialize(question, value, *args)
         options = extract_supported_options!(args)
@@ -16,6 +16,7 @@ module Summary
         @value = value || options[:default]
         @show = options[:show]
         @change_path = options[:change_path]
+        @subject_ownership_type = options[:subject_ownership_type]
         @i18n_opts = options[:i18n_opts]
       end
 
@@ -51,7 +52,20 @@ module Summary
         I18n.t("summary.questions.#{question}.question_a11y", default: question_text)
       end
 
+      def i18n_opts
+        return @i18n_opts if @i18n_opts.key?(:subject_type)
+
+        @i18n_opts.merge(
+          subject_type: subject_ownership_type,
+          subject: translate("summary.dictionary.subjects.#{subject_ownership_type}")
+        )
+      end
+
       private
+
+      def subject_ownership_type
+        @subject_ownership_type ||= SubjectType.new(:applicant)
+      end
 
       def extract_supported_options!(args)
         options = DEFAULT_OPTIONS.merge(args.extract_options!)
