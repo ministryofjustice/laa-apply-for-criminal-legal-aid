@@ -99,6 +99,11 @@ en:
         heading: We cannot check %{subject}'s benefit status without their National Insurance number
         upload_evidence: You must upload evidence that %{subject} gets a passporting benefit.
       steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
+      steps_dwp_cannot_check_dwp_status_form:
+        cannot_check_dwp_status_page_title: Sorry, we cannot check %{subject}’s information with DWP
+        cannot_check_dwp_status_heading: Sorry, we cannot check %{subject}’s information with DWP
+      steps_dwp_benefit_check_result_form:
+        benefit_check_result: DWP records show that %{subject} receives a passporting benefit
       steps_case_has_case_concluded_form:
         has_case_concluded: Has the case concluded?
       steps_case_is_preorder_work_claimed_form:
@@ -218,10 +223,7 @@ en:
         relationship: What their relationship to %{subject}?
       steps_capital_answers_form:
         has_no_other_assets: Confirm the following
-      steps_shared_no_op_form:
-        benefit_check_result: DWP records show that %{subject} receives a passporting benefit
-        cannot_check_dwp_status_page_title: Sorry, we cannot check %{subject}’s information with DWP
-        cannot_check_dwp_status_heading: Sorry, we cannot check %{subject}’s information with DWP
+
     hint:
       steps_client_relationship_status_form:
         separation_date:

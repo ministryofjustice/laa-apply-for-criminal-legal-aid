@@ -90,7 +90,7 @@ module StepsHelper
   def translate_with_subject(key, **options)
     subject_type = options.fetch(
       :subject_type,
-      current_form_object.try(:subject_ownership_type)
+      current_form_object.try(:form_subject)
     )
 
     options[:subject] ||= translate('dictionary.subject', subject_type:)

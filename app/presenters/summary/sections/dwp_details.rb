@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class DWPDetails < Sections::BaseSection
+      include TypeOfMeansAssessment
+
       def show?
         benefit_check_recipient.present? && super
       end
@@ -33,12 +35,6 @@ module Summary
 
       def name
         :details
-      end
-
-      private
-
-      def benefit_check_recipient
-        @benefit_check_recipient ||= crime_application.benefit_check_recipient
       end
     end
   end

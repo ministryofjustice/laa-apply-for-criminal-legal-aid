@@ -1,6 +1,8 @@
 module Decisions
   # rubocop:disable Metrics/ClassLength
   class DWPDecisionTree < BaseDecisionTree
+    include TypeOfMeansAssessment
+
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
@@ -73,11 +75,8 @@ module Decisions
     end
 
     def partner_benefit_type_required?
-      # TODO: refactor to use has_partner in partner_details table instead of client_has_partner
-
       form_object.benefit_type.none? &&
-        FeatureFlags.partner_journey.enabled? &&
-        current_crime_application.client_has_partner == 'yes'
+        FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
     end
 
     def after_has_benefit_evidence
@@ -142,8 +141,8 @@ module Decisions
       @partner ||= current_crime_application.partner
     end
 
-    def benefit_check_recipient
-      current_crime_application.benefit_check_recipient
+    def crime_application
+      current_crime_application
     end
 
     def partner_is_recipient?

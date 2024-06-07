@@ -126,10 +126,4 @@ class CrimeApplication < ApplicationRecord
     age >= 18
   end
   # rubocop:enable Metrics/AbcSize
-
-  def benefit_check_recipient
-    return partner if partner.present? && partner.has_passporting_benefit?
-
-    applicant
-  end
 end

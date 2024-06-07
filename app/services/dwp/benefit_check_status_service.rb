@@ -22,8 +22,6 @@ module DWP
 
     attr_reader :crime_application, :person
 
-    delegate :benefit_check_recipient, to: :crime_application
-
     def benefit_check_status
       return BenefitCheckStatus::NO_CHECK_NO_NINO.to_s if nino_forthcoming?
       return undetermined_status if dwp_undetermined
@@ -40,7 +38,7 @@ module DWP
     end
 
     def dwp_undetermined
-      crime_application.benefit_check_recipient.confirm_dwp_result == 'no'
+      benefit_check_recipient.confirm_dwp_result == 'no'
     end
 
     def checker_down

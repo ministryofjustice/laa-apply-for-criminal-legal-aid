@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Steps::ApplicantOrPartnerExclusive do
+RSpec.describe Steps::SubjectIsBenefitCheckRecipient do
   subject(:assessable) do
     assessable_class.new(crime_application:)
   end
 
   let(:assessable_class) do
     Struct.new(:crime_application) do
-      include Steps::ApplicantOrPartnerExclusive
+      include Steps::SubjectIsBenefitCheckRecipient
     end
   end
 
@@ -34,8 +34,8 @@ RSpec.describe Steps::ApplicantOrPartnerExclusive do
     end
   end
 
-  describe '#subject_ownership_type' do
-    subject(:subject_ownership_type) { assessable.subject_ownership_type }
+  describe '#form_subject' do
+    subject(:form_subject) { assessable.form_subject }
 
     context 'when partner has passporting benefit' do
       it { is_expected.to eq SubjectType::PARTNER }

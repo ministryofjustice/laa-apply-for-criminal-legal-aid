@@ -1,12 +1,12 @@
 module Steps
-  module ApplicantOrPartnerExclusive
+  module SubjectIsBenefitCheckRecipient
     extend ActiveSupport::Concern
 
     def subject
-      I18n.t('dictionary.subject', subject_type: subject_ownership_type)
+      I18n.t('dictionary.subject', subject_type: form_subject)
     end
 
-    def subject_ownership_type
+    def form_subject
       return SubjectType::PARTNER if partner_has_benefit?
 
       SubjectType::APPLICANT

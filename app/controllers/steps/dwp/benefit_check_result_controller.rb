@@ -1,12 +1,14 @@
 module Steps
   module DWP
     class BenefitCheckResultController < Steps::DWPStepController
-      include Steps::NoOpAdvanceStep
+      def edit
+        @form_object = BenefitCheckResultForm.build(
+          current_crime_application
+        )
+      end
 
-      private
-
-      def advance_as
-        :benefit_check_result
+      def update
+        update_and_advance(BenefitCheckResultForm, as: :benefit_check_result)
       end
     end
   end

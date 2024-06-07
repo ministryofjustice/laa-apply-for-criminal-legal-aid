@@ -6,11 +6,10 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      applicant: applicant,
-      partner: partner,
-      partner_detail: partner_detail,
-      client_has_partner: client_has_partner,
-      benefit_check_recipient: applicant
+      applicant:,
+      partner:,
+      partner_detail:,
+      client_has_partner:
     )
   end
 
@@ -114,6 +113,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          involvement_in_case: nil,
         )
       end
 

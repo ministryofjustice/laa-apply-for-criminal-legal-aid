@@ -8,7 +8,8 @@ describe Summary::Sections::DWPDetails do
       CrimeApplication,
       to_param: '12345',
       client_has_partner: 'no',
-      benefit_check_recipient: applicant,
+      partner_detail: nil,
+      applicant: applicant
     )
   end
 

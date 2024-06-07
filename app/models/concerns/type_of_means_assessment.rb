@@ -2,8 +2,7 @@ module TypeOfMeansAssessment
   extend ActiveSupport::Concern
 
   delegate :applicant, :partner, :kase, :income, :outgoings, :income_payments, :income_benefits,
-           :capital, :appeal_no_changes?, :partner_detail,
-           :benefit_check_recipient, to: :crime_application, allow_nil: true
+           :capital, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
@@ -66,6 +65,14 @@ module TypeOfMeansAssessment
     return false if benefit_check_recipient.nino.blank?
 
     benefit_check_recipient.has_benefit_evidence == 'no'
+  end
+
+  def benefit_check_recipient
+    return applicant unless include_partner_in_means_assessment?
+    return applicant unless applicant.benefit_type == 'none'
+    return partner unless partner.benefit_type == 'none'
+
+    applicant
   end
 
   private

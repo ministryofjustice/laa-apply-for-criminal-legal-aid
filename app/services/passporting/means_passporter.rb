@@ -1,5 +1,7 @@
 module Passporting
   class MeansPassporter < BasePassporter
+    include TypeOfMeansAssessment
+
     def call
       return passported? if resubmission?
 
@@ -50,7 +52,7 @@ module Passporting
     end
 
     def benefit_check_passed?
-      crime_application.benefit_check_recipient.benefit_check_result.present?
+      benefit_check_recipient.benefit_check_result.present?
     end
   end
 end

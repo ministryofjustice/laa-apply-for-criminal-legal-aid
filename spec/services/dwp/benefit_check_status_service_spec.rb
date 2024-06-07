@@ -9,7 +9,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      benefit_check_recipient: benefit_check_recipient
+      partner_detail: nil
     )
   end
 
