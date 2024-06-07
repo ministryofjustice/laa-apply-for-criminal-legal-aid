@@ -8,14 +8,15 @@ RSpec.describe DWP::BenefitCheckStatusService do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      confirm_dwp_result: confirm_dwp_result,
-      applicant: applicant
+      applicant: applicant,
+      partner_detail: nil
     )
   end
 
   let(:applicant) do
     double(
       Applicant,
+      id:,
       benefit_type:,
       last_jsa_appointment_date:,
       benefit_check_result:,
@@ -23,10 +24,19 @@ RSpec.describe DWP::BenefitCheckStatusService do
       nino:,
       will_enter_nino:,
       confirm_details:,
-      has_benefit_evidence:
+      has_benefit_evidence:,
+      confirm_dwp_result:
     )
   end
 
+  let(:partner) do
+    double(
+      Partner,
+      id: '234'
+    )
+  end
+
+  let(:id) { '1234' }
   let(:benefit_type) { nil }
   let(:last_jsa_appointment_date) { nil }
   let(:has_nino) { nil }
@@ -36,6 +46,8 @@ RSpec.describe DWP::BenefitCheckStatusService do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
+
+  let(:benefit_check_recipient) { applicant }
 
   describe '#call' do
     context 'when benefit check outcome undetermined' do
@@ -101,6 +113,14 @@ RSpec.describe DWP::BenefitCheckStatusService do
 
       it 'returns a benefit check status of no_check_no_nino' do
         expect(subject.call).to eq('no_check_no_nino')
+      end
+    end
+
+    context 'when person is not benefit check recipient' do
+      let(:benefit_check_recipient) { partner }
+
+      it 'returns nil' do
+        expect(subject.call).to be_nil
       end
     end
   end

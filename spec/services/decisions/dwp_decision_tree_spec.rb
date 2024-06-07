@@ -1,11 +1,16 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::DWPDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication) }
-  let(:applicant) { instance_double(Applicant, benefit_check_result:) }
+  let(:crime_application) { instance_double(CrimeApplication, partner:, partner_detail:) }
+  let(:applicant) { double(Applicant, benefit_check_result:) }
   let(:benefit_check_result) { false }
+  let(:benefit_check_recipient) { applicant }
+  let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
+  let(:has_passporting_benefit) { false }
+  let(:partner_detail) { nil }
 
   before do
     allow(
@@ -61,11 +66,18 @@ RSpec.describe Decisions::DWPDecisionTree do
     context 'and the answer is `no`' do
       let(:confirm_details) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination('steps/client/details', :edit, id: crime_application) }
+      context 'when the benefit check recipient is the applicant' do
+        it { is_expected.to have_destination('steps/client/details', :edit, id: crime_application) }
+      end
+
+      context 'when the benefit check recipient is the partner' do
+        let(:has_passporting_benefit) { true }
+
+        it { is_expected.to have_destination('steps/partner/details', :edit, id: crime_application) }
+      end
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
     let(:applicant_double) { double(Applicant, has_nino:) }
@@ -73,12 +85,10 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES }
     let(:feature_flag_means_journey_enabled) { false }
-    let(:client_has_partner) { 'no' }
     let(:partner_journey_enabled) { false }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant_double,
-                                                   client_has_partner: client_has_partner,
                                                    benefit_check_passported?: benefit_check_passported)
 
       allow(applicant_double).to receive_messages(benefit_check_result:)
@@ -107,11 +117,20 @@ RSpec.describe Decisions::DWPDecisionTree do
         it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
 
-      context 'and feature flag `partner_journey` is enabled and client has a partner' do
+      context 'and feature flag `partner_journey` is enabled' do
         let(:partner_journey_enabled) { true }
-        let(:client_has_partner) { 'yes' }
 
-        it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+        context 'and the partner is included in the means assessment' do
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+          it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+        end
+
+        context 'and the partner is not included in the means assessment' do
+          let(:feature_flag_means_journey_enabled) { true }
+
+          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+        end
       end
     end
 
@@ -164,7 +183,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `partner_benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
@@ -242,14 +260,22 @@ RSpec.describe Decisions::DWPDecisionTree do
     it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
   end
 
-  context 'when the step is `after_cannot_check_benefit_status`' do
+  context 'when the step is `cannot_check_benefit_status`' do
     let(:form_object) { double('FormObject', applicant:, will_enter_nino:) }
     let(:step_name) { :cannot_check_benefit_status }
 
     context 'and the answer is `yes`' do
       let(:will_enter_nino) { YesNoAnswer::YES }
 
-      it { is_expected.to have_destination('steps/client/has_nino', :edit, id: crime_application) }
+      context 'when the benefit check recipient is the applicant' do
+        it { is_expected.to have_destination('steps/client/has_nino', :edit, id: crime_application) }
+      end
+
+      context 'when the benefit check recipient is the partner' do
+        let(:has_passporting_benefit) { true }
+
+        it { is_expected.to have_destination('steps/partner/nino', :edit, id: crime_application) }
+      end
     end
 
     context 'and the answer is `no`' do
@@ -266,32 +292,32 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:step_name) { :cannot_check_dwp_status }
     let(:benefit_check_passported) { false }
     let(:benefit_check_result) { false }
-    let(:applicant_double) { double(Applicant) }
-    let(:partner_double) { double(Partner, has_passporting_benefit?: partner_has_benefit) }
-    let(:partner_has_benefit) { false }
+    let(:benefit_check_recipient) { applicant }
 
     before do
-      allow(crime_application).to receive_messages(applicant: applicant_double,
-                                                   partner: partner_double,
+      allow(crime_application).to receive_messages(applicant: applicant,
+                                                   partner: partner,
                                                    benefit_check_passported?: benefit_check_passported)
 
-      allow(applicant_double).to receive_messages(benefit_check_result:)
+      allow(applicant).to receive_messages(benefit_check_result:)
 
-      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
+      allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant).and_return(true)
     end
 
     it { is_expected.to have_destination(:confirm_result, :edit, id: crime_application) }
 
     context 'when benefit check is performed on partner details' do
       let(:partner_has_benefit) { true }
+      let(:benefit_check_recipient) { partner }
 
       before do
-        allow(partner_double).to receive_messages(benefit_check_result:)
+        allow(partner).to receive_messages(benefit_check_result:)
 
-        allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(partner_double).and_return(true)
+        allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(partner).and_return(true)
       end
 
       it { is_expected.to have_destination(:confirm_result, :edit, id: crime_application) }
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

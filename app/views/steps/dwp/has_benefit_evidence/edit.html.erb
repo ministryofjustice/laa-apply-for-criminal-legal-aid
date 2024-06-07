@@ -8,12 +8,13 @@
     <%= step_form @form_object do |f| %>
         <%= f.govuk_collection_radio_buttons :has_benefit_evidence, @form_object.choices,
                                              :value, inline: false,
-                                             legend: { tag: 'h1', size: 'xl', text: t(
-                                               '.heading', benefit_type: t(
-                                                 current_crime_application.applicant.benefit_type,
+                                             hint: { text: hint_t(:has_benefit_evidence) },
+                                             legend: { tag: 'h1', size: 'xl', text: legend_t(
+                                               :benefit_type, benefit_type: t(
+                                                 @form_object.benefit_check_recipient.benefit_type,
                                                  scope: 'helpers.label.steps_dwp_benefit_type_form.benefit_type_options'
-                                               )
-                                             ) } %>
+                                               ),
+                                             ) }%>
 
         <%= f.continue_button %>
     <% end %>

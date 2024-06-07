@@ -1,12 +1,14 @@
 module Steps
   module DWP
     class CannotCheckDWPStatusController < Steps::DWPStepController
-      include Steps::NoOpAdvanceStep
+      def edit
+        @form_object = CannotCheckDWPStatusForm.build(
+          current_crime_application
+        )
+      end
 
-      private
-
-      def advance_as
-        :cannot_check_dwp_status
+      def update
+        update_and_advance(CannotCheckDWPStatusForm, as: :cannot_check_dwp_status)
       end
     end
   end

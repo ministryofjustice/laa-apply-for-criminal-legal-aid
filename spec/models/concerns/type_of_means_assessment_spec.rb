@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe TypeOfMeansAssessment do
   subject(:assessable) do
     assessable_class.new(crime_application:)
@@ -12,16 +13,20 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:, kase:, income:)
+    instance_double(CrimeApplication, applicant:, partner:, kase:, income:, partner_detail:)
   end
 
-  let(:applicant) { instance_double(Applicant) }
+  let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }
+  let(:partner) { instance_double(Partner) }
+  let(:benefit_check_recipient) { applicant }
+  let(:has_benefit_evidence) { nil }
   let(:kase) { instance_double(Case) }
   let(:income) { instance_double(Income) }
   let(:means_passporter_result) { false }
   let(:means_passporter) do
     instance_double(Passporting::MeansPassporter, call: means_passporter_result)
   end
+  let(:partner_detail) { nil }
 
   before do
     allow(crime_application).to receive(:appeal_no_changes?)
@@ -56,10 +61,11 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
 
-    context 'when dwp result contested but has not evidence' do
+    context 'when dwp result contested and has no evidence' do
+      let(:has_benefit_evidence) { 'no' }
+
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('no')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('no')
       end
 
       it { is_expected.to be false }
@@ -67,7 +73,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result confirmed' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('yes')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('yes')
       end
 
       it { is_expected.to be false }
@@ -79,10 +85,8 @@ RSpec.describe TypeOfMeansAssessment do
       assessable.include_partner_in_means_assessment?
     end
 
-    let(:partner_detail) { nil }
-
     before do
-      allow(crime_application).to receive_messages(client_has_partner:, partner_detail:)
+      allow(crime_application).to receive_messages(client_has_partner:)
     end
 
     context 'when it is not yet known if the client has a partner' do
@@ -97,7 +101,7 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
 
-    context 'when client has a partner but we do not know thier involvement' do
+    context 'when client has a partner but we do not know their involvement' do
       let(:client_has_partner) { 'yes' }
 
       it { is_expected.to be false }
@@ -174,17 +178,15 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result contested and has evidence' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('yes')
+        allow(applicant).to receive_messages(confirm_dwp_result: 'no', has_benefit_evidence: 'yes')
       end
 
       it { is_expected.to be false }
     end
 
-    context 'when dwp result contested but has not evidence' do
+    context 'when dwp result contested and has no evidence' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('no')
-        allow(applicant).to receive(:has_benefit_evidence).and_return('no')
+        allow(applicant).to receive_messages(confirm_dwp_result: 'no', has_benefit_evidence: 'no')
       end
 
       it { is_expected.to be true }
@@ -192,7 +194,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when dwp result confirmed' do
       before do
-        allow(crime_application).to receive(:confirm_dwp_result).and_return('yes')
+        allow(applicant).to receive(:confirm_dwp_result).and_return('yes')
       end
 
       it { is_expected.to be false }
@@ -474,4 +476,54 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
   end
+
+  describe '#benefit_check_recipient' do
+    subject(:benefit_check_recipient) do
+      assessable.benefit_check_recipient
+    end
+
+    context 'when partner is not included in means assessment' do
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+
+      it { is_expected.to be applicant }
+    end
+
+    context 'when applicant is benefit check recipient' do
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
+      before do
+        allow(applicant).to receive(:benefit_type).and_return(benefit_type)
+      end
+
+      it { is_expected.to be applicant }
+    end
+
+    context 'when partner is benefit check recipient' do
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:applicant_benefit_type) { 'none' }
+      let(:partner_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
+
+      before do
+        allow(applicant).to receive(:benefit_type).and_return(applicant_benefit_type)
+        allow(partner).to receive(:benefit_type).and_return(partner_benefit_type)
+      end
+
+      it { is_expected.to be partner }
+    end
+
+    context 'defaults to applicant' do
+      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:applicant_benefit_type) { 'none' }
+      let(:partner_benefit_type) { 'none' }
+
+      before do
+        allow(applicant).to receive(:benefit_type).and_return(applicant_benefit_type)
+        allow(partner).to receive(:benefit_type).and_return(partner_benefit_type)
+      end
+
+      it { is_expected.to be applicant }
+    end
+  end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -1,6 +1,8 @@
 module Decisions
   # rubocop:disable Metrics/ClassLength
   class DWPDecisionTree < BaseDecisionTree
+    include TypeOfMeansAssessment
+
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
@@ -44,7 +46,7 @@ module Decisions
       if form_object.confirm_details.yes?
         edit(:has_benefit_evidence)
       else
-        edit('steps/client/details')
+        determine_client_details_routing
       end
     end
 
@@ -73,11 +75,8 @@ module Decisions
     end
 
     def partner_benefit_type_required?
-      # TODO: refactor to use has_partner in partner_details table instead of client_has_partner
-
       form_object.benefit_type.none? &&
-        FeatureFlags.partner_journey.enabled? &&
-        current_crime_application.client_has_partner == 'yes'
+        FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
     end
 
     def after_has_benefit_evidence
@@ -90,10 +89,22 @@ module Decisions
 
     def after_cannot_check_benefit_status
       if form_object.will_enter_nino.yes?
-        edit('steps/client/has_nino')
+        determine_nino_routing
       else
         edit('/steps/case/urn')
       end
+    end
+
+    def determine_nino_routing
+      return edit('steps/partner/nino') if partner_is_recipient?
+
+      edit('steps/client/has_nino')
+    end
+
+    def determine_client_details_routing
+      return edit('steps/partner/details') if partner_is_recipient?
+
+      edit('steps/client/details')
     end
 
     def determine_dwp_result_page(person)
@@ -130,10 +141,12 @@ module Decisions
       @partner ||= current_crime_application.partner
     end
 
-    def benefit_check_recipient
-      return partner if partner&.has_passporting_benefit?
+    def crime_application
+      current_crime_application
+    end
 
-      applicant
+    def partner_is_recipient?
+      partner&.has_passporting_benefit?
     end
   end
   # rubocop:enable Metrics/ClassLength

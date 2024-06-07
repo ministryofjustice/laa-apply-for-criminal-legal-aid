@@ -1,6 +1,8 @@
 module Steps
   module DWP
     class ConfirmDetailsForm < Steps::BaseFormObject
+      include Steps::SubjectIsBenefitCheckRecipient
+
       include Steps::HasOneAssociation
       has_one_association :applicant
 

@@ -228,28 +228,32 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date the partner last attended an appointment with their JSA work coach is too far in the past
               future_not_allowed: Date the partner last attended an appointment with their JSA work coach must be today or in the past
-        steps/dwp/has_benefit_evidence_form:
+        steps/dwp/has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_VALIDATION
           attributes:
             has_benefit_evidence:
-              inclusion: Select yes if you have evidence of your client's benefit
+              inclusion: Select yes if you have evidence of their benefit
+        steps/dwp/has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_VALIDATION
         steps/dwp/cannot_check_benefit_status_form: &WILL_ENTER_NINO_VALIDATION
           attributes:
             will_enter_nino:
               inclusion: Select whether you will enter the National Insurance number now or later
+        steps/dwp/cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_VALIDATION
         steps/client/contact_details_form:
           attributes:
             telephone_number:
               invalid: Enter a telephone number in the correct format
             correspondence_address_type:
               inclusion: Select a correspondence address
-        steps/dwp/confirm_details_form:
+        steps/dwp/confirm_details_form: &CONFIRM_DETAILS_VALIDATION
           attributes:
             confirm_details:
               inclusion: Select yes if these details are correct
-        steps/dwp/confirm_result_form:
+        steps/dwp/confirm_partner_details_form: *CONFIRM_DETAILS_VALIDATION
+        steps/dwp/confirm_result_form: &CONFIRM_RESULT_VALIDATION
           attributes:
             confirm_dwp_result:
-              inclusion: Select yes if your client does not receive a passporting benefit
+              inclusion: Select yes if they do not receive a passporting benefit
+        steps/dwp/confirm_result_partner_form: *CONFIRM_RESULT_VALIDATION
         steps/address/lookup_form:
           attributes:
             postcode:

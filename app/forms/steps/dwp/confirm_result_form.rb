@@ -1,9 +1,13 @@
 module Steps
   module DWP
     class ConfirmResultForm < Steps::BaseFormObject
-      attribute :confirm_dwp_result, :value_object, source: YesNoAnswer
+      include Steps::SubjectIsBenefitCheckRecipient
 
-      validates_inclusion_of :confirm_dwp_result, in: :choices
+      include Steps::HasOneAssociation
+      has_one_association :applicant
+
+      attribute :confirm_dwp_result, :value_object, source: YesNoAnswer
+      validates :confirm_dwp_result, inclusion: { in: :choices }
 
       def choices
         YesNoAnswer.values
@@ -12,11 +16,15 @@ module Steps
       private
 
       def persist!
-        crime_application.update(attributes)
+        applicant.update(attributes)
 
         return true if confirm_dwp_result.no?
 
-        crime_application.applicant.update(attributes_to_update) if confirm_dwp_result.yes?
+        update_person_attributes if confirm_dwp_result.yes?
+      end
+
+      def update_person_attributes
+        applicant.update(attributes_to_update)
       end
 
       def attributes_to_update
