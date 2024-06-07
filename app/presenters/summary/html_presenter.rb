@@ -20,6 +20,7 @@ module Summary
         justification_for_legal_aid
         passport_justification_for_legal_aid
         employment_details
+        employment_income
         income_details
         employments
         self_assessment_tax_bill
@@ -65,6 +66,7 @@ module Summary
       ],
       income: %i[
         employment_details
+        employment_income
         income_details
         employments
         self_assessment_tax_bill

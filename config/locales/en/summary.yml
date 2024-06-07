@@ -109,6 +109,7 @@ en:
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
       work_benefits: Other work benefits
+      employment_income: Pay from employment
 
     questions:
       # BEGIN overview section
@@ -804,6 +805,10 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
+      employment_income:
+        question: Salary or wage
+        answers:
+          description: *payment_answer_format
       self_assessment_tax_bill:
         question: Does the partner pay a Self Assessment tax bill?
         answers: *YESNO
