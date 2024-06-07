@@ -141,7 +141,7 @@ en:
               inclusion: Select where your client usually lives or if they have no fixed address
             relationship_to_owner_of_usual_home_address:
               blank: Enter your client's relationship to the person whose home they live in
-        steps/client/has_nino_form:
+        steps/client/nino_form:
           attributes:
             has_nino:
               inclusion: Select yes if your client has a National Insurance number

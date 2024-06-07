@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Client::HasNinoForm do
+RSpec.describe Steps::Client::NinoForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do
