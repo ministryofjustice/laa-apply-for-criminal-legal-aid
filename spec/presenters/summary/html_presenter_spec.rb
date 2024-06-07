@@ -15,7 +15,7 @@ describe Summary::HtmlPresenter do
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
-      savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
+      savings: [double], investments: [double], national_savings_certificates: [double], properties: [double], partner: double, partner_detail: double
     )
   end
   # rubocop:enable Layout/LineLength
@@ -118,7 +118,7 @@ describe Summary::HtmlPresenter do
         }
       },
       'application_type' => application_type,
-      'case_details' => { 'case_type' => 'either_way' }
+      'case_details' => { 'case_type' => 'either_way' },
     }
 
     JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
@@ -144,6 +144,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             ContactDetails
+            PartnerDetails
             PassportingBenefitCheck
             CaseDetails
             Offences
@@ -185,6 +186,7 @@ describe Summary::HtmlPresenter do
             Overview
             ClientDetails
             ContactDetails
+            PartnerDetails
             PassportingBenefitCheck
             CaseDetails
             Offences

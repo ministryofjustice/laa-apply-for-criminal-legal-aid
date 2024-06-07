@@ -18,6 +18,8 @@ class SectionsCompletenessValidator
 
       errors.add(:outgoings_assessment, :incomplete) unless outgoings_assessment_complete?
       errors.add(:capital_assessment, :incomplete) unless capital_assessment_complete?
+
+      errors.add(:partner_details, :incomplete) unless partner_detail&.complete?
     else
       errors.add(:client_details, :incomplete)
     end

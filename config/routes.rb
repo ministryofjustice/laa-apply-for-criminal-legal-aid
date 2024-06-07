@@ -126,7 +126,6 @@ Rails.application.routes.draw do
           edit_step :partner_involved_in_case, alias: :involvement
           edit_step :partner_conflict_of_interest, alias: :conflict
           edit_step :do_client_and_partner_live_same_address, alias: :same_address
-          edit_step :enter_partner_address, alias: :address
 
           if FeatureFlags.unemployed_partner_journey.enabled?
           end
