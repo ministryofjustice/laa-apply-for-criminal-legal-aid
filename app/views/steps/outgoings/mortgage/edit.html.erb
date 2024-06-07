@@ -10,6 +10,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_fieldset(legend: { text: t('.mortgage_legend'), tag: 'h1', size: 'xl' }) do %>
         <%= f.govuk_number_field(:amount,
+                                 label: { text: label_t(:amount) },
                                  width: 'one-half',
                                  prefix_text: '£',
                                  hint: { text: t('.amount_hint') },

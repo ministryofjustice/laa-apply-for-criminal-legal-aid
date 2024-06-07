@@ -1,6 +1,9 @@
 module Steps
   module Outgoings
     class RentForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       attribute :amount, :pence
       attribute :frequency, :value_object, source: PaymentFrequencyType
 
@@ -10,7 +13,7 @@ module Steps
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.rent
 
-        new.tap do |form|
+        new(crime_application:).tap do |form|
           form.attributes = payment.slice(:amount, :frequency) if payment
         end
       end

@@ -65,7 +65,9 @@ en:
       income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
-      outgoings_payments_details: Payments your client pays
+      outgoings_payments_details: 
+        one: Payments %{subject} makes
+        other: Payments %{subject} make
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: Further information
@@ -507,53 +509,53 @@ en:
 
       # BEGIN housing payments section
       housing_payment_type:
-        question: Which of these payments does your client pay where they usually live?
+        question: Type of payment
         answers:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
           none: My client does not pay any of these payments
       mortgage:
-        question: How much are your client's mortgage payments?
+        question: Amount
         answers:
           description: *payment_answer_format
       rent:
-        question: How much rent does your client pay, after taking away Housing Benefit?
+        question: Amount
         answers:
           description: *payment_answer_format
       # BEGIN board and lodgings section
       board_amount:
-        question: How much does your client pay for board and lodgings?
+        question: Amount
         answers:
           description: *payment_answer_format
       food_amount:
-        question: How much of the board and lodgings payment is for food?
+        question: Amount food
         answers:
           description: *payment_answer_format
       payee_name:
-        question: What is the name of the person your client pays for board and lodgings?
+        question: Name of person they pay
         answers:
           description: "%{name}"
       payee_relationship_to_client:
-        question: What is your client's relationship to this person?
+        question: Relationship to that person
         answers:
           description: "%{relationship}"
       # END board and lodgings section
       pays_council_tax:
-        question: Does your client pay Council Tax where they usually live?
+        question: Council Tax 
         answers:
           <<: *YESNO
       council_tax:
-        question: How much do they pay yearly?
+        question: Council Tax amount yearly
         answers:
           description: "%{amount}"
       # END housing payments section
 
       # BEGIN  outgoings payments section
       which_outgoings:
-        question: Which of these payments does your client pay?
+        question: Type of payments 
         answers:
-          none: My client does not pay any of these payments
+          none: None 
       childcare_outgoing:
         question: Childcare payments
         answers:
@@ -563,11 +565,11 @@ en:
         answers:
           description: *payment_answer_format
       legal_aid_contribution_outgoing:
-        question: Contributions towards criminal or civil legal aid
+        question: Criminal or civil legal aid contributions
         answers:
           description: *payment_answer_format
       legal_aid_contribution_outgoing_details:
-        question: What is the case reference of the criminal rep order or civil certificate?
+        question: Case reference of criminal representation order or civil certificate
       # END outgoings payments section
 
       # BEGIN other outgoings details section
@@ -576,11 +578,11 @@ en:
         answers:
           <<: *YESNO
       outgoings_more_than_income:
-        question: Are your client’s outgoings more than their income?
+        question: Outgoings more than income?
         answers:
           <<: *YESNO
       how_manage:
-        question: How does your client manage if their outgoings are more than their income?
+        question: How they cover outgoings that are more than income
       # END other outgoings details section
 
       # BEGIN legal representative details section

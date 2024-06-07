@@ -2,6 +2,9 @@ module Steps
   module Outgoings
     class HousingPaymentTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
+
       has_one_association :outgoings
 
       attribute :housing_payment_type, :value_object, source: HousingPaymentType

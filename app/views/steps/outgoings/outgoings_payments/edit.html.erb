@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title legend_t(:outgoings_payments) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_check_boxes_fieldset :outgoings_payments, legend: { tag: 'h1', size: 'xl' } do |x| %>
+      <%= f.govuk_check_boxes_fieldset :outgoings_payments, legend: { text: legend_t(:outgoings_payments), tag: 'h1', size: 'xl' } do |x| %>
 
         <% @form_object.ordered_payment_types.each do |type| %>
           <%= f.govuk_check_box :types, type, link_errors: true do %>

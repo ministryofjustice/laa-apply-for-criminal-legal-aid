@@ -2,6 +2,9 @@ module Steps
   module Outgoings
     class OutgoingsPaymentsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       has_one_association :outgoings
 
       # NOTE: Remember to add any new types to this list otherwise it will not show on page edit

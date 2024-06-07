@@ -1,11 +1,14 @@
-<% title t('.page_title') %>
+<% title legend_t(:outgoings_more_than_income) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-xl"><%= t('steps.outgoings.caption') %></span>
+
+      <%= govuk_error_summary(@form_object) %>
+
      <%= step_form @form_object do |f| %>
-        <%= f.govuk_radio_buttons_fieldset :outgoings_more_than_income, legend: { text: t('.outgoings_more_than_income'), tag: 'h1', size: 'xl' } do %>
+        <%= f.govuk_radio_buttons_fieldset :outgoings_more_than_income, legend: { text: legend_t(:outgoings_more_than_income), tag: 'h1', size: 'xl' } do %>
           <% @form_object.choices.each_with_index do |choice, index| %>
             <% if choice.yes? %>
               <%= f.govuk_radio_button :outgoings_more_than_income, choice.value do %>

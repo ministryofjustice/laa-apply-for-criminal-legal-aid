@@ -1,6 +1,9 @@
 module Steps
   module Outgoings
     class BoardAndLodgingForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       attribute :board_amount, :pence
       attribute :food_amount, :pence
       attribute :frequency, :value_object, source: PaymentFrequencyType
@@ -23,7 +26,7 @@ module Steps
 
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.board_and_lodging
-        form = new
+        form = new(crime_application:)
 
         if payment
           form.frequency = payment.frequency
