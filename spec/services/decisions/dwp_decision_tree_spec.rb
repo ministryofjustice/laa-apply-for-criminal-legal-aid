@@ -175,7 +175,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `partner_benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
@@ -214,6 +213,7 @@ RSpec.describe Decisions::DWPDecisionTree do
       it { is_expected.to have_destination(:cannot_check_benefit_status, :edit, id: crime_application) }
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   context 'when the step is `has_benefit_evidence`' do
     let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }
