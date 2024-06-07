@@ -12,8 +12,8 @@ module Summary
 
         if partner.benefit_type
           answers.push(Components::ValueAnswer.new(
-            :passporting_benefit, partner.benefit_type
-          ))
+                         :passporting_benefit, partner.benefit_type
+                       ))
         end
 
         if jsa?

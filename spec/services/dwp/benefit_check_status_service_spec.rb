@@ -116,7 +116,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
     context 'when person is not benefit check recipient' do
       let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
       let(:benefit_type) { 'none' }
-      let(:partner) { double(Partner,  id: '234', benefit_type: 'universal_credit') }
+      let(:partner) { double(Partner, id: '234', benefit_type: 'universal_credit') }
 
       it 'returns nil' do
         expect(subject.call).to eq('no_check_required')
