@@ -23,6 +23,7 @@ module Summary
         income_details
         employments
         self_assessment_tax_bill
+        work_benefits
         income_payments_details
         income_benefits_details
         dependants
@@ -67,6 +68,7 @@ module Summary
         income_details
         employments
         self_assessment_tax_bill
+        work_benefits
         income_payments_details
         income_benefits_details
         dependants

@@ -108,6 +108,7 @@ en:
       employments: Jobs
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
+      work_benefits: Other work benefits
 
     questions:
       # BEGIN overview section
@@ -808,5 +809,13 @@ en:
         answers: *YESNO
       self_assessment_tax_bill_payment:
         question: Enter the amount
+        answers:
+          description: *payment_answer_format
+
+      work_benefits:
+        question: Does your client receive any other benefits from work?
+        answers: *YESNO
+      work_benefits_payment:
+        question: Enter the total value every year
         answers:
           description: *payment_answer_format

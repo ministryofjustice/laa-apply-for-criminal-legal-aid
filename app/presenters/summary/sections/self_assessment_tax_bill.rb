@@ -24,7 +24,9 @@ module Summary
       end
 
       def self_assessment_tax_bill
-        crime_application.outgoings_payments.detect { |payment| payment.payment_type == OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.to_s }
+        crime_application
+          .outgoings_payments
+          .detect { |payment| payment.payment_type == OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.to_s }
       end
     end
   end
