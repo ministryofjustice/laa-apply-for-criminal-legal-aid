@@ -396,9 +396,9 @@ en:
           income_tax_rate_above_threshold: In the last 2 years, has your client paid the 40% income tax rate?
       answers:
         edit:
-          page_title: Check your answers - Your client's outgoings
+          page_title: Check your answers - %{Subject}'s outgoings
           heading: Check your answers
-          subheading: Your client’s outgoings
+          subheading: "%{Subject}'s outgoings"
 
     capital:
       caption: Capital assessment

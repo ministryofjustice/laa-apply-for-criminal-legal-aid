@@ -686,7 +686,7 @@ en:
 
         food_amount: How much of the board and lodgings payment is for food?
         payee_name: 
-          one: What is the name of the person your client pays for board and lodgings?
+          one: What is the name of the person %{subject} pays for board and lodgings?
           other: What is the name of the person %{subject} pay for board and lodgings?
         payee_relationship_to_client: What is this person's relationship to %{subject}?
         frequency_options: *frequency_options

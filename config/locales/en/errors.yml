@@ -649,7 +649,7 @@ en:
         steps/outgoings/outgoings_more_than_income_form:
           attributes:
             outgoings_more_than_income:
-              inclusion: Select yes their outgoings are more than their income
+              inclusion: Select yes if their outgoings are more than their income
             how_manage:
               blank: Enter how they manage if their outgoings are more than their income
         steps/capital/property_type_form:
