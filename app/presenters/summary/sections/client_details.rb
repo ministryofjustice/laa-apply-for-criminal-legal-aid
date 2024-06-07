@@ -36,20 +36,6 @@ module Summary
                        ))
         end
 
-        unless no_benefit?
-          answers.push(Components::ValueAnswer.new(
-                         :passporting_benefit, applicant.benefit_type,
-                         change_path: edit_steps_dwp_benefit_type_path
-                       ))
-        end
-
-        if jsa?
-          answers.push(Components::DateAnswer.new(
-                         :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
-                         change_path: edit_steps_dwp_benefit_type_path
-                       ))
-        end
-
         answers.push(
           Components::ValueAnswer.new(
             :has_partner,
@@ -78,7 +64,6 @@ module Summary
         end
 
         answers.select(&:show?)
-        answers
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
@@ -94,14 +79,6 @@ module Summary
 
       def post_submission_evidence?
         crime_application.pse?
-      end
-
-      def no_benefit?
-        crime_application.applicant.benefit_type.nil?
-      end
-
-      def jsa?
-        crime_application.applicant.benefit_type == 'jsa'
       end
 
       def no_partner?

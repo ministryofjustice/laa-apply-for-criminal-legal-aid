@@ -30,4 +30,32 @@ RSpec.describe Applicant, type: :model do
       end
     end
   end
+
+  describe 'has partnership information' do
+    let(:partner_detail) do
+      PartnerDetail.new(
+        has_partner: 'yes',
+        relationship_status: 'separated',
+        separation_date: Date.new(1991, 8, 7),
+      )
+    end
+
+    let(:attributes) do
+      {
+        crime_application: CrimeApplication.new(partner_detail:)
+      }
+    end
+
+    it 'has_partner' do
+      expect(subject.has_partner).to eq 'yes'
+    end
+
+    it 'relationship_status' do
+      expect(subject.relationship_status).to eq 'separated'
+    end
+
+    it 'separation_date' do
+      expect(subject.separation_date).to eq Date.new(1991, 8, 7)
+    end
+  end
 end

@@ -14,10 +14,11 @@ module PartnerDetails
       crime_application.client_has_partner == 'yes'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
     def complete?
       return false unless record
-      return true if no_partner?
+      return true if no_partner_complete?
+      return false if no_partner_incomplete?
 
       [
         record.relationship_to_partner,
@@ -31,12 +32,16 @@ module PartnerDetails
         address?,
       ].map(&:present?).all?(true)
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
     private
 
-    def no_partner?
+    def no_partner_complete?
       crime_application.client_has_partner == 'no' && record.relationship_status.present?
+    end
+
+    def no_partner_incomplete?
+      crime_application.client_has_partner == 'no' && record.relationship_status.blank?
     end
 
     def nino?

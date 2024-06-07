@@ -52,11 +52,11 @@ module Summary
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def partner
-        @partner ||= crime_application.client_details&.partner
+        @partner ||= crime_application.partner
       end
 
       def client
-        @client ||= crime_application.client_details&.applicant
+        @client ||= crime_application.applicant
       end
 
       def partner_home_address
