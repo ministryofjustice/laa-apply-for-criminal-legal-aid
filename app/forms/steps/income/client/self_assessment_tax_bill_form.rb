@@ -49,11 +49,11 @@ module Steps
 
         def create_or_update_outgoings_attribute!
           if crime_application.outgoings.present?
-            crime_application.outgoings.update(
+            crime_application.outgoings.update!(
               applicant_self_assessment_tax_bill:,
             )
           else
-            crime_application.create_outgoings(
+            crime_application.create_outgoings!(
               applicant_self_assessment_tax_bill:,
             )
           end

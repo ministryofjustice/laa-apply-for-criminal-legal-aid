@@ -203,7 +203,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
     t.string "partner_employment_status", default: [], array: true
     t.string "partner_has_no_income_payments"
     t.string "partner_has_no_income_benefits"
-    t.string "applicant_self_assessment_tax_bill"
     t.string "applicant_other_work_benefit_received"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end

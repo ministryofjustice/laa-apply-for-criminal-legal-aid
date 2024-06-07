@@ -56,7 +56,6 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
   describe '#save' do
     before do
       allow(crime_application.outgoings_payments).to receive(:create!).and_return(true)
-      allow(crime_application).to receive(:outgoings).and_return(outgoings)
     end
 
     context 'when `applicant_self_assessment_tax_bill` is not provided' do
@@ -109,14 +108,30 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
           expect(form.errors.of_kind?(:amount, :invalid)).to be(false)
         end
 
-        it 'updates the outgoings payment with the correct attributes' do
-          expect(crime_application.outgoings_payments).to receive(:create!).with(
-            payment_type: :self_assessment_tax_bill,
-            amount: Money.new(100_00),
-            frequency: PaymentFrequencyType::MONTHLY,
-          )
+        context 'when crime_application.outgoings is present' do
+          before do
+            allow(crime_application).to receive(:outgoings).and_return(outgoings)
+          end
 
-          form.save
+          it 'updates the outgoings payment with the correct attributes' do
+            expect(crime_application.outgoings_payments).to receive(:create!).with(
+              payment_type: :self_assessment_tax_bill,
+              amount: Money.new(100_00),
+              frequency: PaymentFrequencyType::MONTHLY,
+            )
+            form.save
+          end
+        end
+
+        context 'when crime_application.outgoings is not present' do
+          let(:outgoings) { nil }
+
+          it 'creates an outgoings with the correct attributes' do
+            expect(crime_application).to receive(:create_outgoings!).with(
+              applicant_self_assessment_tax_bill: YesNoAnswer::YES
+            )
+            form.save
+          end
         end
       end
     end
