@@ -10,13 +10,13 @@ module Summary
       def answers
         answers = [
           Components::ValueAnswer.new(
-            :passporting_benefit, applicant.benefit_type
+            :passporting_benefit, person.benefit_type
           )
         ]
 
         if jsa?
           answers.push(Components::DateAnswer.new(
-                         :last_jsa_appointment_date, applicant.last_jsa_appointment_date,
+                         :last_jsa_appointment_date, person.last_jsa_appointment_date,
                          show: jsa?
                        ))
         end
@@ -26,15 +26,15 @@ module Summary
                          :passporting_benefit_check_outcome, benefit_check_status
                        ))
 
-          if applicant.confirm_details
+          if person.confirm_details
             answers.push(Components::ValueAnswer.new(
-                           :confirmed_client_details, applicant.confirm_details
+                           :confirmed_client_details, person.confirm_details
                          ))
           end
 
-          if applicant.has_benefit_evidence
+          if person.has_benefit_evidence
             answers.push(Components::ValueAnswer.new(
-                           :has_benefit_evidence, applicant.has_benefit_evidence
+                           :has_benefit_evidence, person.has_benefit_evidence
                          ))
           end
         end
@@ -50,24 +50,24 @@ module Summary
 
       private
 
-      def applicant
-        @applicant ||= crime_application.applicant
+      def person
+        @person ||= crime_application.applicant
       end
 
       # If the benefit_check_status is nil we can infer
       # that the application was submitted before the benefit check result data was being saved
       # Therefore, we can use this to determine whether the benefit check rows should be displayed
       def benefit_check_status
-        applicant.benefit_check_status
+        person.benefit_check_status
       end
 
       # Rules out applications where the passporting benefit check was not applicable e.g. appeal no changes
       def benefit_selected?
-        applicant.benefit_type.present?
+        person.benefit_type.present?
       end
 
       def jsa?
-        applicant.benefit_type == 'jsa'
+        person.benefit_type == 'jsa'
       end
     end
   end
