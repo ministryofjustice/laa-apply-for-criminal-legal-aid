@@ -5,7 +5,7 @@ module Tasks
     end
 
     def can_start?
-      fulfilled?(ClientDetails)
+      fulfilled?(ClientDetails) && fulfilled?(PartnerDetails)
     end
 
     def in_progress?

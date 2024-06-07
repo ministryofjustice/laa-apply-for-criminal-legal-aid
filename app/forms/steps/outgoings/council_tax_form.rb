@@ -2,6 +2,9 @@ module Steps
   module Outgoings
     class CouncilTaxForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       has_one_association :outgoings
 
       attribute :pays_council_tax, :value_object, source: YesNoAnswer

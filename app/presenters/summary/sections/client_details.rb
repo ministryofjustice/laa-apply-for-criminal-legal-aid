@@ -36,8 +36,34 @@ module Summary
                        ))
         end
 
+        answers.push(
+          Components::ValueAnswer.new(
+            :has_partner,
+            crime_application.applicant.has_partner,
+            change_path: edit_steps_client_has_partner_path
+          )
+        )
+
+        if no_partner?
+          answers.push(
+            Components::ValueAnswer.new(
+              :relationship_status,
+              crime_application.applicant.relationship_status,
+              change_path: edit_steps_client_relationship_status_path,
+            )
+          )
+
+          answers.push(
+            Components::DateAnswer.new(
+              :separation_date,
+              crime_application.applicant.separation_date,
+              change_path: edit_steps_client_relationship_status_path,
+              show: client_separated?,
+            )
+          )
+        end
+
         answers.select(&:show?)
-        answers
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
@@ -53,6 +79,14 @@ module Summary
 
       def post_submission_evidence?
         crime_application.pse?
+      end
+
+      def no_partner?
+        crime_application.applicant.has_partner == 'no'
+      end
+
+      def client_separated?
+        crime_application.applicant.relationship_status == ClientRelationshipStatusType::SEPARATED.to_s
       end
     end
   end

@@ -2,6 +2,7 @@ en:
   summary:
     dictionary:
       absence_none: &absence_none "None"
+      absence_not_provided: &absence_not_provided "Not provided"
       payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
       YESNO: &YESNO
         'yes': 'Yes'
@@ -47,6 +48,7 @@ en:
       case_details: Case details
       client_details: Client details
       contact_details: Client contact details
+      partner_details: Partner details
       codefendants: Co-defendants
       codefendant: Co-defendant
       details: Details
@@ -64,7 +66,9 @@ en:
       income_benefits_details: Benefits your client gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
-      outgoings_payments_details: Payments your client pays
+      outgoings_payments_details: 
+        one: Payments %{subject} makes
+        other: Payments %{subject} make
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: Further information
@@ -77,7 +81,7 @@ en:
         other: Other cash investment
       premium_bonds: Premium Bonds
       investments: Investments
-      investment: 
+      investment:
         bond: Investment bond
         pep: Personal equity plan (PEP)
         share: Shares
@@ -135,7 +139,21 @@ en:
         question: Date of birth
       nino:
         question: National Insurance number
-        absence_answer: *absence_none
+        absence_answer: *absence_not_provided
+      has_partner:
+        question: Partner
+        answers:
+          <<: *YESNO
+      relationship_status:
+        question: Relationship status
+        answers:
+          single: Single
+          widowed: Widowed
+          divorced: Divorced
+          separated: Separated
+          prefer_not_to_say: They prefer not to say
+      separation_date:
+        question: Date client separated from partner
       # END client details section
 
       # BEGIN contact details section
@@ -167,6 +185,27 @@ en:
         question: Telephone number
         absence_answer: *absence_none
       # END contact details section
+
+      # BEGIN partner details section
+      # NOTE: conflict_of_interest defined by co-defendants section
+      relationship_to_partner:
+        question: Relationship to client
+        answers:
+          married_or_partnership: Married or in a civil partnership
+          living_together: Living together
+          prefer_not_to_say: They prefer not to say
+      involvement_in_case:
+        question: Partner involved in the case?
+        answers:
+          victim: Victim
+          prosecution_witness: Prosecution witness
+          codefendant: Co-defendant
+          none: 'No'
+      has_same_address_as_client:
+        question: Lives at same address as client?
+        answers:
+          <<: *YESNO
+      # END partner details section
 
       # BEGIN passporting benefit check section
       passporting_benefit:
@@ -255,7 +294,7 @@ en:
       offence_type_and_class:
         question: Offence type and class
       offence_date:
-        question: Offence date 
+        question: Offence date
       # END offences section
 
       # BEGIN codefendants section
@@ -455,7 +494,7 @@ en:
 
       # BEGIN other sources of income details section
       manage_without_income:
-        question: 
+        question:
           one: How %{subject} lives with no income?
           other: How %{subject} live with no income?
         answers:
@@ -471,53 +510,53 @@ en:
 
       # BEGIN housing payments section
       housing_payment_type:
-        question: Which of these payments does your client pay where they usually live?
+        question: Type of payment
         answers:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
           none: My client does not pay any of these payments
       mortgage:
-        question: How much are your client's mortgage payments?
+        question: Amount
         answers:
           description: *payment_answer_format
       rent:
-        question: How much rent does your client pay, after taking away Housing Benefit?
+        question: Amount
         answers:
           description: *payment_answer_format
       # BEGIN board and lodgings section
       board_amount:
-        question: How much does your client pay for board and lodgings?
+        question: Amount
         answers:
           description: *payment_answer_format
       food_amount:
-        question: How much of the board and lodgings payment is for food?
+        question: Amount food
         answers:
           description: *payment_answer_format
       payee_name:
-        question: What is the name of the person your client pays for board and lodgings?
+        question: Name of person they pay
         answers:
           description: "%{name}"
       payee_relationship_to_client:
-        question: What is your client's relationship to this person?
+        question: Relationship to that person
         answers:
           description: "%{relationship}"
       # END board and lodgings section
       pays_council_tax:
-        question: Does your client pay Council Tax where they usually live?
+        question: Council Tax 
         answers:
           <<: *YESNO
       council_tax:
-        question: How much do they pay yearly?
+        question: Council Tax amount yearly
         answers:
           description: "%{amount}"
       # END housing payments section
 
       # BEGIN  outgoings payments section
       which_outgoings:
-        question: Which of these payments does your client pay?
+        question: Type of payments 
         answers:
-          none: My client does not pay any of these payments
+          none: None 
       childcare_outgoing:
         question: Childcare payments
         answers:
@@ -527,11 +566,11 @@ en:
         answers:
           description: *payment_answer_format
       legal_aid_contribution_outgoing:
-        question: Contributions towards criminal or civil legal aid
+        question: Criminal or civil legal aid contributions
         answers:
           description: *payment_answer_format
       legal_aid_contribution_outgoing_details:
-        question: What is the case reference of the criminal rep order or civil certificate?
+        question: Case reference of criminal representation order or civil certificate
       # END outgoings payments section
 
       # BEGIN other outgoings details section
@@ -540,11 +579,11 @@ en:
         answers:
           <<: *YESNO
       outgoings_more_than_income:
-        question: Are your client’s outgoings more than their income?
+        question: Outgoings more than income?
         answers:
           <<: *YESNO
       how_manage:
-        question: How does your client manage if their outgoings are more than their income?
+        question: How they cover outgoings that are more than income
       # END other outgoings details section
 
       # BEGIN legal representative details section
@@ -567,29 +606,29 @@ en:
       # BEGIN saving
       account_balance:
         question: What is the account balance?
-        absence_answer: '' 
+        absence_answer: ''
       saving_ownership_type:
         question: Whose name is the account in?
         answers: *OWNERSHIP_TYPE
-        absence_answer: '' 
+        absence_answer: ''
       account_number:
         question: What is the account number?
-        absence_answer: '' 
+        absence_answer: ''
       are_wages_paid_into_account:
         question: Client's wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       are_partners_wages_paid_into_account:
         question: Partner's wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       is_overdrawn:
         question: Is the account overdrawn?
         answers: *YESNO
-        absence_answer: '' 
+        absence_answer: ''
       provider_name:
         question: What is the name of the bank, building society or other holder of the savings?
-        absence_answer: '' 
+        absence_answer: ''
       sort_code:
         question: What is the sort code or branch name?
         absence_answer: ''
@@ -611,15 +650,15 @@ en:
       # END premium_bonds
 
       # START investments
-      description: 
+      description:
         question: Describe the investment
-        absence_answer: '' 
-      value: 
+        absence_answer: ''
+      value:
         question: What is the value of the investment?
         absence_answer: *absence_none
-      ownership_type: 
+      ownership_type:
         question: Whose name is the investment in?
-        answers: *OWNERSHIP_TYPE 
+        answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_investments:
         question: Which investments does your client have inside or outside the UK?
@@ -628,18 +667,18 @@ en:
       # END investments
 
       # START national_savings_certificates
-      national_savings_certificate_holder_number: 
+      national_savings_certificate_holder_number:
         question: What is the customer number or holder number?
         absence_answer: ''
       national_savings_certificate_certificate_number:
         question: 'What is the certificate number?'
         absence_answer: ''
-      national_savings_certificate_value: 
+      national_savings_certificate_value:
         question: What is the value of the certificate?
-        absence_answer: '' 
-      national_savings_certificate_ownership_type: 
+        absence_answer: ''
+      national_savings_certificate_ownership_type:
         question: Whose name is the certificate in?
-        answers: *OWNERSHIP_TYPE 
+        answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_national_savings_certificate:
         question: Does your client have any National Savings Certificates?
@@ -735,7 +774,7 @@ en:
           answers:
             'yes': 'None'
           absence_answer: *absence_none
-          
+
       deduction:
         income_tax:
           question: Income Tax

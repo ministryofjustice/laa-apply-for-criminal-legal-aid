@@ -17,9 +17,11 @@ RSpec.describe Tasks::PassportingBenefitCheck do
   let(:kase) { nil }
 
   let(:client_details_fulfilled) { true }
+  let(:partner_details_fulfilled) { true }
 
   before do
     allow(task).to receive(:fulfilled?).with(Tasks::ClientDetails).and_return(client_details_fulfilled)
+    allow(task).to receive(:fulfilled?).with(Tasks::PartnerDetails).and_return(partner_details_fulfilled)
   end
 
   describe '#path' do

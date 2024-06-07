@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe ClientDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record: record, crime_application: record) }
 
-  let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:) }
+  let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:, client_has_partner:, partner_detail:) }
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
   let(:kase) { instance_double(Case, case_type:) }
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }
   let(:case_type) { nil }
+  let(:client_has_partner) { 'no' }
+  let(:partner_detail) { nil }
 
   before do
     allow(validator).to receive(:appeal_no_changes?) { appeal_no_changes? }
@@ -31,6 +33,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:case_type, :blank)
         expect(errors).to receive(:add).with(:residence_type, :blank)
         expect(errors).to receive(:add).with(:has_nino, :blank)
+        expect(errors).to receive(:add).with(:client_has_partner, :blank)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
@@ -42,6 +45,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         it 'does not add any errors' do
           expect(errors).to receive(:add).with(:details, :blank)
           expect(errors).to receive(:add).with(:case_type, :blank)
+          expect(errors).to receive(:add).with(:client_has_partner, :blank)
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
@@ -156,6 +160,8 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
+
   describe '#has_nino_complete?' do
     let(:has_nino) { nil }
     let(:nino) { nil }
@@ -196,4 +202,39 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       end
     end
   end
+
+  describe '#relationship_status_complete?' do
+    context 'when applicant under18' do
+      let(:client_has_partner) { nil } # Should not be possible
+      let(:under18?) { true }
+
+      it 'returns true' do
+        expect(subject.relationship_status_complete?).to be(true)
+      end
+    end
+
+    context 'when applicant has partner' do
+      let(:client_has_partner) { 'yes' }
+
+      it 'returns true' do
+        expect(subject.relationship_status_complete?).to be(true)
+      end
+    end
+
+    context 'when applicant does not have partner' do
+      let(:client_has_partner) { 'no' }
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          relationship_status: 'divorced'
+        )
+      end
+
+      it 'returns true' do
+        expect(subject.relationship_status_complete?).to be(true)
+      end
+    end
+  end
+
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

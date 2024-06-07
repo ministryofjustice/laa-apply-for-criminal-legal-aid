@@ -2,6 +2,9 @@ module Steps
   module Outgoings
     class OutgoingsMoreThanIncomeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       has_one_association :outgoings
 
       attribute :outgoings_more_than_income, :value_object, source: YesNoAnswer

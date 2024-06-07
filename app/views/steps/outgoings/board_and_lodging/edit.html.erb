@@ -10,6 +10,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_fieldset(legend: { text: t('.page_title'), tag: 'h1', size: 'xl' }) do %>
         <%= f.govuk_number_field(:board_amount,
+                                 label: { text: label_t(:board_amount) },
                                  prefix_text: '£',
                                  width: 'one-half') %>
         <%= f.govuk_number_field(:food_amount,
@@ -21,9 +22,11 @@
                                              legend: { size: 's',
                                                        class: 'govuk-!-font-weight-regular' }) %>
         <%= f.govuk_text_field(:payee_name,
+                               label: { text: label_t(:payee_name) },
                                width: 'one-half',
                                autocomplete: 'off') %>
         <%= f.govuk_text_field(:payee_relationship_to_client,
+                               label: { text: label_t(:payee_relationship_to_client) },
                                width: 'one-half',
                                autocomplete: 'off') %>
   <% end %>
