@@ -107,6 +107,7 @@ en:
       other_capital_details: Other capital
       employments: Jobs
       employment: Job
+      self_assessment_tax_bill: Self Assessment tax
 
     questions:
       # BEGIN overview section
@@ -802,3 +803,10 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
+      self_assessment_tax_bill:
+        question: Does the partner pay a Self Assessment tax bill?
+        answers: *YESNO
+      self_assessment_tax_bill_payment:
+        question: Enter the amount
+        answers:
+          description: *payment_answer_format
