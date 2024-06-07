@@ -46,23 +46,6 @@ module Summary
         more_information
         legal_representative_details
       ],
-      appeal_with_no_changes: %i[
-        overview
-        client_details
-        contact_details
-        partner_details
-        case_details
-        offences
-        codefendants
-        next_court_hearing
-        first_court_hearing
-        justification_for_legal_aid
-        passport_justification_for_legal_aid
-        employment_details
-        supporting_evidence
-        more_information
-        legal_representative_details
-      ],
       capital: %i[
         properties
         savings
