@@ -11,7 +11,8 @@ RSpec.describe Decisions::SubmissionDecisionTree do
       CrimeApplication,
       id: 'uuid',
       applicant: applicant,
-      case: kase
+      case: kase,
+      partner_detail: nil,
     )
   end
 

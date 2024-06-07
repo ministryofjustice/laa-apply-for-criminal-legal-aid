@@ -20,7 +20,7 @@ module Summary
           Components::ValueAnswer.new(
             :client_owns_property, income.client_owns_property,
             change_path: edit_steps_income_client_owns_property_path,
-            subject_ownership_type: property_ownership_type
+            subject_type: property_ownership_type
           ),
           Components::ValueAnswer.new(
             :has_savings, income.has_savings,

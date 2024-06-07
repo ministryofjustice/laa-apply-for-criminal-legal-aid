@@ -37,8 +37,7 @@ module Datastore
         national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
         properties: capital ? parent.capital.properties : [],
         evidence_last_run_at: evidence_last_run_at,
-        evidence_prompts: evidence_prompts,
-        confirm_dwp_result: confirm_dwp_result
+        evidence_prompts: evidence_prompts
       )
     end
 
@@ -59,16 +58,6 @@ module Datastore
       parent.means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
     end
 
-    # `confirm_dwp_result` is saved in the applicant/partner part of Schema, requires calculation
-    # TODO: amend for partner
-    def confirm_dwp_result
-      applicant = parent.client_details.applicant
-
-      return unless applicant.respond_to?(:confirm_dwp_result) && applicant.confirm_dwp_result.present?
-
-      YesNoAnswer.new(applicant.confirm_dwp_result)
-    end
-
     def client_has_partner
       parent.client_details.applicant.has_partner == 'yes' ? YesNoAnswer::YES : YesNoAnswer::NO
     end
@@ -81,7 +70,7 @@ module Datastore
     end
 
     def applicant
-      attributes_to_ignore = PartnerDetail.fields + %w[confirm_dwp_result benefit_check_status]
+      attributes_to_ignore = PartnerDetail.fields + %w[benefit_check_status]
       attributes = parent.applicant.serializable_hash.except!(*attributes_to_ignore)
 
       Applicant.new(attributes)
@@ -91,7 +80,8 @@ module Datastore
       return nil unless FeatureFlags.partner_journey.enabled?
       return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
-      attributes = parent.partner.serializable_hash.except!(*PartnerDetail.fields)
+      attributes_to_ignore = PartnerDetail.fields + %w[benefit_check_status]
+      attributes = parent.partner.serializable_hash.except!(*attributes_to_ignore)
       Partner.new(attributes)
     end
 

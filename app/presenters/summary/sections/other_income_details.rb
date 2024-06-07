@@ -12,7 +12,7 @@ module Summary
           Components::ValueAnswer.new(
             :manage_without_income, income.manage_without_income,
             change_path: edit_steps_income_manage_without_income_path,
-            subject_ownership_type: subject_ownership_type
+            subject_type: manage_without_income_subject
           ),
           Components::FreeTextAnswer.new(
             :manage_other_details, income.manage_other_details,
@@ -23,7 +23,7 @@ module Summary
 
       private
 
-      def subject_ownership_type
+      def manage_without_income_subject
         return unless include_partner_in_means_assessment?
 
         SubjectType.new(:applicant_and_partner)

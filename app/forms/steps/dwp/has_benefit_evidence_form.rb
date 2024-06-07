@@ -1,6 +1,9 @@
 module Steps
   module DWP
     class HasBenefitEvidenceForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::SubjectIsBenefitCheckRecipient
+
       include Steps::HasOneAssociation
       has_one_association :applicant
 

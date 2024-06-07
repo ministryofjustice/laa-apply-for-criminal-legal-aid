@@ -245,13 +245,13 @@ data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
       form_object = double(
         :mock_form_object,
         model_name: Steps::BaseFormObject,
-        subject_ownership_type: subject_ownership_type
+        form_subject: form_subject
       )
 
       allow(view).to receive(:current_form_object).and_return(form_object)
     end
 
-    let(:subject_ownership_type) { nil }
+    let(:form_subject) { nil }
 
     it 'injects "subject", capitalized subject ("Subject") and "count" into the I18n options' do
       expect(helper).to receive(:translate).with(
@@ -263,7 +263,7 @@ data: { module: 'govuk-button', ga_category: 'category', ga_label: 'label' })
     end
 
     context 'when form subject is ApplicantAndPartner' do
-      let(:subject_ownership_type) { SubjectType::APPLICANT_AND_PARTNER }
+      let(:form_subject) { SubjectType::APPLICANT_AND_PARTNER }
 
       it 'sets the count to 2' do
         expect(helper).to receive(:translate).with(:translation_key, hash_including(count: 2))
