@@ -8,11 +8,13 @@ module Summary
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
-        answers = [
-          Components::ValueAnswer.new(
+        answers = []
+
+        if person.benefit_type
+          answers.push(Components::ValueAnswer.new(
             :passporting_benefit, person.benefit_type
-          )
-        ]
+          ))
+        end
 
         if jsa?
           answers.push(Components::DateAnswer.new(
