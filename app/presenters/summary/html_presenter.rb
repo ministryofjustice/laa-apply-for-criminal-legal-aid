@@ -1,5 +1,5 @@
 module Summary
-  class HtmlPresenter # rubocop:disable Metrics/ClassLength
+  class HtmlPresenter
     attr_reader :crime_application
 
     delegate :application_type, :appeal_no_changes?, to: :crime_application
