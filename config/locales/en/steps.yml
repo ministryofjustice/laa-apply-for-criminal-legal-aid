@@ -374,6 +374,13 @@ en:
               a company vehicle
               relocation payments
               private health insurance
+      partner:
+        income_payments:
+          edit:
+            page_title: Which of these payments does your partner get?
+        income_benefits:
+          edit:
+            page_title: Which of these benefits does your partner get?
 
     outgoings:
       caption: Outgoings assessment

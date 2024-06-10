@@ -4,7 +4,7 @@ module Decisions
     #
     include TypeOfMeansAssessment
 
-    def destination
+    def destination # rubocop:disable Metrics/PerceivedComplexity
       case step_name
       when :employment_status
         after_employment_status
@@ -44,6 +44,10 @@ module Decisions
         edit_dependants
       when :dependants_finished
         determine_showing_no_income_page
+      when :partner_income_payments # TODO: Standalone route until partner employment implemented
+        edit(:partner_income_benefits)
+      when :partner_income_benefits
+        edit(:manage_without_income) # TODO: Temporary until partner employment complete
       when :manage_without_income
         edit(:answers)
       when :answers

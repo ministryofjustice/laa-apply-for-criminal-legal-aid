@@ -194,6 +194,11 @@ Rails.application.routes.draw do
         edit_step :which_payments_client, alias: :income_payments
         edit_step :which_benefits_client, alias: :income_benefits
         edit_step :check_your_answers_income, alias: :answers
+
+        namespace :partner, constraints: -> (_) { FeatureFlags.partner_journey.enabled? } do
+          edit_step :which_payments, alias: :income_payments
+          edit_step :which_benefits, alias: :income_benefits
+        end
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
