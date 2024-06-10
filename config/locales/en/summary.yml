@@ -101,7 +101,8 @@ en:
       property_owners:
         relationship:
           <<: *RELATIONSHIP
-      passporting_benefit_check: Passporting benefit check
+      passporting_benefit_check: 'Passporting benefit check: client'
+      passporting_benefit_check_partner: 'Passporting benefit check: partner'
       trust_fund: Trust funds
       other_capital_details: Other capital
       employments: Jobs

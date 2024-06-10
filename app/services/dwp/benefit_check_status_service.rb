@@ -12,8 +12,7 @@ module DWP
     end
 
     def call
-      # TODO: determine when status should be calculated
-      return nil unless person_is_recipient?
+      return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s unless person_is_recipient?
 
       benefit_check_status
     end
