@@ -150,7 +150,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       end
     end
 
-    context 'and there is a relvant partner' do
+    context 'and there is a relevant partner' do
       context 'has correct next step' do
         let(:involvement_in_case) { 'none' }
 

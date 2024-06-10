@@ -77,7 +77,7 @@ module OutgoingsAssessment
 
     def partner_income_tax_rate_complete?
       return true unless FeatureFlags.partner_journey.enabled?
-      return true unless partner_relevant
+      return true unless include_partner_in_means_assessment?
 
       record.partner_income_tax_rate_above_threshold.present?
     end
@@ -87,19 +87,6 @@ module OutgoingsAssessment
       return true if record.outgoings_more_than_income == 'no'
 
       record.how_manage.present?
-    end
-
-    private
-
-    def partner_relevant
-      return if partner.nil?
-
-      partner.involvement_in_case == 'none' ||
-        (partner.involvement_in_case == 'codefendant' && partner.conflict_of_interest == 'no')
-    end
-
-    def partner
-      crime_application.partner_detail
     end
   end
 end

@@ -37,7 +37,7 @@ module Decisions
     end
 
     def after_income_tax_rate
-      if FeatureFlags.partner_journey.enabled? && partner_relevant
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
         edit(:partner_income_tax_rate)
       else
         edit(:outgoings_more_than_income)
@@ -54,13 +54,6 @@ module Decisions
 
     def crime_application
       form_object.crime_application
-    end
-
-    def partner_relevant
-      return if partner_detail.nil?
-
-      partner_detail.involvement_in_case == 'none' ||
-        (partner_detail.involvement_in_case == 'codefendant' && partner_detail.conflict_of_interest == 'no')
     end
   end
 end
