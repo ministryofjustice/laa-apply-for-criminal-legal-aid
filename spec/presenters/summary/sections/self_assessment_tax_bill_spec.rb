@@ -51,6 +51,7 @@ describe Summary::Sections::SelfAssessmentTaxBill do
 
     context 'when there is no outgoings' do
       let(:outgoings) { nil }
+      let(:outgoings_payments_double) { [] }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)
