@@ -43,7 +43,9 @@ describe Summary::Sections::SelfAssessmentTaxBill do
       end
 
       context 'when applicant_self_assessment_tax_bill is set to nil' do
-        it 'shows this section' do
+        let(:outgoings_payment) { nil }
+
+        it 'does not show this section' do
           expect(subject.show?).to be(false)
         end
       end

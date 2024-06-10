@@ -18,7 +18,7 @@ describe Summary::Sections::WorkBenefits do
     instance_double(
       Income,
       applicant_other_work_benefit_received:,
-      )
+    )
   end
 
   let(:income_payment) do
@@ -43,7 +43,9 @@ describe Summary::Sections::WorkBenefits do
       end
 
       context 'when applicant_other_work_benefit_received is set to nil' do
-        it 'shows this section' do
+        let(:income_payment) { nil }
+
+        it 'does not show this section' do
           expect(subject.show?).to be(false)
         end
       end
