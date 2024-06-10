@@ -2,7 +2,7 @@ module Summary
   module Sections
     class EmploymentIncome < Sections::BaseSection
       def show?
-        crime_application.income.applicant_other_work_benefit_received.present?
+        crime_application.income&.applicant_other_work_benefit_received.present?
       end
 
       def answers

@@ -2,10 +2,10 @@ module Summary
   module Sections
     class SelfAssessmentTaxBill < Sections::BaseSection
       def show?
-        crime_application.outgoings.applicant_self_assessment_tax_bill.present?
+        crime_application.outgoings&.applicant_self_assessment_tax_bill.present?
       end
 
-      def answers
+      def answers # rubocop:disable Metrics/MethodLength
         answers = [
           Components::ValueAnswer.new(
             :self_assessment_tax_bill, crime_application.outgoings.applicant_self_assessment_tax_bill,
