@@ -11,6 +11,7 @@ module Summary
         contact_details
         partner_details
         passporting_benefit_check
+        passporting_benefit_check_partner
         case_details
         offences
         codefendants

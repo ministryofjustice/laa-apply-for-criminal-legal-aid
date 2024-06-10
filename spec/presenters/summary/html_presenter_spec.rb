@@ -10,12 +10,13 @@ describe Summary::HtmlPresenter do
   # rubocop:disable Layout/LineLength
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: (double benefit_type: 'universal_credit'), kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double], employments: [double],
+      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
+      kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
+      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
-      savings: [double], investments: [double], national_savings_certificates: [double], properties: [double], partner: double, partner_detail: double
+      savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
   end
   # rubocop:enable Layout/LineLength
@@ -118,7 +119,7 @@ describe Summary::HtmlPresenter do
         }
       },
       'application_type' => application_type,
-      'case_details' => { 'case_type' => 'either_way' },
+      'case_details' => { 'case_type' => 'either_way' }
     }
 
     JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
@@ -146,6 +147,7 @@ describe Summary::HtmlPresenter do
             ContactDetails
             PartnerDetails
             PassportingBenefitCheck
+            PassportingBenefitCheckPartner
             CaseDetails
             Offences
             Codefendants
@@ -188,6 +190,7 @@ describe Summary::HtmlPresenter do
             ContactDetails
             PartnerDetails
             PassportingBenefitCheck
+            PassportingBenefitCheckPartner
             CaseDetails
             Offences
             Codefendants

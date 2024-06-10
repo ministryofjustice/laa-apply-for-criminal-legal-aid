@@ -9,7 +9,8 @@ RSpec.describe DWP::BenefitCheckStatusService do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      partner_detail: nil
+      partner: partner,
+      partner_detail: partner_detail
     )
   end
 
@@ -30,12 +31,10 @@ RSpec.describe DWP::BenefitCheckStatusService do
   end
 
   let(:partner) do
-    double(
-      Partner,
-      id: '234'
-    )
+    double(Partner, id: '234')
   end
 
+  let(:partner_detail) { nil }
   let(:id) { '1234' }
   let(:benefit_type) { nil }
   let(:last_jsa_appointment_date) { nil }
@@ -46,8 +45,6 @@ RSpec.describe DWP::BenefitCheckStatusService do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
-
-  let(:benefit_check_recipient) { applicant }
 
   describe '#call' do
     context 'when benefit check outcome undetermined' do
@@ -117,10 +114,12 @@ RSpec.describe DWP::BenefitCheckStatusService do
     end
 
     context 'when person is not benefit check recipient' do
-      let(:benefit_check_recipient) { partner }
+      let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
+      let(:benefit_type) { 'none' }
+      let(:partner) { double(Partner, id: '234', benefit_type: 'universal_credit') }
 
       it 'returns nil' do
-        expect(subject.call).to be_nil
+        expect(subject.call).to eq('no_check_required')
       end
     end
   end
