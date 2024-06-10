@@ -15,6 +15,7 @@ describe Summary::Sections::OtherOutgoingsDetails do
     instance_double(
       Outgoings,
       income_tax_rate_above_threshold: 'no',
+      partner_income_tax_rate_above_threshold: 'no',
       outgoings_more_than_income: 'yes',
       how_manage: 'An example of how they manage'
     )
@@ -45,22 +46,27 @@ describe Summary::Sections::OtherOutgoingsDetails do
 
     context 'when there are outgoings details' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(3)
+        expect(answers.count).to eq(4)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:income_tax_rate_above_threshold)
         expect(answers[0].change_path)
           .to match('applications/12345/steps/outgoings/client_paid_income_tax_rate')
-        expect(answers[0].value).to eq('no')
+        expect(answers[1].value).to eq('no')
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[1].question).to eq(:outgoings_more_than_income)
+        expect(answers[1].question).to eq(:partner_income_tax_rate_above_threshold)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/are_outgoings_more_than_income')
-        expect(answers[1].value).to eq('yes')
-        expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answers[2].question).to eq(:how_manage)
+          .to match('applications/12345/steps/outgoings/partner_paid_income_tax_rate')
+        expect(answers[1].value).to eq('no')
+        expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[2].question).to eq(:outgoings_more_than_income)
         expect(answers[2].change_path)
           .to match('applications/12345/steps/outgoings/are_outgoings_more_than_income')
-        expect(answers[2].value).to eq('An example of how they manage')
+        expect(answers[2].value).to eq('yes')
+        expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[3].question).to eq(:how_manage)
+        expect(answers[3].change_path)
+          .to match('applications/12345/steps/outgoings/are_outgoings_more_than_income')
+        expect(answers[3].value).to eq('An example of how they manage')
       end
     end
   end
