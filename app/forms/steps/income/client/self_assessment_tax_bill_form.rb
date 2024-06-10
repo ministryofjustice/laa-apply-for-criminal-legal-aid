@@ -1,6 +1,8 @@
 module Steps
   module Income
     module Client
+      # 'Self Assessment tax bill' is an outgoings payment but it is part of employment income journey.
+      # That's why we decided to keep it under 'steps/income' namespace
       class SelfAssessmentTaxBillForm < Steps::BaseFormObject
         attribute :applicant_self_assessment_tax_bill, :value_object, source: YesNoAnswer
         attribute :amount, :pence
