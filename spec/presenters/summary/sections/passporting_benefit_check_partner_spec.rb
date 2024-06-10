@@ -89,7 +89,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
           expect(answers[2].value).to eq('undetermined')
 
           expect(answers[3]).to be_an_instance_of(Summary::Components::ValueAnswer)
-          expect(answers[3].question).to eq(:confirmed_client_details)
+          expect(answers[3].question).to eq(:confirmed_details)
           expect(answers[3].value).to eq('yes')
 
           expect(answers[4]).to be_an_instance_of(Summary::Components::ValueAnswer)

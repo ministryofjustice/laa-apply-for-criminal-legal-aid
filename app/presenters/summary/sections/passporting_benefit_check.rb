@@ -30,7 +30,7 @@ module Summary
 
           if person.confirm_details
             answers.push(Components::ValueAnswer.new(
-                           :confirmed_client_details, person.confirm_details
+                           :confirmed_details, person.confirm_details
                          ))
           end
 
