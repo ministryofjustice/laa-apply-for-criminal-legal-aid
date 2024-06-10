@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_06_080623) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -176,10 +176,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_080623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_title"
+    t.string "has_no_deductions"
     t.bigint "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}, null: false
-    t.string "has_no_deductions"
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
   end
 
@@ -203,7 +203,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_080623) do
     t.string "partner_employment_status", default: [], array: true
     t.string "partner_has_no_income_payments"
     t.string "partner_has_no_income_benefits"
-    t.string "applicant_self_assessment_tax_bill"
     t.string "applicant_other_work_benefit_received"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
@@ -269,6 +268,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_080623) do
     t.string "pays_council_tax"
     t.string "has_no_other_outgoings"
     t.string "partner_income_tax_rate_above_threshold"
+    t.string "applicant_self_assessment_tax_bill"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
