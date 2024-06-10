@@ -649,7 +649,11 @@ en:
         steps/outgoings/income_tax_rate_form:
           attributes:
             income_tax_rate_above_threshold:
-              inclusion: Select yes if in the last 2 years, your client has paid the 40% income tax rate
+              inclusion: Select yes if your client has paid the 40% income tax rate in the last 2 years
+        steps/outgoings/partner_income_tax_rate_form:
+          attributes:
+            partner_income_tax_rate_above_threshold:
+              inclusion: Select yes if the partner has paid the 40% income tax rate in the last 2 years
         steps/outgoings/outgoings_more_than_income_form:
           attributes:
             outgoings_more_than_income:

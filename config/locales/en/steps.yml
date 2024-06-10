@@ -392,8 +392,16 @@ en:
           page_title: Board and lodgings payments
       income_tax_rate:
         edit:
-          page_title: In the last 2 years, has your client paid the 40% income tax rate?
-          income_tax_rate_above_threshold: In the last 2 years, has your client paid the 40% income tax rate?
+          page_title: Has your client paid the 40% income tax rate in the last 2 years?
+          income_tax_rate_above_threshold: Has your client paid the 40% income tax rate in the last 2 years?
+      partner_income_tax_rate:
+        edit:
+          page_title: Has the partner paid the 40% income tax rate in the last 2 years?
+          partner_income_tax_rate_above_threshold: Has the partner paid the 40% income tax rate in the last 2 years?
+      outgoings_more_than_income:
+        edit:
+          page_title: Are your client’s outgoings more than their income?
+          outgoings_more_than_income: Are your client’s outgoings more than their income?
       answers:
         edit:
           page_title: Check your answers - %{Subject}'s outgoings

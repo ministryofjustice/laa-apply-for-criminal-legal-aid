@@ -68,7 +68,7 @@ module Adapters
       end
 
       def employments
-        return [] unless means_details.income_details.employments
+        return [] unless means_details&.income_details&.employments
 
         means_details.income_details.employments.map do |struct|
           if struct.respond_to?(:deductions)
