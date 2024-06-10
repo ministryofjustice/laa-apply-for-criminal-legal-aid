@@ -15,10 +15,7 @@ describe Summary::Sections::EmploymentIncome do
   let(:income_payments_double) { double('income_payments_collection', detect: income_payment) }
 
   let(:income) do
-    instance_double(
-      Income,
-      applicant_other_work_benefit_received:,
-    )
+    instance_double(Income)
   end
 
   let(:income_payment) do
@@ -60,7 +57,7 @@ describe Summary::Sections::EmploymentIncome do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    context 'when there is an income' do
+    context 'when there is an employment income' do
       let(:applicant_other_work_benefit_received) { 'yes' }
 
       it 'has the correct rows' do

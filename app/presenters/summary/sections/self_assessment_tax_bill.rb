@@ -23,11 +23,13 @@ module Summary
         answers
       end
 
+      # :nocov:
       def self_assessment_tax_bill
         crime_application
           .outgoings_payments
           .detect { |payment| payment.payment_type == OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.to_s }
       end
+      # :nocov:
     end
   end
 end

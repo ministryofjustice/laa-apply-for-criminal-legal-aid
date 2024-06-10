@@ -64,7 +64,7 @@ describe Summary::Sections::SelfAssessmentTaxBill do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    context 'when there are outgoings' do
+    context 'when there is self assessment tax bill paid' do
       let(:applicant_self_assessment_tax_bill) { 'yes' }
 
       it 'has the correct rows' do
@@ -77,6 +77,18 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         expect(answers[1].question).to eq(:self_assessment_tax_bill_payment)
         expect(answers[1].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
         expect(answers[1].value).to eq(outgoings_payment)
+      end
+    end
+
+    context 'when there is no self assessment tax bill paid' do
+      let(:applicant_self_assessment_tax_bill) { 'no' }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(1)
+        expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[0].question).to eq(:self_assessment_tax_bill)
+        expect(answers[0].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
+        expect(answers[0].value).to eq('no')
       end
     end
   end

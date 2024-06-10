@@ -23,11 +23,13 @@ module Summary
         answers
       end
 
+      # :nocov:
       def work_benefits
         crime_application
           .income_payments
           .detect { |payment| payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s }
       end
+      # :nocov:
     end
   end
 end

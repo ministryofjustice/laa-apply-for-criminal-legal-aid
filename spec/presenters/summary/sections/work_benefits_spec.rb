@@ -64,7 +64,7 @@ describe Summary::Sections::WorkBenefits do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    context 'when there is an income' do
+    context 'when there is work benefits received' do
       let(:applicant_other_work_benefit_received) { 'yes' }
 
       it 'has the correct rows' do
@@ -77,6 +77,18 @@ describe Summary::Sections::WorkBenefits do
         expect(answers[1].question).to eq(:work_benefits_payment)
         expect(answers[1].change_path).to match('applications/12345/steps/income/client/other_work_benefits_client')
         expect(answers[1].value).to eq(income_payment)
+      end
+    end
+
+    context 'when there is no work benefits received' do
+      let(:applicant_other_work_benefit_received) { 'no' }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(1)
+        expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[0].question).to eq(:work_benefits)
+        expect(answers[0].change_path).to match('applications/12345/steps/income/client/other_work_benefits_client')
+        expect(answers[0].value).to eq('no')
       end
     end
   end
