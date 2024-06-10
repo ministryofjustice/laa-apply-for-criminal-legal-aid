@@ -107,4 +107,3 @@ module Summary
     end
   end
 end
-
