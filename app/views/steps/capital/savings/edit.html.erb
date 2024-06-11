@@ -24,7 +24,7 @@
         <%= f.govuk_collection_radio_buttons :are_partners_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
       <% end %>
 
-      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f:, values: OwnershipType.values  } %>
+      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: f, values: OwnershipType.values } %>
       <%= f.continue_button %>
     <% end %>
   </div>

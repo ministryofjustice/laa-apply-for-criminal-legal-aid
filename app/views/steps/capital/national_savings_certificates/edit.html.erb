@@ -13,7 +13,7 @@
       <%= f.govuk_text_field :certificate_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
       <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
 
-      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f:, values: OwnershipType.exclusive } %>
+      <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: f, values: OwnershipType.exclusive } %>
 
       <%= f.continue_button %>
     <% end %>
