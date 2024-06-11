@@ -1,11 +1,19 @@
 module Adapters
   module Structs
     class CapitalDetails < BaseStructAdapter
+      def trust_fund_amount_held
+        cast_to_pounds(super)
+      end
+
       def trust_fund_yearly_dividend
         cast_to_pounds(super)
       end
 
-      def trust_fund_amount_held
+      def partner_trust_fund_amount_held
+        cast_to_pounds(super)
+      end
+
+      def partner_trust_fund_yearly_dividend
         cast_to_pounds(super)
       end
 

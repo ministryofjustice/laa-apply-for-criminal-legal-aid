@@ -4,9 +4,11 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { instance_double(Capital, crime_application:, errors:) }
-  let(:crime_application) { instance_double(CrimeApplication, income:) }
+  let(:crime_application) { instance_double(CrimeApplication, income:, partner_detail:) }
   let(:income) { instance_double(Income) }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
   let(:errors) { double(:errors) }
+  let(:involvement_in_case) { nil }
   let(:requires_full_means_assessment?) { true }
   let(:requires_full_capital?) { true }
 
@@ -75,6 +77,9 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
           trust_fund_amount_held: 100,
           has_frozen_income_or_assets: 'no',
           trust_fund_yearly_dividend: 1,
+          partner_will_benefit_from_trust_fund: 'yes',
+          partner_trust_fund_amount_held: 200,
+          partner_trust_fund_yearly_dividend: 2,
           national_savings_certificates: [
             instance_double(NationalSavingsCertificate, complete?: true)
           ]
@@ -332,7 +337,7 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   end
 
   describe '#trust_fund_complete?' do
-    it 'returns false when not answerd' do
+    it 'returns false when not answered' do
       allow(record).to receive(:will_benefit_from_trust_fund).and_return('nil')
       expect(subject.trust_fund_complete?).to be(false)
     end
@@ -364,6 +369,48 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
 
         it 'returns false' do
           expect(subject.trust_fund_complete?).to be(false)
+        end
+      end
+    end
+  end
+
+  describe '#partner_trust_fund_complete?' do
+    let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+    it 'returns false when not answered' do
+      allow(record).to receive(:partner_will_benefit_from_trust_fund).and_return('nil')
+      expect(subject.partner_trust_fund_complete?).to be(false)
+    end
+
+    it 'returns true when answered no' do
+      allow(record).to receive(:partner_will_benefit_from_trust_fund).and_return('no')
+      expect(subject.partner_trust_fund_complete?).to be(true)
+    end
+
+    context 'when answered yes' do
+      before do
+        allow(record).to receive(:partner_will_benefit_from_trust_fund).and_return('yes')
+      end
+
+      context 'when partner trust fund details are provided' do
+        before do
+          allow(record).to receive_messages(partner_trust_fund_amount_held: 10_000,
+                                            partner_trust_fund_yearly_dividend: 500)
+        end
+
+        it 'returns true' do
+          expect(subject.partner_trust_fund_complete?).to be(true)
+        end
+      end
+
+      context 'when partner trust fund details are missing' do
+        before do
+          allow(record).to receive_messages(partner_trust_fund_amount_held: nil,
+                                            partner_trust_fund_yearly_dividend: nil)
+        end
+
+        it 'returns false' do
+          expect(subject.partner_trust_fund_complete?).to be(false)
         end
       end
     end

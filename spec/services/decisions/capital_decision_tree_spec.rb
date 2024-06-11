@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Decisions::CapitalDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:crime_application) do
     instance_double(
       CrimeApplication,
@@ -491,7 +492,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
     end
-    
+
     context 'when there is a partner' do
       context 'when partner is not included' do
         let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
@@ -573,4 +574,5 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

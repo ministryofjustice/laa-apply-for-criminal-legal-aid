@@ -20,12 +20,10 @@ module Steps
       private
 
       def persist!
-        binding.pry
         capital.update(attributes)
       end
 
       def before_save
-        binding.pry
         return if partner_will_benefit_from_trust_fund&.yes?
 
         self.partner_trust_fund_amount_held = nil

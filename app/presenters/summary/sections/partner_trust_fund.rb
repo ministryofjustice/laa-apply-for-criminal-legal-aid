@@ -3,7 +3,6 @@ module Summary
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class PartnerTrustFund < Sections::BaseSection
       def show?
-        binding.pry
         capital.present? && capital.partner_will_benefit_from_trust_fund.present?
       end
 
