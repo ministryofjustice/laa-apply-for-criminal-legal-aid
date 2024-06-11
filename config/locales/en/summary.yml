@@ -229,8 +229,8 @@ en:
           no_record_found: No record of passporting benefit found
           checker_unavailable: DWP was unavailable, you can try again
           no_check_no_nino: No check made as no National Insurance number provided
-      confirmed_client_details:
-        question: Confirmed client details correct?
+      confirmed_details:
+        question: Confirmed details correct?
         answers:
           <<: *YESNO
       has_benefit_evidence:
