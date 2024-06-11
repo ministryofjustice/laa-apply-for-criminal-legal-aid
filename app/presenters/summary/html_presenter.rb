@@ -38,6 +38,7 @@ module Summary
         national_savings_certificates
         investments
         trust_fund
+        partner_trust_fund
         other_capital_details
         supporting_evidence
         more_information
@@ -57,6 +58,7 @@ module Summary
         national_savings_certificates
         investments
         trust_fund
+        partner_trust_fund
         other_capital_details
       ],
       outgoings: %i[

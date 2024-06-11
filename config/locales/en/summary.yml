@@ -105,7 +105,8 @@ en:
           <<: *RELATIONSHIP
       passporting_benefit_check: 'Passporting benefit check: client'
       passporting_benefit_check_partner: 'Passporting benefit check: partner'
-      trust_fund: Trust funds
+      trust_fund: 'Trust funds: client'
+      partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
       employments: Jobs
       employment: Job
@@ -750,13 +751,23 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Does your client stand to benefit from a trust fund inside or outside the UK?
+        question: Trust fund
         answers: *YESNO
       trust_fund_amount_held:
-        question: Enter the amount held in the fund
+        question: Amount in fund
       trust_fund_yearly_dividend:
-        question: Enter the yearly dividend
+        question: Yearly dividend
       # END trust_fund
+
+      # START partner_trust_fund
+      partner_will_benefit_from_trust_fund:
+        question: Trust fund
+        answers: *YESNO
+      partner_trust_fund_amount_held:
+        question: Amount in fund
+      partner_trust_fund_yearly_dividend:
+        question: Yearly dividend
+      # END partner_trust_fund
 
       has_no_other_assets:
         question: Client has no other assets or capital

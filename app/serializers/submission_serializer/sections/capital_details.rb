@@ -2,7 +2,7 @@ module SubmissionSerializer
   module Sections
     class CapitalDetails < Sections::BaseSection
       def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        Jbuilder.new do |json|
+        Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           next unless capital && requires_full_means_assessment?
 
           if requires_full_capital?
@@ -25,6 +25,9 @@ module SubmissionSerializer
           json.will_benefit_from_trust_fund capital.will_benefit_from_trust_fund
           json.trust_fund_amount_held capital.trust_fund_amount_held_before_type_cast
           json.trust_fund_yearly_dividend capital.trust_fund_yearly_dividend_before_type_cast
+          json.partner_will_benefit_from_trust_fund capital.partner_will_benefit_from_trust_fund
+          json.partner_trust_fund_amount_held capital.partner_trust_fund_amount_held_before_type_cast
+          json.partner_trust_fund_yearly_dividend capital.partner_trust_fund_yearly_dividend_before_type_cast
 
           unless income.has_frozen_income_or_assets.present? || capital.has_frozen_income_or_assets.blank?
             json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
