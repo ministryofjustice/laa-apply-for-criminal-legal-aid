@@ -66,19 +66,19 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
   describe 'answers' do
     it 'renders as summary list' do
       expect(page).to have_summary_row(
-        'What is the customer number or holder number?',
+        'Customer or holder number',
         'A1'
       )
       expect(page).to have_summary_row(
-        'What is the certificate number?',
+        'Certificate number',
         'B2'
       )
       expect(page).to have_summary_row(
-        'What is the value of the certificate?',
+        'Value',
         '£100.00'
       )
       expect(page).to have_summary_row(
-        'Whose name is the certificate in?',
+        'Who owns the certificate?',
         'Client'
       )
     end
@@ -98,19 +98,19 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
 
       it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
-          'What is the customer number or holder number?',
+          'Customer or holder number',
           ''
         )
         expect(page).to have_summary_row(
-          'What is the certificate number?',
+          'Certificate number',
           ''
         )
         expect(page).to have_summary_row(
-          'What is the value of the certificate?',
+          'Value',
           ''
         )
         expect(page).to have_summary_row(
-          'Whose name is the certificate in?',
+          'Who owns the certificate?',
           ''
         )
       end

@@ -132,6 +132,10 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       context 'when there is no partner' do
         let(:partner_detail) { nil }
 
+        before do
+          allow(crime_application).to receive(:partner)
+        end
+
         it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
       end
 

@@ -10,7 +10,8 @@ RSpec.describe Passporting::MeansPassporter do
       applicant: applicant,
       resubmission?: resubmission?,
       is_means_tested: is_means_tested,
-      partner_detail: nil
+      partner_detail: nil,
+      partner: nil
     )
   }
 

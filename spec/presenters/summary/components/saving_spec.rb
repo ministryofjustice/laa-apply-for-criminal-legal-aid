@@ -69,23 +69,23 @@ RSpec.describe Summary::Components::Saving, type: :component do
   describe 'answers' do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
       expect(page).to have_summary_row(
-        'What is the name of the bank, building society or other holder of the savings?',
+        'Bank or building society',
         'Bank of Test'
       )
       expect(page).to have_summary_row(
-        'What is the sort code or branch name?',
+        'Sort code or branch name',
         '01-01-01',
       )
       expect(page).to have_summary_row(
-        'What is the account number?',
+        'Account number',
         '01234500',
       )
       expect(page).to have_summary_row(
-        'What is the account balance?',
+        'Account balance',
         '£100.01',
       )
       expect(page).to have_summary_row(
-        'Is the account overdrawn?',
+        'Account overdrawn?',
         'No',
       )
       expect(page).to have_summary_row(
@@ -93,7 +93,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
         'Yes',
       )
       expect(page).to have_summary_row(
-        'Whose name is the account in?',
+        'Name the account is in',
         'Client'
       )
     end
@@ -135,29 +135,14 @@ RSpec.describe Summary::Components::Saving, type: :component do
         }
       end
 
-      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
-        expect(page).to have_summary_row(
-          'What is the name of the bank, building society or other holder of the savings?', ''
-        )
-        expect(page).to have_summary_row(
-          'What is the sort code or branch name?', ''
-        )
-        expect(page).to have_summary_row(
-          'What is the account number?', ''
-        )
-        expect(page).to have_summary_row(
-          'What is the account balance?',
-          '',
-        )
-        expect(page).to have_summary_row(
-          'Is the account overdrawn?', ''
-        )
-        expect(page).to have_summary_row(
-          "Client's wages or benefits paid into this account?", ''
-        )
-        expect(page).to have_summary_row(
-          'Whose name is the account in?', ''
-        )
+      it 'renders as summary list with the correct absence_answer' do
+        expect(page).to have_summary_row('Bank or building society', '')
+        expect(page).to have_summary_row('Sort code or branch name', '')
+        expect(page).to have_summary_row('Account number', '')
+        expect(page).to have_summary_row('Account balance', '')
+        expect(page).to have_summary_row('Account overdrawn?', '')
+        expect(page).to have_summary_row("Client's wages or benefits paid into this account?", '')
+        expect(page).to have_summary_row('Name the account is in', '')
       end
     end
   end

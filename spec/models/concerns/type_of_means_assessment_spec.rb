@@ -17,7 +17,7 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }
-  let(:partner) { instance_double(Partner) }
+  let(:partner) { nil }
   let(:benefit_check_recipient) { applicant }
   let(:has_benefit_evidence) { nil }
   let(:kase) { instance_double(Case) }

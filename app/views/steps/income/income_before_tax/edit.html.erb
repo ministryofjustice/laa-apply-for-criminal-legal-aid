@@ -8,7 +8,8 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :income_above_threshold, @form_object.choices,
                                            :value, inline: false,
-                                           legend: { text: legend_t(:income_above_threshold), tag: 'h1', size: 'xl' } %>
+                                           legend: { text: legend_t(:income_above_threshold), tag: 'h1', size: 'xl' },
+                                           hint: { text: hint_t(:income_above_threshold) } %>
       <%= f.continue_button %>
     <% end %>
   </div>

@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::OtherInvestmentTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, investments:, partner_detail:) }
+  let(:crime_application) { instance_double(CrimeApplication, investments:, partner_detail:, partner:) }
   let(:investments) { double }
   let(:investment_type) { InvestmentType.values.sample.to_s }
   let(:new_investment) { instance_double(Investment) }
   let(:partner_detail) { nil }
+  let(:partner) { nil }
 
   describe '#choices' do
     it 'returns investment types' do

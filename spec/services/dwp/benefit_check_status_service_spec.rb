@@ -30,10 +30,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
     )
   end
 
-  let(:partner) do
-    double(Partner, id: '234')
-  end
-
+  let(:partner) { nil }
   let(:partner_detail) { nil }
   let(:id) { '1234' }
   let(:benefit_type) { nil }

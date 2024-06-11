@@ -69,13 +69,13 @@ describe Summary::Sections::OtherIncomeDetails do
     context 'when partner is included in means assessment' do
       let(:include_partner?) { true }
 
-      it { is_expected.to eq 'How client and their partner live with no income?' }
+      it { is_expected.to eq 'How client and partner live with no income' }
     end
 
     context 'when partner is not included means assessment' do
       let(:include_partner?) { false }
 
-      it { is_expected.to eq 'How client lives with no income?' }
+      it { is_expected.to eq 'How client lives with no income' }
     end
   end
 end

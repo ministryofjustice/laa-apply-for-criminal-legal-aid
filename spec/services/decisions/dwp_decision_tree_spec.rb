@@ -8,7 +8,7 @@ RSpec.describe Decisions::DWPDecisionTree do
   let(:applicant) { double(Applicant, benefit_check_result:) }
   let(:benefit_check_result) { false }
   let(:benefit_check_recipient) { applicant }
-  let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
+  let(:partner) { nil }
   let(:has_passporting_benefit) { false }
   let(:partner_detail) { nil }
 
@@ -71,6 +71,7 @@ RSpec.describe Decisions::DWPDecisionTree do
       end
 
       context 'when the benefit check recipient is the partner' do
+        let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
         let(:has_passporting_benefit) { true }
 
         it { is_expected.to have_destination('steps/partner/details', :edit, id: crime_application) }
@@ -273,6 +274,7 @@ RSpec.describe Decisions::DWPDecisionTree do
 
       context 'when the benefit check recipient is the partner' do
         let(:has_passporting_benefit) { true }
+        let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
 
         it { is_expected.to have_destination('steps/partner/nino', :edit, id: crime_application) }
       end
