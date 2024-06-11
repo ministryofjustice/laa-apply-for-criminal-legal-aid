@@ -13,6 +13,8 @@ module Decisions
       when :outgoings_payments
         edit(:income_tax_rate)
       when :income_tax_rate
+        after_income_tax_rate
+      when :partner_income_tax_rate
         edit(:outgoings_more_than_income)
       when :outgoings_more_than_income
         edit(:answers)
@@ -31,6 +33,14 @@ module Decisions
         edit(form_object.housing_payment_type.value)
       when nil, :none
         edit(:council_tax)
+      end
+    end
+
+    def after_income_tax_rate
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        edit(:partner_income_tax_rate)
+      else
+        edit(:outgoings_more_than_income)
       end
     end
 

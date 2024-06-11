@@ -21,6 +21,7 @@ module OutgoingsAssessment
       errors.add(:council_tax, :incomplete) unless council_tax_complete?
       errors.add(:outgoings_payments, :incomplete) unless outgoings_payments_complete?
       errors.add(:income_tax_rate, :incomplete) unless income_tax_rate_complete?
+      errors.add(:partner_income_tax_rate, :incomplete) unless partner_income_tax_rate_complete?
       errors.add(:outgoings_more_than, :incomplete) unless outgoings_more_than_income_complete?
       errors.add(:base, :incomplete_records) if errors.present?
     end
@@ -72,6 +73,13 @@ module OutgoingsAssessment
 
     def income_tax_rate_complete?
       record.income_tax_rate_above_threshold.present?
+    end
+
+    def partner_income_tax_rate_complete?
+      return true unless FeatureFlags.partner_journey.enabled?
+      return true unless include_partner_in_means_assessment?
+
+      record.partner_income_tax_rate_above_threshold.present?
     end
 
     def outgoings_more_than_income_complete?

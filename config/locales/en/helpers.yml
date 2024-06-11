@@ -724,6 +724,8 @@ en:
         amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_partner_income_tax_rate_form:
+        partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:
         types_options:
           childcare: Childcare payments
