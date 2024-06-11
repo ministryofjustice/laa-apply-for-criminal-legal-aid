@@ -50,7 +50,7 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         }
       end
 
-      it 'adds errors for all failed validations' do # rubocop:disable Spec/MultipleExpectations
+      it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
         expect(errors).to receive(:add).with(:has_case_concluded, :blank)
         expect(errors).to receive(:add).with(:is_preorder_work_claimed, :blank)
         expect(errors).to receive(:add).with(:is_client_remanded, :blank)
