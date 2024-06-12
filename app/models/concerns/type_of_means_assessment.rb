@@ -90,7 +90,7 @@ module TypeOfMeansAssessment
   # partner when a datastore application.
   def partner_conflict_of_interest
     return partner_detail.conflict_of_interest if partner_detail
-    
+
     partner&.conflict_of_interest
   end
 
