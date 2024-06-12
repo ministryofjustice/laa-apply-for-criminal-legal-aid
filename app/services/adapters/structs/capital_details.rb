@@ -21,6 +21,10 @@ module Adapters
         cast_to_pounds(super)
       end
 
+      def partner_premium_bonds_total_value
+        cast_to_pounds(super)
+      end
+
       def savings
         return [] unless __getobj__
 

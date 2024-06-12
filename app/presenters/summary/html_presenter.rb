@@ -1,5 +1,5 @@
 module Summary
-  class HtmlPresenter
+  class HtmlPresenter # rubocop:disable Metrics/ClassLength
     attr_reader :crime_application
 
     delegate :application_type, :appeal_no_changes?, to: :crime_application
@@ -36,6 +36,7 @@ module Summary
         properties
         savings
         premium_bonds
+        partner_premium_bonds
         national_savings_certificates
         investments
         trust_fund
@@ -56,6 +57,7 @@ module Summary
         properties
         savings
         premium_bonds
+        partner_premium_bonds
         national_savings_certificates
         investments
         trust_fund

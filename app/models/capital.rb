@@ -1,6 +1,7 @@
 class Capital < ApplicationRecord
   belongs_to :crime_application
   attribute :premium_bonds_total_value, :pence
+  attribute :partner_premium_bonds_total_value, :pence
   attribute :trust_fund_amount_held, :pence
   attribute :trust_fund_yearly_dividend, :pence
   attribute :partner_trust_fund_amount_held, :pence

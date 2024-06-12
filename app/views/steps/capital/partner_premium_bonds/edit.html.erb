@@ -1,0 +1,21 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:partner_has_premium_bonds, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_radio_button :partner_has_premium_bonds, YesNoAnswer::YES do %>
+          <%= f.govuk_text_field :partner_premium_bonds_holder_number, autocomplete: 'off', extra_letter_spacing: true, width: 'one-third' %>
+          <%= f.govuk_number_field :partner_premium_bonds_total_value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
+        <% end %>
+
+        <%= f.govuk_radio_button :partner_has_premium_bonds, YesNoAnswer::NO %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
