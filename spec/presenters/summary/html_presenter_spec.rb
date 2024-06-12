@@ -11,8 +11,12 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit'), kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double], employments: [double],
-      outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
+      income: (double has_no_income_payments: nil, has_no_income_benefits: nil),
+      income_payments: [instance_double(IncomePayment, ownership_type: 'applicant'), instance_double(IncomePayment, ownership_type: 'partner')],
+      employments: [double],
+      outgoings_payments: [instance_double(Payment, payment_type: 'childcare')],
+      income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant'), instance_double(IncomeBenefit, ownership_type: 'partner')],
+      outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double], partner: double, partner_detail: double
@@ -60,18 +64,35 @@ describe Summary::HtmlPresenter do
               ]
             }
           ],
-          'income_payments' => [{
-            'payment_type' => 'maintenance',
-            'amount' => 10_000,
-            'frequency' => 'week',
-            'ownership_type' => 'applicant'
-          }],
-          'income_benefits' => [{
-            'payment_type' => 'child',
-            'amount' => 50_000,
-            'frequency' => 'month',
-            'ownership_type' => 'applicant'
-          }],
+          'income_payments' => [
+            {
+              'payment_type' => 'maintenance',
+              'amount' => 10_000,
+              'frequency' => 'week',
+              'ownership_type' => 'applicant'
+            },
+            {
+              'payment_type' => 'maintenance',
+              'amount' => 20_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'partner'
+            },
+          ],
+          'income_benefits' => [
+            {
+              'payment_type' => 'child',
+              'amount' => 50_000,
+              'frequency' => 'month',
+              'ownership_type' => 'applicant'
+            },
+            {
+              'payment_type' => 'other',
+              'amount' => 1_000,
+              'frequency' => 'month',
+              'ownership_type' => 'partner',
+              'metadata' => { 'details' => 'Local grant' },
+            },
+          ],
           'outgoings_payments' => [{
             'payment_type' => 'childcare',
             'amount' => 200,
@@ -156,9 +177,11 @@ describe Summary::HtmlPresenter do
             EmploymentDetails
             IncomeDetails
             Employments
-            Dependants
             IncomePaymentsDetails
             IncomeBenefitsDetails
+            Dependants
+            PartnerIncomePaymentsDetails
+            PartnerIncomeBenefitsDetails
             OtherIncomeDetails
             HousingPayments
             OutgoingsPaymentsDetails
@@ -201,6 +224,8 @@ describe Summary::HtmlPresenter do
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
+            PartnerIncomePaymentsDetails
+            PartnerIncomeBenefitsDetails
             OtherIncomeDetails
             HousingPayments
             OutgoingsPaymentsDetails
@@ -334,6 +359,8 @@ describe Summary::HtmlPresenter do
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants
+      PartnerIncomePaymentsDetails
+      PartnerIncomeBenefitsDetails
       OtherIncomeDetails
     ]
 

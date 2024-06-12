@@ -14,7 +14,7 @@ module Steps
 
         attribute :income_payments, array: true, default: [] # Used by BaseFormObject
 
-        validates_with IncomePaymentsValidator
+        validates_with PartnerIncomePaymentsValidator
 
         IncomePaymentType::OTHER_INCOME_PAYMENT_TYPES.each do |type|
           attribute type.to_s, :string

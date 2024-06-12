@@ -3,21 +3,15 @@ require 'rails_helper'
 RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
-  let(:record) { instance_double(Income, crime_application:, errors:) }
-  let(:crime_application) { instance_double CrimeApplication }
+  let(:record) { Income.new(crime_application:) }
+  let(:crime_application) { CrimeApplication.new(case: Case.new(case_type: 'summary_only')) }
 
-  let(:errors) { double(:errors) }
   let(:requires_means_assessment?) { true }
   let(:employment_validator) do
     instance_double(EmploymentDetails::AnswersValidator, validate: nil)
   end
 
   before do
-    allow(crime_application).to receive_messages(
-      income: record,
-      kase: double(case_type: 'summary_only')
-    )
-
     allow(validator).to receive_messages(
       evidence_of_passporting_means_forthcoming?: false,
       requires_means_assessment?: requires_means_assessment?
@@ -47,19 +41,17 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
   describe '#complete?' do
     subject(:complete?) { validator.complete? }
 
-    before do
-      expect(validator).to receive(:validate)
-      expect(errors).to receive(:empty?) { !errors_added? }
-    end
-
     context 'when validate does not add errors' do
-      let(:errors_added?) { false }
+      before { allow(validator).to receive(:validate).and_return(nil) }
 
       it { is_expected.to be(true) }
     end
 
     context 'when validate adds errors' do
-      let(:errors_added?) { true }
+      before do
+        record.has_no_income_payments = 'no'
+        crime_application.save!
+      end
 
       it { is_expected.to be(false) }
     end
@@ -70,21 +62,38 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       allow(validator).to receive_messages(
         applicable?: true
       )
-      allow(record).to receive_messages(**attributes)
+
+      crime_application.income_payments = income_payments
+      crime_application.income_benefits = income_benefits
+      record.attributes = record_attributes
+
+      record.save!
     end
 
     context 'when all validations pass' do
-      let(:errors) { [] }
+      let(:income_payments) do
+        [
+          IncomePayment.new(ownership_type: 'applicant', payment_type: 'maintenance', amount: 1, frequency: 'week'),
+          IncomePayment.new(ownership_type: 'partner', payment_type: 'maintenance', amount: 1, frequency: 'week')
+        ]
+      end
 
-      let(:attributes) do
+      let(:income_benefits) do
+        [
+          IncomeBenefit.new(ownership_type: 'applicant', payment_type: 'incapcity', amount: 1, frequency: 'week'),
+          IncomeBenefit.new(ownership_type: 'partner', payment_type: 'incapcity', amount: 1, frequency: 'week')
+        ]
+      end
+
+      let(:record_attributes) do
         {
           employment_status: ['not_working'],
           income_above_threshold: 'no',
           has_frozen_income_or_assets: 'no',
           has_no_income_payments: 'no',
           has_no_income_benefits: 'no',
-          income_payments: [instance_double(Payment, complete?: true)],
-          income_benefits: [instance_double(Payment, complete?: true)],
+          partner_has_no_income_payments: nil,
+          partner_has_no_income_benefits: nil,
           client_has_dependants: 'yes',
           manage_without_income: 'Use savings',
         }
@@ -92,34 +101,38 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
       it 'does not add any errors' do
         subject.validate
+        expect(subject.errors).to be_empty
       end
     end
 
     context 'when validation fails' do
-      let(:errors) { double(:errors) }
+      let(:income_payments) { [] }
+      let(:income_benefits) { [] }
 
-      let(:attributes) do
+      let(:record_attributes) do
         {
           income_above_threshold: nil,
           has_frozen_income_or_assets: nil,
           has_no_income_payments: 'no',
           has_no_income_benefits: 'no',
-          income_payments: [],
-          income_benefits: [],
+          partner_has_no_income_payments: 'no',
+          partner_has_no_income_benefits: 'no',
           client_has_dependants: nil,
           manage_without_income: nil
         }
       end
 
-      it 'adds errors for all failed validations' do
-        expect(errors).to receive(:add).with(:income_before_tax, :incomplete)
-        expect(errors).to receive(:add).with(:income_payments, :incomplete)
-        expect(errors).to receive(:add).with(:income_benefits, :incomplete)
-        expect(errors).to receive(:add).with(:dependants, :incomplete)
-        expect(errors).to receive(:add).with(:manage_without_income, :incomplete)
-        expect(errors).to receive(:add).with(:base, :incomplete_records)
-
+      it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
         subject.validate
+
+        expect(subject.errors.of_kind?('income_before_tax', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('income_payments', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('income_benefits', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('partner_income_payments', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('partner_income_benefits', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('dependants', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('manage_without_income', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
       end
     end
   end
@@ -184,7 +197,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
   describe '#income_payments_complete?' do
     context 'when has_no_income_payments is yes' do
-      before { allow(record).to receive(:has_no_income_payments).and_return('yes') }
+      before { record.has_no_income_payments = 'yes' }
 
       it 'returns true' do
         expect(subject.income_payments_complete?).to be(true)
@@ -193,11 +206,15 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
     context 'when has_no_income_payments is no and income_payments are present and complete' do
       before do
-        allow(record).to receive(:has_no_income_payments).and_return('no')
+        record.has_no_income_payments = 'no'
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'applicant',
+          payment_type: 'maintenance',
+          amount: 100,
+          frequency: 'week',
+        )
 
-        allow(record).to receive(:income_payments) {
-          [instance_double(Payment, complete?: true)]
-        }
+        crime_application.save!
       end
 
       it 'returns true' do
@@ -207,24 +224,33 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
     context 'when has_no_income_payments is no and income_payments are present but not complete' do
       before do
-        allow(record).to receive(:has_no_income_payments).and_return('no')
+        record.has_no_income_payments = 'no'
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'partner',
+          payment_type: 'maintenance',
+          amount: 100,
+          frequency: 'week',
+        )
 
-        allow(record).to receive(:income_payments) {
-          [instance_double(Payment, complete?: false)]
-        }
+        crime_application.save!
       end
 
       it 'returns false' do
+        expect(subject.income_payments.all.size).to be 1
+        expect(subject.income_payments.for_client.size).to be 0
         expect(subject.income_payments_complete?).to be(false)
       end
     end
 
     context 'when has_no_income_payments is no and income_payments are empty' do
       before do
-        allow(record).to receive_messages(has_no_income_payments: 'no', income_payments: [])
+        record.has_no_income_payments = 'no'
+
+        crime_application.save!
       end
 
       it 'returns false' do
+        expect(subject.income_payments.for_client.size).to be 0
         expect(subject.income_payments_complete?).to be(false)
       end
     end
@@ -232,7 +258,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
   describe '#income_benefits_complete?' do
     context 'when has_no_income_benefits is yes' do
-      before { allow(record).to receive(:has_no_income_benefits).and_return('yes') }
+      before { record.has_no_income_benefits = 'yes' }
 
       it 'returns true' do
         expect(subject.income_benefits_complete?).to be(true)
@@ -241,8 +267,15 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
     context 'when has_no_income_benefits is no and income_benefits are present and complete' do
       before do
-        allow(record).to receive_messages(has_no_income_benefits: 'no',
-                                          income_benefits: [double('Benefit', complete?: true)])
+        record.has_no_income_benefits = 'no'
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'applicant',
+          payment_type: 'incapacity',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
       end
 
       it 'returns true' do
@@ -252,21 +285,33 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
     context 'when has_no_income_benefits is no and income_benefits are present but not complete' do
       before do
-        allow(record).to receive_messages(has_no_income_benefits: 'no',
-                                          income_benefits: [double('Benefit', complete?: false)])
+        record.has_no_income_benefits = 'no'
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'partner',
+          payment_type: 'incapacity',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
       end
 
       it 'returns false' do
+        expect(subject.income_benefits.all.size).to be 1
+        expect(subject.income_benefits.for_client.size).to be 0
         expect(subject.income_benefits_complete?).to be(false)
       end
     end
 
     context 'when has_no_income_benefits is no and income_benefits are empty' do
       before do
-        allow(record).to receive_messages(has_no_income_benefits: 'no', income_benefits: [])
+        record.has_no_income_benefits = 'no'
+
+        crime_application.save!
       end
 
       it 'returns false' do
+        expect(subject.income_benefits.for_client.size).to be 0
         expect(subject.income_benefits_complete?).to be(false)
       end
     end

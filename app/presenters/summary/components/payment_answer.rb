@@ -17,6 +17,8 @@ module Summary
       end
 
       def subject_type
+        return SubjectType.new(:applicant) unless value.respond_to?(:ownership_type)
+
         @subject_type ||=
           if value.ownership_type.to_s == OwnershipType::PARTNER.to_s
             SubjectType.new(:partner)

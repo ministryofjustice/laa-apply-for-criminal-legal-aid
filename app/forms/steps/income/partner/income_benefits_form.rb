@@ -14,7 +14,7 @@ module Steps
 
         attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
 
-        validates_with IncomeBenefitsValidator
+        validates_with PartnerIncomeBenefitsValidator
 
         IncomeBenefitType.values.each do |type| # rubocop:disable Style/HashEachMethods
           attribute type.to_s, :string

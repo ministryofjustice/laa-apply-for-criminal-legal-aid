@@ -49,12 +49,14 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
             payment_type: 'council_tax',
             amount: 14_744,
             frequency: 'month',
+            ownership_type: 'applicant',
             metadata: {},
           },
           {
             payment_type: 'mortgage',
             amount: 3_292_900,
             frequency: 'annual',
+            ownership_type: 'applicant',
             metadata: {},
           }
         ],
