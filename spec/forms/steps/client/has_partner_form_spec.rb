@@ -15,13 +15,15 @@ RSpec.describe Steps::Client::HasPartnerForm do
       CrimeApplication,
       client_has_partner:,
       partner_detail:,
-      partner:
+      partner:,
+      income:
     )
   end
 
   let(:client_has_partner) { nil }
   let(:partner_detail) { instance_double(PartnerDetail) }
   let(:partner) { instance_double(Partner) }
+  let(:income) { instance_double(Income) }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -80,10 +82,17 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
     context 'when `client_has_partner` is `no`' do
       let(:client_has_partner) { 'no' }
+      let(:income) do
+        instance_double(Income, partner_employment_status: ['not_working'])
+      end
 
       it 'saves the record and deletes partner information' do
         expect(crime_application).to receive(:update!).with(
           { 'client_has_partner' => YesNoAnswer::NO }
+        ).and_return(true)
+
+        expect(income).to receive(:update!).with(
+          { 'partner_employment_status' => nil }
         ).and_return(true)
 
         expect(partner_detail).to receive(:destroy!)

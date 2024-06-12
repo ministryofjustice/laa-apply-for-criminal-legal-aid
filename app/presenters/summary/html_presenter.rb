@@ -25,6 +25,7 @@ module Summary
         income_payments_details
         income_benefits_details
         dependants
+        partner_employment_details
         other_income_details
         housing_payments
         outgoings_payments_details
@@ -68,6 +69,7 @@ module Summary
         income_payments_details
         income_benefits_details
         dependants
+        partner_employment_details
         other_income_details
       ]
     }.freeze

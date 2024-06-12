@@ -11,7 +11,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       income: income,
       dependants: dependants_double,
       employments: employments_double,
-      kase: kase
+      kase: kase,
+      partner_detail: partner_detail
     )
   end
 
@@ -25,6 +26,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
+  let(:partner_detail) { nil }
 
   before do
     allow(
@@ -158,6 +160,47 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:case_type) { 'summary_only' }
 
         it { is_expected.to have_destination(:income_before_tax, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `partner_employment_status`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_employment_status }
+
+    context 'when partner_employment_status selected is an employed option' do
+      let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
+      end
+
+      it 'redirects to the `employed_exit` page' do
+        expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+      end
+    end
+
+    context 'when status selected is self-employed option' do
+      let(:partner_employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::SELF_EMPLOYED.to_s])
+      end
+
+      it 'redirects to the `employed_exit` page' do
+        expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+      end
+    end
+
+    context 'when status selected is not working' do
+      let(:partner_employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+      before do
+        allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::NOT_WORKING.to_s])
+      end
+
+      it 'redirects to the `manage_without_income` page' do
+        expect(subject).to have_destination(:manage_without_income, :edit, id: crime_application)
       end
     end
   end
@@ -588,6 +631,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `dependants_finished`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :dependants_finished }
+
+    context 'when the partner is included in means assessment' do
+      let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
+
+      before do
+        allow(FeatureFlags).to receive(:partner_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it { is_expected.to have_destination(:partner_employment_status, :edit, id: crime_application) }
+    end
 
     context 'when there are no payments' do
       before do
