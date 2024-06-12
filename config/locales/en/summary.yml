@@ -81,6 +81,7 @@ en:
         cash_isa: Cash ISA
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
+      partner_employment_details: Partner's employment
       premium_bonds: Premium Bonds
       investments: Investments
       investment:
@@ -370,7 +371,7 @@ en:
       # BEGIN employment details section
       employment_status:
         question: What is your client’s employment status?
-        answers:
+        answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Not working
           employed: Employed
           self_employed: Self-employed
@@ -416,6 +417,12 @@ en:
             one: "%{age} year old"
             other: "%{age} years old"
       # END dependants section
+
+      # BEGIN partner employment details section
+      partner_employment_status:
+        question: Partner’s employment status?
+        answers: *EMPLOYMENT_STATUS_ANSWERS
+      # END partner employment details section
 
       # BEGIN income payments details section
       which_payments:
@@ -648,7 +655,7 @@ en:
         answers:
           'none': *absence_none
       # END saving
-      #
+
       # START premium_bonds
       has_premium_bonds:
         question: Does your client have any Premium Bonds?

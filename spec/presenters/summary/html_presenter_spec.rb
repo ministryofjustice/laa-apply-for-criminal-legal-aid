@@ -12,7 +12,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double has_no_income_payments: nil, applicant_other_work_benefit_received: nil, has_no_income_benefits: nil), income_payments: [double(payment_type: 'maintenance')],
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double(payment_type: 'maintenance')],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil, applicant_self_assessment_tax_bill: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
@@ -159,6 +159,7 @@ describe Summary::HtmlPresenter do
             IncomeDetails
             Employments
             Dependants
+            PartnerEmploymentDetails
             IncomePaymentsDetails
             IncomeBenefitsDetails
             OtherIncomeDetails
@@ -202,6 +203,7 @@ describe Summary::HtmlPresenter do
             EmploymentDetails
             IncomeDetails
             Employments
+            PartnerEmploymentDetails
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
@@ -340,6 +342,7 @@ describe Summary::HtmlPresenter do
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants
+      PartnerEmploymentDetails
       OtherIncomeDetails
     ]
 

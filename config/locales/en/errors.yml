@@ -461,9 +461,13 @@ en:
         steps/income/employment_status_form:
           attributes:
             employment_status:
-              invalid: Select your client's employment status, or select 'My client is not working'
+              invalid: Select your client's employment status or select 'Not working'
             ended_employment_within_three_months:
               inclusion: Select yes if your client ended employment in the last 3 months
+        steps/income/partner_employment_status_form:
+          attributes:
+            partner_employment_status:
+              invalid: Select the partner's employment status, or select 'Not working'
         steps/income/lost_job_in_custody_form:
           attributes:
             lost_job_in_custody:
