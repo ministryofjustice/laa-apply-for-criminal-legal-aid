@@ -14,10 +14,11 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
   end
 
   let(:errors) { double(:errors, empty?: false) }
-  let(:crime_application) { instance_double(CrimeApplication, partner_detail:) }
+  let(:crime_application) { instance_double(CrimeApplication, partner_detail:, partner:) }
   let(:employment_status) { [] }
   let(:partner_employment_status) { nil }
   let(:partner_detail) { nil }
+  let(:partner) { nil }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }

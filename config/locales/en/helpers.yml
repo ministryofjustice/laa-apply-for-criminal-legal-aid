@@ -126,7 +126,9 @@ en:
       steps_case_ioj_form:
         types: Why should your client get legal aid?
       steps_income_income_before_tax_form:
-        income_above_threshold: "Is %{subject}'s income currently more than £12,475 a year before tax?"
+        income_above_threshold: 
+          one: Is your client's annual income currently more than £12,475 a year before tax?
+          other: Is your client and their partner's joint annual income more than £12,475 a year before tax?
       steps_income_client_owns_property_form:
         client_owns_property: Does %{subject} own their home, or any other land or property?
         client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
@@ -304,7 +306,9 @@ en:
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
       steps_income_income_before_tax_form:
-        income_above_threshold: Do not include any employment income if your client has lost their job or ended employment.
+        income_above_threshold: 
+          one: Do not include any employment income if your client has lost their job or ended employment.
+          other: Do not include any employment income if your client or their partner has lost their job or ended employment.
       steps_income_client_owns_property_form:
         client_owns_property: Include land or property fully or partly owned, inside or outside the UK.
       steps_income_has_savings_form:
@@ -991,7 +995,7 @@ en:
             partner_with_a_contrary_interest: Partner with a contrary interest
             property_company: Property company
             other: Their relationship is not listed
-          other_relationship: Enter their relationship
+          other_relationship: What is their relationship?
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
       steps_capital_answers_form:

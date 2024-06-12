@@ -29,8 +29,8 @@ en:
         property_company: Property company
       subjects:
         applicant: 'client'
-        applicant_and_partner: 'client and their partner'
-        applicant_or_partner: 'client or their partner'
+        applicant_and_partner: 'client and partner'
+        applicant_or_partner: 'client or partner'
         partner: 'partner'
       ownership:
         applicant: 'your client'
@@ -73,7 +73,9 @@ en:
       partner_income_payments_details: Payments the partner gets
       income_benefits_details: Benefits your client gets
       partner_income_benefits_details: Benefits the partner gets
-      other_income_details: Other sources of income
+      other_income_details:
+        one: "Other sources of income"
+        other: "Other sources of income: client and partner"
       housing_payments: Housing Payments
       outgoings_payments_details:
         one: Payments %{subject} makes
@@ -173,7 +175,7 @@ en:
 
       # BEGIN contact details section
       residence_type:
-        question: Where the client lives
+        question: Where the client usually lives
         answers:
           rented: In rented accommodation
           temporary: In temporary accommodation
@@ -186,7 +188,7 @@ en:
       relationship_to_owner_of_usual_home_address:
         question: Relationship to client
       home_address:
-        question: Home address
+        question: Usual home address
         absence_answer: *absence_none
       correspondence_address:
         question: Correspondence address
@@ -377,21 +379,21 @@ en:
 
       # BEGIN employment details section
       employment_status:
-        question: What is your client’s employment status?
+        question: Client’s employment status?
         answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Not working
           employed: Employed
           self_employed: Self-employed
       ended_employment_within_three_months:
-        question: Has your client ended employment in the last 3 months?
+        question: Employment ended in last 3 months?
         answers:
           <<: *YESNO
       lost_job_in_custody:
-        question: Did your client lose their job as a result of being in custody?
+        question: Employment ended because they were in custody?
         answers:
           <<: *YESNO
       date_job_lost:
-        question: When did they lose their job?
+        question: Date employment ended
       # END employment details section
 
       # BEGIN income details section
@@ -414,15 +416,15 @@ en:
 
       # BEGIN dependants section
       client_has_dependants:
-        question: Does your client have any dependants?
+        question: Any dependants?
         answers:
           <<: *YESNO
       dependant:
-        question: How old is the %{ordinal} dependant?
+        question: Age of dependant %{ordinal}
         answers:
           age:
-            one: "%{age} year old"
-            other: "%{age} years old"
+            one: "%{count} year old"
+            other: "%{count} years old"
       # END dependants section
 
       # BEGIN partner employment details section
@@ -433,9 +435,9 @@ en:
 
       # BEGIN income payments details section
       which_payments:
-        question: Which of these payments does your client get?
+        question: Payments your client gets
         answers:
-          none: My client gets none of these payments
+          none: None
       maintenance_payment:
         question: Maintenance payments
         answers:
@@ -477,7 +479,7 @@ en:
         answers:
           description: *payment_answer_format
       other_payment_details:
-        question: Details of other sources of income
+        question: Other sources of income details
       # END income payments details section
 
       # BEGIN partner income payments details section
@@ -489,9 +491,9 @@ en:
 
       # BEGIN income benefits details section
       which_benefits:
-        question: Which of these benefits does your client get?
+        question: Benefits your client gets?
         answers:
-          none: My client gets none of these benefits
+          none: None
       child_benefit:
         question: Child Benefit
         answers:
@@ -509,7 +511,7 @@ en:
         answers:
           description: *payment_answer_format
       jsa_benefit:
-        question: Contribution-based Jobseeker’s Allowance (JSA)
+        question: Jobseeker’s Allowance
         answers:
           description: *payment_answer_format
       other_benefit:
@@ -530,8 +532,8 @@ en:
       # BEGIN other sources of income details section
       manage_without_income:
         question:
-          one: How %{subject} lives with no income?
-          other: How %{subject} live with no income?
+          one: How %{subject} lives with no income
+          other: How %{subject} live with no income
         answers:
           friends_sofa: They sleep on a friend's sofa for free
           family: They stay with family for free
@@ -638,20 +640,20 @@ en:
       supporting_evidence:
         question: File name
       additional_information:
-        question: Details that will help us process this application
+        question: Any additional information?
         absence_answer: *absence_none
       # END supporting evidence section
 
       # BEGIN saving
       account_balance:
-        question: What is the account balance?
+        question: Account balance
         absence_answer: ''
       saving_ownership_type:
-        question: Whose name is the account in?
+        question: Name the account is in
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       account_number:
-        question: What is the account number?
+        question: Account number
         absence_answer: ''
       are_wages_paid_into_account:
         question: Client's wages or benefits paid into this account?
@@ -662,114 +664,114 @@ en:
         answers: *YESNO
         absence_answer: ''
       is_overdrawn:
-        question: Is the account overdrawn?
+        question: Account overdrawn?
         answers: *YESNO
         absence_answer: ''
       provider_name:
-        question: What is the name of the bank, building society or other holder of the savings?
+        question: Bank or building society
         absence_answer: ''
       sort_code:
-        question: What is the sort code or branch name?
+        question: Sort code or branch name
         absence_answer: ''
       has_capital_savings:
-        question: Which savings does %{subject} have inside or outside the UK?
+        question: Savings %{subject} has
         answers:
           'none': *absence_none
       # END saving
 
       # START premium_bonds
       has_premium_bonds:
-        question: Does your client have any Premium Bonds?
+        question: Any Premium Bonds?
         answers: *YESNO
       premium_bonds_total_value:
-        question: What is the total value of their bonds?
+        question: Total value
       premium_bonds_holder_number:
-        question: What is the holder number?
+        question: Holder number
         absence_answer: ''
       # END premium_bonds
 
       # START investments
       description:
-        question: Describe the investment
+        question: Investment description
         absence_answer: ''
       value:
-        question: What is the value of the investment?
+        question: Value
         absence_answer: *absence_none
       ownership_type:
-        question: Whose name is the investment in?
+        question: Name the investment is in
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_investments:
-        question: Which investments does your client have inside or outside the UK?
+        question: Investments?
         answers:
           'none': *absence_none
       # END investments
 
       # START national_savings_certificates
       national_savings_certificate_holder_number:
-        question: What is the customer number or holder number?
+        question: Customer or holder number
         absence_answer: ''
       national_savings_certificate_certificate_number:
-        question: 'What is the certificate number?'
+        question: Certificate number
         absence_answer: ''
       national_savings_certificate_value:
-        question: What is the value of the certificate?
+        question: Value
         absence_answer: ''
       national_savings_certificate_ownership_type:
-        question: Whose name is the certificate in?
+        question: Who owns the certificate?
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_national_savings_certificate:
-        question: Does your client have any National Savings Certificates?
+        question: Any National Savings Certificates?
         answers:
           <<: *YESNO
       # END national_savings_certificates
 
       # BEGIN property, address and owners
       house_type:
-        question: Which type of property is it?
+        question: Type of property
         absence_answer: *absence_none
       bedrooms:
-        question: How many bedrooms are there?
+        question: Bedrooms
         absence_answer: *absence_none
       size_in_acres:
-        question: What size is the land?
+        question: Size of land
         absence_answer: *absence_none
       usage:
-        question: How is the %{asset} used?
+        question: How %{asset} used
         absence_answer: *absence_none
       # TODO :: Temporary fix to avoid duplicate keys
       property_value:
-        question: How much is the %{asset} worth?
+        question: '%{Asset} value'
         absence_answer: *absence_none
       outstanding_mortgage:
-        question: How much is left to pay on the mortgage?
+        question: Mortgage amount left
         absence_answer: *absence_none
       percentage_applicant_owned:
-        question: What percentage of the %{asset} does your client own?
+        question: Percentage client owns
         absence_answer: *absence_none
       percentage_partner_owned:
-        question: What percentage of the %{asset} does your client’s partner own?
+        question: Percentage partner owns
         absence_answer: *absence_none
       is_home_address:
-        question: Is the address of the %{asset} the same as your client’s home address?
+        question: Address same as client’s home
         answers: *YESNO
         absence_answer: *absence_none
       has_other_owners:
-        question: Does anyone else own part of the %{asset}?
+        question: Other owners
         answers: *YESNO
         absence_answer: *absence_none
       address:
         question: Address
         absence_answer: *absence_none
       name:
-        question: What is the name of the %{index} other owner?
+        question: Name of other owner %{index}
         absence_answer: *absence_none
       relationship:
-        question: What is their relationship to your client?
+        question: Relationship to %{subject}
         absence_answer: *absence_none
       percentage_owned:
-        question: What percentage of the %{asset} do they own?
+        question: Percentage owner %{index} owns
         absence_answer: *absence_none
       has_assets:
         question: Assets %{subject} owns
@@ -779,7 +781,7 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Trust fund
+        question: Stands to benefit from a trust fund?
         answers: *YESNO
       trust_fund_amount_held:
         question: Amount in fund

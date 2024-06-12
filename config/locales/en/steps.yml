@@ -469,7 +469,7 @@ en:
             stock: Stocks, including gilts and government bonds
             unit_trust: Unit trusts
             other: Other lump sum investments
-          info: You told us your %{subject} has investments.
+          info: You told us %{subject} has investments.
         confirm_destroy:
           page_title: Delete investment confirmation
           heading: Are you sure you want to remove this investment?
@@ -496,7 +496,7 @@ en:
           heading:  Does your client have any Premium Bonds?
       has_national_savings_certificates:
         edit:
-          heading:  Does your %{subject} have any National Savings Certificates?
+          heading:  Does %{subject} have any National Savings Certificates?
       national_savings_certificates:
         edit:
           heading: National Savings Certificates
