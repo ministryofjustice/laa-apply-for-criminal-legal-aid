@@ -80,13 +80,17 @@ module TypeOfMeansAssessment
   # involvement_in_case is stored on partner_detail when a database applications and
   # partner when a datastore application.
   def partner_involvement_in_case
-    partner_detail&.involvement_in_case || partner&.involvement_in_case
+    return partner_detail.involvement_in_case if partner_detail
+
+    partner&.involvement_in_case
   end
 
   # conflict_of_interest is stored on partner_detail when a database applications and
   # partner when a datastore application.
   def partner_conflict_of_interest
-    partner_detail&.conflict_of_interest || partner&.conflict_of_interest
+    return partner_detail.conflict_of_interest if partner_detail
+    
+    partner&.conflict_of_interest
   end
 
   def has_passporting_benefit?
