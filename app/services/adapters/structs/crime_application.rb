@@ -101,7 +101,8 @@ module Adapters
       end
 
       delegate :savings, :investments, :national_savings_certificates, :properties,
-               :premium_bonds_total_value, :trust_fund_amount_held, :trust_fund_yearly_dividend, to: :capital
+               :premium_bonds_total_value, :trust_fund_amount_held, :trust_fund_yearly_dividend,
+               :partner_trust_fund_amount_held, :partner_trust_fund_yearly_dividend, to: :capital
 
       def documents
         supporting_evidence.map do |struct|

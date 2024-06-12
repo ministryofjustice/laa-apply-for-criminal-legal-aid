@@ -14,6 +14,9 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
       will_benefit_from_trust_fund: 'yes',
       trust_fund_amount_held_before_type_cast: 1000,
       trust_fund_yearly_dividend_before_type_cast: 2000,
+      partner_will_benefit_from_trust_fund: 'yes',
+      partner_trust_fund_amount_held_before_type_cast: 2000,
+      partner_trust_fund_yearly_dividend_before_type_cast: 200,
       savings: [],
       investments: [],
       national_savings_certificates: [],
@@ -47,6 +50,9 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
           will_benefit_from_trust_fund: 'yes',
           trust_fund_amount_held: 1000,
           trust_fund_yearly_dividend: 2000,
+          partner_will_benefit_from_trust_fund: 'yes',
+          partner_trust_fund_amount_held: 2000,
+          partner_trust_fund_yearly_dividend: 200,
           savings: [],
           investments: [],
           national_savings_certificates: [],
@@ -73,6 +79,9 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
           will_benefit_from_trust_fund: 'yes',
           trust_fund_amount_held: 1000,
           trust_fund_yearly_dividend: 2000,
+          partner_will_benefit_from_trust_fund: 'yes',
+          partner_trust_fund_amount_held: 2000,
+          partner_trust_fund_yearly_dividend: 200,
           has_frozen_income_or_assets: 'yes'
         }.as_json
       end
@@ -88,7 +97,10 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
           {
             will_benefit_from_trust_fund: 'yes',
             trust_fund_amount_held: 1000,
-            trust_fund_yearly_dividend: 2000
+            trust_fund_yearly_dividend: 2000,
+            partner_will_benefit_from_trust_fund: 'yes',
+            partner_trust_fund_amount_held: 2000,
+            partner_trust_fund_yearly_dividend: 200
           }.as_json
         end
 

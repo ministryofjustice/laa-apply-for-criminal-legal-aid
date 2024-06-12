@@ -20,8 +20,11 @@ module Summary
         justification_for_legal_aid
         passport_justification_for_legal_aid
         employment_details
+        employment_income
         income_details
         employments
+        self_assessment_tax_bill
+        work_benefits
         income_payments_details
         income_benefits_details
         dependants
@@ -36,6 +39,7 @@ module Summary
         national_savings_certificates
         investments
         trust_fund
+        partner_trust_fund
         other_capital_details
         supporting_evidence
         more_information
@@ -55,6 +59,7 @@ module Summary
         national_savings_certificates
         investments
         trust_fund
+        partner_trust_fund
         other_capital_details
       ],
       outgoings: %i[
@@ -64,8 +69,11 @@ module Summary
       ],
       income: %i[
         employment_details
+        employment_income
         income_details
         employments
+        self_assessment_tax_bill
+        work_benefits
         income_payments_details
         income_benefits_details
         dependants

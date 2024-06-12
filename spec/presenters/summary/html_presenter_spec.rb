@@ -12,10 +12,10 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
-      capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
+      capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
   end
@@ -172,6 +172,7 @@ describe Summary::HtmlPresenter do
             NationalSavingsCertificates
             Investments
             TrustFund
+            PartnerTrustFund
             OtherCapitalDetails
             SupportingEvidence
             MoreInformation
@@ -216,6 +217,7 @@ describe Summary::HtmlPresenter do
             NationalSavingsCertificates
             Investments
             TrustFund
+            PartnerTrustFund
             OtherCapitalDetails
             SupportingEvidence
             MoreInformation
@@ -282,6 +284,7 @@ describe Summary::HtmlPresenter do
       Properties
       Savings
       TrustFund
+      PartnerTrustFund
     ]
 
     context 'when an initial application' do

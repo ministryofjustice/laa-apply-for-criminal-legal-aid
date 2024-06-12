@@ -514,6 +514,10 @@ en:
         edit:
           page_title: Does your client stand to benefit from a trust fund inside or outside the UK?
           heading: Does your client stand to benefit from a trust fund inside or outside the UK?
+      partner_trust_fund:
+        edit:
+          page_title: Does the partner stand to benefit from a trust fund inside or outside the UK?
+          heading: Does the partner stand to benefit from a trust fund inside or outside the UK?
 
       properties:
         confirm_destroy:

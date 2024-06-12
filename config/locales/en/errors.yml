@@ -721,6 +721,14 @@ en:
               blank: Enter the yearly dividend
             will_benefit_from_trust_fund:
               inclusion: Select yes if your client stands to benefit from a trust fund inside or outside the UK
+        steps/capital/partner_trust_fund_form:
+          attributes:
+            partner_trust_fund_amount_held:
+              blank: Enter the amount held in the fund
+            partner_trust_fund_yearly_dividend:
+              blank: Enter the yearly dividend
+            partner_will_benefit_from_trust_fund:
+              inclusion: Select yes if the partner stands to benefit from a trust fund inside or outside the UK
         steps/capital/residential_form:
           attributes:
             house_type:
