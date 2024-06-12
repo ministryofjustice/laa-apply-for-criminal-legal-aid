@@ -91,16 +91,15 @@ module Summary
         ].select(&:show?)
 
         property.property_owners.each_with_index do |owner, index|
+          owner_i18n_opts = i18n_opts.merge(index: index + 1)
           attributes << Components::FreeTextAnswer.new(
-            :name, owner.name, i18n_opts: { index: (index + 1).ordinalize_fully }
+            :name, owner.name, i18n_opts: owner_i18n_opts
           )
           attributes << Components::FreeTextAnswer.new(
             :relationship, relationship(owner)
           )
           attributes << Components::PercentageAnswer.new(
-            :percentage_owned, owner.percentage_owned, i18n_opts: {
-              asset:
-            }
+            :percentage_owned, owner.percentage_owned, i18n_opts: owner_i18n_opts
           )
         end
 
@@ -120,7 +119,7 @@ module Summary
       end
 
       def i18n_opts
-        { asset: }
+        { asset: asset, Asset: asset.capitalize }
       end
 
       def name

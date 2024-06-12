@@ -10,7 +10,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
       id: 'uuid',
       income: income,
       capital: capital,
-      partner_detail: partner_detail
+      partner_detail: partner_detail,
+      partner: nil
     )
   end
 

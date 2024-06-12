@@ -59,15 +59,15 @@ RSpec.describe Summary::Components::Investment, type: :component do
   describe 'answers' do
     it 'renders as summary list' do
       expect(page).to have_summary_row(
-        'Describe the investment',
+        'Investment description',
         'About the shares'
       )
       expect(page).to have_summary_row(
-        'What is the value of the investment?',
+        'Value',
         '£100.00'
       )
       expect(page).to have_summary_row(
-        'Whose name is the investment in?',
+        'Name the investment is in',
         'Client'
       )
     end
@@ -86,15 +86,15 @@ RSpec.describe Summary::Components::Investment, type: :component do
 
       it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
-          'Describe the investment',
+          'Investment description',
           ''
         )
         expect(page).to have_summary_row(
-          'What is the value of the investment?',
+          'Value',
           ''
         )
         expect(page).to have_summary_row(
-          'Whose name is the investment in?',
+          'Name the investment is in',
           ''
         )
       end

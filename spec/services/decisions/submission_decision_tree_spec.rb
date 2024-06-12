@@ -13,6 +13,7 @@ RSpec.describe Decisions::SubmissionDecisionTree do
       applicant: applicant,
       case: kase,
       partner_detail: nil,
+      partner: nil
     )
   end
 

@@ -30,10 +30,11 @@ module TypeOfMeansAssessment
   end
 
   def include_partner_in_means_assessment?
-    return true if partner_detail&.involvement_in_case == PartnerInvolvementType::NONE.to_s
-    return false unless partner_detail&.involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
+    return false unless partner.present? || partner_detail.present?
+    return true if partner_involvement_in_case == PartnerInvolvementType::NONE.to_s
+    return false unless partner_involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
 
-    partner_detail.conflict_of_interest == 'no'
+    partner_conflict_of_interest == 'no'
   end
 
   def evidence_of_passporting_means_forthcoming?
@@ -76,6 +77,22 @@ module TypeOfMeansAssessment
   end
 
   private
+
+  # involvement_in_case is stored on partner_detail when a database applications and
+  # partner when a datastore application.
+  def partner_involvement_in_case
+    return partner_detail.involvement_in_case if partner_detail
+
+    partner&.involvement_in_case
+  end
+
+  # conflict_of_interest is stored on partner_detail when a database applications and
+  # partner when a datastore application.
+  def partner_conflict_of_interest
+    return partner_detail.conflict_of_interest if partner_detail
+
+    partner&.conflict_of_interest
+  end
 
   def has_passporting_benefit?
     BenefitType.passporting.include?(BenefitType.new(benefit_check_recipient.benefit_type.to_s))

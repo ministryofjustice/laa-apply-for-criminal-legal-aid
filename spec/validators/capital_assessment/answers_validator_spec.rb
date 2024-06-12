@@ -4,9 +4,10 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { instance_double(Capital, crime_application:, errors:) }
-  let(:crime_application) { instance_double(CrimeApplication, income:, partner_detail:) }
+  let(:crime_application) { instance_double(CrimeApplication, income:, partner_detail:, partner:) }
   let(:income) { instance_double(Income) }
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
+  let(:partner) { nil }
   let(:errors) { double(:errors) }
   let(:involvement_in_case) { nil }
   let(:requires_full_means_assessment?) { true }

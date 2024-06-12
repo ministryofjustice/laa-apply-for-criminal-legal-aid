@@ -9,7 +9,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       id: 'uuid',
       outgoings: outgoings,
       kase: kase,
-      partner_detail: partner_detail
+      partner_detail: partner_detail,
+      partner: partner
     )
   end
 
@@ -17,6 +18,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
   let(:kase) { instance_double(Case, case_type:) }
   let(:case_type) { nil }
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
+  let(:partner) { instance_double(Partner) }
   let(:involvement_in_case) { nil }
   let(:conflict_of_interest) { nil }
 
@@ -131,6 +133,10 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     context 'and there is no relevant partner' do
       context 'when there is no partner' do
         let(:partner_detail) { nil }
+
+        before do
+          allow(crime_application).to receive(:partner)
+        end
 
         it { is_expected.to have_destination(:outgoings_more_than_income, :edit, id: crime_application) }
       end

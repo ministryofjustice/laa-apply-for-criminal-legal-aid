@@ -9,6 +9,7 @@ describe Summary::Sections::DWPDetails do
       to_param: '12345',
       client_has_partner: 'no',
       partner_detail: nil,
+      partner: nil,
       applicant: applicant
     )
   end
