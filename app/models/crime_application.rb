@@ -100,33 +100,4 @@ class CrimeApplication < ApplicationRecord
   def passporting_benefit_complete?
     valid?(:passporting_benefit)
   end
-
-  def applicant_requires_nino_evidence?
-    # the applicant is over 18 and no NINO has been entered
-    # plus any one or more of the following apply:
-    # - they are passported on means
-    # - they receive any non-passporting benefit
-    # - the case type is `indictable` or `already_in_crown_court`
-    return false unless applicant_18_or_over_at_date_stamp? && applicant&.nino.blank?
-
-    case_types = [
-      CaseType::INDICTABLE.to_s,
-      CaseType::ALREADY_IN_CROWN_COURT.to_s
-    ]
-
-    applicant.has_passporting_benefit? || case_types.include?(self.case&.case_type) || income_benefits.any?
-  end
-
-  # rubocop:disable Metrics/AbcSize
-  def applicant_18_or_over_at_date_stamp?
-    return false if applicant.blank?
-    return !applicant.under18? if date_stamp.nil?
-
-    dob = applicant&.date_of_birth
-    temp_date_stamp = date_stamp&.to_date
-
-    age = temp_date_stamp.year - dob.year - (dob.change(year: temp_date_stamp.year) > temp_date_stamp ? 1 : 0)
-    age >= 18
-  end
-  # rubocop:enable Metrics/AbcSize
 end
