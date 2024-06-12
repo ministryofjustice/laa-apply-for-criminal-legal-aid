@@ -1,4 +1,22 @@
 class Applicant < Person
+  has_many(
+    :income_payments,
+    -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
+    through: :crime_application
+  )
+
+  has_many(
+    :income_benefits,
+    -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
+    through: :crime_application
+  )
+
+  has_many(
+    :national_savings_certificates,
+    -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
+    through: :crime_application
+  )
+
   # Utility methods for testing/output
   delegate :partner_detail, to: :crime_application
 
