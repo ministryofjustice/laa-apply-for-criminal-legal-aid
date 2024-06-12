@@ -24,6 +24,7 @@ module CapitalAssessment
       end
 
       errors.add :trust_fund, :blank unless trust_fund_complete?
+      errors.add :partner_trust_fund, :blank unless partner_trust_fund_complete?
       errors.add :frozen_income_savings_assets_capital, :blank unless frozen_income_savings_assets_complete?
 
       errors.add(:base, :incomplete_records) if errors.present?
@@ -80,6 +81,14 @@ module CapitalAssessment
       return false unless record.will_benefit_from_trust_fund == 'yes'
 
       record.trust_fund_amount_held.present? && record.trust_fund_yearly_dividend.present?
+    end
+
+    def partner_trust_fund_complete?
+      return true unless FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      return true if record.partner_will_benefit_from_trust_fund == 'no'
+      return false unless record.partner_will_benefit_from_trust_fund == 'yes'
+
+      record.partner_trust_fund_amount_held.present? && record.partner_trust_fund_yearly_dividend.present?
     end
 
     def frozen_income_savings_assets_complete?

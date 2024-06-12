@@ -3,7 +3,7 @@ en:
     dictionary:
       absence_none: &absence_none "None"
       absence_not_provided: &absence_not_provided "Not provided"
-      payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
+      payment_answer_format: &payment_answer_format "%{amount} every %{frequency} %{tax_status}"
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
@@ -35,6 +35,8 @@ en:
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
+    before_tax: before tax
+    after_tax: after tax
     payment_frequency:
       week: week
       fortnight: two weeks
@@ -103,10 +105,14 @@ en:
           <<: *RELATIONSHIP
       passporting_benefit_check: 'Passporting benefit check: client'
       passporting_benefit_check_partner: 'Passporting benefit check: partner'
-      trust_fund: Trust funds
+      trust_fund: 'Trust funds: client'
+      partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
       employments: Jobs
       employment: Job
+      self_assessment_tax_bill: Self Assessment tax
+      work_benefits: Other work benefits
+      employment_income: Pay from employment
 
     questions:
       # BEGIN overview section
@@ -745,13 +751,23 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Does your client stand to benefit from a trust fund inside or outside the UK?
+        question: Trust fund
         answers: *YESNO
       trust_fund_amount_held:
-        question: Enter the amount held in the fund
+        question: Amount in fund
       trust_fund_yearly_dividend:
-        question: Enter the yearly dividend
+        question: Yearly dividend
       # END trust_fund
+
+      # START partner_trust_fund
+      partner_will_benefit_from_trust_fund:
+        question: Trust fund
+        answers: *YESNO
+      partner_trust_fund_amount_held:
+        question: Amount in fund
+      partner_trust_fund_yearly_dividend:
+        question: Yearly dividend
+      # END partner_trust_fund
 
       has_no_other_assets:
         question: Client has no other assets or capital
@@ -802,3 +818,22 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
+      employment_income:
+        question: Salary or wage
+        answers:
+          description: *payment_answer_format
+      self_assessment_tax_bill:
+        question: Does the client pay a Self Assessment tax bill?
+        answers: *YESNO
+      self_assessment_tax_bill_payment:
+        question: Enter the amount
+        answers:
+          description: *payment_answer_format
+
+      work_benefits:
+        question: Does your client receive any other benefits from work?
+        answers: *YESNO
+      work_benefits_payment:
+        question: Enter the total value every year
+        answers:
+          description: *payment_answer_format

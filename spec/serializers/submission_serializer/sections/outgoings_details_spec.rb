@@ -15,7 +15,8 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
       pays_council_tax: 'yes',
       has_no_other_outgoings: nil,
       how_manage: 'A description of how they manage',
-      outgoings_payments: outgoings_payments
+      outgoings_payments: outgoings_payments,
+      applicant_self_assessment_tax_bill: nil
     )
   end
 
@@ -66,6 +67,7 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
           how_manage: 'A description of how they manage',
           pays_council_tax: 'yes',
           has_no_other_outgoings: nil,
+          applicant_self_assessment_tax_bill: nil
       }.as_json
     end
 
