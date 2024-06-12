@@ -11,6 +11,11 @@ RSpec.describe Evidence::Rules::TrustFund do
 
   let(:capital) { Capital.new }
 
+  before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application)
+                                                    .and_return(true)
+  end
+
   it { expect(described_class.key).to eq :income_trust_10 }
   it { expect(described_class.group).to eq :income }
   it { expect(described_class.archived).to be false }
@@ -60,7 +65,40 @@ RSpec.describe Evidence::Rules::TrustFund do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    let(:capital) do
+      Capital.new(
+        partner_will_benefit_from_trust_fund: 'yes', partner_trust_fund_yearly_dividend: 1
+      )
+    end
+
+    context 'when benefitting from trust fund and dividend' do
+      it { is_expected.to be true }
+    end
+
+    context 'when benefitting from trust fund but no dividend' do
+      before do
+        capital.partner_trust_fund_yearly_dividend = nil
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when not benefitting from trust fund but somehow has dividend' do
+      before do
+        capital.partner_trust_fund_yearly_dividend = 10
+        capital.partner_will_benefit_from_trust_fund = 'no'
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no capital' do
+      let(:capital) { nil }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -71,7 +109,9 @@ RSpec.describe Evidence::Rules::TrustFund do
     let(:capital) do
       Capital.new(
         will_benefit_from_trust_fund: 'yes',
-        trust_fund_yearly_dividend: 100
+        trust_fund_yearly_dividend: 100,
+        partner_will_benefit_from_trust_fund: 'yes',
+        partner_trust_fund_yearly_dividend: 100
       )
     end
 
@@ -87,8 +127,8 @@ RSpec.describe Evidence::Rules::TrustFund do
             prompt: ['the trust document, or a certified copy'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['the trust document, or a certified copy'],
           },
           other: {
             result: false,

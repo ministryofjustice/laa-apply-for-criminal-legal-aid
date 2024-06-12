@@ -18,9 +18,16 @@ module Evidence
         end
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        if crime_application.capital
+          dividend = crime_application.capital.partner_trust_fund_yearly_dividend
+
+          crime_application.capital.partner_will_benefit_from_trust_fund == 'yes' &&
+            dividend.present? &&
+            dividend.value.positive?
+        else
+          false
+        end
       end
     end
   end
