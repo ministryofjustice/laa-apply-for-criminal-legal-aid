@@ -32,6 +32,11 @@ en:
         applicant_and_partner: 'client and their partner'
         applicant_or_partner: 'client or their partner'
         partner: 'partner'
+      ownership:
+        applicant: 'your client'
+        applicant_and_partner: 'your client and their partner'
+        applicant_or_partner: 'your client or their partner'
+        partner: 'the partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -63,10 +68,12 @@ en:
       employment_details: Employment
       income_details: Income
       income_payments_details: Payments your client gets
+      partner_income_payments_details: Payments the partner gets
       income_benefits_details: Benefits your client gets
+      partner_income_benefits_details: Benefits the partner gets
       other_income_details: Other sources of income
       housing_payments: Housing Payments
-      outgoings_payments_details: 
+      outgoings_payments_details:
         one: Payments %{subject} makes
         other: Payments %{subject} make
       other_outgoings_details: Other outgoings
@@ -436,7 +443,7 @@ en:
         answers:
           description: *payment_answer_format
       board_from_family_payment:
-        question: Board from family members living with your client
+        question: Board from family members living with %{ownership}
         answers:
           description: *payment_answer_format
       rent_payment:
@@ -444,7 +451,7 @@ en:
         answers:
           description: *payment_answer_format
       financial_support_with_access_payment:
-        question: Financial support from someone who allows your client access to their assets or money
+        question: Financial support from someone who allows %{ownership} access to their assets or money
         answers:
           description: *payment_answer_format
       from_friends_relatives_payment:
@@ -458,6 +465,13 @@ en:
       other_payment_details:
         question: Details of other sources of income
       # END income payments details section
+
+      # BEGIN partner income payments details section
+      which_payments_partner:
+        question: Which of these payments does the partner get?
+        answers:
+          none: The partner gets none of these payments
+      # END partner income payments details section
 
       # BEGIN income benefits details section
       which_benefits:
@@ -491,6 +505,13 @@ en:
       other_benefit_details:
         question: Other benefits details
       # END income benefits details section
+
+      # BEGIN partner income benefits details section
+      which_benefits_partner:
+        question: Which of these benefits does the partner get?
+        answers:
+          none: The partner gets none of these benefits
+      # END partner income benefits details section
 
       # BEGIN other sources of income details section
       manage_without_income:
@@ -543,7 +564,7 @@ en:
           description: "%{relationship}"
       # END board and lodgings section
       pays_council_tax:
-        question: Council Tax 
+        question: Council Tax
         answers:
           <<: *YESNO
       council_tax:
@@ -554,9 +575,9 @@ en:
 
       # BEGIN  outgoings payments section
       which_outgoings:
-        question: Type of payments 
+        question: Type of payments
         answers:
-          none: None 
+          none: None
       childcare_outgoing:
         question: Childcare payments
         answers:

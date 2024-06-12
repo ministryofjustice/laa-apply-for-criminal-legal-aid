@@ -158,7 +158,7 @@ en:
       steps_income_income_benefits_form:
         income_benefits: Which of these benefits does your client get?
       steps_income_partner_income_benefits_form:
-        income_benefits: Which of these benefits does the client get?
+        income_benefits: Which of these benefits does the partner get?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:

@@ -55,12 +55,12 @@ module Steps
 
         def types
           return @types if @types
-          return ['none'] if income.has_no_income_payments == 'yes'
+          return ['none'] if income.partner_has_no_income_payments == 'yes'
 
           income.income_payments.for_partner.pluck(:payment_type)
         end
 
-        def has_no_income_payments
+        def partner_has_no_income_payments
           'yes' if types.include?('none')
         end
 
@@ -81,7 +81,7 @@ module Steps
 
         # Individual income_payments_fieldset_forms are in charge of saving themselves
         def persist!
-          crime_application.income.update(has_no_income_payments:)
+          crime_application.income.update(partner_has_no_income_payments:)
         end
       end
     end

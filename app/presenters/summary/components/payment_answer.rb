@@ -15,6 +15,17 @@ module Summary
           { class: 'govuk-body' }
         )
       end
+
+      def subject_type
+        @subject_type ||=
+          if value.ownership_type.to_s == OwnershipType::PARTNER.to_s
+            SubjectType.new(:partner)
+          elsif value.ownership_type.to_s == OwnershipType::APPLICANT_AND_PARTNER.to_s
+            SubjectType.new(:applicant_and_partner)
+          else
+            SubjectType.new(:applicant)
+          end
+      end
     end
   end
 end

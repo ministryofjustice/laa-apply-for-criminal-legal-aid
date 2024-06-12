@@ -20,6 +20,8 @@ module IncomeAssessment
       errors.add(:frozen_income_savings_assets, :incomplete) unless frozen_income_savings_assets_complete?
       errors.add(:income_payments, :incomplete) unless income_payments_complete?
       errors.add(:income_benefits, :incomplete) unless income_benefits_complete?
+      errors.add(:partner_income_payments, :incomplete) unless partner_income_payments_complete?
+      errors.add(:partner_income_benefits, :incomplete) unless partner_income_benefits_complete?
       errors.add(:dependants, :incomplete) unless dependants_complete?
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
       errors.add(:base, :incomplete_records) if errors.present?
@@ -38,13 +40,33 @@ module IncomeAssessment
     def income_payments_complete?
       return true if record.has_no_income_payments == 'yes'
 
-      record.income_payments.present? && record.income_payments.all?(&:complete?)
+      record.income_payments.for_client.present? && record.income_payments.for_client.all?(&:complete?)
+    end
+
+    def partner_income_payments_complete?
+      return true unless FeatureFlags.partner_journey.enabled?
+      return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
+
+      # TODO: Determine rule for completeness
+      # return true unless crime_application.include_partner_in_means_assessment?
+
+      record.income_payments.for_partner.present? && record.income_payments.for_partner.all?(&:complete?)
     end
 
     def income_benefits_complete?
       return true if record.has_no_income_benefits == 'yes'
 
-      record.income_benefits.present? && record.income_benefits.all?(&:complete?)
+      record.income_benefits.for_client.present? && record.income_benefits.for_client.all?(&:complete?)
+    end
+
+    def partner_income_benefits_complete?
+      return true unless FeatureFlags.partner_journey.enabled?
+      return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
+
+      # TODO: Determine rule for completeness
+      # return true unless crime_application.include_partner_in_means_assessment?
+
+      record.income_benefits.for_partner.present? && record.income_benefits.for_partner.all?(&:complete?)
     end
 
     def dependants_complete?
