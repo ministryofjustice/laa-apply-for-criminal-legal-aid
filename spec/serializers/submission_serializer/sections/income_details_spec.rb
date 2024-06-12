@@ -20,9 +20,11 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       has_savings: 'yes',
       has_no_income_payments: nil,
       has_no_income_benefits: nil,
+      partner_has_no_income_payments: nil,
+      partner_has_no_income_benefits: nil,
       dependants: dependants,
-      income_payments: [income_payment],
-      income_benefits: [income_benefit],
+      income_payments: [income_payment, partner_income_payment],
+      income_benefits: [income_benefit, partner_income_benefit],
       manage_without_income: 'other',
       manage_other_details: 'Another way that they manage',
     )
@@ -36,7 +38,19 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       payment_type: 'other',
       amount_before_type_cast: 1802,
       frequency: 'annual',
+      ownership_type: 'applicant',
       metadata: { 'details' => 'Side hustle' }
+    )
+  end
+
+  let(:partner_income_payment) do
+    instance_double(
+      IncomePayment,
+      payment_type: 'maintenance',
+      amount_before_type_cast: 602,
+      frequency: 'week',
+      ownership_type: 'partner',
+      metadata: {}
     )
   end
 
@@ -46,7 +60,19 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       payment_type: 'child',
       amount_before_type_cast: 123,
       frequency: 'month',
-      metadata: { 'details' => 'Extra topup' },
+      ownership_type: 'applicant',
+      metadata: {},
+    )
+  end
+
+  let(:partner_income_benefit) do
+    instance_double(
+      IncomeBenefit,
+      payment_type: 'other',
+      amount_before_type_cast: 909,
+      frequency: 'month',
+      ownership_type: 'partner',
+      metadata: { 'details' => 'Grant money' },
     )
   end
 
@@ -90,7 +116,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                     deductions: deductions_double)
   end
 
-  describe '#generate' do
+  describe '#generate' do # rubocop:disable MultipleMemoizedHelpers
     let(:json_output) do
       {
         employment_type: ['not_working'],
@@ -107,17 +133,39 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         dependants: [{ age: 10 }],
         has_no_income_payments: nil,
         has_no_income_benefits: nil,
-        income_payments: [{
-          payment_type: 'other',
-          amount: 1802,
-          frequency: 'annual',
-          metadata: { 'details' => 'Side hustle' }
-        }],
+        partner_has_no_income_payments: nil,
+        partner_has_no_income_benefits: nil,
+        income_payments: [
+          {
+            payment_type: 'other',
+            amount: 1802,
+            frequency: 'annual',
+            ownership_type: 'applicant',
+            metadata: { 'details' => 'Side hustle' }
+          },
+          {
+            payment_type: 'maintenance',
+            amount: 602,
+            frequency: 'week',
+            ownership_type: 'partner',
+            metadata: {},
+          },
+        ],
         income_benefits: [
-          payment_type: 'child',
-          amount: 123,
-          frequency: 'month',
-          metadata: { 'details' => 'Extra topup' },
+          {
+            payment_type: 'child',
+            amount: 123,
+            frequency: 'month',
+            ownership_type: 'applicant',
+            metadata: {},
+          },
+          {
+            payment_type: 'other',
+            amount: 909,
+            frequency: 'month',
+            ownership_type: 'partner',
+            metadata: { 'details' => 'Grant money' },
+          },
         ],
         employments: [
           {
