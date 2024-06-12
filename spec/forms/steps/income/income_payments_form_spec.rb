@@ -42,7 +42,7 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
 
       before do
         allowed_types.each do |type|
-          subject.public_send("#{type}=", form_data.dig('steps_income_income_payments_form', type))
+          subject.public_send(:"#{type}=", form_data.dig('steps_income_income_payments_form', type))
           subject.public_send(type.to_s)
         end
 

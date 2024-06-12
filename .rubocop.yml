@@ -49,6 +49,9 @@ Layout/HashAlignment:
 Naming/VariableNumber:
   Enabled: false
 
+Rails/FilePath:
+  Enabled: false
+
 # Rspec cops
 ############
 
@@ -83,12 +86,6 @@ RSpec/IndexedLet:
   Enabled: false
 
 RSpec/NoExpectationExample:
-  Enabled: false
-
-RSpecRails/InferredSpecType:
-  Enabled: false
-
-RSpec/FilePath: # Deprecated
   Enabled: false
 
 RSpec/SpecFilePathFormat:

@@ -122,7 +122,7 @@ module Decisions
       redirect_path = if property.property_type == PropertyType::LAND.to_s
                         property.property_type.to_sym
                       else
-                        "#{property.property_type}_property".to_sym
+                        :"#{property.property_type}_property"
                       end
 
       edit(redirect_path, property_id: property)

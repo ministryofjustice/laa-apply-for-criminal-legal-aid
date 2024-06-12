@@ -28,11 +28,11 @@ class ValueObject
         # :nocov:
         if subclass == trace.self
           subclass.const_set(
-            :INQUIRY_METHODS, subclass.values.map { |value| "#{value}?".to_sym }
+            :INQUIRY_METHODS, subclass.values.map { |value| :"#{value}?" }
           )
 
           subclass.values.each do |value|
-            subclass.define_method("#{value}?") { value.eql?(self) }
+            subclass.define_method(:"#{value}?") { value.eql?(self) }
           end
         end
         # :nocov:
