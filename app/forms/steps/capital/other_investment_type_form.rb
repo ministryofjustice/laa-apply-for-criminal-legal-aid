@@ -1,12 +1,13 @@
 module Steps
   module Capital
     class OtherInvestmentTypeForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       attr_accessor :investment_type
-
-      validates :investment_type, presence: true
-      validates :investment_type, inclusion: { in: InvestmentType.values.map(&:to_s) }
-
       attr_reader :investment
+
+      validate :investment_type_selected
 
       def choices
         InvestmentType.values
@@ -18,6 +19,12 @@ module Steps
         return true if investment_type == ''
 
         @investment = crime_application.investments.create!(investment_type:)
+      end
+
+      def investment_type_selected
+        return if (InvestmentType.values.map(&:to_s) << 'none').include? investment_type.to_s
+
+        errors.add(:investment_type, :blank, subject:)
       end
     end
   end
