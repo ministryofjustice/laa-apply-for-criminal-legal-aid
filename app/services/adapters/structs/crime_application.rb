@@ -52,7 +52,7 @@ module Adapters
       end
 
       def income_payments
-        return [] unless means_details.income_details.income_payments
+        return [] unless means_details&.income_details&.income_payments
 
         means_details.income_details.income_payments.map do |struct|
           IncomePayment.new(struct.attributes)
@@ -60,7 +60,7 @@ module Adapters
       end
 
       def income_benefits
-        return [] unless means_details.income_details.income_benefits
+        return [] unless means_details&.income_details&.income_benefits
 
         means_details.income_details.income_benefits.map do |struct|
           IncomeBenefit.new(struct.attributes)

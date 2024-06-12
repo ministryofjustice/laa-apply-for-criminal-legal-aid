@@ -2,7 +2,7 @@ module Summary
   module Sections
     class EmploymentIncome < Sections::BaseSection
       def show?
-        employment_income.present?
+        income.present? && employment_income.present?
       end
 
       def answers
