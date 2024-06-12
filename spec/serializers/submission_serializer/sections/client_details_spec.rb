@@ -172,7 +172,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           benefit_type: nil,
           last_jsa_appointment_date: nil,
           benefit_check_result: false,
-          benefit_check_status: nil,
+          benefit_check_status: 'no_check_required',
           will_enter_nino: nil,
           has_benefit_evidence: nil,
           confirm_details: nil,

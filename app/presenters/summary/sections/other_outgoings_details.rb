@@ -13,6 +13,10 @@ module Summary
             change_path: edit_steps_outgoings_income_tax_rate_path
           ),
           Components::ValueAnswer.new(
+            :partner_income_tax_rate_above_threshold, outgoings.partner_income_tax_rate_above_threshold,
+            change_path: edit_steps_outgoings_partner_income_tax_rate_path
+          ),
+          Components::ValueAnswer.new(
             :outgoings_more_than_income, outgoings.outgoings_more_than_income,
             change_path: edit_steps_outgoings_outgoings_more_than_income_path
           ),

@@ -278,6 +278,9 @@ en:
         edit:
           page_title: What is your client's employment status?
           ended_employment_within_three_months: Has your client ended employment in the last 3 months?
+      partner_employment_status:
+        edit:
+          page_title: What is the partner's employment status?
       employed_exit:
         show:
           page_title: Use eForms for this application
@@ -399,8 +402,16 @@ en:
           page_title: Board and lodgings payments
       income_tax_rate:
         edit:
-          page_title: In the last 2 years, has your client paid the 40% income tax rate?
-          income_tax_rate_above_threshold: In the last 2 years, has your client paid the 40% income tax rate?
+          page_title: Has your client paid the 40% income tax rate in the last 2 years?
+          income_tax_rate_above_threshold: Has your client paid the 40% income tax rate in the last 2 years?
+      partner_income_tax_rate:
+        edit:
+          page_title: Has the partner paid the 40% income tax rate in the last 2 years?
+          partner_income_tax_rate_above_threshold: Has the partner paid the 40% income tax rate in the last 2 years?
+      outgoings_more_than_income:
+        edit:
+          page_title: Are your client’s outgoings more than their income?
+          outgoings_more_than_income: Are your client’s outgoings more than their income?
       answers:
         edit:
           page_title: Check your answers - %{Subject}'s outgoings
@@ -444,6 +455,9 @@ en:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
 
+      other_investment_type:
+        edit:
+          page_title: Which other investments does %{subject} have inside or outside the UK?
       investments:
         edit:
           page_title: Add investment details
@@ -510,6 +524,10 @@ en:
         edit:
           page_title: Does your client stand to benefit from a trust fund inside or outside the UK?
           heading: Does your client stand to benefit from a trust fund inside or outside the UK?
+      partner_trust_fund:
+        edit:
+          page_title: Does the partner stand to benefit from a trust fund inside or outside the UK?
+          heading: Does the partner stand to benefit from a trust fund inside or outside the UK?
 
       properties:
         confirm_destroy:

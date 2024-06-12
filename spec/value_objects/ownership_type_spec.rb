@@ -16,4 +16,15 @@ RSpec.describe OwnershipType do
       )
     end
   end
+
+  describe '.exclusive' do
+    it 'returns all possible values' do
+      expect(described_class.exclusive.map(&:to_s)).to eq(
+        %w[
+          applicant
+          partner
+        ]
+      )
+    end
+  end
 end

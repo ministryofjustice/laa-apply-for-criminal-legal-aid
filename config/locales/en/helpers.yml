@@ -134,6 +134,8 @@ en:
         has_savings: Does %{subject} have any savings or investments?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
+      steps_income_partner_employment_status_form:
+        partner_employment_status: What is the partner's employment status?
       steps_income_client_employment_income_form:
         before_or_after_tax: Is this before or after tax?
       steps_income_client_employment_details_form:
@@ -206,7 +208,7 @@ en:
       steps_capital_investment_type_form:
         investment_type: Which investments does %{subject} client have inside or outside the UK?
       steps_capital_other_investment_type_form:
-        investment_type: Which other investments does your client have inside or outside the UK?
+        investment_type: Which other investments does %{subject} have inside or outside the UK?
       steps_capital_investments_form:
         ownership_type: Whose name is the investment in?
         confirm_in_applicants_name: Confirm the following
@@ -309,10 +311,13 @@ en:
         has_savings: Include any UK or overseas savings and investments.
       steps_income_employment_status_form:
         employment_status: Select all that apply.
-        employment_status_options:
+        employment_status_options: &EMPLOYMENT_STATUS_HINTS
           employed: They have a job where they are paid by an employer.
           self_employed: Includes if they are in a business partnership, or are a director or shareholder in a private company.
           not_working: Includes if they have ended employment in the last 3 months, never had a job, or they are a pensioner.
+      steps_income_partner_employment_status_form:
+        partner_employment_status: Select all that apply.
+        partner_employment_status_options: *EMPLOYMENT_STATUS_HINTS
       steps_income_client_deductions_form:
         types_options:
           other: For example, Student Loans, pensions or employee benefits
@@ -561,11 +566,13 @@ en:
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
       steps_income_employment_status_form:
-        employment_status_options:
+        employment_status_options: &EMPLOYMENT_STATUS_OPTIONS
           employed: Employed
           self_employed: Self-employed
           not_working: Not working
         ended_employment_within_three_months_options: *YESNO
+      steps_income_partner_employment_status_form:
+        partner_employment_status_options: *EMPLOYMENT_STATUS_OPTIONS
       steps_income_client_employer_details_form:
         employer_name: Employer's name
         address:
@@ -816,6 +823,8 @@ en:
         amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_partner_income_tax_rate_form:
+        partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:
         types_options:
           childcare: Childcare payments
@@ -921,6 +930,10 @@ en:
         trust_fund_amount_held: Enter the amount held in the fund
         trust_fund_yearly_dividend: Enter the yearly dividend
         will_benefit_from_trust_fund_options: *YESNO
+      steps_capital_partner_trust_fund_form:
+        partner_trust_fund_amount_held: Enter the amount held in the fund
+        partner_trust_fund_yearly_dividend: Enter the yearly dividend
+        partner_will_benefit_from_trust_fund_options: *YESNO
       steps_capital_residential_form:
         house_type_options:
           bungalow: Bungalow

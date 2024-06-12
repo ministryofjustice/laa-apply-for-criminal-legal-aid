@@ -24,6 +24,7 @@ module IncomeAssessment
       errors.add(:partner_income_benefits, :incomplete) unless partner_income_benefits_complete?
       errors.add(:dependants, :incomplete) unless dependants_complete?
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
+
       errors.add(:base, :incomplete_records) if errors.present?
     end
 

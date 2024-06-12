@@ -203,7 +203,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_08_005740) do
     t.string "partner_employment_status", default: [], array: true
     t.string "partner_has_no_income_payments"
     t.string "partner_has_no_income_benefits"
-    t.string "applicant_self_assessment_tax_bill"
     t.string "applicant_other_work_benefit_received"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
@@ -269,6 +268,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_08_005740) do
     t.string "pays_council_tax"
     t.string "has_no_other_outgoings"
     t.string "partner_income_tax_rate_above_threshold"
+    t.string "applicant_self_assessment_tax_bill"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 

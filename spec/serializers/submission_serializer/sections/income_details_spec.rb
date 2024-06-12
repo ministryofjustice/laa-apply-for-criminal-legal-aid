@@ -27,6 +27,8 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       income_benefits: [income_benefit, partner_income_benefit],
       manage_without_income: 'other',
       manage_other_details: 'Another way that they manage',
+      partner_employment_status:  ['not_working'],
+      applicant_other_work_benefit_received: nil,
     )
   end
 
@@ -131,10 +133,12 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         manage_without_income: 'other',
         manage_other_details: 'Another way that they manage',
         dependants: [{ age: 10 }],
+        partner_employment_type: ['not_working'],
         has_no_income_payments: nil,
         has_no_income_benefits: nil,
         partner_has_no_income_payments: nil,
         partner_has_no_income_benefits: nil,
+        applicant_other_work_benefit_received: nil,
         income_payments: [
           {
             payment_type: 'other',

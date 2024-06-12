@@ -25,6 +25,7 @@ module EmploymentDetails
 
     def complete?
       return false if record.employment_status.blank?
+      return false if include_partner_in_means_assessment? && record.partner_employment_status.blank?
 
       not_working_details_complete?
     end

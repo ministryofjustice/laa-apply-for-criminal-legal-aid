@@ -10,11 +10,13 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
       Outgoings,
       housing_payment_type: 'mortgage',
       income_tax_rate_above_threshold: 'no',
+      partner_income_tax_rate_above_threshold: 'no',
       outgoings_more_than_income: 'yes',
       pays_council_tax: 'yes',
       has_no_other_outgoings: nil,
       how_manage: 'A description of how they manage',
-      outgoings_payments: outgoings_payments
+      outgoings_payments: outgoings_payments,
+      applicant_self_assessment_tax_bill: nil
     )
   end
 
@@ -62,10 +64,12 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
         ],
           housing_payment_type: 'mortgage',
           income_tax_rate_above_threshold: 'no',
+          partner_income_tax_rate_above_threshold: 'no',
           outgoings_more_than_income: 'yes',
           how_manage: 'A description of how they manage',
           pays_council_tax: 'yes',
           has_no_other_outgoings: nil,
+          applicant_self_assessment_tax_bill: nil
       }.as_json
     end
 

@@ -22,6 +22,8 @@ module SubmissionSerializer
           json.has_no_income_benefits income.has_no_income_benefits
           json.partner_has_no_income_payments income.partner_has_no_income_payments
           json.partner_has_no_income_benefits income.partner_has_no_income_benefits
+          json.partner_employment_type income.partner_employment_status
+          json.applicant_other_work_benefit_received income.applicant_other_work_benefit_received
         end
       end
     end

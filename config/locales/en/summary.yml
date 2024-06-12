@@ -3,7 +3,7 @@ en:
     dictionary:
       absence_none: &absence_none "None"
       absence_not_provided: &absence_not_provided "Not provided"
-      payment_answer_format: &payment_answer_format "%{amount} every %{frequency}"
+      payment_answer_format: &payment_answer_format "%{amount} every %{frequency} %{tax_status}"
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
@@ -40,6 +40,8 @@ en:
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
+    before_tax: before tax
+    after_tax: after tax
     payment_frequency:
       week: week
       fortnight: two weeks
@@ -86,6 +88,7 @@ en:
         cash_isa: Cash ISA
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
+      partner_employment_details: Partner's employment
       premium_bonds: Premium Bonds
       investments: Investments
       investment:
@@ -108,11 +111,16 @@ en:
       property_owners:
         relationship:
           <<: *RELATIONSHIP
-      passporting_benefit_check: Passporting benefit check
-      trust_fund: Trust funds
+      passporting_benefit_check: 'Passporting benefit check: client'
+      passporting_benefit_check_partner: 'Passporting benefit check: partner'
+      trust_fund: 'Trust funds: client'
+      partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
       employments: Jobs
       employment: Job
+      self_assessment_tax_bill: Self Assessment tax
+      work_benefits: Other work benefits
+      employment_income: Pay from employment
 
     questions:
       # BEGIN overview section
@@ -235,8 +243,8 @@ en:
           no_record_found: No record of passporting benefit found
           checker_unavailable: DWP was unavailable, you can try again
           no_check_no_nino: No check made as no National Insurance number provided
-      confirmed_client_details:
-        question: Confirmed client details correct?
+      confirmed_details:
+        question: Confirmed details correct?
         answers:
           <<: *YESNO
       has_benefit_evidence:
@@ -370,7 +378,7 @@ en:
       # BEGIN employment details section
       employment_status:
         question: What is your client’s employment status?
-        answers:
+        answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Not working
           employed: Employed
           self_employed: Self-employed
@@ -416,6 +424,12 @@ en:
             one: "%{age} year old"
             other: "%{age} years old"
       # END dependants section
+
+      # BEGIN partner employment details section
+      partner_employment_status:
+        question: Partner’s employment status?
+        answers: *EMPLOYMENT_STATUS_ANSWERS
+      # END partner employment details section
 
       # BEGIN income payments details section
       which_payments:
@@ -596,7 +610,11 @@ en:
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
-        question: In the last 2 years, has your client paid the 40% income tax rate?
+        question: Client paid 40% Income Tax in last 2 years?
+        answers:
+          <<: *YESNO
+      partner_income_tax_rate_above_threshold:
+        question: Partner paid 40% Income Tax in last 2 years?
         answers:
           <<: *YESNO
       outgoings_more_than_income:
@@ -658,7 +676,7 @@ en:
         answers:
           'none': *absence_none
       # END saving
-      #
+
       # START premium_bonds
       has_premium_bonds:
         question: Does your client have any Premium Bonds?
@@ -761,13 +779,23 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Does your client stand to benefit from a trust fund inside or outside the UK?
+        question: Trust fund
         answers: *YESNO
       trust_fund_amount_held:
-        question: Enter the amount held in the fund
+        question: Amount in fund
       trust_fund_yearly_dividend:
-        question: Enter the yearly dividend
+        question: Yearly dividend
       # END trust_fund
+
+      # START partner_trust_fund
+      partner_will_benefit_from_trust_fund:
+        question: Trust fund
+        answers: *YESNO
+      partner_trust_fund_amount_held:
+        question: Amount in fund
+      partner_trust_fund_yearly_dividend:
+        question: Yearly dividend
+      # END partner_trust_fund
 
       has_no_other_assets:
         question: Client has no other assets or capital
@@ -818,3 +846,22 @@ en:
           details:
             question: Details of other deductions
             absence_answer: ''
+      employment_income:
+        question: Salary or wage
+        answers:
+          description: *payment_answer_format
+      self_assessment_tax_bill:
+        question: Does the client pay a Self Assessment tax bill?
+        answers: *YESNO
+      self_assessment_tax_bill_payment:
+        question: Enter the amount
+        answers:
+          description: *payment_answer_format
+
+      work_benefits:
+        question: Does your client receive any other benefits from work?
+        answers: *YESNO
+      work_benefits_payment:
+        question: Enter the total value every year
+        answers:
+          description: *payment_answer_format

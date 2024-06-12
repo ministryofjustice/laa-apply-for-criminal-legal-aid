@@ -50,6 +50,8 @@ module Decisions
         edit('/steps/income/manage_without_income') # TODO: Temporary until partner employment complete
       when :manage_without_income
         edit(:answers)
+      when :partner_employment_status
+        after_partner_employment_status
       when :answers
         step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
@@ -89,7 +91,7 @@ module Decisions
     end
 
     def after_employment_status
-      if not_working?
+      if not_working?(form_object.employment_status)
         if ended_employment_within_three_months?
           edit(:lost_job_in_custody)
         else
@@ -99,6 +101,16 @@ module Decisions
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
         start_employment_journey
+      end
+    end
+
+    def after_partner_employment_status
+      if not_working?(form_object.partner_employment_status)
+        # TODO: route to partner income payments when route available
+        edit(:manage_without_income)
+      else
+        # TODO: implement employed partner journey
+        show(:employed_exit)
       end
     end
 
@@ -182,7 +194,9 @@ module Decisions
     end
 
     def determine_showing_no_income_page
-      if income_payments.empty? && income_benefits.empty?
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        edit(:partner_employment_status)
+      elsif income_payments.empty? && income_benefits.empty?
         edit(:manage_without_income)
       else
         edit(:answers)
@@ -198,8 +212,8 @@ module Decisions
         FeatureFlags.employment_journey.enabled?
     end
 
-    def not_working?
-      form_object.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+    def not_working?(employment_status)
+      employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
     def ended_employment_within_three_months?

@@ -126,9 +126,7 @@ Rails.application.routes.draw do
           edit_step :partner_involved_in_case, alias: :involvement
           edit_step :partner_conflict_of_interest, alias: :conflict
           edit_step :do_client_and_partner_live_same_address, alias: :same_address
-
-          if FeatureFlags.unemployed_partner_journey.enabled?
-          end
+          edit_step :enter_partner_address, alias: :address
         end
       end
 
@@ -199,12 +197,16 @@ Rails.application.routes.draw do
           edit_step :which_payments, alias: :income_payments
           edit_step :which_benefits, alias: :income_benefits
         end
+        edit_step :what_is_the_partners_employment_status, alias: :partner_employment_status
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :housing_payments_where_lives, alias: :housing_payment_type
         edit_step :pay_council_tax, alias: :council_tax
         edit_step :client_paid_income_tax_rate, alias: :income_tax_rate
+        if FeatureFlags.partner_journey.enabled?
+          edit_step :partner_paid_income_tax_rate, alias: :partner_income_tax_rate
+        end
         edit_step :are_outgoings_more_than_income, alias: :outgoings_more_than_income
         edit_step :which_payments, alias: :outgoings_payments
         edit_step :mortgage_payments, alias: :mortgage
@@ -240,6 +242,7 @@ Rails.application.routes.draw do
 
         edit_step :client_any_premium_bonds, alias: :premium_bonds
         edit_step :client_benefit_from_trust_fund, alias: :trust_fund
+        edit_step :partner_benefit_from_trust_fund, alias: :partner_trust_fund
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets_capital
 
         edit_step :check_your_answers_capital, alias: :answers
