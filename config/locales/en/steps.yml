@@ -445,6 +445,9 @@ en:
           change_link_html: Change <span class="govuk-visually-hidden">saving</span>
           remove_link_html: Remove <span class="govuk-visually-hidden">saving</span>
 
+      other_investment_type:
+        edit:
+          page_title: Which other investments does %{subject} have inside or outside the UK?
       investments:
         edit:
           page_title: Add investment details
