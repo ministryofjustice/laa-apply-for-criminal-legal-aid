@@ -38,6 +38,7 @@ module Summary
         properties
         savings
         premium_bonds
+        partner_premium_bonds
         national_savings_certificates
         investments
         trust_fund
@@ -58,6 +59,7 @@ module Summary
         properties
         savings
         premium_bonds
+        partner_premium_bonds
         national_savings_certificates
         investments
         trust_fund

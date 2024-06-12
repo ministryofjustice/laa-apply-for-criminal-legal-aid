@@ -242,7 +242,10 @@ Rails.application.routes.draw do
 
         edit_step :client_any_premium_bonds, alias: :premium_bonds
         edit_step :client_benefit_from_trust_fund, alias: :trust_fund
-        edit_step :partner_benefit_from_trust_fund, alias: :partner_trust_fund
+        if FeatureFlags.partner_journey.enabled?
+          edit_step :partner_any_premium_bonds, alias: :partner_premium_bonds
+          edit_step :partner_benefit_from_trust_fund, alias: :partner_trust_fund
+        end
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets_capital
 
         edit_step :check_your_answers_capital, alias: :answers

@@ -27,6 +27,8 @@ module Decisions
       when :delete_property_owner
         edit(:property_owners, property_id: property)
       when :premium_bonds
+        after_premium_bonds
+      when :partner_premium_bonds
         edit(:has_national_savings_certificates)
       when :has_national_savings_certificates
         after_has_national_savings_certificates
@@ -164,6 +166,14 @@ module Decisions
 
     def property
       @property ||= form_object.record
+    end
+
+    def after_premium_bonds
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        edit(:partner_premium_bonds)
+      else
+        edit(:has_national_savings_certificates)
+      end
     end
 
     def income_frozen_assets_unanswered?

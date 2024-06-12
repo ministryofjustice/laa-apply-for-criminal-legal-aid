@@ -91,7 +91,8 @@ en:
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
       partner_employment_details: Partner's employment
-      premium_bonds: Premium Bonds
+      premium_bonds: "Premium Bonds: client"
+      partner_premium_bonds: "Premium Bonds: partner"
       investments: Investments
       investment:
         bond: Investment bond
@@ -683,12 +684,23 @@ en:
       has_premium_bonds:
         question: Any Premium Bonds?
         answers: *YESNO
-      premium_bonds_total_value:
-        question: Total value
       premium_bonds_holder_number:
         question: Holder number
         absence_answer: ''
+      premium_bonds_total_value:
+        question: Total value
       # END premium_bonds
+
+      # START partner_premium_bonds
+      partner_has_premium_bonds:
+        question: Any Premium Bonds?
+        answers: *YESNO
+      partner_premium_bonds_holder_number:
+        question: Holder number
+        absence_answer: ''
+      partner_premium_bonds_total_value:
+        question: Total value
+      # END partner_premium_bonds
 
       # START investments
       description:
