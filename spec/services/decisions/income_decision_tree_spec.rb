@@ -12,7 +12,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       dependants: dependants_double,
       employments: employments_double,
       kase: kase,
-      partner_detail: partner_detail
+      partner_detail: partner_detail,
+      partner: nil
     )
   end
 
@@ -27,6 +28,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
   let(:partner_detail) { nil }
+  let(:partner) { nil }
 
   before do
     allow(
