@@ -122,6 +122,8 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         }
       end
 
+      before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
+
       it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
         subject.validate
 
@@ -313,6 +315,176 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       it 'returns false' do
         expect(subject.income_benefits.for_client.size).to be 0
         expect(subject.income_benefits_complete?).to be(false)
+      end
+    end
+  end
+
+  describe '#partner_income_payments_complete?' do
+    before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
+
+    context 'when partner_has_no_income_payments is yes' do
+      before { record.partner_has_no_income_payments = 'yes' }
+
+      it 'returns true' do
+        expect(subject.partner_income_payments_complete?).to be(true)
+      end
+    end
+
+    context 'when partner_has_no_income_payments is no and income_payments are present and complete' do
+      before do
+        record.partner_has_no_income_payments = 'no'
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'partner',
+          payment_type: 'maintenance',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns true' do
+        expect(subject.partner_income_payments_complete?).to be(true)
+      end
+    end
+
+    context 'when partner_has_no_income_payments is no and income_payments are present but not complete' do
+      before do
+        record.partner_has_no_income_payments = 'no'
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'applicant',
+          payment_type: 'maintenance',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns false' do
+        expect(subject.income_payments.all.size).to be 1
+        expect(subject.income_payments.for_partner.size).to be 0
+        expect(subject.partner_income_payments_complete?).to be(false)
+      end
+    end
+
+    context 'when partner_has_no_income_payments is no and income_payments are empty' do
+      before do
+        record.partner_has_no_income_payments = 'no'
+
+        crime_application.save!
+      end
+
+      it 'returns false' do
+        expect(subject.income_payments.for_partner.size).to be 0
+        expect(subject.partner_income_payments_complete?).to be(false)
+      end
+    end
+
+    context 'when partner is not included in means assessment' do
+      before do
+        allow(validator).to receive(:include_partner_in_means_assessment?).and_return(false)
+
+        # Generate invalid partner payments state
+        record.partner_has_no_income_payments = 'no'
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'applicant',
+          payment_type: 'maintenance',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns true' do
+        expect(subject.income_payments.for_partner.size).to be 0
+        expect(subject.partner_income_payments_complete?).to be(true)
+      end
+    end
+  end
+
+  describe '#partner_income_benefits_complete?' do
+    before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
+
+    context 'when partner_has_no_income_benefits is yes' do
+      before { record.partner_has_no_income_benefits = 'yes' }
+
+      it 'returns true' do
+        expect(subject.partner_income_benefits_complete?).to be(true)
+      end
+    end
+
+    context 'when partner_has_no_income_benefits is no and income_benefits are present and complete' do
+      before do
+        record.partner_has_no_income_benefits = 'no'
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'partner',
+          payment_type: 'incapacity',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns true' do
+        expect(subject.partner_income_benefits_complete?).to be(true)
+      end
+    end
+
+    context 'when partner_has_no_income_benefits is no and income_benefits are present but not complete' do
+      before do
+        record.partner_has_no_income_benefits = 'no'
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'applicant',
+          payment_type: 'incapacity',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns false' do
+        expect(subject.income_benefits.all.size).to be 1
+        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(subject.partner_income_benefits_complete?).to be(false)
+      end
+    end
+
+    context 'when partner_has_no_income_benefits is no and income_benefits are empty' do
+      before do
+        record.partner_has_no_income_benefits = 'no'
+
+        crime_application.save!
+      end
+
+      it 'returns false' do
+        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(subject.partner_income_benefits_complete?).to be(false)
+      end
+    end
+
+    context 'when partner is not included in means assessment' do
+      before do
+        allow(validator).to receive(:include_partner_in_means_assessment?).and_return(false)
+
+        # Generate invalid partner benefits state
+        record.partner_has_no_income_benefits = 'no'
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'applicant',
+          payment_type: 'incapacity',
+          amount: 100,
+          frequency: 'week',
+        )
+
+        crime_application.save!
+      end
+
+      it 'returns true' do
+        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(subject.partner_income_payments_complete?).to be(true)
       end
     end
   end

@@ -47,9 +47,7 @@ module IncomeAssessment
     def partner_income_payments_complete?
       return true unless FeatureFlags.partner_journey.enabled?
       return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
-
-      # TODO: Determine rule for completeness
-      # return true unless crime_application.include_partner_in_means_assessment?
+      return true unless include_partner_in_means_assessment?
 
       record.income_payments.for_partner.present? && record.income_payments.for_partner.all?(&:complete?)
     end
@@ -62,10 +60,8 @@ module IncomeAssessment
 
     def partner_income_benefits_complete?
       return true unless FeatureFlags.partner_journey.enabled?
-      return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
-
-      # TODO: Determine rule for completeness
-      # return true unless crime_application.include_partner_in_means_assessment?
+      return true if crime_application.income.partner_has_no_income_benefits.to_s == 'yes'
+      return true unless include_partner_in_means_assessment?
 
       record.income_benefits.for_partner.present? && record.income_benefits.for_partner.all?(&:complete?)
     end

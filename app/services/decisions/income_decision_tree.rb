@@ -44,14 +44,14 @@ module Decisions
         edit_dependants
       when :dependants_finished
         determine_showing_no_income_page
-      when :partner_income_payments
-        edit('/steps/income/partner/income_benefits')
-      when :partner_income_benefits
-        edit('/steps/income/manage_without_income') # TODO: Temporary until partner employment complete
       when :manage_without_income
         edit(:answers)
       when :partner_employment_status
         after_partner_employment_status
+      when :partner_income_payments
+        edit('/steps/income/partner/income_benefits')
+      when :partner_income_benefits
+        after_partner_income_benefits
       when :answers
         step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
@@ -106,11 +106,18 @@ module Decisions
 
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
-        # TODO: route to partner income payments when route available
-        edit(:manage_without_income)
+        edit(:partner_income_payments)
       else
         # TODO: implement employed partner journey
         show(:employed_exit)
+      end
+    end
+
+    def after_partner_income_benefits
+      if crime_application.income&.all_income_over_zero?
+        edit('/steps/income/answers')
+      else
+        edit('/steps/income/manage_without_income')
       end
     end
 

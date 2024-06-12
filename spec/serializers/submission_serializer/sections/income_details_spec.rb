@@ -118,7 +118,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                     deductions: deductions_double)
   end
 
-  describe '#generate' do # rubocop:disable MultipleMemoizedHelpers
+  describe '#generate' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     let(:json_output) do
       {
         employment_type: ['not_working'],

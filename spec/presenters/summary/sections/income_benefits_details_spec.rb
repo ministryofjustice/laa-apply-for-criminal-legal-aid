@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Summary::Sections::IncomeBenefitsDetails do
+describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do

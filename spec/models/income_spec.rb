@@ -35,4 +35,65 @@ RSpec.describe Income, type: :model do
       end
     end
   end
+
+  describe '#all_income_over_zero?' do
+    subject(:all_income_over_zero) { income.all_income_over_zero? }
+
+    context 'when there are any income payments or benefits' do
+      before do
+        crime_application = CrimeApplication.new(income:)
+
+        crime_application.income_payments = [
+          IncomePayment.new(
+            payment_type: 'maintenance',
+            ownership_type: 'applicant',
+            amount: 100,
+            frequency: 'week',
+          ),
+          IncomePayment.new(
+            payment_type: 'maintenance',
+            ownership_type: 'partner',
+            amount: 200,
+            frequency: 'week',
+          ),
+        ]
+
+        crime_application.income_benefits = [
+          IncomeBenefit.new(
+            payment_type: 'jsa',
+            ownership_type: 'applicant',
+            amount: 100,
+            frequency: 'week',
+          ),
+          IncomeBenefit.new(
+            payment_type: 'jsa',
+            ownership_type: 'partner',
+            amount: 200,
+            frequency: 'week',
+          ),
+        ]
+
+        income.has_no_income_payments = 'no'
+        income.partner_has_no_income_payments = 'no'
+        income.has_no_income_benefits = 'no'
+        income.partner_has_no_income_benefits = 'no'
+
+        crime_application.save!
+      end
+
+      it { is_expected.to be true }
+
+      it 'calculates the correct total' do
+        expect(income.all_income_total).to eq 600
+      end
+    end
+
+    context 'when there are no income payments or benefits' do
+      it { is_expected.to be false }
+
+      it 'calculates the correct total' do
+        expect(income.all_income_total).to eq 0
+      end
+    end
+  end
 end
