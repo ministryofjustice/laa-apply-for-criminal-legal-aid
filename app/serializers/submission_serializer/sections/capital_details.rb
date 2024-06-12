@@ -9,6 +9,9 @@ module SubmissionSerializer
             json.has_premium_bonds capital.has_premium_bonds
             json.premium_bonds_total_value capital.premium_bonds_total_value_before_type_cast
             json.premium_bonds_holder_number capital.premium_bonds_holder_number
+            json.partner_has_premium_bonds capital.partner_has_premium_bonds
+            json.partner_premium_bonds_total_value capital.partner_premium_bonds_total_value_before_type_cast
+            json.partner_premium_bonds_holder_number capital.partner_premium_bonds_holder_number
             json.has_no_savings capital.has_no_savings
             json.savings Definitions::Saving.generate(capital.savings)
             json.has_no_investments capital.has_no_investments

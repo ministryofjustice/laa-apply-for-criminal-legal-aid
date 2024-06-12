@@ -709,6 +709,14 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               inclusion: Select yes if your client has any Premium Bonds
+        steps/capital/partner_premium_bonds_form:
+          attributes:
+            partner_premium_bonds_total_value:
+              blank: Enter the total value of their bonds
+            partner_premium_bonds_holder_number:
+              blank: Enter the holder number
+            partner_has_premium_bonds:
+              inclusion: Select yes if the partner has any Premium Bonds
         steps/capital/other_property_type_form:
           attributes:
             property_type:

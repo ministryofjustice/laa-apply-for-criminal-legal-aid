@@ -471,6 +471,23 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :premium_bonds }
 
+    context 'when partner is included' do
+      let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+      it { is_expected.to have_destination(:partner_premium_bonds, :edit, id: crime_application) }
+    end
+
+    context 'when partner is not included' do
+      let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
+
+      it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `partner_premium_bonds`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_premium_bonds }
+
     context 'has correct next step' do
       it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
     end

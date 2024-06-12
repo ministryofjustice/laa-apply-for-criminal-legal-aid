@@ -15,7 +15,7 @@ describe Summary::HtmlPresenter do
       income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, has_no_income_payments: nil, has_no_income_benefits: nil), income_payments: [double(payment_type: 'maintenance')],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil, applicant_self_assessment_tax_bill: nil),
       documents: double, application_type: application_type,
-      capital: (double has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
+      capital: (double has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
     )
   end
@@ -113,9 +113,15 @@ describe Summary::HtmlPresenter do
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A',
+          'partner_has_premium_bonds' => 'yes',
+          'partner_premium_bonds_total_value' => 764_532,
+          'partner_premium_bonds_holder_number' => '3124G',
           'will_benefit_from_trust_fund' => 'yes',
           'trust_fund_amount_held' => 1000,
-          'trust_fund_yearly_dividend' => 2000
+          'trust_fund_yearly_dividend' => 2000,
+          'partner_will_benefit_from_trust_fund' => 'yes',
+          'partner_trust_fund_amount_held' => 4000,
+          'partner_trust_fund_yearly_dividend' => 400
         }
       },
       'application_type' => application_type,
@@ -169,6 +175,7 @@ describe Summary::HtmlPresenter do
             Savings
             Properties
             PremiumBonds
+            PartnerPremiumBonds
             NationalSavingsCertificates
             Investments
             TrustFund
@@ -214,6 +221,7 @@ describe Summary::HtmlPresenter do
             Savings
             Properties
             PremiumBonds
+            PartnerPremiumBonds
             NationalSavingsCertificates
             Investments
             TrustFund
@@ -281,6 +289,7 @@ describe Summary::HtmlPresenter do
       NationalSavingsCertificates
       OtherCapitalDetails
       PremiumBonds
+      PartnerPremiumBonds
       Properties
       Savings
       TrustFund
