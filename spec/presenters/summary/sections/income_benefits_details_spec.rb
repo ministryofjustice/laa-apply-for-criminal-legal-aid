@@ -25,56 +25,72 @@ describe Summary::Sections::IncomeBenefitsDetails do
 
   let(:child_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'child',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      ownership_type: 'applicant',
     )
   end
 
   let(:working_or_child_tax_credit_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'working_or_child_tax_credit',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      ownership_type: 'applicant',
     )
   end
 
   let(:incapacity_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'incapacity',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      ownership_type: 'applicant',
     )
   end
 
   let(:industrial_injuries_disablement_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'industrial_injuries_disablement',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      ownership_type: 'applicant',
     )
   end
 
   let(:jsa_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'jsa',
       amount: 100,
-      frequency: 'week'
+      frequency: 'week',
+      ownership_type: 'applicant',
     )
   end
 
   let(:other_benefit_payment) do
     instance_double(
-      IncomePayment,
+      IncomeBenefit,
       payment_type: 'other',
       amount: 100,
       frequency: 'week',
+      ownership_type: 'applicant',
       metadata: { details: 'Some details' }
+    )
+  end
+
+  let(:partner_benefit_payment) do
+    double(
+      IncomeBenefit,
+      payment_type: 'from_friends_relatives',
+      amount: 19_001,
+      frequency: 'month',
+      ownership_type: 'partner',
     )
   end
 
@@ -129,7 +145,8 @@ describe Summary::Sections::IncomeBenefitsDetails do
             incapacity_benefit_payment,
             industrial_injuries_disablement_benefit_payment,
             jsa_benefit_payment,
-            other_benefit_payment
+            other_benefit_payment,
+            partner_benefit_payment,
           ]
         end
 
