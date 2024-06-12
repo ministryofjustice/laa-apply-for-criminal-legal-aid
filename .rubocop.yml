@@ -85,7 +85,7 @@ RSpec/IndexedLet:
 RSpec/NoExpectationExample:
   Enabled: false
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 RSpec/FilePath: # Deprecated
