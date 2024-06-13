@@ -2,6 +2,9 @@ module Steps
   module Income
     module Client
       class SelfAssessmentTaxBillForm < Steps::BaseFormObject
+        include Steps::HasOneAssociation
+        has_one_association :income
+
         attribute :applicant_self_assessment_tax_bill, :value_object, source: YesNoAnswer
         attribute :applicant_self_assessment_tax_bill_amount, :pence
         attribute :applicant_self_assessment_tax_bill_frequency, :value_object, source: PaymentFrequencyType
@@ -16,7 +19,7 @@ module Steps
         private
 
         def persist!
-          record.update!(attributes)
+          income.update!(attributes)
         end
 
         def pays_self_assessment_tax_bill?
