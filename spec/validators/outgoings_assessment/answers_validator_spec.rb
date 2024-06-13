@@ -6,10 +6,11 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { instance_double(Outgoings, crime_application:, errors:) }
-  let(:crime_application) { instance_double CrimeApplication }
+  let(:crime_application) { instance_double(CrimeApplication, partner: nil) }
 
   let(:errors) { [] }
   let(:requires_full_means_assessment?) { true }
+  let(:involvement_in_case?) { nil }
 
   before do
     allow(crime_application).to receive_messages(outgoings: record)
@@ -17,6 +18,14 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
     allow(validator).to receive_messages(
       requires_full_means_assessment?: requires_full_means_assessment?
     )
+
+    allow(crime_application).to receive(:partner_detail).and_return(
+      instance_double(PartnerDetail)
+    )
+
+    allow(crime_application).to receive_message_chain(:partner_detail, :involvement_in_case) {
+      involvement_in_case?
+    }
   end
 
   describe '#applicable?' do
@@ -60,6 +69,8 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
     context 'when all validations pass' do
       let(:errors) { [] }
 
+      let(:involvement_in_case?) { 'none' }
+
       before do
         allow(record).to receive_message_chain(:outgoings_payments, :rent) {
           instance_double(Payment, complete?: true)
@@ -75,6 +86,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
           has_no_other_outgoings: nil,
           other_payments: [instance_double(Payment, complete?: true)],
           income_tax_rate_above_threshold: true,
+          partner_income_tax_rate_above_threshold: true,
           outgoings_more_than_income: 'yes',
           how_manage: 'budgeting'
         )
@@ -83,10 +95,25 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
       it 'does not add any errors' do
         subject.validate
       end
+
+      context 'when partner is codefendant with no conflict' do
+        let(:involvement_in_case?) { 'codefendant' }
+
+        before do
+          allow(crime_application).to receive_message_chain(:partner_detail, :conflict_of_interest) {
+            'no'
+          }
+        end
+
+        it 'does not add any errors' do
+          subject.validate
+        end
+      end
     end
 
     context 'when validations fail' do
       let(:errors) { double(:errors) }
+      let(:involvement_in_case?) { 'none' }
 
       before do
         allow(record).to receive_message_chain(:outgoings_payments, :rent) {
@@ -107,6 +134,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
           other_payments: [],
           has_no_other_outgoings: nil,
           income_tax_rate_above_threshold: false,
+          partner_income_tax_rate_above_threshold: false,
           outgoings_more_than_income: nil
         )
       end
@@ -116,6 +144,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:council_tax, :incomplete)
         expect(errors).to receive(:add).with(:outgoings_payments, :incomplete)
         expect(errors).to receive(:add).with(:income_tax_rate, :incomplete)
+        expect(errors).to receive(:add).with(:partner_income_tax_rate, :incomplete)
         expect(errors).to receive(:add).with(:outgoings_more_than, :incomplete)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
@@ -308,6 +337,30 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
 
       it 'returns false' do
         expect(subject.income_tax_rate_complete?).to be(false)
+      end
+    end
+  end
+
+  describe '#partner_income_tax_rate_complete?' do
+    let(:involvement_in_case?) { 'none' }
+
+    context 'when partner_income_tax_rate_above_threshold is present' do
+      before do
+        allow(record).to receive(:partner_income_tax_rate_above_threshold).and_return(true)
+      end
+
+      it 'returns true' do
+        expect(subject.partner_income_tax_rate_complete?).to be(true)
+      end
+    end
+
+    context 'when partner_income_tax_rate_above_threshold is nil' do
+      before do
+        allow(record).to receive(:partner_income_tax_rate_above_threshold).and_return(nil)
+      end
+
+      it 'returns false' do
+        expect(subject.partner_income_tax_rate_complete?).to be(false)
       end
     end
   end

@@ -126,7 +126,9 @@ en:
       steps_case_ioj_form:
         types: Why should your client get legal aid?
       steps_income_income_before_tax_form:
-        income_above_threshold: "Is %{subject}'s income currently more than £12,475 a year before tax?"
+        income_above_threshold: 
+          one: Is your client's annual income currently more than £12,475 a year before tax?
+          other: Is your client and their partner's joint annual income more than £12,475 a year before tax?
       steps_income_client_owns_property_form:
         client_owns_property: Does %{subject} own their home, or any other land or property?
         client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
@@ -134,6 +136,8 @@ en:
         has_savings: Does %{subject} have any savings or investments?
       steps_income_employment_status_form:
         employment_status: What is your client's employment status?
+      steps_income_partner_employment_status_form:
+        partner_employment_status: What is the partner's employment status?
       steps_income_client_employment_income_form:
         before_or_after_tax: Is this before or after tax?
       steps_income_client_employment_details_form:
@@ -202,7 +206,7 @@ en:
       steps_capital_investment_type_form:
         investment_type: Which investments does %{subject} client have inside or outside the UK?
       steps_capital_other_investment_type_form:
-        investment_type: Which other investments does your client have inside or outside the UK?
+        investment_type: Which other investments does %{subject} have inside or outside the UK?
       steps_capital_investments_form:
         ownership_type: Whose name is the investment in?
         confirm_in_applicants_name: Confirm the following
@@ -298,17 +302,22 @@ en:
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
       steps_income_income_before_tax_form:
-        income_above_threshold: Do not include any employment income if your client has lost their job or ended employment.
+        income_above_threshold: 
+          one: Do not include any employment income if your client has lost their job or ended employment.
+          other: Do not include any employment income if your client or their partner has lost their job or ended employment.
       steps_income_client_owns_property_form:
         client_owns_property: Include land or property fully or partly owned, inside or outside the UK.
       steps_income_has_savings_form:
         has_savings: Include any UK or overseas savings and investments.
       steps_income_employment_status_form:
         employment_status: Select all that apply.
-        employment_status_options:
+        employment_status_options: &EMPLOYMENT_STATUS_HINTS
           employed: They have a job where they are paid by an employer.
           self_employed: Includes if they are in a business partnership, or are a director or shareholder in a private company.
           not_working: Includes if they have ended employment in the last 3 months, never had a job, or they are a pensioner.
+      steps_income_partner_employment_status_form:
+        partner_employment_status: Select all that apply.
+        partner_employment_status_options: *EMPLOYMENT_STATUS_HINTS
       steps_income_client_deductions_form:
         types_options:
           other: For example, Student Loans, pensions or employee benefits
@@ -544,11 +553,13 @@ en:
           interest_of_another: It is in the interests of another person (such as the person making a complaint or other witness) that they are represented
           other: Other
       steps_income_employment_status_form:
-        employment_status_options:
+        employment_status_options: &EMPLOYMENT_STATUS_OPTIONS
           employed: Employed
           self_employed: Self-employed
           not_working: Not working
         ended_employment_within_three_months_options: *YESNO
+      steps_income_partner_employment_status_form:
+        partner_employment_status_options: *EMPLOYMENT_STATUS_OPTIONS
       steps_income_client_employer_details_form:
         employer_name: Employer's name
         address:
@@ -724,6 +735,8 @@ en:
         amount: How much do they pay yearly?
       steps_outgoings_income_tax_rate_form:
         income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_partner_income_tax_rate_form:
+        partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:
         types_options:
           childcare: Childcare payments
@@ -821,6 +834,10 @@ en:
         premium_bonds_holder_number: What is the holder number?
         premium_bonds_total_value: What is the total value of their bonds?
         has_premium_bonds_options: *YESNO
+      steps_capital_partner_premium_bonds_form:
+        partner_premium_bonds_holder_number: What is the holder number?
+        partner_premium_bonds_total_value: What is the total value of their bonds?
+        partner_has_premium_bonds_options: *YESNO
       steps_capital_has_national_savings_certificates_form:
         has_national_savings_certificates_options: *YESNO
       steps_capital_properties_summary_form:
@@ -829,6 +846,10 @@ en:
         trust_fund_amount_held: Enter the amount held in the fund
         trust_fund_yearly_dividend: Enter the yearly dividend
         will_benefit_from_trust_fund_options: *YESNO
+      steps_capital_partner_trust_fund_form:
+        partner_trust_fund_amount_held: Enter the amount held in the fund
+        partner_trust_fund_yearly_dividend: Enter the yearly dividend
+        partner_will_benefit_from_trust_fund_options: *YESNO
       steps_capital_residential_form:
         house_type_options:
           bungalow: Bungalow
@@ -886,7 +907,7 @@ en:
             partner_with_a_contrary_interest: Partner with a contrary interest
             property_company: Property company
             other: Their relationship is not listed
-          other_relationship: Enter their relationship
+          other_relationship: What is their relationship?
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
       steps_capital_answers_form:

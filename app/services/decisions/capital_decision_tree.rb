@@ -1,5 +1,6 @@
 module Decisions
   class CapitalDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
+    include TypeOfMeansAssessment
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
@@ -26,6 +27,8 @@ module Decisions
       when :delete_property_owner
         edit(:property_owners, property_id: property)
       when :premium_bonds
+        after_premium_bonds
+      when :partner_premium_bonds
         edit(:has_national_savings_certificates)
       when :has_national_savings_certificates
         after_has_national_savings_certificates
@@ -42,6 +45,8 @@ module Decisions
       when :investments_summary
         after_investments_summary
       when :trust_fund
+        after_client_trust_fund
+      when :partner_trust_fund
         after_trust_fund
       when :frozen_income_savings_assets_capital
         edit(:answers)
@@ -95,6 +100,14 @@ module Decisions
       return edit(:saving_type) if form_object.add_property.no?
 
       edit(:other_property_type)
+    end
+
+    def after_client_trust_fund
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        edit(:partner_trust_fund)
+      else
+        after_trust_fund
+      end
     end
 
     def after_trust_fund
@@ -155,8 +168,20 @@ module Decisions
       @property ||= form_object.record
     end
 
+    def after_premium_bonds
+      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        edit(:partner_premium_bonds)
+      else
+        edit(:has_national_savings_certificates)
+      end
+    end
+
     def income_frozen_assets_unanswered?
       form_object.crime_application.income.has_frozen_income_or_assets.nil?
+    end
+
+    def crime_application
+      form_object.crime_application
     end
   end
 end

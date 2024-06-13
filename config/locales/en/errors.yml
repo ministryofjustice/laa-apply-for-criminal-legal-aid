@@ -461,9 +461,13 @@ en:
         steps/income/employment_status_form:
           attributes:
             employment_status:
-              invalid: Select your client's employment status, or select 'My client is not working'
+              invalid: Select your client's employment status or select 'Not working'
             ended_employment_within_three_months:
               inclusion: Select yes if your client ended employment in the last 3 months
+        steps/income/partner_employment_status_form:
+          attributes:
+            partner_employment_status:
+              invalid: Select the partner's employment status, or select 'Not working'
         steps/income/lost_job_in_custody_form:
           attributes:
             lost_job_in_custody:
@@ -649,7 +653,11 @@ en:
         steps/outgoings/income_tax_rate_form:
           attributes:
             income_tax_rate_above_threshold:
-              inclusion: Select yes if in the last 2 years, your client has paid the 40% income tax rate
+              inclusion: Select yes if your client has paid the 40% income tax rate in the last 2 years
+        steps/outgoings/partner_income_tax_rate_form:
+          attributes:
+            partner_income_tax_rate_above_threshold:
+              inclusion: Select yes if the partner has paid the 40% income tax rate in the last 2 years
         steps/outgoings/outgoings_more_than_income_form:
           attributes:
             outgoings_more_than_income:
@@ -701,6 +709,14 @@ en:
               blank: Enter the holder number
             has_premium_bonds:
               inclusion: Select yes if your client has any Premium Bonds
+        steps/capital/partner_premium_bonds_form:
+          attributes:
+            partner_premium_bonds_total_value:
+              blank: Enter the total value of their bonds
+            partner_premium_bonds_holder_number:
+              blank: Enter the holder number
+            partner_has_premium_bonds:
+              inclusion: Select yes if the partner has any Premium Bonds
         steps/capital/other_property_type_form:
           attributes:
             property_type:
@@ -713,6 +729,14 @@ en:
               blank: Enter the yearly dividend
             will_benefit_from_trust_fund:
               inclusion: Select yes if your client stands to benefit from a trust fund inside or outside the UK
+        steps/capital/partner_trust_fund_form:
+          attributes:
+            partner_trust_fund_amount_held:
+              blank: Enter the amount held in the fund
+            partner_trust_fund_yearly_dividend:
+              blank: Enter the yearly dividend
+            partner_will_benefit_from_trust_fund:
+              inclusion: Select yes if the partner stands to benefit from a trust fund inside or outside the UK
         steps/capital/residential_form:
           attributes:
             house_type:

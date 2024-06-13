@@ -8,13 +8,17 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       Income,
       errors:,
       crime_application:,
-      employment_status:
+      employment_status:,
+      partner_employment_status:
     )
   end
 
   let(:errors) { double(:errors, empty?: false) }
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) { instance_double(CrimeApplication, partner_detail:, partner:) }
   let(:employment_status) { [] }
+  let(:partner_employment_status) { nil }
+  let(:partner_detail) { nil }
+  let(:partner) { nil }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
@@ -83,6 +87,19 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
         let(:date_job_lost) { nil }
 
         it { is_expected.to be(true) }
+
+        context 'when partner employment status is not answered' do
+          let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
+          let(:partner_employment_status) { nil }
+
+          it { is_expected.to be(false) }
+
+          context 'when partner employment status is answered' do # rubocop:disable RSpec/NestedGroups
+            let(:partner_employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
+
+            it { is_expected.to be(true) }
+          end
+        end
       end
     end
   end

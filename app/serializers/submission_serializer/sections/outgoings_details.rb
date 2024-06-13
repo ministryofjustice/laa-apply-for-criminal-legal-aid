@@ -8,10 +8,12 @@ module SubmissionSerializer
           json.outgoings Definitions::Payment.generate(outgoings.outgoings_payments)
           json.housing_payment_type outgoings.housing_payment_type
           json.income_tax_rate_above_threshold outgoings.income_tax_rate_above_threshold
+          json.partner_income_tax_rate_above_threshold outgoings.partner_income_tax_rate_above_threshold
           json.outgoings_more_than_income outgoings.outgoings_more_than_income
           json.how_manage outgoings.how_manage
           json.pays_council_tax outgoings.pays_council_tax
           json.has_no_other_outgoings outgoings.has_no_other_outgoings
+          json.applicant_self_assessment_tax_bill outgoings.applicant_self_assessment_tax_bill
         end
       end
     end

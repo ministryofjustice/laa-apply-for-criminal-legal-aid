@@ -17,7 +17,7 @@ module Summary
             Components::FreeTextAnswer.new(
               :dependant, age(dependant),
               change_path: edit_steps_income_dependants_path,
-              i18n_opts: { ordinal: index.ordinalize_fully }
+              i18n_opts: { ordinal: index }
             )
           end
         ].flatten.select(&:show?)
@@ -27,8 +27,7 @@ module Summary
       private
 
       def age(dependant)
-        format = dependant.age == 1 ? 'one' : 'other'
-        I18n.t("summary.questions.dependant.answers.age.#{format}", age: dependant.age)
+        I18n.t('summary.questions.dependant.answers.age', age: dependant.age, count: dependant.age)
       end
 
       def dependants

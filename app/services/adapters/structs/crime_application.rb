@@ -52,7 +52,7 @@ module Adapters
       end
 
       def income_payments
-        return [] unless means_details.income_details.income_payments
+        return [] unless means_details&.income_details&.income_payments
 
         means_details.income_details.income_payments.map do |struct|
           IncomePayment.new(struct.attributes)
@@ -60,7 +60,7 @@ module Adapters
       end
 
       def income_benefits
-        return [] unless means_details.income_details.income_benefits
+        return [] unless means_details&.income_details&.income_benefits
 
         means_details.income_details.income_benefits.map do |struct|
           IncomeBenefit.new(struct.attributes)
@@ -68,7 +68,7 @@ module Adapters
       end
 
       def employments
-        return [] unless means_details.income_details.employments
+        return [] unless means_details&.income_details&.employments
 
         means_details.income_details.employments.map do |struct|
           if struct.respond_to?(:deductions)
@@ -101,7 +101,8 @@ module Adapters
       end
 
       delegate :savings, :investments, :national_savings_certificates, :properties,
-               :premium_bonds_total_value, :trust_fund_amount_held, :trust_fund_yearly_dividend, to: :capital
+               :premium_bonds_total_value, :trust_fund_amount_held, :trust_fund_yearly_dividend,
+               :partner_trust_fund_amount_held, :partner_trust_fund_yearly_dividend, to: :capital
 
       def documents
         supporting_evidence.map do |struct|

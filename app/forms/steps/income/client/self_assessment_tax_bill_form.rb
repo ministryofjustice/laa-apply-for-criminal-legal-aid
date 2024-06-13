@@ -1,6 +1,8 @@
 module Steps
   module Income
     module Client
+      # 'Self Assessment tax bill' is an outgoings payment but it is part of employment income journey.
+      # That's why we decided to keep it under 'steps/income' namespace
       class SelfAssessmentTaxBillForm < Steps::BaseFormObject
         attribute :applicant_self_assessment_tax_bill, :value_object, source: YesNoAnswer
         attribute :amount, :pence
@@ -12,10 +14,10 @@ module Steps
 
         def self.build(crime_application)
           payment = crime_application.outgoings_payments.self_assessment_tax_bill
-          income = crime_application.income
+          outgoings = crime_application.outgoings
           form = new
 
-          form.applicant_self_assessment_tax_bill = income.applicant_self_assessment_tax_bill if income
+          form.applicant_self_assessment_tax_bill = outgoings.applicant_self_assessment_tax_bill if outgoings
 
           if payment
             form.amount = payment.amount
@@ -43,14 +45,20 @@ module Steps
               )
             end
 
-            update_income_attribute!
+            create_or_update_outgoings_attribute!
           end
         end
 
-        def update_income_attribute!
-          crime_application.income.update(
-            applicant_self_assessment_tax_bill:,
-          )
+        def create_or_update_outgoings_attribute!
+          if crime_application.outgoings.present?
+            crime_application.outgoings.update!(
+              applicant_self_assessment_tax_bill:,
+            )
+          else
+            crime_application.create_outgoings!(
+              applicant_self_assessment_tax_bill:,
+            )
+          end
         end
 
         def reset!

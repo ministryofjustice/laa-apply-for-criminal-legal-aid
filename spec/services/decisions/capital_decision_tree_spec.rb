@@ -3,18 +3,24 @@ require 'rails_helper'
 RSpec.describe Decisions::CapitalDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:crime_application) do
     instance_double(
       CrimeApplication,
       id: 'uuid',
       income: income,
-      capital: capital
+      capital: capital,
+      partner_detail: partner_detail,
+      partner: nil
     )
   end
 
   let(:capital) { instance_double(Capital) }
   let(:income) { instance_double(Income, has_frozen_income_or_assets:) }
   let(:has_frozen_income_or_assets) { nil }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
+  let(:involvement_in_case) { nil }
+  let(:conflict_of_interest) { nil }
 
   before do
     allow(form_object).to receive_messages(crime_application:)
@@ -465,6 +471,23 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :premium_bonds }
 
+    context 'when partner is included' do
+      let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+      it { is_expected.to have_destination(:partner_premium_bonds, :edit, id: crime_application) }
+    end
+
+    context 'when partner is not included' do
+      let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
+
+      it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `partner_premium_bonds`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_premium_bonds }
+
     context 'has correct next step' do
       it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
     end
@@ -473,6 +496,47 @@ RSpec.describe Decisions::CapitalDecisionTree do
   context 'when the step is `trust_fund`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :trust_fund }
+
+    context 'when there is no partner' do
+      let(:partner_detail) { nil }
+
+      context 'when has_frozen_income_or_assets is nil' do
+        it { is_expected.to have_destination(:frozen_income_savings_assets_capital, :edit, id: crime_application) }
+      end
+
+      context 'when has_frozen_income_or_assets is set' do
+        let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when there is a partner' do
+      context 'when partner is not included' do
+        let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
+
+        context 'when has_frozen_income_or_assets is nil' do
+          it { is_expected.to have_destination(:frozen_income_savings_assets_capital, :edit, id: crime_application) }
+        end
+
+        context 'when has_frozen_income_or_assets is set' do
+          let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+
+          it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+        end
+      end
+
+      context 'when partner is included' do
+        let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+        it { is_expected.to have_destination(:partner_trust_fund, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `partner_trust_fund`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_trust_fund }
 
     context 'when has_frozen_income_or_assets is nil' do
       it { is_expected.to have_destination(:frozen_income_savings_assets_capital, :edit, id: crime_application) }
@@ -528,4 +592,5 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

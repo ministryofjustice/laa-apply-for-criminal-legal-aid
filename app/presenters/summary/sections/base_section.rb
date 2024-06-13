@@ -25,6 +25,15 @@ module Summary
         self.class.name.split('::').last.underscore.to_sym
       end
 
+      def title
+        I18n.t(
+          name,
+          scope: 'summary.sections',
+          subject: I18n.t('summary.dictionary.subject', subject_type:),
+          count: subject_type.to_s == SubjectType::APPLICANT_AND_PARTNER.to_s ? 2 : 1
+        )
+      end
+
       # May be overridden in subclasses to hide/show if appropriate
       def show?
         answers.any?
@@ -59,6 +68,10 @@ module Summary
       private
 
       delegate :requires_means_assessment?, :kase, :income, :outgoings, :capital, to: :crime_application
+
+      def subject_type
+        SubjectType.new(:applicant)
+      end
 
       # :nocov:
       def answers
