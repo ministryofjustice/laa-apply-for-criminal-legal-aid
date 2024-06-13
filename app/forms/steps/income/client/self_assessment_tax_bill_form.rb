@@ -12,23 +12,11 @@ module Steps
         validates :applicant_self_assessment_tax_bill_frequency,
                   inclusion: { in: PaymentFrequencyType.values }, if: -> { pays_self_assessment_tax_bill? }
 
-        def self.build(crime_application)
-          income = crime_application.income
-          form = new
-
-          if income
-            form.applicant_self_assessment_tax_bill = income.applicant_self_assessment_tax_bill
-            form.applicant_self_assessment_tax_bill_amount = income.applicant_self_assessment_tax_bill_amount
-            form.applicant_self_assessment_tax_bill_frequency = income.applicant_self_assessment_tax_bill_frequency
-          end
-
-          form
-        end
 
         private
 
         def persist!
-          crime_application.income.update!(attributes)
+          record.update!(attributes)
         end
 
         def pays_self_assessment_tax_bill?
