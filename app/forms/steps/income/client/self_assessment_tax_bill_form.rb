@@ -15,7 +15,6 @@ module Steps
         validates :applicant_self_assessment_tax_bill_frequency,
                   inclusion: { in: PaymentFrequencyType.values }, if: -> { pays_self_assessment_tax_bill? }
 
-
         private
 
         def persist!

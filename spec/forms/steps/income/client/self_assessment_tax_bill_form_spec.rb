@@ -19,16 +19,6 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
   let(:applicant_self_assessment_tax_bill_amount) { 100_000 }
   let(:applicant_self_assessment_tax_bill_frequency) { 'four_weeks' }
 
-  # describe '#build' do
-  #   subject(:form) { described_class.build(crime_application) }
-  #
-  #   it 'sets the form attributes from the model' do
-  #     expect(form.applicant_self_assessment_tax_bill_amount).to eq Money.new(50)
-  #     expect(form.applicant_self_assessment_tax_bill_frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
-  #     expect(form.applicant_self_assessment_tax_bill).to eq(YesNoAnswer::YES)
-  #   end
-  # end
-
   describe '#save' do
     context 'when `applicant_self_assessment_tax_bill` is not provided' do
       let(:applicant_self_assessment_tax_bill) { nil }
@@ -73,40 +63,14 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
       end
 
       context 'when all attributes are valid' do
-        let(:amount) { '100' }
-        let(:frequency) { PaymentFrequencyType::MONTHLY.to_s }
+        let(:applicant_self_assessment_tax_bill_amount) { '100' }
+        let(:applicant_self_assessment_tax_bill_frequency) { PaymentFrequencyType::MONTHLY.to_s }
 
         it { is_expected.to be_valid }
 
         it 'passes validation' do
           expect(form.errors.of_kind?(:applicant_self_assessment_tax_bill_amount, :invalid)).to be(false)
         end
-
-        # context 'when crime_application.income is present' do
-        #   # before do
-        #   #   allow(crime_application).to receive(:income).and_return(income)
-        #   # end
-        #
-        #   it 'updates the outgoings payment with the correct attributes' do
-        #     expect(crime_application.income).to receive(:update!).with(
-        #       applicant_self_assessment_tax_bill: YesNoAnswer::YES,
-        #       applicant_self_assessment_tax_bill_amount: Money.new(applicant_self_assessment_tax_bill_amount),
-        #       applicant_self_assessment_tax_bill_frequency: PaymentFrequencyType::MONTHLY,
-        #     )
-        #     form.save
-        #   end
-        # end
-
-        # context 'when crime_application.outgoings is not present' do
-        #   let(:outgoings) { nil }
-        #
-        #   it 'creates an outgoings with the correct attributes' do
-        #     expect(crime_application).to receive(:create_outgoings!).with(
-        #       applicant_self_assessment_tax_bill: YesNoAnswer::YES
-        #     )
-        #     form.save
-        #   end
-        # end
       end
     end
 
@@ -114,13 +78,15 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
       let(:applicant_self_assessment_tax_bill) { YesNoAnswer::NO.to_s }
 
       context 'when `amount` is not provided' do
+        let(:applicant_self_assessment_tax_bill_amount) { nil }
+
         it 'passes validation' do
           expect(form.errors.of_kind?(:applicant_self_assessment_tax_bill_amount, :invalid)).to be(false)
         end
       end
 
       context 'when `frequency` is not valid' do
-        let(:frequency) { 'every six weeks' }
+        let(:applicant_self_assessment_tax_bill_frequency) { 'every six weeks' }
 
         it 'passes validation' do
           expect(form.errors.of_kind?(:applicant_self_assessment_tax_bill_amount, :invalid)).to be(false)
