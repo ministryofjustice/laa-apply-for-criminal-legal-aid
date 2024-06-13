@@ -6,6 +6,10 @@ module Adapters
         employment_type || []
       end
 
+      def applicant_self_assessment_tax_bill_amount
+        Money.new(super)
+      end
+
       def partner_employment_status
         partner_employment_type || []
       end

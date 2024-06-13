@@ -22,6 +22,9 @@ module SubmissionSerializer
           json.has_no_income_benefits income.has_no_income_benefits
           json.partner_employment_type income.partner_employment_status
           json.applicant_other_work_benefit_received income.applicant_other_work_benefit_received
+          json.applicant_self_assessment_tax_bill income.applicant_self_assessment_tax_bill
+          json.applicant_self_assessment_tax_bill_amount income.applicant_self_assessment_tax_bill_amount_before_type_cast # rubocop:disable Layout/LineLength
+          json.applicant_self_assessment_tax_bill_frequency income.applicant_self_assessment_tax_bill_frequency
         end
       end
     end

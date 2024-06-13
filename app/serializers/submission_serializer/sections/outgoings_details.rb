@@ -13,7 +13,6 @@ module SubmissionSerializer
           json.how_manage outgoings.how_manage
           json.pays_council_tax outgoings.pays_council_tax
           json.has_no_other_outgoings outgoings.has_no_other_outgoings
-          json.applicant_self_assessment_tax_bill outgoings.applicant_self_assessment_tax_bill
         end
       end
     end
