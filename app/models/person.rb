@@ -7,6 +7,18 @@ class Person < ApplicationRecord
   has_one :home_address, dependent: :destroy, class_name: 'HomeAddress'
   has_one :correspondence_address, dependent: :destroy, class_name: 'CorrespondenceAddress'
 
+  has_many(
+    :joint_savings,
+    -> { where(ownership_type: OwnershipType::APPLICANT_AND_PARTNER.to_s) },
+    through: :crime_application, source: :savings
+  )
+
+  has_many(
+    :joint_investments,
+    -> { where(ownership_type: OwnershipType::APPLICANT_AND_PARTNER.to_s) },
+    through: :crime_application, source: :investments
+  )
+
   scope :with_name, -> { where.not(first_name: [nil, '']) }
 
   def home_address?
@@ -23,10 +35,6 @@ class Person < ApplicationRecord
 
   def applicant?
     is_a? Applicant
-  end
-
-  def partner?
-    is_a? Partner
   end
 
   def over_18_at_date_stamp?

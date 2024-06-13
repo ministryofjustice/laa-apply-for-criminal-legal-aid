@@ -88,13 +88,13 @@ RSpec.describe Person, type: :model do
 
   describe '#over_18_at_date_stamp?' do
     subject(:over_18_at_date_stamp?) { person.over_18_at_date_stamp? }
-    
+
     let(:eighteen_today_dob) { 18.years.ago.in_time_zone('London').to_date }
     let(:date_stamp) { nil }
 
     before do
       allow(person).to receive(:crime_application).and_return(
-        instance_double(CrimeApplication, date_stamp: )
+        instance_double(CrimeApplication, date_stamp:)
       )
 
       person.date_of_birth = date_of_birth

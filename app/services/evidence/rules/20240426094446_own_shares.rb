@@ -6,12 +6,12 @@ module Evidence
       key :capital_shares_24
       group :capital
 
-      client do |crime_application|
-        crime_application.investments.for_client.where(investment_type: InvestmentType::SHARE.value).any?
+      client do |_crime_application, applicant|
+        applicant.joint_investments.share.any? || applicant.investments.share.any?
       end
 
-      partner do |crime_application|
-        crime_application.investments.for_partner.where(investment_type: InvestmentType::SHARE.value).any?
+      partner do |_crime_application, partner|
+        partner.joint_investments.share.any? || partner.investments.share.any?
       end
     end
   end

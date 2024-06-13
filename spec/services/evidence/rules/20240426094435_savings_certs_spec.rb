@@ -5,13 +5,18 @@ RSpec.describe Evidence::Rules::SavingsCerts do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      national_savings_certificates:,
+      national_savings_certificates: national_savings_certificates,
       partner: Partner.new,
       applicant: Applicant.new
     )
   end
-
   let(:national_savings_certificates) { [] }
+
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+  end
 
   it { expect(described_class.key).to eq :capital_savings_certs_22 }
   it { expect(described_class.group).to eq :capital }
@@ -33,7 +38,7 @@ RSpec.describe Evidence::Rules::SavingsCerts do
       it { is_expected.to be true }
     end
 
-    context 'with owned by applicant' do
+    context 'when owned by partner' do
       let(:national_savings_certificates) do
         [NationalSavingsCertificate.new(ownership_type: 'partner')]
       end
@@ -57,7 +62,7 @@ RSpec.describe Evidence::Rules::SavingsCerts do
       it { is_expected.to be false }
     end
 
-    context 'with owned by applicant' do
+    context 'when owned by partner' do
       let(:national_savings_certificates) do
         [NationalSavingsCertificate.new(ownership_type: 'partner')]
       end

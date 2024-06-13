@@ -1,34 +1,32 @@
-
 require 'rails_helper'
 
 RSpec.describe Evidence::Rules::NationalInsuranceNumber do
-  subject { described_class.new(crime_application) }
+  subject(:rule) { described_class.new(crime_application) }
 
-  let(:benefit_type) { nil }
-  let(:dob) { nil }
-  let(:nino) { nil }
+  let(:crime_application) do
+    CrimeApplication.create!(
+      applicant: applicant,
+      partner: partner,
+      partner_detail: partner_detail,
+      date_stamp: DateTime.now,
+      case: Case.new(case_type:),
+      income_benefits: income_benefits
+    )
+  end
+  let(:income_benefits) { [] }
+  let(:case_type) { nil }
   let(:applicant) {
     Applicant.new(
-      date_of_birth: Date.new(1995, 5, 12),
+      date_of_birth: '1995-05-01',
       nino: nil,
       has_nino: 'no',
       will_enter_nino: 'no',
       benefit_type: benefit_type,
     )
   }
-  
-  let(:case_type) { nil }
-  let(:kase) { Case.new(case_type:) }
-  let(:income_benefits) { [] }
-
-  let(:crime_application) do
-    CrimeApplication.create!(
-      applicant: applicant,
-      date_stamp: DateTime.now,
-      case: kase,
-      income_benefits: income_benefits
-    )
-  end
+  let(:partner_detail) { nil }
+  let(:partner) { nil }
+  let(:benefit_type) { nil }
 
   it { expect(described_class.key).to eq :national_insurance_32 }
   it { expect(described_class.group).to eq :none }
@@ -36,11 +34,9 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
   it { expect(described_class.active?).to be true }
 
   describe '.client' do
-    subject { described_class.new(crime_application).client_predicate }
+    subject(:predicate) { rule.client_predicate }
 
     context 'when applicant is over 18 without a NINO' do
-      let(:dob) { Date.new(1995, 5, 12) }
-
       context 'when the case type is `indictable`' do
         let(:case_type) { CaseType::INDICTABLE.to_s }
 
@@ -53,6 +49,12 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
         it { is_expected.to be true }
       end
 
+      context 'when the case type is `summary only`' do
+        let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
+
+        it { is_expected.to be false }
+      end
+
       context 'when the applicant receives a passporting benefit' do
         let(:benefit_type) { BenefitType::JSA }
 
@@ -60,70 +62,68 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
       end
 
       context 'when the applicant receives a non-passporting benefit' do
-        let(:income_benefits) { [IncomeBenefit.new(payment_type: IncomeBenefitType::CHILD, amount: 200)] }
+        let(:income_benefits) do
+          [IncomeBenefit.new(payment_type: IncomeBenefitType::CHILD, amount: 200)]
+        end
 
         it { is_expected.to be true }
       end
     end
 
     context 'when applicant is under 18' do
-      let(:dob) { Date.new(2015, 5, 12) }
+      before { applicant.date_of_birth = 15.years.ago.to_date }
 
       it { is_expected.to be false }
     end
 
     context 'when NINO has been entered' do
-      let(:nino) { 'AB123456A' }
+      before { applicant.nino = 'AB123456A' }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    let(:partner_detail) do
-      instance_double(PartnerDetail, involvement_in_case: 'none')
+    subject(:predicate) { rule.partner_predicate }
+
+    let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+    let(:partner) { Partner.new(date_of_birth: '2000-01-01') }
+    let(:ownership_type) { OwnershipType::APPLICANT }
+
+    let(:income_benefits) do
+      [
+        IncomeBenefit.new(
+          payment_type: IncomeBenefitType::CHILD,
+          amount: 200,
+          ownership_type: ownership_type
+        )
+      ]
     end
 
-    let(:partner) do
-      instance_double(
-        Partner,
-        over_18_at_date_stamp?: true,
-        nino: nil,
-        partner?: true
-      )
-    end 
-
-    before do
-      allow(crime_application).to receive_messages(partner_detail:, partner:)
-    end
-
-    it { expect(subject.partner_predicate).to be false }
+    it { is_expected.to be false }
 
     context 'when partner nino forthcoming' do
-      # sets the applicant benefit type to 'none'
       let(:benefit_type) { 'none' }
 
       before do
-        allow(partner).to receive_messages(
-          benefit_type: 'jsa',
-          has_nino: 'no',
-          will_enter_nino: 'no'
-        )
+        partner.benefit_type = 'jsa'
+        partner.has_nino = 'no'
+        partner.will_enter_nino = 'no'
       end
 
-      it { expect(subject.partner_predicate).to be true }
+      it { is_expected.to be true }
     end
 
     context 'when partner has Income Benefits' do
-      let(:income_benefits) { [IncomeBenefit.new(payment_type: IncomeBenefitType::CHILD, amount: 200, ownership_type: OwnershipType::PARTNER)] }
-    
-      it { expect(subject.partner_predicate).to be true }
+      let(:ownership_type) { OwnershipType::PARTNER }
+
+      it { is_expected.to be true }
     end
-    
+
     context 'when just applicant has Income Benefits' do
-      let(:income_benefits) { [IncomeBenefit.new(payment_type: IncomeBenefitType::CHILD, amount: 200, ownership_type: OwnershipType::APPLICANT)] }
-    
-      it { expect(subject.partner_predicate).to be false }
+      let(:ownership_type) { OwnershipType::APPLICANT }
+
+      it { is_expected.to be false }
     end
   end
 

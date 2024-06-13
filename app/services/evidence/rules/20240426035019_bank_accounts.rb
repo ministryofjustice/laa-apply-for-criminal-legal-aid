@@ -6,12 +6,12 @@ module Evidence
       key :capital_bank_accounts_16
       group :capital
 
-      client do |crime_application|
-        crime_application.savings.for_client.where(saving_type: SavingType::BANK.value).any?
+      client do |_crime_application, applicant|
+        applicant.savings.bank.any? || applicant.joint_savings.bank.any?
       end
 
-      partner do |crime_application|
-        crime_application.savings.for_partner.where(saving_type: SavingType::BANK.value).any?
+      partner do |_crime_application, partner|
+        partner.savings.bank.any? || partner.joint_savings.bank.any?
       end
     end
   end
