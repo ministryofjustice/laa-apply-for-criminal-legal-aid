@@ -7,8 +7,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   describe '#employments' do
     it 'returns a employments collection' do
-      # TODO: Need to update schema fixtures to improve the coverage
-      # expect(subject.employments).to all(be_an(Employment))
+      expect(subject.employments).to all(be_an(Employment))
     end
   end
 
