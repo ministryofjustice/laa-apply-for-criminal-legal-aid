@@ -68,6 +68,10 @@ RSpec.describe Steps::Income::Client::SelfAssessmentTaxBillForm do
 
         it { is_expected.to be_valid }
 
+        it 'returns true' do
+          expect(subject.save).to be(true)
+        end
+
         it 'passes validation' do
           expect(form.errors.of_kind?(:applicant_self_assessment_tax_bill_amount, :invalid)).to be(false)
         end
