@@ -66,13 +66,13 @@ en:
       income_details: Income
       income_payments_details: Payments your client gets
       income_benefits_details: Benefits your client gets
-      other_income_details: 
+      other_income_details:
         one: "Other sources of income"
         other: "Other sources of income: client and partner"
       housing_payments: Housing Payments
-      outgoings_payments_details: 
-        one: Payments %{subject} makes
-        other: Payments %{subject} make
+      outgoings_payments_details:
+        one: Payments your %{subject} makes
+        other: Payments your %{subject} make
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: Further information
@@ -480,7 +480,7 @@ en:
       which_benefits:
         question: Benefits your client gets?
         answers:
-          none: None 
+          none: None
       child_benefit:
         question: Child Benefit
         answers:
@@ -560,7 +560,7 @@ en:
           description: "%{relationship}"
       # END board and lodgings section
       pays_council_tax:
-        question: Council Tax 
+        question: Council Tax
         answers:
           <<: *YESNO
       council_tax:
@@ -571,9 +571,9 @@ en:
 
       # BEGIN  outgoings payments section
       which_outgoings:
-        question: Type of payments 
+        question: Type of payments?
         answers:
-          none: None 
+          none: None
       childcare_outgoing:
         question: Childcare payments
         answers:
@@ -620,7 +620,7 @@ en:
       supporting_evidence:
         question: File name
       additional_information:
-        question: Any additional information? 
+        question: Any additional information?
         absence_answer: *absence_none
       # END supporting evidence section
 
@@ -654,7 +654,7 @@ en:
         question: Sort code or branch name
         absence_answer: ''
       has_capital_savings:
-        question: Savings %{subject} has 
+        question: Savings %{subject} has
         answers:
           'none': *absence_none
       # END saving
@@ -706,7 +706,7 @@ en:
         question: Certificate number
         absence_answer: ''
       national_savings_certificate_value:
-        question: Value 
+        question: Value
         absence_answer: ''
       national_savings_certificate_ownership_type:
         question: Who owns the certificate?
@@ -726,10 +726,10 @@ en:
         question: Bedrooms
         absence_answer: *absence_none
       size_in_acres:
-        question: Size of land 
+        question: Size of land
         absence_answer: *absence_none
       usage:
-        question: How %{asset} used 
+        question: How %{asset} used
         absence_answer: *absence_none
       # TODO :: Temporary fix to avoid duplicate keys
       property_value:
@@ -759,7 +759,7 @@ en:
         question: Name of other owner %{index}
         absence_answer: *absence_none
       relationship:
-        question: Relationship to %{subject} 
+        question: Relationship to %{subject}
         absence_answer: *absence_none
       percentage_owned:
         question: Percentage owner %{index} owns
