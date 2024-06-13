@@ -12,7 +12,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: nil, has_no_income_payments: nil, has_no_income_benefits: nil),
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no', has_no_income_payments: nil, has_no_income_benefits: nil),
       income_payments: [double(payment_type: 'maintenance')],
       outgoings_payments: [instance_double(Payment, payment_type: 'childcare')], income_benefits: [double], outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
@@ -167,6 +167,7 @@ describe Summary::HtmlPresenter do
             Employments
             Dependants
             PartnerEmploymentDetails
+            SelfAssessmentTaxBill
             IncomePaymentsDetails
             IncomeBenefitsDetails
             OtherIncomeDetails
@@ -351,6 +352,7 @@ describe Summary::HtmlPresenter do
       EmploymentDetails
       IncomeDetails
       Employments
+      SelfAssessmentTaxBill
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants
