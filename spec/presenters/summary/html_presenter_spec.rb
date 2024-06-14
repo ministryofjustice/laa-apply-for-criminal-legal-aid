@@ -12,11 +12,11 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, has_no_income_payments: nil, has_no_income_benefits: nil),
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no', has_no_income_payments: nil, has_no_income_benefits: nil),
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
       income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
-      outgoings: (double has_no_other_outgoings: nil, applicant_self_assessment_tax_bill: nil),
+      outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double]
@@ -186,6 +186,7 @@ describe Summary::HtmlPresenter do
             Employments
             Dependants
             PartnerEmploymentDetails
+            SelfAssessmentTaxBill
             IncomePaymentsDetails
             IncomeBenefitsDetails
             PartnerIncomePaymentsDetails
@@ -233,6 +234,8 @@ describe Summary::HtmlPresenter do
             IncomeDetails
             Employments
             PartnerEmploymentDetails
+            SelfAssessmentTaxBill
+            WorkBenefits
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
@@ -372,6 +375,7 @@ describe Summary::HtmlPresenter do
       EmploymentDetails
       IncomeDetails
       Employments
+      SelfAssessmentTaxBill
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants

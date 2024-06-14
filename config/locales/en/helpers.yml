@@ -154,7 +154,7 @@ en:
         add_client_employment: Do you want to add another job?
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
-        frequency: How often do they pay this amount?
+        applicant_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
       steps_income_partner_income_payments_form:
@@ -613,8 +613,8 @@ en:
           details: Enter details of other deductions
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill_options: *YESNO
-        amount: How much do they pay?
-        frequency_options: *frequency_options
+        applicant_self_assessment_tax_bill_amount: How much do they pay?
+        applicant_self_assessment_tax_bill_frequency_options: *frequency_options
       steps_income_client_employments_summary_form:
         add_client_employment_options: *YESNO
       steps_income_client_other_work_benefits_form:

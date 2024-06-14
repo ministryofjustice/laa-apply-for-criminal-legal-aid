@@ -868,7 +868,7 @@ en:
         question: Does the client pay a Self Assessment tax bill?
         answers: *YESNO
       self_assessment_tax_bill_payment:
-        question: Enter the amount
+        question: Amount
         answers:
           description: *payment_answer_format
 
@@ -876,6 +876,6 @@ en:
         question: Does your client receive any other benefits from work?
         answers: *YESNO
       work_benefits_payment:
-        question: Enter the total value every year
+        question: Total value every year
         answers:
           description: *payment_answer_format

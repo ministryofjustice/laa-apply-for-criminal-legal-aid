@@ -24,7 +24,7 @@ module Steps
       end
 
       def existing_or_build(parent, name)
-        parent.public_send(name) || parent.public_send("build_#{name}")
+        parent.public_send(name) || parent.public_send(:"build_#{name}")
       end
 
       def has_one_association(name, through: nil)

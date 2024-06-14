@@ -43,7 +43,7 @@ module PrometheusMetrics
 
       def stale_count
         result = cache do
-          CrimeApplication.with_applicant.where(['crime_applications.updated_at < ?', 1.week.ago]).count
+          CrimeApplication.with_applicant.where(crime_applications: { updated_at: ...1.week.ago }).count
         end
 
         observe_counter(result, status: 'stale')

@@ -514,9 +514,9 @@ en:
           attributes:
             applicant_self_assessment_tax_bill:
               inclusion: Select yes if your client pays a Self Assessment tax bill received in the last 2 years
-            amount:
+            applicant_self_assessment_tax_bill_amount:
               not_a_number: Enter the amount they pay
-            frequency:
+            applicant_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
         steps/income/client/other_work_benefits_form:
           attributes:

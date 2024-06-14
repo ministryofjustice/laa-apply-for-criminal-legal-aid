@@ -29,6 +29,9 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       manage_other_details: 'Another way that they manage',
       partner_employment_status:  ['not_working'],
       applicant_other_work_benefit_received: nil,
+      applicant_self_assessment_tax_bill: 'yes',
+      applicant_self_assessment_tax_bill_amount_before_type_cast: 100_00,
+      applicant_self_assessment_tax_bill_frequency: 'week',
     )
   end
 
@@ -138,6 +141,9 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         has_no_income_benefits: nil,
         partner_has_no_income_payments: nil,
         partner_has_no_income_benefits: nil,
+        applicant_self_assessment_tax_bill: 'yes',
+        applicant_self_assessment_tax_bill_amount: 100_00,
+        applicant_self_assessment_tax_bill_frequency: 'week',
         applicant_other_work_benefit_received: nil,
         income_payments: [
           {
