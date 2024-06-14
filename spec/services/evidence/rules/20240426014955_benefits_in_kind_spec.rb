@@ -7,8 +7,14 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
   # consider using real objects
   let(:crime_application) do
     instance_double(
-      CrimeApplication,
+      CrimeApplication, partner: double, applicant: double
     )
+  end
+
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
   end
 
   it { expect(described_class.key).to eq :income_noncash_benefit_4 }

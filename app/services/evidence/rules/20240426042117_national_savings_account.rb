@@ -6,12 +6,14 @@ module Evidence
       key :capital_nsa_19
       group :capital
 
-      client do |crime_application|
-        crime_application.savings.for_client.where(saving_type: SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE.value).any?
+      client do |_crime_application, applicant|
+        applicant.savings.national_savings_or_post_office.any? ||
+          applicant.joint_savings.national_savings_or_post_office.any?
       end
 
-      partner do |crime_application|
-        crime_application.savings.for_partner.where(saving_type: SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE.value).any?
+      partner do |_crime_application, partner|
+        partner.savings.national_savings_or_post_office.any? ||
+          partner.joint_savings.national_savings_or_post_office.any?
       end
     end
   end
