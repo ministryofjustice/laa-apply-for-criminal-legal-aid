@@ -18,7 +18,7 @@ module Summary
       end
 
       def edit_path
-        edit_steps_income_partner_income_benefits_path
+        edit_steps_income_income_benefits_partner_path
       end
 
       def question

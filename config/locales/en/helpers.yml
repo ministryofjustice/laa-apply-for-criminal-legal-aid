@@ -126,7 +126,7 @@ en:
       steps_case_ioj_form:
         types: Why should your client get legal aid?
       steps_income_income_before_tax_form:
-        income_above_threshold: 
+        income_above_threshold:
           one: Is your client's annual income currently more than £12,475 a year before tax?
           other: Is your client and their partner's joint annual income more than £12,475 a year before tax?
       steps_income_client_owns_property_form:
@@ -306,7 +306,7 @@ en:
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
       steps_income_income_before_tax_form:
-        income_above_threshold: 
+        income_above_threshold:
           one: Do not include any employment income if your client has lost their job or ended employment.
           other: Do not include any employment income if your client or their partner has lost their job or ended employment.
       steps_income_client_owns_property_form:

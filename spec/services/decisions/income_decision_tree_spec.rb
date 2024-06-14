@@ -201,33 +201,33 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::NOT_WORKING.to_s])
       end
 
-      it 'redirects to the `partner_income_payments` page' do
-        expect(subject).to have_destination(:partner_income_payments, :edit, id: crime_application)
+      it 'redirects to the `income_payments_partner` page' do
+        expect(subject).to have_destination(:income_payments_partner, :edit, id: crime_application)
       end
     end
   end
 
-  context 'when the step is `partner_income_payments`' do
+  context 'when the step is `income_payments_partner`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :partner_income_payments }
+    let(:step_name) { :income_payments_partner }
 
-    it { is_expected.to have_destination('/steps/income/partner/income_benefits', :edit, id: crime_application) }
+    it { is_expected.to have_destination(:income_benefits_partner, :edit, id: crime_application) }
   end
 
-  context 'when the step is `partner_income_benefits`' do
+  context 'when the step is `income_benefits_partner`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :partner_income_benefits }
+    let(:step_name) { :income_benefits_partner }
 
     context 'when there are any income payments or benefits' do
       before { allow(income).to receive(:all_income_over_zero?).and_return(true) }
 
-      it { is_expected.to have_destination('/steps/income/answers', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
 
     context 'when there are no income payments or benefits' do
       before { allow(income).to receive(:all_income_over_zero?).and_return(false) }
 
-      it { is_expected.to have_destination('/steps/income/manage_without_income', :edit, id: crime_application) }
+      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
     end
   end
 

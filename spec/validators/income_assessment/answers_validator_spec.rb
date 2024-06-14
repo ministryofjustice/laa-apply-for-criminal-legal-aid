@@ -49,7 +49,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
     context 'when validate adds errors' do
       before do
-        record.has_no_income_payments = 'no'
+        record.has_no_income_payments = nil
         crime_application.save!
       end
 
@@ -206,9 +206,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_payments is no and income_payments are present and complete' do
+    context 'when has_no_income_payments is nil and income_payments are present and complete' do
       before do
-        record.has_no_income_payments = 'no'
+        record.has_no_income_payments = nil
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'applicant',
           payment_type: 'maintenance',
@@ -224,9 +224,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_payments is no and income_payments are present but not complete' do
+    context 'when has_no_income_payments is nil and income_payments are present but not complete' do
       before do
-        record.has_no_income_payments = 'no'
+        record.has_no_income_payments = nil
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'partner',
           payment_type: 'maintenance',
@@ -244,9 +244,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_payments is no and income_payments are empty' do
+    context 'when has_no_income_payments is nil and income_payments are empty' do
       before do
-        record.has_no_income_payments = 'no'
+        record.has_no_income_payments = nil
 
         crime_application.save!
       end
@@ -267,9 +267,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_benefits is no and income_benefits are present and complete' do
+    context 'when has_no_income_benefits is nil and income_benefits are present and complete' do
       before do
-        record.has_no_income_benefits = 'no'
+        record.has_no_income_benefits = nil
         crime_application.income_benefits << IncomeBenefit.new(
           ownership_type: 'applicant',
           payment_type: 'incapacity',
@@ -285,9 +285,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_benefits is no and income_benefits are present but not complete' do
+    context 'when has_no_income_benefits is nil and income_benefits are present but not complete' do
       before do
-        record.has_no_income_benefits = 'no'
+        record.has_no_income_benefits = nil
         crime_application.income_benefits << IncomeBenefit.new(
           ownership_type: 'partner',
           payment_type: 'incapacity',
@@ -305,9 +305,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when has_no_income_benefits is no and income_benefits are empty' do
+    context 'when has_no_income_benefits is nil and income_benefits are empty' do
       before do
-        record.has_no_income_benefits = 'no'
+        record.has_no_income_benefits = nil
 
         crime_application.save!
       end
@@ -330,9 +330,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_payments is no and income_payments are present and complete' do
+    context 'when partner_has_no_income_payments is nil and income_payments are present and complete' do
       before do
-        record.partner_has_no_income_payments = 'no'
+        record.partner_has_no_income_payments = nil
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'partner',
           payment_type: 'maintenance',
@@ -348,9 +348,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_payments is no and income_payments are present but not complete' do
+    context 'when partner_has_no_income_payments is nil and income_payments are present but not complete' do
       before do
-        record.partner_has_no_income_payments = 'no'
+        record.partner_has_no_income_payments = nil
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'applicant',
           payment_type: 'maintenance',
@@ -368,9 +368,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_payments is no and income_payments are empty' do
+    context 'when partner_has_no_income_payments is nil and income_payments are empty' do
       before do
-        record.partner_has_no_income_payments = 'no'
+        record.partner_has_no_income_payments = nil
 
         crime_application.save!
       end
@@ -386,7 +386,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         allow(validator).to receive(:include_partner_in_means_assessment?).and_return(false)
 
         # Generate invalid partner payments state
-        record.partner_has_no_income_payments = 'no'
+        record.partner_has_no_income_payments = nil
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'applicant',
           payment_type: 'maintenance',
@@ -415,9 +415,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_benefits is no and income_benefits are present and complete' do
+    context 'when partner_has_no_income_benefits is nil and income_benefits are present and complete' do
       before do
-        record.partner_has_no_income_benefits = 'no'
+        record.partner_has_no_income_benefits = nil
         crime_application.income_benefits << IncomeBenefit.new(
           ownership_type: 'partner',
           payment_type: 'incapacity',
@@ -433,9 +433,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_benefits is no and income_benefits are present but not complete' do
+    context 'when partner_has_no_income_benefits is nil and income_benefits are present but not complete' do
       before do
-        record.partner_has_no_income_benefits = 'no'
+        record.partner_has_no_income_benefits = nil
         crime_application.income_benefits << IncomeBenefit.new(
           ownership_type: 'applicant',
           payment_type: 'incapacity',
@@ -453,9 +453,9 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
     end
 
-    context 'when partner_has_no_income_benefits is no and income_benefits are empty' do
+    context 'when partner_has_no_income_benefits is nil and income_benefits are empty' do
       before do
-        record.partner_has_no_income_benefits = 'no'
+        record.partner_has_no_income_benefits = nil
 
         crime_application.save!
       end
@@ -471,7 +471,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         allow(validator).to receive(:include_partner_in_means_assessment?).and_return(false)
 
         # Generate invalid partner benefits state
-        record.partner_has_no_income_benefits = 'no'
+        record.partner_has_no_income_benefits = nil
         crime_application.income_benefits << IncomeBenefit.new(
           ownership_type: 'applicant',
           payment_type: 'incapacity',

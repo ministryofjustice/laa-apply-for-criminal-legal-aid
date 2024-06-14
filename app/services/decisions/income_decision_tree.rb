@@ -48,9 +48,9 @@ module Decisions
         edit(:answers)
       when :partner_employment_status
         after_partner_employment_status
-      when :partner_income_payments
-        edit('/steps/income/partner/income_benefits')
-      when :partner_income_benefits
+      when :income_payments_partner
+        edit(:income_benefits_partner)
+      when :income_benefits_partner
         after_partner_income_benefits
       when :answers
         step_path = Rails.application.routes.url_helpers
@@ -106,7 +106,7 @@ module Decisions
 
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
-        edit(:partner_income_payments)
+        edit(:income_payments_partner)
       else
         # TODO: implement employed partner journey
         show(:employed_exit)
@@ -115,9 +115,9 @@ module Decisions
 
     def after_partner_income_benefits
       if crime_application.income&.all_income_over_zero?
-        edit('/steps/income/answers')
+        edit(:answers)
       else
-        edit('/steps/income/manage_without_income')
+        edit(:manage_without_income)
       end
     end
 
