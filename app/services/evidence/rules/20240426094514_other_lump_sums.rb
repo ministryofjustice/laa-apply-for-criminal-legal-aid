@@ -6,12 +6,12 @@ module Evidence
       key :capital_other_lump_sums_29
       group :capital
 
-      client do |crime_application|
-        crime_application.investments.for_client.where(investment_type: InvestmentType::OTHER.value).any?
+      client do |_crime_application, applicant|
+        applicant.joint_investments.other.any? || applicant.investments.other.any?
       end
 
-      partner do |crime_application|
-        crime_application.investments.for_partner.where(investment_type: InvestmentType::OTHER.value).any?
+      partner do |_crime_application, partner|
+        partner.joint_investments.other.any? || partner.investments.other.any?
       end
     end
   end

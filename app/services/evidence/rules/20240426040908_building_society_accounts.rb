@@ -6,12 +6,12 @@ module Evidence
       key :capital_building_society_accounts_17
       group :capital
 
-      client do |crime_application|
-        crime_application.savings.for_client.where(saving_type: SavingType::BUILDING_SOCIETY.value).any?
+      client do |_crime_application, applicant|
+        applicant.savings.building_society.any? || applicant.joint_savings.building_society.any?
       end
 
-      partner do |crime_application|
-        crime_application.savings.for_partner.where(saving_type: SavingType::BUILDING_SOCIETY.value).any?
+      partner do |_crime_application, partner|
+        partner.savings.building_society.any? || partner.joint_savings.building_society.any?
       end
     end
   end

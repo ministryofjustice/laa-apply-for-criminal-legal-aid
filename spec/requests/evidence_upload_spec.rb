@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Evidence upload page', :authorized do
   before :all do
-    crime_application = CrimeApplication.create
+    crime_application = CrimeApplication.create(
+      applicant: Applicant.new(date_of_birth: 20.years.ago.to_date)
+    )
+
     file = fixture_file_upload('uploads/test.pdf', 'application/pdf')
 
     # Successfully uploaded document
