@@ -11,8 +11,24 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
       partner: Partner.new
     )
   end
+  let(:income_payments) do
+    [
+      IncomePayment.new(
+        payment_type: IncomePaymentType::MAINTENANCE,
+        frequency: PaymentFrequencyType::WEEKLY,
+        amount: 115.39,
+        ownership_type: OwnershipType::APPLICANT
+      ),
+      IncomePayment.new(
+        payment_type: IncomePaymentType::MAINTENANCE,
+        frequency: PaymentFrequencyType::MONTHLY,
+        amount: 510.00,
+        ownership_type: OwnershipType::PARTNER
+      )
+    ]
+  end
+
   let(:income) { Income.new }
-  let(:income_payments) { [] }
 
   before do
     allow(MeansStatus).to receive(:include_partner?).and_return(true)
@@ -33,16 +49,6 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'when threshold met' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::MAINTENANCE,
-            frequency: PaymentFrequencyType::WEEKLY,
-            amount: 115.39,
-          ),
-        ]
-      end
-
       it { is_expected.to be true }
     end
 
@@ -76,7 +82,7 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    it { expect(subject.partner_predicate).to be true }
   end
 
   describe '.other' do
@@ -84,16 +90,6 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   end
 
   describe '#to_h' do
-    let(:income_payments) do
-      [
-        IncomePayment.new(
-          payment_type: IncomePaymentType::MAINTENANCE,
-          frequency: PaymentFrequencyType::MONTHLY,
-          amount: 500.01,
-        ),
-      ]
-    end
-
     # rubocop:disable Layout/LineLength
     let(:expected_hash) do
       {
@@ -107,8 +103,8 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
             prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement'],
           },
           other: {
             result: false,
