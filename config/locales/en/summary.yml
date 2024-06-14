@@ -485,14 +485,14 @@ en:
 
       # BEGIN partner income payments details section
       which_payments_partner:
-        question: Which of these payments does the partner get?
+        question: Payments the partner gets
         answers:
-          none: The partner gets none of these payments
+          none: None
       # END partner income payments details section
 
       # BEGIN income benefits details section
       which_benefits:
-        question: Benefits your client gets?
+        question: Benefits your client gets
         answers:
           none: None
       child_benefit:
@@ -525,9 +525,9 @@ en:
 
       # BEGIN partner income benefits details section
       which_benefits_partner:
-        question: Which of these benefits does the partner get?
+        question: Benefits the partner gets
         answers:
-          none: The partner gets none of these benefits
+          none: None
       # END partner income benefits details section
 
       # BEGIN other sources of income details section
