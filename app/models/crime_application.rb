@@ -27,6 +27,9 @@ class CrimeApplication < ApplicationRecord
   has_many :income_benefits, dependent: :destroy
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
 
+  # NOTE: Useful for testing, use carefully in logic
+  has_many :payments, dependent: :destroy
+
   has_many :dependants, dependent: :destroy
   accepts_nested_attributes_for :dependants, allow_destroy: true
 
