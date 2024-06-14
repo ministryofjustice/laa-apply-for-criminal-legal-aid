@@ -63,7 +63,7 @@ module Summary
         address = partner&.home_address
         return unless address
 
-        address.attributes.slice(*Address::ADDRESS_ATTRIBUTES).values.compact_blank.join("\r\n")
+        address.attributes.symbolize_keys.slice(*Address::ADDRESS_ATTRIBUTES).values.compact_blank.join("\r\n")
       end
     end
   end
