@@ -10,7 +10,7 @@ describe Summary::HtmlPresenter do
   # rubocop:disable Layout/LineLength
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner),
+      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no', has_no_income_payments: nil, has_no_income_benefits: nil),
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],

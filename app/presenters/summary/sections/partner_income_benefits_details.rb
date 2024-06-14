@@ -3,8 +3,12 @@ require 'laa_crime_schemas'
 module Summary
   module Sections
     class PartnerIncomeBenefitsDetails < Sections::PaymentDetails
+      include TypeOfMeansAssessment
+
       def show?
-        true # TODO: Requires adjusting once partner journey in place
+        return false unless FeatureFlags.partner_journey.enabled?
+
+        include_partner_in_means_assessment?
       end
 
       private
