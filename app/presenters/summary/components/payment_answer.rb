@@ -17,6 +17,19 @@ module Summary
         )
       end
 
+      def subject_type
+        return SubjectType.new(:applicant) unless value.respond_to?(:ownership_type)
+
+        @subject_type ||=
+          if value.ownership_type.to_s == OwnershipType::PARTNER.to_s
+            SubjectType.new(:partner)
+          elsif value.ownership_type.to_s == OwnershipType::APPLICANT_AND_PARTNER.to_s
+            SubjectType.new(:applicant_and_partner)
+          else
+            SubjectType.new(:applicant)
+          end
+      end
+
       def tax_status
         val = value.respond_to?(:metadata) && value.metadata.dig('before_or_after_tax', 'value')
         t("summary.#{val}") if val

@@ -20,6 +20,8 @@ module SubmissionSerializer
           json.income_benefits Definitions::Payment.generate(income.income_benefits)
           json.has_no_income_payments income.has_no_income_payments
           json.has_no_income_benefits income.has_no_income_benefits
+          json.partner_has_no_income_payments income.partner_has_no_income_payments
+          json.partner_has_no_income_benefits income.partner_has_no_income_benefits
           json.partner_employment_type income.partner_employment_status
           json.applicant_other_work_benefit_received income.applicant_other_work_benefit_received
           json.applicant_self_assessment_tax_bill income.applicant_self_assessment_tax_bill
