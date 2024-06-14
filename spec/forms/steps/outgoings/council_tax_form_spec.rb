@@ -15,6 +15,10 @@ RSpec.describe Steps::Outgoings::CouncilTaxForm do
   describe '#build' do
     subject(:form) { described_class.build(crime_application) }
 
+    it 'sets the crime_application' do
+      expect(subject.crime_application).not_to be_nil
+    end
+
     context 'when no council_tax payment exists' do
       it 'creates empty form if model does not exist' do
         expect(subject.amount).to be_nil
