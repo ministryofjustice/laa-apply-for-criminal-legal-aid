@@ -85,8 +85,8 @@ en:
         client: the trust document, or a certified copy
         partner: the trust document, or a certified copy
       BankAccounts:
-        client: bank statements for the last 3 months, for each account declared by the applicant
-        partner: bank statements for the last 3 months, for each account declared by the applicant
+        client: bank statements for the last 3 months, for each account, including any joint account with a partner
+        partner: bank statements for the last 3 months, for each account, including any joint account held with your client
       BuildingSocietyAccounts:
         client: building society statement or passbook showing transactions for the last 3 months, for each account
         partner: building society statement or passbook showing transactions for the last 3 months, for each account

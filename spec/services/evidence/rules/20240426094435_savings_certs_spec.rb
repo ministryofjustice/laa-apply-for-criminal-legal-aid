@@ -1,15 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Rules::SavingsCerts do
-  subject { described_class.new(crime_application) }
+  subject(:rule) { described_class.new(crime_application) }
 
   let(:crime_application) do
     CrimeApplication.create!(
-      capital:
+      national_savings_certificates: national_savings_certificates,
+      partner: Partner.new,
+      applicant: Applicant.new
     )
   end
+  let(:national_savings_certificates) { [] }
 
-  let(:capital) { Capital.new }
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+  end
 
   it { expect(described_class.key).to eq :capital_savings_certs_22 }
   it { expect(described_class.group).to eq :capital }
@@ -17,29 +24,51 @@ RSpec.describe Evidence::Rules::SavingsCerts do
   it { expect(described_class.active?).to be true }
 
   describe '.client' do
-    subject { described_class.new(crime_application).client_predicate }
+    subject(:client) { rule.client_predicate }
 
-    context 'with national savings certificates saving' do
-      let(:capital) { Capital.new(has_national_savings_certificates: 'yes') }
+    context 'when none' do
+      it { is_expected.to be false }
+    end
+
+    context 'when owned by applicant' do
+      let(:national_savings_certificates) do
+        [NationalSavingsCertificate.new(ownership_type: 'applicant')]
+      end
 
       it { is_expected.to be true }
     end
 
-    context 'without national savings certificates saving' do
-      let(:capital) { Capital.new(has_national_savings_certificates: 'no') }
-
-      it { is_expected.to be false }
-    end
-
-    context 'when national savings certificates saving is not set' do
-      let(:capital) { Capital.new(has_national_savings_certificates: nil) }
+    context 'when owned by partner' do
+      let(:national_savings_certificates) do
+        [NationalSavingsCertificate.new(ownership_type: 'partner')]
+      end
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject(:partner) { rule.partner_predicate }
+
+    context 'when none' do
+      it { is_expected.to be false }
+    end
+
+    context 'when owned by applicant' do
+      let(:national_savings_certificates) do
+        [NationalSavingsCertificate.new(ownership_type: 'applicant')]
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when owned by partner' do
+      let(:national_savings_certificates) do
+        [NationalSavingsCertificate.new(ownership_type: 'partner')]
+      end
+
+      it { is_expected.to be true }
+    end
   end
 
   describe '.other' do
@@ -47,7 +76,9 @@ RSpec.describe Evidence::Rules::SavingsCerts do
   end
 
   describe '#to_h' do
-    let(:capital) { Capital.new(has_national_savings_certificates: 'yes') }
+    let(:national_savings_certificates) do
+      [NationalSavingsCertificate.new(ownership_type: 'applicant')]
+    end
 
     let(:expected_hash) do
       {
