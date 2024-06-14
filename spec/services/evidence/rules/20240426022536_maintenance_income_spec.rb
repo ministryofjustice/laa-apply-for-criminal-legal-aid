@@ -5,13 +5,18 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      income:,
-      income_payments:
+      income: income,
+      income_payments: income_payments,
+      applicant: Applicant.new,
+      partner: Partner.new
     )
   end
-
   let(:income) { Income.new }
   let(:income_payments) { [] }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+  end
 
   it { expect(described_class.key).to eq :income_maintenance_6 }
   it { expect(described_class.group).to eq :income }
