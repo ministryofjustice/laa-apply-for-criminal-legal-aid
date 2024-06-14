@@ -12,7 +12,10 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: record, partner: partner_record) }
+  let(:crime_application) do
+    CrimeApplication.new(applicant: record, partner: partner_record)
+  end
+
   let(:record) { Applicant.new }
   let(:partner_record) { Partner.new }
 
@@ -48,23 +51,23 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
       end
 
       it 'saves `benefit_type` value and returns true' do
-        expect(record).to receive(:update).with({
-                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                                                  'last_jsa_appointment_date' => nil,
-                                                  'has_benefit_evidence' => nil,
-                                                  'will_enter_nino' => nil,
-                                                  'benefit_check_result' => nil,
-                                                  'confirm_details' => nil,
-                                                  'confirm_dwp_result' => nil
-                                                }).and_return(true)
-        expect(partner_record).to receive(:update).with({
-                                                          'last_jsa_appointment_date' => nil,
-                                                          'has_benefit_evidence' => nil,
-                                                          'will_enter_nino' => nil,
-                                                          'benefit_check_result' => nil,
-                                                          'confirm_details' => nil,
-                                                          'confirm_dwp_result' => nil
-                                                        }).and_return(true)
+        expect(record).to receive(:update!).with({
+                                                   'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil
+                                                 }).and_return(true)
+        expect(partner_record).to receive(:update!).with({
+                                                           'last_jsa_appointment_date' => nil,
+                                                           'has_benefit_evidence' => nil,
+                                                           'will_enter_nino' => nil,
+                                                           'benefit_check_result' => nil,
+                                                           'confirm_details' => nil,
+                                                           'confirm_dwp_result' => nil
+                                                         }).and_return(true)
         expect(subject.save).to be(true)
       end
 
