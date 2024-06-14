@@ -186,9 +186,9 @@ Rails.application.routes.draw do
           crud_step :employer_details, alias: :employer_details, param: :employment_id
           crud_step :employment_details, alias: :employment_details, param: :employment_id
           #edit_step :employment_income
-          #edit_step :self_assessment_client, alias: :self_assessment_tax_bill
           crud_step :deductions_from_pay, alias: :deductions, param: :employment_id
           edit_step :add_employments, alias: :employments_summary
+          #edit_step :self_assessment_client, alias: :self_assessment_tax_bill
           #edit_step :other_work_benefits_client, alias: :other_work_benefits
         end
 
@@ -205,6 +205,11 @@ Rails.application.routes.draw do
         edit_step :which_payments_client, alias: :income_payments
         edit_step :which_benefits_client, alias: :income_benefits
         edit_step :check_your_answers_income, alias: :answers
+
+        if FeatureFlags.partner_journey.enabled?
+          edit_step :which_payments_partner, alias: :income_payments_partner
+          edit_step :which_benefits_partner, alias: :income_benefits_partner
+        end
       end
 
       namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do

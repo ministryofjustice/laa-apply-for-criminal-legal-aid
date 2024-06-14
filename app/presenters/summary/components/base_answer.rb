@@ -57,7 +57,8 @@ module Summary
 
         @i18n_opts.merge(
           subject_type: subject_type,
-          subject: translate("summary.dictionary.subjects.#{subject_type}")
+          subject: translate("summary.dictionary.subjects.#{subject_type}"),
+          ownership: translate("summary.dictionary.ownership.#{subject_type}"),
         )
       end
 

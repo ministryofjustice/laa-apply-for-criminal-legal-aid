@@ -4,7 +4,7 @@ module Decisions
     #
     include TypeOfMeansAssessment
 
-    def destination
+    def destination # rubocop:disable Metrics/PerceivedComplexity
       case step_name
       when :employment_status
         after_employment_status
@@ -56,6 +56,10 @@ module Decisions
         edit(:answers)
       when :partner_employment_status
         after_partner_employment_status
+      when :income_payments_partner
+        edit(:income_benefits_partner)
+      when :income_benefits_partner
+        after_partner_income_benefits
       when :answers
         step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
@@ -133,12 +137,19 @@ module Decisions
 
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
-        # TODO: route to partner income payments when route available
-        edit(:manage_without_income)
+        edit(:income_payments_partner)
       else
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
         start_partner_employment_journey
+      end
+    end
+
+    def after_partner_income_benefits
+      if crime_application.income&.all_income_over_zero?
+        edit(:answers)
+      else
+        edit(:manage_without_income)
       end
     end
 

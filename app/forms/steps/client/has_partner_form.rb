@@ -25,11 +25,12 @@ module Steps
         end
       end
 
-      def reset!
+      def reset! # rubocop:disable Metrics/AbcSize
         if client_has_partner.no?
           crime_application.partner&.destroy!
           crime_application.partner_detail&.destroy!
-          crime_application.income&.update!('partner_employment_status' => nil)
+          crime_application.income&.update!('partner_employment_status' => [])
+          crime_application.payments.for_partner.destroy_all
         elsif client_has_partner.yes?
           crime_application.partner_detail&.update!(
             'relationship_status' => nil,
