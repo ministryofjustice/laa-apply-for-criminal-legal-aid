@@ -16,7 +16,6 @@ RSpec.describe OutgoingsPaymentType do
           childcare
           maintenance
           legal_aid_contribution
-          self_assessment_tax_bill
         ]
       )
     end

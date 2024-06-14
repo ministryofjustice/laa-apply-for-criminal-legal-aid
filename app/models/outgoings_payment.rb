@@ -36,10 +36,6 @@ class OutgoingsPayment < Payment
     where(payment_type: OutgoingsPaymentType::MAINTENANCE.value).order(created_at: :desc).first
   end
 
-  def self.self_assessment_tax_bill
-    where(payment_type: OutgoingsPaymentType::SELF_ASSESSMENT_TAX_BILL.value).order(created_at: :desc).first
-  end
-
   # Manually cast food_amount and board_amount
   # because Rails will not convert to :pence as they are
   # store_accessor attributes
