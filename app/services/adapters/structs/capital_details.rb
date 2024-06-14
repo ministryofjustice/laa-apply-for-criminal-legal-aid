@@ -58,7 +58,7 @@ module Adapters
 
       def serializable_hash(options = {})
         except = %i[savings investments national_savings_certificates properties]
-        super options.merge(except:)
+        super(options.merge(except:))
       end
 
       # TODO: figure out why casting from pence is not happening automatically

@@ -1,7 +1,7 @@
 RSpec.shared_examples 'a has-one-association form' do |options|
   let(:association_name) { options[:association_name] }
   let(:expected_attributes) { options[:expected_attributes] }
-  let(:build_method_name) { "build_#{association_name}".to_sym }
+  let(:build_method_name) { :"build_#{association_name}" }
 
   let(:association_double) { associated_class_name.camelize.constantize.new }
 
@@ -59,7 +59,7 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
   let(:attribute_name) { options[:attribute_name] }
 
   before do
-    subject.public_send("#{attribute_name}=", date)
+    subject.public_send(:"#{attribute_name}=", date)
   end
 
   context 'when day is invalid' do

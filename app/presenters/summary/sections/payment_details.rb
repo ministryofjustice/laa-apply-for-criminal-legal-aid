@@ -64,7 +64,7 @@ module Summary
         key = name == 'legal_aid_contribution_outgoing' ? 'case_reference' : 'details'
 
         details_component = Components::FreeTextAnswer.new(
-          "#{name}_details".to_sym, details.metadata[key],
+          :"#{name}_details", details.metadata[key],
           show: true,
           change_path: change_path
         )
