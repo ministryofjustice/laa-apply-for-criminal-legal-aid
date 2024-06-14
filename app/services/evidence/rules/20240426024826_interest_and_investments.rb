@@ -6,13 +6,12 @@ module Evidence
       key :income_investments_7
       group :income
 
-      client do |crime_application|
-        crime_application.income_payments.interest_investment.present?
+      client do |_crime_application, applicant|
+        applicant.income_payments.interest_investment.present?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |_crime_application, partner|
+        partner.income_payments.interest_investment.present?
       end
     end
   end

@@ -14,9 +14,12 @@ module Evidence
         end
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        if crime_application.outgoings
+          (crime_application.outgoings.partner_income_tax_rate_above_threshold == 'yes') || false
+        else
+          false
+        end
       end
     end
   end
