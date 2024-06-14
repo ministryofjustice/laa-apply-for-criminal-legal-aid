@@ -301,6 +301,12 @@ en:
       income_benefits:
         edit:
           page_title: Which of these benefits does your client get?
+      income_payments_partner:
+        edit:
+          page_title: Which of these payments does the partner get?
+      income_benefits_partner:
+        edit:
+          page_title: Which of these benefits does the partner get?
       client_has_dependants:
         edit:
           page_title: 'Does your client have any dependants?'

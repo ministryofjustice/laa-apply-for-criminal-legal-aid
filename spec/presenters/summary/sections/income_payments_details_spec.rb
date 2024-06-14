@@ -29,7 +29,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'maintenance',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -38,7 +39,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'private_pension',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -47,7 +49,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'state_pension',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -56,7 +59,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'interest_investment',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -65,7 +69,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'student_loan_grant',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -74,7 +79,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'board_from_family',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -83,7 +89,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'rent',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -92,7 +99,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'financial_support_with_access',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -101,7 +109,8 @@ describe Summary::Sections::IncomePaymentsDetails do
       IncomePayment,
       payment_type: 'from_friends_relatives',
       amount: 300,
-      frequency: 'month'
+      frequency: 'month',
+      ownership_type: 'applicant',
     )
   end
 
@@ -111,7 +120,18 @@ describe Summary::Sections::IncomePaymentsDetails do
       payment_type: 'other',
       amount: 300,
       frequency: 'month',
-      metadata: { details: 'Some details' }
+      ownership_type: 'applicant',
+      metadata: { details: 'Some details' },
+    )
+  end
+
+  let(:partner_payment) do
+    double(
+      IncomePayment,
+      payment_type: 'from_friends_relatives',
+      amount: 19_001,
+      frequency: 'month',
+      ownership_type: 'partner',
     )
   end
 
@@ -169,7 +189,8 @@ describe Summary::Sections::IncomePaymentsDetails do
             rent_payment,
             financial_support_with_access_payment,
             from_friends_relatives_payment,
-            other_payment
+            other_payment,
+            partner_payment,
           ]
         end
 
