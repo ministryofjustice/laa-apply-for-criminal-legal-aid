@@ -3,7 +3,7 @@ en:
     persona:
       client:
         income: Evidence of your client's income
-        outgoings: Evidence of your client's outgoings
+        outgoings: "Evidence of %{subject}'s outgoings"
         capital: Evidence of your client's capital
         none: Other evidence of your client's income, outgoings or capital
       partner:
