@@ -30,18 +30,17 @@ module SubmissionSerializer
           json.conflict_of_interest partner_detail.conflict_of_interest
           json.has_same_address_as_client partner_detail.has_same_address_as_client
 
-          json.is_included_in_means_assessment is_included_in_means_assessment
+          json.is_included_in_means_assessment partner_in_means_assessment?
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
-      # TODO: how to include TypeOfMeansAssessment in this file??
-      def is_included_in_means_assessment
-        return false unless partner.present? || partner_detail.present?
-        return true if partner_involvement_in_case == PartnerInvolvementType::NONE.to_s
-        return false unless partner_involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
+      def partner_in_means_assessment?
+        return false if partner_detail.blank?
+        return true if partner_detail.involvement_in_case == PartnerInvolvementType::NONE.to_s
+        return false unless partner_detail.involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
 
-        partner_conflict_of_interest == 'no'
+        partner_detail.conflict_of_interest == 'no'
       end
     end
   end
