@@ -7,13 +7,11 @@ module Evidence
       group :none
 
       client do |crime_application|
-        (crime_application.capital&.has_frozen_income_or_assets == 'yes' ||
-          crime_application.income&.has_frozen_income_or_assets == 'yes') || false
+        MeansStatus.new(crime_application).has_frozen_assets?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        MeansStatus.new(crime_application).has_frozen_assets?
       end
     end
   end
