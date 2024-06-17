@@ -18,7 +18,7 @@ RSpec.describe Steps::Partner::NinoForm do
     )
   end
 
-  let(:partner) { instance_double(Partner, has_nino:, nino:) }
+  let(:partner) { Partner.new }
   let(:has_nino) { nil }
   let(:nino) { nil }
 
@@ -76,9 +76,17 @@ RSpec.describe Steps::Partner::NinoForm do
       let(:nino) { 'JA293483A' }
 
       it 'saves the record' do
-        expect(partner).to receive(:update).with(
-          { 'has_nino' => YesNoAnswer::YES, 'nino' => 'JA293483A' }
-        ).and_return(true)
+        expect(partner).to receive(:update).with({
+                                                   'has_nino' => YesNoAnswer::YES,
+                                                   'nino' => 'JA293483A',
+                                                   'benefit_type' => nil,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil,
+                                                 }).and_return(true)
 
         expect(subject.save).to be(true)
       end
@@ -89,11 +97,37 @@ RSpec.describe Steps::Partner::NinoForm do
       let(:nino) { 'NotRequired' }
 
       it 'saves the record' do
-        expect(partner).to receive(:update).with(
-          { 'has_nino' => YesNoAnswer::NO }
-        ).and_return(true)
+        expect(partner).to receive(:update).with({
+                                                   'has_nino' => YesNoAnswer::NO,
+                                                   'nino' => nil,
+                                                   'benefit_type' => nil,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil,
+                                                 }).and_return(true)
 
         expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when has nino is unchanged' do
+      before do
+        allow(partner).to receive_messages(has_nino: previous_has_nino, nino: previous_nino)
+      end
+
+      context 'when has nino is the same as in the persisted record' do
+        let(:previous_has_nino) { YesNoAnswer::YES.to_s }
+        let(:previous_nino) { 'AB123456C' }
+        let(:has_nino) { YesNoAnswer::YES }
+        let(:nino) { 'AB123456C' }
+
+        it 'does not save the record but returns true' do
+          expect(partner).not_to receive(:update)
+          expect(subject.save).to be(true)
+        end
       end
     end
   end
