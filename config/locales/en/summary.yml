@@ -317,7 +317,7 @@ en:
 
       # BEGIN codefendants section
       has_codefendants:
-        question: Co-defendants
+        question: Co-defendants?
         answers:
           <<: *YESNO
       conflict_of_interest:
@@ -793,7 +793,7 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Stands to benefit from a trust fund?
+        question: Trust fund
         answers: *YESNO
       trust_fund_amount_held:
         question: Amount in fund
