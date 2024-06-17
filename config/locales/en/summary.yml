@@ -317,7 +317,7 @@ en:
 
       # BEGIN codefendants section
       has_codefendants:
-        question: Co-defendants
+        question: Co-defendants?
         answers:
           <<: *YESNO
       conflict_of_interest:

@@ -18,7 +18,21 @@ module Steps
       def persist!
         return true unless changed?
 
-        partner.update!(attributes)
+        partner.update(attributes.merge(attributes_to_reset))
+      end
+
+      def attributes_to_reset
+        return {} unless changed?(:last_name, :date_of_birth)
+
+        {
+          has_nino: nil,
+          nino: nil,
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
+          benefit_type: nil,
+          last_jsa_appointment_date: nil,
+          benefit_check_result: nil,
+        }
       end
     end
   end
