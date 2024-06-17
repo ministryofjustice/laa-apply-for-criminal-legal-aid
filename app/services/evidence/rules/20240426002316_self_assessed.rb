@@ -15,7 +15,7 @@ module Evidence
       end
 
       partner do |crime_application|
-        if crime_application.outgoings
+        if MeansStatus.include_partner?(crime_application) && crime_application.outgoings
           (crime_application.outgoings.partner_income_tax_rate_above_threshold == 'yes') || false
         else
           false

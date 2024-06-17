@@ -55,8 +55,6 @@ module Evidence
 
       def execute_partner(crime_application)
         if @partner_proc.respond_to?(:call)
-          return false unless MeansStatus.include_partner?(crime_application)
-
           @partner_proc.call(crime_application, crime_application.partner)
         else
           DEFAULT_PREDICATE.call(crime_application)

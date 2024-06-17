@@ -79,6 +79,12 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
       it { is_expected.to be true }
     end
 
+    context 'when partner is not included in means assessment' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
+
     context 'when threshold not met' do
       before do
         partner_pension.frequency = PaymentFrequencyType::MONTHLY

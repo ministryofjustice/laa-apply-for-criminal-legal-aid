@@ -68,6 +68,12 @@ RSpec.describe Evidence::Rules::SavingsCerts do
       end
 
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
   end
 
