@@ -81,7 +81,7 @@ module Datastore
       return nil unless FeatureFlags.partner_journey.enabled?
       return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
-      attributes_to_ignore = PartnerDetail.fields + %w[benefit_check_status]
+      attributes_to_ignore = PartnerDetail.fields + %w[benefit_check_status is_included_in_means_assessment]
       attributes = parent.partner.serializable_hash.except!(*attributes_to_ignore)
       Partner.new(attributes)
     end
