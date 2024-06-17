@@ -10,12 +10,20 @@ module Decisions
         after_employment_status
       when :client_employer_details
         after_client_employer_details
+      when :partner_employer_details
+        after_partner_employer_details
       when :client_employment_details
         after_client_employment_details
+      when :partner_employment_details
+        after_partner_employment_details
       when :client_deductions
         after_client_deductions
-      when :employments_summary
-        after_employments_summary
+      when :partner_deductions
+        after_partner_deductions
+      when :client_employments_summary
+        after_client_employments_summary
+      when :partner_employments_summary
+        after_partner_employments_summary
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -70,19 +78,42 @@ module Decisions
 
     private
 
+    def applicant
+      OwnershipType::APPLICANT.to_s
+    end
+
+    def partner
+      OwnershipType::PARTNER.to_s
+    end
+
     def employment
       @employment ||= if incomplete_employments.empty?
-                        current_crime_application.employments.create!
+                        current_crime_application.client_employments.create!
                       else
                         incomplete_employments.first
                       end
     end
 
-    def after_employments_summary
+    def partner_employment
+      @partner_employment ||= if incomplete_partner_employments.empty?
+                        current_crime_application.partner_employments.create!
+                      else
+                        incomplete_partner_employments.first
+                      end
+    end
+
+    def after_client_employments_summary
       return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
 
-      employment = current_crime_application.employments.create!
+      employment = current_crime_application.client_employments.create!
       redirect_to_employer_details(employment)
+    end
+
+    def after_partner_employments_summary
+      return edit(:self_assessment_tax_bill) if form_object.add_partner_employment.no?
+
+      employment = current_crime_application.partner_employments.create!
+      redirect_to_partner_employer_details(employment)
     end
 
     def previous_step_path
@@ -114,8 +145,9 @@ module Decisions
           show(:self_employed_exit)
         end
       else
-        # TODO: implement employed partner journey
-        show(:employed_exit)
+        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
+
+        start_partner_employment_journey
       end
     end
 
@@ -143,8 +175,23 @@ module Decisions
       end
     end
 
+    def start_partner_employment_journey
+      case form_object.partner_employment_status
+      when [EmploymentStatus::EMPLOYED.to_s]
+        #edit(:income_before_tax)
+      when [EmploymentStatus::SELF_EMPLOYED.to_s]
+        #show(:self_employed_exit)
+      when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        redirect_to_partner_employer_details(partner_employment)
+      end
+    end
+
     def redirect_to_employer_details(employment)
       edit('/steps/income/client/employer_details', employment_id: employment)
+    end
+
+    def redirect_to_partner_employer_details(employment)
+      edit('/steps/income/partner/employer_details', employment_id: employment)
     end
 
     def after_income_before_tax
@@ -221,7 +268,11 @@ module Decisions
     end
 
     def incomplete_employments
-      crime_application.employments.reject(&:complete?)
+      crime_application.client_employments.reject(&:complete?)
+    end
+
+    def incomplete_partner_employments
+      crime_application.partner_employments.reject(&:complete?)
     end
 
     def employed?
@@ -261,12 +312,24 @@ module Decisions
       edit('steps/income/client/employment_details', employment_id: form_object.record.id)
     end
 
+    def after_partner_employer_details
+      edit('steps/income/partner/employment_details', employment_id: form_object.record.id)
+    end
+
     def after_client_employment_details
       edit('/steps/income/client/deductions', employment_id: form_object.record.id)
     end
 
+    def after_partner_employment_details
+      edit('/steps/income/partner/deductions', employment_id: form_object.record.id)
+    end
+
     def after_client_deductions
       edit('/steps/income/client/employments_summary')
+    end
+
+    def after_partner_deductions
+      edit('/steps/income/partner/employments_summary')
     end
   end
 end

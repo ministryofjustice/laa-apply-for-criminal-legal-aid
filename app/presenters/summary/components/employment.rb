@@ -3,6 +3,11 @@ module Summary
     class Employment < BaseRecord
       alias employment record
 
+      OWNERSHIP_TYPE_MAPPING = {
+        applicant: 'client',
+        partner: 'partner'
+      }.freeze
+
       private
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -10,7 +15,7 @@ module Summary
         attributes =
           [
             Components::FreeTextAnswer.new(
-              'employment.employer_name', employment.employer_name
+              'employment.employer_name', employment.employer_name + employment.ownership_type
             ),
             Components::FreeTextAnswer.new(
               'employment.address', full_address(employment.address)
@@ -60,15 +65,15 @@ module Summary
       end
 
       def change_path
-        edit_steps_income_client_employer_details_path(employment_id: employment.id)
+        send "edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type.to_sym]}_employer_details_path", employment_id: employment.id
       end
 
       def summary_path
-        edit_steps_income_client_employments_summary_path(employment_id: employment.id)
+        send "edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type.to_sym]}_employments_summary_path", employment_id: employment.id
       end
 
       def remove_path
-        confirm_destroy_steps_income_client_employments_path(employment_id: employment.id)
+        send "confirm_destroy_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type.to_sym]}_employments_path", employment_id: employment.id
       end
     end
   end

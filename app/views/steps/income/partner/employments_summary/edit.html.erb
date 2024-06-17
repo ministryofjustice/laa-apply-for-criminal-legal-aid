@@ -9,13 +9,13 @@
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
 
     <h1 class="govuk-heading-xl">
-      <%=t '.heading', count: @form_object.client_employments.size %>
+      <%=t '.heading', count: @form_object.partner_employments.size %>
     </h1>
 
-    <%= render Summary::Sections::Employments.new(current_crime_application, headless: true) %>
+    <%= render Summary::Sections::PartnerEmployments.new(current_crime_application, headless: true) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :add_client_employment, @form_object.choices, :value,
+      <%= f.govuk_collection_radio_buttons :add_partner_employment, @form_object.choices, :value,
                                            inline: true %>
       <%= f.continue_button %>
     <% end %>
