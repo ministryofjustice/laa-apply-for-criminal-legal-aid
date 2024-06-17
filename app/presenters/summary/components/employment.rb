@@ -10,7 +10,7 @@ module Summary
         attributes =
           [
             Components::FreeTextAnswer.new(
-              'employment.employer_name', employment.employer_name + employment.ownership_type
+              'employment.employer_name', employment.employer_name
             ),
             Components::FreeTextAnswer.new(
               'employment.address', full_address(employment.address)
