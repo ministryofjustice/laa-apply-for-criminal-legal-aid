@@ -50,17 +50,60 @@ RSpec.describe Steps::Partner::DetailsForm do
       end
 
       it 'saves the record' do
-        expect(partner_record).to receive(:update!).with(form_attributes.stringify_keys).and_return(true)
+        expect(partner_record).to receive(:update).with(form_attributes.stringify_keys).and_return(true)
 
         partner_record.first_name = 'Ella'
         expect(subject.save).to be(true)
       end
 
       it 'does not update unchanged details' do
-        expect(partner_record).not_to receive(:update!)
-        expect(partner_detail).not_to receive(:update!)
+        expect(partner_record).not_to receive(:update)
+        expect(partner_detail).not_to receive(:update)
 
         expect(subject.save).to be(true)
+      end
+
+      context 'when details linked to DWP passporting have changed' do
+        context 'last_name' do
+          let(:form_attributes) { super().merge(last_name: 'Smith') }
+
+          it_behaves_like 'a has-one-association form',
+                          association_name: :partner,
+                          expected_attributes: {
+                            'first_name' => 'John',
+                            'last_name' => 'Smith',
+                            'other_names' => nil,
+                            'date_of_birth' => 20.years.ago.to_date,
+                            :has_nino => nil,
+                            :nino => nil,
+                            :benefit_type => nil,
+                            :benefit_check_result => nil,
+                            :last_jsa_appointment_date => nil,
+                            :will_enter_nino => nil,
+                            :has_benefit_evidence => nil,
+                          }
+        end
+
+        context 'date_of_birth' do
+          let(:date_of_birth) { 20.years.ago.to_date }
+          let(:form_attributes) { super().merge(date_of_birth:) }
+
+          it_behaves_like 'a has-one-association form',
+                          association_name: :partner,
+                          expected_attributes: {
+                            'first_name' => 'John',
+                            'last_name' => 'Doe',
+                            'other_names' => nil,
+                            'date_of_birth' => 20.years.ago.to_date,
+                            :has_nino => nil,
+                            :nino => nil,
+                            :benefit_type => nil,
+                            :benefit_check_result => nil,
+                            :last_jsa_appointment_date => nil,
+                            :will_enter_nino => nil,
+                            :has_benefit_evidence => nil,
+                          }
+        end
       end
     end
   end

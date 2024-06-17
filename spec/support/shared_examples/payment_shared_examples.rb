@@ -253,14 +253,13 @@ RSpec.shared_examples 'a payment form' do |payment_class, has_none_attr|
 
       it 'saves the has_none' do
         expect(subject.save).to be true
-
         expect(payments.size).to eq 0
-
         expect(subject.errors.size).to eq 0
+        expect(subject.send(has_none_attr)).to eq 'yes'
       end
     end
 
-    context 'when no attributes are invoked' do
+    context 'when attributes are not invoked' do
       subject(:form) do
         described_class.new(
           crime_application: crime_application,
@@ -273,6 +272,23 @@ RSpec.shared_examples 'a payment form' do |payment_class, has_none_attr|
 
         expect(payments.size).to eq 0
         expect(subject.errors.of_kind?(:base, :none_selected)).to be(true)
+      end
+    end
+
+    context 'when attributes are invoked' do
+      subject(:form) do
+        described_class.new(
+          crime_application: crime_application,
+          types: [allowed_types.first]
+        )
+      end
+
+      it 'saves invoked types' do
+        subject.send(:"#{allowed_types.first}=", { amount: 10, frequency: 'week' })
+
+        expect(subject.save).to be true
+        expect(payments.size).to eq 1
+        expect(subject.send(has_none_attr)).to be_nil
       end
     end
   end

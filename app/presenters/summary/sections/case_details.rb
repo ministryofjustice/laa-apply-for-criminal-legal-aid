@@ -117,7 +117,7 @@ module Summary
       def appeal_reference_value
         return '' if kase.appeal_reference_number.nil?
 
-        (kase.appeal_maat_id.presence || kase.appeal_usn.presence)
+        kase.appeal_maat_id.presence || kase.appeal_usn.presence
       end
 
       def original_app_submitted?

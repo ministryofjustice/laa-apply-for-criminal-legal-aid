@@ -7,16 +7,11 @@ module Evidence
       group :capital
 
       client do |crime_application|
-        if crime_application.capital
-          crime_application.capital.has_national_savings_certificates == 'yes'
-        else
-          false
-        end
+        crime_application.applicant.national_savings_certificates.any?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        crime_application.partner.national_savings_certificates.any?
       end
     end
   end

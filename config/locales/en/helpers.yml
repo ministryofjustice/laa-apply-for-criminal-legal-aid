@@ -126,7 +126,7 @@ en:
       steps_case_ioj_form:
         types: Why should your client get legal aid?
       steps_income_income_before_tax_form:
-        income_above_threshold: 
+        income_above_threshold:
           one: Is your client's annual income currently more than £12,475 a year before tax?
           other: Is your client and their partner's joint annual income more than £12,475 a year before tax?
       steps_income_client_owns_property_form:
@@ -157,12 +157,16 @@ en:
         applicant_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
+      steps_income_partner_income_payments_form:
+        income_payments: Which of these payments does the partner get?
       steps_income_income_benefits_form:
         income_benefits: Which of these benefits does your client get?
+      steps_income_partner_income_benefits_form:
+        income_benefits: Which of these benefits does the partner get?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
-        manage_without_income: 
+        manage_without_income:
           one: How does %{subject} manage with no income?
           other: How do %{subject} manage with no income?
       steps_outgoings_housing_payment_type_form:
@@ -174,11 +178,11 @@ en:
       steps_outgoings_board_and_lodging_form:
         frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
-        council_tax: 
+        council_tax:
           one: Does %{subject} pay Council Tax where they usually live?
           other: Do %{subject} pay Council Tax where they usually live?
       steps_outgoings_outgoings_payments_form:
-        outgoings_payments: 
+        outgoings_payments:
           one: Which of these payments does %{subject} pay?
           other: Which of these payments do %{subject} pay?
       steps_outgoings_outgoings_more_than_income_form:
@@ -302,7 +306,7 @@ en:
         interest_of_another_justification: *ioj_justification_hint
         other_justification: *ioj_justification_hint
       steps_income_income_before_tax_form:
-        income_above_threshold: 
+        income_above_threshold:
           one: Do not include any employment income if your client has lost their job or ended employment.
           other: Do not include any employment income if your client or their partner has lost their job or ended employment.
       steps_income_client_owns_property_form:
@@ -331,7 +335,20 @@ en:
           board_from_family: This includes any non-contractual payments.
           rent: This includes contractual payments from property your client does not live in.
           from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
+      steps_income_partner_income_payments_form:
+        income_payments: Select all that apply.
+        types_options:
+          maintenance: This includes child maintenance.
+          private_pension: This includes pensions from an employer.
+          board_from_family: This includes any non-contractual payments.
+          rent: This includes contractual payments from property the partner does not live in.
+          from_friends_relatives: Select if a friend or relative regularly gives the partner money to help with living costs. Do not include one-off payments.
       steps_income_income_benefits_form:
+        income_benefits: Select all that apply.
+        types_options:
+          jsa: This includes New Style JSA.
+          other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
+      steps_income_partner_income_benefits_form:
         income_benefits: Select all that apply.
         types_options:
           jsa: This includes New Style JSA.
@@ -700,9 +717,84 @@ en:
           living_on_streets: They are living on the streets or homeless
           custody: They have been in custody for more than 3 months
           other: Other
-        manage_other_details: 
+        manage_other_details:
           one: Tell us how %{subject} manages with no income
           other: Tell us how %{subject} manage with no income
+
+      # BEGIN: Partner Income
+      steps_income_partner_income_payments_form:
+        types_options:
+          maintenance: Maintenance payments
+          private_pension: Private pensions
+          state_pension: State Pension
+          interest_investment: Interest or income from savings or investments
+          student_loan_grant: Student grant or loan
+          board_from_family: Board from family members living with the partner
+          rent: Rent from a tenant
+          financial_support_with_access: Financial support from someone who allows the parther access to their assets or money
+          from_friends_relatives: Money from friends or family
+          other: Other sources of income
+          none: They do not get any of these payments
+        maintenance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        private_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        state_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        interest_investment:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        student_loan_grant:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        board_from_family:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        rent:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        financial_support_with_access:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        from_friends_relatives:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Enter total amount of all other sources of income
+          frequency_options: *frequency_options
+          details: Enter the other sources of income they get
+      steps_income_partner_income_benefits_form:
+        types_options:
+          child: Child Benefit
+          working_or_child_tax_credit: Working Tax Credit or Child Tax Credit
+          incapacity: Incapacity Benefit
+          industrial_injuries_disablement: Industrial Injuries Disablement Benefit
+          jsa: Contribution-based Jobseeker’s Allowance (JSA)
+          other: Other benefits (except disregarded benefits)
+          none: They do not get any of these benefits
+        child:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        working_or_child_tax_credit:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        incapacity:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        industrial_injuries_disablement:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        jsa:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Enter total amount of all other benefits (except disregarded benefits)
+          frequency_options: *frequency_options
+          details: Enter what benefits they get and the amount
+      # END: Partner Income
       steps_outgoings_housing_payment_type_form:
         housing_payment_type_options:
           rent: Rent
@@ -710,22 +802,22 @@ en:
           board_and_lodging: Board and lodgings
           none: They do not pay any of these payments
       steps_outgoings_mortgage_form:
-        amount: 
+        amount:
           one: How much are the mortgage payments %{subject} makes?
           other: How much are the mortgage payments %{subject} make?
         frequency_options: *frequency_options
       steps_outgoings_rent_form:
-        amount: 
+        amount:
           one: How much rent does %{subject} pay, after taking away Housing Benefit?
           other: How much rent do %{subject} pay, after taking away Housing Benefit?
         frequency_options: *frequency_options
       steps_outgoings_board_and_lodging_form:
-        board_amount: 
+        board_amount:
           one: How much does %{subject} pay for board and lodgings?
           other: How much do %{subject} pay for board and lodgings?
 
         food_amount: How much of the board and lodgings payment is for food?
-        payee_name: 
+        payee_name:
           one: What is the name of the person %{subject} pays for board and lodgings?
           other: What is the name of the person %{subject} pay for board and lodgings?
         payee_relationship_to_client: What is this person's relationship to %{subject}?

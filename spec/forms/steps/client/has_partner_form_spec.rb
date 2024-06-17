@@ -11,19 +11,18 @@ RSpec.describe Steps::Client::HasPartnerForm do
   end
 
   let(:crime_application) do
-    instance_double(
-      CrimeApplication,
+    CrimeApplication.new(
       client_has_partner:,
       partner_detail:,
       partner:,
-      income:
+      income:,
     )
   end
 
   let(:client_has_partner) { nil }
-  let(:partner_detail) { instance_double(PartnerDetail) }
-  let(:partner) { instance_double(Partner) }
-  let(:income) { instance_double(Income) }
+  let(:partner_detail) { PartnerDetail.new }
+  let(:partner) { Partner.new }
+  let(:income) { Income.new }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -61,7 +60,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
     context 'when `client_has_partner` is `yes`' do
       let(:client_has_partner) { 'yes' }
       let(:partner_detail) do
-        instance_double(PartnerDetail, relationship_status: 'widowed', separation_date: '2023-01-01')
+        PartnerDetail.new(relationship_status: 'widowed', separation_date: '2023-01-01')
       end
 
       it 'saves the record and resets client relationship status' do
@@ -83,22 +82,50 @@ RSpec.describe Steps::Client::HasPartnerForm do
     context 'when `client_has_partner` is `no`' do
       let(:client_has_partner) { 'no' }
       let(:income) do
-        instance_double(Income, partner_employment_status: ['not_working'])
+        Income.new(partner_employment_status: ['not_working'])
+      end
+
+      before do
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'applicant',
+          amount: 1,
+          frequency: 'week',
+          payment_type: 'maintainance',
+        )
+
+        crime_application.income_payments << IncomePayment.new(
+          ownership_type: 'partner',
+          amount: 1,
+          frequency: 'week',
+          payment_type: 'maintainance',
+        )
+
+        crime_application.income_benefits << IncomeBenefit.new(
+          ownership_type: 'partner',
+          amount: 1,
+          frequency: 'week',
+          payment_type: 'jsa',
+        )
+
+        crime_application.save!
       end
 
       it 'saves the record and deletes partner information' do
+        expect(crime_application.payments.size).to eq 3
+
         expect(crime_application).to receive(:update!).with(
           { 'client_has_partner' => YesNoAnswer::NO }
-        ).and_return(true)
+        )
 
         expect(income).to receive(:update!).with(
-          { 'partner_employment_status' => nil }
-        ).and_return(true)
+          { 'partner_employment_status' => [] }
+        )
 
         expect(partner_detail).to receive(:destroy!)
         expect(partner).to receive(:destroy!)
 
         expect(subject.save).to be(true)
+        expect(crime_application.payments.for_client.size).to eq 1
       end
     end
   end
