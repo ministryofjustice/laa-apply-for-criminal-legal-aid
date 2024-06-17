@@ -9,20 +9,22 @@ module Evidence
       key :income_maintenance_6
       group :income
 
-      client do |crime_application|
-        income = [
-          crime_application.income_payments.maintenance,
-        ]
-
-        total = income.compact.sum { |x| x.prorated_monthly.to_f }
-
-        total > THRESHOLD
+      client do |_crime_application, applicant|
+        MaintenanceEvidenceRequired.for(applicant)
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |_crime_application, partner|
+        MaintenanceEvidenceRequired.for(partner)
       end
+    end
+  end
+
+  class MaintenanceEvidenceRequired
+    def self.for(person)
+      maintenance = person.income_payments.maintenance
+      return false unless maintenance
+
+      maintenance.prorated_monthly.to_f > Rules::MaintenanceIncome::THRESHOLD
     end
   end
 end
