@@ -17,7 +17,7 @@ module Steps
           # Used by govuk form component to retrieve values to populate the fields_for
           # for each type (on page load). Trigger validation on load.
           define_method :"#{type}" do
-            DeductionFieldsetForm.build(find_or_create_deduction(type), crime_application:).tap do |record|
+            deduction_fieldset_form_name.build(find_or_create_deduction(type), crime_application:).tap do |record|
               self.employment = record.employment
               record.valid? if types.include?(type.to_s)
             end
@@ -27,7 +27,7 @@ module Steps
           # (on form submit). 'type' is the checkbox value
           define_method :"#{type}=" do |attrs|
             @new_deductions ||= {}
-            record = DeductionFieldsetForm.build(
+            record = deduction_fieldset_form_name.build(
               Deduction.new(employment: employment, deduction_type: type.to_s, **attrs),
               crime_application:
             )
@@ -65,6 +65,10 @@ module Steps
         # rubocop:enable Naming/PredicateName
 
         private
+
+        def deduction_fieldset_form_name
+          DeductionFieldsetForm
+        end
 
         # :nocov:
         # Precedence: submitted values, stored values, empty Deduction
