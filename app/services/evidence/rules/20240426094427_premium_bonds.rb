@@ -14,9 +14,12 @@ module Evidence
         end
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        if crime_application.capital
+          crime_application.capital.partner_has_premium_bonds == 'yes'
+        else
+          false
+        end
       end
     end
   end
