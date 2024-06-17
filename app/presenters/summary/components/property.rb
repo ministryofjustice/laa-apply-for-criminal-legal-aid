@@ -68,7 +68,7 @@ module Summary
             :percentage_partner_owned,
             property.percentage_partner_owned,
             i18n_opts: i18n_opts,
-            show: include_partner_in_means_assessment?
+            show: property.percentage_partner_owned.present?
           ),
           Components::ValueAnswer.new(
             :is_home_address,
