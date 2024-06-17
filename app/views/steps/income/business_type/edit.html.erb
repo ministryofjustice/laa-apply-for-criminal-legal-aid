@@ -1,0 +1,21 @@
+<% title legend_t(:business_type) %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+    <%= govuk_error_summary(@form_object) %>
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons(
+            :business_type,
+            @form_object.choices,
+            :value,
+            legend: { size: 'xl' }
+          ) %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

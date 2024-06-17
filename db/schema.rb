@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_13_005740) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_115219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_005740) do
     t.string "lookup_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
+  end
+
+  create_table "businesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "business_type", null: false
+    t.string "ownership_type", default: "applicant", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_businesses_on_crime_application_id"
   end
 
   create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -176,10 +185,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_005740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_title"
-    t.string "has_no_deductions"
     t.bigint "amount"
     t.string "frequency"
     t.jsonb "metadata", default: {}, null: false
+    t.string "has_no_deductions"
     t.index ["crime_application_id"], name: "index_employments_on_crime_application_id"
   end
 
@@ -395,6 +404,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_005740) do
   end
 
   add_foreign_key "addresses", "people"
+  add_foreign_key "businesses", "crime_applications"
   add_foreign_key "capitals", "crime_applications"
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"

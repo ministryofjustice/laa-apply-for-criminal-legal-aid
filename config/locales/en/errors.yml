@@ -617,6 +617,10 @@ en:
               inclusion: Select how they manage with no income
             manage_other_details:
               blank: Enter details on how they manage with no income
+        steps/income/business_type_form:
+          attributes:
+            business_type:
+              inclusion: Select a business type
         steps/outgoings/housing_payment_type_form:
           attributes:
             housing_payment_type:

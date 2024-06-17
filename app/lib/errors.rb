@@ -12,4 +12,5 @@ module Errors
   class DocumentUnavailable < NotFound; end
   class DateOfBirthPending < StandardError; end
   class EmploymentNotFound < NotFound; end
+  class SubjectNotFound < NotFound; end
 end
