@@ -169,6 +169,7 @@ Rails.application.routes.draw do
 
       namespace :income, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
         edit_step :what_is_clients_employment_status, alias: :employment_status
+        edit_step :what_is_the_partners_employment_status, alias: :partner_employment_status
         namespace :client, constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
           crud_step :employments, param: :employment_id
           crud_step :employer_details, alias: :employer_details, param: :employment_id
@@ -179,6 +180,18 @@ Rails.application.routes.draw do
           edit_step :add_employments, alias: :employments_summary
           edit_step :other_work_benefits_client, alias: :other_work_benefits
         end
+
+        namespace :partner, constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
+          crud_step :employments, param: :employment_id
+          crud_step :employer_details, alias: :employer_details, param: :employment_id
+          crud_step :employment_details, alias: :employment_details, param: :employment_id
+          #edit_step :employment_income
+          #edit_step :self_assessment_client, alias: :self_assessment_tax_bill
+          crud_step :deductions_from_pay, alias: :deductions, param: :employment_id
+          edit_step :add_employments, alias: :employments_summary
+          #edit_step :other_work_benefits_client, alias: :other_work_benefits
+        end
+
         show_step :employed_exit
         show_step :self_employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody

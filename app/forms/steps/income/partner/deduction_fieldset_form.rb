@@ -1,6 +1,6 @@
 module Steps
   module Income
-    module Client
+    module Partner
       class DeductionFieldsetForm < Steps::BaseFormObject
         attribute :id, :string
         attribute :deduction_type, :string
@@ -38,7 +38,7 @@ module Steps
         end
 
         def employment
-          crime_application.client_employments.find(employment_id)
+          crime_application.partner_employments.find(employment_id)
         end
 
         def delete

@@ -143,6 +143,9 @@ en:
       steps_income_client_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
+      steps_income_partner_employment_details_form:
+        before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_client_deductions_form:
         income_tax:
           frequency: Select how often this gets deducted
@@ -152,6 +155,8 @@ en:
           frequency: Select how often this gets deducted
       steps_income_client_employments_summary_form:
         add_client_employment: Do you want to add another job?
+      steps_income_partner_employments_summary_form:
+        add_partner_employment: Do you want to add another job?
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
         applicant_self_assessment_tax_bill_frequency: How often do they pay this amount?
@@ -585,8 +590,23 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
+      steps_income_partner_employer_details_form:
+        employer_name: Employer's name
+        address:
+          address_line_one: Address line 1
+          address_line_two: Address line 2 (optional)
+          city: Town or city
+          country: Country
+          postcode: Postcode
       steps_income_client_employment_details_form:
         job_title: What is your client’s job title?
+        amount: What is their salary or wage?
+        before_or_after_tax_options:
+          before_tax: Before tax
+          after_tax: After tax
+        frequency_options: *frequency_options
+      steps_income_partner_employment_details_form:
+        job_title: What is their job title?
         amount: What is their salary or wage?
         before_or_after_tax_options:
           before_tax: Before tax
@@ -611,12 +631,52 @@ en:
           amount: Enter total amount of all other deductions
           frequency_options: *frequency_options
           details: Enter details of other deductions
+      steps_income_partner_deductions_form:
+        #deductions: Select all that apply.
+        types_options:
+          income_tax: Income Tax
+          national_insurance: National Insurance
+          other: Other deductions
+          none: The client does not have deductions taken from their pay
+        deduction_attributes:
+          amount: What is their salary or wage?
+        income_tax:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        national_insurance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Enter total amount of all other deductions
+          frequency_options: *frequency_options
+          details: Enter details of other deductions
+      steps_income_partner_deductions_form:
+        #deductions: Select all that apply.
+        types_options:
+          income_tax: Income Tax
+          national_insurance: National Insurance
+          other: Other deductions
+          none: The client does not have deductions taken from their pay
+        deduction_attributes:
+          amount: What is their salary or wage?
+        income_tax:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        national_insurance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Enter total amount of all other deductions
+          frequency_options: *frequency_options
+          details: Enter details of other deductions
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill_options: *YESNO
         applicant_self_assessment_tax_bill_amount: How much do they pay?
         applicant_self_assessment_tax_bill_frequency_options: *frequency_options
       steps_income_client_employments_summary_form:
         add_client_employment_options: *YESNO
+      steps_income_partner_employments_summary_form:
+        add_partner_employment_options: *YESNO
       steps_income_client_other_work_benefits_form:
         applicant_other_work_benefit_received_options: *YESNO
         amount: How much is the total yearly value?
