@@ -1,20 +1,6 @@
 module Summary
   module Sections
-    class PartnerEmployments < Sections::BaseSection
-      def answers
-        return [] if employments.empty?
-
-        Components::Employment.with_collection(
-          employments, show_actions: editable?, show_record_actions: headless?
-        )
-      end
-
-      def list?
-        return false if employments.empty?
-
-        true
-      end
-
+    class PartnerEmployments < Summary::Sections::Employments
       private
 
       def employments
