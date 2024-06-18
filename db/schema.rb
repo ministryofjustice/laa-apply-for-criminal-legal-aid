@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_17_115219) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_18_122548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -216,6 +216,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_17_115219) do
     t.string "applicant_self_assessment_tax_bill"
     t.bigint "applicant_self_assessment_tax_bill_amount"
     t.string "applicant_self_assessment_tax_bill_frequency"
+    t.string "partner_self_assessment_tax_bill"
+    t.bigint "partner_self_assessment_tax_bill_amount"
+    t.string "partner_self_assessment_tax_bill_frequency"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 

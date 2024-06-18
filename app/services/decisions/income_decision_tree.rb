@@ -38,6 +38,9 @@ module Decisions
         edit('/steps/income/income_payments')
       when :client_self_assessment_tax_bill
         edit(:other_work_benefits)
+      when :partner_self_assessment_tax_bill
+        # TODO: Implement next step for partner income payments
+        edit('/steps/income/income_payments')
       when :client_other_work_benefits
         edit('/steps/income/income_payments')
       when :income_payments
