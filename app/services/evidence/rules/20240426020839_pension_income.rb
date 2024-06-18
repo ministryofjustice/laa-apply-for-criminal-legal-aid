@@ -14,8 +14,8 @@ module Evidence
         PensionEvidenceRequired.for(applicant)
       end
 
-      partner do |_crime_application, partner|
-        PensionEvidenceRequired.for(partner)
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) && PensionEvidenceRequired.for(partner)
       end
     end
   end

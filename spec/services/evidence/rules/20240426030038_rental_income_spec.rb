@@ -31,9 +31,10 @@ RSpec.describe Evidence::Rules::RentalIncome do
 
   let(:income) { Income.new }
   let(:income_payments) { [client_rent, partner_rent] }
+  let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_rent_8 }
@@ -56,10 +57,16 @@ RSpec.describe Evidence::Rules::RentalIncome do
   end
 
   describe '.partner' do
-    subject { described_class.new(crime_application).partner_predicate }
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
 
     context 'with rental income' do
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'without rental income' do

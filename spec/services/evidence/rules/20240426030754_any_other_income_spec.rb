@@ -11,6 +11,7 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
       partner: Partner.new
     )
   end
+  let(:include_partner?) { true }
 
   let(:partner_other) do
     IncomePayment.new(
@@ -35,7 +36,7 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
   let(:income_payments) { [client_other, partner_other] }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_other_9 }
@@ -71,10 +72,22 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
   end
 
   describe '.partner' do
-    subject { described_class.new(crime_application).partner_predicate }
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
 
     context 'with other income' do
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when partner is not included in means assessment' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
     end
 
     context 'without other income details' do
