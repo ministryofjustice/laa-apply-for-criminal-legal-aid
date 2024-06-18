@@ -7,8 +7,9 @@ module Summary
 
       def show?
         return false unless FeatureFlags.partner_journey.enabled?
+        return false if income.blank?
 
-        include_partner_in_means_assessment?
+        income.partner_has_no_income_payments == 'yes' || super
       end
 
       private
