@@ -39,10 +39,11 @@ module Decisions
       when :client_self_assessment_tax_bill
         edit(:other_work_benefits)
       when :partner_self_assessment_tax_bill
-        # TODO: Implement next step for partner income payments
-        edit('/steps/income/income_payments')
+        edit(:other_work_benefits)
       when :client_other_work_benefits
         edit('/steps/income/income_payments')
+      when :partner_other_work_benefits
+        edit('/steps/income/income_payments_partner')
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
@@ -83,10 +84,10 @@ module Decisions
 
     def client_employment
       @client_employment ||= if incomplete_client_employments.empty?
-                        current_crime_application.client_employments.create!
-                      else
-                        incomplete_client_employments.first
-                      end
+                               current_crime_application.client_employments.create!
+                             else
+                               incomplete_client_employments.first
+                             end
     end
 
     def partner_employment

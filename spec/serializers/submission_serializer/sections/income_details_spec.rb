@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
@@ -277,3 +278,4 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     it { expect(subject.generate).to eq(json_output) }
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
