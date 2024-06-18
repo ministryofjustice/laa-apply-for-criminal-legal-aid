@@ -23,11 +23,11 @@ module Steps
         raise Errors::EmploymentNotFound
       end
 
+      # :nocov:
       def employments
         raise NotImplementedError
       end
 
-      # :nocov:
       def advance_as
         raise NotImplementedError
       end
