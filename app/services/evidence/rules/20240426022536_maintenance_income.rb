@@ -13,8 +13,8 @@ module Evidence
         MaintenanceEvidenceRequired.for(applicant)
       end
 
-      partner do |_crime_application, partner|
-        MaintenanceEvidenceRequired.for(partner)
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) && MaintenanceEvidenceRequired.for(partner)
       end
     end
   end
