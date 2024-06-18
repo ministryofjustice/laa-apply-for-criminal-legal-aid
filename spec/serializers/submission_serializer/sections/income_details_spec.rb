@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double CrimeApplication, income: income, employments: [employment] }
+  let(:crime_application) { instance_double CrimeApplication, income: income, client_employments: [employment], partner_employments: [] }
   let(:deductions_double) { double('deductions_collection', complete: deductions) }
 
   let(:income) do
@@ -214,7 +214,8 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
               }
             ]
           }
-        ]
+        ],
+        partner_employments: []
       }.as_json
     end
 

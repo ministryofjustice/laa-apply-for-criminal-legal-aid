@@ -32,7 +32,11 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'applicant_other_work_benefit_received' => 'no',
           'applicant_self_assessment_tax_bill' => 'yes',
           'applicant_self_assessment_tax_bill_amount' => 555_00,
-          'applicant_self_assessment_tax_bill_frequency' => 'fortnight'
+          'applicant_self_assessment_tax_bill_frequency' => 'fortnight',
+          'partner_other_work_benefit_received' => 'no',
+          'partner_self_assessment_tax_bill' => 'yes',
+          'partner_self_assessment_tax_bill_amount' => 222_00,
+          'partner_self_assessment_tax_bill_frequency' => 'fortnight'
         )
       )
     end
@@ -59,6 +63,10 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           applicant_self_assessment_tax_bill
           applicant_self_assessment_tax_bill_amount
           applicant_self_assessment_tax_bill_frequency
+          partner_other_work_benefit_received
+          partner_self_assessment_tax_bill
+          partner_self_assessment_tax_bill_amount
+          partner_self_assessment_tax_bill_frequency
         ]
       )
     end

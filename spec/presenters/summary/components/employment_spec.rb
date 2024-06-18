@@ -8,7 +8,8 @@ RSpec.describe Summary::Components::Employment, type: :component do
                     complete?: true,
                     deductions: deductions,
                     has_no_deductions: has_no_deductions,
-                    crime_application: crime_application, **attributes)
+                    crime_application: crime_application, **attributes,
+                    ownership_type: 'applicant')
   }
 
   let(:deduction1) {

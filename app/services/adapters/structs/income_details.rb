@@ -28,6 +28,19 @@ module Adapters
           Employment.new(**attrs)
         end
       end
+
+      def partner_employments
+        return [] unless __getobj__
+
+        super.map do |attrs|
+          if attrs.respond_to?(:deductions)
+            attrs.deductions.map! do |po|
+              Deduction.new(**po)
+            end
+          end
+          Employment.new(**attrs)
+        end
+      end
       # :nocov:
 
       def serializable_hash(options = {})
@@ -39,7 +52,7 @@ module Adapters
             except: [
               :employment_type, :partner_employment_type,
               :dependants, :income_payments, :income_benefits,
-              :employments
+              :employments, :partner_employments
             ]
           )
         )

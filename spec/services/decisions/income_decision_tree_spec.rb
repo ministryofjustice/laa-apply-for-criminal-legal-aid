@@ -10,7 +10,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      employments: employments_double,
+      client_employments: employments_double,
       kase: kase,
       partner_detail: partner_detail,
       partner: nil
@@ -264,9 +264,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
     end
   end
 
-  context 'when the step is `employments_summary`' do
+  context 'when the step is `client_employments_summary`' do
     let(:form_object) { double('FormObject', record: employment_double) }
-    let(:step_name) { :employments_summary }
+    let(:step_name) { :client_employments_summary }
 
     before do
       allow(form_object).to receive_messages(crime_application:, add_client_employment:)
