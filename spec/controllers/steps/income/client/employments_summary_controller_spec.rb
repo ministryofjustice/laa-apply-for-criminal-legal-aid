@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe Steps::Income::Client::EmploymentsSummaryController, type: :controller do
   let(:existing_case) do
-    CrimeApplication.create(employments: employments, applicant: Applicant.new)
+    CrimeApplication.create(client_employments: client_employments, applicant: Applicant.new)
   end
 
   context 'when employments present' do
-    let(:employments) { [Employment.new] }
+    let(:client_employments) { [Employment.new] }
 
     it_behaves_like 'a generic step controller',
                     Steps::Income::Client::EmploymentsSummaryForm, Decisions::IncomeDecisionTree
   end
 
   context 'when employments empty' do
-    let(:employments) { [] }
+    let(:client_employments) { [] }
 
     describe '#edit' do
       it 'redirects to the `employment_status` page' do
