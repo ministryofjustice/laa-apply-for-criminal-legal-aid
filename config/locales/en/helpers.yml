@@ -170,7 +170,7 @@ en:
           one: How does %{subject} manage with no income?
           other: How do %{subject} manage with no income?
       steps_outgoings_housing_payment_type_form:
-        housing_payment_type: Which of these payments does %{subject} pay where they usually live?
+        housing_payment_type: Which of these payments does %{subject} make where they usually live?
       steps_outgoings_mortgage_form:
         frequency: Select how often they make mortgage payments
       steps_outgoings_rent_form:
@@ -183,8 +183,8 @@ en:
           other: Do %{subject} pay Council Tax where they usually live?
       steps_outgoings_outgoings_payments_form:
         outgoings_payments:
-          one: Which of these payments does %{subject} pay?
-          other: Which of these payments do %{subject} pay?
+          one: Which of these payments does %{subject} make?
+          other: Which of these payments do %{subject} make?
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income: Are the outgoings of %{subject} more than their income?
       steps_submission_more_information_form:
