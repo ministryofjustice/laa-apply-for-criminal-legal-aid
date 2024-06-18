@@ -53,6 +53,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         national_savings_certificates: [], # capital and certificates tested separately
         properties: [],
         employments: [],
+        partner_employments: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
       )
