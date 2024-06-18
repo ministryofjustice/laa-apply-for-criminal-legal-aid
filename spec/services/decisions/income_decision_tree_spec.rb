@@ -19,7 +19,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
   end
 
   let(:employment_double) {
-    instance_double(Employment, id: 'uuid',  ownership_type: OwnershipType::APPLICANT.to_s)
+    instance_double(Employment, id: 'uuid', ownership_type: OwnershipType::APPLICANT.to_s)
   }
   let(:partner_employment_double) {
     instance_double(Employment, id: 'uuid', ownership_type: OwnershipType::PARTNER.to_s)
@@ -28,7 +28,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) { double('employments_collection', create!: true, reject: income_employments) }
-  let(:partner_employments_double) { double('partner_employments_collection', create!: true, reject: partner_income_employments) }
+  let(:partner_employments_double) {
+    double('partner_employments_collection', create!: true, reject: partner_income_employments)
+  }
   let(:kase) { instance_double(Case, case_type:) }
   let(:income_employments) { [employment_double] }
   let(:partner_income_employments) { [partner_employment_double] }
@@ -293,7 +295,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:add_client_employment) { YesNoAnswer::NO }
 
         it 'redirects to client self_assessment_tax_bill page' do
-          expect(subject).to have_destination('/steps/income/client/self_assessment_tax_bill', :edit, id: crime_application)
+          expect(subject).to have_destination(
+            '/steps/income/client/self_assessment_tax_bill', :edit, id: crime_application
+          )
         end
       end
     end
@@ -307,7 +311,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
       let(:step_name) { :partner_employer_details }
 
       it 'redirects to `partner_employer_details` page' do
-        expect(subject).to have_destination('steps/income/partner/employment_details', :edit, id: crime_application)
+        expect(subject).to have_destination(
+          'steps/income/partner/employment_details', :edit, id: crime_application
+        )
       end
     end
 
@@ -353,7 +359,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:add_partner_employment) { YesNoAnswer::NO }
 
         it 'redirects to partner self_assessment_tax_bill page' do
-          expect(subject).to have_destination('/steps/income/partner/self_assessment_tax_bill', :edit, id: crime_application)
+          expect(subject).to have_destination(
+            '/steps/income/partner/self_assessment_tax_bill', :edit, id: crime_application
+          )
         end
       end
     end
