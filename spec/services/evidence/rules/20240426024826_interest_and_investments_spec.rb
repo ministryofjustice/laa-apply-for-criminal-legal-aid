@@ -31,9 +31,10 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
 
   let(:income) { Income.new }
   let(:income_payments) { [client_investments, partner_investments] }
+  let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_investments_7 }
@@ -56,10 +57,16 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
   end
 
   describe '.partner' do
-    subject { described_class.new(crime_application).partner_predicate }
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
 
     context 'with interest or income from savings or investments payments' do
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'without any interest or income from savings payments' do

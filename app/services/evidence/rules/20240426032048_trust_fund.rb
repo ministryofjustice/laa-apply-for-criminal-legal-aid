@@ -19,7 +19,7 @@ module Evidence
       end
 
       partner do |crime_application|
-        if crime_application.capital
+        if MeansStatus.include_partner?(crime_application) && crime_application.capital
           dividend = crime_application.capital.partner_trust_fund_yearly_dividend
 
           crime_application.capital.partner_will_benefit_from_trust_fund == 'yes' &&

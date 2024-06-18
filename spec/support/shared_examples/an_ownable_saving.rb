@@ -53,9 +53,9 @@ RSpec.shared_examples 'an ownable saving requiring evidence' do
       it { is_expected.to be true }
 
       context 'when partner is not included in means assessment' do
-        let(:include_partner?) { true }
+        let(:include_partner?) { false }
 
-        it { is_expected.to be true }
+        it { is_expected.to be false }
       end
     end
 
