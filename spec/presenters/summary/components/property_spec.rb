@@ -19,7 +19,6 @@ RSpec.describe Summary::Components::Property, type: :component do
                     percentage_owned: 10.567)
   }
   let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
-  let(:client_has_partner) { false }
   let(:relationship) { 'friends' }
   let(:property_type) { 'residential' }
 
@@ -47,7 +46,6 @@ RSpec.describe Summary::Components::Property, type: :component do
   let(:has_other_owners) { 'yes' }
 
   before do
-    allow(component).to receive(:include_partner_in_means_assessment?) { client_has_partner }
     render_summary_component(component)
   end
 
@@ -149,21 +147,9 @@ RSpec.describe Summary::Components::Property, type: :component do
     end
 
     describe 'summary list partner percentage' do
-      let(:partner_percent_text) { 'Percentage partner owns' }
-
-      context 'when client has partner' do
-        let(:client_has_partner) { true }
-
+      context 'when partner percentage owned is present' do
         it 'renders as summary list with partner percentage' do
-          expect(page).to have_summary_row(partner_percent_text, '50.00%')
-        end
-      end
-
-      context 'when client has no partner' do
-        let(:client_has_partner) { false }
-
-        it 'renders as summary list without partner percentage' do
-          expect(page).not_to have_content(partner_percent_text)
+          expect(page).to have_summary_row('Percentage partner owns', '50.00%')
         end
       end
     end
@@ -256,6 +242,12 @@ RSpec.describe Summary::Components::Property, type: :component do
           'Other owners',
           '',
         )
+      end
+
+      context 'when partner percentage owned is not present' do
+        it 'renders as summary list without partner percentage' do
+          expect(page).not_to have_content('Percentage partner owns')
+        end
       end
     end
   end
