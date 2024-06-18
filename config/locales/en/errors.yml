@@ -524,6 +524,12 @@ en:
               inclusion: Select yes if your client receives any other benefits from work
             amount:
               not_a_number: Enter the total yearly value of their other work benefits
+        steps/income/partner/other_work_benefits_form:
+          attributes:
+            partner_other_work_benefit_received:
+              inclusion: Select yes if your client's partner receives any other benefits from work
+            amount:
+              not_a_number: Enter the total yearly value of their other work benefits
         steps/income/client_has_dependants_form:
           attributes:
             client_has_dependants:

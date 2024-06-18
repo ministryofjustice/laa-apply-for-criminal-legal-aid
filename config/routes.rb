@@ -189,7 +189,7 @@ Rails.application.routes.draw do
           crud_step :deductions_from_pay, alias: :deductions, param: :employment_id
           edit_step :add_employments, alias: :employments_summary
           #edit_step :self_assessment_client, alias: :self_assessment_tax_bill
-          #edit_step :other_work_benefits_client, alias: :other_work_benefits
+          edit_step :other_work_benefits_partner, alias: :other_work_benefits
         end
 
         show_step :employed_exit

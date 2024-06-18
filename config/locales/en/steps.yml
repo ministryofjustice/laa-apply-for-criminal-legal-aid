@@ -428,8 +428,8 @@ en:
             success_flash: You removed the job
         other_work_benefits:
           edit:
-            page_title: Does your client receive any other benefits from work?
-            heading: Does your client receive any other benefits from work?
+            page_title: Does the partner receive any other benefits from work?
+            heading: Does the partner receive any other benefits from work?
             page_text: 'These could be, for example:'
             list: |
               childcare vouchers

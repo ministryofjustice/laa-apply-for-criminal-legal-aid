@@ -40,6 +40,8 @@ module Decisions
         edit(:other_work_benefits)
       when :client_other_work_benefits
         edit('/steps/income/income_payments')
+      when :partner_other_work_benefits
+        edit(:income_payments_partner)
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
