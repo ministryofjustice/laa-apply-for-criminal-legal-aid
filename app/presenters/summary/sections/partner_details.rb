@@ -2,6 +2,8 @@ module Summary
   module Sections
     class PartnerDetails < Sections::BaseSection
       def show?
+        return false unless FeatureFlags.partner_journey.enabled?
+
         partner.present? && client.present? && super
       end
 
