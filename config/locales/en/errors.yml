@@ -518,6 +518,14 @@ en:
               not_a_number: Enter the amount they pay
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
+        steps/income/partner/self_assessment_tax_bill_form:
+          attributes:
+            partner_self_assessment_tax_bill:
+              inclusion: Select yes if your partner pays a Self Assessment tax bill received in the last 2 years
+            partner_self_assessment_tax_bill_amount:
+              not_a_number: Enter the amount they pay
+            partner_self_assessment_tax_bill_frequency:
+              inclusion: Select how often they pay this amount
         steps/income/client/other_work_benefits_form:
           attributes:
             applicant_other_work_benefit_received:

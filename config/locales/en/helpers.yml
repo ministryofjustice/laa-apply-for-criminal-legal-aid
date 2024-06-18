@@ -160,6 +160,9 @@ en:
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
         applicant_self_assessment_tax_bill_frequency: How often do they pay this amount?
+      steps_income_partner_self_assessment_tax_bill_form:
+        partner_self_assessment_tax_bill: Does the partner pay a Self Assessment tax bill received in the last 2 years?
+        partner_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
       steps_income_partner_income_payments_form:
@@ -673,6 +676,10 @@ en:
         applicant_self_assessment_tax_bill_options: *YESNO
         applicant_self_assessment_tax_bill_amount: How much do they pay?
         applicant_self_assessment_tax_bill_frequency_options: *frequency_options
+      steps_income_partner_self_assessment_tax_bill_form:
+        partner_self_assessment_tax_bill_options: *YESNO
+        partner_self_assessment_tax_bill_amount: How much do they pay?
+        partner_self_assessment_tax_bill_frequency_options: *frequency_options
       steps_income_client_employments_summary_form:
         add_client_employment_options: *YESNO
       steps_income_partner_employments_summary_form:
