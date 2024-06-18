@@ -10,8 +10,9 @@ module Evidence
         applicant.joint_investments.share.any? || applicant.investments.share.any?
       end
 
-      partner do |_crime_application, partner|
-        partner.joint_investments.share.any? || partner.investments.share.any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          (partner.joint_investments.share.any? || partner.investments.share.any?)
       end
     end
   end
