@@ -88,7 +88,7 @@ module Decisions
 
     def employment
       @employment ||= if incomplete_employments.empty?
-                        current_crime_application.client_employments.create!
+                        current_crime_application.employments.create!
                       else
                         incomplete_employments.first
                       end
@@ -105,7 +105,7 @@ module Decisions
     def after_client_employments_summary
       return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
 
-      employment = current_crime_application.client_employments.create!
+      employment = current_crime_application.employments.create!
       redirect_to_employer_details(employment)
     end
 
@@ -259,7 +259,7 @@ module Decisions
     end
 
     def incomplete_employments
-      crime_application.client_employments.reject(&:complete?)
+      crime_application.employments.reject(&:complete?)
     end
 
     def incomplete_partner_employments

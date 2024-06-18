@@ -23,7 +23,7 @@ module Datastore
         partner: partner,
         partner_detail: partner_detail,
         case: case_with_ioj,
-        employments: parent.client_employments,
+        employments: parent.employments,
         partner_employments: parent.partner_employments,
         income: income,
         outgoings: outgoings,

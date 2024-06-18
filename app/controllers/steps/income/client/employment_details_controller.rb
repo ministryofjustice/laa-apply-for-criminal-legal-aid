@@ -9,7 +9,7 @@ module Steps
         end
 
         def employments
-          @employments ||= current_crime_application.client_employments
+          @employments ||= current_crime_application.employments
         end
 
         def form_name

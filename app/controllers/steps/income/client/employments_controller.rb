@@ -21,7 +21,7 @@ module Steps
         private
 
         def employments
-          @employments ||= current_crime_application.client_employments
+          @employments ||= current_crime_application.employments
         end
       end
     end

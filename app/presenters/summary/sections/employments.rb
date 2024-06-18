@@ -18,7 +18,7 @@ module Summary
       private
 
       def employments
-        @employments ||= crime_application.client_employments
+        @employments ||= crime_application.employments
       end
     end
   end

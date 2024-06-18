@@ -138,9 +138,9 @@ en:
         employment_status: What is your client's employment status?
       steps_income_partner_employment_status_form:
         partner_employment_status: What is the partner's employment status?
-      steps_income_client_employment_income_form:
+      steps_income_employment_income_form:
         before_or_after_tax: Is this before or after tax?
-      steps_income_client_employment_details_form:
+      steps_income_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
       steps_income_partner_employment_details_form:
@@ -153,8 +153,8 @@ en:
           frequency: Select how often this gets deducted
         other:
           frequency: Select how often this gets deducted
-      steps_income_client_employments_summary_form:
-        add_client_employment: Do you want to add another job?
+      steps_income_employments_summary_form:
+        add_employment: Do you want to add another job?
       steps_income_partner_employments_summary_form:
         add_partner_employment: Do you want to add another job?
       steps_income_client_self_assessment_tax_bill_form:
@@ -598,7 +598,7 @@ en:
           city: Town or city
           country: Country
           postcode: Postcode
-      steps_income_client_employment_details_form:
+      steps_income_employment_details_form:
         job_title: What is your client’s job title?
         amount: What is their salary or wage?
         before_or_after_tax_options:
@@ -673,8 +673,8 @@ en:
         applicant_self_assessment_tax_bill_options: *YESNO
         applicant_self_assessment_tax_bill_amount: How much do they pay?
         applicant_self_assessment_tax_bill_frequency_options: *frequency_options
-      steps_income_client_employments_summary_form:
-        add_client_employment_options: *YESNO
+      steps_income_employments_summary_form:
+        add_employment_options: *YESNO
       steps_income_partner_employments_summary_form:
         add_partner_employment_options: *YESNO
       steps_income_client_other_work_benefits_form:
@@ -690,7 +690,7 @@ en:
         client_owns_property_options: *YESNO
       steps_income_has_savings_form:
         has_savings_options: *YESNO
-      steps_income_client_employment_income_form:
+      steps_income_employment_income_form:
         amount: What is their salary or wage?
         before_or_after_tax_options:
           before_tax: Before tax
