@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch, Metrics/PerceivedComplexity
     #
     include TypeOfMeansAssessment
 
@@ -74,7 +74,7 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch, Metrics/PerceivedComplexity
 
     private
 
@@ -96,10 +96,10 @@ module Decisions
 
     def partner_employment
       @partner_employment ||= if incomplete_partner_employments.empty?
-                        current_crime_application.partner_employments.create!
-                      else
-                        incomplete_partner_employments.first
-                      end
+                                current_crime_application.partner_employments.create!
+                              else
+                                incomplete_partner_employments.first
+                              end
     end
 
     def after_client_employments_summary
@@ -168,9 +168,10 @@ module Decisions
     def start_partner_employment_journey
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        #edit(:income_before_tax)
+        # TODO: Redirect to partner's employment income
+        # edit(:income_before_tax)
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        #show(:self_employed_exit)
+        show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         redirect_to_partner_employer_details(partner_employment)
       end
