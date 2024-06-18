@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :controller do
-  let(:form_class) { Steps::Income::Client::EmploymentDetailsForm }
+RSpec.describe Steps::Income::Partner::EmployerDetailsController, type: :controller do
+  let(:form_class) { Steps::Income::Partner::EmployerDetailsForm }
   let(:decision_tree_class) { Decisions::IncomeDecisionTree }
   let(:crime_application) { CrimeApplication.create }
   let(:employment) do
-    Employment.create!(crime_application:)
+    Employment.create!(crime_application: crime_application, ownership_type: OwnershipType::PARTNER.to_s)
   end
 
   describe '#edit' do
@@ -25,7 +25,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
 
     context 'when employment is for another application' do
       let(:employment) do
-        Employment.create!(crime_application: CrimeApplication.create!)
+        Employment.create!(crime_application: CrimeApplication.create!, ownership_type: OwnershipType::PARTNER.to_s)
       end
 
       it 'responds with HTTP success' do
@@ -41,28 +41,33 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
       {
         id: crime_application,
         employment_id: employment,
-        steps_income_client_employment_details_form: {
-          job_title: 'manager',
-          amount: 600,
-          frequency: 'four_weeks',
-          before_or_after_tax: BeforeOrAfterTax::AFTER,
-        }
+        steps_income_partner_employer_details_form: { employer_name: 'abc', address: address_attributes }
       }
     end
 
-    context 'when valid income_payment attributes' do
-      it 'redirects to `employed_exit` page' do
+    let(:address_attributes) do
+      {
+        address_line_one: 'address_line_one',
+        address_line_two: 'address_line_two',
+        city: 'city',
+        country: 'country',
+        postcode: 'postcode'
+      }
+    end
+
+    context 'when valid address attributes' do
+      it 'redirects to `employment_details` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to edit_steps_income_client_deductions_from_pay_path
+        expect(response).to redirect_to edit_steps_income_partner_employment_details_path
       end
     end
 
     context 'when invalid address attributes' do
-      before { expected_params[:steps_income_client_employment_details_form].merge!(amount: nil, frequency: nil) }
+      before { address_attributes.merge!(address_line_one: nil, city: nil) }
 
-      it 'does not redirect to the `employments_summary` path' do
+      it 'does not redirect to the `employment_details` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).not_to redirect_to edit_steps_income_client_deductions_from_pay_path
+        expect(response).not_to redirect_to edit_steps_income_partner_employment_details_path
       end
     end
   end

@@ -8,12 +8,12 @@ module Steps
           :client_employment_details
         end
 
-        def employments
-          @employments ||= current_crime_application.employments
+        def form_name
+          Steps::Income::Client::EmploymentDetailsForm
         end
 
-        def form_name
-          EmploymentDetailsForm
+        def employments
+          @employments ||= current_crime_application.employments
         end
       end
     end

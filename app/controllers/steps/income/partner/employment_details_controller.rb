@@ -6,6 +6,10 @@ module Steps
           :partner_employment_details
         end
 
+        def form_name
+          Steps::Income::Partner::EmploymentDetailsForm
+        end
+
         def employments
           @employments ||= current_crime_application.partner_employments
         end

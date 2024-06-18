@@ -9,7 +9,7 @@ module Steps
         end
 
         def form_name
-          EmployerDetailsForm
+          Steps::Income::Client::EmployerDetailsForm
         end
 
         private
