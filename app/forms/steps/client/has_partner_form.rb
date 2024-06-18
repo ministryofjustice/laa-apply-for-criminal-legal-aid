@@ -11,9 +11,15 @@ module Steps
 
       private
 
+      def changed?
+        !crime_application.client_has_partner.eql?(client_has_partner.to_s)
+      end
+
       # TODO: When FeatureFlag.partner_journey is removed,
       # move this form into /partner and Partner module
       def persist!
+        return true unless changed?
+
         ::CrimeApplication.transaction do
           reset!
 

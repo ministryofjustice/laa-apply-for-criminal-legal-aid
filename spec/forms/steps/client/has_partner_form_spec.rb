@@ -12,7 +12,6 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
   let(:crime_application) do
     CrimeApplication.new(
-      client_has_partner:,
       partner_detail:,
       partner:,
       income:,
@@ -126,6 +125,22 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
         expect(subject.save).to be(true)
         expect(crime_application.payments.for_client.size).to eq 1
+      end
+    end
+
+    context 'when has client_has_partner is unchanged' do
+      before do
+        allow(crime_application).to receive_messages(client_has_partner: previous_client_has_partner)
+      end
+
+      context 'when has nino is the same as in the persisted record' do
+        let(:previous_client_has_partner) { YesNoAnswer::YES.to_s }
+        let(:client_has_partner) { YesNoAnswer::YES }
+
+        it 'does not save the record but returns true' do
+          expect(crime_application).not_to receive(:update!)
+          expect(subject.save).to be(true)
+        end
       end
     end
   end
