@@ -10,8 +10,9 @@ module Evidence
         applicant.joint_investments.other.any? || applicant.investments.other.any?
       end
 
-      partner do |_crime_application, partner|
-        partner.joint_investments.other.any? || partner.investments.other.any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          (partner.joint_investments.other.any? || partner.investments.other.any?)
       end
     end
   end

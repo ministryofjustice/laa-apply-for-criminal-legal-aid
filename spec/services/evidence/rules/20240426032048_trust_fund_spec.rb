@@ -10,10 +10,10 @@ RSpec.describe Evidence::Rules::TrustFund do
   end
 
   let(:capital) { Capital.new }
+  let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application)
-                                                    .and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
   end
 
   it { expect(described_class.key).to eq :income_trust_10 }
@@ -75,6 +75,12 @@ RSpec.describe Evidence::Rules::TrustFund do
 
     context 'when benefitting from trust fund and dividend' do
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'when benefitting from trust fund but no dividend' do
