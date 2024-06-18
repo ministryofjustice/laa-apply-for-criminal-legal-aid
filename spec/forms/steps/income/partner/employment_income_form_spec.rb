@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Income::Client::EmploymentIncomeForm do
+RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
   # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
@@ -25,7 +25,7 @@ RSpec.describe Steps::Income::Client::EmploymentIncomeForm do
 
   before do
     allow(crime_application.income_payments).to receive_message_chain(
-      :for_client, :employment
+      :for_partner, :employment
     ).and_return(income_payment)
   end
 
@@ -48,12 +48,13 @@ RSpec.describe Steps::Income::Client::EmploymentIncomeForm do
                         payment_type: IncomePaymentType::EMPLOYMENT.to_s,
                         amount: 600,
                         frequency: 'four_weeks',
+                        ownership_type: OwnershipType::PARTNER.to_s,
                         metadata: { 'before_or_after_tax' => BeforeOrAfterTax::AFTER })
     }
 
     before do
       allow(crime_application.income_payments).to receive_message_chain(
-        :for_client, :employment
+        :for_partner, :employment
       ).and_return(existing_employment_income_payment)
     end
 
@@ -123,7 +124,7 @@ RSpec.describe Steps::Income::Client::EmploymentIncomeForm do
           amount: Money.new(60_000),
           before_or_after_tax: BeforeOrAfterTax::AFTER,
           frequency: PaymentFrequencyType::MONTHLY,
-          ownership_type: OwnershipType::APPLICANT.to_s
+          ownership_type: OwnershipType::PARTNER.to_s
         )
 
         form.save
