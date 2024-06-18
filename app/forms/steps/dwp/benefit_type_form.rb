@@ -30,11 +30,15 @@ module Steps
       def persist!
         return true unless changed?
 
-        applicant.update(
-          attributes.merge(attributes_to_reset)
-        )
+        ::Applicant.transaction do
+          applicant.update!(
+            attributes.merge(attributes_to_reset)
+          )
 
-        crime_application.partner&.update(attributes_to_reset)
+          crime_application.partner&.update!(attributes_to_reset)
+
+          true
+        end
       end
 
       def attributes_to_reset

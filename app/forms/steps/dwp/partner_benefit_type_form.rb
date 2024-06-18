@@ -15,9 +15,13 @@ module Steps
       def persist!
         return true unless changed?
 
-        partner.update(
-          attributes.merge(attributes_to_reset)
-        )
+        ::Partner.transaction do
+          partner.update!(
+            attributes.merge(attributes_to_reset)
+          )
+
+          true
+        end
       end
     end
   end
