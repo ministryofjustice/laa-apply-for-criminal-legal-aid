@@ -81,14 +81,6 @@ module Decisions
 
     private
 
-    def applicant
-      OwnershipType::APPLICANT.to_s
-    end
-
-    def partner
-      OwnershipType::PARTNER.to_s
-    end
-
     def employment
       @employment ||= if incomplete_employments.empty?
                         current_crime_application.employments.create!
