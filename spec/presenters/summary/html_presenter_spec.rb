@@ -12,7 +12,8 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no', has_no_income_payments: nil, has_no_income_benefits: nil),
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no',
+                      has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil),
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
       income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
@@ -130,6 +131,8 @@ describe Summary::HtmlPresenter do
                              'is_home_address' => 'yes',
                              'has_other_owners' => 'no',
                              'address' => nil, 'property_owners' => [] }],
+          'partner_has_no_income_payments' => 'yes',
+          'partner_has_no_income_benefits' => 'yes',
           'has_premium_bonds' => 'yes',
           'premium_bonds_total_value' => 1234,
           'premium_bonds_holder_number' => '1234A',

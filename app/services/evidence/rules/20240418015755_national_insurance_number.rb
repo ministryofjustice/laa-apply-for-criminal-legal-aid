@@ -10,8 +10,9 @@ module Evidence
         NinoEvidenceRequired.for(applicant)
       end
 
-      partner do |_crime_application, partner|
-        NinoEvidenceRequired.for(partner)
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          NinoEvidenceRequired.for(partner)
       end
     end
   end

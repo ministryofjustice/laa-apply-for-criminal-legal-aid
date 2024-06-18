@@ -29,9 +29,10 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   end
 
   let(:income) { Income.new }
+  let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_maintenance_6 }
@@ -82,7 +83,15 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be true }
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
+
+    it { is_expected.to be true }
+
+    context 'when partner is not included in means assessment' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
