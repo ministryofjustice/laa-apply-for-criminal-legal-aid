@@ -98,14 +98,14 @@ module Decisions
     end
 
     def after_client_employments_summary
-      return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
+      return edit('/steps/income/client/self_assessment_tax_bill') if form_object.add_client_employment.no?
 
       employment = current_crime_application.employments.create!
       redirect_to_employer_details(employment)
     end
 
     def after_partner_employments_summary
-      return edit(:self_assessment_tax_bill) if form_object.add_partner_employment.no?
+      return edit('/steps/income/partner/self_assessment_tax_bill') if form_object.add_partner_employment.no?
 
       employment = current_crime_application.partner_employments.create!
       redirect_to_partner_employer_details(employment)
