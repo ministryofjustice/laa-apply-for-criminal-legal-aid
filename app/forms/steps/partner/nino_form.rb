@@ -21,11 +21,34 @@ module Steps
       private
 
       def persist!
-        if has_nino.no?
-          partner.update(attributes.except('nino'))
-        else
-          partner.update(attributes)
-        end
+        return true unless changed?
+
+        partner.update(attributes.merge(attributes_to_reset))
+      end
+
+      def changed?
+        !partner.has_nino.eql?(has_nino.to_s) || nino_changed?
+      end
+
+      def nino_changed?
+        return false if partner.nino.nil? || nino == ''
+
+        partner.nino != nino
+      end
+
+      def attributes_to_reset
+        nino_attr = partner_has_nino? ? nino : nil
+
+        {
+          'benefit_type' => nil,
+          'last_jsa_appointment_date' => nil,
+          'benefit_check_result' => nil,
+          'will_enter_nino' => nil,
+          'has_benefit_evidence' => nil,
+          'confirm_details' => nil,
+          'confirm_dwp_result' => nil,
+          'nino' => nino_attr
+        }
       end
 
       def partner_has_nino?
