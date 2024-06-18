@@ -12,10 +12,11 @@ module Evidence
         other_income.present? && other_income.details.present?
       end
 
-      partner do |_crime_application, partner|
-        other_income = partner.income_payments.other
+      partner do |crime_application, partner|
+        other_income = partner&.income_payments&.other
 
-        other_income.present? && other_income.details.present?
+        MeansStatus.include_partner?(crime_application) &&
+          other_income.present? && other_income.details.present?
       end
     end
   end

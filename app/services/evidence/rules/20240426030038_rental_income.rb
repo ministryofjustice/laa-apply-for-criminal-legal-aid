@@ -10,8 +10,9 @@ module Evidence
         applicant.income_payments.rent.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.income_payments.rent.present?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          partner.income_payments.rent.present?
       end
     end
   end
