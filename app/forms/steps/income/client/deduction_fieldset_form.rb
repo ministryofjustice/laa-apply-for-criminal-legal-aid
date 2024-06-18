@@ -38,7 +38,7 @@ module Steps
         end
 
         def employment
-          crime_application.client_employments.find(employment_id)
+          crime_application.employments.find(employment_id)
         end
 
         def delete

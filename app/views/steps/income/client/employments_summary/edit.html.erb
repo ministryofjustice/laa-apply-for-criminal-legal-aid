@@ -9,7 +9,7 @@
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
 
     <h1 class="govuk-heading-xl">
-      <%=t '.heading', count: @form_object.client_employments.size %>
+      <%=t '.heading', count: @form_object.employments.size %>
     </h1>
 
     <%= render Summary::Sections::Employments.new(current_crime_application, headless: true) %>

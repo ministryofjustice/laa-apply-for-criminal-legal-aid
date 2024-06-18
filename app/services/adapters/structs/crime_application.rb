@@ -67,7 +67,7 @@ module Adapters
         end
       end
 
-      def client_employments
+      def employments
         return [] unless means_details&.income_details&.employments
 
         means_details.income_details.employments.map do |struct|

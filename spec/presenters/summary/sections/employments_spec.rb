@@ -6,7 +6,7 @@ describe Summary::Sections::Employments do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      client_employments: records,
+      employments: records,
       in_progress?: true,
       to_param: 12_345
     )

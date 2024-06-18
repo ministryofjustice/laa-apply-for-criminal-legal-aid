@@ -10,7 +10,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      client_employments: employments_double,
+      employments: employments_double,
       kase: kase,
       partner_detail: partner_detail,
       partner: nil

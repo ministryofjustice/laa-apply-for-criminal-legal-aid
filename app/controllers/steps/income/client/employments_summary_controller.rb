@@ -29,7 +29,7 @@ module Steps
         end
 
         def require_employment
-          return true if current_crime_application.client_employments.present?
+          return true if current_crime_application.employments.present?
 
           redirect_to edit_steps_income_employment_status_path(current_crime_application)
         end
