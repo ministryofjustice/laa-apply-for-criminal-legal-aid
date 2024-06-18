@@ -59,6 +59,7 @@ module ClientDetails
     end
 
     def relationship_status_complete?
+      return true unless FeatureFlags.partner_journey.enabled?
       return true if applicant.under18?
       return true if record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?
       return true if record.client_has_partner == 'yes'
