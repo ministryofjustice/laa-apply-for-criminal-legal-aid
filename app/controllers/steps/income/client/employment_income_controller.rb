@@ -9,7 +9,17 @@ module Steps
         end
 
         def update
-          update_and_advance(EmploymentIncomeForm, as: :client_employment_income)
+          update_and_advance(form_name, as: advance_as)
+        end
+
+        private
+
+        def form_name
+          Steps::Income::Client::EmploymentIncomeForm
+        end
+
+        def advance_as
+          :client_employment_income
         end
       end
     end

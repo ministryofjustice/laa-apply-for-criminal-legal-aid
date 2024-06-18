@@ -396,9 +396,9 @@ en:
             heading: The partner’s employment details
         employment_income:
           edit:
-            page_title: Your client's employment income
-            heading: Your client's employment income
-            page_text: You told us your client is employed.
+            page_title: The partner's employment income
+            heading: The partner's employment income
+            page_text: You told us your client's partner is employed.
         self_assessment_tax_bill:
           edit:
             page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?

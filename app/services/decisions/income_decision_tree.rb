@@ -36,6 +36,8 @@ module Decisions
         after_has_savings
       when :client_employment_income
         edit('/steps/income/income_payments')
+      when :partner_employment_income
+        edit(:income_payments_partner)
       when :client_self_assessment_tax_bill
         edit(:other_work_benefits)
       when :client_other_work_benefits
@@ -168,8 +170,7 @@ module Decisions
     def start_partner_employment_journey
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        # TODO: Redirect to partner's employment income
-        # edit(:income_before_tax)
+        edit('/steps/income/partner/employment_income')
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
