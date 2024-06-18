@@ -27,15 +27,15 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
       let(:previous_benefit_type) { BenefitType::GUARANTEE_PENSION.to_s }
 
       it 'saves `benefit_type` value and returns true' do
-        expect(record).to receive(:update).with({
-                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                                                  'last_jsa_appointment_date' => nil,
-                                                  'has_benefit_evidence' => nil,
-                                                  'will_enter_nino' => nil,
-                                                  'benefit_check_result' => nil,
-                                                  'confirm_details' => nil,
-                                                  'confirm_dwp_result' => nil,
-                                                }).and_return(true)
+        expect(record).to receive(:update!).with({
+                                                   'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil,
+                                                 }).and_return(true)
         expect(subject.save).to be(true)
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe Steps::DWP::PartnerBenefitTypeForm do
       let(:previous_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
       it 'does not save the record but returns true' do
-        expect(record).not_to receive(:update)
+        expect(record).not_to receive(:update!)
         expect(subject.save).to be(true)
       end
     end
