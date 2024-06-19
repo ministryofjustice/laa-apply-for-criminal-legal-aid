@@ -30,11 +30,18 @@ module Steps
       def persist!
         return true unless changed?
 
-        applicant.update(
-          attributes.merge(attributes_to_reset)
-        )
+        ::Applicant.transaction do
+          applicant.update!(
+            attributes.merge(attributes_to_reset)
+          )
 
-        crime_application.partner&.update(attributes_to_reset)
+          # Prevent DWP Check for Partner
+          partner_attributes = attributes_to_reset
+          partner_attributes['benefit_type'] = nil unless none?
+          crime_application.partner&.update!(partner_attributes)
+
+          true
+        end
       end
 
       def attributes_to_reset
@@ -50,6 +57,10 @@ module Steps
 
       def jsa?
         benefit_type&.jsa?
+      end
+
+      def none?
+        benefit_type&.none?
       end
     end
   end

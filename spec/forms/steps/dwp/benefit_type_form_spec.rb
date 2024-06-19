@@ -12,7 +12,9 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, applicant: record, partner: partner_record) }
+  let(:crime_application) do
+    CrimeApplication.new(applicant: record, partner: partner_record)
+  end
   let(:record) { Applicant.new }
   let(:partner_record) { Partner.new }
 
@@ -47,24 +49,25 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
         expect(form.errors.of_kind?(:benefit_type, :invalid)).to be(false)
       end
 
-      it 'saves `benefit_type` value and returns true' do
-        expect(record).to receive(:update).with({
-                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                                                  'last_jsa_appointment_date' => nil,
-                                                  'has_benefit_evidence' => nil,
-                                                  'will_enter_nino' => nil,
-                                                  'benefit_check_result' => nil,
-                                                  'confirm_details' => nil,
-                                                  'confirm_dwp_result' => nil
-                                                }).and_return(true)
-        expect(partner_record).to receive(:update).with({
-                                                          'last_jsa_appointment_date' => nil,
-                                                          'has_benefit_evidence' => nil,
-                                                          'will_enter_nino' => nil,
-                                                          'benefit_check_result' => nil,
-                                                          'confirm_details' => nil,
-                                                          'confirm_dwp_result' => nil
-                                                        }).and_return(true)
+      it 'saves `benefit_type` value and returns true' do # rubocop:disable RSpec/ExampleLength
+        expect(record).to receive(:update!).with({
+                                                   'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil,
+                                                 }).and_return(true)
+        expect(partner_record).to receive(:update!).with({
+                                                           'last_jsa_appointment_date' => nil,
+                                                           'has_benefit_evidence' => nil,
+                                                           'will_enter_nino' => nil,
+                                                           'benefit_check_result' => nil,
+                                                           'confirm_details' => nil,
+                                                           'confirm_dwp_result' => nil,
+                                                           'benefit_type' => nil,
+                                                         }).and_return(true)
         expect(subject.save).to be(true)
       end
 
@@ -130,25 +133,52 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
     context 'when the benefit type has changed' do
       let(:previous_benefit_type) { BenefitType::GUARANTEE_PENSION.to_s }
 
-      it 'saves `benefit_type` value and returns true' do
-        expect(record).to receive(:update).with({
-                                                  'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
-                                                  'last_jsa_appointment_date' => nil,
-                                                  'has_benefit_evidence' => nil,
-                                                  'will_enter_nino' => nil,
-                                                  'benefit_check_result' => nil,
-                                                  'confirm_details' => nil,
-                                                  'confirm_dwp_result' => nil
-                                                }).and_return(true)
-        expect(partner_record).to receive(:update).with({
-                                                          'last_jsa_appointment_date' => nil,
-                                                  'has_benefit_evidence' => nil,
-                                                  'will_enter_nino' => nil,
-                                                  'benefit_check_result' => nil,
-                                                  'confirm_details' => nil,
-                                                  'confirm_dwp_result' => nil
-                                                        }).and_return(true)
+      before do
+        partner_record.update!(benefit_type: 'universal_credit', crime_application: crime_application)
+      end
+
+      it 'saves `benefit_type` value, resets partner benefit_type and returns true' do # rubocop:disable RSpec/ExampleLength
+        expect(record).to receive(:update!).with({
+                                                   'benefit_type' => BenefitType::UNIVERSAL_CREDIT,
+                                                   'last_jsa_appointment_date' => nil,
+                                                   'has_benefit_evidence' => nil,
+                                                   'will_enter_nino' => nil,
+                                                   'benefit_check_result' => nil,
+                                                   'confirm_details' => nil,
+                                                   'confirm_dwp_result' => nil,
+                                                 }).and_return(true)
+        expect(partner_record).to receive(:update!).with({
+                                                           'last_jsa_appointment_date' => nil,
+                                                           'has_benefit_evidence' => nil,
+                                                           'will_enter_nino' => nil,
+                                                           'benefit_check_result' => nil,
+                                                           'confirm_details' => nil,
+                                                           'confirm_dwp_result' => nil,
+                                                           'benefit_type' => nil,
+                                                         }).and_return(true)
         expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when benefit_type has changed and client benefit_type is none' do
+      let(:previous_benefit_type) { BenefitType::GUARANTEE_PENSION.to_s }
+      let(:benefit_type) { BenefitType::NONE.to_s }
+
+      before do
+        partner_record.update!(benefit_type: 'universal_credit', crime_application: crime_application)
+      end
+
+      it 'does not reset the partner benefit type' do
+        expect(partner_record).to receive(:update!).with({
+                                                           'last_jsa_appointment_date' => nil,
+                                                           'has_benefit_evidence' => nil,
+                                                           'will_enter_nino' => nil,
+                                                           'benefit_check_result' => nil,
+                                                           'confirm_details' => nil,
+                                                           'confirm_dwp_result' => nil,
+                                                         }).and_return(true)
+        expect(subject.save).to be(true)
+        expect(partner_record.benefit_type.to_s).to eq 'universal_credit'
       end
     end
 
@@ -156,7 +186,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
       let(:previous_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
       it 'does not save the record but returns true' do
-        expect(record).not_to receive(:update)
+        expect(record).not_to receive(:update!)
         expect(subject.save).to be(true)
       end
     end
