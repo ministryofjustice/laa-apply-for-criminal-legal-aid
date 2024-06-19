@@ -125,4 +125,8 @@ module TypeOfMeansAssessment
   def income_above_threshold?
     !income_below_threshold?
   end
+
+  def client_has_under18_passport?
+    crime_application.means_passport.include?('on_age_under18')
+  end
 end

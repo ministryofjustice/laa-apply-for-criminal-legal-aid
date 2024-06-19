@@ -31,6 +31,7 @@ class SectionsCompletenessValidator
 
   def partner_detail_complete?
     return true unless FeatureFlags.partner_journey.enabled?
+    return true if client_has_under18_passport?
 
     partner_detail&.complete?
   end
