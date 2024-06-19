@@ -5,13 +5,38 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      income:,
-      income_payments:
+      income: income,
+      income_payments: income_payments,
+      applicant: Applicant.new,
+      partner: Partner.new
     )
   end
 
+  let(:partner_pension) do
+    IncomePayment.new(
+      payment_type: IncomePaymentType::PRIVATE_PENSION,
+      frequency: PaymentFrequencyType::MONTHLY,
+      amount: 1000.01,
+      ownership_type: OwnershipType::PARTNER
+    )
+  end
+
+  let(:client_pension) do
+    IncomePayment.new(
+      payment_type: IncomePaymentType::PRIVATE_PENSION,
+      frequency: PaymentFrequencyType::FOUR_WEEKLY,
+      amount: 923.10
+    )
+  end
+
+  let(:income_payments) { [client_pension, partner_pension] }
+
+  let(:include_partner?) { true }
   let(:income) { Income.new }
-  let(:income_payments) { [] }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?) { include_partner? }
+  end
 
   it { expect(described_class.key).to eq :income_private_pension_5 }
   it { expect(described_class.group).to eq :income }
@@ -28,50 +53,52 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'when threshold met' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::PRIVATE_PENSION,
-            frequency: PaymentFrequencyType::FOUR_WEEKLY,
-            amount: 923.10,
-          ),
-        ]
-      end
-
       it { is_expected.to be true }
     end
 
     context 'when threshold not met' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::PRIVATE_PENSION,
-            frequency: PaymentFrequencyType::ANNUALLY,
-            amount: 12_000,
-          ),
-        ]
+      before do
+        client_pension.frequency = PaymentFrequencyType::ANNUALLY
+        client_pension.amount = 1_200_000
       end
 
       it { is_expected.to be false }
     end
 
     context 'when there are no private pension payments' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::RENT,
-            frequency: PaymentFrequencyType::FORTNIGHTLY,
-            amount: 500.00,
-          ),
-        ]
-      end
+      let(:income_payments) { [partner_pension] }
 
       it { is_expected.to be false }
     end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'when threshold met' do
+      it { is_expected.to be true }
+    end
+
+    context 'when partner is not included in means assessment' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when threshold not met' do
+      before do
+        partner_pension.frequency = PaymentFrequencyType::MONTHLY
+        partner_pension.amount = 100_000
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when they have no private pension payments' do
+      let(:income_payments) { [client_pension] }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -79,16 +106,6 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
   end
 
   describe '#to_h' do
-    let(:income_payments) do
-      [
-        IncomePayment.new(
-          payment_type: IncomePaymentType::PRIVATE_PENSION,
-          frequency: PaymentFrequencyType::MONTHLY,
-          amount: 1000.01,
-        ),
-      ]
-    end
-
     let(:expected_hash) do
       {
         id: 'PrivatePensionIncome',
@@ -101,8 +118,8 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
             prompt: ['either bank statements or their pension statement'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['either bank statements or their pension statement'],
           },
           other: {
             result: false,

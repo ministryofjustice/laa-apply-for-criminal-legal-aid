@@ -4,7 +4,7 @@ module Decisions
     #
     include TypeOfMeansAssessment
 
-    def destination
+    def destination # rubocop:disable Metrics/PerceivedComplexity
       case step_name
       when :employment_status
         after_employment_status
@@ -48,6 +48,10 @@ module Decisions
         edit(:answers)
       when :partner_employment_status
         after_partner_employment_status
+      when :income_payments_partner
+        edit(:income_benefits_partner)
+      when :income_benefits_partner
+        after_partner_income_benefits
       when :answers
         step_path = Rails.application.routes.url_helpers
         if previous_step_path.in? [
@@ -102,11 +106,24 @@ module Decisions
 
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
-        # TODO: route to partner income payments when route available
-        edit(:manage_without_income)
+        edit(:income_payments_partner)
+      elsif self_employed?(form_object.partner_employment_status)
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'partner')
+        else
+          show(:self_employed_exit)
+        end
       else
         # TODO: implement employed partner journey
         show(:employed_exit)
+      end
+    end
+
+    def after_partner_income_benefits
+      if crime_application.income&.all_income_over_zero?
+        edit(:answers)
+      else
+        edit(:manage_without_income)
       end
     end
 
@@ -116,7 +133,11 @@ module Decisions
       when [EmploymentStatus::EMPLOYED.to_s]
         edit(:income_before_tax)
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        show(:self_employed_exit)
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'client')
+        else
+          show(:self_employed_exit)
+        end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         redirect_to_employer_details(employment)
       end
@@ -210,6 +231,10 @@ module Decisions
 
     def not_working?(employment_status)
       employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+    end
+
+    def self_employed?(employment_status)
+      employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
     end
 
     def ended_employment_within_three_months?

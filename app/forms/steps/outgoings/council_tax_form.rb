@@ -18,7 +18,7 @@ module Steps
       def self.build(crime_application)
         payment = crime_application.outgoings_payments.council_tax
 
-        new.tap do |form|
+        new(crime_application:).tap do |form|
           form.attributes = payment.slice(:amount) if payment
           form.pays_council_tax = crime_application.outgoings&.pays_council_tax
         end

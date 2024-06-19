@@ -5,13 +5,37 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      income:,
-      income_payments:
+      income: income,
+      income_payments: income_payments,
+      applicant: Applicant.new,
+      partner: Partner.new
+    )
+  end
+
+  let(:partner_investments) do
+    IncomePayment.new(
+      payment_type: IncomePaymentType::INTEREST_INVESTMENT,
+      frequency: PaymentFrequencyType::MONTHLY,
+      amount: 20.00,
+      ownership_type: OwnershipType::PARTNER
+    )
+  end
+
+  let(:client_investments) do
+    IncomePayment.new(
+      payment_type: IncomePaymentType::INTEREST_INVESTMENT,
+      frequency: PaymentFrequencyType::WEEKLY,
+      amount: 2.00
     )
   end
 
   let(:income) { Income.new }
-  let(:income_payments) { [] }
+  let(:income_payments) { [client_investments, partner_investments] }
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+  end
 
   it { expect(described_class.key).to eq :income_investments_7 }
   it { expect(described_class.group).to eq :income }
@@ -22,29 +46,31 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with interest or income from savings or investments payments' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::INTEREST_INVESTMENT,
-            frequency: PaymentFrequencyType::WEEKLY,
-            amount: 20.00,
-          ),
-        ]
-      end
-
       it { is_expected.to be true }
     end
 
     context 'without any interest or income from savings payments' do
-      let(:income_payments) do
-        [
-          IncomePayment.new(
-            payment_type: IncomePaymentType::RENT,
-            frequency: PaymentFrequencyType::FORTNIGHTLY,
-            amount: 500.00,
-          ),
-        ]
+      let(:income_payments) { [partner_investments] }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '.partner' do
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
+
+    context 'with interest or income from savings or investments payments' do
+      it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
       end
+    end
+
+    context 'without any interest or income from savings payments' do
+      let(:income_payments) { [client_investments] }
 
       it { is_expected.to be false }
     end
@@ -55,16 +81,6 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
   end
 
   describe '#to_h' do
-    let(:income_payments) do
-      [
-        IncomePayment.new(
-          payment_type: IncomePaymentType::INTEREST_INVESTMENT,
-          frequency: PaymentFrequencyType::MONTHLY,
-          amount: 500.01,
-        ),
-      ]
-    end
-
     let(:expected_hash) do
       {
         id: 'InterestAndInvestments',
@@ -77,8 +93,8 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
             prompt: ['bank statements showing interest from their savings or investments'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['bank statements showing interest from their savings or investments'],
           },
           other: {
             result: false,

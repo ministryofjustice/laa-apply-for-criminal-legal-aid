@@ -32,6 +32,11 @@ en:
         applicant_and_partner: 'client and partner'
         applicant_or_partner: 'client or partner'
         partner: 'partner'
+      ownership:
+        applicant: 'your client'
+        applicant_and_partner: 'your client and their partner'
+        applicant_or_partner: 'your client or their partner'
+        partner: 'the partner'
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -65,7 +70,9 @@ en:
       employment_details: Employment
       income_details: Income
       income_payments_details: Payments your client gets
+      partner_income_payments_details: Payments the partner gets
       income_benefits_details: Benefits your client gets
+      partner_income_benefits_details: Benefits the partner gets
       other_income_details:
         one: "Other sources of income"
         other: "Other sources of income: client and partner"
@@ -310,7 +317,7 @@ en:
 
       # BEGIN codefendants section
       has_codefendants:
-        question: Co-defendants
+        question: Co-defendants?
         answers:
           <<: *YESNO
       conflict_of_interest:
@@ -453,7 +460,7 @@ en:
         answers:
           description: *payment_answer_format
       board_from_family_payment:
-        question: Board from family members
+        question: Board from family members living with %{ownership}
         answers:
           description: *payment_answer_format
       rent_payment:
@@ -461,7 +468,7 @@ en:
         answers:
           description: *payment_answer_format
       financial_support_with_access_payment:
-        question: Financial support from someone who allows access to their assets or money
+        question: Financial support from someone who allows %{ownership} access to their assets or money
         answers:
           description: *payment_answer_format
       from_friends_relatives_payment:
@@ -476,9 +483,16 @@ en:
         question: Other sources of income details
       # END income payments details section
 
+      # BEGIN partner income payments details section
+      which_payments_partner:
+        question: Payments the partner gets
+        answers:
+          none: None
+      # END partner income payments details section
+
       # BEGIN income benefits details section
       which_benefits:
-        question: Benefits your client gets?
+        question: Benefits your client gets
         answers:
           none: None
       child_benefit:
@@ -508,6 +522,13 @@ en:
       other_benefit_details:
         question: Other benefits details
       # END income benefits details section
+
+      # BEGIN partner income benefits details section
+      which_benefits_partner:
+        question: Benefits the partner gets
+        answers:
+          none: None
+      # END partner income benefits details section
 
       # BEGIN other sources of income details section
       manage_without_income:
@@ -571,7 +592,7 @@ en:
 
       # BEGIN  outgoings payments section
       which_outgoings:
-        question: Type of payments?
+        question: Type of payments
         answers:
           none: None
       childcare_outgoing:
@@ -772,7 +793,7 @@ en:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Stands to benefit from a trust fund?
+        question: Trust fund
         answers: *YESNO
       trust_fund_amount_held:
         question: Amount in fund
@@ -847,7 +868,7 @@ en:
         question: Does the client pay a Self Assessment tax bill?
         answers: *YESNO
       self_assessment_tax_bill_payment:
-        question: Enter the amount
+        question: Amount
         answers:
           description: *payment_answer_format
 
@@ -855,6 +876,6 @@ en:
         question: Does your client receive any other benefits from work?
         answers: *YESNO
       work_benefits_payment:
-        question: Enter the total value every year
+        question: Total value every year
         answers:
           description: *payment_answer_format

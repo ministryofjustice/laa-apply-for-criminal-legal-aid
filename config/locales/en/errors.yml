@@ -514,9 +514,9 @@ en:
           attributes:
             applicant_self_assessment_tax_bill:
               inclusion: Select yes if your client pays a Self Assessment tax bill received in the last 2 years
-            amount:
+            applicant_self_assessment_tax_bill_amount:
               not_a_number: Enter the amount they pay
-            frequency:
+            applicant_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
         steps/income/client/other_work_benefits_form:
           attributes:
@@ -557,11 +557,47 @@ en:
           attributes:
             amount:
               blank: Enter an amount
+        steps/income/partner/income_payments_form:
+          attributes:
+            base:
+              none_selected: Select which payments the partner gets, or select 'They do not get any of these payments'
+        steps/income/partner/income_payment_fieldset_form:
+          summary:
+            amount:
+              greater_than: "%{payment_type} amount must be greater than 0"
+              not_a_number: "%{payment_type} amount is not a number"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter the other sources of income they get
+            frequency:
+              blank: "%{payment_type} frequency can't be blank"
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: Enter an amount
         steps/income/income_benefits_form:
           attributes:
             base:
               none_selected: Select which benefits your client gets, or select 'They do not get any of these benefits'
         steps/income/income_benefit_fieldset_form:
+          summary:
+            amount:
+              greater_than: "%{payment_type} amount must be greater than 0"
+              not_a_number: "%{payment_type} amount is not a number"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter what benefits they get and the amount
+            frequency:
+              blank: "%{payment_type} frequency can't be blank"
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: Enter an amount
+        steps/income/partner/income_benefits_form:
+          attributes:
+            base:
+              none_selected: Select which benefits the partner gets, or select 'They do not get any of these benefits'
+        steps/income/partner/income_benefit_fieldset_form:
           summary:
             amount:
               greater_than: "%{payment_type} amount must be greater than 0"
@@ -581,6 +617,10 @@ en:
               inclusion: Select how they manage with no income
             manage_other_details:
               blank: Enter details on how they manage with no income
+        steps/income/business_type_form:
+          attributes:
+            business_type:
+              inclusion: Select a business type
         steps/outgoings/housing_payment_type_form:
           attributes:
             housing_payment_type:

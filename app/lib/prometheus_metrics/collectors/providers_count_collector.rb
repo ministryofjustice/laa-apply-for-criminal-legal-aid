@@ -36,7 +36,7 @@ module PrometheusMetrics
       end
 
       def idle_count
-        result = cache { Provider.where(['current_sign_in_at < ?', 1.week.ago]).count }
+        result = cache { Provider.where(current_sign_in_at: ...1.week.ago).count }
         observe_counter(result, status: 'idle')
       end
     end

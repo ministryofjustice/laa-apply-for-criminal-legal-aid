@@ -47,7 +47,7 @@ module Evidence
 
       def execute_client(crime_application)
         if @client_proc.respond_to?(:call)
-          @client_proc.call(crime_application)
+          @client_proc.call(crime_application, crime_application.applicant)
         else
           DEFAULT_PREDICATE.call(crime_application)
         end
@@ -55,7 +55,7 @@ module Evidence
 
       def execute_partner(crime_application)
         if @partner_proc.respond_to?(:call)
-          @partner_proc.call(crime_application)
+          @partner_proc.call(crime_application, crime_application.partner)
         else
           DEFAULT_PREDICATE.call(crime_application)
         end

@@ -7,33 +7,24 @@ describe Summary::Sections::SelfAssessmentTaxBill do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      outgoings: outgoings,
-      outgoings_payments: outgoings_payments_double
+      income: income
     )
   end
 
-  let(:outgoings_payments_double) { double('outgoings_payments_collection', detect: outgoings_payment) }
-
-  let(:outgoings) do
+  let(:income) do
     instance_double(
-      Outgoings,
-      applicant_self_assessment_tax_bill:,
+      Income,
+      to_param: '12345',
+      applicant_self_assessment_tax_bill: applicant_self_assessment_tax_bill,
+      applicant_self_assessment_tax_bill_amount: 100_00,
+      applicant_self_assessment_tax_bill_frequency: 'week'
     )
   end
 
-  let(:outgoings_payment) do
-    instance_double(
-      OutgoingsPayment,
-      payment_type: 'self_assessment_tax_bill',
-      amount: 234_000,
-      frequency: 'yearly'
-    )
-  end
-
-  let(:applicant_self_assessment_tax_bill) { nil }
+  let(:applicant_self_assessment_tax_bill) { 'yes' }
 
   describe '#show?' do
-    context 'when there is an outgoings' do
+    context 'when there is an self_assessment_tax_bill question' do
       context 'when applicant_self_assessment_tax_bill is set to `yes`' do
         let(:applicant_self_assessment_tax_bill) { 'yes' }
 
@@ -42,8 +33,16 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         end
       end
 
+      context 'when applicant_self_assessment_tax_bill is set to `no`' do
+        let(:applicant_self_assessment_tax_bill) { 'no' }
+
+        it 'shows this section' do
+          expect(subject.show?).to be(true)
+        end
+      end
+
       context 'when applicant_self_assessment_tax_bill is set to nil' do
-        let(:outgoings_payment) { nil }
+        let(:applicant_self_assessment_tax_bill) { nil }
 
         it 'does not show this section' do
           expect(subject.show?).to be(false)
@@ -51,9 +50,8 @@ describe Summary::Sections::SelfAssessmentTaxBill do
       end
     end
 
-    context 'when there is no outgoings' do
-      let(:outgoings) { nil }
-      let(:outgoings_payments_double) { [] }
+    context 'when there is no income' do
+      let(:income) { nil }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)
@@ -76,7 +74,9 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:self_assessment_tax_bill_payment)
         expect(answers[1].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
-        expect(answers[1].value).to eq(outgoings_payment)
+        expect(answers[1].value).to be_an_instance_of(
+          Summary::Sections::SelfAssessmentTaxBill::SelfAssessmentTaxBillPayment
+        )
       end
     end
 

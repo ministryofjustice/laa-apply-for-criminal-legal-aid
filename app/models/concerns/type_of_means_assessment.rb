@@ -71,7 +71,7 @@ module TypeOfMeansAssessment
   def benefit_check_recipient
     return applicant unless include_partner_in_means_assessment?
     return applicant unless applicant.benefit_type == 'none'
-    return partner unless partner.benefit_type == 'none'
+    return partner if partner && partner.benefit_type != 'none'
 
     applicant
   end

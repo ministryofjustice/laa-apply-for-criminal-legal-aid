@@ -3,8 +3,13 @@ class Investment < ApplicationRecord
 
   attribute :value, :pence
 
-  scope :for_client, -> { where(ownership_type: OwnershipType::APPLICANT.to_s) }
-  scope :for_partner, -> { where(ownership_type: OwnershipType::PARTNER.to_s) }
+  scope :bond, -> { where(investment_type: InvestmentType::BOND.to_s) }
+  scope :pep, -> { where(investment_type: InvestmentType::PEP.to_s) }
+  scope :share, -> { where(investment_type: InvestmentType::SHARE.to_s) }
+  scope :share_isa, -> { where(investment_type: InvestmentType::SHARE_ISA.to_s) }
+  scope :stock, -> { where(investment_type: InvestmentType::STOCK.to_s) }
+  scope :unit_trust, -> { where(investment_type: InvestmentType::UNIT_TRUST.to_s) }
+  scope :other, -> { where(investment_type: InvestmentType::OTHER.to_s) }
 
   def complete?
     except = %i[id crime_application_id created_at updated_at]

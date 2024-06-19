@@ -500,6 +500,7 @@ RSpec.describe TypeOfMeansAssessment do
     end
 
     context 'when partner is benefit check recipient' do
+      let(:partner) { instance_double(Partner) }
       let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
       let(:applicant_benefit_type) { 'none' }
       let(:partner_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
@@ -513,6 +514,7 @@ RSpec.describe TypeOfMeansAssessment do
     end
 
     context 'defaults to applicant' do
+      let(:partner) { instance_double(Partner) }
       let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
       let(:applicant_benefit_type) { 'none' }
       let(:partner_benefit_type) { 'none' }

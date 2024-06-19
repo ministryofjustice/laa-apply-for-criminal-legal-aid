@@ -6,17 +6,13 @@ module Evidence
       key :capital_savings_certs_22
       group :capital
 
-      client do |crime_application|
-        if crime_application.capital
-          crime_application.capital.has_national_savings_certificates == 'yes'
-        else
-          false
-        end
+      client do |_crime_application, applicant|
+        applicant.national_savings_certificates.any?
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          partner.national_savings_certificates.any?
       end
     end
   end

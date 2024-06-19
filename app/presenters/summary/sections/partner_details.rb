@@ -2,6 +2,8 @@ module Summary
   module Sections
     class PartnerDetails < Sections::BaseSection
       def show?
+        return false unless FeatureFlags.partner_journey.enabled?
+
         partner.present? && client.present? && super
       end
 
@@ -63,7 +65,7 @@ module Summary
         address = partner&.home_address
         return unless address
 
-        address.attributes.slice(*Address::ADDRESS_ATTRIBUTES).values.compact_blank.join("\r\n")
+        address.attributes.symbolize_keys.slice(*Address::ADDRESS_ATTRIBUTES).values.compact_blank.join("\r\n")
       end
     end
   end

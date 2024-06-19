@@ -1,6 +1,9 @@
 module Steps
   module Evidence
     class UploadForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       delegate :documents, to: :crime_application
 
       def prompt
