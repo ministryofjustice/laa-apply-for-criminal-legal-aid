@@ -8,7 +8,7 @@ module Evidence
 
       client do |crime_application|
         if crime_application.income
-          (crime_application.income.applicant_other_work_benefit_received == 'yes') || false
+          crime_application.income.applicant_other_work_benefit_received == 'yes'
         else
           false
         end
