@@ -3,18 +3,15 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::BenefitsInKind do
   subject { described_class.new(crime_application) }
 
-  # A double may not always be appropriate for testing,
-  # consider using real objects
   let(:crime_application) do
-    instance_double(
-      CrimeApplication, partner: double, applicant: double
-    )
+    CrimeApplication.create!(income:)
   end
 
+  let(:income) { Income.new }
   let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_noncash_benefit_4 }
@@ -23,7 +20,31 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
   it { expect(described_class.active?).to be true }
 
   describe '.client' do
-    it { expect(subject.client_predicate).to be false }
+    subject { described_class.new(crime_application).client_predicate }
+
+    context 'when applicant receives non cash benefit' do
+      let(:income) { Income.new(applicant_other_work_benefit_received: 'yes') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when applicant does not receive non cash benefit' do
+      let(:income) { Income.new(applicant_other_work_benefit_received: 'no') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'question was not asked' do
+      let(:income) { Income.new(applicant_other_work_benefit_received: nil) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'income is not present' do
+      let(:income) { nil }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.partner' do
@@ -34,7 +55,13 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
     it { expect(subject.other_predicate).to be false }
   end
 
-  describe '#to_h', skip: 'Awaiting benefit in kind implementation' do
+  describe '#to_h' do
+    let(:income) do
+      Income.new(
+        applicant_other_work_benefit_received: 'yes',
+      )
+    end
+
     let(:expected_hash) do
       {
         id: 'BenefitsInKind',
