@@ -174,7 +174,7 @@ module Decisions
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         # TODO: Redirect to partner's employment income
-        # edit(:income_before_tax)
+        edit(:income_before_tax)
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         show(:self_employed_exit)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
