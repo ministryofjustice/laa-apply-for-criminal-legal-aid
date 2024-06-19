@@ -6,9 +6,12 @@ module Evidence
       key :income_noncash_benefit_4
       group :income
 
-      # TODO: Awaiting client implementation
-      client do |_crime_application|
-        false
+      client do |crime_application|
+        if crime_application.income
+          crime_application.income.applicant_other_work_benefit_received == 'yes'
+        else
+          false
+        end
       end
 
       # TODO: Awaiting partner implementation
