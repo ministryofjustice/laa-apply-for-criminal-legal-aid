@@ -179,6 +179,12 @@ Rails.application.routes.draw do
           edit_step :add_employments, alias: :employments_summary
           edit_step :other_work_benefits_client, alias: :other_work_benefits
         end
+
+        scope '/:subject/', constraints: -> (_) { FeatureFlags.self_employed_journey.enabled? } do
+          edit_step :business_type
+          edit_step :businesses_summary
+        end
+
         show_step :employed_exit
         show_step :self_employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody

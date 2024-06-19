@@ -19,7 +19,7 @@ class SectionsCompletenessValidator
       errors.add(:outgoings_assessment, :incomplete) unless outgoings_assessment_complete?
       errors.add(:capital_assessment, :incomplete) unless capital_assessment_complete?
 
-      errors.add(:partner_details, :incomplete) unless partner_detail&.complete?
+      errors.add(:partner_details, :incomplete) unless partner_detail_complete?
     else
       errors.add(:client_details, :incomplete)
     end
@@ -28,6 +28,12 @@ class SectionsCompletenessValidator
   end
 
   delegate :client_details_complete?, :passporting_benefit_complete?, to: :crime_application
+
+  def partner_detail_complete?
+    return true unless FeatureFlags.partner_journey.enabled?
+
+    partner_detail&.complete?
+  end
 
   def income_assessment_complete?
     return true unless requires_means_assessment?

@@ -28,4 +28,14 @@ class Partner < Person
     -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
     through: :crime_application
   )
+
+  has_many(
+    :businesses,
+    -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
+    through: :crime_application
+  )
+
+  def ownership_type
+    OwnershipType::PARTNER
+  end
 end

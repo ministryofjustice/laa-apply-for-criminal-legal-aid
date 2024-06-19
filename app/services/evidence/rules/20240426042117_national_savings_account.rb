@@ -11,9 +11,11 @@ module Evidence
           applicant.joint_savings.national_savings_or_post_office.any?
       end
 
-      partner do |_crime_application, partner|
-        partner.savings.national_savings_or_post_office.any? ||
-          partner.joint_savings.national_savings_or_post_office.any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) && (
+          partner.savings.national_savings_or_post_office.any? ||
+            partner.joint_savings.national_savings_or_post_office.any?
+        )
       end
     end
   end

@@ -6,14 +6,16 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   let(:crime_application) do
     CrimeApplication.create!(
       outgoings:,
+      income:,
     )
   end
 
   let(:outgoings) { Outgoings.new }
+  let(:income) { Income.new }
+  let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application)
-                                                    .and_return(true)
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
   end
 
   it { expect(described_class.key).to eq :income_p60_sa302_2 }
@@ -35,6 +37,18 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
       it { is_expected.to be false }
     end
+
+    context 'when applicant has paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when applicant has not paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'no') }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.partner' do
@@ -48,6 +62,12 @@ RSpec.describe Evidence::Rules::SelfAssessed do
       let(:above_threshold) { 'yes' }
 
       it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'when not high tax earner' do

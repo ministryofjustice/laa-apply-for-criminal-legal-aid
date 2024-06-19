@@ -29,7 +29,7 @@ module Summary
         I18n.t(
           name,
           scope: 'summary.sections',
-          subject: I18n.t('summary.dictionary.subject', subject_type:),
+          subject: I18n.t("summary.dictionary.subjects.#{subject_type}"),
           count: subject_type.to_s == SubjectType::APPLICANT_AND_PARTNER.to_s ? 2 : 1
         )
       end
