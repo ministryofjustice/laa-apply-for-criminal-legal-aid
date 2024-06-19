@@ -107,6 +107,12 @@ module Decisions
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
+      elsif self_employed?(form_object.partner_employment_status)
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'partner')
+        else
+          show(:self_employed_exit)
+        end
       else
         # TODO: implement employed partner journey
         show(:employed_exit)
@@ -127,7 +133,11 @@ module Decisions
       when [EmploymentStatus::EMPLOYED.to_s]
         edit(:income_before_tax)
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        show(:self_employed_exit)
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'client')
+        else
+          show(:self_employed_exit)
+        end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         redirect_to_employer_details(employment)
       end
@@ -221,6 +231,10 @@ module Decisions
 
     def not_working?(employment_status)
       employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+    end
+
+    def self_employed?(employment_status)
+      employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
     end
 
     def ended_employment_within_three_months?

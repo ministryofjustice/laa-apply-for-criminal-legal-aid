@@ -169,6 +169,8 @@ en:
         manage_without_income:
           one: How does %{subject} manage with no income?
           other: How do %{subject} manage with no income?
+      steps_income_business_type_form:
+        business_type: What is the business type?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does %{subject} make where they usually live?
       steps_outgoings_mortgage_form:
@@ -353,6 +355,8 @@ en:
         types_options:
           jsa: This includes New Style JSA.
           other: Disregarded benefits include Housing Benefit and Personal Independence Payment (PIP).
+      steps_income_business_type_form:
+        business_type: You can add more later.
       steps_outgoings_board_and_lodging_form:
         food_amount: Enter '0' if none.
       steps_submission_declaration_form:
@@ -720,6 +724,12 @@ en:
         manage_other_details:
           one: Tell us how %{subject} manages with no income
           other: Tell us how %{subject} manage with no income
+      steps_income_business_type_form:
+        business_type_options:
+          self_employed: Self-employed business 
+          partnership: Business partnership 
+          director_or_shareholder: Company director or shareholder
+
 
       # BEGIN: Partner Income
       steps_income_partner_income_payments_form:
