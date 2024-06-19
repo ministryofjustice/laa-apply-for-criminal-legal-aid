@@ -6,10 +6,12 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   let(:crime_application) do
     CrimeApplication.create!(
       outgoings:,
+      income:,
     )
   end
 
   let(:outgoings) { Outgoings.new }
+  let(:income) { Income.new }
   let(:include_partner?) { true }
 
   before do
@@ -32,6 +34,18 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
     context 'when not high tax earner' do
       let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'no') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when applicant has paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when applicant has not paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'no') }
 
       it { is_expected.to be false }
     end
