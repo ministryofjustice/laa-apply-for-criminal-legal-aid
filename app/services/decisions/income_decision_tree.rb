@@ -268,10 +268,10 @@ module Decisions
     def determine_showing_no_income_page
       if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
         edit(:partner_employment_status)
-      elsif income_payments.empty? && income_benefits.empty?
-        edit(:manage_without_income)
-      else
+      elsif crime_application.income&.all_income_over_zero?
         edit(:answers)
+      else
+        edit(:manage_without_income)
       end
     end
 
