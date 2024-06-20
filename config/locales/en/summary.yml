@@ -78,8 +78,8 @@ en:
         other: "Other sources of income: client and partner"
       housing_payments: Housing Payments
       outgoings_payments_details:
-        one: Payments your %{subject} makes
-        other: Payments your %{subject} make
+        one: Payments %{ownership} makes
+        other: Payments %{ownership} make
       other_outgoings_details: Other outgoings
       supporting_evidence: Supporting evidence
       more_information: Further information

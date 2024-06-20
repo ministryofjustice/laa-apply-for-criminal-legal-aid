@@ -7,17 +7,9 @@ module SubmissionSerializer
 
           json.client_details do
             json.applicant Definitions::Applicant.generate(crime_application)
-            json.partner partner_json
+            json.partner Definitions::Partner.generate(crime_application) if partner
           end
         end
-      end
-
-      private
-
-      def partner_json
-        return unless crime_application.partner
-
-        Definitions::Partner.generate(crime_application)
       end
     end
   end
