@@ -99,7 +99,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application, subject: 'client')
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: 'client')
         end
       end
 
@@ -233,7 +236,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application, subject: 'partner')
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: 'partner')
         end
       end
 

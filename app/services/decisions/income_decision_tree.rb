@@ -83,10 +83,10 @@ module Decisions
 
     def client_employment
       @client_employment ||= if incomplete_client_employments.empty?
-                        current_crime_application.client_employments.create!
-                      else
-                        incomplete_client_employments.first
-                      end
+                               current_crime_application.client_employments.create!
+                             else
+                               incomplete_client_employments.first
+                             end
     end
 
     def partner_employment
