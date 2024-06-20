@@ -16,9 +16,9 @@ module PartnerDetails
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return unless applicable?
 
-      errors.add(:relationship_to_partner, :incomplete) unless record.relationship_to_partner.present?
+      errors.add(:relationship_to_partner, :incomplete) if record.relationship_to_partner.blank?
       errors.add(:details, :blank) unless partner_details_complete?
-      errors.add(:involvement_in_case, :incomplete) unless record.involvement_in_case.present?
+      errors.add(:involvement_in_case, :incomplete) if record.involvement_in_case.blank?
       errors.add(:nino, :incomplete) unless nino?
       errors.add(:conflict_of_interest, :incomplete) unless conflict_of_interest?
       errors.add(:has_same_address_as_client, :incomplete) unless same_address?
