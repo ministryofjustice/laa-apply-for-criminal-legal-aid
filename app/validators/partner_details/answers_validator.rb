@@ -1,47 +1,40 @@
 module PartnerDetails
   class AnswersValidator < BaseAnswerValidator
-    def validate
-      return unless applicable?
-      return if complete?
-
-      # NOTE: partner_details refers to general partnership information, stored
-      # in partner and partner_detail
-      errors.add :partner_details, :incomplete
-      errors.add :base, :incomplete_records
-    end
+    include TypeOfMeansAssessment
 
     def applicable?
       crime_application.client_has_partner == 'yes'
     end
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
     def complete?
       return false unless record
-      return true if no_partner_complete?
-      return false if no_partner_incomplete?
 
-      [
-        record.relationship_to_partner,
-        crime_application.partner&.first_name,
-        crime_application.partner&.last_name,
-        crime_application.partner&.date_of_birth,
-        record.involvement_in_case,
-        nino?,
-        conflict_of_interest?,
-        same_address?,
-        address?,
-      ].map(&:present?).all?(true)
+      validate
+      errors.empty?
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      return unless applicable?
+
+      errors.add(:relationship_to_partner, :incomplete) unless record.relationship_to_partner.present?
+      errors.add(:details, :blank) unless partner_details_complete?
+      errors.add(:involvement_in_case, :incomplete) unless record.involvement_in_case.present?
+      errors.add(:nino, :incomplete) unless nino?
+      errors.add(:conflict_of_interest, :incomplete) unless conflict_of_interest?
+      errors.add(:has_same_address_as_client, :incomplete) unless same_address?
+      errors.add(:home_address, :incomplete) unless address?
+
+      errors.add(:base, :incomplete_records) if errors.present?
+    end
 
     private
 
-    def no_partner_complete?
-      crime_application.client_has_partner == 'no' && record.relationship_status.present?
-    end
+    def partner_details_complete?
+      return false unless partner
 
-    def no_partner_incomplete?
-      crime_application.client_has_partner == 'no' && record.relationship_status.blank?
+      partner.values_at(
+        :date_of_birth, :first_name, :last_name,
+      ).all?(&:present?)
     end
 
     def nino?
