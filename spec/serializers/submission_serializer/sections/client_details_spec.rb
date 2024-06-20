@@ -93,8 +93,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
-        },
-        partner: nil,
+        }
       }
     }
   end
