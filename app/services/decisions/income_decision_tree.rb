@@ -126,7 +126,7 @@ module Decisions
       else
         return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
 
-        start_employment_journey
+        start_client_employment_journey
       end
     end
 
@@ -155,7 +155,7 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_employment_journey
+    def start_client_employment_journey
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         edit(:income_before_tax)
@@ -281,7 +281,7 @@ module Decisions
     end
 
     def self_employed?(employment_status)
-      employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
+      employment_status.all?(EmploymentStatus::SELF_EMPLOYED.to_s)
     end
 
     def ended_employment_within_three_months?

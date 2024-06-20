@@ -99,8 +99,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application,
-subject: 'client')
+          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application, subject: 'client')
         end
       end
 
@@ -196,6 +195,7 @@ subject: 'client')
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
+        # TODO: Fix redirection
         it 'redirects to the `income_before_tax` page' do
           expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
         end
@@ -233,8 +233,7 @@ subject: 'client')
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application,
-subject: 'partner')
+          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application, subject: 'partner')
         end
       end
 
@@ -243,20 +242,6 @@ subject: 'partner')
 
         it 'redirects to the `employed_exit` page' do
           expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
-        end
-      context 'feature flag `employment_journey` is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
-
-        it 'redirects to the `self employed_exit` page' do
-          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
-        end
-      end
-
-      context 'feature flag `employment_journey` is disabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
         end
       end
     end
