@@ -6,7 +6,6 @@ module SubmissionSerializer
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
           json.employments Definitions::Employment.generate(crime_application.employments)
-          json.partner_employments Definitions::Employment.generate(crime_application.partner_employments)
           json.ended_employment_within_three_months income.ended_employment_within_three_months
           json.lost_job_in_custody income.lost_job_in_custody
           json.date_job_lost income.date_job_lost
