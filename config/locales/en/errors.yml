@@ -954,7 +954,7 @@ en:
             base:
               incomplete_records: You need to complete all questions before you can submit the application
             has_no_other_assets:
-              blank: Confirm your client has no other assets or capital
+              blank: Confirm whether there are any other assets or capital
         steps/submission/more_information_form:
           attributes:
             additional_information:

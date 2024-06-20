@@ -740,9 +740,6 @@ en:
       # END national_savings_certificates
 
       # BEGIN property, address and owners
-      house_type:
-        question: Type of property
-        absence_answer: *absence_none
       bedrooms:
         question: Bedrooms
         absence_answer: *absence_none
@@ -810,12 +807,6 @@ en:
       partner_trust_fund_yearly_dividend:
         question: Yearly dividend
       # END partner_trust_fund
-
-      has_no_other_assets:
-        question: Client has no other assets or capital
-        absence_answer: *absence_none
-        answers:
-          'yes': Confirmed
 
       employment:
         employer_name:
