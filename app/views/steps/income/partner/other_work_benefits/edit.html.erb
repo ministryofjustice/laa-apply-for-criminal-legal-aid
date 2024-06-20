@@ -1,0 +1,30 @@
+<% title t('steps.income.caption') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+    <p class="govuk-body">
+      <%= t('.page_text') %>
+    </p>
+    <ul class="govuk-body govuk-list--bullet govuk-!-margin-bottom-6">
+      <% t('.list').each_line do |line| %>
+        <li><%= line %></li>
+      <% end %>
+    </ul>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :partner_other_work_benefit_received, legend: { tag: 'h1', size: 'xl', hidden: true } do %>
+        <%= f.govuk_radio_button :partner_other_work_benefit_received, YesNoAnswer::YES do %>
+          <%= f.govuk_number_field(:amount,
+                                   prefix_text: '£',
+                                   width: 'one-half') %>
+          <% end %>
+        <%= f.govuk_radio_button :partner_other_work_benefit_received, YesNoAnswer::NO %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
