@@ -186,7 +186,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            Employments
+            ClientEmployments
             Dependants
             PartnerEmploymentDetails
             SelfAssessmentTaxBill
@@ -235,7 +235,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            Employments
+            ClientEmployments
             PartnerEmploymentDetails
             SelfAssessmentTaxBill
             WorkBenefits
@@ -377,7 +377,7 @@ describe Summary::HtmlPresenter do
     expected_sections = %w[
       EmploymentDetails
       IncomeDetails
-      Employments
+      ClientEmployments
       SelfAssessmentTaxBill
       IncomePaymentsDetails
       IncomeBenefitsDetails

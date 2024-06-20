@@ -30,7 +30,7 @@ module Steps
         end
 
         def employments
-          @employments ||= current_crime_application.employments
+          @employments ||= current_crime_application.client_employments
         end
 
         def additional_permitted_params

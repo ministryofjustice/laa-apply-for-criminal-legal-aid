@@ -348,8 +348,8 @@ en:
             page_text: You told us your client is employed.
         self_assessment_tax_bill:
           edit:
-            page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?
-            heading: Does your client pay a Self Assessment tax bill received in the last 2 years?
+            page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?ee
+            heading: Does your client pay a Self Assessment tax bill received in the last 2 years?ww
             page_text: This will be a bill from HM Revenue and Customs (HMRC).
         deductions:
           edit:
@@ -396,19 +396,19 @@ en:
             heading: The partner’s employment details
         employment_income:
           edit:
-            page_title: Your client's employment income
-            heading: Your client's employment income
-            page_text: You told us your client is employed.
+            page_title: Your partner's employment income
+            heading: Your partner's employment income
+            page_text: You told us your partner is employed.
         self_assessment_tax_bill:
           edit:
-            page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?
-            heading: Does your client pay a Self Assessment tax bill received in the last 2 years?
+            page_title: Does the partner pay a Self Assessment tax bill received in the last 2 years?
+            heading: Does the partner pay a Self Assessment tax bill received in the last 2 years?
             page_text: This will be a bill from HM Revenue and Customs (HMRC).
         deductions:
           edit:
-            page_title: Deductions from your client's pay
-            heading: Deductions from your client’s pay
-            page_text: You told us your client is employed.
+            page_title: Deductions from the partner’s pay
+            heading: Deductions from the partner’s pay
+            page_text: You told us your partner is employed.
         employments_summary:
           edit:
             page_title: Your jobs

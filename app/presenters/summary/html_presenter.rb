@@ -22,7 +22,7 @@ module Summary
         employment_details
         employment_income
         income_details
-        employments
+        client_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details
@@ -75,7 +75,7 @@ module Summary
         employment_details
         employment_income
         income_details
-        employments
+        client_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details

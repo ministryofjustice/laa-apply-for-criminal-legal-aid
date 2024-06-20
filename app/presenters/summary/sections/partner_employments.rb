@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    class PartnerEmployments < Summary::Sections::Employments
+    class PartnerEmployments < Summary::Sections::ClientEmployments
       private
 
       def employments

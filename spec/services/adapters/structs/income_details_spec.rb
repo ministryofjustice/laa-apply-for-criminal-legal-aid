@@ -5,7 +5,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   let(:application_struct) { build_struct_application(with_full_means: true) }
 
-  describe '#employments' do
+  describe '#client_employments' do
     it 'returns a employments collection' do
       expect(subject.employments).to all(be_an(Employment))
     end
