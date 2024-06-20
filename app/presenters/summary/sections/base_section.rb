@@ -30,6 +30,7 @@ module Summary
           name,
           scope: 'summary.sections',
           subject: I18n.t("summary.dictionary.subjects.#{subject_type}"),
+          ownership: I18n.t("summary.dictionary.ownership.#{subject_type}"),
           count: subject_type.to_s == SubjectType::APPLICANT_AND_PARTNER.to_s ? 2 : 1
         )
       end

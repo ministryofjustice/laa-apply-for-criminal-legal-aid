@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class OutgoingsPaymentsDetails < Sections::PaymentDetails
+      include TypeOfMeansAssessment
+
       def show?
         return false if outgoings.blank?
 
@@ -37,6 +39,12 @@ module Summary
 
       def payment_types
         %w[childcare maintenance legal_aid_contribution]
+      end
+
+      def subject_type
+        return unless include_partner_in_means_assessment?
+
+        SubjectType.new(:applicant_and_partner)
       end
     end
   end
