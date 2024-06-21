@@ -31,8 +31,10 @@ class SectionsCompletenessValidator
 
   def partner_detail_complete?
     return true unless FeatureFlags.partner_journey.enabled?
+    return true if appeal_no_changes? || applicant&.under18?
+    return false unless partner_detail
 
-    partner_detail&.complete?
+    partner_detail.complete?
   end
 
   def income_assessment_complete?

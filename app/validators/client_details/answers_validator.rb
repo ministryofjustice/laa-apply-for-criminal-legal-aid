@@ -12,13 +12,15 @@ module ClientDetails
     end
 
     # Adds the error to the first step name a user would need to go to fix the issue.
-    def validate # rubocop:disable Metrics/AbcSize
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
       errors.add(:details, :blank) unless applicant_details_complete?
       errors.add(:case_type, :blank) unless case_type_complete?
       errors.add(:residence_type, :blank) unless address_complete?
       AppealDetails::AnswersValidator.new(record).validate
       errors.add(:has_nino, :blank) unless has_nino_complete?
-      errors.add(:client_has_partner, :blank) unless relationship_status_complete?
+      errors.add(:client_has_partner, :blank) unless client_has_partner_complete?
+      errors.add(:relationship_status, :blank) unless relationship_status_complete?
+
       errors.add :base, :incomplete_records unless errors.empty?
     end
 
@@ -58,13 +60,19 @@ module ClientDetails
       applicant.nino.present?
     end
 
+    def client_has_partner_complete?
+      return true unless FeatureFlags.partner_journey.enabled?
+      return true if appeal_no_changes? || applicant.under18?
+
+      record.client_has_partner.present?
+    end
+
     def relationship_status_complete?
       return true unless FeatureFlags.partner_journey.enabled?
-      return true if applicant.under18?
-      return true if record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?
+      return true if appeal_no_changes? || applicant.under18?
       return true if record.client_has_partner == 'yes'
 
-      false
+      record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?
     end
 
     alias crime_application record

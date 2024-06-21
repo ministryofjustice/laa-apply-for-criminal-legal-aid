@@ -23,6 +23,8 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             passporting_benefit_complete?: true,
             kase: double(complete?: true),
             partner_detail: double(complete?: true),
+            appeal_no_changes?: false,
+            applicant: double(under18?: false),
           }
         end
 
@@ -59,6 +61,8 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           kase: double(complete?: true),
           income: double(complete?: true),
           partner_detail: double(complete?: true),
+          appeal_no_changes?: false,
+          applicant: double(under18?: false),
         }
       end
 
@@ -84,6 +88,8 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             outgoings: double(complete?: true),
             capital: double(complete?: true),
             partner_detail: double(complete?: true),
+            appeal_no_changes?: false,
+            applicant: double(under18?: false),
           }
         end
 
@@ -102,6 +108,8 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             outgoings: double(complete?: false),
             capital: double(complete?: false),
             partner_detail: double(complete?: false),
+            appeal_no_changes?: false,
+            applicant: double(under18?: false),
           }
         end
 
@@ -128,8 +136,13 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             outgoings: nil,
             capital: nil,
             partner_detail: nil,
+            appeal_no_changes?: appeal_no_changes,
+            applicant: double(under18?: under18),
           }
         end
+
+        let(:under18) { false }
+        let(:appeal_no_changes) { false }
 
         it 'adds errors to all sections and base' do
           expect(errors).to receive(:add).with(:income_assessment, :incomplete)
@@ -139,6 +152,26 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
+        end
+
+        context 'when applicant is under 18' do
+          let(:under18) { true }
+
+          it 'does not add an error for the partner details section' do
+            expect(errors).not_to receive(:add).with(:partner_details, :incomplete)
+
+            subject.validate
+          end
+        end
+
+        context 'when application is appeal no changes' do
+          let(:appeal_no_changes) { true }
+
+          it 'does not add an error for the partner details section' do
+            expect(errors).not_to receive(:add).with(:partner_details, :incomplete)
+
+            subject.validate
+          end
         end
       end
     end
