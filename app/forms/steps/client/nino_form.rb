@@ -8,7 +8,7 @@ module Steps
       attribute :nino, :string
 
       validates_inclusion_of :has_nino, in: :choices
-      validates_with NinoValidator, person: :applicant, if: -> { client_has_nino? }
+      validates_with NinoValidator, if: -> { client_has_nino? }
 
       def choices
         YesNoAnswer.values

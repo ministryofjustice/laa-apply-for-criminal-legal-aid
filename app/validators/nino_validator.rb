@@ -10,7 +10,7 @@ class NinoValidator < ActiveModel::Validator
 
   def blank_nino(record)
     return if record.nino.present?
-    return if options[:person] == :applicant && record.crime_application.not_means_tested?
+    return if applicant_not_means_tested?(record)
 
     record.errors.add(:nino, :blank)
   end
@@ -20,5 +20,11 @@ class NinoValidator < ActiveModel::Validator
     return if NINO_REGEXP.match?(record.nino)
 
     record.errors.add(:nino, :invalid)
+  end
+
+  def applicant_not_means_tested?(record)
+    return false unless record.class.respond_to?(:association_name)
+
+    record.class.association_name == :applicant && record.crime_application.not_means_tested?
   end
 end
