@@ -628,6 +628,7 @@ subject: 'partner')
 
       before do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+        allow(dependants_double).to receive(:none?).and_return(true)
       end
 
       it 'creates a blank dependant record and redirects to the dependants page' do
@@ -642,10 +643,11 @@ subject: 'partner')
 
       before do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+        allow(dependants_double).to receive(:none?).and_return(false)
       end
 
       it 'does not create a blank dependant record and redirects to the dependants page' do
-        expect(dependants_double).not_to receive(:create!).at_least(:once)
+        expect(dependants_double).not_to receive(:create!)
 
         expect(subject).to have_destination(:dependants, :edit, id: crime_application)
       end
