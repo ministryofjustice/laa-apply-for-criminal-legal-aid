@@ -26,7 +26,7 @@ module Summary
       # :nocov:
       def work_benefits
         crime_application
-          .income_payments
+          .income_payments.for_client
           .detect { |payment| payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s }
       end
       # :nocov:

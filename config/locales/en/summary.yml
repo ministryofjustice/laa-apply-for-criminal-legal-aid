@@ -125,6 +125,7 @@ en:
       self_assessment_tax_bill: Self Assessment tax
       partner_self_assessment_tax_bill: Self Assessment tax
       work_benefits: Other work benefits
+      partner_work_benefits: Other work benefits
       employment_income: Pay from employment
 
     questions:
@@ -879,6 +880,14 @@ en:
         question: Does your client receive any other benefits from work?
         answers: *YESNO
       work_benefits_payment:
+        question: Total value every year
+        answers:
+          description: *payment_answer_format
+
+      partner_work_benefits:
+        question: Does the partner receive any other benefits from work?
+        answers: *YESNO
+      partner_work_benefits_payment:
         question: Total value every year
         answers:
           description: *payment_answer_format
