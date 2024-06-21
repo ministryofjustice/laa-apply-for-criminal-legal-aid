@@ -126,6 +126,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
+        let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the `employer_details` page' do
           expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
@@ -275,6 +276,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
+        let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the `employer_details` page' do
           expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
@@ -303,7 +305,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_employment_journey_enabled) { false }
 
         it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
     end

@@ -124,8 +124,6 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
-
         start_client_employment_journey
       end
     end
@@ -133,15 +131,7 @@ module Decisions
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
-      elsif self_employed?(form_object.partner_employment_status)
-        if FeatureFlags.self_employed_journey.enabled?
-          edit('/steps/income/business_type', subject: 'partner')
-        else
-          show(:self_employed_exit)
-        end
       else
-        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
-
         start_partner_employment_journey
       end
     end
@@ -155,10 +145,15 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_client_employment_journey
+    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        edit(:income_before_tax)
+        if FeatureFlags.employment_journey.enabled?
+          # TODO: Redirect to partner's employment income
+          edit(:income_before_tax)
+        else
+          show(:employed_exit)
+        end
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
           edit('/steps/income/business_type', subject: 'client')
@@ -166,19 +161,35 @@ module Decisions
           show(:self_employed_exit)
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_employer_details(client_employment)
+        if FeatureFlags.self_employed_journey.enabled?
+          redirect_to_employer_details(client_employment)
+        else
+          show(:employed_exit)
+        end
       end
     end
 
-    def start_partner_employment_journey
+    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        # TODO: Redirect to partner's employment income
-        edit(:income_before_tax)
+        if FeatureFlags.employment_journey.enabled?
+          # TODO: Redirect to partner's employment income
+          edit(:income_before_tax)
+        else
+          show(:employed_exit)
+        end
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        show(:self_employed_exit)
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'partner')
+        else
+          show(:self_employed_exit)
+        end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_partner_employer_details(partner_employment)
+        if FeatureFlags.self_employed_journey.enabled?
+          redirect_to_partner_employer_details(partner_employment)
+        else
+          show(:self_employed_exit)
+        end
       end
     end
 
@@ -280,9 +291,12 @@ module Decisions
       employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
+    # :nocov:
+    # currently handling complex employment logic jump via case statement
     def self_employed?(employment_status)
-      employment_status.all?(EmploymentStatus::SELF_EMPLOYED.to_s)
+      employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
     end
+    # :nocov:
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
