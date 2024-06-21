@@ -622,7 +622,6 @@ en:
           after_tax: After tax
         frequency_options: *frequency_options
       steps_income_client_deductions_form:
-        #deductions: Select all that apply.
         types_options:
           income_tax: Income Tax
           national_insurance: National Insurance
@@ -641,7 +640,6 @@ en:
           frequency_options: *frequency_options
           details: Enter details of other deductions
       steps_income_partner_deductions_form:
-        #deductions: Select all that apply.
         types_options:
           income_tax: Income Tax
           national_insurance: National Insurance
