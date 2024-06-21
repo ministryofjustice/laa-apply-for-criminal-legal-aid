@@ -36,6 +36,8 @@ module Decisions
         after_has_savings
       when :client_employment_income
         edit('/steps/income/income_payments')
+      when :partner_employment_income
+        edit('/steps/income/income_payments_partner')
       when :client_self_assessment_tax_bill
         edit(:other_work_benefits)
       when :partner_self_assessment_tax_bill
@@ -150,7 +152,6 @@ module Decisions
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          # TODO: Redirect to partner's employment income
           edit(:income_before_tax)
         else
           show(:employed_exit)
@@ -174,8 +175,7 @@ module Decisions
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          # TODO: Redirect to partner's employment income
-          edit(:income_before_tax)
+          edit('/steps/income/partner/employment_income')
         else
           show(:employed_exit)
         end

@@ -199,9 +199,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        # TODO: Fix redirection
-        it 'redirects to the `income_before_tax` page' do
-          expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
+        it 'redirects to the `partner/employment_income` page' do
+          expect(subject).to have_destination('/steps/income/partner/employment_income', :edit, id: crime_application)
         end
       end
 
@@ -688,6 +687,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :client_employment_income }
 
     it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
+  end
+
+  context 'when the step is `partner_employment_income`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_employment_income }
+
+    it { is_expected.to have_destination('/steps/income/income_payments_partner', :edit, id: crime_application) }
   end
 
   context 'when the step is `client_self_assessment_tax_bill`' do

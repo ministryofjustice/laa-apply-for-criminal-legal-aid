@@ -140,6 +140,8 @@ en:
         partner_employment_status: What is the partner's employment status?
       steps_income_client_employment_income_form:
         before_or_after_tax: Is this before or after tax?
+      steps_income_partner_employment_income_form:
+        before_or_after_tax: Is this before or after tax?
       steps_income_client_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
@@ -686,6 +688,12 @@ en:
       steps_income_has_savings_form:
         has_savings_options: *YESNO
       steps_income_client_employment_income_form:
+        amount: What is their salary or wage?
+        before_or_after_tax_options:
+          before_tax: Before tax
+          after_tax: After tax
+        frequency_options: *frequency_options
+      steps_income_partner_employment_income_form:
         amount: What is their salary or wage?
         before_or_after_tax_options:
           before_tax: Before tax

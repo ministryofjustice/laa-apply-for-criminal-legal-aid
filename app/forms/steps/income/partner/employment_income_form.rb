@@ -1,6 +1,6 @@
 module Steps
   module Income
-    module Client
+    module Partner
       class EmploymentIncomeForm < Steps::BaseFormObject
         attribute :amount, :pence
         attribute :before_or_after_tax, :value_object, source: BeforeOrAfterTax
@@ -17,7 +17,7 @@ module Steps
         end
 
         def self.build(crime_application)
-          payment = crime_application.income_payments.for_client.employment
+          payment = crime_application.income_payments.for_partner.employment
           form = new
 
           if payment
@@ -40,13 +40,13 @@ module Steps
               amount: amount,
               frequency: frequency,
               before_or_after_tax: before_or_after_tax,
-              ownership_type: OwnershipType::APPLICANT.to_s
+              ownership_type: OwnershipType::PARTNER.to_s
             )
           end
         end
 
         def reset!
-          crime_application.income_payments.for_client.employment&.destroy
+          crime_application.income_payments.for_partner.employment&.destroy
         end
       end
     end
