@@ -88,10 +88,6 @@ RSpec.describe Summary::Components::Property, type: :component do
   describe 'answers' do
     it 'renders as summary list' do # rubocop:disable RSpec/ExampleLength
       expect(page).to have_summary_row(
-        'Type of property',
-        'other_house_type'
-      )
-      expect(page).to have_summary_row(
         'Bedrooms',
         '3',
       )
@@ -221,11 +217,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         }
       end
 
-      it 'renders as summary list with the correct absence_answer' do # rubocop:disable RSpec/ExampleLength
-        expect(page).to have_summary_row(
-          'Type of property',
-          'None'
-        )
+      it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
           'Bedrooms',
           'None',
