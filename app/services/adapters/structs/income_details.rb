@@ -39,7 +39,7 @@ module Adapters
             except: [
               :employment_type, :partner_employment_type,
               :dependants, :income_payments, :income_benefits,
-              :employments
+              :employments, :businesses
             ]
           )
         )
