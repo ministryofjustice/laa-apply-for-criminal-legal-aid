@@ -75,7 +75,7 @@ RSpec.describe Steps::Income::Partner::DeductionsController, type: :controller d
     context 'when invalid deduction attributes' do
       before { other.merge!(amount: nil, frequency: nil) }
 
-      it 'redirects not to `employments_summary` page' do
+      it 'does not redirect to the `employments_summary` page' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).not_to redirect_to steps_income_partner_employments_summary_path
         expect(employment.deductions.count).to eq(0)
