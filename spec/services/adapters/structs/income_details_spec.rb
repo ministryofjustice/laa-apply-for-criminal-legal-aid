@@ -7,12 +7,12 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   describe '#employments' do
     it 'returns a employments collection' do
-      # TODO: Need to update schema fixtures to improve the coverage
-      # expect(subject.employments).to all(be_an(Employment))
+      expect(subject.employments).to all(be_an(Employment))
     end
   end
 
   describe '#serializable_hash' do
+    # rubocop:disable RSpec/ExampleLength
     it 'returns a serializable hash, including relationships' do
       expect(subject.serializable_hash).to match(
         a_hash_including(
@@ -28,17 +28,19 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'manage_other_details' => 'Another way they manage',
           'client_has_dependants' => 'yes',
           'has_no_income_benefits' => 'no',
-          'has_no_income_payments' => 'no'
+          'has_no_income_payments' => 'no',
+          'applicant_other_work_benefit_received' => 'no',
+          'applicant_self_assessment_tax_bill' => 'yes',
+          'applicant_self_assessment_tax_bill_amount' => 555_00,
+          'applicant_self_assessment_tax_bill_frequency' => 'fortnight'
         )
       )
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(subject.serializable_hash.keys).to match_array(
         %w[
           employment_status
-          employment_details
           ended_employment_within_three_months
           lost_job_in_custody
           date_job_lost
@@ -52,6 +54,14 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           has_no_income_benefits
           has_no_income_payments
           partner_employment_status
+          applicant_other_work_benefit_received
+          applicant_self_assessment_tax_bill
+          applicant_self_assessment_tax_bill_amount
+          applicant_self_assessment_tax_bill_frequency
+          partner_other_work_benefit_received
+          partner_self_assessment_tax_bill
+          partner_self_assessment_tax_bill_amount
+          partner_self_assessment_tax_bill_frequency
         ]
       )
     end

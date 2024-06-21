@@ -131,7 +131,7 @@ RSpec.describe Steps::Income::DependantsForm do
           allow(subject).to receive(:any_marked_for_destruction?).and_return(true)
         end
 
-        it 'will not run the validations' do
+        it 'does not run the validations' do
           expect(subject).to be_valid
         end
       end

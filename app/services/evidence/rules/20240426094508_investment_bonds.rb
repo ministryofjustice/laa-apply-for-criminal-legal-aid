@@ -6,12 +6,13 @@ module Evidence
       key :capital_investment_bonds_28
       group :capital
 
-      client do |crime_application|
-        crime_application.investments.for_client.where(investment_type: InvestmentType::BOND.value).any?
+      client do |_crime_application, applicant|
+        applicant.joint_investments.bond.any? || applicant.investments.bond.any?
       end
 
-      partner do |crime_application|
-        crime_application.investments.for_partner.where(investment_type: InvestmentType::BOND.value).any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          (partner.joint_investments.bond.any? || partner.investments.bond.any?)
       end
     end
   end

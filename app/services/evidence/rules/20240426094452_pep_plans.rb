@@ -6,12 +6,13 @@ module Evidence
       key :capital_pep_25
       group :capital
 
-      client do |crime_application|
-        crime_application.investments.for_client.where(investment_type: InvestmentType::PEP.value).any?
+      client do |_crime_application, applicant|
+        applicant.joint_investments.pep.any? || applicant.investments.pep.any?
       end
 
-      partner do |crime_application|
-        crime_application.investments.for_partner.where(investment_type: InvestmentType::PEP.value).any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          (partner.joint_investments.pep.any? || partner.investments.pep.any?)
       end
     end
   end

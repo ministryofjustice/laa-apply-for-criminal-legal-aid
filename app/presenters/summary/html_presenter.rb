@@ -29,6 +29,8 @@ module Summary
         income_benefits_details
         dependants
         partner_employment_details
+        partner_income_payments_details
+        partner_income_benefits_details
         other_income_details
         housing_payments
         outgoings_payments_details
@@ -79,6 +81,8 @@ module Summary
         income_payments_details
         income_benefits_details
         dependants
+        partner_income_payments_details
+        partner_income_benefits_details
         partner_employment_details
         other_income_details
       ]

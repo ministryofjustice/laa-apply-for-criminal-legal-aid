@@ -6,12 +6,13 @@ module Evidence
       key :capital_cash_investments_20
       group :capital
 
-      client do |crime_application|
-        crime_application.savings.for_client.where(saving_type: SavingType::OTHER.value).any?
+      client do |_crime_application, applicant|
+        applicant.savings.other.any? || applicant.joint_savings.other.any?
       end
 
-      partner do |crime_application|
-        crime_application.savings.for_partner.where(saving_type: SavingType::OTHER.value).any?
+      partner do |crime_application, partner|
+        MeansStatus.include_partner?(crime_application) &&
+          (partner.savings.other.any? || partner.joint_savings.other.any?)
       end
     end
   end

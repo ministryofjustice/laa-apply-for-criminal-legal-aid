@@ -2,14 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Evidence::Rule do
   let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
+  let(:partner) { instance_double(Partner) }
   let(:income) { instance_double(Income, client_owns_property: 'yes') }
   let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
   let(:capital) { instance_double(Capital, has_premium_bonds: 'yes') }
+  let(:include_partner?) { true }
 
   let(:crime_application) do
     instance_double(
       CrimeApplication,
       applicant:,
+      partner:,
       income:,
       outgoings:,
       capital:,
@@ -39,6 +42,8 @@ RSpec.describe Evidence::Rule do
   end
 
   before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+
     stub_const('OffsideRule', offside_rule)
     stub_const('BarebonesRule', barebones_rule)
 
@@ -194,11 +199,11 @@ RSpec.describe Evidence::Rule do
     end
   end
 
-  describe 'predicates' do
+  describe 'predicates' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     let(:example_rule1) { Evidence::Rules::ExampleRule1.new(crime_application) }
     let(:example_bad) { Evidence::Rules::BadRuleDefinition.new(crime_application) }
 
-    context 'when defined' do
+    context 'when defined' do # rubocop:disable RSpec/MultipleMemoizedHelpers
       it 'evaluates the predicate', :aggregate_failures do
         expect(example_rule1.client_predicate).to be true
         expect(example_rule1.partner_predicate).to be true
@@ -206,7 +211,7 @@ RSpec.describe Evidence::Rule do
       end
     end
 
-    context 'when not defined' do
+    context 'when not defined' do # rubocop:disable RSpec/MultipleMemoizedHelpers
       it 'evaluates to false', :aggregate_failures do
         offside_rule = OffsideRule.new(crime_application)
 
@@ -221,7 +226,7 @@ RSpec.describe Evidence::Rule do
       end
     end
 
-    context 'when predicate evaluates to anything except true or false' do
+    context 'when predicate evaluates to anything except true or false' do # rubocop:disable RSpec/MultipleMemoizedHelpers
       it 'raises error', :aggregate_failures do
         expect { example_bad.client_predicate }.to raise_exception Errors::UnsupportedPredicate
         expect { example_bad.partner_predicate }.to raise_exception Errors::UnsupportedPredicate

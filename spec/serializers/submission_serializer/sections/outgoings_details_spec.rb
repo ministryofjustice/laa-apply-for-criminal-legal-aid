@@ -15,8 +15,7 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
       pays_council_tax: 'yes',
       has_no_other_outgoings: nil,
       how_manage: 'A description of how they manage',
-      outgoings_payments: outgoings_payments,
-      applicant_self_assessment_tax_bill: nil
+      outgoings_payments: outgoings_payments
     )
   end
 
@@ -51,12 +50,14 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
             payment_type: 'council_tax',
             amount: 14_744,
             frequency: 'month',
+            ownership_type: 'applicant',
             metadata: {},
           },
           {
             payment_type: 'mortgage',
             amount: 3_292_900,
             frequency: 'annual',
+            ownership_type: 'applicant',
             metadata: {},
           }
         ],
@@ -66,8 +67,7 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
           outgoings_more_than_income: 'yes',
           how_manage: 'A description of how they manage',
           pays_council_tax: 'yes',
-          has_no_other_outgoings: nil,
-          applicant_self_assessment_tax_bill: nil
+          has_no_other_outgoings: nil
       }.as_json
     end
 

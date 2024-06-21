@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_115219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
     t.string "lookup_id"
     t.index ["person_id"], name: "index_addresses_on_person_id"
     t.index ["type", "person_id"], name: "index_addresses_on_type_and_person_id", unique: true
+  end
+
+  create_table "businesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.string "business_type", null: false
+    t.string "ownership_type", default: "applicant", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "index_businesses_on_crime_application_id"
   end
 
   create_table "capitals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -204,6 +213,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
     t.string "partner_has_no_income_payments"
     t.string "partner_has_no_income_benefits"
     t.string "applicant_other_work_benefit_received"
+    t.string "applicant_self_assessment_tax_bill"
+    t.bigint "applicant_self_assessment_tax_bill_amount"
+    t.string "applicant_self_assessment_tax_bill_frequency"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 
@@ -268,7 +280,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
     t.string "pays_council_tax"
     t.string "has_no_other_outgoings"
     t.string "partner_income_tax_rate_above_threshold"
-    t.string "applicant_self_assessment_tax_bill"
     t.index ["crime_application_id"], name: "index_outgoings_on_crime_application_id", unique: true
   end
 
@@ -296,7 +307,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "ownership_type", default: "applicant"
-    t.index ["crime_application_id", "type", "payment_type"], name: "index_payments_crime_application_id_and_payment_type", unique: true
+    t.index ["crime_application_id", "type", "payment_type", "ownership_type"], name: "index_payments_unique_payment_type", unique: true
     t.index ["crime_application_id"], name: "index_payments_on_crime_application_id"
   end
 
@@ -393,6 +404,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_154545) do
   end
 
   add_foreign_key "addresses", "people"
+  add_foreign_key "businesses", "crime_applications"
   add_foreign_key "capitals", "crime_applications"
   add_foreign_key "cases", "crime_applications"
   add_foreign_key "charges", "cases"

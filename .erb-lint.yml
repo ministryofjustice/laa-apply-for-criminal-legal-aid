@@ -42,3 +42,5 @@ linters:
         Enabled: false
       Lint/UselessAssignment:
         Enabled: false
+      Style/SingleLineDoEndBlock:
+        Enabled: false

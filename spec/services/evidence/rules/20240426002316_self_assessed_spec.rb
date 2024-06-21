@@ -6,10 +6,17 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   let(:crime_application) do
     CrimeApplication.create!(
       outgoings:,
+      income:,
     )
   end
 
   let(:outgoings) { Outgoings.new }
+  let(:income) { Income.new }
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+  end
 
   it { expect(described_class.key).to eq :income_p60_sa302_2 }
   it { expect(described_class.group).to eq :income }
@@ -30,10 +37,50 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
       it { is_expected.to be false }
     end
+
+    context 'when applicant has paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when applicant has not paid a self assessment tax bill' do
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'no') }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    before do
+      outgoings.partner_income_tax_rate_above_threshold = above_threshold
+    end
+
+    context 'when high tax earner' do
+      let(:above_threshold) { 'yes' }
+
+      it { is_expected.to be true }
+
+      context 'when partner is not included in means assessment' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when not high tax earner' do
+      let(:above_threshold) { 'no' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when we do not know if high tax earner' do
+      let(:above_threshold) { nil }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -41,7 +88,12 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   end
 
   describe '#to_h' do
-    let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'yes') }
+    let(:outgoings) do
+      Outgoings.new(
+        income_tax_rate_above_threshold: 'yes',
+        partner_income_tax_rate_above_threshold: 'yes'
+      )
+    end
 
     let(:expected_hash) do
       {
@@ -55,8 +107,8 @@ RSpec.describe Evidence::Rules::SelfAssessed do
             prompt: ['either their P60 or their Self Assessment tax calculation (SA302)'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['either their P60 or their Self Assessment tax calculation (SA302)'],
           },
           other: {
             result: false,
