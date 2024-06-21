@@ -26,19 +26,6 @@ module Adapters
           Employment.new(**attrs)
         end
       end
-
-      def partner_employments
-        return [] unless __getobj__
-
-        super.map do |attrs|
-          if attrs.respond_to?(:deductions)
-            attrs.deductions.map! do |po|
-              Deduction.new(**po)
-            end
-          end
-          Employment.new(**attrs)
-        end
-      end
       # :nocov:
 
       # TODO: remove businesses exclusion once businesses added
