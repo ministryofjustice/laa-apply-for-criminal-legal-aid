@@ -23,6 +23,9 @@
 
     <%= render @presenter.partner_income_sections %>
 
+    <!-- For both client and partner's -->
+    <%= render @presenter.other_income_sections %>
+
     <%= step_form @form_object do |f| %>
       <%= f.continue_button %>
     <% end %>

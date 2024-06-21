@@ -82,7 +82,6 @@ module Summary
         income_payments_details
         income_benefits_details
         dependants
-        other_income_details
       ],
       partner_income: %i[
         partner_employment_details
@@ -91,6 +90,9 @@ module Summary
         partner_work_benefits
         partner_income_payments_details
         partner_income_benefits_details
+      ],
+      other_income: %i[
+        other_income_details
       ]
     }.freeze
 
@@ -108,6 +110,10 @@ module Summary
 
     def partner_income_sections
       build_sections(:partner_income)
+    end
+
+    def other_income_sections
+      build_sections(:other_income)
     end
 
     def outgoings_sections
