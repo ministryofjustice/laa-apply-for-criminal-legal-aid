@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe SectionsCompletenessValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
-  let(:record) { instance_double(CrimeApplication, errors:) }
+  let(:record) { instance_double(CrimeApplication, errors:, means_passport:) }
   let(:errors) { double(:errors, empty?: false) }
+  let(:means_passport) { [] }
 
   describe '#validate' do
     before { allow(record).to receive_messages(**attributes) }
