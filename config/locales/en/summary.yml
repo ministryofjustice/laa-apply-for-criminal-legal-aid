@@ -740,6 +740,9 @@ en:
       # END national_savings_certificates
 
       # BEGIN property, address and owners
+      house_type:
+        question: Type of property
+        absence_answer: *absence_none
       bedrooms:
         question: Bedrooms
         absence_answer: *absence_none
