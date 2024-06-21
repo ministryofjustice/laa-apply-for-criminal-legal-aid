@@ -1,31 +1,32 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
+RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
   # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
     {
       crime_application:,
-      applicant_other_work_benefit_received:,
+      partner_other_work_benefit_received:,
       amount:,
     }
   end
 
   let(:crime_application) { CrimeApplication.new }
   let(:income) { Income.new(crime_application:) }
-  let(:income_payment) {
+  let(:partner_income_payment) {
     IncomePayment.new(crime_application: crime_application,
-                      payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
+                      payment_type: IncomePaymentType::WORK_BENEFITS.to_s,
+                      ownership_type: OwnershipType::PARTNER.to_s)
   }
 
-  let(:applicant_other_work_benefit_received) { nil }
+  let(:partner_other_work_benefit_received) { nil }
   let(:amount) { nil }
 
   before do
     allow(crime_application.income_payments).to receive_message_chain(
-      :for_client, :work_benefits
-    ).and_return(income_payment)
+      :for_partner, :work_benefits
+    ).and_return(partner_income_payment)
   end
 
   describe '#build' do
@@ -34,20 +35,21 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
     let(:existing_income_payment) {
       IncomePayment.new(crime_application: crime_application,
                         payment_type: IncomePaymentType::WORK_BENEFITS.to_s,
+                        ownership_type: OwnershipType::PARTNER.to_s,
                         amount: 150,
                         frequency: PaymentFrequencyType::ANNUALLY.to_s)
     }
 
     before do
       allow(crime_application.income_payments).to receive_message_chain(
-        :for_client, :work_benefits
+        :for_partner, :work_benefits
       ).and_return(existing_income_payment)
-      income.applicant_other_work_benefit_received = 'yes'
+      income.partner_other_work_benefit_received = 'yes'
     end
 
     it 'sets the form attributes from the model' do
       expect(form.amount).to eq Money.new(150)
-      expect(form.applicant_other_work_benefit_received).to eq(YesNoAnswer::YES)
+      expect(form.partner_other_work_benefit_received).to eq(YesNoAnswer::YES)
     end
   end
 
@@ -57,8 +59,8 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
       allow(crime_application).to receive(:income).and_return(income)
     end
 
-    context 'when `applicant_other_work_benefit_received` is not provided' do
-      let(:applicant_other_work_benefit_received) { nil }
+    context 'when `partner_other_work_benefit_received` is not provided' do
+      let(:partner_other_work_benefit_received) { nil }
 
       it 'returns false' do
         expect(form.save).to be(false)
@@ -66,12 +68,12 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:applicant_other_work_benefit_received, :inclusion)).to be(true)
+        expect(form.errors.of_kind?(:partner_other_work_benefit_received, :inclusion)).to be(true)
       end
     end
 
-    context 'when `applicant_other_work_benefit_received` is `Yes`' do
-      let(:applicant_other_work_benefit_received) { YesNoAnswer::YES.to_s }
+    context 'when `partner_other_work_benefit_received` is `Yes`' do
+      let(:partner_other_work_benefit_received) { YesNoAnswer::YES.to_s }
 
       context 'when `amount` is not provided' do
         it 'returns false' do
@@ -98,7 +100,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
             payment_type: :work_benefits,
             amount: Money.new(200_00),
             frequency: PaymentFrequencyType::ANNUALLY,
-            ownership_type: OwnershipType::APPLICANT.to_s
+            ownership_type: OwnershipType::PARTNER.to_s,
           )
 
           form.save
@@ -106,8 +108,8 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
       end
     end
 
-    context 'when `applicant_other_work_benefit_received` is `No`' do
-      let(:applicant_other_work_benefit_received) { YesNoAnswer::NO.to_s }
+    context 'when `partner_other_work_benefit_received` is `No`' do
+      let(:partner_other_work_benefit_received) { YesNoAnswer::NO.to_s }
 
       context 'when `amount` is not provided' do
         it 'passes validation' do
@@ -119,7 +121,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
         let(:existing_income_payment) {
           IncomePayment.new(crime_application: crime_application,
                             payment_type: IncomePaymentType::WORK_BENEFITS.to_s,
-                            ownership_type: OwnershipType::APPLICANT.to_s,
+                            ownership_type: OwnershipType::PARTNER.to_s,
                             amount: 150,
                             frequency: PaymentFrequencyType::ANNUALLY.to_s)
         }

@@ -644,26 +644,7 @@ en:
           income_tax: Income Tax
           national_insurance: National Insurance
           other: Other deductions
-          none: The client does not have deductions taken from their pay
-        deduction_attributes:
-          amount: What is their salary or wage?
-        income_tax:
-          amount: *amount_label
-          frequency_options: *frequency_options
-        national_insurance:
-          amount: *amount_label
-          frequency_options: *frequency_options
-        other:
-          amount: Enter total amount of all other deductions
-          frequency_options: *frequency_options
-          details: Enter details of other deductions
-      steps_income_partner_deductions_form:
-        #deductions: Select all that apply.
-        types_options:
-          income_tax: Income Tax
-          national_insurance: National Insurance
-          other: Other deductions
-          none: The client does not have deductions taken from their pay
+          none: The partner does not have deductions taken from their pay
         deduction_attributes:
           amount: What is their salary or wage?
         income_tax:
@@ -690,6 +671,9 @@ en:
         add_partner_employment_options: *YESNO
       steps_income_client_other_work_benefits_form:
         applicant_other_work_benefit_received_options: *YESNO
+        amount: How much is the total yearly value?
+      steps_income_partner_other_work_benefits_form:
+        partner_other_work_benefit_received_options: *YESNO
         amount: How much is the total yearly value?
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody_options: *YESNO

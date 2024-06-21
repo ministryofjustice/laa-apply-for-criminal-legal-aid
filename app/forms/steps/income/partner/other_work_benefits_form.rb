@@ -1,20 +1,20 @@
 module Steps
   module Income
-    module Client
+    module Partner
       class OtherWorkBenefitsForm < Steps::BaseFormObject
-        attribute :applicant_other_work_benefit_received, :value_object, source: YesNoAnswer
+        attribute :partner_other_work_benefit_received, :value_object, source: YesNoAnswer
         attribute :amount, :pence
         attribute :frequency, :value_object, source: PaymentFrequencyType
 
-        validates :applicant_other_work_benefit_received, inclusion: { in: YesNoAnswer.values }
+        validates :partner_other_work_benefit_received, inclusion: { in: YesNoAnswer.values }
         validates :amount, numericality: { greater_than: 0 }, if: -> { receives_other_work_benefit? }
 
         def self.build(crime_application)
-          payment = crime_application.income_payments.for_client.work_benefits
+          payment = crime_application.income_payments.for_partner.work_benefits
           income = crime_application.income
           form = new
 
-          form.applicant_other_work_benefit_received = income.applicant_other_work_benefit_received if income
+          form.partner_other_work_benefit_received = income.partner_other_work_benefit_received if income
           form.amount = payment.amount if payment
 
           form
@@ -23,7 +23,7 @@ module Steps
         private
 
         def receives_other_work_benefit?
-          applicant_other_work_benefit_received&.yes?
+          partner_other_work_benefit_received&.yes?
         end
 
         def persist!
@@ -35,7 +35,7 @@ module Steps
                 payment_type: IncomePaymentType::WORK_BENEFITS.value,
                 amount: amount,
                 frequency: PaymentFrequencyType::ANNUALLY,
-                ownership_type: OwnershipType::APPLICANT.to_s
+                ownership_type: OwnershipType::PARTNER.to_s
               )
             end
 
@@ -45,12 +45,12 @@ module Steps
 
         def update_income_attribute!
           crime_application.income.update(
-            applicant_other_work_benefit_received:,
+            partner_other_work_benefit_received:,
           )
         end
 
         def reset!
-          crime_application.income_payments.for_client.work_benefits&.destroy
+          crime_application.income_payments.for_partner.work_benefits&.destroy
         end
       end
     end
