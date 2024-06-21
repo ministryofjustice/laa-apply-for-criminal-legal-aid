@@ -623,15 +623,29 @@ subject: 'partner')
       end
     end
 
-    context 'when client does have dependants' do
+    context 'when client does have dependants and no stored dependants' do
+      let(:dependants_double) { double('dependants_collection', empty?: true) }
+
       before do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
       end
 
       it 'creates a blank dependant record and redirects to the dependants page' do
-        expect(
-          dependants_double
-        ).to receive(:create!).at_least(:once)
+        expect(dependants_double).to receive(:create!).at_least(:once)
+
+        expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+      end
+    end
+
+    context 'when client does have dependants and has stored dependants' do
+      let(:dependants_double) { double('dependants_collection', empty?: false) }
+
+      before do
+        allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+      end
+
+      it 'does not create a blank dependant record and redirects to the dependants page' do
+        expect(dependants_double).not_to receive(:create!).at_least(:once)
 
         expect(subject).to have_destination(:dependants, :edit, id: crime_application)
       end
