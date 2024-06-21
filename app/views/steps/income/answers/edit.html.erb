@@ -15,9 +15,14 @@
       <%=t '.heading' %>
     </h1>
 
-    <h1 class="govuk-heading-l"><%= t('.subheading') %></h1>
+    <h1 class="govuk-heading-l"><%= t('.subheading.client') %></h1>
 
     <%= render @presenter.income_sections %>
+
+    <h1 class="govuk-heading-l"><%= t('.subheading.partner') %></h1>
+
+    <%= render @presenter.partner_income_sections %>
+
     <%= step_form @form_object do |f| %>
       <%= f.continue_button %>
     <% end %>

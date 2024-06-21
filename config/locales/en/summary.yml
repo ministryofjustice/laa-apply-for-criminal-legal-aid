@@ -120,8 +120,10 @@ en:
       partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
       client_employments: Jobs
+      partner_employments: Jobs
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
+      partner_self_assessment_tax_bill: Self Assessment tax
       work_benefits: Other work benefits
       employment_income: Pay from employment
 
@@ -861,7 +863,14 @@ en:
       self_assessment_tax_bill:
         question: Does the client pay a Self Assessment tax bill?
         answers: *YESNO
+      partner_self_assessment_tax_bill:
+        question: Does the partner pay a Self Assessment tax bill?
+        answers: *YESNO
       self_assessment_tax_bill_payment:
+        question: Amount
+        answers:
+          description: *payment_answer_format
+      partner_self_assessment_tax_bill_payment:
         question: Amount
         answers:
           description: *payment_answer_format

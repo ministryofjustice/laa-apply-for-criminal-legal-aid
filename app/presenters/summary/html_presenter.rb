@@ -23,6 +23,7 @@ module Summary
         employment_income
         income_details
         client_employments
+        partner_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details
@@ -85,6 +86,12 @@ module Summary
         partner_income_benefits_details
         partner_employment_details
         other_income_details
+      ],
+      partner_income: %i[
+        partner_employment_details
+        partner_employments
+        partner_self_assessment_tax_bill
+        work_benefits
       ]
     }.freeze
 
@@ -98,6 +105,10 @@ module Summary
 
     def income_sections
       build_sections(:income)
+    end
+
+    def partner_income_sections
+      build_sections(:partner_income)
     end
 
     def outgoings_sections
