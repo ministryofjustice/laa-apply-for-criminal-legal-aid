@@ -10,14 +10,14 @@ module Summary
       def answers # rubocop:disable Metrics/MethodLength
         answers = [
           Components::ValueAnswer.new(
-            :self_assessment_tax_bill, income.partner_self_assessment_tax_bill,
+            :partner_self_assessment_tax_bill, income.partner_self_assessment_tax_bill,
             change_path: edit_steps_income_partner_self_assessment_tax_bill_path
           )
         ]
 
         if income.partner_self_assessment_tax_bill == YesNoAnswer::YES.to_s
           answers << Components::PaymentAnswer.new(
-            :self_assessment_tax_bill_payment, self_assessment_tax_bill_payment,
+            :partner_self_assessment_tax_bill_payment, self_assessment_tax_bill_payment,
             change_path: edit_steps_income_partner_self_assessment_tax_bill_path
           )
         end
