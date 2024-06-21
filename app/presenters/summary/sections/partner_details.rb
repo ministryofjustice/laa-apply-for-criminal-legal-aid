@@ -4,7 +4,7 @@ module Summary
       def show?
         return false unless FeatureFlags.partner_journey.enabled?
 
-        partner.present? && client.present? && super
+        partner&.first_name.present? && client.present? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
