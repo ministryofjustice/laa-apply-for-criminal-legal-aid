@@ -1,6 +1,6 @@
 module Decisions
   class IncomeDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch, Metrics/PerceivedComplexity
     #
     include TypeOfMeansAssessment
 
@@ -10,12 +10,20 @@ module Decisions
         after_employment_status
       when :client_employer_details
         after_client_employer_details
+      when :partner_employer_details
+        after_partner_employer_details
       when :client_employment_details
         after_client_employment_details
+      when :partner_employment_details
+        after_partner_employment_details
       when :client_deductions
         after_client_deductions
-      when :employments_summary
-        after_employments_summary
+      when :partner_deductions
+        after_partner_deductions
+      when :client_employments_summary
+        after_client_employments_summary
+      when :partner_employments_summary
+        after_partner_employments_summary
       when :lost_job_in_custody
         edit(:income_before_tax)
       when :income_before_tax
@@ -28,10 +36,16 @@ module Decisions
         after_has_savings
       when :client_employment_income
         edit('/steps/income/income_payments')
+      when :partner_employment_income
+        edit('/steps/income/income_payments_partner')
       when :client_self_assessment_tax_bill
+        edit(:other_work_benefits)
+      when :partner_self_assessment_tax_bill
         edit(:other_work_benefits)
       when :client_other_work_benefits
         edit('/steps/income/income_payments')
+      when :partner_other_work_benefits
+        edit('/steps/income/income_payments_partner')
       when :income_payments
         edit(:income_benefits)
       when :income_benefits
@@ -66,23 +80,38 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize, Lint/DuplicateBranch, Metrics/PerceivedComplexity
 
     private
 
-    def employment
-      @employment ||= if incomplete_employments.empty?
-                        current_crime_application.employments.create!
-                      else
-                        incomplete_employments.first
-                      end
+    def client_employment
+      @client_employment ||= if incomplete_client_employments.empty?
+                               current_crime_application.client_employments.create!
+                             else
+                               incomplete_client_employments.first
+                             end
     end
 
-    def after_employments_summary
-      return edit(:self_assessment_tax_bill) if form_object.add_client_employment.no?
+    def partner_employment
+      @partner_employment ||= if incomplete_partner_employments.empty?
+                                current_crime_application.partner_employments.create!
+                              else
+                                incomplete_partner_employments.first
+                              end
+    end
 
-      employment = current_crime_application.employments.create!
+    def after_client_employments_summary
+      return edit('/steps/income/client/self_assessment_tax_bill') if form_object.add_client_employment.no?
+
+      employment = current_crime_application.client_employments.create!
       redirect_to_employer_details(employment)
+    end
+
+    def after_partner_employments_summary
+      return edit('/steps/income/partner/self_assessment_tax_bill') if form_object.add_partner_employment.no?
+
+      employment = current_crime_application.partner_employments.create!
+      redirect_to_partner_employer_details(employment)
     end
 
     def previous_step_path
@@ -98,24 +127,15 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        return show(:employed_exit) unless FeatureFlags.employment_journey.enabled?
-
-        start_employment_journey
+        start_client_employment_journey
       end
     end
 
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
-      elsif self_employed?(form_object.partner_employment_status)
-        if FeatureFlags.self_employed_journey.enabled?
-          edit('/steps/income/business_type', subject: 'partner')
-        else
-          show(:self_employed_exit)
-        end
       else
-        # TODO: implement employed partner journey
-        show(:employed_exit)
+        start_partner_employment_journey
       end
     end
 
@@ -128,10 +148,14 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_employment_journey
+    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        edit(:income_before_tax)
+        if FeatureFlags.employment_journey.enabled?
+          edit(:income_before_tax)
+        else
+          show(:employed_exit)
+        end
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
           edit('/steps/income/business_type', subject: 'client')
@@ -139,7 +163,34 @@ module Decisions
           show(:self_employed_exit)
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        redirect_to_employer_details(employment)
+        if FeatureFlags.self_employed_journey.enabled?
+          redirect_to_employer_details(client_employment)
+        else
+          show(:employed_exit)
+        end
+      end
+    end
+
+    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      case form_object.partner_employment_status
+      when [EmploymentStatus::EMPLOYED.to_s]
+        if FeatureFlags.employment_journey.enabled?
+          edit('/steps/income/partner/employment_income')
+        else
+          show(:employed_exit)
+        end
+      when [EmploymentStatus::SELF_EMPLOYED.to_s]
+        if FeatureFlags.self_employed_journey.enabled?
+          edit('/steps/income/business_type', subject: 'partner')
+        else
+          show(:self_employed_exit)
+        end
+      when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        if FeatureFlags.self_employed_journey.enabled?
+          redirect_to_partner_employer_details(partner_employment)
+        else
+          show(:self_employed_exit)
+        end
       end
     end
 
@@ -147,11 +198,15 @@ module Decisions
       edit('/steps/income/client/employer_details', employment_id: employment)
     end
 
+    def redirect_to_partner_employer_details(employment)
+      edit('/steps/income/partner/employer_details', employment_id: employment)
+    end
+
     def after_income_before_tax
       if income_below_threshold?
         edit(:frozen_income_savings_assets)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details(employment)
+        redirect_to_employer_details(client_employment)
       else
         edit(:income_payments)
       end
@@ -159,7 +214,7 @@ module Decisions
 
     def after_frozen_income_savings_assets
       if has_frozen_assets?
-        employed? ? redirect_to_employer_details(employment) : edit(:income_payments)
+        employed? ? redirect_to_employer_details(client_employment) : edit(:income_payments)
       elsif summary_only? || committal?
         employed? ? edit('/steps/income/client/employment_income') : edit(:income_payments)
       else
@@ -171,7 +226,7 @@ module Decisions
       return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
       if requires_full_means_assessment?
-        redirect_to_employer_details(employment)
+        redirect_to_employer_details(client_employment)
       else
         edit('/steps/income/client/employment_income')
       end
@@ -181,7 +236,7 @@ module Decisions
       if no_property?
         edit(:has_savings)
       elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details(employment)
+        redirect_to_employer_details(client_employment)
       else
         edit(:income_payments)
       end
@@ -197,7 +252,7 @@ module Decisions
 
     def after_client_has_dependants
       if form_object.client_has_dependants.yes?
-        edit_dependants(add_blank: true)
+        edit_dependants(add_blank: crime_application.dependants.none?)
       else
         determine_showing_no_income_page
       end
@@ -220,8 +275,12 @@ module Decisions
       end
     end
 
-    def incomplete_employments
-      crime_application.employments.reject(&:complete?)
+    def incomplete_client_employments
+      crime_application.client_employments.reject(&:complete?)
+    end
+
+    def incomplete_partner_employments
+      crime_application.partner_employments.reject(&:complete?)
     end
 
     def employed?
@@ -233,9 +292,12 @@ module Decisions
       employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
 
+    # :nocov:
+    # currently handling complex employment logic jump via case statement
     def self_employed?(employment_status)
       employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
     end
+    # :nocov:
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?
@@ -261,12 +323,24 @@ module Decisions
       edit('steps/income/client/employment_details', employment_id: form_object.record.id)
     end
 
+    def after_partner_employer_details
+      edit('steps/income/partner/employment_details', employment_id: form_object.record.id)
+    end
+
     def after_client_employment_details
       edit('/steps/income/client/deductions', employment_id: form_object.record.id)
     end
 
+    def after_partner_employment_details
+      edit('/steps/income/partner/deductions', employment_id: form_object.record.id)
+    end
+
     def after_client_deductions
       edit('/steps/income/client/employments_summary')
+    end
+
+    def after_partner_deductions
+      edit('/steps/income/partner/employments_summary')
     end
   end
 end

@@ -119,7 +119,7 @@ en:
       trust_fund: 'Trust funds: client'
       partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
-      employments: Jobs
+      client_employments: Jobs
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
       work_benefits: Other work benefits
@@ -740,6 +740,9 @@ en:
       # END national_savings_certificates
 
       # BEGIN property, address and owners
+      house_type:
+        question: Type of property
+        absence_answer: *absence_none
       bedrooms:
         question: Bedrooms
         absence_answer: *absence_none

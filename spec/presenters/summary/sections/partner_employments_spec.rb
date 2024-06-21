@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-describe Summary::Sections::Employments do
+describe Summary::Sections::PartnerEmployments do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      employments: records,
+      partner_employments: records,
       in_progress?: true,
       to_param: 12_345
     )
   end
 
-  let(:records) { [Employment.new] }
+  let(:records) { [Employment.new(ownership_type: OwnershipType::PARTNER.to_s)] }
 
   describe '#list?' do
     context 'when there are employments' do

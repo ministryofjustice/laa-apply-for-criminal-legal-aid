@@ -10,7 +10,8 @@ describe Summary::HtmlPresenter do
   # rubocop:disable Layout/LineLength
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'), partner: (double Partner), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
+      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
+      partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no',
                       has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil),
@@ -186,7 +187,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            Employments
+            ClientEmployments
             Dependants
             PartnerEmploymentDetails
             SelfAssessmentTaxBill
@@ -235,7 +236,7 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            Employments
+            ClientEmployments
             PartnerEmploymentDetails
             SelfAssessmentTaxBill
             WorkBenefits
@@ -377,7 +378,7 @@ describe Summary::HtmlPresenter do
     expected_sections = %w[
       EmploymentDetails
       IncomeDetails
-      Employments
+      ClientEmployments
       SelfAssessmentTaxBill
       IncomePaymentsDetails
       IncomeBenefitsDetails

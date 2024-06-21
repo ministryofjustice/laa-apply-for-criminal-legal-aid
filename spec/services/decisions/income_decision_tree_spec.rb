@@ -10,20 +10,30 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      employments: employments_double,
+      client_employments: employments_double,
+      partner_employments: partner_employments_double,
       kase: kase,
       partner_detail: partner_detail,
       partner: nil
     )
   end
 
-  let(:employment_double) { instance_double(Employment, id: 'uuid') }
+  let(:employment_double) {
+    instance_double(Employment, id: 'uuid1', ownership_type: OwnershipType::APPLICANT.to_s)
+  }
+  let(:partner_employment_double) {
+    instance_double(Employment, id: 'uuid2', ownership_type: OwnershipType::PARTNER.to_s)
+  }
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) { double('employments_collection', create!: true, reject: income_employments) }
+  let(:partner_employments_double) {
+    double('partner_employments_collection', create!: true, reject: partner_income_employments)
+  }
   let(:kase) { instance_double(Case, case_type:) }
   let(:income_employments) { [employment_double] }
+  let(:partner_income_employments) { [partner_employment_double] }
 
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
@@ -89,8 +99,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application,
-subject: 'client')
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: 'client')
         end
       end
 
@@ -114,6 +126,7 @@ subject: 'client')
 
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
+        let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the `employer_details` page' do
           expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
@@ -183,12 +196,24 @@ subject: 'client')
         allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
       end
 
-      it 'redirects to the `employed_exit` page' do
-        expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+
+        it 'redirects to the `partner/employment_income` page' do
+          expect(subject).to have_destination('/steps/income/partner/employment_income', :edit, id: crime_application)
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
+        end
       end
     end
 
-    context 'when status selected is self-employed option' do
+    context 'when partner_employment_status selected is self-employed option' do
       let(:partner_employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
 
       before do
@@ -199,8 +224,10 @@ subject: 'client')
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type', :edit, id: crime_application,
-subject: 'partner')
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: 'partner')
         end
       end
 
@@ -208,6 +235,51 @@ subject: 'partner')
         let(:feature_flag_self_employed_journey_enabled) { false }
 
         it 'redirects to the `employed_exit` page' do
+          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
+        end
+      end
+    end
+
+    context 'when partner_employment_status selected is both employed and self_employed options' do
+      let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+      before do
+        allow(form_object).to receive(:partner_employment_status).and_return(
+          [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
+        )
+      end
+
+      context 'feature flag `employment_journey` is enabled' do
+        let(:feature_flag_employment_journey_enabled) { true }
+        let(:feature_flag_self_employed_journey_enabled) { true }
+
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+        end
+
+        context 'with incomplete employments' do
+          let(:partner_income_employments) { [partner_employment_double] }
+
+          it 'redirects to the `partner_employer_details` page' do
+            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+            expect(partner_employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with no incomplete employments' do
+          let(:partner_income_employments) { [] }
+
+          it 'redirects to the `partner_employer_details` page' do
+            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+            expect(partner_employments_double).to have_received(:create!)
+          end
+        end
+      end
+
+      context 'feature flag `employment_journey` is disabled' do
+        let(:feature_flag_employment_journey_enabled) { false }
+
+        it 'redirects to the `self_employed_exit` page' do
           expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
@@ -250,60 +322,128 @@ subject: 'partner')
     end
   end
 
-  context 'when the step is `client_employer_details`' do
-    let(:form_object) do
-      double('FormObject', record: employment_double)
-    end
-    let(:step_name) { :client_employer_details }
+  context 'client employment`' do
+    context 'when the step is `client_employer_details`' do
+      let(:form_object) do
+        double('FormObject', record: employment_double)
+      end
+      let(:step_name) { :client_employer_details }
 
-    it 'redirects to `client_employer_details` page' do
-      expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
-    end
-  end
-
-  context 'when the step is `client_employment_details`' do
-    let(:form_object) do
-      double('FormObject', record: employment_double)
-    end
-    let(:step_name) { :client_employment_details }
-
-    it 'redirects to `client deductions` page' do
-      expect(subject).to have_destination('/steps/income/client/deductions', :edit, id: crime_application)
-    end
-  end
-
-  context 'when the step is `client_deductions`' do
-    let(:form_object) do
-      double('FormObject', record: employment_double)
-    end
-    let(:step_name) { :client_deductions }
-
-    it 'redirects to `employments_summary` page' do
-      expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
-    end
-  end
-
-  context 'when the step is `employments_summary`' do
-    let(:form_object) { double('FormObject', record: employment_double) }
-    let(:step_name) { :employments_summary }
-
-    before do
-      allow(form_object).to receive_messages(crime_application:, add_client_employment:)
-    end
-
-    context 'the client has selected yes to adding an employment' do
-      let(:add_client_employment) { YesNoAnswer::YES }
-
-      it 'redirects to the edit `employer_details` page' do
-        expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+      it 'redirects to `client_employer_details` page' do
+        expect(subject).to have_destination('steps/income/client/employment_details', :edit, id: crime_application)
       end
     end
 
-    context 'the client has selected no to adding an employment' do
-      let(:add_client_employment) { YesNoAnswer::NO }
+    context 'when the step is `client_employment_details`' do
+      let(:form_object) do
+        double('FormObject', record: employment_double)
+      end
+      let(:step_name) { :client_employment_details }
 
-      it 'redirects to self_assessment_tax_bill page' do
-        expect(subject).to have_destination(:self_assessment_tax_bill, :edit, id: crime_application)
+      it 'redirects to `client deductions` page' do
+        expect(subject).to have_destination('/steps/income/client/deductions', :edit, id: crime_application)
+      end
+    end
+
+    context 'when the step is `client_deductions`' do
+      let(:form_object) do
+        double('FormObject', record: employment_double)
+      end
+      let(:step_name) { :client_deductions }
+
+      it 'redirects to `client employments_summary` page' do
+        expect(subject).to have_destination('/steps/income/client/employments_summary', :edit, id: crime_application)
+      end
+    end
+
+    context 'when the step is `client_employments_summary`' do
+      let(:form_object) { double('FormObject', record: employment_double) }
+      let(:step_name) { :client_employments_summary }
+
+      before do
+        allow(form_object).to receive_messages(crime_application:, add_client_employment:)
+      end
+
+      context 'the client has selected yes to adding an employment' do
+        let(:add_client_employment) { YesNoAnswer::YES }
+
+        it 'redirects to the edit `client_employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        end
+      end
+
+      context 'the client has selected no to adding an employment' do
+        let(:add_client_employment) { YesNoAnswer::NO }
+
+        it 'redirects to client self_assessment_tax_bill page' do
+          expect(subject).to have_destination(
+            '/steps/income/client/self_assessment_tax_bill', :edit, id: crime_application
+          )
+        end
+      end
+    end
+  end
+
+  context 'partner employment`' do
+    context 'when the step is `partner_employer_details`' do
+      let(:form_object) do
+        double('FormObject', record: partner_employment_double)
+      end
+      let(:step_name) { :partner_employer_details }
+
+      it 'redirects to `partner_employer_details` page' do
+        expect(subject).to have_destination(
+          'steps/income/partner/employment_details', :edit, id: crime_application
+        )
+      end
+    end
+
+    context 'when the step is `partner_employment_details`' do
+      let(:form_object) do
+        double('FormObject', record: partner_employment_double)
+      end
+      let(:step_name) { :partner_employment_details }
+
+      it 'redirects to `partner deductions` page' do
+        expect(subject).to have_destination('/steps/income/partner/deductions', :edit, id: crime_application)
+      end
+    end
+
+    context 'when the step is `partner_deductions`' do
+      let(:form_object) do
+        double('FormObject', record: partner_employment_double)
+      end
+      let(:step_name) { :partner_deductions }
+
+      it 'redirects to `partner employments_summary` page' do
+        expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit, id: crime_application)
+      end
+    end
+
+    context 'when the step is `partner_employments_summary`' do
+      let(:form_object) { double('FormObject', record: partner_employment_double) }
+      let(:step_name) { :partner_employments_summary }
+
+      before do
+        allow(form_object).to receive_messages(crime_application:, add_partner_employment:)
+      end
+
+      context 'the partner has selected yes to adding an employment' do
+        let(:add_partner_employment) { YesNoAnswer::YES }
+
+        it 'redirects to the edit `partner employer details` page' do
+          expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+        end
+      end
+
+      context 'the partner has selected no to adding an employment' do
+        let(:add_partner_employment) { YesNoAnswer::NO }
+
+        it 'redirects to partner self_assessment_tax_bill page' do
+          expect(subject).to have_destination(
+            '/steps/income/partner/self_assessment_tax_bill', :edit, id: crime_application
+          )
+        end
       end
     end
   end
@@ -525,9 +665,23 @@ subject: 'partner')
     it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
   end
 
+  context 'when the step is `partner_employment_income`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_employment_income }
+
+    it { is_expected.to have_destination('/steps/income/income_payments_partner', :edit, id: crime_application) }
+  end
+
   context 'when the step is `client_self_assessment_tax_bill`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :client_self_assessment_tax_bill }
+
+    it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
+  end
+
+  context 'when the step is `partner_self_assessment_tax_bill`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_self_assessment_tax_bill }
 
     it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
   end
@@ -537,6 +691,13 @@ subject: 'partner')
     let(:step_name) { :client_other_work_benefits }
 
     it { is_expected.to have_destination('/steps/income/income_payments', :edit, id: crime_application) }
+  end
+
+  context 'when the step is `partner_other_work_benefits`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :partner_other_work_benefits }
+
+    it { is_expected.to have_destination('/steps/income/income_payments_partner', :edit, id: crime_application) }
   end
 
   context 'when the step is `income payments`' do
@@ -623,15 +784,31 @@ subject: 'partner')
       end
     end
 
-    context 'when client does have dependants' do
+    context 'when client does have dependants and no stored dependants' do
+      let(:dependants_double) { double('dependants_collection', empty?: true) }
+
       before do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+        allow(dependants_double).to receive(:none?).and_return(true)
       end
 
       it 'creates a blank dependant record and redirects to the dependants page' do
-        expect(
-          dependants_double
-        ).to receive(:create!).at_least(:once)
+        expect(dependants_double).to receive(:create!).at_least(:once)
+
+        expect(subject).to have_destination(:dependants, :edit, id: crime_application)
+      end
+    end
+
+    context 'when client does have dependants and has stored dependants' do
+      let(:dependants_double) { double('dependants_collection', empty?: false) }
+
+      before do
+        allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::YES)
+        allow(dependants_double).to receive(:none?).and_return(false)
+      end
+
+      it 'does not create a blank dependant record and redirects to the dependants page' do
+        expect(dependants_double).not_to receive(:create!)
 
         expect(subject).to have_destination(:dependants, :edit, id: crime_application)
       end

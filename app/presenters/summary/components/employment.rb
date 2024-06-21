@@ -59,17 +59,19 @@ module Summary
         address.values_at(*Address::ADDRESS_ATTRIBUTES.map(&:to_s)).compact_blank.join("\r\n")
       end
 
+      # rubocop:disable Layout/LineLength
       def change_path
-        edit_steps_income_client_employer_details_path(employment_id: employment.id)
+        send :"edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employer_details_path", employment_id: employment.id
       end
 
       def summary_path
-        edit_steps_income_client_employments_summary_path(employment_id: employment.id)
+        send :"edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employments_summary_path", employment_id: employment.id
       end
 
       def remove_path
-        confirm_destroy_steps_income_client_employments_path(employment_id: employment.id)
+        send :"confirm_destroy_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employments_path", employment_id: employment.id
       end
+      # rubocop:enable Layout/LineLength
     end
   end
 end

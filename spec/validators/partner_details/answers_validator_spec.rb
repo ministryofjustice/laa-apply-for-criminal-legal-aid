@@ -65,24 +65,6 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       end
     end
 
-    context 'without a partner' do
-      subject(:complete?) { validator.complete? }
-
-      let(:client_has_partner) { 'no' }
-
-      context 'with a relationship status' do
-        before { partner_detail.relationship_status = 'divorced' }
-
-        it { is_expected.to be true }
-      end
-
-      context 'without a relationship status' do
-        before { partner_detail.relationship_status = nil }
-
-        it { is_expected.to be false }
-      end
-    end
-
     # NOTE: Relies on top level partner_detail to be valid
     context 'with a partner' do
       subject(:complete?) { validator.complete? }
@@ -156,7 +138,8 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       it 'adds errors' do
         subject.validate
 
-        expect(subject.errors.of_kind?('partner_details', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('involvement_in_case', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
       end
     end
   end

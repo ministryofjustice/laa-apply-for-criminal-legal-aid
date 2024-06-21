@@ -9,10 +9,10 @@
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
 
     <h1 class="govuk-heading-xl">
-      <%=t '.heading', count: @form_object.employments.size %>
+      <%=t '.heading', count: @form_object.client_employments.size %>
     </h1>
 
-    <%= render Summary::Sections::Employments.new(current_crime_application, headless: true) %>
+    <%= render Summary::Sections::ClientEmployments.new(current_crime_application, headless: true) %>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_radio_buttons :add_client_employment, @form_object.choices, :value,

@@ -31,7 +31,7 @@ module Steps
         define_method :"#{type}=" do |attrs|
           @new_payments ||= {}
           record = IncomePaymentFieldsetForm.build(
-            IncomePayment.new(payment_type: type.to_s, **attrs),
+            IncomePayment.new(payment_type: type.to_s, ownership_type: OwnershipType::APPLICANT.to_s, **attrs),
             crime_application:
           )
 
@@ -56,7 +56,7 @@ module Steps
         return @types if @types
         return ['none'] if income.has_no_income_payments == 'yes'
 
-        income.income_payments.pluck(:payment_type)
+        income.income_payments.for_client.pluck(:payment_type)
       end
 
       def has_no_income_payments
@@ -69,13 +69,13 @@ module Steps
       def find_or_create_income_payment(type) # rubocop:disable Metrics/AbcSize
         if types.include?(type.to_s) && @new_payments&.key?(type.value.to_s)
           attrs = @new_payments[type.value.to_s].attributes
-          return IncomePayment.new(payment_type: type.to_s, **attrs)
+          return IncomePayment.new(payment_type: type.to_s, ownership_type: OwnershipType::APPLICANT.to_s, **attrs)
         end
 
-        income_payment = crime_application.income_payments.find_by(payment_type: type.value.to_s)
+        income_payment = crime_application.income_payments.for_client.find_by(payment_type: type.value.to_s)
         return income_payment if income_payment
 
-        IncomePayment.new(payment_type: type.to_s)
+        IncomePayment.new(payment_type: type.to_s, ownership_type: OwnershipType::APPLICANT.to_s)
       end
 
       # Individual income_payments_fieldset_forms are in charge of saving themselves
