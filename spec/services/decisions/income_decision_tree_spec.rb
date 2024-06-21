@@ -303,7 +303,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is disabled' do
         let(:feature_flag_employment_journey_enabled) { false }
 
-        it 'redirects to the `employed_exit` page' do
+        it 'redirects to the `self_employed_exit` page' do
           expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
