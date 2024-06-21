@@ -23,13 +23,15 @@ module Summary
         employment_income
         income_details
         client_employments
-        partner_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details
         income_benefits_details
         dependants
         partner_employment_details
+        partner_employments
+        partner_self_assessment_tax_bill
+        partner_work_benefits
         partner_income_payments_details
         partner_income_benefits_details
         other_income_details
