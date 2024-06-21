@@ -8,7 +8,7 @@ module Summary
       private
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        [
+        answers = [
           Components::FreeTextAnswer.new(
             :provider_name, saving.provider_name, show: true
           ),
@@ -28,16 +28,21 @@ module Summary
             :are_wages_paid_into_account,
             saving.are_wages_paid_into_account,
             show: true
-          ),
-          Components::ValueAnswer.new(
+          )
+        ]
+
+        if include_partner_in_means_assessment?
+          answers << Components::ValueAnswer.new(
             :are_partners_wages_paid_into_account,
             saving.are_partners_wages_paid_into_account,
-            show: include_partner_in_means_assessment?
-          ),
-          Components::ValueAnswer.new(
-            :saving_ownership_type, saving.ownership_type, show: true
           )
-        ].select(&:show?)
+        end
+
+        answers << Components::ValueAnswer.new(
+          :saving_ownership_type, saving.ownership_type, show: true
+        )
+
+        answers.select(&:show?)
       end
 
       def name

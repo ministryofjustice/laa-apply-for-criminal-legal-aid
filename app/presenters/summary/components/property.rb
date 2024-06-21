@@ -25,11 +25,6 @@ module Summary
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         attributes = [
           Components::FreeTextAnswer.new(
-            :house_type,
-            house_type, i18n_opts: i18n_opts,
-            show: residential?
-          ),
-          Components::FreeTextAnswer.new(
             :bedrooms,
             property.bedrooms.to_s,
             show: residential?
@@ -128,14 +123,6 @@ module Summary
 
       def asset
         PROPERTY_TYPE_MAPPING[property.property_type][:display_name]
-      end
-
-      def house_type
-        if property.house_type == ::Property::OTHER_HOUSE_TYPE
-          property.other_house_type
-        else
-          I18n.t(property.house_type, scope: [:summary, :sections, :property, :house_type])
-        end
       end
 
       def relationship(owner)
