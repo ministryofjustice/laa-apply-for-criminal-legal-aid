@@ -25,11 +25,28 @@ RSpec.describe Steps::Income::Partner::IncomePaymentsForm do
     )
   end
 
+  let(:payment_with_incorrect_ownership) do
+    IncomePayment.create!(
+      payment_type: 'maintenance',
+      crime_application: crime_application,
+      amount: '500',
+      ownership_type: 'applicant',
+      frequency: 'monthly'
+    )
+  end
+
   let(:payments) do
     subject.crime_application.income_payments
   end
 
   it_behaves_like 'a payment form', described_class, :partner_has_no_income_payments
+
+  context 'when record with incorrect ownership exists' do
+    it 'does not include the payment type' do
+      payment_with_incorrect_ownership
+      expect(subject.types).not_to include(payment_with_incorrect_ownership.payment_type)
+    end
+  end
 
   describe '#save' do
     context 'with form submission' do
