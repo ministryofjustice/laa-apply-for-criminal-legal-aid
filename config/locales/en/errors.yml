@@ -468,6 +468,14 @@ en:
           attributes:
             partner_employment_status:
               invalid: Select the partner's employment status, or select 'Not working'
+        steps/income/client/employments_summary_form:
+          attributes:
+            add_client_employment:
+              inclusion: Select yes if you want to add another job
+        steps/income/partner/employments_summary_form:
+          attributes:
+            add_partner_employment:
+              inclusion: Select yes if you want to add another job
         steps/income/lost_job_in_custody_form:
           attributes:
             lost_job_in_custody:
