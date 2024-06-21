@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class AnswersForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include ApplicantAndPartner
+
       include Steps::HasOneAssociation
       has_one_association :capital
 

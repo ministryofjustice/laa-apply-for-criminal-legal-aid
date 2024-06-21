@@ -811,12 +811,6 @@ en:
         question: Yearly dividend
       # END partner_trust_fund
 
-      has_no_other_assets:
-        question: Client has no other assets or capital
-        absence_answer: *absence_none
-        answers:
-          'yes': Confirmed
-
       employment:
         employer_name:
           question: Employer’s name

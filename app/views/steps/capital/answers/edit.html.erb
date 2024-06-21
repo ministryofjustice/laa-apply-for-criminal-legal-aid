@@ -21,7 +21,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_check_boxes_fieldset :has_no_other_assets, multiple: false do %>
-        <%= f.govuk_check_box :has_no_other_assets, YesNoAnswer::YES, multiple: false, link_errors: true %>
+        <%= f.govuk_check_box :has_no_other_assets, YesNoAnswer::YES, label: { text: label_t('yes') }, multiple: false, link_errors: true %>
       <% end %>
       <%= f.continue_button %>
     <% end %>
