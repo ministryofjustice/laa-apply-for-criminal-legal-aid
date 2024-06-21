@@ -197,7 +197,7 @@ module Decisions
 
     def after_client_has_dependants
       if form_object.client_has_dependants.yes?
-        edit_dependants(add_blank: true)
+        edit_dependants(add_blank: crime_application.dependants.none?)
       else
         determine_showing_no_income_page
       end
