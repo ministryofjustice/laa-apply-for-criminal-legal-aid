@@ -17,7 +17,7 @@ module Steps
         end
 
         def self.build(crime_application)
-          payment = crime_application.income_payments.employment
+          payment = crime_application.income_payments.for_client.employment
           form = new
 
           if payment
@@ -40,12 +40,13 @@ module Steps
               amount: amount,
               frequency: frequency,
               before_or_after_tax: before_or_after_tax,
+              ownership_type: OwnershipType::APPLICANT.to_s
             )
           end
         end
 
         def reset!
-          crime_application.income_payments.employment&.destroy
+          crime_application.income_payments.for_client.employment&.destroy
         end
       end
     end

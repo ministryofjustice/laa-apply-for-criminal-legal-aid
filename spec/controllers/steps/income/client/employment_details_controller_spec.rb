@@ -60,7 +60,7 @@ RSpec.describe Steps::Income::Client::EmploymentDetailsController, type: :contro
     context 'when invalid address attributes' do
       before { expected_params[:steps_income_client_employment_details_form].merge!(amount: nil, frequency: nil) }
 
-      it 'does not redirect to the `properties_summary` path' do
+      it 'does not redirect to the `employments_summary` path' do
         put :update, params: expected_params, session: { crime_application_id: crime_application.id }
         expect(response).not_to redirect_to edit_steps_income_client_deductions_from_pay_path
       end

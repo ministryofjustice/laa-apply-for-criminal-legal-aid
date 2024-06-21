@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
+  # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -22,8 +23,8 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
   let(:amount) { nil }
 
   before do
-    allow(crime_application.income_payments).to receive(:find_by).with(
-      { payment_type: IncomePaymentType::WORK_BENEFITS.to_s }
+    allow(crime_application.income_payments).to receive_message_chain(
+      :for_client, :work_benefits
     ).and_return(income_payment)
   end
 
@@ -38,9 +39,9 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
     }
 
     before do
-      allow(crime_application.income_payments).to(
-        receive(:work_benefits).and_return(existing_income_payment)
-      )
+      allow(crime_application.income_payments).to receive_message_chain(
+        :for_client, :work_benefits
+      ).and_return(existing_income_payment)
       income.applicant_other_work_benefit_received = 'yes'
     end
 
@@ -97,6 +98,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
             payment_type: :work_benefits,
             amount: Money.new(200_00),
             frequency: PaymentFrequencyType::ANNUALLY,
+            ownership_type: OwnershipType::APPLICANT.to_s
           )
 
           form.save
@@ -117,6 +119,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
         let(:existing_income_payment) {
           IncomePayment.new(crime_application: crime_application,
                             payment_type: IncomePaymentType::WORK_BENEFITS.to_s,
+                            ownership_type: OwnershipType::APPLICANT.to_s,
                             amount: 150,
                             frequency: PaymentFrequencyType::ANNUALLY.to_s)
         }
@@ -134,4 +137,5 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
       end
     end
   end
+  # rubocop:enable RSpec/MessageChain
 end

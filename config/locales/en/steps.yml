@@ -384,6 +384,58 @@ en:
               relocation payments
               private health insurance
 
+      partner:
+        employer_details:
+          edit:
+            page_title: Who is your partner employed by?
+            heading: Who does the partner work for?
+            subheading: Add the details of the partner’s employer. If they have more than one job, you can add more.
+        employment_details:
+          edit:
+            page_title: The partner’s employment details
+            heading: The partner’s employment details
+        employment_income:
+          edit:
+            page_title: The partner's employment income
+            heading: The partner's employment income
+            page_text: You told us your client's partner is employed.
+        self_assessment_tax_bill:
+          edit:
+            page_title: Does the partner pay a Self Assessment tax bill received in the last 2 years?
+            heading: Does the partner pay a Self Assessment tax bill received in the last 2 years?
+            page_text: This will be a bill from HM Revenue and Customs (HMRC).
+        deductions:
+          edit:
+            page_title: Deductions from the partner’s pay
+            heading: Deductions from the partner’s pay
+            page_text: You told us your partner is employed.
+        employments_summary:
+          edit:
+            page_title: Your jobs
+            heading:
+              zero: You have not added jobs yet
+              one: You have added %{count} job
+              other: You have added %{count} jobs
+        employments:
+          confirm_destroy:
+            page_title: Delete job confirmation
+            heading: Are you sure you want to remove this job?
+            confirm_delete_button: Yes, remove it
+            cancel_delete_button: No, do not remove it
+            confirm_delete_button_a11y: Yes, remove this job
+            cancel_delete_button_a11y: No, do not remove this job
+          destroy:
+            success_flash: You removed the job
+        other_work_benefits:
+          edit:
+            page_title: Does the partner receive any other benefits from work?
+            heading: Does the partner receive any other benefits from work?
+            page_text: 'These could be, for example:'
+            list: |
+              childcare vouchers
+              a company vehicle
+              relocation payments
+              private health insurance
     outgoings:
       caption: Outgoings assessment
       mortgage:
