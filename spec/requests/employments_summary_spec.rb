@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Employments summary page', :authorized do
   let(:crime_application) { CrimeApplication.create! }
-  let!(:employment) { crime_application.employments.create! }
+  let!(:employment) { crime_application.client_employments.create! }
 
   describe 'list of added employments in summary page' do
     before do
@@ -36,7 +36,7 @@ RSpec.describe 'Employments summary page', :authorized do
 
     context 'when there are other employments' do
       it 'deletes the employment and redirects back to the summary page' do
-        employment_1 = crime_application.employments.create!
+        employment_1 = crime_application.client_employments.create!
 
         expect do
           delete steps_income_client_employments_path(id: crime_application, employment_id: employment_1)

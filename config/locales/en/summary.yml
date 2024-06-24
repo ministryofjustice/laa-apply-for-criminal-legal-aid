@@ -119,7 +119,7 @@ en:
       trust_fund: 'Trust funds: client'
       partner_trust_fund: 'Trust funds: partner'
       other_capital_details: Other capital
-      employments: Jobs
+      client_employments: Jobs
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
       work_benefits: Other work benefits
@@ -810,12 +810,6 @@ en:
       partner_trust_fund_yearly_dividend:
         question: Yearly dividend
       # END partner_trust_fund
-
-      has_no_other_assets:
-        question: Client has no other assets or capital
-        absence_answer: *absence_none
-        answers:
-          'yes': Confirmed
 
       employment:
         employer_name:

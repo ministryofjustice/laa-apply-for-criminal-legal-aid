@@ -80,6 +80,14 @@ module Adapters
         end
       end
 
+      def client_employments
+        employments.select { |e| e.ownership_type == OwnershipType::APPLICANT.to_s }
+      end
+
+      def partner_employments
+        employments.select { |e| e.ownership_type == OwnershipType::PARTNER.to_s }
+      end
+
       def outgoings
         return nil unless means_details
 

@@ -1,9 +1,13 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double CrimeApplication, income: income, employments: [employment] }
+  let(:crime_application) {
+    instance_double CrimeApplication, income: income, employments: [applicant_employment, partner_employment]
+  }
+
   let(:deductions_double) { double('deductions_collection', complete: deductions) }
 
   let(:income) do
@@ -104,7 +108,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     ]
   end
 
-  let(:employment) do
+  let(:applicant_employment) do
     instance_double(Employment,
                     employer_name: 'Joe Goodwin',
                     job_title: 'Supervisor',
@@ -118,6 +122,23 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                     frequency: 'annual',
                     ownership_type: 'applicant',
                     metadata: { before_or_after_tax: { 'value' => 'before_tax' } }.as_json,
+                    deductions: deductions_double)
+  end
+
+  let(:partner_employment) do
+    instance_double(Employment,
+                    employer_name: 'Andy Goodwin',
+                    job_title: 'Manager',
+                    has_no_deductions: nil,
+                    address: { address_line_one: 'address_line_one_z',
+                               address_line_two: 'address_line_two_z',
+                               city: 'city_z',
+                               country: 'country_z',
+                               postcode: 'postcode_z' }.as_json,
+                    amount_before_type_cast: 35_000,
+                    frequency: 'annual',
+                    ownership_type: 'partner',
+                    metadata: { before_or_after_tax: { 'value' => 'after_tax' } }.as_json,
                     deductions: deductions_double)
   end
 
@@ -213,6 +234,42 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                 details: 'deduction details'
               }
             ]
+          },
+          {
+            employer_name: 'Andy Goodwin',
+            job_title: 'Manager',
+            has_no_deductions: nil,
+            address: {
+              address_line_one: 'address_line_one_z',
+              address_line_two: 'address_line_two_z',
+              city: 'city_z',
+              country: 'country_z',
+              postcode: 'postcode_z'
+            },
+            amount: 35_000,
+            frequency: 'annual',
+            ownership_type: 'partner',
+            metadata: { before_or_after_tax: { 'value' => 'after_tax' } },
+            deductions: [
+              {
+                deduction_type: 'income_tax',
+                amount: 1000,
+                frequency: 'week',
+                details: nil
+              },
+              {
+                deduction_type: 'national_insurance',
+                amount: 2000,
+                frequency: 'fortnight',
+                details: nil
+              },
+              {
+                deduction_type: 'other',
+                amount: 3000,
+                frequency: 'annual',
+                details: 'deduction details'
+              }
+            ]
           }
         ]
       }.as_json
@@ -221,3 +278,4 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     it { expect(subject.generate).to eq(json_output) }
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

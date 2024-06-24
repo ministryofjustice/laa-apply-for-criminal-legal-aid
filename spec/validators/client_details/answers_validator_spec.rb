@@ -10,7 +10,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }
   let(:case_type) { nil }
-  let(:client_has_partner) { 'no' }
+  let(:client_has_partner) { nil }
   let(:partner_detail) { nil }
 
   before do
@@ -34,6 +34,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:residence_type, :blank)
         expect(errors).to receive(:add).with(:has_nino, :blank)
         expect(errors).to receive(:add).with(:client_has_partner, :blank)
+        expect(errors).to receive(:add).with(:relationship_status, :blank)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
         subject.validate
@@ -42,10 +43,9 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       context 'when application is appeal to crown court no changes' do
         let(:appeal_no_changes?) { true }
 
-        it 'does not add any errors' do
+        it 'adds any errors for details and case type' do
           expect(errors).to receive(:add).with(:details, :blank)
           expect(errors).to receive(:add).with(:case_type, :blank)
-          expect(errors).to receive(:add).with(:client_has_partner, :blank)
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
@@ -55,7 +55,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
       context 'when applicant is under 18' do
         let(:under18?) { true }
 
-        it 'does not add any errors' do
+        it 'adds any errors for details, case type and residence type' do
           expect(errors).to receive(:add).with(:details, :blank)
           expect(errors).to receive(:add).with(:case_type, :blank)
           expect(errors).to receive(:add).with(:residence_type, :blank)

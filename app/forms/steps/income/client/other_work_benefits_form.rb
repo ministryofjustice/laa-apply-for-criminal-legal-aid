@@ -10,7 +10,7 @@ module Steps
         validates :amount, numericality: { greater_than: 0 }, if: -> { receives_other_work_benefit? }
 
         def self.build(crime_application)
-          payment = crime_application.income_payments.work_benefits
+          payment = crime_application.income_payments.for_client.work_benefits
           income = crime_application.income
           form = new
 
@@ -35,6 +35,7 @@ module Steps
                 payment_type: IncomePaymentType::WORK_BENEFITS.value,
                 amount: amount,
                 frequency: PaymentFrequencyType::ANNUALLY,
+                ownership_type: OwnershipType::APPLICANT.to_s
               )
             end
 
@@ -49,7 +50,7 @@ module Steps
         end
 
         def reset!
-          crime_application.income_payments.work_benefits&.destroy
+          crime_application.income_payments.for_client.work_benefits&.destroy
         end
       end
     end

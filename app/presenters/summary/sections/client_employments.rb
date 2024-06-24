@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    class Employments < Sections::BaseSection
+    class ClientEmployments < Sections::BaseSection
       def answers
         return [] if employments.empty?
 
@@ -18,7 +18,7 @@ module Summary
       private
 
       def employments
-        @employments ||= crime_application.employments
+        @employments ||= crime_application.client_employments
       end
     end
   end

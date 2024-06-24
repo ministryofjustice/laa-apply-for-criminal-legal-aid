@@ -22,15 +22,15 @@ module Summary
         employment_details
         employment_income
         income_details
-        employments
+        client_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details
         income_benefits_details
         dependants
+        partner_employment_details
         partner_income_payments_details
         partner_income_benefits_details
-        partner_employment_details
         other_income_details
         housing_payments
         outgoings_payments_details
@@ -75,7 +75,7 @@ module Summary
         employment_details
         employment_income
         income_details
-        employments
+        client_employments
         self_assessment_tax_bill
         work_benefits
         income_payments_details

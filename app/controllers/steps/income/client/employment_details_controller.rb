@@ -2,14 +2,18 @@ module Steps
   module Income
     module Client
       class EmploymentDetailsController < Steps::IncomeStepController
-        include Steps::Income::Client::EmploymentUpdateStep
+        include Steps::Income::EmploymentUpdateStep
 
         def advance_as
           :client_employment_details
         end
 
         def form_name
-          EmploymentDetailsForm
+          Steps::Income::Client::EmploymentDetailsForm
+        end
+
+        def employments
+          @employments ||= current_crime_application.client_employments
         end
       end
     end

@@ -5,7 +5,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
 
   let(:application_struct) { build_struct_application(with_full_means: true) }
 
-  describe '#employments' do
+  describe '#client_employments' do
     it 'returns a employments collection' do
       expect(subject.employments).to all(be_an(Employment))
     end
@@ -32,7 +32,11 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'applicant_other_work_benefit_received' => 'no',
           'applicant_self_assessment_tax_bill' => 'yes',
           'applicant_self_assessment_tax_bill_amount' => 555_00,
-          'applicant_self_assessment_tax_bill_frequency' => 'fortnight'
+          'applicant_self_assessment_tax_bill_frequency' => 'fortnight',
+          'partner_other_work_benefit_received' => 'no',
+          'partner_self_assessment_tax_bill' => 'yes',
+          'partner_self_assessment_tax_bill_amount' => 222_00,
+          'partner_self_assessment_tax_bill_frequency' => 'fortnight'
         )
       )
     end
@@ -41,7 +45,6 @@ RSpec.describe Adapters::Structs::IncomeDetails do
       expect(subject.serializable_hash.keys).to match_array(
         %w[
           employment_status
-          employment_details
           ended_employment_within_three_months
           lost_job_in_custody
           date_job_lost
@@ -59,6 +62,10 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           applicant_self_assessment_tax_bill
           applicant_self_assessment_tax_bill_amount
           applicant_self_assessment_tax_bill_frequency
+          partner_other_work_benefit_received
+          partner_self_assessment_tax_bill
+          partner_self_assessment_tax_bill_amount
+          partner_self_assessment_tax_bill_frequency
         ]
       )
     end

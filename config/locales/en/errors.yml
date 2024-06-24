@@ -468,6 +468,14 @@ en:
           attributes:
             partner_employment_status:
               invalid: Select the partner's employment status, or select 'Not working'
+        steps/income/client/employments_summary_form:
+          attributes:
+            add_client_employment:
+              inclusion: Select yes if you want to add another job
+        steps/income/partner/employments_summary_form:
+          attributes:
+            add_partner_employment:
+              inclusion: Select yes if you want to add another job
         steps/income/lost_job_in_custody_form:
           attributes:
             lost_job_in_custody:
@@ -510,6 +518,14 @@ en:
               inclusion: Select before or after tax
             frequency:
               inclusion: Select how often they get this payment
+        steps/income/partner/employment_income_form:
+          attributes:
+            amount:
+              not_a_number: Enter their salary or wage
+            before_or_after_tax:
+              inclusion: Select before or after tax
+            frequency:
+              inclusion: Select how often they get this payment
         steps/income/client/self_assessment_tax_bill_form:
           attributes:
             applicant_self_assessment_tax_bill:
@@ -518,10 +534,24 @@ en:
               not_a_number: Enter the amount they pay
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
+        steps/income/partner/self_assessment_tax_bill_form:
+          attributes:
+            partner_self_assessment_tax_bill:
+              inclusion: Select yes if your partner pays a Self Assessment tax bill received in the last 2 years
+            partner_self_assessment_tax_bill_amount:
+              not_a_number: Enter the amount they pay
+            partner_self_assessment_tax_bill_frequency:
+              inclusion: Select how often they pay this amount
         steps/income/client/other_work_benefits_form:
           attributes:
             applicant_other_work_benefit_received:
               inclusion: Select yes if your client receives any other benefits from work
+            amount:
+              not_a_number: Enter the total yearly value of their other work benefits
+        steps/income/partner/other_work_benefits_form:
+          attributes:
+            partner_other_work_benefit_received:
+              inclusion: Select yes if they receive any other benefits from work
             amount:
               not_a_number: Enter the total yearly value of their other work benefits
         steps/income/client_has_dependants_form:
@@ -884,6 +914,18 @@ en:
               blank: Enter country
             postcode:
               blank: Enter postcode
+        steps/income/partner/employer_details_form:
+          attributes:
+            employer_name:
+              blank: Enter employer's name
+            address_line_one:
+              blank: Enter address line 1, typically the building and street
+            city:
+              blank: Enter town or city
+            country:
+              blank: Enter country
+            postcode:
+              blank: Enter postcode
         steps/capital/property_owner_fieldset_form:
           summary: &shared_property_owner_errors
             name:
@@ -954,7 +996,7 @@ en:
             base:
               incomplete_records: You need to complete all questions before you can submit the application
             has_no_other_assets:
-              blank: Confirm your client has no other assets or capital
+              blank: Confirm whether there are any other assets or capital
         steps/submission/more_information_form:
           attributes:
             additional_information:
@@ -982,7 +1024,7 @@ en:
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
-              greater_than: Enter their salary or wage greater than 0
+              greater_than: Salary or wage must be greater than 0
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -995,7 +1037,34 @@ en:
             amount:
               blank: Enter their salary or wage
               not_a_number: Enter their salary or wage
-              greater_than: Enter their salary or wage greater than 0
+              greater_than: Salary or wage must be greater than 0
+            before_or_after_tax:
+              blank: Select before or after tax
+              inclusion: Select before or after tax
+            frequency:
+              blank: Select how often they get this payment
+              inclusion: Select how often they get this payment
+        steps/income/partner/employment_details_form:
+          attributes:
+            job_title:
+              blank: Enter their job title
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Salary or wage must be greater than 0
+            before_or_after_tax:
+              blank: Select before or after tax
+              inclusion: Select before or after tax
+            frequency:
+              blank: Select how often they get this payment
+              inclusion: Select how often they get this payment
+          summary:
+            job_title:
+              blank: Enter their job title
+            amount:
+              blank: Enter their salary or wage
+              not_a_number: Enter their salary or wage
+              greater_than: Salary or wage must be greater than 0
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -1006,12 +1075,16 @@ en:
           attributes:
             base:
               none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
+        steps/income/partner/deductions_form:
+          attributes:
+            base:
+              none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
         steps/income/client/deduction_fieldset_form:
           summary:
             amount:
               blank: Enter amount
               not_a_number: Enter amount
-              greater_than: Enter amount greater than 0
+              greater_than: Amount must be greater than 0
             frequency:
               blank: Select how often the amount gets deducted
               inclusion: Select how often the amount gets deducted
@@ -1022,7 +1095,30 @@ en:
             amount:
               blank: Enter amount
               not_a_number: Enter amount
-              greater_than: Enter amount greater than 0
+              greater_than: Amount must be greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often they get this payment
+            details:
+              blank: Enter details
+              invalid: Details not required
+        steps/income/partner/deduction_fieldset_form:
+          summary:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Amount must be greater than 0
+            frequency:
+              blank: Select how often the amount gets deducted
+              inclusion: Select how often the amount gets deducted
+            details:
+              blank: Enter details
+              invalid: Details not required
+          attributes:
+            amount:
+              blank: Enter amount
+              not_a_number: Enter amount
+              greater_than: Amount must be greater than 0
             frequency:
               blank: Select how often the amount gets deducted
               inclusion: Select how often they get this payment

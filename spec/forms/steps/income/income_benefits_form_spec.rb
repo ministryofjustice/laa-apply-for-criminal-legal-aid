@@ -20,7 +20,18 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
       payment_type: 'jsa',
       crime_application: crime_application,
       amount: '123',
-      frequency: 'four_weeks'
+      frequency: 'four_weeks',
+      ownership_type: 'applicant'
+    )
+  end
+
+  let(:payment_with_incorrect_ownership) do
+    IncomeBenefit.create!(
+      payment_type: 'child',
+      crime_application: crime_application,
+      amount: '200',
+      frequency: 'month',
+      ownership_type: 'partner'
     )
   end
 
@@ -29,6 +40,13 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
   end
 
   it_behaves_like 'a payment form', described_class, :has_no_income_benefits
+
+  context 'when record with incorrect ownership exists' do
+    it 'does not include the payment type' do
+      payment_with_incorrect_ownership
+      expect(subject.types).not_to include(payment_with_incorrect_ownership.payment_type)
+    end
+  end
 
   describe '#save' do
     context 'with form submission' do
