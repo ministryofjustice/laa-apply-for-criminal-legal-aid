@@ -1,7 +1,8 @@
 module SubmissionSerializer
   module Sections
     class IncomeDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
+      def to_builder
         Jbuilder.new do |json|
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
@@ -33,6 +34,7 @@ module SubmissionSerializer
           json.partner_self_assessment_tax_bill_frequency income.partner_self_assessment_tax_bill_frequency
         end
       end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
     end
   end
 end
