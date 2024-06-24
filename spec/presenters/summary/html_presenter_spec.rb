@@ -14,7 +14,7 @@ describe Summary::HtmlPresenter do
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, partner_other_work_benefit_received: 'no', applicant_self_assessment_tax_bill: 'no', partner_self_assessment_tax_bill: 'no',
-                      has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil),
+                      has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil, manage_without_income: nil),
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
       income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
@@ -385,8 +385,59 @@ describe Summary::HtmlPresenter do
     end
   end
 
-  describe '#income_sections' do
-    subject(:income_sections) { presenter.income_sections.map { |s| s.class.name.demodulize } }
+  describe 'employment' do
+    before do
+      allow_any_instance_of(
+        Summary::Sections::BaseSection
+      ).to receive(:show?).and_return(true)
+    end
+
+    describe '#income_sections' do
+      subject(:income_sections) { presenter.income_sections.map { |s| s.class.name.demodulize } }
+
+      let(:crime_application) { database_application }
+
+      expected_sections = %w[
+        EmploymentDetails
+        IncomeDetails
+        ClientEmployments
+        SelfAssessmentTaxBill
+        IncomePaymentsDetails
+        IncomeBenefitsDetails
+        Dependants
+      ]
+
+      context 'when an initial application' do
+        let(:application_type) { 'initial' }
+
+        it { is_expected.to match_array(expected_sections) }
+      end
+    end
+
+    describe '#partner_income_sections' do
+      subject(:partner_income_sections) { presenter.partner_income_sections.map { |s| s.class.name.demodulize } }
+
+      let(:crime_application) { database_application }
+
+      expected_sections = %w[
+        PartnerEmploymentDetails
+        PartnerEmployments
+        PartnerSelfAssessmentTaxBill
+        PartnerWorkBenefits
+        PartnerIncomePaymentsDetails
+        PartnerIncomeBenefitsDetails
+      ]
+
+      context 'when an initial application' do
+        let(:application_type) { 'initial' }
+
+        it { is_expected.to match_array(expected_sections) }
+      end
+    end
+  end
+
+  describe '#other_income_sections' do
+    subject(:other_income_sections) { presenter.other_income_sections.map { |s| s.class.name.demodulize } }
 
     before do
       allow_any_instance_of(
@@ -397,13 +448,7 @@ describe Summary::HtmlPresenter do
     let(:crime_application) { database_application }
 
     expected_sections = %w[
-      EmploymentDetails
-      IncomeDetails
-      ClientEmployments
-      SelfAssessmentTaxBill
-      IncomePaymentsDetails
-      IncomeBenefitsDetails
-      Dependants
+      OtherIncomeDetails
     ]
 
     context 'when an initial application' do
@@ -413,3 +458,4 @@ describe Summary::HtmlPresenter do
     end
   end
 end
+

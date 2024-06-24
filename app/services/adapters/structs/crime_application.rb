@@ -73,7 +73,7 @@ module Adapters
         means_details.income_details.employments.map do |struct|
           if struct.respond_to?(:deductions)
             struct.deductions.map! do |deduction|
-              Deduction.new(**deduction)
+              Deduction.new(deduction.attributes)
             end
           end
           Employment.new(struct.attributes)
