@@ -29,6 +29,7 @@ module Summary
         income_benefits_details
         dependants
         partner_employment_details
+        partner_employment_income
         partner_employments
         partner_self_assessment_tax_bill
         partner_work_benefits
