@@ -14,10 +14,13 @@ module IncomeAssessment
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return unless applicable?
 
-      EmploymentDetails::AnswersValidator.new(record).validate
-
       errors.add(:income_before_tax, :incomplete) unless income_before_tax_complete?
       errors.add(:frozen_income_savings_assets, :incomplete) unless frozen_income_savings_assets_complete?
+
+      return errors.add(:base, :incomplete_records) unless extent_of_means_assessment_determined?
+
+      EmploymentDetails::AnswersValidator.new(record).validate
+
       errors.add(:income_payments, :incomplete) unless income_payments_complete?
       errors.add(:income_benefits, :incomplete) unless income_benefits_complete?
       errors.add(:partner_income_payments, :incomplete) unless partner_income_payments_complete?

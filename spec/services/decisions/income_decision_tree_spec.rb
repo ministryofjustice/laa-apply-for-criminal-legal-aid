@@ -14,7 +14,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       partner_employments: partner_employments_double,
       kase: kase,
       partner_detail: partner_detail,
-      partner: nil
+      partner: nil,
+      appeal_no_changes?: false
     )
   end
 
@@ -459,9 +460,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `income_before_tax`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_before_tax }
+    let(:case_type) { 'committal' }
 
     before do
-      allow(income).to receive_messages(income_above_threshold:)
+      allow(income).to receive_messages(
+        income_above_threshold: income_above_threshold,
+        has_frozen_income_or_assets: nil,
+        client_owns_property: nil,
+        has_savings: nil
+      )
     end
 
     context 'when income is above the threshold' do
@@ -501,7 +508,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :frozen_income_savings_assets }
 
     before do
-      allow(income).to receive_messages(has_frozen_income_or_assets:)
+      allow(income).to receive_messages(
+        income_above_threshold: 'no',
+        has_frozen_income_or_assets: has_frozen_income_or_assets,
+        client_owns_property: nil,
+        has_savings: nil
+      )
     end
 
     context 'when they do not have frozen income or assets' do
@@ -584,7 +596,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :client_owns_property }
 
     before do
-      allow(income).to receive_messages(client_owns_property:)
+      allow(income).to receive_messages(
+        income_above_threshold: 'no',
+        has_frozen_income_or_assets: 'no',
+        client_owns_property: client_owns_property,
+        has_savings: nil,
+      )
     end
 
     context 'when they do not have property' do
