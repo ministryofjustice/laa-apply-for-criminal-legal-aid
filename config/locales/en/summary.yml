@@ -127,6 +127,7 @@ en:
       work_benefits: Other work benefits
       partner_work_benefits: Other work benefits
       employment_income: Pay from employment
+      partner_employment_income: Pay from employment
 
     questions:
       # BEGIN overview section
@@ -858,6 +859,10 @@ en:
             question: Details of other deductions
             absence_answer: ''
       employment_income:
+        question: Salary or wage
+        answers:
+          description: *payment_answer_format
+      partner_employment_income:
         question: Salary or wage
         answers:
           description: *payment_answer_format

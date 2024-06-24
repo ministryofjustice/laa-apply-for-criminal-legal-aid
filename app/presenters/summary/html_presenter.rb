@@ -87,6 +87,7 @@ module Summary
       ],
       partner_income: %i[
         partner_employment_details
+        partner_employment_income
         partner_employments
         partner_self_assessment_tax_bill
         partner_work_benefits
