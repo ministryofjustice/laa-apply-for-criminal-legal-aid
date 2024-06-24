@@ -12,7 +12,9 @@ describe Summary::Sections::WorkBenefits do
     )
   end
 
-  let(:income_payments_double) { double('income_payments_collection', detect: income_payment) }
+  let(:income_payments_double) {
+    double('income_payments_collection', detect: income_payment, for_client: [income_payment])
+  }
 
   let(:income) do
     instance_double(

@@ -13,7 +13,7 @@ describe Summary::HtmlPresenter do
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, applicant_self_assessment_tax_bill: 'no',
+      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, partner_other_work_benefit_received: 'no', applicant_self_assessment_tax_bill: 'no', partner_self_assessment_tax_bill: 'no',
                       has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil),
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
@@ -64,6 +64,21 @@ describe Summary::HtmlPresenter do
                   'details' => 'deduction details'
                 }
               ]
+            },
+            {
+              'employer_name' => 'Andy Goodwin',
+              'job_title' => 'Manager',
+              'has_no_deductions' => nil,
+              'address' => { 'address_line_one' => 'address_line_one_z',
+                             'address_line_two' => 'address_line_two_z',
+                             'city' => 'city_z',
+                             'country' => 'country_z',
+                             'postcode' => 'postcode_z' },
+              'amount' => 12_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'applicant',
+              'metadata' => { 'before_or_after_tax' => { 'value' => 'after_tax' } },
+              'deductions' => []
             }
           ],
           'income_payments' => [
@@ -190,6 +205,9 @@ describe Summary::HtmlPresenter do
             ClientEmployments
             Dependants
             PartnerEmploymentDetails
+            PartnerEmployments
+            PartnerSelfAssessmentTaxBill
+            PartnerWorkBenefits
             SelfAssessmentTaxBill
             IncomePaymentsDetails
             IncomeBenefitsDetails
@@ -243,6 +261,9 @@ describe Summary::HtmlPresenter do
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
+            PartnerEmployments
+            PartnerSelfAssessmentTaxBill
+            PartnerWorkBenefits
             PartnerIncomePaymentsDetails
             PartnerIncomeBenefitsDetails
             OtherIncomeDetails
@@ -383,10 +404,6 @@ describe Summary::HtmlPresenter do
       IncomePaymentsDetails
       IncomeBenefitsDetails
       Dependants
-      PartnerIncomePaymentsDetails
-      PartnerIncomeBenefitsDetails
-      PartnerEmploymentDetails
-      OtherIncomeDetails
     ]
 
     context 'when an initial application' do
