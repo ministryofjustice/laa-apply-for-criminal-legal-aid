@@ -25,9 +25,8 @@ module Summary
 
       # :nocov:
       def work_benefits
-        crime_application
-          .income_payments.for_client
-          .detect { |payment| payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s }
+        crime_application.income_payments
+                         .detect { |payment| (payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s) && (payment.ownership_type == OwnershipType::APPLICANT.to_s) } # rubocop:disable Layout/LineLength
       end
       # :nocov:
     end

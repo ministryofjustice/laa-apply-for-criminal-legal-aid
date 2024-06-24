@@ -458,4 +458,3 @@ describe Summary::HtmlPresenter do
     end
   end
 end
-
