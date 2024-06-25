@@ -203,42 +203,38 @@ module Decisions
     end
 
     def after_income_before_tax
-      if income_below_threshold?
-        edit(:frozen_income_savings_assets)
-      elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details(client_employment)
-      else
-        edit(:income_payments)
-      end
+      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+
+      edit(:frozen_income_savings_assets)
     end
 
     def after_frozen_income_savings_assets
-      if has_frozen_assets?
-        employed? ? redirect_to_employer_details(client_employment) : edit(:income_payments)
-      elsif summary_only? || committal?
-        employed? ? edit('/steps/income/client/employment_income') : edit(:income_payments)
-      else
-        edit(:client_owns_property)
-      end
+      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+
+      edit(:client_owns_property)
+    end
+
+    def after_client_owns_property
+      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+
+      edit(:has_savings)
     end
 
     def after_has_savings
+      after_extent_of_means_determined
+    end
+
+    def after_extent_of_means_determined
       return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
+      employment_start
+    end
+
+    def employment_start
       if requires_full_means_assessment?
         redirect_to_employer_details(client_employment)
       else
         edit('/steps/income/client/employment_income')
-      end
-    end
-
-    def after_client_owns_property
-      if no_property?
-        edit(:has_savings)
-      elsif employed? && FeatureFlags.employment_journey.enabled?
-        redirect_to_employer_details(client_employment)
-      else
-        edit(:income_payments)
       end
     end
 

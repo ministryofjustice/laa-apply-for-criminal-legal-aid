@@ -3,7 +3,7 @@ module OutgoingsAssessment
     include TypeOfMeansAssessment
 
     def applicable?
-      requires_full_means_assessment?
+      extent_of_means_assessment_determined? && requires_full_means_assessment?
     end
 
     def complete?
