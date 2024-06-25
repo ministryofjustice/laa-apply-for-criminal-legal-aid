@@ -88,7 +88,24 @@ RSpec.describe Income, type: :model do
       end
     end
 
+    context 'when there is employment income' do
+      before do
+        crime_application = CrimeApplication.new(income:)
+        crime_application.employments = [
+          Employment.new(amount: 12_000)
+        ]
+      end
+
+      it { is_expected.to be true }
+
+      it 'calculates the correct total' do
+        expect(income.all_income_total).to eq 12_000
+      end
+    end
+
     context 'when there are no income payments or benefits' do
+      before { CrimeApplication.new(income:) }
+
       it { is_expected.to be false }
 
       it 'calculates the correct total' do
