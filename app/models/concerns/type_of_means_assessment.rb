@@ -76,6 +76,12 @@ module TypeOfMeansAssessment
     applicant
   end
 
+  def has_frozen_assets?
+    return capital&.has_frozen_income_or_assets == 'yes' if income&.has_frozen_income_or_assets.nil?
+
+    income.has_frozen_income_or_assets == 'yes'
+  end
+
   private
 
   # involvement_in_case is stored on partner_detail when a database applications and
@@ -112,10 +118,6 @@ module TypeOfMeansAssessment
 
   def no_savings?
     income.has_savings == 'no'
-  end
-
-  def has_frozen_assets?
-    income.has_frozen_income_or_assets == 'yes'
   end
 
   def income_below_threshold?

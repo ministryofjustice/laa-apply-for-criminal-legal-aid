@@ -5,12 +5,17 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      capital:, income:
+      capital: capital, income: income, applicant: Applicant.new, partner: Partner.new
     )
   end
 
   let(:capital) { Capital.new }
   let(:income) { Income.new }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).with(crime_application)
+                                                    .and_return(true)
+  end
 
   it { expect(described_class.key).to eq :restraint_freezing_order_31 }
   it { expect(described_class.group).to eq :none }
@@ -64,7 +69,15 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject(:predicate) { described_class.new(crime_application).partner_predicate }
+
+    it { is_expected.to be false }
+
+    context 'when question was answered' do
+      let(:income) { Income.new(has_frozen_income_or_assets: 'yes') }
+
+      it { is_expected.to be true }
+    end
   end
 
   describe '#to_h' do
@@ -82,8 +95,8 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
             prompt: ['the restraint or freezing order']
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['the restraint or freezing order']
           },
           other: {
             result: false,
