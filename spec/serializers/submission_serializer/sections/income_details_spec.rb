@@ -283,7 +283,8 @@ partner_detail: partner_detail, partner: partner
               }
             ]
           }
-        ]
+        ],
+        employment_income_payments: [],
       }.as_json
     end
 
