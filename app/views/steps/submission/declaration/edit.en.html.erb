@@ -5,12 +5,12 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
 
-    <%= render partial: @form_object.application_type %>
-
     <%= render partial: 'fulfilment_errors',
                locals: { errors: @form_object.fulfilment_errors } if @form_object.fulfilment_errors.any? %>
 
     <%= step_form @form_object do |f| %>
+      <%= render partial: @form_object.application_type,
+                 locals: { f: f, form_object: @form_object, partner_relevant: @form_object.include_partner_in_means_assessment? } %>
       <%= f.govuk_fieldset legend: { text: t('.legal_representative_legend') } do %>
         <%= f.govuk_text_field :legal_rep_first_name, autocomplete: 'off', width: 'three-quarters' %>
         <%= f.govuk_text_field :legal_rep_last_name, autocomplete: 'off', width: 'three-quarters' %>

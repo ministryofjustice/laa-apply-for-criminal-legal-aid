@@ -249,6 +249,8 @@ en:
         relationship: What their relationship to %{subject}?
       steps_capital_answers_form:
         has_no_other_assets: Confirm the following
+      steps_submission_declaration_form:
+        legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
       steps_client_relationship_status_form:
@@ -921,6 +923,8 @@ en:
         additional_information_required_options: *YESNO
         additional_information: Enter details that will help us process this application
       steps_submission_declaration_form:
+        legal_rep_has_partner_declaration_options: *YESNO
+        legal_rep_no_partner_declaration_reason: Explain the reason you could not get a signed declaration from the partner
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
         legal_rep_telephone: Telephone number
