@@ -6,6 +6,7 @@ class Income < ApplicationRecord
   has_many :businesses, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence
+  attribute :partner_self_assessment_tax_bill_amount, :pence
 
   validate on: :submission do
     answers_validator.validate
