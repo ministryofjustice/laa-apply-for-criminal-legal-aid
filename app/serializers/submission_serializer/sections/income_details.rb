@@ -1,7 +1,8 @@
 module SubmissionSerializer
   module Sections
     class IncomeDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
+      def to_builder
         Jbuilder.new do |json|
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
@@ -24,11 +25,16 @@ module SubmissionSerializer
           json.partner_has_no_income_benefits income.partner_has_no_income_benefits
           json.partner_employment_type income.partner_employment_status
           json.applicant_other_work_benefit_received income.applicant_other_work_benefit_received
+          json.partner_other_work_benefit_received income.partner_other_work_benefit_received
           json.applicant_self_assessment_tax_bill income.applicant_self_assessment_tax_bill
           json.applicant_self_assessment_tax_bill_amount income.applicant_self_assessment_tax_bill_amount_before_type_cast # rubocop:disable Layout/LineLength
           json.applicant_self_assessment_tax_bill_frequency income.applicant_self_assessment_tax_bill_frequency
+          json.partner_self_assessment_tax_bill income.partner_self_assessment_tax_bill
+          json.partner_self_assessment_tax_bill_amount income.partner_self_assessment_tax_bill_amount_before_type_cast
+          json.partner_self_assessment_tax_bill_frequency income.partner_self_assessment_tax_bill_frequency
         end
       end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
     end
   end
 end

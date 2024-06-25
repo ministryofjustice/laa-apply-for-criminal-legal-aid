@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Summary::Sections::EmploymentIncome do
+describe Summary::Sections::PartnerEmploymentIncome do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) do
@@ -24,11 +24,11 @@ describe Summary::Sections::EmploymentIncome do
       payment_type: 'employment',
       amount: 234_000,
       frequency: 'yearly',
-      ownership_type: 'applicant'
+      ownership_type: 'partner'
     )
   end
 
-  let(:applicant_other_work_benefit_received) { nil }
+  let(:partner_other_work_benefit_received) { nil }
 
   describe '#show?' do
     context 'when employment income_payment is present' do
@@ -59,13 +59,13 @@ describe Summary::Sections::EmploymentIncome do
     let(:answers) { subject.answers }
 
     context 'when there is an employment income' do
-      let(:applicant_other_work_benefit_received) { 'yes' }
+      let(:partner_other_work_benefit_received) { 'yes' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(1)
         expect(answers[0]).to be_an_instance_of(Summary::Components::PaymentAnswer)
-        expect(answers[0].question).to eq(:employment_income)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/client/employment_income')
+        expect(answers[0].question).to eq(:partner_employment_income)
+        expect(answers[0].change_path).to match('applications/12345/steps/income/partner/employment_income')
         expect(answers[0].value).to eq(income_payment)
       end
     end
