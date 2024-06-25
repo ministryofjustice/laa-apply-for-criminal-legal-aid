@@ -1,6 +1,7 @@
 module Steps
   module Income
     class PartnerEmploymentStatusForm < Steps::BaseFormObject
+      include TypeOfEmployment
       include Steps::HasOneAssociation
       has_one_association :income
 
@@ -27,6 +28,18 @@ module Steps
 
       def persist!
         income.update(attributes)
+      end
+
+      # def not_working?
+      #   employment_status&.include?(EmploymentStatus::NOT_WORKING.to_s)
+      # end
+
+      def before_save
+        return true unless not_working?
+
+        crime_application.partner_employments&.destroy!
+        crime_application.income.reset_partner_employment_fields!
+        crime_application.income_payments.for_partner.employment&.destroy!
       end
     end
   end

@@ -33,4 +33,30 @@ class Income < ApplicationRecord
   def employments_total
     crime_application.employments&.sum { |e| e.amount.to_i }
   end
+
+  def ownership_types
+    if MeansStatus.include_partner?(crime_application)
+      [OwnershipType::APPLICANT.to_s, OwnershipType::PARTNER.to_s]
+    else
+      [OwnershipType::APPLICANT.to_s]
+    end
+  end
+
+  def reset_client_employment_fields!
+    update!(
+      applicant_self_assessment_tax_bill: nil,
+      applicant_self_assessment_tax_bill_amount: nil,
+      applicant_self_assessment_tax_bill_frequency: nil,
+      applicant_other_work_benefit_received: nil,
+    )
+  end
+
+  def reset_partner_employment_fields!
+    update!(
+      partner_self_assessment_tax_bill: nil,
+      partner_self_assessment_tax_bill_amount: nil,
+      partner_self_assessment_tax_bill_frequency: nil,
+      partner_other_work_benefit_received: nil,
+    )
+  end
 end

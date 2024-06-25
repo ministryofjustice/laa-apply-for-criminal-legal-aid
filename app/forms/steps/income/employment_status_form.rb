@@ -1,7 +1,9 @@
 module Steps
   module Income
     class EmploymentStatusForm < Steps::BaseFormObject
+      include TypeOfEmployment
       include Steps::HasOneAssociation
+
       has_one_association :income
 
       attribute :employment_status, array: true, default: []
@@ -47,8 +49,16 @@ module Steps
         }
       end
 
-      def not_working?
-        employment_status&.include?(EmploymentStatus::NOT_WORKING.to_s)
+      # def not_working?
+      #   employment_status&.include?(EmploymentStatus::NOT_WORKING.to_s)
+      # end
+
+      def before_save
+        return true unless not_working?
+
+        crime_application.client_employments&.destroy!
+        crime_application.income.reset_client_employment_fields!
+        crime_application.income_payments.for_client.employment&.destroy!
       end
     end
   end
