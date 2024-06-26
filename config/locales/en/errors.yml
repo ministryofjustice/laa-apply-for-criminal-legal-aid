@@ -141,7 +141,7 @@ en:
               inclusion: Select where your client usually lives or if they have no fixed address
             relationship_to_owner_of_usual_home_address:
               blank: Enter your client's relationship to the person whose home they live in
-        steps/client/has_nino_form:
+        steps/client/nino_form:
           attributes:
             has_nino:
               inclusion: Select yes if your client has a National Insurance number
@@ -1005,6 +1005,10 @@ en:
               inclusion: Select yes if you need to add any more information to this application
         steps/submission/declaration_form:
           attributes:
+            legal_rep_has_partner_declaration:
+              inclusion: Select yes if you have a signed declaration from your client’s partner
+            legal_rep_no_partner_declaration_reason:
+              blank: Enter the reason you could not get a signed declaration from the partner
             legal_rep_first_name:
               blank: Enter a first name
             legal_rep_last_name:
