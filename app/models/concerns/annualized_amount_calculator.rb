@@ -5,7 +5,7 @@ module AnnualizedAmountCalculator
     return amount if amount.nil? || amount.zero?
 
     prorated_value =
-      case frequency
+      case frequency.to_s
       when PaymentFrequencyType::WEEKLY.to_s
         (amount.value * 52)
       when PaymentFrequencyType::FORTNIGHTLY.to_s

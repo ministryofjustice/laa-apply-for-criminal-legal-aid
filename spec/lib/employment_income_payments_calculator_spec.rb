@@ -3,76 +3,95 @@ require 'rails_helper'
 describe EmploymentIncomePaymentsCalculator do
   subject { described_class.annualized_payments(crime_application) }
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) { CrimeApplication.new(income: income, income_payments: [income_payment1, income_payment2]) }
+  let(:income) { Income.new(employment_status: ['employed']) }
+
+  let(:income_payment1) {
+    IncomePayment.new(amount: 100, frequency: 'week', ownership_type: 'applicant', payment_type: 'employment')
+  }
+  let(:income_payment2) {
+    IncomePayment.new(amount: 100, frequency: 'week', ownership_type: 'applicant', payment_type: 'employment')
+  }
 
   describe '#annualized_payments' do
-    before do
-      allow_any_instance_of(Employment).to receive(:complete?).and_return(true)
-      allow_any_instance_of(Deduction).to receive(:complete?).and_return(true)
-    end
-
-    context 'when client and partner has no employments' do
-      it 'has the right value' do
-        expect(subject.count).to eq(0)
-        expect(subject).to be_empty
+    context 'when single employment for client and partner' do
+      context 'when client and partner has no employment' do
+        it 'has the right value' do
+          expect(subject.count).to eq(0)
+          expect(subject).to be_empty
+        end
       end
     end
 
-    context 'when client has employments' do
+    context 'when multiple employments for client and partner' do
       before do
-        create_employments('applicant')
+        allow_any_instance_of(Employment).to receive(:complete?).and_return(true)
+        allow_any_instance_of(Deduction).to receive(:complete?).and_return(true)
       end
 
-      it 'has the right value' do
-        expect(subject.count).to eq(1)
-        expect(subject).to contain_exactly({
-                                             amount: 196_000,
-                                             frequency: 'annual',
-                                             income_tax: 63_700,
-                                             national_insurance: 2400,
-                                             ownership_type: 'applicant'
-                                           })
-      end
-    end
-
-    context 'when partner has employments' do
-      before do
-        create_employments('partner')
+      context 'when client and partner has no employments' do
+        it 'has the right value' do
+          expect(subject.count).to eq(0)
+          expect(subject).to be_empty
+        end
       end
 
-      it 'has the right value' do
-        expect(subject.count).to eq(1)
-        expect(subject).to contain_exactly({
-                                             amount: 196_000,
-                                             frequency: 'annual',
-                                             income_tax: 63_700,
-                                             national_insurance: 2400,
-                                             ownership_type: 'partner'
-                                           })
-      end
-    end
+      context 'when client has employments' do
+        before do
+          create_employments('applicant')
+        end
 
-    context 'when client and partner has employments' do
-      before do
-        create_employments('applicant')
-        create_employments('partner')
+        it 'has the right value' do
+          expect(subject.count).to eq(1)
+          expect(subject).to contain_exactly({
+                                               amount: 196_000,
+                                               frequency: 'annual',
+                                               income_tax: 63_700,
+                                               national_insurance: 2400,
+                                               ownership_type: 'applicant'
+                                             })
+        end
       end
 
-      it 'has the right value' do
-        expect(subject.count).to eq(2)
-        expect(subject).to contain_exactly({
-                                             amount: 196_000,
-                                             frequency: 'annual',
-                                             income_tax: 63_700,
-                                             national_insurance: 2400,
-                                             ownership_type: 'applicant'
-                                           }, {
-                                             amount: 196_000,
-                                             frequency: 'annual',
-                                             income_tax: 63_700,
-                                             national_insurance: 2400,
-                                             ownership_type: 'partner'
-                                           })
+      context 'when partner has employments' do
+        before do
+          create_employments('partner')
+        end
+
+        it 'has the right value' do
+          expect(subject.count).to eq(1)
+          expect(subject).to contain_exactly({
+                                               amount: 196_000,
+                                               frequency: 'annual',
+                                               income_tax: 63_700,
+                                               national_insurance: 2400,
+                                               ownership_type: 'partner'
+                                             })
+        end
+      end
+
+      context 'when client and partner has employments' do
+        before do
+          create_employments('applicant')
+          create_employments('partner')
+        end
+
+        it 'has the right value' do
+          expect(subject.count).to eq(2)
+          expect(subject).to contain_exactly({
+                                               amount: 196_000,
+                                               frequency: 'annual',
+                                               income_tax: 63_700,
+                                               national_insurance: 2400,
+                                               ownership_type: 'applicant'
+                                             }, {
+                                               amount: 196_000,
+                                               frequency: 'annual',
+                                               income_tax: 63_700,
+                                               national_insurance: 2400,
+                                               ownership_type: 'partner'
+                                             })
+        end
       end
     end
   end
