@@ -17,7 +17,7 @@ module Steps
         end
 
         def self.build(crime_application)
-          payment = crime_application.income_payments.for_client.employment
+          payment = crime_application.applicant.income_payments.employment
           form = new
 
           if payment
@@ -46,7 +46,7 @@ module Steps
         end
 
         def reset!
-          crime_application.income_payments.for_client.employment&.destroy
+          crime_application.applicant.income_payments.employment&.destroy
         end
       end
     end

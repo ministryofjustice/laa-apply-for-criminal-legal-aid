@@ -35,6 +35,13 @@ class Partner < Person
     through: :crime_application
   )
 
+  # :nocov:
+  # TOOD add coverage before release
+  def ownership_types
+    [OwnershipType::PARTNER.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
+  end
+  # :nocov:
+
   def ownership_type
     OwnershipType::PARTNER
   end

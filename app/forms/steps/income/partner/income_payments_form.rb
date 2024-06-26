@@ -57,7 +57,7 @@ module Steps
           return @types if @types
           return ['none'] if income.partner_has_no_income_payments == 'yes'
 
-          income.income_payments.for_partner.pluck(:payment_type)
+          crime_application.partner.income_payments.pluck(:payment_type)
         end
 
         def partner_has_no_income_payments
@@ -73,7 +73,7 @@ module Steps
             return IncomePayment.new(payment_type: type.to_s, ownership_type: OwnershipType::PARTNER.to_s, **attrs)
           end
 
-          income_payment = crime_application.income_payments.for_partner.find_by(payment_type: type.value.to_s)
+          income_payment = crime_application.partner.income_payments.find_by(payment_type: type.value.to_s)
           return income_payment if income_payment
 
           IncomePayment.new(payment_type: type.to_s, ownership_type: OwnershipType::PARTNER.to_s)

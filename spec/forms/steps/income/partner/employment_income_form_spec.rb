@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
-  # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -13,7 +12,15 @@ RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
     }
   end
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) do
+    CrimeApplication.new(
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
   let(:income_payment) {
     IncomePayment.new(crime_application: crime_application,
                       payment_type: IncomePaymentType::EMPLOYMENT.to_s)
@@ -22,12 +29,6 @@ RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
   let(:amount) { nil }
   let(:before_or_after_tax) { nil }
   let(:frequency) { nil }
-
-  before do
-    allow(crime_application.income_payments).to receive_message_chain(
-      :for_partner, :employment
-    ).and_return(income_payment)
-  end
 
   describe '#before_or_after_tax_options' do
     it 'returns the possible options' do
@@ -53,9 +54,7 @@ RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
     }
 
     before do
-      allow(crime_application.income_payments).to receive_message_chain(
-        :for_partner, :employment
-      ).and_return(existing_employment_income_payment)
+      allow(partner).to receive(:income_payments).and_return(double(employment: existing_employment_income_payment))
     end
 
     it 'sets the form attributes from the model metadata' do
@@ -131,5 +130,4 @@ RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
       end
     end
   end
-  # rubocop:enable RSpec/MessageChain
 end

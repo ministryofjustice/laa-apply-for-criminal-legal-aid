@@ -4,9 +4,20 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { Income.new(crime_application:) }
-  let(:crime_application) { CrimeApplication.new(case: Case.new(case_type: 'summary_only')) }
+
+  let(:crime_application) do
+    CrimeApplication.new(
+      case: Case.new(case_type: 'summary_only'),
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
 
   let(:requires_means_assessment?) { true }
+
   let(:employment_validator) do
     instance_double(EmploymentDetails::AnswersValidator, validate: nil)
   end
@@ -388,7 +399,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
       it 'returns false' do
         expect(subject.income_payments.all.size).to be 1
-        expect(subject.income_payments.for_partner.size).to be 0
+        expect(partner.income_payments.size).to be 0
         expect(subject.partner_income_payments_complete?).to be(false)
       end
     end
@@ -401,7 +412,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'returns false' do
-        expect(subject.income_payments.for_partner.size).to be 0
+        expect(partner.income_payments.size).to be 0
         expect(subject.partner_income_payments_complete?).to be(false)
       end
     end
@@ -423,7 +434,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'returns true' do
-        expect(subject.income_payments.for_partner.size).to be 0
+        expect(partner.income_payments.size).to be 0
         expect(subject.partner_income_payments_complete?).to be(true)
       end
     end
@@ -473,7 +484,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
 
       it 'returns false' do
         expect(subject.income_benefits.all.size).to be 1
-        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(partner.income_benefits.size).to be 0
         expect(subject.partner_income_benefits_complete?).to be(false)
       end
     end
@@ -486,7 +497,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'returns false' do
-        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(partner.income_benefits.size).to be 0
         expect(subject.partner_income_benefits_complete?).to be(false)
       end
     end
@@ -508,7 +519,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       it 'returns true' do
-        expect(subject.income_benefits.for_partner.size).to be 0
+        expect(partner.income_benefits.size).to be 0
         expect(subject.partner_income_payments_complete?).to be(true)
       end
     end

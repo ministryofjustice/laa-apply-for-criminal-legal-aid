@@ -16,7 +16,8 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when application is found' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: crime_application)
+        Saving.create!(saving_type: SavingType::BANK,
+                       crime_application: crime_application, ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -27,7 +28,8 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when saving is for another application' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!)
+        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!,
+                       ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -62,7 +64,8 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when saving is for another application' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!)
+        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!,
+                       ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -74,7 +77,7 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when an in progress application and saving is found' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: crime_application)
+        Saving.create!(saving_type: SavingType::BANK, crime_application: crime_application, ownership_type: 'applicant')
       end
 
       before do

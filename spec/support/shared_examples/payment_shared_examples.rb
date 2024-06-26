@@ -10,7 +10,16 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication) }
+  let(:crime_application) do
+    CrimeApplication.new(
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
+
   let(:record_id) { '12345' }
 
   describe '#persisted?' do
@@ -107,7 +116,17 @@ RSpec.shared_examples 'a payment form' do |payment_class, has_none_attr|
     }
   end
 
-  let(:crime_application) { CrimeApplication.new(case: case_record, income: income) }
+  let(:crime_application) do
+    CrimeApplication.new(
+      case: case_record,
+      income: income,
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
   let(:record_id) { '12345' }
   let(:case_record) { Case.new }
   let(:income) { Income.new }

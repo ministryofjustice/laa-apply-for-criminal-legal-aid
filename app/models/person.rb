@@ -42,4 +42,11 @@ class Person < ApplicationRecord
 
     datum.in_time_zone('London').to_date - 18.years >= date_of_birth
   end
+
+  # :nocov:
+  # TOOD add coverage before release
+  def ownership_types
+    OwnershipType.values.map(&:to_s)
+  end
+  # :nocov:
 end

@@ -5,7 +5,10 @@ RSpec.describe Steps::Capital::SavingTypeController, type: :controller do
                   Steps::Capital::SavingTypeForm, Decisions::CapitalDecisionTree do
     context 'when savings present' do
       let(:existing_case) do
-        CrimeApplication.create(savings: [Saving.new(saving_type: :bank)], applicant: Applicant.new)
+        CrimeApplication.create(
+          savings: [Saving.new(saving_type: :bank, ownership_type: 'applicant')],
+          applicant: Applicant.new
+        )
       end
 
       describe '#edit' do

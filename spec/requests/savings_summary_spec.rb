@@ -57,7 +57,10 @@ RSpec.describe 'Savings summary page', :authorized do
     context 'when there are other savings' do
       it 'deletes the saving and redirects back to the summary page' do
         # ensure we have at least an additional saving
-        saving = crime_application.savings.create!(saving_type: SavingType::CASH_ISA)
+        saving = crime_application.savings.create!(
+          saving_type: SavingType::CASH_ISA,
+          ownership_type: 'applicant'
+        )
 
         expect do
           delete steps_capital_savings_path(id: crime_application, saving_id: saving)

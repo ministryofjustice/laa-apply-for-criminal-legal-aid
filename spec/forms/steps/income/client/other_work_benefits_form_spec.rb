@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
-  # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -12,7 +11,8 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
     }
   end
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) { CrimeApplication.new applicant: }
+  let(:applicant) { Applicant.new }
   let(:income) { Income.new(crime_application:) }
   let(:income_payment) {
     IncomePayment.new(crime_application: crime_application,
@@ -21,12 +21,6 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
 
   let(:applicant_other_work_benefit_received) { nil }
   let(:amount) { nil }
-
-  before do
-    allow(crime_application.income_payments).to receive_message_chain(
-      :for_client, :work_benefits
-    ).and_return(income_payment)
-  end
 
   describe '#build' do
     subject(:form) { described_class.build(crime_application) }
@@ -39,9 +33,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
     }
 
     before do
-      allow(crime_application.income_payments).to receive_message_chain(
-        :for_client, :work_benefits
-      ).and_return(existing_income_payment)
+      allow(applicant).to receive(:income_payments).and_return(double(work_benefits: existing_income_payment))
       income.applicant_other_work_benefit_received = 'yes'
     end
 
@@ -137,5 +129,4 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
       end
     end
   end
-  # rubocop:enable RSpec/MessageChain
 end
