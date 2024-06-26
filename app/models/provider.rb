@@ -4,6 +4,8 @@ class Provider < ApplicationRecord
 
   store_accessor :settings,
                  :selected_office_code,
+                 :legal_rep_has_partner_declaration,
+                 :legal_rep_no_partner_declaration_reason,
                  :legal_rep_first_name,
                  :legal_rep_last_name,
                  :legal_rep_telephone
