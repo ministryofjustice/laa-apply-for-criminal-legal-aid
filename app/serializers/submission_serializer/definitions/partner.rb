@@ -30,7 +30,7 @@ module SubmissionSerializer
           json.conflict_of_interest partner_detail.conflict_of_interest
           json.has_same_address_as_client partner_detail.has_same_address_as_client
 
-          json.is_included_in_means_assessment MeansStatus.new(self).include_partner_in_means_assessment?
+          json.is_included_in_means_assessment MeansStatus.include_partner?(self)
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

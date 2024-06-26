@@ -8,16 +8,12 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
+      partner_detail: instance_double(PartnerDetail, involvement_in_case:),
       partner: partner
     )
   end
 
-  let(:applicant) do
-    double(
-      Applicant,
-      has_partner:
-    )
-  end
+  let(:applicant) { double(Applicant) }
 
   let(:partner) do
     double(
@@ -34,11 +30,10 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
   let(:benefit_check_status) { nil }
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
-  let(:has_partner) { 'yes' }
+  let(:involvement_in_case) { 'none' }
 
   before do
     allow(partner).to receive(:benefit_check_status).and_return(benefit_check_status)
-    allow(applicant).to receive(:has_partner).and_return(has_partner)
   end
 
   describe '#name' do
@@ -53,7 +48,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
     end
 
     context 'when the applicant has no partner' do
-      let(:has_partner) { 'no' }
+      let(:involvement_in_case) { 'victim' }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)

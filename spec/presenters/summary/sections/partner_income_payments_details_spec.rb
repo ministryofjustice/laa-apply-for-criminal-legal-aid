@@ -8,9 +8,15 @@ describe Summary::Sections::PartnerIncomePaymentsDetails do
       CrimeApplication,
       to_param: '12345',
       income: income,
-      income_payments: income_payments
+      income_payments: income_payments,
+      applicant: applicant,
+      partner_detail: instance_double(PartnerDetail, involvement_in_case:),
+      partner: partner
     )
   end
+
+  let(:applicant) { double(Applicant) }
+  let(:partner) { double(Partner) }
 
   let(:income) do
     instance_double(
@@ -19,6 +25,7 @@ describe Summary::Sections::PartnerIncomePaymentsDetails do
     )
   end
 
+  let(:involvement_in_case) { 'none' }
   let(:income_payments) { [] }
   let(:partner_has_no_income_payments) { nil }
 

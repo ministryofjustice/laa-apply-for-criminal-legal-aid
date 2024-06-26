@@ -5,9 +5,13 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
   let(:crime_application) {
-    instance_double CrimeApplication, income: income, employments: [applicant_employment, partner_employment]
+    instance_double CrimeApplication, income: income, employments: [applicant_employment, partner_employment],
+partner_detail: partner_detail, partner: partner
   }
 
+  let(:partner) { instance_double(Partner) }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
+  let(:involvement_in_case) { 'none' }
   let(:deductions_double) { double('deductions_collection', complete: deductions) }
 
   let(:income) do

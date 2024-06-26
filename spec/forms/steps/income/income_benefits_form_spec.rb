@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Steps::Income::IncomeBenefitsForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { CrimeApplication.new(case: case_record) }
+  let(:crime_application) { CrimeApplication.new(case: case_record, applicant: Applicant.new) }
   let(:case_record) { Case.new }
 
   let(:allowed_types) do

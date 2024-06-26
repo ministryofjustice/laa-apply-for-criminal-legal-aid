@@ -32,7 +32,7 @@ module Steps
         end
 
         def delete
-          crime_application.income_benefits.for_partner.find_by(payment_type:)&.delete
+          crime_application.partner.income_benefits.find_by(payment_type:)&.delete
         end
 
         private

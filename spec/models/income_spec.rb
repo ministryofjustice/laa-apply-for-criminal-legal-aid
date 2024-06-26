@@ -40,8 +40,14 @@ RSpec.describe Income, type: :model do
     subject(:all_income_over_zero) { income.all_income_over_zero? }
 
     context 'when there are any income payments or benefits' do
+      let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+
       before do
-        crime_application = CrimeApplication.new(income:)
+        partner = Partner.new
+
+        crime_application = CrimeApplication.new(
+          income:, partner_detail:, partner:
+        )
 
         crime_application.income_payments = [
           IncomePayment.new(
@@ -85,6 +91,14 @@ RSpec.describe Income, type: :model do
 
       it 'calculates the correct total' do
         expect(income.all_income_total).to eq 600
+      end
+
+      context 'when partner has contrary interest' do
+        let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'victim') }
+
+        it 'only includes applicant payments' do
+          expect(income.all_income_total).to eq 200
+        end
       end
     end
 

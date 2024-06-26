@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
   subject(:serializer) { described_class.new(crime_application) }
 
-  let(:crime_application) { instance_double CrimeApplication, capital:, income: }
+  let(:crime_application) { instance_double CrimeApplication, capital:, income:, partner_detail:, partner: }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
+  let(:partner) { instance_double(Partner) }
+  let(:involvement_in_case) { 'none' }
 
   let(:capital) do
     instance_double(

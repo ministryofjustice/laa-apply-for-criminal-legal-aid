@@ -53,7 +53,10 @@ RSpec.describe 'Investments summary page', :authorized do
     context 'when there are other investments' do
       it 'deletes the investment and redirects back to the summary page' do
         # ensure we have at least an additional investment
-        investment = crime_application.investments.create!(investment_type: InvestmentType::SHARE_ISA)
+        investment = crime_application.investments.create!(
+          investment_type: InvestmentType::SHARE_ISA,
+          ownership_type: 'applicant'
+        )
 
         expect do
           delete steps_capital_investments_path(id: crime_application, investment_id: investment)

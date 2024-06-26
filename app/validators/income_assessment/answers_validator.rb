@@ -44,7 +44,7 @@ module IncomeAssessment
     def income_payments_complete?
       return true if record.has_no_income_payments == 'yes'
 
-      record.income_payments.for_client.present? && record.income_payments.for_client.all?(&:complete?)
+      applicant.income_payments.present? && applicant.income_payments.all?(&:complete?)
     end
 
     def partner_income_payments_complete?
@@ -52,13 +52,13 @@ module IncomeAssessment
       return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
       return true unless include_partner_in_means_assessment?
 
-      record.income_payments.for_partner.present? && record.income_payments.for_partner.all?(&:complete?)
+      partner.income_payments.present? && partner.income_payments.all?(&:complete?)
     end
 
     def income_benefits_complete?
       return true if record.has_no_income_benefits == 'yes'
 
-      record.income_benefits.for_client.present? && record.income_benefits.for_client.all?(&:complete?)
+      applicant.income_benefits.present? && applicant.income_benefits.all?(&:complete?)
     end
 
     def partner_income_benefits_complete?
@@ -66,7 +66,7 @@ module IncomeAssessment
       return true if crime_application.income.partner_has_no_income_benefits.to_s == 'yes'
       return true unless include_partner_in_means_assessment?
 
-      record.income_benefits.for_partner.present? && record.income_benefits.for_partner.all?(&:complete?)
+      partner.income_benefits.present? && partner.income_benefits.all?(&:complete?)
     end
 
     def dependants_complete?

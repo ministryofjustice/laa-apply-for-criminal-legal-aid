@@ -1,4 +1,4 @@
-class CrimeApplication < ApplicationRecord
+class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include TypeOfApplication
   include Passportable
 
@@ -18,13 +18,22 @@ class CrimeApplication < ApplicationRecord
   has_many :people, dependent: :destroy
   has_many :documents, dependent: :destroy
 
-  has_many :income_payments, dependent: :destroy
+  has_many(:income_payments,
+           ->(object) { where(ownership_type: object.ownership_types) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
   accepts_nested_attributes_for :income_payments, allow_destroy: true
 
-  has_many :outgoings_payments, dependent: :destroy
+  has_many(:outgoings_payments,
+           ->(object) { where(ownership_type: object.ownership_types) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
   accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
 
-  has_many :income_benefits, dependent: :destroy
+  has_many(:income_benefits,
+           ->(object) { where(ownership_type: object.ownership_types) },
+           inverse_of: :crime_application,
+           dependent: :destroy)
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
 
   # NOTE: Useful for testing, use carefully in logic
@@ -39,17 +48,17 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
 
   has_many(:savings,
-           -> { order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:investments,
-           -> { order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:national_savings_certificates,
-           -> { order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
@@ -59,7 +68,7 @@ class CrimeApplication < ApplicationRecord
   has_many :codefendants, through: :case
 
   has_many(:employments,
-           -> { order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            class_name: 'Employment',
            dependent: :destroy)
@@ -77,7 +86,7 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
 
   has_many(:businesses,
-           -> { order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
@@ -119,5 +128,14 @@ class CrimeApplication < ApplicationRecord
 
   def passporting_benefit_complete?
     valid?(:passporting_benefit)
+  end
+
+  # Used in scopes and associations such as savings, properties, etc
+  def ownership_types
+    if MeansStatus.include_partner?(self)
+      OwnershipType.values.map(&:to_s)
+    else
+      [OwnershipType::APPLICANT.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
+    end
   end
 end

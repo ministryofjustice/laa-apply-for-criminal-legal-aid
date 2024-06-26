@@ -9,7 +9,7 @@ module SubmissionSerializer
 
       def generate
         if respond_to?(:map)
-          map { |item| self.class.generate(item) }
+          filter_map { |item| self.class.generate(item) }
         elsif present?
           to_builder.attributes!
         end

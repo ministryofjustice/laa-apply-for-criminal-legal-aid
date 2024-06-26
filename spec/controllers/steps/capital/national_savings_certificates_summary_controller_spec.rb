@@ -6,7 +6,9 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesSummaryController, typ
   end
 
   context 'when national savings certificates present' do
-    let(:national_savings_certificates) { [NationalSavingsCertificate.new] }
+    let(:national_savings_certificates) {
+      [NationalSavingsCertificate.new(ownership_type: 'applicant')]
+    }
 
     it_behaves_like 'a generic step controller',
                     Steps::Capital::NationalSavingsCertificatesSummaryForm, Decisions::CapitalDecisionTree

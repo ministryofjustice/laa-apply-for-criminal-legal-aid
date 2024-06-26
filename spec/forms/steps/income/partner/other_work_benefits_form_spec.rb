@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
-  # rubocop:disable RSpec/MessageChain
   subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
@@ -12,7 +11,16 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
     }
   end
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) do
+    CrimeApplication.new(
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
+
   let(:income) { Income.new(crime_application:) }
   let(:partner_income_payment) {
     IncomePayment.new(crime_application: crime_application,
@@ -24,9 +32,7 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
   let(:amount) { nil }
 
   before do
-    allow(crime_application.income_payments).to receive_message_chain(
-      :for_partner, :work_benefits
-    ).and_return(partner_income_payment)
+    allow(partner).to receive(:income_payments).and_return(double(work_benefits: partner_income_payment))
   end
 
   describe '#build' do
@@ -41,9 +47,7 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
     }
 
     before do
-      allow(crime_application.income_payments).to receive_message_chain(
-        :for_partner, :work_benefits
-      ).and_return(existing_income_payment)
+      allow(partner).to receive(:income_payments).and_return(double(work_benefits: existing_income_payment))
       income.partner_other_work_benefit_received = 'yes'
     end
 
@@ -127,9 +131,7 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
         }
 
         before do
-          allow(crime_application.income_payments).to(
-            receive(:work_benefits).and_return(existing_income_payment)
-          )
+          allow(partner).to receive(:income_payments).and_return(double(work_benefits: existing_income_payment))
         end
 
         it 'resets the attributes before saving' do
@@ -139,5 +141,4 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
       end
     end
   end
-  # rubocop:enable RSpec/MessageChain
 end

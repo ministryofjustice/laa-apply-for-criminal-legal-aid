@@ -5,8 +5,10 @@ RSpec.describe Steps::Capital::HasNationalSavingsCertificatesController, type: :
                   Decisions::CapitalDecisionTree do
     context 'when National Saving Certificates present' do
       let(:existing_case) do
-        CrimeApplication.create(national_savings_certificates: [NationalSavingsCertificate.new],
-                                applicant: Applicant.new)
+        CrimeApplication.create(
+          national_savings_certificates: [NationalSavingsCertificate.new(ownership_type: 'applicant')],
+          applicant: Applicant.new,
+        )
       end
 
       describe '#edit' do

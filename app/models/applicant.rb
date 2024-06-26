@@ -11,6 +11,15 @@ class Applicant < Person
     through: :crime_application
   )
 
+  # :nocov:
+  # TOOD add coverage before release
+  has_many(
+    :outgoings_payments,
+    -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
+    through: :crime_application
+  )
+  # :nocov:
+
   has_many(
     :national_savings_certificates,
     -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
@@ -48,6 +57,13 @@ class Applicant < Person
 
   def separation_date
     partner_detail&.separation_date
+  end
+
+  def ownership_types
+    [
+      OwnershipType::APPLICANT.to_s,
+      OwnershipType::APPLICANT_AND_PARTNER.to_s
+    ]
   end
 
   def ownership_type
