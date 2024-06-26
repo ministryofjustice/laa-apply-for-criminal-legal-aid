@@ -73,6 +73,8 @@ RSpec.describe SubmissionSerializer::Application do
         provider_details: {
           office_code: nil,
           provider_email: nil,
+          legal_rep_has_partner_declaration: nil,
+          legal_rep_no_partner_declaration_reason: nil,
           legal_rep_first_name: nil,
           legal_rep_last_name: nil,
           legal_rep_telephone: nil

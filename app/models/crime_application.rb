@@ -88,6 +88,8 @@ class CrimeApplication < ApplicationRecord
   alias_attribute :reference, :usn
 
   store_accessor :provider_details,
+                 :legal_rep_has_partner_declaration,
+                 :legal_rep_no_partner_declaration_reason,
                  :provider_email,
                  :legal_rep_first_name,
                  :legal_rep_last_name,

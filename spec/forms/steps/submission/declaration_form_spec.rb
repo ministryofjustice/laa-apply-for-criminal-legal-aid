@@ -7,18 +7,25 @@ RSpec.describe Steps::Submission::DeclarationForm do
     {
       record: provider_record,
       crime_application: crime_application,
+      legal_rep_has_partner_declaration: rep_has_partner_declaration,
+      legal_rep_no_partner_declaration_reason: rep_no_declaration_reason,
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: legal_rep_telephone,
     }
   end
-
+  let(:include_partner_in_means_assessment) { false }
+  let(:rep_has_partner_declaration) { nil }
+  let(:rep_no_declaration_reason) { nil }
   let(:legal_rep_telephone) { '123456789' }
   let(:provider_record) { Provider.new(provider_attrs.merge(rep_details_attrs)) }
   let(:crime_application) { instance_double(CrimeApplication) }
-
   let(:provider_attrs) { { email: 'provider@example.com' } }
   let(:rep_details_attrs) { {} }
+
+  before do
+    allow(subject).to receive(:include_partner_in_means_assessment?).and_return(include_partner_in_means_assessment)
+  end
 
   describe '#fulfilment_errors' do
     it 'instantiate the presenter' do
@@ -40,6 +47,19 @@ RSpec.describe Steps::Submission::DeclarationForm do
       it { is_expected.to validate_presence_of(:legal_rep_last_name) }
       it { is_expected.to validate_presence_of(:legal_rep_telephone) }
 
+      context 'when partner is relevant to application' do
+        let(:include_partner_in_means_assessment) { true }
+
+        it { is_expected.to validate_is_a(:legal_rep_has_partner_declaration, YesNoAnswer) }
+
+        context 'when `has partner declaration` is no' do
+          let(:include_partner_in_means_assessment) { true }
+          let(:rep_has_partner_declaration) { 'no' }
+
+          it { is_expected.to validate_presence_of(:legal_rep_no_partner_declaration_reason) }
+        end
+      end
+
       context 'when `legal_rep_telephone` contains letters' do
         let(:legal_rep_telephone) { 'not a telephone_number' }
 
@@ -58,11 +78,24 @@ RSpec.describe Steps::Submission::DeclarationForm do
       end
     end
 
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when form validations pass' do
       let(:fulfilment_ok) { true }
 
       let(:expected_attrs) do
         {
+          'legal_rep_has_partner_declaration' => nil,
+          'legal_rep_no_partner_declaration_reason' => nil,
+          'legal_rep_first_name' => 'John',
+          'legal_rep_last_name' => 'Doe',
+          'legal_rep_telephone' => '123456789',
+        }
+      end
+
+      let(:provider_settings) do
+        {
+          'legal_rep_has_partner_declaration' => nil,
+          'legal_rep_no_partner_declaration_reason' => nil,
           'legal_rep_first_name' => 'John',
           'legal_rep_last_name' => 'Doe',
           'legal_rep_telephone' => '123456789',
@@ -84,7 +117,7 @@ RSpec.describe Steps::Submission::DeclarationForm do
           allow(crime_application).to receive(:update).and_return(true)
 
           expect(provider_record).to receive(:update).with(
-            expected_attrs
+            expected_attrs.compact_blank
           ).and_return(true)
 
           expect(subject.save).to be(true)
@@ -144,5 +177,6 @@ RSpec.describe Steps::Submission::DeclarationForm do
         subject.save
       end
     end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 end

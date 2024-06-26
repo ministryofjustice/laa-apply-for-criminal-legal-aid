@@ -2,13 +2,21 @@ module Steps
   module Submission
     class DeclarationForm < Steps::BaseFormObject
       class ApplicationFulfilmentError < StandardError; end
+      include TypeOfMeansAssessment
 
+      attribute :legal_rep_has_partner_declaration, :value_object, source: YesNoAnswer
+      attribute :legal_rep_no_partner_declaration_reason, :string
       attribute :legal_rep_first_name, :string
       attribute :legal_rep_last_name, :string
       attribute :legal_rep_telephone, :string
 
       # Very basic validation to allow numeric and common telephone number symbols
       TEL_REGEXP = /\A[0-9#+()-.]{7,18}\z/
+
+      validates_inclusion_of :legal_rep_has_partner_declaration, in: :choices,
+                             if: -> { include_partner_in_means_assessment? }
+      validates :legal_rep_no_partner_declaration_reason,
+                presence: true, if: -> { legal_rep_has_no_partner_declaration? }
 
       validates :legal_rep_first_name,
                 :legal_rep_last_name,
@@ -21,6 +29,10 @@ module Steps
       # essentially a top level sanity check. See `ApplicationFulfilmentValidator`
       validate :application_fulfilment
 
+      def choices
+        YesNoAnswer.values
+      end
+
       def legal_rep_telephone=(str)
         super(str.delete(' ')) if str
       end
@@ -30,6 +42,10 @@ module Steps
       end
 
       private
+
+      def legal_rep_has_no_partner_declaration?
+        legal_rep_has_partner_declaration&.no?
+      end
 
       def application_fulfilment
         return if errors.any? # if the declaration form already has errors
