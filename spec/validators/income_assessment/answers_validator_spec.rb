@@ -109,32 +109,57 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       let(:income_payments) { [] }
       let(:income_benefits) { [] }
 
-      let(:record_attributes) do
-        {
-          income_above_threshold: nil,
-          has_frozen_income_or_assets: nil,
-          has_no_income_payments: 'no',
-          has_no_income_benefits: 'no',
-          partner_has_no_income_payments: 'no',
-          partner_has_no_income_benefits: 'no',
-          client_has_dependants: nil,
-          manage_without_income: nil
-        }
+      context 'when extent of means is not known' do
+        let(:record_attributes) do
+          {
+            income_above_threshold: nil,
+            has_frozen_income_or_assets: nil,
+            has_no_income_payments: 'no',
+            has_no_income_benefits: 'no',
+            partner_has_no_income_payments: 'no',
+            partner_has_no_income_benefits: 'no',
+            client_has_dependants: nil,
+            manage_without_income: nil
+          }
+        end
+
+        before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
+
+        it 'adds errors for all failed validations' do
+          subject.validate
+
+          expect(subject.errors.of_kind?('income_before_tax', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
+        end
       end
 
-      before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
+      context 'when extent of means is known' do
+        let(:record_attributes) do
+          {
+            income_above_threshold: 'yes',
+            has_frozen_income_or_assets: nil,
+            has_no_income_payments: 'no',
+            has_no_income_benefits: 'no',
+            partner_has_no_income_payments: 'no',
+            partner_has_no_income_benefits: 'no',
+            client_has_dependants: nil,
+            manage_without_income: nil
+          }
+        end
 
-      it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
-        subject.validate
+        before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
 
-        expect(subject.errors.of_kind?('income_before_tax', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('income_payments', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('income_benefits', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('partner_income_payments', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('partner_income_benefits', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('dependants', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('manage_without_income', :incomplete)).to be(true)
-        expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
+        it 'adds errors for all failed validations' do
+          subject.validate
+
+          expect(subject.errors.of_kind?('income_payments', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('income_benefits', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('partner_income_payments', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('partner_income_benefits', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('dependants', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('manage_without_income', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
+        end
       end
     end
   end

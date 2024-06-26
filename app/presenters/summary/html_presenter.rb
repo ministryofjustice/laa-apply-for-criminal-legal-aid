@@ -29,6 +29,10 @@ module Summary
         income_benefits_details
         dependants
         partner_employment_details
+        partner_employment_income
+        partner_employments
+        partner_self_assessment_tax_bill
+        partner_work_benefits
         partner_income_payments_details
         partner_income_benefits_details
         other_income_details
@@ -81,9 +85,17 @@ module Summary
         income_payments_details
         income_benefits_details
         dependants
+      ],
+      partner_income: %i[
+        partner_employment_details
+        partner_employment_income
+        partner_employments
+        partner_self_assessment_tax_bill
+        partner_work_benefits
         partner_income_payments_details
         partner_income_benefits_details
-        partner_employment_details
+      ],
+      other_income: %i[
         other_income_details
       ]
     }.freeze
@@ -98,6 +110,14 @@ module Summary
 
     def income_sections
       build_sections(:income)
+    end
+
+    def partner_income_sections
+      build_sections(:partner_income)
+    end
+
+    def other_income_sections
+      build_sections(:other_income)
     end
 
     def outgoings_sections

@@ -13,4 +13,5 @@ module Errors
   class DateOfBirthPending < StandardError; end
   class EmploymentNotFound < NotFound; end
   class SubjectNotFound < NotFound; end
+  class CannotYetDetermineFullMeans < NotFound; end
 end

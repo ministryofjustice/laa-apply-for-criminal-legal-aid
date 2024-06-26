@@ -1,4 +1,4 @@
-module TypeOfMeansAssessment
+module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   delegate :applicant, :partner, :kase, :income, :outgoings, :income_payments, :income_benefits,
@@ -12,11 +12,23 @@ module TypeOfMeansAssessment
     !evidence_of_passporting_means_forthcoming?
   end
 
-  def requires_full_means_assessment?
+  def requires_full_means_assessment? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     return false unless requires_means_assessment?
     return true if income_above_threshold? || has_frozen_assets?
 
-    !summary_only? && !(no_property? && no_savings?)
+    raise Errors::CannotYetDetermineFullMeans unless income_below_threshold? && has_no_frozen_assets?
+
+    return false if summary_only? || committal?
+    return true if has_property? || has_savings?
+    return false if no_property? && no_savings?
+
+    raise Errors::CannotYetDetermineFullMeans
+  end
+
+  def extent_of_means_assessment_determined?
+    requires_full_means_assessment? || true
+  rescue Errors::CannotYetDetermineFullMeans
+    false
   end
 
   def requires_full_capital?
@@ -110,12 +122,24 @@ module TypeOfMeansAssessment
     income.client_owns_property == 'no'
   end
 
+  def has_property?
+    income.client_owns_property == 'yes'
+  end
+
+  def has_savings?
+    income.has_savings == 'yes'
+  end
+
   def no_savings?
     income.has_savings == 'no'
   end
 
   def has_frozen_assets?
-    income.has_frozen_income_or_assets == 'yes'
+    income&.has_frozen_income_or_assets == 'yes'
+  end
+
+  def has_no_frozen_assets?
+    income&.has_frozen_income_or_assets == 'no'
   end
 
   def income_below_threshold?
@@ -123,6 +147,6 @@ module TypeOfMeansAssessment
   end
 
   def income_above_threshold?
-    !income_below_threshold?
+    income&.income_above_threshold == 'yes'
   end
 end

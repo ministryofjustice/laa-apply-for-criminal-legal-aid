@@ -14,7 +14,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       partner_employments: partner_employments_double,
       kase: kase,
       partner_detail: partner_detail,
-      partner: nil
+      partner: nil,
+      appeal_no_changes?: false
     )
   end
 
@@ -315,7 +316,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
       it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
 
-    context 'when there are no income payments or benefits' do
+    context 'when there are no income payments, income benefits or employment income' do
       before { allow(income).to receive(:all_income_over_zero?).and_return(false) }
 
       it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
@@ -459,9 +460,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
   context 'when the step is `income_before_tax`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_before_tax }
+    let(:case_type) { 'committal' }
 
     before do
-      allow(income).to receive_messages(income_above_threshold:)
+      allow(income).to receive_messages(
+        income_above_threshold: income_above_threshold,
+        has_frozen_income_or_assets: nil,
+        client_owns_property: nil,
+        has_savings: nil
+      )
     end
 
     context 'when income is above the threshold' do
@@ -501,7 +508,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :frozen_income_savings_assets }
 
     before do
-      allow(income).to receive_messages(has_frozen_income_or_assets:)
+      allow(income).to receive_messages(
+        income_above_threshold: 'no',
+        has_frozen_income_or_assets: has_frozen_income_or_assets,
+        client_owns_property: nil,
+        has_savings: nil
+      )
     end
 
     context 'when they do not have frozen income or assets' do
@@ -584,7 +596,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :client_owns_property }
 
     before do
-      allow(income).to receive_messages(client_owns_property:)
+      allow(income).to receive_messages(
+        income_above_threshold: 'no',
+        has_frozen_income_or_assets: 'no',
+        client_owns_property: client_owns_property,
+        has_savings: nil,
+      )
     end
 
     context 'when they do not have property' do
@@ -726,20 +743,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when does not require full means assessment' do
       let(:requires_full_means_assessment) { false }
 
-      before do
-        allow(crime_application).to receive_messages(income_payments:, income_benefits:)
-      end
-
-      context 'when there are no payments' do
-        let(:income_payments) { [] }
-        let(:income_benefits) { [] }
+      context 'when income is zero' do
+        before do
+          allow(income).to receive(:all_income_over_zero?).and_return false
+        end
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
       end
 
-      context 'when there are payments or benefits' do
-        let(:income_payments) { [{ amount: 1234 }] }
-        let(:income_benefits) { [] }
+      context 'when income is above zero' do
+        before do
+          allow(income).to receive(:all_income_over_zero?).and_return true
+        end
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
@@ -757,7 +772,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when there are no payments' do
         before do
-          allow(crime_application).to receive_messages(income_payments: [], income_benefits: [])
+          allow(income).to receive(:all_income_over_zero?).and_return false
         end
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
@@ -765,20 +780,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       context 'when there are payments' do
         before do
-          allow(crime_application).to receive_messages(income_payments: [{ amount: 1234 }], income_benefits: [])
-
-          allow(income).to receive_messages(
-            income_above_threshold:,
-            has_frozen_income_or_assets:,
-            client_owns_property:,
-            has_savings:
-          )
+          allow(income).to receive(:all_income_over_zero?).and_return true
         end
-
-        let(:income_above_threshold) { YesNoAnswer::NO.to_s }
-        let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
-        let(:client_owns_property) { YesNoAnswer::NO.to_s }
-        let(:has_savings) { YesNoAnswer::NO.to_s }
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
@@ -866,30 +869,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
       it { is_expected.to have_destination(:partner_employment_status, :edit, id: crime_application) }
     end
 
-    context 'when there are no payments' do
+    context 'when income is zero' do
       before do
-        allow(crime_application).to receive_messages(income_payments: [], income_benefits: [])
+        allow(income).to receive(:all_income_over_zero?).and_return false
       end
 
       it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
     end
 
-    context 'when there are payments' do
+    context 'when income is above zero' do
       before do
-        allow(crime_application).to receive_messages(income_payments: [{ amount: 1234 }], income_benefits: [])
-
-        allow(income).to receive_messages(
-          income_above_threshold:,
-          has_frozen_income_or_assets:,
-          client_owns_property:,
-          has_savings:
-        )
+        allow(income).to receive(:all_income_over_zero?).and_return true
       end
-
-      let(:income_above_threshold) { YesNoAnswer::NO.to_s }
-      let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
-      let(:client_owns_property) { YesNoAnswer::NO.to_s }
-      let(:has_savings) { YesNoAnswer::NO.to_s }
 
       it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end

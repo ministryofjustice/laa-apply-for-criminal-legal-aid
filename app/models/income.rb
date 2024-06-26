@@ -6,6 +6,7 @@ class Income < ApplicationRecord
   has_many :businesses, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence
+  attribute :partner_self_assessment_tax_bill_amount, :pence
 
   validate on: :submission do
     answers_validator.validate
@@ -24,6 +25,10 @@ class Income < ApplicationRecord
   end
 
   def all_income_total
-    income_payments.sum { |p| p.amount.to_i } + income_benefits.sum { |p| p.amount.to_i }
+    income_payments.sum { |p| p.amount.to_i } + income_benefits.sum { |p| p.amount.to_i } + employments_total
+  end
+
+  def employments_total
+    crime_application.employments&.sum { |e| e.amount.to_i }
   end
 end
