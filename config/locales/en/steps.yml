@@ -699,7 +699,7 @@ en:
           heading: Review the application
       declaration:
         edit:
-          page_title: Declaration
+          page_title: Declarations
           legal_representative_legend: Legal representative
         fulfilment_errors:
           heading: You need to complete the following information before the application can be submitted
