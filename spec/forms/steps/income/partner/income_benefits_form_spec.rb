@@ -1,9 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Partner::IncomeBenefitsForm do
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { CrimeApplication.new(case: case_record) }
+  let(:crime_application) do
+    CrimeApplication.new(
+      case: case_record,
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
   let(:case_record) { Case.new }
 
   let(:allowed_types) do
@@ -121,4 +131,5 @@ RSpec.describe Steps::Income::Partner::IncomeBenefitsForm do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

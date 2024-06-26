@@ -3,7 +3,17 @@ require 'rails_helper'
 RSpec.describe Steps::Income::IncomePaymentsForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { CrimeApplication.new(case: Case.new, income: Income.new) }
+  let(:crime_application) do
+    CrimeApplication.new(
+      case: Case.new,
+      income: Income.new,
+      partner: partner,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
+
+  let(:partner) { Partner.new }
 
   let(:allowed_types) do
     %w[maintenance private_pension state_pension interest_investment student_loan_grant

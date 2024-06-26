@@ -6,7 +6,7 @@ RSpec.describe Steps::Capital::InvestmentsSummaryController, type: :controller d
   end
 
   context 'when investments present' do
-    let(:investments) { [Investment.new(investment_type: 'pep')] }
+    let(:investments) { [Investment.new(investment_type: 'pep', ownership_type: 'applicant')] }
 
     it_behaves_like 'a generic step controller',
                     Steps::Capital::InvestmentsSummaryForm, Decisions::CapitalDecisionTree

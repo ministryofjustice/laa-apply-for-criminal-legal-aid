@@ -6,7 +6,7 @@ RSpec.describe Steps::Capital::SavingsSummaryController, type: :controller do
   end
 
   context 'when savings present' do
-    let(:savings) { [Saving.new(saving_type: 'bank')] }
+    let(:savings) { [Saving.new(saving_type: 'bank', ownership_type: 'applicant')] }
 
     it_behaves_like 'a generic step controller',
                     Steps::Capital::SavingsSummaryForm, Decisions::CapitalDecisionTree

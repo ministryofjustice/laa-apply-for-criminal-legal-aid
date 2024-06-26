@@ -4,7 +4,13 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
   let(:form_class) { Steps::Capital::NationalSavingsCertificatesForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) do
+    CrimeApplication.create!(
+      partner: Partner.new,
+      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      applicant: Applicant.new
+    )
+  end
 
   describe '#edit' do
     context 'when application is not found' do
@@ -16,7 +22,7 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when application is found' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application:)
+        NationalSavingsCertificate.create!(crime_application: crime_application, ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -27,7 +33,7 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when National Savings Certificate is for another application' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!)
+        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!, ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -62,7 +68,7 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when National Savings Certificate is for another application' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!)
+        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!, ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -74,7 +80,7 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when an in progress application and National Savings Certificate is found' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application:)
+        NationalSavingsCertificate.create!(crime_application: crime_application, ownership_type: 'applicant')
       end
 
       before do

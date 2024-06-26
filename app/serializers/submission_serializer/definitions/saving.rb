@@ -10,6 +10,7 @@ module SubmissionSerializer
           json.account_balance account_balance_before_type_cast
           json.is_overdrawn is_overdrawn
           json.are_wages_paid_into_account are_wages_paid_into_account
+
           if include_partner_in_means_assessment?
             json.are_partners_wages_paid_into_account are_partners_wages_paid_into_account
           end

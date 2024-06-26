@@ -16,7 +16,8 @@ RSpec.describe Steps::Capital::InvestmentsController, type: :controller do
 
     context 'when application is found' do
       let(:investment) do
-        Investment.create!(investment_type: InvestmentType::BOND, crime_application: crime_application)
+        Investment.create!(investment_type: InvestmentType::BOND, crime_application: crime_application,
+                           ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -27,7 +28,8 @@ RSpec.describe Steps::Capital::InvestmentsController, type: :controller do
 
     context 'when investment is for another application' do
       let(:investment) do
-        Investment.create!(investment_type: InvestmentType::BOND, crime_application: CrimeApplication.create!)
+        Investment.create!(investment_type: InvestmentType::BOND, crime_application: CrimeApplication.create!,
+                           ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -62,7 +64,8 @@ RSpec.describe Steps::Capital::InvestmentsController, type: :controller do
 
     context 'when investment is for another application' do
       let(:investment) do
-        Investment.create!(investment_type: InvestmentType::BOND, crime_application: CrimeApplication.create!)
+        Investment.create!(investment_type: InvestmentType::BOND, crime_application: CrimeApplication.create!,
+                           ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do
@@ -74,7 +77,8 @@ RSpec.describe Steps::Capital::InvestmentsController, type: :controller do
 
     context 'when an in progress application and investment is found' do
       let(:investment) do
-        Investment.create!(investment_type: InvestmentType::BOND, crime_application: crime_application)
+        Investment.create!(investment_type: InvestmentType::BOND, crime_application: crime_application,
+                           ownership_type: 'applicant')
       end
 
       before do

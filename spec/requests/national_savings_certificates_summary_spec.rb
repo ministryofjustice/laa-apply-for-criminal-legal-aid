@@ -67,7 +67,7 @@ RSpec.describe 'NationalSavingsCertificates summary page', :authorized do
     context 'when there are other certificates' do
       it 'deletes the certificate and redirects back to the summary page' do
         # ensure we have at least an additional certificate
-        crime_application.national_savings_certificates.create!
+        crime_application.national_savings_certificates.create!(ownership_type: 'applicant')
 
         expect { delete destroy_path }.to change(NationalSavingsCertificate, :count).by(-1)
         expect(response).to have_http_status(:redirect)

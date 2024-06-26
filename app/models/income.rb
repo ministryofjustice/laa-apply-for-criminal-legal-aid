@@ -31,4 +31,12 @@ class Income < ApplicationRecord
   def employments_total
     crime_application.employments&.sum { |e| e.amount.to_i }
   end
+
+  def ownership_types
+    if MeansStatus.include_partner?(crime_application)
+      [OwnershipType::APPLICANT.to_s, OwnershipType::PARTNER.to_s]
+    else
+      [OwnershipType::APPLICANT.to_s]
+    end
+  end
 end

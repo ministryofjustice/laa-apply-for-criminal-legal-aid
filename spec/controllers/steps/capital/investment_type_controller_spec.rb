@@ -4,7 +4,8 @@ RSpec.describe Steps::Capital::InvestmentTypeController, type: :controller do
   it_behaves_like 'a generic step controller', Steps::Capital::InvestmentTypeForm, Decisions::CapitalDecisionTree do
     context 'when investments present' do
       let(:existing_case) do
-        CrimeApplication.create(investments: [Investment.new(investment_type: :bank)], applicant: Applicant.new)
+        CrimeApplication.create(investments: [Investment.new(investment_type: :bank, ownership_type: 'applicant')],
+                                applicant: Applicant.new)
       end
 
       describe '#edit' do
