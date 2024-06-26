@@ -99,19 +99,22 @@ partner_detail: partner_detail, partner: partner
         Deduction, deduction_type: 'income_tax',
                       amount_before_type_cast: 1000,
                       frequency: 'week',
-                      details: nil, annualized_amount: Money.new(100)
+                      details: nil,
+                      annualized_amount: Money.new(100)
       ),
       instance_double(
         Deduction, deduction_type: 'national_insurance',
                       amount_before_type_cast: 2000,
                       frequency: 'fortnight',
-                      details: nil, annualized_amount: Money.new(200)
+                      details: nil,
+                      annualized_amount: Money.new(200)
       ),
       instance_double(
         Deduction, deduction_type: 'other',
                       amount_before_type_cast: 3000,
                       frequency: 'annual',
-                      details: 'deduction details', annualized_amount: Money.new(300)
+                      details: 'deduction details',
+                      annualized_amount: Money.new(300)
       )
     ]
   end
@@ -131,7 +134,8 @@ partner_detail: partner_detail, partner: partner
                     ownership_type: 'applicant',
                     metadata: { before_or_after_tax: { 'value' => 'before_tax' } }.as_json,
                     deductions: deductions_double,
-                    complete?: true, annualized_amount: Money.new(1500))
+                    complete?: true,
+                    annualized_amount: Money.new(1500))
   end
 
   let(:partner_employment) do
@@ -149,7 +153,8 @@ partner_detail: partner_detail, partner: partner
                     ownership_type: 'partner',
                     metadata: { before_or_after_tax: { 'value' => 'after_tax' } }.as_json,
                     deductions: deductions_double,
-                    complete?: true, annualized_amount: Money.new(2500))
+                    complete?: true,
+                    annualized_amount: Money.new(2500))
   end
 
   describe '#generate' do # rubocop:disable RSpec/MultipleMemoizedHelpers
