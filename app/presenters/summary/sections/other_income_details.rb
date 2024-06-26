@@ -24,7 +24,7 @@ module Summary
       private
 
       def subject_type
-        return unless include_partner_in_means_assessment?
+        return SubjectType.new(:applicant) unless include_partner_in_means_assessment?
 
         SubjectType.new(:applicant_and_partner)
       end
