@@ -1,17 +1,14 @@
 module Steps
   module Client
-    class HasNinoForm < Steps::BaseFormObject
+    class NinoForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
       has_one_association :applicant
-
-      NINO_REGEXP = /\A(?!BG)(?!GB)(?!NK)(?!KN)(?!TN)(?!NT)(?!ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z][0-9]{6}([A-DFM])\z/
 
       attribute :has_nino, :value_object, source: YesNoAnswer
       attribute :nino, :string
 
       validates_inclusion_of :has_nino, in: :choices
-      validate :validate_nino, if: -> { client_has_nino? }
-      # TODO: Use NinoValidator CRIMAPP-970
+      validates_with NinoValidator, if: -> { client_has_nino? }
 
       def choices
         YesNoAnswer.values
@@ -22,14 +19,6 @@ module Steps
       end
 
       private
-
-      def validate_nino
-        if nino.blank?
-          crime_application.not_means_tested? ? return : errors.add(:nino, :blank)
-        end
-
-        errors.add(:nino, :invalid) unless NINO_REGEXP.match?(nino)
-      end
 
       def changed?
         !applicant.has_nino.eql?(has_nino.to_s) || nino_changed?
