@@ -35,6 +35,16 @@ module SubmissionSerializer
             json.partner_self_assessment_tax_bill_amount income.partner_self_assessment_tax_bill_amount_before_type_cast
             json.partner_self_assessment_tax_bill_frequency income.partner_self_assessment_tax_bill_frequency
           end
+
+          # Attribute required  CAA (crime application adaptor)
+          annualized_employment_payments = EmploymentIncomePaymentsCalculator.annualized_payments(crime_application)
+          json.employment_income_payments annualized_employment_payments do |attachment|
+            json.amount attachment[:amount]
+            json.income_tax attachment[:income_tax]
+            json.national_insurance attachment[:national_insurance]
+            json.frequency attachment[:frequency]
+            json.ownership_type attachment[:ownership_type]
+          end
         end
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
