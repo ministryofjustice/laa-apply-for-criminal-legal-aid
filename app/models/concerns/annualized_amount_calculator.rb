@@ -16,8 +16,6 @@ module AnnualizedAmountCalculator
         (amount.value * 12)
       when PaymentFrequencyType::ANNUALLY.to_s
         amount.value
-      else
-        raise 'Unsupported frequency'
       end
 
     Money.new(prorated_value)
