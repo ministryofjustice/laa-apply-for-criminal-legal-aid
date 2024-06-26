@@ -38,6 +38,12 @@ module Steps
       end
 
       def persist!
+        if employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+          ::Income.transaction do
+            reset_employments!
+          end
+        end
+
         income.update(
           attributes.merge(attributes_to_reset)
         )
@@ -49,16 +55,11 @@ module Steps
         }
       end
 
-      # def not_working?
-      #   employment_status&.include?(EmploymentStatus::NOT_WORKING.to_s)
-      # end
-
-      def before_save
-        return true unless not_working?
-
-        crime_application.client_employments&.destroy!
+      def reset_employments!
+        crime_application.client_employments&.destroy_all
         crime_application.income.reset_client_employment_fields!
-        crime_application.income_payments.for_client.employment&.destroy!
+        crime_application.applicant.income_payments.employment&.destroy!
+        crime_application.applicant.income_payments.work_benefits&.destroy!
       end
     end
   end

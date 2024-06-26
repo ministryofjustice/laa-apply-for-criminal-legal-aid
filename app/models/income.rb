@@ -44,6 +44,7 @@ class Income < ApplicationRecord
 
   def reset_client_employment_fields!
     update!(
+      income_above_threshold: nil,
       applicant_self_assessment_tax_bill: nil,
       applicant_self_assessment_tax_bill_amount: nil,
       applicant_self_assessment_tax_bill_frequency: nil,

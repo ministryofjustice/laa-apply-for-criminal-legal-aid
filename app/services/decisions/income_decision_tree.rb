@@ -127,7 +127,11 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        start_client_employment_journey
+        if crime_application.client_employments.empty?
+          start_client_employment_journey
+        else
+          edit('/steps/income/client/employments_summary')
+        end
       end
     end
 
@@ -135,7 +139,11 @@ module Decisions
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
       else
-        start_partner_employment_journey
+        if crime_application.partner_employments.empty?
+          start_partner_employment_journey
+        else
+          edit('/steps/income/partner/employments_summary')
+        end
       end
     end
 

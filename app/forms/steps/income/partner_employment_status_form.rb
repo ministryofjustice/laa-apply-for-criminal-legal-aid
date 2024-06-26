@@ -27,19 +27,20 @@ module Steps
       end
 
       def persist!
+        if partner_employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+          ::Income.transaction do
+            reset_employments!
+          end
+        end
+
         income.update(attributes)
       end
 
-      # def not_working?
-      #   employment_status&.include?(EmploymentStatus::NOT_WORKING.to_s)
-      # end
-
-      def before_save
-        return true unless not_working?
-
-        crime_application.partner_employments&.destroy!
+      def reset_employments!
+        crime_application.partner_employments&.destroy_all
         crime_application.income.reset_partner_employment_fields!
-        crime_application.income_payments.for_partner.employment&.destroy!
+        crime_application.partner.income_payments.employment&.destroy!
+        crime_application.partner.income_payments.work_benefits&.destroy!
       end
     end
   end
