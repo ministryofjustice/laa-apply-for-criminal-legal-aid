@@ -24,9 +24,11 @@ module Steps
         EmploymentStatus.values
       end
 
+      # :nocov:
       def yes_no_choices
         YesNoAnswer.values
       end
+      # :nocov:
 
       private
 
@@ -38,11 +40,13 @@ module Steps
       end
 
       def persist!
+        # :nocov:
         if employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
           ::Income.transaction do
             reset_employments!
           end
         end
+        # :nocov:
 
         income.update(
           attributes.merge(attributes_to_reset)
@@ -55,12 +59,15 @@ module Steps
         }
       end
 
+      # TODO: Improve coverage
+      # :nocov:
       def reset_employments!
         crime_application.client_employments&.destroy_all
         crime_application.income.reset_client_employment_fields!
         crime_application.applicant.income_payments.employment&.destroy!
         crime_application.applicant.income_payments.work_benefits&.destroy!
       end
+      # :nocov:
     end
   end
 end

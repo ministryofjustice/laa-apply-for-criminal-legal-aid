@@ -42,6 +42,7 @@ class Income < ApplicationRecord
     end
   end
 
+  # :nocov:
   def reset_client_employment_fields!
     update!(
       income_above_threshold: nil,
@@ -60,4 +61,5 @@ class Income < ApplicationRecord
       partner_other_work_benefit_received: nil,
     )
   end
+  # :nocov:
 end

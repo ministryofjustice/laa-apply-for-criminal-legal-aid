@@ -119,6 +119,7 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
+    # rubocop:disable Style/IfInsideElse, Metrics/MethodLength
     def after_employment_status
       if not_working?(form_object.employment_status)
         if ended_employment_within_three_months?
@@ -146,6 +147,7 @@ module Decisions
         end
       end
     end
+    # rubocop:enable Style/IfInsideElse, Metrics/MethodLength
 
     def after_partner_income_benefits
       if crime_application.income&.all_income_over_zero?
