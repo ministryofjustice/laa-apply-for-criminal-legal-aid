@@ -31,7 +31,9 @@ module Summary
       private
 
       def show_partner_premium_bonds?
-        capital.present? && capital.partner_has_premium_bonds.present?
+        capital.present? &&
+          MeansStatus.include_partner?(crime_application) &&
+          capital.partner_has_premium_bonds.present?
       end
 
       def partner_have_premium_bonds?

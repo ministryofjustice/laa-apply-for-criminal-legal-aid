@@ -4,7 +4,9 @@ module Summary
       SelfAssessmentTaxBillPayment = Struct.new(:amount, :frequency)
 
       def show?
-        income.present? && income.partner_self_assessment_tax_bill.present?
+        income.present? &&
+          MeansStatus.include_partner?(crime_application) &&
+          income.partner_self_assessment_tax_bill.present?
       end
 
       def answers # rubocop:disable Metrics/MethodLength
