@@ -1,4 +1,6 @@
 class Outgoings < ApplicationRecord
+  include MeansOwnershipScope
+
   belongs_to :crime_application
   has_many :outgoings_payments, through: :crime_application
 
@@ -18,13 +20,5 @@ class Outgoings < ApplicationRecord
 
   def answers_validator
     @answers_validator ||= OutgoingsAssessment::AnswersValidator.new(record: self)
-  end
-
-  def ownership_types
-    if MeansStatus.include_partner?(crime_application)
-      [OwnershipType::APPLICANT.to_s, OwnershipType::PARTNER.to_s]
-    else
-      [OwnershipType::APPLICANT.to_s]
-    end
   end
 end
