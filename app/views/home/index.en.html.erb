@@ -4,43 +4,14 @@
   <div class="govuk-grid-column-two-thirds">
     <%= render partial: 'shared/flash_banner' %>
 
-    <h1 class="govuk-heading-xl">
-      <%= service_name %>
-    </h1>
-
-    <% if FeatureFlags.means_journey.enabled? %>
-      <p class="govuk-body">
-      Use this service to apply for criminal legal aid. The application will be means tested.
-      </p>
-      <p class="govuk-body">
-      To use this service, your client must not have a partner and must be either:
-      </p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>receiving a passporting benefit, for example Universal Credit</li>
-        <li>not working</li>
-      </ul>
-
-      <p class="govuk-body">
-        If your client does not meet these criteria or you need to tell us about a change in financial circumstances,
-        <%= link_to 'apply using eForms', Settings.eforms_url %>.
-      </p>
-    <% else %>
-      <p class="govuk-body">
-        Use this service to apply for criminal legal aid if:
-      </p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>the case is ongoing</li>
-        <li>you know your client’s National Insurance number (if they are 18 years old or over)</li>
-        <li>your client does not have a partner</li>
-        <li>your client receives a passporting benefit, including Universal Credit</li>
-      </ul>
-
-      <p class="govuk-body">
-        Use <%= link_to 'eForms', Settings.eforms_url %> for all other applications.
-      </p>
-    <% end %>
+    <h1 class="govuk-heading-xl"><%= service_name %></h1>
+    <p class="govuk-body">Use this service to apply for criminal legal aid.</p>
+    <p class="govuk-body">You cannot use this service if:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>the application is non-means tested </li>
+      <li>your client, and any partner they have, are working or self-employed</li>
+    </ul>
+    <p class="govuk-body">For these types of applications, or to tell us about a change in financial circumstances, <%= link_to 'apply using eForms', Settings.eforms_url %>.</p>
 
     <%= button_to provider_saml_omniauth_authorize_path, method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
