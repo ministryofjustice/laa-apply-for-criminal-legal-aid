@@ -19,10 +19,10 @@
 
     <%= render @presenter.income_sections %>
 
-    <% if current_crime_application.client_has_partner == YesNoAnswer::YES.to_s %>
-    <h1 class="govuk-heading-l"><%= t('.subheading.partner') %></h1>
+    <% if MeansStatus.include_partner?(current_crime_application) %>
+      <h1 class="govuk-heading-l"><%= t('.subheading.partner') %></h1>
 
-    <%= render @presenter.partner_income_sections %>
+      <%= render @presenter.partner_income_sections %>
     <% end %>
 
     <%= render @presenter.other_income_sections %>

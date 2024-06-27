@@ -1,6 +1,7 @@
-class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class CrimeApplication < ApplicationRecord
   include TypeOfApplication
   include Passportable
+  include MeansOwnershipScope
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
@@ -128,14 +129,5 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def passporting_benefit_complete?
     valid?(:passporting_benefit)
-  end
-
-  # Used in scopes and associations such as savings, properties, etc
-  def ownership_types
-    if MeansStatus.include_partner?(self)
-      OwnershipType.values.map(&:to_s)
-    else
-      [OwnershipType::APPLICANT.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
-    end
   end
 end

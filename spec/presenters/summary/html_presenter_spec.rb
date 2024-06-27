@@ -281,6 +281,7 @@ describe Summary::HtmlPresenter do
             OtherCapitalDetails
             SupportingEvidence
             MoreInformation
+            Declarations
             LegalRepresentativeDetails
           ]
         end

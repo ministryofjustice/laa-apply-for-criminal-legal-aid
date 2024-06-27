@@ -66,6 +66,7 @@ en:
       first_court_hearing: First court hearing
       justification_for_legal_aid: Justification for legal aid
       passport_justification_for_legal_aid: Justification for legal aid
+      declarations: Declarations
       legal_representative_details: Legal representative
       employment_details: Employment
       income_details: Income
@@ -631,6 +632,19 @@ en:
       how_manage:
         question: How they cover outgoings that are more than income
       # END other outgoings details section
+
+      # BEGIN declarations section
+      legal_rep_has_client_declaration:
+        question: Declaration from client?
+        answers:
+          <<: *YESNO
+      legal_rep_has_partner_declaration:
+        question: Declaration from partner?
+        answers:
+          <<: *YESNO
+      legal_rep_no_partner_declaration_reason:
+        question: Reason for no partner declaration
+      # END declarations section
 
       # BEGIN legal representative details section
       legal_rep_first_name:

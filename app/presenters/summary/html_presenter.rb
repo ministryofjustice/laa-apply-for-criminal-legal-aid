@@ -50,6 +50,7 @@ module Summary
         other_capital_details
         supporting_evidence
         more_information
+        declarations
         legal_representative_details
       ],
       post_submission_evidence: %i[

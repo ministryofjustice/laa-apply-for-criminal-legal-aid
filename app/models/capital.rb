@@ -1,4 +1,6 @@
 class Capital < ApplicationRecord
+  include MeansOwnershipScope
+
   belongs_to :crime_application
   attribute :premium_bonds_total_value, :pence
   attribute :partner_premium_bonds_total_value, :pence
@@ -23,17 +25,6 @@ class Capital < ApplicationRecord
   def complete?
     valid?(:submission)
   end
-
-  # :nocov:
-  # TOOD add coverage before release
-  def ownership_types
-    if MeansStatus.include_partner?(crime_application)
-      OwnershipType.values.map(&:to_s)
-    else
-      [OwnershipType::APPLICANT.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
-    end
-  end
-  # :nocov:
 
   private
 
