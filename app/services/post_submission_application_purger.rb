@@ -1,5 +1,4 @@
 class PostSubmissionApplicationPurger < ApplicationPurger
-
   class << self
     def call(crime_application)
       new(crime_application).call
@@ -7,7 +6,7 @@ class PostSubmissionApplicationPurger < ApplicationPurger
   end
 
   def initialize(crime_application)
-    @crime_application = crime_application
+    super(crime_application, nil)
   end
   private_class_method :new
 
