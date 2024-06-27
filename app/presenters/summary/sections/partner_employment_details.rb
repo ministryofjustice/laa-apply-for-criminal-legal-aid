@@ -2,7 +2,9 @@ module Summary
   module Sections
     class PartnerEmploymentDetails < Sections::BaseSection
       def show?
-        income.present? && income.partner_employment_status.present? && super
+        income.present? &&
+          MeansStatus.include_partner?(crime_application) &&
+          income.partner_employment_status.present? && super
       end
 
       def answers

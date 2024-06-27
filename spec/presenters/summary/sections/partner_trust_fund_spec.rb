@@ -14,6 +14,10 @@ describe Summary::Sections::PartnerTrustFund do
     )
   end
 
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+  end
+
   describe '#name' do
     it { expect(subject.name).to eq(:partner_trust_fund) }
   end
