@@ -46,7 +46,7 @@ class Person < ApplicationRecord
   # :nocov:
   # TOOD add coverage before release
   def ownership_types
-    OwnershipType.values.map(&:to_s)
+    OwnershipType.values.map(&:to_s) << nil
   end
   # :nocov:
 end

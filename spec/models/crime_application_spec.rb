@@ -70,4 +70,6 @@ RSpec.describe CrimeApplication, type: :model do
       expect(subject.passporting_benefit_complete?).to be false
     end
   end
+
+  it_behaves_like 'it has a means ownership scope'
 end

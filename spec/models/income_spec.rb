@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Income, type: :model do
   subject(:income) { described_class.new }
 
+  it_behaves_like 'it has a means ownership scope'
+
   describe 'validations' do
     let(:answers_validator) { double('answers_validator') }
 

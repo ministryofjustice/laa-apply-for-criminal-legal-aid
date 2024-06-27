@@ -1,4 +1,6 @@
 class Income < ApplicationRecord
+  include MeansOwnershipScope
+
   belongs_to :crime_application
   has_many :income_payments, through: :crime_application
   has_many :income_benefits, through: :crime_application
@@ -30,13 +32,5 @@ class Income < ApplicationRecord
 
   def employments_total
     crime_application.employments&.sum { |e| e.amount.to_i }
-  end
-
-  def ownership_types
-    if MeansStatus.include_partner?(crime_application)
-      [OwnershipType::APPLICANT.to_s, OwnershipType::PARTNER.to_s]
-    else
-      [OwnershipType::APPLICANT.to_s]
-    end
   end
 end

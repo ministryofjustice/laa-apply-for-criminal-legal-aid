@@ -35,4 +35,6 @@ RSpec.describe Outgoings, type: :model do
       end
     end
   end
+
+  it_behaves_like 'it has a means ownership scope'
 end
