@@ -244,14 +244,6 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           nino: nil,
           involvement_in_case: 'victim',
           conflict_of_interest: nil,
-          benefit_type: nil,
-          last_jsa_appointment_date: nil,
-          benefit_check_result: false,
-          benefit_check_status: 'no_check_required',
-          will_enter_nino: nil,
-          has_benefit_evidence: nil,
-          confirm_details: nil,
-          confirm_dwp_result: nil,
           is_included_in_means_assessment: false
         }
 
