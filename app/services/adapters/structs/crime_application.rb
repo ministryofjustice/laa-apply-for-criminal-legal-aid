@@ -27,6 +27,7 @@ module Adapters
 
       def partner
         return @partner if @partner
+        return nil if client_details.partner.blank?
 
         struct = Structs::Partner.new(client_details.partner)
 
