@@ -85,13 +85,14 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
 
       let(:json_output) do
         {
-          will_benefit_from_trust_fund: 'yes',
-          trust_fund_amount_held: 1000,
-          trust_fund_yearly_dividend: 2000,
-          partner_will_benefit_from_trust_fund: 'yes',
-          partner_trust_fund_amount_held: 2000,
-          partner_trust_fund_yearly_dividend: 200,
-          has_frozen_income_or_assets: 'yes'
+          :will_benefit_from_trust_fund => 'yes',
+          :trust_fund_amount_held => 1000,
+          :trust_fund_yearly_dividend => 2000,
+          :partner_will_benefit_from_trust_fund => 'yes',
+          :partner_trust_fund_amount_held => 2000,
+          :partner_trust_fund_yearly_dividend => 200,
+          :has_frozen_income_or_assets => 'yes',
+          'has_no_other_assets' => 'yes'
         }.as_json
       end
 
@@ -104,12 +105,13 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
 
         let(:json_output) do
           {
-            will_benefit_from_trust_fund: 'yes',
-            trust_fund_amount_held: 1000,
-            trust_fund_yearly_dividend: 2000,
-            partner_will_benefit_from_trust_fund: 'yes',
-            partner_trust_fund_amount_held: 2000,
-            partner_trust_fund_yearly_dividend: 200
+            :will_benefit_from_trust_fund => 'yes',
+            :trust_fund_amount_held => 1000,
+            :trust_fund_yearly_dividend => 2000,
+            :partner_will_benefit_from_trust_fund => 'yes',
+            :partner_trust_fund_amount_held => 2000,
+            :partner_trust_fund_yearly_dividend => 200,
+            'has_no_other_assets' => 'yes'
           }.as_json
         end
 

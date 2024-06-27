@@ -26,12 +26,12 @@ module SubmissionSerializer
             )
             json.has_no_properties capital.has_no_properties
             json.properties Definitions::Property.generate(capital.properties)
-            json.has_no_other_assets capital.has_no_other_assets
           end
 
           json.will_benefit_from_trust_fund capital.will_benefit_from_trust_fund
           json.trust_fund_amount_held capital.trust_fund_amount_held_before_type_cast
           json.trust_fund_yearly_dividend capital.trust_fund_yearly_dividend_before_type_cast
+          json.has_no_other_assets capital.has_no_other_assets
 
           if include_partner_in_means_assessment?
             json.partner_will_benefit_from_trust_fund capital.partner_will_benefit_from_trust_fund
