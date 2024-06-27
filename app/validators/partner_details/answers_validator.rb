@@ -21,8 +21,11 @@ module PartnerDetails
       errors.add(:involvement_in_case, :incomplete) if record.involvement_in_case.blank?
       errors.add(:nino, :incomplete) unless nino?
       errors.add(:conflict_of_interest, :incomplete) unless conflict_of_interest?
-      errors.add(:has_same_address_as_client, :incomplete) unless same_address?
-      errors.add(:home_address, :incomplete) unless address?
+
+      if include_partner_in_means_assessment?
+        errors.add(:has_same_address_as_client, :incomplete) unless same_address?
+        errors.add(:home_address, :incomplete) unless address?
+      end
 
       errors.add(:base, :incomplete_records) if errors.present?
     end
@@ -42,11 +45,13 @@ module PartnerDetails
     end
 
     def address?
+      return true unless include_partner_in_means_assessment?
+
       record.has_same_address_as_client == 'no' ? crime_application.partner&.home_address.present? : true
     end
 
     def same_address?
-      return true unless record.involvement_in_case == 'none' || record.conflict_of_interest == 'no'
+      return true unless include_partner_in_means_assessment?
 
       record.has_same_address_as_client.present?
     end

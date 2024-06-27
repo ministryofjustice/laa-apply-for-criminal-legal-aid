@@ -120,7 +120,14 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       it { expect(subject.generate).to eq(applicant_without_partner.as_json) }
     end
 
-    context 'with partner' do
+    context 'with partner without conflict of interest' do
+      before do
+        allow(MeansStatus).to receive(:include_partner?).and_return(true)
+        allow(partner).to receive_messages(
+          home_address: nil,
+        )
+      end
+
       let(:client_has_partner) { 'yes' }
       let(:relationship_to_partner) { 'married_or_partnership' }
       let(:relationship_status) { nil }
@@ -177,16 +184,78 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
-          is_included_in_means_assessment: false
+          is_included_in_means_assessment: true
         }
 
         applicant_without_partner.deep_merge(client_details: { partner: partner_attributes })
       end
 
+      it { expect(subject.generate).to eq(applicant_with_partner.as_json) }
+    end
+
+    context 'with partner with conflict of interest' do
       before do
-        allow(partner).to receive_messages(
-          home_address: nil,
+        allow(MeansStatus).to receive(:include_partner?).and_return(false)
+      end
+
+      let(:client_has_partner) { 'yes' }
+      let(:relationship_to_partner) { 'married_or_partnership' }
+      let(:relationship_status) { nil }
+
+      let(:partner) do
+        instance_double(
+          Partner,
+          id: '123',
+          first_name: 'Fred',
+          last_name: 'Flint',
+          other_names: nil,
+          date_of_birth: nil,
+          has_nino: 'no',
+          nino: nil,
+          benefit_type: nil,
+          last_jsa_appointment_date: nil,
+          benefit_check_result: false,
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
+          confirm_details: nil,
+          confirm_dwp_result: nil,
         )
+      end
+
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          involvement_in_case: 'victim',
+          conflict_of_interest: nil,
+          has_same_address_as_client: nil,
+          relationship_to_partner: relationship_to_partner,
+          relationship_status: relationship_status,
+          separation_date: nil,
+        )
+      end
+
+      let(:applicant_with_partner) do
+        partner_attributes = {
+          first_name: 'Fred',
+          last_name: 'Flint',
+          other_names: nil,
+          date_of_birth: nil,
+          has_nino: 'no',
+          nino: nil,
+          involvement_in_case: 'victim',
+          conflict_of_interest: nil,
+          benefit_type: nil,
+          last_jsa_appointment_date: nil,
+          benefit_check_result: false,
+          benefit_check_status: 'no_check_required',
+          will_enter_nino: nil,
+          has_benefit_evidence: nil,
+          confirm_details: nil,
+          confirm_dwp_result: nil,
+          is_included_in_means_assessment: false
+        }
+
+        applicant_without_partner.deep_merge(client_details: { partner: partner_attributes })
       end
 
       it { expect(subject.generate).to eq(applicant_with_partner.as_json) }
