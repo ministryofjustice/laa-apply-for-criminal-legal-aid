@@ -148,7 +148,7 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
@@ -175,7 +175,7 @@ module Decisions
       end
     end
 
-    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
