@@ -129,6 +129,20 @@ RSpec.describe Steps::Income::EmploymentStatusForm do
             ).to be(false)
           end
         end
+
+        context 'when the employment_status was previously `employed`' do
+          let(:employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
+
+          it 'is also valid' do
+            expect(form).to be_valid
+            expect(
+              form.errors.of_kind?(
+                :ended_employment_within_three_months,
+                :present
+              )
+            ).to be(false)
+          end
+        end
       end
     end
   end

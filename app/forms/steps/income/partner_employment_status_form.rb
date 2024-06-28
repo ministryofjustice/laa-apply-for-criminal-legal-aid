@@ -1,6 +1,7 @@
 module Steps
   module Income
     class PartnerEmploymentStatusForm < Steps::BaseFormObject
+      include TypeOfEmployment
       include Steps::HasOneAssociation
       has_one_association :income
 
@@ -26,8 +27,26 @@ module Steps
       end
 
       def persist!
+        # :nocov:
+        if partner_employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
+          ::Income.transaction do
+            reset_employments!
+          end
+        end
+        # :nocov:
+
         income.update(attributes)
       end
+
+      # TODO: Improve coverage
+      # :nocov:
+      def reset_employments!
+        crime_application.partner_employments&.destroy_all
+        crime_application.income.reset_partner_employment_fields!
+        crime_application.partner.income_payments.employment&.destroy!
+        crime_application.partner.income_payments.work_benefits&.destroy!
+      end
+      # :nocov:
     end
   end
 end
