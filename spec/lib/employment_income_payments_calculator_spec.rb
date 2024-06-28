@@ -3,8 +3,15 @@ require 'rails_helper'
 describe EmploymentIncomePaymentsCalculator do
   subject { described_class.annualized_payments(crime_application) }
 
-  let(:crime_application) { CrimeApplication.new(income:) }
+  let(:crime_application) { CrimeApplication.new(income:, partner:, applicant:, partner_detail:) }
   let(:income) { Income.new(employment_status: ['employed']) }
+  let(:applicant) { Applicant.new }
+  let(:partner) { Partner.new }
+  let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+
+  before do
+    allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+  end
 
   describe '#annualized_payments' do
     context 'when single employment for client and partner' do

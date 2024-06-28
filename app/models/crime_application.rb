@@ -25,17 +25,16 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
   accepts_nested_attributes_for :income_payments, allow_destroy: true
 
-  has_many(:outgoings_payments,
-           ->(object) { where(ownership_type: object.ownership_types) },
-           inverse_of: :crime_application,
-           dependent: :destroy)
-  accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
-
   has_many(:income_benefits,
            ->(object) { where(ownership_type: object.ownership_types) },
            inverse_of: :crime_application,
            dependent: :destroy)
   accepts_nested_attributes_for :income_benefits, allow_destroy: true
+
+  has_many(:outgoings_payments,
+           inverse_of: :crime_application,
+           dependent: :destroy)
+  accepts_nested_attributes_for :outgoings_payments, allow_destroy: true
 
   # NOTE: Useful for testing, use carefully in logic
   has_many :payments, dependent: :destroy
@@ -68,11 +67,7 @@ class CrimeApplication < ApplicationRecord
   has_many :addresses, through: :people
   has_many :codefendants, through: :case
 
-  has_many(:employments,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
-           inverse_of: :crime_application,
-           class_name: 'Employment',
-           dependent: :destroy)
+  has_many(:employments, inverse_of: :crime_application, dependent: :destroy)
 
   has_many(:client_employments,
            -> { where(ownership_type: OwnershipType::APPLICANT.to_s).order(created_at: :asc) },
@@ -87,7 +82,7 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
 
   has_many(:businesses,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           ->(_object) { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 

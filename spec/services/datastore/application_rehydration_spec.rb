@@ -44,6 +44,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         dependants: all(be_a(Dependant)),
         outgoings: an_instance_of(Outgoings),
         outgoings_payments: all(be_a(OutgoingsPayment)),
+        employments: all(be_a(Employment)),
         additional_information: parent['additional_information'],
         income_payments: all(be_a(IncomePayment)),
         income_benefits: all(be_a(IncomeBenefit)),

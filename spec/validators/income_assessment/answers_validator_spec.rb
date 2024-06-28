@@ -14,7 +14,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     )
   end
 
-  let(:partner) { Partner.new }
+  let(:partner) { Partner.new(date_of_birth: '2000-01-01') }
 
   let(:requires_means_assessment?) { true }
 
@@ -145,6 +145,11 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
       end
 
       context 'when extent of means is known' do
+        before do
+          allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: true)
+          allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true)
+        end
+
         let(:record_attributes) do
           {
             income_above_threshold: 'yes',
@@ -157,8 +162,6 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
             manage_without_income: nil
           }
         end
-
-        before { allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true) }
 
         it 'adds errors for all failed validations' do
           subject.validate
@@ -572,6 +575,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
   describe '#manage_without_income_complete?' do
     context 'when both income_payments and income_benefits are empty' do
       before do
+        allow(MeansStatus).to receive(:full_means_required?).and_return(false)
         allow(record).to receive_messages(income_payments: [], income_benefits: [])
       end
 
