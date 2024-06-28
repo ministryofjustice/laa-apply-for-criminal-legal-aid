@@ -1,11 +1,22 @@
 module SubmissionSerializer
   module Sections
     class IncomeDetails < Sections::BaseSection
+      include TypeOfMeansAssessment
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
       def to_builder
         Jbuilder.new do |json|
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
+          if requires_full_means_assessment?
+            employments_arr = []
+            if income.employment_status.include? 'employed'
+              employments_arr << crime_application.client_employments
+            end
+
+            if income.partner_employment_status.include?('employed') && include_partner_in_means_assessment?
+              employments_arr << crime_application.partner_employments
+            end
+          end
           json.employments Definitions::Employment.generate(crime_application.employments)
           json.ended_employment_within_three_months income.ended_employment_within_three_months
           json.lost_job_in_custody income.lost_job_in_custody

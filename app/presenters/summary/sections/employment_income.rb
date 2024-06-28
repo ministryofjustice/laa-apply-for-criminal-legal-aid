@@ -1,8 +1,10 @@
 module Summary
   module Sections
     class EmploymentIncome < Sections::BaseSection
+      include TypeOfMeansAssessment
+
       def show?
-        income.present? && employment_income.present?
+        income.employment_status.include?('employed')
       end
 
       def answers
@@ -21,4 +23,16 @@ module Summary
       end
     end
   end
+end
+
+
+
+if employment_status == employed
+
+  if requires_full_means_assessment?
+    
+  end
+
+else
+
 end
