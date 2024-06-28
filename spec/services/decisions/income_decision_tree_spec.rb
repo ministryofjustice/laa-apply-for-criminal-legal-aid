@@ -223,8 +223,38 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        it 'redirects to the `partner/employment_income` page' do
-          expect(subject).to have_destination('/steps/income/partner/employment_income', :edit, id: crime_application)
+        context 'when route_to_partner_employment_income?' do
+          before do
+            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(true)
+          end
+
+          it 'redirects to the `partner/employment_income` page' do
+            expect(subject).to have_destination('/steps/income/partner/employment_income', :edit, id: crime_application)
+          end
+        end
+
+        context 'when no route_to_partner_employment_income?' do
+          before do
+            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(false)
+          end
+
+          context 'with partner employments present' do
+            let(:partner_employments_empty?) { true }
+
+            it 'redirects to the `partner/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                  id: crime_application)
+            end
+          end
+
+          context 'with partner employments not present' do
+            let(:partner_employments_empty?) { false }
+
+            it 'redirects to the `partner/employments_summary` page' do
+              expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+                                                  id: crime_application)
+            end
+          end
         end
       end
 
