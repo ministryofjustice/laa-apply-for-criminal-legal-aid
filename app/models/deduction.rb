@@ -1,4 +1,6 @@
 class Deduction < ApplicationRecord
+  include AnnualizedAmountCalculator
+
   # Ordering using deduction_type maintains the deduction order income_tax, national_insurance and other
   default_scope { order(deduction_type: :asc) }
 

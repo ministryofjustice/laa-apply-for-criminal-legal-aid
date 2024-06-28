@@ -1,4 +1,6 @@
 class Employment < ApplicationRecord
+  include AnnualizedAmountCalculator
+
   belongs_to :crime_application
 
   # Using UUIDs as the record IDs. We can't trust sequential ordering by ID

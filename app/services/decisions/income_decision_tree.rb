@@ -148,7 +148,7 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
@@ -164,18 +164,28 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_employer_details(client_employment)
+          if crime_application.client_employments.empty?
+            redirect_to_employer_details(client_employment)
+          else
+            edit('/steps/income/client/employments_summary')
+          end
         else
           show(:employed_exit)
         end
       end
     end
 
-    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          edit('/steps/income/partner/employment_income')
+          return edit('/steps/income/partner/employment_income') if route_to_partner_employment_income?
+
+          if crime_application.partner_employments.empty?
+            redirect_to_partner_employer_details(partner_employment)
+          else
+            edit('/steps/income/partner/employments_summary')
+          end
         else
           show(:employed_exit)
         end
@@ -187,12 +197,25 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_partner_employer_details(partner_employment)
+          if crime_application.partner_employments.empty?
+            redirect_to_partner_employer_details(partner_employment)
+          else
+            edit('/steps/income/partner/employments_summary')
+          end
         else
           show(:self_employed_exit)
         end
       end
     end
+
+    # :nocov:
+    def route_to_partner_employment_income?
+      income.values_at(:income_above_threshold,
+                       :has_frozen_income_or_assets,
+                       :client_owns_property,
+                       :has_savings).all? YesNoAnswer::No.to_s
+    end
+    # :nocov:
 
     def redirect_to_employer_details(employment)
       edit('/steps/income/client/employer_details', employment_id: employment)
@@ -232,7 +255,11 @@ module Decisions
 
     def employment_start
       if requires_full_means_assessment?
-        redirect_to_employer_details(client_employment)
+        if crime_application.client_employments.empty?
+          redirect_to_employer_details(client_employment)
+        else
+          edit('/steps/income/client/employments_summary')
+        end
       else
         edit('/steps/income/client/employment_income')
       end
