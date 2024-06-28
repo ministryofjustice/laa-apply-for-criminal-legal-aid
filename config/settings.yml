@@ -26,7 +26,7 @@ feature_flags:
   partner_journey:
     local: true
     staging: true
-    production: false
+    production: true
   employment_journey:
     local: true
     staging: false
