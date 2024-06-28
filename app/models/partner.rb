@@ -35,6 +35,12 @@ class Partner < Person
     through: :crime_application
   )
 
+  has_many(
+    :employments,
+    -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
+    through: :crime_application
+  )
+
   # :nocov:
   # TOOD add coverage before release
   def ownership_types

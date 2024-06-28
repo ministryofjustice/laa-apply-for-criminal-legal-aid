@@ -86,7 +86,7 @@ module Decisions
 
     def client_employment
       @client_employment ||= if incomplete_client_employments.empty?
-                               current_crime_application.client_employments.create!
+                               current_crime_application.applicant.employments.create!
                              else
                                incomplete_client_employments.first
                              end
@@ -94,7 +94,7 @@ module Decisions
 
     def partner_employment
       @partner_employment ||= if incomplete_partner_employments.empty?
-                                current_crime_application.partner_employments.create!
+                                current_crime_application.partner.employments.create!
                               else
                                 incomplete_partner_employments.first
                               end
@@ -103,14 +103,14 @@ module Decisions
     def after_client_employments_summary
       return edit('/steps/income/client/self_assessment_tax_bill') if form_object.add_client_employment.no?
 
-      employment = current_crime_application.client_employments.create!
+      employment = current_crime_application.applicant.employments.create!
       redirect_to_employer_details(employment)
     end
 
     def after_partner_employments_summary
       return edit('/steps/income/partner/self_assessment_tax_bill') if form_object.add_partner_employment.no?
 
-      employment = current_crime_application.partner_employments.create!
+      employment = current_crime_application.partner.employments.create!
       redirect_to_partner_employer_details(employment)
     end
 
@@ -164,7 +164,7 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          if crime_application.client_employments.empty?
+          if crime_application.applicant.employments.empty?
             redirect_to_employer_details(client_employment)
           else
             edit('/steps/income/client/employments_summary')
@@ -181,7 +181,7 @@ module Decisions
         if FeatureFlags.employment_journey.enabled?
           return edit('/steps/income/partner/employment_income') if route_to_partner_employment_income?
 
-          if crime_application.partner_employments.empty?
+          if crime_application.partner.employments.empty?
             redirect_to_partner_employer_details(partner_employment)
           else
             edit('/steps/income/partner/employments_summary')
@@ -197,7 +197,7 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          if crime_application.partner_employments.empty?
+          if crime_application.partner.employments.empty?
             redirect_to_partner_employer_details(partner_employment)
           else
             edit('/steps/income/partner/employments_summary')
@@ -226,28 +226,28 @@ module Decisions
     end
 
     def after_income_before_tax
-      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+      return after_extent_of_means if extent_of_means_assessment_determined?
 
       edit(:frozen_income_savings_assets)
     end
 
     def after_frozen_income_savings_assets
-      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+      return after_extent_of_means if extent_of_means_assessment_determined?
 
       edit(:client_owns_property)
     end
 
     def after_client_owns_property
-      return after_extent_of_means_determined if extent_of_means_assessment_determined?
+      return after_extent_of_means if extent_of_means_assessment_determined?
 
       edit(:has_savings)
     end
 
     def after_has_savings
-      after_extent_of_means_determined
+      after_extent_of_means
     end
 
-    def after_extent_of_means_determined
+    def after_extent_of_means
       return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
 
       employment_start
@@ -255,7 +255,7 @@ module Decisions
 
     def employment_start
       if requires_full_means_assessment?
-        if crime_application.client_employments.empty?
+        if crime_application.applicant.employments.empty?
           redirect_to_employer_details(client_employment)
         else
           edit('/steps/income/client/employments_summary')
@@ -299,11 +299,11 @@ module Decisions
     end
 
     def incomplete_client_employments
-      crime_application.client_employments.reject(&:complete?)
+      crime_application.applicant.employments.reject(&:complete?)
     end
 
     def incomplete_partner_employments
-      crime_application.partner_employments.reject(&:complete?)
+      crime_application.partner.employments.reject(&:complete?)
     end
 
     def employed?

@@ -69,7 +69,7 @@ class CrimeApplication < ApplicationRecord
   has_many :codefendants, through: :case
 
   has_many(:employments,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           ->(object) { where(ownership_type: object.employent_ownership_types).order(created_at: :asc) },
            inverse_of: :crime_application,
            class_name: 'Employment',
            dependent: :destroy)

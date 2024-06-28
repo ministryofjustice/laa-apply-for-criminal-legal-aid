@@ -14,7 +14,7 @@ class EmploymentIncomePaymentsCalculator
         end
       else
         # employments loop for client and partner
-        grouped_employments(crime_application.employments).map do |ownership_type, employments_array|
+        grouped_employments(crime_application.income.employments).map do |ownership_type, employments_array|
           {
             amount: annual_income(employments_array),
             income_tax: annual_deduction(employments_array, :income_tax),

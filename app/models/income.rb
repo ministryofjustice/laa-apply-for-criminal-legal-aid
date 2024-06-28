@@ -1,5 +1,6 @@
 class Income < ApplicationRecord
   include MeansOwnershipScope
+  include PersonEmployments
 
   belongs_to :crime_application
   has_many :income_payments, through: :crime_application
@@ -32,5 +33,33 @@ class Income < ApplicationRecord
 
   def employments_total
     crime_application.employments&.sum { |e| e.amount.to_i }
+  end
+
+  def employments
+    return [] unless known_to_be_full_means?
+
+    crime_application.employments
+  end
+
+  def partner_employment_income
+    return nil if known_to_be_full_means? || partner.blank?
+
+    partner.income_payments.employment
+  end
+
+  def client_employment_income
+    return nil if known_to_be_full_means? || applicant.blank?
+
+    applicant.income_payments.employment
+  end
+
+  private
+
+  delegate :partner, :applicant, to: :crime_application
+
+  def known_to_be_full_means?
+    MeansStatus.full_means_required?(crime_application)
+  rescue Errors::CannotYetDetermineFullMeans
+    false
   end
 end

@@ -14,4 +14,21 @@ module MeansOwnershipScope
       [OwnershipType::APPLICANT.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s, nil]
     end
   end
+
+  def employent_ownership_types
+    scopes = []
+
+    if income
+      scopes << OwnershipType::APPLICANT.to_s if employed?(income.employment_status)
+      scopes << OwnershipType::PARTNER.to_s if employed?(income.partner_employment_status)
+    end
+
+    scopes & ownership_types
+  end
+
+  private
+
+  def employed?(statuses)
+    statuses.include? EmploymentStatus::EMPLOYED.to_s
+  end
 end

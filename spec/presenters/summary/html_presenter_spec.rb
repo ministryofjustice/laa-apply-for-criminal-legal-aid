@@ -13,8 +13,7 @@ describe Summary::HtmlPresenter do
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, partner_other_work_benefit_received: 'no', applicant_self_assessment_tax_bill: 'no', partner_self_assessment_tax_bill: 'no',
-                      has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil, manage_without_income: nil),
+      income: income,
       income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
       income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
@@ -25,6 +24,24 @@ describe Summary::HtmlPresenter do
     )
   end
   # rubocop:enable Layout/LineLength
+
+  let(:income) do
+    instance_double(
+      Income,
+      partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s],
+      client_employment_income: nil,
+      partner_employment_income: nil,
+      applicant_other_work_benefit_received: nil,
+      partner_other_work_benefit_received: 'no',
+      applicant_self_assessment_tax_bill: 'no',
+      partner_self_assessment_tax_bill: 'no',
+      has_no_income_payments: nil,
+      has_no_income_benefits: nil,
+      partner_has_no_income_payments: nil,
+      partner_has_no_income_benefits: nil,
+      manage_without_income: nil
+    )
+  end
 
   let(:datastore_application) do
     extra = {

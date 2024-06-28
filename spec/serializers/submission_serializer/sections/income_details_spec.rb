@@ -4,10 +4,20 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double CrimeApplication, income: income, employments: [applicant_employment, partner_employment],
-partner_detail: partner_detail, partner: partner
-  }
+  before do
+    allow(subject).to receive(:requires_full_means_assessment?).and_return(false)
+  end
+
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      income: income,
+      partner_detail:
+      partner_detail,
+      partner: partner,
+      employments: []
+    )
+  end
 
   let(:partner) { instance_double(Partner) }
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
@@ -17,6 +27,7 @@ partner_detail: partner_detail, partner: partner
   let(:income) do
     instance_double(
       Income,
+      employments: [applicant_employment, partner_employment],
       employment_status: ['not_working'],
       ended_employment_within_three_months: 'yes',
       lost_job_in_custody: 'yes',

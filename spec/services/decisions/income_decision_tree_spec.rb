@@ -10,14 +10,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
       id: 'uuid',
       income: income,
       dependants: dependants_double,
-      client_employments: employments_double,
-      partner_employments: partner_employments_double,
+      employments: [],
       kase: kase,
       partner_detail: partner_detail,
-      partner: nil,
+      partner: partner,
+      applicant: applicant,
       appeal_no_changes?: false
     )
   end
+
+  let(:applicant) { instance_double(Applicant, employments: employments_double) }
+  let(:partner) { instance_double(Partner, employments: partner_employments_double) }
 
   let(:employment_double) {
     instance_double(Employment, id: 'uuid1', ownership_type: OwnershipType::APPLICANT.to_s)
@@ -45,8 +48,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
   let(:feature_flag_self_employed_journey_enabled) { false }
-  let(:partner_detail) { nil }
-  let(:partner) { nil }
+  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
 
   let(:partner_employments_empty?) { true }
   let(:client_employments_empty?) { true }
