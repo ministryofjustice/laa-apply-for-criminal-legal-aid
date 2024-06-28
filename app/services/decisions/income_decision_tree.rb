@@ -119,7 +119,6 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
-    # rubocop:disable Style/IfInsideElse, Metrics/MethodLength
     def after_employment_status
       if not_working?(form_object.employment_status)
         if ended_employment_within_three_months?
@@ -128,28 +127,17 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        if crime_application.client_employments.empty?
-          start_client_employment_journey
-        else
-          edit('/steps/income/client/employments_summary')
-        end
+        start_client_employment_journey
       end
     end
-    # rubocop:enable Style/IfInsideElse, Metrics/MethodLength
 
-    # rubocop:disable Style/IfInsideElse
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
       else
-        if crime_application.partner_employments.empty?
-          start_partner_employment_journey
-        else
-          edit('/steps/income/partner/employments_summary')
-        end
+        start_partner_employment_journey
       end
     end
-    # rubocop:enable Style/IfInsideElse
 
     def after_partner_income_benefits
       if crime_application.income&.all_income_over_zero?
@@ -176,7 +164,11 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_employer_details(client_employment)
+          if crime_application.client_employments.empty?
+            redirect_to_employer_details(client_employment)
+          else
+            edit('/steps/income/client/employments_summary')
+          end
         else
           show(:employed_exit)
         end
@@ -199,7 +191,11 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_partner_employer_details(partner_employment)
+          if crime_application.partner_employments.empty?
+            redirect_to_partner_employer_details(partner_employment)
+          else
+            edit('/steps/income/partner/employments_summary')
+          end
         else
           show(:self_employed_exit)
         end
@@ -244,7 +240,11 @@ module Decisions
 
     def employment_start
       if requires_full_means_assessment?
-        redirect_to_employer_details(client_employment)
+        if crime_application.client_employments.empty?
+          redirect_to_employer_details(client_employment)
+        else
+          edit('/steps/income/client/employments_summary')
+        end
       else
         edit('/steps/income/client/employment_income')
       end
