@@ -1,4 +1,6 @@
 class IncomePayment < Payment
+  include AnnualizedAmountCalculator
+
   store_accessor :metadata,
                  [:before_or_after_tax]
 
