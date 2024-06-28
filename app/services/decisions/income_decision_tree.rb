@@ -179,7 +179,13 @@ module Decisions
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          edit('/steps/income/partner/employment_income')
+          return edit('/steps/income/partner/employment_income') if route_to_partner_employment_income?
+
+          if crime_application.partner_employments.empty?
+            redirect_to_partner_employer_details(partner_employment)
+          else
+            edit('/steps/income/partner/employments_summary')
+          end
         else
           show(:employed_exit)
         end
@@ -201,6 +207,15 @@ module Decisions
         end
       end
     end
+
+    # :nocov:
+    def route_to_partner_employment_income?
+      income.values_at(:income_above_threshold,
+                       :has_frozen_income_or_assets,
+                       :client_owns_property,
+                       :has_savings).all? YesNoAnswer::No.to_s
+    end
+    # :nocov:
 
     def redirect_to_employer_details(employment)
       edit('/steps/income/client/employer_details', employment_id: employment)
