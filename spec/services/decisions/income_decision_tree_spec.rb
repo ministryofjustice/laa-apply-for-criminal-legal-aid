@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable RSpec/MultipleMemoizedHelpers, RSpec/NestedGroups
 RSpec.describe Decisions::IncomeDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -609,7 +609,22 @@ RSpec.describe Decisions::IncomeDecisionTree do
         context 'when the employed feature flag is enabled' do
           let(:feature_flag_employment_journey_enabled) { true }
 
-          it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
+          context 'with client employments present' do
+            let(:client_employments_empty?) { true }
+
+            it 'redirects to the `client/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            end
+          end
+
+          context 'with client employments not present' do
+            let(:client_employments_empty?) { false }
+
+            it 'redirects to the `client/employments_summary` page' do
+              expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
+                                                  id: crime_application)
+            end
+          end
         end
 
         context 'when the employed feature flag is NOT enabled' do
@@ -655,7 +670,22 @@ RSpec.describe Decisions::IncomeDecisionTree do
         context 'when the employed feature flag is enabled' do
           let(:feature_flag_employment_journey_enabled) { true }
 
-          it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
+          context 'with client employments present' do
+            let(:client_employments_empty?) { true }
+
+            it 'redirects to the `client/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            end
+          end
+
+          context 'with client employments not present' do
+            let(:client_employments_empty?) { false }
+
+            it 'redirects to the `client/employments_summary` page' do
+              expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
+                                                  id: crime_application)
+            end
+          end
         end
 
         context 'when the employed feature flag is NOT enabled' do
@@ -696,8 +726,21 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when they have savings' do
         before { allow(subject).to receive(:requires_full_means_assessment?).and_return(true) }
 
-        it 'redirects to the `employer_details` page' do
-          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+        context 'with client employments present' do
+          let(:client_employments_empty?) { true }
+
+          it 'redirects to the `client/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+          end
+        end
+
+        context 'with client employments not present' do
+          let(:client_employments_empty?) { false }
+
+          it 'redirects to the `client/employments_summary` page' do
+            expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
+                                                id: crime_application)
+          end
         end
       end
 
@@ -1011,4 +1054,4 @@ RSpec.describe Decisions::IncomeDecisionTree do
   end
 end
 
-# rubocop:enable RSpec/MultipleMemoizedHelpers
+# rubocop:enable RSpec/MultipleMemoizedHelpers, RSpec/NestedGroups
