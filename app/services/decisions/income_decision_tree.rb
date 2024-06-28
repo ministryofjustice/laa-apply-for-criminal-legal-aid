@@ -119,6 +119,7 @@ module Decisions
       current_crime_application&.navigation_stack&.slice(-2) || root_path
     end
 
+    # rubocop:disable Style/IfInsideElse, Metrics/MethodLength
     def after_employment_status
       if not_working?(form_object.employment_status)
         if ended_employment_within_three_months?
@@ -127,17 +128,28 @@ module Decisions
           edit(:income_before_tax)
         end
       else
-        start_client_employment_journey
+        if crime_application.client_employments.empty?
+          start_client_employment_journey
+        else
+          edit('/steps/income/client/employments_summary')
+        end
       end
     end
+    # rubocop:enable Style/IfInsideElse, Metrics/MethodLength
 
+    # rubocop:disable Style/IfInsideElse
     def after_partner_employment_status
       if not_working?(form_object.partner_employment_status)
         edit(:income_payments_partner)
       else
-        start_partner_employment_journey
+        if crime_application.partner_employments.empty?
+          start_partner_employment_journey
+        else
+          edit('/steps/income/partner/employments_summary')
+        end
       end
     end
+    # rubocop:enable Style/IfInsideElse
 
     def after_partner_income_benefits
       if crime_application.income&.all_income_over_zero?
