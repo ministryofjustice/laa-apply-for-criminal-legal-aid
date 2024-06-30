@@ -264,7 +264,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.23.1)
+    minitest (5.24.1)
     moj-simple-jwt-auth (0.1.0)
       json
       jwt
@@ -362,7 +362,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.0)
+    rexml (3.3.1)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -397,7 +397,7 @@ GEM
     rubocop-performance (1.21.0)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails (2.25.0)
+    rubocop-rails (2.25.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -517,7 +517,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   rubocop-performance
-  rubocop-rails
+  rubocop-rails (>= 2.25.1)
   rubocop-rspec
   savon
   selenium-webdriver
@@ -531,7 +531,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 2.7.8p225
 
 BUNDLED WITH
    2.3.17
