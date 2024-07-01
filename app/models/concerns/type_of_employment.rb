@@ -7,10 +7,6 @@ module TypeOfEmployment
     income.employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
   end
 
-  def partner_not_working?
-    income.partner_employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
-  end
-
   def employed?
     income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s)
   end
