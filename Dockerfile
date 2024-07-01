@@ -69,7 +69,7 @@ RUN chown -R appuser:appgroup log tmp
 # ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem $RDS_COMBINED_CA_BUNDLE
 # NEW:
 ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/global-bundle.pem
-ADD https://truststore.pki.us-gov-west-1.rds.amazonaws.com/global/global-bundle.pem $RDS_COMBINED_CA_BUNDLE
+ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem $RDS_COMBINED_CA_BUNDLE
 RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
 ARG APP_BUILD_DATE
