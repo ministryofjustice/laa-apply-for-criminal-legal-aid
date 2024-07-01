@@ -7,11 +7,11 @@
     <ul class="govuk-list govuk-list--bullet app-inverted-text">
       <li>their application is non-means tested</li>
       <% if FeatureFlags.employment_journey.enabled? %>
-        <li>they are self-employed</li>
-        <li>they have a partner who is self-employed</li>
+        <li>they are self-employed, in a business partnership or are a director or shareholder in a private company </li>
+        <li>they have a partner who is self-employed, in a business partnership or is a director or shareholder in a private company </li>
       <% else %>
-        <li>they are working or self-employed</li>
-        <li>they have a partner who is working or self-employed</li>
+        <li>they are working or self-employed, in a business partnership or are a director or shareholder in a private company</li>
+        <li>they have a partner who is working or self-employed, in a business partnership or is a director or shareholder in a private company</li>
       <% end %>
     </ul>
 
