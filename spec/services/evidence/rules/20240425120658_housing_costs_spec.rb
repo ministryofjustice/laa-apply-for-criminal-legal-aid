@@ -12,6 +12,11 @@ RSpec.describe Evidence::Rules::HousingCosts do
 
   let(:outgoings) { Outgoings.new }
   let(:outgoings_payments) { [] }
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+  end
 
   it { expect(described_class.key).to eq :outgoings_housing_11 }
   it { expect(described_class.group).to eq :outgoings }
@@ -123,7 +128,43 @@ RSpec.describe Evidence::Rules::HousingCosts do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    before do
+      allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+    end
+
+    context 'when client meets housing cost threshold and has a partner' do
+      let(:outgoings_payments) do
+        [
+          OutgoingsPayment.new(
+            payment_type: OutgoingsPaymentType::MORTGAGE,
+            frequency: PaymentFrequencyType::FOUR_WEEKLY,
+            amount: 461.59,
+          ),
+        ]
+      end
+
+      let(:include_partner?) { true }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when client meets housing cost threshold and has no partner' do
+      let(:outgoings_payments) do
+        [
+          OutgoingsPayment.new(
+            payment_type: OutgoingsPaymentType::MORTGAGE,
+            frequency: PaymentFrequencyType::FOUR_WEEKLY,
+            amount: 461.59,
+          ),
+        ]
+      end
+
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -153,8 +194,8 @@ RSpec.describe Evidence::Rules::HousingCosts do
             prompt: ['their rental, tenancy agreement or mortgage statement'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['their rental, tenancy agreement or mortgage statement'],
           },
           other: {
             result: false,
