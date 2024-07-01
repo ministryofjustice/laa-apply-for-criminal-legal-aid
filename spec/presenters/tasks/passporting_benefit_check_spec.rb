@@ -9,7 +9,8 @@ RSpec.describe Tasks::PassportingBenefitCheck do
       to_param: '12345',
       applicant: applicant,
       kase: kase,
-      appeal_no_changes?: false
+      appeal_no_changes?: false,
+      is_means_tested: 'yes'
     )
   end
 
@@ -44,6 +45,7 @@ RSpec.describe Tasks::PassportingBenefitCheck do
     context 'when case type is appeal no changes' do
       before do
         allow(crime_application).to receive(:appeal_no_changes?).and_return true
+        allow(crime_application).to receive_messages(is_means_tested: 'yes')
       end
 
       it { is_expected.to be(true) }

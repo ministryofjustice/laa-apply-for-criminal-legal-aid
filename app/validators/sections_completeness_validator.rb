@@ -30,7 +30,7 @@ class SectionsCompletenessValidator
   delegate :client_details_complete?, :passporting_benefit_complete?, to: :crime_application
 
   def partner_detail_complete?
-    return true if appeal_no_changes? || applicant&.under18?
+    return true if applicant&.under18? || not_means_tested? || appeal_no_changes?
     return false unless partner_detail
 
     partner_detail.complete?

@@ -91,6 +91,10 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   private
 
+  def not_means_tested?
+    crime_application.is_means_tested == 'no'
+  end
+
   # involvement_in_case is stored on partner_detail when a database applications and
   # partner when a datastore application.
   def partner_involvement_in_case

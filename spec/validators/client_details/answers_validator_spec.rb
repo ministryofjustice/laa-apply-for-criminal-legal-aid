@@ -15,6 +15,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   before do
     allow(validator).to receive(:appeal_no_changes?) { appeal_no_changes? }
+    allow(record).to receive_messages(is_means_tested: true)
   end
 
   describe '#validate' do

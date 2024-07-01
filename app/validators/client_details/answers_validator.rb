@@ -47,13 +47,14 @@ module ClientDetails
     end
 
     def case_type_complete?
+      return true if not_means_tested?
       return false unless kase
 
       kase.case_type.present?
     end
 
     def has_nino_complete?
-      return true if appeal_no_changes? || applicant.under18?
+      return true if applicant.under18? || appeal_no_changes?
       return false if applicant.has_nino.blank?
       return true if applicant.has_nino == 'no'
 
@@ -61,13 +62,13 @@ module ClientDetails
     end
 
     def client_has_partner_complete?
-      return true if appeal_no_changes? || applicant.under18?
+      return true if applicant.under18? || not_means_tested? || appeal_no_changes?
 
       record.client_has_partner.present?
     end
 
     def relationship_status_complete?
-      return true if appeal_no_changes? || applicant.under18?
+      return true if applicant.under18? || not_means_tested? || appeal_no_changes?
       return true if record.client_has_partner == 'yes'
 
       record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?

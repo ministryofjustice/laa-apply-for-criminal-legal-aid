@@ -15,6 +15,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
 
   before do
     allow(record).to receive_messages(appeal_no_changes?: appeal_no_changes?)
+    allow(record).to receive_messages(is_means_tested: true)
     allow(applicant).to receive_messages(under18?: under18?)
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported?)
   end

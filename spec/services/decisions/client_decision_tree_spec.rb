@@ -8,9 +8,10 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:kase) { instance_double(Case, case_type:) }
   let(:case_type) { CaseType::SUMMARY_ONLY }
 
-  let(:not_means_tested) { nil }
   let(:appeal_no_changes?) { nil }
   let(:client_has_partner) { nil }
+  let(:is_means_tested_enabled) { false }
+  let(:not_means_tested?) { nil }
 
   before do
     allow(
@@ -20,29 +21,16 @@ RSpec.describe Decisions::ClientDecisionTree do
     allow(crime_application).to receive_messages(
       update: true,
       date_stamp: nil,
-      not_means_tested?: not_means_tested,
       appeal_no_changes?: appeal_no_changes?,
+      not_means_tested?: not_means_tested?,
     )
+
+    allow(FeatureFlags).to receive(:non_means_tested) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: is_means_tested_enabled)
+    }
   end
 
   it_behaves_like 'a decision tree'
-
-  context 'when the step is `is_means_tested`' do
-    let(:form_object) { double('FormObject', is_means_tested:) }
-    let(:step_name) { :is_means_tested }
-
-    context 'when answer is `yes`' do
-      let(:is_means_tested) { YesNoAnswer::YES }
-
-      it { is_expected.to have_destination(:details, :edit, id: crime_application) }
-    end
-
-    context 'when answer is `no`' do
-      let(:is_means_tested) { YesNoAnswer::NO }
-
-      it { is_expected.to have_destination('/crime_applications', :edit, id: crime_application) }
-    end
-  end
 
   context 'when the step is `has_partner`' do
     let(:form_object) { double('FormObject', client_has_partner:) }
@@ -66,53 +54,51 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :relationship_status }
 
-    context 'and application is not means tested' do
-      let(:not_means_tested) { true }
-
-      it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-    end
-
-    context 'application is means tested' do
-      let(:not_means_tested) { false }
-
-      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
-    end
+    it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
   end
 
   context 'when the step is `details`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    before do
-      allow(crime_application).to receive(:is_means_tested?).and_return(is_means_tested)
+    context 'and `non_means_tested` feature is enabled' do
+      let(:is_means_tested_enabled) { true }
+
+      it { is_expected.to have_destination(:is_means_tested, :edit, id: crime_application) }
     end
 
-    context 'and application is means tested' do
+    context 'and `non_means_tested` feature is not enabled' do
+      let(:is_means_tested_enabled) { false }
+
+      it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
+    end
+  end
+
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
+  context 'when the step is `is_means_tested`' do
+    let(:form_object) { double('FormObject', is_means_tested:) }
+    let(:step_name) { :is_means_tested }
+
+    context 'when answer is `yes`' do
       let(:is_means_tested) { YesNoAnswer::YES }
 
       it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
     end
 
-    context 'and application is not means tested' do
+    context 'when answer is `no`' do
       let(:is_means_tested) { YesNoAnswer::NO }
-      let(:not_means_tested) { true }
+      let(:not_means_tested?) { true }
 
-      context 'and application does not already have a date stamp' do
-        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
-      end
-
-      context 'and application already has a date stamp' do
+      context 'and the application already has a date stamp' do
         before do
           allow(crime_application).to receive(:date_stamp) { Time.zone.today }
-          allow(
-            Address
-          ).to receive(:find_or_create_by).with(person: applicant).and_return('address')
         end
 
-        let(:is_means_tested) { YesNoAnswer::NO }
-        let(:not_means_tested) { true }
-
         it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
+      end
+
+      context 'and the application has no date stamp' do
+        it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
       end
     end
   end
@@ -317,11 +303,13 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:step_name) { :has_nino }
 
     context 'when the application is means tested' do
+      let(:not_means_tested?) { false }
+
       it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
     end
 
     context 'when the application is not means tested' do
-      let(:not_means_tested) { true }
+      let(:not_means_tested?) { true }
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
     end
@@ -356,4 +344,5 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

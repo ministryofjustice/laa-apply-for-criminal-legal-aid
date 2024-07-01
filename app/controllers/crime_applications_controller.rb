@@ -16,11 +16,7 @@ class CrimeApplicationsController < DashboardController
 
   def create
     initialize_crime_application do |crime_application|
-      if FeatureFlags.non_means_tested.enabled?
-        redirect_to edit_steps_client_is_means_tested_path(crime_application)
-      else
-        redirect_to edit_crime_application_path(crime_application)
-      end
+      redirect_to edit_crime_application_path(crime_application)
     end
   end
 
