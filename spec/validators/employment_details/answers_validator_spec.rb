@@ -10,6 +10,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       errors:,
       crime_application:,
       employment_status:,
+      employments:,
       partner_employment_status:,
       ended_employment_within_three_months:,
       applicant_self_assessment_tax_bill:,
@@ -20,7 +21,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
   end
 
   let(:errors) { double(:errors, empty?: false) }
-  let(:crime_application) { instance_double(CrimeApplication, employments:, partner_detail:, partner:) }
+  let(:crime_application) { instance_double(CrimeApplication, partner_detail:, partner:) }
   let(:employment_status) {
     []
   }
