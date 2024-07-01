@@ -10,20 +10,25 @@ module Evidence
       group :outgoings
 
       client do |crime_application|
-        costs = [
-          crime_application.outgoings_payments.mortgage,
-          crime_application.outgoings_payments.rent,
-        ]
-
-        total = costs.compact.sum { |x| x.prorated_monthly.to_f }
-
-        total > THRESHOLD
+        HousingCostsExceedThreshold.for(crime_application)
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application, _partner|
+        MeansStatus.include_partner?(crime_application) && HousingCostsExceedThreshold.for(crime_application)
       end
+    end
+  end
+
+  class HousingCostsExceedThreshold
+    def self.for(crime_application)
+      costs = [
+        crime_application.outgoings_payments.mortgage,
+        crime_application.outgoings_payments.rent,
+      ]
+
+      total = costs.compact.sum { |x| x.prorated_monthly.to_f }
+
+      total > Rules::HousingCosts::THRESHOLD
     end
   end
 end
