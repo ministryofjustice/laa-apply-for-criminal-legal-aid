@@ -81,6 +81,13 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
       it { is_expected.to be false }
     end
+
+    context 'when partner has paid a self assessment tax bill' do
+      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes') }
+      let(:above_threshold) { 'no' }
+
+      it { is_expected.to be true }
+    end
   end
 
   describe '.other' do
@@ -91,7 +98,7 @@ RSpec.describe Evidence::Rules::SelfAssessed do
     let(:outgoings) do
       Outgoings.new(
         income_tax_rate_above_threshold: 'yes',
-        partner_income_tax_rate_above_threshold: 'yes'
+        partner_income_tax_rate_above_threshold: 'yes',
       )
     end
 

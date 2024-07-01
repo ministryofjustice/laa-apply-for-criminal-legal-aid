@@ -14,9 +14,12 @@ module Evidence
         end
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        if crime_application.income
+          crime_application.income.partner_other_work_benefit_received == 'yes'
+        else
+          false
+        end
       end
     end
   end
