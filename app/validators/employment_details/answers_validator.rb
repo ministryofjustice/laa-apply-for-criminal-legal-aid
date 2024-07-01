@@ -1,6 +1,5 @@
 module EmploymentDetails
   class AnswersValidator
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     include TypeOfMeansAssessment
     include TypeOfEmployment
 
@@ -78,7 +77,7 @@ module EmploymentDetails
       end
 
       return unless income.applicant_other_work_benefit_received == 'yes'
-      return if record.income_payments&.work_benefits.present? && record.income_payments&.work_benefits&.complete?
+      return if income.client_work_benefits.present? && income.client_work_benefits.complete?
 
       errors.add :applicant_other_work_benefit_received, :incomplete
     end
@@ -90,6 +89,5 @@ module EmploymentDetails
     end
 
     alias income record
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
   end
 end

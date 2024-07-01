@@ -7,7 +7,7 @@ describe Summary::Sections::EmploymentIncome do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      income: income,
+      income: income
     )
   end
 

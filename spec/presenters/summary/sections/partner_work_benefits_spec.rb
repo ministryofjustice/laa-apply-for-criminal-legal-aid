@@ -7,19 +7,15 @@ describe Summary::Sections::PartnerWorkBenefits do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      income: income,
-      income_payments: income_payments_double
+      income: income
     )
   end
-
-  let(:income_payments_double) {
-    double('income_payments_collection', detect: income_payment, for_partner: [income_payment])
-  }
 
   let(:income) do
     instance_double(
       Income,
-      partner_other_work_benefit_received:,
+      partner_other_work_benefit_received: partner_other_work_benefit_received,
+      partner_work_benefits: income_payment
     )
   end
 

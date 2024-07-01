@@ -82,6 +82,10 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     end
 
     context 'when all validations pass' do
+      before do
+        allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: true)
+      end
+
       let(:income_payments) do
         [
           IncomePayment.new(ownership_type: 'applicant', payment_type: 'maintenance', amount: 1, frequency: 'week'),

@@ -17,7 +17,7 @@ module SubmissionSerializer
           json.manage_other_details income.manage_other_details
           json.client_has_dependants income.client_has_dependants
           json.dependants Definitions::Dependant.generate(income.dependants.with_ages)
-          json.income_payments Definitions::Payment.generate(income_payments)
+          json.income_payments Definitions::Payment.generate(income.income_payments)
           json.income_benefits Definitions::Payment.generate(income.income_benefits)
           json.has_no_income_payments income.has_no_income_payments
           json.has_no_income_benefits income.has_no_income_benefits
@@ -46,14 +46,6 @@ module SubmissionSerializer
             json.ownership_type attachment[:ownership_type]
           end
         end
-      end
-
-      private
-
-      def income_payments
-        return income.income_payments unless requires_full_means_assessment?
-
-        income.income_payments.where.not(payment_type: IncomePaymentType::EMPLOYMENT.value)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
     end

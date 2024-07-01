@@ -31,6 +31,8 @@ describe Summary::HtmlPresenter do
       partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s],
       client_employment_income: nil,
       partner_employment_income: nil,
+      client_work_benefits: nil,
+      partner_work_benefits: [double],
       applicant_other_work_benefit_received: nil,
       partner_other_work_benefit_received: 'no',
       applicant_self_assessment_tax_bill: 'no',
@@ -110,6 +112,18 @@ describe Summary::HtmlPresenter do
               'amount' => 20_000,
               'frequency' => 'annual',
               'ownership_type' => 'partner'
+            },
+            {
+              'payment_type' => 'work_benefits',
+              'amount' => 20_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'partner'
+            },
+            {
+              'payment_type' => 'work_benefits',
+              'amount' => 20_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'applicant'
             },
           ],
           'income_benefits' => [

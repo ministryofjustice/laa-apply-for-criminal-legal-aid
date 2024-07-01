@@ -1,9 +1,8 @@
 class Income < ApplicationRecord
   include MeansOwnershipScope
-  include PersonEmployments
+  include EmployedIncome
 
   belongs_to :crime_application
-  has_many :income_payments, through: :crime_application
   has_many :income_benefits, through: :crime_application
   has_many :dependants, through: :crime_application
   has_many :businesses, through: :crime_application
@@ -18,7 +17,25 @@ class Income < ApplicationRecord
   def employments
     return [] unless known_to_be_full_means?
 
-    crime_application.employments.where(ownership_type: employment_ownership_types)
+    crime_application.employments.where(ownership_type: ownership_types & employed_owners)
+  end
+
+  def income_payments
+    return @income_payments if @income_payments
+
+    # disregard payments for people not included in means assessemnt
+    # as well as obsolete payment types
+    scope = crime_application.income_payments
+                             .owned_by(ownership_types)
+                             .not_of_type(obsolete_employed_income_payment_types)
+
+    # disregard employed income for people no longer employed
+    if not_employed_owners.present?
+      scope = scope.where('ownership_type NOT IN(?) AND payment_type IN(?)',
+                          not_employed_owners, employed_income_payment_types)
+    end
+
+    @income_payments = scope
   end
 
   def complete?
@@ -41,19 +58,12 @@ class Income < ApplicationRecord
     employments&.sum { |e| e.amount.to_i }
   end
 
-  def partner_employment_income
-    return nil if known_to_be_full_means? || partner.blank?
-    return nil unless MeansStatus.include_partner?(crime_application)
-    return nil unless partner_employed?
-
-    partner.income_payments.employment
+  def partner_employed?
+    partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 
-  def client_employment_income
-    return nil if known_to_be_full_means? || applicant.blank?
-    return nil unless client_employed?
-
-    applicant.income_payments.employment
+  def client_employed?
+    employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 
   private
@@ -64,22 +74,5 @@ class Income < ApplicationRecord
     MeansStatus.full_means_required?(crime_application)
   rescue Errors::CannotYetDetermineFullMeans
     false
-  end
-
-  def employment_ownership_types
-    scopes = []
-
-    scopes << OwnershipType::APPLICANT.to_s if client_employed?
-    scopes << OwnershipType::PARTNER.to_s if partner_employed?
-
-    scopes & ownership_types
-  end
-
-  def partner_employed?
-    partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
-  end
-
-  def client_employed?
-    employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 end

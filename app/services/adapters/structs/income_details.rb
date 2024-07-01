@@ -1,7 +1,7 @@
 module Adapters
   module Structs
     class IncomeDetails < BaseStructAdapter
-      include PersonEmployments
+      include EmployedIncome
 
       def employment_status
         # TODO: Handle this having multiple employment status' when we get designs for employed
@@ -33,6 +33,13 @@ module Adapters
         end
       end
 
+      def client_employment_income
+        income_payments.find do |payment|
+          payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s &&
+            payment.ownership_type == OwnershipType::APPLICANT.to_s
+        end
+      end
+
       def partner_employment_income
         income_payments.find do |payment|
           payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s &&
@@ -40,10 +47,17 @@ module Adapters
         end
       end
 
-      def client_employment_income
+      def client_work_benefits
         income_payments.find do |payment|
-          payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s &&
+          payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s &&
             payment.ownership_type == OwnershipType::APPLICANT.to_s
+        end
+      end
+
+      def partner_work_benefits
+        income_payments.find do |payment|
+          payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s &&
+            payment.ownership_type == OwnershipType::PARTNER.to_s
         end
       end
 
