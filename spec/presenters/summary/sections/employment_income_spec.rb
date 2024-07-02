@@ -7,16 +7,11 @@ describe Summary::Sections::EmploymentIncome do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      income: income,
-      income_payments: income_payments_double
+      income: income
     )
   end
 
-  let(:income_payments_double) { double('income_payments_collection', detect: income_payment) }
-
-  let(:income) do
-    instance_double(Income)
-  end
+  let(:income) { instance_double(Income, client_employment_income: income_payment) }
 
   let(:income_payment) do
     instance_double(
@@ -47,7 +42,6 @@ describe Summary::Sections::EmploymentIncome do
 
     context 'when there is no income' do
       let(:income) { nil }
-      let(:income_payments_double) { [] }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)

@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Income, type: :model do
-  subject(:income) { described_class.new }
+  subject(:income) { described_class.new(crime_application:) }
+
+  let(:crime_application) { CrimeApplication.new }
 
   it_behaves_like 'it has a means ownership scope'
 
@@ -9,8 +11,9 @@ RSpec.describe Income, type: :model do
     let(:answers_validator) { double('answers_validator') }
 
     before do
-      allow(IncomeAssessment::AnswersValidator).to receive(:new).with(record: income)
-                                                                .and_return(answers_validator)
+      allow(IncomeAssessment::AnswersValidator).to receive(:new).with(
+        record: income
+      ).and_return(answers_validator)
     end
 
     describe 'valid?(:submission)' do
@@ -38,17 +41,192 @@ RSpec.describe Income, type: :model do
     end
   end
 
+  describe '#employments' do
+    subject(:employments) { income.employments }
+
+    let(:employments_double) { double(:employments, where: ['results']) }
+
+    before do
+      allow(crime_application).to receive(:employments).and_return(employments_double)
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to eq [] }
+    end
+
+    context 'full means are not required' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_return(false)
+      end
+
+      it { is_expected.to eq [] }
+    end
+
+    context 'when full means required' do
+      before do
+        income.employment_status = ['employed']
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      context 'when partner is included in means' do
+        before do
+          allow(MeansStatus).to receive(:include_partner?).and_return(true)
+        end
+
+        it 'return applicant and partner employments' do
+          expect(employments).to eq(['results'])
+          expect(employments_double).to have_received(:where).with(
+            ownership_type: %w[applicant partner]
+          )
+        end
+
+        it 'does not return applicant if not employed' do
+          income.employment_status = ['self_employed']
+
+          expect(employments).to eq(['results'])
+          expect(employments_double).to have_received(:where).with(
+            ownership_type: ['partner']
+          )
+        end
+      end
+
+      context 'when partner is not included' do
+        before do
+          allow(MeansStatus).to receive(:include_partner?).and_return(false)
+        end
+
+        it 'return applicant and partner employments' do
+          expect(employments).to eq(['results'])
+          expect(employments_double).to have_received(:where).with(
+            ownership_type: ['applicant']
+          )
+        end
+      end
+    end
+  end
+
+  describe '#client_employment_income' do
+    subject(:client_employment_income) { income.client_employment_income }
+
+    let(:expected) {
+      instance_double(
+        IncomePayment,
+        ownership_type: OwnershipType::APPLICANT.to_s,
+        payment_type: IncomePaymentType::EMPLOYMENT.to_s
+      )
+    }
+
+    before do
+      allow(income).to receive(:income_payments).and_return(
+        [
+          expected,
+          instance_double(IncomePayment, ownership_type: OwnershipType::PARTNER.to_s,
+payment_type: IncomePaymentType::EMPLOYMENT.to_s),
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
+        ]
+      )
+    end
+
+    it { is_expected.to eq(expected) }
+  end
+
+  describe '#client_work_benefits' do
+    subject(:client_work_benefits) { income.client_work_benefits }
+
+    let(:expected) {
+      instance_double(
+        IncomePayment,
+        ownership_type: OwnershipType::APPLICANT.to_s,
+        payment_type: IncomePaymentType::WORK_BENEFITS.to_s
+      )
+    }
+
+    before do
+      allow(income).to receive(:income_payments).and_return(
+        [
+          expected,
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::EMPLOYMENT.to_s),
+          instance_double(IncomePayment, ownership_type: OwnershipType::PARTNER.to_s,
+payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
+        ]
+      )
+    end
+
+    it { is_expected.to eq(expected) }
+  end
+
+  describe '#partenr_work_benefits' do
+    subject(:partenr_work_benefits) { income.partner_work_benefits }
+
+    let(:expected) {
+      instance_double(
+        IncomePayment,
+        ownership_type: OwnershipType::PARTNER.to_s,
+        payment_type: IncomePaymentType::WORK_BENEFITS.to_s
+      )
+    }
+
+    before do
+      allow(income).to receive(:income_payments).and_return(
+        [
+          expected,
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::EMPLOYMENT.to_s),
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
+        ]
+      )
+    end
+
+    it { is_expected.to eq(expected) }
+  end
+
+  describe '#partner_employment_income' do
+    subject(:partner_employment_income) { income.partner_employment_income }
+
+    let(:expected) {
+      instance_double(
+        IncomePayment,
+        ownership_type: OwnershipType::PARTNER.to_s,
+        payment_type: IncomePaymentType::EMPLOYMENT.to_s
+      )
+    }
+
+    before do
+      allow(income).to receive(:income_payments).and_return(
+        [
+          expected,
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::EMPLOYMENT.to_s),
+          instance_double(IncomePayment, ownership_type: OwnershipType::APPLICANT.to_s,
+payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
+        ]
+      )
+    end
+
+    it { is_expected.to eq(expected) }
+  end
+
   describe '#all_income_over_zero?' do
     subject(:all_income_over_zero) { income.all_income_over_zero? }
 
     context 'when there are any income payments or benefits' do
-      let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
-
       before do
+        allow(MeansStatus).to receive(:full_means_required?).and_return(false)
         partner = Partner.new
+        applicant = Applicant.new
 
         crime_application = CrimeApplication.new(
-          income:, partner_detail:, partner:
+          income:, partner_detail:, partner:, applicant:
         )
 
         crime_application.income_payments = [
@@ -85,9 +263,13 @@ RSpec.describe Income, type: :model do
         income.partner_has_no_income_payments = 'no'
         income.has_no_income_benefits = 'no'
         income.partner_has_no_income_benefits = 'no'
+        income.employment_status = ['employed']
+        income.partner_employment_status = ['employed']
 
         crime_application.save!
       end
+
+      let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
 
       it { is_expected.to be true }
 
@@ -105,11 +287,18 @@ RSpec.describe Income, type: :model do
     end
 
     context 'when there is employment income' do
+      let(:crime_application) {
+        CrimeApplication.create!(
+          employments: [
+            Employment.new(amount: 12_000, ownership_type: 'applicant'),
+            Employment.new(amount: 21_000, ownership_type: 'partner')
+          ]
+        )
+      }
+
       before do
-        crime_application = CrimeApplication.new(income:)
-        crime_application.employments = [
-          Employment.new(amount: 12_000)
-        ]
+        income.employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
       end
 
       it { is_expected.to be true }
@@ -120,7 +309,9 @@ RSpec.describe Income, type: :model do
     end
 
     context 'when there are no income payments or benefits' do
-      before { CrimeApplication.new(income:) }
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_return(false)
+      end
 
       it { is_expected.to be false }
 

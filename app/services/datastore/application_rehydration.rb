@@ -30,6 +30,7 @@ module Datastore
         additional_information: parent.additional_information,
         income_payments: income_payments,
         income_benefits: income_benefits,
+        employments: employments,
         capital: capital,
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],
@@ -138,6 +139,10 @@ module Datastore
       Income.new(
         parent.income.serializable_hash
       )
+    end
+
+    def employments
+      parent.income.employments
     end
 
     def outgoings
