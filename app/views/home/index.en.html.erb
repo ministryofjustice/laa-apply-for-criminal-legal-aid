@@ -9,7 +9,11 @@
     <p class="govuk-body">You cannot use this service if:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>the application is non-means tested </li>
-      <li>your client, and any partner they have, is working or self-employed</li>
+      <% if FeatureFlags.employment_journey.enabled? %>
+        <li>your client, and any partner they have, is self-employed, in a business partnership or is a director or shareholder in a private company</li>
+      <% else %>
+        <li>your client, and any partner they have, is working or self-employed, in a business partnership or is a director or shareholder in a private company</li>
+      <% end %>
     </ul>
     <p class="govuk-body">For these types of applications, or to tell us about a change in financial circumstances, <%= link_to 'apply using eForms', Settings.eforms_url %>.</p>
 
