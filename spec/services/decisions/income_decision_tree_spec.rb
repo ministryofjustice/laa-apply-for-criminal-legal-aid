@@ -25,7 +25,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:partner_employment_double) {
     instance_double(Employment, id: 'uuid2', ownership_type: OwnershipType::PARTNER.to_s)
   }
-  let(:income) { instance_double(Income, employment_status:) }
+  let(:income) do
+    instance_double(
+      Income,
+      employment_status: employment_status,
+      client_employments: employments_double,
+      partner_employments: partner_employments_double
+    )
+  end
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) {
@@ -766,6 +773,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'with client employments not present' do
           let(:client_employments_empty?) { false }
+
+          before do
+            allow(income).to receive(:client_employments).and_return(employments_double)
+          end
 
           it 'redirects to the `client/employments_summary` page' do
             expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,

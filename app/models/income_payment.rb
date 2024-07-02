@@ -1,8 +1,10 @@
 class IncomePayment < Payment
   include AnnualizedAmountCalculator
 
-  store_accessor :metadata,
-                 [:before_or_after_tax]
+  store_accessor :metadata, [:before_or_after_tax]
+
+  scope :owned_by, ->(ownership_types) { where(ownership_type: ownership_types) }
+  scope :not_of_type, ->(payment_types) { where.not(payment_type: payment_types) }
 
   def self.private_pension
     where(payment_type: IncomePaymentType::PRIVATE_PENSION.value).order(created_at: :desc).first

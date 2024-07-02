@@ -1,9 +1,11 @@
 module Summary
   module Sections
     class ClientEmployments < Sections::BaseSection
-      def answers
-        return [] if employments.empty?
+      def show?
+        income.present? && employments.present?
+      end
 
+      def answers
         Components::Employment.with_collection(
           employments, show_actions: editable?, show_record_actions: headless?
         )
@@ -18,7 +20,7 @@ module Summary
       private
 
       def employments
-        @employments ||= crime_application.client_employments
+        @employments ||= income.client_employments
       end
     end
   end

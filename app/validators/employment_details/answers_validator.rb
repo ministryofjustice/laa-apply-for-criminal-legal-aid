@@ -1,6 +1,5 @@
 module EmploymentDetails
   class AnswersValidator
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     include TypeOfMeansAssessment
     include TypeOfEmployment
 
@@ -27,7 +26,7 @@ module EmploymentDetails
     def validate_partner_employment
       return unless include_partner_in_means_assessment?
 
-      errors.add :partner_employment_status, :incomplete if record.partner_employment_status.blank?
+      errors.add(:partner_employment_status, :incomplete) if record.partner_employment_status.blank?
     end
 
     def applicable?
@@ -55,9 +54,7 @@ module EmploymentDetails
     def validate_employment_details
       return unless requires_full_means_assessment?
 
-      if record.crime_application.employments.blank? || !record.crime_application.employments.all?(&:complete?)
-        errors.add :employments, :incomplete
-      end
+      errors.add(:employments, :incomplete) if record.employments.blank? || !record.employments.all?(&:complete?)
 
       validate_self_assessment_tax_bill
       validate_other_work_benefit
@@ -80,7 +77,7 @@ module EmploymentDetails
       end
 
       return unless income.applicant_other_work_benefit_received == 'yes'
-      return if record.income_payments&.work_benefits.present? && record.income_payments&.work_benefits&.complete?
+      return if income.client_work_benefits.present? && income.client_work_benefits.complete?
 
       errors.add :applicant_other_work_benefit_received, :incomplete
     end
@@ -92,6 +89,5 @@ module EmploymentDetails
     end
 
     alias income record
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
   end
 end
