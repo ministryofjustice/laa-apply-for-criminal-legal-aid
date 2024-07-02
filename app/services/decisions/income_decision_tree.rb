@@ -213,7 +213,7 @@ module Decisions
       income.values_at(:income_above_threshold,
                        :has_frozen_income_or_assets,
                        :client_owns_property,
-                       :has_savings).all? YesNoAnswer::No.to_s
+                       :has_savings).all? YesNoAnswer::NO.to_s
     end
     # :nocov:
 
