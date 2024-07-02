@@ -2,7 +2,7 @@ module Summary
   module Sections
     class PartnerWorkBenefits < Sections::BaseSection
       def show?
-        income.present? && income.partner_other_work_benefit_received.present?
+        income.present? && work_benefits.present?
       end
 
       def answers # rubocop:disable Metrics/MethodLength
@@ -23,12 +23,9 @@ module Summary
         answers
       end
 
-      # :nocov:
       def work_benefits
-        crime_application.income_payments
-                         .detect { |payment| (payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s) && (payment.ownership_type == OwnershipType::PARTNER.to_s) } # rubocop:disable Layout/LineLength
+        income.partner_work_benefits
       end
-      # :nocov:
     end
   end
 end

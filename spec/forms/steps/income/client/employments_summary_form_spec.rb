@@ -35,6 +35,18 @@ RSpec.describe Steps::Income::Client::EmploymentsSummaryForm do
     end
   end
 
+  describe '#client_employments' do
+    subject(:client_employments) { form.client_employments }
+
+    before do
+      expect(crime_application).to receive(:income).and_return(
+        instance_double(Income, client_employments: ['income_client_employment'])
+      )
+    end
+
+    it { is_expected.to eq ['income_client_employment'] }
+  end
+
   describe '#save' do
     context 'for valid details' do
       let(:attributes) do

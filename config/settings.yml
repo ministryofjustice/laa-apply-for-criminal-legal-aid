@@ -29,7 +29,7 @@ feature_flags:
     production: true
   employment_journey:
     local: true
-    staging: false
+    staging: true
     production: false
   self_employed_journey:
     local: true

@@ -43,7 +43,6 @@ class Applicant < Person
     -> { where(ownership_type: OwnershipType::APPLICANT.to_s) },
     through: :crime_application
   )
-
   # Utility methods for testing/output
   delegate :partner_detail, to: :crime_application
 
@@ -60,10 +59,7 @@ class Applicant < Person
   end
 
   def ownership_types
-    [
-      OwnershipType::APPLICANT.to_s,
-      OwnershipType::APPLICANT_AND_PARTNER.to_s
-    ]
+    [OwnershipType::APPLICANT.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
   end
 
   def ownership_type

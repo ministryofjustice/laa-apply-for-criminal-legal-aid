@@ -1,5 +1,5 @@
 FROM ruby:3.2.2-alpine3.19 AS base
-MAINTAINER LAA Crime Apply Team
+LABEL maintainer="LAA Crime Apply Team"
 
 # dependencies required both at runtime and build time
 # ClamAV binaries required to access separate ClamAV service over TCP
@@ -64,8 +64,8 @@ RUN chown -R appuser:appgroup log tmp
 # Download RDS certificates bundle -- needed for SSL verification
 # We set the path to the bundle in the ENV, and use it in `/config/database.yml`
 #
-ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/rds-combined-ca-bundle.pem
-ADD https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem $RDS_COMBINED_CA_BUNDLE
+ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/global-bundle.pem
+ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem $RDS_COMBINED_CA_BUNDLE
 RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
 ARG APP_BUILD_DATE

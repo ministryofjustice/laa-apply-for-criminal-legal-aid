@@ -6,7 +6,9 @@ module Steps
 
         validates_inclusion_of :add_partner_employment, in: :choices
 
-        delegate :partner_employments, to: :crime_application
+        def partner_employments
+          crime_application.income.partner_employments
+        end
 
         def choices
           YesNoAnswer.values
