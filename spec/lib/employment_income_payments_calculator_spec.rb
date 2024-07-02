@@ -4,7 +4,7 @@ describe EmploymentIncomePaymentsCalculator do
   subject { described_class.annualized_payments(crime_application) }
 
   let(:crime_application) { CrimeApplication.new(income:, partner:, applicant:, partner_detail:) }
-  let(:income) { Income.new(employment_status: ['employed']) }
+  let(:income) { Income.new(employment_status: ['employed'], partner_employment_status: ['employed']) }
   let(:applicant) { Applicant.new }
   let(:partner) { Partner.new }
   let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
@@ -16,7 +16,7 @@ describe EmploymentIncomePaymentsCalculator do
   describe '#annualized_payments' do
     context 'when single employment for client and partner' do
       before do
-        allow(described_class).to receive(:single_employment_income?).and_return(true)
+        allow(income).to receive(:known_to_be_full_means?).and_return(false)
       end
 
       context 'when client and partner has no employment' do
@@ -29,6 +29,7 @@ describe EmploymentIncomePaymentsCalculator do
       context 'when client has an employment' do
         before do
           create_income_payments('applicant')
+          crime_application.save!
         end
 
         it 'has the right value' do
@@ -46,6 +47,7 @@ describe EmploymentIncomePaymentsCalculator do
       context 'when partner has an employment' do
         before do
           create_income_payments('partner')
+          crime_application.save!
         end
 
         it 'has the right value' do
@@ -64,6 +66,7 @@ describe EmploymentIncomePaymentsCalculator do
         before do
           create_income_payments('applicant')
           create_income_payments('partner')
+          crime_application.save!
         end
 
         it 'has the right value' do
@@ -87,7 +90,7 @@ describe EmploymentIncomePaymentsCalculator do
 
     context 'when multiple employments for client and partner' do
       before do
-        allow(described_class).to receive(:single_employment_income?).and_return(false)
+        allow(income).to receive(:known_to_be_full_means?).and_return(true)
         allow_any_instance_of(Employment).to receive(:complete?).and_return(true)
         allow_any_instance_of(Deduction).to receive(:complete?).and_return(true)
       end
