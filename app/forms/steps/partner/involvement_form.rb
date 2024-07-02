@@ -25,8 +25,7 @@ module Steps
 
       def reset_address!
         return if involvement_in_case.to_s == 'none'
-        return if crime_application.partner.nil?
-        return if crime_application.partner.home_address.nil?
+        return if crime_application.partner&.home_address.nil?
 
         crime_application.partner.home_address.destroy!
       end

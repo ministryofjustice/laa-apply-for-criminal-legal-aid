@@ -24,9 +24,8 @@ module Steps
       end
 
       def reset_address!
-        return if has_same_address_as_client.to_s == 'yes'
-        return if crime_application.partner.nil?
-        return if crime_application.partner.home_address.nil?
+        return if has_same_address_as_client.to_s == 'no'
+        return if crime_application.partner&.home_address.nil?
 
         crime_application.partner.home_address.destroy!
       end
