@@ -54,6 +54,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       partner_self_assessment_tax_bill: nil,
       partner_self_assessment_tax_bill_amount_before_type_cast: nil,
       partner_self_assessment_tax_bill_frequency: nil,
+      known_to_be_full_means?: true,
     )
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MessageChain, RSpec/MultipleMemoizedHelpers
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
@@ -194,7 +194,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
 
       context 'when no employment income payment exists' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :employment) { nil }
+          allow(record).to receive(:client_employment_income).and_return(nil)
         end
 
         it 'adds an error to :employment_income' do
@@ -206,7 +206,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
 
       context 'when an incomplete employment income payment exists' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :employment) {
+          allow(record).to receive(:client_employment_income) {
             instance_double(Payment, complete?: false)
           }
         end
@@ -220,7 +220,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
 
       context 'when an employment income payment exists and is complete' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :employment) {
+          allow(record).to receive(:client_employment_income) {
             instance_double(Payment, complete?: true)
           }
         end
@@ -391,4 +391,4 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
     end
   end
 end
-# rubocop:enable RSpec/MessageChain, RSpec/MultipleMemoizedHelpers
+# rubocop:enable RSpec/MultipleMemoizedHelpers

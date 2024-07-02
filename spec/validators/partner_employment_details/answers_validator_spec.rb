@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MessageChain, RSpec/MultipleMemoizedHelpers
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
@@ -20,6 +20,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       partner_self_assessment_tax_bill_amount:,
       partner_self_assessment_tax_bill_frequency:,
       partner_other_work_benefit_received:,
+      partner_employments:
     )
   end
 
@@ -153,12 +154,11 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
     context 'when does not require a full means assessment' do
       before do
         allow(validator).to receive(:requires_full_means_assessment?).and_return(false)
+        allow(record).to receive(:partner_employment_income) { partner_employment_income }
       end
 
       context 'when no employment income payment exists' do
-        before do
-          allow(record).to receive_message_chain(:income_payments, :employment) { nil }
-        end
+        let(:partner_employment_income) { nil }
 
         it 'adds an error to :employment_income' do
           expect(errors).to receive(:add).with(:employment_income, :incomplete)
@@ -168,11 +168,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       end
 
       context 'when an incomplete employment income payment exists' do
-        before do
-          allow(record).to receive_message_chain(:income_payments, :employment) {
-            instance_double(Payment, complete?: false)
-          }
-        end
+        let(:partner_employment_income) { instance_double(Payment, complete?: false) }
 
         it 'adds an error to :employment_income' do
           expect(errors).to receive(:add).with(:employment_income, :incomplete)
@@ -182,11 +178,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       end
 
       context 'when an employment income payment exists and is complete' do
-        before do
-          allow(record).to receive_message_chain(:income_payments, :employment) {
-            instance_double(Payment, complete?: true)
-          }
-        end
+        let(:partner_employment_income) { instance_double(Payment, complete?: true) }
 
         it 'does not add errors' do
           expect(errors).not_to receive(:add)
@@ -266,7 +258,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
       context 'when there is no work_benefit payment' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :work_benefits) { nil }
+          allow(record).to receive(:partner_work_benefits).and_return(nil)
         end
 
         it 'adds an error to :partner_other_work_benefit_received' do
@@ -278,9 +270,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
       context 'when work_benefit payment exists but is not complete' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :work_benefits) {
-            instance_double(Payment, complete?: false)
-          }
+          allow(record).to receive(:partner_work_benefits) { instance_double(Payment, complete?: false) }
         end
 
         it 'adds an error to :partner_other_work_benefit_received' do
@@ -292,9 +282,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
       context 'when partner_other_work_benefit_received payment is complete' do
         before do
-          allow(record).to receive_message_chain(:income_payments, :work_benefits) {
-            instance_double(Payment, complete?: true)
-          }
+          allow(record).to receive(:partner_work_benefits) { instance_double(Payment, complete?: true) }
         end
 
         it 'does not add errors' do
@@ -308,6 +296,10 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
   describe '#validate' do
     subject(:validate) { validator.validate }
+
+    before do
+      allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+    end
 
     context 'when not applicable' do
       before do
@@ -325,6 +317,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
       before do
         allow(validator).to receive(:applicable?).and_return(true)
+        allow(record).to receive(:partner_employed?).and_return(false)
       end
 
       it 'adds errors to :employment_status when incomplete' do
@@ -336,4 +329,4 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
     end
   end
 end
-# rubocop:enable RSpec/MessageChain, RSpec/MultipleMemoizedHelpers
+# rubocop:enable RSpec/MultipleMemoizedHelpers

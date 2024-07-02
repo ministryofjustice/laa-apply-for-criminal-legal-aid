@@ -85,7 +85,7 @@ module EmploymentDetails
     def validate_employment_income
       return if requires_full_means_assessment?
 
-      errors.add :employment_income, :incomplete unless record.income_payments&.employment&.complete?
+      errors.add :employment_income, :incomplete unless record.client_employment_income&.complete?
     end
 
     alias income record
