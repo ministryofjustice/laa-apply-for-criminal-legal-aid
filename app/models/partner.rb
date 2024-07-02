@@ -39,6 +39,10 @@ class Partner < Person
     [OwnershipType::PARTNER.to_s, OwnershipType::APPLICANT_AND_PARTNER.to_s]
   end
 
+  def to_param
+    'partner'
+  end
+
   def ownership_type
     OwnershipType::PARTNER
   end

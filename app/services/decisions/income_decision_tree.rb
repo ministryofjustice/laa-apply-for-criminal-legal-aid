@@ -158,7 +158,7 @@ module Decisions
         end
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          edit('/steps/income/business_type', subject: 'client')
+          start_self_employed_for(crime_application.applicant)
         else
           show(:self_employed_exit)
         end
@@ -181,7 +181,7 @@ module Decisions
         end
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          edit('/steps/income/business_type', subject: 'partner')
+          start_self_employed_for(crime_application.partner)
         else
           show(:self_employed_exit)
         end
@@ -194,14 +194,13 @@ module Decisions
       end
     end
 
-    # :nocov:
-    def route_to_partner_employment_income?
-      income.values_at(:income_above_threshold,
-                       :has_frozen_income_or_assets,
-                       :client_owns_property,
-                       :has_savings).all? YesNoAnswer::NO.to_s
+    def start_self_employed_for(person)
+      if person.businesses.any?
+        edit('/steps/income/businesses_summary', subject: person)
+      else
+        edit('/steps/income/business_type', subject: person)
+      end
     end
-    # :nocov:
 
     def redirect_to_employer_details(employment)
       edit('/steps/income/client/employer_details', employment_id: employment)

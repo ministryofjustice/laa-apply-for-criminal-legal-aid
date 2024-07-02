@@ -61,7 +61,6 @@ module Adapters
         end
       end
 
-      # TODO: remove businesses exclusion once businesses added
       def serializable_hash(options = {})
         super(
           options.merge(

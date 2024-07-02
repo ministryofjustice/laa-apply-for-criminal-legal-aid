@@ -68,6 +68,14 @@ module Adapters
         end
       end
 
+      def businesses
+        return [] unless means_details&.income_details&.businesses
+
+        means_details.income_details.businesses.map do |struct|
+          Business.new(struct.attributes)
+        end
+      end
+
       def outgoings
         return nil unless means_details
 

@@ -1,0 +1,33 @@
+<% title legend_t(:financials) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_fieldset legend: { text: legend_t(:financials), size: 'xl'} do %>
+        <p><%= hint_t(:financials) %></p>
+
+        <% f.object.financials.each do | payment | %>
+          <%= f.fields_for payment, f.object.public_send(payment) do |ff| %>
+
+            <%= ff.govuk_number_field :amount,
+                                   autocomplete: 'off',
+                                   inputmode: 'numeric',
+                                   width: 'one-third',
+                                   prefix_text: '£' %>
+
+            <%= ff.govuk_collection_radio_buttons :frequency,
+                                                 PaymentFrequencyType.values,
+                                                 :value,
+                                                 legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
+
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

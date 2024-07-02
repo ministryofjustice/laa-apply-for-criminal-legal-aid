@@ -4,5 +4,9 @@ ActiveModel::Type.register(:string, Type::StrippedString)
 ActiveModel::Type.register(:value_object, Type::ValueObject)
 ActiveRecord::Type.register(:value_object, Type::ValueObject)
 ActiveModel::Type.register(:multiparam_date, Type::MultiparamDate)
+
 ActiveModel::Type.register(:pence, Type::Pence)
 ActiveRecord::Type.register(:pence, Type::Pence)
+
+ActiveModel::Type.register(:amount_and_frequency, Type::AmountAndFrequencyType)
+ActiveRecord::Type.register(:amount_and_frequency, Type::AmountAndFrequencyType)

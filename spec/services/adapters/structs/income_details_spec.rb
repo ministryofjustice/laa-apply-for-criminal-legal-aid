@@ -58,6 +58,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           has_no_income_benefits
           has_no_income_payments
           partner_employment_status
+          businesses
           applicant_other_work_benefit_received
           applicant_self_assessment_tax_bill
           applicant_self_assessment_tax_bill_amount

@@ -16,6 +16,10 @@ module Tasks
       crime_application.income.present?
     end
 
+    def completed?
+      true
+    end
+
     private
 
     def validator

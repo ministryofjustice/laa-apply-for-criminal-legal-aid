@@ -23,6 +23,7 @@ module Summary
         employment_income
         income_details
         client_employments
+        client_businesses
         self_assessment_tax_bill
         work_benefits
         income_payments_details

@@ -37,4 +37,8 @@ class Money
   def zero?
     value.to_f.zero?
   end
+
+  def as_json(_opts = {})
+    to_i
+  end
 end

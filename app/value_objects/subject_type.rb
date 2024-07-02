@@ -5,4 +5,10 @@ class SubjectType < ValueObject
     APPLICANT_OR_PARTNER = new(:applicant_or_partner),
     PARTNER = new(:partner),
   ].freeze
+
+  def to_param
+    return 'client' if applicant?
+
+    value
+  end
 end

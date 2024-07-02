@@ -14,10 +14,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
       partner_employments: partner_employments_double,
       kase: kase,
       partner_detail: partner_detail,
-      partner: nil,
-      appeal_no_changes?: false
+      partner: partner,
+      applicant: applicant
     )
   end
+
+  let(:applicant) { instance_double(Applicant) }
+  let(:partner) { nil }
 
   let(:employment_double) {
     instance_double(Employment, id: 'uuid1', ownership_type: OwnershipType::APPLICANT.to_s)
@@ -116,11 +119,30 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `self_employed_journey` is enabled' do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
-        it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type',
-                                              :edit,
-                                              id: crime_application,
-                                              subject: 'client')
+        context 'when the client has no businesses' do
+          before do
+            allow(applicant).to receive_messages(businesses: [])
+          end
+
+          it 'redirects to the Business type page' do
+            expect(subject).to have_destination('/steps/income/business_type',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: applicant)
+          end
+        end
+        
+        context 'when the client has businesses' do
+          before do
+            allow(applicant).to receive_messages(businesses: [instance_double(Business)])
+          end
+
+          it 'redirects to the Business type page' do
+            expect(subject).to have_destination('/steps/income/businesses_summary',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: applicant)
+          end
         end
       end
 
@@ -285,11 +307,26 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `self_employed_journey` is enabled' do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
-        it 'redirects to the Business type page' do
-          expect(subject).to have_destination('/steps/income/business_type',
-                                              :edit,
-                                              id: crime_application,
-                                              subject: 'partner')
+        context 'when the partner has no businesses' do
+          let(:partner) { instance_double(Partner, businesses: []) }
+
+          it 'redirects to the Business type page' do
+            expect(subject).to have_destination('/steps/income/business_type',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: partner)
+          end
+        end
+
+        context 'when the partner already has businesses' do
+          let(:partner) { instance_double(Partner, businesses: [instance_double(Business)]) }
+          
+          it 'redirects to the partner Business summary page' do
+            expect(subject).to have_destination('/steps/income/businesses_summary',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: partner)
+          end
         end
       end
 
@@ -303,7 +340,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     end
 
     context 'when partner_employment_status selected is both employed and self_employed options' do
-      let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
+      let(:partner) { instance_double(Partner, businesses: []) }
 
       before do
         allow(form_object).to receive(:partner_employment_status).and_return(
@@ -311,7 +348,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         )
       end
 
-      context 'feature flag `employment_journey` is enabled' do
+      context 'feature flag `employment_journey` and `employment_journey` enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
         let(:feature_flag_self_employed_journey_enabled) { true }
 

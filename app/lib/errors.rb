@@ -14,4 +14,5 @@ module Errors
   class EmploymentNotFound < NotFound; end
   class SubjectNotFound < NotFound; end
   class CannotYetDetermineFullMeans < NotFound; end
+  class BusinessNotFound < NotFound; end
 end

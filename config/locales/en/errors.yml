@@ -39,6 +39,12 @@ en:
               flagged: File may have a virus - please check the file is safe before trying again
               inconclusive: File scanning service failed - please contact <a href="mailto:%{support_email}">%{support_email}</a>
 
+        payment:
+          attributes:
+            amount: 
+              blank: Enter an amount
+            frequency: 
+              blank: Select how often 
   activemodel:
     errors:
       models:
@@ -651,6 +657,67 @@ en:
           attributes:
             business_type:
               inclusion: Select a business type
+        steps/income/businesses_summary_form:
+          attributes:
+            add_business:
+              inclusion: Select yes if you want to add another business
+        steps/income/businesses_form:
+          attributes:
+            trading_name: 
+              blank: Enter the trading name of the business 
+            address:
+              address_line_one:
+                blank: Enter address line 1, typically the building and street
+              city:
+                blank: Enter town or city
+              country:
+                blank:  Enter country
+              postcode:
+                blank: Enter postcode
+        steps/income/business_nature_form:
+          attributes:
+            description: 
+              blank: Enter a description of the business
+        steps/income/business_start_date_form:
+          attributes:
+            trading_start_date:
+              blank: Enter the date the business began trading
+              blank_day: Date must include a day
+              blank_month: Date must include a month
+              blank_year: Date must include a year
+              blank_day_month: Date must include a day and month
+              blank_day_year: Date must include a day and year
+              blank_month_year: Date must include a month and year
+              invalid: Enter a valid date
+              invalid_day: Enter a valid day
+              invalid_month: Enter a valid month
+              invalid_year: Enter a valid year
+              year_too_early: Date is too far in the past
+              future_not_allowed: Date must be today or in the past
+        steps/income/business_additional_owners_form:
+          attributes:
+            has_additional_owners:
+              inclusion: Select yes or no
+            additional_owners:
+              blank: Enter the names of who they are in business with
+        steps/income/business_employees_form:
+          attributes:
+            has_employees:
+              inclusion: Select yes or no
+            number_of_employees:
+              not_a_number: Enter the number of employees
+              greater_than: Select no if the number of employees is 0
+        steps/income/business_financials_form:
+          attributes:
+            turnover:
+              amount_blank: Enter the total turnover amount 
+              frequency_blank: Select how often 
+            drawings:
+              amount_blank: Enter the total drawings amount 
+              frequency_blank: Select how often this amount was drawn
+            profit:
+              amount_blank: Enter the total profit amount 
+              frequency_blank: Select what period this total profit was for
         steps/outgoings/housing_payment_type_form:
           attributes:
             housing_payment_type:

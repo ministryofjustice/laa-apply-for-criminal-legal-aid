@@ -20,6 +20,10 @@ class ValueObject
     [ValueObject, self.class, value].hash
   end
 
+  def as_json(_opts = {})
+    value.as_json
+  end
+
   class << self
     # Define inquiry methods for each value in the value object,
     # i.e. `#coffee?` returns true for value `:coffee`, false for `:tea`

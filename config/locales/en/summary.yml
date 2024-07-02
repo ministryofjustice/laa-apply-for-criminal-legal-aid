@@ -4,6 +4,7 @@ en:
       absence_none: &absence_none "None"
       absence_not_provided: &absence_not_provided "Not provided"
       payment_answer_format: &payment_answer_format "%{amount} every %{frequency} %{tax_status}"
+      amount_and_frequency_answer: "%{amount} every %{frequency}"
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
@@ -52,6 +53,12 @@ en:
     does_not_pay: Does not pay
     sections:
       overview: Overview
+      businesses: Businesses
+      business:
+        self_employed: Self-employed business 
+        partnership: Business partnership 
+        director_or_shareholder: Company director or shareholder
+      client_businesses: Client businesses
       case_details: Case details
       client_details: Client details
       contact_details: Client contact details
@@ -910,3 +917,46 @@ en:
         question: Total value every year
         answers:
           description: *payment_answer_format
+
+      trading_name:
+        question: Trading name
+        absence_answer: ''
+      business_address:
+        question: Business address
+        absence_answer: ''
+      nature_of_business:
+        question: Nature of business
+        absence_answer: ''
+      trading_start_date:
+        question: Date began trading 
+        absence_answer: ''
+      has_additional_owners:
+        question: In business with anyone else? 
+        answers: *YESNO
+      additional_owners:
+        question: Name of others in business 
+        absence_answer: ''
+      has_employees:
+        question: Employees? 
+        answers: *YESNO
+      number_of_employees:
+        question: Number of employees 
+        absence_answer: ''
+      turnover:
+        question: Total turnover
+        answers:
+          description: *payment_answer_format
+        absence_answer: ''
+      drawings:
+        question: Total drawings 
+        answers:
+          description: *payment_answer_format
+        absence_answer: ''
+      profit:
+        question: Total profit
+        answers:
+          description: *payment_answer_format
+        absence_answer: ''
+
+
+>>>>>>> 318ddd4b (Add business details. Delete a business)

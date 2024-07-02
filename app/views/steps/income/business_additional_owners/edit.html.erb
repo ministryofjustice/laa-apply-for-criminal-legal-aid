@@ -1,0 +1,20 @@
+<% title legend_t(:has_additional_owners) %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset(:has_additional_owners, legend: { text: legend_t(:has_additional_owners), tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_radio_button :has_additional_owners, YesNoAnswer::YES do %>
+          <%= f.govuk_text_area :additional_owners  %>
+        <% end %>
+
+        <%= f.govuk_radio_button :has_additional_owners, YesNoAnswer::NO %>
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
