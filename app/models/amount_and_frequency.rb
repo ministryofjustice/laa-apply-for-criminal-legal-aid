@@ -6,7 +6,7 @@ class AmountAndFrequency
   attribute :amount, :pence
   attribute :frequency, :value_object, source: PaymentFrequencyType
 
-  def as_json(_opts = {})
-    attributes
+  def as_json(opts = {})
+    attributes.as_json(opts)
   end
 end

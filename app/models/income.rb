@@ -1,11 +1,11 @@
 class Income < ApplicationRecord
   include MeansOwnershipScope
   include EmployedIncome
+  include SelfEmployedIncome
 
   belongs_to :crime_application
   has_many :income_benefits, through: :crime_application
   has_many :dependants, through: :crime_application
-  has_many :businesses, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence
   attribute :partner_self_assessment_tax_bill_amount, :pence
@@ -18,6 +18,12 @@ class Income < ApplicationRecord
     return [] unless known_to_be_full_means?
 
     crime_application.employments.where(ownership_type: ownership_types & employed_owners)
+  end
+
+  def businesses
+    @businesses ||= crime_application.businesses.where(
+      ownership_type: ownership_types & self_employed_owners
+    )
   end
 
   def income_payments
@@ -58,12 +64,20 @@ class Income < ApplicationRecord
     employments&.sum { |e| e.amount.to_i }
   end
 
+  def client_employed?
+    employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  end
+
   def partner_employed?
     partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 
-  def client_employed?
-    employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  def partner_self_employed?
+    partner_employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
+  end
+
+  def client_self_employed?
+    employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
   end
 
   def known_to_be_full_means?

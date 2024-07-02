@@ -46,8 +46,7 @@ module SubmissionSerializer
             json.ownership_type attachment[:ownership_type]
           end
 
-          # FIXME: access via income after the merge
-          json.businesses Definitions::Business.generate(crime_application.businesses)
+          json.businesses income.businesses.as_json
         end
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength

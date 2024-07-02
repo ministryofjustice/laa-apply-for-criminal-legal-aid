@@ -957,6 +957,3 @@ en:
         answers:
           description: *payment_answer_format
         absence_answer: ''
-
-
->>>>>>> 318ddd4b (Add business details. Delete a business)

@@ -8,7 +8,7 @@ class Business < ApplicationRecord
   attribute :profit, :amount_and_frequency
 
   def complete?
-    except = %i[id crime_application_id created_at updated_at]
+    except = %i[id crime_application_id created_at updated_at address_line_two]
 
     serializable_hash(except:).values.none?(&:blank?)
   end

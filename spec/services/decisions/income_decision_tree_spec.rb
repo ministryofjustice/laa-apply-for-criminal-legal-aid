@@ -15,7 +15,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       kase: kase,
       partner_detail: partner_detail,
       partner: partner,
-      applicant: applicant
+      applicant: applicant,
+      appeal_no_changes?: false
     )
   end
 
@@ -57,7 +58,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:feature_flag_employment_journey_enabled) { false }
   let(:feature_flag_self_employed_journey_enabled) { false }
   let(:partner_detail) { nil }
-  let(:partner) { nil }
 
   let(:partner_employments_empty?) { true }
   let(:client_employments_empty?) { true }
@@ -131,7 +131,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                 subject: applicant)
           end
         end
-        
+
         context 'when the client has businesses' do
           before do
             allow(applicant).to receive_messages(businesses: [instance_double(Business)])
@@ -320,7 +320,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'when the partner already has businesses' do
           let(:partner) { instance_double(Partner, businesses: [instance_double(Business)]) }
-          
+
           it 'redirects to the partner Business summary page' do
             expect(subject).to have_destination('/steps/income/businesses_summary',
                                                 :edit,

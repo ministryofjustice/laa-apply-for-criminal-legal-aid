@@ -3,6 +3,7 @@ module SubmissionSerializer
     class Business < Definitions::BaseDefinition
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_builder
+        raise 'Do we need this'
         Jbuilder.new do |json|
           json.ownership_type ownership_type
           json.business_type business_type

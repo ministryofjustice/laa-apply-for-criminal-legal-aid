@@ -3,8 +3,6 @@ module Summary
     class Business < BaseRecord
       def business
         return record if record.is_a? ApplicationRecord
-
-        throw ::Business.new(record.to_h.deep_stringify_keys).turnover
       end
 
       private
@@ -33,7 +31,7 @@ module Summary
             :has_employees, business.has_employees
           ),
           Components::IntegerAnswer.new(
-            :number_of_employees, business.number_of_employees || ''
+            :number_of_employees, business.number_of_employees
           ),
           Components::AmountAndFrequencyAnswer.new(
             :turnover, business.turnover
