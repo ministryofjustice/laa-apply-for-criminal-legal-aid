@@ -86,8 +86,10 @@ module Datastore
     end
 
     # NOTE: Actual partner_detail fields are mixed between the Applicant and Partner Structs
+    # rubocop:disable Metrics/AbcSize
     def partner_detail
       return nil unless FeatureFlags.partner_journey.enabled?
+      return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
       fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
       fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
@@ -97,6 +99,7 @@ module Datastore
 
       PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
     end
+    # rubocop:enable Metrics/AbcSize
 
     def ioj
       if parent.ioj.present?
