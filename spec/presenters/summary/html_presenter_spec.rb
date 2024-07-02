@@ -31,6 +31,8 @@ describe Summary::HtmlPresenter do
       partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s],
       client_employment_income: nil,
       partner_employment_income: nil,
+      client_employments: [],
+      partner_employments: [],
       client_work_benefits: nil,
       partner_work_benefits: [double],
       applicant_other_work_benefit_received: nil,
@@ -233,10 +235,8 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            ClientEmployments
             Dependants
             PartnerEmploymentDetails
-            PartnerEmployments
             PartnerSelfAssessmentTaxBill
             PartnerWorkBenefits
             SelfAssessmentTaxBill
@@ -292,7 +292,6 @@ describe Summary::HtmlPresenter do
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
-            PartnerEmployments
             PartnerSelfAssessmentTaxBill
             PartnerWorkBenefits
             PartnerIncomePaymentsDetails
@@ -432,7 +431,6 @@ describe Summary::HtmlPresenter do
       expected_sections = %w[
         EmploymentDetails
         IncomeDetails
-        ClientEmployments
         SelfAssessmentTaxBill
         IncomePaymentsDetails
         IncomeBenefitsDetails
@@ -453,7 +451,6 @@ describe Summary::HtmlPresenter do
 
       expected_sections = %w[
         PartnerEmploymentDetails
-        PartnerEmployments
         PartnerSelfAssessmentTaxBill
         PartnerWorkBenefits
         PartnerIncomePaymentsDetails
