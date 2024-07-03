@@ -9,6 +9,10 @@ class MeansStatus
     def include_partner?(crime_application)
       new(crime_application).include_partner_in_means_assessment?
     end
+
+    def full_means_required?(crime_application)
+      new(crime_application).requires_full_means_assessment?
+    end
   end
 
   private

@@ -27,6 +27,7 @@ module Adapters
 
       def partner
         return @partner if @partner
+        return nil if client_details.partner.blank?
 
         struct = Structs::Partner.new(client_details.partner)
 
@@ -65,27 +66,6 @@ module Adapters
         means_details.income_details.income_benefits.map do |struct|
           IncomeBenefit.new(struct.attributes)
         end
-      end
-
-      def employments
-        return [] unless means_details&.income_details&.employments
-
-        means_details.income_details.employments.map do |struct|
-          if struct.respond_to?(:deductions)
-            struct.deductions.map! do |deduction|
-              Deduction.new(deduction.attributes)
-            end
-          end
-          Employment.new(struct.attributes)
-        end
-      end
-
-      def client_employments
-        employments.select { |e| e.ownership_type == OwnershipType::APPLICANT.to_s }
-      end
-
-      def partner_employments
-        employments.select { |e| e.ownership_type == OwnershipType::PARTNER.to_s }
       end
 
       def outgoings

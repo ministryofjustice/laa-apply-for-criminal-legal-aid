@@ -4,10 +4,19 @@ require 'rails_helper'
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) {
-    instance_double CrimeApplication, income: income, employments: [applicant_employment, partner_employment],
-partner_detail: partner_detail, partner: partner
-  }
+  before do
+    allow(subject).to receive(:requires_full_means_assessment?).and_return(false)
+  end
+
+  let(:crime_application) do
+    instance_double(
+      CrimeApplication,
+      income: income,
+      partner_detail: partner_detail,
+      partner: partner,
+      employments: [applicant_employment, partner_employment]
+    )
+  end
 
   let(:partner) { instance_double(Partner) }
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
@@ -17,6 +26,7 @@ partner_detail: partner_detail, partner: partner
   let(:income) do
     instance_double(
       Income,
+      employments: [applicant_employment, partner_employment],
       employment_status: ['not_working'],
       ended_employment_within_three_months: 'yes',
       lost_job_in_custody: 'yes',
@@ -44,6 +54,7 @@ partner_detail: partner_detail, partner: partner
       partner_self_assessment_tax_bill: nil,
       partner_self_assessment_tax_bill_amount_before_type_cast: nil,
       partner_self_assessment_tax_bill_frequency: nil,
+      known_to_be_full_means?: true,
     )
   end
 
@@ -99,19 +110,22 @@ partner_detail: partner_detail, partner: partner
         Deduction, deduction_type: 'income_tax',
                       amount_before_type_cast: 1000,
                       frequency: 'week',
-                      details: nil
+                      details: nil,
+                      annualized_amount: Money.new(100)
       ),
       instance_double(
         Deduction, deduction_type: 'national_insurance',
                       amount_before_type_cast: 2000,
                       frequency: 'fortnight',
-                      details: nil
+                      details: nil,
+                      annualized_amount: Money.new(200)
       ),
       instance_double(
         Deduction, deduction_type: 'other',
                       amount_before_type_cast: 3000,
                       frequency: 'annual',
-                      details: 'deduction details'
+                      details: 'deduction details',
+                      annualized_amount: Money.new(300)
       )
     ]
   end
@@ -130,7 +144,9 @@ partner_detail: partner_detail, partner: partner
                     frequency: 'annual',
                     ownership_type: 'applicant',
                     metadata: { before_or_after_tax: { 'value' => 'before_tax' } }.as_json,
-                    deductions: deductions_double)
+                    deductions: deductions_double,
+                    complete?: true,
+                    annualized_amount: Money.new(1500))
   end
 
   let(:partner_employment) do
@@ -147,7 +163,9 @@ partner_detail: partner_detail, partner: partner
                     frequency: 'annual',
                     ownership_type: 'partner',
                     metadata: { before_or_after_tax: { 'value' => 'after_tax' } }.as_json,
-                    deductions: deductions_double)
+                    deductions: deductions_double,
+                    complete?: true,
+                    annualized_amount: Money.new(2500))
   end
 
   describe '#generate' do # rubocop:disable RSpec/MultipleMemoizedHelpers
@@ -283,7 +301,23 @@ partner_detail: partner_detail, partner: partner
               }
             ]
           }
-        ]
+        ],
+        employment_income_payments: [
+          {
+            amount: 1500,
+            frequency: 'annual',
+            income_tax: 100,
+            national_insurance: 200,
+            ownership_type: 'applicant'
+          },
+          {
+            amount: 2500,
+            frequency: 'annual',
+            income_tax: 100,
+            national_insurance: 200,
+            ownership_type: 'partner'
+          }
+        ],
       }.as_json
     end
 

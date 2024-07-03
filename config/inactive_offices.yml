@@ -979,3 +979,20 @@ production:
     - 0X337F
     - 2M237P
     - 2P072J
+    # Deactivate office codes that no longer have contract - 28/06/2024
+    - 0L411R
+    - 0N757R
+    - 0Y490J
+    - 1M021E
+    - 2L723F
+    - 2M435E
+    - 2M455B
+    - 2N829V
+    - 2P340A
+    - 2Q202M
+    - 2Q319P
+    - 2Q363M
+    - 2Q424D
+    - 2Q450G
+    - 2Q512Z
+    - 2Q517E

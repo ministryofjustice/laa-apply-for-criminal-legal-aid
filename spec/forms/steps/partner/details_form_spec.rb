@@ -22,6 +22,7 @@ RSpec.describe Steps::Partner::DetailsForm do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
+      applicant: Applicant.new,
       partner: partner_record,
       partner_detail: partner_detail
     )

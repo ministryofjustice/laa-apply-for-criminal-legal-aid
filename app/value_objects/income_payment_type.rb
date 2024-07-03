@@ -26,4 +26,9 @@ class IncomePaymentType < ValueObject
     FROM_FRIENDS_RELATIVES,
     OTHER
   ].freeze
+
+  EMPLOYED_INCOME_TYPES = [
+    EMPLOYMENT,
+    WORK_BENEFITS
+  ].freeze
 end

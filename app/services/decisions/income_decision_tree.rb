@@ -164,7 +164,7 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_employer_details(client_employment)
+          employment_start
         else
           show(:employed_exit)
         end
@@ -175,7 +175,7 @@ module Decisions
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          edit('/steps/income/partner/employment_income')
+          partner_employment_start
         else
           show(:employed_exit)
         end
@@ -187,12 +187,21 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          redirect_to_partner_employer_details(partner_employment)
+          partner_employment_start
         else
           show(:self_employed_exit)
         end
       end
     end
+
+    # :nocov:
+    def route_to_partner_employment_income?
+      income.values_at(:income_above_threshold,
+                       :has_frozen_income_or_assets,
+                       :client_owns_property,
+                       :has_savings).all? YesNoAnswer::NO.to_s
+    end
+    # :nocov:
 
     def redirect_to_employer_details(employment)
       edit('/steps/income/client/employer_details', employment_id: employment)
@@ -232,9 +241,25 @@ module Decisions
 
     def employment_start
       if requires_full_means_assessment?
-        redirect_to_employer_details(client_employment)
+        if income.client_employments.empty?
+          redirect_to_employer_details(client_employment)
+        else
+          edit('/steps/income/client/employments_summary')
+        end
       else
         edit('/steps/income/client/employment_income')
+      end
+    end
+
+    def partner_employment_start
+      if requires_full_means_assessment?
+        if income.partner_employments.empty?
+          redirect_to_partner_employer_details(partner_employment)
+        else
+          edit('/steps/income/partner/employments_summary')
+        end
+      else
+        edit('/steps/income/partner/employment_income')
       end
     end
 
@@ -272,11 +297,11 @@ module Decisions
     end
 
     def incomplete_client_employments
-      crime_application.client_employments.reject(&:complete?)
+      income.client_employments.reject(&:complete?)
     end
 
     def incomplete_partner_employments
-      crime_application.partner_employments.reject(&:complete?)
+      income.partner_employments.reject(&:complete?)
     end
 
     def employed?
