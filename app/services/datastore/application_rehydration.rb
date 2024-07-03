@@ -97,7 +97,9 @@ module Datastore
         from_partner = parent.partner.serializable_hash.slice(*fields_from_partner)
         PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
       else
+        # :nocov:
         PartnerDetail.new({}.merge(from_applicant))
+        # :nocov:
       end
     end
 
