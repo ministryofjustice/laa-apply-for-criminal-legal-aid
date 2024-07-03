@@ -16,9 +16,14 @@ module Evidence
         )
       end
 
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
+      partner do |crime_application|
+        if MeansStatus.include_partner?(crime_application)
+          [EmploymentStatus::SELF_EMPLOYED.to_s].intersect?(
+            Array.wrap(crime_application.income&.partner_employment_status)
+          )
+        else
+          false
+        end
       end
     end
   end
