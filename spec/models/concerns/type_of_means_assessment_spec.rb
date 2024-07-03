@@ -377,6 +377,10 @@ RSpec.describe TypeOfMeansAssessment do
   describe '#requires_full_means_assessment?' do
     subject(:requires_full_means_assessment?) { assessable.requires_full_means_assessment? }
 
+    before do
+      allow(income).to receive_messages(partner_self_employed?: false, client_self_employed?: false)
+    end
+
     context 'when means assessment not required' do
       before do
         allow(assessable).to receive(:requires_means_assessment?).and_return(false)
@@ -405,6 +409,48 @@ RSpec.describe TypeOfMeansAssessment do
         end
 
         it { is_expected.to be true }
+      end
+
+      context 'when client is self employed' do
+        before do
+          allow(income).to receive_messages(
+            income_above_threshold: 'no',
+            has_frozen_income_or_assets: 'no',
+            client_self_employed?: true
+          )
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'when partner is self employed' do
+        before do
+          allow(income).to receive_messages(
+            income_above_threshold: 'no',
+            has_frozen_income_or_assets: 'no',
+            partner_self_employed?: true
+          )
+        end
+
+        context 'when partner not means assessed' do
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+
+          before do
+            allow(income).to receive_messages(
+              client_owns_property: 'no',
+              has_savings: 'no'
+            )
+            allow(kase).to receive(:case_type)
+          end
+
+          it { is_expected.to be false }
+        end
+
+        context 'when partner means assessed' do
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+          it { is_expected.to be true }
+        end
       end
 
       context 'has no frozen assets and income is below threshold' do

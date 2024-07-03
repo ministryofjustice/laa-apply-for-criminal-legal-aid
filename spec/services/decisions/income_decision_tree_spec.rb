@@ -35,9 +35,12 @@ RSpec.describe Decisions::IncomeDecisionTree do
       employment_status: employment_status,
       client_employments: employments_double,
       partner_employments: partner_employments_double,
+      client_self_employed?: false,
+      partner_self_employed?: false,
       income_above_threshold: 'yes'
     )
   end
+
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) {

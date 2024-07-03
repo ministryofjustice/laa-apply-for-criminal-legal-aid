@@ -12,7 +12,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
     !evidence_of_passporting_means_forthcoming?
   end
 
-  def requires_full_means_assessment? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def requires_full_means_assessment? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
     return false unless requires_means_assessment?
     return true if income_above_threshold? || has_frozen_assets?
     return true if client_or_means_assessed_partner_self_employed?
@@ -21,10 +21,9 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
     return false if summary_only? || committal?
     return true if has_property? || has_savings?
+    return false if no_property? && no_savings?
 
-    false if no_property? && no_savings?
-
-    # raise Errors::CannotYetDetermineFullMeans
+    raise Errors::CannotYetDetermineFullMeans
   end
 
   def extent_of_means_assessment_determined?
@@ -53,12 +52,6 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def evidence_of_passporting_means_forthcoming?
     benefit_evidence_forthcoming? || nino_forthcoming?
-  end
-
-  def client_or_means_assessed_partner_self_employed?
-    return true if income.client_self_employed?
-
-    income.partner_self_employed? && include_partner_in_means_assessment?
   end
 
   # Relevant when there's a passporting benefit but the NINO is unknown.
@@ -156,5 +149,13 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def income_above_threshold?
     income&.income_above_threshold == 'yes'
+  end
+
+  def client_or_means_assessed_partner_self_employed?
+    return false if income.blank?
+    return true if income.client_self_employed?
+    return false unless include_partner_in_means_assessment?
+
+    income.partner_self_employed?
   end
 end

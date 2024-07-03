@@ -22,4 +22,9 @@ class Business < ApplicationRecord
       crime_application.applicant
     end
   end
+
+  def serializable_hash(options = nil)
+    options ||= { except: [:created_at, :updated_at, :crime_application_id] }
+    super
+  end
 end

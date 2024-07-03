@@ -97,7 +97,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   let(:client_business) do
     instance_double(
       Business,
-      business_type: BusinessType.values.sample,
+      business_type: BusinessType.values.first,
       ownership_type: 'applicant',
       trading_name: 'MoJ',
       address: {
@@ -136,7 +136,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
 
   let(:partner_business) do
     Business.new(
-      business_type: BusinessType.values.sample,
+      business_type: BusinessType.values.first,
       ownership_type: 'applicant',
       trading_name: 'LAA',
       address: {
@@ -147,7 +147,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         postcode: 'postcode_r'
       },
       description: 'It is LAA',
-      trading_start_date: 5.years.ago,
+      trading_start_date: Date.new(2000, 1, 2),
       has_additional_owners: 'no',
       additional_owners: '',
       has_employees: 'no',
@@ -307,6 +307,42 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
             ownership_type: 'partner',
             metadata: { 'details' => 'Grant money' },
           },
+        ],
+        businesses: [
+          {
+            'additional_owners' => '',
+            'address' => {
+              'address_line_one' => 'address_line_one_r',
+              'address_line_two' => 'address_line_two_r',
+              'city' => 'city_r',
+              'country' => 'country_r',
+              'postcode' => 'postcode_r'
+            },
+            'business_type' => 'self_employed',
+            'description' => 'It is LAA',
+            'drawings' => { 'amount' => 90, 'frequency' => 'week' },
+            'has_additional_owners' => 'no',
+            'has_employees' => 'no',
+            'id' => nil,
+            'number_of_employees' => 2,
+            'ownership_type' => 'applicant',
+            'percentage_profit_share' => 100.0,
+            'profit' => {
+              'amount' => 900_000,
+              'frequency' => 'annual'
+            },
+            'salary' => {
+              'amount' => 90_000,
+              'frequency' => 'weekly'
+            },
+            'total_income_share_sales' => nil,
+            'trading_name' => 'LAA',
+            'trading_start_date' => '2000-01-02',
+            'turnover' => {
+              'amount' => 9_000_000,
+              'frequency' => 'annual'
+            }
+          }
         ],
         employments: [
           {
