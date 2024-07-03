@@ -28,9 +28,9 @@ module Datastore
         outgoings_payments: outgoings_payments,
         documents: parent.documents,
         additional_information: parent.additional_information,
-        income_payments: income_payments,
-        income_benefits: income_benefits,
-        employments: employments,
+        income_payments: parent.income.income_payments,
+        income_benefits: parent.income.income_benefits,
+        employments: parent.income.employments,
         capital: capital,
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],
@@ -86,20 +86,22 @@ module Datastore
     end
 
     # NOTE: Actual partner_detail fields are mixed between the Applicant and Partner Structs
-    # rubocop:disable Metrics/AbcSize
     def partner_detail
       return nil unless FeatureFlags.partner_journey.enabled?
-      return nil unless parent.partner && parent.applicant.has_partner == 'yes'
 
       fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
-      fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
-
       from_applicant = parent.applicant.serializable_hash.slice(*fields_from_applicant)
-      from_partner = parent.partner.serializable_hash.slice(*fields_from_partner) if parent.partner
 
-      PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
+      # :nocov:
+      if parent.partner
+        fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
+        from_partner = parent.partner.serializable_hash.slice(*fields_from_partner)
+        PartnerDetail.new({}.merge(from_applicant).merge(from_partner))
+      else
+        PartnerDetail.new({}.merge(from_applicant))
+      end
+      # :nocov:
     end
-    # rubocop:enable Metrics/AbcSize
 
     def ioj
       if parent.ioj.present?
@@ -121,28 +123,12 @@ module Datastore
       end || []
     end
 
-    def income_payments
-      parent.means_details&.income_details&.income_payments&.map do |struct|
-        IncomePayment.new(**struct)
-      end || []
-    end
-
-    def income_benefits
-      parent.means_details&.income_details&.income_benefits&.map do |struct|
-        IncomeBenefit.new(**struct)
-      end || []
-    end
-
     def income
       return if parent.income.blank?
 
       Income.new(
         parent.income.serializable_hash
       )
-    end
-
-    def employments
-      parent.income.employments
     end
 
     def outgoings
