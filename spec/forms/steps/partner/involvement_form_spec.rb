@@ -13,12 +13,15 @@ RSpec.describe Steps::Partner::InvolvementForm do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      partner_detail:
+      partner_detail:,
+      partner:,
     )
   end
 
   let(:partner_detail) { instance_double(PartnerDetail) }
+  let(:partner) { instance_double(Partner) }
   let(:involvement_in_case) { nil }
+  let(:home_address) { instance_double(Address) }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -47,12 +50,38 @@ RSpec.describe Steps::Partner::InvolvementForm do
       end
     end
 
-    context 'when `involvement_in_case` is valid' do
+    context 'when `involvement_in_case` is not `none`' do
       let(:involvement_in_case) { 'victim' }
 
-      it 'saves the record' do
-        expect(partner_detail).to receive(:update).with(
+      before do
+        allow(home_address).to receive(:destroy!).and_return(true)
+        allow(partner).to receive(:home_address).and_return(home_address)
+      end
+
+      it 'saves the record and deletes existing home address' do
+        expect(home_address).to receive(:destroy!)
+
+        expect(partner_detail).to receive(:update!).with(
           { 'involvement_in_case' => PartnerInvolvementType::VICTIM }
+        ).and_return(true)
+
+        expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when `involvement_in_case` is `none`' do
+      let(:involvement_in_case) { 'none' }
+
+      before do
+        allow(home_address).to receive(:destroy!).and_return(true)
+        allow(partner).to receive(:home_address).and_return(home_address)
+      end
+
+      it 'saves the record and does not delete home address' do
+        expect(home_address).not_to receive(:destroy!)
+
+        expect(partner_detail).to receive(:update!).with(
+          { 'involvement_in_case' => PartnerInvolvementType::NONE }
         ).and_return(true)
 
         expect(subject.save).to be(true)
