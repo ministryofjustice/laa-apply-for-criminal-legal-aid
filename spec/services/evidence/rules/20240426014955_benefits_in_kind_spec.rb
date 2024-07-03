@@ -48,7 +48,37 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'when partner receives non cash benefit' do
+      let(:income) { Income.new(partner_other_work_benefit_received: 'yes') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when partner does not receive non cash benefit' do
+      let(:income) { Income.new(partner_other_work_benefit_received: 'no') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when question was not asked' do
+      let(:income) { Income.new(partner_other_work_benefit_received: nil) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no partner' do
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
+
+    context 'income is not present' do
+      let(:income) { nil }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -59,6 +89,7 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
     let(:income) do
       Income.new(
         applicant_other_work_benefit_received: 'yes',
+        partner_other_work_benefit_received: 'yes',
       )
     end
 
@@ -74,8 +105,8 @@ RSpec.describe Evidence::Rules::BenefitsInKind do
             prompt: ["their P11D form for 'benefits in kind'"],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ["their P11D form for 'benefits in kind'"],
           },
           other: {
             result: false,
