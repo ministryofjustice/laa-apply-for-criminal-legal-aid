@@ -1,10 +1,10 @@
 module Summary
   module Sections
-    class ClientBusinesses < Businesses
+    class PartnerBusinesses < Businesses
       private
 
       def businesses
-        income.client_businesses
+        income.partner_businesses
       end
     end
   end

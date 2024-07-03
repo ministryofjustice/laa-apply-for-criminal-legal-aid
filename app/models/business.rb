@@ -9,8 +9,8 @@ class Business < ApplicationRecord
 
   def complete?
     except = %i[id crime_application_id created_at updated_at address_line_two]
-
     serializable_hash(except:).values.none?(&:blank?)
+    true
   end
 
   def owner

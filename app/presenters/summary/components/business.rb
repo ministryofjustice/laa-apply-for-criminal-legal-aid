@@ -62,7 +62,7 @@ module Summary
       end
 
       def subject
-        SubjectType.new(business.ownership_type)
+        SubjectType.new(business.ownership_type).to_param
       end
     end
   end

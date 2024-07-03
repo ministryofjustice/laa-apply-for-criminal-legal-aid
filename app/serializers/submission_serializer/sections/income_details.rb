@@ -46,7 +46,7 @@ module SubmissionSerializer
             json.ownership_type attachment[:ownership_type]
           end
 
-          json.businesses income.businesses.as_json
+          json.businesses income.businesses
         end
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength

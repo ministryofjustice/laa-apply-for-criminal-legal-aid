@@ -2,6 +2,7 @@ module Adapters
   module Structs
     class IncomeDetails < BaseStructAdapter
       include EmployedIncome
+      include SelfEmployedIncome
 
       def employment_status
         # TODO: Handle this having multiple employment status' when we get designs for employed
@@ -31,6 +32,12 @@ module Adapters
           end
           Employment.new(**attrs)
         end
+      end
+
+      def businesses
+        return [] unless __getobj__
+
+        @businesses ||= super.map { |struct| Business.new(**struct) }
       end
 
       def client_employment_income
