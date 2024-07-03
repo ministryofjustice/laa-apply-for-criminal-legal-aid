@@ -21,7 +21,8 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
     return false if summary_only? || committal?
     return true if has_property? || has_savings?
-    return false if no_property? && no_savings?
+
+    false if no_property? && no_savings?
 
     # raise Errors::CannotYetDetermineFullMeans
   end
@@ -56,6 +57,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def client_or_means_assessed_partner_self_employed?
     return true if income.client_self_employed?
+
     income.partner_self_employed? && include_partner_in_means_assessment?
   end
 

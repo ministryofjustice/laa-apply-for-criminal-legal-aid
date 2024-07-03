@@ -34,6 +34,7 @@ module IncomeAssessment
 
     def income_before_tax_complete?
       return true if client_or_means_assessed_partner_self_employed?
+
       record.income_above_threshold.present?
     end
 

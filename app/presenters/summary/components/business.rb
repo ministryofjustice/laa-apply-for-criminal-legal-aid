@@ -2,7 +2,7 @@ module Summary
   module Components
     class Business < BaseRecord
       def business
-        return record if record.is_a? ApplicationRecord
+        record if record.is_a? ApplicationRecord
       end
 
       private

@@ -105,19 +105,19 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         address_line_two: 'address_line_two_q',
         city: 'city_q',
         country: 'country_q',
-        postcode: 'postcode_q' 
+        postcode: 'postcode_q'
       },
-      description: "It is MoJ",
+      description: 'It is MoJ',
       trading_start_date: 1.year.ago,
       has_additional_owners: 'yes',
       additional_owners: 'HM',
       has_employees: 'no',
       number_of_employees: 1,
       salary: AmountAndFrequency.new(
-        amount: 2000000,
+        amount: 2_000_000,
         frequency: 'annual'
       ),
-      total_income_share_sales: 19901,
+      total_income_share_sales: 19_901,
       percentage_profit_share: 100,
       turnover: AmountAndFrequency.new(
         amount: 900,
@@ -128,49 +128,49 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         frequency: 'week'
       ),
       profit: AmountAndFrequency.new(
-        amount: 900000,
+        amount: 900_000,
         frequency: 'annual'
       ),
     )
   end
 
   let(:partner_business) do
-      Business.new(
-        business_type: BusinessType.values.sample,
-        ownership_type: 'applicant',
-        trading_name: 'LAA',
-        address: {
-          address_line_one: 'address_line_one_r',
-          address_line_two: 'address_line_two_r',
-          city: 'city_r',
-          country: 'country_r',
-          postcode: 'postcode_r' 
-        },
-        description: "It is LAA",
-        trading_start_date: 5.year.ago,
-        has_additional_owners: 'no',
-        additional_owners: '',
-        has_employees: 'no',
-        number_of_employees: 2,
-        salary: AmountAndFrequency.new(
-          amount: 90000,
-          frequency: 'weekly'
-        ),
-        total_income_share_sales: nil,
-        percentage_profit_share: 100,
-        turnover: AmountAndFrequency.new(
-          amount: 9000000,
-          frequency: 'annual'
-        ),
-        drawings: AmountAndFrequency.new(
-          amount: 90,
-          frequency: 'week'
-        ),
-        profit: AmountAndFrequency.new(
-          amount: 900000,
-          frequency: 'annual'
-        )
+    Business.new(
+      business_type: BusinessType.values.sample,
+      ownership_type: 'applicant',
+      trading_name: 'LAA',
+      address: {
+        address_line_one: 'address_line_one_r',
+        address_line_two: 'address_line_two_r',
+        city: 'city_r',
+        country: 'country_r',
+        postcode: 'postcode_r'
+      },
+      description: 'It is LAA',
+      trading_start_date: 5.years.ago,
+      has_additional_owners: 'no',
+      additional_owners: '',
+      has_employees: 'no',
+      number_of_employees: 2,
+      salary: AmountAndFrequency.new(
+        amount: 90_000,
+        frequency: 'weekly'
+      ),
+      total_income_share_sales: nil,
+      percentage_profit_share: 100,
+      turnover: AmountAndFrequency.new(
+        amount: 9_000_000,
+        frequency: 'annual'
+      ),
+      drawings: AmountAndFrequency.new(
+        amount: 90,
+        frequency: 'week'
+      ),
+      profit: AmountAndFrequency.new(
+        amount: 900_000,
+        frequency: 'annual'
       )
+    )
   end
 
   let(:partner_income_benefit) do
