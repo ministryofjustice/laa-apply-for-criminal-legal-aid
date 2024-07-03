@@ -10,6 +10,11 @@ RSpec.describe Evidence::Rules::SelfEmployed do
   end
 
   let(:income) { Income.new }
+  let(:include_partner?) { true }
+
+  before do
+    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+  end
 
   it { expect(described_class.key).to eq :income_selfemployed_3 }
   it { expect(described_class.group).to eq :income }
@@ -47,7 +52,34 @@ RSpec.describe Evidence::Rules::SelfEmployed do
   end
 
   describe '.partner' do
-    it { expect(subject.partner_predicate).to be false }
+    subject { described_class.new(crime_application).partner_predicate }
+
+    context 'when self employed' do
+      let(:income) { Income.new(partner_employment_status: [EmploymentStatus::SELF_EMPLOYED]) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when employed or not working' do
+      let(:income) {
+        Income.new(partner_employment_status: [EmploymentStatus::NOT_WORKING,
+                                               EmploymentStatus::EMPLOYED])
+      }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no employment status' do
+      let(:income) { Income.new(partner_employment_status: nil) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no income' do
+      let(:income) { nil }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -56,7 +88,8 @@ RSpec.describe Evidence::Rules::SelfEmployed do
 
   describe '#to_h' do
     let(:income) do
-      Income.new(employment_status: [EmploymentStatus::SELF_EMPLOYED])
+      Income.new(employment_status: [EmploymentStatus::SELF_EMPLOYED],
+                 partner_employment_status: [EmploymentStatus::SELF_EMPLOYED])
     end
 
     let(:expected_hash) do
@@ -71,8 +104,8 @@ RSpec.describe Evidence::Rules::SelfEmployed do
             prompt: ['complete financial accounts, tax return, bank statements, cash book or other business records'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['complete financial accounts, tax return, bank statements, cash book or other business records'],
           },
           other: {
             result: false,
