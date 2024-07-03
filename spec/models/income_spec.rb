@@ -320,4 +320,16 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
       end
     end
   end
+
+  describe '#income_payments' do
+    context 'with not_employed_owners' do
+      before do
+        allow(income).to receive(:not_employed_owners).and_return([])
+      end
+
+      it 'returns correct incomes' do
+        expect(subject.income_payments).to eq []
+      end
+    end
+  end
 end
