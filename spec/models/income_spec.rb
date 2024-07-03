@@ -323,12 +323,37 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
 
   describe '#income_payments' do
     context 'with not_employed_owners' do
+      let(:client_maintainance_payment) do
+        IncomePayment.new(
+          payment_type: 'maintenance',
+          ownership_type: 'applicant',
+          amount: 100,
+          frequency: 'week',
+        )
+      end
+
+      let(:partner_maintainance_payment) do
+        IncomePayment.new(
+          payment_type: 'maintenance',
+          ownership_type: 'partner',
+          amount: 200,
+          frequency: 'week',
+        )
+      end
+
       before do
-        allow(income).to receive(:not_employed_owners).and_return([])
+        crime_application.applicant = Applicant.new(date_of_birth: Date.new(1980, 1, 1))
+
+        crime_application.income_payments = [
+          client_maintainance_payment,
+          partner_maintainance_payment,
+        ]
+
+        crime_application.save!
       end
 
       it 'returns correct incomes' do
-        expect(subject.income_payments).to eq []
+        expect(subject.income_payments).to eq [client_maintainance_payment]
       end
     end
   end
