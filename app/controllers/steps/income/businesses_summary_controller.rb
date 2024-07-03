@@ -21,7 +21,8 @@ module Steps
       def require_businesses
         return true if @subject.businesses.present?
 
-        redirect_to edit_steps_income_business_type_path(@subject)
+        redirect_to edit_steps_income_business_type_path(
+          current_crime_application, @subject)
       end
 
       def decision_tree_class

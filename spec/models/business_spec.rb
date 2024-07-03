@@ -17,4 +17,32 @@ RSpec.describe Business, type: :model do
       business.turnover.amount = '12.00'
     end
   end
+
+  describe '#owner' do
+    subject(:owner) { business.owner }
+
+    let(:crime_application) do
+      CrimeApplication.new(applicant: Applicant.new, partner: Partner.new)
+    end
+
+    let(:attributes) { { crime_application:, ownership_type: } }
+
+    context 'when ownership type is not set' do
+      let(:ownership_type) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when owned by applicant' do
+      let(:ownership_type) { 'applicant' }
+
+      it { is_expected.to be crime_application.applicant }
+    end
+
+    context 'when owned by partner' do
+      let(:ownership_type) { 'partner' }
+
+      it { is_expected.to be crime_application.partner }
+    end
+  end
 end

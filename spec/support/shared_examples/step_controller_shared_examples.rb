@@ -21,6 +21,7 @@ RSpec.shared_examples 'a show step controller' do
 end
 
 RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_class|
+  let(:base_params) {{}}
   describe '#edit' do
     context 'when application is not found' do
       before do
@@ -30,7 +31,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
       end
 
       it 'redirects to the application not found error page' do
-        get :edit, params: { id: '12345' }
+        get :edit, params: base_params.merge(id: '12345')
         expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
@@ -51,7 +52,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
       end
 
       it 'responds with HTTP success' do
-        get :edit, params: { id: existing_case }
+        get :edit, params: base_params.merge(id: existing_case)
         expect(response).to be_successful
       end
     end
@@ -60,7 +61,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
-    let(:expected_params) { { :id => existing_case, form_class_params_name => { foo: 'bar' } } }
+    let(:expected_params) { base_params.merge(:id => existing_case, form_class_params_name => { foo: 'bar' }) }
 
     context 'when application is not found' do
       let(:existing_case) { '12345' }
