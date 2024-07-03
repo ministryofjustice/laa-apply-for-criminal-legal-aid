@@ -3,7 +3,6 @@ class Income < ApplicationRecord
   include EmployedIncome
 
   belongs_to :crime_application
-  has_many :income_benefits, through: :crime_application
   has_many :dependants, through: :crime_application
   has_many :businesses, through: :crime_application
 
@@ -36,6 +35,12 @@ class Income < ApplicationRecord
     end
 
     @income_payments = scope
+  end
+
+  def income_benefits
+    @income_benefits ||= crime_application.income_benefits.where(
+      ownership_type: ownership_types
+    )
   end
 
   def complete?
