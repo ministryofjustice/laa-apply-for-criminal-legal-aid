@@ -4,7 +4,6 @@ class Income < ApplicationRecord
   include SelfEmployedIncome
 
   belongs_to :crime_application
-  has_many :income_benefits, through: :crime_application
   has_many :dependants, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence
@@ -42,6 +41,12 @@ class Income < ApplicationRecord
     end
 
     @income_payments = scope
+  end
+
+  def income_benefits
+    @income_benefits ||= crime_application.income_benefits.where(
+      ownership_type: ownership_types
+    )
   end
 
   def complete?

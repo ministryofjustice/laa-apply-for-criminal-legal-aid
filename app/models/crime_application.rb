@@ -25,7 +25,6 @@ class CrimeApplication < ApplicationRecord
   accepts_nested_attributes_for :income_payments, allow_destroy: true
 
   has_many(:income_benefits,
-           ->(object) { where(ownership_type: object.ownership_types) },
            inverse_of: :crime_application,
            dependent: :destroy)
   accepts_nested_attributes_for :income_benefits, allow_destroy: true

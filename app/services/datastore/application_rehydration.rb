@@ -28,10 +28,10 @@ module Datastore
         outgoings_payments: outgoings_payments,
         documents: parent.documents,
         additional_information: parent.additional_information,
-        income_payments: income_payments,
-        income_benefits: income_benefits,
-        businesses: businesses,
-        employments: employments,
+        income_payments: parent.income.income_payments,
+        income_benefits: parent.income.income_benefits,
+        employments: parent.income.employments,
+        businesses: parent.income.businesses,
         capital: capital,
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],
@@ -122,32 +122,12 @@ module Datastore
       end || []
     end
 
-    def income_payments
-      parent.means_details&.income_details&.income_payments&.map do |struct|
-        IncomePayment.new(**struct)
-      end || []
-    end
-
-    def income_benefits
-      parent.means_details&.income_details&.income_benefits&.map do |struct|
-        IncomeBenefit.new(**struct)
-      end || []
-    end
-
     def income
       return if parent.income.blank?
 
       Income.new(
         parent.income.serializable_hash
       )
-    end
-
-    def businesses
-      parent.income.businesses
-    end
-
-    def employments
-      parent.income.employments
     end
 
     def outgoings

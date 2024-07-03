@@ -9,15 +9,15 @@ describe Summary::Sections::PartnerIncomeBenefitsDetails do
       to_param: '12345',
       income: income,
       partner: instance_double(Partner),
-      partner_detail: instance_double(PartnerDetail, involvement_in_case: 'none'),
-      income_benefits: income_benefits
+      partner_detail: instance_double(PartnerDetail, involvement_in_case: 'none')
     )
   end
 
   let(:income) do
     instance_double(
       Income,
-      partner_has_no_income_benefits:
+      partner_has_no_income_benefits:,
+      income_benefits:
     )
   end
 

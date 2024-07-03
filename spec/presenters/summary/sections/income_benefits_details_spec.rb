@@ -7,8 +7,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      income: income,
-      income_benefits: income_benefits,
+      income: income
     )
   end
 
@@ -16,7 +15,8 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
     instance_double(
       Income,
       income_above_threshold: 'yes',
-      has_no_income_benefits: has_no_income_benefits
+      has_no_income_benefits: has_no_income_benefits,
+      income_benefits: income_benefits,
     )
   end
 

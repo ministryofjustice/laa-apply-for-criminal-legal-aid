@@ -16,7 +16,7 @@ module Summary
       private
 
       def payments
-        @payments ||= crime_application.income_benefits.select { |i| i.ownership_type == OwnershipType::PARTNER.to_s }
+        @payments ||= income.income_benefits.select { |i| i.ownership_type == OwnershipType::PARTNER.to_s }
       end
 
       def no_payments?

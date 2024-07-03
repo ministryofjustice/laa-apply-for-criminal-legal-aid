@@ -13,6 +13,18 @@ module Adapters
         Money.new(super)
       end
 
+      def income_payments
+        return [] unless __getobj__
+
+        @income_payments ||= super.map { |struct| IncomePayment.new(**struct) }
+      end
+
+      def income_benefits
+        return [] unless __getobj__
+
+        @income_benefits ||= super.map { |struct| IncomeBenefit.new(**struct) }
+      end
+
       def partner_self_assessment_tax_bill_amount
         Money.new(super)
       end
@@ -38,34 +50,6 @@ module Adapters
         return [] unless __getobj__
 
         @businesses ||= super.map { |struct| Business.new(**struct) }
-      end
-
-      def client_employment_income
-        income_payments.find do |payment|
-          payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s &&
-            payment.ownership_type == OwnershipType::APPLICANT.to_s
-        end
-      end
-
-      def partner_employment_income
-        income_payments.find do |payment|
-          payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s &&
-            payment.ownership_type == OwnershipType::PARTNER.to_s
-        end
-      end
-
-      def client_work_benefits
-        income_payments.find do |payment|
-          payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s &&
-            payment.ownership_type == OwnershipType::APPLICANT.to_s
-        end
-      end
-
-      def partner_work_benefits
-        income_payments.find do |payment|
-          payment.payment_type == IncomePaymentType::WORK_BENEFITS.to_s &&
-            payment.ownership_type == OwnershipType::PARTNER.to_s
-        end
       end
 
       def serializable_hash(options = {})
