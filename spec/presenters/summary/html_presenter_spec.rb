@@ -14,9 +14,7 @@ describe Summary::HtmlPresenter do
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: income,
-      income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
-      income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
       outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
@@ -28,6 +26,10 @@ describe Summary::HtmlPresenter do
   let(:income) do
     instance_double(
       Income,
+      income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'),
+                        instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
+      income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'),
+                        instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
       partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s],
       client_employment_income: nil,
       partner_employment_income: nil,

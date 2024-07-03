@@ -9,13 +9,13 @@ describe Summary::Sections::IncomePaymentsDetails do
       CrimeApplication,
       to_param: '12345',
       income: income,
-      income_payments: income_payments,
     )
   end
 
   let(:income) do
     instance_double(
       Income,
+      income_payments: income_payments,
       income_above_threshold: 'yes',
       has_no_income_payments: has_no_income_payments
     )
