@@ -15,9 +15,7 @@ module Summary
       end
 
       def employment_income
-        crime_application
-          .income_payments
-          .detect { |payment| (payment.payment_type == IncomePaymentType::EMPLOYMENT.to_s) && (payment.ownership_type == OwnershipType::PARTNER.to_s) } # rubocop:disable Layout/LineLength
+        income.partner_employment_income
       end
     end
   end

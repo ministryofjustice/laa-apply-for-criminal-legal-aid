@@ -13,11 +13,8 @@ describe Summary::HtmlPresenter do
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
-      income: (double partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s], applicant_other_work_benefit_received: nil, partner_other_work_benefit_received: 'no', applicant_self_assessment_tax_bill: 'no', partner_self_assessment_tax_bill: 'no',
-                      has_no_income_payments: nil, has_no_income_benefits: nil, partner_has_no_income_payments: nil, partner_has_no_income_benefits: nil, manage_without_income: nil),
-      income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'), instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
+      income: income,
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
-      income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'), instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
       outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
       capital: (double has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
@@ -25,6 +22,32 @@ describe Summary::HtmlPresenter do
     )
   end
   # rubocop:enable Layout/LineLength
+
+  let(:income) do
+    instance_double(
+      Income,
+      income_payments: [instance_double(IncomePayment, ownership_type: 'applicant', payment_type: 'maintenance'),
+                        instance_double(IncomePayment, ownership_type: 'partner', payment_type: 'maintenance')],
+      income_benefits: [instance_double(IncomeBenefit, ownership_type: 'applicant', payment_type: 'incapacity'),
+                        instance_double(IncomeBenefit, ownership_type: 'partner', payment_type: 'jsa')],
+      partner_employment_status: [EmploymentStatus::NOT_WORKING.to_s],
+      client_employment_income: nil,
+      partner_employment_income: nil,
+      client_employments: [],
+      partner_employments: [],
+      client_work_benefits: nil,
+      partner_work_benefits: [double],
+      applicant_other_work_benefit_received: nil,
+      partner_other_work_benefit_received: 'no',
+      applicant_self_assessment_tax_bill: 'no',
+      partner_self_assessment_tax_bill: 'no',
+      has_no_income_payments: nil,
+      has_no_income_benefits: nil,
+      partner_has_no_income_payments: nil,
+      partner_has_no_income_benefits: nil,
+      manage_without_income: nil
+    )
+  end
 
   let(:datastore_application) do
     extra = {
@@ -93,6 +116,18 @@ describe Summary::HtmlPresenter do
               'amount' => 20_000,
               'frequency' => 'annual',
               'ownership_type' => 'partner'
+            },
+            {
+              'payment_type' => 'work_benefits',
+              'amount' => 20_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'partner'
+            },
+            {
+              'payment_type' => 'work_benefits',
+              'amount' => 20_000,
+              'frequency' => 'annual',
+              'ownership_type' => 'applicant'
             },
           ],
           'income_benefits' => [
@@ -202,10 +237,8 @@ describe Summary::HtmlPresenter do
             PassportJustificationForLegalAid
             EmploymentDetails
             IncomeDetails
-            ClientEmployments
             Dependants
             PartnerEmploymentDetails
-            PartnerEmployments
             PartnerSelfAssessmentTaxBill
             PartnerWorkBenefits
             SelfAssessmentTaxBill
@@ -261,7 +294,6 @@ describe Summary::HtmlPresenter do
             IncomePaymentsDetails
             IncomeBenefitsDetails
             Dependants
-            PartnerEmployments
             PartnerSelfAssessmentTaxBill
             PartnerWorkBenefits
             PartnerIncomePaymentsDetails
@@ -401,7 +433,6 @@ describe Summary::HtmlPresenter do
       expected_sections = %w[
         EmploymentDetails
         IncomeDetails
-        ClientEmployments
         SelfAssessmentTaxBill
         IncomePaymentsDetails
         IncomeBenefitsDetails
@@ -422,7 +453,6 @@ describe Summary::HtmlPresenter do
 
       expected_sections = %w[
         PartnerEmploymentDetails
-        PartnerEmployments
         PartnerSelfAssessmentTaxBill
         PartnerWorkBenefits
         PartnerIncomePaymentsDetails

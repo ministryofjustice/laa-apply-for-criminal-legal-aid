@@ -6,12 +6,13 @@ describe Summary::Sections::ClientEmployments do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      client_employments: records,
       in_progress?: true,
-      to_param: 12_345
+      to_param: 12_345,
+      income: income
     )
   end
 
+  let(:income) { instance_double(Income, client_employments: records) }
   let(:records) { [Employment.new(ownership_type: OwnershipType::APPLICANT.to_s)] }
 
   describe '#list?' do

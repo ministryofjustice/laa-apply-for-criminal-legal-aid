@@ -52,43 +52,6 @@ module Adapters
         Structs::IncomeDetails.new(means_details.income_details)
       end
 
-      def income_payments
-        return [] unless means_details&.income_details&.income_payments
-
-        means_details.income_details.income_payments.map do |struct|
-          IncomePayment.new(struct.attributes)
-        end
-      end
-
-      def income_benefits
-        return [] unless means_details&.income_details&.income_benefits
-
-        means_details.income_details.income_benefits.map do |struct|
-          IncomeBenefit.new(struct.attributes)
-        end
-      end
-
-      def employments
-        return [] unless means_details&.income_details&.employments
-
-        means_details.income_details.employments.map do |struct|
-          if struct.respond_to?(:deductions)
-            struct.deductions.map! do |deduction|
-              Deduction.new(deduction.attributes)
-            end
-          end
-          Employment.new(struct.attributes)
-        end
-      end
-
-      def client_employments
-        employments.select { |e| e.ownership_type == OwnershipType::APPLICANT.to_s }
-      end
-
-      def partner_employments
-        employments.select { |e| e.ownership_type == OwnershipType::PARTNER.to_s }
-      end
-
       def outgoings
         return nil unless means_details
 
