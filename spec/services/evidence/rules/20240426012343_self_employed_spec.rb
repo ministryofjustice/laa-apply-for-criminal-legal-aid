@@ -61,7 +61,10 @@ RSpec.describe Evidence::Rules::SelfEmployed do
     end
 
     context 'when employed or not working' do
-      let(:income) { Income.new(partner_employment_status: [EmploymentStatus::NOT_WORKING, EmploymentStatus::EMPLOYED]) }
+      let(:income) {
+        Income.new(partner_employment_status: [EmploymentStatus::NOT_WORKING,
+                                               EmploymentStatus::EMPLOYED])
+      }
 
       it { is_expected.to be false }
     end
