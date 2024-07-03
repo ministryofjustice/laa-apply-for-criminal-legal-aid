@@ -22,6 +22,10 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     instance_double(EmploymentDetails::AnswersValidator, validate: nil)
   end
 
+  let(:partner_employment_validator) do
+    instance_double(PartnerEmploymentDetails::AnswersValidator, validate: nil)
+  end
+
   before do
     allow(validator).to receive_messages(
       evidence_of_passporting_means_forthcoming?: false,
@@ -29,6 +33,10 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     )
 
     allow(EmploymentDetails::AnswersValidator).to receive(:new).and_return(
+      employment_validator
+    )
+
+    allow(PartnerEmploymentDetails::AnswersValidator).to receive(:new).and_return(
       employment_validator
     )
   end

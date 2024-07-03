@@ -30,7 +30,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       Income,
       employment_status: employment_status,
       client_employments: employments_double,
-      partner_employments: partner_employments_double
+      partner_employments: partner_employments_double,
+      income_above_threshold: 'yes'
     )
   end
   let(:employment_status) { nil }
@@ -230,9 +231,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        context 'when route_to_partner_employment_income?' do
+        context 'when does not requires_full_means_assessment?' do
           before do
-            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(true)
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
           end
 
           it 'redirects to the `partner/employment_income` page' do
@@ -240,9 +241,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
         end
 
-        context 'when no route_to_partner_employment_income?' do
+        context 'when requires_full_means_assessment?' do
           before do
-            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(false)
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
           end
 
           context 'with partner employments present' do

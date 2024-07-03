@@ -1,18 +1,7 @@
 class EmploymentIncomePaymentsCalculator
   class << self
     def annualized_payments(crime_application) # rubocop:disable Metrics/MethodLength
-      if single_employment_income?(crime_application.income)
-        # singe employment for client and partner
-        grouped_income_payments(crime_application.income_payments).map do |ownership_type, income_payments_array|
-          {
-            amount: annual_income(income_payments_array),
-            income_tax: 0,
-            national_insurance: 0,
-            frequency: PaymentFrequencyType::ANNUALLY.to_s,
-            ownership_type: ownership_type
-          }
-        end
-      else
+      if crime_application.income.known_to_be_full_means?
         # employments loop for client and partner
         grouped_employments(crime_application.employments).map do |ownership_type, employments_array|
           {
@@ -23,18 +12,21 @@ class EmploymentIncomePaymentsCalculator
             ownership_type: ownership_type
           }
         end
+      else
+        # singe employment for client and partner
+        grouped_income_payments(crime_application.income.income_payments).map do |ownership_type, income_payments_array|
+          {
+            amount: annual_income(income_payments_array),
+            income_tax: 0,
+            national_insurance: 0,
+            frequency: PaymentFrequencyType::ANNUALLY.to_s,
+            ownership_type: ownership_type
+          }
+        end
       end
     end
 
     private
-
-    def single_employment_income?(income)
-      income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s) &&
-        income.income_above_threshold == YesNoAnswer::NO.to_s &&
-        income.has_frozen_income_or_assets == YesNoAnswer::NO.to_s &&
-        income.client_owns_property == YesNoAnswer::NO.to_s &&
-        income.has_savings == YesNoAnswer::NO.to_s
-    end
 
     def grouped_employments(employments)
       employments.select(&:complete?).group_by(&:ownership_type)

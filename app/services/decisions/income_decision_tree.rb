@@ -148,7 +148,7 @@ module Decisions
     end
 
     # <- to make it easier to reimplement when we do self-employed
-    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
@@ -164,28 +164,18 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          if income.client_employments.empty?
-            redirect_to_employer_details(client_employment)
-          else
-            edit('/steps/income/client/employments_summary')
-          end
+          employment_start
         else
           show(:employed_exit)
         end
       end
     end
 
-    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          return edit('/steps/income/partner/employment_income') if route_to_partner_employment_income?
-
-          if income.partner_employments.empty?
-            redirect_to_partner_employer_details(partner_employment)
-          else
-            edit('/steps/income/partner/employments_summary')
-          end
+          partner_employment_start
         else
           show(:employed_exit)
         end
@@ -197,11 +187,7 @@ module Decisions
         end
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
         if FeatureFlags.self_employed_journey.enabled?
-          if income.partner_employments.empty?
-            redirect_to_partner_employer_details(partner_employment)
-          else
-            edit('/steps/income/partner/employments_summary')
-          end
+          partner_employment_start
         else
           show(:self_employed_exit)
         end
@@ -262,6 +248,18 @@ module Decisions
         end
       else
         edit('/steps/income/client/employment_income')
+      end
+    end
+
+    def partner_employment_start
+      if requires_full_means_assessment?
+        if income.partner_employments.empty?
+          redirect_to_partner_employer_details(partner_employment)
+        else
+          edit('/steps/income/partner/employments_summary')
+        end
+      else
+        edit('/steps/income/partner/employment_income')
       end
     end
 

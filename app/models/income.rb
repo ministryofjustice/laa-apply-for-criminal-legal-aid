@@ -66,13 +66,11 @@ class Income < ApplicationRecord
     employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 
-  private
-
-  delegate :partner, :applicant, to: :crime_application
-
   def known_to_be_full_means?
     MeansStatus.full_means_required?(crime_application)
   rescue Errors::CannotYetDetermineFullMeans
     false
   end
+
+  delegate :partner, :applicant, to: :crime_application
 end
