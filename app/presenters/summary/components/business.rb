@@ -25,13 +25,13 @@ module Summary
             :has_additional_owners, business.has_additional_owners
           ),
           Components::FreeTextAnswer.new(
-            :additional_owners, business.additional_owners
+            :additional_owners, business.additional_owners, show: business.additional_owners.present?
           ),
           Components::ValueAnswer.new(
             :has_employees, business.has_employees
           ),
-          Components::IntegerAnswer.new(
-            :number_of_employees, business.number_of_employees
+          Components::FreeTextAnswer.new(
+            :number_of_employees, business.number_of_employees.to_s, show: business.number_of_employees.present?
           ),
           Components::AmountAndFrequencyAnswer.new(
             :turnover, business.turnover
@@ -42,7 +42,7 @@ module Summary
           Components::AmountAndFrequencyAnswer.new(
             :drawings, business.profit
           )
-        ]
+        ].select(&:show?)
       end
 
       def name
