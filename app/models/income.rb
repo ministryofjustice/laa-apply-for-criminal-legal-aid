@@ -30,7 +30,7 @@ class Income < ApplicationRecord
 
     # disregard employed income for people no longer employed
     if not_employed_owners.present?
-      scope = scope.where('ownership_type NOT IN(?) AND payment_type IN(?)',
+      scope = scope.where('NOT (ownership_type IN(?) AND payment_type IN(?))',
                           not_employed_owners, employed_income_payment_types)
     end
 
