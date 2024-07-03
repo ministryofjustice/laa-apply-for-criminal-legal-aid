@@ -241,7 +241,7 @@ module Decisions
 
     def employment_start
       if requires_full_means_assessment?
-        if income.client_employments.empty?
+        if income.client_employments.empty? || incomplete_client_employments.present?
           redirect_to_employer_details(client_employment)
         else
           edit('/steps/income/client/employments_summary')
@@ -253,7 +253,7 @@ module Decisions
 
     def partner_employment_start
       if requires_full_means_assessment?
-        if income.partner_employments.empty?
+        if income.partner_employments.empty? || incomplete_partner_employments.present?
           redirect_to_partner_employer_details(partner_employment)
         else
           edit('/steps/income/partner/employments_summary')
