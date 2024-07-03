@@ -14,7 +14,20 @@ module Steps
       private
 
       def persist!
-        partner_detail.update(attributes)
+        ::PartnerDetail.transaction do
+          reset_address!
+
+          partner_detail.update!(attributes)
+
+          true
+        end
+      end
+
+      def reset_address!
+        return if has_same_address_as_client.to_s == 'no'
+        return if crime_application.partner&.home_address.nil?
+
+        crime_application.partner.home_address.destroy!
       end
     end
   end
