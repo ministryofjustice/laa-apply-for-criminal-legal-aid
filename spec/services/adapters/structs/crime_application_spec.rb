@@ -60,21 +60,9 @@ RSpec.describe Adapters::Structs::CrimeApplication do
     end
   end
 
-  describe '#client_employments' do
-    it 'returns the capital struct' do
-      expect(subject.client_employments).to all(be_a(Employment))
-    end
-  end
-
   describe '#partner' do
     it 'returns the partner struct' do
       expect(subject.partner).to be_a(Adapters::Structs::Partner)
-    end
-  end
-
-  describe '#partner_employments' do
-    it 'returns the capital struct' do
-      expect(subject.partner_employments).to all(be_a(Employment))
     end
   end
 end

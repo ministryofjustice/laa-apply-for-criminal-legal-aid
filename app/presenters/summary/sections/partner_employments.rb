@@ -4,7 +4,7 @@ module Summary
       private
 
       def employments
-        @employments ||= crime_application.partner_employments
+        @employments ||= income.partner_employments
       end
     end
   end

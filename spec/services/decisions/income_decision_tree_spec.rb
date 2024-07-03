@@ -25,7 +25,15 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:partner_employment_double) {
     instance_double(Employment, id: 'uuid2', ownership_type: OwnershipType::PARTNER.to_s)
   }
-  let(:income) { instance_double(Income, employment_status:) }
+  let(:income) do
+    instance_double(
+      Income,
+      employment_status: employment_status,
+      client_employments: employments_double,
+      partner_employments: partner_employments_double,
+      income_above_threshold: 'yes'
+    )
+  end
   let(:employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) {
@@ -223,9 +231,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        context 'when route_to_partner_employment_income?' do
+        context 'when does not requires_full_means_assessment?' do
           before do
-            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(true)
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
           end
 
           it 'redirects to the `partner/employment_income` page' do
@@ -233,9 +241,9 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
         end
 
-        context 'when no route_to_partner_employment_income?' do
+        context 'when requires_full_means_assessment?' do
           before do
-            allow_any_instance_of(described_class).to receive(:route_to_partner_employment_income?).and_return(false)
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
           end
 
           context 'with partner employments present' do
@@ -766,6 +774,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'with client employments not present' do
           let(:client_employments_empty?) { false }
+
+          before do
+            allow(income).to receive(:client_employments).and_return(employments_double)
+          end
 
           it 'redirects to the `client/employments_summary` page' do
             expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,

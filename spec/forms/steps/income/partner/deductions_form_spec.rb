@@ -14,7 +14,15 @@ RSpec.describe Steps::Income::Partner::DeductionsForm do
     }
   end
 
-  let(:crime_application) { CrimeApplication.new }
+  let(:crime_application) do
+    CrimeApplication.new(
+      income: Income.new(
+        partner_employment_status: ['employed'],
+        employment_status: ['employed'],
+      )
+    )
+  end
+
   let(:employment) {
     Employment.create!(crime_application: crime_application, ownership_type: OwnershipType::PARTNER.to_s)
   }
@@ -22,6 +30,10 @@ RSpec.describe Steps::Income::Partner::DeductionsForm do
   let(:national_insurance) { { amount: '', frequency: '', employment_id: employment.id } }
   let(:other) { { amount: 300, frequency: 'week', employment_id: employment.id, details: 'other deduction details' } }
   let(:types) { %w[income_tax other] }
+
+  before do
+    allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+  end
 
   describe '#save' do
     context 'when valid attributes are provided' do

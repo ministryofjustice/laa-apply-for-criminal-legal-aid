@@ -6,7 +6,7 @@ module SubmissionSerializer
         Jbuilder.new do |json|
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
-          json.employments Definitions::Employment.generate(crime_application.employments)
+          json.employments Definitions::Employment.generate(income.employments)
           json.ended_employment_within_three_months income.ended_employment_within_three_months
           json.lost_job_in_custody income.lost_job_in_custody
           json.date_job_lost income.date_job_lost

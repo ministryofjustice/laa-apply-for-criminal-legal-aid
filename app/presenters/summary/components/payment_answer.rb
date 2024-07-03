@@ -31,7 +31,7 @@ module Summary
       end
 
       def tax_status
-        val = value.respond_to?(:metadata) && value.metadata.dig('before_or_after_tax', 'value')
+        val = value.respond_to?(:metadata) && value.metadata.to_h.dig('before_or_after_tax', 'value')
         t("summary.#{val}") if val
       end
     end
