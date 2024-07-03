@@ -54,7 +54,7 @@ RSpec.describe Evidence::Rules::SelfEmployed do
   describe '.partner' do
     subject { described_class.new(crime_application).partner_predicate }
 
-    context 'when employed' do
+    context 'when self employed' do
       let(:income) { Income.new(partner_employment_status: [EmploymentStatus::SELF_EMPLOYED]) }
 
       it { is_expected.to be true }
