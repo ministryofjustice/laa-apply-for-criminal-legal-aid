@@ -51,6 +51,14 @@ class Income < ApplicationRecord
     super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
   end
 
+  def applicant_other_work_benefit_received
+    super if client_employed? && known_to_be_full_means?
+  end
+
+  def partner_other_work_benefit_received
+    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
+  end
+
   def complete?
     valid?(:submission)
   end

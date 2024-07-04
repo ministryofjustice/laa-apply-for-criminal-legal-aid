@@ -21,7 +21,7 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
 
   let(:partner) { Partner.new }
 
-  let(:income) { Income.new(crime_application:) }
+  let(:income) { Income.new(crime_application: crime_application, partner_employment_status: ['employed']) }
   let(:partner_income_payment) {
     IncomePayment.new(crime_application: crime_application,
                       payment_type: IncomePaymentType::WORK_BENEFITS.to_s,
@@ -32,6 +32,7 @@ RSpec.describe Steps::Income::Partner::OtherWorkBenefitsForm do
   let(:amount) { nil }
 
   before do
+    allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: true)
     allow(partner).to receive(:income_payments).and_return(double(work_benefits: partner_income_payment))
   end
 
