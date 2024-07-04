@@ -6,7 +6,7 @@ RSpec.describe Steps::Income::BusinessesForm do
   let(:arguments) { { crime_application:, record: }.merge(attributes) }
   let(:crime_application) { instance_double(CrimeApplication) }
   let(:record) { Business.new }
-  let(:attributes) {{}}
+  let(:attributes) { {} }
 
   let(:valid_attributes) do
     {
@@ -19,7 +19,7 @@ RSpec.describe Steps::Income::BusinessesForm do
   end
 
   it_behaves_like 'a form with a from_subject'
-  
+
   describe '#validations' do
     it { is_expected.to validate_presence_of(:address_line_one) }
     it { is_expected.to validate_presence_of(:city) }

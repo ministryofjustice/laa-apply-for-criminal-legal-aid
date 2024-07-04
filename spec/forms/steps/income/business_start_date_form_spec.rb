@@ -9,7 +9,7 @@ RSpec.describe Steps::Income::BusinessStartDateForm do
   let(:attributes) { {} }
 
   it_behaves_like 'a form with a from_subject'
-  
+
   describe '#validations' do
     it { is_expected.to validate_presence_of(:trading_start_date) }
 

@@ -61,7 +61,6 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     options[:earliest_year] || MultiparamDateValidator::DEFAULT_OPTIONS[:earliest_year]
   end
 
-
   before do
     subject.public_send(:"#{attribute_name}=", date)
   end

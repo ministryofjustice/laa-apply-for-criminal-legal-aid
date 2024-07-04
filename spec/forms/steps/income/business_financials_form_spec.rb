@@ -63,5 +63,4 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
       expect(form.financials).to contain_exactly :turnover, :drawings, :profit
     end
   end
-
 end

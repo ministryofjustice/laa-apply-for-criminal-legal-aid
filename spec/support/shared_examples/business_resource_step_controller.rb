@@ -27,7 +27,7 @@ RSpec.shared_examples 'a business resource step controller' do |form_class|
       let(:business) { crime_application.businesses.where(ownership_type: 'partner').first }
 
       it 'redirects to the not found error page' do
-        get :edit, params: { id: crime_application.id, business_id: business.id, subject: subject_type } 
+        get :edit, params: { id: crime_application.id, business_id: business.id, subject: subject_type }
         expect(response).to redirect_to(not_found_errors_path)
       end
     end

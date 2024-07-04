@@ -7,7 +7,7 @@ RSpec.shared_examples 'a form with a from_subject' do
 
       it { is_expected.to eq SubjectType::APPLICANT }
     end
-    
+
     context 'when record is owned by partner' do
       before { record.ownership_type = 'partner' }
 

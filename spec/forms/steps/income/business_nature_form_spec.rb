@@ -9,7 +9,7 @@ RSpec.describe Steps::Income::BusinessNatureForm do
   let(:attributes) { {} }
 
   it_behaves_like 'a form with a from_subject'
-  
+
   describe '#validations' do
     it { is_expected.to validate_presence_of(:description) }
   end

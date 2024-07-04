@@ -71,7 +71,6 @@ RSpec.describe Summary::Components::Business, type: :component do
         render_summary_component(described_class.new(record: record, show_record_actions: true))
       end
 
-
       let(:path) { '/applications/APP123/steps/income/client/businesses/BUS345' }
 
       describe 'change link' do
@@ -93,7 +92,7 @@ RSpec.describe Summary::Components::Business, type: :component do
   end
 
   describe 'answers' do
-    it 'renders as summary list' do
+    it 'renders as summary list' do # rubocop:disable RSpec/MultipleExpectations
       expect(page).to have_summary_row 'Trading name', 'LAA LTD'
       expect(page).to have_summary_row 'Business address', 'address_line_one_r, city_r, postcode_r, country_r'
       expect(page).to have_summary_row 'Date began trading', '2 January 2000'
@@ -106,7 +105,7 @@ RSpec.describe Summary::Components::Business, type: :component do
       expect(page).to have_summary_row 'Total drawings', '£3,030.00 every year'
     end
 
-    xcontext 'when answers are missing' do
+    xcontext 'when answers are missing' do, "pending merge with Hibo's fix"
       let(:attributes) do
         {
           id: 'BUS345',
@@ -124,13 +123,12 @@ RSpec.describe Summary::Components::Business, type: :component do
           total_income_share_sales: nil,
           percentage_profit_share: nil,
           turnover: {},
-          drawings: {}, 
+          drawings: {},
           profit: {}
         }
       end
 
-      it 'renders as summary list' do
-        throw page.inspect
+      it 'renders as summary list' do # rubocop:disable RSpec/MultipleExpectations
         expect(page).to have_summary_row 'Trading name', ''
         expect(page).to have_summary_row 'Business address', ''
         expect(page).to have_summary_row 'Date began trading', '2 January 2000'
