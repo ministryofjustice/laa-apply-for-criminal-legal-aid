@@ -112,6 +112,170 @@ RSpec.describe Income, type: :model do
     end
   end
 
+  describe '#applicant_self_assessment_tax_bill' do
+    subject(:applicant_self_assessment_tax_bill) { income.applicant_self_assessment_tax_bill }
+
+    before do
+      income.applicant_self_assessment_tax_bill = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is employed' do
+      before do
+        income.employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#partner_self_assessment_tax_bill' do
+    subject(:partner_self_assessment_tax_bill) { income.partner_self_assessment_tax_bill }
+
+    before do
+      allow(MeansStatus).to receive(:include_partner?).and_return(true)
+      income.partner_self_assessment_tax_bill = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and partner is employed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and partner is employed and no longer mean assessed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: false)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.partner_employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#applicant_other_work_benefit_received' do
+    subject(:applicant_other_work_benefit_received) { income.applicant_other_work_benefit_received }
+
+    before do
+      income.applicant_other_work_benefit_received = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is employed' do
+      before do
+        income.employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#partner_other_work_benefit_received' do
+    subject(:partner_other_work_benefit_received) { income.partner_other_work_benefit_received }
+
+    before do
+      allow(MeansStatus).to receive(:include_partner?).and_return(true)
+      income.partner_other_work_benefit_received = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and partner is employed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and partner is employed and no longer mean assessed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: false)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.partner_employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#client_employment_income' do
     subject(:client_employment_income) { income.client_employment_income }
 
@@ -317,6 +481,108 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
 
       it 'calculates the correct total' do
         expect(income.all_income_total).to eq 0
+      end
+    end
+
+    describe '#income_paymnents' do
+      subject(:income_payments) { income.income_payments }
+
+      let(:crime_application) { CrimeApplication.create!(applicant: Applicant.new, partner: Partner.new) }
+      let(:owners) { income_payments.pluck(:ownership_type).uniq }
+      let(:payment_types) { income_payments.pluck(:payment_type).uniq }
+
+      before do
+        base = { type: 'IncomePayment', crime_application_id: crime_application.id, amount: 1, frequency: 'week' }
+
+        # rubocop:disable Rails/SkipsModelValidations
+        IncomePayment.insert_all(
+          [
+            base.merge(ownership_type: 'partner', payment_type: 'employment'),
+            base.merge(ownership_type: 'applicant', payment_type: 'employment'),
+            base.merge(ownership_type: 'partner', payment_type: 'work_benefits'),
+            base.merge(ownership_type: 'applicant', payment_type: 'work_benefits'),
+            base.merge(ownership_type: 'partner', payment_type: 'maintenance'),
+            base.merge(ownership_type: 'applicant', payment_type: 'maintenance')
+          ]
+        )
+
+        # rubocop:enable Rails/SkipsModelValidations
+      end
+
+      context 'when neither are employed' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: true, full_means_required?: false)
+        end
+
+        it 'returns non-employment payment types for both client and partner' do
+          expect(owners).to contain_exactly 'partner', 'applicant'
+          expect(payment_types).to contain_exactly 'maintenance'
+        end
+      end
+
+      context 'when both are employed and full means is not required' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: true, full_means_required?: false)
+          income.employment_status = ['employed']
+          income.partner_employment_status = ['employed']
+        end
+
+        it 'includes the employment payment type for both client and partner' do
+          expect(owners).to contain_exactly 'partner', 'applicant'
+          expect(payment_types).to contain_exactly 'employment', 'maintenance'
+        end
+      end
+
+      context 'when both are employed and full means is required' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: true, full_means_required?: true)
+          income.employment_status = ['employed']
+          income.partner_employment_status = ['employed']
+        end
+
+        it 'includes the work_benefits payment type for both client and partner' do
+          expect(owners).to contain_exactly 'partner', 'applicant'
+          expect(payment_types).to contain_exactly 'maintenance', 'work_benefits'
+        end
+      end
+
+      context 'when both are employed but the partner is excluded from means' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: false, full_means_required?: false)
+          income.employment_status = ['employed']
+          income.partner_employment_status = ['employed']
+        end
+
+        it 'includes the employment payment for just the client' do
+          expect(owners).to contain_exactly 'applicant'
+          expect(payment_types).to contain_exactly 'employment', 'maintenance'
+        end
+      end
+
+      context 'when only the partner is employed but is excluded from means' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: false, full_means_required?: false)
+          income.employment_status = ['self_employed']
+          income.partner_employment_status = ['employed']
+        end
+
+        it 'employent payments are still excluded' do
+          expect(owners).to contain_exactly 'applicant'
+          expect(payment_types).to contain_exactly 'maintenance'
+        end
+      end
+
+      context 'when full means, both are employed, but partner is excluded' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: false, full_means_required?: true)
+          income.employment_status = ['employed']
+          income.partner_employment_status = ['employed']
+        end
+
+        it 'includes the work_benefits payment type for client only' do
+          expect(owners).to contain_exactly 'applicant'
+          expect(payment_types).to contain_exactly 'maintenance', 'work_benefits'
+        end
       end
     end
   end

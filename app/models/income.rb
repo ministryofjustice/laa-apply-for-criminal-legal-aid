@@ -36,7 +36,7 @@ class Income < ApplicationRecord
 
     # disregard employed income for people no longer employed
     if not_employed_owners.present?
-      scope = scope.where('ownership_type NOT IN(?) AND payment_type IN(?)',
+      scope = scope.where('NOT (ownership_type IN(?) AND payment_type IN(?))',
                           not_employed_owners, employed_income_payment_types)
     end
 
@@ -47,6 +47,22 @@ class Income < ApplicationRecord
     @income_benefits ||= crime_application.income_benefits.where(
       ownership_type: ownership_types
     )
+  end
+
+  def applicant_self_assessment_tax_bill
+    super if client_employed? && known_to_be_full_means?
+  end
+
+  def partner_self_assessment_tax_bill
+    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
+  end
+
+  def applicant_other_work_benefit_received
+    super if client_employed? && known_to_be_full_means?
+  end
+
+  def partner_other_work_benefit_received
+    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
   end
 
   def complete?

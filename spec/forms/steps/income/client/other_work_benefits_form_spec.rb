@@ -13,7 +13,7 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
 
   let(:crime_application) { CrimeApplication.new applicant: }
   let(:applicant) { Applicant.new }
-  let(:income) { Income.new(crime_application:) }
+  let(:income) { Income.new(crime_application: crime_application, employment_status: ['employed']) }
   let(:income_payment) {
     IncomePayment.new(crime_application: crime_application,
                       payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
@@ -21,6 +21,10 @@ RSpec.describe Steps::Income::Client::OtherWorkBenefitsForm do
 
   let(:applicant_other_work_benefit_received) { nil }
   let(:amount) { nil }
+
+  before do
+    allow(MeansStatus).to receive_messages(full_means_required?: true)
+  end
 
   describe '#build' do
     subject(:form) { described_class.build(crime_application) }

@@ -15,7 +15,7 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+    allow(MeansStatus).to receive_messages(include_partner?: include_partner?, full_means_required?: true)
   end
 
   it { expect(described_class.key).to eq :income_p60_sa302_2 }
@@ -39,7 +39,7 @@ RSpec.describe Evidence::Rules::SelfAssessed do
     end
 
     context 'when applicant has paid a self assessment tax bill' do
-      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes') }
+      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes', employment_status: ['employed']) }
 
       it { is_expected.to be true }
     end
@@ -81,6 +81,28 @@ RSpec.describe Evidence::Rules::SelfAssessed do
 
       it { is_expected.to be false }
     end
+
+    context 'when partner has paid a self assessment tax bill' do
+      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['employed']) }
+      let(:above_threshold) { 'no' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when partner has paid a self assessment tax bill and no long means assessed' do
+      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['employed']) }
+      let(:above_threshold) { 'no' }
+      let(:include_partner?) { false }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when partner has paid a self assessment tax bill but no longer employed' do
+      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['not_working']) }
+      let(:above_threshold) { 'no' }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '.other' do
@@ -91,7 +113,7 @@ RSpec.describe Evidence::Rules::SelfAssessed do
     let(:outgoings) do
       Outgoings.new(
         income_tax_rate_above_threshold: 'yes',
-        partner_income_tax_rate_above_threshold: 'yes'
+        partner_income_tax_rate_above_threshold: 'yes',
       )
     end
 
