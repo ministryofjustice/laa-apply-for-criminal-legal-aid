@@ -89,7 +89,7 @@ RSpec.describe 'Businesses summary page', :authorized do
 
   describe 'list of added businesses in summary page' do
     before do
-      PartnerDetail.update_all(involvement_in_case:)
+      PartnerDetail.update_all(involvement_in_case:) # rubocop:disable Rails/SkipsModelValidations
 
       get edit_steps_income_businesses_summary_path(crime_application, subject: subject_type)
     end

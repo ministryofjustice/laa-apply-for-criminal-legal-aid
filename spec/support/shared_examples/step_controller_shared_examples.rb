@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'a show step controller' do
+  let(:base_params) { {} }
+
   describe '#show' do
     context 'when application is not found' do
       it 'redirects to the application not found error page' do
-        get :show, params: { id: '12345' }
+        get :show, params: base_params.merge(id: '12345')
         expect(response).to redirect_to(application_not_found_errors_path)
       end
     end
@@ -13,7 +15,7 @@ RSpec.shared_examples 'a show step controller' do
       let(:existing_case) { CrimeApplication.create }
 
       it 'responds with HTTP success' do
-        get :show, params: { id: existing_case }
+        get :show, params: base_params.merge(id: existing_case)
         expect(response).to be_successful
       end
     end
@@ -21,7 +23,7 @@ RSpec.shared_examples 'a show step controller' do
 end
 
 RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_class|
-  let(:base_params) {{}}
+  let(:base_params) { {} }
   describe '#edit' do
     context 'when application is not found' do
       before do

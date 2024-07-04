@@ -11,22 +11,24 @@ RSpec.describe Steps::Income::BusinessesSummaryController, type: :controller do
   end
 
   context 'when businesses present' do
-    let(:businesses) { [
-      Business.new(business_type: 'partnership', ownership_type: 'applicant'),
-      Business.new(business_type: 'self_employed', ownership_type: 'partner')
-    ] }
+    let(:businesses) {
+      [
+        Business.new(business_type: 'partnership', ownership_type: 'applicant'),
+        Business.new(business_type: 'self_employed', ownership_type: 'partner')
+      ]
+    }
 
     context 'when subject is client' do
       it_behaves_like 'a generic step controller',
                       Steps::Income::BusinessesSummaryForm, Decisions::SelfEmployedIncomeDecisionTree do
-                        let(:base_params) { { subject: 'client'} }
+                        let(:base_params) { { subject: 'client' } }
                       end
     end
-    
+
     context 'when subject is partner' do
       it_behaves_like 'a generic step controller',
                       Steps::Income::BusinessesSummaryForm, Decisions::SelfEmployedIncomeDecisionTree do
-                        let(:base_params) { { subject: 'partner'} }
+                        let(:base_params) { { subject: 'partner' } }
                       end
     end
   end
@@ -45,4 +47,3 @@ RSpec.describe Steps::Income::BusinessesSummaryController, type: :controller do
     end
   end
 end
-
