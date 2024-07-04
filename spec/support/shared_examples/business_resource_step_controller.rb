@@ -22,6 +22,15 @@ RSpec.shared_examples 'a business resource step controller' do |form_class|
     it_behaves_like 'a generic step controller', form_class, Decisions::SelfEmployedIncomeDecisionTree do
       let(:base_params) { { business_id: business.id, subject: subject_type } }
     end
+
+    context 'when the business is for the partner' do
+      let(:business) { crime_application.businesses.where(ownership_type: 'partner').first }
+
+      it 'redirects to the not found error page' do
+        get :edit, params: { id: crime_application.id, business_id: business.id, subject: subject_type } 
+        expect(response).to redirect_to(not_found_errors_path)
+      end
+    end
   end
 
   context 'when subject is partner' do

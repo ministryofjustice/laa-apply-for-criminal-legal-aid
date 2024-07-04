@@ -1,9 +1,7 @@
 module Summary
   module Components
     class Business < BaseRecord
-      def business
-        record if record.is_a? ApplicationRecord
-      end
+      alias business record
 
       private
 

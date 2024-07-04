@@ -16,7 +16,9 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
     }
   end
 
-  describe 'save' do
+  it_behaves_like 'a form with a from_subject'
+
+  describe '#save' do
     let(:attributes) { valid_attributes }
 
     context 'when all payments valid' do
@@ -30,7 +32,7 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
     context 'when a payments is invalid' do
       let(:attributes) { valid_attributes.deep_merge(turnover: { amount: nil }) }
 
-      it 'updates does not update record' do
+      it 'does not update record' do
         expect(record).not_to receive(:update)
         expect(subject.save).to be(false)
       end
@@ -44,7 +46,7 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
     context 'when a frequency is missing' do
       let(:attributes) { valid_attributes.deep_merge(profit: { frequency: nil }) }
 
-      it 'updates does not update record' do
+      it 'does not update record' do
         expect(record).not_to receive(:update)
         expect(subject.save).to be(false)
       end
@@ -55,4 +57,11 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
       end
     end
   end
+
+  describe '#financials' do
+    it 'returns a list of payments' do
+      expect(form.financials).to contain_exactly :turnover, :drawings, :profit
+    end
+  end
+
 end
