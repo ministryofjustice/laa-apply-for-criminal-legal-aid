@@ -43,6 +43,14 @@ class Income < ApplicationRecord
     )
   end
 
+  def applicant_self_assessment_tax_bill
+    super if client_employed? && known_to_be_full_means?
+  end
+
+  def partner_self_assessment_tax_bill
+    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
+  end
+
   def complete?
     valid?(:submission)
   end
