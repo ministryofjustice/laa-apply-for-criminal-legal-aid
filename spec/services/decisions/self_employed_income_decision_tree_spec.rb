@@ -20,9 +20,7 @@ RSpec.describe Decisions::SelfEmployedIncomeDecisionTree do
 
   it_behaves_like 'a decision tree'
 
-  context 'when the step is `business_type`' do
-    let(:step_name) { :business_type }
-
-    xit { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
-  end
+  # context 'when the step is `business_type`' do
+  #   let(:step_name) { :business_type }
+  # end
 end

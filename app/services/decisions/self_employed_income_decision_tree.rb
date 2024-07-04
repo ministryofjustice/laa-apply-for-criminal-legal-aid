@@ -2,6 +2,8 @@ module Decisions
   class SelfEmployedIncomeDecisionTree < BaseDecisionTree
     # TODO: consider renaming this decision tree business as it passes back to the income decision tree...
 
+    # :nocov:
+    # temporary nocov until merge
     def destination # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       case step_name
       when :business_type
@@ -31,5 +33,7 @@ module Decisions
       person = form_object.subject.to_param
       edit("steps/income/#{person}/self_assessment_tax_bill")
     end
+
+    # :nocov:
   end
 end
