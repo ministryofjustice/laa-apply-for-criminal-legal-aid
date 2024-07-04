@@ -112,6 +112,88 @@ RSpec.describe Income, type: :model do
     end
   end
 
+  describe '#applicant_self_assessment_tax_bill' do
+    subject(:applicant_self_assessment_tax_bill) { income.applicant_self_assessment_tax_bill }
+
+    before do
+      income.applicant_self_assessment_tax_bill = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is employed' do
+      before do
+        income.employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#partner_self_assessment_tax_bill' do
+    subject(:partner_self_assessment_tax_bill) { income.partner_self_assessment_tax_bill }
+
+    before do
+      allow(MeansStatus).to receive(:include_partner?).and_return(true)
+      income.partner_self_assessment_tax_bill = 'yes'
+    end
+
+    context 'when not known if full means are necessary' do
+      before do
+        allow(MeansStatus).to receive(:full_means_required?).and_raise(
+          Errors::CannotYetDetermineFullMeans
+        )
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and partner is employed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and partner is employed and no longer mean assessed' do
+      before do
+        income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: false)
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when full means required and client is not employed' do
+      before do
+        income.partner_employment_status = ['not_working']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#client_employment_income' do
     subject(:client_employment_income) { income.client_employment_income }
 
