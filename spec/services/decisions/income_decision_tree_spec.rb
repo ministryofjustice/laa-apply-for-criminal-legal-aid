@@ -38,17 +38,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) {
     double('employments_collection', create!: true,
-           reject: income_employments,
+           reject: incomplete_employments,
            empty?: client_employments_empty?)
   }
   let(:partner_employments_double) {
     double('partner_employments_collection', create!: true,
-           reject: partner_income_employments,
+           reject: partner_incomplete_employments,
            empty?: partner_employments_empty?)
   }
   let(:kase) { instance_double(Case, case_type:) }
-  let(:income_employments) { [employment_double] }
-  let(:partner_income_employments) { [partner_employment_double] }
+  let(:incomplete_employments) { [] }
+  let(:partner_incomplete_employments) { [] }
 
   let(:case_type) { nil }
   let(:feature_flag_employment_journey_enabled) { false }
@@ -147,15 +147,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:feature_flag_self_employed_journey_enabled) { true }
 
         context 'with client employments present' do
-          let(:client_employments_empty?) { true }
-
-          it 'redirects to the `employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details',
-                                                :edit, id: crime_application)
-          end
-        end
-
-        context 'with client employments not present' do
           let(:client_employments_empty?) { false }
 
           it 'redirects to the `client/employments_summary` page' do
@@ -164,8 +155,18 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
         end
 
+        context 'with client employments not present' do
+          let(:client_employments_empty?) { true }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details',
+                                                :edit, id: crime_application)
+          end
+        end
+
         context 'with incomplete employments' do
-          let(:income_employments) { [employment_double] }
+          let(:client_employments_empty?) { true }
+          let(:incomplete_employments) { [employment_double] }
 
           it 'redirects to the `employer_details` page' do
             expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
@@ -174,7 +175,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         end
 
         context 'with no incomplete employments' do
-          let(:income_employments) { [] }
+          let(:incomplete_employments) { [] }
 
           it 'redirects to the `employer_details` page' do
             expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
@@ -247,7 +248,17 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
 
           context 'with partner employments present' do
-            let(:partner_employments_empty?) { true }
+            let(:partner_employments_empty?) { false }
+
+            it 'redirects to the `partner/employments_summary` page' do
+              expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+                                                  id: crime_application)
+            end
+          end
+
+          context 'with incomplete partner employments' do
+            let(:partner_employments_empty?) { false }
+            let(:partner_incomplete_employments) { [employment_double] }
 
             it 'redirects to the `partner/employer_details` page' do
               expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
@@ -256,10 +267,10 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
 
           context 'with partner employments not present' do
-            let(:partner_employments_empty?) { false }
+            let(:partner_employments_empty?) { true }
 
-            it 'redirects to the `partner/employments_summary` page' do
-              expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+            it 'redirects to the `partner/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
                                                   id: crime_application)
             end
           end
@@ -333,7 +344,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
         end
 
         context 'with incomplete employments' do
-          let(:partner_income_employments) { [partner_employment_double] }
+          let(:partner_employments_empty?) { false }
+          let(:partner_incomplete_employments) { [partner_employment_double] }
 
           it 'redirects to the `partner_employer_details` page' do
             expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
@@ -342,7 +354,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
         end
 
         context 'with no incomplete employments' do
-          let(:partner_income_employments) { [] }
+          let(:partner_employments_empty?) { true }
+          let(:partner_incomplete_employments) { [] }
 
           it 'redirects to the `partner_employer_details` page' do
             expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
@@ -655,6 +668,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
             end
           end
 
+          context 'with incomplete client employments' do
+            let(:client_employments_empty?) { true }
+            let(:incomplete_employments) { [employment_double] }
+
+            it 'redirects to the `employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+              expect(employments_double).not_to have_received(:create!)
+            end
+          end
+
           context 'with client employments not present' do
             let(:client_employments_empty?) { false }
 
@@ -709,19 +732,29 @@ RSpec.describe Decisions::IncomeDecisionTree do
           let(:feature_flag_employment_journey_enabled) { true }
 
           context 'with client employments present' do
-            let(:client_employments_empty?) { true }
-
-            it 'redirects to the `client/employer_details` page' do
-              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            end
-          end
-
-          context 'with client employments not present' do
             let(:client_employments_empty?) { false }
 
             it 'redirects to the `client/employments_summary` page' do
               expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
                                                   id: crime_application)
+            end
+          end
+
+          context 'with incomplete employments' do
+            let(:client_employments_empty?) { true }
+            let(:incomplete_employments) { [employment_double] }
+
+            it 'redirects to the `employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+              expect(employments_double).not_to have_received(:create!)
+            end
+          end
+
+          context 'with client employments not present' do
+            let(:client_employments_empty?) { true }
+
+            it 'redirects to the `client/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
             end
           end
         end
@@ -765,14 +798,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
         before { allow(subject).to receive(:requires_full_means_assessment?).and_return(true) }
 
         context 'with client employments present' do
-          let(:client_employments_empty?) { true }
-
-          it 'redirects to the `client/employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-          end
-        end
-
-        context 'with client employments not present' do
           let(:client_employments_empty?) { false }
 
           before do
@@ -782,6 +807,24 @@ RSpec.describe Decisions::IncomeDecisionTree do
           it 'redirects to the `client/employments_summary` page' do
             expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
                                                 id: crime_application)
+          end
+        end
+
+        context 'with incomplete employments' do
+          let(:client_employments_empty?) { true }
+          let(:incomplete_employments) { [employment_double] }
+
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with client employments not present' do
+          let(:client_employments_empty?) { true }
+
+          it 'redirects to the `client/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
           end
         end
       end
