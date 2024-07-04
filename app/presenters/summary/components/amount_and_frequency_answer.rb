@@ -2,6 +2,8 @@ module Summary
   module Components
     class AmountAndFrequencyAnswer < BaseAnswer
       def answer_text
+        return unless value.respond_to? :amount
+
         simple_format(
           I18n.t(
             'summary.dictionary.amount_and_frequency_answer',

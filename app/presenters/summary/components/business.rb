@@ -8,37 +8,39 @@ module Summary
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         [
           Components::FreeTextAnswer.new(
-            :trading_name, business.trading_name
+            :trading_name, business.trading_name, show: true
           ),
           Components::AddressLineAnswer.new(
-            :business_address, business.address
+            :business_address, business.address, show: true
           ),
           Components::FreeTextAnswer.new(
-            :nature_of_business, business.description
+            :nature_of_business, business.description, show: true
           ),
           Components::DateAnswer.new(
-            :trading_start_date, business.trading_start_date
+            :trading_start_date, business.trading_start_date, show: true
           ),
           Components::ValueAnswer.new(
-            :has_additional_owners, business.has_additional_owners
+            :has_additional_owners, business.has_additional_owners, show: true
           ),
           Components::FreeTextAnswer.new(
-            :additional_owners, business.additional_owners, show: business.additional_owners.present?
+            :additional_owners, business.additional_owners,
+            show: business.has_additional_owners == 'yes'
           ),
           Components::ValueAnswer.new(
-            :has_employees, business.has_employees
+            :has_employees, business.has_employees, show: true
           ),
           Components::FreeTextAnswer.new(
-            :number_of_employees, business.number_of_employees.to_s, show: business.number_of_employees.present?
+            :number_of_employees, business.number_of_employees.to_s,
+            show: business.has_employees == 'yes'
           ),
           Components::AmountAndFrequencyAnswer.new(
-            :turnover, business.turnover
+            :turnover, business.turnover, show: true
           ),
           Components::AmountAndFrequencyAnswer.new(
-            :profit, business.drawings
+            :profit, business.drawings, show: true
           ),
           Components::AmountAndFrequencyAnswer.new(
-            :drawings, business.profit
+            :drawings, business.profit, show: true
           )
         ].select(&:show?)
       end

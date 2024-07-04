@@ -105,40 +105,40 @@ RSpec.describe Summary::Components::Business, type: :component do
       expect(page).to have_summary_row 'Total drawings', '£3,030.00 every year'
     end
 
-    xcontext 'when answers are missing' do, "pending merge with Hibo's fix"
+    context 'when answers are missing' do
       let(:attributes) do
         {
           id: 'BUS345',
-          business_type: BusinessType.values.last,
+          business_type: BusinessType.values.first,
           ownership_type: 'partner',
           trading_name: nil,
-          address: nil,
+          address: {},
           description: nil,
           trading_start_date: nil,
           has_additional_owners: nil,
-          additional_owners: nil,
+          additional_owners: 'Ben, Kim, Ali',
           has_employees: nil,
-          number_of_employees: nil,
+          number_of_employees: 21,
           salary: nil,
           total_income_share_sales: nil,
           percentage_profit_share: nil,
-          turnover: {},
-          drawings: {},
-          profit: {}
+          turnover: nil,
+          drawings: { amount: nil, frequency: 'week' },
+          profit: { amount: 303_000, frequency: nil }
         }
       end
 
       it 'renders as summary list' do # rubocop:disable RSpec/MultipleExpectations
         expect(page).to have_summary_row 'Trading name', ''
         expect(page).to have_summary_row 'Business address', ''
-        expect(page).to have_summary_row 'Date began trading', '2 January 2000'
-        expect(page).to have_summary_row 'In business with anyone else?', 'Yes'
-        expect(page).to have_summary_row 'Name of others', 'Ben, Kim, Ali'
-        expect(page).to have_summary_row 'Employees?', 'Yes'
-        expect(page).to have_summary_row 'Number of employees', '21'
-        expect(page).to have_summary_row 'Total turnover', '£90,010.12 every year'
-        expect(page).to have_summary_row 'Total profit', '£0.90 every week'
-        expect(page).to have_summary_row 'Total drawings', '£3,030.00 every year'
+        expect(page).to have_summary_row 'Date began trading', ''
+        expect(page).to have_summary_row 'In business with anyone else?', ''
+        expect(page).not_to have_content 'Name of others'
+        expect(page).to have_summary_row 'Employees?', ''
+        expect(page).not_to have_content 'Number of employees'
+        expect(page).to have_summary_row 'Total turnover', ''
+        expect(page).to have_summary_row 'Total profit', ''
+        expect(page).to have_summary_row 'Total drawings', ''
       end
     end
   end
