@@ -2,6 +2,7 @@ module Adapters
   module Structs
     class IncomeDetails < BaseStructAdapter
       include EmployedIncome
+      include SelfEmployedIncome
 
       def employment_status
         # TODO: Handle this having multiple employment status' when we get designs for employed
@@ -45,6 +46,12 @@ module Adapters
         end
       end
 
+      def businesses
+        return [] unless __getobj__
+
+        @businesses ||= super.map { |struct| Business.new(**struct) }
+      end
+
       def serializable_hash(options = {})
         super(
           options.merge(
@@ -54,7 +61,7 @@ module Adapters
             except: [
               :employment_type, :partner_employment_type,
               :dependants, :income_payments, :income_benefits,
-              :employments, :businesses, :employment_income_payments
+              :employments, :employment_income_payments, :businesses
             ]
           )
         )

@@ -23,6 +23,7 @@ module Summary
         employment_income
         income_details
         client_employments
+        client_businesses
         self_assessment_tax_bill
         work_benefits
         income_payments_details
@@ -31,6 +32,7 @@ module Summary
         partner_employment_details
         partner_employment_income
         partner_employments
+        partner_businesses
         partner_self_assessment_tax_bill
         partner_work_benefits
         partner_income_payments_details
@@ -81,6 +83,7 @@ module Summary
         employment_income
         income_details
         client_employments
+        client_businesses
         self_assessment_tax_bill
         work_benefits
         income_payments_details
@@ -91,6 +94,7 @@ module Summary
         partner_employment_details
         partner_employment_income
         partner_employments
+        partner_businesses
         partner_self_assessment_tax_bill
         partner_work_benefits
         partner_income_payments_details

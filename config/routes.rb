@@ -184,6 +184,12 @@ Rails.application.routes.draw do
         scope '/:subject/', constraints: -> (_) { FeatureFlags.self_employed_journey.enabled? } do
           edit_step :business_type
           edit_step :businesses_summary
+          crud_step :businesses, param: :business_id
+          crud_step :nature_of_business, alias: :business_nature, param: :business_id, except: [:destroy]
+          crud_step :date_business_began_trading, alias: :business_start_date, param: :business_id, except: [:destroy]
+          crud_step :in_business_with_anyone_else, alias: :business_additional_owners, param: :business_id, except: [:destroy]
+          crud_step :employees, alias: :business_employees, param: :business_id, except: [:destroy]
+          crud_step :financials_of_business, alias: :business_financials, param: :business_id, except: [:destroy]
         end
 
 

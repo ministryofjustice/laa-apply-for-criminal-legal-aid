@@ -57,6 +57,9 @@ end
 
 RSpec.shared_examples 'a multiparam date validation' do |options|
   let(:attribute_name) { options[:attribute_name] }
+  let(:earliest_year) do
+    options[:earliest_year] || MultiparamDateValidator::DEFAULT_OPTIONS[:earliest_year]
+  end
 
   before do
     subject.public_send(:"#{attribute_name}=", date)
@@ -99,7 +102,7 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
   end
 
   context 'when year is invalid (too old)' do
-    let(:date) { { 3 => 25, 2 => 12, 1 => 1899 } }
+    let(:date) { { 3 => 25, 2 => 12, 1 => earliest_year - 1 } }
 
     it 'has a validation error on the field' do
       expect(subject).not_to be_valid

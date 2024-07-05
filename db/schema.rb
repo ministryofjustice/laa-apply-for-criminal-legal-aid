@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_18_132557) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_18_144807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -40,6 +40,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_18_132557) do
     t.string "ownership_type", default: "applicant", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "trading_name"
+    t.jsonb "address"
+    t.text "description"
+    t.date "trading_start_date"
+    t.string "has_additional_owners"
+    t.text "additional_owners"
+    t.string "has_employees"
+    t.integer "number_of_employees"
+    t.float "percentage_profit_share"
+    t.jsonb "salary"
+    t.jsonb "total_income_share_sales"
+    t.jsonb "turnover"
+    t.jsonb "drawings"
+    t.jsonb "profit"
     t.index ["crime_application_id"], name: "index_businesses_on_crime_application_id"
   end
 

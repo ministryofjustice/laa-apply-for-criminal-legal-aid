@@ -1,10 +1,10 @@
 class Income < ApplicationRecord
   include MeansOwnershipScope
   include EmployedIncome
+  include SelfEmployedIncome
 
   belongs_to :crime_application
   has_many :dependants, through: :crime_application
-  has_many :businesses, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence
   attribute :partner_self_assessment_tax_bill_amount, :pence
@@ -19,6 +19,12 @@ class Income < ApplicationRecord
     crime_application.employments.where(ownership_type: ownership_types & employed_owners)
   end
 
+  def businesses
+    @businesses ||= crime_application.businesses.where(
+      ownership_type: ownership_types & self_employed_owners
+    )
+  end
+
   def income_payments
     return @income_payments if @income_payments
 
@@ -29,9 +35,9 @@ class Income < ApplicationRecord
                              .not_of_type(obsolete_employed_income_payment_types)
 
     # disregard employed income for people no longer employed
-    if not_employed_owners.present?
+    if not_working_owners.present?
       scope = scope.where('NOT (ownership_type IN(?) AND payment_type IN(?))',
-                          not_employed_owners, employed_income_payment_types)
+                          not_working_owners, employed_income_payment_types)
     end
 
     @income_payments = scope
@@ -44,19 +50,29 @@ class Income < ApplicationRecord
   end
 
   def applicant_self_assessment_tax_bill
-    super if client_employed? && known_to_be_full_means?
+    return unless client_employed? || client_self_employed?
+
+    super if known_to_be_full_means?
   end
 
   def partner_self_assessment_tax_bill
-    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
+    return unless partner_employed? || partner_self_employed?
+    return unless MeansStatus.include_partner?(crime_application)
+
+    super if known_to_be_full_means?
   end
 
   def applicant_other_work_benefit_received
-    super if client_employed? && known_to_be_full_means?
+    return unless client_employed? || client_self_employed?
+
+    super if known_to_be_full_means?
   end
 
   def partner_other_work_benefit_received
-    super if partner_employed? && known_to_be_full_means? && MeansStatus.include_partner?(crime_application)
+    return unless partner_employed? || partner_self_employed?
+    return unless MeansStatus.include_partner?(crime_application)
+
+    super if known_to_be_full_means?
   end
 
   def complete?
@@ -79,12 +95,20 @@ class Income < ApplicationRecord
     employments&.sum { |e| e.amount.to_i }
   end
 
+  def client_employed?
+    employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  end
+
   def partner_employed?
     partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
 
-  def client_employed?
-    employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  def partner_self_employed?
+    partner_employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
+  end
+
+  def client_self_employed?
+    employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
   end
 
   def known_to_be_full_means?
@@ -94,4 +118,10 @@ class Income < ApplicationRecord
   end
 
   delegate :partner, :applicant, to: :crime_application
+
+  private
+
+  def not_working_owners
+    OwnershipType.exclusive.map(&:to_s) - (employed_owners | self_employed_owners)
+  end
 end

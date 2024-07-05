@@ -51,6 +51,8 @@ module SubmissionSerializer
             json.frequency attachment[:frequency]
             json.ownership_type attachment[:ownership_type]
           end
+
+          json.businesses income.businesses.as_json
         end
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength

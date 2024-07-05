@@ -3,10 +3,11 @@ module Summary
     class BaseSection
       include Routing
 
-      attr_reader :crime_application
+      attr_reader :crime_application, :subject
 
-      def initialize(crime_application, editable: true, headless: false)
+      def initialize(crime_application, editable: true, headless: false, subject: nil)
         @crime_application = crime_application
+        @subject = subject
         @editable = editable
         @headless = headless
       end

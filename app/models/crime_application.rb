@@ -79,10 +79,7 @@ class CrimeApplication < ApplicationRecord
            class_name: 'Employment',
            dependent: :destroy)
 
-  has_many(:businesses,
-           ->(_object) { order(created_at: :asc) },
-           inverse_of: :crime_application,
-           dependent: :destroy)
+  has_many(:businesses, inverse_of: :crime_application, dependent: :destroy)
 
   enum status: ApplicationStatus.enum_values
 
