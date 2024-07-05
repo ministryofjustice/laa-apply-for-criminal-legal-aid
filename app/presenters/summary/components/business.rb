@@ -37,11 +37,11 @@ module Summary
             :turnover, business.turnover, show: true
           ),
           Components::AmountAndFrequencyAnswer.new(
-            :profit, business.profit, show: true
+            :drawings, business.drawings, show: true
           ),
           Components::AmountAndFrequencyAnswer.new(
-            :drawings, business.drawings, show: true
-          )
+            :profit, business.profit, show: true
+          ),
         ].select(&:show?)
       end
 

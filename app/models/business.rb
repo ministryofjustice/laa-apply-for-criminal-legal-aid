@@ -7,10 +7,21 @@ class Business < ApplicationRecord
   attribute :drawings, :amount_and_frequency
   attribute :profit, :amount_and_frequency
 
+  OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
+  REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
+
+  # TODO: add validation for upcoming screens, CRIMAPP-983, 984, 985
   def complete?
-    except = %i[id crime_application_id created_at updated_at address_line_two]
-    serializable_hash(except:).values.none?(&:blank?)
-    true
+    except = %i[id crime_application_id created_at updated_at address_line_two percentage_profit_share salary
+                total_income_share_sales]
+    except << :number_of_employees if has_employees == YesNoAnswer::NO.to_s
+    except << :additional_owners if has_additional_owners == YesNoAnswer::NO.to_s
+
+    serializable_hash(except:).values.none?(&:blank?) && address_complete?
+  end
+
+  def address_complete?
+    address.present? && address.values_at(*REQUIRED_ADDRESS_ATTRIBUTES.map(&:to_s)).all?(&:present?)
   end
 
   def owner

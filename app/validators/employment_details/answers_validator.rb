@@ -19,6 +19,7 @@ module EmploymentDetails
 
       validate_employment
       validate_partner_employment
+      validate_self_employment
 
       errors.add :base, :incomplete_records if errors.present?
     end
@@ -86,6 +87,12 @@ module EmploymentDetails
       return if requires_full_means_assessment?
 
       errors.add :employment_income, :incomplete unless record.client_employment_income&.complete?
+    end
+
+    def validate_self_employment
+      return unless self_employed?
+
+      errors.add(:businesses, :incomplete) if record.businesses.blank? || !record.businesses.all?(&:complete?)
     end
 
     alias income record
