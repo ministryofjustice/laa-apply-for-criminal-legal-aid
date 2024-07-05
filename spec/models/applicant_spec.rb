@@ -31,6 +31,12 @@ RSpec.describe Applicant, type: :model do
     end
   end
 
+  describe '#to_param' do
+    subject(:to_param) { applicant.to_param }
+
+    it { is_expected.to eq 'client' }
+  end
+
   describe 'has partnership information' do
     let(:partner_detail) do
       PartnerDetail.new(

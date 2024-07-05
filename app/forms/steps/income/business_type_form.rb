@@ -7,10 +7,13 @@ module Steps
       validates :ownership_type, inclusion: { in: OwnershipType.exclusive }
 
       attr_accessor :subject
+      attr_reader :business
 
       def choices
         BusinessType.values
       end
+
+      alias record business
 
       private
 
@@ -19,7 +22,7 @@ module Steps
       end
 
       def persist!
-        Business.create!(crime_application:, business_type:, ownership_type:)
+        @business = Business.create!(crime_application:, business_type:, ownership_type:)
       end
     end
   end

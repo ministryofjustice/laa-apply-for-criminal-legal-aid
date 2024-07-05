@@ -31,6 +31,7 @@ module Datastore
         income_payments: parent.income.income_payments,
         income_benefits: parent.income.income_benefits,
         employments: parent.income.employments,
+        businesses: parent.income.businesses,
         capital: capital,
         savings: capital ? parent.capital.savings : [],
         investments: capital ? parent.capital.investments : [],

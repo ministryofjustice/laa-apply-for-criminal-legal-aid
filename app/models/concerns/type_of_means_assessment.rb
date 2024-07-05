@@ -12,9 +12,10 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
     !evidence_of_passporting_means_forthcoming?
   end
 
-  def requires_full_means_assessment? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def requires_full_means_assessment? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
     return false unless requires_means_assessment?
     return true if income_above_threshold? || has_frozen_assets?
+    return true if client_or_means_assessed_partner_self_employed?
 
     raise Errors::CannotYetDetermineFullMeans unless income_below_threshold? && has_no_frozen_assets?
 
@@ -148,5 +149,13 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def income_above_threshold?
     income&.income_above_threshold == 'yes'
+  end
+
+  def client_or_means_assessed_partner_self_employed?
+    return false if income.blank?
+    return true if income.client_self_employed?
+    return false unless include_partner_in_means_assessment?
+
+    income.partner_self_employed?
   end
 end

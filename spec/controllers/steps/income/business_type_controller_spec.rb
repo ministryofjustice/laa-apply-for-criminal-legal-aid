@@ -58,18 +58,6 @@ RSpec.describe Steps::Income::BusinessTypeController, type: :controller do
             expect(response).to redirect_to(not_found_errors_path)
           end
         end
-
-        context 'when partner already has a business' do
-          let(:existing_ownership) { 'partner' }
-
-          it 'redirects to partner business summary page' do
-            expect(response).to redirect_to(
-              edit_steps_income_businesses_summary_path(
-                id: existing_case.id, subject: 'partner'
-              )
-            )
-          end
-        end
       end
 
       context 'when subject is client' do
@@ -78,18 +66,6 @@ RSpec.describe Steps::Income::BusinessTypeController, type: :controller do
 
         it 'succeeds' do
           expect(response).to be_successful
-        end
-
-        context 'when client already has a business' do
-          let(:existing_ownership) { 'applicant' }
-
-          it 'redirects to partner business summary page' do
-            expect(response).to redirect_to(
-              edit_steps_income_businesses_summary_path(
-                id: existing_case.id, subject: 'client'
-              )
-            )
-          end
         end
       end
     end

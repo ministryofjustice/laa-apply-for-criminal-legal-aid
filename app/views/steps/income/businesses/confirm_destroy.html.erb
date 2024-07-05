@@ -1,0 +1,28 @@
+<% title t('.page_title') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+
+    <dl class='govuk-summary-list'>
+      <%= render Summary::Components::Business.new(record: @business, show_actions: false) %>
+    </dl>
+
+    <%= form_with url: steps_income_businesses_path, method: :delete do |f| %>
+      <div class="govuk-button-group">
+        <%= f.button(
+              t('.confirm_delete_button'),
+              class: govuk_button_classes(warning: true),
+              aria: { label: t('.confirm_delete_button_a11y') }
+            ) %>
+        <%= govuk_button_link_to(
+              t('.cancel_delete_button'),
+              edit_steps_income_businesses_summary_path,
+              aria: { label: t('.cancel_delete_button_a11y') }
+            ) %>
+      </div>
+    <% end %>
+  </div>
+</div>

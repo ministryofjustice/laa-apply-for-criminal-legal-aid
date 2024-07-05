@@ -43,6 +43,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       dependants: dependants,
       income_payments: [income_payment, partner_income_payment],
       income_benefits: [income_benefit, partner_income_benefit],
+      businesses: [partner_business],
       manage_without_income: 'other',
       manage_other_details: 'Another way that they manage',
       partner_employment_status:  ['not_working'],
@@ -90,6 +91,85 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       frequency: 'month',
       ownership_type: 'applicant',
       metadata: {},
+    )
+  end
+
+  let(:client_business) do
+    instance_double(
+      Business,
+      business_type: BusinessType.values.first,
+      ownership_type: 'applicant',
+      trading_name: 'MoJ',
+      address: {
+        address_line_one: 'address_line_one_q',
+        address_line_two: 'address_line_two_q',
+        city: 'city_q',
+        country: 'country_q',
+        postcode: 'postcode_q'
+      },
+      description: 'It is MoJ',
+      trading_start_date: 1.year.ago,
+      has_additional_owners: 'yes',
+      additional_owners: 'HM',
+      has_employees: 'no',
+      number_of_employees: 1,
+      salary: AmountAndFrequency.new(
+        amount: 2_000_000,
+        frequency: 'annual'
+      ),
+      total_income_share_sales: 19_901,
+      percentage_profit_share: 100,
+      turnover: AmountAndFrequency.new(
+        amount: 900,
+        frequency: 'annual'
+      ),
+      drawings: AmountAndFrequency.new(
+        amount: 90,
+        frequency: 'week'
+      ),
+      profit: AmountAndFrequency.new(
+        amount: 900_000,
+        frequency: 'annual'
+      ),
+    )
+  end
+
+  let(:partner_business) do
+    Business.new(
+      business_type: BusinessType.values.first,
+      ownership_type: 'applicant',
+      trading_name: 'LAA',
+      address: {
+        address_line_one: 'address_line_one_r',
+        address_line_two: 'address_line_two_r',
+        city: 'city_r',
+        country: 'country_r',
+        postcode: 'postcode_r'
+      },
+      description: 'It is LAA',
+      trading_start_date: Date.new(2000, 1, 2),
+      has_additional_owners: 'no',
+      additional_owners: '',
+      has_employees: 'no',
+      number_of_employees: 2,
+      salary: AmountAndFrequency.new(
+        amount: 90_000,
+        frequency: 'weekly'
+      ),
+      total_income_share_sales: nil,
+      percentage_profit_share: 100,
+      turnover: AmountAndFrequency.new(
+        amount: 9_000_000,
+        frequency: 'annual'
+      ),
+      drawings: AmountAndFrequency.new(
+        amount: 90,
+        frequency: 'week'
+      ),
+      profit: AmountAndFrequency.new(
+        amount: 900_000,
+        frequency: 'annual'
+      )
     )
   end
 
@@ -227,6 +307,42 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
             ownership_type: 'partner',
             metadata: { 'details' => 'Grant money' },
           },
+        ],
+        businesses: [
+          {
+            'additional_owners' => '',
+            'address' => {
+              'address_line_one' => 'address_line_one_r',
+              'address_line_two' => 'address_line_two_r',
+              'city' => 'city_r',
+              'country' => 'country_r',
+              'postcode' => 'postcode_r'
+            },
+            'business_type' => 'self_employed',
+            'description' => 'It is LAA',
+            'drawings' => { 'amount' => 90, 'frequency' => 'week' },
+            'has_additional_owners' => 'no',
+            'has_employees' => 'no',
+            'id' => nil,
+            'number_of_employees' => 2,
+            'ownership_type' => 'applicant',
+            'percentage_profit_share' => 100.0,
+            'profit' => {
+              'amount' => 900_000,
+              'frequency' => 'annual'
+            },
+            'salary' => {
+              'amount' => 90_000,
+              'frequency' => 'weekly'
+            },
+            'total_income_share_sales' => nil,
+            'trading_name' => 'LAA',
+            'trading_start_date' => '2000-01-02',
+            'turnover' => {
+              'amount' => 9_000_000,
+              'frequency' => 'annual'
+            }
+          }
         ],
         employments: [
           {

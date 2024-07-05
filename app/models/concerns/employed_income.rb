@@ -45,10 +45,6 @@ module EmployedIncome
     owners
   end
 
-  def not_employed_owners
-    OwnershipType.exclusive.map(&:to_s) - employed_owners
-  end
-
   # employed income payement types relevant to a given application based on the
   # extent of means assessment
   def employed_income_payment_types

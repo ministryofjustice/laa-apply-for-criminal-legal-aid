@@ -30,4 +30,10 @@ RSpec.describe Partner, type: :model do
       end
     end
   end
+
+  describe '#to_param' do
+    subject(:to_param) { partner.to_param }
+
+    it { is_expected.to eq 'partner' }
+  end
 end

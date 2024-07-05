@@ -33,11 +33,14 @@ module IncomeAssessment
     end
 
     def income_before_tax_complete?
+      return true if client_or_means_assessed_partner_self_employed?
+
       record.income_above_threshold.present?
     end
 
     def frozen_income_savings_assets_complete?
       return true unless income_below_threshold?
+      return true if client_or_means_assessed_partner_self_employed?
 
       record.has_frozen_income_or_assets.present?
     end

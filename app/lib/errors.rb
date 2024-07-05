@@ -2,6 +2,7 @@ module Errors
   class InvalidSession < StandardError; end
   class ApplicationCannotReceivePse < StandardError; end
   class DateOfBirthPending < StandardError; end
+  class CannotYetDetermineFullMeans < StandardError; end
   class NotFound < StandardError; end
   class ApplicationNotFound < NotFound; end
   class SavingNotFound < NotFound; end
@@ -13,5 +14,5 @@ module Errors
   class DocumentUnavailable < NotFound; end
   class EmploymentNotFound < NotFound; end
   class SubjectNotFound < NotFound; end
-  class CannotYetDetermineFullMeans < NotFound; end
+  class BusinessNotFound < NotFound; end
 end

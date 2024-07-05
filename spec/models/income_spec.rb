@@ -138,6 +138,15 @@ RSpec.describe Income, type: :model do
       it { is_expected.to eq 'yes' }
     end
 
+    context 'when full means required and client is self-employed' do
+      before do
+        income.employment_status = ['self_employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
     context 'when full means required and client is not employed' do
       before do
         income.employment_status = ['not_working']
@@ -169,6 +178,15 @@ RSpec.describe Income, type: :model do
     context 'when full means required and partner is employed' do
       before do
         income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and partner is self employed' do
+      before do
+        income.partner_employment_status = ['self_employed']
         allow(MeansStatus).to receive(:full_means_required?).and_return(true)
       end
 
@@ -220,6 +238,15 @@ RSpec.describe Income, type: :model do
       it { is_expected.to eq 'yes' }
     end
 
+    context 'when full means required and client is self-employed' do
+      before do
+        income.employment_status = ['self_employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
     context 'when full means required and client is not employed' do
       before do
         income.employment_status = ['not_working']
@@ -251,6 +278,15 @@ RSpec.describe Income, type: :model do
     context 'when full means required and partner is employed' do
       before do
         income.partner_employment_status = ['employed']
+        allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+      end
+
+      it { is_expected.to eq 'yes' }
+    end
+
+    context 'when full means required and partner is self-employed' do
+      before do
+        income.partner_employment_status = ['self_employed']
         allow(MeansStatus).to receive(:full_means_required?).and_return(true)
       end
 
@@ -546,6 +582,19 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
         end
       end
 
+      context 'when both are self-employed and full means is required' do
+        before do
+          allow(MeansStatus).to receive_messages(include_partner?: true, full_means_required?: true)
+          income.employment_status = ['self_employed']
+          income.partner_employment_status = ['self_employed']
+        end
+
+        it 'includes the work_benefits payment type for both client and partner' do
+          expect(owners).to contain_exactly 'partner', 'applicant'
+          expect(payment_types).to contain_exactly 'maintenance', 'work_benefits'
+        end
+      end
+
       context 'when both are employed but the partner is excluded from means' do
         before do
           allow(MeansStatus).to receive_messages(include_partner?: false, full_means_required?: false)
@@ -562,7 +611,7 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
       context 'when only the partner is employed but is excluded from means' do
         before do
           allow(MeansStatus).to receive_messages(include_partner?: false, full_means_required?: false)
-          income.employment_status = ['self_employed']
+          income.employment_status = ['not_working']
           income.partner_employment_status = ['employed']
         end
 
