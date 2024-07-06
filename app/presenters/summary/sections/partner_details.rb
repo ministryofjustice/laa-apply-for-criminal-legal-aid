@@ -2,9 +2,7 @@ module Summary
   module Sections
     class PartnerDetails < Sections::BaseSection
       def show?
-        return false unless FeatureFlags.partner_journey.enabled?
-
-        partner&.first_name.present? && client.present? && super
+        client.present? && partner&.first_name.present? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

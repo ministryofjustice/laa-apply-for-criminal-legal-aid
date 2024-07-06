@@ -286,7 +286,7 @@ module Decisions
     end
 
     def determine_showing_no_income_page
-      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      if include_partner_in_means_assessment?
         edit(:partner_employment_status)
       elsif crime_application.income&.all_income_over_zero?
         edit(:answers)

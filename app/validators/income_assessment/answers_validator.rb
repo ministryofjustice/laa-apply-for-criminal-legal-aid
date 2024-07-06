@@ -52,7 +52,6 @@ module IncomeAssessment
     end
 
     def partner_income_payments_complete?
-      return true unless FeatureFlags.partner_journey.enabled?
       return true if crime_application.income.partner_has_no_income_payments.to_s == 'yes'
       return true unless include_partner_in_means_assessment?
 
@@ -66,7 +65,6 @@ module IncomeAssessment
     end
 
     def partner_income_benefits_complete?
-      return true unless FeatureFlags.partner_journey.enabled?
       return true if crime_application.income.partner_has_no_income_benefits.to_s == 'yes'
       return true unless include_partner_in_means_assessment?
 

@@ -86,7 +86,6 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES }
     let(:feature_flag_means_journey_enabled) { false }
-    let(:partner_journey_enabled) { false }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant_double,
@@ -99,10 +98,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       allow(FeatureFlags).to receive(:means_journey) {
         instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
       }
-
-      allow(FeatureFlags).to receive(:partner_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: partner_journey_enabled)
-      }
     end
 
     context 'and the benefit type is `none`' do
@@ -110,16 +105,14 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:benefit_check_passported) { false }
       let(:benefit_check_result) { nil }
 
-      it { is_expected.to have_destination(:benefit_exit, :show, id: crime_application) }
+      context 'and feature flag `means_journey` is not enabled' do
+        let(:feature_flag_means_journey_enabled) { false }
+
+        it { is_expected.to have_destination(:benefit_exit, :show, id: crime_application) }
+      end
 
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
-
-        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-      end
-
-      context 'and feature flag `partner_journey` is enabled' do
-        let(:partner_journey_enabled) { true }
 
         context 'and the partner is included in the means assessment' do
           let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
@@ -128,7 +121,7 @@ RSpec.describe Decisions::DWPDecisionTree do
         end
 
         context 'and the partner is not included in the means assessment' do
-          let(:feature_flag_means_journey_enabled) { true }
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
 
           it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
         end

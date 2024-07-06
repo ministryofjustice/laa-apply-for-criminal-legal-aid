@@ -64,7 +64,7 @@ module CapitalAssessment
     end
 
     def partner_premium_bonds_complete?
-      return true unless FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      return true unless include_partner_in_means_assessment?
       return true if record.partner_has_premium_bonds == 'no'
       return false unless record.partner_has_premium_bonds == 'yes'
 
@@ -101,7 +101,7 @@ module CapitalAssessment
     end
 
     def partner_trust_fund_complete?
-      return true unless FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      return true unless include_partner_in_means_assessment?
       return true if record.partner_will_benefit_from_trust_fund == 'no'
       return false unless record.partner_will_benefit_from_trust_fund == 'yes'
 

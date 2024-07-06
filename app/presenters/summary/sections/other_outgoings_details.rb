@@ -16,7 +16,7 @@ module Summary
           ),
         ]
 
-        if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+        if include_partner_in_means_assessment?
           answers.push(
             Components::ValueAnswer.new(
               :partner_income_tax_rate_above_threshold, outgoings.partner_income_tax_rate_above_threshold,

@@ -37,7 +37,7 @@ module Decisions
     end
 
     def after_income_tax_rate
-      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      if include_partner_in_means_assessment?
         edit(:partner_income_tax_rate)
       else
         edit(:outgoings_more_than_income)

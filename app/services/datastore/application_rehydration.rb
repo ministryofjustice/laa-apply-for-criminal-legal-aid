@@ -78,8 +78,7 @@ module Datastore
     end
 
     def partner
-      return nil unless FeatureFlags.partner_journey.enabled?
-      return nil unless parent.partner && parent.applicant.has_partner == 'yes'
+      return nil unless parent.applicant.has_partner == 'yes' && parent.partner
 
       attributes_to_ignore = PartnerDetail.fields + %w[benefit_check_status is_included_in_means_assessment]
       attributes = parent.partner.serializable_hash.except!(*attributes_to_ignore)
@@ -88,8 +87,6 @@ module Datastore
 
     # NOTE: Actual partner_detail fields are mixed between the Applicant and Partner Structs
     def partner_detail
-      return nil unless FeatureFlags.partner_journey.enabled?
-
       fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
       from_applicant = parent.applicant.serializable_hash.slice(*fields_from_applicant)
 
