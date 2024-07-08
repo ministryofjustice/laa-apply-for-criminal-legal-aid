@@ -4,6 +4,8 @@ module Summary
       private
 
       def businesses
+        return if income.blank?
+
         income.client_businesses
       end
     end

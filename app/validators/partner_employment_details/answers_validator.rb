@@ -16,7 +16,8 @@ module PartnerEmploymentDetails
 
       errors.add :partner_employment_status, :incomplete if record.partner_employment_status.blank?
 
-      validate_employment
+      validate_partner_employment
+      validate_partner_self_employment
 
       errors.add :base, :incomplete_records if errors.present?
     end
@@ -26,7 +27,7 @@ module PartnerEmploymentDetails
     end
 
     # :nocov:
-    def validate_employment
+    def validate_partner_employment
       return unless income.partner_employed?
 
       validate_employment_details
@@ -70,6 +71,18 @@ module PartnerEmploymentDetails
       return if requires_full_means_assessment?
 
       errors.add :employment_income, :incomplete unless record.partner_employment_income&.complete?
+    end
+
+    def validate_partner_self_employment
+      return unless income.partner_self_employed?
+
+      errors.add(:businesses, :incomplete) if partner_businesses_incomplete?
+      validate_self_assessment_tax_bill
+      validate_other_work_benefit
+    end
+
+    def partner_businesses_incomplete?
+      record.partner_businesses.blank? || !record.partner_businesses.all?(&:complete?)
     end
 
     alias income record

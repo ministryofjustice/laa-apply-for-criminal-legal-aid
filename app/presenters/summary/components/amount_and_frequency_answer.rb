@@ -2,7 +2,7 @@ module Summary
   module Components
     class AmountAndFrequencyAnswer < BaseAnswer
       def answer_text
-        return unless value.respond_to? :amount
+        return if value&.amount.blank? || value&.frequency.blank?
 
         simple_format(
           I18n.t(

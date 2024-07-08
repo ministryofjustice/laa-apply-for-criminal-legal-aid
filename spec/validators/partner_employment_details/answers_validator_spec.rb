@@ -9,13 +9,8 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       Income,
       errors:,
       crime_application:,
-      employment_status:,
       partner_employment_status:,
-      ended_employment_within_three_months:,
-      applicant_self_assessment_tax_bill:,
-      applicant_self_assessment_tax_bill_amount:,
-      applicant_self_assessment_tax_bill_frequency:,
-      applicant_other_work_benefit_received:,
+      partner_businesses:,
       partner_self_assessment_tax_bill:,
       partner_self_assessment_tax_bill_amount:,
       partner_self_assessment_tax_bill_frequency:,
@@ -26,22 +21,15 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
   let(:errors) { double(:errors, empty?: false) }
   let(:crime_application) { instance_double(CrimeApplication, partner_employments:, partner_detail:, partner:) }
-  let(:employment_status) {
-    []
-  }
   let(:partner_employment_status) { [] }
+  let(:partner_businesses) { [] }
   let(:partner_detail) { nil }
   let(:partner) { Partner.new(date_of_birth: '2000-01-01') }
   let(:partner_employments) { [] }
-  let(:applicant_self_assessment_tax_bill) { nil }
-  let(:applicant_self_assessment_tax_bill_amount) { nil }
-  let(:applicant_self_assessment_tax_bill_frequency) { nil }
-  let(:applicant_other_work_benefit_received) { nil }
   let(:partner_self_assessment_tax_bill) { nil }
   let(:partner_self_assessment_tax_bill_amount) { nil }
   let(:partner_self_assessment_tax_bill_frequency) { nil }
   let(:partner_other_work_benefit_received) { nil }
-  let(:ended_employment_within_three_months) { nil }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
@@ -294,6 +282,48 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
     end
   end
 
+  describe '#validate_partner_self_employment' do
+    subject(:validate) { validator.validate_partner_self_employment }
+
+    before do
+      allow(record).to receive(:partner_self_employed?).and_return(true)
+    end
+
+    context 'when partner is self employed' do
+      let(:partner_employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
+      let(:partner_other_work_benefit_received) { 'no' }
+      let(:partner_self_assessment_tax_bill) { 'no' }
+
+      context 'when there are no businesses' do
+        it 'adds an error to :businesses' do
+          expect(errors).to receive(:add).with(:businesses, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'where there is an incomplete business' do
+        let(:partner_businesses) { [instance_double(Business, complete?: false)] }
+
+        it 'adds an error to :businesses' do
+          expect(errors).to receive(:add).with(:businesses, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'when businesses are complete' do
+        let(:partner_businesses) { [instance_double(Business, complete?: true)] }
+
+        it 'adds an error to :businesses' do
+          expect(errors).not_to receive(:add)
+
+          validate
+        end
+      end
+    end
+  end
+
   describe '#validate' do
     subject(:validate) { validator.validate }
 
@@ -317,7 +347,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
 
       before do
         allow(validator).to receive(:applicable?).and_return(true)
-        allow(record).to receive(:partner_employed?).and_return(false)
+        allow(record).to receive_messages(partner_employed?: false, partner_self_employed?: false)
       end
 
       it 'adds errors to :employment_status when incomplete' do
