@@ -22,7 +22,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
 
 # Accessing soap apis
-gem 'savon'
+gem 'savon', '>= 2.15.1'
 
 # Monitoring
 gem 'prometheus_exporter'
