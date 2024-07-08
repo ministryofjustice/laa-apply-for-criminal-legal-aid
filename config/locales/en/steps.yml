@@ -387,7 +387,7 @@ en:
               private health insurance
       businesses_summary:
         edit:
-          page_title: Your %{subject}’s businesses
+          page_title: '%{Subject}’s businesses'
           heading:
             one: You added %{count} business
             other: You added %{count} businesses

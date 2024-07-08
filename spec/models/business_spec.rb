@@ -45,4 +45,99 @@ RSpec.describe Business, type: :model do
       it { is_expected.to be crime_application.partner }
     end
   end
+
+  describe '#complete?' do
+    subject { business.complete? }
+
+    let(:required_attributes) do
+      {
+        id: SecureRandom.uuid,
+        business_type: BusinessType::SELF_EMPLOYED.to_s,
+        trading_name: 'Test Trading Name',
+        description: 'A Test Business',
+        trading_start_date: Date.new(2001, 10, 12),
+        has_additional_owners: YesNoAnswer::NO.to_s,
+        additional_owners: nil,
+        has_employees: YesNoAnswer::NO.to_s,
+        number_of_employees: nil,
+        turnover: AmountAndFrequency.new(amount: 100, frequency: PaymentFrequencyType::MONTHLY),
+        drawings: AmountAndFrequency.new(amount: 100, frequency: PaymentFrequencyType::MONTHLY),
+        profit: AmountAndFrequency.new(amount: 100, frequency: PaymentFrequencyType::MONTHLY),
+        percentage_profit_share: nil,
+        salary: nil,
+        total_income_share_sales: nil,
+        address: address_attributes
+      }
+    end
+
+    let(:address_attributes) do
+      {
+        'address_line_one' => 'address_line_one',
+        'address_line_two' => 'address_line_two',
+        'city' => 'city',
+        'country' => 'country',
+        'postcode' => 'postcode'
+      }
+    end
+
+    context 'when any required attributes are missing' do
+      it { is_expected.to be false }
+    end
+
+    context 'when all required attributes are present' do
+      let(:attributes) { required_attributes }
+
+      it { is_expected.to be true }
+    end
+
+    context 'additional owners validation' do
+      context 'when the business has additional owners' do
+        context 'and the additional owners have not been provided' do
+          let(:attributes) do
+            required_attributes.merge(has_additional_owners: YesNoAnswer::YES.to_s, additional_owners: nil)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        context 'and the additional owners have been provided' do
+          let(:attributes) do
+            required_attributes.merge(has_additional_owners: YesNoAnswer::YES.to_s, additional_owners: 'Owner 1')
+          end
+
+          it { expect(subject).to be true }
+        end
+      end
+    end
+
+    context 'employees validation' do
+      context 'when the business has employees' do
+        context 'and the number of employees has not been provided' do
+          let(:attributes) do
+            required_attributes.merge(has_employees: YesNoAnswer::YES.to_s, number_of_employees: nil)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        context 'and the number of employees has been provided' do
+          let(:attributes) do
+            required_attributes.merge(has_employees: YesNoAnswer::YES.to_s, number_of_employees: 5)
+          end
+
+          it { expect(subject).to be true }
+        end
+      end
+    end
+
+    context 'address validation' do
+      context 'with invalid address attributes' do
+        let(:attributes) do
+          required_attributes.merge(address: address_attributes.merge('address_line_one' => ''))
+        end
+
+        it { expect(subject).to be false }
+      end
+    end
+  end
 end

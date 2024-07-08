@@ -101,8 +101,8 @@ RSpec.describe Summary::Components::Business, type: :component do
       expect(page).to have_summary_row 'Employees?', 'Yes'
       expect(page).to have_summary_row 'Number of employees', '21'
       expect(page).to have_summary_row 'Total turnover', '£90,010.12 every year'
-      expect(page).to have_summary_row 'Total profit', '£3,030.00 every year'
       expect(page).to have_summary_row 'Total drawings', '£0.90 every week'
+      expect(page).to have_summary_row 'Total profit', '£3,030.00 every year'
     end
 
     context 'when answers are missing' do
@@ -123,8 +123,8 @@ RSpec.describe Summary::Components::Business, type: :component do
           total_income_share_sales: nil,
           percentage_profit_share: nil,
           turnover: nil,
-          drawings: { amount: nil, frequency: 'week' },
-          profit: { amount: 303_000, frequency: nil }
+          drawings:  AmountAndFrequency.new(amount: nil, frequency: 'week'),
+          profit: AmountAndFrequency.new(amount: 303_000, frequency: nil)
         }
       end
 
