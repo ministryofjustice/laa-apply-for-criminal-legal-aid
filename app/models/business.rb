@@ -12,16 +12,24 @@ class Business < ApplicationRecord
 
   # TODO: add validation for upcoming screens, CRIMAPP-983, 984, 985
   def complete?
-    except = %i[id crime_application_id created_at updated_at address_line_two percentage_profit_share salary
-                total_income_share_sales]
+    except = %i[id crime_application_id created_at updated_at address_line_two
+                turnover drawings profit percentage_profit_share salary total_income_share_sales]
     except << :number_of_employees if has_employees == YesNoAnswer::NO.to_s
     except << :additional_owners if has_additional_owners == YesNoAnswer::NO.to_s
 
-    serializable_hash(except:).values.none?(&:blank?) && address_complete?
+    serializable_hash(except:).values.none?(&:blank?) && address_complete? && financials_complete?
   end
 
   def address_complete?
     address.present? && address.values_at(*REQUIRED_ADDRESS_ATTRIBUTES.map(&:to_s)).all?(&:present?)
+  end
+
+  def financials_complete?
+    payment_complete?(turnover) && payment_complete?(drawings) && payment_complete?(profit)
+  end
+
+  def payment_complete?(payment)
+    payment.amount.present? && payment.frequency.present?
   end
 
   def owner

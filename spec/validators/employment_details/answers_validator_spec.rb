@@ -11,7 +11,8 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       crime_application:,
       employment_status:,
       employments:,
-      businesses:,
+      client_businesses:,
+      partner_businesses:,
       partner_employment_status:,
       ended_employment_within_three_months:,
       applicant_self_assessment_tax_bill:,
@@ -23,14 +24,13 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
 
   let(:errors) { double(:errors, empty?: false) }
   let(:crime_application) { instance_double(CrimeApplication, partner_detail:, partner:) }
-  let(:employment_status) {
-    []
-  }
-  let(:partner_employment_status) { nil }
+  let(:employment_status) { [] }
+  let(:partner_employment_status) { [] }
   let(:partner_detail) { nil }
   let(:partner) { nil }
   let(:employments) { [] }
-  let(:businesses) { [] }
+  let(:client_businesses) { [] }
+  let(:partner_businesses) { [] }
   let(:applicant_self_assessment_tax_bill) { nil }
   let(:applicant_self_assessment_tax_bill_amount) { nil }
   let(:applicant_self_assessment_tax_bill_frequency) { nil }
@@ -390,8 +390,6 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       let(:employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
 
       context 'when there are no businesses' do
-        let(:businesses) { [] }
-
         it 'adds an error to :businesses' do
           expect(errors).to receive(:add).with(:businesses, :incomplete)
 
@@ -400,7 +398,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       end
 
       context 'where there is an incomplete business' do
-        let(:businesses) { [instance_double(Business, complete?: false)] }
+        let(:client_businesses) { [instance_double(Business, complete?: false)] }
 
         it 'adds an error to :businesses' do
           expect(errors).to receive(:add).with(:businesses, :incomplete)
@@ -410,7 +408,39 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       end
 
       context 'where there business are complete' do
-        let(:businesses) { [instance_double(Business, complete?: true)] }
+        let(:client_businesses) { [instance_double(Business, complete?: true)] }
+
+        it 'adds an error to :businesses' do
+          expect(errors).not_to receive(:add)
+
+          validate
+        end
+      end
+    end
+
+    context 'when partner is self employed' do
+      let(:partner_employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+      context 'when there are no businesses' do
+        it 'adds an error to :businesses' do
+          expect(errors).to receive(:add).with(:businesses, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'where there is an incomplete business' do
+        let(:partner_businesses) { [instance_double(Business, complete?: false)] }
+
+        it 'adds an error to :businesses' do
+          expect(errors).to receive(:add).with(:businesses, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'where there business are complete' do
+        let(:partner_businesses) { [instance_double(Business, complete?: true)] }
 
         it 'adds an error to :businesses' do
           expect(errors).not_to receive(:add)

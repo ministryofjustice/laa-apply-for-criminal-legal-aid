@@ -11,10 +11,6 @@ module TypeOfEmployment
     income.employment_status.include?(EmploymentStatus::EMPLOYED.to_s)
   end
 
-  def self_employed?
-    income.employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
-  end
-
   def ended_employment_within_three_months?
     income.ended_employment_within_three_months == 'yes'
   end

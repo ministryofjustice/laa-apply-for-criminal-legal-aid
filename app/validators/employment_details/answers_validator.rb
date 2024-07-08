@@ -90,9 +90,19 @@ module EmploymentDetails
     end
 
     def validate_self_employment
-      return unless self_employed?
+      errors.add(:businesses, :incomplete) if client_businesses_incomplete? || partner_businesses_incomplete?
+    end
 
-      errors.add(:businesses, :incomplete) if record.businesses.blank? || !record.businesses.all?(&:complete?)
+    def client_businesses_incomplete?
+      return false unless record.employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
+
+      record.client_businesses.blank? || !record.client_businesses.all?(&:complete?)
+    end
+
+    def partner_businesses_incomplete?
+      return false unless record.partner_employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
+
+      record.partner_businesses.blank? || !record.partner_businesses.all?(&:complete?)
     end
 
     alias income record
