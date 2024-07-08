@@ -2,6 +2,8 @@ module Summary
   module Sections
     class Businesses < Sections::BaseSection
       def show?
+        return false if income.blank?
+
         businesses.any?
       end
 
