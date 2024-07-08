@@ -37,13 +37,19 @@ module Decisions
 
     private
 
-    # TODO: New partner details journey will cause the existing `has_partner` question
-    # to move further along the client journey rather than at the beginning
+    def after_client_details
+      if DateStamper.new(form_object.crime_application).call
+        edit(:date_stamp)
+      elsif form_object.crime_application.not_means_tested?
+        edit(:residence_type)
+      else
+        edit(:case_type)
+      end
+    end
+
     def after_is_means_tested
-      if form_object.is_means_tested.yes? && FeatureFlags.partner_journey.enabled?
+      if form_object.is_means_tested.yes?
         edit(:details)
-      elsif form_object.is_means_tested.yes?
-        edit(:has_partner)
       else
         # Task list
         edit('/crime_applications')
@@ -55,16 +61,6 @@ module Decisions
         edit('/steps/case/urn')
       else
         edit('/steps/dwp/benefit_type')
-      end
-    end
-
-    def after_client_details
-      if DateStamper.new(form_object.crime_application).call
-        edit(:date_stamp)
-      elsif form_object.crime_application.not_means_tested?
-        edit(:residence_type)
-      else
-        edit(:case_type)
       end
     end
 
@@ -133,36 +129,21 @@ module Decisions
     def after_has_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
-      elsif FeatureFlags.partner_journey.enabled?
-        edit(:has_partner)
       else
-        edit('/steps/dwp/benefit_type')
+        edit(:has_partner)
       end
     end
 
     def after_has_partner
-      if start_partner_journey? && FeatureFlags.partner_journey.enabled?
+      if form_object.client_has_partner.yes?
         edit('/steps/partner/relationship')
-      elsif form_object.client_has_partner.no? && FeatureFlags.partner_journey.enabled?
-        edit(:relationship_status)
-      elsif form_object.client_has_partner.yes?
-        show(:partner_exit)
       else
-        edit(:details)
+        edit(:relationship_status)
       end
     end
 
     def applicant
       @applicant ||= current_crime_application.applicant
-    end
-
-    # TODO: Consider whether !crime_application.age_passported? is more appropriate?
-    def start_partner_journey?
-      return false unless FeatureFlags.partner_journey.enabled?
-
-      form_object.client_has_partner.yes? &&
-        !current_crime_application.not_means_tested? &&
-        !applicant.under18?
     end
   end
   # rubocop:enable Metrics/ClassLength

@@ -103,7 +103,7 @@ module Decisions
     end
 
     def after_client_trust_fund
-      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      if include_partner_in_means_assessment?
         edit(:partner_trust_fund)
       else
         after_trust_fund
@@ -169,7 +169,7 @@ module Decisions
     end
 
     def after_premium_bonds
-      if FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      if include_partner_in_means_assessment?
         edit(:partner_premium_bonds)
       else
         edit(:has_national_savings_certificates)

@@ -76,7 +76,6 @@ module OutgoingsAssessment
     end
 
     def partner_income_tax_rate_complete?
-      return true unless FeatureFlags.partner_journey.enabled?
       return true unless include_partner_in_means_assessment?
 
       record.partner_income_tax_rate_above_threshold.present?

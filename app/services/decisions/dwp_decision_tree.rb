@@ -75,8 +75,7 @@ module Decisions
     end
 
     def partner_benefit_type_required?
-      form_object.benefit_type.none? &&
-        FeatureFlags.partner_journey.enabled? && include_partner_in_means_assessment?
+      form_object.benefit_type.none? && include_partner_in_means_assessment?
     end
 
     def after_has_benefit_evidence
