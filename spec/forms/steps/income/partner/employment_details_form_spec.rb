@@ -10,7 +10,7 @@ RSpec.describe Steps::Income::Partner::EmploymentDetailsForm do
       job_title: job_title,
       amount: 100,
       frequency: PaymentFrequencyType::MONTHLY.to_s,
-      before_or_after_tax: BeforeOrAfterTax::AFTER.to_s
+      before_or_after_tax: BeforeOrAfterTax::AFTER
     }
   end
 

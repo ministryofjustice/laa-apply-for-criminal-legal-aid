@@ -38,7 +38,7 @@ RSpec.describe Employment, type: :model do
 
   let(:metadata) do
     {
-      before_or_after_tax: { value: 'before_tax' }
+      before_or_after_tax: 'before_tax'
     }.as_json
   end
 

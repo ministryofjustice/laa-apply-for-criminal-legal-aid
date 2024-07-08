@@ -223,7 +223,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                     amount_before_type_cast: 25_000,
                     frequency: 'annual',
                     ownership_type: 'applicant',
-                    metadata: { before_or_after_tax: { 'value' => 'before_tax' } }.as_json,
+                    metadata: { before_or_after_tax: 'before_tax' }.as_json,
                     deductions: deductions_double,
                     complete?: true,
                     annualized_amount: Money.new(1500))
@@ -242,7 +242,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
                     amount_before_type_cast: 35_000,
                     frequency: 'annual',
                     ownership_type: 'partner',
-                    metadata: { before_or_after_tax: { 'value' => 'after_tax' } }.as_json,
+                    metadata: { before_or_after_tax: 'after_tax' }.as_json,
                     deductions: deductions_double,
                     complete?: true,
                     annualized_amount: Money.new(2500))
@@ -359,7 +359,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
             amount: 25_000,
             frequency: 'annual',
             ownership_type: 'applicant',
-            metadata: { before_or_after_tax: { 'value' => 'before_tax' } },
+            metadata: { before_or_after_tax: 'before_tax' },
             deductions: [
               {
                 deduction_type: 'income_tax',
@@ -395,7 +395,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
             amount: 35_000,
             frequency: 'annual',
             ownership_type: 'partner',
-            metadata: { before_or_after_tax: { 'value' => 'after_tax' } },
+            metadata: { before_or_after_tax: 'after_tax' },
             deductions: [
               {
                 deduction_type: 'income_tax',
