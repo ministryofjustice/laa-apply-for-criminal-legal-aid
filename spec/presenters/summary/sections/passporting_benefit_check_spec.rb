@@ -7,7 +7,8 @@ describe Summary::Sections::PassportingBenefitCheck do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      applicant: applicant
+      applicant: applicant,
+      is_means_tested: is_means_tested
     )
   end
 
@@ -26,6 +27,7 @@ describe Summary::Sections::PassportingBenefitCheck do
   let(:benefit_check_status) { nil }
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
+  let(:is_means_tested) { 'yes' }
 
   before do
     allow(applicant).to receive(:benefit_check_status).and_return(benefit_check_status)

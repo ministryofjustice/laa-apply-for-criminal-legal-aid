@@ -10,8 +10,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       applicant: instance_double(Applicant),
       case: kase, # TODO: refactor the CaseDecisionTree to use #kase instead of #case
       kase: kase,
-      not_means_tested?: not_means_tested,
-      is_means_tested: is_means_tested
+      non_means_tested?: non_means_tested
     )
   }
 
@@ -27,7 +26,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
   let(:is_means_tested) { nil }
-  let(:not_means_tested) { nil }
+  let(:non_means_tested) { nil }
 
   before do
     allow(
@@ -94,7 +93,7 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'when application is not means tested' do
       let(:is_means_tested) { 'no' }
-      let(:not_means_tested) { true }
+      let(:non_means_tested) { true }
 
       before do
         allow(FeatureFlags).to receive(:non_means_tested) {

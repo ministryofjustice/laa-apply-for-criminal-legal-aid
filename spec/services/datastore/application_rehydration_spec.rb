@@ -12,7 +12,6 @@ RSpec.describe Datastore::ApplicationRehydration do
 
   let(:applicant) { nil }
   let(:parent) { JSON.parse(LaaCrimeSchemas.fixture(1.0, name: 'application_returned').read) }
-  let(:means_passport) { [] }
 
   before do
     allow(crime_application).to receive(:update!).and_return(true)
@@ -22,7 +21,7 @@ RSpec.describe Datastore::ApplicationRehydration do
     let(:parent_ioj) { Ioj.new(types: ['foobar']) }
 
     before do
-      allow(subject.parent).to receive_messages(ioj: parent_ioj, means_passport: means_passport)
+      allow(subject.parent).to receive_messages(ioj: parent_ioj)
     end
 
     it 're-hydrates the new application using the parent details' do # rubocop:disable RSpec/ExampleLength
@@ -31,7 +30,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       ).to receive(:update!).with(
         client_has_partner: YesNoAnswer::YES,
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
-        is_means_tested: an_instance_of(YesNoAnswer),
+        is_means_tested: 'yes',
         date_stamp: an_instance_of(DateTime),
         ioj_passport: an_instance_of(Array),
         means_passport: an_instance_of(Array),
@@ -93,12 +92,15 @@ RSpec.describe Datastore::ApplicationRehydration do
 
     context 'date stamp' do
       let(:parent) do
-        super().deep_merge('case_details' => { 'case_type' => case_type })
+        super().deep_merge(
+          'is_means_tested' => is_means_tested,
+          'case_details' => { 'case_type' => case_type }
+        )
       end
 
       context 'for a parent that is non means tested' do
+        let(:is_means_tested) { 'no' }
         let(:case_type) { nil }
-        let(:means_passport) { ['on_not_means_tested'] }
 
         it 'inherits the existing date stamp' do
           expect(
@@ -114,6 +116,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
 
       context 'for a parent with a date-stampable case type' do
+        let(:is_means_tested) { 'yes' }
         let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
         it 'inherits the existing date stamp' do
@@ -130,6 +133,7 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
 
       context 'for a parent with a non date-stampable case type' do
+        let(:is_means_tested) { 'yes' }
         let(:case_type) { CaseType::INDICTABLE.to_s }
 
         it 'leaves the date stamp `nil`' do

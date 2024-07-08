@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SectionsCompletenessValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
-  let(:record) { instance_double(CrimeApplication, errors: errors, is_means_tested: 'yes') }
+  let(:record) { instance_double(CrimeApplication, errors: errors, non_means_tested?: false) }
   let(:errors) { double(:errors, empty?: false) }
 
   describe '#validate' do

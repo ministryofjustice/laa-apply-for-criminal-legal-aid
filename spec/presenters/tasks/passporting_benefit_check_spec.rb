@@ -10,7 +10,7 @@ RSpec.describe Tasks::PassportingBenefitCheck do
       applicant: applicant,
       kase: kase,
       appeal_no_changes?: false,
-      is_means_tested: 'yes'
+      non_means_tested?: false
     )
   end
 

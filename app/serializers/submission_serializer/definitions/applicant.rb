@@ -18,16 +18,18 @@ module SubmissionSerializer
           json.has_nino applicant.has_nino
           json.nino applicant.nino
 
-          json.benefit_type applicant.benefit_type
-          json.last_jsa_appointment_date applicant.last_jsa_appointment_date
-          json.benefit_check_result applicant.benefit_check_result
-          json.will_enter_nino applicant.will_enter_nino
-          json.has_benefit_evidence applicant.has_benefit_evidence
-          json.confirm_details applicant.confirm_details
-          json.confirm_dwp_result applicant.confirm_dwp_result
-          json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
+          unless non_means_tested?
+            json.benefit_type applicant.benefit_type
+            json.last_jsa_appointment_date applicant.last_jsa_appointment_date
+            json.benefit_check_result applicant.benefit_check_result
+            json.will_enter_nino applicant.will_enter_nino
+            json.has_benefit_evidence applicant.has_benefit_evidence
+            json.confirm_details applicant.confirm_details
+            json.confirm_dwp_result applicant.confirm_dwp_result
+            json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
 
-          partner_attributes(json)
+            partner_attributes(json)
+          end
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

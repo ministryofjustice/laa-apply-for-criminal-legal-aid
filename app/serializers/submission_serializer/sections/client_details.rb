@@ -7,7 +7,8 @@ module SubmissionSerializer
 
           json.client_details do
             json.applicant Definitions::Applicant.generate(crime_application)
-            json.partner partner_json
+
+            json.partner partner_json unless crime_application.non_means_tested?
           end
         end
       end

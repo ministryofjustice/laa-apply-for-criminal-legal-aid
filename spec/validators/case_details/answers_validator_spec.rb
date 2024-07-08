@@ -4,9 +4,9 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
   let(:record) { instance_double(Case, crime_application:, errors:) }
-  let(:crime_application) { instance_double(CrimeApplication, not_means_tested?: not_means_tested) }
+  let(:crime_application) { instance_double(CrimeApplication, non_means_tested?: non_means_tested) }
   let(:errors) { double(:errors) }
-  let(:not_means_tested) { false }
+  let(:non_means_tested) { false }
 
   describe '#validate' do
     before { allow(record).to receive_messages(**attributes) }
@@ -65,11 +65,13 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         subject.validate
       end
 
-      context 'when application is not means tested' do
-        let(:not_means_tested) { true }
+      # rubocop:disable RSpec/MultipleExpectations
+      context 'when application is non means tested' do
+        let(:non_means_tested) { true }
 
         it 'adds errors for all failed validations' do
           expect(errors).to receive(:add).with(:has_case_concluded, :blank)
+          expect(errors).to receive(:add).with(:is_preorder_work_claimed, :blank)
           expect(errors).to receive(:add).with(:hearing_details, :blank)
           expect(errors).to receive(:add).with(:charges, :blank)
           expect(errors).to receive(:add).with(:charges_summary, :incomplete_records)
@@ -81,6 +83,7 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
           subject.validate
         end
       end
+      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 

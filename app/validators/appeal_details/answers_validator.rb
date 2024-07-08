@@ -26,6 +26,8 @@ module AppealDetails
     end
 
     def applicable?
+      return false if record.non_means_tested?
+
       kase&.case_type.present? && CaseType.new(kase.case_type).appeal?
     end
 

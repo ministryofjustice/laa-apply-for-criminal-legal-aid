@@ -36,6 +36,10 @@ module TypeOfApplication
       kase.appeal_financial_circumstances_changed == 'no'
   end
 
+  def non_means_tested?
+    is_means_tested == 'no'
+  end
+
   private
 
   def application_type_eql?(other_type)
