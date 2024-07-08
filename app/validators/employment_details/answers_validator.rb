@@ -17,17 +17,10 @@ module EmploymentDetails
       errors.add :employment_status, :incomplete if record.employment_status.blank?
       errors.add :employment_status, :incomplete unless not_working_details_complete?
 
-      validate_employment
-      validate_partner_employment
-      validate_self_employment
+      validate_client_employment
+      validate_client_self_employment
 
       errors.add :base, :incomplete_records if errors.present?
-    end
-
-    def validate_partner_employment
-      return unless include_partner_in_means_assessment?
-
-      errors.add(:partner_employment_status, :incomplete) if record.partner_employment_status.blank?
     end
 
     def applicable?
@@ -44,7 +37,7 @@ module EmploymentDetails
     end
 
     # :nocov:
-    def validate_employment
+    def validate_client_employment
       return unless employed?
 
       validate_employment_details
@@ -89,20 +82,16 @@ module EmploymentDetails
       errors.add :employment_income, :incomplete unless record.client_employment_income&.complete?
     end
 
-    def validate_self_employment
-      errors.add(:businesses, :incomplete) if client_businesses_incomplete? || partner_businesses_incomplete?
+    def validate_client_self_employment
+      return unless income.client_self_employed?
+
+      errors.add(:businesses, :incomplete) if client_businesses_incomplete?
+      validate_self_assessment_tax_bill
+      validate_other_work_benefit
     end
 
     def client_businesses_incomplete?
-      return false unless record.employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
-
       record.client_businesses.blank? || !record.client_businesses.all?(&:complete?)
-    end
-
-    def partner_businesses_incomplete?
-      return false unless record.partner_employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
-
-      record.partner_businesses.blank? || !record.partner_businesses.all?(&:complete?)
     end
 
     alias income record
