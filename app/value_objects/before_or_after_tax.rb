@@ -5,6 +5,6 @@ class BeforeOrAfterTax < ValueObject
   ].freeze
 
   def as_json(_opts = nil)
-    {value: }
+    { value: }
   end
 end
