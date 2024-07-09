@@ -22,7 +22,7 @@ module Steps
       # rescue Dry::Struct::Error => e
       #   Rails.error.report(e, handled: true)
 
-        redirect_to edit_crime_application_path(current_crime_application)
+        # redirect_to edit_crime_application_path(current_crime_application)
       end
 
       def draft_json_application

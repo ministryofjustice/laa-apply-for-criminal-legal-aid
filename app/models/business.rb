@@ -6,8 +6,8 @@ class Business < ApplicationRecord
   attribute :turnover, :amount_and_frequency
   attribute :drawings, :amount_and_frequency
   attribute :profit, :amount_and_frequency
-  attribute :salary, :amount_and_frequency, default: nil
-  attribute :total_income_share_sales, :amount_and_frequency, default: nil
+  attribute :salary, :amount_and_frequency
+  attribute :total_income_share_sales, :amount_and_frequency
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
   REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
@@ -52,16 +52,21 @@ class Business < ApplicationRecord
   end
 
   def serializable_hash(options = nil)
-    options ||= { except: [:created_at, :updated_at, :crime_application_id] }
+    options ||= {except: ignored_attributes}
     super
   end
 
-  def attributes
-    throw 'here'
-    super.reject { |_, v| v.nil? }
-  end
-
   # private
+  #
+  def ignored_attributes
+    ignored = %w[created_at updated_at crime_application_id ]
+
+    unless business_type == BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s
+     ignored += %w[total_income_share_sales salary]
+    end
+
+    ignored
+  end
   # def attributes_not_to_serialize
   #   attr = %i[id crime_application_id created_at updated_at salary total_income_share_sales]
   # end

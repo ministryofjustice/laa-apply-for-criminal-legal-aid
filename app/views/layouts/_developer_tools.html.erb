@@ -26,9 +26,8 @@
                           data: { module: 'govuk-button' } do; 'Under18 Bypass'; end %>
           <% end %>
 
-          <% if crime_application.errors %>
+          <% if crime_application.errors.any? %>
             <%= crime_application.errors.attribute_names %>
-            <%= crime_application.income.errors.attribute_names %>
         <% end %>
 
           <% if crime_application.in_progress? %>
