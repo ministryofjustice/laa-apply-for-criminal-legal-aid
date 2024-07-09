@@ -42,6 +42,18 @@ module Summary
           Components::AmountAndFrequencyAnswer.new(
             :profit, business.profit, show: true
           ),
+          Components::AmountAndFrequencyAnswer.new(
+            :salary, business.salary, show: business.salary&.amount.present?
+          ),
+          Components::AmountAndFrequencyAnswer.new(
+            :total_income_share_sales, business.total_income_share_sales,
+            show: business.total_income_share_sales&.amount.present?
+          ),
+          Components::PercentageAnswer.new(
+            :percentage_profit_share,
+            business.percentage_profit_share,
+            show: business.percentage_profit_share.present?
+          ),
         ].select(&:show?)
       end
 

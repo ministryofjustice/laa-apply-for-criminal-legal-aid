@@ -1,0 +1,20 @@
+<% title legend_t(:total_income_share_sales) %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.fields_for :total_income_share_sales, f.object.public_send(:total_income_share_sales) do |ff| %>
+        <%= ff.govuk_number_field :amount, width: 'one-half',
+                                  label: { text: legend_t(:total_income_share_sales), size: 'xl' },
+                                  hint: { text: hint_t(:total_income_share_sales)},
+                                  prefix_text: '£' %>
+
+      <% end %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -6,16 +6,18 @@ class Business < ApplicationRecord
   attribute :turnover, :amount_and_frequency
   attribute :drawings, :amount_and_frequency
   attribute :profit, :amount_and_frequency
+  attribute :salary, :amount_and_frequency, default: nil
+  attribute :total_income_share_sales, :amount_and_frequency, default: nil
 
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
   REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
 
-  # TODO: add validation for upcoming screens, CRIMAPP-983, 984, 985
   def complete?
     except = %i[id crime_application_id created_at updated_at address_line_two
-                turnover drawings profit percentage_profit_share salary total_income_share_sales]
+                turnover drawings profit salary total_income_share_sales]
     except << :number_of_employees if has_employees == YesNoAnswer::NO.to_s
     except << :additional_owners if has_additional_owners == YesNoAnswer::NO.to_s
+    except << :percentage_profit_share if business_type == BusinessType::SELF_EMPLOYED.to_s
 
     serializable_hash(except:).values.none?(&:blank?) && address_complete? && financials_complete?
   end
@@ -25,7 +27,14 @@ class Business < ApplicationRecord
   end
 
   def financials_complete?
-    payment_complete?(turnover) && payment_complete?(drawings) && payment_complete?(profit)
+    payment_complete?(turnover) && payment_complete?(drawings) && payment_complete?(profit) &&
+      director_financials_complete?
+  end
+
+  def director_financials_complete?
+    return true unless business_type == BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s
+
+    payment_complete?(salary) && payment_complete?(total_income_share_sales)
   end
 
   def payment_complete?(payment)
@@ -46,4 +55,14 @@ class Business < ApplicationRecord
     options ||= { except: [:created_at, :updated_at, :crime_application_id] }
     super
   end
+
+  def attributes
+    throw 'here'
+    super.reject { |_, v| v.nil? }
+  end
+
+  # private
+  # def attributes_not_to_serialize
+  #   attr = %i[id crime_application_id created_at updated_at salary total_income_share_sales]
+  # end
 end

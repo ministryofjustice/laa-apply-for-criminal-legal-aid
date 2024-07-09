@@ -26,6 +26,11 @@
                           data: { module: 'govuk-button' } do; 'Under18 Bypass'; end %>
           <% end %>
 
+          <% if crime_application.errors %>
+            <%= crime_application.errors.attribute_names %>
+            <%= crime_application.income.errors.attribute_names %>
+        <% end %>
+
           <% if crime_application.in_progress? %>
              <%= button_to edit_steps_income_employment_status_path, method: :get,
                           class: 'govuk-button govuk-!-margin-right-1',

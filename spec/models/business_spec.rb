@@ -130,6 +130,51 @@ RSpec.describe Business, type: :model do
       end
     end
 
+    context 'director/stakeholder business validation' do
+      context 'when the businesses type is `director_or_shareholder`' do
+        context 'and the salary and total_income_share_sales has not been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        context 'and the salary and total_income_share_sales figures have been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s,
+                                      percentage_profit_share: 50,
+                                      salary: AmountAndFrequency.new(amount: 100,
+                                                                     frequency: PaymentFrequencyType::ANNUALLY),
+                                      total_income_share_sales: AmountAndFrequency.new(amount: 100,
+                                                                                       frequency: PaymentFrequencyType::ANNUALLY))
+          end
+
+          it { expect(subject).to be true }
+        end
+      end
+    end
+
+    context 'partnership business validation' do
+      context 'when the businesses type is `partnership`' do
+        context 'and the percentage_profit_share has not been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::PARTNERSHIP.to_s)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        context 'and the percentage_profit_share figure has been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::PARTNERSHIP.to_s, percentage_profit_share: 50)
+          end
+
+          it { expect(subject).to be true }
+        end
+      end
+    end
+
     context 'address validation' do
       context 'with invalid address attributes' do
         let(:attributes) do
