@@ -52,22 +52,7 @@ class Business < ApplicationRecord
   end
 
   def serializable_hash(options = nil)
-    options ||= {except: ignored_attributes}
+    options ||= { except: [:created_at, :updated_at, :crime_application_id] }
     super
   end
-
-  # private
-  #
-  def ignored_attributes
-    ignored = %w[created_at updated_at crime_application_id ]
-
-    unless business_type == BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s
-     ignored += %w[total_income_share_sales salary]
-    end
-
-    ignored
-  end
-  # def attributes_not_to_serialize
-  #   attr = %i[id crime_application_id created_at updated_at salary total_income_share_sales]
-  # end
 end
