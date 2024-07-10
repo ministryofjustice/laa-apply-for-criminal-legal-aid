@@ -1,5 +1,7 @@
 module CaseDetails
   class AnswersValidator
+    include TypeOfMeansAssessment
+
     def initialize(record)
       @record = record
     end
@@ -14,11 +16,9 @@ module CaseDetails
 
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       errors.add(:has_case_concluded, :blank) unless case_concluded_complete?
+      errors.add(:is_preorder_work_claimed, :blank) unless preorder_work_complete?
 
-      unless not_means_tested?
-        errors.add(:is_preorder_work_claimed, :blank) unless preorder_work_complete?
-        errors.add(:is_client_remanded, :blank) unless client_remanded_complete?
-      end
+      errors.add(:is_client_remanded, :blank) if !non_means_tested? && !client_remanded_complete?
 
       errors.add(:charges, :blank) unless has_charges_complete?
       errors.add(:charges_summary, :incomplete_records) unless all_charges_complete?
@@ -29,8 +29,6 @@ module CaseDetails
 
       errors.add :base, :incomplete_records unless errors.empty?
     end
-
-    delegate :not_means_tested?, to: :crime_application
 
     def case_concluded_complete?
       return false if kase.has_case_concluded.blank?

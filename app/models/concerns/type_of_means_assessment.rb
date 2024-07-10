@@ -2,7 +2,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   delegate :applicant, :partner, :kase, :income, :outgoings, :income_payments, :income_benefits,
-           :capital, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
+           :capital, :non_means_tested?, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
     return false unless FeatureFlags.means_journey.enabled?
@@ -90,6 +90,8 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   end
 
   private
+
+  alias not_means_tested? non_means_tested?
 
   # involvement_in_case is stored on partner_detail when a database applications and
   # partner when a datastore application.

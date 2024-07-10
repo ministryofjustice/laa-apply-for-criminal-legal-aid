@@ -14,7 +14,7 @@ module Datastore
       crime_application.update!(
         client_has_partner: client_has_partner,
         parent_id: parent.id,
-        is_means_tested: means_tested,
+        is_means_tested: parent.is_means_tested,
         date_stamp: date_stamp,
         ioj_passport: parent.ioj_passport,
         means_passport: parent.means_passport,
@@ -52,13 +52,6 @@ module Datastore
       parent.return_details.reason.inquiry.split_case?
     end
 
-    # `is_means_tested` is not part of Schema, requires calculation
-    def means_tested
-      return YesNoAnswer::YES unless FeatureFlags.non_means_tested.enabled?
-
-      parent.means_passport.include?('on_not_means_tested') ? YesNoAnswer::NO : YesNoAnswer::YES
-    end
-
     def client_has_partner
       parent.client_details.applicant.has_partner == 'yes' ? YesNoAnswer::YES : YesNoAnswer::NO
     end
@@ -67,7 +60,7 @@ module Datastore
     # date stamp if the parent case type was date-stampable, otherwise
     # we leave it `nil`, so a new date is applied on resubmission.
     def date_stamp
-      parent.date_stamp if not_means_tested? || CaseType.new(parent.case.case_type).date_stampable?
+      parent.date_stamp if parent.non_means_tested? || CaseType.new(parent.case.case_type).date_stampable?
     end
 
     def applicant
@@ -145,12 +138,6 @@ module Datastore
       parent.means_details&.outgoings_details&.outgoings&.map do |struct|
         OutgoingsPayment.new(**struct)
       end || []
-    end
-
-    def not_means_tested?
-      return true if means_tested.value == :no
-
-      false
     end
 
     def evidence_last_run_at

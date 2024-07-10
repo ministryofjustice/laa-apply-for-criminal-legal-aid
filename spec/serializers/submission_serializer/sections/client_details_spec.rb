@@ -6,10 +6,11 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      applicant:,
-      partner:,
-      partner_detail:,
-      client_has_partner:
+      applicant: applicant,
+      partner: partner,
+      partner_detail: partner_detail,
+      client_has_partner: client_has_partner,
+      non_means_tested?: non_means_tested
     )
   end
 
@@ -40,6 +41,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   end
 
   let(:date_of_birth) { DateTime.new(1950, 1, 1) }
+  let(:non_means_tested) { false }
 
   let(:home_address) do
     instance_double(
@@ -95,6 +97,34 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           separation_date: nil,
         },
         partner: nil,
+      }
+    }
+  end
+
+  let(:non_means_tested_client) do
+    {
+      client_details: {
+        applicant: {
+          first_name: 'Max',
+          last_name: 'Mustermann',
+          other_names: '',
+          date_of_birth: date_of_birth,
+          has_nino: 'yes',
+          nino: 'AB123456A',
+          home_address: {
+            address_line_one: 'Test',
+            address_line_two: 'Home',
+            city: 'City',
+            country: 'Country',
+            postcode: 'A11 1XX',
+            lookup_id: 1,
+          },
+          correspondence_address: nil,
+          telephone_number: '123456789',
+          correspondence_address_type: 'home_address',
+          residence_type: 'rented',
+          relationship_to_owner_of_usual_home_address: nil,
+        }
       }
     }
   end
@@ -191,6 +221,13 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       end
 
       it { expect(subject.generate).to eq(applicant_with_partner.as_json) }
+
+      context 'when non-means tested application' do
+        let(:non_means_tested) { true }
+
+        it { expect(subject.generate).not_to eq(applicant_with_partner.as_json) }
+        it { expect(subject.generate).to eq(non_means_tested_client.as_json) }
+      end
     end
 
     context 'with partner with conflict of interest' do

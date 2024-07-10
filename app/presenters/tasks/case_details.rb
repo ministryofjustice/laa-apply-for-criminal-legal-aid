@@ -1,5 +1,7 @@
 module Tasks
   class CaseDetails < BaseTask
+    include TypeOfMeansAssessment
+
     def path
       edit_steps_case_urn_path
     end
@@ -9,7 +11,7 @@ module Tasks
     end
 
     def can_start?
-      return fulfilled?(ClientDetails) if appeal_no_changes? || applicant&.under18?
+      return fulfilled?(ClientDetails) if applicant&.under18? || not_means_tested? || appeal_no_changes?
 
       fulfilled?(PassportingBenefitCheck)
     end

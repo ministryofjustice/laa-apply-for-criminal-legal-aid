@@ -5,14 +5,10 @@ module Decisions
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name
-      when :is_means_tested
-        after_is_means_tested
-      when :has_partner
-        after_has_partner
-      when :relationship_status
-        after_relationship_status
       when :details
         after_client_details
+      when :is_means_tested
+        after_is_means_tested
       when :case_type
         after_case_type
       when :appeal_details
@@ -29,6 +25,10 @@ module Decisions
         after_contact_details
       when :has_nino
         after_has_nino
+      when :has_partner
+        after_has_partner
+      when :relationship_status
+        edit('/steps/dwp/benefit_type')
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -38,29 +38,20 @@ module Decisions
     private
 
     def after_client_details
-      if DateStamper.new(form_object.crime_application).call
-        edit(:date_stamp)
-      elsif form_object.crime_application.not_means_tested?
-        edit(:residence_type)
+      if FeatureFlags.non_means_tested.enabled?
+        edit(:is_means_tested)
       else
         edit(:case_type)
       end
     end
 
     def after_is_means_tested
-      if form_object.is_means_tested.yes?
-        edit(:details)
+      if DateStamper.new(form_object.crime_application).call
+        edit(:date_stamp)
+      elsif form_object.crime_application.not_means_tested?
+        edit(:residence_type)
       else
-        # Task list
-        edit('/crime_applications')
-      end
-    end
-
-    def after_relationship_status
-      if current_crime_application.not_means_tested?
-        edit('/steps/case/urn')
-      else
-        edit('/steps/dwp/benefit_type')
+        edit(:case_type)
       end
     end
 

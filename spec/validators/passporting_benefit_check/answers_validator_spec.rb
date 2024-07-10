@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
-  let(:record) { instance_double(CrimeApplication, errors:, applicant:, partner:, partner_detail:) }
+  let(:record) {
+    instance_double(CrimeApplication, errors: errors, applicant: applicant, partner: partner,
+   partner_detail: partner_detail, non_means_tested?: false)
+  }
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, benefit_type:) }
   let(:benefit_type) { nil }
@@ -15,6 +18,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
 
   before do
     allow(record).to receive_messages(appeal_no_changes?: appeal_no_changes?)
+    allow(record).to receive_messages(is_means_tested: true)
     allow(applicant).to receive_messages(under18?: under18?)
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported?)
   end
