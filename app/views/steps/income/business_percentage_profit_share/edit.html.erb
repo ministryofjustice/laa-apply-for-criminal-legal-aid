@@ -1,0 +1,19 @@
+<% title legend_t(:percentage_profit_share) %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_number_field(:percentage_profit_share,
+                               inputmode: 'numeric',
+                               suffix_text: '%',
+                               width: 'one-half',
+                               label: { size: 'xl' }) %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

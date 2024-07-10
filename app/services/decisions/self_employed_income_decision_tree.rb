@@ -17,6 +17,12 @@ module Decisions
       when :business_employees
         edit(:business_financials, business_id:)
       when :business_financials
+        after_business_financials
+      when :business_salary_or_remuneration
+        edit(:business_total_income_share_sales, business_id:)
+      when :business_total_income_share_sales
+        edit(:business_percentage_profit_share, business_id:)
+      when :business_percentage_profit_share
         edit(:businesses_summary, business_id:)
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
@@ -34,6 +40,16 @@ module Decisions
 
       person = form_object.subject.to_param
       edit("steps/income/#{person}/self_assessment_tax_bill")
+    end
+
+    def after_business_financials
+      if form_object.record.business_type == BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s
+        edit(:business_salary_or_remuneration, business_id:)
+      elsif form_object.record.business_type == BusinessType::PARTNERSHIP.to_s
+        edit(:business_percentage_profit_share, business_id:)
+      else
+        edit(:businesses_summary, business_id:)
+      end
     end
   end
 end

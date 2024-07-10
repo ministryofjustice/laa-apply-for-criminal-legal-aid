@@ -46,7 +46,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       businesses: [partner_business],
       manage_without_income: 'other',
       manage_other_details: 'Another way that they manage',
-      partner_employment_status:  ['not_working'],
+      partner_employment_status: ['not_working'],
       applicant_other_work_benefit_received: nil,
       partner_other_work_benefit_received: nil,
       applicant_self_assessment_tax_bill: 'yes',
@@ -117,7 +117,10 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         amount: 2_000_000,
         frequency: 'annual'
       ),
-      total_income_share_sales: 19_901,
+      total_income_share_sales: AmountAndFrequency.new(
+        amount: 19_901,
+        frequency: 'annual'
+      ),
       percentage_profit_share: 100,
       turnover: AmountAndFrequency.new(
         amount: 900,
@@ -136,8 +139,8 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
 
   let(:partner_business) do
     Business.new(
-      business_type: BusinessType.values.first,
-      ownership_type: 'applicant',
+      business_type: BusinessType.values.third,
+      ownership_type: 'partner',
       trading_name: 'LAA',
       address: {
         address_line_one: 'address_line_one_r',
@@ -156,7 +159,10 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         amount: 90_000,
         frequency: 'weekly'
       ),
-      total_income_share_sales: nil,
+      total_income_share_sales: AmountAndFrequency.new(
+        amount: 19_901,
+        frequency: 'annual'
+      ),
       percentage_profit_share: 100,
       turnover: AmountAndFrequency.new(
         amount: 9_000_000,
@@ -318,14 +324,13 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
               'country' => 'country_r',
               'postcode' => 'postcode_r'
             },
-            'business_type' => 'self_employed',
+            'business_type' => 'director_or_shareholder',
             'description' => 'It is LAA',
             'drawings' => { 'amount' => 90, 'frequency' => 'week' },
             'has_additional_owners' => 'no',
             'has_employees' => 'no',
-            'id' => nil,
             'number_of_employees' => 2,
-            'ownership_type' => 'applicant',
+            'ownership_type' => 'partner',
             'percentage_profit_share' => 100.0,
             'profit' => {
               'amount' => 900_000,
@@ -335,7 +340,10 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
               'amount' => 90_000,
               'frequency' => 'weekly'
             },
-            'total_income_share_sales' => nil,
+            'total_income_share_sales' => {
+              'amount' => 19_901,
+              'frequency' => 'annual'
+            },
             'trading_name' => 'LAA',
             'trading_start_date' => '2000-01-02',
             'turnover' => {
