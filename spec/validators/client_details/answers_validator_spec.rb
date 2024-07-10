@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe ClientDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record: record, crime_application: record) }
 
-  let(:record) { instance_double(CrimeApplication, errors:, applicant:, kase:, client_has_partner:, partner_detail:) }
+  let(:record) {
+    instance_double(CrimeApplication, errors: errors, applicant: applicant, kase: kase,
+   client_has_partner: client_has_partner, partner_detail: partner_detail, non_means_tested?: false)
+  }
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
   let(:kase) { instance_double(Case, case_type:) }
@@ -15,6 +18,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   before do
     allow(validator).to receive(:appeal_no_changes?) { appeal_no_changes? }
+    allow(record).to receive_messages(is_means_tested: true)
   end
 
   describe '#validate' do

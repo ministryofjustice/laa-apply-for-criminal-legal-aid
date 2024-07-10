@@ -56,8 +56,8 @@ en:
       businesses: Businesses
       business:
         self_employed: Self-employed business 
-        partnership: Business partnership 
-        director_or_shareholder: Company director or shareholder
+        partnership: Partnership
+        director_or_shareholder: Director or shareholder
       client_businesses: Client businesses
       partner_businesses: Partner businesses
       case_details: Case details
@@ -957,4 +957,17 @@ en:
         question: Total profit
         answers:
           description: *payment_answer_format
+        absence_answer: ''
+      salary:
+        question: Salary or remuneration
+        answers:
+          description: *payment_answer_format
+        absence_answer: ''
+      total_income_share_sales:
+        question: Income from share sales
+        answers:
+          description: *payment_answer_format
+        absence_answer: ''
+      percentage_profit_share:
+        question: Share of profits
         absence_answer: ''

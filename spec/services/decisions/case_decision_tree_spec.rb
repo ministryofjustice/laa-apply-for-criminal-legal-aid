@@ -10,7 +10,7 @@ RSpec.describe Decisions::CaseDecisionTree do
       applicant: instance_double(Applicant),
       case: kase, # TODO: refactor the CaseDecisionTree to use #kase instead of #case
       kase: kase,
-      not_means_tested?: false
+      non_means_tested?: non_means_tested
     )
   }
 
@@ -25,6 +25,8 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
+  let(:is_means_tested) { nil }
+  let(:non_means_tested) { nil }
 
   before do
     allow(
@@ -89,8 +91,33 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :is_preorder_work_claimed }
 
-    it 'redirects to the `is_client_remanded` page' do
-      expect(subject).to have_destination(:is_client_remanded, :edit, id: crime_application)
+    context 'when application is not means tested' do
+      let(:is_means_tested) { 'no' }
+      let(:non_means_tested) { true }
+
+      before do
+        allow(FeatureFlags).to receive(:non_means_tested) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      context 'and there are no charges yet' do
+        let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
+
+        it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+      end
+
+      context 'and there are already charges' do
+        let(:charges_double) { double(any?: true) }
+
+        it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when application is means tested' do
+      it 'redirects to the `is_client_remanded` page' do
+        expect(subject).to have_destination(:is_client_remanded, :edit, id: crime_application)
+      end
     end
   end
 

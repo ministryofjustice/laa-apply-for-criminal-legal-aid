@@ -17,8 +17,10 @@ RSpec.describe Decisions::SelfEmployedIncomeDecisionTree do
   let(:partner) { instance_double Partner, to_param: 'partner' }
 
   let(:ownership_type) { OwnershipType::PARTNER }
+  let(:business_type) { BusinessType::SELF_EMPLOYED }
   let(:form_object) do
-    double('FormObject', record: instance_double(Business, id: 'BUS123', ownership_type: ownership_type))
+    double('FormObject', record: instance_double(Business, id: 'BUS123', ownership_type: ownership_type,
+                                                 business_type: business_type))
   end
 
   before do
@@ -65,6 +67,38 @@ RSpec.describe Decisions::SelfEmployedIncomeDecisionTree do
 
   context 'when the step is `business_financials`' do
     let(:step_name) { :business_financials }
+
+    context 'when the business type is self employed' do
+      it { is_expected.to have_destination(:businesses_summary, :edit, **expected_params) }
+    end
+
+    context 'when the business type is director or shareholder' do
+      let(:business_type) { BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s }
+
+      it { is_expected.to have_destination(:business_salary_or_remuneration, :edit, **expected_params) }
+    end
+
+    context 'when the business type is partnership' do
+      let(:business_type) { BusinessType::PARTNERSHIP.to_s }
+
+      it { is_expected.to have_destination(:business_percentage_profit_share, :edit, **expected_params) }
+    end
+  end
+
+  context 'when the step is `business_salary_or_remuneration`' do
+    let(:step_name) { :business_salary_or_remuneration }
+
+    it { is_expected.to have_destination(:business_total_income_share_sales, :edit, **expected_params) }
+  end
+
+  context 'when the step is `business_total_income_share_sales`' do
+    let(:step_name) { :business_total_income_share_sales }
+
+    it { is_expected.to have_destination(:business_percentage_profit_share, :edit, **expected_params) }
+  end
+
+  context 'when the step is `business_percentage_profit_share`' do
+    let(:step_name) { :business_percentage_profit_share }
 
     it { is_expected.to have_destination(:businesses_summary, :edit, **expected_params) }
   end
