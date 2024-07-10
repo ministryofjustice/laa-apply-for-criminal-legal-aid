@@ -7,10 +7,10 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.fields_for :total_income_share_sales, f.object.public_send(:total_income_share_sales) do |ff| %>
+      <%= f.fields_for :total_income_share_sales, f.object.total_income_share_sales do |ff| %>
         <%= ff.govuk_number_field :amount, width: 'one-half',
                                   label: { text: legend_t(:total_income_share_sales), size: 'xl' },
-                                  hint: { text: hint_t(:total_income_share_sales)},
+                                  hint: { text: hint_t(:total_income_share_sales) },
                                   prefix_text: '£' %>
 
       <% end %>

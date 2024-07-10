@@ -7,11 +7,11 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-    <%= f.fields_for :salary, f.object.public_send(:salary) do |ff| %>
+    <%= f.fields_for :salary, f.object.salary do |ff| %>
         <%= ff.govuk_number_field :amount,
                                   width: 'one-half',
                                   label: { text: legend_t(:salary), size: 'xl' },
-                                  hint: { text: hint_t(:salary)},
+                                  hint: { text: hint_t(:salary) },
                                   prefix_text: '£' %>
 
       <% end %>
