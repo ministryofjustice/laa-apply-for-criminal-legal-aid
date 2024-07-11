@@ -18,6 +18,45 @@ RSpec.describe Business, type: :model do
     end
   end
 
+  describe '#valid?' do
+    let(:valid_attributes) do
+      {
+        crime_application: CrimeApplication.new,
+        business_type: BusinessType::SELF_EMPLOYED.to_s
+      }
+    end
+
+    context 'when business_type' do
+      subject(:business_is_valid) { business.valid? }
+
+      let(:attributes) { valid_attributes.merge(business_type:) }
+
+      context 'is null' do
+        let(:business_type) { '' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is empty string' do
+        let(:business_type) { nil }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is something else' do
+        let(:business_type) { 'NotBusinessType' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is a BusinessType' do
+        let(:business_type) { BusinessType.values.sample.to_s }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
   describe '#owner' do
     subject(:owner) { business.owner }
 
