@@ -44,6 +44,7 @@ class SectionsCompletenessValidator
   end
 
   def outgoings_assessment_complete?
+    return false unless extent_of_means_assessment_determined?
     return true unless requires_full_means_assessment?
     return false unless outgoings
 
@@ -51,6 +52,7 @@ class SectionsCompletenessValidator
   end
 
   def capital_assessment_complete?
+    return false unless extent_of_means_assessment_determined?
     return true unless requires_full_means_assessment?
     return false unless capital
 
