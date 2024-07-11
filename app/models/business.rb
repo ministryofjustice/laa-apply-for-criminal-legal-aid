@@ -9,6 +9,8 @@ class Business < ApplicationRecord
   attribute :salary, :amount_and_frequency
   attribute :total_income_share_sales, :amount_and_frequency
 
+  validates :business_type, inclusion: { in: BusinessType.values.map(&:to_s) }
+
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
   REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
 
