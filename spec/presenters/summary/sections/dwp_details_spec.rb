@@ -10,7 +10,8 @@ describe Summary::Sections::DWPDetails do
       client_has_partner: 'no',
       partner_detail: nil,
       partner: nil,
-      applicant: applicant
+      applicant: applicant,
+      non_means_tested?: false
     )
   end
 

@@ -4,7 +4,10 @@ require 'rails_helper'
 RSpec.describe Decisions::DWPDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
-  let(:crime_application) { instance_double(CrimeApplication, partner:, partner_detail:) }
+  let(:crime_application) {
+    instance_double(CrimeApplication, partner: partner, partner_detail: partner_detail,
+  non_means_tested?: false)
+  }
   let(:applicant) { double(Applicant, benefit_check_result:) }
   let(:benefit_check_result) { false }
   let(:benefit_check_recipient) { applicant }
