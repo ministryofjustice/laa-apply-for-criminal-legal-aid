@@ -49,6 +49,7 @@ B,Cardiff Magistrates' Court
 C,Carlisle Crown Court
 B,Carlisle Magistrates' Court
 C,Central Criminal Court
+A,Chancery Division
 C,Chelmsford Crown Court
 B,Chelmsford Magistrates' Court
 B,Cheltenham Magistrates' Court
@@ -60,7 +61,9 @@ B,Chorley Magistrates' Court
 B,Cirencester Magistrates' Court
 B,City of London Magistrates' Court
 B,Colchester Magistrates' Court
+A,County Court
 C,Court of Appeal
+A,Court of Protection
 C,Coventry Crown Court
 B,Coventry Magistrates' Court
 B,Crawley Magistrates' Court
@@ -79,6 +82,7 @@ B,Ealing Magistrates' Court
 B,Eastbourne Magistrates' Court
 C,Exeter Crown Court
 B,Exeter Magistrates' Court
+A,Family Court
 B,Folkestone Magistrates' Court
 B,Gateshead Magistrates' Court
 C,Gloucester Crown Court
@@ -95,6 +99,7 @@ B,Haverfordwest Magistrates' Court
 B,Hendon Magistrates' Court
 C,Hereford Crown Court
 B,Herefordshire Magistrates' Court
+A,High Court
 B,Highbury Corner Magistrates' Court
 B,Horsham Magistrates' Court
 B,Huddersfield Magistrates' Court
