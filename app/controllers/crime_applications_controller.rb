@@ -56,7 +56,7 @@ class CrimeApplicationsController < DashboardController
 
   def new_application_params
     params
-      .fetch(:start_financial_circumstances_changed_form)
+      .fetch(:start_financial_circumstances_changed_form, {})
       .permit(:has_financial_circumstances_changed)
   end
 
