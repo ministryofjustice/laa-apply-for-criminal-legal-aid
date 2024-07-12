@@ -11,7 +11,8 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
       applicant: applicant,
       partner_detail: instance_double(PartnerDetail, involvement_in_case:),
       partner: partner,
-      is_means_tested: is_means_tested
+      is_means_tested: is_means_tested,
+      non_means_tested?: false
     )
   end
 

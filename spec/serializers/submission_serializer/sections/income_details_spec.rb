@@ -14,7 +14,8 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       income: income,
       partner_detail: partner_detail,
       partner: partner,
-      employments: [applicant_employment, partner_employment]
+      employments: [applicant_employment, partner_employment],
+      non_means_tested?: false
     )
   end
 

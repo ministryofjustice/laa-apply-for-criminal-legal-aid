@@ -43,6 +43,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   end
 
   def include_partner_in_means_assessment?
+    return false if non_means_tested?
     return false unless partner.present? || partner_detail.present?
     return true if partner_involvement_in_case == PartnerInvolvementType::NONE.to_s
     return false unless partner_involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s

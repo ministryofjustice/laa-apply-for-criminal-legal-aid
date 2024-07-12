@@ -13,7 +13,15 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   let(:crime_application) do
-    instance_double(CrimeApplication, applicant:, partner:, kase:, income:, partner_detail:)
+    instance_double(
+      CrimeApplication,
+      applicant: applicant,
+      partner: partner,
+      kase: kase,
+      income: income,
+      partner_detail: partner_detail,
+      non_means_tested?: false
+    )
   end
 
   let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }

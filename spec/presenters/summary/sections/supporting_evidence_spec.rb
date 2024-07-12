@@ -21,6 +21,24 @@ describe Summary::Sections::SupportingEvidence do
     )]
   end
 
+  describe '#show' do
+    let(:documents) { [] }
+
+    it { expect(subject.show?).to be true }
+  end
+
+  describe '#change_path' do
+    context 'when there are documents' do
+      it { expect(subject.change_path).to be_nil }
+    end
+
+    context 'when there are no documents' do
+      let(:documents) { [] }
+
+      it { expect(subject.change_path).to eq '/applications/12345/steps/evidence/upload' }
+    end
+  end
+
   describe '#name' do
     it { expect(subject.name).to eq(:supporting_evidence) }
   end

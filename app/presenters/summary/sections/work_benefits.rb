@@ -2,7 +2,7 @@ module Summary
   module Sections
     class WorkBenefits < Sections::BaseSection
       def show?
-        income.present? && work_benefits.present?
+        income.present? && income.applicant_other_work_benefit_received.present?
       end
 
       def answers # rubocop:disable Metrics/MethodLength

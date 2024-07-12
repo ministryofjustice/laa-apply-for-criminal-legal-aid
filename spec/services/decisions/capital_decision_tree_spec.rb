@@ -11,7 +11,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
       income: income,
       capital: capital,
       partner_detail: partner_detail,
-      partner: nil
+      partner: nil,
+      non_means_tested?: false
     )
   end
 

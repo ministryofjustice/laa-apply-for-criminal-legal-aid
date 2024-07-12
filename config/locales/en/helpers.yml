@@ -252,7 +252,7 @@ en:
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
       steps_capital_investment_type_form:
-        investment_type: Which investments does %{subject} client have inside or outside the UK?
+        investment_type: Which investments does %{subject} have inside or outside the UK?
       steps_capital_other_investment_type_form:
         investment_type: Which other investments does %{subject} have inside or outside the UK?
       steps_capital_investments_form:

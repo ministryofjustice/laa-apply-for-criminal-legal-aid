@@ -6,8 +6,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
   let(:record) { instance_double(Outgoings, crime_application:, errors:) }
-  let(:crime_application) { instance_double(CrimeApplication, partner: nil) }
-
+  let(:crime_application) { instance_double(CrimeApplication, partner: nil, non_means_tested?: false) }
   let(:errors) { [] }
   let(:requires_full_means_assessment?) { true }
   let(:involvement_in_case?) { nil }
