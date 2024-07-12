@@ -12,11 +12,11 @@ RSpec.describe Court, type: :model do
     subject(:all) { described_class.all }
 
     it 'returns all courts' do
-      expect(all.size).to eq(250)
+      expect(all.size).to eq(255)
     end
 
     it 'returns required courts as expected' do
-      digest_of_expected_court_names = '28f3f063e2397d7b9226c8b9334d85b4'
+      digest_of_expected_court_names = '0391053914b3ca1265d08ed1330191e1'
 
       expect(Digest::MD5.hexdigest(all.map(&:name).join)).to eq digest_of_expected_court_names
     end
