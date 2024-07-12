@@ -16,7 +16,8 @@ RSpec.describe Decisions::IncomeDecisionTree do
       partner_detail: partner_detail,
       partner: partner,
       applicant: applicant,
-      appeal_no_changes?: false
+      appeal_no_changes?: false,
+      non_means_tested?: false
     )
   end
 

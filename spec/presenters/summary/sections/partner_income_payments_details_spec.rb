@@ -10,7 +10,8 @@ describe Summary::Sections::PartnerIncomePaymentsDetails do
       income: income,
       applicant: applicant,
       partner_detail: instance_double(PartnerDetail, involvement_in_case:),
-      partner: partner
+      partner: partner,
+      non_means_tested?: false
     )
   end
 

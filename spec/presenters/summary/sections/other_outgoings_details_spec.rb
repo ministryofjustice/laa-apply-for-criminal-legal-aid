@@ -10,6 +10,7 @@ describe Summary::Sections::OtherOutgoingsDetails do
       outgoings: outgoings,
       partner: partner,
       partner_detail: partner_detail,
+      non_means_tested?: false
     )
   end
 

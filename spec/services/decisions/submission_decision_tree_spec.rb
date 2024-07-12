@@ -13,7 +13,8 @@ RSpec.describe Decisions::SubmissionDecisionTree do
       applicant: applicant,
       case: kase,
       partner_detail: nil,
-      partner: nil
+      partner: nil,
+      non_means_tested?: false
     )
   end
 

@@ -9,7 +9,8 @@ describe Summary::Sections::PartnerIncomeBenefitsDetails do
       to_param: '12345',
       income: income,
       partner: instance_double(Partner),
-      partner_detail: instance_double(PartnerDetail, involvement_in_case: 'none')
+      partner_detail: instance_double(PartnerDetail, involvement_in_case: 'none'),
+      non_means_tested?: false
     )
   end
 
