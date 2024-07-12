@@ -96,7 +96,6 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
             allow(kase).to receive_messages(is_client_remanded: 'no')
           end
 
-
           it 'adds errors for all failed validations' do
             expect(errors).to receive(:add).with(:documents, :blank)
 

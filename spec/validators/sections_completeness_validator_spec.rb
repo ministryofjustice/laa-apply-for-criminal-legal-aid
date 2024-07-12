@@ -122,7 +122,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           }
         end
 
-        it 'adds errors to all sections and base' do
+        it 'adds errors to all sections and base' do # rubocop:disable RSpec/MultipleExpectations
           expect(errors).to receive(:add).with(:benefit_type, :incomplete)
           expect(errors).to receive(:add).with(:case_details, :incomplete)
           expect(errors).to receive(:add).with(:income_assessment, :incomplete)

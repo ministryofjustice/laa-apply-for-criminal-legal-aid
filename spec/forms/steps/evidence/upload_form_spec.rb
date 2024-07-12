@@ -44,7 +44,8 @@ RSpec.describe Steps::Evidence::UploadForm do
     end
 
     before do
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(evidence_complete)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?)
+        .and_return(evidence_complete)
       form.valid?
     end
 
