@@ -126,6 +126,37 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         end
       end
 
+      context 'when extent of means assessment is not yet known' do
+        before do
+          allow(subject).to receive(:requires_means_assessment?).and_return(true)
+          allow(subject).to receive(:requires_full_means_assessment?).and_raise(
+            Errors::CannotYetDetermineFullMeans
+          )
+        end
+
+        let(:attributes) do
+          {
+            client_details_complete?: true,
+            passporting_benefit_complete?: true,
+            kase: double(complete?: true),
+            income: double(complete?: true),
+            outgoings: double(complete?: true),
+            capital: double(complete?: true),
+            partner_detail: double(complete?: true),
+            appeal_no_changes?: false,
+            applicant: double(under18?: false),
+          }
+        end
+
+        it 'adds errors to outgoings, capital, base' do
+          expect(errors).to receive(:add).with(:outgoings_assessment, :incomplete)
+          expect(errors).to receive(:add).with(:capital_assessment, :incomplete)
+          expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+          subject.validate
+        end
+      end
+
       context 'when income, outgoings, capital and partner details are missing' do
         let(:attributes) do
           {
