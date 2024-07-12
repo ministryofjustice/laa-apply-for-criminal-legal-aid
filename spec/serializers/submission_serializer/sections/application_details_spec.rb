@@ -13,6 +13,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
+      is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
       additional_information: 'More details'
@@ -33,6 +34,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
+      is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
       additional_information: 'More details'

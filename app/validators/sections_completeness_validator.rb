@@ -30,7 +30,7 @@ class SectionsCompletenessValidator
   delegate :client_details_complete?, :passporting_benefit_complete?, to: :crime_application
 
   def partner_detail_complete?
-    return true if appeal_no_changes? || applicant&.under18?
+    return true if applicant&.under18? || not_means_tested? || appeal_no_changes?
     return false unless partner_detail
 
     partner_detail.complete?
@@ -44,6 +44,7 @@ class SectionsCompletenessValidator
   end
 
   def outgoings_assessment_complete?
+    return false unless extent_of_means_assessment_determined?
     return true unless requires_full_means_assessment?
     return false unless outgoings
 
@@ -51,6 +52,7 @@ class SectionsCompletenessValidator
   end
 
   def capital_assessment_complete?
+    return false unless extent_of_means_assessment_determined?
     return true unless requires_full_means_assessment?
     return false unless capital
 

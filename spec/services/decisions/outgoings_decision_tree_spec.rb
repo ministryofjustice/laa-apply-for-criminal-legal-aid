@@ -10,7 +10,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       outgoings: outgoings,
       kase: kase,
       partner_detail: partner_detail,
-      partner: partner
+      partner: partner,
+      non_means_tested?: false
     )
   end
 

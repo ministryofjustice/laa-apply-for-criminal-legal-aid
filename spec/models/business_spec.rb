@@ -18,6 +18,45 @@ RSpec.describe Business, type: :model do
     end
   end
 
+  describe '#valid?' do
+    let(:valid_attributes) do
+      {
+        crime_application: CrimeApplication.new,
+        business_type: BusinessType::SELF_EMPLOYED.to_s
+      }
+    end
+
+    context 'when business_type' do
+      subject(:business_is_valid) { business.valid? }
+
+      let(:attributes) { valid_attributes.merge(business_type:) }
+
+      context 'is null' do
+        let(:business_type) { '' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is empty string' do
+        let(:business_type) { nil }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is something else' do
+        let(:business_type) { 'NotBusinessType' }
+
+        it { is_expected.to be false }
+      end
+
+      context 'is a BusinessType' do
+        let(:business_type) { BusinessType.values.sample.to_s }
+
+        it { is_expected.to be true }
+      end
+    end
+  end
+
   describe '#owner' do
     subject(:owner) { business.owner }
 
@@ -123,6 +162,53 @@ RSpec.describe Business, type: :model do
         context 'and the number of employees has been provided' do
           let(:attributes) do
             required_attributes.merge(has_employees: YesNoAnswer::YES.to_s, number_of_employees: 5)
+          end
+
+          it { expect(subject).to be true }
+        end
+      end
+    end
+
+    context 'director/stakeholder business validation' do
+      context 'when the businesses type is `director_or_shareholder`' do
+        context 'and the salary and total_income_share_sales has not been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        # rubocop:disable Layout/LineLength
+        context 'and the salary and total_income_share_sales figures have been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s,
+                                      percentage_profit_share: 50,
+                                      salary: AmountAndFrequency.new(amount: 100,
+                                                                     frequency: PaymentFrequencyType::ANNUALLY),
+                                      total_income_share_sales: AmountAndFrequency.new(amount: 100,
+                                                                                       frequency: PaymentFrequencyType::ANNUALLY))
+          end
+
+          it { expect(subject).to be true }
+        end
+        # rubocop:enable Layout/LineLength
+      end
+    end
+
+    context 'partnership business validation' do
+      context 'when the businesses type is `partnership`' do
+        context 'and the percentage_profit_share has not been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::PARTNERSHIP.to_s)
+          end
+
+          it { expect(subject).to be false }
+        end
+
+        context 'and the percentage_profit_share figure has been provided' do
+          let(:attributes) do
+            required_attributes.merge(business_type: BusinessType::PARTNERSHIP.to_s, percentage_profit_share: 50)
           end
 
           it { expect(subject).to be true }

@@ -744,6 +744,22 @@ en:
             profit:
               amount_blank: Enter the total profit amount
               frequency_blank: Select what period this total profit was for
+        steps/income/business_salary_or_remuneration_form:
+          attributes:
+            salary:
+              not_a_number: Enter amount
+              greater_than: Their salary must be more than 0
+        steps/income/business_total_income_share_sales_form:
+          attributes:
+            total_income_share_sales:
+              not_a_number: Enter amount
+              greater_than: The total income share sales must be more than 0
+        steps/income/business_percentage_profit_share_form:
+          attributes:
+            percentage_profit_share:
+              not_a_number: Enter percentage
+              greater_than_or_equal_to: The percentage share of profits must be a number between 0 and 100
+              less_than_or_equal_to: The percentage share of profits must be a number between 0 and 100
         steps/outgoings/housing_payment_type_form:
           attributes:
             housing_payment_type:

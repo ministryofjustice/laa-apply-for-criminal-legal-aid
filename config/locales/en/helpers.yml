@@ -207,7 +207,12 @@ en:
           frequency: How often was this?
         profit:
           frequency: Over what period was this?
-
+      steps_income_business_salary_or_remuneration_form:
+        salary: What is your client’s salary or remuneration as director or shareholder?
+      steps_income_business_total_income_share_sales_form:
+        total_income_share_sales: What is your client’s total income from share sales?
+      steps_income_business_percentage_profit_share_form:
+        percentage_profit_share: What is your client’s percentage share of profits from the business or partnership?
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does %{subject} make where they usually live?
       steps_outgoings_mortgage_form:
@@ -247,7 +252,7 @@ en:
       steps_capital_savings_summary_form:
         add_saving: Do you want to add another savings account?
       steps_capital_investment_type_form:
-        investment_type: Which investments does %{subject} client have inside or outside the UK?
+        investment_type: Which investments does %{subject} have inside or outside the UK?
       steps_capital_other_investment_type_form:
         investment_type: Which other investments does %{subject} have inside or outside the UK?
       steps_capital_investments_form:
@@ -408,7 +413,12 @@ en:
           amount: Any money or other assets drawn from the business for personal use.
         profit:
           amount: The amount left after the deduction of business expenses.
-
+      steps_income_business_salary_or_remuneration_form:
+        salary: Enter the yearly amount. Enter 0 if none.
+      steps_income_business_total_income_share_sales_form:
+        total_income_share_sales: Enter the yearly amount. Enter 0 if none.
+      steps_income_business_percentage_profit_share_form:
+        percentage_profit_share: Enter the yearly amount. Enter 0 if none.
       steps_outgoings_board_and_lodging_form:
         food_amount: Enter '0' if none.
       steps_submission_declaration_form:
@@ -842,7 +852,12 @@ en:
           amount: Total profit
           frequency_options: *frequency_options
 
-
+      steps_income_business_salary_or_remuneration_form:
+        salary: What is your client’s salary or remuneration as director or shareholder?
+      steps_income_business_total_income_share_sales_form:
+        total_income_share_sales: What is your client’s total income from share sales?
+      steps_income_business_percentage_profit_share_form:
+        percentage_profit_share: What is your client’s percentage share of profits from the business or partnership?
 
 
       # BEGIN: Partner Income

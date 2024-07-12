@@ -18,7 +18,7 @@ module PassportingBenefitCheck
     end
 
     def applicable?
-      !(crime_application.appeal_no_changes? || applicant&.under18?)
+      !(applicant&.under18? || not_means_tested? || crime_application.appeal_no_changes?)
     end
 
     def complete?

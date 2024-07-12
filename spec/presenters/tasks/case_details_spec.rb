@@ -10,6 +10,7 @@ RSpec.describe Tasks::CaseDetails do
       applicant: applicant,
       kase: kase,
       appeal_no_changes?: appeal_no_changes,
+      non_means_tested?: false
     )
   end
 

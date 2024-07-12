@@ -337,7 +337,7 @@ en:
           heading: Check your answers
           subheading:
             client: Your client’s income
-            partner: Your Partner’s income
+            partner: The partner’s income
       client:
         employer_details:
           edit:

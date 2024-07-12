@@ -10,7 +10,8 @@ RSpec.describe DWP::BenefitCheckStatusService do
       to_param: '12345',
       applicant: applicant,
       partner: partner,
-      partner_detail: partner_detail
+      partner_detail: partner_detail,
+      non_means_tested?: false
     )
   end
 

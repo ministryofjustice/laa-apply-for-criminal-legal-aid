@@ -27,8 +27,6 @@ class CrimeApplicationsController < DashboardController
     initialize_crime_application(attrs) do |crime_application|
       if FeatureFlags.cifc_journey.enabled? && financial_circumstances_changed
         redirect_to edit_steps_circumstances_appeal_reference_number_path(crime_application)
-      elsif FeatureFlags.non_means_tested.enabled?
-        redirect_to edit_steps_client_is_means_tested_path(crime_application)
       else
         redirect_to edit_crime_application_path(crime_application)
       end

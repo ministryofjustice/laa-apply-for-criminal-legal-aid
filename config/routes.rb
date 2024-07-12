@@ -195,6 +195,9 @@ Rails.application.routes.draw do
           crud_step :in_business_with_anyone_else, alias: :business_additional_owners, param: :business_id, except: [:destroy]
           crud_step :employees, alias: :business_employees, param: :business_id, except: [:destroy]
           crud_step :financials_of_business, alias: :business_financials, param: :business_id, except: [:destroy]
+          crud_step :salary_or_remuneration_as_director_or_shareholder, alias: :business_salary_or_remuneration, param: :business_id, except: [:destroy]
+          crud_step :total_income_from_share_sales, alias: :business_total_income_share_sales, param: :business_id, except: [:destroy]
+          crud_step :percentage_share_of_profits, alias: :business_percentage_profit_share, param: :business_id, except: [:destroy]
         end
 
 

@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe Steps::Capital::OtherInvestmentTypeForm do
   subject(:form) { described_class.new(crime_application:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, investments:, partner_detail:, partner:) }
+  let(:crime_application) {
+    instance_double(CrimeApplication, investments: investments, partner_detail: partner_detail, partner: partner,
+  non_means_tested?: false)
+  }
   let(:investments) { double }
   let(:investment_type) { InvestmentType.values.sample.to_s }
   let(:new_investment) { instance_double(Investment) }

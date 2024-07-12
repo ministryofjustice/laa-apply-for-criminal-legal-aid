@@ -10,6 +10,7 @@ describe Summary::Sections::ClientDetails do
       client_has_partner: 'no',
       applicant: applicant,
       application_type: application_type,
+      is_means_tested: is_means_tested
     )
   end
 
@@ -28,6 +29,7 @@ describe Summary::Sections::ClientDetails do
   let(:application_type) { ApplicationType::INITIAL }
   let(:pse?) { false }
   let(:has_partner) { 'no' }
+  let(:is_means_tested) { 'yes' }
 
   before do
     allow(applicant).to receive_messages(

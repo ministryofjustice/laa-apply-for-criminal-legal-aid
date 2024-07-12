@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::PassportingBenefitCheckPartner do
   subject { described_class.new(crime_application) }
 
@@ -9,7 +10,9 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
       to_param: '12345',
       applicant: applicant,
       partner_detail: instance_double(PartnerDetail, involvement_in_case:),
-      partner: partner
+      partner: partner,
+      is_means_tested: is_means_tested,
+      non_means_tested?: false
     )
   end
 
@@ -31,6 +34,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:involvement_in_case) { 'none' }
+  let(:is_means_tested) { 'yes' }
 
   before do
     allow(partner).to receive(:benefit_check_status).and_return(benefit_check_status)
@@ -177,3 +181,4 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

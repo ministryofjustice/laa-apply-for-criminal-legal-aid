@@ -67,6 +67,7 @@ RSpec.describe SubmissionSerializer::Application do
         created_at: nil,
         submitted_at: nil,
         date_stamp: nil,
+        is_means_tested: nil,
         ioj_passport: [],
         means_passport: [],
         additional_information: nil,
