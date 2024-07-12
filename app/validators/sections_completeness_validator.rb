@@ -20,6 +20,8 @@ class SectionsCompletenessValidator
       errors.add(:capital_assessment, :incomplete) unless capital_assessment_complete?
 
       errors.add(:partner_details, :incomplete) unless partner_detail_complete?
+
+      errors.add(:documents, :incomplete) unless evidence_validator.evidence_complete?
     else
       errors.add(:client_details, :incomplete)
     end
@@ -55,5 +57,9 @@ class SectionsCompletenessValidator
     return false unless capital
 
     capital.complete?
+  end
+
+  def evidence_validator
+    ::SupportingEvidence::AnswersValidator.new(record:, crime_application:)
   end
 end

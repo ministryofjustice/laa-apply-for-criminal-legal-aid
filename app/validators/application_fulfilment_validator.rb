@@ -5,7 +5,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/MethodLength
+  def perform_validations # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     errors = []
 
     unless means_valid?
@@ -26,6 +26,12 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
+    unless evidence_validator.evidence_complete?
+      errors << [
+        :documents, :blank, { change_path: edit_steps_evidence_upload_path }
+      ]
+    end
+
     errors
   end
 
@@ -33,7 +39,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     return true if Passporting::MeansPassporter.new(record).call
     return true if appeal_no_changes?
 
-    evidence_present? || means_record_present? || client_remanded_in_custody?
+    means_record_present? || client_remanded_in_custody?
   end
 
   def ioj_present?
@@ -51,6 +57,10 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   def client_remanded_in_custody?
     kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
+  end
+
+  def evidence_validator
+    ::SupportingEvidence::AnswersValidator.new(record:, crime_application:)
   end
 
   alias crime_application record

@@ -37,4 +37,27 @@ RSpec.describe Steps::Evidence::UploadForm do
       expect(sentences).to eq ['certificate or statement for each stock, gilt or government bond']
     end
   end
+
+  describe 'validation' do
+    subject(:error_message) do
+      form.errors.full_messages_for(:documents).first
+    end
+
+    before do
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(evidence_complete)
+      form.valid?
+    end
+
+    context 'when the supporting evidence section is not complete' do
+      let(:evidence_complete) { false }
+
+      it { is_expected.to eq 'You must provide the required evidence' }
+    end
+
+    context 'when the supporting evidence section is complete' do
+      let(:evidence_complete) { true }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end
