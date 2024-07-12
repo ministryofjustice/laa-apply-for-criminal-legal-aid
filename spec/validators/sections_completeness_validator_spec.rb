@@ -144,6 +144,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           )
         end
 
+        let(:evidence_complete?) { true }
         let(:attributes) do
           {
             client_details_complete?: true,
