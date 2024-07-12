@@ -2,7 +2,7 @@ module Summary
   module Sections
     class SupportingEvidence < Sections::BaseSection
       def show?
-        documents.present? && super
+        true
       end
 
       def answers
@@ -16,6 +16,12 @@ module Summary
             )
           end
         ].flatten.compact.select(&:show?)
+      end
+
+      def change_path
+        return unless documents.empty?
+
+        edit_steps_evidence_upload_path
       end
 
       private
