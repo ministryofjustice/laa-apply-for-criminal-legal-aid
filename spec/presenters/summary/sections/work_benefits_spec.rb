@@ -40,7 +40,16 @@ describe Summary::Sections::WorkBenefits do
         end
       end
 
-      context 'when applicant_other_work_benefit_received is set to nil' do
+      context 'when applicant_other_work_benefit_received is set to `no`' do
+        let(:applicant_other_work_benefit_received) { 'no' }
+        let(:income_payment) { nil }
+
+        it 'shows this section' do
+          expect(subject.show?).to be(true)
+        end
+      end
+
+      context 'when applicant_other_work_benefit question was not asked' do
         let(:income_payment) { nil }
 
         it 'does not show this section' do
