@@ -1,6 +1,13 @@
 ---
 en:
   crime_applications:
+    new:
+      page_title: Are you making a new application or telling us about a change in financial circumstances?
+      heading: Are you making a new application or telling us about a change in financial circumstances?
+      options:
+        'no': 'New application'
+        'yes': 'A change in financial circumstances'
+
     index:
       page_title: Your applications
       delete_button: Delete
@@ -95,6 +102,7 @@ en:
   shared:
     dashboard_header:
       heading: Your applications
+      start_button: Start an application
       create_button: Make a new application
     subnavigation:
       nav_aria_label: Applications by status

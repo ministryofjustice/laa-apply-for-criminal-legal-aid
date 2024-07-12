@@ -18,6 +18,11 @@ en:
         edit:
           page_title: Select office account number
 
+    circumstances:
+      appeal_reference_number:
+        edit:
+          page_title: What is the reference number of the original application?
+
     client:
       is_means_tested:
         edit:
@@ -398,7 +403,7 @@ en:
           confirm_delete_button: Yes, remove it
           cancel_delete_button: No, do not remove it
           confirm_delete_button_a11y: Yes, remove this business
-          cancel_delete_button_a11y: No, do not remove this business 
+          cancel_delete_button_a11y: No, do not remove this business
         destroy:
           success_flash: You removed the business
 

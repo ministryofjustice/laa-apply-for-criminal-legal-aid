@@ -8,6 +8,12 @@ class CrimeApplicationsController < DashboardController
     ).page params[:page]
   end
 
+  def new
+    @form_object = Start::FinancialCircumstancesChangedForm.build(
+      CrimeApplication.new(office_code: current_office_code)
+    )
+  end
+
   def edit
     @tasklist = TaskList::Collection.new(
       view_context, crime_application: current_crime_application
@@ -15,8 +21,13 @@ class CrimeApplicationsController < DashboardController
   end
 
   def create
-    initialize_crime_application do |crime_application|
-      if FeatureFlags.non_means_tested.enabled?
+    attrs = {}
+    attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if financial_circumstances_changed
+
+    initialize_crime_application(attrs) do |crime_application|
+      if FeatureFlags.cifc_journey.enabled? && financial_circumstances_changed
+        redirect_to edit_steps_circumstances_appeal_reference_number_path(crime_application)
+      elsif FeatureFlags.non_means_tested.enabled?
         redirect_to edit_steps_client_is_means_tested_path(crime_application)
       else
         redirect_to edit_crime_application_path(crime_application)
@@ -45,7 +56,17 @@ class CrimeApplicationsController < DashboardController
     { helpers.sort_by => helpers.sort_direction }
   end
 
+  def new_application_params
+    params
+      .fetch(:start_financial_circumstances_changed_form)
+      .permit(:has_financial_circumstances_changed)
+  end
+
   def log_context
     LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
+  end
+
+  def financial_circumstances_changed
+    @financial_circumstances_changed ||= (new_application_params[:has_financial_circumstances_changed] == 'yes')
   end
 end

@@ -72,8 +72,9 @@ Rails.application.routes.draw do
   # Handle the cookies consent
   resource :cookies, only: [:show, :update]
 
-  resources :crime_applications, except: [:show, :new, :update], path: 'applications' do
+  resources :crime_applications, except: [:show, :update], path: 'applications' do
     get :confirm_destroy, on: :member
+    get :start, on: :collection
 
     member do
       resources :documents, only: [:create, :destroy],
@@ -99,6 +100,12 @@ Rails.application.routes.draw do
 
   scope 'applications/:id' do
     namespace :steps do
+      namespace :circumstances do
+        if FeatureFlags.cifc_journey.enabled?
+          edit_step :appeal_reference_number
+        end
+      end
+
       namespace :client do
         if FeatureFlags.non_means_tested.enabled?
           edit_step :is_application_means_tested, alias: :is_means_tested

@@ -1,0 +1,17 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@crime_application) %>
+
+    <%= form_for @form_object, url: crime_applications_path, method: :post  do |f| %>
+      <%= f.govuk_collection_radio_buttons :has_financial_circumstances_changed,
+            @form_object.choices,
+            :value,
+            ->(option) { I18n.t(".crime_applications.new.options." + option.to_s) },
+            legend: { tag: 'h1', size: 'xl', text: t('.heading') } %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
