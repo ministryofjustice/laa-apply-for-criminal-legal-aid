@@ -6,14 +6,16 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-    policy.default_src :none
+    policy.default_src :self, :https
     policy.base_uri    :none
     policy.style_src   :self
-    policy.font_src    :self, :data
-    policy.img_src     :self, :data, 'https://*.google-analytics.com', 'https://*.googletagmanager.com'
+    policy.font_src    :self, :https, :data
+    policy.img_src     :self, :https, :data, 'https://*.google-analytics.com', 'https://*.googletagmanager.com'
     policy.connect_src :self, 'https://ga.jspm.io', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'
     policy.form_action :self, 'https://*.legalservices.gov.uk/oamfed/idp/samlv20'
-    policy.script_src  :strict_dynamic
+    policy.object_src  :none
+    policy.script_src  :self, :https
+    policy.style_src   :self, :https
 
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
@@ -21,6 +23,9 @@ Rails.application.configure do
 
   # Generate session nonces for permitted importmap and inline scripts
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+
+   # config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+   config.content_security_policy_nonce_directives = %w(script-src style-src)
 
   # Report violations without enforcing the policy.
   # config.content_security_policy_report_only = true
