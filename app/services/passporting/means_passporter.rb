@@ -3,11 +3,9 @@ module Passporting
     include TypeOfMeansAssessment
 
     def call
-      return passported? if resubmission?
-
       means_passport = []
       means_passport << MeansPassportType::ON_NOT_MEANS_TESTED if app_not_means_tested?
-      means_passport << MeansPassportType::ON_AGE_UNDER18      if applicant_under18?
+      means_passport << MeansPassportType::ON_AGE_UNDER18      if age_passported?
       means_passport << MeansPassportType::ON_BENEFIT_CHECK    if benefit_check_passed?
 
       crime_application.update(means_passport:)
