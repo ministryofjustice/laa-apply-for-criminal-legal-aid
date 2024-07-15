@@ -4,6 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds" id="upload-page">
     <%= render partial: 'shared/flash_banner' %>
+    <%= govuk_error_summary(@form_object) %>
 
     <%# Required to display dropzone error messages %>
     <%= render partial: 'steps/evidence/upload/upload_error_summary' %>

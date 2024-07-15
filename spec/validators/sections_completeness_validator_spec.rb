@@ -5,6 +5,12 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
 
   let(:record) { instance_double(CrimeApplication, errors: errors, non_means_tested?: false) }
   let(:errors) { double(:errors, empty?: false) }
+  let(:evidence_complete?) { false }
+
+  before do
+    allow_any_instance_of(SupportingEvidence::AnswersValidator)
+      .to receive(:evidence_complete?).and_return(evidence_complete?)
+  end
 
   describe '#validate' do
     before { allow(record).to receive_messages(**attributes) }
@@ -16,6 +22,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
 
       context 'when case complete' do
         let(:errors) { [] }
+        let(:evidence_complete?) { true }
 
         let(:attributes) do
           {
@@ -53,6 +60,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       end
 
       let(:errors) { [] }
+      let(:evidence_complete?) { true }
 
       let(:attributes) do
         {
@@ -77,6 +85,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       end
 
       context 'when all sections complete' do
+        let(:evidence_complete?) { true }
         let(:errors) { [] }
 
         let(:attributes) do
@@ -113,13 +122,14 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           }
         end
 
-        it 'adds errors to all sections and base' do
+        it 'adds errors to all sections and base' do # rubocop:disable RSpec/MultipleExpectations
           expect(errors).to receive(:add).with(:benefit_type, :incomplete)
           expect(errors).to receive(:add).with(:case_details, :incomplete)
           expect(errors).to receive(:add).with(:income_assessment, :incomplete)
           expect(errors).to receive(:add).with(:outgoings_assessment, :incomplete)
           expect(errors).to receive(:add).with(:capital_assessment, :incomplete)
           expect(errors).to receive(:add).with(:partner_details, :incomplete)
+          expect(errors).to receive(:add).with(:documents, :incomplete)
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
@@ -134,6 +144,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           )
         end
 
+        let(:evidence_complete?) { true }
         let(:attributes) do
           {
             client_details_complete?: true,
@@ -158,6 +169,8 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       end
 
       context 'when income, outgoings, capital and partner details are missing' do
+        let(:evidence_complete?) { true }
+
         let(:attributes) do
           {
             client_details_complete?: true,

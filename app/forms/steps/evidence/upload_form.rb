@@ -4,13 +4,23 @@ module Steps
       include TypeOfMeansAssessment
       include ApplicantAndPartner
 
-      delegate :documents, to: :crime_application
+      delegate :documents, :evidence_prompts, to: :crime_application
+
+      validate do
+        validator.validate
+      end
 
       def prompt
         @prompt ||= ::Evidence::Prompt.new(crime_application).run!(ignore_exempt: false)
       end
 
       private
+
+      def validator
+        @validator ||= ::SupportingEvidence::AnswersValidator.new(
+          record: self, crime_application: crime_application
+        )
+      end
 
       # :nocov:
       def persist!
