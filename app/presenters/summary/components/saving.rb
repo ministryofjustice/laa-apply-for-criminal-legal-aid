@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Saving < BaseRecord
+      GROUP_BY = :saving_type
+
       include TypeOfMeansAssessment
 
       alias saving record

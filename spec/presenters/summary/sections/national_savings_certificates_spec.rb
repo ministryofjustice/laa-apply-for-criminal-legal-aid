@@ -6,10 +6,17 @@ describe Summary::Sections::NationalSavingsCertificates do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      national_savings_certificates: records,
+      capital: capital,
       in_progress?: true,
-      capital: double(Capital, has_national_savings_certificates:),
       to_param: 12_345
+    )
+  end
+
+  let(:capital) do
+    instance_double(
+      Capital,
+      has_national_savings_certificates: has_national_savings_certificates,
+      national_savings_certificates: records
     )
   end
 

@@ -1,18 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'NationalSavingsCertificates summary page', :authorized do
-  before :all do
-    app = CrimeApplication.create(capital: Capital.new)
+  before do
+    allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
+
+    app = CrimeApplication.create(capital: Capital.new(has_national_savings_certificates: 'yes'))
     app.national_savings_certificates.create!(
       holder_number: 'A!',
       certificate_number: 'B2',
       value: 10_001,
       ownership_type: OwnershipType::APPLICANT
     )
-  end
-
-  after :all do
-    CrimeApplication.destroy_all
   end
 
   describe 'list of added certificates on summary page' do

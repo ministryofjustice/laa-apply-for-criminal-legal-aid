@@ -1,49 +1,32 @@
 module Summary
   module Sections
-    class Savings < Sections::BaseSection
-      def show?
-        shown_savings?
-      end
-
-      def answers
-        return savings_list_component unless no_savings?
-
-        [
-          Components::ValueAnswer.new(
-            :has_capital_savings, 'none',
-            change_path: edit_steps_capital_saving_type_path
-          )
-        ]
-      end
-
-      def list?
-        !no_savings?
-      end
-
+    class Savings < BaseCapitalRecordsSection
       private
 
-      def savings_list_component
-        Summary::Components::GroupedList.new(
-          items: savings,
-          group_by: :saving_type,
-          item_component: Summary::Components::Saving,
-          show_actions: editable?,
-          show_record_actions: headless?
+      def has_no_records_component
+        Components::ValueAnswer.new(
+          :has_capital_savings, has_records_answer,
+          change_path: edit_steps_capital_saving_type_path
         )
       end
 
-      def savings
-        @savings ||= crime_application.savings
+      def item_component_class
+        Summary::Components::Saving
       end
 
-      def shown_savings?
-        capital.present? && (no_savings? || savings.present?)
+      def records
+        @records ||= capital.savings
       end
 
-      def no_savings?
-        return false if capital.has_no_savings.nil?
-
-        YesNoAnswer.new(capital.has_no_savings).yes?
+      def has_records_answer
+        case capital.has_no_savings
+        when 'yes'
+          YesNoAnswer::NO
+        when 'no'
+          YesNoAnswer::YES
+        else
+          capital.has_no_savings
+        end
       end
     end
   end

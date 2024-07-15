@@ -1,6 +1,8 @@
 module Summary
   module Components
     class NationalSavingsCertificate < BaseRecord
+      GROUP_BY = :id
+
       alias national_savings_certificate record
 
       private

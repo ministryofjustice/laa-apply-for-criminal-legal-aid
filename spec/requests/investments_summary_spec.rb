@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Investments summary page', :authorized do
-  before :all do
+  before do
+    allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
+
     app = CrimeApplication.create(capital: Capital.new)
     app.investments.create!(investment_type: InvestmentType::BOND,
                             description: 'About the Bond',
                             value: 10_001,
                             ownership_type: OwnershipType::APPLICANT)
-  end
-
-  after :all do
-    CrimeApplication.destroy_all
   end
 
   describe 'list of added investments in summary page' do

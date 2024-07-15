@@ -17,13 +17,30 @@ describe Summary::HtmlPresenter do
       outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
       outgoings: (double has_no_other_outgoings: nil),
       documents: double, application_type: application_type,
-      capital: (double has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes', will_benefit_from_trust_fund: 'yes', partner_will_benefit_from_trust_fund: 'yes', has_no_properties: nil, has_no_savings: nil, has_no_investments: nil, has_national_savings_certificates: 'yes'),
+      capital: capital,
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double],
       is_means_tested: is_means_tested,
       non_means_tested?: false
     )
   end
   # rubocop:enable Layout/LineLength
+
+  let(:capital) do
+    instance_double(
+      Capital,
+      has_premium_bonds: 'yes',
+      partner_has_premium_bonds: 'yes',
+      will_benefit_from_trust_fund: 'yes',
+      partner_will_benefit_from_trust_fund: 'yes',
+      has_no_properties: nil, has_no_savings: nil,
+      has_no_investments: nil,
+      has_national_savings_certificates: 'yes',
+      savings: [double],
+      investments: [double],
+      national_savings_certificates: [double],
+      properties: [double]
+    )
+  end
 
   let(:income) do
     instance_double(
