@@ -1,51 +1,32 @@
 module Summary
   module Sections
-    class Properties < Sections::BaseSection
-      def show?
-        shown_question?
-      end
-
-      # rubocop:disable Metrics/MethodLength
-      def answers
-        if no_properties?
-          [
-            Components::ValueAnswer.new(
-              :has_assets, 'none',
-              change_path: edit_steps_capital_property_type_path
-            )
-          ]
-        else
-          Summary::Components::GroupedList.new(
-            items: properties,
-            group_by: :property_type,
-            item_component: Summary::Components::Property,
-            show_actions: editable?,
-            show_record_actions: headless?
-          )
-        end
-      end
-      # rubocop:enable Metrics/MethodLength
-
-      def list?
-        return false if properties.empty?
-
-        true
-      end
-
+    class Properties < BaseCapitalRecordsSection
       private
 
-      def properties
-        @properties ||= crime_application.properties
+      def has_no_records_component
+        Components::ValueAnswer.new(
+          :has_assets, has_records_answer,
+          change_path: edit_steps_capital_property_type_path
+        )
       end
 
-      def shown_question?
-        capital.present? && (no_properties? || properties.present?)
+      def item_component_class
+        Summary::Components::Property
       end
 
-      def no_properties?
-        return false if capital.has_no_properties.nil?
+      def records
+        @records ||= capital.properties
+      end
 
-        YesNoAnswer.new(capital.has_no_properties).yes?
+      def has_records_answer
+        case capital.has_no_properties
+        when 'yes'
+          YesNoAnswer::NO
+        when 'no'
+          YesNoAnswer::YES
+        else
+          capital.has_no_properties
+        end
       end
     end
   end

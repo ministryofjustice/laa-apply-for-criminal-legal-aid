@@ -5,7 +5,7 @@ RSpec.describe Evidence::Rule do
   let(:partner) { instance_double(Partner) }
   let(:income) { instance_double(Income, client_owns_property: 'yes') }
   let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
-  let(:capital) { instance_double(Capital, has_premium_bonds: 'yes') }
+  let(:capital) { instance_double(Capital, has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes') }
   let(:include_partner?) { true }
 
   let(:crime_application) do

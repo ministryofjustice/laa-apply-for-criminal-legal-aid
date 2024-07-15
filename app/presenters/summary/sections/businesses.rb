@@ -10,7 +10,6 @@ module Summary
       def answers
         Summary::Components::GroupedList.new(
           items: businesses,
-          group_by: :business_type,
           item_component: Summary::Components::Business,
           show_actions: editable?,
           show_record_actions: headless?

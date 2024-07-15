@@ -12,8 +12,10 @@ RSpec.describe Evidence::Rules::PremiumBonds do
   let(:capital) { Capital.new }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application)
-                                                    .and_return(true)
+    allow(MeansStatus).to receive_messages(
+      include_partner?: true,
+      full_capital_required?: true
+    )
   end
 
   it { expect(described_class.key).to eq :capital_premium_bonds_21 }

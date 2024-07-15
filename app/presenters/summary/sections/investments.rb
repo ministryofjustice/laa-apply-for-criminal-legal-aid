@@ -1,51 +1,32 @@
 module Summary
   module Sections
-    class Investments < Sections::BaseSection
-      def show?
-        shown_investments?
-      end
-
-      # rubocop:disable Metrics/MethodLength
-      def answers
-        if no_investments?
-          [
-            Components::ValueAnswer.new(
-              :has_investments, 'none',
-              change_path: edit_steps_capital_investment_type_path
-            )
-          ]
-        else
-          Summary::Components::GroupedList.new(
-            items: investments,
-            group_by: :investment_type,
-            item_component: Summary::Components::Investment,
-            show_actions: editable?,
-            show_record_actions: headless?
-          )
-        end
-      end
-      # rubocop:enable Metrics/MethodLength
-
-      def list?
-        return false if investments.empty?
-
-        true
-      end
-
+    class Investments < BaseCapitalRecordsSection
       private
 
-      def investments
-        @investments ||= crime_application.investments
+      def has_no_records_component
+        Components::ValueAnswer.new(
+          :has_investments, has_records_answer,
+          change_path: edit_steps_capital_investment_type_path
+        )
       end
 
-      def shown_investments?
-        capital.present? && (no_investments? || investments.present?)
+      def item_component_class
+        Summary::Components::Investment
       end
 
-      def no_investments?
-        return false if capital.has_no_investments.nil?
+      def records
+        @records ||= capital.investments
+      end
 
-        YesNoAnswer.new(capital.has_no_investments).yes?
+      def has_records_answer
+        case capital.has_no_investments
+        when 'yes'
+          YesNoAnswer::NO
+        when 'no'
+          YesNoAnswer::YES
+        else
+          capital.has_no_investments
+        end
       end
     end
   end

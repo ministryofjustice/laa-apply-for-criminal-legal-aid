@@ -5,24 +5,6 @@ RSpec.describe Adapters::Structs::CapitalDetails do
 
   let(:application_struct) { build_struct_application }
 
-  describe '#trust_fund_yearly_dividend' do
-    it 'returns a money object' do
-      expect(subject.trust_fund_yearly_dividend).to be_an_instance_of(Money)
-    end
-  end
-
-  describe '#trust_fund_amount_held' do
-    it 'returns a money object' do
-      expect(subject.trust_fund_amount_held).to be_an_instance_of(Money)
-    end
-  end
-
-  describe '#premium_bonds_total_value' do
-    it 'returns a money object' do
-      expect(subject.premium_bonds_total_value).to be_an_instance_of(Money)
-    end
-  end
-
   describe '#savings' do
     it 'returns a savings collection' do
       expect(subject.savings).to all(be_an(Saving))

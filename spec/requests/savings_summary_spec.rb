@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Savings summary page', :authorized do
-  before :all do
+  before do
+    allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
+
     app = CrimeApplication.create(capital: Capital.new)
     app.savings.create!(saving_type: SavingType::BANK,
                         provider_name: 'Bank of Test',
@@ -11,10 +13,6 @@ RSpec.describe 'Savings summary page', :authorized do
                         account_balance: '100.01',
                         is_overdrawn: YesNoAnswer.values.sample,
                         are_wages_paid_into_account: YesNoAnswer.values.sample)
-  end
-
-  after :all do
-    CrimeApplication.destroy_all
   end
 
   describe 'list of added savings in summary page' do

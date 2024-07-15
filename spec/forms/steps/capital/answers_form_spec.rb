@@ -52,8 +52,6 @@ RSpec.describe Steps::Capital::AnswersForm do
     context 'when `has_no_other_assets` is `yes` but answers are incomplete' do
       let(:attributes) { { has_no_other_assets: YesNoAnswer::YES.to_s } }
 
-      before { capital.properties.build }
-
       it 'updates capital record' do
         expect(capital).not_to receive(:update)
         expect(subject.save).to be(false)

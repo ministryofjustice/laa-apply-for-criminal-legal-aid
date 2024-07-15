@@ -701,9 +701,8 @@ en:
         question: Sort code or branch name
         absence_answer: ''
       has_capital_savings:
-        question: Savings %{subject} has
-        answers:
-          'none': *absence_none
+        question: Any savings?
+        answers: *YESNO
       # END saving
 
       # START premium_bonds
@@ -740,9 +739,8 @@ en:
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_investments:
-        question: Investments?
-        answers:
-          'none': *absence_none
+        question: Any investments?
+        answers: *YESNO
       # END investments
 
       # START national_savings_certificates
@@ -813,8 +811,7 @@ en:
         absence_answer: *absence_none
       has_assets:
         question: Assets %{subject} owns
-        answers:
-          'none': *absence_none
+        answers: *YESNO
       # END property, address and owners
 
       # START trust_fund

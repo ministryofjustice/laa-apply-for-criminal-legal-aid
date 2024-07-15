@@ -1,45 +1,27 @@
 module Summary
   module Sections
-    class NationalSavingsCertificates < Sections::BaseSection
-      def show?
-        shown_question?
-      end
-
-      def answers
-        if no_certificates?
-          [
-            Components::ValueAnswer.new(
-              :has_national_savings_certificate, 'no',
-              change_path: edit_steps_capital_has_national_savings_certificates_path
-            )
-          ]
-        else
-          Summary::Components::NationalSavingsCertificate.with_collection(
-            national_savings_certificates, show_actions: editable?, show_record_actions: headless?
-          )
-        end
-      end
-
-      def list?
-        return false if national_savings_certificates.empty?
-
-        true
-      end
-
+    class NationalSavingsCertificates < BaseCapitalRecordsSection
       private
 
-      def national_savings_certificates
-        @national_savings_certificates ||= crime_application.national_savings_certificates
+      def has_no_records_component
+        Components::ValueAnswer.new(
+          :has_national_savings_certificate, has_records_answer,
+          change_path: edit_steps_capital_has_national_savings_certificates_path
+        )
       end
 
-      def shown_question?
-        capital.present? && (no_certificates? || national_savings_certificates.present?)
+      def list_component
+        Summary::Components::NationalSavingsCertificate.with_collection(
+          records, show_actions: editable?, show_record_actions: headless?
+        )
       end
 
-      def no_certificates?
-        return false if capital.has_national_savings_certificates.nil?
+      def records
+        @records ||= capital.national_savings_certificates
+      end
 
-        YesNoAnswer.new(capital.has_national_savings_certificates).no?
+      def has_records_answer
+        capital.has_national_savings_certificates
       end
     end
   end
