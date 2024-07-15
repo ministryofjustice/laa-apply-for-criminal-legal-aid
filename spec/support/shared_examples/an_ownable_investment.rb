@@ -2,10 +2,13 @@ RSpec.shared_examples 'an ownable investment requiring evidence' do
   subject(:rule) { described_class.new(crime_application) }
 
   let(:include_partner?) { true }
+  let(:full_capital_required?) { true }
   let(:investments) { [] }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+    allow(MeansStatus).to receive_messages(
+      include_partner?: include_partner?, full_capital_required?: full_capital_required?
+    )
   end
 
   let(:crime_application) do
@@ -22,6 +25,12 @@ RSpec.shared_examples 'an ownable investment requiring evidence' do
 
     context 'when owned by client' do
       it { is_expected.to be true }
+    end
+
+    context 'when full capital is not required' do
+      let(:full_capital_required?) { false }
+
+      it { is_expected.to be false }
     end
 
     context 'when jointly owned' do
@@ -51,6 +60,12 @@ RSpec.shared_examples 'an ownable investment requiring evidence' do
 
     context 'when owned by partner' do
       it { is_expected.to be true }
+
+      context 'when full capital is not required' do
+        let(:full_capital_required?) { false }
+
+        it { is_expected.to be false }
+      end
 
       context 'when partner is not included in means assessment' do
         let(:include_partner?) { false }
