@@ -13,6 +13,10 @@ class MeansStatus
     def full_means_required?(crime_application)
       new(crime_application).requires_full_means_assessment?
     end
+
+    def full_capital_required?(crime_application)
+      new(crime_application).requires_full_capital?
+    end
   end
 
   private

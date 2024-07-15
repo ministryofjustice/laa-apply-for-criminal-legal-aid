@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Business < BaseRecord
+      GROUP_BY = :business_type
+
       alias business record
 
       private

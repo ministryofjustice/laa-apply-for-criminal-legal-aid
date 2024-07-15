@@ -46,17 +46,17 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
 
   has_many(:savings,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:investments,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:national_savings_certificates,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 

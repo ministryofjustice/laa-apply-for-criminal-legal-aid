@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Property < BaseRecord # rubocop:disable Metrics/ClassLength
+      GROUP_BY = :property_type
+
       include TypeOfMeansAssessment
 
       alias property record
