@@ -990,6 +990,22 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
+
+      context 'when self employed' do
+        before do
+          allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: true)
+        end
+
+        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      end
+
+      context 'when not self employed' do
+        before do
+          allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: false)
+        end
+
+        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
+      end
     end
 
     context 'when client does have dependants and no stored dependants' do

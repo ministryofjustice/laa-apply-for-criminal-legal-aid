@@ -4,26 +4,20 @@ module Tasks
       edit_steps_evidence_upload_path
     end
 
-    def not_applicable?
-      false
-    end
-
     def can_start?
       true
     end
 
     def in_progress?
-      documents.any?
-    end
-
-    def completed?
-      documents.stored.any?
+      true
     end
 
     private
 
-    def documents
-      @documents ||= crime_application.documents
+    def validator
+      @validator ||= ::SupportingEvidence::AnswersValidator.new(
+        record: crime_application, crime_application: crime_application
+      )
     end
   end
 end

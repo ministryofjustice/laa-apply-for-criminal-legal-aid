@@ -7,11 +7,11 @@ RSpec.describe Tasks::EvidenceUpload do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      documents: documents,
+      applicant: applicant,
     )
   end
 
-  let(:documents) { [] }
+  let(:applicant) { instance_double Applicant }
 
   describe '#path' do
     it { expect(subject.path).to eq('/applications/12345/steps/evidence/upload') }
@@ -26,30 +26,22 @@ RSpec.describe Tasks::EvidenceUpload do
   end
 
   describe '#in_progress?' do
-    context 'when there are any documents' do
-      let(:documents) { ['doc'] }
-
-      it { expect(subject.in_progress?).to be(true) }
-    end
-
-    context 'when there are no documents yet' do
-      let(:documents) { [] }
-
-      it { expect(subject.in_progress?).to be(false) }
-    end
+    it { expect(subject.in_progress?).to be(true) }
   end
 
   describe '#completed?' do
-    let(:documents) { double(stored: scoped_documents) }
+    before do
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:complete?).and_return(evidence_complete)
+    end
 
-    context 'when there are any stored documents' do
-      let(:scoped_documents) { ['stored_doc'] }
+    context 'when evidence validation is true' do
+      let(:evidence_complete) { true }
 
       it { expect(subject.completed?).to be(true) }
     end
 
-    context 'when there are no stored documents yet' do
-      let(:scoped_documents) { [] }
+    context 'when evidence validation is false' do
+      let(:evidence_complete) { false }
 
       it { expect(subject.completed?).to be(false) }
     end

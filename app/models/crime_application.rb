@@ -101,8 +101,7 @@ class CrimeApplication < ApplicationRecord
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
 
   validate on: :client_details do
-    ::ClientDetails::AnswersValidator.new(record: self, crime_application: self)
-                                     .validate
+    ::ClientDetails::AnswersValidator.new(record: self, crime_application: self).validate
   end
 
   validate on: :passporting_benefit do

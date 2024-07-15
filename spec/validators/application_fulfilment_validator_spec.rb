@@ -59,6 +59,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
       # stub the other validation
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
     end
 
     context 'when the application is means-passported' do
@@ -71,14 +72,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'when the application is not means-passported' do
       let(:means_result) { false }
-
-      context 'and evidence has been uploaded' do
-        let(:stored_documents) { ['stored_doc'] }
-
-        it 'is valid' do
-          expect(subject).to be_valid
-        end
-      end
 
       context 'and means details have been recorded' do
         before do
@@ -128,16 +121,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
         end
       end
 
-      context 'and evidence has not been uploaded' do
-        let(:stored_documents) { [] }
-
-        it 'is invalid' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:means_passport, :blank)).to be(true)
-          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
-        end
-      end
-
       context 'and means details have not been recorded' do
         let(:employment_status) { [] }
 
@@ -165,6 +148,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
       # stub the other validation
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
     end
 
     context 'when the application is ioj-passported' do
@@ -201,6 +185,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       # stub the other validations
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
     end
 
     context 'when the application has a case type' do
@@ -231,6 +216,37 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
           expect(subject.errors.of_kind?(:base, :case_type_missing)).to be(true)
           expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case_type')
         end
+      end
+    end
+  end
+
+  # Note the validator logic is tested in validators/supporting_evidence/answers_validator_spec.rb
+  context 'Supporting evidence validation' do
+    before do
+      # stub the other validations
+      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
+      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
+    end
+
+    context 'when the required evidence has not been uploaded' do
+      before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(false)
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:documents, :blank)).to be(true)
+        expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/evidence/upload')
+      end
+    end
+
+    context 'when the required evidence has been uploaded' do
+      before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+      end
+
+      it 'is valid' do
+        expect(subject).to be_valid
       end
     end
   end
