@@ -13,9 +13,12 @@ RSpec.describe Evidence::Rules::SavingsCerts do
   let(:national_savings_certificates) { [] }
 
   let(:include_partner?) { true }
+  let(:full_capital_required?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
+    allow(MeansStatus).to receive_messages(
+      include_partner?: include_partner?, full_capital_required?: full_capital_required?
+    )
   end
 
   it { expect(described_class.key).to eq :capital_savings_certs_22 }
@@ -36,6 +39,12 @@ RSpec.describe Evidence::Rules::SavingsCerts do
       end
 
       it { is_expected.to be true }
+
+      context 'when full capital is not required' do
+        let(:full_capital_required?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'when owned by partner' do
@@ -68,6 +77,12 @@ RSpec.describe Evidence::Rules::SavingsCerts do
       end
 
       it { is_expected.to be true }
+
+      context 'when full capital is not required' do
+        let(:full_capital_required?) { false }
+
+        it { is_expected.to be false }
+      end
 
       context 'when partner is not included in means assessment' do
         let(:include_partner?) { false }

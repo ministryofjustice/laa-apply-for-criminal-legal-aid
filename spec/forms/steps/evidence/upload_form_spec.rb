@@ -19,7 +19,7 @@ RSpec.describe Steps::Evidence::UploadForm do
   end
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive_messages(include_partner?: true, full_capital_required?: true)
   end
 
   describe '#prompt' do
