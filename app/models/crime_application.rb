@@ -46,17 +46,17 @@ class CrimeApplication < ApplicationRecord
            dependent: :destroy)
 
   has_many(:savings,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:investments,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
   has_many(:national_savings_certificates,
-           ->(object) { where(ownership_type: object.ownership_types).order(created_at: :asc) },
+           -> { order(created_at: :asc) },
            inverse_of: :crime_application,
            dependent: :destroy)
 
@@ -101,8 +101,7 @@ class CrimeApplication < ApplicationRecord
   validates_with PseFulfilmentValidator, on: :submission, if: :post_submission_evidence?
 
   validate on: :client_details do
-    ::ClientDetails::AnswersValidator.new(record: self, crime_application: self)
-                                     .validate
+    ::ClientDetails::AnswersValidator.new(record: self, crime_application: self).validate
   end
 
   validate on: :passporting_benefit do

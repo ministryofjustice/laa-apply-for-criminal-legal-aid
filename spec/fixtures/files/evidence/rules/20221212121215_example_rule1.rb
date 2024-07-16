@@ -13,7 +13,7 @@ module Evidence
       end
 
       partner do |crime_application|
-        crime_application.capital.present?
+        crime_application.capital.partner_has_premium_bonds == 'yes'
       end
     end
   end

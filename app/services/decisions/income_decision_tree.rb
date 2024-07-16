@@ -288,7 +288,7 @@ module Decisions
     def determine_showing_no_income_page
       if include_partner_in_means_assessment?
         edit(:partner_employment_status)
-      elsif crime_application.income&.all_income_over_zero?
+      elsif crime_application.income&.all_income_over_zero? || crime_application.income&.client_self_employed?
         edit(:answers)
       else
         edit(:manage_without_income)

@@ -19,7 +19,7 @@ RSpec.describe Steps::Evidence::UploadForm do
   end
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(true)
+    allow(MeansStatus).to receive_messages(include_partner?: true, full_capital_required?: true)
   end
 
   describe '#prompt' do
@@ -35,6 +35,30 @@ RSpec.describe Steps::Evidence::UploadForm do
       sentences = subject.result_for(group: :capital, persona: :partner).last.dig(:run, :partner, :prompt)
 
       expect(sentences).to eq ['certificate or statement for each stock, gilt or government bond']
+    end
+  end
+
+  describe 'validation' do
+    subject(:error_message) do
+      form.errors.full_messages_for(:documents).first
+    end
+
+    before do
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?)
+        .and_return(evidence_complete)
+      form.valid?
+    end
+
+    context 'when the supporting evidence section is not complete' do
+      let(:evidence_complete) { false }
+
+      it { is_expected.to eq 'You must provide the required evidence' }
+    end
+
+    context 'when the supporting evidence section is complete' do
+      let(:evidence_complete) { true }
+
+      it { is_expected.to be_nil }
     end
   end
 end

@@ -1,6 +1,7 @@
 module Summary
   module Components
     class Investment < BaseRecord
+      GROUP_BY = :investment_type
       alias investment record
 
       private

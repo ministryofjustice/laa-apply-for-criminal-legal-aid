@@ -58,7 +58,6 @@ module Steps
           employment.deductions.pluck(:deduction_type)
         end
 
-        # rubocop:disable Naming/PredicateName
         def has_no_deductions
           'yes' if types.include?('none')
         end

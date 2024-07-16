@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    # rubocop:disable Naming/PredicateName, Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class PremiumBonds < Sections::BaseSection
       def show?
         shown_premium_bonds? && super

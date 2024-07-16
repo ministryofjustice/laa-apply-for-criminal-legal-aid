@@ -1238,3 +1238,7 @@ en:
             details:
               blank: Enter details
               invalid: Details not required
+        steps/evidence/upload_form:
+          attributes:
+            documents:
+              blank: You must provide the required evidence

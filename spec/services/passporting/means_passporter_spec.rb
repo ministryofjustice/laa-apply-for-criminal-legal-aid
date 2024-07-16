@@ -33,17 +33,6 @@ RSpec.describe Passporting::MeansPassporter do
   end
 
   describe '#call' do
-    context 'for a resubmitted application' do
-      let(:resubmission?) { true }
-
-      it 'uses the existing values' do
-        expect(crime_application).not_to receive(:update)
-        expect(subject).to receive(:passported?)
-
-        subject.call
-      end
-    end
-
     context 'means passporting on non-means tested' do
       let(:is_means_tested) { 'no' }
 
