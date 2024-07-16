@@ -95,7 +95,7 @@ module Decisions
     end
 
     def ioj_or_passported
-      if Passporting::IojPassporter.new(crime_application).call
+      if change_in_financial_circumstances? || Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)
       else
         edit(:ioj)
@@ -134,6 +134,12 @@ module Decisions
 
     def crime_application
       form_object.crime_application
+    end
+
+    def change_in_financial_circumstances?
+      return false unless FeatureFlags.cifc_journey.enabled?
+
+      crime_application.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES
     end
   end
   # rubocop:enable Metrics/ClassLength
