@@ -101,17 +101,31 @@ module Decisions
     end
 
     def after_client_employments_summary
-      return edit('/steps/income/client/self_assessment_tax_bill') if form_object.add_client_employment.no?
+      if form_object.add_client_employment.no?
+        unless crime_application.income.employment_status.include?('self_employed')
+          return edit('/steps/income/client/self_assessment_tax_bill')
+        end
 
-      employment = current_crime_application.client_employments.create!
-      redirect_to_employer_details(employment)
+        start_self_employed_for(crime_application.applicant)
+      else
+        employment = current_crime_application.client_employments.create!
+
+        redirect_to_employer_details(employment)
+      end
     end
 
     def after_partner_employments_summary
-      return edit('/steps/income/partner/self_assessment_tax_bill') if form_object.add_partner_employment.no?
+      if form_object.add_partner_employment.no?
+        unless crime_application.income.partner_employment_status.include?('self_employed')
+          return edit('/steps/income/partner/self_assessment_tax_bill')
+        end
 
-      employment = current_crime_application.partner_employments.create!
-      redirect_to_partner_employer_details(employment)
+        start_self_employed_for(crime_application.partner)
+      else
+        employment = current_crime_application.partner_employments.create!
+
+        redirect_to_partner_employer_details(employment)
+      end
     end
 
     def previous_step_path
@@ -147,7 +161,6 @@ module Decisions
       end
     end
 
-    # <- to make it easier to reimplement when we do self-employed
     def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
