@@ -66,9 +66,11 @@ describe Summary::HtmlPresenter do
       has_no_income_benefits: nil,
       partner_has_no_income_payments: nil,
       partner_has_no_income_benefits: nil,
-      manage_without_income: nil
+      manage_without_income: manage_without_income
     )
   end
+
+  let(:manage_without_income) { nil }
 
   let(:is_means_tested) { 'yes' }
 
@@ -270,7 +272,6 @@ describe Summary::HtmlPresenter do
             IncomeBenefitsDetails
             PartnerIncomePaymentsDetails
             PartnerIncomeBenefitsDetails
-            OtherIncomeDetails
             HousingPayments
             OutgoingsPaymentsDetails
             OtherOutgoingsDetails
@@ -509,7 +510,17 @@ describe Summary::HtmlPresenter do
     context 'when an initial application' do
       let(:application_type) { 'initial' }
 
-      it { is_expected.to match_array(expected_sections) }
+      context 'when `manage_without_income` is present' do
+        let(:manage_without_income) { ManageWithoutIncomeType::LIVING_ON_STREETS.to_s }
+
+        it { is_expected.to match_array(expected_sections) }
+      end
+
+      context 'when `manage_without_income` is not present' do
+        let(:manage_without_income) { nil }
+
+        it { is_expected.not_to match_array(expected_sections) }
+      end
     end
   end
 end
