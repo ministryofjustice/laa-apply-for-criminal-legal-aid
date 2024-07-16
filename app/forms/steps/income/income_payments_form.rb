@@ -56,7 +56,7 @@ module Steps
         return @types if @types
         return ['none'] if income.has_no_income_payments == 'yes'
 
-        crime_application.applicant.income_payments.pluck(:payment_type)
+        crime_application.applicant.income_payments.pluck(:payment_type) & PAYMENT_TYPES_ORDER
       end
 
       def has_no_income_payments
