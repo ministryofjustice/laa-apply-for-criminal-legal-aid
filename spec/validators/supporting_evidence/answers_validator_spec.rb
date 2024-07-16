@@ -117,4 +117,24 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
       end
     end
   end
+
+  describe '#complete?' do
+    context 'when errors are present' do
+      before do
+        allow(validator).to receive(:validate).and_return(false)
+      end
+
+      it { expect(subject.complete?).to be(false) }
+    end
+
+    context 'when errors is empty' do
+      let(:errors) { double(:errors, empty?: true) }
+
+      before do
+        allow(validator).to receive(:validate).and_return(true)
+      end
+
+      it { expect(subject.complete?).to be(true) }
+    end
+  end
 end
