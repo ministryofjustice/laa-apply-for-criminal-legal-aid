@@ -90,12 +90,13 @@ module Decisions
 
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
+      return after_ioj if form_object.crime_application.cifc?
 
       ioj_or_passported
     end
 
     def ioj_or_passported
-      if change_in_financial_circumstances? || Passporting::IojPassporter.new(crime_application).call
+      if Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)
       else
         edit(:ioj)
@@ -134,12 +135,6 @@ module Decisions
 
     def crime_application
       form_object.crime_application
-    end
-
-    def change_in_financial_circumstances?
-      return false unless FeatureFlags.cifc_journey.enabled?
-
-      crime_application.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s
     end
   end
   # rubocop:enable Metrics/ClassLength

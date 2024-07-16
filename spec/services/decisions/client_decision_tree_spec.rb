@@ -13,7 +13,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:client_has_partner) { nil }
   let(:is_means_tested_enabled) { false }
   let(:not_means_tested?) { nil }
-  let(:application_type) { 'initial' }
+  let(:cifc?) { false }
 
   before do
     allow(
@@ -25,7 +25,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       date_stamp: nil,
       appeal_no_changes?: appeal_no_changes?,
       not_means_tested?: not_means_tested?,
-      application_type: application_type,
+      cifc?: cifc?,
     )
 
     allow(FeatureFlags).to receive(:non_means_tested) {
@@ -151,6 +151,18 @@ RSpec.describe Decisions::ClientDecisionTree do
 
         it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
       end
+    end
+
+    context 'with a change_in_financial_circumstances application' do
+      let(:cifc?) { true }
+
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
     end
   end
 

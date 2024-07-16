@@ -32,6 +32,11 @@ RSpec.describe 'Dashboard', :authorized do
         }
       end
 
+      it 'shows the new application or change in financial circumstances form' do
+        expect { get new_crime_application_path }.not_to change(CrimeApplication, :count)
+        assert_select 'h1', 'Are you making a new application or telling us about a change in financial circumstances?'
+      end
+
       it 'creates a new `crime_application` record and redirects to the task list when user selects new application' do
         params = { start_is_cifc_form: { is_cifc: 'no' } }
 
@@ -45,9 +50,8 @@ RSpec.describe 'Dashboard', :authorized do
 
         expect { post crime_applications_path, params: }.to change(CrimeApplication, :count).by(1)
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(/appeal_reference_number/)
+        expect(response).to redirect_to(/pre_cifc_reference_number/)
       end
-
     end
   end
 

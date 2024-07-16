@@ -731,13 +731,16 @@ en:
           heading:
             initial: Application complete
             post_submission_evidence: Evidence submitted
+            change_in_financial_circumstances: Change in financial circumstances submitted
             resubmission: Application updated
           what_happens_next:
             initial: We’ll check your application to see if your client is entitled to legal aid.
             post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
+            change_in_financial_circumstances: We’ll check the evidence submitted to see if your client is entitled to legal aid.
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence
+            change_in_financial_circumstances: View submitted evidence
       cannot_submit_without_nino:
         edit:
           page_title: Cannot submit application without National Insurance number

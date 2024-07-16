@@ -15,6 +15,16 @@ module SubmissionSerializer
         evidence_details
         supporting_evidence
       ],
+      change_in_financial_circumstances: %i[
+        application_details
+        provider_details
+        client_details
+        case_details
+        ioj_details
+        means_details
+        evidence_details
+        supporting_evidence
+      ],
       post_submission_evidence: %i[
         pse_application_details
         provider_details

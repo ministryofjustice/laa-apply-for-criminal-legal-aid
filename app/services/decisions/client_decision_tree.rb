@@ -62,7 +62,7 @@ module Decisions
     end
 
     def after_appeal_details
-      return date_stamp_if_needed if change_in_financial_circumstances?
+      return date_stamp_if_needed if form_object.crime_application.cifc?
 
       if form_object.appeal_original_app_submitted.yes?
         edit(:appeal_financial_circumstances)
@@ -137,12 +137,6 @@ module Decisions
 
     def applicant
       @applicant ||= current_crime_application.applicant
-    end
-
-    def change_in_financial_circumstances?
-      return false unless FeatureFlags.cifc_journey.enabled?
-
-      current_crime_application.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s
     end
   end
   # rubocop:enable Metrics/ClassLength

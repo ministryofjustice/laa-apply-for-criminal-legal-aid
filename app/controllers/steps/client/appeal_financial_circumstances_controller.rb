@@ -1,6 +1,8 @@
 module Steps
   module Client
     class AppealFinancialCircumstancesController < Steps::ClientStepController
+      before_action :redirect_cifc
+
       def edit
         @form_object = AppealFinancialCircumstancesForm.build(
           current_crime_application

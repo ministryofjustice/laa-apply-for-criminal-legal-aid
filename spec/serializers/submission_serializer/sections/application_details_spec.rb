@@ -16,7 +16,10 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
-      additional_information: 'More details'
+      additional_information: 'More details',
+      pre_cifc_reference_number: 'pre_cifc_usn',
+      pre_cifc_maat_id: nil,
+      pre_cifc_usn: 'USN123',
     )
   end
 
@@ -37,7 +40,10 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],
-      additional_information: 'More details'
+      additional_information: 'More details',
+      pre_cifc_reference_number: 'pre_cifc_usn',
+      pre_cifc_maat_id: nil,
+      pre_cifc_usn: 'USN123',
     }.as_json
   end
 
