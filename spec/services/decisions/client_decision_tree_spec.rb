@@ -12,6 +12,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:client_has_partner) { nil }
   let(:is_means_tested_enabled) { false }
   let(:not_means_tested?) { nil }
+  let(:application_type) { 'initial' }
 
   before do
     allow(
@@ -23,6 +24,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       date_stamp: nil,
       appeal_no_changes?: appeal_no_changes?,
       not_means_tested?: not_means_tested?,
+      application_type: application_type,
     )
 
     allow(FeatureFlags).to receive(:non_means_tested) {

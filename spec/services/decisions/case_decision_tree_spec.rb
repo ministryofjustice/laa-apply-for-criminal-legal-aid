@@ -10,7 +10,8 @@ RSpec.describe Decisions::CaseDecisionTree do
       applicant: instance_double(Applicant),
       case: kase, # TODO: refactor the CaseDecisionTree to use #kase instead of #case
       kase: kase,
-      non_means_tested?: non_means_tested
+      non_means_tested?: non_means_tested,
+      application_type: application_type,
     )
   }
 
@@ -27,6 +28,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:charges_double) { double('charges_collection') }
   let(:is_means_tested) { nil }
   let(:non_means_tested) { nil }
+  let(:application_type) { 'initial' }
 
   before do
     allow(
