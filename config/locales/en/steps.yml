@@ -19,7 +19,7 @@ en:
           page_title: Select office account number
 
     circumstances:
-      appeal_reference_number:
+      pre_cifc_reference_number:
         edit:
           page_title: What is the reference number of the original application?
 

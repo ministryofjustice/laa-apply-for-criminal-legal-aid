@@ -50,8 +50,8 @@ en:
         consent: Do you want to accept analytics cookies?
       steps_provider_select_office_form:
         office_code: Select your office account number
-      steps_circumstances_appeal_reference_number_form:
-        appeal_reference_number: What is the reference number of the original application?
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number: What is the reference number of the original application?
       steps_client_is_means_tested_form:
         is_means_tested: Is this application subject to the usual means or passported test?
       steps_client_has_partner_form:
@@ -285,6 +285,8 @@ en:
         legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number: We need either your client's MAAT ID or unique submission number (USN).
       steps_client_relationship_status_form:
         separation_date:
       steps_client_details_form:
@@ -463,12 +465,12 @@ en:
         is_current_office_options:
           'yes': 'Yes'
           'no': 'No, another office is handling this application'
-      steps_circumstances_appeal_reference_number_form:
-        appeal_reference_number_options:
-          appeal_maat_id: MAAT ID
-          appeal_usn: USN
-        appeal_maat_id: Enter MAAT ID
-        appeal_usn: Enter USN
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number_options:
+          pre_cifc_maat_id: MAAT ID
+          pre_cifc_usn: USN
+        pre_cifc_maat_id: Enter MAAT ID
+        pre_cifc_usn: Enter USN
       steps_client_is_means_tested_form:
         is_means_tested_options: *YESNO
       steps_client_has_partner_form:

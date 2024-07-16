@@ -59,14 +59,18 @@ en:
   activemodel:
     errors:
       models:
-        steps/circumstances/appeal_reference_number_form:
+        start/is_cifc_form:
+          is_cifc:
+            inclusion: Select whether you are making a new application or telling us about a change in financial circumstances
+
+        steps/circumstances/pre_cifc_reference_number_form:
           attributes:
-            appeal_reference_number:
+            pre_cifc_reference_number:
               blank: Select MAAT ID or USN
-            appeal_maat_id:
+            pre_cifc_maat_id:
               blank: Enter MAAT ID
               invalid: Enter a valid MAAT ID
-            appeal_usn:
+            pre_cifc_usn:
               blank: Enter USN
         steps/provider/confirm_office_form:
           attributes:

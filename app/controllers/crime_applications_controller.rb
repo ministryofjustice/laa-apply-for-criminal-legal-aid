@@ -9,9 +9,7 @@ class CrimeApplicationsController < DashboardController
   end
 
   def new
-    @form_object = Start::FinancialCircumstancesChangedForm.build(
-      CrimeApplication.new(office_code: current_office_code)
-    )
+    @form_object = Start::IsCifcForm.new
   end
 
   def edit
@@ -20,13 +18,25 @@ class CrimeApplicationsController < DashboardController
     )
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     attrs = {}
-    attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if financial_circumstances_changed
+
+    # Validation for forms usually performed in step controller but the
+    # IsCifcForm is not part of the /step journey
+    if FeatureFlags.cifc_journey.enabled?
+      @form_object = Start::IsCifcForm.build(
+        CrimeApplication.new(office_code: current_office_code),
+        new_application_params[:is_cifc]
+      )
+
+      return render(:new, flash:) unless @form_object.valid?
+
+      attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if cifc?
+    end
 
     initialize_crime_application(attrs) do |crime_application|
-      if FeatureFlags.cifc_journey.enabled? && financial_circumstances_changed
-        redirect_to edit_steps_circumstances_appeal_reference_number_path(crime_application)
+      if FeatureFlags.cifc_journey.enabled? && cifc?
+        redirect_to edit_steps_circumstances_pre_cifc_reference_number_path(crime_application)
       else
         redirect_to edit_crime_application_path(crime_application)
       end
@@ -55,16 +65,14 @@ class CrimeApplicationsController < DashboardController
   end
 
   def new_application_params
-    params
-      .fetch(:start_financial_circumstances_changed_form, {})
-      .permit(:has_financial_circumstances_changed)
+    params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
   end
 
   def log_context
     LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
   end
 
-  def financial_circumstances_changed
-    @financial_circumstances_changed ||= (new_application_params[:has_financial_circumstances_changed] == 'yes')
+  def cifc?
+    @cifc ||= (new_application_params[:is_cifc] == 'yes')
   end
 end

@@ -10,11 +10,44 @@ RSpec.describe 'Dashboard', :authorized do
   let(:returned_application_fixture_id) { '47a93336-7da6-48ec-b139-808ddd555a41' }
 
   describe 'start a new application' do
-    it 'creates a new `crime_application` record and redirects to the task list' do
-      expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+    context 'without cifc journey enabled' do
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
 
-      expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(/edit/)
+      it 'creates a new `crime_application` record and redirects to the task list' do
+        expect { post crime_applications_path }.to change(CrimeApplication, :count).by(1)
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/edit/)
+      end
+    end
+
+    context 'with cifc journey enabled' do
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it 'creates a new `crime_application` record and redirects to the task list when user selects new application' do
+        params = { start_is_cifc_form: { is_cifc: 'no' } }
+
+        expect { post crime_applications_path, params: }.to change(CrimeApplication, :count).by(1)
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/edit/)
+      end
+
+      it 'creates a new `crime_application` record and redirects user to enter the original reference number' do
+        params = { start_is_cifc_form: { is_cifc: 'yes' } }
+
+        expect { post crime_applications_path, params: }.to change(CrimeApplication, :count).by(1)
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(/appeal_reference_number/)
+      end
+
     end
   end
 

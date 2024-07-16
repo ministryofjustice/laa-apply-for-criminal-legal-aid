@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -76,7 +77,6 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `is_means_tested`' do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
@@ -346,5 +346,5 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
