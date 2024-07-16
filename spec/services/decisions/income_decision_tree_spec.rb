@@ -34,6 +34,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     instance_double(
       Income,
       employment_status: employment_status,
+      partner_employment_status: partner_employment_status,
       client_employments: employments_double,
       partner_employments: partner_employments_double,
       client_self_employed?: false,
@@ -43,6 +44,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
   end
 
   let(:employment_status) { nil }
+  let(:partner_employment_status) { nil }
   let(:dependants_double) { double('dependants_collection') }
   let(:employments_double) {
     double('employments_collection', create!: true,
@@ -504,10 +506,29 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'the client has selected no to adding an employment' do
         let(:add_client_employment) { YesNoAnswer::NO }
 
-        it 'redirects to client self_assessment_tax_bill page' do
-          expect(subject).to have_destination(
-            '/steps/income/client/self_assessment_tax_bill', :edit, id: crime_application
-          )
+        context 'and there are no self employments to add' do
+          let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+          it 'redirects to client self_assessment_tax_bill page' do
+            expect(subject).to have_destination(
+              '/steps/income/client/self_assessment_tax_bill', :edit, id: crime_application
+            )
+          end
+        end
+
+        context 'and there are self employments to add' do
+          let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+          before do
+            allow(applicant).to receive_messages(businesses: [])
+          end
+
+          it 'redirects to the Business type page' do
+            expect(subject).to have_destination('/steps/income/business_type',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: applicant)
+          end
         end
       end
     end
@@ -568,10 +589,29 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'the partner has selected no to adding an employment' do
         let(:add_partner_employment) { YesNoAnswer::NO }
 
-        it 'redirects to partner self_assessment_tax_bill page' do
-          expect(subject).to have_destination(
-            '/steps/income/partner/self_assessment_tax_bill', :edit, id: crime_application
-          )
+        context 'and there are no self employments to add' do
+          let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
+
+          it 'redirects to partner self_assessment_tax_bill page' do
+            expect(subject).to have_destination(
+              '/steps/income/partner/self_assessment_tax_bill', :edit, id: crime_application
+            )
+          end
+        end
+
+        context 'and there are self employments to add' do
+          let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
+
+          before do
+            allow(partner).to receive_messages(businesses: [])
+          end
+
+          it 'redirects to the Business type page' do
+            expect(subject).to have_destination('/steps/income/business_type',
+                                                :edit,
+                                                id: crime_application,
+                                                subject: partner)
+          end
         end
       end
     end
