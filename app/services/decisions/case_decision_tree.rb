@@ -139,7 +139,7 @@ module Decisions
     def change_in_financial_circumstances?
       return false unless FeatureFlags.cifc_journey.enabled?
 
-      crime_application.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES
+      crime_application.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s
     end
   end
   # rubocop:enable Metrics/ClassLength
