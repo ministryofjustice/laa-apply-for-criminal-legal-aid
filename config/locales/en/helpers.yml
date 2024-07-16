@@ -186,7 +186,7 @@ en:
           one: How does %{subject} manage with no income?
           other: How do %{subject} manage with no income?
       steps_income_business_type_form:
-        business_type: What is the business type?
+        business_type: Which type of self-employed business do you want to add?
       steps_income_businesses_summary_form:
         add_business: Do you need to add another business?
       steps_income_businesses_form: 
