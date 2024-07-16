@@ -75,6 +75,12 @@ class Income < ApplicationRecord
     super if known_to_be_full_means?
   end
 
+  def manage_without_income
+    return if all_income_over_zero?
+
+    super
+  end
+
   def complete?
     valid?(:submission)
   end

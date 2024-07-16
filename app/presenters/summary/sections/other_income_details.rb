@@ -4,7 +4,7 @@ module Summary
       include TypeOfMeansAssessment
 
       def show?
-        income.present? && super
+        income.present? && income.manage_without_income.present? && super
       end
 
       def answers
