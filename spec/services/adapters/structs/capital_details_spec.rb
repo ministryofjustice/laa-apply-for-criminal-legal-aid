@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Adapters::Structs::CapitalDetails do
-  subject { application_struct.capital }
+  subject(:adapter) { application_struct.capital }
 
   let(:application_struct) { build_struct_application }
 
@@ -27,6 +27,48 @@ RSpec.describe Adapters::Structs::CapitalDetails do
     it 'returns a properties collection' do
       expect(subject.properties).to all(be_an(Property))
     end
+  end
+
+  describe '#trust_fund_amount_held' do
+    subject(:trust_fund_amount_held) { adapter.trust_fund_amount_held }
+
+    it { is_expected.to be_a Money }
+    it { is_expected.to eq 100_000 }
+  end
+
+  describe '#trust_fund_yearly_dividend' do
+    subject(:trust_fund_yearly_dividend) { adapter.trust_fund_yearly_dividend }
+
+    it { is_expected.to be_a Money }
+    it { is_expected.to eq 200_000 }
+  end
+
+  describe '#premium_bonds_total_value' do
+    subject(:premium_bonds_total_value) { adapter.premium_bonds_total_value }
+
+    it { is_expected.to be_a Money }
+    it { is_expected.to eq 100_000 }
+  end
+
+  describe '#partner_premium_bonds_total_value' do
+    subject(:partner_premium_bonds_total_value) { adapter.partner_premium_bonds_total_value }
+
+    it { is_expected.to be_a Money }
+    it { expect(subject.value).to be_nil }
+  end
+
+  describe '#partner_trust_fund_yearly_dividend' do
+    subject(:partner_trust_fund_yearly_dividend) { adapter.partner_trust_fund_yearly_dividend }
+
+    it { is_expected.to be_a Money }
+    it { expect(subject.value).to be_nil }
+  end
+
+  describe '#partner_trust_fund_amount_held' do
+    subject(:partner_trust_fund_amount_held) { adapter.partner_trust_fund_amount_held }
+
+    it { is_expected.to be_a Money }
+    it { expect(subject.value).to be_nil }
   end
 
   describe '#serializable_hash' do

@@ -1,6 +1,30 @@
 module Adapters
   module Structs
     class CapitalDetails < BaseStructAdapter
+      def trust_fund_amount_held
+        Money.new(super)
+      end
+
+      def trust_fund_yearly_dividend
+        Money.new(super)
+      end
+
+      def partner_trust_fund_amount_held
+        Money.new(super)
+      end
+
+      def partner_trust_fund_yearly_dividend
+        Money.new(super)
+      end
+
+      def premium_bonds_total_value
+        Money.new(super)
+      end
+
+      def partner_premium_bonds_total_value
+        Money.new(super)
+      end
+
       def savings
         return [] unless __getobj__
 
