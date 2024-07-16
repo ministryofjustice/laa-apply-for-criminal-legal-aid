@@ -55,11 +55,12 @@ RSpec.describe Evidence::Prompt do
       :evidence_prompts= => nil,
       :evidence_last_run_at => [],
       :evidence_last_run_at= => nil,
+      :is_means_tested => 'yes',
       :save! => true
     )
 
     allow(applicant).to receive_messages(
-      under18?: false
+      under18?: false,
     )
   end
 
@@ -215,6 +216,19 @@ RSpec.describe Evidence::Prompt do
       it 'returns false' do
         expect(prompt.exempt?).to be false
         expect(prompt.exempt_reasons).to be_empty
+      end
+    end
+
+    context 'when the client is not means tested' do
+      before do
+        allow(crime_application).to receive(:is_means_tested).and_return 'no'
+      end
+
+      it 'returns true and sets the reason' do
+        expect(prompt.exempt?).to be true
+        expect(prompt.exempt_reasons).to contain_exactly(
+          'it is not subject to the usual means or passported test'
+        )
       end
     end
 

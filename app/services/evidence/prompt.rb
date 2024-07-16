@@ -54,7 +54,8 @@ module Evidence
 
       [
         under18?,
-        in_custody?
+        in_custody?,
+        not_means_tested?
       ].any?(true)
     end
 
@@ -84,6 +85,14 @@ module Evidence
     end
 
     private
+
+    def not_means_tested?
+      return false unless crime_application.is_means_tested == 'no'
+
+      @exempt_reasons << I18n.t('evidence.exempt.not_means_tested')
+
+      true
+    end
 
     def under18?
       return false unless crime_application.applicant
