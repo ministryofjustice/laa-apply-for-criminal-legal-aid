@@ -6,17 +6,20 @@
 
     <h1 class="govuk-heading-xl"><%= service_name %></h1>
     <p class="govuk-body">Use this service to apply for criminal legal aid.</p>
-    <p class="govuk-body">You cannot use this service if:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the application is non-means tested </li>
-      <% if FeatureFlags.employment_journey.enabled? %>
-        <li>your client, and any partner they have, is self-employed, in a business partnership or is a director or shareholder in a private company</li>
-      <% else %>
-        <li>your client, and any partner they have, is working or self-employed, in a business partnership or is a director or shareholder in a private company</li>
-      <% end %>
-    </ul>
-    <p class="govuk-body">For these types of applications, or to tell us about a change in financial circumstances, <%= link_to 'apply using eForms', Settings.eforms_url %>.</p>
-
+    <% if FeatureFlags.self_employed_journey.enabled? %>
+      <p class="govuk-body">To tell us about a change in financial circumstances, <%= link_to 'apply using eForms', Settings.eforms_url %>.</p>
+    <% else %>
+      <p class="govuk-body">You cannot use this service if:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>the application is non-means tested </li>
+        <% if FeatureFlags.employment_journey.enabled? %>
+          <li>your client, and any partner they have, is self-employed, in a business partnership or is a director or shareholder in a private company</li>
+        <% else %>
+          <li>your client, and any partner they have, is working or self-employed, in a business partnership or is a director or shareholder in a private company</li>
+        <% end %>
+      </ul>
+      <p class="govuk-body">For these types of applications, or to tell us about a change in financial circumstances, <%= link_to 'apply using eForms', Settings.eforms_url %>.</p>
+    <% end %>
     <%= button_to provider_saml_omniauth_authorize_path, method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
                   data: { module: 'govuk-button' }, role: 'button', draggable: false do %>
