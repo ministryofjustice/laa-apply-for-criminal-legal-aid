@@ -5,11 +5,15 @@ module Tasks
     end
 
     def can_start?
-      true
+      crime_application.applicant.present?
     end
 
     def in_progress?
-      true
+      crime_application.documents.any?
+    end
+
+    def completed?
+      false
     end
 
     private
