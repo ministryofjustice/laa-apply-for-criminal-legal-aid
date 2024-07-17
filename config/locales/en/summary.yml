@@ -398,6 +398,7 @@ en:
           not_working: Not working
           employed: Employed
           self_employed: Self-employed
+          employed_and_self_employed: Employed and Self-employed
       ended_employment_within_three_months:
         question: Employment ended in last 3 months?
         answers:

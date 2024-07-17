@@ -9,8 +9,7 @@ module Summary
       def answers
         [
           Components::ValueAnswer.new(
-            # TODO: Handle array of employment_statuses when designs for employed available
-            :employment_status, income.employment_status.first,
+            :employment_status, IncomePresenter.present(income).employment_status_text,
             change_path: edit_steps_income_employment_status_path
           ),
           Components::ValueAnswer.new(
