@@ -244,17 +244,6 @@ RSpec.describe Evidence::Prompt do
         )
       end
     end
-
-    context 'when the client is in custody' do
-      let(:kase) { instance_double(Case, is_client_remanded: 'yes') }
-
-      it 'returns true and sets the reason' do
-        expect(prompt.exempt?).to be true
-        expect(prompt.exempt_reasons).to contain_exactly(
-          'you have told us they are remanded in custody'
-        )
-      end
-    end
   end
 
   describe '#required?' do

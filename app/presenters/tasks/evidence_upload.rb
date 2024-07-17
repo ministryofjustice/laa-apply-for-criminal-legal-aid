@@ -12,6 +12,10 @@ module Tasks
       crime_application.documents.any?
     end
 
+    def applicable?
+      true
+    end
+
     def completed?
       false
     end

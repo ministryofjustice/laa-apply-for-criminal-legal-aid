@@ -7,7 +7,7 @@ module Steps
       delegate :documents, :evidence_prompts, to: :crime_application
 
       validate do
-        validator.validate
+        validator.validate if validator.applicable?
       end
 
       def prompt

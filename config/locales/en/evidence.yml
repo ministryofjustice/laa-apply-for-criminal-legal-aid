@@ -15,7 +15,6 @@ en:
     exempt:
       not_means_tested: it is not subject to the usual means or passported test
       under_18: your client was under 18 when the application was first made
-      in_custody: you have told us they are remanded in custody
     rule:
       # Test rules
       ExampleRule1:
