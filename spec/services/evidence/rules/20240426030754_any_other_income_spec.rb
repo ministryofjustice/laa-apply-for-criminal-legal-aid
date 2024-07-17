@@ -36,7 +36,10 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
   let(:income_payments) { [client_other, partner_other] }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+    allow(MeansStatus).to receive_messages(
+      include_partner?: include_partner?,
+      full_means_required?: true
+    )
   end
 
   it { expect(described_class.key).to eq :income_other_9 }

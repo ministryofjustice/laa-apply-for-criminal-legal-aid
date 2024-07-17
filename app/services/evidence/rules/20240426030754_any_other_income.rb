@@ -7,17 +7,19 @@ module Evidence
       group :income
 
       client do |_crime_application, applicant|
-        other_income = applicant.income_payments.other
-
-        other_income.present? && other_income.details.present?
+        OtherIncomeEvidenceRequired.for(applicant)
       end
 
-      partner do |crime_application, partner|
-        other_income = partner&.income_payments&.other
-
-        MeansStatus.include_partner?(crime_application) &&
-          other_income.present? && other_income.details.present?
+      partner do |_crime_application, partner|
+        partner.present? && OtherIncomeEvidenceRequired.for(partner)
       end
+    end
+  end
+
+  class OtherIncomeEvidenceRequired
+    def self.for(person)
+      other_income = person.income_payment(IncomePaymentType::OTHER)
+      other_income.present? && other_income.details.present?
     end
   end
 end

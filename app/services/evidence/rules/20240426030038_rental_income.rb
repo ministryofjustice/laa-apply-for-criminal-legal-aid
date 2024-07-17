@@ -7,12 +7,11 @@ module Evidence
       group :income
 
       client do |_crime_application, applicant|
-        applicant.income_payments.rent.present?
+        applicant.income_payment(IncomePaymentType::RENT).present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) &&
-          partner.income_payments.rent.present?
+      partner do |_crime_application, partner|
+        partner.present? && partner.income_payment(IncomePaymentType::RENT).present?
       end
     end
   end

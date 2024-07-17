@@ -45,7 +45,7 @@ class Applicant < Person
   def ownership_type
     OwnershipType::APPLICANT
   end
-  
+
   def ownership_types
     [OwnershipType::APPLICANT, OwnershipType::APPLICANT_AND_PARTNER]
   end

@@ -36,6 +36,7 @@ RSpec.describe Evidence::Rules::PrivatePensionIncome do
 
   before do
     allow(MeansStatus).to receive(:include_partner?) { include_partner? }
+    allow(MeansStatus).to receive(:full_means_required?).and_return(true)
   end
 
   it { expect(described_class.key).to eq :income_private_pension_5 }

@@ -13,18 +13,18 @@ module Evidence
         MaintenanceEvidenceRequired.for(applicant)
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) && MaintenanceEvidenceRequired.for(partner)
+      partner do |_crime_application, partner|
+        partner.present? && MaintenanceEvidenceRequired.for(partner)
       end
     end
   end
 
   class MaintenanceEvidenceRequired
     def self.for(person)
-      maintenance = person.income_payments.maintenance
+      maintenance = person.income_payment(IncomePaymentType::MAINTENANCE)
       return false unless maintenance
 
-      maintenance.prorated_monthly.to_f > Rules::MaintenanceIncome::THRESHOLD
+      maintenance && maintenance.prorated_monthly.to_f > Rules::MaintenanceIncome::THRESHOLD
     end
   end
 end

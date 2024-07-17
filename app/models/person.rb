@@ -12,18 +12,27 @@ class Person < ApplicationRecord
   def savings(*saving_types)
     return [] unless capital
 
-    capital.savings.select do |saving| 
-      ownership_types.include?(OwnershipType.new(saving.ownership_type)) && 
+    capital.savings.select do |saving|
+      ownership_types.include?(OwnershipType.new(saving.ownership_type)) &&
         saving_types.include?(SavingType.new(saving.saving_type))
     end
   end
-  
+
   def investments(*investment_types)
     return [] unless capital
 
-    capital.investments.select do |investment| 
-      ownership_types.include?(OwnershipType.new(investment.ownership_type)) && 
+    capital.investments.select do |investment|
+      ownership_types.include?(OwnershipType.new(investment.ownership_type)) &&
         investment_types.include?(InvestmentType.new(investment.investment_type))
+    end
+  end
+
+  def income_payment(payment_type)
+    return unless income
+
+    income.income_payments.find do |payment|
+      ownership_types.include?(OwnershipType.new(payment.ownership_type)) &&
+        payment.payment_type == payment_type.to_s
     end
   end
 

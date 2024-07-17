@@ -32,7 +32,10 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   let(:include_partner?) { true }
 
   before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
+    allow(MeansStatus).to receive_messages(
+      include_partner?: include_partner?,
+      full_means_required?: true
+    )
   end
 
   it { expect(described_class.key).to eq :income_maintenance_6 }

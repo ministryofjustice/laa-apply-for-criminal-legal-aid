@@ -14,15 +14,15 @@ module Evidence
         PensionEvidenceRequired.for(applicant)
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) && PensionEvidenceRequired.for(partner)
+      partner do |_crime_application, partner|
+        partner.present? && PensionEvidenceRequired.for(partner)
       end
     end
   end
 
   class PensionEvidenceRequired
     def self.for(person)
-      pension = person.income_payments.private_pension
+      pension = person.income_payment(IncomePaymentType::PRIVATE_PENSION)
       return false unless pension
 
       pension.prorated_monthly.to_f > Rules::PrivatePensionIncome::THRESHOLD

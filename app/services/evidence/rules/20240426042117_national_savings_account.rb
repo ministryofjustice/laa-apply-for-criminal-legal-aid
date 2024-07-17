@@ -12,7 +12,8 @@ module Evidence
 
       partner do |_crime_application, partner|
         partner.present? && partner.savings(
-          SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE).any?
+          SavingType::NATIONAL_SAVINGS_OR_POST_OFFICE
+        ).any?
       end
     end
   end
