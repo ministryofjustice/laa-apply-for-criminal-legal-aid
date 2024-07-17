@@ -22,7 +22,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.0'
 
 # Accessing soap apis
-gem 'savon'
+gem 'savon', '>= 2.15.1'
 
 # Monitoring
 gem 'prometheus_exporter'
@@ -68,11 +68,11 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'erb_lint', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'selenium-webdriver'
+  gem 'rubocop', '>= 1.65.0', require: false
+  gem 'rubocop-performance', '>= 1.21.1', require: false
+  gem 'rubocop-rails', '>= 2.25.1', require: false
+  gem 'rubocop-rspec', '>= 3.0.2', require: false
+  gem 'selenium-webdriver', '>= 4.22.0'
   gem 'simplecov', require: false
   gem 'webmock'
 end
