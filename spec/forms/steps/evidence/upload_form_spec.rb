@@ -11,6 +11,7 @@ RSpec.describe Steps::Evidence::UploadForm do
       applicant: Applicant.new(date_of_birth: '2000-01-01'),
       partner: Partner.new(date_of_birth: '2000-01-01'),
       partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      capital: Capital.new,
       investments: [
         Investment.new(investment_type: 'share', ownership_type: :applicant),
         Investment.new(investment_type: 'stock', ownership_type: :partner),

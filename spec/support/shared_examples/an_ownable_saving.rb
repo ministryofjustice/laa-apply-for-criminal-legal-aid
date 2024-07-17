@@ -13,7 +13,7 @@ RSpec.shared_examples 'an ownable saving requiring evidence' do
 
   let(:crime_application) do
     CrimeApplication.create!(
-      savings: savings, applicant: Applicant.new, partner: Partner.new
+      savings: savings, applicant: Applicant.new, partner: Partner.new, capital: Capital.new
     )
   end
 

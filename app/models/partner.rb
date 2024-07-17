@@ -18,18 +18,6 @@ class Partner < Person
   )
 
   has_many(
-    :savings,
-    -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
-    through: :crime_application
-  )
-
-  has_many(
-    :investments,
-    -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
-    through: :crime_application
-  )
-
-  has_many(
     :businesses,
     -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
     through: :crime_application
@@ -41,5 +29,9 @@ class Partner < Person
 
   def ownership_type
     OwnershipType::PARTNER
+  end
+
+  def ownership_types
+    [OwnershipType::PARTNER, OwnershipType::APPLICANT_AND_PARTNER]
   end
 end

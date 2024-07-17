@@ -7,14 +7,11 @@ module Evidence
       group :capital
 
       client do |crime_application, applicant|
-        (MeansStatus.full_capital_required?(crime_application) &&
-          applicant.savings.cash_isa.any?) || applicant.joint_savings.cash_isa.any?
+        applicant.savings(SavingType::CASH_ISA).any?
       end
 
       partner do |crime_application, partner|
-        MeansStatus.full_capital_required?(crime_application) &&
-          MeansStatus.include_partner?(crime_application) &&
-          (partner.savings.cash_isa.any? || partner.joint_savings.cash_isa.any?)
+        partner.present? && partner.savings(SavingType::CASH_ISA).any?
       end
     end
   end

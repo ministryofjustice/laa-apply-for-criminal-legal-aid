@@ -6,15 +6,12 @@ module Evidence
       key :capital_share_isa_26
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          (applicant.joint_investments.share_isa.any? || applicant.investments.share_isa.any?)
+      client do |_crime_application, applicant|
+        applicant.investments(InvestmentType::SHARE_ISA).any?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.full_capital_required?(crime_application) &&
-          MeansStatus.include_partner?(crime_application) &&
-          (partner.joint_investments.share_isa.any? || partner.investments.share_isa.any?)
+      partner do |_crime_application, partner|
+        partner.present? && partner.investments(InvestmentType::SHARE_ISA).any?
       end
     end
   end
