@@ -54,7 +54,6 @@ module Evidence
 
       [
         under18?,
-        in_custody?,
         not_means_tested?
       ].any?(true)
     end
@@ -99,15 +98,6 @@ module Evidence
 
       result = crime_application.applicant&.under18?
       @exempt_reasons << I18n.t('evidence.exempt.under_18') if result
-
-      result
-    end
-
-    def in_custody?
-      return false unless crime_application.kase&.is_client_remanded
-
-      result = crime_application.kase&.is_client_remanded == 'yes'
-      @exempt_reasons << I18n.t('evidence.exempt.in_custody') if result
 
       result
     end

@@ -10,8 +10,7 @@ module Summary
       def answers
         [
           Components::ValueAnswer.new(
-            # TODO: Handle array of partner_employment_statuses when designs for employed partner available
-            :partner_employment_status, income.partner_employment_status.first,
+            :partner_employment_status, IncomePresenter.present(income).partner_employment_status_text,
             change_path: edit_steps_income_partner_employment_status_path
           )
         ].flatten.select(&:show?)
