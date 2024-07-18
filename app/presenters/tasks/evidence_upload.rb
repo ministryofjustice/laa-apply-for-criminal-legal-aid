@@ -12,20 +12,12 @@ module Tasks
       crime_application.documents.any?
     end
 
-    def applicable?
-      true
+    def not_applicable?
+      false
     end
 
     def completed?
       false
-    end
-
-    private
-
-    def validator
-      @validator ||= ::SupportingEvidence::AnswersValidator.new(
-        record: crime_application, crime_application: crime_application
-      )
     end
   end
 end

@@ -6,10 +6,13 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
   let(:record) { instance_double(CrimeApplication, errors: errors, non_means_tested?: false) }
   let(:errors) { double(:errors, empty?: false) }
   let(:evidence_complete?) { false }
+  let(:applicable?) { true }
 
   before do
     allow_any_instance_of(SupportingEvidence::AnswersValidator)
       .to receive(:evidence_complete?).and_return(evidence_complete?)
+    allow_any_instance_of(SupportingEvidence::AnswersValidator)
+      .to receive(:applicable?).and_return(applicable?)
   end
 
   describe '#validate' do
