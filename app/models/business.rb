@@ -1,6 +1,8 @@
 class Business < ApplicationRecord
   belongs_to :crime_application
 
+  default_scope { order(created_at: :asc) }
+
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 
   attribute :turnover, :amount_and_frequency
