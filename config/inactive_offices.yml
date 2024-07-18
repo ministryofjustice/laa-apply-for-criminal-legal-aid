@@ -996,3 +996,8 @@ production:
     - 2Q450G
     - 2Q512Z
     - 2Q517E
+    # Deactivate office codes that no longer have contract - 18/7/2024
+    - 1Z522F
+    - 1Z902U
+    - 2Q346U
+    - 2Q347V

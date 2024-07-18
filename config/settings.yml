@@ -22,7 +22,7 @@ feature_flags:
   non_means_tested:
     local: true
     staging: true
-    production: false
+    production: true
   employment_journey:
     local: true
     staging: true
@@ -30,7 +30,7 @@ feature_flags:
   self_employed_journey:
     local: true
     staging: true
-    production: false
+    production: true
   evidence_validation:
     local: true
     staging: false
