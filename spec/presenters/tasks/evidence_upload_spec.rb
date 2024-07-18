@@ -19,8 +19,8 @@ RSpec.describe Tasks::EvidenceUpload do
     it { expect(subject.path).to eq('/applications/12345/steps/evidence/upload') }
   end
 
-  describe '#applicable?' do
-    it { expect(subject.applicable?).to be(true) }
+  describe '#not_applicable?' do
+    it { expect(subject.not_applicable?).to be(false) }
   end
 
   describe '#can_start?' do

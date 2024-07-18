@@ -26,7 +26,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
-    unless evidence_validator.evidence_complete?
+    unless evidence_upload_complete?
       errors << [
         :documents, :blank, { change_path: edit_steps_evidence_upload_path }
       ]
@@ -61,6 +61,13 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   def evidence_validator
     ::SupportingEvidence::AnswersValidator.new(record:, crime_application:)
+  end
+
+  def evidence_upload_complete?
+    return true unless FeatureFlags.evidence_validation.enabled?
+    return true unless evidence_validator.applicable?
+
+    evidence_validator.evidence_complete?
   end
 
   alias crime_application record
