@@ -53,7 +53,7 @@ RSpec.describe SubmissionSerializer::Sections::ProviderDetails do
     end
 
     context 'when there is a partner' do
-      let(:rep_has_partner_declaration) { { 'value' => 'no' } }
+      let(:rep_has_partner_declaration) { 'no' }
       let(:rep_no_declaration_reason) { 'A reason' }
 
       it { expect(subject.generate).to eq(json_with_partner_output) }

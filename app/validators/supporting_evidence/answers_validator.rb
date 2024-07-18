@@ -11,25 +11,19 @@ module SupportingEvidence
     end
 
     def applicable?
-      true
+      !(indictable_or_in_crown_court? || client_remanded_in_custody?)
     end
 
     def validate
       errors.add(:documents, :blank) unless evidence_complete?
     end
 
+    # TODO: add branch for CIFC applications
     def evidence_complete?
-      return true if exempt?
+      return true unless evidence_prompts_present?
+      return true if nino_is_only_evidence_prompt && !has_passporting_benefit?
 
       evidence_present?
-    end
-
-    # TODO: add branch for CIFC applications
-    def exempt?
-      return true unless evidence_required?
-      return true if indictable_or_in_crown_court?
-
-      nino_is_only_evidence_prompt && has_passporting_benefit? && client_remanded_in_custody?
     end
 
     def client_remanded_in_custody?
@@ -45,7 +39,7 @@ module SupportingEvidence
         .include?(kase&.case_type)
     end
 
-    def evidence_required?
+    def evidence_prompts_present?
       evidence_prompt_results.uniq.any?
     end
 
@@ -59,7 +53,7 @@ module SupportingEvidence
 
     # rubocop:disable Layout/LineLength
     def nino_evidence_required?
-      record.evidence_prompts.first { |result| result['key'] == :national_insurance_32 }['run'].slice('client', 'partner', 'other').values.pluck('result').flatten.uniq.any?
+      record.evidence_prompts.find { |result| result['key'] == 'national_insurance_32' }['run'].slice('client', 'partner', 'other').values.pluck('result').flatten.uniq.any?
     end
 
     def evidence_prompt_results

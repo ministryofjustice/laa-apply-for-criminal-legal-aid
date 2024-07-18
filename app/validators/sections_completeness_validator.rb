@@ -21,7 +21,7 @@ class SectionsCompletenessValidator
 
       errors.add(:partner_details, :incomplete) unless partner_detail_complete?
 
-      errors.add(:documents, :incomplete) unless evidence_validator.evidence_complete?
+      errors.add(:documents, :incomplete) unless evidence_upload_complete?
     else
       errors.add(:client_details, :incomplete)
     end
@@ -63,5 +63,12 @@ class SectionsCompletenessValidator
 
   def evidence_validator
     ::SupportingEvidence::AnswersValidator.new(record:, crime_application:)
+  end
+
+  def evidence_upload_complete?
+    return true unless FeatureFlags.evidence_validation.enabled?
+    return true unless evidence_validator.applicable?
+
+    evidence_validator.evidence_complete?
   end
 end

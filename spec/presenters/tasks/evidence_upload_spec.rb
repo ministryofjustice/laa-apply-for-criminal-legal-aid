@@ -8,10 +8,12 @@ RSpec.describe Tasks::EvidenceUpload do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
+      documents: documents
     )
   end
 
   let(:applicant) { instance_double Applicant }
+  let(:documents) { [] }
 
   describe '#path' do
     it { expect(subject.path).to eq('/applications/12345/steps/evidence/upload') }
@@ -23,27 +25,27 @@ RSpec.describe Tasks::EvidenceUpload do
 
   describe '#can_start?' do
     it { expect(subject.can_start?).to be(true) }
+
+    context 'when applicant is not present' do
+      let(:applicant) { nil }
+
+      it { expect(subject.can_start?).to be(false) }
+    end
   end
 
   describe '#in_progress?' do
-    it { expect(subject.in_progress?).to be(true) }
+    context 'when documents are not present' do
+      it { expect(subject.in_progress?).to be(false) }
+    end
+
+    context 'when documents are present' do
+      let(:documents) { ['doc'] }
+
+      it { expect(subject.in_progress?).to be(true) }
+    end
   end
 
   describe '#completed?' do
-    before do
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:complete?).and_return(evidence_complete)
-    end
-
-    context 'when evidence validation is true' do
-      let(:evidence_complete) { true }
-
-      it { expect(subject.completed?).to be(true) }
-    end
-
-    context 'when evidence validation is false' do
-      let(:evidence_complete) { false }
-
-      it { expect(subject.completed?).to be(false) }
-    end
+    it { expect(subject.completed?).to be(false) }
   end
 end

@@ -5,19 +5,19 @@ module Tasks
     end
 
     def can_start?
-      true
+      crime_application.applicant.present?
     end
 
     def in_progress?
-      true
+      crime_application.documents.any?
     end
 
-    private
+    def not_applicable?
+      false
+    end
 
-    def validator
-      @validator ||= ::SupportingEvidence::AnswersValidator.new(
-        record: crime_application, crime_application: crime_application
-      )
+    def completed?
+      false
     end
   end
 end
