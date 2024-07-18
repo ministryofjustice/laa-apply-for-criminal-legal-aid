@@ -3,8 +3,6 @@ module Summary
     class Saving < BaseRecord
       GROUP_BY = :saving_type
 
-      include TypeOfMeansAssessment
-
       alias saving record
 
       private
@@ -33,7 +31,7 @@ module Summary
           )
         ]
 
-        if include_partner_in_means_assessment?
+        if saving.are_partners_wages_paid_into_account.present?
           answers << Components::ValueAnswer.new(
             :are_partners_wages_paid_into_account,
             saving.are_partners_wages_paid_into_account,
