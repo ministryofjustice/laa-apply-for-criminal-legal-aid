@@ -11,15 +11,6 @@ class Partner < Person
     through: :crime_application
   )
 
-  # :nocov:
-  # TOOD add coverage before release
-  has_many(
-    :outgoings_payments,
-    -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
-    through: :crime_application
-  )
-  # :nocov:
-
   has_many(
     :national_savings_certificates,
     -> { where(ownership_type: OwnershipType::PARTNER.to_s) },
