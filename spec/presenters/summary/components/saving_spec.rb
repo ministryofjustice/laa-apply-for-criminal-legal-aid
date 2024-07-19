@@ -18,15 +18,14 @@ RSpec.describe Summary::Components::Saving, type: :component do
       account_balance: '100.01',
       is_overdrawn: YesNoAnswer::NO,
       are_wages_paid_into_account: YesNoAnswer::YES,
-      are_partners_wages_paid_into_account: YesNoAnswer::NO,
+      are_partners_wages_paid_into_account: partners_wages,
       saving_type: :bank
     }
   end
 
-  let(:include_partner?) { false }
+  let(:partners_wages) { YesNoAnswer::NO }
 
   before do
-    allow(component).to receive(:include_partner_in_means_assessment?) { include_partner? }
     render_summary_component(component)
   end
 
@@ -101,16 +100,14 @@ RSpec.describe Summary::Components::Saving, type: :component do
     describe 'the partner wages question' do
       let(:wages_text) { "Partner's wages or benefits paid into this account?" }
 
-      context 'when partner is included in means assessment' do
-        let(:include_partner?) { true }
-
+      context 'when partner wages question was asked' do
         it 'is shown' do
           expect(page).to have_summary_row(wages_text, 'No')
         end
       end
 
-      context 'when partner is not included in means assessment' do
-        let(:include_partner?) { false }
+      context 'when partner wages question was not asked' do
+        let(:partners_wages) { nil }
 
         it 'is not shown' do
           expect(page).not_to have_content(wages_text)
