@@ -23,6 +23,7 @@ en:
           attributes:
             base:
               case_type_missing: A case type needs to be selected
+              circumstances_reference_missing: Your client's MAAT ID or unique submission number (USN) needs to be completed
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:

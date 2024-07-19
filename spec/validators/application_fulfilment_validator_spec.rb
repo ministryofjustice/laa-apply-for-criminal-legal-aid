@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Test
-  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, :applicant,
+  CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, :applicant, :cifc?,
                                            keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
@@ -52,6 +52,8 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:documents) { double(stored: stored_documents) }
   let(:stored_documents) { [] }
+
+  let(:cifc?) { false }
 
   context 'MeansPassporter validation' do
     before do

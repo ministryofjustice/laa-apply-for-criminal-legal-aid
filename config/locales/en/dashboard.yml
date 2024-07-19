@@ -66,6 +66,7 @@ en:
       page_title: Application representation order
       heading:
         initial: Application for a criminal legal aid representation order
+        change_in_financial_circumstances: Change in financial circumstances
         post_submission_evidence: Supporting evidence
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
