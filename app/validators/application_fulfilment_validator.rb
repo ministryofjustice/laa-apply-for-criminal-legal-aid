@@ -20,7 +20,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
-    unless Passporting::IojPassporter.new(record).call || ioj_present?
+    unless ioj_present? || Passporting::IojPassporter.new(record).call
       errors << [
         :ioj_passport, :blank, { change_path: edit_steps_case_ioj_path }
       ]

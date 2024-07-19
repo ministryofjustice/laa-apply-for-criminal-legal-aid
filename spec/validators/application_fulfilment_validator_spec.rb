@@ -22,12 +22,13 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:arguments) do
     {
-      is_means_tested:,
-      kase:,
-      applicant:,
-      ioj:,
-      income:,
-      documents:
+      'is_means_tested' => is_means_tested,
+      'kase' => kase,
+      'applicant' => applicant,
+      'ioj' => ioj,
+      'income' => income,
+      'documents' => documents,
+      'cifc?' => cifc?,
     }
   end
 
@@ -249,6 +250,39 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
       it 'is valid' do
         expect(subject).to be_valid
+      end
+    end
+  end
+
+  context 'when application is Change in Financial Circumstances' do
+    let(:cifc?) { true }
+
+    before do
+      allow(FeatureFlags).to receive(:cifc_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
+    context 'with completed fields' do
+      before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+        allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(true)
+      end
+
+      it 'is valid' do
+        expect(subject).to be_valid
+      end
+    end
+
+    context 'without incomplete fields' do
+      before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+        allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(false)
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:base, :circumstances_reference_missing)).to be(true)
       end
     end
   end
