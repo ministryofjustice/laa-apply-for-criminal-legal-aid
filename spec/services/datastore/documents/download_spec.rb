@@ -8,11 +8,16 @@ RSpec.describe Datastore::Documents::Download do
   let(:s3_object_key) { '123/abcdef1234' }
   let(:content_type) { 'application/pdf' }
   let(:filename) { 'bankstatement.pdf' }
+  let(:expected_query) do
+    { object_key: %r{123/.*}, s3_opts: { expires_in: Datastore::Documents::Download::PRESIGNED_URL_EXPIRES_IN,
+                                         response_content_disposition:  "attachment; filename=\"#{filename}\"" } }
+  end
 
   describe '#call' do
     context 'when a document exists' do
       before do
         stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_download')
+          .with(body: expected_query)
           .to_return(status: 200, body: '{"object_key":"123/abcdef1234", "url":"https://secure.com/123/abcdef1234?fileinfo"}')
       end
 

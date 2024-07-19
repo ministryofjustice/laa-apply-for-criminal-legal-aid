@@ -30,7 +30,7 @@ module Datastore
 
       def response_content_disposition
         # To force download of file rather than opening in another window
-        "attachment; filename=#{@document.filename}"
+        %(attachment; filename="#{@document.filename}")
       end
 
       def context
