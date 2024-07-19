@@ -41,9 +41,14 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
 
   before do
     allow(validator).to receive(:has_passporting_benefit?).and_return(has_passporting_benefit?)
+    allow(record).to receive(:application_type).and_return(ApplicationType::INITIAL.to_s)
   end
 
   describe '#validate' do
+    before do
+      allow(validator).to receive(:benefit_evidence_forthcoming?).and_return(false)
+    end
+
     context 'when validation fails' do
       it 'adds errors for all failed validations' do
         expect(errors).to receive(:add).with(:documents, :blank)
@@ -94,6 +99,20 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
         end
       end
     end
+
+    context 'when benefit evidence is forthcoming' do
+      before do
+        allow(validator).to receive(:benefit_evidence_forthcoming?).and_return(true)
+      end
+
+      context 'and evidence has not been uploaded' do
+        it 'adds errors for all failed validations' do
+          expect(errors).to receive(:add).with(:documents, :blank)
+
+          subject.validate
+        end
+      end
+    end
   end
 
   describe '#complete?' do
@@ -117,6 +136,20 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
   end
 
   describe '#applicable?' do
+    before do
+      allow(validator).to receive(:benefit_evidence_forthcoming?).and_return(false)
+    end
+
+    context 'when benefit evidence is forthcoming' do
+      before do
+        allow(validator).to receive(:benefit_evidence_forthcoming?).and_return(true)
+      end
+
+      it 'the application does require evidence validation' do
+        expect(subject.applicable?).to be(true)
+      end
+    end
+
     context 'when case is indictable' do
       let(:case_type) { CaseType::INDICTABLE.to_s }
 
@@ -138,8 +171,21 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
         allow(kase).to receive_messages(is_client_remanded: 'yes', date_client_remanded: 1.month.ago.to_date)
       end
 
-      it 'the application does not require evidence validation' do
-        expect(subject.applicable?).to be(false)
+      context 'when the application type is change in financial circumstances' do
+        before do
+          allow(record).to receive(:application_type)
+            .and_return(ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s)
+        end
+
+        it 'the application does require evidence validation' do
+          expect(subject.applicable?).to be(true)
+        end
+      end
+
+      context 'when the application type is not change in financial circumstances' do
+        it 'the application does not require evidence validation' do
+          expect(subject.applicable?).to be(false)
+        end
       end
     end
 

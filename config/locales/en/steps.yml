@@ -678,6 +678,7 @@ en:
     evidence:
       upload:
         edit:
+          cifc_warning: You must provide evidence of all changes in financial circumstances
           page_title: Upload supporting evidence
           heading: Upload supporting evidence
           exempt: Your client's application does not need any supporting evidence because %{reasons}. You may still upload any documents that will help your application.
