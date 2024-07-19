@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Test
   CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, :applicant, :cifc?,
-                                           keyword_init: true) do
+                                           :application_type, keyword_init: true) do
     include ActiveModel::Validations
     validates_with ApplicationFulfilmentValidator
 
@@ -22,13 +22,14 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
   let(:arguments) do
     {
-      'is_means_tested' => is_means_tested,
-      'kase' => kase,
-      'applicant' => applicant,
-      'ioj' => ioj,
-      'income' => income,
-      'documents' => documents,
-      'cifc?' => cifc?,
+      is_means_tested: is_means_tested,
+      kase: kase,
+      applicant: applicant,
+      ioj: ioj,
+      income: income,
+      documents: documents,
+      cifc?: cifc?,
+      application_type: ApplicationType::INITIAL.to_s
     }
   end
 
@@ -39,18 +40,13 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   }
 
   let(:applicant) { instance_double(Applicant, benefit_type: 'none') }
-
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
-
   let(:case_type) { 'either_way' }
-
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
-
   let(:income) { instance_double(Income, employment_status:) }
   let(:employment_status) { [] }
-
   let(:documents) { double(stored: stored_documents) }
   let(:stored_documents) { [] }
 
@@ -63,6 +59,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       # stub the other validation
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
       allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
     end
 
     context 'when the application is means-passported' do
@@ -152,6 +149,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       # stub the other validation
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
       allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
     end
 
     context 'when the application is ioj-passported' do
@@ -189,6 +187,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
       allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
       allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
     end
 
     context 'when the application has a case type' do
@@ -233,6 +232,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'when the required evidence has not been uploaded' do
       before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
         allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(false)
       end
 
@@ -245,6 +245,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'when the required evidence has been uploaded' do
       before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
         allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
       end
 
@@ -266,6 +267,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     context 'with completed fields' do
       before do
         allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
         allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(true)
       end
 
@@ -277,6 +279,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     context 'without incomplete fields' do
       before do
         allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
         allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(false)
       end
 

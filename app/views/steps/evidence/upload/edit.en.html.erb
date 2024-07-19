@@ -15,6 +15,8 @@
       <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
         <%= t('.exempt', reasons: @form_object.prompt.exempt_reasons.to_sentence) %>
       </p>
+    <% elsif @form_object.application_type == 'change_in_financial_circumstances'  %>
+      <%= govuk_warning_text(text: t('.cifc_warning')) %>
     <% elsif @form_object.prompt.required? %>
       <%= govuk_warning_text(text: t('.reject_warning')) %>
 

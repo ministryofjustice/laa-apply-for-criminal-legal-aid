@@ -11,6 +11,8 @@ module SupportingEvidence
     end
 
     def applicable?
+      return true if benefit_evidence_forthcoming?
+
       !(indictable_or_in_crown_court? || client_remanded_in_custody?)
     end
 
@@ -18,8 +20,8 @@ module SupportingEvidence
       errors.add(:documents, :blank) unless evidence_complete?
     end
 
-    # TODO: add branch for CIFC applications
     def evidence_complete?
+      return false if benefit_evidence_forthcoming? && !evidence_present?
       return true unless evidence_prompts_present?
       return true if nino_is_only_evidence_prompt && !has_passporting_benefit?
 
@@ -28,8 +30,13 @@ module SupportingEvidence
 
     def client_remanded_in_custody?
       return true unless kase
+      return false if cifc?
 
       kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
+    end
+
+    def cifc?
+      record.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s
     end
 
     def indictable_or_in_crown_court?
