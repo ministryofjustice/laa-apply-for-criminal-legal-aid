@@ -55,6 +55,56 @@ module Summary
         declarations
         legal_representative_details
       ],
+      change_in_financial_circumstances: %i[
+        overview
+        client_details
+        contact_details
+        partner_details
+        passporting_benefit_check
+        passporting_benefit_check_partner
+        case_details
+        offences
+        codefendants
+        next_court_hearing
+        first_court_hearing
+        justification_for_legal_aid
+        passport_justification_for_legal_aid
+        employment_details
+        employment_income
+        income_details
+        client_employments
+        client_businesses
+        self_assessment_tax_bill
+        work_benefits
+        income_payments_details
+        income_benefits_details
+        dependants
+        partner_employment_details
+        partner_employment_income
+        partner_employments
+        partner_businesses
+        partner_self_assessment_tax_bill
+        partner_work_benefits
+        partner_income_payments_details
+        partner_income_benefits_details
+        other_income_details
+        housing_payments
+        outgoings_payments_details
+        other_outgoings_details
+        properties
+        savings
+        premium_bonds
+        partner_premium_bonds
+        national_savings_certificates
+        investments
+        trust_fund
+        partner_trust_fund
+        other_capital_details
+        supporting_evidence
+        more_information
+        declarations
+        legal_representative_details
+      ],
       post_submission_evidence: %i[
         overview
         client_details

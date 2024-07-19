@@ -18,9 +18,10 @@ class CompletedApplicationsController < DashboardController
 
   def recreate
     usn = current_crime_application.reference
+    application_type = current_crime_application['application_type']
 
     # There can only be one application in progress with same USN across all offices
-    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:)
+    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:, application_type:)
 
     # Ensure that the 'in progress' application is associated with the correct office code.
     # If this exception is raised, there may be an issue with the data integrity.

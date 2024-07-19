@@ -142,6 +142,8 @@ en:
       # BEGIN overview section
       reference:
         question: LAA reference number
+      pre_cifc_maat_id_or_usn:
+        question: "%{ref_type} of original application"
       means_tested:
         question: Means tested application
         answers:

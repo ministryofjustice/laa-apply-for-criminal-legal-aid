@@ -1,0 +1,20 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= form_for @form_object, url: crime_applications_path, method: :post  do |f| %>
+      <%= f.govuk_collection_radio_buttons(
+            :is_cifc,
+            @form_object.choices,
+            :value,
+            ->(option) { I18n.t(".crime_applications.new.options.#{option}") },
+            legend: { tag: 'h1', size: 'xl', text: t('.heading') }
+          ) %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::ClientDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -12,6 +13,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:client_has_partner) { nil }
   let(:is_means_tested_enabled) { false }
   let(:not_means_tested?) { nil }
+  let(:cifc?) { false }
 
   before do
     allow(
@@ -23,6 +25,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       date_stamp: nil,
       appeal_no_changes?: appeal_no_changes?,
       not_means_tested?: not_means_tested?,
+      cifc?: cifc?,
     )
 
     allow(FeatureFlags).to receive(:non_means_tested) {
@@ -74,7 +77,6 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   context 'when the step is `is_means_tested`' do
     let(:form_object) { double('FormObject', is_means_tested:) }
     let(:step_name) { :is_means_tested }
@@ -149,6 +151,18 @@ RSpec.describe Decisions::ClientDecisionTree do
 
         it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }
       end
+    end
+
+    context 'with a change_in_financial_circumstances application' do
+      let(:cifc?) { true }
+
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
     end
   end
 
@@ -344,5 +358,5 @@ RSpec.describe Decisions::ClientDecisionTree do
       }
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

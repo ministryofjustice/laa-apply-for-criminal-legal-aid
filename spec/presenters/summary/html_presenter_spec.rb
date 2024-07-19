@@ -347,6 +347,114 @@ describe Summary::HtmlPresenter do
       end
     end
 
+    context 'when a change in financial circumstances application' do
+      let(:application_type) { 'change_in_financial_circumstances' }
+      let(:is_means_tested) { 'yes' }
+
+      context 'for an "in progress" database application' do
+        let(:crime_application) { database_application }
+
+        let(:expected_sections) do
+          %w[
+            Overview
+            ClientDetails
+            ContactDetails
+            PartnerDetails
+            PassportingBenefitCheck
+            PassportingBenefitCheckPartner
+            CaseDetails
+            Offences
+            Codefendants
+            NextCourtHearing
+            FirstCourtHearing
+            JustificationForLegalAid
+            PassportJustificationForLegalAid
+            EmploymentDetails
+            IncomeDetails
+            Dependants
+            PartnerEmploymentDetails
+            PartnerSelfAssessmentTaxBill
+            PartnerWorkBenefits
+            SelfAssessmentTaxBill
+            IncomePaymentsDetails
+            IncomeBenefitsDetails
+            PartnerIncomePaymentsDetails
+            PartnerIncomeBenefitsDetails
+            HousingPayments
+            OutgoingsPaymentsDetails
+            OtherOutgoingsDetails
+            Savings
+            Properties
+            PremiumBonds
+            PartnerPremiumBonds
+            NationalSavingsCertificates
+            Investments
+            TrustFund
+            PartnerTrustFund
+            OtherCapitalDetails
+            SupportingEvidence
+            MoreInformation
+          ]
+        end
+
+        it { is_expected.to match_array(expected_sections) }
+      end
+
+      context 'for a "submitted" datastore application' do
+        let(:crime_application) { datastore_application }
+
+        let(:expected_sections) do
+          %w[
+            Overview
+            ClientDetails
+            ContactDetails
+            PartnerDetails
+            PassportingBenefitCheck
+            PassportingBenefitCheckPartner
+            CaseDetails
+            Offences
+            Codefendants
+            NextCourtHearing
+            FirstCourtHearing
+            JustificationForLegalAid
+            PassportJustificationForLegalAid
+            EmploymentDetails
+            IncomeDetails
+            ClientEmployments
+            PartnerEmploymentDetails
+            SelfAssessmentTaxBill
+            WorkBenefits
+            IncomePaymentsDetails
+            IncomeBenefitsDetails
+            Dependants
+            PartnerSelfAssessmentTaxBill
+            PartnerWorkBenefits
+            PartnerIncomePaymentsDetails
+            PartnerIncomeBenefitsDetails
+            OtherIncomeDetails
+            HousingPayments
+            OutgoingsPaymentsDetails
+            OtherOutgoingsDetails
+            Savings
+            Properties
+            PremiumBonds
+            PartnerPremiumBonds
+            NationalSavingsCertificates
+            Investments
+            TrustFund
+            PartnerTrustFund
+            OtherCapitalDetails
+            SupportingEvidence
+            MoreInformation
+            Declarations
+            LegalRepresentativeDetails
+          ]
+        end
+
+        it { is_expected.to match_array(expected_sections) }
+      end
+    end
+
     context 'when a PSE application' do
       let(:application_type) { 'post_submission_evidence' }
 

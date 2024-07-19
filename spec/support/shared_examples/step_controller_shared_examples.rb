@@ -327,3 +327,71 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
     end
   end
 end
+
+RSpec.shared_examples 'a step disallowed for change in financial circumstances applications' do
+  let(:existing_case) do
+    CrimeApplication.create!(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES)
+  end
+
+  describe '#edit' do
+    before do
+      allow(FeatureFlags).to receive(:cifc_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
+    it 'redirects back to the task list because user is not allowed to complete this form' do
+      get :edit, params: { id: existing_case.id }
+
+      expect(response).to redirect_to(edit_crime_application_path(existing_case))
+    end
+  end
+
+  describe '#update' do
+    before do
+      allow(FeatureFlags).to receive(:cifc_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
+    it 'redirects back to the task list because user is not allowed to complete this form' do
+      get :update, params: { id: existing_case.id }
+
+      expect(response).to redirect_to(edit_crime_application_path(existing_case))
+    end
+  end
+end
+
+RSpec.shared_examples 'a step disallowed for non change in financial circumstances applications' do
+  let(:existing_case) do
+    CrimeApplication.create!(application_type: ApplicationType::INITIAL)
+  end
+
+  describe '#edit' do
+    before do
+      allow(FeatureFlags).to receive(:cifc_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
+    it 'redirects back to the task list because user is not allowed to complete this form' do
+      get :edit, params: { id: existing_case.id }
+
+      expect(response).to redirect_to(edit_crime_application_path(existing_case))
+    end
+  end
+
+  describe '#update' do
+    before do
+      allow(FeatureFlags).to receive(:cifc_journey) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
+    it 'redirects back to the task list because user is not allowed to complete this form' do
+      get :update, params: { id: existing_case.id }
+
+      expect(response).to redirect_to(edit_crime_application_path(existing_case))
+    end
+  end
+end

@@ -1,0 +1,23 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_radio_buttons_fieldset :pre_cifc_reference_number, legend: { tag: 'h1', size: 'xl' } do %>
+        <%= f.govuk_radio_button :pre_cifc_reference_number, 'pre_cifc_maat_id', link_errors: true do %>
+          <%= f.govuk_text_field :pre_cifc_maat_id, autocomplete: 'off', width: 'one-third',
+                                 extra_letter_spacing: true, label: { size: 's' } %>
+        <% end %>
+        <%= f.govuk_radio_button :pre_cifc_reference_number, 'pre_cifc_usn' do %>
+          <%= f.govuk_text_field :pre_cifc_usn, autocomplete: 'off', width: 'one-third',
+                                 extra_letter_spacing: true, label: { size: 's' } %>
+        <% end %>
+      <% end %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
