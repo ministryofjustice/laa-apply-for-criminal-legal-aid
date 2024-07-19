@@ -158,7 +158,6 @@ module Datastore
     end
 
     def pre_cifc_reference_number
-      binding.break
       parent.pre_cifc_reference_number
     end
 

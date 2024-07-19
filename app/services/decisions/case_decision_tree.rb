@@ -96,9 +96,7 @@ module Decisions
     end
 
     def ioj_or_passported
-      if FeatureFlags.cifc_journey.enabled? && form_object.crime_application.cifc?
-        return after_ioj
-      end
+      return after_ioj if FeatureFlags.cifc_journey.enabled? && form_object.crime_application.cifc?
 
       if Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)

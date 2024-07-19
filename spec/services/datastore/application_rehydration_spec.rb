@@ -55,6 +55,9 @@ RSpec.describe Datastore::ApplicationRehydration do
         properties: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
+        pre_cifc_reference_number: nil,
+        pre_cifc_maat_id: nil,
+        pre_cifc_usn: nil,
       )
 
       expect(
@@ -485,6 +488,40 @@ RSpec.describe Datastore::ApplicationRehydration do
           relationship_status: 'separated',
           separated_date: '1990-01-12'
         ).and_call_original
+
+        subject.call
+      end
+    end
+
+    context 'when application is a Change in Financial Circumstances' do
+      let(:p) do
+        {
+          'income_payments' => [
+            {
+              'payment_type' => 'other',
+              'amount' => 1289,
+              'frequency' => 'fortnight',
+              'ownership_type' => 'applicant',
+              'metadata' => { 'details' => "A note\n2022" },
+            },
+          ]
+        }
+      end
+
+      let(:parent) do
+        super().deep_merge(
+          'pre_cifc_reference_number' => 'pre_cifc_maat_id',
+          'pre_cifc_maat_id' => '123456789',
+        )
+      end
+
+      it 'generates a change in financial circumstances application' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            pre_cifc_reference_number: 'pre_cifc_maat_id',
+            pre_cifc_maat_id: '123456789',
+          )
+        )
 
         subject.call
       end

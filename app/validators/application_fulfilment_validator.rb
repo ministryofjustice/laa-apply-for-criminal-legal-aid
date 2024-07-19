@@ -34,7 +34,8 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
     unless change_in_financial_circumstances_complete?
       errors << [
-        :base, :circumstances_reference_missing, { change_path: edit_steps_circumstances_pre_cifc_reference_number_path }
+        :base, :circumstances_reference_missing,
+        { change_path: edit_steps_circumstances_pre_cifc_reference_number_path }
       ]
     end
 
