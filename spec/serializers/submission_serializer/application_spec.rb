@@ -84,7 +84,10 @@ RSpec.describe SubmissionSerializer::Application do
         evidence_details: {
           evidence_prompts: []
         },
-        supporting_evidence: []
+        supporting_evidence: [],
+        pre_cifc_reference_number: nil,
+        pre_cifc_maat_id: nil,
+        pre_cifc_usn: nil,
       }.as_json
     end
 

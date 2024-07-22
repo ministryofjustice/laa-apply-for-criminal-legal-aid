@@ -13,12 +13,18 @@ describe Summary::Sections::Overview do
       submitted_at: Date.new(2023, 1, 21),
       provider_details: provider_details,
       application_type: application_type,
+      pre_cifc_reference_number: pre_cifc_reference_number,
+      pre_cifc_maat_id: pre_cifc_maat_id,
+      pre_cifc_usn: pre_cifc_usn,
     )
   end
 
   let(:provider_details) { double }
   let(:status) { :submitted }
   let(:application_type) { 'initial' }
+  let(:pre_cifc_reference_number) { nil }
+  let(:pre_cifc_maat_id) { nil }
+  let(:pre_cifc_usn) { nil }
 
   before do
     allow(crime_application).to receive_messages(kase: Case.new, in_progress?: false, is_means_tested: 'yes')
@@ -147,6 +153,40 @@ describe Summary::Sections::Overview do
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:reference)
           expect(answer.value).to eq('12345')
+        end
+      end
+
+      context 'when application_type is change in financial circumstances' do
+        let(:application_type) { 'change_in_financial_circumstances' }
+
+        context 'with MAAT ID' do
+          let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
+          let(:pre_cifc_maat_id) { '123456' }
+
+          it 'has the correct rows' do
+            expect(answers.count).to eq(3)
+
+            answer = answers[1]
+            expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+            expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
+            expect(answer.value).to eq('123456')
+          end
+        end
+
+        context 'with USN' do
+          let(:pre_cifc_reference_number) { 'pre_cifc_usn' }
+          let(:pre_cifc_usn) { '98765' }
+
+          it 'has the correct rows' do
+            expect(answers.count).to eq(3)
+
+            answer = answers[1]
+            expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+            expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
+            expect(answer.value).to eq('98765')
+          end
         end
       end
     end

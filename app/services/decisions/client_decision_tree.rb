@@ -62,6 +62,8 @@ module Decisions
     end
 
     def after_appeal_details
+      return date_stamp_if_needed if form_object.crime_application.cifc?
+
       if form_object.appeal_original_app_submitted.yes?
         edit(:appeal_financial_circumstances)
       else

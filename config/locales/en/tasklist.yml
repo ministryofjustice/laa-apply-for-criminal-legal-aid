@@ -4,6 +4,7 @@ en:
     heading_text:
       initial: Make a new application
       post_submission_evidence: Upload supporting evidence
+      change_in_financial_circumstances: Change in financial circumstances
     heading:
       about_your_client: About your client
       case_details: Case details

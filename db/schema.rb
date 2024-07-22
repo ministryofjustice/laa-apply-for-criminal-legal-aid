@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_18_144807) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_16_144600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -148,6 +148,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_18_144807) do
     t.jsonb "evidence_prompts", default: []
     t.datetime "evidence_last_run_at"
     t.string "additional_information_required"
+    t.string "pre_cifc_reference_number"
+    t.string "pre_cifc_usn"
+    t.string "pre_cifc_maat_id"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end

@@ -5,7 +5,7 @@ module Summary
         show_overview_details? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
       def answers
         relevant_answers =
           [
@@ -13,6 +13,15 @@ module Summary
               :reference, crime_application.reference.to_s,
             ),
           ]
+
+        if FeatureFlags.cifc_journey.enabled? && cifc?
+          relevant_answers.push(Components::FreeTextAnswer.new(
+                                  :pre_cifc_maat_id_or_usn, pre_cifc_reference_value,
+                                  show: crime_application.pre_cifc_reference_number.present?,
+                                  change_path: edit_steps_circumstances_pre_cifc_reference_number_path,
+                                  i18n_opts: { ref_type: pre_cifc_reference_name }
+                                ))
+        end
 
         if FeatureFlags.non_means_tested.enabled? && !pse?
           relevant_answers.push(Components::ValueAnswer.new(
@@ -51,7 +60,7 @@ module Summary
 
         relevant_answers
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
       private
 
@@ -67,6 +76,22 @@ module Summary
 
       def pse?
         crime_application.application_type == 'post_submission_evidence'
+      end
+
+      def cifc?
+        crime_application.application_type == 'change_in_financial_circumstances'
+      end
+
+      def pre_cifc_reference_name
+        return '' if crime_application.pre_cifc_reference_number.nil?
+
+        crime_application.pre_cifc_maat_id.present? ? 'MAAT ID' : 'USN'
+      end
+
+      def pre_cifc_reference_value
+        return '' if crime_application.pre_cifc_reference_number.nil?
+
+        crime_application.pre_cifc_maat_id.presence || crime_application.pre_cifc_usn.presence
       end
     end
   end

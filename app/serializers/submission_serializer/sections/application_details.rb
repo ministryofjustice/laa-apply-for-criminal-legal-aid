@@ -15,6 +15,9 @@ module SubmissionSerializer
           json.ioj_passport crime_application.ioj_passport
           json.means_passport crime_application.means_passport
           json.additional_information crime_application.additional_information
+          json.pre_cifc_reference_number crime_application.pre_cifc_reference_number
+          json.pre_cifc_maat_id crime_application.pre_cifc_maat_id
+          json.pre_cifc_usn crime_application.pre_cifc_usn
         end
       end
     end

@@ -8,15 +8,38 @@ class CrimeApplicationsController < DashboardController
     ).page params[:page]
   end
 
+  def new
+    @form_object = Start::IsCifcForm.new
+  end
+
   def edit
     @tasklist = TaskList::Collection.new(
       view_context, crime_application: current_crime_application
     )
   end
 
-  def create
-    initialize_crime_application do |crime_application|
-      redirect_to edit_crime_application_path(crime_application)
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    attrs = {}
+
+    # Validation for forms usually performed in step controller but the
+    # IsCifcForm is not part of the /step journey
+    if FeatureFlags.cifc_journey.enabled?
+      @form_object = Start::IsCifcForm.build(
+        CrimeApplication.new(office_code: current_office_code),
+        new_application_params[:is_cifc]
+      )
+
+      return render(:new, flash:) unless @form_object.valid?
+
+      attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if cifc?
+    end
+
+    initialize_crime_application(attrs) do |crime_application|
+      if FeatureFlags.cifc_journey.enabled? && cifc?
+        redirect_to edit_steps_circumstances_pre_cifc_reference_number_path(crime_application)
+      else
+        redirect_to edit_crime_application_path(crime_application)
+      end
     end
   end
 
@@ -41,7 +64,15 @@ class CrimeApplicationsController < DashboardController
     { helpers.sort_by => helpers.sort_direction }
   end
 
+  def new_application_params
+    params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
+  end
+
   def log_context
     LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
+  end
+
+  def cifc?
+    @cifc ||= (new_application_params[:is_cifc] == 'yes')
   end
 end

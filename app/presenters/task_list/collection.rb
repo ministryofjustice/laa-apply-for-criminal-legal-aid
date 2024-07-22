@@ -17,6 +17,14 @@ module TaskList
         [:more_information, [:more_information]],
         [:review_confirm,   [:review, :declaration]],
       ],
+      change_in_financial_circumstances: [
+        [:about_your_client, [:client_details, :partner_details, :passporting_benefit_check]],
+        [:case_details,     [:case_details, :ioj]],
+        [:means_assessment, [:income_assessment, :outgoings_assessment, :capital_assessment]],
+        [:support_evidence, [:evidence_upload]],
+        [:more_information, [:more_information]],
+        [:review_confirm,   [:review, :declaration]],
+      ],
       post_submission_evidence: [
         [:support_evidence, [:evidence_upload]],
         [:more_information, [:more_information]],

@@ -23,6 +23,7 @@ en:
           attributes:
             base:
               case_type_missing: A case type needs to be selected
+              circumstances_reference_missing: Your client's MAAT ID or unique submission number (USN) needs to be completed
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:
@@ -45,20 +46,33 @@ en:
 
         amount_and_frequency:
           attributes:
-            amount: 
+            amount:
               blank: Enter an amount
-            frequency: 
-              blank: Select how often 
+            frequency:
+              blank: Select how often
 
         payment:
           attributes:
-            amount: 
+            amount:
               blank: Enter an amount
-            frequency: 
-              blank: Select how often 
+            frequency:
+              blank: Select how often
   activemodel:
     errors:
       models:
+        start/is_cifc_form:
+          is_cifc:
+            inclusion: Select whether you are making a new application or telling us about a change in financial circumstances
+
+        steps/circumstances/pre_cifc_reference_number_form:
+          attributes:
+            pre_cifc_reference_number:
+              blank: Select MAAT ID or USN
+            pre_cifc_maat_id:
+              blank: Enter MAAT ID
+              invalid: Enter a valid MAAT ID
+            pre_cifc_usn:
+              blank: Enter USN
         steps/provider/confirm_office_form:
           attributes:
             is_current_office:
@@ -674,8 +688,8 @@ en:
               inclusion: Select yes if you want to add another business
         steps/income/businesses_form:
           attributes:
-            trading_name: 
-              blank: Enter the trading name of the business 
+            trading_name:
+              blank: Enter the trading name of the business
             address_line_one:
               blank: Enter address line 1, typically the building and street
             city:
@@ -686,7 +700,7 @@ en:
               blank: Enter postcode
         steps/income/business_nature_form:
           attributes:
-            description: 
+            description:
               blank: Enter a description of the business
         steps/income/business_start_date_form:
           attributes:
@@ -724,16 +738,16 @@ en:
             turnover:
               amount:
                 blank: 'asdfasdf'
-              amount_blank: Enter the total turnover amount 
-              frequency_blank: Select how often 
-              attributes: 
+              amount_blank: Enter the total turnover amount
+              frequency_blank: Select how often
+              attributes:
                 amount:
                   blank: 'asdfasdf'
             drawings:
-              amount_blank: Enter the total drawings amount 
+              amount_blank: Enter the total drawings amount
               frequency_blank: Select how often this amount was drawn
             profit:
-              amount_blank: Enter the total profit amount 
+              amount_blank: Enter the total profit amount
               frequency_blank: Select what period this total profit was for
         steps/income/business_salary_or_remuneration_form:
           attributes:

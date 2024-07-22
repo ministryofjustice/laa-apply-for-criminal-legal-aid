@@ -1,6 +1,13 @@
 ---
 en:
   crime_applications:
+    new:
+      page_title: Are you making a new application or telling us about a change in financial circumstances?
+      heading: Are you making a new application or telling us about a change in financial circumstances?
+      options:
+        'no': 'New application'
+        'yes': 'A change in financial circumstances'
+
     index:
       page_title: Your applications
       delete_button: Delete
@@ -59,6 +66,7 @@ en:
       page_title: Application representation order
       heading:
         initial: Application for a criminal legal aid representation order
+        change_in_financial_circumstances: Change in financial circumstances
         post_submission_evidence: Supporting evidence
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
@@ -95,6 +103,7 @@ en:
   shared:
     dashboard_header:
       heading: Your applications
+      start_button: Start an application
       create_button: Make a new application
     subnavigation:
       nav_aria_label: Applications by status

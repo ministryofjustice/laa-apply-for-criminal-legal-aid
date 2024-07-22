@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -10,7 +11,8 @@ RSpec.describe Decisions::CaseDecisionTree do
       applicant: instance_double(Applicant),
       case: kase, # TODO: refactor the CaseDecisionTree to use #kase instead of #case
       kase: kase,
-      non_means_tested?: non_means_tested
+      non_means_tested?: non_means_tested,
+      cifc?: cifc?,
     )
   }
 
@@ -27,6 +29,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:charges_double) { double('charges_collection') }
   let(:is_means_tested) { nil }
   let(:non_means_tested) { nil }
+  let(:cifc?) { false }
 
   before do
     allow(
@@ -349,3 +352,4 @@ RSpec.describe Decisions::CaseDecisionTree do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

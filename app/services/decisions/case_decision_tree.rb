@@ -90,11 +90,14 @@ module Decisions
 
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
+      return after_ioj if form_object.crime_application.cifc?
 
       ioj_or_passported
     end
 
     def ioj_or_passported
+      return after_ioj if FeatureFlags.cifc_journey.enabled? && form_object.crime_application.cifc?
+
       if Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)
       else
