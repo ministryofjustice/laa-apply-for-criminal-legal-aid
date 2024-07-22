@@ -11,7 +11,8 @@ module Summary
         [
           Components::ValueAnswer.new(
             :income_above_threshold, income.income_above_threshold,
-            change_path: edit_steps_income_income_before_tax_path
+            change_path: edit_steps_income_income_before_tax_path,
+            i18n_opts: { prefix: income_above_threshold_prefix }
           ),
           Components::ValueAnswer.new(
             :has_frozen_income_or_assets, income.has_frozen_income_or_assets,
@@ -25,11 +26,15 @@ module Summary
           Components::ValueAnswer.new(
             :has_savings, income.has_savings,
             change_path: edit_steps_income_has_savings_path
-          ),
+          )
         ].select(&:show?)
       end
 
       private
+
+      def income_above_threshold_prefix
+        include_partner_in_means_assessment? ? 'Joint annual income' : 'Income'
+      end
 
       def property_ownership_type
         return unless include_partner_in_means_assessment?
