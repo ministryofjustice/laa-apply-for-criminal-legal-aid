@@ -30,13 +30,9 @@ module SupportingEvidence
 
     def client_remanded_in_custody?
       return true unless kase
-      return false if cifc?
+      return false if record.cifc?
 
       kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
-    end
-
-    def cifc?
-      record.application_type == ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s
     end
 
     def indictable_or_in_crown_court?

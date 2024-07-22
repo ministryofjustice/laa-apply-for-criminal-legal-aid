@@ -41,7 +41,7 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
 
   before do
     allow(validator).to receive(:has_passporting_benefit?).and_return(has_passporting_benefit?)
-    allow(record).to receive(:application_type).and_return(ApplicationType::INITIAL.to_s)
+    allow(record).to receive_messages(application_type: ApplicationType::INITIAL.to_s, cifc?: false)
   end
 
   describe '#validate' do
@@ -173,8 +173,8 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
 
       context 'when the application type is change in financial circumstances' do
         before do
-          allow(record).to receive(:application_type)
-            .and_return(ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s)
+          allow(record).to receive_messages(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s,
+                                            cifc?: true)
         end
 
         it 'the application does require evidence validation' do

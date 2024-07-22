@@ -11,7 +11,7 @@
 
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
-    <% if @form_object.application_type == 'change_in_financial_circumstances'  %>
+    <% if @form_object.cifc?  %>
       <%= govuk_warning_text(text: t('.cifc_warning')) %>
     <% elsif @form_object.prompt.exempt? %>
       <p class="govuk-body" data-ruleset="<%= @form_object.prompt.ruleset %>">
