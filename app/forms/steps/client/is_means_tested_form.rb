@@ -5,6 +5,11 @@ module Steps
 
       validates_inclusion_of :is_means_tested, in: :choices
 
+      # CRIMAPP-1249 temporary fix to default application to being means tested
+      def is_means_tested
+        super || YesNoAnswer::YES
+      end
+
       def choices
         YesNoAnswer.values
       end
