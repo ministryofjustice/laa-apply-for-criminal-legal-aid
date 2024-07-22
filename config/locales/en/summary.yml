@@ -418,6 +418,10 @@ en:
         question: Income more than £12,475 a year before tax?
         answers:
           <<: *YESNO
+      joint_income_above_threshold:
+        question: Joint annual income more than £12,475 a year before tax?
+        answers:
+          <<: *YESNO
       has_frozen_income_or_assets:
         question: Income, savings or assets under a restraint or freezing order
         answers: *YESNO

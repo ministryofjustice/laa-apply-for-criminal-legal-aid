@@ -8,11 +8,20 @@ module Summary
       end
 
       def answers # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-        [
-          Components::ValueAnswer.new(
-            :income_above_threshold, income.income_above_threshold,
-            change_path: edit_steps_income_income_before_tax_path
-          ),
+        answers = []
+        answers << if include_partner_in_means_assessment?
+                     Components::ValueAnswer.new(
+                       :joint_income_above_threshold, income.income_above_threshold,
+                       change_path: edit_steps_income_income_before_tax_path
+                     )
+                   else
+                     Components::ValueAnswer.new(
+                       :income_above_threshold, income.income_above_threshold,
+                       change_path: edit_steps_income_income_before_tax_path
+                     )
+                   end
+
+        answers << [
           Components::ValueAnswer.new(
             :has_frozen_income_or_assets, income.has_frozen_income_or_assets,
             change_path: edit_steps_income_frozen_income_savings_assets_path
@@ -26,7 +35,9 @@ module Summary
             :has_savings, income.has_savings,
             change_path: edit_steps_income_has_savings_path
           ),
-        ].select(&:show?)
+        ]
+
+        answers.flatten.select(&:show?)
       end
 
       private
