@@ -124,5 +124,23 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesForm do
         expect(subject.save).to be(true)
       end
     end
+
+    context 'when customer/holder number is invalid' do
+      let(:attributes) do
+        {
+          holder_number: '12345--',
+          certificate_number: '345B',
+          ownership_type: OwnershipType::APPLICANT,
+          value: '100.01',
+          confirm_in_applicants_name: YesNoAnswer::YES
+        }
+      end
+
+      it 'does not update the record' do
+        expect(record).not_to receive(:update)
+
+        expect(subject.save).to be(false)
+      end
+    end
   end
 end
