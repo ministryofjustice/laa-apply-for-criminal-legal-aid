@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Client::IsMeansTestedForm do
-  subject { described_class.new(arguments) }
+  subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
     {
@@ -21,8 +21,14 @@ RSpec.describe Steps::Client::IsMeansTestedForm do
     end
   end
 
+  describe '#is_means_tested' do
+    it 'is yes by default' do
+      expect(form.is_means_tested).to eq YesNoAnswer::YES
+    end
+  end
+
   describe '#save' do
-    context 'when `is_means_tested` is not provided' do
+    context 'when `is_means_tested` is not provided', skip: 'CRIMAPP-1249 temporary behaviour change' do
       it 'returns false' do
         expect(subject.save).to be(false)
       end
@@ -47,11 +53,11 @@ RSpec.describe Steps::Client::IsMeansTestedForm do
     end
 
     context 'when `is_means_tested` is valid' do
-      let(:is_means_tested) { 'yes' }
+      let(:is_means_tested) { 'no' }
 
       it 'saves the record' do
         expect(crime_application).to receive(:update).with(
-          { 'is_means_tested' => YesNoAnswer::YES }
+          { 'is_means_tested' => YesNoAnswer::NO }
         ).and_return(true)
 
         expect(subject.save).to be(true)
