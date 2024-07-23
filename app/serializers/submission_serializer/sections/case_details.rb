@@ -26,11 +26,13 @@ module SubmissionSerializer
             json.is_preorder_work_claimed kase.is_preorder_work_claimed
             json.preorder_work_date kase.preorder_work_date
             json.preorder_work_details kase.preorder_work_details
+
+            # Following fields are not populated by Change in Financial Circumstances
+            # applications but submitted for completeness/schema conformance
             json.hearing_court_name kase.hearing_court_name
             json.hearing_date kase.hearing_date
             json.is_first_court_hearing kase.is_first_court_hearing
             json.first_court_hearing_name kase.first_court_hearing_name
-
             json.offences Definitions::Offence.generate(kase.charges.complete)
             json.codefendants Definitions::Codefendant.generate(kase.codefendants)
           end

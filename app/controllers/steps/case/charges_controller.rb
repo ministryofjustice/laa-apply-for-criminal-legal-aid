@@ -1,6 +1,8 @@
 module Steps
   module Case
     class ChargesController < Steps::CaseStepController
+      before_action :redirect_cifc
+
       def edit
         @form_object = ChargesForm.build(
           charge_record, crime_application: current_crime_application

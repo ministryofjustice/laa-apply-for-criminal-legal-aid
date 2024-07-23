@@ -52,4 +52,6 @@ RSpec.describe Steps::Case::CodefendantsController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'a step disallowed for change in financial circumstances applications'
 end

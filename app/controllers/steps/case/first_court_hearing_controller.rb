@@ -1,6 +1,8 @@
 module Steps
   module Case
     class FirstCourtHearingController < Steps::CaseStepController
+      before_action :redirect_cifc
+
       def edit
         @form_object = FirstCourtHearingForm.build(
           current_crime_application
