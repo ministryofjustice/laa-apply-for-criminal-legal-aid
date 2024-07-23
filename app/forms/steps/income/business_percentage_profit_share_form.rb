@@ -3,7 +3,7 @@ module Steps
     class BusinessPercentageProfitShareForm < Steps::BaseFormObject
       attribute :percentage_profit_share, :decimal
 
-      validates_numericality_of :percentage_profit_share, greater_than_or_equal_to: 0.0,
+      validates_numericality_of :percentage_profit_share, greater_than: 0.0,
                                 less_than_or_equal_to: 100.0
 
       def persist!

@@ -57,7 +57,7 @@ RSpec.describe Steps::Income::BusinessPercentageProfitShareForm do
 
         it 'adds an error' do
           subject.save
-          expect(subject.errors.of_kind?(:percentage_profit_share, :greater_than_or_equal_to)).to be(true)
+          expect(subject.errors.of_kind?(:percentage_profit_share, :greater_than)).to be(true)
         end
       end
     end
