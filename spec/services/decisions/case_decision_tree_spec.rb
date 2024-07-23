@@ -147,11 +147,23 @@ RSpec.describe Decisions::CaseDecisionTree do
         allow(FeatureFlags).to receive(:cifc_journey) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         }
-
-        allow(subject).to receive(:requires_means_assessment?).and_return(false)
       end
 
-      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      context 'when means assessment required' do
+        before do
+          allow(subject).to receive(:requires_means_assessment?).and_return(true)
+        end
+
+        it { is_expected.to have_destination('/steps/income/employment_status', :edit, id: crime_application) }
+      end
+
+      context 'when means assessment not required' do
+        before do
+          allow(subject).to receive(:requires_means_assessment?).and_return(false)
+        end
+
+        it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+      end
     end
   end
 
