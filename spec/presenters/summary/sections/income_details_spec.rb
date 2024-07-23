@@ -90,7 +90,7 @@ describe Summary::Sections::IncomeDetails do
       let(:expected_labels) do
         [
           'Client or partner owns home, land or property?',
-          'Income more than £12,475 a year before tax?',
+          'Joint annual income more than £12,475 a year before tax?',
           'Income, savings or assets under a restraint or freezing order',
           'Savings or investments?'
         ]
