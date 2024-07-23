@@ -33,11 +33,11 @@ feature_flags:
     production: true
   evidence_validation:
     local: true
-    staging: false
+    staging: true
     production: false
   cifc_journey:
     local: true
-    staging: false
+    staging: true
     production: false
 
 # NOTE: consider if the setting you are adding here

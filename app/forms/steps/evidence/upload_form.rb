@@ -4,7 +4,7 @@ module Steps
       include TypeOfMeansAssessment
       include ApplicantAndPartner
 
-      delegate :documents, :evidence_prompts, to: :crime_application
+      delegate :documents, :evidence_prompts, :application_type, :cifc?, to: :crime_application
 
       validate do
         validator.validate if FeatureFlags.evidence_validation.enabled? && validator.applicable?

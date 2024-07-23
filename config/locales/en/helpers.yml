@@ -54,7 +54,7 @@ en:
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number: What is the reference number of the original application?
       steps_client_is_means_tested_form:
-        is_means_tested: Is this application subject to the usual means or passported test?
+        is_means_tested: Is this application subject to the means or passported test?
       steps_client_has_partner_form:
         client_has_partner: Does your client have a partner?
       steps_client_details_form:
@@ -290,6 +290,8 @@ en:
     hint:
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number: We need either your client's MAAT ID or unique submission number (USN).
+      steps_client_is_means_tested_form:
+        is_means_tested: Most applications are subject to the means or passporting test, including under-18s, unless their proceedings are non-means tested as defined in the Criminal Legal Aid Manual.
       steps_client_relationship_status_form:
         separation_date:
       steps_client_details_form:
@@ -475,7 +477,9 @@ en:
         pre_cifc_maat_id: Enter MAAT ID
         pre_cifc_usn: Enter USN
       steps_client_is_means_tested_form:
-        is_means_tested_options: *YESNO
+        is_means_tested_options:
+          'yes': Yes - the application is subject to the test
+          'no': No - the application covers non-means tested prescribed proceedings
       steps_client_has_partner_form:
         client_has_partner_options: *YESNO
       steps_client_details_form:
