@@ -415,7 +415,7 @@ en:
 
       # BEGIN income details section
       income_above_threshold:
-        question: Income more than £12,475 a year before tax?
+        question: "%{prefix} more than £12,475 a year before tax?"
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
