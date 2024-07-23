@@ -741,7 +741,7 @@ en:
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence
-            change_in_financial_circumstances: View submitted evidence
+            change_in_financial_circumstances: View completed application
       cannot_submit_without_nino:
         edit:
           page_title: Cannot submit application without National Insurance number
