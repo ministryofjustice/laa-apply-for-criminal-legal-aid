@@ -1,6 +1,8 @@
 module Steps
   module Case
     class ChargesSummaryController < Steps::CaseStepController
+      before_action :redirect_cifc
+
       def edit
         @form_object = ChargesSummaryForm.new(
           crime_application: current_crime_application

@@ -9,12 +9,14 @@ RSpec.describe Tasks::Ioj do
       to_param: '12345',
       ioj_passport: ioj_passport,
       ioj: ioj,
+      cifc?: cifc?
     )
   end
 
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
   let(:ioj_passport) { [] }
+  let(:cifc?) { false }
 
   # We assume the completeness of the case details here, as
   # their statuses are tested in its own spec, no need to repeat
@@ -46,6 +48,18 @@ RSpec.describe Tasks::Ioj do
 
   describe '#not_applicable?' do
     it { expect(subject.not_applicable?).to be(false) }
+
+    context 'with change in financial circumstances application' do
+      let(:cifc?) { true }
+
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it { expect(subject.not_applicable?).to be(true) }
+    end
   end
 
   describe '#can_start?' do

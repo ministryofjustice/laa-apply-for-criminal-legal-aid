@@ -55,6 +55,7 @@ module Decisions
     end
 
     def charges_summary_or_edit_new_charge
+      return after_ioj if form_object.crime_application.cifc?
       return edit(:charges_summary) if case_charges.any?(&:complete?)
 
       edit_new_charge
@@ -90,14 +91,11 @@ module Decisions
 
     def after_hearing_details
       return edit(:first_court_hearing) if form_object.is_first_court_hearing.no?
-      return after_ioj if form_object.crime_application.cifc?
 
       ioj_or_passported
     end
 
     def ioj_or_passported
-      return after_ioj if FeatureFlags.cifc_journey.enabled? && form_object.crime_application.cifc?
-
       if Passporting::IojPassporter.new(crime_application).call
         edit(:ioj_passport)
       else

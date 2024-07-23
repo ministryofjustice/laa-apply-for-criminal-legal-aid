@@ -139,6 +139,20 @@ RSpec.describe Decisions::CaseDecisionTree do
 
       it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
     end
+
+    context 'and it is a change in financial circumstances application' do
+      let(:cifc?) { true }
+
+      before do
+        allow(FeatureFlags).to receive(:cifc_journey) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+
+        allow(subject).to receive(:requires_means_assessment?).and_return(false)
+      end
+
+      it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `has_codefendants`' do

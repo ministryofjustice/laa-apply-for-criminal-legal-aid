@@ -1,6 +1,8 @@
 module Steps
   module Case
     class CodefendantsController < Steps::CaseStepController
+      before_action :redirect_cifc
+
       def edit
         @form_object = CodefendantsForm.new(
           crime_application: current_crime_application

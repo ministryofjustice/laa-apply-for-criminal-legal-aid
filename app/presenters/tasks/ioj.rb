@@ -9,6 +9,8 @@ module Tasks
     end
 
     def not_applicable?
+      return true if crime_application.cifc?
+
       false
     end
 
