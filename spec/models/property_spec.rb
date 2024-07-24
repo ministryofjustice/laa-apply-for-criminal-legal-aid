@@ -170,6 +170,14 @@ RSpec.describe Property, type: :model do
 
         it { is_expected.to be false }
       end
+
+      context 'with property owners missing' do
+        let(:attributes) do
+          required_attributes.merge(property_owners: [])
+        end
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'when property has no other owners' do
