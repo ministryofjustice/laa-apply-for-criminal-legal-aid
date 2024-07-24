@@ -3,10 +3,20 @@ require 'rails_helper'
 RSpec.describe AppealDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
-  let(:record) { instance_double(CrimeApplication, errors: errors, kase: kase, non_means_tested?: false) }
+  let(:record) do
+    instance_double(
+      CrimeApplication,
+      errors: errors,
+      kase: kase,
+      non_means_tested?: false,
+      cifc?: cifc?,
+    )
+  end
+
   let(:errors) { double(:errors, empty?: false) }
   let(:kase) { instance_double(Case, case_type:) }
   let(:case_type) { nil }
+  let(:cifc?) { false }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
@@ -131,6 +141,17 @@ RSpec.describe AppealDetails::AnswersValidator, type: :model do
 
       it 'does not add errors when complete' do
         allow(validator).to receive(:complete?).and_return(true)
+        expect(errors).not_to receive(:add)
+
+        validate
+      end
+    end
+
+    context 'when change in financial circumstances application' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+      let(:cifc?) { true }
+
+      it 'does not add errors when complete' do
         expect(errors).not_to receive(:add)
 
         validate
