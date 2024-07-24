@@ -2,7 +2,7 @@ module Summary
   module Sections
     class Codefendants < Sections::BaseSection
       def show?
-        kase.present? && !(crime_application.application_type == 'change_in_finaicial_circumstances') && super
+        kase.present? && (crime_application.application_type != 'change_in_financial_circumstances') && super
       end
 
       def answers
