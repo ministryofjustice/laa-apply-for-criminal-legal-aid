@@ -22,8 +22,7 @@ RSpec.describe Property, type: :model do
       percentage_partner_owned: nil,
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
-      address: nil,
-      property_owners: []
+      address: nil
     }
   end
 
