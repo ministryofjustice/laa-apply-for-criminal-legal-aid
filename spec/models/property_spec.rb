@@ -23,11 +23,16 @@ RSpec.describe Property, type: :model do
       is_home_address: is_home_address,
       has_other_owners: has_other_owners,
       address: nil,
+      property_owners: []
     }
   end
 
   describe '#complete?' do
     subject { instance.complete? }
+
+    before do
+      allow(instance).to receive(:property_ownership_valid?).and_return(true)
+    end
 
     context 'when property_type is residential' do
       let(:property_type) { PropertyType::RESIDENTIAL.to_s }
@@ -185,6 +190,92 @@ RSpec.describe Property, type: :model do
       let(:attributes) { required_attributes.merge(property_owners: []) }
 
       it { is_expected.to be true }
+    end
+  end
+
+  describe '#has_percentage_complete?' do
+    subject { instance.property_ownership_valid? }
+
+    context 'when partner is not present' do
+      context 'when valid' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 100) }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when invalid' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 60) }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when other owners are present' do
+        let(:has_other_owners) { 'yes' }
+
+        context 'when valid' do
+          let(:attributes) {
+            required_attributes.merge(
+              percentage_applicant_owned: 60,
+              property_owners: [PropertyOwner.new(percentage_owned: 40, name: 'name', relationship: 'relationship')]
+            )
+          }
+
+          it { is_expected.to be true }
+        end
+
+        context 'when invalid' do
+          let(:attributes) {
+            required_attributes.merge(
+              percentage_applicant_owned: 50,
+              property_owners: [PropertyOwner.new(percentage_owned: 40, name: 'name', relationship: 'relationship')]
+            )
+          }
+
+          it { is_expected.to be false }
+        end
+      end
+    end
+
+    context 'when partner is present' do
+      context 'when valid' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 60, percentage_partner_owned: 40) }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when invalid' do
+        let(:attributes) { required_attributes.merge(percentage_applicant_owned: 60, percentage_partner_owned: 30) }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when other owners are present' do
+        let(:has_other_owners) { 'yes' }
+
+        context 'when valid' do
+          let(:attributes) {
+            required_attributes.merge(
+              percentage_applicant_owned: 60,
+              percentage_partner_owned: 30,
+              property_owners: [PropertyOwner.new(percentage_owned: 10, name: 'name', relationship: 'relationship')]
+            )
+          }
+
+          it { is_expected.to be true }
+        end
+
+        context 'when invalid' do
+          let(:attributes) {
+            required_attributes.merge(
+              percentage_applicant_owned: 50,
+              percentage_partner_owned: 30,
+              property_owners: [PropertyOwner.new(percentage_owned: 10, name: 'name', relationship: 'relationship')]
+            )
+          }
+
+          it { is_expected.to be false }
+        end
+      end
     end
   end
 end
