@@ -65,6 +65,10 @@ class Property < ApplicationRecord
   end
 
   def property_owners_complete?
-    property_owners.all?(&:complete?)
+    return true if has_other_owners == YesNoAnswer::NO.to_s || has_other_owners.nil?
+
+    (has_other_owners == YesNoAnswer::YES.to_s) &&
+      property_owners.present? &&
+      property_owners.all?(&:complete?)
   end
 end
