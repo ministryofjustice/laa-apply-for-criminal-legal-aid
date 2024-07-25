@@ -53,7 +53,7 @@ class Property < ApplicationRecord
     return false unless property_type
 
     values_at(*REQUIRED_ATTRIBUTES[property_type.to_sym]).all?(&:present?) &&
-      address_complete? && property_owners_complete?
+      address_complete? && property_owners_complete? && property_ownership_valid?
   end
 
   def address_complete?
@@ -65,6 +65,19 @@ class Property < ApplicationRecord
   end
 
   def property_owners_complete?
-    property_owners.all?(&:complete?)
+    return true if has_other_owners == YesNoAnswer::NO.to_s || has_other_owners.nil?
+
+    (has_other_owners == YesNoAnswer::YES.to_s) &&
+      property_owners.present? &&
+      property_owners.all?(&:complete?)
+  end
+
+  def property_ownership_valid?
+    percentage_ownerships = []
+    percentage_ownerships << percentage_applicant_owned unless percentage_applicant_owned.nil?
+    percentage_ownerships << percentage_partner_owned unless percentage_partner_owned.nil?
+    percentage_ownerships << property_owners.sum(&:percentage_owned) if property_owners_complete?
+
+    percentage_ownerships.sum == 100
   end
 end
