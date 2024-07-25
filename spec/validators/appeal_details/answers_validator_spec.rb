@@ -147,12 +147,41 @@ RSpec.describe AppealDetails::AnswersValidator, type: :model do
       end
     end
 
-    context 'when change in financial circumstances application' do
+    context 'when valid change in financial circumstances application' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
       let(:cifc?) { true }
+      let(:appeal_lodged_date) { '2023-11-11' }
+      let(:appeal_original_app_submitted) { 'yes' }
+
+      before do
+        allow(kase).to receive_messages(
+          appeal_lodged_date:,
+          appeal_original_app_submitted:
+        )
+      end
 
       it 'does not add errors when complete' do
         expect(errors).not_to receive(:add)
+
+        validate
+      end
+    end
+
+    context 'when invalid change in financial circumstances application' do
+      let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+      let(:cifc?) { true }
+      let(:appeal_lodged_date) { nil }
+      let(:appeal_original_app_submitted) { nil }
+
+      before do
+        allow(kase).to receive_messages(
+          appeal_lodged_date:,
+          appeal_original_app_submitted:
+        )
+      end
+
+      it 'does not add errors when complete' do
+        expect(errors).to receive(:add)
 
         validate
       end

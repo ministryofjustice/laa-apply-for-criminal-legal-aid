@@ -9,7 +9,7 @@ describe Summary::Sections::Codefendants do
       in_progress?: true,
       kase: kase,
       to_param: 12_345,
-      application_type: application_type,
+      cifc?: cifc?,
     )
   end
 
@@ -23,7 +23,7 @@ describe Summary::Sections::Codefendants do
 
   let(:records) { [Codefendant.new] }
   let(:has_codefendants) { 'yes' }
-  let(:application_type) { 'initial' }
+  let(:cifc?) { false }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -45,7 +45,7 @@ describe Summary::Sections::Codefendants do
     end
 
     context 'when change in financial circumstances application' do
-      let(:application_type) { 'change_in_financial_circumstances' }
+      let(:cifc?) { true }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)
