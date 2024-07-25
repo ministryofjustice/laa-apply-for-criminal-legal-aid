@@ -6,13 +6,12 @@ module Evidence
       key :income_investments_7
       group :income
 
-      client do |_crime_application, applicant|
-        applicant.income_payment(IncomePaymentType::INTEREST_INVESTMENT).present?
+      client do |crime_application, _applicant|
+        crime_application.income&.client_interest_investment_payment.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? &&
-          partner.income_payment(IncomePaymentType::INTEREST_INVESTMENT).present?
+      partner do |crime_application, _partner|
+        crime_application.income&.partner_interest_investment_payment.present?
       end
     end
   end

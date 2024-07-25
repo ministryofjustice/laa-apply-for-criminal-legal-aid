@@ -6,12 +6,12 @@ module Evidence
       key :income_rent_8
       group :income
 
-      client do |_crime_application, applicant|
-        applicant.income_payment(IncomePaymentType::RENT).present?
+      client do |crime_application, _applicant|
+        crime_application.income&.client_rent_payment.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && partner.income_payment(IncomePaymentType::RENT).present?
+      partner do |crime_application, _partner|
+        crime_application.income&.partner_rent_payment.present?
       end
     end
   end

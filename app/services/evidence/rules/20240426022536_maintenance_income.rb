@@ -9,22 +9,17 @@ module Evidence
       key :income_maintenance_6
       group :income
 
-      client do |_crime_application, applicant|
-        MaintenanceEvidenceRequired.for(applicant)
+      client do |crime_application, _applicant|
+        payment = crime_application.income&.client_maintenance_payment
+
+        payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && MaintenanceEvidenceRequired.for(partner)
+      partner do |crime_application, _partner|
+        payment = crime_application.income&.partner_maintenance_payment
+
+        payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
-    end
-  end
-
-  class MaintenanceEvidenceRequired
-    def self.for(person)
-      maintenance = person.income_payment(IncomePaymentType::MAINTENANCE)
-      return false unless maintenance
-
-      maintenance && maintenance.prorated_monthly.to_f > Rules::MaintenanceIncome::THRESHOLD
     end
   end
 end

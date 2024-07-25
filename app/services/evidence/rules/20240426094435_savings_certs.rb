@@ -6,15 +6,12 @@ module Evidence
       key :capital_savings_certs_22
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          applicant.national_savings_certificates.any?
+      client do |crime_application|
+        crime_application.capital&.client_national_savings_certificates.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.full_capital_required?(crime_application) &&
-          MeansStatus.include_partner?(crime_application) &&
-          partner.national_savings_certificates.any?
+      partner do |crime_application|
+        crime_application.capital&.partner_national_savings_certificates.present?
       end
     end
   end

@@ -8,7 +8,7 @@ module Datastore
       @parent = Adapters::JsonApplication.new(parent)
     end
 
-    def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return if already_recreated?
 
       crime_application.update!(
@@ -25,7 +25,7 @@ module Datastore
         case: case_with_ioj,
         income: income,
         outgoings: outgoings,
-        outgoings_payments: outgoings_payments,
+        outgoings_payments: parent.outgoings&.outgoings_payments || [],
         documents: parent.documents,
         additional_information: parent.additional_information,
         income_payments: parent.income.income_payments,
@@ -33,10 +33,10 @@ module Datastore
         employments: parent.income.employments,
         businesses: parent.income.businesses,
         capital: capital,
-        savings: capital ? parent.capital.savings : [],
-        investments: capital ? parent.capital.investments : [],
-        national_savings_certificates: capital ? parent.capital.national_savings_certificates : [],
-        properties: capital ? parent.capital.properties : [],
+        savings: parent.capital&.savings || [],
+        investments: parent.capital&.investments || [],
+        national_savings_certificates: parent.capital&.national_savings_certificates || [],
+        properties: parent.capital&.properties || [],
         evidence_last_run_at: evidence_last_run_at,
         evidence_prompts: evidence_prompts,
 
@@ -137,12 +137,6 @@ module Datastore
       return if parent.capital.blank?
 
       Capital.new(parent.capital.serializable_hash)
-    end
-
-    def outgoings_payments
-      parent.means_details&.outgoings_details&.outgoings&.map do |struct|
-        OutgoingsPayment.new(**struct)
-      end || []
     end
 
     def evidence_last_run_at

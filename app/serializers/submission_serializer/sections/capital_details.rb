@@ -1,9 +1,9 @@
 module SubmissionSerializer
   module Sections
     class CapitalDetails < Sections::BaseSection
-      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      def to_builder # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
-          next unless capital && requires_full_means_assessment?
+          next unless capital && extent_of_means_assessment_determined? && requires_full_means_assessment?
 
           if requires_full_capital?
             json.has_premium_bonds capital.has_premium_bonds

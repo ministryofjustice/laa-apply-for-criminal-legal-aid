@@ -3,29 +3,10 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::NationalInsuranceNumber do
   subject(:rule) { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      applicant: applicant,
-      partner: partner,
-      partner_detail: partner_detail,
-      date_stamp: DateTime.now,
-      case: Case.new(case_type:),
-      income_benefits: income_benefits
-    )
-  end
+  include_context 'serializable application'
+
   let(:income_benefits) { [] }
   let(:case_type) { nil }
-  let(:applicant) {
-    Applicant.new(
-      date_of_birth: '1995-05-01',
-      nino: nil,
-      has_nino: 'no',
-      will_enter_nino: 'no',
-      benefit_type: benefit_type,
-    )
-  }
-  let(:partner_detail) { nil }
-  let(:partner) { nil }
   let(:benefit_type) { nil }
 
   it { expect(described_class.key).to eq :national_insurance_32 }
@@ -36,48 +17,52 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
   describe '.client' do
     subject(:predicate) { rule.client_predicate }
 
-    context 'when applicant is over 18 without a NINO' do
-      context 'when the case type is `indictable`' do
-        let(:case_type) { CaseType::INDICTABLE.to_s }
-
-        it { is_expected.to be true }
+    context 'when nino forthcoming' do
+      before do
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(
+          BenefitCheckStatus::NO_CHECK_NO_NINO.to_s
+        )
       end
 
-      context 'when the case type is `already_in_crown_court`' do
-        let(:case_type) { CaseType::ALREADY_IN_CROWN_COURT.to_s }
-
-        it { is_expected.to be true }
-      end
-
-      context 'when the case type is `summary only`' do
-        let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
-
-        it { is_expected.to be false }
-      end
-
-      context 'when the applicant receives a passporting benefit' do
-        let(:benefit_type) { BenefitType::JSA }
-
-        it { is_expected.to be true }
-      end
-
-      context 'when the applicant receives a non-passporting benefit' do
-        let(:income_benefits) do
-          [IncomeBenefit.new(payment_type: IncomeBenefitType::CHILD, amount: 200)]
-        end
-
-        it { is_expected.to be true }
-      end
+      it { is_expected.to be true }
     end
 
-    context 'when applicant is under 18' do
-      before { applicant.date_of_birth = 15.years.ago.to_date }
+    context 'when benefit check confirmed' do
+      before do
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(
+          BenefitCheckStatus::CONFIRMED.to_s
+        )
+      end
 
       it { is_expected.to be false }
     end
 
-    context 'when NINO has been entered' do
-      before { applicant.nino = 'AB123456A' }
+    context 'when client has income benefits' do
+      let(:income_benefits) do
+        [
+          IncomeBenefit.new(
+            payment_type: IncomeBenefitType::CHILD,
+            amount: 200,
+            frequency: 'month',
+            ownership_type: 'applicant'
+          )
+        ]
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'client has no income benefits' do
+      let(:income_benefits) do
+        [
+          IncomeBenefit.new(
+            payment_type: IncomeBenefitType::CHILD,
+            amount: 200,
+            frequency: 'month',
+            ownership_type: 'partner'
+          )
+        ]
+      end
 
       it { is_expected.to be false }
     end
@@ -86,42 +71,58 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
   describe '.partner' do
     subject(:predicate) { rule.partner_predicate }
 
-    let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
-    let(:partner) { Partner.new(date_of_birth: '2000-01-01') }
-    let(:ownership_type) { OwnershipType::APPLICANT }
-
-    let(:income_benefits) do
-      [
-        IncomeBenefit.new(
-          payment_type: IncomeBenefitType::CHILD,
-          amount: 200,
-          ownership_type: ownership_type
-        )
-      ]
-    end
-
-    it { is_expected.to be false }
-
-    context 'when partner nino forthcoming' do
-      let(:benefit_type) { 'none' }
-
+    context 'when nino forthcoming' do
       before do
-        partner.benefit_type = 'jsa'
-        partner.has_nino = 'no'
-        partner.will_enter_nino = 'no'
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(
+          BenefitCheckStatus::NO_CHECK_NO_NINO.to_s
+        )
       end
 
       it { is_expected.to be true }
     end
 
-    context 'when partner has Income Benefits' do
-      let(:ownership_type) { OwnershipType::PARTNER }
+    context 'when benefit check confirmed' do
+      before do
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(
+          BenefitCheckStatus::CONFIRMED.to_s
+        )
+      end
 
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
 
-    context 'when just applicant has Income Benefits' do
-      let(:ownership_type) { OwnershipType::APPLICANT }
+    context 'when partner has income benefits' do
+      let(:income_benefits) do
+        [
+          IncomeBenefit.new(
+            payment_type: IncomeBenefitType::CHILD,
+            amount: 200,
+            frequency: 'month',
+            ownership_type: 'partner'
+          )
+        ]
+      end
+
+      it { is_expected.to be true }
+
+      context 'when partner is not included in means' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when partner has no income benefits' do
+      let(:income_benefits) do
+        [
+          IncomeBenefit.new(
+            payment_type: IncomeBenefitType::CHILD,
+            amount: 200,
+            frequency: 'month',
+            ownership_type: 'applicant'
+          )
+        ]
+      end
 
       it { is_expected.to be false }
     end
@@ -132,8 +133,22 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
   end
 
   describe '#to_h' do
-    let(:dob) { Date.new(1995, 5, 12) }
-    let(:case_type) { CaseType::INDICTABLE.to_s }
+    let(:income_benefits) do
+      [
+        IncomeBenefit.new(
+          payment_type: IncomeBenefitType::CHILD,
+          amount: 200,
+          frequency: 'month',
+          ownership_type: 'applicant'
+        ),
+        IncomeBenefit.new(
+          payment_type: IncomeBenefitType::CHILD,
+          amount: 200,
+          frequency: 'month',
+          ownership_type: 'partner'
+        )
+      ]
+    end
 
     let(:expected_hash) do
       {
@@ -147,8 +162,8 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
             prompt: ['their National Insurance number'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['their National Insurance number'],
           },
           other: {
             result: false,

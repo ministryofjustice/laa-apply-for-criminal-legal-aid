@@ -3,6 +3,7 @@ module Adapters
     class IncomeDetails < BaseStructAdapter
       include EmployedIncome
       include SelfEmployedIncome
+      include PersonIncomePaymentTypes
 
       def employment_status
         # TODO: Handle this having multiple employment status' when we get designs for employed

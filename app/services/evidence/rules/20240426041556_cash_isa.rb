@@ -6,12 +6,12 @@ module Evidence
       key :capital_cash_isa_18
       group :capital
 
-      client do |_crime_application, applicant|
-        applicant.savings(SavingType::CASH_ISA).any?
+      client do |crime_application|
+        crime_application.capital&.client_cash_isa_savings.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && partner.savings(SavingType::CASH_ISA).any?
+      partner do |crime_application|
+        crime_application.capital&.partner_cash_isa_savings.present?
       end
     end
   end

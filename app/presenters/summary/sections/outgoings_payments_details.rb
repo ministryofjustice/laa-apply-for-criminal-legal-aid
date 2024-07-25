@@ -18,7 +18,9 @@ module Summary
       end
 
       def payments
-        @payments ||= crime_application.outgoings_payments.select { |p| payment_types.include? p.payment_type }
+        @payments ||= crime_application.outgoings.outgoings_payments.select do |p|
+          payment_types.include? p.payment_type
+        end
       end
 
       def edit_path

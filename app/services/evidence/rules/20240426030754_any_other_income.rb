@@ -6,20 +6,13 @@ module Evidence
       key :income_other_9
       group :income
 
-      client do |_crime_application, applicant|
-        OtherIncomeEvidenceRequired.for(applicant)
+      client do |crime_application, _applicant|
+        crime_application.income&.client_other_payment.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && OtherIncomeEvidenceRequired.for(partner)
+      partner do |crime_application, _partner|
+        crime_application.income&.partner_other_payment.present?
       end
-    end
-  end
-
-  class OtherIncomeEvidenceRequired
-    def self.for(person)
-      other_income = person.income_payment(IncomePaymentType::OTHER)
-      other_income.present? && other_income.details.present?
     end
   end
 end

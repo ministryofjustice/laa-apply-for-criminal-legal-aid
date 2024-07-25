@@ -1,30 +1,29 @@
 RSpec.shared_examples 'an ownable saving requiring evidence' do
   subject(:rule) { described_class.new(crime_application) }
 
+  include_context 'serializable application'
+
   let(:include_partner?) { true }
   let(:full_capital_required?) { true }
   let(:savings) { [] }
-
-  before do
-    allow(MeansStatus).to receive_messages(
-      include_partner?: include_partner?, full_capital_required?: full_capital_required?
-    )
-  end
-
-  let(:crime_application) do
-    CrimeApplication.create!(
-      savings: savings, applicant: Applicant.new, partner: Partner.new, capital: Capital.new
-    )
-  end
 
   describe '.client' do
     subject(:predicate) { described_class.new(crime_application).client_predicate }
 
     let(:ownership_type) { OwnershipType::APPLICANT }
-    let(:savings) { [Saving.new(saving_type:, ownership_type:)] }
+
+    let(:savings) do
+      [Saving.new(saving_type: saving_type, ownership_type: ownership_type, account_balance: 101)]
+    end
 
     context 'when owned by client' do
       it { is_expected.to be true }
+    end
+
+    context 'when capital section not answered' do
+      let(:age_passported?) { true }
+
+      it { is_expected.to be false }
     end
 
     context 'when full capital is not required' do
@@ -45,7 +44,7 @@ RSpec.shared_examples 'an ownable saving requiring evidence' do
       it { is_expected.to be false }
     end
 
-    context 'when owned by applicant' do
+    context 'when owned by partner' do
       let(:ownership_type) { OwnershipType::PARTNER }
 
       it { is_expected.to be false }
@@ -56,7 +55,16 @@ RSpec.shared_examples 'an ownable saving requiring evidence' do
     subject(:predicate) { described_class.new(crime_application).partner_predicate }
 
     let(:ownership_type) { OwnershipType::PARTNER }
-    let(:savings) { [Saving.new(saving_type:, ownership_type:)] }
+
+    let(:savings) do
+      [Saving.new(saving_type: saving_type, ownership_type: ownership_type, account_balance: 101)]
+    end
+
+    context 'when capital section not answered' do
+      let(:age_passported?) { true }
+
+      it { is_expected.to be false }
+    end
 
     context 'when owned by partner' do
       it { is_expected.to be true }
@@ -100,8 +108,8 @@ RSpec.shared_examples 'an ownable saving requiring evidence' do
   describe '#to_h' do
     let(:savings) do
       [
-        Saving.new(saving_type: saving_type, ownership_type: :applicant),
-        Saving.new(saving_type: saving_type, ownership_type: :partner)
+        Saving.new(saving_type: saving_type, ownership_type: :applicant, account_balance: 123),
+        Saving.new(saving_type: saving_type, ownership_type: :partner, account_balance: 4234)
       ]
     end
 

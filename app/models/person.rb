@@ -9,33 +9,6 @@ class Person < ApplicationRecord
 
   scope :with_name, -> { where.not(first_name: [nil, '']) }
 
-  def savings(*saving_types)
-    return [] unless capital
-
-    capital.savings.select do |saving|
-      ownership_types.include?(OwnershipType.new(saving.ownership_type)) &&
-        saving_types.include?(SavingType.new(saving.saving_type))
-    end
-  end
-
-  def investments(*investment_types)
-    return [] unless capital
-
-    capital.investments.select do |investment|
-      ownership_types.include?(OwnershipType.new(investment.ownership_type)) &&
-        investment_types.include?(InvestmentType.new(investment.investment_type))
-    end
-  end
-
-  def income_payment(payment_type)
-    return unless income
-
-    income.income_payments.find do |payment|
-      ownership_types.include?(OwnershipType.new(payment.ownership_type)) &&
-        payment.payment_type == payment_type.to_s
-    end
-  end
-
   def home_address?
     home_address&.address_line_one.present?
   end
@@ -46,10 +19,6 @@ class Person < ApplicationRecord
 
   def has_passporting_benefit?
     BenefitType.passporting.map(&:value).include?(benefit_type&.to_sym)
-  end
-
-  def applicant?
-    is_a? Applicant
   end
 
   def over_18_at_date_stamp?

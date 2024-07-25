@@ -6,12 +6,12 @@ module Evidence
       key :capital_unit_trusts_27
       group :capital
 
-      client do |_crime_application, applicant|
-        applicant.investments(InvestmentType::UNIT_TRUST).any?
+      client do |crime_application|
+        crime_application.capital&.client_unit_trust_investments.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && partner.investments(InvestmentType::UNIT_TRUST).any?
+      partner do |crime_application|
+        crime_application.capital&.partner_unit_trust_investments.present?
       end
     end
   end

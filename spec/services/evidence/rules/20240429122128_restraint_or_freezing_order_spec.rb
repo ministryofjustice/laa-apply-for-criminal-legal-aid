@@ -3,14 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      capital:, income:
-    )
-  end
-
-  let(:capital) { Capital.new }
-  let(:income) { Income.new }
+  include_context 'serializable application'
 
   it { expect(described_class.key).to eq :restraint_freezing_order_31 }
   it { expect(described_class.group).to eq :none }
@@ -20,15 +13,21 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
+    context 'means passported' do
+      let(:age_passported?) { true }
+
+      it { is_expected.to be false }
+    end
+
     context 'when client does not have a restraining or freezing order in place' do
       context 'when question was not answered in the capital section' do
-        let(:capital) { Capital.new(has_frozen_income_or_assets: 'no') }
+        before { capital.has_frozen_income_or_assets = 'no' }
 
         it { is_expected.to be false }
       end
 
       context 'when question was not answered in the income section' do
-        let(:income) { Income.new(has_frozen_income_or_assets: 'no') }
+        before { income.has_frozen_income_or_assets = 'no' }
 
         it { is_expected.to be false }
       end
@@ -36,15 +35,16 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
 
     context 'when client has a restraining or freezing order in place' do
       context 'when question was answered in the capital section' do
-        let(:capital) { Capital.new(has_frozen_income_or_assets: 'yes') }
-        let(:income) { Income.new(has_frozen_income_or_assets: nil) }
+        before { capital.has_frozen_income_or_assets = 'yes' }
 
         it { is_expected.to be true }
       end
 
       context 'when question was answered in the income section' do
-        let(:capital) { Capital.new(has_frozen_income_or_assets: nil) }
-        let(:income) { Income.new(has_frozen_income_or_assets: 'yes') }
+        before do
+          capital.has_frozen_income_or_assets = nil
+          income.has_frozen_income_or_assets = 'yes'
+        end
 
         it { is_expected.to be true }
       end
@@ -68,7 +68,7 @@ RSpec.describe Evidence::Rules::RestraintOrFreezingOrder do
   end
 
   describe '#to_h' do
-    let(:capital) { Capital.new(has_frozen_income_or_assets: 'yes') }
+    before { capital.has_frozen_income_or_assets = 'yes' }
 
     let(:expected_hash) do
       {

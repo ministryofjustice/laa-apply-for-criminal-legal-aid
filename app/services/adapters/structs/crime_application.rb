@@ -51,14 +51,6 @@ module Adapters
         Structs::OutgoingsDetails.new(means_details.outgoings_details)
       end
 
-      def outgoings_payments
-        return [] unless means_details.outgoings_details.outgoings
-
-        means_details.outgoings_details.outgoings.map do |struct|
-          OutgoingsPayment.new(struct.attributes)
-        end
-      end
-
       def capital
         return nil unless means_details
 

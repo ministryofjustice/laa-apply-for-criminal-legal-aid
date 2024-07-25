@@ -55,6 +55,14 @@ module EmployedIncome
     end
   end
 
+  def client_employed?
+    employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  end
+
+  def partner_employed?
+    partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
+  end
+
   # inverse of employment_income_payment_type
   def obsolete_employed_income_payment_types
     IncomePaymentType::EMPLOYED_INCOME_TYPES.map(&:to_s) - employed_income_payment_types

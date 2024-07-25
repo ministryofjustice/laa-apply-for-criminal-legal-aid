@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Evidence::Ruleset::Latest do
   let(:crime_application) do
-    instance_double(CrimeApplication, evidence_prompts: [])
+    instance_double(CrimeApplication, evidence_prompts: [], draft_submission: double)
   end
 
   before do

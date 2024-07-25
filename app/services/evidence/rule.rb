@@ -43,7 +43,7 @@ module Evidence
     end
 
     def initialize(crime_application = nil)
-      @crime_application = crime_application
+      @crime_application = crime_application&.draft_submission
       @errors = []
 
       setup if respond_to?(:setup)

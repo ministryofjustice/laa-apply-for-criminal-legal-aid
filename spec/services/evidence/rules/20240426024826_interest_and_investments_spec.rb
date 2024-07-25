@@ -3,14 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::InterestAndInvestments do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      income: income,
-      income_payments: income_payments,
-      applicant: Applicant.new,
-      partner: Partner.new
-    )
-  end
+  include_context 'serializable application'
 
   let(:partner_investments) do
     IncomePayment.new(
@@ -29,16 +22,7 @@ RSpec.describe Evidence::Rules::InterestAndInvestments do
     )
   end
 
-  let(:income) { Income.new }
   let(:income_payments) { [client_investments, partner_investments] }
-  let(:include_partner?) { true }
-
-  before do
-    allow(MeansStatus).to receive_messages(
-      include_partner?: include_partner?,
-      full_means_required?: true
-    )
-  end
 
   it { expect(described_class.key).to eq :income_investments_7 }
   it { expect(described_class.group).to eq :income }

@@ -11,8 +11,8 @@ module Evidence
 
       client do |crime_application|
         costs = [
-          crime_application.outgoings_payments.mortgage,
-          crime_application.outgoings_payments.rent,
+          crime_application.outgoings&.rent,
+          crime_application.outgoings&.mortgage
         ]
 
         total = costs.compact.sum { |x| x.prorated_monthly.to_f }
@@ -20,7 +20,6 @@ module Evidence
         total > THRESHOLD
       end
 
-      # TODO: Awaiting partner implementation
       partner do |_crime_application|
         false
       end

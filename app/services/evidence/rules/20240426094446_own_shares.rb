@@ -6,12 +6,12 @@ module Evidence
       key :capital_shares_24
       group :capital
 
-      client do |_crime_application, applicant|
-        applicant.investments(InvestmentType::SHARE).any?
+      client do |crime_application|
+        crime_application.capital&.client_share_investments.present?
       end
 
-      partner do |_crime_application, partner|
-        partner.present? && partner.investments(InvestmentType::SHARE).any?
+      partner do |crime_application|
+        crime_application.capital&.partner_share_investments.present?
       end
     end
   end

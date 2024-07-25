@@ -13,11 +13,11 @@ module Summary
               change_path: edit_steps_outgoings_housing_payment_type_path
             ),
             Components::PaymentAnswer.new(
-              :mortgage, mortgage,
+              :mortgage, outgoings.mortgage,
               change_path: edit_steps_outgoings_mortgage_path
             ),
             Components::PaymentAnswer.new(
-              :rent, rent,
+              :rent, outgoings.rent,
               change_path: edit_steps_outgoings_rent_path
             ),
           ] + board_and_lodging_info + council_tax_info
@@ -58,9 +58,9 @@ module Summary
             change_path: edit_steps_outgoings_council_tax_path
           ),
           Components::PaymentAnswer.new(
-            :council_tax, council_tax,
+            :council_tax, outgoings.council_tax,
             change_path: edit_steps_outgoings_council_tax_path
-          ),
+          )
         ]
       end
 
@@ -78,16 +78,7 @@ module Summary
         )
       end
 
-      # TODO: Attempted to get an appropriate Struct to return this value
-      # however doing so caused headache with specs. Ensure match is using
-      # .to_s to ensure both ActiveRecord and Struct models work as expected
-      (HousingPaymentType::VALUES + [OutgoingsPaymentType::COUNCIL_TAX]).each do |type|
-        define_method(type.to_s) do
-          crime_application.outgoings_payments.find do |p|
-            p.payment_type.to_s == type.to_s
-          end
-        end
-      end
+      delegate :board_and_lodging, to: :outgoings
     end
   end
 end
