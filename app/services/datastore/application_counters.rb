@@ -18,6 +18,8 @@ module Datastore
     # Fallback to `zero`, but do not blow up.
     # As per locales, it will not show counter on the tab.
     def count(status)
+      return 0 if office_code.blank?
+
       Rails.error.handle(fallback: -> { FALLBACK_COUNT }) do
         result = DatastoreApi::Requests::ListApplications.new(
           status: status.to_s, office_code: office_code, per_page: PER_PAGE_LIMIT

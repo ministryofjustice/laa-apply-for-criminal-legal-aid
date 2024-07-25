@@ -23,6 +23,14 @@ RSpec.describe Datastore::ApplicationCounters do
     it 'returns total returned applications' do
       expect(subject.returned_count).to eq(5)
     end
+
+    context 'when office code blank' do
+      subject { described_class.new(office_code: '') }
+
+      it 'returns total returned applications' do
+        expect(subject.returned_count).to eq(0)
+      end
+    end
   end
 
   context 'handling of errors' do
