@@ -20,7 +20,8 @@ describe Summary::HtmlPresenter do
       capital: capital,
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double],
       is_means_tested: is_means_tested,
-      non_means_tested?: false
+      non_means_tested?: false,
+      cifc?: cifc?,
     )
   end
   # rubocop:enable Layout/LineLength
@@ -73,6 +74,7 @@ describe Summary::HtmlPresenter do
   let(:manage_without_income) { nil }
 
   let(:is_means_tested) { 'yes' }
+  let(:cifc?) { false }
 
   let(:datastore_application) do
     extra = {
@@ -350,6 +352,7 @@ describe Summary::HtmlPresenter do
     context 'when a change in financial circumstances application' do
       let(:application_type) { 'change_in_financial_circumstances' }
       let(:is_means_tested) { 'yes' }
+      let(:cifc?) { true }
 
       context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
@@ -364,7 +367,6 @@ describe Summary::HtmlPresenter do
             PassportingBenefitCheckPartner
             CaseDetails
             Offences
-            Codefendants
             NextCourtHearing
             FirstCourtHearing
             JustificationForLegalAid
@@ -413,7 +415,6 @@ describe Summary::HtmlPresenter do
             PassportingBenefitCheckPartner
             CaseDetails
             Offences
-            Codefendants
             NextCourtHearing
             FirstCourtHearing
             JustificationForLegalAid

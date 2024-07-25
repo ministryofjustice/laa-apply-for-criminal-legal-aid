@@ -8,7 +8,8 @@ describe Summary::Sections::Codefendants do
       CrimeApplication,
       in_progress?: true,
       kase: kase,
-      to_param: 12_345
+      to_param: 12_345,
+      cifc?: cifc?,
     )
   end
 
@@ -22,6 +23,7 @@ describe Summary::Sections::Codefendants do
 
   let(:records) { [Codefendant.new] }
   let(:has_codefendants) { 'yes' }
+  let(:cifc?) { false }
 
   describe '#list?' do
     it { expect(subject.list?).to be true }
@@ -36,6 +38,14 @@ describe Summary::Sections::Codefendants do
 
     context 'when there is no case' do
       let(:kase) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
+      end
+    end
+
+    context 'when change in financial circumstances application' do
+      let(:cifc?) { true }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)
