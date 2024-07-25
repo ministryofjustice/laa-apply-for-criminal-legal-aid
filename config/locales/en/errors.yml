@@ -1091,6 +1091,7 @@ en:
           attributes:
             holder_number:
               blank: Enter the customer number or holder number
+              invalid: Enter a valid customer number or holder number
             certificate_number:
               blank: Enter the certificate number
             value:

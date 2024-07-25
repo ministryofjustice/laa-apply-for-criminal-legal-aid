@@ -17,15 +17,16 @@ module CaseDetails
     def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       errors.add(:has_case_concluded, :blank) unless case_concluded_complete?
       errors.add(:is_preorder_work_claimed, :blank) unless preorder_work_complete?
-
       errors.add(:is_client_remanded, :blank) if !non_means_tested? && !client_remanded_complete?
 
-      errors.add(:charges, :blank) unless has_charges_complete?
-      errors.add(:charges_summary, :incomplete_records) unless all_charges_complete?
-      errors.add(:has_codefendants, :blank) unless has_codefendants_complete?
-      errors.add(:codefendants_summary, :incomplete_records) unless all_codefendants_complete?
-      errors.add(:hearing_details, :blank) unless hearing_details_complete?
-      errors.add(:first_court_hearing, :blank) unless first_court_hearing_complete?
+      unless crime_application.cifc?
+        errors.add(:charges, :blank) unless has_charges_complete?
+        errors.add(:charges_summary, :incomplete_records) unless all_charges_complete?
+        errors.add(:has_codefendants, :blank) unless has_codefendants_complete?
+        errors.add(:codefendants_summary, :incomplete_records) unless all_codefendants_complete?
+        errors.add(:hearing_details, :blank) unless hearing_details_complete?
+        errors.add(:first_court_hearing, :blank) unless first_court_hearing_complete?
+      end
 
       errors.add :base, :incomplete_records unless errors.empty?
     end
