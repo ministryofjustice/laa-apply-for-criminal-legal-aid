@@ -139,6 +139,22 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
           expect(subject).to be_valid
         end
       end
+
+      context 'and evidence has not been uploaded' do
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:means_passport, :blank)).to be(true)
+          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/details')
+        end
+
+        context 'and evidence has been uploaded' do
+          let(:stored_documents) { ['doc'] }
+
+          it 'is valid' do
+            expect(subject).to be_valid
+          end
+        end
+      end
     end
   end
 
