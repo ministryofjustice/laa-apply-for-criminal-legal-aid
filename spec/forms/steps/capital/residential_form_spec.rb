@@ -117,6 +117,26 @@ RSpec.describe Steps::Capital::ResidentialForm do
           expect(subject.save).to be(true)
         end
       end
+
+      context 'percentage_applicant_owned validation' do
+        context 'when percentage applicant owned is 0' do
+          let(:attributes) { required_attributes.merge(percentage_applicant_owned: 0) }
+
+          it 'adds an error' do
+            expect(subject.save).to be(false)
+            expect(subject.errors.of_kind?(:percentage_applicant_owned, :greater_than)).to be(true)
+          end
+        end
+
+        context 'when percentage applicant owned greater than 100' do
+          let(:attributes) { required_attributes.merge(percentage_applicant_owned: 101) }
+
+          it 'adds an error' do
+            expect(subject.save).to be(false)
+            expect(subject.errors.of_kind?(:percentage_applicant_owned, :less_than_or_equal_to)).to be(true)
+          end
+        end
+      end
     end
 
     context 'when client has a partner' do
@@ -139,6 +159,36 @@ RSpec.describe Steps::Capital::ResidentialForm do
           expect(record).to receive(:update).and_return(true)
 
           expect(subject.save).to be(true)
+        end
+      end
+
+      context 'percentage_applicant_owned validation' do
+        context 'when percentage applicant owned is less than 0' do
+          let(:attributes) { required_attributes.merge(percentage_applicant_owned: -1) }
+
+          it 'adds an error' do
+            expect(subject.save).to be(false)
+            expect(subject.errors.of_kind?(:percentage_applicant_owned, :greater_than_or_equal_to)).to be(true)
+          end
+        end
+
+        context 'when percentage applicant owned is 0' do
+          let(:attributes) { required_attributes.merge(percentage_applicant_owned: 0, percentage_partner_owned: 10) }
+
+          it 'updates the record' do
+            expect(record).to receive(:update).and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
+
+        context 'when percentage applicant owned greater than 100' do
+          let(:attributes) { required_attributes.merge(percentage_applicant_owned: 101) }
+
+          it 'adds an error' do
+            expect(subject.save).to be(false)
+            expect(subject.errors.of_kind?(:percentage_applicant_owned, :less_than_or_equal_to)).to be(true)
+          end
         end
       end
     end
