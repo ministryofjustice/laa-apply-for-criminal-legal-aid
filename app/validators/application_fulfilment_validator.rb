@@ -47,7 +47,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     return true if Passporting::MeansPassporter.new(record).call
     return true if appeal_no_changes?
 
-    means_record_present? || client_remanded_in_custody?
+    evidence_present? || means_record_present? || client_remanded_in_custody?
   end
 
   def ioj_present?
