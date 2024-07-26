@@ -31,13 +31,13 @@ RSpec.describe Payment, type: :model do
         [{ amount: 12_000.99, frequency: 'annual', payment_type: 'rent' }, 1000.08],
         [{ amount: -1.99, frequency: 'month', payment_type: 'rent' }, -1.99],
         [{ amount: 0, frequency: 'annual', payment_type: 'rent' }, 0],
-        [{ amount: nil, frequency: 'annual', payment_type: 'rent' }, 0],
-        [{ amount: 123.09, frequency: 'badfrequency', payment_type: 'rent' }, 123.09],
+        [{ amount: nil, frequency: 'annual', payment_type: 'rent' }, 0]
       ]
 
       tests.each do |test|
         payment = described_class.new(**test[0])
-        expect(payment.prorated_monthly.to_f).to eq(test[1])
+
+        expect(payment.prorated_monthly.to_f).to eq(test[1]), -> { test }
       end
     end
   end

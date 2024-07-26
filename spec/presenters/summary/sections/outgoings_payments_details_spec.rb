@@ -16,7 +16,8 @@ describe Summary::Sections::OutgoingsPaymentsDetails do
     instance_double(
       Outgoings,
       housing_payment_type: 'none',
-      has_no_other_outgoings: has_no_other_outgoings
+      has_no_other_outgoings: has_no_other_outgoings,
+      outgoings_payments: outgoings_payments,
     )
   end
 

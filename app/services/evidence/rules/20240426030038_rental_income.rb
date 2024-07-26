@@ -6,13 +6,12 @@ module Evidence
       key :income_rent_8
       group :income
 
-      client do |_crime_application, applicant|
-        applicant.income_payments.rent.present?
+      client do |crime_application, _applicant|
+        crime_application.income&.client_rent_payment.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) &&
-          partner.income_payments.rent.present?
+      partner do |crime_application, _partner|
+        crime_application.income&.partner_rent_payment.present?
       end
     end
   end

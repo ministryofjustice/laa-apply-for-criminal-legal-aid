@@ -119,4 +119,11 @@ class CrimeApplication < ApplicationRecord
   def passporting_benefit_complete?
     valid?(:passporting_benefit)
   end
+
+  def draft_submission
+    draft = SubmissionSerializer::Application.new(self).to_builder
+    draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
+
+    Adapters::Structs::CrimeApplication.new(draft.attributes!.as_json)
+  end
 end

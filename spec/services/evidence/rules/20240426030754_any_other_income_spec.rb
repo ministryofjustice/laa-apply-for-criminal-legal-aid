@@ -3,15 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::AnyOtherIncome do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      income: income,
-      income_payments: income_payments,
-      applicant: Applicant.new,
-      partner: Partner.new
-    )
-  end
-  let(:include_partner?) { true }
+  include_context 'serializable application'
 
   let(:partner_other) do
     IncomePayment.new(
@@ -32,12 +24,7 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
     )
   end
 
-  let(:income) { Income.new }
   let(:income_payments) { [client_other, partner_other] }
-
-  before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
-  end
 
   it { expect(described_class.key).to eq :income_other_9 }
   it { expect(described_class.group).to eq :income }
@@ -49,12 +36,18 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
 
     context 'with other income' do
       it { is_expected.to be true }
+
+      context 'when means pasported' do
+        let(:age_passported?) { true }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'without other income details' do
       let(:client_other) do
         IncomePayment.new(
-          payment_type: IncomePaymentType::OTHER,
+          payment_type: IncomePaymentType::RENT,
           frequency: PaymentFrequencyType::MONTHLY,
           amount: 40.00,
           details: ''
@@ -93,7 +86,7 @@ RSpec.describe Evidence::Rules::AnyOtherIncome do
     context 'without other income details' do
       let(:partner_other) do
         IncomePayment.new(
-          payment_type: IncomePaymentType::OTHER,
+          payment_type: IncomePaymentType::RENT,
           frequency: PaymentFrequencyType::MONTHLY,
           amount: 40.00,
           details: '',

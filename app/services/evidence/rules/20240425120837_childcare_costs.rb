@@ -10,13 +10,9 @@ module Evidence
       group :outgoings
 
       client do |crime_application|
-        costs = [
-          crime_application.outgoings_payments.childcare,
-        ]
+        payment = crime_application.outgoings&.childcare
 
-        total = costs.compact.sum { |x| x.prorated_monthly.to_f }
-
-        total > THRESHOLD
+        payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
       # TODO: Awaiting partner implementation

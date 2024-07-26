@@ -7,19 +7,11 @@ module Evidence
       group :capital
 
       client do |crime_application|
-        if crime_application.capital
-          crime_application.capital.has_premium_bonds == 'yes'
-        else
-          false
-        end
+        crime_application.capital&.has_premium_bonds == 'yes'
       end
 
       partner do |crime_application|
-        if crime_application.capital
-          crime_application.capital.partner_has_premium_bonds == 'yes'
-        else
-          false
-        end
+        crime_application.capital&.partner_has_premium_bonds == 'yes'
       end
     end
   end

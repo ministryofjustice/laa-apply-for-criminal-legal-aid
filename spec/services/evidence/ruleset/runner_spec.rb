@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Evidence::Ruleset::Runner do
   let(:crime_application) do
-    instance_double(CrimeApplication)
+    instance_double(CrimeApplication, draft_submission: double)
   end
 
   before do

@@ -3,18 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::TrustFund do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      capital:,
-    )
-  end
-
-  let(:capital) { Capital.new }
-  let(:include_partner?) { true }
-
-  before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
-  end
+  include_context 'serializable application'
 
   it { expect(described_class.key).to eq :income_trust_10 }
   it { expect(described_class.group).to eq :income }
@@ -25,40 +14,34 @@ RSpec.describe Evidence::Rules::TrustFund do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'when benefitting from trust fund and dividend' do
-      let(:capital) do
-        Capital.new(
-          will_benefit_from_trust_fund: 'yes',
-          trust_fund_yearly_dividend: 1
-        )
+      before do
+        capital.will_benefit_from_trust_fund = 'yes'
+        capital.trust_fund_yearly_dividend = 1
       end
 
       it { is_expected.to be true }
     end
 
     context 'when benefitting from trust fund but no dividend' do
-      let(:capital) do
-        Capital.new(
-          will_benefit_from_trust_fund: 'yes',
-          trust_fund_yearly_dividend: nil
-        )
+      before do
+        capital.will_benefit_from_trust_fund = 'yes'
+        capital.trust_fund_yearly_dividend = nil
       end
 
       it { is_expected.to be false }
     end
 
     context 'when not benefitting from trust fund but somehow has dividend' do
-      let(:capital) do
-        Capital.new(
-          will_benefit_from_trust_fund: 'no',
-          trust_fund_yearly_dividend: 10
-        )
+      before do
+        capital.will_benefit_from_trust_fund = 'no'
+        capital.trust_fund_yearly_dividend = 10
       end
 
       it { is_expected.to be false }
     end
 
     context 'when there is no capital' do
-      let(:capital) { nil }
+      before { crime_application.capital = nil }
 
       it { is_expected.to be false }
     end
@@ -67,10 +50,9 @@ RSpec.describe Evidence::Rules::TrustFund do
   describe '.partner' do
     subject { described_class.new(crime_application).partner_predicate }
 
-    let(:capital) do
-      Capital.new(
-        partner_will_benefit_from_trust_fund: 'yes', partner_trust_fund_yearly_dividend: 1
-      )
+    before do
+      capital.partner_will_benefit_from_trust_fund = 'yes'
+      capital.partner_trust_fund_yearly_dividend = 10
     end
 
     context 'when benefitting from trust fund and dividend' do
@@ -101,7 +83,7 @@ RSpec.describe Evidence::Rules::TrustFund do
     end
 
     context 'when there is no capital' do
-      let(:capital) { nil }
+      before { crime_application.capital = nil }
 
       it { is_expected.to be false }
     end
@@ -112,13 +94,11 @@ RSpec.describe Evidence::Rules::TrustFund do
   end
 
   describe '#to_h' do
-    let(:capital) do
-      Capital.new(
-        will_benefit_from_trust_fund: 'yes',
-        trust_fund_yearly_dividend: 100,
-        partner_will_benefit_from_trust_fund: 'yes',
-        partner_trust_fund_yearly_dividend: 100
-      )
+    before do
+      capital.will_benefit_from_trust_fund = 'yes'
+      capital.trust_fund_yearly_dividend = 100
+      capital.partner_will_benefit_from_trust_fund = 'yes'
+      capital.partner_trust_fund_yearly_dividend = 100
     end
 
     let(:expected_hash) do
