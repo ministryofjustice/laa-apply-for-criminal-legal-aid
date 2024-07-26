@@ -1,6 +1,8 @@
 module Adapters
   module Structs
     class CapitalDetails < BaseStructAdapter
+      include PersonCapitalAssets
+
       def trust_fund_amount_held
         Money.new(super)
       end

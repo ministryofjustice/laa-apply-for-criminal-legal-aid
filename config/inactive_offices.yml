@@ -238,7 +238,6 @@ production:
     - 2M241U
     - 2M247A
     - 2P619D
-    - 2Q248M
     - 2Q475J
     - 2Q476K
     - 2Q477L
@@ -1001,3 +1000,5 @@ production:
     - 1Z902U
     - 2Q346U
     - 2Q347V
+    # Deactivate office code request - 26/07/2024
+    - 2M248B

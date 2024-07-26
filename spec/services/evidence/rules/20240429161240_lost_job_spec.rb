@@ -3,22 +3,16 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::LostJob do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      income:,
-    )
-  end
-
-  let(:income) do
-    Income.new(
-      employment_status: [EmploymentStatus::NOT_WORKING],
-      lost_job_in_custody: 'yes',
-      ended_employment_within_three_months: 'yes',
-      date_job_lost: date_job_lost,
-    )
-  end
+  include_context 'serializable application'
 
   let(:date_job_lost) { nil }
+
+  before do
+    income.employment_status = ['not_working']
+    income.lost_job_in_custody = 'yes'
+    income.ended_employment_within_three_months = 'yes'
+    income.date_job_lost = date_job_lost
+  end
 
   it { expect(described_class.key).to eq :lost_job_33 }
   it { expect(described_class.group).to eq :none }
@@ -75,7 +69,9 @@ RSpec.describe Evidence::Rules::LostJob do
     end
 
     context 'when income is nil' do
-      let(:income) { nil }
+      before do
+        crime_application.income = nil
+      end
 
       it { expect(subject).to be false }
     end

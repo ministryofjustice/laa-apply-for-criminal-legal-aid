@@ -101,22 +101,6 @@ class Income < ApplicationRecord
     employments&.sum { |e| e.amount.to_i }
   end
 
-  def client_employed?
-    employment_status.include? EmploymentStatus::EMPLOYED.to_s
-  end
-
-  def partner_employed?
-    partner_employment_status.include? EmploymentStatus::EMPLOYED.to_s
-  end
-
-  def partner_self_employed?
-    partner_employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
-  end
-
-  def client_self_employed?
-    employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
-  end
-
   def known_to_be_full_means?
     MeansStatus.full_means_required?(crime_application)
   rescue Errors::CannotYetDetermineFullMeans

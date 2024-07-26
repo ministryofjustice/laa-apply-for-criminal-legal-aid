@@ -1,5 +1,6 @@
 class Outgoings < ApplicationRecord
   include MeansOwnershipScope
+  include TypesOfOutgoings
 
   belongs_to :crime_application
   has_many :outgoings_payments, through: :crime_application

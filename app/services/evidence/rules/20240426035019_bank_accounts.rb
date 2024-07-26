@@ -6,15 +6,12 @@ module Evidence
       key :capital_bank_accounts_16
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          (applicant.savings.bank.any? || applicant.joint_savings.bank.any?)
+      client do |crime_application|
+        crime_application.capital&.client_bank_savings.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) &&
-          MeansStatus.full_capital_required?(crime_application) &&
-          (partner.savings.bank.any? || partner.joint_savings.bank.any?)
+      partner do |crime_application|
+        crime_application.capital&.partner_bank_savings.present?
       end
     end
   end

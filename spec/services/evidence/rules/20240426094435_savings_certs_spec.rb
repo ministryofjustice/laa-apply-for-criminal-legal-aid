@@ -3,23 +3,8 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::SavingsCerts do
   subject(:rule) { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      national_savings_certificates: national_savings_certificates,
-      partner: Partner.new,
-      applicant: Applicant.new
-    )
-  end
+  include_context 'serializable application'
   let(:national_savings_certificates) { [] }
-
-  let(:include_partner?) { true }
-  let(:full_capital_required?) { true }
-
-  before do
-    allow(MeansStatus).to receive_messages(
-      include_partner?: include_partner?, full_capital_required?: full_capital_required?
-    )
-  end
 
   it { expect(described_class.key).to eq :capital_savings_certs_22 }
   it { expect(described_class.group).to eq :capital }

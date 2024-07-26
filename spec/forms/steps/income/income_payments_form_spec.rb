@@ -49,6 +49,10 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
     subject.crime_application.income_payments
   end
 
+  before do
+    allow(MeansStatus).to receive(:full_means_required?).and_return(true)
+  end
+
   it_behaves_like 'a payment form', described_class, :has_no_income_payments
 
   context 'when record with incorrect ownership exists' do

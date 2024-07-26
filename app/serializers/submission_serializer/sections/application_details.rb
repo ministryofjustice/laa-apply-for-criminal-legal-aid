@@ -13,7 +13,9 @@ module SubmissionSerializer
           json.date_stamp crime_application.date_stamp
           json.is_means_tested crime_application.is_means_tested
           json.ioj_passport crime_application.ioj_passport
-          json.means_passport crime_application.means_passport
+          json.means_passport(
+            applicant.present? ? Passporting::MeansPassporter.new(crime_application).means_passport : []
+          )
           json.additional_information crime_application.additional_information
           json.pre_cifc_reference_number crime_application.pre_cifc_reference_number
           json.pre_cifc_maat_id crime_application.pre_cifc_maat_id

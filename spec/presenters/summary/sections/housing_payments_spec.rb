@@ -74,6 +74,15 @@ describe Summary::Sections::HousingPayments do
     )
   end
 
+  before do
+    allow(outgoings).to receive_messages(
+      mortgage: nil,
+      board_and_lodging: nil,
+      council_tax: nil,
+      rent: nil
+    )
+  end
+
   describe '#name' do
     it { expect(subject.name).to eq(:housing_payments) }
   end
@@ -87,7 +96,6 @@ describe Summary::Sections::HousingPayments do
 
     context 'when there is no housing_payments and no council_tax payment' do
       let(:outgoings) { nil }
-      let(:outgoings_payments) { [] }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)
@@ -111,10 +119,10 @@ describe Summary::Sections::HousingPayments do
     let(:answers) { subject.answers }
 
     context 'when there are outgoings detail and council_tax payment' do
-      let(:outgoings_payments) do
-        [
-          council_tax_payment
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          council_tax: council_tax_payment
+        )
       end
 
       it 'has the correct rows' do
@@ -142,12 +150,12 @@ describe Summary::Sections::HousingPayments do
     end
 
     context 'with mortgage and council_tax payment' do
-      let(:outgoings_payments) do
-        [
-          mortgage_payment,
-          maintenance_payment,
-          council_tax_payment,
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          mortgage: mortgage_payment,
+          maintenance: maintenance_payment,
+          council_tax: council_tax_payment
+        )
       end
 
       it 'shows this section' do
@@ -166,12 +174,12 @@ describe Summary::Sections::HousingPayments do
     end
 
     context 'with rent and council_tax payment' do
-      let(:outgoings_payments) do
-        [
-          rent_payment,
-          maintenance_payment,
-          council_tax_payment,
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          maintenance: maintenance_payment,
+          council_tax: council_tax_payment,
+          rent: rent_payment
+        )
       end
 
       it 'shows this section' do
@@ -190,11 +198,11 @@ describe Summary::Sections::HousingPayments do
     end
 
     context 'with mortgage' do
-      let(:outgoings_payments) do
-        [
-          mortgage_payment,
-          maintenance_payment,
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          mortgage: mortgage_payment,
+          maintenance: maintenance_payment
+        )
       end
 
       it 'shows this section' do
@@ -209,11 +217,11 @@ describe Summary::Sections::HousingPayments do
     end
 
     context 'with rent' do
-      let(:outgoings_payments) do
-        [
-          rent_payment,
-          maintenance_payment,
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          maintenance: maintenance_payment,
+          rent: rent_payment
+        )
       end
 
       it 'shows this section' do
@@ -228,10 +236,10 @@ describe Summary::Sections::HousingPayments do
     end
 
     context 'with board and lodging' do
-      let(:outgoings_payments) do
-        [
-          board_and_lodging_payment
-        ]
+      before do
+        allow(outgoings).to receive_messages(
+          board_and_lodging: board_and_lodging_payment
+        )
       end
 
       it 'has the correct rows' do

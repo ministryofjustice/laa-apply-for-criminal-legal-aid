@@ -3,20 +3,9 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::SelfAssessed do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      outgoings:,
-      income:,
-    )
-  end
+  include_context 'serializable application'
 
-  let(:outgoings) { Outgoings.new }
-  let(:income) { Income.new }
-  let(:include_partner?) { true }
-
-  before do
-    allow(MeansStatus).to receive_messages(include_partner?: include_partner?, full_means_required?: true)
-  end
+  let(:outgoings) { crime_application.outgoings }
 
   it { expect(described_class.key).to eq :income_p60_sa302_2 }
   it { expect(described_class.group).to eq :income }
@@ -26,26 +15,36 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   describe '.client' do
     subject { described_class.new(crime_application).client_predicate }
 
+    before do
+      crime_application.outgoings.income_tax_rate_above_threshold = above_threshold
+      crime_application.income.applicant_self_assessment_tax_bill = self_assessed
+    end
+
+    let(:self_assessed) { nil }
+    let(:above_threshold) { nil }
+
     context 'when high tax earner' do
-      let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'yes') }
+      let(:above_threshold) { 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'when not high tax earner' do
-      let(:outgoings) { Outgoings.new(income_tax_rate_above_threshold: 'no') }
+      let(:above_threshold) { 'no' }
 
       it { is_expected.to be false }
     end
 
     context 'when applicant has paid a self assessment tax bill' do
-      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'yes', employment_status: ['employed']) }
+      let(:client_employed?) { true }
+      let(:self_assessed) { 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'when applicant has not paid a self assessment tax bill' do
-      let(:income) { Income.new(applicant_self_assessment_tax_bill: 'no') }
+      let(:client_employed?) { true }
+      let(:self_assessed) { 'no' }
 
       it { is_expected.to be false }
     end
@@ -55,8 +54,12 @@ RSpec.describe Evidence::Rules::SelfAssessed do
     subject { described_class.new(crime_application).partner_predicate }
 
     before do
-      outgoings.partner_income_tax_rate_above_threshold = above_threshold
+      crime_application.outgoings.partner_income_tax_rate_above_threshold = above_threshold
+      crime_application.income.partner_self_assessment_tax_bill = self_assessed
     end
+
+    let(:self_assessed) { nil }
+    let(:above_threshold) { nil }
 
     context 'when high tax earner' do
       let(:above_threshold) { 'yes' }
@@ -83,23 +86,24 @@ RSpec.describe Evidence::Rules::SelfAssessed do
     end
 
     context 'when partner has paid a self assessment tax bill' do
-      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['employed']) }
-      let(:above_threshold) { 'no' }
+      let(:partner_employed?) { true }
+      let(:self_assessed) { 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'when partner has paid a self assessment tax bill and no long means assessed' do
-      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['employed']) }
-      let(:above_threshold) { 'no' }
+      let(:partner_employed?) { true }
       let(:include_partner?) { false }
+
+      let(:self_assessed) { 'yes' }
 
       it { is_expected.to be false }
     end
 
     context 'when partner has paid a self assessment tax bill but no longer employed' do
-      let(:income) { Income.new(partner_self_assessment_tax_bill: 'yes', partner_employment_status: ['not_working']) }
-      let(:above_threshold) { 'no' }
+      let(:partner_employed?) { false }
+      let(:self_assessed) { 'yes' }
 
       it { is_expected.to be false }
     end
@@ -110,11 +114,9 @@ RSpec.describe Evidence::Rules::SelfAssessed do
   end
 
   describe '#to_h' do
-    let(:outgoings) do
-      Outgoings.new(
-        income_tax_rate_above_threshold: 'yes',
-        partner_income_tax_rate_above_threshold: 'yes',
-      )
+    before do
+      crime_application.outgoings.income_tax_rate_above_threshold = 'yes'
+      crime_application.outgoings.partner_income_tax_rate_above_threshold = 'yes'
     end
 
     let(:expected_hash) do
