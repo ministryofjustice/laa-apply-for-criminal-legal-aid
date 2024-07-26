@@ -11,7 +11,7 @@ module SupportingEvidence
     end
 
     def applicable?
-      return true if benefit_evidence_forthcoming?
+      return true if benefit_evidence_forthcoming? || record.cifc?
 
       !(indictable_or_in_crown_court? || client_remanded_in_custody?)
     end
@@ -21,7 +21,7 @@ module SupportingEvidence
     end
 
     def evidence_complete?
-      return false if benefit_evidence_forthcoming? && !evidence_present?
+      return false if (benefit_evidence_forthcoming? || record.cifc?) && !evidence_present?
       return true unless evidence_prompts_present?
       return true if nino_is_only_evidence_prompt && !has_passporting_benefit?
 
@@ -30,7 +30,6 @@ module SupportingEvidence
 
     def client_remanded_in_custody?
       return true unless kase
-      return false if record.cifc?
 
       kase.is_client_remanded == 'yes' && kase.date_client_remanded.present?
     end
