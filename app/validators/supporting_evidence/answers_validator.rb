@@ -11,7 +11,7 @@ module SupportingEvidence
     end
 
     def applicable?
-      return true if benefit_evidence_forthcoming? || record.cifc?
+      return true if evidence_required?
 
       !(indictable_or_in_crown_court? || client_remanded_in_custody?)
     end
@@ -21,11 +21,15 @@ module SupportingEvidence
     end
 
     def evidence_complete?
-      return false if (benefit_evidence_forthcoming? || record.cifc?) && !evidence_present?
+      return false if evidence_required? && !evidence_present?
       return true unless evidence_prompts_present?
       return true if nino_is_only_evidence_prompt && !has_passporting_benefit?
 
       evidence_present?
+    end
+
+    def evidence_required?
+      benefit_evidence_forthcoming? || record.cifc?
     end
 
     def client_remanded_in_custody?
