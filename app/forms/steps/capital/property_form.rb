@@ -27,7 +27,7 @@ module Steps
 
       validates_numericality_of :percentage_applicant_owned, greater_than_or_equal_to: 0.0,
                                 less_than_or_equal_to: 100.0, if: :include_partner_in_means_assessment?
-      validates_numericality_of :percentage_partner_owned, greater_than: 0.0,
+      validates_numericality_of :percentage_partner_owned, greater_than_or_equal_to: 0.0,
                                 less_than_or_equal_to: 100.0, if: :include_partner_in_means_assessment?
 
       validates_with CapitalAssessment::PropertyOwnershipValidator
