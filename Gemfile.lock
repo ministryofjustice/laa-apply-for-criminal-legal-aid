@@ -182,7 +182,7 @@ GEM
       rainbow
       rubocop
       smart_properties
-    erubi (1.12.0)
+    erubi (1.13.0)
     faraday (2.9.1)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
@@ -196,7 +196,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.11)
-    govuk_design_system_formbuilder (5.0.0)
+    govuk_design_system_formbuilder (5.4.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -264,7 +264,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.23.1)
+    minitest (5.24.1)
     moj-simple-jwt-auth (0.1.0)
       json
       jwt
@@ -283,7 +283,7 @@ GEM
       net-protocol
     nio4r (2.7.3)
     nkf (0.2.0)
-    nokogiri (1.16.5)
+    nokogiri (1.16.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.7.0)
@@ -315,7 +315,7 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (2.2.9)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
@@ -499,7 +499,7 @@ DEPENDENCIES
   erb_lint
   faraday (~> 2.7)
   govuk-components (~> 5.2.1)
-  govuk_design_system_formbuilder (~> 5.0.0)
+  govuk_design_system_formbuilder
   importmap-rails
   jbuilder (~> 2.11.5)
   kaminari

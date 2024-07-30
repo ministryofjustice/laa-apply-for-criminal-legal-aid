@@ -22,7 +22,7 @@ RSpec.describe Steps::Income::BusinessTotalIncomeShareSalesForm do
     end
 
     context 'when `total_income_share_sales` is invalid' do
-      let(:attributes) { { total_income_share_sales: { amount: nil, frequency: 'annual' } } }
+      let(:attributes) { { total_income_share_sales: { amount: nil, frequency: nil } } }
 
       it 'does not update record' do
         expect(record).not_to receive(:update)

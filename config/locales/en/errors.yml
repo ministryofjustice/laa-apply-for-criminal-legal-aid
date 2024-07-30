@@ -733,22 +733,18 @@ en:
               greater_than: Select no if the number of employees is 0
         steps/income/business_financials_form:
           attributes:
-            amount:
-              blank: 'asdfasdf'
-            turnover:
-              amount:
-                blank: 'asdfasdf'
-              amount_blank: Enter the total turnover amount
-              frequency_blank: Select how often
-              attributes:
-                amount:
-                  blank: 'asdfasdf'
-            drawings:
-              amount_blank: Enter the total drawings amount
-              frequency_blank: Select how often this amount was drawn
-            profit:
-              amount_blank: Enter the total profit amount
-              frequency_blank: Select what period this total profit was for
+            turnover_amount:
+              blank: Enter the total turnover amount
+            turnover_frequency:
+              inclusion: Select how often this amount was generated
+            drawings_amount:
+              blank: Enter the total drawings amount
+            drawings_frequency:
+              inclusion: Select how often this amount was drawn
+            profit_amount:
+              blank: Enter the total profit amount
+            profit_frequency:
+              inclusion: Select what period this total profit was for
         steps/income/business_salary_or_remuneration_form:
           attributes:
             salary:
