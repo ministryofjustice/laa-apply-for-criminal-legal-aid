@@ -16,8 +16,6 @@ module Steps
       private
 
       def persist!
-        return true if saving_type == ''
-
         @saving = crime_application.savings.create!(saving_type:)
       end
 
