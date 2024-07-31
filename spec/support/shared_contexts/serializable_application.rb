@@ -34,7 +34,7 @@ RSpec.shared_context 'serializable application' do # rubocop:disable RSpec/Multi
       date_of_birth: (age_passported? ? 17 : 19).years.ago
     )
 
-    CrimeApplication.new(
+    CrimeApplication.create(
       id: SecureRandom.uuid,
       income: income,
       case: Case.new(case_type:),
