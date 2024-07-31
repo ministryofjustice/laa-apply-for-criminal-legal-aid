@@ -10,10 +10,6 @@ en:
 
     incomplete_records: You need to complete all questions before you can submit the application
 
-    messages:
-      amount_blank: 'Enter the amount'
-      frequency_blank: 'Select how often'
-
   activerecord:
     errors:
       models:
@@ -747,13 +743,14 @@ en:
               inclusion: Select what period this total profit was for
         steps/income/business_salary_or_remuneration_form:
           attributes:
-            salary:
-              not_a_number: Enter amount
-              greater_than: Their salary must be more than 0
+            salary_amount:
+              blank: Enter the amount
+              not_a_number: Enter the amount
         steps/income/business_total_income_share_sales_form:
           attributes:
-            total_income_share_sales:
-              not_a_number: Enter amount
+            total_income_share_sales_amount:
+              blank: Enter the amount
+              not_a_number: Enter the amount
               greater_than: The total income share sales must be more than 0
         steps/income/business_percentage_profit_share_form:
           attributes:

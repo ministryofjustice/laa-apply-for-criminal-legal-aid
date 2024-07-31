@@ -68,6 +68,27 @@ RSpec.describe Steps::Income::BusinessFinancialsForm do
 
         expect(subject.save).to be(true)
       end
+
+      it 'saves the details on the turnover' do
+        subject.save
+
+        expect(subject.turnover.frequency.to_s).to eq 'annual'
+        expect(subject.turnover.amount).to eq 12_300_001
+      end
+
+      it 'saves the details on the profit' do
+        subject.save
+
+        expect(subject.profit.frequency.to_s).to eq 'month'
+        expect(subject.profit.amount).to eq 280_000
+      end
+
+      it 'saves the details on the drawings' do
+        subject.save
+
+        expect(subject.drawings.frequency.to_s).to eq 'week'
+        expect(subject.drawings.amount).to eq 31
+      end
     end
 
     context 'when a payments is invalid' do

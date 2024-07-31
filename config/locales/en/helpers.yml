@@ -208,9 +208,9 @@ en:
         drawings_frequency: How often was this?
         profit_frequency: Over what period was this?
       steps_income_business_salary_or_remuneration_form:
-        salary: What is %{subject}’s salary or remuneration as director or shareholder?
+        salary_amount: What is %{subject}’s salary or remuneration as director or shareholder?
       steps_income_business_total_income_share_sales_form:
-        total_income_share_sales: What is %{subject}’s total income from share sales?
+        total_income_share_sales_amount: What is %{subject}’s total income from share sales?
       steps_income_business_percentage_profit_share_form:
         percentage_profit_share: What is %{subject}’s percentage share of profits from the business or partnership?
       steps_outgoings_housing_payment_type_form:
@@ -415,9 +415,9 @@ en:
         drawings_amount: Any money or other assets drawn from the business for personal use.
         profit_amount: The amount left after the deduction of business expenses.
       steps_income_business_salary_or_remuneration_form:
-        salary: Enter the yearly amount. Enter 0 if none.
+        salary_amount: Enter the yearly amount. Enter 0 if none.
       steps_income_business_total_income_share_sales_form:
-        total_income_share_sales: Enter the yearly amount. Enter 0 if none.
+        total_income_share_sales_amount: Enter the yearly amount. Enter 0 if none.
       steps_income_business_percentage_profit_share_form:
         percentage_profit_share: Enter the yearly amount. Enter 0 if none.
       steps_outgoings_board_and_lodging_form:
@@ -851,10 +851,6 @@ en:
         profit_frequency_options: *frequency_options
         drawings_frequency_options: *frequency_options
 
-      steps_income_business_salary_or_remuneration_form:
-        salary: What is %{subject}’s salary or remuneration as director or shareholder?
-      steps_income_business_total_income_share_sales_form:
-        total_income_share_sales: What is %{subject}’s total income from share sales?
       steps_income_business_percentage_profit_share_form:
         percentage_profit_share: What is %{subject}’s percentage share of profits from the business or partnership?
 

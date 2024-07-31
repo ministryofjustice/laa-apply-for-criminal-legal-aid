@@ -22,7 +22,7 @@ module Steps
       private
 
       def additional_permitted_params
-        [salary: [:amount]]
+        [:salary_amount]
       end
     end
   end
