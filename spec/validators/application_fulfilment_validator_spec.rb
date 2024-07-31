@@ -36,16 +36,12 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   let(:is_means_tested) { 'yes' }
 
   let(:kase) {
-    instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:,
-                                  hearing_court_name:, hearing_date:, is_first_court_hearing:)
+    instance_double(Case, case_type:, is_client_remanded:, date_client_remanded:)
   }
 
   let(:applicant) { instance_double(Applicant, benefit_type: 'none') }
   let(:is_client_remanded) { nil }
   let(:date_client_remanded) { nil }
-  let(:hearing_court_name) { 'Court Name' }
-  let(:hearing_date) { Time.zone.today }
-  let(:is_first_court_hearing) { true }
   let(:case_type) { 'either_way' }
   let(:ioj) { instance_double(Ioj, types: ioj_types) }
   let(:ioj_types) { [] }
@@ -290,33 +286,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       it 'is invalid' do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:base, :circumstances_reference_missing)).to be(true)
-      end
-    end
-  end
-
-  context 'when application is missing hearing details' do
-    before do
-      # stub the other validations
-      allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(true)
-      allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_return(true)
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
-    end
-
-    context 'with completed fields' do
-      it 'is valid' do
-        expect(subject).to be_valid
-      end
-    end
-
-    context 'with incomplete fields' do
-      let(:hearing_court_name) { nil }
-      let(:hearing_date) { nil }
-      let(:is_first_court_hearing) { nil }
-
-      it 'is invalid' do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:base, :hearing_details)).to be(true)
       end
     end
   end

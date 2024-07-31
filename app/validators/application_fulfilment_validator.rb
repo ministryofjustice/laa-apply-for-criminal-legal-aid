@@ -5,7 +5,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def perform_validations # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
     errors = []
 
     unless means_valid?
@@ -17,12 +17,6 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     if record.is_means_tested == 'yes' && kase.case_type.nil?
       errors << [
         :base, :case_type_missing, { change_path: edit_steps_client_case_type_path }
-      ]
-    end
-
-    unless hearing_details_complete?
-      errors << [
-        :base, :hearing_details, { change_path: edit_steps_case_hearing_details_path }
       ]
     end
 
@@ -95,10 +89,6 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     return true unless circumstances_validator.applicable?
 
     circumstances_validator.circumstances_complete?
-  end
-
-  def hearing_details_complete?
-    kase.hearing_court_name.present? && kase.hearing_date.present? && kase.is_first_court_hearing.present?
   end
 
   alias crime_application record
