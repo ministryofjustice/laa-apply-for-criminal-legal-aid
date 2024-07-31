@@ -2,9 +2,7 @@ module Passporting
   class MeansPassporter < BasePassporter
     include TypeOfMeansAssessment
 
-    def call(persist: false)
-      crime_application.update(means_passport:) unless persist
-
+    def call
       passported?
     end
 
