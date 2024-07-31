@@ -36,7 +36,7 @@ gem 'sentry-ruby'
 gem 'stackprof'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
+gem 'sprockets-rails', '>= 3.5.2'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'

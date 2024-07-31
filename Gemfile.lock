@@ -182,7 +182,7 @@ GEM
       rainbow
       rubocop
       smart_properties
-    erubi (1.12.0)
+    erubi (1.13.0)
     faraday (2.9.1)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
@@ -264,7 +264,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.23.1)
+    minitest (5.24.1)
     moj-simple-jwt-auth (0.1.0)
       json
       jwt
@@ -283,7 +283,7 @@ GEM
       net-protocol
     nio4r (2.7.3)
     nkf (0.2.0)
-    nokogiri (1.16.5)
+    nokogiri (1.15.6)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.7.0)
@@ -315,7 +315,7 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (2.2.9)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
@@ -442,7 +442,7 @@ GEM
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.1)
+    sprockets-rails (3.5.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
@@ -524,14 +524,14 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   simplecov
-  sprockets-rails
+  sprockets-rails (>= 3.5.2)
   stackprof
   uk_postcode
   web-console
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 2.7.8p225
 
 BUNDLED WITH
    2.3.17
