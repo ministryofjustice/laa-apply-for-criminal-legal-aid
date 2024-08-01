@@ -1,4 +1,4 @@
-<% title legend_t(:salary) %>
+<% title legend_t(:salary_amount) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -7,14 +7,11 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-    <%= f.fields_for :salary, f.object.salary do |ff| %>
-        <%= ff.govuk_number_field :amount,
-                                  width: 'one-half',
-                                  label: { text: legend_t(:salary), size: 'xl' },
-                                  hint: { text: hint_t(:salary) },
-                                  prefix_text: '£' %>
+      <%= f.govuk_number_field :salary_amount,
+                               width: 'one-half',
+                               label: { text: legend_t(:salary_amount), size: 'xl' },
+                               prefix_text: '£' %>
 
-      <% end %>
       <%= f.continue_button %>
     <% end %>
   </div>

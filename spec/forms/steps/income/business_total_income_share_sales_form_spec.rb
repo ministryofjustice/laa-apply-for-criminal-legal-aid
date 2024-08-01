@@ -10,28 +10,38 @@ RSpec.describe Steps::Income::BusinessTotalIncomeShareSalesForm do
 
   it_behaves_like 'a form with a from_subject'
 
-  describe '#save' do
-    let(:attributes) { { total_income_share_sales: { amount: '120.01', frequency: 'annual' } } }
+  describe '#validation' do
+    it {
+      expect(subject).to validate_presence_of(
+        :total_income_share_sales_amount, :blank, 'Enter the amount'
+      )
+    }
+  end
 
-    context 'when `total_income_share_sales` is valid' do
+  describe '#save' do
+    context 'when `total_income_share_sales_amount` is valid' do
+      let(:attributes) { { total_income_share_sales_amount: '120.01' } }
+
       it 'updates the record' do
         expect(record).to receive(:update).and_return(true)
 
         expect(subject.save).to be(true)
       end
+
+      it 'saves the details' do
+        subject.save
+
+        expect(subject.total_income_share_sales.frequency.to_s).to eq 'annual'
+        expect(subject.total_income_share_sales.amount).to eq 12_001
+      end
     end
 
-    context 'when `total_income_share_sales` is invalid' do
-      let(:attributes) { { total_income_share_sales: { amount: nil, frequency: 'annual' } } }
+    context 'when `total_income_share_sales_amount` is invalid' do
+      let(:attributes) { { total_income_share_sales_amount: nil } }
 
       it 'does not update record' do
         expect(record).not_to receive(:update)
         expect(subject.save).to be(false)
-      end
-
-      it 'adds an error' do
-        subject.save
-        expect(form.errors.added?(:total_income_share_sales, :amount_blank)).to be true
       end
     end
   end
