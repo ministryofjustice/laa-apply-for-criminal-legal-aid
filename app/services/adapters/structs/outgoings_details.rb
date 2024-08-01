@@ -4,7 +4,7 @@ module Adapters
       include TypesOfOutgoings
 
       def outgoings_payments
-        return [] unless outgoings
+        return [] unless __getobj__
 
         @outgoings_payments ||= outgoings.map { |struct| OutgoingsPayment.new(**struct) }
       end

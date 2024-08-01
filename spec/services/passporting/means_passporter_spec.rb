@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Passporting::MeansPassporter do
-  subject { described_class.new(crime_application) }
+  subject(:passporter) { described_class.new(crime_application) }
 
   let(:crime_application) {
     instance_double(
@@ -27,13 +27,36 @@ RSpec.describe Passporting::MeansPassporter do
   let(:benefit_check_result) { nil }
   let(:is_means_tested) { 'yes' }
 
-  before do
-    allow(crime_application).to receive(:update)
-    allow(crime_application).to receive(:means_passport).and_return([])
-  end
+  describe '#means_passport' do
+    subject(:means_passport) { passporter.means_passport }
 
-  describe '#call' do
-    context 'means passporting on non-means tested' do
+    context 'when applicant is over 18' do
+      let(:under18) { false }
+
+      it { is_expected.to eq([]) }
+    end
+
+    context 'when applicant is under 18' do
+      let(:under18) { true }
+
+      it { is_expected.to eq([MeansPassportType::ON_AGE_UNDER18]) }
+    end
+
+    context 'when DWP benefit check has been successful' do
+      let(:under18) { false }
+      let(:benefit_check_result) { true }
+
+      it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
+    end
+
+    context 'when DWP benefit check has failed' do
+      let(:under18) { false }
+      let(:benefit_check_result) { nil }
+
+      it { is_expected.to eq([]) }
+    end
+
+    context 'when means passporting on non-means tested' do
       let(:is_means_tested) { 'no' }
 
       before do
@@ -42,153 +65,68 @@ RSpec.describe Passporting::MeansPassporter do
         }
       end
 
-      it 'does not add an age passported type to the array' do
-        expect(crime_application).to receive(:update).with(
-          means_passport: [MeansPassportType::ON_NOT_MEANS_TESTED]
-        )
-
-        subject.call
-      end
-    end
-
-    context 'means passporting on age' do
-      context 'when applicant is over 18' do
-        let(:under18) { false }
-
-        it 'does not add an age passported type to the array' do
-          expect(crime_application).to receive(:update).with(means_passport: [])
-
-          subject.call
-        end
-      end
-
-      context 'when applicant is under 18' do
-        let(:under18) { true }
-
-        it 'adds an age passported type to the array' do
-          expect(
-            crime_application
-          ).to receive(:update).with(
-            means_passport: [MeansPassportType::ON_AGE_UNDER18]
-          )
-
-          subject.call
-        end
-      end
-    end
-
-    context 'means passporting on benefit checker' do
-      let(:under18) { false }
-
-      context 'when DWP benefit check has been successful' do
-        let(:benefit_check_result) { true }
-
-        it 'adds a benefit passported type to the array' do
-          expect(
-            crime_application
-          ).to receive(:update).with(
-            means_passport: [MeansPassportType::ON_BENEFIT_CHECK]
-          )
-
-          subject.call
-        end
-      end
-
-      context 'when DWP benefit check has failed' do
-        let(:benefit_check_result) { false }
-
-        it 'does not add a benefit passported type to the array' do
-          expect(crime_application).to receive(:update).with(means_passport: [])
-
-          subject.call
-        end
-      end
-
-      context 'when DWP benefit check has not been performed' do
-        let(:benefit_check_result) { nil }
-
-        it 'does not add a benefit passported type to the array' do
-          expect(crime_application).to receive(:update).with(means_passport: [])
-
-          subject.call
-        end
-      end
+      it { is_expected.to eq([MeansPassportType::ON_NOT_MEANS_TESTED]) }
     end
   end
 
-  describe '#passported?' do
-    it 'checks if any of the passporting kinds has triggered' do
-      expect(subject).to receive(:age_passported?).and_return(false)
-      expect(subject).to receive(:benefit_check_passported?).and_return(false)
+  describe 'passported?' do
+    subject(:passported?) { passporter.passported? }
 
-      subject.passported?
+    context 'when means passported' do
+      let(:under18) { true }
+
+      it { is_expected.to be(true) }
+    end
+
+    context 'when not means passported' do
+      let(:under18) { false }
+
+      it { is_expected.to be(false) }
     end
   end
 
   describe '#age_passported?' do
-    context 'for a new application' do
-      context 'for under 18' do
-        let(:under18) { true }
+    subject(:age_passported?) { passporter.age_passported? }
 
-        it { expect(subject.age_passported?).to be(true) }
-      end
+    context 'when applicant is over 18' do
+      let(:under18) { true }
 
-      context 'for over 18' do
-        let(:under18) { false }
-
-        it { expect(subject.age_passported?).to be(false) }
-      end
+      it { is_expected.to be(true) }
     end
 
-    context 'for a resubmitted application' do
+    context 'when benefit check passported' do
+      let(:under18) { false }
+      let(:benefit_check_result) { true }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when a resubmission' do
+      let(:under18) { false }
       let(:resubmission?) { true }
 
       before do
-        allow(crime_application).to receive(:means_passport).and_return(means_passport)
+        allow(crime_application).to receive(:means_passport).and_return(
+          stored_means_passport
+        )
       end
 
-      context 'passported on age' do
-        let(:means_passport) { [MeansPassportType::ON_AGE_UNDER18.to_s] }
+      context 'when was age passported' do
+        let(:stored_means_passport) { [MeansPassportType::ON_AGE_UNDER18.to_s] }
 
-        it { expect(subject.age_passported?).to be(true) }
+        it { is_expected.to be(true) }
       end
 
-      context 'not passported on age' do
-        let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
+      context 'when was passported but not age passported' do
+        let(:stored_means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
 
-        it { expect(subject.age_passported?).to be(false) }
-      end
-    end
-  end
-
-  describe '#benefit_check_passported?' do
-    context 'for a new application' do
-      context 'with benefit check passed' do
-        let(:benefit_check_result) { true }
-
-        it { expect(subject.benefit_check_passported?).to be(true) }
+        it { is_expected.to be(false) }
       end
 
-      context 'with benefit check failed' do
-        let(:benefit_check_result) { false }
+      context 'when was not age passported' do
+        let(:stored_means_passport) { nil }
 
-        it { expect(subject.benefit_check_passported?).to be(false) }
-      end
-    end
-
-    context 'for a resubmitted application' do
-      let(:resubmission?) { true }
-
-      before do
-        allow(crime_application).to receive(:means_passport).and_return(means_passport)
-      end
-
-      context 'originally passported on benefit check' do
-        let(:means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
-
-        it 'ignores the original means_passport' do
-          expect(subject.benefit_check_passported?).to be(false)
-        end
+        it { is_expected.to be(false) }
       end
     end
   end
