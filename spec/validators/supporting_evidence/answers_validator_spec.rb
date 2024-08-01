@@ -113,6 +113,21 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
         end
       end
     end
+
+    context 'when the application type is change in financial circumstances' do
+      before do
+        allow(record).to receive_messages(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s,
+                                          cifc?: true)
+      end
+
+      context 'and evidence has not been uploaded' do
+        it 'adds errors for all failed validations' do
+          expect(errors).to receive(:add).with(:documents, :blank)
+
+          subject.validate
+        end
+      end
+    end
   end
 
   describe '#complete?' do
@@ -150,6 +165,17 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
       end
     end
 
+    context 'when the application type is change in financial circumstances' do
+      before do
+        allow(record).to receive_messages(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s,
+                                          cifc?: true)
+      end
+
+      it 'the application does require evidence validation' do
+        expect(subject.applicable?).to be(true)
+      end
+    end
+
     context 'when case is indictable' do
       let(:case_type) { CaseType::INDICTABLE.to_s }
 
@@ -171,21 +197,8 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
         allow(kase).to receive_messages(is_client_remanded: 'yes', date_client_remanded: 1.month.ago.to_date)
       end
 
-      context 'when the application type is change in financial circumstances' do
-        before do
-          allow(record).to receive_messages(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES.to_s,
-                                            cifc?: true)
-        end
-
-        it 'the application does require evidence validation' do
-          expect(subject.applicable?).to be(true)
-        end
-      end
-
-      context 'when the application type is not change in financial circumstances' do
-        it 'the application does not require evidence validation' do
-          expect(subject.applicable?).to be(false)
-        end
+      it 'the application does not require evidence validation' do
+        expect(subject.applicable?).to be(false)
       end
     end
 
