@@ -5,6 +5,8 @@ RSpec.describe Evidence::Rules::LostJob do
 
   include_context 'serializable application'
 
+  let(:case_type) { CaseType::EITHER_WAY }
+
   let(:date_job_lost) { nil }
 
   before do
