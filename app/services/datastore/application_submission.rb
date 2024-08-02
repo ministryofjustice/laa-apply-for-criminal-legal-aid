@@ -6,16 +6,11 @@ module Datastore
       @crime_application = crime_application
     end
 
-    # rubocop:disable Metrics/MethodLength
     def call
-      submitted_at = Time.current
-      date_stamp = crime_application.date_stamp || submitted_at
-
       Rails.error.handle(fallback: -> { false }) do
         CrimeApplication.transaction do
           crime_application.assign_attributes(
-            submitted_at:,
-            date_stamp:,
+            submitted_at: Time.current
           )
 
           DatastoreApi::Requests::CreateApplication.new(
@@ -28,7 +23,6 @@ module Datastore
         true
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     def application_payload
       SubmissionSerializer::Application.new(
