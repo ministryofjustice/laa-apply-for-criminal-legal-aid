@@ -5,12 +5,13 @@ RSpec.describe Datastore::ApplicationSubmission do
   # NOTE: we are using real DB records here as a way of testing
   # an end to end full serialized application posted to the datastore.
   #
-  subject { described_class.new(crime_application) }
+  subject(:service) { described_class.new(crime_application) }
 
   let(:crime_application) { CrimeApplication.find_by(usn: 123) }
-  let(:payload) { subject.application_payload }
+  let(:payload) { service.application_payload }
+  let(:case_type) { 'either_way' }
 
-  before :all do
+  before do
     # create all neccessary records
     app = create_test_application(
       usn: 123,
@@ -80,7 +81,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       preorder_work_details: 'preorder work details test',
       is_client_remanded: 'yes',
       date_client_remanded: 1.year.ago,
-      case_type: 'either_way',
+      case_type: case_type,
       has_codefendants: 'yes',
       hearing_court_name: 'Manchester Crown Court',
       hearing_date: 1.year.from_now
@@ -127,14 +128,6 @@ RSpec.describe Datastore::ApplicationSubmission do
       has_premium_bonds: 'no',
       will_benefit_from_trust_fund: 'no'
     )
-  end
-
-  after :all do
-    # do not leave left overs in the test database
-    CrimeApplication.destroy_all
-  end
-
-  before do
     allow(crime_application).to receive(:destroy!)
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
@@ -148,27 +141,42 @@ RSpec.describe Datastore::ApplicationSubmission do
       travel_to submitted_date
     end
 
-    context 'when `date_stamp` attribute is `nil`' do
-      it 'sets the `date_stamp` as the value of the submission date' do
-        expect { subject.call }.to change(crime_application, :date_stamp).from(nil).to(submitted_date)
-      end
+    it 'sets the submitted_at' do
+      expect { subject.call }.to change(crime_application, :submitted_at).from(nil).to(submitted_date)
     end
 
-    context 'when there is already a `date_stamp`' do
-      let(:date_stamp) { DateTime.new(2022, 12, 15) }
+    describe 'the submitted date stamp' do
+      subject(:submitted_date_stamp) { payload['date_stamp']&.to_time }
 
-      before do
-        allow(crime_application).to receive(:date_stamp).and_return(date_stamp)
+      context 'when `date_stamp` attribute is `nil`' do
+        before { service.call }
+
+        it { is_expected.to eq submitted_date }
       end
 
-      it 'does not change the `date_stamp` value' do
-        expect { subject.call }.not_to change(crime_application, :date_stamp).from(date_stamp)
+      context 'when there is a `date_stamp`' do
+        let(:date_stamp) { DateTime.new(2022, 12, 15) }
+
+        before do
+          crime_application.update(date_stamp:)
+          service.call
+        end
+
+        context 'when the application is datestampable' do
+          it { is_expected.to eq date_stamp }
+        end
+
+        context 'when application is no longer date_stampable' do
+          let(:case_type) { 'indictable' }
+
+          it { is_expected.to eq submitted_date }
+        end
       end
     end
 
     context 'submission to the datastore' do
       before do
-        subject.call
+        service.call
       end
 
       it 'generates a valid JSON document conforming to the schema' do
@@ -201,7 +209,7 @@ RSpec.describe Datastore::ApplicationSubmission do
 
         allow(Rails.error).to receive(:report)
 
-        subject.call
+        service.call
       end
 
       it 'does not purge the application from the local database' do
