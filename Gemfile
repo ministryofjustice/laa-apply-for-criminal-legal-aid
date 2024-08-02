@@ -6,7 +6,7 @@ ruby File.read('.ruby-version').chomp
 gem 'dartsass-rails', '~> 0.5.0'
 gem 'faraday', '~> 2.7'
 gem 'govuk-components', '~> 5.2.1'
-gem 'govuk_design_system_formbuilder', '~> 5.0.0'
+gem 'govuk_design_system_formbuilder'
 gem 'jbuilder', '~> 2.11.5'
 gem 'kaminari'
 gem 'lograge'

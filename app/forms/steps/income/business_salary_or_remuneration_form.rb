@@ -1,8 +1,10 @@
 module Steps
   module Income
     class BusinessSalaryOrRemunerationForm < Steps::BaseFormObject
-      attribute :salary, :amount_and_frequency
-      validates :salary, payment: true
+      attribute :salary, :amount_and_frequency, default: {}
+      delegate(:amount, :amount=, to: :salary, prefix: true)
+
+      validates :salary_amount, presence: true, numericality: true
 
       def persist!
         return true unless changed?

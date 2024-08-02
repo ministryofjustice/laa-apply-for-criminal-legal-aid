@@ -175,14 +175,14 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
-    erb_lint (0.5.0)
+    erb_lint (0.6.0)
       activesupport
       better_html (>= 2.0.1)
       parser (>= 2.7.1.4)
       rainbow
-      rubocop
+      rubocop (>= 1)
       smart_properties
-    erubi (1.12.0)
+    erubi (1.13.0)
     faraday (2.9.1)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
@@ -196,7 +196,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (>= 3.9, < 3.11)
-    govuk_design_system_formbuilder (5.0.0)
+    govuk_design_system_formbuilder (5.4.1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -264,7 +264,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.23.1)
+    minitest (5.24.1)
     moj-simple-jwt-auth (0.1.0)
       json
       jwt
@@ -283,7 +283,7 @@ GEM
       net-protocol
     nio4r (2.7.3)
     nkf (0.2.0)
-    nokogiri (1.16.5)
+    nokogiri (1.16.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     nori (2.7.0)
@@ -301,7 +301,7 @@ GEM
     orm_adapter (0.5.0)
     pagy (6.5.0)
     parallel (1.25.1)
-    parser (3.3.3.0)
+    parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.6)
@@ -315,7 +315,7 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (2.2.9)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
@@ -362,7 +362,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.0)
+    rexml (3.3.4)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -381,13 +381,13 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
-    rubocop (1.64.1)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
+      regexp_parser (>= 2.4, < 3.0)
       rexml (>= 3.2.5, < 4.0)
       rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
@@ -499,7 +499,7 @@ DEPENDENCIES
   erb_lint
   faraday (~> 2.7)
   govuk-components (~> 5.2.1)
-  govuk_design_system_formbuilder (~> 5.0.0)
+  govuk_design_system_formbuilder
   importmap-rails
   jbuilder (~> 2.11.5)
   kaminari

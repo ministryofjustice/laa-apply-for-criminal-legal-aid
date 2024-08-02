@@ -22,7 +22,7 @@ module Steps
       private
 
       def additional_permitted_params
-        [total_income_share_sales: [:amount]]
+        [:total_income_share_sales_amount]
       end
     end
   end
