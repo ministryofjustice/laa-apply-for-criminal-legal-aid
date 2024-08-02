@@ -10,12 +10,11 @@ module Evidence
       group :outgoings
 
       client do |crime_application|
-        payment = crime_application.outgoings&.council_tax
+        payment = crime_application.outgoings&.outgoings.present? ? crime_application.outgoings.council_tax : nil
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
-      # TODO: Awaiting partner implementation
       partner do |_crime_application|
         false
       end

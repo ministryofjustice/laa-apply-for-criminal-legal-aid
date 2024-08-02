@@ -10,10 +10,11 @@ module Evidence
       group :outgoings
 
       client do |crime_application|
-        costs = [
-          crime_application.outgoings&.rent,
-          crime_application.outgoings&.mortgage
-        ]
+        costs = if crime_application.outgoings&.outgoings.present?
+                  [crime_application.outgoings.rent, crime_application.outgoings.mortgage]
+                else
+                  []
+                end
 
         total = costs.compact.sum { |x| x.prorated_monthly.to_f }
 
