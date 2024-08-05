@@ -153,7 +153,7 @@ RSpec.describe Steps::Capital::ResidentialForm do
       end
 
       context 'for valid details' do
-        let(:attributes) { required_attributes.merge(percentage_partner_owned: 10) }
+        let(:attributes) { required_attributes.merge(percentage_partner_owned: 5) }
 
         it 'updates the record' do
           expect(record).to receive(:update).and_return(true)

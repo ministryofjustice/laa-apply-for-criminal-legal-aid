@@ -930,6 +930,7 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: &property_client_percentage_error The percentage of the property your client owns must be a number between 0 and 100
               greater_than: The percentage of the property your client owns must be greater than 0 and less than 100
@@ -937,6 +938,7 @@ en:
               less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client's partner owns
               not_a_number: &property_partner_percentage_error The percentage of the property your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_partner_percentage_error
@@ -957,6 +959,7 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: The percentage of the property your client owns must be a number between 0 and 100
               greater_than: The percentage of the property your client owns must be greater than 0 and less than 100
@@ -964,6 +967,7 @@ en:
               less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client's partner owns
               not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_partner_percentage_error
@@ -987,6 +991,7 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the land your client owns
               not_a_number: &land_client_percentage_error The percentage of the land your client owns must be a number between 0 and 100
               greater_than: The percentage of the land your client owns must be greater than 0 and less than 100
@@ -994,6 +999,7 @@ en:
               less_than_or_equal_to: *land_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the land your client's partner owns
               not_a_number: &land_partner_percentage_error The percentage of the land your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *land_partner_percentage_error
