@@ -812,7 +812,7 @@ en:
         steps/outgoings/outgoings_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client pays, or select 'They do not pay any of these payments'
+              none_selected: Select which payments your client pays, or select 'They do not make any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
@@ -1119,7 +1119,7 @@ en:
             additional_information:
               blank: Enter details you need to add to the application
             additional_information_required:
-              inclusion: Select yes if you need to add any more information to this application
+              inclusion: Select yes if you want to add any other information
         steps/submission/declaration_form:
           attributes:
             legal_rep_has_partner_declaration:

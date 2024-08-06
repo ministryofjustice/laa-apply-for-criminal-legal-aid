@@ -92,7 +92,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
         'Yes',
       )
       expect(page).to have_summary_row(
-        'Name the account is in',
+        'Account holder',
         'Client'
       )
     end
@@ -139,7 +139,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
         expect(page).to have_summary_row('Account balance', '')
         expect(page).to have_summary_row('Account overdrawn?', '')
         expect(page).to have_summary_row("Client's wages or benefits paid into this account?", '')
-        expect(page).to have_summary_row('Name the account is in', '')
+        expect(page).to have_summary_row('Account holder', '')
       end
     end
   end
