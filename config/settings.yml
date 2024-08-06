@@ -34,7 +34,7 @@ feature_flags:
   evidence_validation:
     local: true
     staging: true
-    production: false
+    production: true
   cifc_journey:
     local: true
     staging: true
