@@ -936,7 +936,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: They do not pay make of these payments
+          none: They do not make any of these payments
       steps_outgoings_mortgage_form:
         amount:
           one: How much are the mortgage payments %{subject} makes?
