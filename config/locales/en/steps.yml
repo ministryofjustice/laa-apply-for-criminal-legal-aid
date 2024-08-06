@@ -737,7 +737,7 @@ en:
             change_in_financial_circumstances: Change in financial circumstances submitted
             resubmission: Application updated
           what_happens_next:
-            initial: We’ll check your application to see if your client is entitled to legal aid.
+            initial: We will check your application and email you with the outcome.
             post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
             change_in_financial_circumstances: We’ll check the new information submitted to see if your client is entitled to legal aid.
           view_application:
