@@ -780,8 +780,8 @@ en:
               invalid: Rent they pay, after taking away Housing Benefit, must be a number, like 50
               not_a_number: Rent they pay, after taking away Housing Benefit, must be a number, like 50
             frequency:
-              blank: Select how often they make rent payments
-              inclusion: Select how often they make rent payments
+              blank: Select how often they make rent
+              inclusion: Select how often they make rent
         steps/outgoings/board_and_lodging_form:
           attributes:
             board_amount:
