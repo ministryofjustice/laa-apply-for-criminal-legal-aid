@@ -114,9 +114,14 @@ module Decisions
     end
 
     def start_address_journey(address_class)
-      address = address_class.find_or_create_by(person: applicant)
-
-      edit('/steps/address/lookup', address_id: address)
+      address = address_class.find_by(person: applicant)
+      # check whether they previously entered an address manually
+      if address && address.lookup_id.nil?
+        edit('/steps/address/details', address_id: address)
+      else
+        address = address_class.find_or_create_by(person: applicant)
+        edit('/steps/address/lookup', address_id: address)
+      end
     end
 
     def after_has_nino
