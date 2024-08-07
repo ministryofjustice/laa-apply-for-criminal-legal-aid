@@ -357,6 +357,26 @@ RSpec.describe Decisions::ClientDecisionTree do
         )
       }
     end
+
+    context 'and they previously entered an address manually' do
+      let(:residence_type) { ResidenceType::RENTED }
+      let(:address) { Address.new(lookup_id: nil) }
+
+      before do
+        allow(
+          Address
+        ).to receive(:find_by).with(person: applicant).and_return(address)
+      end
+
+      it {
+        expect(subject).to have_destination(
+          '/steps/address/details',
+          :edit,
+          id: crime_application,
+          address_id: address
+        )
+      }
+    end
   end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers
