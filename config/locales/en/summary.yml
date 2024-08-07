@@ -889,10 +889,10 @@ en:
         answers:
           description: *payment_answer_format
       self_assessment_tax_bill:
-        question: Does the client pay a Self Assessment tax bill?
+        question: "Self Assessment tax calculation: client?"
         answers: *YESNO
       partner_self_assessment_tax_bill:
-        question: Does the partner pay a Self Assessment tax bill?
+        question:  "Self Assessment tax calculation: partner?"
         answers: *YESNO
       self_assessment_tax_bill_payment:
         question: Amount
