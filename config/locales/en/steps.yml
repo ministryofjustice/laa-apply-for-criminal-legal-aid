@@ -34,8 +34,8 @@ en:
             intro: 'A partner is someone your client:'
             definition_1: is married to
             definition_2: is in a civil partnership with
-            definition_3: normally lives with as a couple, even if they are not living together right now - for example, if one person is in hospital, prison or abroad
-            exclusion: Do not include anyone who is separated from your client in a way that is likely to be permanent.
+            definition_3: normally lives with as a couple, even if they are not living together currently - for example, if one person is in hospital, prison or abroad
+            exclusion: It does not include anyone your client is separated from permanently.
       relationship_status:
         edit:
           page_title: What is your client's relationship status?
