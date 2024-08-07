@@ -282,7 +282,7 @@ en:
       steps_outgoings_mortgage_form:
         frequency: Select how often they make mortgage payments
       steps_outgoings_rent_form:
-        frequency: Select how often they make rent
+        frequency: Select how often they pay rent
       steps_outgoings_board_and_lodging_form:
         frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
