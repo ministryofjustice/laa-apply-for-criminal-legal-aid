@@ -7,7 +7,6 @@ describe Summary::Sections::ClientDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      client_has_partner: 'no',
       applicant: applicant,
       application_type: application_type,
       is_means_tested: is_means_tested

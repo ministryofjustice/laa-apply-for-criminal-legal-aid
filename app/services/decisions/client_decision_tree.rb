@@ -128,7 +128,7 @@ module Decisions
     end
 
     def after_has_partner
-      if form_object.client_has_partner.yes?
+      if form_object.has_partner.yes?
         edit('/steps/partner/relationship')
       else
         edit(:relationship_status)

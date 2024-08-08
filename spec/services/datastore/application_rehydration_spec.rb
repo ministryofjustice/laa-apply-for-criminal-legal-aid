@@ -28,7 +28,6 @@ RSpec.describe Datastore::ApplicationRehydration do
       expect(
         crime_application
       ).to receive(:update!).with(
-        client_has_partner: YesNoAnswer::YES,
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         is_means_tested: 'yes',
         date_stamp: an_instance_of(DateTime),
