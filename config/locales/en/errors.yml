@@ -10,10 +10,6 @@ en:
 
     incomplete_records: You need to complete all questions before you can submit the application
 
-    messages:
-      amount_blank: 'Enter the amount'
-      frequency_blank: 'Select how often'
-
   activerecord:
     errors:
       models:
@@ -733,31 +729,28 @@ en:
               greater_than: Select no if the number of employees is 0
         steps/income/business_financials_form:
           attributes:
-            amount:
-              blank: 'asdfasdf'
-            turnover:
-              amount:
-                blank: 'asdfasdf'
-              amount_blank: Enter the total turnover amount
-              frequency_blank: Select how often
-              attributes:
-                amount:
-                  blank: 'asdfasdf'
-            drawings:
-              amount_blank: Enter the total drawings amount
-              frequency_blank: Select how often this amount was drawn
-            profit:
-              amount_blank: Enter the total profit amount
-              frequency_blank: Select what period this total profit was for
+            turnover_amount:
+              blank: Enter the total turnover amount
+            turnover_frequency:
+              inclusion: Select how often this amount was generated
+            drawings_amount:
+              blank: Enter the total drawings amount
+            drawings_frequency:
+              inclusion: Select how often this amount was drawn
+            profit_amount:
+              blank: Enter the total profit amount
+            profit_frequency:
+              inclusion: Select what period this total profit was for
         steps/income/business_salary_or_remuneration_form:
           attributes:
-            salary:
-              not_a_number: Enter amount
-              greater_than: Their salary must be more than 0
+            salary_amount:
+              blank: Enter the amount
+              not_a_number: Enter the amount
         steps/income/business_total_income_share_sales_form:
           attributes:
-            total_income_share_sales:
-              not_a_number: Enter amount
+            total_income_share_sales_amount:
+              blank: Enter the amount
+              not_a_number: Enter the amount
               greater_than: The total income share sales must be more than 0
         steps/income/business_percentage_profit_share_form:
           attributes:
@@ -819,7 +812,7 @@ en:
         steps/outgoings/outgoings_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client pays, or select 'They do not pay any of these payments'
+              none_selected: Select which payments your client pays, or select 'They do not make any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
@@ -937,12 +930,15 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: &property_client_percentage_error The percentage of the property your client owns must be a number between 0 and 100
+              greater_than: The percentage of the property your client owns must be greater than 0 and less than 100
               greater_than_or_equal_to: *property_client_percentage_error
               less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client's partner owns
               not_a_number: &property_partner_percentage_error The percentage of the property your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_partner_percentage_error
@@ -963,12 +959,15 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: The percentage of the property your client owns must be a number between 0 and 100
+              greater_than: The percentage of the property your client owns must be greater than 0 and less than 100
               greater_than_or_equal_to: *property_client_percentage_error
               less_than_or_equal_to: *property_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the property your client's partner owns
               not_a_number: The percentage of the property your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *property_partner_percentage_error
@@ -992,12 +991,15 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the land your client owns
               not_a_number: &land_client_percentage_error The percentage of the land your client owns must be a number between 0 and 100
+              greater_than: The percentage of the land your client owns must be greater than 0 and less than 100
               greater_than_or_equal_to: *land_client_percentage_error
               less_than_or_equal_to: *land_client_percentage_error
             percentage_partner_owned:
               invalid: Percentages entered need to total 100%
+              invalid_when_other_owners: Percentages entered need to total less than 100%
               blank: Enter the percentage of the land your client's partner owns
               not_a_number: &land_partner_percentage_error The percentage of the land your client's partner owns must be a number between 0 and 100
               greater_than_or_equal_to: *land_partner_percentage_error
@@ -1052,7 +1054,7 @@ en:
             percentage_owned:
               invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land they own
-              greater_than_or_equal_to: The percentage of the property they own must be a number greater than 0 and less than 100
+              greater_than: The percentage of the property they own must be a number greater than 0 and less than 100
               less_than: The percentage of the property they own must be a number greater than 0 and less than 100
           attributes: *shared_property_owner_errors
         steps/capital/properties_summary_form:
@@ -1117,7 +1119,7 @@ en:
             additional_information:
               blank: Enter details you need to add to the application
             additional_information_required:
-              inclusion: Select yes if you need to add any more information to this application
+              inclusion: Select yes if you want to add any other information
         steps/submission/declaration_form:
           attributes:
             legal_rep_has_partner_declaration:

@@ -6,15 +6,12 @@ module Evidence
       key :capital_stocks_gilts_23
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          (applicant.joint_investments.stock.any? || applicant.investments.stock.any?)
+      client do |crime_application|
+        crime_application.capital&.client_stock_investments.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.full_capital_required?(crime_application) &&
-          MeansStatus.include_partner?(crime_application) &&
-          (partner.joint_investments.stock.any? || partner.investments.stock.any?)
+      partner do |crime_application|
+        crime_application.capital&.partner_stock_investments.present?
       end
     end
   end

@@ -6,17 +6,12 @@ module Evidence
       key :income_other_9
       group :income
 
-      client do |_crime_application, applicant|
-        other_income = applicant.income_payments.other
-
-        other_income.present? && other_income.details.present?
+      client do |crime_application, _applicant|
+        crime_application.income&.client_other_payment.present?
       end
 
-      partner do |crime_application, partner|
-        other_income = partner&.income_payments&.other
-
-        MeansStatus.include_partner?(crime_application) &&
-          other_income.present? && other_income.details.present?
+      partner do |crime_application, _partner|
+        crime_application.income&.partner_other_payment.present?
       end
     end
   end

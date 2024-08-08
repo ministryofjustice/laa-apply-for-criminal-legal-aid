@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CrimeApplication, type: :model do
-  subject { described_class.new(attributes) }
+  subject(:application) { described_class.new(attributes) }
 
   let(:attributes) { {} }
 
@@ -38,6 +38,43 @@ RSpec.describe CrimeApplication, type: :model do
       it 'has the right value' do
         expect(subject.not_means_tested?).to be(false)
       end
+    end
+  end
+
+  describe '#date_stamp' do
+    subject(:date_stamp) { application.date_stamp }
+
+    let(:stored_date_stamp) { '2024-01-01' }
+
+    before do
+      application.date_stamp = stored_date_stamp
+      application.case = Case.new(case_type:)
+    end
+
+    context 'when #case#case_type is passportable' do
+      let(:case_type) { CaseType::DATE_STAMPABLE.sample.to_s }
+
+      it { is_expected.to eq stored_date_stamp }
+    end
+
+    context 'when #case#case_type is not passportable' do
+      let(:case_type) { (CaseType::VALUES - CaseType::DATE_STAMPABLE).sample.to_s }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when #case is nil' do
+      let(:case_type) { nil }
+
+      before { application.case = nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when #case#case_type is nil' do
+      let(:case_type) { nil }
+
+      it { is_expected.to be_nil }
     end
   end
 

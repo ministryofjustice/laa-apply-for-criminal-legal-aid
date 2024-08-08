@@ -1,22 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Rule do
-  let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
-  let(:partner) { instance_double(Partner) }
-  let(:income) { instance_double(Income, client_owns_property: 'yes') }
-  let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
-  let(:capital) { instance_double(Capital, has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes') }
-  let(:include_partner?) { true }
+  include_context 'serializable application'
 
-  let(:crime_application) do
-    instance_double(
-      CrimeApplication,
-      applicant:,
-      partner:,
-      income:,
-      outgoings:,
-      capital:,
-    )
+  before do
+    capital.has_premium_bonds = 'yes'
+    capital.partner_has_premium_bonds = 'yes'
+    outgoings.housing_payment_type = 'mortgage'
+    income.client_owns_property = 'yes'
+    applicant.has_nino = 'yes'
+    stub_const('OffsideRule', offside_rule)
+    stub_const('BarebonesRule', barebones_rule)
+
+    Rails.root.glob('spec/fixtures/files/evidence/rules/*.rb') do |file|
+      load file
+    end
   end
 
   let(:offside_rule) do
@@ -28,7 +26,7 @@ RSpec.describe Evidence::Rule do
       group :none
 
       other do |crime_application|
-        crime_application.is_a? RSpec::Mocks::InstanceVerifyingDouble
+        crime_application.is_a? Adapters::Structs::CrimeApplication
       end
     end
   end
@@ -38,17 +36,6 @@ RSpec.describe Evidence::Rule do
       include Evidence::RuleDsl
 
       # NOTE: deliberately missing `key`, `archived`
-    end
-  end
-
-  before do
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
-
-    stub_const('OffsideRule', offside_rule)
-    stub_const('BarebonesRule', barebones_rule)
-
-    Rails.root.glob('spec/fixtures/files/evidence/rules/*.rb') do |file|
-      load file
     end
   end
 
@@ -134,10 +121,11 @@ RSpec.describe Evidence::Rule do
   end
 
   describe '#initialize' do
-    it 'initializes with a crime application' do
+    it 'initializes with a crime application draft submission' do
       rule = BarebonesRule.new(crime_application)
 
-      expect(rule.crime_application).to eq(crime_application)
+      expect(rule.crime_application).to be_a(Adapters::Structs::CrimeApplication)
+      expect(rule.crime_application.id).to eq(crime_application.id)
     end
   end
 
@@ -199,11 +187,11 @@ RSpec.describe Evidence::Rule do
     end
   end
 
-  describe 'predicates' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+  describe 'predicates' do
     let(:example_rule1) { Evidence::Rules::ExampleRule1.new(crime_application) }
     let(:example_bad) { Evidence::Rules::BadRuleDefinition.new(crime_application) }
 
-    context 'when defined' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    context 'when defined' do
       it 'evaluates the predicate', :aggregate_failures do
         expect(example_rule1.client_predicate).to be true
         expect(example_rule1.partner_predicate).to be true
@@ -211,7 +199,7 @@ RSpec.describe Evidence::Rule do
       end
     end
 
-    context 'when not defined' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    context 'when not defined' do
       it 'evaluates to false', :aggregate_failures do
         offside_rule = OffsideRule.new(crime_application)
 
@@ -226,7 +214,7 @@ RSpec.describe Evidence::Rule do
       end
     end
 
-    context 'when predicate evaluates to anything except true or false' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    context 'when predicate evaluates to anything except true or false' do
       it 'raises error', :aggregate_failures do
         expect { example_bad.client_predicate }.to raise_exception Errors::UnsupportedPredicate
         expect { example_bad.partner_predicate }.to raise_exception Errors::UnsupportedPredicate

@@ -6,15 +6,12 @@ module Evidence
       key :capital_investment_bonds_28
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          (applicant.joint_investments.bond.any? || applicant.investments.bond.any?)
+      client do |crime_application|
+        crime_application.capital&.client_bond_investments.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) &&
-          MeansStatus.full_capital_required?(crime_application) &&
-          (partner.joint_investments.bond.any? || partner.investments.bond.any?)
+      partner do |crime_application|
+        crime_application.capital&.partner_bond_investments.present?
       end
     end
   end

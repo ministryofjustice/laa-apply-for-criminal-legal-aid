@@ -1,4 +1,6 @@
 class Payment < ApplicationRecord
+  include AnnualizedAmountCalculator
+
   belongs_to :crime_application
 
   attribute :amount, :pence
@@ -15,23 +17,9 @@ class Payment < ApplicationRecord
     values_at(:amount, :payment_type, :frequency).all?(&:present?)
   end
 
-  def prorated_monthly # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def prorated_monthly
     return amount if amount.nil? || amount.zero?
 
-    prorated_value =
-      case frequency
-      when PaymentFrequencyType::WEEKLY
-        (amount.value * 52) / 12
-      when PaymentFrequencyType::FORTNIGHTLY
-        (amount.value * 26) / 12
-      when PaymentFrequencyType::FOUR_WEEKLY
-        (amount.value * 13) / 12
-      when PaymentFrequencyType::ANNUALLY
-        amount.value / 12
-      else
-        amount.value
-      end
-
-    Money.new(prorated_value)
+    Money.new(annualized_amount.value / 12)
   end
 end

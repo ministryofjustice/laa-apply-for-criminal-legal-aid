@@ -10,22 +10,17 @@ module Evidence
       key :income_private_pension_5
       group :income
 
-      client do |_crime_application, applicant|
-        PensionEvidenceRequired.for(applicant)
+      client do |crime_application, _applicant|
+        payment = crime_application.income&.client_private_pension_payment
+
+        payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.include_partner?(crime_application) && PensionEvidenceRequired.for(partner)
+      partner do |crime_application, _partner|
+        payment = crime_application.income&.partner_private_pension_payment
+
+        payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
-    end
-  end
-
-  class PensionEvidenceRequired
-    def self.for(person)
-      pension = person.income_payments.private_pension
-      return false unless pension
-
-      pension.prorated_monthly.to_f > Rules::PrivatePensionIncome::THRESHOLD
     end
   end
 end

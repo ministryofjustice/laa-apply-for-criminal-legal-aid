@@ -1,6 +1,8 @@
 module Adapters
   module Structs
     class Partner < BaseStructAdapter
+      include PersonIncomePaymentTypes
+
       def home_address
         HomeAddress.new(super.attributes) if super
       end

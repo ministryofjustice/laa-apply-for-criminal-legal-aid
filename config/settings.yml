@@ -34,11 +34,11 @@ feature_flags:
   evidence_validation:
     local: true
     staging: true
-    production: false
+    production: true
   cifc_journey:
     local: true
     staging: true
-    production: false
+    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

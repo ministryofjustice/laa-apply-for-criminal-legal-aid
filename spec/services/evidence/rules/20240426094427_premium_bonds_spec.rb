@@ -3,20 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::PremiumBonds do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      capital:
-    )
-  end
-
-  let(:capital) { Capital.new }
-
-  before do
-    allow(MeansStatus).to receive_messages(
-      include_partner?: true,
-      full_capital_required?: true
-    )
-  end
+  include_context 'serializable application'
 
   it { expect(described_class.key).to eq :capital_premium_bonds_21 }
   it { expect(described_class.group).to eq :capital }
@@ -27,20 +14,18 @@ RSpec.describe Evidence::Rules::PremiumBonds do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'with premium bonds saving' do
-      let(:capital) { Capital.new(has_premium_bonds: 'yes') }
+      before { capital.has_premium_bonds = 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'without premium bonds saving' do
-      let(:capital) { Capital.new(has_premium_bonds: 'no') }
+      before { capital.has_premium_bonds = 'no' }
 
       it { is_expected.to be false }
     end
 
     context 'when premium bonds saving is not set' do
-      let(:capital) { Capital.new(has_premium_bonds: nil) }
-
       it { is_expected.to be false }
     end
   end
@@ -49,20 +34,18 @@ RSpec.describe Evidence::Rules::PremiumBonds do
     subject { described_class.new(crime_application).partner_predicate }
 
     context 'with premium bonds saving' do
-      let(:capital) { Capital.new(partner_has_premium_bonds: 'yes') }
+      before { capital.partner_has_premium_bonds = 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'without premium bonds saving' do
-      let(:capital) { Capital.new(partner_has_premium_bonds: 'no') }
+      before { capital.partner_has_premium_bonds = 'no' }
 
       it { is_expected.to be false }
     end
 
     context 'when premium bonds saving is not set' do
-      let(:capital) { Capital.new(partner_has_premium_bonds: nil) }
-
       it { is_expected.to be false }
     end
   end
@@ -72,7 +55,10 @@ RSpec.describe Evidence::Rules::PremiumBonds do
   end
 
   describe '#to_h' do
-    let(:capital) { Capital.new(has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes') }
+    before do
+      capital.has_premium_bonds = 'yes'
+      capital.partner_has_premium_bonds = 'yes'
+    end
 
     let(:expected_hash) do
       {

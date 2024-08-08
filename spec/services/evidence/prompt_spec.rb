@@ -1,24 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Evidence::Prompt do
-  let(:applicant) { instance_double(Applicant, has_nino: 'yes') }
-  let(:partner) { instance_double(Partner) }
-  let(:income) { instance_double(Income, client_owns_property: 'yes') }
-  let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'mortgage') }
-  let(:capital) { instance_double(Capital, has_premium_bonds: 'yes', partner_has_premium_bonds: 'yes') }
-  let(:kase) { nil }
-  let(:include_partner?) { true }
+  include_context 'serializable application'
 
-  let(:crime_application) do
-    instance_double(
-      CrimeApplication,
-      applicant:,
-      partner:,
-      income:,
-      outgoings:,
-      capital:,
-      kase:
-    )
+  before do
+    applicant.nino = 'QQ123456B'
+    income.client_owns_property = 'yes'
+    outgoings.housing_payment_type = 'mortgage'
+    capital.has_premium_bonds = 'yes'
+    capital.partner_has_premium_bonds = 'yes'
+    stub_const('EmptyRuleset', empty_ruleset)
+    stub_const('WalesRuleset', wales_ruleset)
+
+    Rails.root.glob('spec/fixtures/files/evidence/rules/*.rb') do |file|
+      load file
+    end
   end
 
   let(:empty_ruleset) do
@@ -38,30 +34,6 @@ RSpec.describe Evidence::Prompt do
         ]
       end
     end
-  end
-
-  before do
-    stub_const('EmptyRuleset', empty_ruleset)
-    stub_const('WalesRuleset', wales_ruleset)
-
-    Rails.root.glob('spec/fixtures/files/evidence/rules/*.rb') do |file|
-      load file
-    end
-
-    allow(MeansStatus).to receive(:include_partner?).with(crime_application) { include_partner? }
-
-    allow(crime_application).to receive_messages(
-      :evidence_prompts => [],
-      :evidence_prompts= => nil,
-      :evidence_last_run_at => [],
-      :evidence_last_run_at= => nil,
-      :is_means_tested => 'yes',
-      :save! => true
-    )
-
-    allow(applicant).to receive_messages(
-      under18?: false,
-    )
   end
 
   describe '#initialize' do
@@ -96,35 +68,31 @@ RSpec.describe Evidence::Prompt do
   end
 
   describe '#run!' do
-    before do
-      allow(crime_application).to receive(:save!).and_return true
-    end
-
     it 'persists generated prompts' do # rubocop:disable RSpec/ExampleLength
       expected_prompts = [
         {
           id: 'ExampleRule1',
-          group: :capital,
+          group: 'capital',
           ruleset: 'WalesRuleset',
-          key: :example1,
+          key: 'example1',
           run: {
             client: { result: true, prompt: ['a bank statement for your client'] },
             partner: { result: true, prompt: ['a bank statement for the partner'] },
-            other: { result: false, prompt: [] },
+            other: { result: false, prompt: [] }
           }
         },
         {
           id: 'ExampleRule2Budget2024',
-          group: :outgoings,
+          group: 'outgoings',
           ruleset: 'WalesRuleset',
-          key: :example2,
+          key: 'example2',
           run: {
             client: { result: true, prompt: ['a birth certificate', 'a driving licence'] },
             partner: { result: false, prompt: [] },
-            other: { result: false, prompt: [] },
+            other: { result: false, prompt: [] }
           }
         },
-      ]
+      ].map(&:deep_stringify_keys)
 
       custom_ruleset = WalesRuleset.new(crime_application, [])
       now = Time.zone.local(2024, 10, 1, 13, 23, 55)
@@ -133,8 +101,8 @@ RSpec.describe Evidence::Prompt do
       described_class.new(crime_application, custom_ruleset).run!
       travel_back
 
-      expect(crime_application).to have_received(:evidence_prompts=).with(expected_prompts)
-      expect(crime_application).to have_received(:evidence_last_run_at=).with(now)
+      expect(crime_application.evidence_prompts).to eq expected_prompts
+      expect(crime_application.evidence_last_run_at).to eq now
     end
   end
 
@@ -165,8 +133,11 @@ RSpec.describe Evidence::Prompt do
       end
     end
 
-    context 'with Hydrated and versioned ruleset' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-      let(:outgoings) { instance_double(Outgoings, housing_payment_type: 'rent') }
+    context 'with Hydrated and versioned ruleset' do
+      before {
+        outgoings.housing_payment_type = 'rent'
+        allow(crime_application).to receive(:evidence_prompts).and_return(persisted_evidence_prompts)
+      }
 
       # NOTE: ExampleRule2 is the archived/old-version rule in /fixtures
       let(:persisted_evidence_prompts) do
@@ -194,10 +165,6 @@ RSpec.describe Evidence::Prompt do
             }
           },
         ]
-      end
-
-      before do
-        allow(crime_application).to receive(:evidence_prompts).and_return(persisted_evidence_prompts)
       end
 
       it 'generates results' do
@@ -260,7 +227,7 @@ RSpec.describe Evidence::Prompt do
     end
   end
 
-  describe '#result_for?' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+  describe '#result_for?' do
     subject(:prompt) { described_class.new(crime_application, ruleset).run }
 
     let(:ruleset) do
@@ -289,7 +256,7 @@ RSpec.describe Evidence::Prompt do
     end
   end
 
-  describe '#result_for' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+  describe '#result_for' do
     subject(:prompt) { described_class.new(crime_application, ruleset).run }
 
     let(:ruleset) do

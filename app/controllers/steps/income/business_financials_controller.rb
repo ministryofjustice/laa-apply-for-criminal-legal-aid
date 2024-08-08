@@ -23,9 +23,9 @@ module Steps
 
       def additional_permitted_params
         [
-          turnover: [:amount, :frequency],
-          drawings: [:amount, :frequency],
-          profit: [:amount, :frequency]
+          :turnover_amount, :turnover_frequency,
+          :profit_amount, :profit_frequency,
+          :drawings_amount, :drawings_frequency,
         ]
       end
     end

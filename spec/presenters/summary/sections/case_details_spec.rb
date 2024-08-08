@@ -9,7 +9,8 @@ describe Summary::Sections::CaseDetails do
       CrimeApplication,
       to_param: '12345',
       kase: kase,
-      is_means_tested: is_means_tested
+      is_means_tested: is_means_tested,
+      cifc?: cifc?,
     )
   end
 
@@ -45,6 +46,7 @@ describe Summary::Sections::CaseDetails do
   let(:appeal_maat_id) { nil }
   let(:appeal_usn) { nil }
   let(:urn) { 'xyz' }
+  let(:cifc?) { false }
 
   let(:has_case_concluded) { nil }
   let(:date_case_concluded) { nil }

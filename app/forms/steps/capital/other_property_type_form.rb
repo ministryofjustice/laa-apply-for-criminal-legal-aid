@@ -22,8 +22,6 @@ module Steps
       end
 
       def persist!
-        return true if property_type == ''
-
         @property = incomplete_property_for_type || crime_application.properties.create!(property_type:)
       end
 

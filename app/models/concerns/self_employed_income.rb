@@ -16,4 +16,12 @@ module SelfEmployedIncome
   def partner_businesses
     businesses.select { |e| e.ownership_type == OwnershipType::PARTNER.to_s }
   end
+
+  def partner_self_employed?
+    partner_employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
+  end
+
+  def client_self_employed?
+    employment_status.include? EmploymentStatus::SELF_EMPLOYED.to_s
+  end
 end

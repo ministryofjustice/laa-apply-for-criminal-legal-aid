@@ -8,7 +8,7 @@
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:partner_will_benefit_from_trust_fund, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:partner_will_benefit_from_trust_fund, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }, hint: { text: t('.hint') }) do %>
         <%= f.govuk_radio_button :partner_will_benefit_from_trust_fund, YesNoAnswer::YES do %>
           <%= f.govuk_number_field :partner_trust_fund_amount_held, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
           <%= f.govuk_number_field :partner_trust_fund_yearly_dividend, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>

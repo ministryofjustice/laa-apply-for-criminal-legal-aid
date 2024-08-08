@@ -1,21 +1,11 @@
 RSpec.shared_examples 'an ownable investment requiring evidence' do
   subject(:rule) { described_class.new(crime_application) }
 
+  include_context 'serializable application'
+
   let(:include_partner?) { true }
   let(:full_capital_required?) { true }
   let(:investments) { [] }
-
-  before do
-    allow(MeansStatus).to receive_messages(
-      include_partner?: include_partner?, full_capital_required?: full_capital_required?
-    )
-  end
-
-  let(:crime_application) do
-    CrimeApplication.create!(
-      investments: investments, applicant: Applicant.new, partner: Partner.new
-    )
-  end
 
   describe '.client' do
     subject(:predicate) { described_class.new(crime_application).client_predicate }
@@ -25,6 +15,12 @@ RSpec.shared_examples 'an ownable investment requiring evidence' do
 
     context 'when owned by client' do
       it { is_expected.to be true }
+    end
+
+    context 'when means passported' do
+      let(:age_passported?) { true }
+
+      it { is_expected.to be false }
     end
 
     context 'when full capital is not required' do
@@ -60,6 +56,12 @@ RSpec.shared_examples 'an ownable investment requiring evidence' do
 
     context 'when owned by partner' do
       it { is_expected.to be true }
+
+      context 'when means passported' do
+        let(:age_passported?) { true }
+
+        it { is_expected.to be false }
+      end
 
       context 'when full capital is not required' do
         let(:full_capital_required?) { false }

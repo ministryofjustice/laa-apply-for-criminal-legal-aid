@@ -3,15 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::ChildcareCosts do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      outgoings:,
-      outgoings_payments:,
-    )
-  end
-
-  let(:outgoings) { Outgoings.new }
-  let(:outgoings_payments) { [] }
+  include_context 'serializable application'
 
   it { expect(described_class.key).to eq :outgoings_childcare_14 }
   it { expect(described_class.group).to eq :outgoings }

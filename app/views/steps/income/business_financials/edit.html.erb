@@ -10,21 +10,17 @@
       <%= f.govuk_fieldset legend: { text: legend_t(:financials), size: 'xl' } do %>
         <p><%= hint_t(:financials) %></p>
 
-        <% f.object.financials.each do | payment | %>
-          <%= f.fields_for payment, f.object.public_send(payment) do |ff| %>
+        <% @form_object.attributes.keys.each do |attribute| %>
+          <%= f.govuk_number_field :"#{attribute}_amount",
+                                   autocomplete: 'off',
+                                   inputmode: 'numeric',
+                                   width: 'one-third',
+                                   prefix_text: '£' %>
 
-            <%= ff.govuk_number_field :amount,
-                                      autocomplete: 'off',
-                                      inputmode: 'numeric',
-                                      width: 'one-third',
-                                      prefix_text: '£' %>
-
-            <%= ff.govuk_collection_radio_buttons :frequency,
-                                                  PaymentFrequencyType.values,
-                                                  :value,
-                                                  legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
-
-          <% end %>
+            <%= f.govuk_collection_radio_buttons :"#{attribute}_frequency",
+                                                 PaymentFrequencyType.values,
+                                                 :value,
+                                                 legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
         <% end %>
       <% end %>
 

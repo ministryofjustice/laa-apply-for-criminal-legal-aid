@@ -14,13 +14,13 @@ describe Summary::HtmlPresenter do
       partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: income,
-      outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
-      outgoings: (double has_no_other_outgoings: nil),
+      outgoings: outgoings,
       documents: double, application_type: application_type,
       capital: capital,
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double],
-      is_means_tested: is_means_tested,
-      non_means_tested?: false
+      is_means_tested: 'yes',
+      non_means_tested?: false,
+      cifc?: cifc?,
     )
   end
   # rubocop:enable Layout/LineLength
@@ -70,9 +70,17 @@ describe Summary::HtmlPresenter do
     )
   end
 
+  let(:outgoings) do
+    instance_double(
+      Outgoings,
+      outgoings_payments: [instance_double(OutgoingsPayment, payment_type: 'childcare')],
+      has_no_other_outgoings: nil
+    )
+  end
+
   let(:manage_without_income) { nil }
 
-  let(:is_means_tested) { 'yes' }
+  let(:cifc?) { false }
 
   let(:datastore_application) do
     extra = {
@@ -241,7 +249,6 @@ describe Summary::HtmlPresenter do
 
     context 'when an initial application' do
       let(:application_type) { 'initial' }
-      let(:is_means_tested) { 'yes' }
 
       context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
@@ -349,7 +356,7 @@ describe Summary::HtmlPresenter do
 
     context 'when a change in financial circumstances application' do
       let(:application_type) { 'change_in_financial_circumstances' }
-      let(:is_means_tested) { 'yes' }
+      let(:cifc?) { true }
 
       context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
@@ -364,7 +371,6 @@ describe Summary::HtmlPresenter do
             PassportingBenefitCheckPartner
             CaseDetails
             Offences
-            Codefendants
             NextCourtHearing
             FirstCourtHearing
             JustificationForLegalAid
@@ -413,7 +419,6 @@ describe Summary::HtmlPresenter do
             PassportingBenefitCheckPartner
             CaseDetails
             Offences
-            Codefendants
             NextCourtHearing
             FirstCourtHearing
             JustificationForLegalAid

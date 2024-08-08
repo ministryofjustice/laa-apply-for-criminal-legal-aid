@@ -34,8 +34,8 @@ en:
             intro: 'A partner is someone your client:'
             definition_1: is married to
             definition_2: is in a civil partnership with
-            definition_3: normally lives with as a couple, even if they are not living together right now - for example, if one person is in hospital, prison or abroad
-            exclusion: Do not include anyone who is separated from your client in a way that is likely to be permanent.
+            definition_3: normally lives with as a couple, even if they are not living together currently - for example, if one person is in hospital, prison or abroad
+            exclusion: It does not include anyone your client is separated from permanently.
       relationship_status:
         edit:
           page_title: What is your client's relationship status?
@@ -600,12 +600,14 @@ en:
           remove_link_html: Remove <span class="govuk-visually-hidden">National Savings Certificate</span>
       trust_fund:
         edit:
-          page_title: Does your client stand to benefit from a trust fund inside or outside the UK?
-          heading: Does your client stand to benefit from a trust fund inside or outside the UK?
+          page_title: Does your client stand to benefit from a trust fund?
+          heading: Does your client stand to benefit from a trust fund?
+          hint: Including any trust funds inside and outside the UK.
       partner_trust_fund:
         edit:
-          page_title: Does the partner stand to benefit from a trust fund inside or outside the UK?
-          heading: Does the partner stand to benefit from a trust fund inside or outside the UK?
+          page_title: Does the partner stand to benefit from a trust fund?
+          heading: Does the partner stand to benefit from a trust fund?
+          hint: Including any trust funds inside and outside the UK.
 
       properties:
         confirm_destroy:
@@ -735,7 +737,7 @@ en:
             change_in_financial_circumstances: Change in financial circumstances submitted
             resubmission: Application updated
           what_happens_next:
-            initial: We’ll check your application to see if your client is entitled to legal aid.
+            initial: We will check your application and email you with the outcome.
             post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
             change_in_financial_circumstances: We’ll check the new information submitted to see if your client is entitled to legal aid.
           view_application:

@@ -50,6 +50,7 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
 
         it 'is invalid' do
           expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid)).to be(true)
         end
       end
     end
@@ -68,16 +69,40 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
 
         it 'is invalid' do
           expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid)).to be(true)
+          expect(subject.errors.of_kind?(:percentage_partner_owned, :invalid)).to be(true)
         end
       end
     end
 
     context 'when there are other owners' do
       let(:has_other_owners) { YesNoAnswer::YES }
+      let(:include_partner?) { true }
 
-      # instead the % ownership is validated on the other property owners screen
-      it 'is bypassed' do
-        expect(subject).to be_valid
+      context 'when percentage ownership totals 100' do
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid_when_other_owners)).to be(true)
+          expect(subject.errors.of_kind?(:percentage_partner_owned, :invalid_when_other_owners)).to be(true)
+        end
+      end
+
+      context 'when percentage ownership is greater than 100' do
+        let(:percentage_partner_owned) { 10 }
+
+        it 'is invalid' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid_when_other_owners)).to be(true)
+          expect(subject.errors.of_kind?(:percentage_partner_owned, :invalid_when_other_owners)).to be(true)
+        end
+      end
+
+      context 'when percentage ownership is less than 100' do
+        let(:percentage_applicant_owned) { 90 }
+
+        it 'is valid' do
+          expect(subject).to be_valid
+        end
       end
     end
   end

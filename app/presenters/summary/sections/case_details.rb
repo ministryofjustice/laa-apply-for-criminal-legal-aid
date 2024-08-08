@@ -36,13 +36,13 @@ module Summary
 
           Components::ValueAnswer.new(
             :appeal_financial_circumstances_changed, kase.appeal_financial_circumstances_changed,
-            show: original_app_submitted?,
+            show: original_app_submitted? && !crime_application.cifc?,
             change_path: edit_steps_client_appeal_financial_circumstances_path
           ),
 
           Components::FreeTextAnswer.new(
             :appeal_with_changes_details, kase.appeal_with_changes_details,
-            show: financial_circumstances_changed?,
+            show: financial_circumstances_changed? && !crime_application.cifc?,
             change_path: edit_steps_client_appeal_financial_circumstances_path
           ),
 

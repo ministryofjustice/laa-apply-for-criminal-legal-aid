@@ -6,18 +6,12 @@ module Evidence
       key :capital_nsa_19
       group :capital
 
-      client do |crime_application, applicant|
-        MeansStatus.full_capital_required?(crime_application) &&
-          (applicant.savings.national_savings_or_post_office.any? ||
-           applicant.joint_savings.national_savings_or_post_office.any?)
+      client do |crime_application|
+        crime_application.capital&.client_national_savings_or_post_office_savings.present?
       end
 
-      partner do |crime_application, partner|
-        MeansStatus.full_capital_required?(crime_application) &&
-          MeansStatus.include_partner?(crime_application) && (
-            partner.savings.national_savings_or_post_office.any? ||
-              partner.joint_savings.national_savings_or_post_office.any?
-          )
+      partner do |crime_application|
+        crime_application.capital&.partner_national_savings_or_post_office_savings.present?
       end
     end
   end

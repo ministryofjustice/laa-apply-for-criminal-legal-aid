@@ -3,20 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::Rules::SalariedEmployee do
   subject { described_class.new(crime_application) }
 
-  let(:crime_application) do
-    CrimeApplication.create!(
-      income:,
-      income_payments:,
-    )
-  end
-
-  let(:income) { Income.new }
-  let(:income_payments) { [] }
-  let(:include_partner?) { true }
-
-  before do
-    allow(MeansStatus).to receive(:include_partner?).and_return(include_partner?)
-  end
+  include_context 'serializable application'
 
   it { expect(described_class.key).to eq :income_employed_0a }
   it { expect(described_class.group).to eq :income }
@@ -27,25 +14,21 @@ RSpec.describe Evidence::Rules::SalariedEmployee do
     subject { described_class.new(crime_application).client_predicate }
 
     context 'when employed' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::EMPLOYED]) }
+      let(:client_employed?) { true }
 
       it { is_expected.to be true }
     end
 
     context 'when not employed' do
-      let(:income) { Income.new(employment_status: [EmploymentStatus::NOT_WORKING]) }
-
-      it { is_expected.to be false }
-    end
-
-    context 'when there is no employment status' do
-      let(:income) { Income.new(employment_status: nil) }
+      let(:client_employed?) { false }
 
       it { is_expected.to be false }
     end
 
     context 'when there is no income' do
-      let(:income) { nil }
+      before do
+        crime_application.income = nil
+      end
 
       it { is_expected.to be false }
     end
@@ -55,25 +38,27 @@ RSpec.describe Evidence::Rules::SalariedEmployee do
     subject { described_class.new(crime_application).partner_predicate }
 
     context 'when employed' do
-      let(:income) { Income.new(partner_employment_status: [EmploymentStatus::EMPLOYED]) }
+      let(:partner_employed?) { true }
 
       it { is_expected.to be true }
+
+      context 'when partner not included in means' do
+        let(:include_partner?) { false }
+
+        it { is_expected.to be false }
+      end
     end
 
     context 'when not employed' do
-      let(:income) { Income.new(partner_employment_status: [EmploymentStatus::NOT_WORKING]) }
-
-      it { is_expected.to be false }
-    end
-
-    context 'when there is no employment status' do
-      let(:income) { Income.new(partner_employment_status: nil) }
+      let(:partner_employed?) { false }
 
       it { is_expected.to be false }
     end
 
     context 'when there is no income' do
-      let(:income) { nil }
+      before do
+        crime_application.income = nil
+      end
 
       it { is_expected.to be false }
     end
@@ -84,10 +69,8 @@ RSpec.describe Evidence::Rules::SalariedEmployee do
   end
 
   describe '#to_h' do
-    let(:income) do
-      Income.new(employment_status: [EmploymentStatus::EMPLOYED],
-                 partner_employment_status: [EmploymentStatus::EMPLOYED])
-    end
+    let(:client_employed?) { true }
+    let(:partner_employed?) { true }
 
     let(:expected_hash) do
       {
