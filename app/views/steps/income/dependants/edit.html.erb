@@ -17,7 +17,7 @@
       <%= f.fields_for :dependants do |c| %>
         <% index = c.index + 1 %>
 
-        <%= c.govuk_fieldset legend: { text: t('.dependant_legend', ordinal: index.ordinalize_fully.capitalize) }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
+        <%= c.govuk_fieldset legend: { hidden: true }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
           <%= c.govuk_number_field :age,
                                    autocomplete: 'off',
                                    class: 'govuk-input--width-2',
