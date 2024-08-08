@@ -20,10 +20,16 @@ module Circumstances
       errors.add(:pre_cifc_reason) if crime_application.pre_cifc_reason.blank?
     end
 
-    def circumstances_complete?
+    def circumstances_reference_complete?
       return true unless applicable?
       return false if crime_application.pre_cifc_reference_number.blank?
       return false if maat_id_blank? && usn_blank?
+
+      true
+    end
+
+    def circumstances_reason_complete?
+      return true unless applicable?
       return false if crime_application.pre_cifc_reason.blank?
 
       true

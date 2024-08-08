@@ -21,6 +21,11 @@ module Summary
                                   change_path: edit_steps_circumstances_pre_cifc_reference_number_path,
                                   i18n_opts: { ref_type: pre_cifc_reference_name }
                                 ))
+
+          relevant_answers.push(Components::FreeTextAnswer.new(
+                                  :pre_cifc_reason, crime_application.pre_cifc_reason,
+                                  change_path: edit_steps_circumstances_pre_cifc_reason_path,
+                                ))
         end
 
         if FeatureFlags.non_means_tested.enabled? && !pse?

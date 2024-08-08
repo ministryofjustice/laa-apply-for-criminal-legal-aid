@@ -55,7 +55,7 @@ en:
       overview: Overview
       businesses: Businesses
       business:
-        self_employed: Self-employed business 
+        self_employed: Self-employed business
         partnership: Partnership
         director_or_shareholder: Director or shareholder
       client_businesses: Client businesses
@@ -144,6 +144,9 @@ en:
         question: LAA reference number
       pre_cifc_maat_id_or_usn:
         question: "%{ref_type} of original application"
+      pre_cifc_reason:
+        question: What has changed in your client's financial circumstances?
+        absence_answer: *absence_not_provided
       means_tested:
         question: Means tested application
         answers:
@@ -929,19 +932,19 @@ en:
         question: Nature of business
         absence_answer: ''
       trading_start_date:
-        question: Date began trading 
+        question: Date began trading
         absence_answer: ''
       has_additional_owners:
-        question: In business with anyone else? 
+        question: In business with anyone else?
         answers: *YESNO
       additional_owners:
-        question: Name of others in business 
+        question: Name of others in business
         absence_answer: ''
       has_employees:
-        question: Employees? 
+        question: Employees?
         answers: *YESNO
       number_of_employees:
-        question: Number of employees 
+        question: Number of employees
         absence_answer: ''
       turnover:
         question: Total turnover
@@ -949,7 +952,7 @@ en:
           description: *payment_answer_format
         absence_answer: ''
       drawings:
-        question: Total drawings 
+        question: Total drawings
         answers:
           description: *payment_answer_format
         absence_answer: ''
