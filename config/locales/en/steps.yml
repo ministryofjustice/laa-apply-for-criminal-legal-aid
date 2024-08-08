@@ -355,9 +355,7 @@ en:
             page_text: You told us your client is employed.
         self_assessment_tax_bill:
           edit:
-            page_title: Does your client pay a Self Assessment tax bill received in the last 2 years?
-            heading: Does your client pay a Self Assessment tax bill received in the last 2 years?
-            page_text: This will be a bill from HM Revenue and Customs (HMRC).
+            page_title: Has your client received a Self Assessment tax calculation in the last 2 years?
         deductions:
           edit:
             page_title: Deductions from your client's pay
@@ -424,9 +422,7 @@ en:
             page_text: You told us your client's partner is employed.
         self_assessment_tax_bill:
           edit:
-            page_title: Does the partner pay a Self Assessment tax bill received in the last 2 years?
-            heading: Does the partner pay a Self Assessment tax bill received in the last 2 years?
-            page_text: This will be a bill from HM Revenue and Customs (HMRC).
+            page_title: Has the partner received a Self Assessment tax bill calculation in the last 2 years?
         deductions:
           edit:
             page_title: Deductions from the partner’s pay
