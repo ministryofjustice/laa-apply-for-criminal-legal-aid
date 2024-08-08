@@ -9,7 +9,6 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       applicant: applicant,
       partner: partner,
       partner_detail: partner_detail,
-      client_has_partner: client_has_partner,
       non_means_tested?: non_means_tested
     )
   end
@@ -91,7 +90,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: 'yes',
           confirm_details: 'yes',
           confirm_dwp_result: 'no',
-          has_partner: client_has_partner,
+          has_partner: has_partner,
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
@@ -132,7 +131,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#generate' do
     context 'without partner' do
-      let(:client_has_partner) { 'no' }
+      let(:has_partner) { 'no' }
       let(:relationship_to_partner) { nil }
       let(:relationship_status) { 'divorced' }
       let(:partner) { nil }
@@ -144,6 +143,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_status: relationship_status,
           separation_date: nil,
           involvement_in_case: nil,
+          has_partner: has_partner,
         )
       end
 
@@ -158,7 +158,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
         )
       end
 
-      let(:client_has_partner) { 'yes' }
+      let(:has_partner) { 'yes' }
       let(:relationship_to_partner) { 'married_or_partnership' }
       let(:relationship_status) { nil }
 
@@ -191,6 +191,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          has_partner: has_partner,
         )
       end
 
@@ -235,7 +236,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
         allow(MeansStatus).to receive(:include_partner?).and_return(false)
       end
 
-      let(:client_has_partner) { 'yes' }
+      let(:has_partner) { 'yes' }
       let(:relationship_to_partner) { 'married_or_partnership' }
       let(:relationship_status) { nil }
 
@@ -268,6 +269,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          has_partner: has_partner,
         )
       end
 

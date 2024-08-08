@@ -37,7 +37,7 @@ module SubmissionSerializer
       def partner_attributes(json)
         return nil unless partner_detail
 
-        json.has_partner client_has_partner
+        json.has_partner partner_detail.has_partner
         json.relationship_to_partner partner_detail.relationship_to_partner
         json.relationship_status partner_detail.relationship_status
         json.separation_date partner_detail.separation_date

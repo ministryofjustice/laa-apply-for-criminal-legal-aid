@@ -3,9 +3,10 @@ module PartnerDetails
     include TypeOfMeansAssessment
 
     def applicable?
+      return false unless record
       return false if applicant&.under18? || not_means_tested? || appeal_no_changes?
 
-      crime_application.client_has_partner != 'no'
+      record.has_partner != 'no'
     end
 
     def complete?

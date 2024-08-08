@@ -13,10 +13,11 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       involvement_in_case: 'none',
       conflict_of_interest: 'no',
       has_same_address_as_client: 'no',
+      has_partner: has_partner,
     )
   end
 
-  let(:crime_application) { CrimeApplication.new(client_has_partner:, partner:) }
+  let(:crime_application) { CrimeApplication.new(partner:) }
 
   let(:partner) do
     Partner.new(
@@ -30,7 +31,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
   end
 
   let(:home_address) { instance_double(Address, type: 'HomeAddress', person: partner, postcode: 'SW1A 2AA') }
-  let(:client_has_partner) { nil }
+  let(:has_partner) { nil }
 
   before do
     allow(partner).to receive(:home_address).and_return(home_address)
@@ -40,13 +41,13 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     subject(:applicable?) { validator.applicable? }
 
     context 'when client has partner' do
-      let(:client_has_partner) { 'yes' }
+      let(:has_partner) { 'yes' }
 
       it { is_expected.to be true }
     end
 
     context 'when client does not have partner' do
-      let(:client_has_partner) { 'no' }
+      let(:has_partner) { 'no' }
 
       it { is_expected.to be false }
     end
@@ -61,7 +62,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       it { is_expected.to be false }
 
       it 'does not bother checking if there is a partner' do
-        expect(crime_application).not_to receive(:client_has_partner)
+        expect(partner_detail).not_to receive(:has_partner)
       end
     end
 
@@ -69,7 +70,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     context 'with a partner' do
       subject(:complete?) { validator.complete? }
 
-      let(:client_has_partner) { 'yes' }
+      let(:has_partner) { 'yes' }
 
       context 'with partner and all conditions met' do
         it { is_expected.to be true }
@@ -130,7 +131,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
   end
 
   describe '#validate' do
-    let(:client_has_partner) { 'yes' }
+    let(:has_partner) { 'yes' }
 
     context 'when not complete' do
       before { partner_detail.involvement_in_case = nil }

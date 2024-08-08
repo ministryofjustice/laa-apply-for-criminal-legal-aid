@@ -18,7 +18,7 @@ module ClientDetails
       errors.add(:residence_type, :blank) unless address_complete?
       AppealDetails::AnswersValidator.new(record).validate
       errors.add(:has_nino, :blank) unless has_nino_complete?
-      errors.add(:client_has_partner, :blank) unless client_has_partner_complete?
+      errors.add(:has_partner, :blank) unless has_partner_complete?
       errors.add(:relationship_status, :blank) unless relationship_status_complete?
 
       errors.add :base, :incomplete_records unless errors.empty?
@@ -61,17 +61,17 @@ module ClientDetails
       applicant.nino.present?
     end
 
-    def client_has_partner_complete?
+    def has_partner_complete?
       return true if applicant.under18? || non_means_tested? || appeal_no_changes?
 
-      record.client_has_partner.present?
+      record.partner_detail&.has_partner.present?
     end
 
-    def relationship_status_complete?
+    def relationship_status_complete? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       return true if applicant.under18? || non_means_tested? || appeal_no_changes?
-      return true if record.client_has_partner == 'yes'
+      return true if record.partner_detail&.has_partner == 'yes'
 
-      record.client_has_partner == 'no' && record.partner_detail&.relationship_status.present?
+      record.partner_detail&.has_partner == 'no' && record.partner_detail&.relationship_status.present?
     end
 
     alias crime_application record

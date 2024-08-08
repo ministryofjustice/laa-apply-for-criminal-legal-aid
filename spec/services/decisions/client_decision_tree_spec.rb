@@ -10,7 +10,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   let(:case_type) { CaseType::SUMMARY_ONLY }
 
   let(:appeal_no_changes?) { nil }
-  let(:client_has_partner) { nil }
+  let(:has_partner) { nil }
   let(:is_means_tested_enabled) { false }
   let(:not_means_tested?) { nil }
   let(:cifc?) { false }
@@ -36,18 +36,18 @@ RSpec.describe Decisions::ClientDecisionTree do
   it_behaves_like 'a decision tree'
 
   context 'when the step is `has_partner`' do
-    let(:form_object) { double('FormObject', client_has_partner:) }
+    let(:form_object) { double('FormObject', has_partner:) }
     let(:step_name) { :has_partner }
     let(:applicant) { instance_double(Applicant, under18?: false) }
 
     context 'and answer is `no`' do
-      let(:client_has_partner) { YesNoAnswer::NO }
+      let(:has_partner) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination(:relationship_status, :edit, id: crime_application) }
     end
 
     context 'and answer is `yes`' do
-      let(:client_has_partner) { YesNoAnswer::YES }
+      let(:has_partner) { YesNoAnswer::YES }
 
       it { is_expected.to have_destination('/steps/partner/relationship', :edit, id: crime_application) }
     end

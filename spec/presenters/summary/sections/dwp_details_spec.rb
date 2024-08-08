@@ -7,7 +7,6 @@ describe Summary::Sections::DWPDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      client_has_partner: 'no',
       partner_detail: nil,
       partner: nil,
       applicant: applicant,

@@ -23,13 +23,11 @@ module DeveloperTools
                   flash: { success: 'Application marked as returned' }
     end
 
-    # rubocop:disable Metrics/MethodLength
-
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def bypass_dwp
       find_or_create_applicant
 
       crime_application.update(
-        client_has_partner: YesNoAnswer::NO,
         navigation_stack: [
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
@@ -42,7 +40,6 @@ module DeveloperTools
       redirect_to edit_steps_dwp_benefit_check_result_path(crime_application)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def under18_bypass
       find_or_create_applicant(
         dob: rand(15..17).years.ago,
@@ -60,7 +57,6 @@ module DeveloperTools
       find_or_create_case
 
       crime_application.update(
-        client_has_partner: YesNoAnswer::NO,
         navigation_stack: [
           edit_steps_client_has_partner_path(crime_application),
           edit_steps_client_details_path(crime_application),
@@ -76,9 +72,7 @@ module DeveloperTools
     private
 
     def crime_application
-      @crime_application ||= current_crime_application || initialize_crime_application(
-        client_has_partner: YesNoAnswer::NO,
-      )
+      @crime_application ||= current_crime_application || initialize_crime_application
     end
 
     # rubocop:disable Metrics/MethodLength

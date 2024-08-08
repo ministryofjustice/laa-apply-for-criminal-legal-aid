@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_radio_buttons :client_has_partner, @form_object.choices,
+        <%= f.govuk_collection_radio_buttons :has_partner, @form_object.choices,
                                              :value, inline: false, legend: { tag: 'h1', size: 'xl' } do %>
           <p><%= t('.partner_definitions.intro') %></p>
           <ul class="govuk-list govuk-list--bullet">

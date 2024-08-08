@@ -7,7 +7,6 @@ describe Summary::Sections::LegalRepresentativeDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      client_has_partner: 'no',
       status: status,
       provider_details: provider_details
     )

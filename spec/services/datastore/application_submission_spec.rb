@@ -19,7 +19,6 @@ RSpec.describe Datastore::ApplicationSubmission do
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: '123456789',
-      client_has_partner: 'yes',
     )
 
     client = Applicant.create(
@@ -59,6 +58,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       involvement_in_case: 'none',
       has_same_address_as_client: 'no',
       conflict_of_interest: 'no',
+      has_partner: 'yes',
     )
 
     HomeAddress.create(
