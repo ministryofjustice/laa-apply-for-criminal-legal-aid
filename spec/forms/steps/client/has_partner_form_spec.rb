@@ -80,10 +80,14 @@ RSpec.describe Steps::Client::HasPartnerForm do
       end
     end
 
-    context 'when `has_partner` is `no`' do
+    context 'when `has_partner` is `no` and was previously `yes`' do
       let(:has_partner) { 'no' }
-      let(:income) do
-        Income.new(partner_employment_status: ['not_working'])
+      let(:income) { Income.new(partner_employment_status: ['not_working']) }
+      let(:partner_detail) do
+        PartnerDetail.new(
+          has_partner: 'yes',
+          relationship_to_partner: 'prefer_not_to_say',
+        )
       end
 
       before do
@@ -119,6 +123,22 @@ RSpec.describe Steps::Client::HasPartnerForm do
 
         expect(subject.save).to be(true)
         expect(crime_application.payments.for_client.size).to eq 1
+      end
+    end
+
+    context 'when has has_partner is unchanged' do
+      before do
+        allow(partner_detail).to receive_messages(has_partner: previous_has_partner)
+      end
+
+      context 'when has_partner is unchanged' do
+        let(:previous_has_partner) { YesNoAnswer::YES.to_s }
+        let(:has_partner) { YesNoAnswer::YES }
+
+        it 'does not save the record but returns true' do
+          expect(partner_detail).not_to receive(:update!)
+          expect(subject.save).to be(true)
+        end
       end
     end
   end

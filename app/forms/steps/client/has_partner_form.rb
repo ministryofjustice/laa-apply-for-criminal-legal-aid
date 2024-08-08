@@ -12,9 +12,15 @@ module Steps
         YesNoAnswer.values
       end
 
+      def changed?
+        !partner_detail.has_partner.eql?(has_partner.to_s)
+      end
+
       private
 
-      def persist!
+      def persist! # rubocop:disable Metrics/MethodLength
+        return true unless changed?
+
         ::CrimeApplication.transaction do
           if has_partner.no?
             reset!
