@@ -219,6 +219,7 @@ en:
           page_title: Do you intend to claim pre-order work?
           preorder_work_date: Enter when you or your firm were first instructed
           preorder_work_details: Enter details about the urgency of the work
+          hint: "'Pre-order work' is work done before a representation order is issued."
       is_client_remanded:
         edit:
           page_title: Has a court remanded your client in custody?
@@ -325,7 +326,6 @@ en:
         edit:
           page_title: Dependants’ ages
           heading: Dependants’ ages
-          dependant_legend: '%{ordinal} dependant age'
           age: How old is the %{ordinal} dependant?
           age_hint: years old
           remove_button: Remove %{ordinal} dependant
@@ -684,7 +684,7 @@ en:
           required: 'Based on your answers, use this page to provide:'
           reject_warning: This application will be rejected if you have not uploaded the relevant evidence unless either the client is in Court Custody and therefore self-certifies, or it is a Crown Court Trial (in which case evidence may follow within 14 days).
           recent_docs: All evidence must be from the last 3 months.
-          rename_files: Files often have long, meaningless names by default, but if you rename them to a friendly name it will make it easier for us to assess your case. For example, Client-bank-statement.PDF instead of File23.PDF.
+          rename_files: It can help us process your claim more quickly if you give filenames clear descriptions. For example, Client-bank-statement.PDF instead of File23.PDF.
           upload_file_button: Upload file
           upload_files_heading: Upload files
           upload_files_info: The maximum size for each file is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
@@ -734,8 +734,8 @@ en:
             resubmission: Application updated
           what_happens_next:
             initial: We will check your application and email you with the outcome.
-            post_submission_evidence: We’ll check the evidence submitted to see if your client is entitled to legal aid.
-            change_in_financial_circumstances: We’ll check the new information submitted to see if your client is entitled to legal aid.
+            post_submission_evidence: We’ll check the evidence submitted and email you with the outcome.
+            change_in_financial_circumstances: We’ll check the new information submitted and email you with the outcome.
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence

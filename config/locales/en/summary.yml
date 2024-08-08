@@ -85,7 +85,7 @@ en:
       other_income_details:
         one: "Other sources of income"
         other: "Other sources of income: client and partner"
-      housing_payments: Housing Payments
+      housing_payments: Housing payments
       outgoings_payments_details:
         one: Payments %{ownership} makes
         other: Payments %{ownership} make
@@ -679,7 +679,7 @@ en:
         question: Account balance
         absence_answer: ''
       saving_ownership_type:
-        question: Name the account is in
+        question: Account holder
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       account_number:

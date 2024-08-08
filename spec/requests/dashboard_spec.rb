@@ -187,9 +187,9 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
-          assert_select 'h3', 'You need to tell us why your client should get legal aid'
+          assert_select 'h3', 'You need to tell us why your client should get legal aid.'
           assert_select 'p.govuk-body', 'We’ve returned your application because you need to add justification for all offences. This is because the case has been ’split’.'
-          assert_select 'p.govuk-body', 'A case is split into multiple cases when CPS decides offences are not related enough to be tried at the same time.'
+          assert_select 'p.govuk-body', 'A case is split into more than one when the Crown Prosecution Service decides offences are not related enough to be tried at the same time.'
           assert_select 'p.govuk-body', 'The caseworker who returned this application says: Offence 1 reason requires more detail'
           assert_select 'button.govuk-button', count: 1, text: 'Add justification'
         end
@@ -225,7 +225,7 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
-          assert_select 'h3', 'LAA have returned this application because further clarification is needed'
+          assert_select 'h3', 'We have returned this application because we need further clarification.'
           assert_select 'p.govuk-body', 'The caseworker who returned this application says: Further information regarding IoJ required'
           assert_select 'button.govuk-button', count: 1, text: 'Update application'
         end
