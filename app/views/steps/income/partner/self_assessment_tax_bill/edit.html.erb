@@ -6,12 +6,8 @@
     <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
     <%= govuk_error_summary(@form_object) %>
 
-    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
-    <p class="govuk-body">
-      <%= t('.page_text') %>
-    </p>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset :partner_self_assessment_tax_bill, legend: { tag: 'h1', size: 'xl', hidden: true } do %>
+      <%= f.govuk_radio_buttons_fieldset :partner_self_assessment_tax_bill, legend: { tag: 'h1', size: 'xl' } do %>
         <%= f.govuk_radio_button :partner_self_assessment_tax_bill, YesNoAnswer::YES do %>
           <%= f.govuk_number_field(:partner_self_assessment_tax_bill_amount,
                                    prefix_text: '£',
