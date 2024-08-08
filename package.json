@@ -4,6 +4,6 @@
   "dependencies": {
     "@ministryofjustice/frontend": "2.1.3",
     "dropzone": "^6.0.0-beta.2",
-    "govuk-frontend": "5.4.0"
+    "govuk-frontend": "5.4.1"
   }
 }
