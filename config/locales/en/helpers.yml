@@ -300,9 +300,9 @@ en:
         legal_aid_contribution:
           frequency: Select how often they pay this
       steps_outgoings_outgoings_more_than_income_form:
-        outgoings_more_than_income: Are the outgoings of %{subject} more than their income?
+        outgoings_more_than_income: Are %{subject}'s outgoings more than their income?
       steps_submission_more_information_form:
-        additional_information_required: Do you need to add any more information to this application?
+        additional_information_required: Do you want to add any other information?
       steps_submission_cannot_submit_without_nino_form:
         heading: You cannot submit this application yet, as we cannot check %{subject}'s benefit status without their National Insurance number
       steps_capital_property_type_form:
@@ -384,7 +384,7 @@ en:
           'no': You may not be able to submit your application without the National Insurance number
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
-        has_benefit_evidence: This can be a letter from DWP or JobCentre Plus, or an image from a government app showing %{subject}'s name and their benefit details.
+        has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or an image from a government app showing %{subject}'s name and their benefit details.
         has_benefit_evidence_options:
           'yes': You'll need to upload evidence at the end of this application.
           # TODO: check with design
@@ -450,19 +450,19 @@ en:
       steps_income_income_payments_form:
         income_payments: Select all that apply.
         types_options:
-          maintenance: This includes child maintenance.
-          private_pension: This includes pensions from an employer.
-          board_from_family: This includes any non-contractual payments.
-          rent: This includes contractual payments from property your client does not live in.
-          from_friends_relatives: Select if a friend or relative regularly gives your client money to help with living costs. Do not include one-off payments.
+          maintenance: Include child maintenance.
+          private_pension: Include employer pensions.
+          board_from_family: Include any payments, even if not agreed with a contract.
+          rent: Include payments your client gets from a property they do not live in, even if not agreed with a contract.
+          from_friends_relatives: Regular payments to help with living costs, not one-off amounts of money.
       steps_income_partner_income_payments_form:
         income_payments: Select all that apply.
         types_options:
-          maintenance: This includes child maintenance.
-          private_pension: This includes pensions from an employer.
-          board_from_family: This includes any non-contractual payments.
-          rent: This includes contractual payments from property the partner does not live in.
-          from_friends_relatives: Select if a friend or relative regularly gives the partner money to help with living costs. Do not include one-off payments.
+          maintenance: Include child maintenance.
+          private_pension: Include employer pensions.
+          board_from_family: Include any payments, even if not agreed with a contract.
+          rent: Include payments your client gets from a property they do not live in, even if not agreed with a contract.
+          from_friends_relatives: Regular payments to help with living costs, not one-off amounts of money.
       steps_income_income_benefits_form:
         income_benefits: Select all that apply.
         types_options:
@@ -524,6 +524,8 @@ en:
         value: You can use property websites to find the estimated value.
       steps_capital_land_form:
         value: You can use property websites to find the estimated value.
+      steps_submission_more_information_form:
+        additional_information: For example, justification for the time spent on the case, or for any uplift claimed
 
     label:
       cookies_settings_form:
@@ -818,7 +820,7 @@ en:
           board_from_family: Board from family members living with your client
           rent: Rent from a tenant
           financial_support_with_access: Financial support from someone who allows your client access to their assets or money
-          from_friends_relatives: Money from friends or family
+          from_friends_relatives: Regular payments from a friend or relative
           other: Other sources of income
           none: They do not get any of these payments
         maintenance:
@@ -1004,7 +1006,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: They do not pay any of these payments
+          none: They do not make any of these payments
       steps_outgoings_mortgage_form:
         amount:
           one: How much are the mortgage payments %{subject} makes?
@@ -1038,7 +1040,7 @@ en:
           childcare: Childcare payments
           maintenance: Maintenance payments to a former partner
           legal_aid_contribution: Contributions to criminal or civil legal aid
-          none: They do not pay any of these payments
+          none: They do not make any of these payments
         childcare:
           amount: *amount_label
           frequency_options: *frequency_options
@@ -1056,7 +1058,7 @@ en:
         upload_files: Upload files
       steps_submission_more_information_form:
         additional_information_required_options: *YESNO
-        additional_information: Enter details that will help us process this application
+        additional_information: Add other information
       steps_submission_declaration_form:
         legal_rep_has_partner_declaration_options: *YESNO
         legal_rep_no_partner_declaration_reason: Explain the reason you could not get a signed declaration from the partner

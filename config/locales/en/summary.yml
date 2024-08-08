@@ -679,7 +679,7 @@ en:
         question: Account balance
         absence_answer: ''
       saving_ownership_type:
-        question: Name the account is in
+        question: Account holder
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       account_number:
