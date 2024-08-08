@@ -20,6 +20,7 @@ en:
             base:
               case_type_missing: A case type needs to be selected
               circumstances_reference_missing: Your client's MAAT ID or unique submission number (USN) needs to be completed
+              circumstances_reason_missing: What has changed in your client's financial circumstances needs to be completed
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:
@@ -69,6 +70,10 @@ en:
               invalid: Enter a valid MAAT ID
             pre_cifc_usn:
               blank: Enter USN
+        steps/circumstances/pre_cifc_reason_form:
+          attributes:
+            pre_cifc_reason:
+              blank: Enter what has changed in your client's financial circumstances
         steps/provider/confirm_office_form:
           attributes:
             is_current_office:

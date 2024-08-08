@@ -546,6 +546,8 @@ en:
           pre_cifc_usn: USN
         pre_cifc_maat_id: Enter MAAT ID
         pre_cifc_usn: Enter USN
+      steps_circumstances_pre_cifc_reason_form:
+        pre_cifc_reason: What has changed in your client's financial circumstances?
       steps_client_is_means_tested_form:
         is_means_tested_options:
           'yes': Yes - the application is subject to the test
