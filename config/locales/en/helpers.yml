@@ -176,12 +176,76 @@ en:
         partner_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
+        maintenance:
+          frequency: *frequency_legend
+        private_pension:
+          frequency: *frequency_legend
+        state_pension:
+          frequency: *frequency_legend
+        interest_investment:
+          frequency: *frequency_legend
+        student_loan_grant:
+          frequency: *frequency_legend
+        board_from_family:
+          frequency: *frequency_legend
+        rent:
+          frequency: *frequency_legend
+        financial_support_with_access:
+          frequency: *frequency_legend
+        from_friends_relatives:
+          frequency: *frequency_legend
+        other:
+          frequency: *frequency_legend
       steps_income_partner_income_payments_form:
         income_payments: Which of these payments does the partner get?
+        maintenance:
+          frequency: *frequency_legend
+        private_pension:
+          frequency: *frequency_legend
+        state_pension:
+          frequency: *frequency_legend
+        interest_investment:
+          frequency: *frequency_legend
+        student_loan_grant:
+          frequency: *frequency_legend
+        board_from_family:
+          frequency: *frequency_legend
+        rent:
+          frequency: *frequency_legend
+        financial_support_with_access:
+          frequency: *frequency_legend
+        from_friends_relatives:
+          frequency: *frequency_legend
+        other:
+          frequency: *frequency_legend
       steps_income_income_benefits_form:
         income_benefits: Which of these benefits does your client get?
+        child:
+          frequency: *frequency_legend
+        working_or_child_tax_credit:
+          frequency: *frequency_legend
+        incapacity:
+          frequency: *frequency_legend
+        industrial_injuries_disablement:
+          frequency: *frequency_legend
+        jsa:
+          frequency: *frequency_legend
+        other:
+          frequency: *frequency_legend
       steps_income_partner_income_benefits_form:
         income_benefits: Which of these benefits does the partner get?
+        child:
+          frequency: *frequency_legend
+        working_or_child_tax_credit:
+          frequency: *frequency_legend
+        incapacity:
+          frequency: *frequency_legend
+        industrial_injuries_disablement:
+          frequency: *frequency_legend
+        jsa:
+          frequency: *frequency_legend
+        other:
+          frequency: *frequency_legend
       steps_income_lost_job_in_custody_form:
         lost_job_in_custody: Did your client lose their job as a result of being in custody?
       steps_income_manage_without_income_form:
@@ -218,7 +282,7 @@ en:
       steps_outgoings_mortgage_form:
         frequency: Select how often they make mortgage payments
       steps_outgoings_rent_form:
-        frequency: Select how often they make rent payments
+        frequency: Select how often they pay rent
       steps_outgoings_board_and_lodging_form:
         frequency: Select how often they pay for board and lodgings, and food
       steps_outgoings_council_tax_form:
@@ -229,6 +293,12 @@ en:
         outgoings_payments:
           one: Which of these payments does %{subject} make?
           other: Which of these payments do %{subject} make?
+        childcare:
+          frequency: Select how often they pay this
+        maintenance:
+          frequency: Select how often they pay this
+        legal_aid_contribution:
+          frequency: Select how often they pay this
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income: Are %{subject}'s outgoings more than their income?
       steps_submission_more_information_form:
@@ -331,7 +401,7 @@ en:
         date_case_concluded: For example, 27 3 2007
       steps_case_is_preorder_work_claimed_form:
         preorder_work_date: For example, 27 3 2007
-        preorder_work_details: Urgency of work details
+        preorder_work_details: Enter details about the urgency of the work
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 27 3 2007
       steps_case_charges_form:
@@ -1046,7 +1116,7 @@ en:
         value: What is the value of the investment?
         ownership_type_options: *OWNERSHIP_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm that the investment is in my client's name
+          'true': I confirm the investment is in my client's name
       steps_capital_national_savings_certificates_form:
         holder_number: What is the customer number or holder number?
         certificate_number: What is the certificate number?
@@ -1097,7 +1167,7 @@ en:
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
       steps_capital_commercial_form:
-        usage: How is the property used?
+        usage: What is the property used for?
         value: How much is the property worth?
         outstanding_mortgage: How much is left to pay on the mortgage?
         percentage_applicant_owned: What percentage of the property does your client own?
