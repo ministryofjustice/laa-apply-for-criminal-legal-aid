@@ -13,6 +13,8 @@ module Steps
 
       attribute :income_benefits, array: true, default: [] # Used by BaseFormObject
 
+      validate { errors.add(:base, :none_selected) if @types.nil? }
+
       validates_with IncomeBenefitsValidator
 
       IncomeBenefitType.values.each do |type| # rubocop:disable Style/HashEachMethods
