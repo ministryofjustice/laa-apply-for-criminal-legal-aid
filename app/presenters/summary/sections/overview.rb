@@ -65,6 +65,10 @@ module Summary
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
+      def heading
+        :application_details
+      end
+
       private
 
       def provider_details

@@ -52,6 +52,7 @@ en:
     does_not_get: Does not get
     does_not_pay: Does not pay
     sections:
+      application_details: Application details
       assets: Assets
       overview: Overview
       businesses: Businesses
