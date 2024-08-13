@@ -169,10 +169,10 @@ en:
       steps_income_partner_employments_summary_form:
         add_partner_employment: Do you want to add another job?
       steps_income_client_self_assessment_tax_bill_form:
-        applicant_self_assessment_tax_bill: Does your client pay a Self Assessment tax bill received in the last 2 years?
+        applicant_self_assessment_tax_bill: Has your client received a Self Assessment tax calculation in the last 2 years?
         applicant_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_partner_self_assessment_tax_bill_form:
-        partner_self_assessment_tax_bill: Does the partner pay a Self Assessment tax bill received in the last 2 years?
+        partner_self_assessment_tax_bill: Has the partner received a Self Assessment tax bill calculation in the last 2 years?
         partner_self_assessment_tax_bill_frequency: How often do they pay this amount?
       steps_income_income_payments_form:
         income_payments: Which of these payments does your client get?
@@ -445,6 +445,10 @@ en:
       steps_income_client_deductions_form:
         types_options:
           other: For example, Student Loans, pensions or employee benefits
+      steps_income_client_self_assessment_tax_bill_form:
+        applicant_self_assessment_tax_bill: This will be from HM Revenue and Customs (HMRC).
+      steps_income_partner_self_assessment_tax_bill_form:
+        partner_self_assessment_tax_bill: This will be from HM Revenue and Customs (HMRC).
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_income_income_payments_form:
@@ -524,8 +528,6 @@ en:
         value: You can use property websites to find the estimated value.
       steps_capital_land_form:
         value: You can use property websites to find the estimated value.
-      steps_submission_more_information_form:
-        additional_information: For example, justification for the time spent on the case, or for any uplift claimed
 
     label:
       cookies_settings_form:
