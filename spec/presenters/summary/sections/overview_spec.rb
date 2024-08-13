@@ -16,6 +16,7 @@ describe Summary::Sections::Overview do
       pre_cifc_reference_number: pre_cifc_reference_number,
       pre_cifc_maat_id: pre_cifc_maat_id,
       pre_cifc_usn: pre_cifc_usn,
+      pre_cifc_reason: pre_cifc_reason,
     )
   end
 
@@ -25,6 +26,7 @@ describe Summary::Sections::Overview do
   let(:pre_cifc_reference_number) { nil }
   let(:pre_cifc_maat_id) { nil }
   let(:pre_cifc_usn) { nil }
+  let(:pre_cifc_reason) { nil }
 
   before do
     allow(crime_application).to receive_messages(kase: Case.new, in_progress?: false, is_means_tested: 'yes')
@@ -159,14 +161,28 @@ describe Summary::Sections::Overview do
       context 'when application_type is change in financial circumstances' do
         let(:application_type) { 'change_in_financial_circumstances' }
 
+        context 'with reason' do
+          let(:pre_cifc_reason) { 'Won the lottery' }
+
+          it 'has the correct rows' do
+            expect(answers.count).to eq(4)
+
+            answer = answers[1]
+            expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+            expect(answer.question).to eq(:pre_cifc_reason)
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reason')
+            expect(answer.value).to eq('Won the lottery')
+          end
+        end
+
         context 'with MAAT ID' do
           let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
           let(:pre_cifc_maat_id) { '123456' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(3)
+            expect(answers.count).to eq(4)
 
-            answer = answers[1]
+            answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
             expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
@@ -179,9 +195,9 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_usn) { '98765' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(3)
+            expect(answers.count).to eq(4)
 
-            answer = answers[1]
+            answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
             expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')

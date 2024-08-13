@@ -144,8 +144,9 @@ en:
         question: LAA reference number
       pre_cifc_maat_id_or_usn:
         question: "%{ref_type} of original application"
+        absence_answer: *absence_not_provided
       pre_cifc_reason:
-        question: What has changed in your client's financial circumstances?
+        question: Changes in client's financial circumstances
         absence_answer: *absence_not_provided
       means_tested:
         question: Means tested application

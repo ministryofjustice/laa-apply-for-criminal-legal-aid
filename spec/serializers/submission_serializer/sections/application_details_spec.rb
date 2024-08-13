@@ -29,6 +29,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       pre_cifc_reference_number: 'pre_cifc_usn',
       pre_cifc_maat_id: nil,
       pre_cifc_usn: 'USN123',
+      pre_cifc_reason: 'Won the lottery',
     )
   end
 
@@ -53,6 +54,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       pre_cifc_reference_number: 'pre_cifc_usn',
       pre_cifc_maat_id: nil,
       pre_cifc_usn: 'USN123',
+      pre_cifc_reason: 'Won the lottery',
     }.as_json
   end
 

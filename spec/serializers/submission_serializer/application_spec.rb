@@ -88,6 +88,7 @@ RSpec.describe SubmissionSerializer::Application do
         pre_cifc_reference_number: nil,
         pre_cifc_maat_id: nil,
         pre_cifc_usn: nil,
+        pre_cifc_reason: nil,
       }.as_json
     end
 
