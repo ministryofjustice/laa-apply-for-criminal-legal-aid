@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Steps::Income::IncomeBenefitsForm do
   subject(:form) { described_class.new(crime_application:) }
 
@@ -94,7 +94,7 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
           {
             'steps_income_income_benefits_form' => {
               'income_benefits' => [''],
-              'types' => %w[child jsa other],
+              'types' => types,
 
               'child' =>  { 'amount' => '', 'frequency' => 'every week' },
               'working_or_child_tax_credit' => { 'amount' => '', 'frequency' => '' },
@@ -106,19 +106,38 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
           }
         end
 
-        it 'is invalid' do
-          expect(subject).not_to be_valid
+        context 'when benefit types types are selected' do
+          let(:types) { %w[child jsa other] }
+
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(3)
+            expect(subject.errors.of_kind?('child-amount', :not_a_number)).to be(true)
+            expect(subject.errors.of_kind?('child-frequency', :inclusion)).to be(true)
+            expect(subject.errors.of_kind?('jsa-details', :invalid)).to be(true)
+
+            # Error attributes should respond
+            expect(subject.send(:'child-amount')).to be_nil
+          end
         end
 
-        it 'has error messages' do
-          expect(subject.errors.of_kind?('child-amount', :not_a_number)).to be(true)
-          expect(subject.errors.of_kind?('child-frequency', :inclusion)).to be(true)
-          expect(subject.errors.of_kind?('jsa-details', :invalid)).to be(true)
+        context 'when benefit types are not selected' do
+          let(:types) { [] }
 
-          # Error attributes should respond
-          expect(subject.send(:'child-amount')).to be_nil
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(1)
+            expect(subject.errors.of_kind?('base', :none_selected)).to be(true)
+          end
         end
       end
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
