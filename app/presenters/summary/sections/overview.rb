@@ -9,6 +9,9 @@ module Summary
       def answers
         relevant_answers =
           [
+            Components::ValueAnswer.new(
+              :application_type, crime_application.application_type
+            ),
             Components::FreeTextAnswer.new(
               :reference, crime_application.reference.to_s,
             ),
