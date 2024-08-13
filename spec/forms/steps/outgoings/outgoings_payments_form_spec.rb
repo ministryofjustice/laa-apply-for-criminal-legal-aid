@@ -72,8 +72,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
           {
             'steps_outgoings_outgoings_payments_form' => {
               'outgoings_payments' => [''],
-              'types' => %w[childcare maintenance legal_aid_contribution],
-
+              'types' => types,
               'childcare' =>  { 'amount' => '', 'frequency' => 'every week' },
               'maintenance' => { 'amount' => '3.00', 'frequency' => 'annual' },
               'legal_aid_contribution' => { 'amount' => '44', 'frequency' => 'week', 'case_reference' => 'CASE1234' },
@@ -81,16 +80,34 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
           }
         end
 
-        it 'is invalid' do
-          expect(subject).not_to be_valid
+        context 'when outgoings payment types are selected' do
+          let(:types) { %w[childcare maintenance legal_aid_contribution] }
+
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(2)
+            expect(subject.errors.of_kind?('childcare-amount', :not_a_number)).to be(true)
+            expect(subject.errors.of_kind?('childcare-frequency', :inclusion)).to be(true)
+
+            # Error attributes should respond
+            expect(subject.send(:'childcare-amount')).to be_nil
+          end
         end
 
-        it 'has error messages' do
-          expect(subject.errors.of_kind?('childcare-amount', :not_a_number)).to be(true)
-          expect(subject.errors.of_kind?('childcare-frequency', :inclusion)).to be(true)
+        context 'when outgoings payment types are not selected' do
+          let(:types) { [] }
 
-          # Error attributes should respond
-          expect(subject.send(:'childcare-amount')).to be_nil
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(1)
+            expect(subject.errors.of_kind?('base', :none_selected)).to be(true)
+          end
         end
       end
     end
