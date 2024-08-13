@@ -256,6 +256,20 @@ RSpec.describe Steps::Client::NinoForm do
               attributes = subject.send(:attributes_to_reset)
               expect(attributes['arc']).to eq(arc)
             end
+
+            context 'when arc is the same as in the persisted record' do
+              let(:previous_has_nino) { HasNinoType::ARC.to_s }
+              let(:previous_arc) { 'ABC12/345678/A' }
+
+              before do
+                allow(record).to receive_messages(has_nino: previous_has_nino, arc: previous_arc)
+              end
+
+              it 'does not save the record but returns true' do
+                expect(record).not_to receive(:update)
+                expect(subject.save).to be(true)
+              end
+            end
           end
         end
       end
