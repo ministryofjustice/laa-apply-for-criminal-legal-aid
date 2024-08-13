@@ -96,11 +96,11 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
         run: {
           client: {
             result: true,
-            prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement'],
+            prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintenance Service agreement'],
           },
           partner: {
             result: true,
-            prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement'],
+            prompt: ['bank statements showing the maintenance payments, or the court order or Child Maintenance Service agreement'],
           },
           other: {
             result: false,
