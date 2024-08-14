@@ -32,7 +32,7 @@ module Summary
         unless post_submission_evidence?
           answers.push(Components::FreeTextAnswer.new(
                          :nino, applicant.nino,
-                         change_path: edit_steps_client_has_nino_path
+                         change_path: edit_steps_client_has_nino_path, show: true
                        ))
         end
 
