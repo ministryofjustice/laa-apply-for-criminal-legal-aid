@@ -24,6 +24,10 @@ module Summary
         ).select(&:show?)
       end
 
+      def heading
+        :outgoings unless crime_application.respond_to?(:navigation_stack)
+      end
+
       private
 
       def board_and_lodging_info # rubocop:disable Metrics/MethodLength

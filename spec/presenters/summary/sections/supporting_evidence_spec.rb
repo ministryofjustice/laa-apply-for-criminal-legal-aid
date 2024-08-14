@@ -40,7 +40,7 @@ describe Summary::Sections::SupportingEvidence do
   end
 
   describe '#name' do
-    it { expect(subject.name).to eq(:supporting_evidence) }
+    it { expect(subject.name).to eq(:files) }
   end
 
   describe '#answers' do

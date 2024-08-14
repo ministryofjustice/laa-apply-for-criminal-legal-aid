@@ -24,6 +24,14 @@ module Summary
         edit_steps_evidence_upload_path
       end
 
+      def heading
+        :supporting_evidence
+      end
+
+      def name
+        :files
+      end
+
       private
 
       def documents

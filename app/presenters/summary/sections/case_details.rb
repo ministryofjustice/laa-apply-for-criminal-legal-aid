@@ -96,6 +96,10 @@ module Summary
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
+      def heading
+        :case_details_and_offences
+      end
+
       private
 
       def appeal_case_type?

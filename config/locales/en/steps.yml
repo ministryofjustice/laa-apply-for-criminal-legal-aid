@@ -734,8 +734,8 @@ en:
             resubmission: Application updated
           what_happens_next:
             initial: We will check your application and email you with the outcome.
-            post_submission_evidence: We’ll check the evidence submitted and email you with the outcome.
-            change_in_financial_circumstances: We’ll check the new information submitted and email you with the outcome.
+            post_submission_evidence: We will check the evidence submitted and email you with the outcome.
+            change_in_financial_circumstances: We will check the new information submitted and email you with the outcome.
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence

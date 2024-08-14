@@ -60,35 +60,40 @@ describe Summary::Sections::Overview do
 
     context 'when the application is completed' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(6)
+        expect(answers.count).to eq(7)
 
         answer = answers[0]
+        expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answer.question).to eq(:application_type)
+        expect(answer.value).to eq('initial')
+
+        answer = answers[1]
         expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answer.question).to eq(:reference)
         expect(answer.value).to eq('12345')
 
-        answer = answers[1]
+        answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:means_tested)
         expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
         expect(answer.value).to eq('yes')
 
-        answer = answers[2]
+        answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
         expect(answer.question).to eq(:date_stamp)
         expect(answer.value).to eq(Date.new(2023, 1, 20))
 
-        answer = answers[3]
+        answer = answers[4]
         expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
         expect(answer.question).to eq(:date_submitted)
         expect(answer.value).to eq(Date.new(2023, 1, 21))
 
-        answer = answers[4]
+        answer = answers[5]
         expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answer.question).to eq(:provider_email)
         expect(answer.value).to eq('provider@example.com')
 
-        answer = answers[5]
+        answer = answers[6]
         expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answer.question).to eq(:office_code)
         expect(answer.value).to eq('123AA')
@@ -98,24 +103,29 @@ describe Summary::Sections::Overview do
         let(:application_type) { 'post_submission_evidence' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
           answer = answers[0]
+          expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+          expect(answer.question).to eq(:application_type)
+          expect(answer.value).to eq('post_submission_evidence')
+
+          answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:reference)
           expect(answer.value).to eq('12345')
 
-          answer = answers[1]
+          answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
           expect(answer.question).to eq(:date_submitted)
           expect(answer.value).to eq(Date.new(2023, 1, 21))
 
-          answer = answers[2]
+          answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:provider_email)
           expect(answer.value).to eq('provider@example.com')
 
-          answer = answers[3]
+          answer = answers[4]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:office_code)
           expect(answer.value).to eq('123AA')
@@ -129,14 +139,14 @@ describe Summary::Sections::Overview do
       end
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(2)
+        expect(answers.count).to eq(3)
 
-        answer = answers[0]
+        answer = answers[1]
         expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answer.question).to eq(:reference)
         expect(answer.value).to eq('12345')
 
-        answer = answers[1]
+        answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:means_tested)
         expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
@@ -147,9 +157,9 @@ describe Summary::Sections::Overview do
         let(:application_type) { 'post_submission_evidence' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(1)
+          expect(answers.count).to eq(2)
 
-          answer = answers[0]
+          answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:reference)
           expect(answer.value).to eq('12345')
@@ -164,9 +174,14 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_maat_id) { '123456' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(3)
+            expect(answers.count).to eq(4)
 
-            answer = answers[1]
+            answer = answers[0]
+            expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
+            expect(answer.question).to eq(:application_type)
+            expect(answer.value).to eq('change_in_financial_circumstances')
+
+            answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
             expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
@@ -179,9 +194,9 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_usn) { '98765' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(3)
+            expect(answers.count).to eq(4)
 
-            answer = answers[1]
+            answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
             expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
