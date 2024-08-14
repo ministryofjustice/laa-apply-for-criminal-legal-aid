@@ -70,8 +70,8 @@ en:
         client: either bank statements or their pension statement
         partner: either bank statements or their pension statement
       MaintenanceIncome:
-        client: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
-        partner: bank statements showing the maintenance payments, or the court order or Child Maintence Service agreement
+        client: bank statements showing the maintenance payments, or the court order or Child Maintenance Service agreement
+        partner: bank statements showing the maintenance payments, or the court order or Child Maintenance Service agreement
       InterestAndInvestments:
         client: bank statements showing interest from their savings or investments
         partner: bank statements showing interest from their savings or investments

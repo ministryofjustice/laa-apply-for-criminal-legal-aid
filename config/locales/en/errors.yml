@@ -1052,11 +1052,14 @@ en:
             other_relationship:
               blank: Enter their relationship
             percentage_owned:
-              invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land they own
               greater_than: The percentage of the property they own must be a number greater than 0 and less than 100
               less_than: The percentage of the property they own must be a number greater than 0 and less than 100
           attributes: *shared_property_owner_errors
+        steps/capital/property_owners_form:
+          summary:
+            base:
+              invalid: Percentages entered need to total 100%
         steps/capital/properties_summary_form:
           attributes:
             add_property:

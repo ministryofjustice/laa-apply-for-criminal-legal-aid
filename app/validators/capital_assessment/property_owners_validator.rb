@@ -9,8 +9,9 @@ module CapitalAssessment
 
       record.property_owners.each_with_index do |property_owner, index|
         add_indexed_errors(property_owner, index) unless property_owner.valid?
-        ownership_error(property_owner, index) unless valid_ownership_total?(record)
       end
+
+      add_ownership_error unless valid_ownership_total?(record)
     end
 
     private
@@ -48,9 +49,12 @@ module CapitalAssessment
       end
     end
 
-    def ownership_error(property_owner, index)
-      ownership_err = Error.new(attribute: :percentage_owned, type: :invalid)
-      add_error(property_owner, ownership_err, index)
+    def add_ownership_error
+      record.errors.add(
+        :base,
+        :invalid,
+        message: error_message(record, Error.new(:base, :invalid))
+      )
     end
 
     def valid_ownership_total?(record)
