@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Steps::Income::IncomePaymentsForm do
   subject(:form) { described_class.new(crime_application:) }
 
@@ -112,8 +112,7 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
           {
             'steps_income_income_payments_form' => {
               'income_payments' => [''],
-              'types' => %w[maintenance student_loan_grant rent other],
-
+              'types' => types,
               'maintenance' =>  { 'amount' => '', 'frequency' => 'every week' },
               'private_pension' => { 'amount' => '', 'frequency' => '' },
               'state_pension' => { 'amount' => '', 'frequency' => '' },
@@ -128,19 +127,38 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
           }
         end
 
-        it 'is invalid' do
-          expect(subject).not_to be_valid
+        context 'when payment types are selected' do
+          let(:types) { %w[maintenance student_loan_grant rent other] }
+
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(3)
+            expect(subject.errors.of_kind?('maintenance-amount', :not_a_number)).to be(true)
+            expect(subject.errors.of_kind?('maintenance-frequency', :inclusion)).to be(true)
+            expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)
+
+            # Error attributes should respond
+            expect(subject.send(:'maintenance-amount')).to be_nil
+          end
         end
 
-        it 'has error messages' do
-          expect(subject.errors.of_kind?('maintenance-amount', :not_a_number)).to be(true)
-          expect(subject.errors.of_kind?('maintenance-frequency', :inclusion)).to be(true)
-          expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)
+        context 'when payment types are not selected' do
+          let(:types) { [] }
 
-          # Error attributes should respond
-          expect(subject.send(:'maintenance-amount')).to be_nil
+          it 'is invalid' do
+            expect(subject).not_to be_valid
+          end
+
+          it 'has error messages' do
+            expect(subject.errors.count).to be(1)
+            expect(subject.errors.of_kind?('base', :none_selected)).to be(true)
+          end
         end
       end
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
