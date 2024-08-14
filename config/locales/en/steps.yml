@@ -687,7 +687,7 @@ en:
           required: 'Based on your answers, use this page to provide:'
           reject_warning: This application will be rejected if you have not uploaded the relevant evidence unless either the client is in Court Custody and therefore self-certifies, or it is a Crown Court Trial (in which case evidence may follow within 14 days).
           recent_docs: All evidence must be from the last 3 months.
-          rename_files: It can help us process your claim more quickly if you give filenames clear descriptions. For example, Client-bank-statement.PDF instead of File23.PDF.
+          rename_files: It can help us process your claim more quickly if you give filenames clear descriptions. For example, 'client-bank-statement.pdf' instead of 'file23.pdf'.
           upload_file_button: Upload file
           upload_files_heading: Upload files
           upload_files_info: The maximum size for each file is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
