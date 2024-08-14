@@ -132,7 +132,8 @@ RSpec.describe Steps::Income::Partner::IncomePaymentsForm do
           end
 
           it 'has error messages' do
-            expect(subject.errors.count).to be(3)
+            expect(subject.errors.count).to be(4)
+            expect(subject.errors.of_kind?('maintenance-amount', :blank)).to be(true)
             expect(subject.errors.of_kind?('maintenance-amount', :not_a_number)).to be(true)
             expect(subject.errors.of_kind?('maintenance-frequency', :inclusion)).to be(true)
             expect(subject.errors.of_kind?('student-loan-grant-details', :invalid)).to be(true)

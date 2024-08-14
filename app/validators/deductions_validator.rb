@@ -45,13 +45,15 @@ class DeductionsValidator < ActiveModel::Validator
   def error_message(obj, error)
     deduction_type = I18n.t(
       obj.deduction_type,
-      scope: [:helpers, :label, :steps_income_deductions_form, :types_options]
+      scope: [:helpers, :label, :steps_income_client_deductions_form, :types_options]
     )
+    deduction_type&.downcase! if obj.deduction_type == DeductionType::OTHER.to_s
 
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
       scope: [:activemodel, :errors, :models],
-      deduction_type: deduction_type
+      deduction_type: deduction_type,
+      count: obj.deduction_type == DeductionType::OTHER.to_s ? 2 : 1
     )
   end
 end

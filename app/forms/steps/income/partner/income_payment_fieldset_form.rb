@@ -8,12 +8,15 @@ module Steps
         attribute :frequency, :string
         attribute :details, :string
 
+        validate { presence_with_payment_type :amount }
+        validate { presence_with_payment_type :frequency }
+
         validates :amount, numericality: {
           greater_than: 0
         }
 
         validates :payment_types, presence: true, inclusion: { in: :payment_types }
-        validates :frequency, presence: true, inclusion: { in: :frequencies }
+        validates :frequency, inclusion: { in: :frequencies }
 
         validate :details_only_when_other?
 
@@ -51,6 +54,21 @@ module Steps
           elsif (payment_type != IncomePaymentType::OTHER.to_s) && details.present?
             errors.add(:details, :invalid)
           end
+        end
+
+        def presence_with_payment_type(attribute)
+          return if send(attribute).present?
+
+          payment_type_str = I18n.t(
+            payment_type,
+            scope: [:helpers, :label, :steps_income_income_payments_form, :types_options]
+          )&.downcase!
+
+          errors.add(
+            attribute,
+            :blank,
+            payment_type: payment_type_str
+          )
         end
       end
     end
