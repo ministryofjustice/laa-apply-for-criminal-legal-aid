@@ -17,7 +17,7 @@ class DocumentsController < ApplicationController
     document.url = download_crime_application_document_path(current_crime_application, document)
 
     respond_with(document, location: evidence_upload_step) do |format|
-      if document.invalid?(:scan) || document.invalid?(:storage)
+      if document.invalid?(:storage) || document.invalid?(:scan)
         format.html { redirect_to evidence_upload_step }
         format.json do
           render json: document.as_json.merge(error_message: error_for(document)),

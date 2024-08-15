@@ -2,12 +2,12 @@
 
 import Dropzone from "dropzone"
 
-const MIN_FILE_SIZE = 5000 // Bytes = 5KB
+const MIN_FILE_SIZE = 3000 // Bytes = 3KB
 const MAX_FILE_SIZE = 1000000 // Bytes = 10MB
 
 const ERR_GENERIC = 'could not be uploaded – try again'
 const ERR_FILE_SIZE_TOO_BIG = 'must be smaller than 10MB'
-const ERR_FILE_SIZE_TOO_SMALL = 'must be bigger than 5KB'
+const ERR_FILE_SIZE_TOO_SMALL = 'must be bigger than 3KB'
 const ERR_CONTENT_TYPE = 'must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF'
 const ALLOWED_CONTENT_TYPES = [
   // dropzone checks both the mimetype and the file extension so this list covers everything
