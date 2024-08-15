@@ -93,54 +93,59 @@ RSpec.describe TypeOfMeansAssessment do
       assessable.include_partner_in_means_assessment?
     end
 
-    before do
-      allow(crime_application).to receive_messages(client_has_partner:)
-    end
-
     context 'when it is not yet known if the client has a partner' do
-      let(:client_has_partner) { nil }
-
       it { is_expected.to be false }
     end
 
     context 'when the client does not have partner' do
-      let(:client_has_partner) { 'no' }
+      let(:partner_detail) do
+        instance_double(PartnerDetail, has_partner: 'no', involvement_in_case: nil)
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when client has a partner but we do not know their involvement' do
-      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) do
+        instance_double(PartnerDetail, has_partner: 'yes', involvement_in_case: nil)
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when client has a partner and they are not involved in the case' do
-      let(:client_has_partner) { 'yes' }
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) do
+        instance_double(PartnerDetail, involvement_in_case: 'none', has_partner: 'yes')
+      end
 
       it { is_expected.to be true }
     end
 
     context 'when client has a partner and they are a prosecution witness' do
-      let(:client_has_partner) { 'yes' }
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'prosecution_witness') }
+      let(:partner_detail) do
+        instance_double(PartnerDetail, involvement_in_case: 'prosecution_witness', has_partner: 'yes')
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when client has a partner and they are a victim' do
-      let(:client_has_partner) { 'yes' }
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+      let(:partner_detail) do
+        instance_double(PartnerDetail, involvement_in_case: 'victim', has_partner: 'yes')
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when client has a partner and they are a codefendant' do
-      let(:client_has_partner) { 'yes' }
-      let(:partner_detail) {
-        instance_double(PartnerDetail, involvement_in_case: 'codefendant', conflict_of_interest: conflict_of_interest)
-      }
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          involvement_in_case: 'codefendant',
+          conflict_of_interest: conflict_of_interest,
+          has_partner: 'yes',
+        )
+      end
 
       context 'when there is a conflict of interest' do
         let(:conflict_of_interest) { 'yes' }

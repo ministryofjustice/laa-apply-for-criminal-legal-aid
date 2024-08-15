@@ -5,7 +5,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   let(:record) {
     instance_double(CrimeApplication, errors: errors, applicant: applicant, kase: kase,
-   client_has_partner: client_has_partner, partner_detail: partner_detail, non_means_tested?: false)
+    partner_detail: partner_detail, non_means_tested?: false)
   }
   let(:errors) { double(:errors, empty?: false) }
   let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
@@ -13,7 +13,6 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }
   let(:case_type) { nil }
-  let(:client_has_partner) { nil }
   let(:partner_detail) { nil }
 
   before do
@@ -37,7 +36,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:case_type, :blank)
         expect(errors).to receive(:add).with(:residence_type, :blank)
         expect(errors).to receive(:add).with(:has_nino, :blank)
-        expect(errors).to receive(:add).with(:client_has_partner, :blank)
+        expect(errors).to receive(:add).with(:has_partner, :blank)
         expect(errors).to receive(:add).with(:relationship_status, :blank)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
 
@@ -209,7 +208,12 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   describe '#relationship_status_complete?' do
     context 'when applicant under18' do
-      let(:client_has_partner) { nil } # Should not be possible
+      let(:partner_detail) do # Should not be possible
+        instance_double(
+          PartnerDetail,
+          has_partner: 'yes',
+        )
+      end
       let(:under18?) { true }
 
       it 'returns true' do
@@ -218,7 +222,13 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when applicant has partner' do
-      let(:client_has_partner) { 'yes' }
+      let(:partner_detail) do
+        instance_double(
+          PartnerDetail,
+          relationship_status: 'divorced',
+          has_partner: 'yes',
+        )
+      end
 
       it 'returns true' do
         expect(subject.relationship_status_complete?).to be(true)
@@ -226,11 +236,11 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when applicant does not have partner' do
-      let(:client_has_partner) { 'no' }
       let(:partner_detail) do
         instance_double(
           PartnerDetail,
-          relationship_status: 'divorced'
+          relationship_status: 'divorced',
+          has_partner: 'no',
         )
       end
 

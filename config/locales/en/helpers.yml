@@ -56,7 +56,7 @@ en:
       steps_client_is_means_tested_form:
         is_means_tested: Is this application subject to the means or passported test?
       steps_client_has_partner_form:
-        client_has_partner: Does your client have a partner?
+        has_partner: Does your client have a partner?
       steps_client_details_form:
         date_of_birth: Date of birth
       steps_client_case_type_form:
@@ -551,7 +551,7 @@ en:
           'yes': Yes - the application is subject to the test
           'no': No - the application covers non-means tested prescribed proceedings
       steps_client_has_partner_form:
-        client_has_partner_options: *YESNO
+        has_partner_options: *YESNO
       steps_client_details_form:
         first_name: First name
         last_name: Last name

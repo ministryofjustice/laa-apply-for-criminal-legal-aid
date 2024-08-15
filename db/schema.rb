@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_08_155320) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_14_155613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -132,7 +132,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_08_155320) do
     t.string "navigation_stack", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "client_has_partner"
     t.string "status", default: "in_progress"
     t.datetime "date_stamp"
     t.datetime "submitted_at"
@@ -313,7 +312,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_08_155320) do
     t.string "has_same_address_as_client"
     t.string "relationship_status"
     t.date "separation_date"
-    t.string "has_partner", default: "no", null: false
+    t.string "has_partner"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_partner_details_on_crime_application_id", unique: true

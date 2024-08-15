@@ -12,7 +12,6 @@ module Datastore
       return if already_recreated?
 
       crime_application.update!(
-        client_has_partner: client_has_partner,
         parent_id: parent.id,
         is_means_tested: parent.is_means_tested,
         date_stamp: date_stamp,
@@ -56,10 +55,6 @@ module Datastore
 
     def split_case?
       parent.return_details.reason.inquiry.split_case?
-    end
-
-    def client_has_partner
-      parent.client_details.applicant.has_partner == 'yes' ? YesNoAnswer::YES : YesNoAnswer::NO
     end
 
     # For re-hydration of returned applications, we keep the original

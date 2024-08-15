@@ -88,7 +88,7 @@ en:
               inclusion: Select yes if this application is means tested
         steps/client/has_partner_form:
           attributes:
-            client_has_partner:
+            has_partner:
               inclusion: Select yes if your client has a partner
         steps/client/relationship_status_form:
           attributes:

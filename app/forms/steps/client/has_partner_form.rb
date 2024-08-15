@@ -1,49 +1,46 @@
 module Steps
   module Client
     class HasPartnerForm < Steps::BaseFormObject
-      attribute :client_has_partner, :value_object, source: YesNoAnswer
+      include Steps::HasOneAssociation
+      has_one_association :partner_detail
 
-      validates_inclusion_of :client_has_partner, in: :choices
+      attribute :has_partner, :value_object, source: YesNoAnswer
+
+      validates_inclusion_of :has_partner, in: :choices
 
       def choices
         YesNoAnswer.values
       end
 
-      private
-
       def changed?
-        !crime_application.client_has_partner.eql?(client_has_partner.to_s)
+        !partner_detail.has_partner.eql?(has_partner.to_s)
       end
 
-      # TODO: When FeatureFlag.partner_journey is removed,
-      # move this form into /partner and Partner module
-      def persist!
+      private
+
+      def persist! # rubocop:disable Metrics/MethodLength
         return true unless changed?
 
         ::CrimeApplication.transaction do
-          reset!
-
-          crime_application.update!(
-            attributes
-          )
+          if has_partner.no?
+            reset!
+          else
+            partner_detail.update!(
+              relationship_status: nil,
+              separation_date: nil,
+              has_partner: 'yes',
+            )
+          end
 
           true
         end
       end
 
-      def reset! # rubocop:disable Metrics/AbcSize
-        if client_has_partner.no?
-          crime_application.partner&.destroy!
-          crime_application.partner_detail&.destroy!
-          crime_application.income&.update!('partner_employment_status' => [])
-          crime_application.payments.for_partner.destroy_all
-        elsif client_has_partner.yes?
-          crime_application.partner_detail&.update!(
-            'relationship_status' => nil,
-            'separation_date' => nil,
-            'has_partner' => 'yes',
-          )
-        end
+      def reset!
+        crime_application.partner&.destroy!
+        crime_application.income&.update!(partner_employment_status: [])
+        crime_application.payments.for_partner.destroy_all
+        crime_application.partner_detail&.destroy!
       end
     end
   end
