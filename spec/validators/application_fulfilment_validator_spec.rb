@@ -266,9 +266,21 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
 
     context 'with completed fields' do
       before do
-        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
-        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
-        allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(true)
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:evidence_complete?).and_return(true)
+        )
+
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:applicable?).and_return(true)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reference_complete?).and_return(true)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reason_complete?).and_return(true)
+        )
       end
 
       it 'is valid' do
@@ -276,16 +288,53 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       end
     end
 
-    context 'without incomplete fields' do
+    context 'with incomplete reference fields' do
       before do
-        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:evidence_complete?).and_return(true)
-        allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive(:applicable?).and_return(true)
-        allow_any_instance_of(Circumstances::AnswersValidator).to receive(:circumstances_complete?).and_return(false)
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:evidence_complete?).and_return(true)
+        )
+
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:applicable?).and_return(true)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reference_complete?).and_return(false)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reason_complete?).and_return(true)
+        )
       end
 
       it 'is invalid' do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:base, :circumstances_reference_missing)).to be(true)
+        expect(subject.errors.of_kind?(:base, :circumstances_reference)).to be(true)
+      end
+    end
+
+    context 'with incomplete reason field' do
+      before do
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:evidence_complete?).and_return(true)
+        )
+
+        allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
+          receive(:applicable?).and_return(true)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reference_complete?).and_return(true)
+        )
+
+        allow_any_instance_of(Circumstances::AnswersValidator).to(
+          receive(:circumstances_reason_complete?).and_return(false)
+        )
+      end
+
+      it 'is invalid' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:base, :circumstances_reason)).to be(true)
       end
     end
   end

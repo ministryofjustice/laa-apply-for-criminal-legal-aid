@@ -58,6 +58,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         pre_cifc_reference_number: nil,
         pre_cifc_maat_id: nil,
         pre_cifc_usn: nil,
+        pre_cifc_reason: nil,
       )
 
       expect(
@@ -494,24 +495,11 @@ RSpec.describe Datastore::ApplicationRehydration do
     end
 
     context 'when application is a Change in Financial Circumstances' do
-      let(:p) do
-        {
-          'income_payments' => [
-            {
-              'payment_type' => 'other',
-              'amount' => 1289,
-              'frequency' => 'fortnight',
-              'ownership_type' => 'applicant',
-              'metadata' => { 'details' => "A note\n2022" },
-            },
-          ]
-        }
-      end
-
       let(:parent) do
         super().deep_merge(
           'pre_cifc_reference_number' => 'pre_cifc_maat_id',
           'pre_cifc_maat_id' => '123456789',
+          'pre_cifc_reason' => 'Won the lottery',
         )
       end
 
@@ -520,6 +508,7 @@ RSpec.describe Datastore::ApplicationRehydration do
           hash_including(
             pre_cifc_reference_number: 'pre_cifc_maat_id',
             pre_cifc_maat_id: '123456789',
+            pre_cifc_reason: 'Won the lottery',
           )
         )
 

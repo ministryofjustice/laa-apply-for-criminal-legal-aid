@@ -19,6 +19,11 @@ module Summary
 
         if FeatureFlags.cifc_journey.enabled? && cifc?
           relevant_answers.push(Components::FreeTextAnswer.new(
+                                  :pre_cifc_reason, crime_application.pre_cifc_reason,
+                                  change_path: edit_steps_circumstances_pre_cifc_reason_path,
+                                ))
+
+          relevant_answers.push(Components::FreeTextAnswer.new(
                                   :pre_cifc_maat_id_or_usn, pre_cifc_reference_value,
                                   show: crime_application.pre_cifc_reference_number.present?,
                                   change_path: edit_steps_circumstances_pre_cifc_reference_number_path,

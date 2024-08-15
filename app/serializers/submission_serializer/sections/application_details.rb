@@ -20,6 +20,7 @@ module SubmissionSerializer
           json.pre_cifc_reference_number crime_application.pre_cifc_reference_number
           json.pre_cifc_maat_id crime_application.pre_cifc_maat_id
           json.pre_cifc_usn crime_application.pre_cifc_usn
+          json.pre_cifc_reason crime_application.pre_cifc_reason
         end
       end
     end

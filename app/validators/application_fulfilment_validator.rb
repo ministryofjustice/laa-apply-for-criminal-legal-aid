@@ -5,7 +5,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  def perform_validations # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+  def perform_validations # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     errors = []
 
     unless means_valid?
@@ -32,10 +32,15 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
       ]
     end
 
-    unless change_in_financial_circumstances_complete?
+    unless cifc_reference_complete?
       errors << [
-        :base, :circumstances_reference_missing,
-        { change_path: edit_steps_circumstances_pre_cifc_reference_number_path }
+        :base, :circumstances_reference, { change_path: edit_steps_circumstances_pre_cifc_reference_number_path }
+      ]
+    end
+
+    unless cifc_reason_complete?
+      errors << [
+        :base, :circumstances_reason, { change_path: edit_steps_circumstances_pre_cifc_reason_path }
       ]
     end
 
@@ -84,11 +89,16 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
     ::Circumstances::AnswersValidator.new(record:, crime_application:)
   end
 
-  def change_in_financial_circumstances_complete?
+  def cifc_reference_complete?
     return true unless FeatureFlags.cifc_journey.enabled?
-    return true unless circumstances_validator.applicable?
 
-    circumstances_validator.circumstances_complete?
+    circumstances_validator.circumstances_reference_complete?
+  end
+
+  def cifc_reason_complete?
+    return true unless FeatureFlags.cifc_journey.enabled?
+
+    circumstances_validator.circumstances_reason_complete?
   end
 
   alias crime_application record
