@@ -19,6 +19,8 @@ module Steps
 
       attribute :outgoings_payments, array: true, default: [] # Used by BaseFormObject
 
+      validate { errors.add(:base, :none_selected) if @types.nil? }
+
       validates_with OutgoingsPaymentsValidator
 
       OutgoingsPaymentType::OTHER_PAYMENT_TYPES.each do |type|

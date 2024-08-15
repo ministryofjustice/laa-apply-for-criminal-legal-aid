@@ -52,6 +52,8 @@ en:
     does_not_get: Does not get
     does_not_pay: Does not pay
     sections:
+      application_details: Application details
+      assets: Assets
       overview: Overview
       businesses: Businesses
       business:
@@ -61,6 +63,7 @@ en:
       client_businesses: Client businesses
       partner_businesses: Partner businesses
       case_details: Case details
+      case_details_and_offences: Case details and offences
       client_details: Client details
       contact_details: Client contact details
       partner_details: Partner details
@@ -68,6 +71,7 @@ en:
       codefendant: Co-defendant
       details: Details
       dependants: Dependants
+      files: Files
       offences: Offences
       offence: Offence
       next_court_hearing: Next court hearing
@@ -85,7 +89,8 @@ en:
       other_income_details:
         one: "Other sources of income"
         other: "Other sources of income: client and partner"
-      housing_payments: Housing Payments
+      housing_payments: Housing payments
+      outgoings: Outgoings
       outgoings_payments_details:
         one: Payments %{ownership} makes
         other: Payments %{ownership} make
@@ -93,6 +98,7 @@ en:
       supporting_evidence: Supporting evidence
       more_information: Further information
       savings: Savings
+      savings_and_investments: Savings and investments
       saving:
         bank: Bank account
         building_society: Building society account
@@ -140,6 +146,12 @@ en:
 
     questions:
       # BEGIN overview section
+      application_type:
+        question: Application type
+        answers:
+          initial: Initial
+          change_in_financial_circumstances: Change in financial circumstances
+          post_submission_evidence: Post submission evidence
       reference:
         question: LAA reference number
       pre_cifc_maat_id_or_usn:
@@ -209,7 +221,7 @@ en:
       correspondence_address:
         question: Correspondence address
       correspondence_address_type:
-        question: Where to send correspondence
+        question: Correspondence
         answers:
           home_address: Same as usual home address
           providers_office_address: Provider’s office
@@ -889,10 +901,10 @@ en:
         answers:
           description: *payment_answer_format
       self_assessment_tax_bill:
-        question: Does the client pay a Self Assessment tax bill?
+        question: "Self Assessment tax calculation: client?"
         answers: *YESNO
       partner_self_assessment_tax_bill:
-        question: Does the partner pay a Self Assessment tax bill?
+        question:  "Self Assessment tax calculation: partner?"
         answers: *YESNO
       self_assessment_tax_bill_payment:
         question: Amount

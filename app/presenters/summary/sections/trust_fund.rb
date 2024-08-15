@@ -2,6 +2,8 @@ module Summary
   module Sections
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class TrustFund < Sections::BaseSection
+      include TypeOfMeansAssessment
+
       def show?
         capital.present? && capital.will_benefit_from_trust_fund.present?
       end
@@ -27,6 +29,10 @@ module Summary
             show: will_benefit_from_trust_fund?
           )
         ].select(&:show?)
+      end
+
+      def heading
+        :savings_and_investments unless requires_full_capital?
       end
 
       private

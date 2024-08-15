@@ -1,6 +1,10 @@
 module Summary
   module Sections
     class Savings < BaseCapitalRecordsSection
+      def heading
+        :savings_and_investments
+      end
+
       private
 
       def has_no_records_component

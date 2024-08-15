@@ -1,6 +1,10 @@
 module Summary
   module Sections
     class Properties < BaseCapitalRecordsSection
+      def heading
+        :assets
+      end
+
       private
 
       def has_no_records_component

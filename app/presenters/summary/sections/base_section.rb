@@ -26,6 +26,11 @@ module Summary
         self.class.name.split('::').last.underscore.to_sym
       end
 
+      # May be overridden in subclasses.
+      def heading
+        nil
+      end
+
       def title
         I18n.t(
           name,

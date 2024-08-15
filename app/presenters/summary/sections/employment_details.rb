@@ -27,6 +27,10 @@ module Summary
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+      def heading
+        :income_details unless crime_application.respond_to?(:navigation_stack)
+      end
     end
   end
 end
