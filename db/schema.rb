@@ -311,7 +311,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_14_155613) do
     t.string "has_same_address_as_client"
     t.string "relationship_status"
     t.date "separation_date"
-    t.string "has_partner", null: false
+    t.string "has_partner"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "index_partner_details_on_crime_application_id", unique: true
