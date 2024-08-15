@@ -25,7 +25,12 @@ module Tasks
     def completed?
       return true if crime_application.ioj_passported?
 
-      ioj.present? && ioj.types.any?
+      ioj.present? && ioj.types.any? && ioj_attributes_present?
+    end
+
+    def ioj_attributes_present?
+      required_attributes = ioj.types.map { |type| "#{type}_justification" }
+      ioj.values_at(*required_attributes).all?(&:present?)
     end
   end
 end
