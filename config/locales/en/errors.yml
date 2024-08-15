@@ -19,7 +19,8 @@ en:
           attributes:
             base:
               case_type_missing: A case type needs to be selected
-              circumstances_reference_missing: Your client's MAAT ID or unique submission number (USN) needs to be completed
+              circumstances_reference: Your client's MAAT ID or unique submission number (USN) needs to be completed
+              circumstances_reason: Changes in client's financial circumstances needs to be completed
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:
@@ -69,6 +70,10 @@ en:
               invalid: Enter a valid MAAT ID
             pre_cifc_usn:
               blank: Enter USN
+        steps/circumstances/pre_cifc_reason_form:
+          attributes:
+            pre_cifc_reason:
+              blank: Enter what has changed in your client's financial circumstances
         steps/provider/confirm_office_form:
           attributes:
             is_current_office:
@@ -1052,11 +1057,14 @@ en:
             other_relationship:
               blank: Enter their relationship
             percentage_owned:
-              invalid: Percentages entered need to total 100%
               blank: Enter the percentage of the land they own
               greater_than: The percentage of the property they own must be a number greater than 0 and less than 100
               less_than: The percentage of the property they own must be a number greater than 0 and less than 100
           attributes: *shared_property_owner_errors
+        steps/capital/property_owners_form:
+          summary:
+            base:
+              invalid: Percentages entered need to total 100%
         steps/capital/properties_summary_form:
           attributes:
             add_property:

@@ -22,6 +22,9 @@ en:
       pre_cifc_reference_number:
         edit:
           page_title: What is the reference number of the original application?
+      pre_cifc_reason:
+        edit:
+          page_title: What has changed in your client's financial circumstances?
 
     client:
       is_means_tested:

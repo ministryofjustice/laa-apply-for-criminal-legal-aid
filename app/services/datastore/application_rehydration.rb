@@ -39,10 +39,11 @@ module Datastore
         evidence_last_run_at: evidence_last_run_at,
         evidence_prompts: evidence_prompts,
 
-        # Change in Financial Circumstances
-        pre_cifc_reference_number: pre_cifc_reference_number,
-        pre_cifc_maat_id: pre_cifc_maat_id,
-        pre_cifc_usn: pre_cifc_usn,
+        # Change in Financial Circumstances specific fields
+        pre_cifc_reference_number: parent.pre_cifc_reference_number,
+        pre_cifc_maat_id: parent.pre_cifc_maat_id,
+        pre_cifc_usn: parent.pre_cifc_usn,
+        pre_cifc_reason: parent.pre_cifc_reason,
       )
     end
 
@@ -144,18 +145,6 @@ module Datastore
       return [] unless parent&.evidence_details&.evidence_prompts
 
       parent.evidence_details.evidence_prompts
-    end
-
-    def pre_cifc_reference_number
-      parent.pre_cifc_reference_number
-    end
-
-    def pre_cifc_maat_id
-      parent.pre_cifc_maat_id
-    end
-
-    def pre_cifc_usn
-      parent.pre_cifc_usn
     end
   end
   # rubocop:enable Metrics/ClassLength

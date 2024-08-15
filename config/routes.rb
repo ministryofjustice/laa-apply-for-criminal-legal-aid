@@ -103,6 +103,7 @@ Rails.application.routes.draw do
       namespace :circumstances do
         if FeatureFlags.cifc_journey.enabled?
           edit_step :pre_cifc_reference_number
+          edit_step :pre_cifc_reason
         end
       end
 

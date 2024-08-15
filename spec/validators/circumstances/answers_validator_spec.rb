@@ -11,6 +11,7 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
       pre_cifc_reference_number:,
       pre_cifc_maat_id:,
       pre_cifc_usn:,
+      pre_cifc_reason:,
     )
   end
 
@@ -18,6 +19,7 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
   let(:pre_cifc_reference_number) { nil }
   let(:pre_cifc_maat_id) { nil }
   let(:pre_cifc_usn) { nil }
+  let(:pre_cifc_reason) { nil }
 
   before do
     allow(FeatureFlags).to receive(:cifc_journey) {
@@ -56,6 +58,7 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
     context 'with pre_cifc_reference_number set without a MAAT ID' do
       let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
       let(:pre_cifc_maat_id) { nil }
+      let(:pre_cifc_reason) { 'Won the lottery' }
 
       it 'is false' do
         expect(subject.complete?).to be false
@@ -66,6 +69,7 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
     context 'with pre_cifc_reference_number set with a MAAT ID' do
       let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
       let(:pre_cifc_maat_id) { '1234567' }
+      let(:pre_cifc_reason) { 'Won the lottery' }
 
       it { expect(subject.complete?).to be true }
     end
@@ -73,6 +77,7 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
     context 'with pre_cifc_reference_number set without a USN' do
       let(:pre_cifc_reference_number) { 'pre_cifc_usn' }
       let(:pre_cifc_usn) { nil }
+      let(:pre_cifc_reason) { 'Won the lottery' }
 
       it 'is false' do
         expect(subject.complete?).to be false
@@ -83,25 +88,83 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
     context 'with pre_cifc_reference_number set with a USN' do
       let(:pre_cifc_reference_number) { 'pre_cifc_usn' }
       let(:pre_cifc_usn) { 'USN78171' }
+      let(:pre_cifc_reason) { 'Won the lottery' }
 
       it { expect(subject.complete?).to be true }
     end
+
+    context 'without a reason' do
+      let(:pre_cifc_reference_number) { 'pre_cifc_usn' }
+      let(:pre_cifc_usn) { 'USN78171' }
+      let(:pre_cifc_reason) { nil }
+
+      it 'is false' do
+        expect(subject.complete?).to be false
+        expect(subject.errors.of_kind?('pre_cifc_reason', :blank)).to be(true)
+      end
+    end
   end
 
-  describe '#circumstances_complete?' do
+  describe '#circumstances_reference_complete?' do
     context 'when not complete' do
       it 'is false' do
-        expect(subject.circumstances_complete?).to be false
+        expect(subject.circumstances_reference_complete?).to be false
+        expect(subject.errors).to be_empty
+      end
+    end
+
+    context 'when only partially complete' do
+      let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
+
+      it 'is false' do
+        expect(subject.circumstances_reference_complete?).to be false
+      end
+    end
+
+    context 'when mismatched' do
+      let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
+      let(:pre_cifc_maat_id) { nil } # Should have MAAT ID value
+      let(:pre_cifc_usn) { '123567' }
+
+      it 'is false' do
+        expect(subject.circumstances_reference_complete?).to be false
+      end
+    end
+
+    context 'when complete with MAAT ID' do
+      let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
+      let(:pre_cifc_maat_id) { '1234567' }
+      let(:pre_cifc_usn) { nil }
+
+      it 'is true' do
+        expect(subject.circumstances_reference_complete?).to be true
+      end
+    end
+
+    context 'when complete with USN' do
+      let(:pre_cifc_reference_number) { 'pre_cifc_usn' }
+      let(:pre_cifc_maat_id) { nil }
+      let(:pre_cifc_usn) { '1234567' }
+
+      it 'is true' do
+        expect(subject.circumstances_reference_complete?).to be true
+      end
+    end
+  end
+
+  describe '#circumstances_reason_complete?' do
+    context 'when not complete' do
+      it 'is false' do
+        expect(subject.circumstances_reason_complete?).to be false
         expect(subject.errors).to be_empty
       end
     end
 
     context 'when complete' do
-      let(:pre_cifc_reference_number) { 'pre_cifc_maat_id' }
-      let(:pre_cifc_maat_id) { '1234567' }
+      let(:pre_cifc_reason) { 'Won the lottery' }
 
       it 'is true' do
-        expect(subject.circumstances_complete?).to be true
+        expect(subject.circumstances_reason_complete?).to be true
         expect(subject.errors).to be_empty
       end
     end
