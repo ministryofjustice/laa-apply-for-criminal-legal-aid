@@ -353,7 +353,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_14_155613) do
     t.string "relationship_to_owner_of_usual_home_address"
     t.string "confirm_details"
     t.string "confirm_dwp_result"
-    t.string "client_has_partner"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
