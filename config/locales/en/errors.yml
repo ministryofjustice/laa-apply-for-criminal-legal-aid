@@ -946,6 +946,7 @@ en:
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
             has_other_owners:
+              blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the property
         steps/capital/commercial_form:
           attributes:
