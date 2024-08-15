@@ -1,5 +1,5 @@
 class FileUploadValidator < ActiveModel::Validator
-  MIN_FILE_SIZE = 5 # KB
+  MIN_FILE_SIZE = 3 # KB
   MAX_FILE_SIZE = 10 # MB
 
   ALLOWED_CONTENT_TYPES = %w[

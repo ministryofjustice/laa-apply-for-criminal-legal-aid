@@ -33,7 +33,7 @@ RSpec.describe Document, type: :model do
 
     context 'criteria' do
       context 'file is too small' do
-        let(:attributes) { super().merge(file_size: 3.kilobytes) }
+        let(:attributes) { super().merge(file_size: 2.kilobytes) }
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
