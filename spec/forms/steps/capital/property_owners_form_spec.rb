@@ -92,8 +92,8 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
         end
 
         it 'has errors when when total percentage ownership is over 100' do
-          expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :invalid)).to be(true)
-          expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
+          expect(subject.errors.of_kind?('base', :invalid)).to be(true)
+          expect(subject.errors.messages_for('base').first).to eq(
             'Percentages entered need to total 100%'
           )
         end
