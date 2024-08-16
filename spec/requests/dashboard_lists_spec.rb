@@ -177,9 +177,8 @@ RSpec.describe 'Dashboard', :authorized do
     context 'when the office code is blank' do
       let(:selected_office_code) { '' }
 
-      # This test would fail on WebMock::NetConnectNotAllowedError without blank office code guard
-      it 'shows a list of submitted applications' do
-        expect(response).to have_http_status(:success)
+      it 'redirects to the select office page' do
+        expect(response).to redirect_to(steps_provider_select_office_path)
       end
     end
 

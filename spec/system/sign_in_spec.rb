@@ -35,14 +35,22 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed in' do
+  context 'user is signed in, has multiple office codes, but none selected' do
     before do
       start_button.click
       visit root_path
     end
 
-    it 'redirects to the dashboard' do
-      expect(current_url).to match(crime_applications_path)
+    it 'redirects to the select office path' do
+      expect(current_url).to match(steps_provider_select_office_path)
+    end
+
+    context 'when the user attempts to access the dashboard' do
+      it 'redirects to the select office path' do
+        visit 'applications'
+        expect(current_url).to match(steps_provider_select_office_path)
+        expect(page).not_to have_link('Your applications')
+      end
     end
   end
 
@@ -64,9 +72,11 @@ RSpec.describe 'Sign in user journey' do
   end
 
   context 'user is signed in, has multiple accounts' do
-    include_context 'with office code selected'
-
     before do
+      allow_any_instance_of(Provider).to receive_messages(
+        selected_office_code: '1A123B'
+      )
+
       start_button.click
     end
 
@@ -99,6 +109,31 @@ RSpec.describe 'Sign in user journey' do
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')
       expect(page).not_to have_css('nav.govuk-header__navigation')
+    end
+  end
+
+  context 'user is signed in, has multiple office codes, with an active office selected' do
+    before do
+      start_button.click
+      visit root_path
+      choose('1A123B')
+      click_button('Save and continue')
+    end
+
+    context 'when the user attempts to access the dashboard' do
+      it 'shows the dashboard' do
+        visit 'applications'
+        expect(current_url).to match(crime_applications_path)
+        expect(page).to have_link('Your applications')
+      end
+    end
+
+    context 'when the user attempts to access the dashboard after the selected office code is deactivated' do
+      it 'redirects to the select the office page' do
+        allow(Providers::Gatekeeper).to receive(:inactive_office_codes).and_return(['1A123B'])
+        visit 'applications'
+        expect(current_url).to match(steps_provider_select_office_path)
+      end
     end
   end
 

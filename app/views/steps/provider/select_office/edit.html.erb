@@ -5,9 +5,17 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :office_code, @form_object.choices,
-                                           :to_s, :to_s, inline: false,
-                                           legend: { tag: 'h1', size: 'xl' } %>
+      <%= f.govuk_collection_radio_buttons(
+            :office_code, @form_object.choices, :to_s, :to_s,
+            inline: false,
+            hint: {
+              text: sanitize(
+                hint_t(:office_code, support_email: govuk_mail_to(Settings.support_email))
+              ),
+              class: ['govuk-inset-text', 'govuk-!-margin-top-6']
+            },
+            legend: { tag: 'h1', size: 'xl' }
+          ) %>
 
       <%= f.continue_button(secondary: false) %>
     <% end %>

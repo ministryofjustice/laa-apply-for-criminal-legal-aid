@@ -1,33 +1,79 @@
 require 'rails_helper'
 
 RSpec.describe Provider, type: :model do
-  subject { described_class.new(attributes) }
+  subject(:provider) { described_class.new(attributes) }
 
   let(:attributes) do
     {
       uid: 'test-user',
       email: 'provider@example.com',
-      office_codes: office_codes,
+      office_codes: set_office_codes,
+      selected_office_code: set_selected_office_code
     }
   end
 
-  let(:office_codes) { %w[A1 B2 C3] }
+  let(:set_office_codes) { %w[1K022G 2A555X 3B345C 4C567D] }
+  let(:set_selected_office_code) { nil }
 
   it_behaves_like 'a reauthable model'
 
   describe '#display_name' do
-    it { expect(subject.display_name).to eq('provider@example.com') }
+    it { expect(provider.display_name).to eq('provider@example.com') }
   end
 
   describe '#multiple_offices?' do
     context 'provider has more than 1 office account' do
-      it { expect(subject.multiple_offices?).to be(true) }
+      it { expect(provider.multiple_offices?).to be(true) }
+    end
+
+    context 'provider has more than 1 office account but only one is active' do
+      let(:set_office_codes) { %w[2A555X 3B345C] }
+
+      it { expect(provider.multiple_offices?).to be(false) }
     end
 
     context 'provider has only 1 office account' do
-      let(:office_codes) { %w[A1] }
+      let(:set_office_codes) { %w[1K022G] }
 
-      it { expect(subject.multiple_offices?).to be(false) }
+      it { expect(provider.multiple_offices?).to be(false) }
     end
+  end
+
+  describe '#selected_office_code' do
+    subject(:selected_office_code) { provider.selected_office_code }
+
+    it { is_expected.to be_nil }
+
+    context 'when selected office code is inactive' do
+      let(:set_selected_office_code) { '3B345C' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when selected office code enroled but not set on providers' do
+      let(:set_selected_office_code) { '1A123B' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when selected office code is active' do
+      let(:set_selected_office_code) { '2A555X' }
+
+      it { is_expected.to eq '2A555X' }
+    end
+
+    context 'when there is only one active office code' do
+      let(:set_office_codes) { %w[1K022G 3B345C 4C567D] }
+
+      it 'defaults to the one active office code' do
+        expect(selected_office_code).to eq('1K022G')
+      end
+    end
+  end
+
+  describe '#office_codes' do
+    subject(:office_codes) { provider.office_codes }
+
+    it { is_expected.to eq %w[1K022G 2A555X] }
   end
 end

@@ -2,11 +2,20 @@ class DashboardController < ApplicationController
   helper_method :in_progress_count, :returned_count, :sortable_columns
   delegate :returned_count, to: :application_counters
 
-  # Avoid the browser caching any of the dashboard pages so the
-  # back button after signing out can't load any sensitive details
-  before_action :no_store
+  before_action(
+    :require_current_office!,
+    # Avoid the browser caching any of the dashboard pages so the
+    # back button after signing out can't load any sensitive details
+    :no_store
+  )
 
   private
+
+  def require_current_office!
+    return if current_office_code.present?
+
+    redirect_to steps_provider_select_office_path
+  end
 
   # Implement in sub-controllers to narrow down allowed columns
   # :nocov:
