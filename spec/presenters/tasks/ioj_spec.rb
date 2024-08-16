@@ -13,19 +13,29 @@ RSpec.describe Tasks::Ioj do
     )
   end
 
-  let(:ioj) { instance_double(Ioj, types: ioj_types) }
+  let(:ioj) {
+    instance_double(Ioj, types: ioj_types, loss_of_liberty_justification: loss_of_liberty_justification)
+  }
   let(:ioj_types) { [] }
   let(:ioj_passport) { [] }
   let(:cifc?) { false }
+  let(:loss_of_liberty_justification) { 'loss_of_liberty justification' }
 
   # We assume the completeness of the case details here, as
   # their statuses are tested in its own spec, no need to repeat
   let(:case_details_fulfilled) { true }
 
   before do
+    RSpec::Mocks.configuration.allow_message_expectations_on_nil = true
     allow(
       subject
     ).to receive(:fulfilled?).with(Tasks::CaseDetails).and_return(case_details_fulfilled)
+
+    allow(ioj).to receive(:values_at).with('loss_of_liberty_justification').and_return([loss_of_liberty_justification])
+  end
+
+  after do
+    RSpec::Mocks.configuration.allow_message_expectations_on_nil = false
   end
 
   describe '#path' do
@@ -115,13 +125,20 @@ RSpec.describe Tasks::Ioj do
       end
 
       context 'and we have completed the Ioj details' do
-        let(:ioj_types) { ['bar'] }
+        let(:ioj_types) { ['loss_of_liberty'] }
 
         it { expect(subject.completed?).to be(true) }
       end
 
       context 'and we have not yet completed the Ioj details' do
         it { expect(subject.completed?).to be(false) }
+
+        context 'when types are selected but relevant justification is missing' do
+          let(:ioj_types) { ['loss_of_liberty'] }
+          let(:loss_of_liberty_justification) { nil }
+
+          it { expect(subject.completed?).to be(false) }
+        end
       end
     end
   end
