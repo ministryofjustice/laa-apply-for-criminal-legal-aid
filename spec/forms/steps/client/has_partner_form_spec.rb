@@ -119,7 +119,15 @@ RSpec.describe Steps::Client::HasPartnerForm do
         expect(crime_application.payments.size).to eq 3
         expect(income).to receive(:update!).with({ partner_employment_status: [] })
         expect(partner).to receive(:destroy!)
-        expect(partner_detail).to receive(:destroy!)
+        expect(partner_detail).to receive(:update!).with({
+                                                           has_partner: 'no',
+                                                           separation_date: nil,
+                                                           relationship_status: nil,
+                                                           has_same_address_as_client: nil,
+                                                           conflict_of_interest: nil,
+                                                           involvement_in_case: nil,
+                                                           relationship_to_partner: nil,
+                                                         }).and_return(true)
 
         expect(subject.save).to be(true)
         expect(crime_application.payments.for_client.size).to eq 1
