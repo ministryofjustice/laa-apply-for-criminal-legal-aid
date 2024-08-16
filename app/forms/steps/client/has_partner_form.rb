@@ -40,7 +40,19 @@ module Steps
         crime_application.partner&.destroy!
         crime_application.income&.update!(partner_employment_status: [])
         crime_application.payments.for_partner.destroy_all
-        crime_application.partner_detail&.destroy!
+        reset_partner_details
+      end
+
+      def reset_partner_details
+        partner_detail.update!(
+          relationship_to_partner: nil,
+          involvement_in_case: nil,
+          conflict_of_interest: nil,
+          has_same_address_as_client: nil,
+          relationship_status: nil,
+          separation_date: nil,
+          has_partner: 'no',
+        )
       end
     end
   end
