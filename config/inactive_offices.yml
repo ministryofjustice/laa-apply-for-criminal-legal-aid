@@ -1001,3 +1001,11 @@ production:
     - 2Q347V
     # Deactivate office code request - 26/07/2024
     - 2M248B
+    # Deactivate office code request - 19/08/2024
+    # (0Q801N, 0W336T, 0W551B were already deactivated)
+    - 0R010Q
+    - 0N681J
+    - 2Q591K
+    - 0W673J
+    - 1T004W
+    - 2E861J
