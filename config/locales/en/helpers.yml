@@ -1189,8 +1189,7 @@ en:
         percentage_partner_owned: What percentage of the land does your client’s partner own?
         is_home_address_options: *YESNO
         has_other_owners_options: *YESNO
-      steps_capital_property_address_form:
-        address: *ADDRESS_DETAILS
+      steps_capital_property_address_form: *ADDRESS_DETAILS
       steps_capital_property_owners_form:
         name: What is the name of the %{index} other owner?
         percentage_owned_land: What percentage of the land do they own?

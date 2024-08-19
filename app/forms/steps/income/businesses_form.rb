@@ -15,6 +15,8 @@ module Steps
 
       validates :trading_name, presence: true
 
+      private
+
       def persist!
         return true unless changed?
 
