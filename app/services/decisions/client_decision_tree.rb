@@ -28,7 +28,7 @@ module Decisions
       when :has_partner
         after_has_partner
       when :relationship_status
-        edit('/steps/dwp/benefit_type')
+        after_relationship_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -138,6 +138,12 @@ module Decisions
       else
         edit(:relationship_status)
       end
+    end
+
+    def after_relationship_status
+      return edit('/steps/case/urn') if current_crime_application.applicant.arc.present?
+
+      edit('/steps/dwp/benefit_type')
     end
 
     def applicant

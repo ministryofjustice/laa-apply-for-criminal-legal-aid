@@ -34,6 +34,11 @@ module Summary
                          :nino, applicant.nino,
                          change_path: edit_steps_client_has_nino_path, show: true
                        ))
+
+          answers.push(Components::FreeTextAnswer.new(
+                         :arc, applicant.arc,
+                         change_path: edit_steps_client_has_nino_path
+                       ))
         end
 
         answers.push(

@@ -89,9 +89,11 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES }
     let(:feature_flag_means_journey_enabled) { false }
+    let(:partner_double) { nil }
+    let(:arc) { nil }
 
     before do
-      allow(crime_application).to receive_messages(applicant: applicant_double,
+      allow(crime_application).to receive_messages(applicant: applicant_double, partner: partner_double,
                                                    benefit_check_passported?: benefit_check_passported)
 
       allow(applicant_double).to receive_messages(benefit_check_result:)
@@ -125,6 +127,14 @@ RSpec.describe Decisions::DWPDecisionTree do
 
         context 'and the partner is not included in the means assessment' do
           let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+
+          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+        end
+
+        context 'and the partner has an arc number' do
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+          let(:partner_double) { instance_double(Partner, arc:) }
+          let(:arc) { 'ABC12/345678/A' }
 
           it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
         end

@@ -58,7 +58,7 @@ module ClientDetails
       return false if applicant.has_nino.blank?
       return true if applicant.has_nino == 'no'
 
-      applicant.nino.present?
+      applicant.nino.present? || applicant.arc.present?
     end
 
     def has_partner_complete?

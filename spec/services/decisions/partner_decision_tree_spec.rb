@@ -7,6 +7,8 @@ RSpec.describe Decisions::PartnerDecisionTree do
     instance_double(
       CrimeApplication,
       partner_detail:,
+      applicant:,
+      partner:
     )
   end
 
@@ -19,6 +21,9 @@ RSpec.describe Decisions::PartnerDecisionTree do
       has_same_address_as_client: nil,
     )
   end
+
+  let(:applicant) { instance_double(Applicant, arc: nil) }
+  let(:partner) { instance_double(Partner, arc: nil) }
 
   let(:form_object) { double('FormObject') }
 
@@ -151,7 +156,8 @@ RSpec.describe Decisions::PartnerDecisionTree do
     let(:step_name) { :same_address }
 
     let(:partner_detail) { double(PartnerDetail, has_same_address_as_client:) }
-    let(:partner) { instance_double(Partner, id: SecureRandom.uuid.to_s) }
+    let(:partner) { instance_double(Partner, id: SecureRandom.uuid.to_s, arc: partner_arc) }
+    let(:partner_arc) { nil }
 
     before do
       allow(form_object).to receive(:has_same_address_as_client).and_return(has_same_address_as_client)
@@ -184,7 +190,24 @@ RSpec.describe Decisions::PartnerDecisionTree do
       context 'when same address as client' do
         let(:has_same_address_as_client) { YesNoAnswer::YES }
 
-        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+        context 'when the applicant and partner have arc numbers' do
+          let(:applicant) { instance_double(Applicant, arc: 'ABC12/345678/A') }
+          let(:partner_arc) { 'BCD12/345678/C' }
+
+          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+        end
+
+        context 'when the applicant has an arc number' do
+          let(:applicant) { instance_double(Applicant, arc: 'ABC12/345678/A') }
+
+          it { is_expected.to have_destination('/steps/dwp/partner_benefit_type', :edit, id: crime_application) }
+        end
+
+        context 'when neither the applicant or partner have arc numbers' do
+          let(:applicant) { instance_double(Applicant, arc: nil) }
+
+          it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+        end
       end
 
       context 'when partner does not have same address as client' do

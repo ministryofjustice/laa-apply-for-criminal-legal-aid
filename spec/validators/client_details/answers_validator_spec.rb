@@ -168,10 +168,11 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   describe '#has_nino_complete?' do
     let(:has_nino) { nil }
     let(:nino) { nil }
+    let(:arc) { nil }
     let(:will_enter_nino) { nil }
 
     before do
-      allow(applicant).to receive_messages(has_nino:, nino:)
+      allow(applicant).to receive_messages(has_nino:, nino:, arc:)
     end
 
     context 'when has NINO is missing' do
@@ -199,6 +200,23 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     context 'when has NINO is yes and NINO is present' do
       let(:has_nino) { 'yes' }
       let(:nino) { 'ABC12312' }
+
+      it 'returns true' do
+        expect(subject.has_nino_complete?).to be(true)
+      end
+    end
+
+    context 'when has NINO is arc but arc is missing' do
+      let(:has_nino) { 'arc' }
+
+      it 'returns false' do
+        expect(subject.has_nino_complete?).to be(false)
+      end
+    end
+
+    context 'when has NINO is arc and arc is present' do
+      let(:has_nino) { 'arc' }
+      let(:arc) { 'ABC12/345678/A' }
 
       it 'returns true' do
         expect(subject.has_nino_complete?).to be(true)
