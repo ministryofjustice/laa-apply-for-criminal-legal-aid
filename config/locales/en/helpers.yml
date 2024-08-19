@@ -355,6 +355,8 @@ en:
         legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
+      steps_provider_select_office_form:
+        office_code: "If your office account number is not listed, email: %{support_email}"
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number: We need either your client's MAAT ID or unique submission number (USN).
       steps_client_is_means_tested_form:

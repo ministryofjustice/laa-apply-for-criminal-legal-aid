@@ -18,6 +18,16 @@ class Provider < ApplicationRecord
     office_codes.size > 1
   end
 
+  def selected_office_code
+    return super if office_codes.include?(super)
+
+    office_codes.first unless multiple_offices?
+  end
+
+  def office_codes
+    super & Providers::Gatekeeper.active_office_codes
+  end
+
   class << self
     def from_omniauth(auth)
       find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|
@@ -25,30 +35,9 @@ class Provider < ApplicationRecord
           email: auth.info.email,
           description: auth.info.description,
           roles: auth.info.roles,
-          office_codes: active_office_codes(auth)
+          office_codes: auth.info.office_codes
         )
-
-        ensure_default_office(record)
       end
-    end
-
-    private
-
-    # If `selected_office_code` is nil or unknown, and there is
-    # only one office returned, it defaults to that office.
-    # If there are more offices, the provider will choose one.
-    def ensure_default_office(record)
-      return if record.office_codes.include?(record.selected_office_code)
-
-      record.update(
-        selected_office_code: (
-          record.office_codes.first unless record.multiple_offices?
-        )
-      )
-    end
-
-    def active_office_codes(auth)
-      Providers::ActiveOfficeChecker.new(auth.info).active_office_codes
     end
   end
 end

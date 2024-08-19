@@ -6,7 +6,7 @@ RSpec.describe Providers::OfficeRouter do
   subject { described_class.call(provider) }
 
   let(:provider) { Provider.new(office_codes:, selected_office_code:) }
-  let(:office_codes) { %w[ABC XYZ] }
+  let(:office_codes) { %w[1K022G 2A555X] }
   let(:selected_office_code) { nil }
 
   describe 'redirect path' do
@@ -15,14 +15,14 @@ RSpec.describe Providers::OfficeRouter do
     end
 
     context 'when there is a selected office' do
-      let(:selected_office_code) { 'ABC' }
+      let(:selected_office_code) { '1K022G' }
 
       context 'and there are multiple offices' do
         it { expect(subject).to eq(edit_steps_provider_confirm_office_path) }
       end
 
       context 'and there is only one office' do
-        let(:office_codes) { %w[ABC] }
+        let(:office_codes) { %w[1K022G] }
 
         it { expect(subject).to eq(crime_applications_path) }
       end

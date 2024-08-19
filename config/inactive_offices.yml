@@ -13,8 +13,7 @@
 #
 localhost:
   inactive_office_codes:
-    - 3B345C
-    - 4C567D
+    - 3B345C # portal dev/stg test user
 
 staging:
   inactive_office_codes:

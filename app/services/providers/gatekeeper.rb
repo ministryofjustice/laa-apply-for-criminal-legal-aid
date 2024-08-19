@@ -11,7 +11,7 @@ module Providers
     end
 
     def office_enrolled?
-      allowed_office_codes.intersect?(auth_info.office_codes)
+      Gatekeeper.allowed_office_codes.intersect?(auth_info.office_codes)
     end
 
     # TODO: implement separately once decided if this is required
@@ -19,10 +19,18 @@ module Providers
       false
     end
 
-    private
+    class << self
+      def active_office_codes
+        allowed_office_codes - inactive_office_codes
+      end
 
-    def allowed_office_codes
-      Rails.configuration.x.gatekeeper.office_codes
+      def allowed_office_codes
+        Rails.configuration.x.gatekeeper.office_codes || []
+      end
+
+      def inactive_office_codes
+        Rails.configuration.x.inactive_offices.inactive_office_codes || []
+      end
     end
   end
 end
