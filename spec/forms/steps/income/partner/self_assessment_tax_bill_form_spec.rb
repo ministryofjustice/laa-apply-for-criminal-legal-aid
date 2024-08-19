@@ -76,6 +76,13 @@ RSpec.describe Steps::Income::Partner::SelfAssessmentTaxBillForm do
           expect(form.errors.of_kind?(:partner_self_assessment_tax_bill_amount, :invalid)).to be(false)
         end
       end
+
+      context 'when amount is zero' do
+        let(:partner_self_assessment_tax_bill_amount) { '0' }
+        let(:partner_self_assessment_tax_bill_frequency) { PaymentFrequencyType::MONTHLY.to_s }
+
+        it { is_expected.to be_valid }
+      end
     end
 
     context 'when `partner_self_assessment_tax_bill` is `No`' do

@@ -11,7 +11,7 @@ module Steps
 
         validates :applicant_self_assessment_tax_bill, inclusion: { in: YesNoAnswer.values }
         validates :applicant_self_assessment_tax_bill_amount,
-                  numericality: { greater_than: 0 }, if: -> { pays_self_assessment_tax_bill? }
+                  numericality: { greater_than_or_equal_to: 0 }, if: -> { pays_self_assessment_tax_bill? }
         validates :applicant_self_assessment_tax_bill_frequency,
                   inclusion: { in: PaymentFrequencyType.values }, if: -> { pays_self_assessment_tax_bill? }
 
