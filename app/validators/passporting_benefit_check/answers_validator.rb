@@ -18,7 +18,7 @@ module PassportingBenefitCheck
     end
 
     def applicable?
-      !(applicant&.under18? || not_means_tested? || crime_application.appeal_no_changes?)
+      !(applicant&.under18? || not_means_tested? || crime_application.appeal_no_changes? || arc_present?)
     end
 
     def complete?
@@ -28,6 +28,12 @@ module PassportingBenefitCheck
       return true if evidence_of_passporting_means_forthcoming?
 
       means_assessment_as_benefit_evidence?
+    end
+
+    def arc_present?
+      return true if applicant&.arc.present? && (partner.nil? || partner.arc.present?)
+
+      false
     end
 
     alias crime_application record

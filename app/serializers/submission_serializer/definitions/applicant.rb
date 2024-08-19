@@ -17,6 +17,7 @@ module SubmissionSerializer
 
           json.has_nino applicant.has_nino
           json.nino applicant.nino
+          json.arc applicant.arc
 
           unless non_means_tested?
             json.benefit_type applicant.benefit_type

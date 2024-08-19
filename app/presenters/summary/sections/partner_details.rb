@@ -2,14 +2,14 @@ module Summary
   module Sections
     class PartnerDetails < Sections::BaseSection
       def show?
-        client.present? && partner&.first_name.present? && super
+        applicant.present? && partner&.first_name.present? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           Components::ValueAnswer.new(
-            :relationship_to_partner, client.relationship_to_partner,
+            :relationship_to_partner, applicant.relationship_to_partner,
             change_path: edit_steps_partner_relationship_path
           ),
           Components::FreeTextAnswer.new(
@@ -31,6 +31,10 @@ module Summary
           Components::FreeTextAnswer.new(
             :nino, partner.nino,
             change_path: edit_steps_partner_nino_path, show: true,
+          ),
+          Components::FreeTextAnswer.new(
+            :arc, partner.arc,
+            change_path: edit_steps_partner_nino_path,
           ),
           Components::ValueAnswer.new(
             :involvement_in_case, partner.involvement_in_case,
@@ -55,8 +59,8 @@ module Summary
         @partner ||= crime_application.partner
       end
 
-      def client
-        @client ||= crime_application.applicant
+      def applicant
+        @applicant ||= crime_application.applicant
       end
 
       def partner_home_address

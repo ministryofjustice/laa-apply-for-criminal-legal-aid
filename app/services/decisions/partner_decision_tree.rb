@@ -59,8 +59,18 @@ module Decisions
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
       else
-        edit('/steps/dwp/benefit_type')
+        dwp_or_case_journey
       end
+    end
+
+    def dwp_or_case_journey
+      if current_crime_application.applicant.arc.present? && current_crime_application.partner.arc.present?
+        return edit('/steps/case/urn')
+      end
+
+      return edit('/steps/dwp/partner_benefit_type') if current_crime_application.applicant.arc.present?
+
+      edit('/steps/dwp/benefit_type')
     end
   end
 end

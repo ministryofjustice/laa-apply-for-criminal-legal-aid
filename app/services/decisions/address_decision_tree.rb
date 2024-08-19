@@ -16,7 +16,7 @@ module Decisions
     def after_address_entered
       if form_object.record.is_a?(HomeAddress)
         if form_object.record.person.is_a?(Partner)
-          edit('/steps/dwp/benefit_type')
+          dwp_or_case_journey
         else
           edit('/steps/client/contact_details')
         end
@@ -25,6 +25,16 @@ module Decisions
       else
         edit('/steps/client/has_nino')
       end
+    end
+
+    def dwp_or_case_journey
+      if current_crime_application.applicant.arc.present? && current_crime_application.partner.arc.present?
+        return edit('/steps/case/urn')
+      end
+
+      return edit('/steps/dwp/partner_benefit_type') if current_crime_application.applicant.arc.present?
+
+      edit('/steps/dwp/benefit_type')
     end
   end
 end

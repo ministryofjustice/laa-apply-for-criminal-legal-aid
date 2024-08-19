@@ -14,7 +14,7 @@ RSpec.describe Tasks::PassportingBenefitCheck do
     )
   end
 
-  let(:applicant) { double under18?: false }
+  let(:applicant) { double under18?: false, arc: nil }
   let(:kase) { nil }
 
   let(:client_details_fulfilled) { true }
@@ -26,6 +26,17 @@ RSpec.describe Tasks::PassportingBenefitCheck do
   end
 
   describe '#path' do
+    context 'when applicant has an arc number and there is a partner present' do
+      let(:partner_double) { instance_double Partner }
+
+      before do
+        allow(applicant).to receive(:arc).and_return('ABC12/345678/A')
+        allow(crime_application).to receive(:partner).and_return(partner_double)
+      end
+
+      it { expect(task.path).to eq('/applications/12345/steps/dwp/partner_benefit_type') }
+    end
+
     it { expect(task.path).to eq('/applications/12345/steps/dwp/benefit_type') }
   end
 

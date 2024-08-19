@@ -75,6 +75,8 @@ module Decisions
     end
 
     def partner_benefit_type_required?
+      return false if partner&.arc.present?
+
       form_object.benefit_type.none? && include_partner_in_means_assessment?
     end
 

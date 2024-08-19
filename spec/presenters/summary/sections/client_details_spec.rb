@@ -21,10 +21,12 @@ describe Summary::Sections::ClientDetails do
       other_names: '',
       date_of_birth: Date.new(1999, 1, 20),
       nino: nino,
+      arc: arc
     )
   end
 
   let(:nino) { '123456' }
+  let(:arc) { nil }
   let(:application_type) { ApplicationType::INITIAL }
   let(:pse?) { false }
   let(:has_partner) { 'no' }
@@ -128,6 +130,25 @@ describe Summary::Sections::ClientDetails do
 
       it 'has the correct rows' do
         expect(answers.count).to eq(8)
+      end
+    end
+
+    context 'when an arc is provided' do
+      let(:nino) { nil }
+      let(:arc) { 'ABC12/345678/A' }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(9)
+
+        expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[4].question).to eq(:nino)
+        expect(answers[4].change_path).to match('applications/12345/steps/client/has_nino')
+        expect(answers[4].value).to be_nil
+
+        expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[5].question).to eq(:arc)
+        expect(answers[5].change_path).to match('applications/12345/steps/client/has_nino')
+        expect(answers[5].value).to eq('ABC12/345678/A')
       end
     end
 
