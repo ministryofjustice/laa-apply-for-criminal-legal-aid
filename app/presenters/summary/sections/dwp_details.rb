@@ -4,30 +4,30 @@ module Summary
       include TypeOfMeansAssessment
 
       def show?
-        benefit_check_recipient.present? && super
+        benefit_check_subject.present? && super
       end
 
       # rubocop:disable Metrics/MethodLength
       def answers
         [
           Components::FreeTextAnswer.new(
-            :first_name, benefit_check_recipient.first_name
+            :first_name, benefit_check_subject.first_name
           ),
 
           Components::FreeTextAnswer.new(
-            :last_name, benefit_check_recipient.last_name
+            :last_name, benefit_check_subject.last_name
           ),
 
           Components::FreeTextAnswer.new(
-            :other_names, benefit_check_recipient.other_names, show: true
+            :other_names, benefit_check_subject.other_names, show: true
           ),
 
           Components::DateAnswer.new(
-            :date_of_birth, benefit_check_recipient.date_of_birth
+            :date_of_birth, benefit_check_subject.date_of_birth
           ),
 
           Components::FreeTextAnswer.new(
-            :nino, benefit_check_recipient.nino
+            :nino, benefit_check_subject.nino
           ),
         ].select(&:show?)
       end

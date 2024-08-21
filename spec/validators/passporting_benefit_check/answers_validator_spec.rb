@@ -110,7 +110,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
       let(:benefit_type) { BenefitType::NONE.to_s }
       let(:partner) {
         double(Partner, id: '234', benefit_type: BenefitType::UNIVERSAL_CREDIT.to_s,
-                             nino: 'AB123456A', has_benefit_evidence: 'yes')
+                             nino: 'AB123456A', has_benefit_evidence: 'yes', arc: nil)
       }
 
       it { is_expected.to be(true) }

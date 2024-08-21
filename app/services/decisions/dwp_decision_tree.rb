@@ -123,7 +123,7 @@ module Decisions
     end
 
     def after_cannot_check_dwp_status
-      person = benefit_check_recipient
+      person = benefit_check_subject
 
       determine_dwp_result_page(person)
     end
