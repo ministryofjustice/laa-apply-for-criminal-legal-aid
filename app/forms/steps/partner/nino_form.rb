@@ -13,7 +13,10 @@ module Steps
       validates_with ArcValidator, if: -> { partner_has_arc? }
 
       def choices
-        HasNinoType.values
+        values = HasNinoType.values.dup
+        values.delete(HasNinoType::ARC) unless FeatureFlags.arc.enabled?
+
+        values
       end
 
       def nino=(str)

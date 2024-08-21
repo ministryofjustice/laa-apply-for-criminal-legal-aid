@@ -25,10 +25,32 @@ RSpec.describe Steps::Partner::NinoForm do
   let(:arc) { nil }
 
   describe '#choices' do
-    it 'returns the possible choices' do
-      expect(
-        subject.choices
-      ).to eq([HasNinoType::YES, HasNinoType::NO, HasNinoType::ARC])
+    context 'when the arc feature flag is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:arc) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+      end
+
+      it 'returns the possible choices' do
+        expect(
+          subject.choices
+        ).to eq([HasNinoType::YES, HasNinoType::NO, HasNinoType::ARC])
+      end
+    end
+
+    context 'when the arc feature flag is not enabled' do
+      before do
+        allow(FeatureFlags).to receive(:arc) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'returns the possible choices' do
+        expect(
+          subject.choices
+        ).to eq([HasNinoType::YES, HasNinoType::NO])
+      end
     end
   end
 
