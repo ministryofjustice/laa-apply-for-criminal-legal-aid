@@ -46,22 +46,28 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
 
   describe '#show?' do
     context 'when the applicant has a partner' do
-      context 'when the partner has a benefit type selected' do
-        let(:benefit_type) { BenefitType::NONE.to_s }
+      context 'when the partner has an arc' do
+        before do
+          allow(partner).to receive(:arc).and_return('ABC12/345678/A')
+        end
+
+        it 'shows this section' do
+          expect(subject.show?).to be(false)
+        end
+      end
+
+      context 'when the partner dos not have an arc' do
+        before do
+          allow(partner).to receive(:arc).and_return(nil)
+        end
 
         it 'shows this section' do
           expect(subject.show?).to be(true)
         end
       end
-
-      context 'when the partner does not have a benefit type' do
-        it 'does not show this section' do
-          expect(subject.show?).to be(false)
-        end
-      end
     end
 
-    context 'when the applicant has no partner' do
+    context `when the applicant's partner is included in the means assessment` do
       let(:involvement_in_case) { 'victim' }
 
       it 'does not show this section' do

@@ -11,7 +11,7 @@ describe Summary::HtmlPresenter do
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
-      partner: double(first_name: 'Test first name'), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
+      partner: double(first_name: 'Test first name', arc: nil), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
       income: income,
       outgoings: outgoings,
