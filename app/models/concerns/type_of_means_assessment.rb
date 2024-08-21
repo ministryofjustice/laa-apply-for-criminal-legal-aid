@@ -62,30 +62,30 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   # blocked until the NINO or benefit evidence is provided.
   def nino_forthcoming?
     return false unless has_passporting_benefit?
-    return false unless benefit_check_recipient.has_nino == 'no'
-    return false if benefit_check_recipient.will_enter_nino == 'yes'
+    return false unless benefit_check_subject.has_nino == 'no'
+    return false if benefit_check_subject.will_enter_nino == 'yes'
 
-    benefit_check_recipient.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
+    benefit_check_subject.will_enter_nino == 'no' || kase.is_client_remanded == 'yes'
   end
 
   def benefit_evidence_forthcoming?
     return false unless has_passporting_benefit?
-    return false if benefit_check_recipient.nino.blank?
+    return false if benefit_check_subject.nino.blank?
 
-    benefit_check_recipient.has_benefit_evidence == 'yes'
+    benefit_check_subject.has_benefit_evidence == 'yes'
   end
 
   def means_assessment_as_benefit_evidence?
     return false unless has_passporting_benefit?
-    return false if benefit_check_recipient.nino.blank?
+    return false if benefit_check_subject.nino.blank?
 
-    benefit_check_recipient.has_benefit_evidence == 'no'
+    benefit_check_subject.has_benefit_evidence == 'no'
   end
 
-  def benefit_check_recipient
+  def benefit_check_subject
     return applicant unless include_partner_in_means_assessment?
-    return applicant unless applicant.benefit_type == 'none'
-    return partner if partner && partner.benefit_type != 'none'
+    return applicant unless benefit_check_not_required(applicant)
+    return partner unless benefit_check_not_required(partner)
 
     applicant
   end
@@ -93,6 +93,10 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   private
 
   alias not_means_tested? non_means_tested?
+
+  def benefit_check_not_required(person)
+    person&.benefit_type == 'none' || person&.arc.present?
+  end
 
   # involvement_in_case is stored on partner_detail when a database applications and
   # partner when a datastore application.
@@ -111,7 +115,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   end
 
   def has_passporting_benefit?
-    BenefitType.passporting.include?(BenefitType.new(benefit_check_recipient.benefit_type.to_s))
+    BenefitType.passporting.include?(BenefitType.new(benefit_check_subject.benefit_type.to_s))
   end
 
   def summary_only?

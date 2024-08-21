@@ -10,7 +10,7 @@ RSpec.describe Decisions::DWPDecisionTree do
   }
   let(:applicant) { double(Applicant, benefit_check_result:) }
   let(:benefit_check_result) { false }
-  let(:benefit_check_recipient) { applicant }
+  let(:benefit_check_subject) { applicant }
   let(:partner) { nil }
   let(:has_passporting_benefit) { false }
   let(:partner_detail) { nil }
@@ -300,7 +300,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:step_name) { :cannot_check_dwp_status }
     let(:benefit_check_passported) { false }
     let(:benefit_check_result) { false }
-    let(:benefit_check_recipient) { applicant }
+    let(:benefit_check_subject) { applicant }
 
     before do
       allow(crime_application).to receive_messages(applicant: applicant,
@@ -316,7 +316,7 @@ RSpec.describe Decisions::DWPDecisionTree do
 
     context 'when benefit check is performed on partner details' do
       let(:partner_has_benefit) { true }
-      let(:benefit_check_recipient) { partner }
+      let(:benefit_check_subject) { partner }
 
       before do
         allow(partner).to receive_messages(benefit_check_result:)
