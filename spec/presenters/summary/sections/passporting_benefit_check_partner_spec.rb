@@ -56,7 +56,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
         end
       end
 
-      context 'when the partner dos not have an arc' do
+      context 'when the partner does not have an arc' do
         before do
           allow(partner).to receive(:arc).and_return(nil)
         end
@@ -67,7 +67,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
       end
     end
 
-    context `when the applicant's partner is included in the means assessment` do
+    context 'when the partner is included in the means assessment' do
       let(:involvement_in_case) { 'victim' }
 
       it 'does not show this section' do
