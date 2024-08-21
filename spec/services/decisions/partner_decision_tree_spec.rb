@@ -37,13 +37,13 @@ RSpec.describe Decisions::PartnerDecisionTree do
   context 'when the step is partner details' do
     let(:step_name) { :details }
 
-    it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
+    it { is_expected.to have_destination(:involvement, :edit, id: crime_application) }
   end
 
   context 'when the step is partner nino' do
     let(:step_name) { :nino }
 
-    it { is_expected.to have_destination(:involvement, :edit, id: crime_application) }
+    it { is_expected.to have_destination(:same_address, :edit, id: crime_application) }
   end
 
   context 'when the step is partner involvement' do
@@ -67,7 +67,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
     context 'when partner is not involved' do
       let(:involvement_in_case) { PartnerInvolvementType::NONE }
 
-      it { is_expected.to have_destination(:same_address, :edit, id: crime_application) }
+      it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
     end
 
     context 'without means tested application' do
@@ -125,7 +125,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
       context 'when partner does not have conflict of interest' do
         let(:conflict_of_interest) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination(:same_address, :edit, id: crime_application) }
+        it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
       end
     end
 
@@ -141,7 +141,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
       context 'when partner does not have conflict of interest' do
         let(:conflict_of_interest) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination(:same_address, :edit, id: crime_application) }
+        it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
       end
     end
   end
