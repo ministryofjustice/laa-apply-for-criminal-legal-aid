@@ -6,23 +6,23 @@ module Steps
 
       delegate :property_type, :has_other_owners, to: :record
 
-      attribute :address
       attribute :address_line_one
       attribute :address_line_two
       attribute :city
       attribute :country
       attribute :postcode
 
-      validates :address, presence: true
-
-      validates_with AddressValidator
+      validates_presence_of :address_line_one,
+                            :city,
+                            :country,
+                            :postcode
 
       private
 
       def persist!
-        record.update(
-          attributes
-        )
+        return true unless changed?
+
+        record.update(attributes)
       end
     end
   end

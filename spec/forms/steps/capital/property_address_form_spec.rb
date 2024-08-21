@@ -10,7 +10,7 @@ RSpec.describe Steps::Capital::PropertyAddressForm do
     }.merge(attributes)
   end
 
-  let(:attributes) { { address: valid_attributes } }
+  let(:attributes) { valid_attributes }
 
   let(:crime_application) do
     instance_double(CrimeApplication)
@@ -30,8 +30,6 @@ RSpec.describe Steps::Capital::PropertyAddressForm do
     end
 
     context 'with valid attributes' do
-      let(:attributes) { { address: valid_attributes } }
-
       it 'updates the record' do
         expect(record).to receive(:update).and_return(true)
         expect(subject.save).to be(true)
@@ -40,7 +38,7 @@ RSpec.describe Steps::Capital::PropertyAddressForm do
 
     context 'with invalid attributes' do
       context 'when address is not present' do
-        let(:attributes) { { address: nil } }
+        let(:attributes) { {} }
 
         it 'does not updates the record' do
           expect(record).not_to receive(:update)
@@ -49,7 +47,7 @@ RSpec.describe Steps::Capital::PropertyAddressForm do
       end
 
       context 'when address is incomplete' do
-        let(:attributes) { { address: valid_attributes.merge(address_line_one: nil, city: nil) } }
+        let(:attributes) { valid_attributes.merge(address_line_one: nil, city: nil) }
 
         it 'does not updates the record' do
           expect(record).not_to receive(:update)
