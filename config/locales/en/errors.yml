@@ -442,7 +442,7 @@ en:
         steps/case/hearing_details_form:
           attributes:
             hearing_court_name:
-              blank: Enter a court name
+              blank: Select a court name
             hearing_date:
               blank: Date of next hearing cannot be blank
               blank_day: Date of next hearing must include a day
@@ -462,7 +462,7 @@ en:
         steps/case/first_court_hearing_form:
           attributes:
             first_court_hearing_name:
-              blank: Enter a court name
+              blank: Select a court name
         steps/case/ioj_form:
           attributes:
             types:
