@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
+RSpec.describe 'Apply for Criminal Leagal Aid when Non-Means Tested' do
   describe 'Submitting a completed application' do
     before do
       visit root_path
@@ -23,14 +23,17 @@ RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
       # steps/client/details
       fill_in('First name', with: 'Jo')
       fill_in('Last name', with: 'Bloggs')
-      fill_date('Date of birth', with: 17.years.ago.to_date)
+      fill_date('Date of birth', with: 19.years.ago.to_date)
       save_and_continue
 
       # steps/client/is_application_means_tested
+      choose_answer(
+        'Is this application subject to the means or passported test?',
+        'No - the application covers non-means tested prescribed proceedings'
+      )
       save_and_continue
 
-      # steps/client/case_type
-      choose('Indictable')
+      # steps/client/date_stamp
       save_and_continue
 
       # steps/client/residence_type
@@ -44,15 +47,15 @@ RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
       choose_answer('Where shall we send correspondence?', 'Provider’s office')
       save_and_continue
 
+      # steps/client/has_nino
+      choose_answer('Does your client have a National Insurance number?', 'No')
+      save_and_continue
+      #
       # steps/client/urn
       save_and_continue
 
       # steps/case/has_the_case_concluded
       choose_answer('Has the case concluded?', 'No')
-      save_and_continue
-
-      # steps/case/haas_court_remanded_client_in_custody
-      choose_answer('Has a court remanded your client in custody?', 'No')
       save_and_continue
 
       # steps/case/charges/#{charge_id}
@@ -75,6 +78,14 @@ RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
       save_and_continue
 
       # steps/case/ioj_passport
+      choose_answers(
+        'Why should your client get legal aid?',
+        ['It is likely that they will lose their livelihood']
+      )
+      fill_in(
+        'steps-case-ioj-form-loss-of-livelihood-justification-field',
+        with: 'IoJ justification details'
+      )
       save_and_continue
 
       # steps/evidence/upload
@@ -100,7 +111,7 @@ RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
-          body['ioj_passport'] == ['on_age_under18'] && body['means_passport'] == ['on_age_under18']
+          body['is_means_tested'] == 'no' && body['means_passport'] == ['on_not_means_tested']
         }
       ).to have_been_made.once
     end

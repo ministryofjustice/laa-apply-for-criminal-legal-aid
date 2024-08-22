@@ -13,11 +13,23 @@ module CapybaraHelpers
     end
   end
 
+  # radio buttons
   def choose_answer(question, choice)
-    q = find('legend', text: question).sibling('div')
+    q = find('legend', text: question).sibling('div.govuk-radios')
 
     within q do
       choose(choice)
+    end
+  end
+
+  # check boxes
+  def choose_answers(question, choices = [])
+    q = find('legend', text: question).sibling('div.govuk-checkboxes')
+
+    within q do
+      choices.each do |choice|
+        check(choice)
+      end
     end
   end
 
