@@ -10,7 +10,11 @@ module Adapters
       end
 
       def has_nino
-        nino.present? ? 'yes' : 'no'
+        if nino.present?
+          'yes'
+        else
+          arc.present? ? nil : 'no'
+        end
       end
 
       def serializable_hash(options = {})

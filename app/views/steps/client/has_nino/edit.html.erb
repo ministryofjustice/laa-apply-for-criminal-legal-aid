@@ -6,22 +6,19 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
-        <% @form_object.choices.each_with_index do |choice, index| %>
-          <% if choice == HasNinoType::YES %>
-            <%= f.govuk_radio_button :has_nino, choice.value do %>
-              <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
-                                     extra_letter_spacing: true,
-                                     label: { text: t('.nino') } %>
-            <% end %>
-          <% elsif choice == HasNinoType::ARC %>
-            <%= f.govuk_radio_button :has_nino, choice.value do %>
-              <%= f.govuk_text_field :arc, autocomplete: 'off', width: 'one-third',
-                                     extra_letter_spacing: true,
-                                     label: { text: t('.arc') } %>
-              <% end %>
-          <% else %>
-            <%= f.govuk_radio_button :has_nino, choice.value, link_errors: index.zero? %>
+      <%= f.govuk_radio_buttons_fieldset(:has_arc_or_nino, legend: { tag: 'h1', size: 'xl' }) do %>
+        <%= f.govuk_radio_button :has_arc_or_nino, YesNoAnswer::YES do %>
+          <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
+                                 extra_letter_spacing: true,
+                                 label: { text: t('.nino') } %>
+        <% end %>
+        <%= f.govuk_radio_button :has_arc_or_nino, YesNoAnswer::NO %>
+
+        <% if FeatureFlags.arc.enabled? %>
+          <%= f.govuk_radio_button :has_arc_or_nino, 'arc' do %>
+            <%= f.govuk_text_field :arc, autocomplete: 'off', width: 'one-third',
+                                   extra_letter_spacing: true,
+                                   label: { text: t('.arc') } %>
           <% end %>
         <% end %>
       <% end %>

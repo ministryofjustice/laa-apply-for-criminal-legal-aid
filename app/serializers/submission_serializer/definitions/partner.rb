@@ -14,6 +14,7 @@ module SubmissionSerializer
           json.date_of_birth partner.date_of_birth
 
           json.has_nino partner.has_nino
+          json.has_arc partner.has_arc
           json.nino partner.nino
           json.arc partner.arc
 

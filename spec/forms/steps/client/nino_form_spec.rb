@@ -9,7 +9,9 @@ RSpec.describe Steps::Client::NinoForm do
       record:,
       nino:,
       arc:,
-      has_nino:
+      has_nino:,
+      has_arc:,
+      has_arc_or_nino:,
     }
   end
 
@@ -20,56 +22,28 @@ RSpec.describe Steps::Client::NinoForm do
   let(:nino) { nil }
   let(:arc) { nil }
   let(:has_nino) { nil }
+  let(:has_arc) { nil }
+  let(:has_arc_or_nino) { nil }
 
   before do
     allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
   end
 
   describe 'Has nino form' do
-    describe '#choices' do
-      context 'when the arc feature flag is enabled' do
-        before do
-          allow(FeatureFlags).to receive(:arc) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-          }
-        end
-
-        it 'returns the possible choices' do
-          expect(
-            subject.choices
-          ).to eq([HasNinoType::YES, HasNinoType::NO, HasNinoType::ARC])
-        end
-      end
-
-      context 'when the arc feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:arc) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it 'returns the possible choices' do
-          expect(
-            subject.choices
-          ).to eq([HasNinoType::YES, HasNinoType::NO])
-        end
-      end
-    end
-
     describe '#save' do
-      context 'when `has_nino` is not provided' do
+      context 'when `has_arc_or_nino` is not provided' do
         it 'returns false' do
           expect(subject.save).to be(false)
         end
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:has_nino, :inclusion)).to be(true)
+          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
         end
       end
 
-      context 'when `has_nino` is not valid' do
-        let(:has_nino) { 'maybe' }
+      context 'when `has_arc_or_nino` is not valid' do
+        let(:has_arc_or_nino) { 'maybe' }
 
         it 'returns false' do
           expect(subject.save).to be(false)
@@ -77,25 +51,27 @@ RSpec.describe Steps::Client::NinoForm do
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:has_nino, :inclusion)).to be(true)
+          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
         end
       end
 
       # rubocop:disable RSpec/NestedGroups
-      context 'when `has_nino` is valid' do
-        let(:has_nino) { HasNinoType::NO.to_s }
+      context 'when `has_arc_or_nino` is valid' do
+        let(:has_arc_or_nino) { 'no' }
+        let(:has_nino) { YesNoAnswer::NO.to_s }
 
         it { is_expected.to be_valid }
 
         it 'passes validation' do
-          expect(subject.errors.of_kind?(:has_nino, :invalid)).to be(false)
+          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(false)
         end
 
         it 'saves `has_nino` value and returns true' do
           expect(record).to receive(:update).with({
-                                                    'has_nino' => HasNinoType::NO,
+                                                    'has_nino' => YesNoAnswer::NO,
                                                     'nino' => nil,
                                                     'arc' => nil,
+                                                    'has_arc' => YesNoAnswer::NO,
                                                     'benefit_type' => nil,
                                                     'last_jsa_appointment_date' => nil,
                                                     'benefit_check_result' => nil,
@@ -108,6 +84,7 @@ RSpec.describe Steps::Client::NinoForm do
         end
 
         context 'when `has_nino` answer is no' do
+          let(:has_arc_or_nino) { 'no' }
           let(:nino) { 'AB123456C' }
 
           context 'when a `nino` was previously recorded' do
@@ -121,7 +98,8 @@ RSpec.describe Steps::Client::NinoForm do
         end
 
         context 'when `has_nino` answer is yes' do
-          let(:has_nino) { HasNinoType::YES.to_s }
+          let(:has_arc_or_nino) { 'yes' }
+          let(:has_nino) { YesNoAnswer::YES.to_s }
           let(:nino) { 'AB123456C' }
 
           context 'when `nino` is blank' do
@@ -220,7 +198,7 @@ RSpec.describe Steps::Client::NinoForm do
             end
 
             it 'cannot reset `nino` as it is relevant' do
-              crime_application.applicant.update(has_nino: HasNinoType::YES.to_s)
+              crime_application.applicant.update(has_nino: YesNoAnswer::YES.to_s)
 
               attributes = subject.send(:attributes_to_reset)
               expect(attributes['nino']).to eq(nino)
@@ -241,7 +219,7 @@ RSpec.describe Steps::Client::NinoForm do
         end
 
         context 'when `has_nino` answer is no but they have an arc number' do
-          let(:has_nino) { HasNinoType::ARC.to_s }
+          let(:has_arc_or_nino) { 'arc' }
           let(:arc) { 'ABC12/345678/A' }
 
           context 'when `arc` is blank' do
@@ -273,18 +251,19 @@ RSpec.describe Steps::Client::NinoForm do
             it { is_expected.to be_valid }
 
             it 'cannot reset `arc` as it is relevant' do
-              crime_application.applicant.update(has_nino: HasNinoType::ARC.to_s)
+              crime_application.applicant.update(has_arc: YesNoAnswer::YES.to_s)
 
               attributes = subject.send(:attributes_to_reset)
               expect(attributes['arc']).to eq(arc)
             end
 
             context 'when arc is the same as in the persisted record' do
-              let(:previous_has_nino) { HasNinoType::ARC.to_s }
-              let(:previous_arc) { 'ABC12/345678/A' }
-
               before do
-                allow(record).to receive_messages(has_nino: previous_has_nino, arc: previous_arc)
+                allow(FeatureFlags).to receive(:arc) {
+                  instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+                }
+
+                allow(record).to receive_messages(has_arc: YesNoAnswer::YES.to_s, arc: 'ABC12/345678/A')
               end
 
               it 'does not save the record but returns true' do
@@ -300,13 +279,12 @@ RSpec.describe Steps::Client::NinoForm do
 
     context 'when has nino is unchanged' do
       before do
-        allow(record).to receive_messages(has_nino: previous_has_nino, nino: previous_nino)
+        allow(record).to receive_messages(has_nino: YesNoAnswer::YES.to_s, nino: 'AB123456C')
       end
 
       context 'when has nino is the same as in the persisted record' do
-        let(:previous_has_nino) { HasNinoType::YES.to_s }
-        let(:previous_nino) { 'AB123456C' }
-        let(:has_nino) { HasNinoType::YES }
+        let(:has_arc_or_nino) { 'yes' }
+        let(:has_nino) { YesNoAnswer::YES }
         let(:nino) { 'AB123456C' }
 
         it 'does not save the record but returns true' do

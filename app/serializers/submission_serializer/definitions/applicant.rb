@@ -16,6 +16,7 @@ module SubmissionSerializer
           json.correspondence_address Definitions::Address.generate(applicant.correspondence_address)
 
           json.has_nino applicant.has_nino
+          json.has_arc applicant.has_arc
           json.nino applicant.nino
           json.arc applicant.arc
 

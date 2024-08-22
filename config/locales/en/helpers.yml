@@ -62,7 +62,7 @@ en:
       steps_client_case_type_form:
         case_type: What is the case type?
       steps_client_nino_form:
-        has_nino: Does your client have a National Insurance number?
+        has_arc_or_nino: Does your client have a National Insurance number?
       steps_client_appeal_details_form:
         appeal_lodged_date: When was the appeal lodged?
         appeal_original_app_submitted: Was a legal aid application submitted for the original case?
@@ -372,10 +372,10 @@ en:
       steps_client_appeal_reference_number_form:
         appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
       steps_client_nino_form:
-        has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+        has_arc_or_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
         arc: For example, 'ABC12/345678/A'.
-        has_nino_options:
+        has_arc_or_nino_options:
           arc: The ARC is a credit card-sized plastic card issued by the Home Office to people who claim asylum.
       steps_partner_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
@@ -574,7 +574,7 @@ en:
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
       steps_client_nino_form:
-        has_nino_options:
+        has_arc_or_nino_options:
           'yes': 'Yes'
           'no': 'No'
           arc: No, but the client has an application registration card (ARC)

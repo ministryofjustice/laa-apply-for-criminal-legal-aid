@@ -36,6 +36,8 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
       'telephone_number' => nil,
       'has_nino' => nil,
       'nino' => nil,
+      'has_arc' => nil,
+      'arc' => nil,
       'will_enter_nino' => nil,
       'benefit_type' => nil,
       'last_jsa_appointment_date' => nil,
