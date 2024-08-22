@@ -27,7 +27,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
           :date_of_birth, :first_name, :last_name
         ).and_return(['2000-11-11', 'Tim', nil])
 
-        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil)
+        allow(applicant).to receive_messages(correspondence_address_type: nil, has_nino: nil, has_arc: nil)
         allow(record).to receive(:kase).and_return(nil)
       end
 
@@ -168,14 +168,15 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
   describe '#has_nino_complete?' do
     let(:has_nino) { nil }
     let(:nino) { nil }
+    let(:has_arc) { nil }
     let(:arc) { nil }
     let(:will_enter_nino) { nil }
 
     before do
-      allow(applicant).to receive_messages(has_nino:, nino:, arc:)
+      allow(applicant).to receive_messages(has_nino:, nino:, arc:, has_arc:)
     end
 
-    context 'when has NINO is missing' do
+    context 'when has nino and has arc is missing' do
       it 'returns false' do
         expect(subject.has_nino_complete?).to be(false)
       end
@@ -207,7 +208,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when has NINO is arc but arc is missing' do
-      let(:has_nino) { 'arc' }
+      let(:has_arc) { 'yes' }
 
       it 'returns false' do
         expect(subject.has_nino_complete?).to be(false)
@@ -215,7 +216,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
     end
 
     context 'when has NINO is arc and arc is present' do
-      let(:has_nino) { 'arc' }
+      let(:has_arc) { 'yes' }
       let(:arc) { 'ABC12/345678/A' }
 
       it 'returns true' do

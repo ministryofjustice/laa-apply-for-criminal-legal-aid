@@ -175,8 +175,8 @@ en:
               blank: Enter your client's relationship to the person whose home they live in
         steps/client/nino_form:
           attributes:
-            has_nino:
-              inclusion: Select yes if your client has a National Insurance number
+            has_arc_or_nino:
+              blank: Select yes if your client has a National Insurance number
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
