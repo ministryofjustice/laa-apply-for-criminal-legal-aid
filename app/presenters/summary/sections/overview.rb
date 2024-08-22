@@ -31,7 +31,7 @@ module Summary
                                 ))
         end
 
-        if FeatureFlags.non_means_tested.enabled? && !pse?
+        if FeatureFlags.non_means_tested.enabled? && !pse? && !cifc?
           relevant_answers.push(Components::ValueAnswer.new(
                                   :means_tested, crime_application.is_means_tested,
                                   change_path: edit_steps_client_is_means_tested_path

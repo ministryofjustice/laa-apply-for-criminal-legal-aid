@@ -11,7 +11,7 @@ module SubmissionSerializer
           json.created_at crime_application.created_at
           json.submitted_at crime_application.submitted_at
           json.date_stamp crime_application.date_stamp || crime_application.submitted_at
-          json.is_means_tested crime_application.is_means_tested
+          json.is_means_tested crime_application.cifc? ? 'yes' : crime_application.is_means_tested
           json.ioj_passport crime_application.ioj_passport
           json.means_passport(
             applicant.present? ? Passporting::MeansPassporter.new(crime_application).means_passport : []
