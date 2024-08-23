@@ -6,13 +6,13 @@ module Decisions
       when :relationship
         edit(:details)
       when :details
-        edit(:nino)
-      when :nino
         edit(:involvement)
       when :involvement
         after_involvement
       when :conflict
         after_conflict
+      when :nino
+        edit(:same_address)
       when :same_address
         after_same_address
       else
@@ -27,7 +27,7 @@ module Decisions
       if form_object.involvement_in_case == PartnerInvolvementType::CODEFENDANT
         edit(:conflict)
       elsif form_object.involvement_in_case == PartnerInvolvementType::NONE
-        edit(:same_address)
+        edit(:nino)
       else
         exit_partner_journey
       end
@@ -37,7 +37,7 @@ module Decisions
       if form_object.conflict_of_interest.yes?
         exit_partner_journey
       else
-        edit(:same_address)
+        edit(:nino)
       end
     end
 
