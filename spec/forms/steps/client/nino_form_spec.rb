@@ -8,6 +8,7 @@ RSpec.describe Steps::Client::NinoForm do
       crime_application:,
       record:,
       nino:,
+      arc:,
       has_nino:
     }
   end
@@ -17,6 +18,7 @@ RSpec.describe Steps::Client::NinoForm do
 
   let(:not_means_tested) { false }
   let(:nino) { nil }
+  let(:arc) { nil }
   let(:has_nino) { nil }
 
   before do
@@ -28,7 +30,7 @@ RSpec.describe Steps::Client::NinoForm do
       it 'returns the possible choices' do
         expect(
           subject.choices
-        ).to eq([YesNoAnswer::YES, YesNoAnswer::NO])
+        ).to eq([HasNinoType::YES, HasNinoType::NO, HasNinoType::ARC])
       end
     end
 
@@ -59,7 +61,7 @@ RSpec.describe Steps::Client::NinoForm do
 
       # rubocop:disable RSpec/NestedGroups
       context 'when `has_nino` is valid' do
-        let(:has_nino) { YesNoAnswer::NO.to_s }
+        let(:has_nino) { HasNinoType::NO.to_s }
 
         it { is_expected.to be_valid }
 
@@ -69,8 +71,9 @@ RSpec.describe Steps::Client::NinoForm do
 
         it 'saves `has_nino` value and returns true' do
           expect(record).to receive(:update).with({
-                                                    'has_nino' => YesNoAnswer::NO,
+                                                    'has_nino' => HasNinoType::NO,
                                                     'nino' => nil,
+                                                    'arc' => nil,
                                                     'benefit_type' => nil,
                                                     'last_jsa_appointment_date' => nil,
                                                     'benefit_check_result' => nil,
@@ -96,7 +99,7 @@ RSpec.describe Steps::Client::NinoForm do
         end
 
         context 'when `has_nino` answer is yes' do
-          let(:has_nino) { YesNoAnswer::YES.to_s }
+          let(:has_nino) { HasNinoType::YES.to_s }
           let(:nino) { 'AB123456C' }
 
           context 'when `nino` is blank' do
@@ -195,7 +198,7 @@ RSpec.describe Steps::Client::NinoForm do
             end
 
             it 'cannot reset `nino` as it is relevant' do
-              crime_application.applicant.update(has_nino: YesNoAnswer::YES.to_s)
+              crime_application.applicant.update(has_nino: HasNinoType::YES.to_s)
 
               attributes = subject.send(:attributes_to_reset)
               expect(attributes['nino']).to eq(nino)
@@ -214,6 +217,47 @@ RSpec.describe Steps::Client::NinoForm do
             end
           end
         end
+
+        context 'when `has_nino` answer is no but they have an arc number' do
+          let(:has_nino) { HasNinoType::ARC.to_s }
+          let(:arc) { 'ABC12/345678/A' }
+
+          context 'when `arc` is blank' do
+            let(:arc) { '' }
+
+            it 'has a validation error on the field' do
+              expect(subject).not_to be_valid
+              expect(subject.errors.of_kind?(:arc, :blank)).to be(true)
+            end
+          end
+
+          context 'when `arc` is invalid' do
+            let(:arc) { 'abcdefg' }
+
+            it 'has a validation error on the field' do
+              expect(subject).not_to be_valid
+              expect(subject.errors.of_kind?(:arc, :invalid)).to be(true)
+            end
+          end
+
+          context 'when `arc` is valid' do
+            it 'passes validation' do
+              expect(subject).to be_valid
+              expect(subject.errors.of_kind?(:arc, :invalid)).to be(false)
+            end
+          end
+
+          context 'when an `arc` was previously recorded' do
+            it { is_expected.to be_valid }
+
+            it 'cannot reset `arc` as it is relevant' do
+              crime_application.applicant.update(has_nino: HasNinoType::ARC.to_s)
+
+              attributes = subject.send(:attributes_to_reset)
+              expect(attributes['arc']).to eq(arc)
+            end
+          end
+        end
       end
       # rubocop:enable RSpec/NestedGroups
     end
@@ -224,9 +268,9 @@ RSpec.describe Steps::Client::NinoForm do
       end
 
       context 'when has nino is the same as in the persisted record' do
-        let(:previous_has_nino) { YesNoAnswer::YES.to_s }
+        let(:previous_has_nino) { HasNinoType::YES.to_s }
         let(:previous_nino) { 'AB123456C' }
-        let(:has_nino) { YesNoAnswer::YES }
+        let(:has_nino) { HasNinoType::YES }
         let(:nino) { 'AB123456C' }
 
         it 'does not save the record but returns true' do

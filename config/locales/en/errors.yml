@@ -180,6 +180,9 @@ en:
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+            arc:
+              blank: Enter an ARC number
+              invalid: Enter an ARC number in the correct format
         steps/partner/relationship_form:
           attributes:
             relationship_to_partner:
@@ -191,6 +194,9 @@ en:
             nino:
               blank: Enter the partner's National Insurance number
               invalid: Enter a National Insurance number in the correct format
+            arc:
+              blank: Enter an ARC number
+              invalid: Enter an ARC number in the correct format
         steps/partner/involvement_form:
           attributes:
             involvement_in_case:

@@ -8,12 +8,18 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:has_nino, legend: { tag: 'h1', size: 'xl' }) do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
-          <% if choice == YesNoAnswer::YES %>
+          <% if choice == HasNinoType::YES %>
             <%= f.govuk_radio_button :has_nino, choice.value do %>
               <%= f.govuk_text_field :nino, autocomplete: 'off', width: 'one-third',
                                      extra_letter_spacing: true,
                                      label: { text: t('.nino') } %>
             <% end %>
+          <% elsif choice == HasNinoType::ARC %>
+            <%= f.govuk_radio_button :has_nino, choice.value do %>
+              <%= f.govuk_text_field :arc, autocomplete: 'off', width: 'one-third',
+                                     extra_letter_spacing: true,
+                                     label: { text: t('.arc') } %>
+              <% end %>
           <% else %>
             <%= f.govuk_radio_button :has_nino, choice.value, link_errors: index.zero? %>
           <% end %>

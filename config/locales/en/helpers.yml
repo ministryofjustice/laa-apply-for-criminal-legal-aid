@@ -381,9 +381,15 @@ en:
       steps_client_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
+        arc: For example, 'ABC12/345678/A'.
+        has_nino_options:
+          arc: The ARC is a credit card-sized plastic card issued by the Home Office to people who claim asylum.
       steps_partner_nino_form:
         has_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
+        arc: For example, 'ABC12/345678/A'.
+        has_nino_options:
+          arc: The ARC is a credit card-sized plastic card issued by the Home Office to people who claim asylum.
       steps_dwp_benefit_type_form: &BENEFIT_TYPE_HINT
         benefit_type: This will help us review your application. It will not affect the DWP check.
         last_jsa_appointment_date: This is sometimes known as ‘signing on’.
@@ -575,7 +581,10 @@ en:
           appeal_to_crown_court: Appeal to crown court
           appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
       steps_client_nino_form:
-        has_nino_options: *YESNO
+        has_nino_options:
+          'yes': 'Yes'
+          'no': 'No'
+          arc: No, but the client has an application registration card (ARC)
       steps_client_appeal_details_form:
         appeal_original_app_submitted_options: *YESNO
       steps_client_appeal_financial_circumstances_form:
@@ -622,7 +631,9 @@ en:
         other_names: Other names (optional)
       steps_partner_nino_form:
         has_nino_options:
-          <<: *YESNO
+          'yes': 'Yes'
+          'no': 'No'
+          arc: No, but the client has an application registration card (ARC)
       steps_partner_involvement_form:
         involvement_in_case_options:
           victim: Victim
