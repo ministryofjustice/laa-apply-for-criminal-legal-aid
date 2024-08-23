@@ -605,38 +605,31 @@ en:
           attributes:
             base:
               none_selected: Select which payments your client gets, or select 'They do not get any of these payments'
-        steps/income/income_payment_fieldset_form:
+        steps/income/income_payment_fieldset_form: &income_payment_fieldset_form
           summary:
             amount:
               greater_than: "%{payment_type} amount must be greater than 0"
               not_a_number: "%{payment_type} amount is not a number"
+              blank: "Enter amount for %{payment_type}"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter the other sources of income they get
             frequency:
-              blank: "%{payment_type} frequency can't be blank"
+              blank: "Select how often they receive %{payment_type}"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              blank: Enter an amount
+              greater_than: "%{payment_type} amount must be greater than 0"
+              blank: "Enter amount for %{payment_type}"
+            frequency:
+              blank: "Select how often they receive %{payment_type}"
+            details:
+              blank: Enter the other sources of income they get
         steps/income/partner/income_payments_form:
           attributes:
             base:
               none_selected: Select which payments the partner gets, or select 'They do not get any of these payments'
-        steps/income/partner/income_payment_fieldset_form:
-          summary:
-            amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-            details:
-              invalid: "Cannot add additional details for %{payment_type}"
-              blank: Enter the other sources of income they get
-            frequency:
-              blank: "%{payment_type} frequency can't be blank"
-              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
-          attributes:
-            amount:
-              blank: Enter an amount
+        steps/income/partner/income_payment_fieldset_form: *income_payment_fieldset_form
         steps/income/income_benefits_form:
           attributes:
             base:
@@ -1208,52 +1201,36 @@ en:
           attributes:
             base:
               none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
-        steps/income/client/deduction_fieldset_form:
+        steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
           summary:
             amount:
-              blank: Enter amount
+              blank: Enter how much %{deduction_type} gets deducted
+              blank_alt: Enter amount of %{deduction_type}
               not_a_number: Enter amount
               greater_than: Amount must be greater than 0
             frequency:
-              blank: Select how often the amount gets deducted
+              blank:
+                one: Select how often the %{deduction_type} gets deducted
+                other: Select how often the %{deduction_type} get deducted
               inclusion: Select how often the amount gets deducted
             details:
-              blank: Enter details
+              blank: Enter details of other deductions
               invalid: Details not required
           attributes:
             amount:
-              blank: Enter amount
+              blank: Enter how much %{deduction_type} gets deducted
+              blank_alt: Enter amount of %{deduction_type}
               not_a_number: Enter amount
               greater_than: Amount must be greater than 0
             frequency:
-              blank: Select how often the amount gets deducted
-              inclusion: Select how often they get this payment
-            details:
-              blank: Enter details
-              invalid: Details not required
-        steps/income/partner/deduction_fieldset_form:
-          summary:
-            amount:
-              blank: Enter amount
-              not_a_number: Enter amount
-              greater_than: Amount must be greater than 0
-            frequency:
-              blank: Select how often the amount gets deducted
+              blank:
+                one: Select how often the %{deduction_type} gets deducted
+                other: Select how often the %{deduction_type} get deducted
               inclusion: Select how often the amount gets deducted
             details:
-              blank: Enter details
+              blank: Enter details of other deductions
               invalid: Details not required
-          attributes:
-            amount:
-              blank: Enter amount
-              not_a_number: Enter amount
-              greater_than: Amount must be greater than 0
-            frequency:
-              blank: Select how often the amount gets deducted
-              inclusion: Select how often they get this payment
-            details:
-              blank: Enter details
-              invalid: Details not required
+        steps/income/partner/deduction_fieldset_form: *deduction_fieldset_form
         steps/evidence/upload_form:
           attributes:
             documents:

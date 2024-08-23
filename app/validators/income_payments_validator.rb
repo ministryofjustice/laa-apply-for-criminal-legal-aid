@@ -44,7 +44,7 @@ class IncomePaymentsValidator < ActiveModel::Validator
     payment_type = I18n.t(
       obj.payment_type,
       scope: [:helpers, :label, :steps_income_income_payments_form, :types_options]
-    )
+    )&.downcase!
 
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
