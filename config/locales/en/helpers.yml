@@ -159,11 +159,11 @@ en:
         frequency: How often do they get this payment?
       steps_income_client_deductions_form:
         income_tax:
-          frequency: Select how often this gets deducted
+          frequency: How often does this get deducted?
         national_insurance:
-          frequency: Select how often this gets deducted
+          frequency: How often does this get deducted?
         other:
-          frequency: Select how often this gets deducted
+          frequency: How often does this get deducted?
       steps_income_client_employments_summary_form:
         add_client_employment: Do you want to add another job?
       steps_income_partner_employments_summary_form:
@@ -749,10 +749,10 @@ en:
         deduction_attributes:
           amount: What is their salary or wage?
         income_tax:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         national_insurance:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         other:
           amount: Enter total amount of all other deductions

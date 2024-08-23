@@ -36,6 +36,7 @@ RSpec.configure do |config|
 
   config.include(FactoryHelpers)
   config.include(AuthenticationHelpers, type: :controller)
+  config.include CapybaraHelpers, type: :system
 
   config.include(ViewSpecHelpers, type: :helper)
   config.include(ViewSpecHelpers, type: :view)
