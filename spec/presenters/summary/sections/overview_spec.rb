@@ -175,7 +175,7 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_reason) { 'Won the lottery' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(5)
+            expect(answers.count).to eq(4)
 
             answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -190,7 +190,7 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_maat_id) { '123456' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(5)
+            expect(answers.count).to eq(4)
 
             answer = answers[3]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -205,7 +205,7 @@ describe Summary::Sections::Overview do
           let(:pre_cifc_usn) { '98765' }
 
           it 'has the correct rows' do
-            expect(answers.count).to eq(5)
+            expect(answers.count).to eq(4)
 
             answer = answers[3]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)

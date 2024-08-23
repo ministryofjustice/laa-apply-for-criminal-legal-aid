@@ -24,9 +24,9 @@ module Steps
       end
 
       def cifc_application
-        if crime_application.cifc? && is_means_tested.to_s == 'no'
-          errors.add(:is_means_tested, "Change in Financial Circumstances application must be means tested")
-        end
+        return unless crime_application.cifc? && is_means_tested.to_s == 'no'
+
+        errors.add(:is_means_tested, :cifc)
       end
     end
   end

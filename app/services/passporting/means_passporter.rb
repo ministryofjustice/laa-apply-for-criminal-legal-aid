@@ -44,8 +44,6 @@ module Passporting
     private
 
     def app_not_means_tested?
-      return false unless FeatureFlags.non_means_tested.enabled?
-
       crime_application.is_means_tested == 'no'
     end
 

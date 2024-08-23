@@ -5,7 +5,7 @@ module Summary
         show_overview_details? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
         relevant_answers =
           [
@@ -17,7 +17,7 @@ module Summary
             ),
           ]
 
-        if FeatureFlags.cifc_journey.enabled? && cifc?
+        if cifc?
           relevant_answers.push(Components::FreeTextAnswer.new(
                                   :pre_cifc_reason, crime_application.pre_cifc_reason,
                                   change_path: edit_steps_circumstances_pre_cifc_reason_path,
@@ -31,7 +31,7 @@ module Summary
                                 ))
         end
 
-        if FeatureFlags.non_means_tested.enabled? && !pse? && !cifc?
+        if !pse? && !cifc?
           relevant_answers.push(Components::ValueAnswer.new(
                                   :means_tested, crime_application.is_means_tested,
                                   change_path: edit_steps_client_is_means_tested_path
@@ -68,7 +68,7 @@ module Summary
 
         relevant_answers
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def heading
         :application_details
