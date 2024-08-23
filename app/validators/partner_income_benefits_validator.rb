@@ -45,6 +45,7 @@ class PartnerIncomeBenefitsValidator < ActiveModel::Validator
       obj.payment_type,
       scope: [:helpers, :label, :steps_income_income_benefits_form, :types_options]
     )
+    payment_type&.downcase! if obj.payment_type == IncomeBenefitType::OTHER.to_s
 
     I18n.t(
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
