@@ -93,7 +93,7 @@ describe Summary::Sections::ClientDetails do
 
       expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[4].question).to eq(:nino)
-      expect(answers[4].change_path).to match('applications/12345/steps/client/has_nino')
+      expect(answers[4].change_path).to match('applications/12345/steps/client/nino')
       expect(answers[4].value).to eq('123456')
 
       expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
@@ -142,12 +142,12 @@ describe Summary::Sections::ClientDetails do
 
         expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[4].question).to eq(:nino)
-        expect(answers[4].change_path).to match('applications/12345/steps/client/has_nino')
+        expect(answers[4].change_path).to match('applications/12345/steps/client/nino')
         expect(answers[4].value).to be_nil
 
         expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[5].question).to eq(:arc)
-        expect(answers[5].change_path).to match('applications/12345/steps/client/has_nino')
+        expect(answers[5].change_path).to match('applications/12345/steps/client/nino')
         expect(answers[5].value).to eq('ABC12/345678/A')
       end
     end

@@ -7,7 +7,7 @@ RSpec.describe 'eForms redirect', :authorized do
       app = CrimeApplication.create
 
       # page actually under test
-      get steps_client_nino_exit_path(app)
+      get steps_income_employed_exit_path(app)
     end
 
     after :all do

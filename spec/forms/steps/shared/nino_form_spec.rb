@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Client::NinoForm do
-  subject { described_class.new(arguments) }
+RSpec.describe Steps::Shared::NinoForm do
+  subject(:form) { described_class.new(arguments) }
 
   let(:arguments) do
     {
@@ -29,16 +29,32 @@ RSpec.describe Steps::Client::NinoForm do
     allow(crime_application).to receive(:not_means_tested?).and_return(not_means_tested)
   end
 
+  describe '#form_subject' do
+    subject(:form_subject) { form.form_subject }
+
+    context 'when record is Applicant' do
+      let(:record) { Applicant.new }
+
+      it { is_expected.to be_applicant }
+    end
+
+    context 'when record is Partner' do
+      let(:record) { Partner.new }
+
+      it { is_expected.to be_partner }
+    end
+  end
+
   describe 'Has nino form' do
     describe '#save' do
       context 'when `has_arc_or_nino` is not provided' do
         it 'returns false' do
-          expect(subject.save).to be(false)
+          expect(form.save).to be(false)
         end
 
         it 'has a validation error on the field' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
         end
       end
 
@@ -46,12 +62,12 @@ RSpec.describe Steps::Client::NinoForm do
         let(:has_arc_or_nino) { 'maybe' }
 
         it 'returns false' do
-          expect(subject.save).to be(false)
+          expect(form.save).to be(false)
         end
 
         it 'has a validation error on the field' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
+          expect(form).not_to be_valid
+          expect(form.errors.of_kind?(:has_arc_or_nino, :blank)).to be(true)
         end
       end
 
@@ -63,7 +79,7 @@ RSpec.describe Steps::Client::NinoForm do
         it { is_expected.to be_valid }
 
         it 'passes validation' do
-          expect(subject.errors.of_kind?(:has_arc_or_nino, :blank)).to be(false)
+          expect(form.errors.of_kind?(:has_arc_or_nino, :blank)).to be(false)
         end
 
         it 'saves `has_nino` value and returns true' do
@@ -80,7 +96,7 @@ RSpec.describe Steps::Client::NinoForm do
                                                     'confirm_details' => nil,
                                                     'confirm_dwp_result' => nil,
                                                   }).and_return(true)
-          expect(subject.save).to be(true)
+          expect(form.save).to be(true)
         end
 
         context 'when `has_nino` answer is no' do
@@ -91,7 +107,7 @@ RSpec.describe Steps::Client::NinoForm do
             it { is_expected.to be_valid }
 
             it 'can make nino field nil if no longer required' do
-              attributes = subject.send(:attributes_to_reset)
+              attributes = form.send(:attributes_to_reset)
               expect(attributes['nino']).to be_nil
             end
           end
@@ -106,8 +122,8 @@ RSpec.describe Steps::Client::NinoForm do
             let(:nino) { '' }
 
             it 'has a validation error on the field' do
-              expect(subject).not_to be_valid
-              expect(subject.errors.of_kind?(:nino, :blank)).to be(true)
+              expect(form).not_to be_valid
+              expect(form.errors.of_kind?(:nino, :blank)).to be(true)
             end
           end
 
@@ -116,8 +132,8 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { 'not a NINO' }
 
               it 'has a validation error on the field' do
-                expect(subject).not_to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+                expect(form).not_to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(true)
               end
             end
 
@@ -125,8 +141,8 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { 'BG123456C' }
 
               it 'has a validation error on the field' do
-                expect(subject).not_to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+                expect(form).not_to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(true)
               end
             end
           end
@@ -136,12 +152,12 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { 'AB 12 34 56 C' }
 
               it 'passes validation' do
-                expect(subject).to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
+                expect(form).to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(false)
               end
 
               it 'removes spaces from input' do
-                expect(subject.nino).to eq('AB123456C')
+                expect(form.nino).to eq('AB123456C')
               end
             end
 
@@ -149,8 +165,8 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { ' AB 1234 56C ' }
 
               it 'passed validation' do
-                expect(subject).to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(false)
+                expect(form).to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(false)
               end
             end
           end
@@ -162,8 +178,8 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { '' }
 
               it 'does not have a validation error on the field' do
-                expect(subject).to be_valid
-                expect(subject.errors.of_kind?(:nino, :blank)).to be(false)
+                expect(form).to be_valid
+                expect(form.errors.of_kind?(:nino, :blank)).to be(false)
               end
             end
 
@@ -171,8 +187,8 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { 'not a NINO' }
 
               it 'has a validation error on the field' do
-                expect(subject).not_to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+                expect(form).not_to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(true)
               end
             end
 
@@ -180,40 +196,9 @@ RSpec.describe Steps::Client::NinoForm do
               let(:nino) { 'BG123456C' }
 
               it 'has a validation error on the field' do
-                expect(subject).not_to be_valid
-                expect(subject.errors.of_kind?(:nino, :invalid)).to be(true)
+                expect(form).not_to be_valid
+                expect(form.errors.of_kind?(:nino, :invalid)).to be(true)
               end
-            end
-          end
-
-          context 'when a `nino` was previously recorded' do
-            it 'is valid' do
-              expect(subject).to be_valid
-              expect(
-                subject.errors.of_kind?(
-                  :nino,
-                  :present
-                )
-              ).to be(false)
-            end
-
-            it 'cannot reset `nino` as it is relevant' do
-              crime_application.applicant.update(has_nino: YesNoAnswer::YES.to_s)
-
-              attributes = subject.send(:attributes_to_reset)
-              expect(attributes['nino']).to eq(nino)
-            end
-          end
-
-          context 'when a `nino` was not previously recorded' do
-            it 'is also valid' do
-              expect(subject).to be_valid
-              expect(
-                subject.errors.of_kind?(
-                  :nino,
-                  :present
-                )
-              ).to be(false)
             end
           end
         end
@@ -226,8 +211,8 @@ RSpec.describe Steps::Client::NinoForm do
             let(:arc) { '' }
 
             it 'has a validation error on the field' do
-              expect(subject).not_to be_valid
-              expect(subject.errors.of_kind?(:arc, :blank)).to be(true)
+              expect(form).not_to be_valid
+              expect(form.errors.of_kind?(:arc, :blank)).to be(true)
             end
           end
 
@@ -235,41 +220,15 @@ RSpec.describe Steps::Client::NinoForm do
             let(:arc) { 'abcdefg' }
 
             it 'has a validation error on the field' do
-              expect(subject).not_to be_valid
-              expect(subject.errors.of_kind?(:arc, :invalid)).to be(true)
+              expect(form).not_to be_valid
+              expect(form.errors.of_kind?(:arc, :invalid)).to be(true)
             end
           end
 
           context 'when `arc` is valid' do
             it 'passes validation' do
-              expect(subject).to be_valid
-              expect(subject.errors.of_kind?(:arc, :invalid)).to be(false)
-            end
-          end
-
-          context 'when an `arc` was previously recorded' do
-            it { is_expected.to be_valid }
-
-            it 'cannot reset `arc` as it is relevant' do
-              crime_application.applicant.update(has_arc: YesNoAnswer::YES.to_s)
-
-              attributes = subject.send(:attributes_to_reset)
-              expect(attributes['arc']).to eq(arc)
-            end
-
-            context 'when arc is the same as in the persisted record' do
-              before do
-                allow(FeatureFlags).to receive(:arc) {
-                  instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-                }
-
-                allow(record).to receive_messages(has_arc: YesNoAnswer::YES.to_s, arc: 'ABC12/345678/A')
-              end
-
-              it 'does not save the record but returns true' do
-                expect(record).not_to receive(:update)
-                expect(subject.save).to be(true)
-              end
+              expect(form).to be_valid
+              expect(form.errors.of_kind?(:arc, :invalid)).to be(false)
             end
           end
         end
@@ -289,7 +248,7 @@ RSpec.describe Steps::Client::NinoForm do
 
         it 'does not save the record but returns true' do
           expect(record).not_to receive(:update)
-          expect(subject.save).to be(true)
+          expect(form.save).to be(true)
         end
       end
     end

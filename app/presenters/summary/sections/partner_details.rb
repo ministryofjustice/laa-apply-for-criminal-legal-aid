@@ -22,7 +22,8 @@ module Summary
           ),
           Components::FreeTextAnswer.new(
             :other_names, partner.other_names,
-            change_path: edit_steps_partner_details_path, show: true,
+            change_path: edit_steps_partner_details_path,
+            show: true,
           ),
           Components::DateAnswer.new(
             :date_of_birth, partner.date_of_birth,
@@ -30,11 +31,12 @@ module Summary
           ),
           Components::FreeTextAnswer.new(
             :nino, partner.nino,
-            change_path: edit_steps_partner_nino_path, show: true,
+            change_path: edit_steps_nino_path(subject: 'partner'),
+            show: true,
           ),
           Components::FreeTextAnswer.new(
             :arc, partner.arc,
-            change_path: edit_steps_partner_nino_path,
+            change_path: edit_steps_nino_path(subject: 'partner')
           ),
           Components::ValueAnswer.new(
             :involvement_in_case, partner.involvement_in_case,
