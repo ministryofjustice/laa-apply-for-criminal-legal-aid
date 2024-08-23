@@ -8,6 +8,7 @@ RSpec.describe Steps::Partner::NinoForm do
       crime_application:,
       has_nino:,
       nino:,
+      arc:,
     }
   end
 
@@ -21,12 +22,13 @@ RSpec.describe Steps::Partner::NinoForm do
   let(:partner) { Partner.new }
   let(:has_nino) { nil }
   let(:nino) { nil }
+  let(:arc) { nil }
 
   describe '#choices' do
     it 'returns the possible choices' do
       expect(
         subject.choices
-      ).to eq([YesNoAnswer::YES, YesNoAnswer::NO])
+      ).to eq([HasNinoType::YES, HasNinoType::NO, HasNinoType::ARC])
     end
   end
 
@@ -71,14 +73,15 @@ RSpec.describe Steps::Partner::NinoForm do
       end
     end
 
-    context 'when `has_nino` and `nino` is valid' do
+    context 'when `has_nino=yes` and `nino` is valid' do
       let(:has_nino) { 'yes' }
       let(:nino) { 'JA293483A' }
 
       it 'saves the record' do
         expect(partner).to receive(:update).with({
-                                                   'has_nino' => YesNoAnswer::YES,
+                                                   'has_nino' => HasNinoType::YES,
                                                    'nino' => 'JA293483A',
+                                                   'arc' => nil,
                                                    'benefit_type' => nil,
                                                    'last_jsa_appointment_date' => nil,
                                                    'benefit_check_result' => nil,
@@ -98,8 +101,9 @@ RSpec.describe Steps::Partner::NinoForm do
 
       it 'saves the record' do
         expect(partner).to receive(:update).with({
-                                                   'has_nino' => YesNoAnswer::NO,
+                                                   'has_nino' => HasNinoType::NO,
                                                    'nino' => nil,
+                                                   'arc' => nil,
                                                    'benefit_type' => nil,
                                                    'last_jsa_appointment_date' => nil,
                                                    'benefit_check_result' => nil,
@@ -113,15 +117,56 @@ RSpec.describe Steps::Partner::NinoForm do
       end
     end
 
+    context 'when `has_nino` answer is no but they have an arc number' do
+      let(:has_nino) { HasNinoType::ARC.to_s }
+      let(:arc) { 'ABC12/345678/A' }
+
+      context 'when `arc` is blank' do
+        let(:arc) { '' }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:arc, :blank)).to be(true)
+        end
+      end
+
+      context 'when `arc` is invalid' do
+        let(:arc) { 'abcdefg' }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid
+          expect(subject.errors.of_kind?(:arc, :invalid)).to be(true)
+        end
+      end
+
+      context 'when `arc` is valid' do
+        it 'passes validation' do
+          expect(subject).to be_valid
+          expect(subject.errors.of_kind?(:arc, :invalid)).to be(false)
+        end
+      end
+
+      context 'when an `arc` was previously recorded' do
+        it { is_expected.to be_valid }
+
+        it 'cannot reset `arc` as it is relevant' do
+          crime_application.partner.update(has_nino: HasNinoType::ARC.to_s)
+
+          attributes = subject.send(:attributes_to_reset)
+          expect(attributes['arc']).to eq(arc)
+        end
+      end
+    end
+
     context 'when has nino is unchanged' do
       before do
         allow(partner).to receive_messages(has_nino: previous_has_nino, nino: previous_nino)
       end
 
       context 'when has nino is the same as in the persisted record' do
-        let(:previous_has_nino) { YesNoAnswer::YES.to_s }
+        let(:previous_has_nino) { HasNinoType::YES.to_s }
         let(:previous_nino) { 'AB123456C' }
-        let(:has_nino) { YesNoAnswer::YES }
+        let(:has_nino) { HasNinoType::YES }
         let(:nino) { 'AB123456C' }
 
         it 'does not save the record but returns true' do
