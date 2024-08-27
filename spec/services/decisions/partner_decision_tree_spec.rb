@@ -48,7 +48,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
   context 'when the step is partner nino' do
     let(:step_name) { :nino }
 
-    it { is_expected.to have_destination(:same_address, :edit, id: crime_application) }
+    it { is_expected.to have_destination('steps/partner/same_address', :edit, id: crime_application) }
   end
 
   context 'when the step is partner involvement' do
@@ -72,7 +72,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
     context 'when partner is not involved' do
       let(:involvement_in_case) { PartnerInvolvementType::NONE }
 
-      it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
+      it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
     end
 
     context 'without means tested application' do

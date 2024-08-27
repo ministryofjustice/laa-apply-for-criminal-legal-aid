@@ -23,8 +23,8 @@ module Decisions
         after_residence_type
       when :contact_details
         after_contact_details
-      when :has_nino
-        after_has_nino
+      when :nino
+        after_nino
       when :has_partner
         after_has_partner
       when :relationship_status
@@ -109,7 +109,7 @@ module Decisions
       elsif current_crime_application.age_passported? || current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
-        edit(:has_nino)
+        edit('steps/shared/nino', subject: 'client')
       end
     end
 
@@ -124,11 +124,11 @@ module Decisions
       end
     end
 
-    def after_has_nino
+    def after_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
       else
-        edit(:has_partner)
+        edit('/steps/client/has_partner')
       end
     end
 

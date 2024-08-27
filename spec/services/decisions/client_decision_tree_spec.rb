@@ -297,13 +297,13 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'and answer is `home_address`' do
         let(:correspondence_address_type) { CorrespondenceType::HOME_ADDRESS }
 
-        it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
       end
 
       context 'and answer is `providers_office_address`' do
         let(:correspondence_address_type) { CorrespondenceType::PROVIDERS_OFFICE_ADDRESS }
 
-        it { is_expected.to have_destination(:has_nino, :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
       end
     end
 
@@ -326,14 +326,14 @@ RSpec.describe Decisions::ClientDecisionTree do
     end
   end
 
-  context 'when the step is `has_nino`' do
+  context 'when the step is `nino`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :has_nino }
+    let(:step_name) { :nino }
 
     context 'when the application is means tested' do
       let(:not_means_tested?) { false }
 
-      it { is_expected.to have_destination(:has_partner, :edit, id: crime_application) }
+      it { is_expected.to have_destination('/steps/client/has_partner', :edit, id: crime_application) }
     end
 
     context 'when the application is not means tested' do
