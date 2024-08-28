@@ -17,6 +17,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       applicant_self_assessment_tax_bill_amount:,
       applicant_self_assessment_tax_bill_frequency:,
       applicant_other_work_benefit_received:,
+      client_in_armed_forces:,
     )
   end
 
@@ -32,6 +33,7 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
   let(:applicant_self_assessment_tax_bill_frequency) { nil }
   let(:applicant_other_work_benefit_received) { nil }
   let(:ended_employment_within_three_months) { nil }
+  let(:client_in_armed_forces) { nil }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
@@ -425,6 +427,44 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
       it 'adds errors to :employment_status when incomplete' do
         expect(errors).to receive(:add).with(:employment_status, :incomplete)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+        validate
+      end
+    end
+  end
+
+  describe '#validate_armed_forces' do
+    subject(:validate) { validator.validate_armed_forces }
+
+    context 'when client_in_armed_forces is required' do
+      before { allow(record).to receive(:require_client_in_armed_forces?).and_return(true) }
+
+      context 'and client_in_armed_forces is nil' do
+        let(:client_in_armed_forces) { nil }
+
+        it 'adds errors to :client_in_armed_forces' do
+          expect(errors).to receive(:add).with(:client_in_armed_forces, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'and client_in_armed_forces is not nil' do
+        let(:client_in_armed_forces) { 'yes' }
+
+        it 'does not add errors' do
+          expect(errors).not_to receive(:add)
+
+          validate
+        end
+      end
+    end
+
+    context 'when client_in_armed_forces is not required' do
+      before { allow(record).to receive(:require_client_in_armed_forces?).and_return(false) }
+
+      it 'does not add errors' do
+        expect(errors).not_to receive(:add)
 
         validate
       end

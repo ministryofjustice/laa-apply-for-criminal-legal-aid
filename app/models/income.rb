@@ -107,6 +107,18 @@ class Income < ApplicationRecord
     false
   end
 
+  def client_in_armed_forces
+    return unless require_client_in_armed_forces?
+
+    super
+  end
+
+  def partner_in_armed_forces
+    return unless require_partner_in_armed_forces?
+
+    super
+  end
+
   delegate :partner, :applicant, to: :crime_application
 
   private

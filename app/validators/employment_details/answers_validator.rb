@@ -40,6 +40,7 @@ module EmploymentDetails
     def validate_client_employment
       return unless employed?
 
+      validate_armed_forces
       validate_employment_details
       validate_employment_income
     end
@@ -92,6 +93,12 @@ module EmploymentDetails
 
     def client_businesses_incomplete?
       record.client_businesses.blank? || !record.client_businesses.all?(&:complete?)
+    end
+
+    def validate_armed_forces
+      return unless record.require_client_in_armed_forces?
+
+      errors.add(:client_in_armed_forces, :incomplete) if record.client_in_armed_forces.blank?
     end
 
     alias income record

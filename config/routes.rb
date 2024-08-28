@@ -203,6 +203,9 @@ Rails.application.routes.draw do
           crud_step :percentage_share_of_profits, alias: :business_percentage_profit_share, param: :business_id, except: [:destroy]
         end
 
+        scope '/:subject/', constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
+          edit_step :armed_forces
+        end
 
         namespace :partner, constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
           crud_step :employments, param: :employment_id
