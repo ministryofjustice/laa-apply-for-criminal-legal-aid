@@ -24,10 +24,10 @@ module DWP
     def benefit_check_status
       return BenefitCheckStatus::NO_CHECK_NO_NINO.to_s if nino_forthcoming?
       return undetermined_status if dwp_undetermined
-      return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s if benefit_check_recipient.benefit_type == 'none'
+      return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s if benefit_check_subject.benefit_type == 'none'
       return BenefitCheckStatus::CHECKER_UNAVAILABLE.to_s if checker_down
 
-      BenefitCheckStatus::CONFIRMED.to_s if benefit_check_recipient.benefit_check_result
+      BenefitCheckStatus::CONFIRMED.to_s if benefit_check_subject.benefit_check_result
     end
 
     def undetermined_status
@@ -37,15 +37,15 @@ module DWP
     end
 
     def dwp_undetermined
-      benefit_check_recipient.confirm_dwp_result == 'no'
+      benefit_check_subject.confirm_dwp_result == 'no'
     end
 
     def checker_down
-      benefit_check_recipient.benefit_check_result.nil? && benefit_check_recipient.has_benefit_evidence.present?
+      benefit_check_subject.benefit_check_result.nil? && benefit_check_subject.has_benefit_evidence.present?
     end
 
     def person_is_recipient?
-      benefit_check_recipient.id == person.id
+      benefit_check_subject.id == person.id
     end
   end
 end

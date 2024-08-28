@@ -75,6 +75,8 @@ module Decisions
     end
 
     def partner_benefit_type_required?
+      return false if partner&.arc.present?
+
       form_object.benefit_type.none? && include_partner_in_means_assessment?
     end
 
@@ -121,7 +123,7 @@ module Decisions
     end
 
     def after_cannot_check_dwp_status
-      person = benefit_check_recipient
+      person = benefit_check_subject
 
       determine_dwp_result_page(person)
     end

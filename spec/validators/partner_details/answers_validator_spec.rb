@@ -119,6 +119,16 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
         it { is_expected.to be false }
       end
 
+      context 'with arc but without arc value' do
+        before do
+          partner.has_nino = 'arc'
+          partner.nino = nil
+          partner.arc = nil
+        end
+
+        it { is_expected.to be false }
+      end
+
       context 'when partner has a conflict of interest' do
         before do
           partner_detail.involvement_in_case = 'codefendant'

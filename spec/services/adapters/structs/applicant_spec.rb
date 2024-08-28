@@ -35,6 +35,34 @@ RSpec.describe Adapters::Structs::Applicant do
     end
   end
 
+  describe '#has_nino' do
+    context 'when nino present' do
+      it 'returns yes if nino is present' do
+        expect(subject.has_nino).to eq('yes')
+      end
+    end
+
+    context 'when arc is present' do
+      before do
+        allow(subject).to receive_messages(nino: nil, arc: '123')
+      end
+
+      it 'returns nil if arc is present' do
+        expect(subject.has_nino).to be_nil
+      end
+    end
+
+    context 'when neither nino or arc is present' do
+      before do
+        allow(subject).to receive_messages(nino: nil, arc: nil)
+      end
+
+      it 'returns no' do
+        expect(subject.has_nino).to eq('no')
+      end
+    end
+  end
+
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
       expect(
@@ -58,6 +86,7 @@ RSpec.describe Adapters::Structs::Applicant do
           other_names
           date_of_birth
           nino
+          arc
           benefit_type
           last_jsa_appointment_date
           correspondence_address_type
@@ -65,6 +94,7 @@ RSpec.describe Adapters::Structs::Applicant do
           home_address
           correspondence_address
           has_nino
+          has_arc
           residence_type
           relationship_to_owner_of_usual_home_address
           has_partner

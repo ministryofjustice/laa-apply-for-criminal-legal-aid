@@ -1,6 +1,10 @@
 module Tasks
   class PassportingBenefitCheck < BaseTask
+    delegate :partner, to: :crime_application
+
     def path
+      return edit_steps_dwp_partner_benefit_type_path if applicant.arc.present? && partner.present?
+
       edit_steps_dwp_benefit_type_path
     end
 

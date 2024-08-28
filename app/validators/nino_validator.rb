@@ -23,8 +23,6 @@ class NinoValidator < ActiveModel::Validator
   end
 
   def applicant_not_means_tested?(record)
-    return false unless record.class.respond_to?(:association_name)
-
-    record.class.association_name == :applicant && record.crime_application.not_means_tested?
+    record.crime_application.not_means_tested?
   end
 end

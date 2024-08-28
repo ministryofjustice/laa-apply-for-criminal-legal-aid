@@ -27,6 +27,8 @@ module Steps
         {
           has_nino: nil,
           nino: nil,
+          has_arc: nil,
+          arc: nil,
           will_enter_nino: nil,
           has_benefit_evidence: nil,
           benefit_type: nil,

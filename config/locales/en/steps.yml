@@ -68,10 +68,6 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
-      has_nino:
-        edit:
-          page_title: Enter your client’s NINO
-          nino: What is their National Insurance Number?
       nino_exit:
         show:
           page_title: Use eForms for this application
@@ -95,8 +91,6 @@ en:
       nino:
         edit:
           page_title: Does the partner have a National Insurance number?
-          heading: Does the partner have a National Insurance number?
-          nino: What is their National Insurance number?
       involvement:
         edit:
           page_title: Is the partner involved in your client’s case?

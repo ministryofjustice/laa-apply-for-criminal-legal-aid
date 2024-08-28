@@ -2,7 +2,7 @@ module Summary
   module Sections
     class PassportingBenefitCheckPartner < Sections::PassportingBenefitCheck
       def show?
-        include_partner_in_means_assessment?
+        include_partner_in_means_assessment? && partner.arc.nil?
       end
 
       def change_path

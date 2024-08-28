@@ -26,7 +26,7 @@ RSpec.describe TypeOfMeansAssessment do
 
   let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }
   let(:partner) { nil }
-  let(:benefit_check_recipient) { applicant }
+  let(:benefit_check_subject) { applicant }
   let(:has_benefit_evidence) { nil }
   let(:kase) { instance_double(Case) }
   let(:income) { instance_double(Income) }
@@ -536,9 +536,9 @@ RSpec.describe TypeOfMeansAssessment do
     end
   end
 
-  describe '#benefit_check_recipient' do
-    subject(:benefit_check_recipient) do
-      assessable.benefit_check_recipient
+  describe '#benefit_check_subject' do
+    subject(:benefit_check_subject) do
+      assessable.benefit_check_subject
     end
 
     context 'when partner is not included in means assessment' do
@@ -552,7 +552,7 @@ RSpec.describe TypeOfMeansAssessment do
       let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
       before do
-        allow(applicant).to receive(:benefit_type).and_return(benefit_type)
+        allow(applicant).to receive_messages(benefit_type: benefit_type, arc: nil)
       end
 
       it { is_expected.to be applicant }
@@ -561,29 +561,47 @@ RSpec.describe TypeOfMeansAssessment do
     context 'when partner is benefit check recipient' do
       let(:partner) { instance_double(Partner) }
       let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
-      let(:applicant_benefit_type) { 'none' }
-      let(:partner_benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
-      before do
-        allow(applicant).to receive(:benefit_type).and_return(applicant_benefit_type)
-        allow(partner).to receive(:benefit_type).and_return(partner_benefit_type)
+      context 'when applicant benefit type is none' do
+        before do
+          allow(applicant).to receive(:benefit_type).and_return('none')
+          allow(partner).to receive_messages(benefit_type: BenefitType::UNIVERSAL_CREDIT.to_s, arc: nil)
+        end
+
+        it { is_expected.to be partner }
       end
 
-      it { is_expected.to be partner }
+      context 'when applicant benefit type has an arc' do
+        before do
+          allow(applicant).to receive_messages(benefit_type: nil, arc: 'ABC12/345678/A')
+          allow(partner).to receive_messages(benefit_type: BenefitType::UNIVERSAL_CREDIT.to_s, arc: nil)
+        end
+
+        it { is_expected.to be partner }
+      end
     end
 
     context 'defaults to applicant' do
       let(:partner) { instance_double(Partner) }
       let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
-      let(:applicant_benefit_type) { 'none' }
-      let(:partner_benefit_type) { 'none' }
 
-      before do
-        allow(applicant).to receive(:benefit_type).and_return(applicant_benefit_type)
-        allow(partner).to receive(:benefit_type).and_return(partner_benefit_type)
+      context 'when both the applicant and partner benefit type is none' do
+        before do
+          allow(applicant).to receive(:benefit_type).and_return('none')
+          allow(partner).to receive(:benefit_type).and_return('none')
+        end
+
+        it { is_expected.to be applicant }
       end
 
-      it { is_expected.to be applicant }
+      context 'when both the applicant and partner have arc numbers' do
+        before do
+          allow(applicant).to receive_messages(benefit_type: nil, arc: 'ABC12/345678/A')
+          allow(partner).to receive_messages(benefit_type: nil, arc: 'ABC12/345678/A')
+        end
+
+        it { is_expected.to be applicant }
+      end
     end
   end
 end

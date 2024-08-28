@@ -18,16 +18,22 @@ module PassportingBenefitCheck
     end
 
     def applicable?
-      !(applicant&.under18? || not_means_tested? || crime_application.appeal_no_changes?)
+      !(applicant&.under18? || not_means_tested? || crime_application.appeal_no_changes? || not_applicable_on_arc?)
     end
 
     def complete?
-      return false if benefit_check_recipient.benefit_type.blank?
       return true if Passporting::MeansPassporter.new(crime_application).call
-      return true if benefit_check_recipient.benefit_type == BenefitType::NONE.to_s
+      return true if benefit_check_subject.arc.present?
+      return true if benefit_check_subject.benefit_type == BenefitType::NONE.to_s
       return true if evidence_of_passporting_means_forthcoming?
 
       means_assessment_as_benefit_evidence?
+    end
+
+    def not_applicable_on_arc?
+      return true if applicant&.arc.present? && (partner.nil? || partner.arc.present?)
+
+      false
     end
 
     alias crime_application record

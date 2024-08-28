@@ -8,7 +8,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
    partner_detail: partner_detail, non_means_tested?: false)
   }
   let(:errors) { double(:errors, empty?: false) }
-  let(:applicant) { instance_double(Applicant, benefit_type:) }
+  let(:applicant) { instance_double(Applicant, benefit_type: benefit_type, arc: nil) }
   let(:benefit_type) { nil }
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }
@@ -38,6 +38,28 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
       let(:under18?) { true }
 
       it { is_expected.to be(false) }
+    end
+
+    context 'when the applicant has an arc number' do
+      before do
+        allow(applicant).to receive(:arc).and_return('ABC12/345678/A')
+      end
+
+      context 'when there is no partner' do
+        it { is_expected.to be(false) }
+      end
+
+      context 'when the partner has an arc number' do
+        let(:partner) { instance_double(Partner, arc: 'ABC12/345678/A') }
+
+        it { is_expected.to be(false) }
+      end
+
+      context 'when there is a partner with no arc number' do
+        let(:partner) { instance_double(Partner, nino: 'AB123456A', arc: nil) }
+
+        it { is_expected.to be(true) }
+      end
     end
   end
 
@@ -88,7 +110,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
       let(:benefit_type) { BenefitType::NONE.to_s }
       let(:partner) {
         double(Partner, id: '234', benefit_type: BenefitType::UNIVERSAL_CREDIT.to_s,
-                             nino: 'AB123456A', has_benefit_evidence: 'yes')
+                             nino: 'AB123456A', has_benefit_evidence: 'yes', arc: nil)
       }
 
       it { is_expected.to be(true) }

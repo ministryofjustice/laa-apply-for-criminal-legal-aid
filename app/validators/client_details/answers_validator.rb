@@ -53,12 +53,12 @@ module ClientDetails
       kase.case_type.present?
     end
 
-    def has_nino_complete?
+    def has_nino_complete? # rubocop:disable Metrics/AbcSize
       return true if applicant.under18? || appeal_no_changes?
-      return false if applicant.has_nino.blank?
+      return false if applicant.has_nino.blank? && applicant.has_arc.blank?
       return true if applicant.has_nino == 'no'
 
-      applicant.nino.present?
+      applicant.nino.present? || applicant.arc.present?
     end
 
     def has_partner_complete?
