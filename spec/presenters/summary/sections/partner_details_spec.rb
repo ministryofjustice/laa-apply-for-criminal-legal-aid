@@ -25,6 +25,7 @@ describe Summary::Sections::PartnerDetails do
       date_of_birth: Date.new(1999, 1, 20),
       nino: nino,
       arc: arc,
+      involved_in_case: 'yes',
       involvement_in_case: 'codefendant',
       conflict_of_interest: 'no',
       has_same_address_as_client: has_same_address_as_client,
@@ -80,7 +81,7 @@ describe Summary::Sections::PartnerDetails do
     client_partner_same_address_path = 'applications/12345/steps/partner/do_client_and_partner_live_same_address'
 
     it 'has the correct rows' do
-      expect(answers.count).to eq(10)
+      expect(answers.count).to eq(11)
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[0].question).to eq(:relationship_to_partner)
@@ -113,24 +114,29 @@ describe Summary::Sections::PartnerDetails do
       expect(answers[5].value).to eq('123456')
 
       expect(answers[6]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[6].question).to eq(:involvement_in_case)
+      expect(answers[6].question).to eq(:involved_in_case)
       expect(answers[6].change_path).to match('applications/12345/steps/partner/partner_involved_in_case')
-      expect(answers[6].value).to eq('codefendant')
+      expect(answers[6].value).to eq('yes')
 
       expect(answers[7]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[7].question).to eq(:conflict_of_interest)
-      expect(answers[7].change_path).to match('applications/12345/steps/partner/partner_conflict_of_interest')
-      expect(answers[7].value).to eq('no')
+      expect(answers[7].question).to eq(:involvement_in_case)
+      expect(answers[7].change_path).to match('applications/12345/steps/partner/how_partner_involved_in_case')
+      expect(answers[7].value).to eq('codefendant')
 
       expect(answers[8]).to be_an_instance_of(Summary::Components::ValueAnswer)
-      expect(answers[8].question).to eq(:has_same_address_as_client)
-      expect(answers[8].change_path).to match(client_partner_same_address_path)
+      expect(answers[8].question).to eq(:conflict_of_interest)
+      expect(answers[8].change_path).to match('applications/12345/steps/partner/partner_conflict_of_interest')
       expect(answers[8].value).to eq('no')
 
-      expect(answers[9]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-      expect(answers[9].question).to eq(:home_address)
-      expect(answers[9].change_path).to be_nil
-      expect(answers[9].value).to eq("Test\r\nHome\r\nCity\r\nPostcode\r\nCountry")
+      expect(answers[9]).to be_an_instance_of(Summary::Components::ValueAnswer)
+      expect(answers[9].question).to eq(:has_same_address_as_client)
+      expect(answers[9].change_path).to match(client_partner_same_address_path)
+      expect(answers[9].value).to eq('no')
+
+      expect(answers[10]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+      expect(answers[10].question).to eq(:home_address)
+      expect(answers[10].change_path).to be_nil
+      expect(answers[10].value).to eq("Test\r\nHome\r\nCity\r\nPostcode\r\nCountry")
     end
 
     context 'when partner has same home address as client' do
@@ -138,7 +144,7 @@ describe Summary::Sections::PartnerDetails do
       let(:home_address) { nil }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(9)
+        expect(answers.count).to eq(10)
 
         expect(answers[8]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[8].question).to eq(:has_same_address_as_client)
@@ -152,7 +158,7 @@ describe Summary::Sections::PartnerDetails do
       let(:arc) { 'ABC12/345678/A' }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(11)
+        expect(answers.count).to eq(12)
 
         expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[5].question).to eq(:nino)

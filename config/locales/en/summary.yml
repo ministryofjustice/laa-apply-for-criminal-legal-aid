@@ -245,13 +245,16 @@ en:
           married_or_partnership: Married or in a civil partnership
           living_together: Living together
           prefer_not_to_say: They prefer not to say
-      involvement_in_case:
+      involved_in_case:
         question: Partner involved in the case?
+        answers:
+          <<: *YESNO
+      involvement_in_case:
+        question: How partner involved
         answers:
           victim: Victim
           prosecution_witness: Prosecution witness
           codefendant: Co-defendant
-          none: 'No'
       has_same_address_as_client:
         question: Lives at same address as client?
         answers:
