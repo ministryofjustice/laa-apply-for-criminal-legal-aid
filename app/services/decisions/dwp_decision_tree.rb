@@ -97,9 +97,9 @@ module Decisions
     end
 
     def determine_nino_routing
-      return edit('steps/partner/nino') if partner_is_recipient?
+      subject = partner_is_recipient? ? 'partner' : 'client'
 
-      edit('steps/client/has_nino')
+      edit('steps/shared/nino', subject:)
     end
 
     def determine_client_details_routing

@@ -130,7 +130,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
       context 'when partner does not have conflict of interest' do
         let(:conflict_of_interest) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe Decisions::PartnerDecisionTree do
       context 'when partner does not have conflict of interest' do
         let(:conflict_of_interest) { YesNoAnswer::NO }
 
-        it { is_expected.to have_destination(:nino, :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
       end
     end
   end
