@@ -151,7 +151,7 @@ RSpec.describe Decisions::SubmissionDecisionTree do
     context 'and the answer is `yes`' do
       let(:will_enter_nino) { YesNoAnswer::YES }
 
-      it { is_expected.to have_destination('/steps/client/has_nino', :edit, id: crime_application) }
+      it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
     end
 
     context 'and the answer is `no`' do
