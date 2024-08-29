@@ -275,14 +275,14 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:will_enter_nino) { YesNoAnswer::YES }
 
       context 'when the benefit check recipient is the applicant' do
-        it { is_expected.to have_destination('steps/client/has_nino', :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
       end
 
       context 'when the benefit check recipient is the partner' do
         let(:has_passporting_benefit) { true }
         let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
 
-        it { is_expected.to have_destination('steps/partner/nino', :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
       end
     end
 

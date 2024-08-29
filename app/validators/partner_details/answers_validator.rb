@@ -44,6 +44,7 @@ module PartnerDetails
     end
 
     def nino?
+      return true unless include_partner_in_means_assessment?
       return true if crime_application.partner&.has_nino == 'no'
 
       crime_application.partner&.nino.present? || crime_application.partner&.arc.present?

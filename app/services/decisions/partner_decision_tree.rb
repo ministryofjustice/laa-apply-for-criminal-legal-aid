@@ -37,7 +37,7 @@ module Decisions
       if form_object.conflict_of_interest.yes?
         exit_partner_journey
       else
-        edit(:nino)
+        edit('steps/shared/nino', subject: 'partner')
       end
     end
 
