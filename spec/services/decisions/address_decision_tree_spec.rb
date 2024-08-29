@@ -46,7 +46,7 @@ RSpec.describe Decisions::AddressDecisionTree do
       context 'and applicant is not `age_passported`' do
         let(:age_passported) { false }
 
-        it { is_expected.to have_destination('/steps/client/has_nino', :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
       end
     end
 

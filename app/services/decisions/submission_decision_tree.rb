@@ -39,7 +39,7 @@ module Decisions
 
     def after_cannot_submit_without_nino
       if form_object.will_enter_nino.yes?
-        edit('/steps/client/has_nino')
+        edit('steps/shared/nino', subject: 'client')
       else
         edit(:review)
       end

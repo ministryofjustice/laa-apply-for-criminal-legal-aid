@@ -23,7 +23,7 @@ module Decisions
       elsif current_crime_application.age_passported?
         edit('/steps/case/urn')
       else
-        edit('/steps/client/has_nino')
+        edit('steps/shared/nino', subject: 'client')
       end
     end
 

@@ -47,7 +47,7 @@ RSpec.describe 'Apply for Criminal Leagal Aid when Non-Means Tested' do
       choose_answer('Where shall we send correspondence?', 'Provider’s office')
       save_and_continue
 
-      # steps/client/has_nino
+      # steps/client/nino
       choose_answer('Does your client have a National Insurance number?', 'No')
       save_and_continue
       #
