@@ -21,6 +21,7 @@ module PartnerDetails
 
       errors.add(:relationship_to_partner, :incomplete) if record.relationship_to_partner.blank?
       errors.add(:details, :blank) unless partner_details_complete?
+      errors.add(:involved_in_case, :incomplete) if record.involved_in_case.blank?
       errors.add(:involvement_in_case, :incomplete) if record.involvement_in_case.blank?
       errors.add(:nino, :incomplete) unless nino?
       errors.add(:conflict_of_interest, :incomplete) unless conflict_of_interest?

@@ -1,6 +1,6 @@
 module Decisions
   class PartnerDecisionTree < BaseDecisionTree
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :relationship
@@ -9,6 +9,8 @@ module Decisions
         edit(:involvement)
       when :involvement
         after_involvement
+      when :involvement_type
+        after_involvement_type
       when :conflict
         after_conflict
       when :nino
@@ -19,15 +21,21 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
     def after_involvement
+      if form_object.involved_in_case == YesNoAnswer::YES
+        edit(:involvement_type)
+      else
+        edit('steps/shared/nino', subject: 'partner')
+      end
+    end
+
+    def after_involvement_type
       if form_object.involvement_in_case == PartnerInvolvementType::CODEFENDANT
         edit(:conflict)
-      elsif form_object.involvement_in_case == PartnerInvolvementType::NONE
-        edit('steps/shared/nino', subject: 'partner')
       else
         exit_partner_journey
       end

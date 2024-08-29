@@ -97,9 +97,9 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be false }
     end
 
-    context 'when the client does not have partner' do
+    context 'when the client does not have a partner' do
       let(:partner_detail) do
-        instance_double(PartnerDetail, has_partner: 'no', involvement_in_case: nil)
+        instance_double(PartnerDetail, has_partner: 'no', involved_in_case: nil, involvement_in_case: nil)
       end
 
       it { is_expected.to be false }
@@ -107,7 +107,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when client has a partner but we do not know their involvement' do
       let(:partner_detail) do
-        instance_double(PartnerDetail, has_partner: 'yes', involvement_in_case: nil)
+        instance_double(PartnerDetail, has_partner: 'yes', involved_in_case: nil, involvement_in_case: nil)
       end
 
       it { is_expected.to be false }
@@ -115,7 +115,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when client has a partner and they are not involved in the case' do
       let(:partner_detail) do
-        instance_double(PartnerDetail, involvement_in_case: 'none', has_partner: 'yes')
+        instance_double(PartnerDetail, involved_in_case: 'no', has_partner: 'yes')
       end
 
       it { is_expected.to be true }
@@ -123,7 +123,12 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when client has a partner and they are a prosecution witness' do
       let(:partner_detail) do
-        instance_double(PartnerDetail, involvement_in_case: 'prosecution_witness', has_partner: 'yes')
+        instance_double(
+          PartnerDetail,
+          involved_in_case: 'yes',
+          involvement_in_case: 'prosecution_witness',
+          has_partner: 'yes'
+        )
       end
 
       it { is_expected.to be false }
@@ -131,7 +136,12 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when client has a partner and they are a victim' do
       let(:partner_detail) do
-        instance_double(PartnerDetail, involvement_in_case: 'victim', has_partner: 'yes')
+        instance_double(
+          PartnerDetail,
+          involved_in_case: 'yes',
+          involvement_in_case: 'victim',
+          has_partner: 'yes'
+        )
       end
 
       it { is_expected.to be false }
@@ -141,6 +151,7 @@ RSpec.describe TypeOfMeansAssessment do
       let(:partner_detail) do
         instance_double(
           PartnerDetail,
+          involved_in_case: 'yes',
           involvement_in_case: 'codefendant',
           conflict_of_interest: conflict_of_interest,
           has_partner: 'yes',
@@ -446,7 +457,13 @@ RSpec.describe TypeOfMeansAssessment do
         end
 
         context 'when partner not means assessed' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+          let(:partner_detail) {
+            instance_double(
+              PartnerDetail,
+              involved_in_case: 'yes',
+              involvement_in_case: 'victim'
+            )
+          }
 
           before do
             allow(income).to receive_messages(
@@ -460,7 +477,13 @@ RSpec.describe TypeOfMeansAssessment do
         end
 
         context 'when partner means assessed' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+          let(:partner_detail) {
+            instance_double(
+              PartnerDetail,
+              involved_in_case: 'no',
+              involvement_in_case: nil
+            )
+          }
 
           it { is_expected.to be true }
         end
@@ -542,13 +565,13 @@ RSpec.describe TypeOfMeansAssessment do
     end
 
     context 'when partner is not included in means assessment' do
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+      let(:partner_detail) { instance_double(PartnerDetail, involved_in_case: 'yes', involvement_in_case: 'victim') }
 
       it { is_expected.to be applicant }
     end
 
     context 'when applicant is benefit check recipient' do
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) { instance_double(PartnerDetail, involved_in_case: 'no') }
       let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT.to_s }
 
       before do
@@ -560,7 +583,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'when partner is benefit check recipient' do
       let(:partner) { instance_double(Partner) }
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) { instance_double(PartnerDetail, involved_in_case: 'no') }
 
       context 'when applicant benefit type is none' do
         before do
@@ -583,7 +606,7 @@ RSpec.describe TypeOfMeansAssessment do
 
     context 'defaults to applicant' do
       let(:partner) { instance_double(Partner) }
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) { instance_double(PartnerDetail, involved_in_case: 'no') }
 
       context 'when both the applicant and partner benefit type is none' do
         before do

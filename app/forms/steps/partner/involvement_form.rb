@@ -4,11 +4,11 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :partner_detail
 
-      attribute :involvement_in_case, :value_object, source: PartnerInvolvementType
-      validates :involvement_in_case, inclusion: { in: :choices }
+      attribute :involved_in_case, :value_object, source: YesNoAnswer
+      validates :involved_in_case, inclusion: { in: :choices }
 
       def choices
-        PartnerInvolvementType.values
+        YesNoAnswer.values
       end
 
       private
@@ -24,7 +24,7 @@ module Steps
       end
 
       def reset_address!
-        return if involvement_in_case.to_s == 'none'
+        return if involved_in_case.to_s == 'no'
         return if crime_application.partner&.home_address.nil?
 
         crime_application.partner.home_address.destroy!

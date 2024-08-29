@@ -45,8 +45,8 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   def include_partner_in_means_assessment?
     return false if non_means_tested?
     return false unless partner.present? || partner_detail.present?
-    return true if partner_involvement_in_case == PartnerInvolvementType::NONE.to_s
-    return false unless partner_involvement_in_case == PartnerInvolvementType::CODEFENDANT.to_s
+    return true if partner_involved_in_case == YesNoAnswer::NO.to_s
+    return false unless partner_involvement_type == PartnerInvolvementType::CODEFENDANT.to_s
 
     partner_conflict_of_interest == 'no'
   end
@@ -98,9 +98,15 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
     person&.benefit_type == 'none' || person&.arc.present?
   end
 
+  def partner_involved_in_case
+    return partner_detail.involved_in_case if partner_detail
+
+    partner&.involved_in_case
+  end
+
   # involvement_in_case is stored on partner_detail when a database applications and
   # partner when a datastore application.
-  def partner_involvement_in_case
+  def partner_involvement_type
     return partner_detail.involvement_in_case if partner_detail
 
     partner&.involvement_in_case

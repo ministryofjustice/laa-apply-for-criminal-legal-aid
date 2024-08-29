@@ -190,12 +190,16 @@ en:
               inclusion: Select what your client's relationship to their partner is
         steps/partner/involvement_form:
           attributes:
+            involved_in_case:
+              inclusion: Select yes if the partner is involved in your client's case
+        steps/partner/involvement_type_form:
+          attributes:
             involvement_in_case:
-              inclusion: Select how the partner is involved in your client's case or select 'no, the partner is not involved'
+              inclusion: Select how the partner is involved in your client's case
         steps/partner/conflict_form:
           attributes:
             conflict_of_interest:
-              inclusion: Select yes if the partner has a confilct of interest
+              inclusion: Select yes if the partner has a conflict of interest
         steps/partner/same_address_form:
           attributes:
             has_same_address_as_client:

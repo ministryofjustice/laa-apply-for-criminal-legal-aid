@@ -94,6 +94,9 @@ en:
       involvement:
         edit:
           page_title: Is the partner involved in your client’s case?
+      involvement_type:
+        edit:
+          page_title: How is the partner involved in your client’s case?
       conflict:
         edit:
           page_title: Does the partner have a conflict of interest?

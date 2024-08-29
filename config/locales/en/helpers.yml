@@ -77,7 +77,9 @@ en:
       steps_partner_details_form:
         date_of_birth: Date of birth
       steps_partner_involvement_form:
-        involvement_in_case: Is the partner involved in your client’s case?
+        involved_in_case: Is the partner involved in your client’s case?
+      steps_partner_involvement_type_form:
+        involvement_in_case: How is the partner involved in your client’s case?
       steps_partner_conflict_form:
         conflict_of_interest: Does the partner have a conflict of interest?
       steps_partner_same_address_form:
@@ -626,11 +628,13 @@ en:
         last_name: Last name
         other_names: Other names (optional)
       steps_partner_involvement_form:
+        involved_in_case_options:
+          <<: *YESNO
+      steps_partner_involvement_type_form:
         involvement_in_case_options:
           victim: Victim
           prosecution_witness: Prosecution witness
           codefendant: Co-defendant
-          none: No, the partner is not involved
       steps_partner_conflict_form:
         conflict_of_interest_options:
           <<: *YESNO

@@ -133,6 +133,7 @@ Rails.application.routes.draw do
         edit_step :client_relationship_to_partner, alias: :relationship
         edit_step :partner_details, alias: :details
         edit_step :partner_involved_in_case, alias: :involvement
+        edit_step :how_partner_involved_in_case, alias: :involvement_type
         edit_step :partner_conflict_of_interest, alias: :conflict
         edit_step :do_client_and_partner_live_same_address, alias: :same_address
         edit_step :enter_partner_address, alias: :address
