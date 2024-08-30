@@ -41,7 +41,7 @@ feature_flags:
     production: true
   arc:
     local: true
-    staging: false
+    staging: true
     production: false
 
 # NOTE: consider if the setting you are adding here
