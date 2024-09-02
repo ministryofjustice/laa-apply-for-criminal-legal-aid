@@ -602,6 +602,16 @@ RSpec.describe TypeOfMeansAssessment do
 
         it { is_expected.to be applicant }
       end
+
+      context 'when partner is nil' do
+        let(:partner) { nil }
+
+        before do
+          allow(applicant).to receive(:benefit_type).and_return('none')
+        end
+
+        it { is_expected.to be applicant }
+      end
     end
   end
 end
