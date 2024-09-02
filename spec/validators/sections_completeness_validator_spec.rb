@@ -4,6 +4,16 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
   let(:record) { instance_double(CrimeApplication, errors: errors, non_means_tested?: false) }
+  let(:valid_attributes) do
+    {
+      client_details_complete?: true,
+      passporting_benefit_complete?: true,
+      kase: double(complete?: true),
+      partner_detail: double(complete?: true),
+      appeal_no_changes?: false,
+      applicant: double(under18?: false),
+    }
+  end
   let(:errors) { double(:errors, empty?: false) }
   let(:evidence_complete?) { false }
   let(:applicable?) { true }
@@ -13,30 +23,25 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       .to receive(:evidence_complete?).and_return(evidence_complete?)
     allow_any_instance_of(SupportingEvidence::AnswersValidator)
       .to receive(:applicable?).and_return(applicable?)
+    allow(InterestsOfJustice::AnswersValidator).to receive(:new).and_return(
+      instance_double(InterestsOfJustice::AnswersValidator, applicable?: false)
+    )
   end
 
   describe '#validate' do
     before { allow(record).to receive_messages(**attributes) }
 
     context 'when means assessment not required' do
+      let(:evidence_complete?) { true }
+
       before do
         allow(subject).to receive(:requires_means_assessment?).and_return(false)
       end
 
       context 'when case complete' do
         let(:errors) { [] }
-        let(:evidence_complete?) { true }
 
-        let(:attributes) do
-          {
-            client_details_complete?: true,
-            passporting_benefit_complete?: true,
-            kase: double(complete?: true),
-            partner_detail: double(complete?: true),
-            appeal_no_changes?: false,
-            applicant: double(under18?: false),
-          }
-        end
+        let(:attributes) { valid_attributes }
 
         it 'does not add any errors' do
           subject.validate
@@ -50,6 +55,54 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
 
         it 'adds errors to case details' do
           expect(errors).to receive(:add).with(:client_details, :incomplete)
+          expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+          subject.validate
+        end
+      end
+
+      describe 'when Interests of Justice applicable' do
+        let(:attributes) { valid_attributes }
+
+        before do
+          allow(InterestsOfJustice::AnswersValidator).to receive(:new).and_return(
+            instance_double(InterestsOfJustice::AnswersValidator, applicable?: true, complete?: ioj_complete?)
+          )
+        end
+
+        context 'when IoJ complete' do
+          let(:errors) { [] }
+          let(:ioj_complete?) { true }
+
+          it 'does not add any errors' do
+            subject.validate
+          end
+        end
+
+        context 'when IoJ incomplete' do
+          let(:ioj_complete?) { false }
+
+          it 'adds errors to Interests of Justice' do
+            expect(errors).to receive(:add).with(:interests_of_justice, :incomplete)
+            expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+            subject.validate
+          end
+        end
+      end
+
+      context 'when Interests of Justice incomplete' do
+        let(:attributes) { valid_attributes }
+        let(:evidence_complete?) { true }
+
+        before do
+          allow(InterestsOfJustice::AnswersValidator).to receive(:new).and_return(
+            instance_double(InterestsOfJustice::AnswersValidator, applicable?: true, complete?: false)
+          )
+        end
+
+        it 'adds errors to Interests of Justice' do
+          expect(errors).to receive(:add).with(:interests_of_justice, :incomplete)
           expect(errors).to receive(:add).with(:base, :incomplete_records)
 
           subject.validate
