@@ -85,7 +85,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   def benefit_check_subject
     return applicant unless include_partner_in_means_assessment?
     return applicant unless benefit_check_not_required(applicant)
-    return partner unless benefit_check_not_required(partner)
+    return partner if partner && !benefit_check_not_required(partner)
 
     applicant
   end
