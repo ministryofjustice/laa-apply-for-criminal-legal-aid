@@ -14,6 +14,7 @@ RSpec.describe Tasks::Ioj do
   let(:applicable?) { true }
   let(:complete?) { false }
   let(:ioj) { nil }
+  let(:passporter_result) { false }
 
   let(:validator) do
     instance_double(
@@ -25,13 +26,11 @@ RSpec.describe Tasks::Ioj do
   before do
     allow(InterestsOfJustice::AnswersValidator).to receive(:new)
       .with(crime_application).and_return(validator)
+
+    allow(crime_application).to receive(:ioj_passported?).and_return(passporter_result)
   end
 
   describe '#path' do
-    before do
-      allow(crime_application).to receive(:ioj_passported?).and_return(passporter_result)
-    end
-
     context 'when the application is Ioj passported (and there is no override)' do
       let(:passporter_result) { true }
 
@@ -39,8 +38,6 @@ RSpec.describe Tasks::Ioj do
     end
 
     context 'when the application is not Ioj passported (or there is override)' do
-      let(:passporter_result) { false }
-
       it { expect(subject.path).to eq('/applications/12345/steps/case/ioj') }
     end
   end
@@ -66,6 +63,12 @@ RSpec.describe Tasks::Ioj do
 
     context 'when we do not have yet an ioj record' do
       it { expect(subject.in_progress?).to be(false) }
+
+      context 'when ioj_passported' do
+        let(:passporter_result) { true }
+
+        it { expect(subject.in_progress?).to be(true) }
+      end
     end
   end
 
