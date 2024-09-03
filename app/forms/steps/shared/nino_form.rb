@@ -14,6 +14,10 @@ module Steps
         super(str.upcase.delete(' ')) if str
       end
 
+      def arc=(str)
+        super(str.upcase.delete(' ')) if str
+      end
+
       def has_arc_or_nino=(value) # rubocop:disable Metrics/MethodLength
         self.nino = nil unless value == 'yes'
         self.arc = nil unless value == 'arc'
