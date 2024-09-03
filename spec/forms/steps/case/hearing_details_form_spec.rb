@@ -50,7 +50,9 @@ RSpec.describe Steps::Case::HearingDetailsForm do
     context 'hearing_date' do
       it_behaves_like 'a multiparam date validation',
                       attribute_name: :hearing_date,
-                      allow_future: true
+                      allow_future: true,
+                      earliest_year: 2010,
+                      latest_year: 2035
     end
 
     # rubocop:disable Style/HashSyntax

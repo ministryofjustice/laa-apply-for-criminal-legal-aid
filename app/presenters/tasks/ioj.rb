@@ -13,7 +13,7 @@ module Tasks
     end
 
     def in_progress?
-      ioj.present?
+      crime_application.ioj_passported? || ioj.present?
     end
 
     private

@@ -6,9 +6,32 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Contact us</h1>
     <h2 class="govuk-heading-m">Case enquiries</h2>
-    <p class="govuk-body">Telephone: <%= Settings.case_enquiries_tel %></p>
-    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding bank holidays)</p>
+    <p class="govuk-body">For enquiries about Criminal Legal Aid applications.</p>
+    <h3 class="govuk-heading-s">Telephone</h3>
+    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, option 2</p>
+    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding public holidays)</p>
+    <p class="govuk-body">
+      <%= govuk_link_to('Find out about call charges', 'https://design-system.service.gov.uk/patterns/contact-a-department-or-service-team/all-contact-information/index.html') %>
+    </p>
+    <h3 class="govuk-heading-s">Webchat</h3>
+    <p class="govuk-body">
+      <%= govuk_link_to('Speak to an adviser now', 'https://legalaidlearning.justice.gov.uk/totara/dashboard/index.php?id=34') %>
+    </p>
+
     <h2 class="govuk-heading-m">Technical support</h2>
-    <p class="govuk-body">Email: <%= mail_to Settings.support_email, class: 'govuk-link--no-visited-state' %></p>
+    <p class="govuk-body">For help using the Apply for Criminal Legal Aid service.</p>
+    <h3 class="govuk-heading-s">Telephone</h3>
+    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, option 3</p>
+    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding public holidays)</p>
+    <p class="govuk-body">
+      <%= govuk_link_to('Find out about call charges', 'https://design-system.service.gov.uk/patterns/contact-a-department-or-service-team/all-contact-information/index.html') %>
+    </p>
+    <h3 class="govuk-heading-s">Email</h3>
+    <p class="govuk-body"><%= mail_to Settings.support_email, class: 'govuk-link--no-visited-state' %></p>
+    <p class="govuk-body">We aim to respond within 5 working days.</p>
+    <h3 class="govuk-heading-s">Webchat</h3>
+    <p class="govuk-body">
+      <%= govuk_link_to('Speak to an adviser now', 'https://legalaidlearning.justice.gov.uk/totara/dashboard/index.php?id=34') %>
+    </p>
   </div>
 </div>
