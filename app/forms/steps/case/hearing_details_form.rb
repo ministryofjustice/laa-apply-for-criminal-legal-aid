@@ -9,8 +9,9 @@ module Steps
       attribute :is_first_court_hearing, :value_object, source: FirstHearingAnswer
 
       validates :hearing_court_name, presence: true
+      # hearing_date must fall between 01/01/2010 - 31/12/2035 as per validation in MAAT; latest update LASB-3572
       validates :hearing_date, presence: true,
-                multiparam_date: { allow_future: true }
+                multiparam_date: { allow_future: true, earliest_year: 2010, latest_year: 2035 }
 
       validates :is_first_court_hearing, inclusion: { in: :choices }
 
