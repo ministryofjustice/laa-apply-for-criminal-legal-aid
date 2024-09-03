@@ -1,7 +1,7 @@
 class ArcValidator < ActiveModel::Validator
   attr_reader :record
 
-  ARC_REGEXP = %r([A-Z]{3}\d{2}/\d{6}/[A-Z])
+  ARC_REGEXP = %r([a-zA-Z]{3}\d{2}/\d{6}/[a-zA-Z])
 
   def validate(record)
     blank_arc(record)
