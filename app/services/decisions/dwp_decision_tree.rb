@@ -75,6 +75,8 @@ module Decisions
     end
 
     def partner_benefit_type_required?
+      return false if partner&.arc.present?
+
       form_object.benefit_type.none? && include_partner_in_means_assessment?
     end
 
@@ -95,9 +97,9 @@ module Decisions
     end
 
     def determine_nino_routing
-      return edit('steps/partner/nino') if partner_is_recipient?
+      subject = partner_is_recipient? ? 'partner' : 'client'
 
-      edit('steps/client/has_nino')
+      edit('steps/shared/nino', subject:)
     end
 
     def determine_client_details_routing
@@ -121,7 +123,7 @@ module Decisions
     end
 
     def after_cannot_check_dwp_status
-      person = benefit_check_recipient
+      person = benefit_check_subject
 
       determine_dwp_result_page(person)
     end

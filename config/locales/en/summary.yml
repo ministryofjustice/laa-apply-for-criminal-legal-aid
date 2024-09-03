@@ -189,6 +189,8 @@ en:
       nino:
         question: National Insurance number
         absence_answer: *absence_not_provided
+      arc:
+        question: Application registration card (ARC) number
       has_partner:
         question: Partner
         answers:

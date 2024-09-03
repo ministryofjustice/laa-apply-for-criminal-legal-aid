@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_14_155613) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_21_151632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -354,6 +354,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_14_155613) do
     t.string "relationship_to_owner_of_usual_home_address"
     t.string "confirm_details"
     t.string "confirm_dwp_result"
+    t.string "arc"
+    t.string "has_arc"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 

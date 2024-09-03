@@ -14,7 +14,9 @@ module SubmissionSerializer
           json.date_of_birth partner.date_of_birth
 
           json.has_nino partner.has_nino
+          json.has_arc partner.has_arc
           json.nino partner.nino
+          json.arc partner.arc
 
           json.involvement_in_case partner_detail.involvement_in_case
           json.conflict_of_interest partner_detail.conflict_of_interest

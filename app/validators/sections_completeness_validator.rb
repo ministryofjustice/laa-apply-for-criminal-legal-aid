@@ -10,17 +10,15 @@ class SectionsCompletenessValidator
 
   delegate :errors, to: :record
 
-  def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
     if client_details_complete?
       errors.add(:benefit_type, :incomplete) unless passporting_benefit_complete?
       errors.add(:case_details, :incomplete) unless kase&.complete?
       errors.add(:income_assessment, :incomplete) unless income_assessment_complete?
-
       errors.add(:outgoings_assessment, :incomplete) unless outgoings_assessment_complete?
       errors.add(:capital_assessment, :incomplete) unless capital_assessment_complete?
-
       errors.add(:partner_details, :incomplete) unless partner_detail_complete?
-
+      errors.add(:interests_of_justice, :incomplete) unless interests_of_justice_complete?
       errors.add(:documents, :incomplete) unless evidence_upload_complete?
     else
       errors.add(:client_details, :incomplete)
@@ -36,6 +34,14 @@ class SectionsCompletenessValidator
     return false unless partner_detail
 
     partner_detail.complete?
+  end
+
+  def interests_of_justice_complete?
+    validator = InterestsOfJustice::AnswersValidator.new(crime_application)
+
+    return true unless validator.applicable?
+
+    validator.complete?
   end
 
   def income_assessment_complete?

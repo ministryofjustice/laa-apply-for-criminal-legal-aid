@@ -46,7 +46,7 @@ RSpec.describe Decisions::AddressDecisionTree do
       context 'and applicant is not `age_passported`' do
         let(:age_passported) { false }
 
-        it { is_expected.to have_destination('/steps/client/has_nino', :edit, id: crime_application) }
+        it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'client') }
       end
     end
 
@@ -54,7 +54,30 @@ RSpec.describe Decisions::AddressDecisionTree do
       let(:form_object) { double('FormObject', record: address_record) }
       let(:address_record) { HomeAddress.new(person: Partner.new) }
 
-      it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      before do
+        allow(crime_application).to receive_messages(applicant:, partner:)
+      end
+
+      context 'when the applicant and partner have arc numbers' do
+        let(:applicant) { instance_double(Applicant, arc: 'ABC12/345678/A') }
+        let(:partner) { instance_double(Partner, arc: 'BCD12/345678/C') }
+
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      end
+
+      context 'when the applicant has an arc number' do
+        let(:applicant) { instance_double(Applicant, arc: 'ABC12/345678/A') }
+        let(:partner) { instance_double(Partner, arc: nil) }
+
+        it { is_expected.to have_destination('/steps/dwp/partner_benefit_type', :edit, id: crime_application) }
+      end
+
+      context 'when neither the applicant or partner have arc numbers' do
+        let(:applicant) { instance_double(Applicant, arc: nil) }
+        let(:partner) { instance_double(Partner, arc: nil) }
+
+        it { is_expected.to have_destination('/steps/dwp/benefit_type', :edit, id: crime_application) }
+      end
     end
   end
 

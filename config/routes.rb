@@ -107,6 +107,13 @@ Rails.application.routes.draw do
         end
       end
 
+
+      scope module: :shared do
+        scope '/:subject/' do
+          edit_step :nino
+        end
+      end
+
       namespace :client do
         edit_step :is_application_means_tested, alias: :is_means_tested
         edit_step :does_client_have_partner, alias: :has_partner
@@ -117,8 +124,6 @@ Rails.application.routes.draw do
         edit_step :financial_circumstances_changed, alias: :appeal_financial_circumstances
         edit_step :appeal_reference_number
         edit_step :date_stamp
-        edit_step :has_nino
-        show_step :nino_exit
         edit_step :contact_details
         edit_step :residence_type
         edit_step :relationship_status
@@ -127,7 +132,6 @@ Rails.application.routes.draw do
       namespace :partner do
         edit_step :client_relationship_to_partner, alias: :relationship
         edit_step :partner_details, alias: :details
-        edit_step :partner_nino, alias: :nino
         edit_step :partner_involved_in_case, alias: :involvement
         edit_step :partner_conflict_of_interest, alias: :conflict
         edit_step :do_client_and_partner_live_same_address, alias: :same_address

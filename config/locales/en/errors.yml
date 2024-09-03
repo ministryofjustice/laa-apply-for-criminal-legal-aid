@@ -174,24 +174,20 @@ en:
               inclusion: Select where your client usually lives or if they have no fixed address
             relationship_to_owner_of_usual_home_address:
               blank: Enter your client's relationship to the person whose home they live in
-        steps/client/nino_form:
+        steps/shared/nino_form:
           attributes:
-            has_nino:
-              inclusion: Select yes if your client has a National Insurance number
+            has_arc_or_nino:
+              blank: Select yes if they have a National Insurance number
             nino:
               blank: Enter a National Insurance number
               invalid: Enter a National Insurance number in the correct format
+            arc:
+              blank: Enter an ARC number
+              invalid: Enter an ARC number in the correct format
         steps/partner/relationship_form:
           attributes:
             relationship_to_partner:
               inclusion: Select what your client's relationship to their partner is
-        steps/partner/nino_form:
-          attributes:
-            has_nino:
-              inclusion: Select yes if the partner has a National Insurance number
-            nino:
-              blank: Enter the partner's National Insurance number
-              invalid: Enter a National Insurance number in the correct format
         steps/partner/involvement_form:
           attributes:
             involvement_in_case:
@@ -635,38 +631,31 @@ en:
           attributes:
             base:
               none_selected: Select which benefits your client gets, or select 'They do not get any of these benefits'
-        steps/income/income_benefit_fieldset_form:
+        steps/income/income_benefit_fieldset_form: &income_benefit_fieldset_form
           summary:
             amount:
               greater_than: "%{payment_type} amount must be greater than 0"
               not_a_number: "%{payment_type} amount is not a number"
+              blank: "Enter amount for %{payment_type}"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter what benefits they get and the amount
             frequency:
-              blank: "%{payment_type} frequency can't be blank"
+              blank: "Select how often they receive %{payment_type}"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              blank: Enter an amount
+              greater_than: Amount must be greater than 0
+              blank: "Enter amount for %{payment_type}"
+            details:
+              blank: Enter what benefits they get and the amount
+            frequency:
+              blank: "Select how often they receive %{payment_type}"
         steps/income/partner/income_benefits_form:
           attributes:
             base:
               none_selected: Select which benefits the partner gets, or select 'They do not get any of these benefits'
-        steps/income/partner/income_benefit_fieldset_form:
-          summary:
-            amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-            details:
-              invalid: "Cannot add additional details for %{payment_type}"
-              blank: Enter what benefits they get and the amount
-            frequency:
-              blank: "%{payment_type} frequency can't be blank"
-              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
-          attributes:
-            amount:
-              blank: Enter an amount
+        steps/income/partner/income_benefit_fieldset_form: *income_benefit_fieldset_form
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:

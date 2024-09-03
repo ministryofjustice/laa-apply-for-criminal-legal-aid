@@ -23,12 +23,12 @@ module Decisions
         after_residence_type
       when :contact_details
         after_contact_details
-      when :has_nino
-        after_has_nino
+      when :nino
+        after_nino
       when :has_partner
         after_has_partner
       when :relationship_status
-        edit('/steps/dwp/benefit_type')
+        after_relationship_status
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -109,7 +109,7 @@ module Decisions
       elsif current_crime_application.age_passported? || current_crime_application.appeal_no_changes?
         edit('/steps/case/urn')
       else
-        edit(:has_nino)
+        edit('steps/shared/nino', subject: 'client')
       end
     end
 
@@ -124,11 +124,11 @@ module Decisions
       end
     end
 
-    def after_has_nino
+    def after_nino
       if current_crime_application.not_means_tested?
         edit('/steps/case/urn')
       else
-        edit(:has_partner)
+        edit('/steps/client/has_partner')
       end
     end
 
@@ -138,6 +138,12 @@ module Decisions
       else
         edit(:relationship_status)
       end
+    end
+
+    def after_relationship_status
+      return edit('/steps/case/urn') if current_crime_application.applicant.arc.present?
+
+      edit('/steps/dwp/benefit_type')
     end
 
     def applicant
