@@ -18,6 +18,8 @@ class Property < ApplicationRecord
 
   store_accessor :address, :address_line_one, :address_line_two, :city, :country, :postcode
 
+  scope :home_address, -> { where(is_home_address: YesNoAnswer::YES.to_s) }
+
   OPTIONAL_ADDRESS_ATTRIBUTES = %w[address_line_two].freeze
   REQUIRED_ADDRESS_ATTRIBUTES = Address::ADDRESS_ATTRIBUTES.map(&:to_s).reject { |a| a.in? OPTIONAL_ADDRESS_ATTRIBUTES }
   REQUIRED_ATTRIBUTES = {

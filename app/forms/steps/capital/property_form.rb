@@ -32,6 +32,8 @@ module Steps
 
       validates_with CapitalAssessment::PropertyOwnershipValidator
 
+      validate :home_address, unless: :property_is_home_address?
+
       def persist!
         record.update(attributes)
       end
@@ -43,6 +45,19 @@ module Steps
 
       def person_has_home_address?
         crime_application.applicant.home_address?
+      end
+
+      def property_is_home_address?
+        return true if crime_application.properties.home_address.empty?
+
+        crime_application.properties.home_address.first.id == record.id
+      end
+
+      def home_address
+        return true unless is_home_address&.yes?
+
+        errors.add(:is_home_address, :invalid) if is_home_address&.yes? &&
+                                                  crime_application.properties.home_address.count >= 1
       end
     end
   end
