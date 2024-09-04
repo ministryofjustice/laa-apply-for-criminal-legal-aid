@@ -126,6 +126,7 @@ en:
         land: Land
         house_type:
           <<: *HOUSE_TYPE
+          absence_answer: *absence_not_provided
       property_owners:
         relationship:
           <<: *RELATIONSHIP
