@@ -86,7 +86,7 @@ en:
           attributes:
             is_means_tested:
               inclusion: Select yes if this application is means tested
-              cifc: Change in Financial Circumstances application must be means tested
+              cifc: Change in financial circumstances application must be means tested
         steps/client/has_partner_form:
           attributes:
             has_partner:
