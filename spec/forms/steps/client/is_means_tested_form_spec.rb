@@ -10,8 +10,12 @@ RSpec.describe Steps::Client::IsMeansTestedForm do
     }
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, is_means_tested:) }
+  let(:crime_application) do
+    instance_double(CrimeApplication, 'is_means_tested' => is_means_tested, 'cifc?' => cifc?)
+  end
+
   let(:is_means_tested) { nil }
+  let(:cifc?) { false }
 
   describe '#choices' do
     it 'returns the possible choices' do
@@ -52,7 +56,7 @@ RSpec.describe Steps::Client::IsMeansTestedForm do
       end
     end
 
-    context 'when `is_means_tested` is valid' do
+    context 'when `is_means_tested` is valid and application is not cifc' do
       let(:is_means_tested) { 'no' }
 
       it 'saves the record' do
@@ -61,6 +65,33 @@ RSpec.describe Steps::Client::IsMeansTestedForm do
         ).and_return(true)
 
         expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when `is_means_tested` is `yes` and application is cifc' do
+      let(:is_means_tested) { 'yes' }
+      let(:cifc?) { true }
+
+      it 'saves the record' do
+        expect(crime_application).to receive(:update).with(
+          { 'is_means_tested' => YesNoAnswer::YES }
+        ).and_return(true)
+
+        expect(subject.save).to be(true)
+      end
+    end
+
+    context 'when `is_means_tested` is `no` and application is cifc' do
+      let(:is_means_tested) { 'no' }
+      let(:cifc?) { true }
+
+      it 'returns false' do
+        expect(subject.save).to be(false)
+      end
+
+      it 'has a validation error on the field' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:is_means_tested, :cifc)).to be(true)
       end
     end
   end

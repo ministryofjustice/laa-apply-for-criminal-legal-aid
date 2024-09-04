@@ -11,7 +11,6 @@ RSpec.describe Decisions::ClientDecisionTree do
 
   let(:appeal_no_changes?) { nil }
   let(:has_partner) { nil }
-  let(:is_means_tested_enabled) { false }
   let(:not_means_tested?) { nil }
   let(:cifc?) { false }
 
@@ -27,10 +26,6 @@ RSpec.describe Decisions::ClientDecisionTree do
       not_means_tested?: not_means_tested?,
       cifc?: cifc?,
     )
-
-    allow(FeatureFlags).to receive(:non_means_tested) {
-      instance_double(FeatureFlags::EnabledFeature, enabled?: is_means_tested_enabled)
-    }
   end
 
   it_behaves_like 'a decision tree'
@@ -78,14 +73,12 @@ RSpec.describe Decisions::ClientDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :details }
 
-    context 'and `non_means_tested` feature is enabled' do
-      let(:is_means_tested_enabled) { true }
-
+    context 'and `non_means_tested`' do
       it { is_expected.to have_destination(:is_means_tested, :edit, id: crime_application) }
     end
 
-    context 'and `non_means_tested` feature is not enabled' do
-      let(:is_means_tested_enabled) { false }
+    context 'and `non_means_tested` and change in financial circumstances application' do
+      let(:cifc?) { true }
 
       it { is_expected.to have_destination(:case_type, :edit, id: crime_application) }
     end

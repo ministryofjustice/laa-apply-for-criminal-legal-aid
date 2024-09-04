@@ -4,6 +4,7 @@ module Steps
       attribute :is_means_tested, :value_object, source: YesNoAnswer
 
       validates_inclusion_of :is_means_tested, in: :choices
+      validate :cifc_application
 
       # CRIMAPP-1249 temporary fix to default application to being means tested
       def is_means_tested
@@ -20,6 +21,12 @@ module Steps
         crime_application.update(
           attributes
         )
+      end
+
+      def cifc_application
+        return unless crime_application.cifc? && is_means_tested.to_s == 'no'
+
+        errors.add(:is_means_tested, :cifc)
       end
     end
   end

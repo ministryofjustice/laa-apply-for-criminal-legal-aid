@@ -44,6 +44,8 @@ module TypeOfApplication
   end
 
   def non_means_tested?
+    return false if change_in_financial_circumstances?
+
     is_means_tested == 'no'
   end
 

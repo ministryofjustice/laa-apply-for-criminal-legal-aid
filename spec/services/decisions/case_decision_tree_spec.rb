@@ -45,27 +45,8 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :urn }
 
-    before do
-      allow(FeatureFlags).to receive(:means_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-      }
-    end
-
-    context 'feature flag `means_journey` is enabled' do
-      let(:feature_flag_means_journey_enabled) { true }
-
-      it 'redirects to the `has_case_concluded` page' do
-        expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
-      end
-    end
-
-    context 'feature flag `means_journey` is disabled' do
-      let(:feature_flag_means_journey_enabled) { false }
-      let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
-
-      it 'redirects to the edit `charges` page' do
-        expect(subject).to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge')
-      end
+    it 'redirects to the `has_case_concluded` page' do
+      expect(subject).to have_destination(:has_case_concluded, :edit, id: crime_application)
     end
   end
 
@@ -97,12 +78,6 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'when application is not means tested' do
       let(:is_means_tested) { 'no' }
       let(:non_means_tested) { true }
-
-      before do
-        allow(FeatureFlags).to receive(:non_means_tested) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-      end
 
       context 'and there are no charges yet' do
         let(:charges_double) { double(any?: false, create!: 'charge', reject: nil) }
@@ -142,12 +117,6 @@ RSpec.describe Decisions::CaseDecisionTree do
 
     context 'and it is a change in financial circumstances application' do
       let(:cifc?) { true }
-
-      before do
-        allow(FeatureFlags).to receive(:cifc_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-      end
 
       context 'when means assessment required' do
         before do
@@ -357,7 +326,6 @@ RSpec.describe Decisions::CaseDecisionTree do
   context 'when the step is `ioj`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :ioj }
-    let(:feature_flag_means_journey_enabled) { true }
 
     before do
       allow(subject).to receive(:requires_means_assessment?).and_return(

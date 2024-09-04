@@ -38,10 +38,10 @@ module Decisions
     private
 
     def after_client_details
-      if FeatureFlags.non_means_tested.enabled?
-        edit(:is_means_tested)
-      else
+      if form_object.crime_application.cifc?
         edit(:case_type)
+      else
+        edit(:is_means_tested)
       end
     end
 
