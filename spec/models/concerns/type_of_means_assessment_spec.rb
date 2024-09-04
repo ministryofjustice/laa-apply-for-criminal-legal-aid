@@ -89,6 +89,8 @@ RSpec.describe TypeOfMeansAssessment do
   end
 
   describe '#include_partner_in_means_assessment?' do
+    let(:partner) { instance_double(Partner) }
+
     subject(:include_partner_in_means_assessment?) do
       assessable.include_partner_in_means_assessment?
     end
