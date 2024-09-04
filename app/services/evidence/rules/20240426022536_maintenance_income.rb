@@ -9,13 +9,13 @@ module Evidence
       key :income_maintenance_6
       group :income
 
-      client do |crime_application, _applicant|
+      client do |crime_application|
         payment = crime_application.income&.client_maintenance_payment
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
-      partner do |crime_application, _partner|
+      partner do |crime_application|
         payment = crime_application.income&.partner_maintenance_payment
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD

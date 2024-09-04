@@ -14,11 +14,6 @@ module Evidence
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
-
-      # TODO: Awaiting partner implementation
-      partner do |_crime_application|
-        false
-      end
     end
   end
 end

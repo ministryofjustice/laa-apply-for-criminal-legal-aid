@@ -59,12 +59,6 @@ RSpec.describe Passporting::MeansPassporter do
     context 'when means passporting on non-means tested' do
       let(:is_means_tested) { 'no' }
 
-      before do
-        allow(FeatureFlags).to receive(:non_means_tested) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-      end
-
       it { is_expected.to eq([MeansPassportType::ON_NOT_MEANS_TESTED]) }
     end
   end
