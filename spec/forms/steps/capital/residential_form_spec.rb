@@ -5,13 +5,15 @@ RSpec.describe Steps::Capital::ResidentialForm do
 
   let(:arguments) { { crime_application:, record: }.merge(attributes) }
   let(:attributes) { {} }
-  let(:crime_application) { instance_double(CrimeApplication, applicant:) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:, properties:) }
   let(:applicant) { instance_double(Applicant, home_address?: home_address?) }
   let(:record) do
     instance_double(Property, 'other_house_type=': nil, 'address=': nil)
   end
   let(:home_address?) { true }
   let(:include_partner?) { false }
+  let(:properties) { class_double(Property, home_address:) }
+  let(:home_address) { [] }
 
   before do
     allow(form).to receive(:include_partner_in_means_assessment?)
@@ -134,6 +136,47 @@ RSpec.describe Steps::Capital::ResidentialForm do
           it 'adds an error' do
             expect(subject.save).to be(false)
             expect(subject.errors.of_kind?(:percentage_applicant_owned, :less_than_or_equal_to)).to be(true)
+          end
+        end
+      end
+
+      context 'home address validation' do
+        let(:attributes) { required_attributes }
+
+        context 'when home address has already been set' do
+          before do
+            allow(record).to receive(:id).and_return('123')
+          end
+
+          context 'and the current property is not the home address' do # rubocop:disable RSpec/NestedGroups
+            let(:home_address) { [instance_double(Property, id: '456')] }
+
+            it 'adds an error' do
+              expect(subject.save).to be(false)
+              expect(subject.errors.of_kind?(:is_home_address, :invalid)).to be(true)
+            end
+          end
+
+          context 'and the current property is the home address' do # rubocop:disable RSpec/NestedGroups
+            let(:home_address) { [instance_double(Property, id: '123')] }
+
+            it 'updates the record' do
+              expect(record).to receive(:update).and_return(true)
+              expect(subject.save).to be(true)
+            end
+          end
+        end
+
+        context 'when home address has not been set' do
+          let(:home_address) { [] }
+
+          before do
+            allow(record).to receive(:id).and_return('123')
+          end
+
+          it 'updates the record' do
+            expect(record).to receive(:update).and_return(true)
+            expect(subject.save).to be(true)
           end
         end
       end

@@ -11,7 +11,6 @@ module Evidence
           crime_application.income&.has_frozen_income_or_assets == 'yes') || false
       end
 
-      # TODO: Awaiting partner implementation
       partner do |_crime_application|
         false
       end
