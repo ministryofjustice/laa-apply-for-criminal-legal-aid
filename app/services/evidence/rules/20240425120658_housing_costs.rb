@@ -19,10 +19,6 @@ module Evidence
 
         total > THRESHOLD
       end
-
-      partner do |_crime_application|
-        false
-      end
     end
   end
 end

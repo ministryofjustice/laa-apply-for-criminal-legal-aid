@@ -11,7 +11,7 @@ module Evidence
           crime_application.income&.applicant_self_assessment_tax_bill == 'yes'
       end
 
-      partner do |crime_application, _partner|
+      partner do |crime_application|
         crime_application.outgoings&.partner_income_tax_rate_above_threshold == 'yes' ||
           crime_application.income&.partner_self_assessment_tax_bill == 'yes'
       end
