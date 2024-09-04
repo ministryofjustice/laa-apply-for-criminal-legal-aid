@@ -14,10 +14,6 @@ module Evidence
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
-
-      partner do |_crime_application|
-        false
-      end
     end
   end
 end

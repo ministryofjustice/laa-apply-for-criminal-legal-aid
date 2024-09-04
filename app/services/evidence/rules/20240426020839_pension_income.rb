@@ -10,13 +10,13 @@ module Evidence
       key :income_private_pension_5
       group :income
 
-      client do |crime_application, _applicant|
+      client do |crime_application|
         payment = crime_application.income&.client_private_pension_payment
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
       end
 
-      partner do |crime_application, _partner|
+      partner do |crime_application|
         payment = crime_application.income&.partner_private_pension_payment
 
         payment.present? && payment.prorated_monthly.to_f > THRESHOLD
