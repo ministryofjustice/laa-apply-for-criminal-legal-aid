@@ -49,7 +49,7 @@ module Decisions
     end
 
     def determine_showing_client_remanded
-      return charges_summary_or_edit_new_charge if FeatureFlags.non_means_tested.enabled? && not_means_tested?
+      return charges_summary_or_edit_new_charge if not_means_tested?
 
       edit(:is_client_remanded)
     end

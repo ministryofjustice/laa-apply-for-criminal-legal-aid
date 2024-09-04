@@ -115,9 +115,7 @@ Rails.application.routes.draw do
       end
 
       namespace :client do
-        if FeatureFlags.non_means_tested.enabled?
-          edit_step :is_application_means_tested, alias: :is_means_tested
-        end
+        edit_step :is_application_means_tested, alias: :is_means_tested
         edit_step :does_client_have_partner, alias: :has_partner
         show_step :partner_exit
         edit_step :details
