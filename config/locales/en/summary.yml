@@ -791,7 +791,7 @@ en:
         absence_answer: *absence_none
       bedrooms:
         question: Bedrooms
-        absence_answer: *absence_none
+        absence_answer: *absence_not_provided
       size_in_acres:
         question: Size of land
         absence_answer: *absence_none

@@ -224,7 +224,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         )
         expect(page).to have_summary_row(
           'Bedrooms',
-          'None',
+          'Not provided',
         )
         expect(page).to have_summary_row(
           'Property value',
