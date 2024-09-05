@@ -46,6 +46,7 @@ module Steps
       def reset_partner_details
         partner_detail.update!(
           relationship_to_partner: nil,
+          involved_in_case: nil,
           involvement_in_case: nil,
           conflict_of_interest: nil,
           has_same_address_as_client: nil,

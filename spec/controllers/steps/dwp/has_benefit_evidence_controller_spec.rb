@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Steps::DWP::HasBenefitEvidenceController, type: :controller do
   let(:applicant) { Applicant.new }
   let(:partner) { Partner.new }
-  let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'victim') }
+  let(:partner_detail) { PartnerDetail.new(involved_in_case: 'yes', involvement_in_case: 'victim') }
 
   let(:existing_case) do
     CrimeApplication.create(partner:,
@@ -14,7 +14,7 @@ RSpec.describe Steps::DWP::HasBenefitEvidenceController, type: :controller do
   it_behaves_like 'a step that can be drafted', Steps::DWP::HasBenefitEvidenceForm
 
   context 'when benefit check is on applicant' do
-    let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+    let(:partner_detail) { PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil) }
     let(:applicant) { Applicant.new(benefit_type: 'none') }
     let(:partner) { Partner.new(benefit_type: 'none') }
 
@@ -22,7 +22,7 @@ RSpec.describe Steps::DWP::HasBenefitEvidenceController, type: :controller do
   end
 
   context 'when benefit check is on partner' do
-    let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+    let(:partner_detail) { PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil) }
     let(:applicant) { Applicant.new(benefit_type: 'none') }
     let(:partner) { Partner.new(benefit_type: 'universal_credit') }
 

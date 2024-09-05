@@ -9,7 +9,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
       CrimeApplication,
       to_param: '12345',
       applicant: applicant,
-      partner_detail: instance_double(PartnerDetail, involvement_in_case:),
+      partner_detail: instance_double(PartnerDetail, involved_in_case:, involvement_in_case:),
       partner: partner,
       is_means_tested: is_means_tested,
       non_means_tested?: false
@@ -33,7 +33,8 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
   let(:benefit_check_status) { nil }
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
-  let(:involvement_in_case) { 'none' }
+  let(:involved_in_case) { 'no' }
+  let(:involvement_in_case) { nil }
   let(:is_means_tested) { 'yes' }
 
   before do
@@ -68,6 +69,7 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
     end
 
     context 'when the partner is included in the means assessment' do
+      let(:involved_in_case) { 'yes' }
       let(:involvement_in_case) { 'victim' }
 
       it 'does not show this section' do

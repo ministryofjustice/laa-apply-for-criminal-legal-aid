@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::PartnerDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -16,14 +17,18 @@ RSpec.describe Decisions::PartnerDecisionTree do
     instance_double(
       PartnerDetail,
       relationship_to_partner: nil,
-      involvement_in_case: nil,
       conflict_of_interest: nil,
       has_same_address_as_client: nil,
+      involved_in_case: involved_in_case,
+      involvement_in_case: involvement_in_case,
     )
   end
 
   let(:applicant) { instance_double(Applicant, arc: nil) }
   let(:partner) { instance_double(Partner, arc: nil) }
+
+  let(:involved_in_case) { nil }
+  let(:involvement_in_case) { nil }
 
   let(:form_object) { double('FormObject') }
 
@@ -55,7 +60,27 @@ RSpec.describe Decisions::PartnerDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :involvement }
 
-    let(:partner_detail) { double(PartnerDetail, involvement_in_case:) }
+    before do
+      allow(form_object).to receive(:involved_in_case).and_return(involved_in_case)
+    end
+
+    context 'when the partner is involved' do
+      let(:involved_in_case) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:involvement_type, :edit, id: crime_application) }
+    end
+
+    context 'when partner is not involved' do
+      let(:involved_in_case) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
+    end
+  end
+
+  context 'when the step is partner involvement type' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :involvement_type }
+
     let(:not_means_tested) { nil }
 
     before do
@@ -67,12 +92,6 @@ RSpec.describe Decisions::PartnerDecisionTree do
       let(:involvement_in_case) { PartnerInvolvementType::CODEFENDANT }
 
       it { is_expected.to have_destination(:conflict, :edit, id: crime_application) }
-    end
-
-    context 'when partner is not involved' do
-      let(:involvement_in_case) { PartnerInvolvementType::NONE }
-
-      it { is_expected.to have_destination('steps/shared/nino', :edit, id: crime_application, subject: 'partner') }
     end
 
     context 'without means tested application' do
@@ -218,3 +237,4 @@ RSpec.describe Decisions::PartnerDecisionTree do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

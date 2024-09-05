@@ -469,7 +469,7 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
         crime_application.save!
       end
 
-      let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+      let(:partner_detail) { PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil) }
 
       it { is_expected.to be true }
 
@@ -478,7 +478,7 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
       end
 
       context 'when partner has contrary interest' do
-        let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'victim') }
+        let(:partner_detail) { PartnerDetail.new(involved_in_case: 'yes', involvement_in_case: 'victim') }
 
         it 'only includes applicant payments' do
           expect(income.all_income_total).to eq 200

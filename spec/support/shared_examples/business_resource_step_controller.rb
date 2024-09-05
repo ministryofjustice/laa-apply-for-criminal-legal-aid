@@ -5,7 +5,7 @@ RSpec.shared_examples 'a business resource step controller' do |form_class|
     CrimeApplication.create(
       applicant: Applicant.new,
       partner: Partner.new,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       businesses: [
         Business.new(business_type: 'partnership', ownership_type: 'applicant'),
         Business.new(business_type: 'self_employed', ownership_type: 'partner')

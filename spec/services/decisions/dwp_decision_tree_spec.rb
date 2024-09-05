@@ -120,19 +120,23 @@ RSpec.describe Decisions::DWPDecisionTree do
         let(:feature_flag_means_journey_enabled) { true }
 
         context 'and the partner is included in the means assessment' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+          let(:partner_detail) { instance_double(PartnerDetail, involved_in_case: 'no', involvement_in_case: nil) }
 
           it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
         end
 
         context 'and the partner is not included in the means assessment' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+          let(:partner_detail) {
+            instance_double(PartnerDetail, involved_in_case: 'yes', involvement_in_case: 'victim')
+          }
 
           it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
         end
 
         context 'and the partner has an arc number' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+          let(:partner_detail) {
+            instance_double(PartnerDetail, involved_in_case: 'yes', involvement_in_case: 'victim')
+          }
           let(:partner_double) { instance_double(Partner, arc:) }
           let(:arc) { 'ABC12/345678/A' }
 

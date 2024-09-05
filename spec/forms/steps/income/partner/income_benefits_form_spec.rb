@@ -8,7 +8,7 @@ RSpec.describe Steps::Income::Partner::IncomeBenefitsForm do
     CrimeApplication.new(
       case: case_record,
       partner: partner,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end

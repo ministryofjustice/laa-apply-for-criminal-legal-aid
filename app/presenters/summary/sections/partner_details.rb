@@ -39,12 +39,12 @@ module Summary
             change_path: edit_steps_nino_path(subject: 'partner')
           ),
           Components::ValueAnswer.new(
-            :involvement_in_case, partner.involved_in_case,
+            :involved_in_case, partner.involved_in_case,
             change_path: edit_steps_partner_involvement_path
           ),
           Components::ValueAnswer.new(
             :involvement_in_case, partner.involvement_in_case,
-            change_path: edit_steps_partner_involvement_path
+            change_path: edit_steps_partner_involvement_type_path
           ),
           Components::ValueAnswer.new(
             :conflict_of_interest, partner.conflict_of_interest,

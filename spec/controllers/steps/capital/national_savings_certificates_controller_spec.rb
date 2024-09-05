@@ -7,7 +7,7 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
   let(:crime_application) do
     CrimeApplication.create!(
       partner: Partner.new,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end

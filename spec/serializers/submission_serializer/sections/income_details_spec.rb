@@ -20,8 +20,9 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   end
 
   let(:partner) { instance_double(Partner) }
-  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
-  let(:involvement_in_case) { 'none' }
+  let(:partner_detail) { instance_double(PartnerDetail, involved_in_case:, involvement_in_case:) }
+  let(:involved_in_case) { 'no' }
+  let(:involvement_in_case) { nil }
   let(:deductions_double) { double('deductions_collection', complete: deductions) }
 
   let(:income) do

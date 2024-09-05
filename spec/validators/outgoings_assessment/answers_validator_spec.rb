@@ -9,6 +9,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
   let(:crime_application) { instance_double(CrimeApplication, partner: nil, non_means_tested?: false) }
   let(:errors) { [] }
   let(:requires_full_means_assessment?) { true }
+  let(:involved_in_case?) { nil }
   let(:involvement_in_case?) { nil }
 
   before do
@@ -21,6 +22,10 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
     allow(crime_application).to receive(:partner_detail).and_return(
       instance_double(PartnerDetail)
     )
+
+    allow(crime_application).to receive_message_chain(:partner_detail, :involved_in_case) {
+      involved_in_case?
+    }
 
     allow(crime_application).to receive_message_chain(:partner_detail, :involvement_in_case) {
       involvement_in_case?
@@ -68,7 +73,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
     context 'when all validations pass' do
       let(:errors) { [] }
 
-      let(:involvement_in_case?) { 'none' }
+      let(:involved_in_case?) { 'no' }
 
       before do
         allow(record).to receive_message_chain(:outgoings_payments, :rent) {
@@ -112,7 +117,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
 
     context 'when validations fail' do
       let(:errors) { double(:errors) }
-      let(:involvement_in_case?) { 'none' }
+      let(:involved_in_case?) { 'no' }
 
       before do
         allow(record).to receive_message_chain(:outgoings_payments, :rent) {
@@ -341,7 +346,7 @@ RSpec.describe OutgoingsAssessment::AnswersValidator, type: :model do
   end
 
   describe '#partner_income_tax_rate_complete?' do
-    let(:involvement_in_case?) { 'none' }
+    let(:involved_in_case?) { 'no' }
 
     context 'when partner_income_tax_rate_above_threshold is present' do
       before do

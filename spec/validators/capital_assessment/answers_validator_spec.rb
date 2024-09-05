@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record:, crime_application:) }
 
@@ -9,9 +10,10 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   non_means_tested?: false)
   }
   let(:income) { instance_double(Income) }
-  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
+  let(:partner_detail) { instance_double(PartnerDetail, involved_in_case:, involvement_in_case:) }
   let(:partner) { nil }
   let(:errors) { double(:errors) }
+  let(:involved_in_case) { nil }
   let(:involvement_in_case) { nil }
   let(:requires_full_means_assessment?) { true }
   let(:requires_full_capital?) { true }
@@ -103,7 +105,8 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
     end
 
     context 'when validation fails' do
-      let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+      let(:involved_in_case) { YesNoAnswer::NO.to_s }
+      let(:involvement_in_case) { nil }
 
       let(:attributes) do
         {
@@ -345,7 +348,8 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   end
 
   describe '#partner_premium_bonds_complete?' do
-    let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+    let(:involved_in_case) { YesNoAnswer::NO.to_s }
+    let(:involvement_in_case) { nil }
 
     it 'returns false when not answered' do
       allow(record).to receive(:partner_has_premium_bonds).and_return('nil')
@@ -474,7 +478,8 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
   end
 
   describe '#partner_trust_fund_complete?' do
-    let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+    let(:involved_in_case) { YesNoAnswer::NO.to_s }
+    let(:involvement_in_case) { nil }
 
     it 'returns false when not answered' do
       allow(record).to receive(:partner_will_benefit_from_trust_fund).and_return('nil')
@@ -544,3 +549,4 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

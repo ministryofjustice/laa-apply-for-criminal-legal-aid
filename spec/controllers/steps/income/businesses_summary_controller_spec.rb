@@ -6,7 +6,7 @@ RSpec.describe Steps::Income::BusinessesSummaryController, type: :controller do
       businesses: businesses,
       applicant: Applicant.new,
       partner: Partner.new,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none')
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil)
     )
   end
 

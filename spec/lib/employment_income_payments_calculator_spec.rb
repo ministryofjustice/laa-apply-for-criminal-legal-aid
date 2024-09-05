@@ -7,7 +7,7 @@ describe EmploymentIncomePaymentsCalculator do
   let(:income) { Income.new(employment_status: ['employed'], partner_employment_status: ['employed']) }
   let(:applicant) { Applicant.new }
   let(:partner) { Partner.new }
-  let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'none') }
+  let(:partner_detail) { PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil) }
 
   before do
     allow(MeansStatus).to receive(:full_means_required?).and_return(true)

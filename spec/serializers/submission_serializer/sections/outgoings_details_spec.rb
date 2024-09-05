@@ -7,9 +7,10 @@ RSpec.describe SubmissionSerializer::Sections::OutgoingsDetails do
     instance_double(CrimeApplication, outgoings: outgoings, partner_detail: partner_detail, partner: partner,
   non_means_tested?: false)
   }
-  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:) }
+  let(:partner_detail) { instance_double(PartnerDetail, involved_in_case:, involvement_in_case:) }
   let(:partner) { instance_double(Partner) }
-  let(:involvement_in_case) { 'none' }
+  let(:involved_in_case) { 'no' }
+  let(:involvement_in_case) { nil }
 
   let(:outgoings) do
     instance_double(

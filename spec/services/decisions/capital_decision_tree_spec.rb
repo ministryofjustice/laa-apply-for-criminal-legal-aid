@@ -19,7 +19,10 @@ RSpec.describe Decisions::CapitalDecisionTree do
   let(:capital) { instance_double(Capital) }
   let(:income) { instance_double(Income, has_frozen_income_or_assets:) }
   let(:has_frozen_income_or_assets) { nil }
-  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
+  let(:partner_detail) {
+    instance_double(PartnerDetail, involved_in_case:, involvement_in_case:, conflict_of_interest:)
+  }
+  let(:involved_in_case) { nil }
   let(:involvement_in_case) { nil }
   let(:conflict_of_interest) { nil }
 
@@ -473,12 +476,14 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :premium_bonds }
 
     context 'when partner is included' do
-      let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+      let(:involved_in_case) { YesNoAnswer::NO.to_s }
+      let(:involvement_in_case) { nil }
 
       it { is_expected.to have_destination(:partner_premium_bonds, :edit, id: crime_application) }
     end
 
     context 'when partner is not included' do
+      let(:involved_in_case) { 'yes' }
       let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
 
       it { is_expected.to have_destination(:has_national_savings_certificates, :edit, id: crime_application) }
@@ -514,6 +519,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     context 'when there is a partner' do
       context 'when partner is not included' do
+        let(:involved_in_case) { 'yes' }
         let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
 
         context 'when has_frozen_income_or_assets is nil' do
@@ -528,7 +534,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
       end
 
       context 'when partner is included' do
-        let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+        let(:involved_in_case) { YesNoAnswer::NO.to_s }
+        let(:involvement_in_case) { nil }
 
         it { is_expected.to have_destination(:partner_trust_fund, :edit, id: crime_application) }
       end

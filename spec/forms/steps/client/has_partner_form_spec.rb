@@ -125,6 +125,7 @@ RSpec.describe Steps::Client::HasPartnerForm do
                                                            relationship_status: nil,
                                                            has_same_address_as_client: nil,
                                                            conflict_of_interest: nil,
+                                                           involved_in_case: nil,
                                                            involvement_in_case: nil,
                                                            relationship_to_partner: nil,
                                                          }).and_return(true)

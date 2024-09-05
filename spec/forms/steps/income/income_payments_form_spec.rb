@@ -8,7 +8,7 @@ RSpec.describe Steps::Income::IncomePaymentsForm do
       case: Case.new,
       income: Income.new,
       partner: partner,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end

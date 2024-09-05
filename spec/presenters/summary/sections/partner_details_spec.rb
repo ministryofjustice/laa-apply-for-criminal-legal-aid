@@ -146,10 +146,10 @@ describe Summary::Sections::PartnerDetails do
       it 'has the correct rows' do
         expect(answers.count).to eq(10)
 
-        expect(answers[8]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[8].question).to eq(:has_same_address_as_client)
-        expect(answers[8].change_path).to match(client_partner_same_address_path)
-        expect(answers[8].value).to eq('yes')
+        expect(answers[9]).to be_an_instance_of(Summary::Components::ValueAnswer)
+        expect(answers[9].question).to eq(:has_same_address_as_client)
+        expect(answers[9].change_path).to match(client_partner_same_address_path)
+        expect(answers[9].value).to eq('yes')
       end
     end
 

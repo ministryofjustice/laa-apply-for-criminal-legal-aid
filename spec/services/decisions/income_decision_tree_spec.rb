@@ -1119,7 +1119,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:step_name) { :dependants_finished }
 
     context 'when the partner is included in means assessment' do
-      let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) { double(PartnerDetail, involved_in_case: 'no', involvement_in_case: nil) }
 
       it { is_expected.to have_destination(:partner_employment_status, :edit, id: crime_application) }
     end

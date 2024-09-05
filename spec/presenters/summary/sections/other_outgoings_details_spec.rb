@@ -75,7 +75,7 @@ describe Summary::Sections::OtherOutgoingsDetails do
         let(:partner_detail) do
           instance_double(
             PartnerDetail,
-            involvement_in_case: 'none',
+            involved_in_case: 'no', involvement_in_case: nil,
           )
         end
 

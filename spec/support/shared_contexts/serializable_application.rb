@@ -11,7 +11,8 @@ RSpec.shared_context 'serializable application' do # rubocop:disable RSpec/Multi
 
   let(:crime_application) do
     PartnerDetail.new(
-      involvement_in_case: include_partner? ? 'none' : 'victim'
+      involved_in_case: include_partner? ? 'yes' : nil,
+      involvement_in_case: include_partner? ? nil : 'victim'
     )
 
     employment_status = []
@@ -34,6 +35,11 @@ RSpec.shared_context 'serializable application' do # rubocop:disable RSpec/Multi
       date_of_birth: (age_passported? ? 17 : 19).years.ago
     )
 
+    partner_detail = PartnerDetail.new(
+      involved_in_case: include_partner? ? 'no' : 'yes',
+      involvement_in_case: include_partner? ? nil : 'victim'
+    )
+
     CrimeApplication.create(
       id: SecureRandom.uuid,
       income: income,
@@ -48,7 +54,7 @@ RSpec.shared_context 'serializable application' do # rubocop:disable RSpec/Multi
       applicant: applicant,
       partner: Partner.new,
       capital: Capital.new,
-      partner_detail: PartnerDetail.new(involvement_in_case: include_partner? ? 'none' : 'victim'),
+      partner_detail: partner_detail,
       usn: 691_231,
       created_at: Time.zone.now
     )

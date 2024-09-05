@@ -9,7 +9,7 @@ describe Summary::Sections::PartnerIncomePaymentsDetails do
       to_param: '12345',
       income: income,
       applicant: applicant,
-      partner_detail: instance_double(PartnerDetail, involvement_in_case:),
+      partner_detail: instance_double(PartnerDetail, involved_in_case:, involvement_in_case:),
       partner: partner,
       non_means_tested?: false
     )
@@ -26,7 +26,8 @@ describe Summary::Sections::PartnerIncomePaymentsDetails do
     )
   end
 
-  let(:involvement_in_case) { 'none' }
+  let(:involved_in_case) { 'no' }
+  let(:involvement_in_case) { nil }
   let(:income_payments) { [] }
   let(:partner_has_no_income_payments) { nil }
 

@@ -18,6 +18,7 @@ module SubmissionSerializer
           json.nino partner.nino
           json.arc partner.arc
 
+          json.involved_in_case partner_detail.involved_in_case
           json.involvement_in_case partner_detail.involvement_in_case
           json.conflict_of_interest partner_detail.conflict_of_interest
 

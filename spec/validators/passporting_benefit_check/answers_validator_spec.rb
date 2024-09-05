@@ -106,7 +106,7 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
     end
 
     context 'when the partner is the benefit check recipient' do
-      let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
+      let(:partner_detail) { double(PartnerDetail, involved_in_case: 'no', involvement_in_case: nil) }
       let(:benefit_type) { BenefitType::NONE.to_s }
       let(:partner) {
         double(Partner, id: '234', benefit_type: BenefitType::UNIVERSAL_CREDIT.to_s,

@@ -48,7 +48,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
           CrimeApplication.create(
             applicant: Applicant.new,
             partner: Partner.new,
-            partner_detail: PartnerDetail.new(involvement_in_case: false)
+            partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil)
           )
         end
       end

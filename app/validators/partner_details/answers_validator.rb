@@ -16,13 +16,16 @@ module PartnerDetails
       errors.empty?
     end
 
-    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
       return unless applicable?
 
       errors.add(:relationship_to_partner, :incomplete) if record.relationship_to_partner.blank?
       errors.add(:details, :blank) unless partner_details_complete?
       errors.add(:involved_in_case, :incomplete) if record.involved_in_case.blank?
-      errors.add(:involvement_in_case, :incomplete) if record.involvement_in_case.blank?
+      if record.involvement_in_case.blank? && record.involved_in_case == 'yes'
+        errors.add(:involvement_in_case,
+                   :incomplete)
+      end
       errors.add(:nino, :incomplete) unless nino?
       errors.add(:conflict_of_interest, :incomplete) unless conflict_of_interest?
 

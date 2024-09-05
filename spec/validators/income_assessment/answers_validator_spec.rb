@@ -9,7 +9,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     CrimeApplication.new(
       case: Case.new(case_type: 'summary_only'),
       partner: partner,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end

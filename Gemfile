@@ -50,7 +50,8 @@ gem 'laa-criminal-applications-datastore-api-client',
 
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas',
-    tag: 'v1.2.6'
+    ref: '36076b25d6ab8b6305f7ee3eae88872e95a0c84d'
+# tag: 'v1.2.9'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

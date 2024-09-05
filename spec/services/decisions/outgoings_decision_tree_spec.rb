@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::OutgoingsDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -18,8 +19,11 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
   let(:outgoings) { instance_double(Outgoings) }
   let(:kase) { instance_double(Case, case_type:) }
   let(:case_type) { nil }
-  let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
+  let(:partner_detail) {
+    instance_double(PartnerDetail, involved_in_case:, involvement_in_case:, conflict_of_interest:)
+  }
   let(:partner) { instance_double(Partner) }
+  let(:involved_in_case) { nil }
   let(:involvement_in_case) { nil }
   let(:conflict_of_interest) { nil }
 
@@ -143,6 +147,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       end
 
       context 'when partner is victim' do
+        let(:involved_in_case) { 'yes' }
         let(:involvement_in_case) { 'victim' }
         let(:conflict_of_interest) { nil }
 
@@ -150,6 +155,7 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
       end
 
       context 'when partner is codefendant with a conflict' do
+        let(:involved_in_case) { 'yes' }
         let(:involvement_in_case) { 'codefendant' }
         let(:conflict_of_interest) { 'yes' }
 
@@ -159,7 +165,8 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
 
     context 'and there is a relevant partner' do
       context 'has correct next step' do
-        let(:involvement_in_case) { 'none' }
+        let(:involved_in_case) { 'no' }
+        let(:involvement_in_case) { nil }
 
         it { is_expected.to have_destination(:partner_income_tax_rate, :edit, id: crime_application) }
       end
@@ -217,3 +224,4 @@ RSpec.describe Decisions::OutgoingsDecisionTree do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

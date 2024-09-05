@@ -76,7 +76,7 @@ RSpec.describe 'Businesses summary page', :authorized do
       income: Income.new,
       applicant: Applicant.new,
       partner: Partner.new,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       businesses: [business, partner_business]
     )
   end
@@ -89,13 +89,14 @@ RSpec.describe 'Businesses summary page', :authorized do
 
   describe 'list of added businesses in summary page' do
     before do
-      PartnerDetail.update_all(involvement_in_case:) # rubocop:disable Rails/SkipsModelValidations
+      PartnerDetail.update_all(involved_in_case:, involvement_in_case:) # rubocop:disable Rails/SkipsModelValidations
 
       get edit_steps_income_businesses_summary_path(crime_application, subject: subject_type)
     end
 
     context 'when subject is client' do
-      let(:involvement_in_case) { 'none' }
+      let(:involved_in_case) { 'no' }
+      let(:involvement_in_case) { nil }
       let(:subject_type) { SubjectType::APPLICANT }
 
       it 'lists the businesses with their details and action links' do
@@ -111,7 +112,8 @@ RSpec.describe 'Businesses summary page', :authorized do
 
     context 'when subject is partner' do
       let(:subject_type) { SubjectType::PARTNER }
-      let(:involvement_in_case) { 'none' }
+      let(:involved_in_case) { 'no' }
+      let(:involvement_in_case) { nil }
 
       it 'lists the partners businesses' do
         expect(response).to have_http_status(:success)
@@ -120,7 +122,8 @@ RSpec.describe 'Businesses summary page', :authorized do
       end
 
       context 'when partner has a contrary interest' do
-        let(:involvement_in_case) { 'victim' }
+        let(:involved_in_case) { YesNoAnswer::YES }
+        let(:involvement_in_case) { PartnerInvolvementType::VICTIM }
 
         it 'redirects page not found' do
           expect(response).to redirect_to(/not_found/)

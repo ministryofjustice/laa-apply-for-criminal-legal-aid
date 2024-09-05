@@ -13,7 +13,7 @@ RSpec.shared_examples 'a payment fieldset form' do |fieldset_class|
   let(:crime_application) do
     CrimeApplication.new(
       partner: partner,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end
@@ -121,7 +121,7 @@ RSpec.shared_examples 'a payment form' do |payment_class, has_none_attr|
       case: case_record,
       income: income,
       partner: partner,
-      partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
+      partner_detail: PartnerDetail.new(involved_in_case: 'no', involvement_in_case: nil),
       applicant: Applicant.new
     )
   end

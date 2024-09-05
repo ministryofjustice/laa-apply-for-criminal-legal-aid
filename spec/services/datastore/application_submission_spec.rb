@@ -55,7 +55,7 @@ RSpec.describe Datastore::ApplicationSubmission do
     partner_details = PartnerDetail.create( # rubocop:disable Lint/UselessAssignment
       crime_application: app,
       relationship_to_partner: 'married_or_partnership',
-      involvement_in_case: 'none',
+      involved_in_case: 'no', involvement_in_case: nil,
       has_same_address_as_client: 'no',
       conflict_of_interest: 'no',
       has_partner: 'yes',

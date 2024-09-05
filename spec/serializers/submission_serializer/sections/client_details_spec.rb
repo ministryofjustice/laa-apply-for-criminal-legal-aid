@@ -148,6 +148,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          involved_in_case: 'no',
           involvement_in_case: nil,
           has_partner: has_partner,
         )
@@ -193,6 +194,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       let(:partner_detail) do
         instance_double(
           PartnerDetail,
+          involved_in_case: 'yes',
           involvement_in_case: 'victim',
           conflict_of_interest: nil,
           has_same_address_as_client: nil,
@@ -213,6 +215,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           nino: nil,
           has_arc: nil,
           arc: nil,
+          involved_in_case: 'yes',
           involvement_in_case: 'victim',
           conflict_of_interest: nil,
           has_same_address_as_client: nil,
@@ -275,6 +278,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       let(:partner_detail) do
         instance_double(
           PartnerDetail,
+          involved_in_case: 'yes',
           involvement_in_case: 'victim',
           conflict_of_interest: nil,
           has_same_address_as_client: nil,
@@ -295,6 +299,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           nino: nil,
           has_arc: nil,
           arc: nil,
+          involved_in_case: 'yes',
           involvement_in_case: 'victim',
           conflict_of_interest: nil,
           is_included_in_means_assessment: false

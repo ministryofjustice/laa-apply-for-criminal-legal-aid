@@ -10,6 +10,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       relationship_status: nil,
       separation_date: nil,
       relationship_to_partner: 'married_or_partnership',
+      involved_in_case: 'no',
       involvement_in_case: 'none',
       conflict_of_interest: 'no',
       has_same_address_as_client: 'no',
@@ -98,10 +99,26 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
         it { is_expected.to be false }
       end
 
+      context 'without involved in case' do
+        before { partner_detail.involved_in_case = nil }
+
+        it { is_expected.to be false }
+      end
+
       context 'without involvement in case' do
         before { partner_detail.involvement_in_case = nil }
 
-        it { is_expected.to be false }
+        context 'when partner involved in case = yes' do
+          before { partner_detail.involved_in_case = 'yes' }
+
+          it { is_expected.to be false }
+        end
+
+        context 'when partner involved in case = no' do
+          before { partner_detail.involved_in_case = 'no' }
+
+          it { is_expected.to be true }
+        end
       end
 
       context 'without nino' do
@@ -144,12 +161,12 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     let(:has_partner) { 'yes' }
 
     context 'when not complete' do
-      before { partner_detail.involvement_in_case = nil }
+      before { partner_detail.involved_in_case = nil }
 
       it 'adds errors' do
         subject.validate
 
-        expect(subject.errors.of_kind?('involvement_in_case', :incomplete)).to be(true)
+        expect(subject.errors.of_kind?('involved_in_case', :incomplete)).to be(true)
         expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
       end
     end
