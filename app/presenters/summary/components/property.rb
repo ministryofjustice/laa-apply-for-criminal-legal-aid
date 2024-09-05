@@ -136,7 +136,7 @@ module Summary
         if property.house_type == ::Property::OTHER_HOUSE_TYPE
           property.other_house_type
         else
-          I18n.t(property.house_type, scope: [:summary, :sections, :property, :house_type])
+          I18n.t(property.house_type.presence || :absence_answer, scope: [:summary, :sections, :property, :house_type])
         end
       end
 
