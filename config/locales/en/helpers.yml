@@ -419,10 +419,10 @@ en:
           date_from: For example, 27 3 2007
           date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
-        hearing_court_name: For example, Cardiff Crown Court
+        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court
         hearing_date: For example, 27 3 2024
       steps_case_first_court_hearing_form:
-        first_court_hearing_name: For example, Bristol Magistrates Court
+        first_court_hearing_name: Start typing to add a court. For example, Bristol Magistrates Court
       steps_case_ioj_form:
         loss_of_liberty_justification: *ioj_justification_hint
         suspended_sentence_justification: *ioj_justification_hint
