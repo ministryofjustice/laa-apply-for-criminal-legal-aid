@@ -25,7 +25,7 @@
       <% end %>
       <%= f.govuk_collection_radio_buttons :has_other_owners, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
 
-      <%= f.continue_button %>
+      <%= f.continue_button(secondary: false)  %>
     <% end %>
   </div>
 </div>

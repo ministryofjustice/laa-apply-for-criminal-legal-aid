@@ -56,8 +56,7 @@ module Steps
       def home_address
         return true unless is_home_address&.yes?
 
-        errors.add(:is_home_address, :invalid) if is_home_address&.yes? &&
-                                                  crime_application.properties.home_address.count >= 1
+        errors.add(:is_home_address, :invalid) if crime_application.properties.home_address.count >= 1
       end
     end
   end
