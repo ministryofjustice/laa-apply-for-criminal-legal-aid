@@ -24,7 +24,7 @@ class HealthcheckController < BareApplicationController
   end
 
   def database_connected?
-    ActiveRecord::Base.connection.active?
+    ActiveRecord::Base.connection.execute('SELECT 1').present?
   rescue StandardError
     false
   end
