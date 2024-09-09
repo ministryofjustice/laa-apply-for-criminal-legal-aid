@@ -15,7 +15,7 @@ RSpec.describe 'Healthcheck endpoint' do
     end
 
     it 'can report a failure' do
-      allow(ActiveRecord::Base.connection).to receive(:active?)
+      allow(ActiveRecord::Base.connection).to receive(:execute)
         .and_raise(StandardError)
 
       get '/health'
