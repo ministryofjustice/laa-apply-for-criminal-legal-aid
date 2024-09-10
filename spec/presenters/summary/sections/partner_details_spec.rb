@@ -33,7 +33,9 @@ describe Summary::Sections::PartnerDetails do
   end
 
   let(:nino) { '123456' }
+  let(:has_nino) { 'yes' }
   let(:arc) { nil }
+  let(:has_arc) { nil }
   let(:has_same_address_as_client) { 'no' }
   let(:home_address) do
     HomeAddress.new(
@@ -43,6 +45,13 @@ describe Summary::Sections::PartnerDetails do
       postcode: 'Postcode',
       city: 'City',
       country: 'Country',
+    )
+  end
+
+  before do
+    allow(partner).to receive_messages(
+      has_nino:,
+      has_arc:
     )
   end
 
@@ -150,6 +159,7 @@ describe Summary::Sections::PartnerDetails do
     context 'when an arc is provided' do
       let(:nino) { nil }
       let(:arc) { 'ABC12/345678/A' }
+      let(:has_arc) { 'yes' }
 
       it 'has the correct rows' do
         expect(answers.count).to eq(11)

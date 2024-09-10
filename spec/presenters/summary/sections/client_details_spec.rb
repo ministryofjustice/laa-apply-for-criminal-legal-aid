@@ -26,7 +26,9 @@ describe Summary::Sections::ClientDetails do
   end
 
   let(:nino) { '123456' }
+  let(:has_nino) { 'yes' }
   let(:arc) { nil }
+  let(:has_arc) { nil }
   let(:application_type) { ApplicationType::INITIAL }
   let(:pse?) { false }
   let(:has_partner) { 'no' }
@@ -37,6 +39,8 @@ describe Summary::Sections::ClientDetails do
       has_partner: has_partner,
       relationship_status: 'separated',
       separation_date: Date.new(2001, 10, 12),
+      has_nino: has_nino,
+      has_arc: has_arc
     )
 
     allow(crime_application).to receive_messages(
@@ -65,6 +69,7 @@ describe Summary::Sections::ClientDetails do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#answers' do
     let(:answers) { subject.answers }
 
@@ -135,6 +140,7 @@ describe Summary::Sections::ClientDetails do
 
     context 'when an arc is provided' do
       let(:nino) { nil }
+      let(:has_arc) { 'yes' }
       let(:arc) { 'ABC12/345678/A' }
 
       it 'has the correct rows' do
@@ -161,4 +167,5 @@ describe Summary::Sections::ClientDetails do
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
