@@ -420,6 +420,10 @@ en:
           employed: Employed
           self_employed: Self-employed
           employed_and_self_employed: Employed and Self-employed
+      client_in_armed_forces:
+        question: Client in armed forces?
+        answers:
+          <<: *YESNO
       ended_employment_within_three_months:
         question: Employment ended in last 3 months?
         answers:
@@ -467,6 +471,10 @@ en:
       partner_employment_status:
         question: Partner’s employment status?
         answers: *EMPLOYMENT_STATUS_ANSWERS
+      partner_in_armed_forces:
+        question: Partner in armed forces?
+        answers:
+          <<: *YESNO
       # END partner employment details section
 
       # BEGIN income payments details section

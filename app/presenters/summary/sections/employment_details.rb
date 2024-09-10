@@ -13,6 +13,10 @@ module Summary
             change_path: edit_steps_income_employment_status_path
           ),
           Components::ValueAnswer.new(
+            :client_in_armed_forces, income.client_in_armed_forces,
+            change_path: edit_steps_income_armed_forces_path(subject: 'client')
+          ),
+          Components::ValueAnswer.new(
             :ended_employment_within_three_months, income.ended_employment_within_three_months,
             change_path: edit_steps_income_employment_status_path
           ),
