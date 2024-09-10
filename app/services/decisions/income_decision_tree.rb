@@ -8,6 +8,8 @@ module Decisions
       case step_name
       when :employment_status
         after_employment_status
+      when :armed_forces
+        after_armed_forces
       when :client_employer_details
         after_client_employer_details
       when :partner_employer_details
@@ -153,6 +155,12 @@ module Decisions
       end
     end
 
+    def after_armed_forces
+      return partner_employment_start if form_object.form_subject == SubjectType::PARTNER
+
+      edit(:income_before_tax)
+    end
+
     def after_partner_income_benefits
       if crime_application.income&.all_income_over_zero?
         edit(:answers)
@@ -165,7 +173,7 @@ module Decisions
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          edit(:income_before_tax)
+          start_employed_for('client')
         else
           show(:employed_exit)
         end
@@ -188,7 +196,7 @@ module Decisions
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
         if FeatureFlags.employment_journey.enabled?
-          partner_employment_start
+          start_employed_for('partner')
         else
           show(:employed_exit)
         end
@@ -204,6 +212,17 @@ module Decisions
         else
           show(:self_employed_exit)
         end
+      end
+    end
+
+    def start_employed_for(subject)
+      return edit(:armed_forces, subject:) if require_armed_forces?(subject)
+
+      case subject
+      when 'client'
+        edit(:income_before_tax)
+      when 'partner'
+        partner_employment_start
       end
     end
 
@@ -374,6 +393,14 @@ module Decisions
 
     def after_partner_deductions
       edit('/steps/income/partner/employments_summary')
+    end
+
+    def require_armed_forces?(subject)
+      income = crime_application.income
+
+      return false if income.nil?
+
+      income.send(:"require_#{subject}_in_armed_forces?")
     end
   end
 end

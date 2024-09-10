@@ -523,6 +523,10 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date is too far in the past
               future_not_allowed: Date they lost their job must be today or in the past
+        steps/income/armed_forces_form:
+          attributes:
+            in_armed_forces:
+              inclusion: Select yes if the %{subject} is in the armed forces
         steps/income/income_before_tax_form:
           attributes:
             income_above_threshold:

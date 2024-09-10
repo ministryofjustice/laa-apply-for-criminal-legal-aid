@@ -635,4 +635,40 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
       end
     end
   end
+
+  describe '#client_in_armed_forces' do
+    subject(:client_in_armed_forces) { income.client_in_armed_forces }
+
+    before { income.client_in_armed_forces = 'yes' }
+
+    context 'when client_in_armed_forces is required' do
+      before { allow(income).to receive(:require_client_in_armed_forces?).and_return(true) }
+
+      it { is_expected.to eq('yes') }
+    end
+
+    context 'when client_in_armed_forces is not required' do
+      before { allow(income).to receive(:require_client_in_armed_forces?).and_return(false) }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#partner_in_armed_forces' do
+    subject(:partner_in_armed_forces) { income.partner_in_armed_forces }
+
+    before { income.partner_in_armed_forces = 'no' }
+
+    context 'when partner_in_armed_forces is required' do
+      before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(true) }
+
+      it { is_expected.to eq('no') }
+    end
+
+    context 'when partner_in_armed_forces is not required' do
+      before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(false) }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end

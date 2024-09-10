@@ -100,8 +100,20 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        it 'redirects to the `income_before_tax` page' do
-          expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
+        context 'and the armed forces question is required' do
+          before { allow(income).to receive(:require_client_in_armed_forces?).and_return(true) }
+
+          it 'redirects to the `armed_forces` page' do
+            expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'client')
+          end
+        end
+
+        context 'and the armed forces question is not required' do
+          before { allow(income).to receive(:require_client_in_armed_forces?).and_return(false) }
+
+          it 'redirects to the `income_before_tax` page' do
+            expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
+          end
         end
       end
 
@@ -260,46 +272,59 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'feature flag `employment_journey` is enabled' do
         let(:feature_flag_employment_journey_enabled) { true }
 
-        context 'when does not requires_full_means_assessment?' do
-          before do
-            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
-          end
+        context 'and the armed forces question is required' do
+          before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(true) }
 
-          it 'redirects to the `partner/employment_income` page' do
-            expect(subject).to have_destination('/steps/income/partner/employment_income', :edit, id: crime_application)
+          it 'redirects to the `armed_forces` page' do
+            expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'partner')
           end
         end
 
-        context 'when requires_full_means_assessment?' do
-          before do
-            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
-          end
+        context 'and the armed forces question is not required' do
+          before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(false) }
 
-          context 'with partner employments present' do
-            let(:partner_employments_empty?) { false }
+          context 'when does not requires_full_means_assessment?' do
+            before do
+              allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
+            end
 
-            it 'redirects to the `partner/employments_summary` page' do
-              expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+            it 'redirects to the `partner/employment_income` page' do
+              expect(subject).to have_destination('/steps/income/partner/employment_income', :edit,
                                                   id: crime_application)
             end
           end
 
-          context 'with incomplete partner employments' do
-            let(:partner_employments_empty?) { false }
-            let(:partner_incomplete_employments) { [employment_double] }
-
-            it 'redirects to the `partner/employer_details` page' do
-              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
-                                                  id: crime_application)
+          context 'when requires_full_means_assessment?' do
+            before do
+              allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
             end
-          end
 
-          context 'with partner employments not present' do
-            let(:partner_employments_empty?) { true }
+            context 'with partner employments present' do
+              let(:partner_employments_empty?) { false }
 
-            it 'redirects to the `partner/employer_details` page' do
-              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
-                                                  id: crime_application)
+              it 'redirects to the `partner/employments_summary` page' do
+                expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+                                                    id: crime_application)
+              end
+            end
+
+            context 'with incomplete partner employments' do
+              let(:partner_employments_empty?) { false }
+              let(:partner_incomplete_employments) { [employment_double] }
+
+              it 'redirects to the `partner/employer_details` page' do
+                expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                    id: crime_application)
+              end
+            end
+
+            context 'with partner employments not present' do
+              let(:partner_employments_empty?) { true }
+
+              it 'redirects to the `partner/employer_details` page' do
+                expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                    id: crime_application)
+              end
             end
           end
         end
@@ -425,6 +450,76 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
       it 'redirects to the `income_payments_partner` page' do
         expect(subject).to have_destination(:income_payments_partner, :edit, id: crime_application)
+      end
+    end
+  end
+
+  context 'when the step is `armed_forces`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :armed_forces }
+
+    context 'and the form subject is client' do
+      before do
+        allow(
+          form_object
+        ).to receive(:form_subject).and_return(SubjectType::APPLICANT)
+      end
+
+      it 'redirects to the `income_before_tax` page' do
+        expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
+      end
+    end
+
+    context 'and the form subject is partner' do
+      before do
+        allow(
+          form_object
+        ).to receive(:form_subject).and_return(SubjectType::PARTNER)
+      end
+
+      context 'when does not requires_full_means_assessment?' do
+        before do
+          allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
+        end
+
+        it 'redirects to the `partner/employment_income` page' do
+          expect(subject).to have_destination('/steps/income/partner/employment_income', :edit,
+                                              id: crime_application)
+        end
+      end
+
+      context 'when requires_full_means_assessment?' do
+        before do
+          allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
+        end
+
+        context 'with partner employments present' do
+          let(:partner_employments_empty?) { false }
+
+          it 'redirects to the `partner/employments_summary` page' do
+            expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+                                                id: crime_application)
+          end
+        end
+
+        context 'with incomplete partner employments' do
+          let(:partner_employments_empty?) { false }
+          let(:partner_incomplete_employments) { [employment_double] }
+
+          it 'redirects to the `partner/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                id: crime_application)
+          end
+        end
+
+        context 'with partner employments not present' do
+          let(:partner_employments_empty?) { true }
+
+          it 'redirects to the `partner/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                id: crime_application)
+          end
+        end
       end
     end
   end
