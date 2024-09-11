@@ -25,7 +25,9 @@
 
 <body class="govuk-template__body app-body <%= ['app-body', HostEnv.env_name].join('--') %>">
 <%= javascript_tag nonce: true do %>
-  document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+  if (!document.body.className.includes('no-js')) {
+    document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+  }
 <% end %>
 
 <%= yield(:cookie_banner) unless controller_name == 'cookies' %>
