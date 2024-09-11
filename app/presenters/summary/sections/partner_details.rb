@@ -39,12 +39,13 @@ module Summary
           )
         end
 
-        if partner.has_nino == YesNoAnswer::YES.to_s
+        if partner.has_arc == YesNoAnswer::YES.to_s
           answers << Components::FreeTextAnswer.new(
             :arc, partner.arc,
             change_path: edit_steps_nino_path(subject: 'partner')
           )
         end
+
         answers << Components::ValueAnswer.new(
           :involvement_in_case, partner.involvement_in_case,
           change_path: edit_steps_partner_involvement_path
