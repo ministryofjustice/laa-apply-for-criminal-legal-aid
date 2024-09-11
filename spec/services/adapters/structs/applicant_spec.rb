@@ -35,33 +35,33 @@ RSpec.describe Adapters::Structs::Applicant do
     end
   end
 
-  describe '#has_nino' do
-    context 'when nino present' do
-      it 'returns yes if nino is present' do
-        expect(subject.has_nino).to eq('yes')
-      end
-    end
-
-    context 'when arc is present' do
-      before do
-        allow(subject).to receive_messages(nino: nil, arc: '123')
-      end
-
-      it 'returns nil if arc is present' do
-        expect(subject.has_nino).to be_nil
-      end
-    end
-
-    context 'when neither nino or arc is present' do
-      before do
-        allow(subject).to receive_messages(nino: nil, arc: nil)
-      end
-
-      it 'returns no' do
-        expect(subject.has_nino).to eq('no')
-      end
-    end
-  end
+  # describe '#has_nino' do
+  #   context 'when nino present' do
+  #     it 'returns yes if nino is present' do
+  #       expect(subject.has_nino).to eq('yes')
+  #     end
+  #   end
+  #
+  #   context 'when arc is present' do
+  #     before do
+  #       allow(subject).to receive_messages(nino: nil, arc: '123')
+  #     end
+  #
+  #     it 'returns nil if arc is present' do
+  #       expect(subject.has_nino).to be_nil
+  #     end
+  #   end
+  #
+  #   context 'when neither nino or arc is present' do
+  #     before do
+  #       allow(subject).to receive_messages(nino: nil, arc: nil)
+  #     end
+  #
+  #     it 'returns no' do
+  #       expect(subject.has_nino).to eq('no')
+  #     end
+  #   end
+  # end
 
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do

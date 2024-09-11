@@ -17,6 +17,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
       before do
         applicant.benefit_type = 'jsa'
         applicant.benefit_check_result = true
+        applicant.has_nino = 'yes'
         applicant.nino = 'QQ123456A'
       end
 
@@ -66,6 +67,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
         applicant.benefit_type = 'none'
         partner.benefit_type = 'jsa'
         partner.benefit_check_result = true
+        partner.has_nino = 'yes'
         partner.nino = 'QQ123456A'
       end
 
