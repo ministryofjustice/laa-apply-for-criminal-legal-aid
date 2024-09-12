@@ -51,7 +51,7 @@ module Summary
           ),
           Components::FreeTextAnswer.new(
             :home_address, partner_home_address
-          )
+          ),
         ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

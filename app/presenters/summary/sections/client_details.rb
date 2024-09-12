@@ -40,7 +40,6 @@ module Summary
                          :arc, applicant.arc,
                          change_path: edit_steps_nino_path(subject: 'client'),
                        ))
-
         end
 
         answers.push(
