@@ -15,7 +15,8 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       partner_self_assessment_tax_bill_amount:,
       partner_self_assessment_tax_bill_frequency:,
       partner_other_work_benefit_received:,
-      partner_employments:
+      partner_employments:,
+      partner_in_armed_forces:
     )
   end
 
@@ -30,6 +31,7 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
   let(:partner_self_assessment_tax_bill_amount) { nil }
   let(:partner_self_assessment_tax_bill_frequency) { nil }
   let(:partner_other_work_benefit_received) { nil }
+  let(:partner_in_armed_forces) { nil }
 
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
@@ -353,6 +355,44 @@ RSpec.describe PartnerEmploymentDetails::AnswersValidator, type: :model do
       it 'adds errors to :employment_status when incomplete' do
         expect(errors).to receive(:add).with(:partner_employment_status, :incomplete)
         expect(errors).to receive(:add).with(:base, :incomplete_records)
+
+        validate
+      end
+    end
+  end
+
+  describe '#validate_armed_forces' do
+    subject(:validate) { validator.validate_armed_forces }
+
+    context 'when partner_in_armed_forces is required' do
+      before { allow(record).to receive(:require_partner_in_armed_forces?).and_return(true) }
+
+      context 'and partner_in_armed_forces is nil' do
+        let(:partner_in_armed_forces) { nil }
+
+        it 'adds errors to :partner_in_armed_forces' do
+          expect(errors).to receive(:add).with(:partner_in_armed_forces, :incomplete)
+
+          validate
+        end
+      end
+
+      context 'and partner_in_armed_forces is not nil' do
+        let(:partner_in_armed_forces) { 'yes' }
+
+        it 'does not add errors' do
+          expect(errors).not_to receive(:add)
+
+          validate
+        end
+      end
+    end
+
+    context 'when partner_in_armed_forces is not required' do
+      before { allow(record).to receive(:require_partner_in_armed_forces?).and_return(false) }
+
+      it 'does not add errors' do
+        expect(errors).not_to receive(:add)
 
         validate
       end

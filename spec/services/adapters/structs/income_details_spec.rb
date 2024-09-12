@@ -20,6 +20,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           'ended_employment_within_three_months' => 'yes',
           'lost_job_in_custody' => 'yes',
           'date_job_lost' => Date.new(2023, 9, 1),
+          'client_in_armed_forces' => 'no',
+          'partner_in_armed_forces' => 'no',
           'income_above_threshold' => 'no',
           'has_frozen_income_or_assets' => 'no',
           'client_owns_property' => 'no',
@@ -48,6 +50,8 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           ended_employment_within_three_months
           lost_job_in_custody
           date_job_lost
+          client_in_armed_forces
+          partner_in_armed_forces
           income_above_threshold
           has_frozen_income_or_assets
           client_owns_property

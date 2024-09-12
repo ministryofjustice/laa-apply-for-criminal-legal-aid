@@ -30,6 +30,7 @@ module PartnerEmploymentDetails
     def validate_partner_employment
       return unless income.partner_employed?
 
+      validate_armed_forces
       validate_employment_details
       validate_employment_income
     end
@@ -83,6 +84,12 @@ module PartnerEmploymentDetails
 
     def partner_businesses_incomplete?
       record.partner_businesses.blank? || !record.partner_businesses.all?(&:complete?)
+    end
+
+    def validate_armed_forces
+      return unless record.require_partner_in_armed_forces?
+
+      errors.add(:partner_in_armed_forces, :incomplete) if record.partner_in_armed_forces.blank?
     end
 
     alias income record

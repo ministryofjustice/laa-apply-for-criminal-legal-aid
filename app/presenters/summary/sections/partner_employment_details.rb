@@ -12,7 +12,11 @@ module Summary
           Components::ValueAnswer.new(
             :partner_employment_status, IncomePresenter.present(income).partner_employment_status_text,
             change_path: edit_steps_income_partner_employment_status_path
-          )
+          ),
+          Components::ValueAnswer.new(
+            :partner_in_armed_forces, income.partner_in_armed_forces,
+            change_path: edit_steps_income_armed_forces_path(subject: 'partner')
+          ),
         ].flatten.select(&:show?)
       end
     end

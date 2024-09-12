@@ -55,6 +55,14 @@ module EmployedIncome
     end
   end
 
+  def require_client_in_armed_forces?
+    client_employed_only?
+  end
+
+  def require_partner_in_armed_forces?
+    partner_employed_only? && client_employed_only?
+  end
+
   def client_employed?
     employment_status.include? EmploymentStatus::EMPLOYED.to_s
   end
@@ -66,5 +74,15 @@ module EmployedIncome
   # inverse of employment_income_payment_type
   def obsolete_employed_income_payment_types
     IncomePaymentType::EMPLOYED_INCOME_TYPES.map(&:to_s) - employed_income_payment_types
+  end
+
+  private
+
+  def client_employed_only?
+    employment_status == [EmploymentStatus::EMPLOYED.to_s]
+  end
+
+  def partner_employed_only?
+    partner_employment_status == [EmploymentStatus::EMPLOYED.to_s]
   end
 end

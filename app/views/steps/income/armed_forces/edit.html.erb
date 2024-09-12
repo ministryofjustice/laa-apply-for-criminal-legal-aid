@@ -1,0 +1,16 @@
+<% subject = @form_object.form_subject.to_param %>
+<% title legend_t(:"#{subject}_in_armed_forces") %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <%= govuk_error_summary(@form_object) %>
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :in_armed_forces, @form_object.choices,
+                                           :value, inline: false,
+                                           legend: { text: legend_t(:"#{subject}_in_armed_forces"), tag: 'h1', size: 'xl' } %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

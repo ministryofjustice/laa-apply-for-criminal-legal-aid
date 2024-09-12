@@ -4,6 +4,8 @@ module SubmissionSerializer
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
       def to_builder
         Jbuilder.new do |json|
+          json.client_in_armed_forces income.client_in_armed_forces
+          json.partner_in_armed_forces income.partner_in_armed_forces
           json.income_above_threshold income.income_above_threshold
           json.employment_type income.employment_status
           json.employments Definitions::Employment.generate(income.employments)

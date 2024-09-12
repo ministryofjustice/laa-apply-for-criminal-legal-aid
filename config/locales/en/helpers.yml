@@ -136,6 +136,9 @@ en:
         income_above_threshold:
           one: Is your client's annual income currently more than £12,475 a year before tax?
           other: Is your client and their partner's joint annual income more than £12,475 a year before tax?
+      steps_income_armed_forces_form:
+        client_in_armed_forces: Is your client in the armed forces?
+        partner_in_armed_forces: Is the partner in the armed forces?
       steps_income_client_owns_property_form:
         client_owns_property: Does %{subject} own their home, or any other land or property?
         client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
@@ -807,6 +810,8 @@ en:
         lost_job_in_custody_options: *YESNO
       steps_income_income_before_tax_form:
         income_above_threshold_options: *YESNO
+      steps_income_armed_forces_form:
+        in_armed_forces_options: *YESNO
       steps_income_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
       steps_income_client_owns_property_form:
