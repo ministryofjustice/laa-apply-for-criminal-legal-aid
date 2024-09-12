@@ -162,17 +162,12 @@ describe Summary::Sections::PartnerDetails do
       let(:has_arc) { 'yes' }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(11)
+        expect(answers.count).to eq(10)
 
         expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answers[5].question).to eq(:nino)
+        expect(answers[5].question).to eq(:arc)
         expect(answers[5].change_path).to match('applications/12345/steps/partner/nino')
-        expect(answers[5].value).to be_nil
-
-        expect(answers[6]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answers[6].question).to eq(:arc)
-        expect(answers[6].change_path).to match('applications/12345/steps/partner/nino')
-        expect(answers[6].value).to eq('ABC12/345678/A')
+        expect(answers[5].value).to eq('ABC12/345678/A')
       end
     end
   end
