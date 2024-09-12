@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
   describe 'Submitting a employed means tested application with a partner' do
-    include_context 'with partner'
+    include_context 'means tested with partner'
 
     before do
       # steps/income/what_is_clients_employment_status
@@ -10,7 +10,8 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/income/current_income_before_tax
-      choose_answer("Is your client and their partner's joint annual income more than £12,475 a year before tax", 'Yes')
+      choose_answer("Is your client and their partner's joint annual income more than £12,475 a year before tax?",
+                    'Yes')
       save_and_continue
 
       # steps/income/client/employer_details/:job_id

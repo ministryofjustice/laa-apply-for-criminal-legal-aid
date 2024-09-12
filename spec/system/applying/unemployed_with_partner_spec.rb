@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
   describe 'Submitting an unemployed means tested application with a partner' do
-    include_context 'with partner'
+    include_context 'means tested with partner'
 
     before do
       # steps/income/what_is_clients_employment_status

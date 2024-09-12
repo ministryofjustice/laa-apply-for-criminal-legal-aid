@@ -1,4 +1,4 @@
-RSpec.shared_context 'with partner' do
+RSpec.shared_context 'means tested with partner' do
   let(:case_type) { 'Indictable' }
 
   before do
