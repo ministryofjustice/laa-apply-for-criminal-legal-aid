@@ -10,6 +10,7 @@ RSpec.describe 'DWP passporting sub journey', :authorized do
         crime_application: app,
         first_name: 'Jane', last_name: 'Doe',
         date_of_birth: Date.new(1990, 2, 1),
+        has_nino: 'yes',
         nino: 'AB123456A'
       )
     end
