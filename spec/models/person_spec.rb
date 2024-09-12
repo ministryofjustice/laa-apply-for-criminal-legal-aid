@@ -142,4 +142,64 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+  describe '#nino' do
+    before do
+      attributes.merge!(has_nino: has_nino, nino: 'AB123456A')
+    end
+
+    context 'when has_nino is `yes`' do
+      let(:has_nino) { 'yes' }
+
+      it 'returns nino' do
+        expect(subject.nino).to eq('AB123456A')
+      end
+    end
+
+    context 'when has_nino is `no`' do
+      let(:has_nino) { 'no' }
+
+      it 'returns nil' do
+        expect(subject.nino).to be_nil
+      end
+    end
+
+    context 'when has_nino is `nil`' do
+      let(:has_nino) { nil }
+
+      it 'returns nil' do
+        expect(subject.nino).to be_nil
+      end
+    end
+  end
+
+  describe '#arc' do
+    before do
+      attributes.merge!(has_arc: has_arc, arc: 'ARC123')
+    end
+
+    context 'when has_arc is `yes`' do
+      let(:has_arc) { 'yes' }
+
+      it 'returns arc' do
+        expect(subject.arc).to eq('ARC123')
+      end
+    end
+
+    context 'when has_arc is `no`' do
+      let(:has_arc) { 'no' }
+
+      it 'returns nil' do
+        expect(subject.arc).to be_nil
+      end
+    end
+
+    context 'when has_arc is `nil`' do
+      let(:has_arc) { nil }
+
+      it 'returns nil' do
+        expect(subject.arc).to be_nil
+      end
+    end
+  end
 end

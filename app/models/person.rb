@@ -27,5 +27,17 @@ class Person < ApplicationRecord
     datum.in_time_zone('London').to_date - 18.years >= date_of_birth
   end
 
+  def nino
+    return unless has_nino == YesNoAnswer::YES.to_s
+
+    super
+  end
+
+  def arc
+    return unless has_arc == YesNoAnswer::YES.to_s
+
+    super
+  end
+
   delegate :capital, :income, to: :crime_application
 end

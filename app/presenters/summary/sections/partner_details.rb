@@ -31,8 +31,7 @@ module Summary
           ),
           Components::FreeTextAnswer.new(
             :nino, partner.nino,
-            change_path: edit_steps_nino_path(subject: 'partner'),
-            show: true,
+            change_path: edit_steps_nino_path(subject: 'partner')
           ),
           Components::FreeTextAnswer.new(
             :arc, partner.arc,
@@ -51,7 +50,7 @@ module Summary
             change_path: edit_steps_partner_same_address_path
           ),
           Components::FreeTextAnswer.new(
-            :home_address, partner_home_address,
+            :home_address, partner_home_address
           ),
         ].select(&:show?)
       end

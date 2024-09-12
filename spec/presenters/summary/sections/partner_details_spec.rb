@@ -33,7 +33,9 @@ describe Summary::Sections::PartnerDetails do
   end
 
   let(:nino) { '123456' }
+  let(:has_nino) { 'yes' }
   let(:arc) { nil }
+  let(:has_arc) { nil }
   let(:has_same_address_as_client) { 'no' }
   let(:home_address) do
     HomeAddress.new(
@@ -43,6 +45,13 @@ describe Summary::Sections::PartnerDetails do
       postcode: 'Postcode',
       city: 'City',
       country: 'Country',
+    )
+  end
+
+  before do
+    allow(partner).to receive_messages(
+      has_nino:,
+      has_arc:
     )
   end
 
@@ -150,19 +159,15 @@ describe Summary::Sections::PartnerDetails do
     context 'when an arc is provided' do
       let(:nino) { nil }
       let(:arc) { 'ABC12/345678/A' }
+      let(:has_arc) { 'yes' }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(11)
+        expect(answers.count).to eq(10)
 
         expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answers[5].question).to eq(:nino)
+        expect(answers[5].question).to eq(:arc)
         expect(answers[5].change_path).to match('applications/12345/steps/partner/nino')
-        expect(answers[5].value).to be_nil
-
-        expect(answers[6]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-        expect(answers[6].question).to eq(:arc)
-        expect(answers[6].change_path).to match('applications/12345/steps/partner/nino')
-        expect(answers[6].value).to eq('ABC12/345678/A')
+        expect(answers[5].value).to eq('ABC12/345678/A')
       end
     end
   end
