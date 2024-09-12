@@ -7,7 +7,7 @@ module Summary
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def answers
-        answers = [
+        [
           Components::ValueAnswer.new(
             :relationship_to_partner, applicant.relationship_to_partner,
             change_path: edit_steps_partner_relationship_path
@@ -28,40 +28,31 @@ module Summary
           Components::DateAnswer.new(
             :date_of_birth, partner.date_of_birth,
             change_path: edit_steps_partner_details_path
-          )
-        ]
-
-        if partner.has_nino == YesNoAnswer::YES.to_s
-          answers << Components::FreeTextAnswer.new(
+          ),
+          Components::FreeTextAnswer.new(
             :nino, partner.nino,
-            change_path: edit_steps_nino_path(subject: 'partner'),
-            show: true,
-          )
-        end
-
-        if partner.has_arc == YesNoAnswer::YES.to_s
-          answers << Components::FreeTextAnswer.new(
+            change_path: edit_steps_nino_path(subject: 'partner')
+          ),
+          Components::FreeTextAnswer.new(
             :arc, partner.arc,
             change_path: edit_steps_nino_path(subject: 'partner')
+          ),
+          Components::ValueAnswer.new(
+            :involvement_in_case, partner.involvement_in_case,
+            change_path: edit_steps_partner_involvement_path
+          ),
+          Components::ValueAnswer.new(
+            :conflict_of_interest, partner.conflict_of_interest,
+            change_path: edit_steps_partner_conflict_path
+          ),
+          Components::ValueAnswer.new(
+            :has_same_address_as_client, partner.has_same_address_as_client,
+            change_path: edit_steps_partner_same_address_path
+          ),
+          Components::FreeTextAnswer.new(
+            :home_address, partner_home_address
           )
-        end
-
-        answers << Components::ValueAnswer.new(
-          :involvement_in_case, partner.involvement_in_case,
-          change_path: edit_steps_partner_involvement_path
-        )
-        answers << Components::ValueAnswer.new(
-          :conflict_of_interest, partner.conflict_of_interest,
-          change_path: edit_steps_partner_conflict_path
-        )
-        answers << Components::ValueAnswer.new(
-          :has_same_address_as_client, partner.has_same_address_as_client,
-          change_path: edit_steps_partner_same_address_path
-        )
-        answers << Components::FreeTextAnswer.new(
-          :home_address, partner_home_address,
-        )
-        answers.select(&:show?)
+        ].select(&:show?)
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 

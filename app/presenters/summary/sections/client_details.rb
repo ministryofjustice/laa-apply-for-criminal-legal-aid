@@ -30,20 +30,17 @@ module Summary
         ]
 
         unless post_submission_evidence?
-          if applicant.has_nino == YesNoAnswer::YES.to_s
-            answers.push(Components::FreeTextAnswer.new(
-                           :nino, applicant.nino,
-                           change_path: edit_steps_nino_path(subject: 'client'),
-                           show: true
-                         ))
-          end
+          answers.push(Components::FreeTextAnswer.new(
+                         :nino, applicant.nino,
+                         change_path: edit_steps_nino_path(subject: 'client'),
+                         show: true
+                       ))
 
-          if applicant.has_arc == YesNoAnswer::YES.to_s
-            answers.push(Components::FreeTextAnswer.new(
-                           :arc, applicant.arc,
-                           change_path: edit_steps_nino_path(subject: 'client'),
-                         ))
-          end
+          answers.push(Components::FreeTextAnswer.new(
+                         :arc, applicant.arc,
+                         change_path: edit_steps_nino_path(subject: 'client'),
+                       ))
+
         end
 
         answers.push(
