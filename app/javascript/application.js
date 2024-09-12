@@ -2,15 +2,7 @@
 
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
-try {
-  initAll()
-} catch(e) {
-  document.body.className += ' no-js'
-}
-
-if (navigator.userAgent.match(/iPad/i)) {
-  document.body.className += ' no-js'
-}
+initAll()
 
 // Cookie banner -- Script name is obfuscated to avoid browsers blocking it
 // https://design-system.service.gov.uk/components/cookie-banner/
