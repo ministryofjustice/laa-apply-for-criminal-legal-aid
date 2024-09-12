@@ -1,16 +1,14 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 
-// https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
-import { initAll } from 'govuk-frontend'
-try {
-  initAll()
-} catch(e) {
+// Detect whether the user is on an iPad, if so then disable JS
+// to avoid the (unresolved) issue of conditionally revealed fields not displaying on old iPads
+if ((('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) && (navigator.userAgent.match(/Safari/i))) {
   document.body.className += ' no-js'
 }
 
-if (navigator.userAgent.match(/iPad/i)) {
-  document.body.className += ' no-js'
-}
+// https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
+import { initAll } from 'govuk-frontend'
+initAll()
 
 // Cookie banner -- Script name is obfuscated to avoid browsers blocking it
 // https://design-system.service.gov.uk/components/cookie-banner/
