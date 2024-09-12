@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Apply for Criminal Leagal Aid when under 18 years old' do
+RSpec.describe 'Apply for Criminal Legal Aid when under 18 years old' do
   describe 'Submitting a completed application' do
     before do
       visit root_path
