@@ -131,10 +131,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       choose_answers('Which of these benefits does the partner get?', ['They do not get any of these benefits'])
       save_and_continue
 
-      # steps/income/how_manage_with_no_income
-      choose_answer('How do your client and their partner manage with no income?', 'They stay with family for free')
-      save_and_continue
-
       # income cya
       save_and_continue
 

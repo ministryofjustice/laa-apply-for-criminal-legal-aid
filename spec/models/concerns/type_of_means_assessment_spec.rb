@@ -614,5 +614,47 @@ RSpec.describe TypeOfMeansAssessment do
       end
     end
   end
+
+  describe '#insufficient_income_declared?' do
+    subject(:insufficient_income_declared?) do
+      assessable.insufficient_income_declared?
+    end
+
+    context 'when income is more than zero' do
+      before do
+        allow(income).to receive_messages(all_income_over_zero?: true, client_self_employed?: false,
+                                          partner_self_employed?: false)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the client is self-employed' do
+      before do
+        allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: true,
+                                          partner_self_employed?: false)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the partner is self-employed' do
+      before do
+        allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: false,
+                                          partner_self_employed?: true)
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no income and neither the client or partner are self-employed' do
+      before do
+        allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: false,
+                                          partner_self_employed?: false)
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -59,7 +59,7 @@ module Decisions
       when :delete_dependant
         edit_dependants
       when :dependants_finished
-        determine_showing_no_income_page
+        after_dependants_finished
       when :manage_without_income
         edit(:answers)
       when :partner_employment_status
@@ -162,11 +162,7 @@ module Decisions
     end
 
     def after_partner_income_benefits
-      if crime_application.income&.all_income_over_zero?
-        edit(:answers)
-      else
-        edit(:manage_without_income)
-      end
+      determine_showing_no_income_page
     end
 
     def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -297,6 +293,8 @@ module Decisions
     def after_income_benefits
       if requires_full_means_assessment?
         edit(:client_has_dependants)
+      elsif include_partner_in_means_assessment?
+        edit(:partner_employment_status)
       else
         determine_showing_no_income_page
       end
@@ -305,6 +303,8 @@ module Decisions
     def after_client_has_dependants
       if form_object.client_has_dependants.yes?
         edit_dependants(add_blank: crime_application.dependants.none?)
+      elsif include_partner_in_means_assessment?
+        edit(:partner_employment_status)
       else
         determine_showing_no_income_page
       end
@@ -317,13 +317,17 @@ module Decisions
       edit(:dependants)
     end
 
+    def after_dependants_finished
+      return edit(:partner_employment_status) if include_partner_in_means_assessment?
+
+      determine_showing_no_income_page
+    end
+
     def determine_showing_no_income_page
-      if include_partner_in_means_assessment?
-        edit(:partner_employment_status)
-      elsif crime_application.income&.all_income_over_zero? || crime_application.income&.client_self_employed?
-        edit(:answers)
-      else
+      if insufficient_income_declared?
         edit(:manage_without_income)
+      else
+        edit(:answers)
       end
     end
 
@@ -343,13 +347,6 @@ module Decisions
     def not_working?(employment_status)
       employment_status.include?(EmploymentStatus::NOT_WORKING.to_s)
     end
-
-    # :nocov:
-    # currently handling complex employment logic jump via case statement
-    def self_employed?(employment_status)
-      employment_status.include?(EmploymentStatus::SELF_EMPLOYED.to_s)
-    end
-    # :nocov:
 
     def ended_employment_within_three_months?
       form_object.ended_employment_within_three_months&.yes?

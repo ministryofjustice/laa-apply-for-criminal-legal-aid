@@ -79,9 +79,7 @@ module IncomeAssessment
     end
 
     def manage_without_income_complete?
-      return true if record.income_payments.present? || record.income_benefits.present?
-      return true if record.employments.any?
-      return true if record.client_self_employed?
+      return true unless insufficient_income_declared?
 
       record.manage_without_income.present?
     end
