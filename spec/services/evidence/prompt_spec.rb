@@ -4,6 +4,7 @@ RSpec.describe Evidence::Prompt do
   include_context 'serializable application'
 
   before do
+    applicant.has_nino = 'yes'
     applicant.nino = 'QQ123456B'
     income.client_owns_property = 'yes'
     outgoings.housing_payment_type = 'mortgage'
