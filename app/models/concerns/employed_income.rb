@@ -45,7 +45,7 @@ module EmployedIncome
     owners
   end
 
-  # employed income payement types relevant to a given application based on the
+  # employed income payment types relevant to a given application based on the
   # extent of means assessment
   def employed_income_payment_types
     if known_to_be_full_means?
@@ -60,7 +60,7 @@ module EmployedIncome
   end
 
   def require_partner_in_armed_forces?
-    partner_employed_only? && client_employed_only?
+    partner_employed_only? && employment_status.exclude?(EmploymentStatus::SELF_EMPLOYED.to_s)
   end
 
   def client_employed?
