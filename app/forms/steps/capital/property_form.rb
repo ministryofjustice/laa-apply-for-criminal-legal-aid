@@ -17,8 +17,8 @@ module Steps
                 :outstanding_mortgage,
                 :percentage_applicant_owned,
                 :has_other_owners, presence: true
-      validates :is_home_address, presence: true, if: :person_has_home_address?
-      validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: :person_has_home_address?
+      validates :is_home_address, presence: true, if: :display_home_address_question?
+      validates :is_home_address, inclusion: { in: YesNoAnswer.values }, if: :display_home_address_question?
       validates :has_other_owners, inclusion: { in: YesNoAnswer.values }
       validates :percentage_partner_owned, presence: true, if: :include_partner_in_means_assessment?
 
@@ -32,10 +32,10 @@ module Steps
 
       validates_with CapitalAssessment::PropertyOwnershipValidator
 
-      validate :home_address, unless: :property_is_home_address?
-
       def persist!
-        record.update(attributes)
+        is_home_address_attr = display_home_address_question? ? is_home_address : YesNoAnswer::NO
+
+        record.update(attributes.merge(is_home_address: is_home_address_attr))
       end
 
       def before_save
@@ -53,11 +53,14 @@ module Steps
         crime_application.properties.home_address.first.id == record.id
       end
 
-      def home_address
-        return true unless is_home_address&.yes?
+      def display_home_address_question?
+        return true if property_is_home_address?
 
-        errors.add(:is_home_address, :invalid) if is_home_address&.yes? &&
-                                                  crime_application.properties.home_address.count >= 1
+        person_has_home_address? && !home_address_known?
+      end
+
+      def home_address_known?
+        crime_application.properties.home_address.count >= 1
       end
     end
   end
