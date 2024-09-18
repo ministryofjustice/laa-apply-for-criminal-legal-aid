@@ -36,13 +36,13 @@ RSpec.describe EmployedIncome do
     context 'when the partner employment status is only `employed`' do
       let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
-      context 'and the client employment status is only `employed`' do
+      context "and the client's employment status does not include `self employed`" do
         let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
         it { is_expected.to be true }
       end
 
-      context 'and the client employment status is more than `employed`' do
+      context "and the client's employment status includes `self employed`" do
         let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
 
         it { is_expected.to be false }
@@ -50,6 +50,7 @@ RSpec.describe EmployedIncome do
     end
 
     context 'when the partner employment status is more than `employed`' do
+      let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
       let(:partner_employment_status) { [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s] }
 
       it { is_expected.to be false }
