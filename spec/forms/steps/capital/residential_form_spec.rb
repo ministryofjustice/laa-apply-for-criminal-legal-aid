@@ -154,47 +154,6 @@ RSpec.describe Steps::Capital::ResidentialForm do
           end
         end
       end
-
-      # context 'home address validation' do
-      #   let(:attributes) { required_attributes }
-      #
-      #   context 'when home address has already been set' do
-      #     before do
-      #       allow(record).to receive(:id).and_return('123')
-      #     end
-      #
-      #     context 'and the current property is not the home address' do # rubocop:disable RSpec/NestedGroups
-      #       let(:home_address) { [instance_double(Property, id: '456')] }
-      #
-      #       it 'adds an error' do
-      #         expect(subject.save).to be(false)
-      #         expect(subject.errors.of_kind?(:is_home_address, :invalid)).to be(true)
-      #       end
-      #     end
-      #
-      #     context 'and the current property is the home address' do # rubocop:disable RSpec/NestedGroups
-      #       let(:home_address) { [instance_double(Property, id: '123')] }
-      #
-      #       it 'updates the record' do
-      #         expect(record).to receive(:update).and_return(true)
-      #         expect(subject.save).to be(true)
-      #       end
-      #     end
-      #   end
-      #
-      #   context 'when home address has not been set' do
-      #     let(:home_address) { [] }
-      #
-      #     before do
-      #       allow(record).to receive(:id).and_return('123')
-      #     end
-      #
-      #     it 'updates the record' do
-      #       expect(record).to receive(:update).and_return(true)
-      #       expect(subject.save).to be(true)
-      #     end
-      #   end
-      # end
     end
 
     context 'when client has a partner' do
