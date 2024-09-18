@@ -1,6 +1,9 @@
 class Case < ApplicationRecord
   belongs_to :crime_application
 
+  EARLIEST_HEARING_DATE = Date.parse('01-01-2010')
+  LATEST_HEARING_DATE = Date.parse('31-12-2035')
+
   has_one :ioj, dependent: :destroy
   has_many :codefendants, dependent: :destroy
   accepts_nested_attributes_for :codefendants, allow_destroy: true
@@ -22,6 +25,10 @@ class Case < ApplicationRecord
 
   def complete?
     valid?(:submission)
+  end
+
+  def hearing_date_within_range?
+    hearing_date.between?(EARLIEST_HEARING_DATE, LATEST_HEARING_DATE)
   end
 
   private
