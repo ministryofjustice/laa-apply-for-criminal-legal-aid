@@ -25,9 +25,29 @@ class DateStamper
     return false if @crime_app.date_stamp.present?
 
     if @crime_app.not_means_tested? || CaseType.new(@case_type).date_stampable?
-      @crime_app.update(date_stamp: Time.current)
+      @crime_app.date_stamp = Time.current
+      @crime_app.date_stamp_checksum = date_stamp_checksum if @crime_app.date_stamp_checksum.blank?
+
+      @crime_app.save!
     else
       false
     end
+  end
+
+  private
+
+  def date_stamp_checksum
+    return nil unless @crime_app.applicant
+
+    Digest::SHA2.new(256).hexdigest [
+      @crime_app.applicant.first_name,
+      @crime_app.applicant.last_name,
+      @crime_app.applicant.other_names,
+      @crime_app.applicant.date_of_birth,
+    ].join('') # rubocop:disable Style/RedundantArgument
+  end
+
+  def date_stamp_checksum_changed?
+    date_stamp_checksum != @crime_app.date_stamp_checksum
   end
 end

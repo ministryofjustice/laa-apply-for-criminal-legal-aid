@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_27_151147) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_17_084151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_27_151147) do
     t.string "pre_cifc_usn"
     t.string "pre_cifc_maat_id"
     t.string "pre_cifc_reason"
+    t.string "date_stamp_checksum"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
