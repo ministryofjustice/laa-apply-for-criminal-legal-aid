@@ -9,6 +9,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       choose_answers("What is your client's employment status?", ['Employed'])
       save_and_continue
 
+      # steps/income/client/armed_forces
+      choose_answer('Is your client in the armed forces?', 'No')
+      save_and_continue
+
       # steps/income/current_income_before_tax
       choose_answer("Is your client and their partner's joint annual income more than £12,475 a year before tax?",
                     'Yes')
@@ -60,6 +64,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
 
       # steps/income/what_is_partners_employment_status
       choose_answers("What is the partner's employment status?", ['Employed'])
+      save_and_continue
+
+      # steps/income/partner/armed_forces
+      choose_answer('Is the partner in the armed forces?', 'No')
       save_and_continue
 
       # steps/income/partner/employer_details/:job_id
