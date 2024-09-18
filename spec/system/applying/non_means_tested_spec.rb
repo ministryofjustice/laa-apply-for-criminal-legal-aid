@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Apply for Criminal Leagal Aid when Non-Means Tested' do
+RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
   describe 'Submitting a completed application' do
     before do
       visit root_path
