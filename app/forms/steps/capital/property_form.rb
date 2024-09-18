@@ -33,9 +33,7 @@ module Steps
       validates_with CapitalAssessment::PropertyOwnershipValidator
 
       def persist!
-        is_home_address_attr = display_home_address_question? ? is_home_address : YesNoAnswer::NO
-
-        record.update(attributes.merge(is_home_address: is_home_address_attr))
+        record.update(attributes)
       end
 
       def before_save
