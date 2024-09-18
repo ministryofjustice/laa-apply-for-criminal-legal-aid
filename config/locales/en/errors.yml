@@ -937,7 +937,6 @@ en:
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
-              invalid: Client can only have 1 home address
             has_other_owners:
               blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the property
@@ -968,7 +967,6 @@ en:
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
               inclusion: Select yes if the address of the property is the same as your client's home address
-              invalid: Client can only have 1 home address
             has_other_owners:
               blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the property
@@ -1002,7 +1000,6 @@ en:
               less_than_or_equal_to: *land_partner_percentage_error
             is_home_address:
               inclusion: Select yes if the address of the land is the same as your client's home address
-              invalid: Client can only have 1 home address
             has_other_owners:
               blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the land
