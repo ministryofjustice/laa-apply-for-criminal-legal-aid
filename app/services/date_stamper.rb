@@ -29,6 +29,8 @@ class DateStamper
       @crime_app.date_stamp_checksum = date_stamp_checksum if @crime_app.date_stamp_checksum.blank?
 
       @crime_app.save!
+
+      flag! if date_stamp_checksum_changed?
     else
       false
     end
@@ -49,5 +51,9 @@ class DateStamper
 
   def date_stamp_checksum_changed?
     date_stamp_checksum != @crime_app.date_stamp_checksum
+  end
+
+  def flag!
+    # TODO: Raise Event
   end
 end
