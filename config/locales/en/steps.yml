@@ -378,6 +378,7 @@ en:
         other_work_benefits:
           edit:
             page_title: Does your client receive any other benefits from work?
+            applicant_other_work_benefit_received: Does your client receive any other benefits from work?
             heading: Does your client receive any other benefits from work?
             page_text: 'These could be, for example:'
             list: |
@@ -419,7 +420,7 @@ en:
             page_text: You told us your client's partner is employed.
         self_assessment_tax_bill:
           edit:
-            page_title: Has the partner received a Self Assessment tax bill calculation in the last 2 years?
+            page_title: Has the partner received a Self Assessment tax calculation in the last 2 years?
         deductions:
           edit:
             page_title: Deductions from the partner’s pay
@@ -445,6 +446,7 @@ en:
         other_work_benefits:
           edit:
             page_title: Does the partner receive any other benefits from work?
+            partner_other_work_benefit_received: Does the partner receive any other benefits from work?
             heading: Does the partner receive any other benefits from work?
             page_text: 'These could be, for example:'
             list: |
