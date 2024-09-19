@@ -535,14 +535,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :income_benefits_partner }
 
-    context 'when there are any income payments or benefits' do
-      before { allow(income).to receive(:all_income_over_zero?).and_return(true) }
+    context 'when there is sufficient income' do
+      before { allow(subject).to receive(:insufficient_income_declared?).and_return(false) }
 
       it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
     end
 
-    context 'when there are no income payments, income benefits or employment income' do
-      before { allow(income).to receive(:all_income_over_zero?).and_return(false) }
+    context 'when there is insufficient income' do
+      before { allow(subject).to receive(:insufficient_income_declared?).and_return(true) }
 
       it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
     end
@@ -1083,20 +1083,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when does not require full means assessment' do
       let(:requires_full_means_assessment) { false }
 
-      context 'when income is zero' do
-        before do
-          allow(income).to receive(:all_income_over_zero?).and_return false
-        end
-
-        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
-      end
-
-      context 'when income is above zero' do
-        before do
-          allow(income).to receive(:all_income_over_zero?).and_return true
-        end
+      context 'when there is sufficient income' do
+        before { allow(subject).to receive(:insufficient_income_declared?).and_return(false) }
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+      end
+
+      context 'when there is insufficient income' do
+        before { allow(subject).to receive(:insufficient_income_declared?).and_return(true) }
+
+        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
       end
     end
   end
@@ -1110,34 +1106,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:client_has_dependants).and_return(YesNoAnswer::NO)
       end
 
-      context 'when there are no payments' do
-        before do
-          allow(income).to receive(:all_income_over_zero?).and_return false
-        end
-
-        it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
-      end
-
-      context 'when there are payments' do
-        before do
-          allow(income).to receive(:all_income_over_zero?).and_return true
-        end
+      context 'when there is sufficient income' do
+        before { allow(subject).to receive(:insufficient_income_declared?).and_return(false) }
 
         it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
       end
 
-      context 'when self employed' do
-        before do
-          allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: true)
-        end
-
-        it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
-      end
-
-      context 'when not self employed' do
-        before do
-          allow(income).to receive_messages(all_income_over_zero?: false, client_self_employed?: false)
-        end
+      context 'when there is insufficient income' do
+        before { allow(subject).to receive(:insufficient_income_declared?).and_return(true) }
 
         it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
       end
@@ -1219,20 +1195,16 @@ RSpec.describe Decisions::IncomeDecisionTree do
       it { is_expected.to have_destination(:partner_employment_status, :edit, id: crime_application) }
     end
 
-    context 'when income is zero' do
-      before do
-        allow(income).to receive(:all_income_over_zero?).and_return false
-      end
-
-      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
-    end
-
-    context 'when income is above zero' do
-      before do
-        allow(income).to receive(:all_income_over_zero?).and_return true
-      end
+    context 'when there is sufficient income' do
+      before { allow(subject).to receive(:insufficient_income_declared?).and_return(false) }
 
       it { is_expected.to have_destination(:answers, :edit, id: crime_application) }
+    end
+
+    context 'when there is insufficient income' do
+      before { allow(subject).to receive(:insufficient_income_declared?).and_return(true) }
+
+      it { is_expected.to have_destination(:manage_without_income, :edit, id: crime_application) }
     end
   end
 
