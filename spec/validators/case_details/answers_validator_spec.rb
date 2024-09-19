@@ -10,9 +10,13 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
   let(:errors) { double(:errors) }
   let(:non_means_tested) { false }
   let(:cifc?) { false }
+  let(:hearing_date_within_range?) { true }
 
   describe '#validate' do
-    before { allow(record).to receive_messages(**attributes) }
+    before {
+      allow(record).to receive_messages(**attributes)
+      allow(record).to receive(:hearing_date_within_range?).and_return(hearing_date_within_range?)
+    }
 
     context 'when all validations pass' do
       let(:errors) { double(empty?: true) }
@@ -263,7 +267,7 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
       allow(record).to receive_messages(
         hearing_court_name:, hearing_date:, is_first_court_hearing:
       )
-
+      allow(record).to receive(:hearing_date_within_range?).and_return(hearing_date_within_range?)
       allow(record).to receive(:values_at).with(:hearing_court_name, :hearing_date, :is_first_court_hearing) {
         [hearing_court_name, hearing_date, is_first_court_hearing]
       }
@@ -286,6 +290,17 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
     context 'when any hearing detail is missing' do
       let(:hearing_court_name) { 'Court Name' }
       let(:hearing_date) { nil }
+      let(:is_first_court_hearing) { true }
+
+      it 'returns false' do
+        expect(subject.hearing_details_complete?).to be(false)
+      end
+    end
+
+    context 'when any hearing date is out of range' do
+      let(:hearing_date_within_range?) { false }
+      let(:hearing_court_name) { 'Court Name' }
+      let(:hearing_date) { Date.parse('01-01-2036') }
       let(:is_first_court_hearing) { true }
 
       it 'returns false' do

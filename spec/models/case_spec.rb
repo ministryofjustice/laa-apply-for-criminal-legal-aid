@@ -4,12 +4,13 @@ RSpec.describe Case, type: :model do
   subject(:kase) { described_class.new(attributes) }
 
   let(:attributes) { {} }
+  let(:hearing_date) { Time.zone.today }
 
   let(:case_attributes) do
     {
       crime_application: CrimeApplication.new,
       hearing_court_name: 'court name',
-      hearing_date: Time.zone.today,
+      hearing_date: hearing_date,
       is_first_court_hearing: nil,
       first_court_hearing_name: nil,
       has_case_concluded: nil,
@@ -107,6 +108,26 @@ RSpec.describe Case, type: :model do
       let(:court_name) { '' }
 
       it { expect(subject.hearing_court).to be_nil }
+    end
+  end
+
+  describe '#hearing_date_within_range?' do
+    context 'when latest hearing date is out of range' do
+      let(:attributes) { { hearing_date: Date.parse('01-01-2036') } }
+
+      it { expect(kase).not_to be_hearing_date_within_range }
+    end
+
+    context 'when earliest hearing date is out of range' do
+      let(:attributes) { { hearing_date: Date.parse('31-12-2009') } }
+
+      it { expect(kase).not_to be_hearing_date_within_range }
+    end
+
+    context 'when hearing date is within the range' do
+      let(:attributes) { { hearing_date: Date.parse('01-01-2030') } }
+
+      it { expect(kase).to be_hearing_date_within_range }
     end
   end
 end
