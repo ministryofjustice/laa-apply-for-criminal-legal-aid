@@ -612,6 +612,20 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         allow(record).to receive(:manage_without_income).and_return(nil)
         expect(subject.manage_without_income_complete?).to be(false)
       end
+
+      it 'returns true if partner is self-employed' do
+        allow(record).to receive_messages(client_self_employed?: false)
+        allow(record).to receive(:manage_without_income).and_return(nil)
+        allow(record).to receive_messages(partner_self_employed?: true)
+        expect(subject.manage_without_income_complete?).to be(true)
+      end
+
+      it 'returns false if partner is not self-employed' do
+        allow(record).to receive_messages(client_self_employed?: false)
+        allow(record).to receive(:manage_without_income).and_return(nil)
+        allow(record).to receive_messages(partner_self_employed?: false)
+        expect(subject.manage_without_income_complete?).to be(false)
+      end
     end
   end
 end

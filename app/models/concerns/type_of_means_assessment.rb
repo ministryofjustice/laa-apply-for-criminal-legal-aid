@@ -90,6 +90,10 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
     applicant
   end
 
+  def insufficient_income_declared?
+    !(income&.all_income_over_zero? || income&.client_self_employed? || income&.partner_self_employed?)
+  end
+
   private
 
   alias not_means_tested? non_means_tested?
