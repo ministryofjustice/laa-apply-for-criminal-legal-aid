@@ -52,7 +52,7 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
       it { is_expected.to be true }
     end
 
-    context 'client has no income benefits' do
+    context 'when client has no income benefits' do
       let(:income_benefits) do
         [
           IncomeBenefit.new(
@@ -62,6 +62,18 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
             ownership_type: 'partner'
           )
         ]
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when client has already entered nino' do
+      before do
+        crime_application.applicant = Applicant.new(
+          nino: 'OL293483A',
+          has_nino: 'yes',
+          date_of_birth: '1990-01-01',
+        )
       end
 
       it { is_expected.to be false }
@@ -122,6 +134,18 @@ RSpec.describe Evidence::Rules::NationalInsuranceNumber do
             ownership_type: 'applicant'
           )
         ]
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when partner has already entered nino' do
+      before do
+        crime_application.partner = Partner.new(
+          nino: 'OL293483A',
+          has_nino: 'yes',
+          date_of_birth: '1990-01-01',
+        )
       end
 
       it { is_expected.to be false }

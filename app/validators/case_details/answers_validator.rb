@@ -75,7 +75,11 @@ module CaseDetails
     end
 
     def hearing_details_complete?
-      kase.values_at(:hearing_court_name, :hearing_date, :is_first_court_hearing).all?(&:present?)
+      kase.values_at(
+        :hearing_court_name,
+        :hearing_date,
+        :is_first_court_hearing
+      ).all?(&:present?) && kase.hearing_date_within_range?
     end
 
     def first_court_hearing_complete?
