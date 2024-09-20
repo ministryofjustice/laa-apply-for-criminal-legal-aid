@@ -19,6 +19,12 @@ RSpec.describe Datastore::ApplicationSubmission do
       legal_rep_first_name: 'John',
       legal_rep_last_name: 'Doe',
       legal_rep_telephone: '123456789',
+      date_stamp_context: DateStampContext.new(
+        first_name: 'Johnny',
+        last_name: 'Does',
+        date_of_birth: 25.years.ago,
+        date_stamp: DateTime.new(2022, 12, 15),
+      )
     )
 
     client = Applicant.create(

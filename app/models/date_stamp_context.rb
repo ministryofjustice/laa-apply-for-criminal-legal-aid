@@ -18,4 +18,8 @@ class DateStampContext
       created_at: DateTime.now,
     )
   end
+
+  def as_json(*)
+    super['attributes']
+  end
 end

@@ -47,4 +47,64 @@ RSpec.describe DateStampContext, type: :model do
       end
     end
   end
+
+  describe 'serialization and immutability' do
+    it 'is hashable' do
+      crime_application = CrimeApplication.new(date_stamp_context: { first_name: 'Jo' })
+      crime_application.save!
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Jo'
+    end
+
+    it 'is serializable from json string' do
+      crime_application = CrimeApplication.new
+      crime_application.date_stamp_context = { first_name: 'Jo' }.to_json
+      crime_application.save!
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Jo'
+    end
+
+    it 'is serializable from attributes hash' do
+      crime_application = CrimeApplication.new
+      crime_application.date_stamp_context = { attributes: { first_name: 'Jo' } }
+      crime_application.save!
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Jo'
+    end
+
+    it 'is serializable from simple hash' do
+      crime_application = CrimeApplication.new
+      crime_application.date_stamp_context = { first_name: 'Jo' }
+      crime_application.save!
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Jo'
+    end
+
+    it 'is immutable' do
+      crime_application = CrimeApplication.new
+      crime_application.date_stamp_context = described_class.new(
+        first_name: 'Marie',
+        last_name: 'Curie',
+        date_of_birth: '1867-11-07',
+        date_stamp: Time.current,
+      )
+
+      crime_application.save!
+
+      # Cannot change...
+      crime_application.date_stamp_context.first_name = 'Mariana'
+      expect(crime_application.changed?).to be false
+      crime_application.save!
+      crime_application.reload
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Marie'
+
+      # ...but can be reset
+      crime_application.date_stamp_context = nil
+      crime_application.save!
+      crime_application.reload
+
+      expect(crime_application.date_stamp_context.first_name).to be_nil
+    end
+  end
 end
