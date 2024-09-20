@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
+  attribute :date_stamp_context, DateStampContextType.new
 
   has_one :case, dependent: :destroy
   alias kase case

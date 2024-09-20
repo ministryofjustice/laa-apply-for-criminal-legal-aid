@@ -22,10 +22,14 @@ RSpec.describe Decisions::ClientDecisionTree do
     allow(crime_application).to receive_messages(
       update: true,
       date_stamp: nil,
+      date_stamp_context: nil,
       appeal_no_changes?: appeal_no_changes?,
       not_means_tested?: not_means_tested?,
       cifc?: cifc?,
     )
+
+    allow(crime_application).to receive(:date_stamp_context=)
+    allow(DateStampContext).to receive(:build).and_return(nil)
   end
 
   it_behaves_like 'a decision tree'
@@ -107,6 +111,11 @@ RSpec.describe Decisions::ClientDecisionTree do
       end
 
       context 'and the application has no date stamp' do
+        before do
+          allow(crime_application).to receive(:date_stamp=)
+          allow(crime_application).to receive(:save).and_return(true)
+        end
+
         it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
       end
     end
@@ -144,6 +153,11 @@ RSpec.describe Decisions::ClientDecisionTree do
       context 'and the case type is "date stampable"' do
         let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
 
+        before do
+          allow(crime_application).to receive(:date_stamp=)
+          allow(crime_application).to receive(:save).and_return(true)
+        end
+
         it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
       end
 
@@ -167,6 +181,9 @@ RSpec.describe Decisions::ClientDecisionTree do
         allow(FeatureFlags).to receive(:cifc_journey) {
           instance_double(FeatureFlags::EnabledFeature, enabled?: true)
         }
+
+        allow(crime_application).to receive(:date_stamp=)
+        allow(crime_application).to receive(:save).and_return(true)
       end
 
       it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }

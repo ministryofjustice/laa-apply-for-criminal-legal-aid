@@ -6,15 +6,25 @@ RSpec.describe DateStamper do
   let(:crime_app) do
     instance_double(
       CrimeApplication,
-      date_stamp: date
+      date_stamp: date,
+      applicant: applicant,
     )
   end
 
   let(:not_means_tested) { nil }
 
+  let(:applicant) do
+    instance_double(
+      Applicant,
+      first_name: 'Jason',
+      last_name: 'Apple',
+      other_names: 'Bruno',
+      date_of_birth: '1990-01-01',
+    )
+  end
+
   before do
-    allow(crime_app).to receive(:update)
-    allow(crime_app).to receive(:not_means_tested?).and_return(not_means_tested)
+    allow(crime_app).to receive_messages(save: true, not_means_tested?: not_means_tested)
   end
 
   describe '#call' do
@@ -23,8 +33,10 @@ RSpec.describe DateStamper do
       let(:case_type) { nil }
       let(:date) { nil }
 
-      it 'adds a date stamp to the crime app' do
-        expect(crime_app).to receive(:update).with({ date_stamp: instance_of(ActiveSupport::TimeWithZone) })
+      it 'adds a date stamp and context to the crime app' do
+        expect(crime_app).to receive(:date_stamp=).with(instance_of(ActiveSupport::TimeWithZone))
+        expect(crime_app).to receive(:date_stamp_context=).with(instance_of(DateStampContext))
+
         subject.call
       end
     end
@@ -36,7 +48,9 @@ RSpec.describe DateStamper do
       let(:date) { nil }
 
       it 'adds a date stamp to the crime app' do
-        expect(crime_app).to receive(:update).with({ date_stamp: instance_of(ActiveSupport::TimeWithZone) })
+        expect(crime_app).to receive(:date_stamp=).with(instance_of(ActiveSupport::TimeWithZone))
+        expect(crime_app).to receive(:date_stamp_context=).with(instance_of(DateStampContext))
+
         subject.call
       end
     end
@@ -48,7 +62,8 @@ RSpec.describe DateStamper do
       let(:date) { DateTime.new(2022, 2, 2) }
 
       it 'does not update the crime applications a date stamp' do
-        expect(crime_app).not_to receive(:update)
+        expect(crime_app).not_to receive(:date_stamp=)
+        expect(crime_app).not_to receive(:date_stamp_context=)
 
         result = subject.call
 
@@ -63,7 +78,8 @@ RSpec.describe DateStamper do
       let(:date) { nil }
 
       it 'does not update the crime applications a date stamp' do
-        expect(crime_app).not_to receive(:update)
+        expect(crime_app).not_to receive(:date_stamp=)
+        expect(crime_app).not_to receive(:date_stamp_context=)
 
         result = subject.call
 
