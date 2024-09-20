@@ -315,7 +315,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.9)
@@ -513,7 +513,7 @@ DEPENDENCIES
   pg (~> 1.4)
   prometheus_exporter
   pry
-  puma
+  puma (>= 6.4.3)
   rails (~> 7.0.8)
   rspec-rails
   rubocop
@@ -532,7 +532,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 2.7.8p225
 
 BUNDLED WITH
    2.3.17
