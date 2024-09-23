@@ -9,7 +9,6 @@ module Steps
     end
 
     def redirect_non_cifc
-      return unless FeatureFlags.cifc_journey.enabled?
 
       redirect_to edit_crime_application_path(current_crime_application) unless current_crime_application.cifc?
     end
