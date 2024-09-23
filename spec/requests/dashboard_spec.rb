@@ -26,11 +26,6 @@ RSpec.describe 'Dashboard', :authorized do
     end
 
     context 'with cifc journey enabled' do
-      before do
-        allow(FeatureFlags).to receive(:cifc_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-      end
 
       it 'shows the new application or change in financial circumstances form' do
         expect { get new_crime_application_path }.not_to change(CrimeApplication, :count)
