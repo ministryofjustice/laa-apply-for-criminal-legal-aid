@@ -334,7 +334,6 @@ RSpec.shared_examples 'a step disallowed for change in financial circumstances a
   end
 
   describe '#edit' do
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :edit, params: { id: existing_case.id }
 
@@ -343,7 +342,6 @@ RSpec.shared_examples 'a step disallowed for change in financial circumstances a
   end
 
   describe '#update' do
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :update, params: { id: existing_case.id }
 
@@ -358,7 +356,6 @@ RSpec.shared_examples 'a step disallowed for non change in financial circumstanc
   end
 
   describe '#edit' do
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :edit, params: { id: existing_case.id }
 
@@ -367,7 +364,6 @@ RSpec.shared_examples 'a step disallowed for non change in financial circumstanc
   end
 
   describe '#update' do
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :update, params: { id: existing_case.id }
 
