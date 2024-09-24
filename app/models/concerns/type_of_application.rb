@@ -30,8 +30,6 @@ module TypeOfApplication
   alias pse? post_submission_evidence?
 
   def change_in_financial_circumstances?
-    return false unless FeatureFlags.cifc_journey.enabled?
-
     application_type_eql?(:change_in_financial_circumstances)
   end
   alias cifc? change_in_financial_circumstances?

@@ -21,12 +21,6 @@ RSpec.describe Circumstances::AnswersValidator, type: :model do
   let(:pre_cifc_usn) { nil }
   let(:pre_cifc_reason) { nil }
 
-  before do
-    allow(FeatureFlags).to receive(:cifc_journey) {
-      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-    }
-  end
-
   describe '#applicable?' do
     subject(:applicable?) { validator.applicable? }
 

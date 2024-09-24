@@ -111,12 +111,6 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         }
       end
 
-      before do
-        allow(FeatureFlags).to receive(:cifc_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-      end
-
       it 'passes validation' do
         subject.validate
       end

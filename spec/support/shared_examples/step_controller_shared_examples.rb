@@ -334,12 +334,6 @@ RSpec.shared_examples 'a step disallowed for change in financial circumstances a
   end
 
   describe '#edit' do
-    before do
-      allow(FeatureFlags).to receive(:cifc_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :edit, params: { id: existing_case.id }
 
@@ -348,12 +342,6 @@ RSpec.shared_examples 'a step disallowed for change in financial circumstances a
   end
 
   describe '#update' do
-    before do
-      allow(FeatureFlags).to receive(:cifc_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :update, params: { id: existing_case.id }
 
@@ -368,12 +356,6 @@ RSpec.shared_examples 'a step disallowed for non change in financial circumstanc
   end
 
   describe '#edit' do
-    before do
-      allow(FeatureFlags).to receive(:cifc_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :edit, params: { id: existing_case.id }
 
@@ -382,12 +364,6 @@ RSpec.shared_examples 'a step disallowed for non change in financial circumstanc
   end
 
   describe '#update' do
-    before do
-      allow(FeatureFlags).to receive(:cifc_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     it 'redirects back to the task list because user is not allowed to complete this form' do
       get :update, params: { id: existing_case.id }
 

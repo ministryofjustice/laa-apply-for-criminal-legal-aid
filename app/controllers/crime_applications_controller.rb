@@ -18,24 +18,23 @@ class CrimeApplicationsController < DashboardController
     )
   end
 
-  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def create # rubocop:disable Metrics/MethodLength
     attrs = {}
 
     # Validation for forms usually performed in step controller but the
     # IsCifcForm is not part of the /step journey
-    if FeatureFlags.cifc_journey.enabled?
-      @form_object = Start::IsCifcForm.build(
-        CrimeApplication.new(office_code: current_office_code),
-        new_application_params[:is_cifc]
-      )
 
-      return render(:new, flash:) unless @form_object.valid?
+    @form_object = Start::IsCifcForm.build(
+      CrimeApplication.new(office_code: current_office_code),
+      new_application_params[:is_cifc]
+    )
 
-      attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if cifc?
-    end
+    return render(:new, flash:) unless @form_object.valid?
+
+    attrs[:application_type] = ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES if cifc?
 
     initialize_crime_application(attrs) do |crime_application|
-      if FeatureFlags.cifc_journey.enabled? && cifc?
+      if cifc?
         redirect_to edit_steps_circumstances_pre_cifc_reference_number_path(crime_application)
       else
         redirect_to edit_crime_application_path(crime_application)

@@ -90,14 +90,10 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def cifc_reference_complete?
-    return true unless FeatureFlags.cifc_journey.enabled?
-
     circumstances_validator.circumstances_reference_complete?
   end
 
   def cifc_reason_complete?
-    return true unless FeatureFlags.cifc_journey.enabled?
-
     circumstances_validator.circumstances_reason_complete?
   end
 
