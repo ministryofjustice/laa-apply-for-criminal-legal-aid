@@ -513,7 +513,7 @@ DEPENDENCIES
   pg (~> 1.4)
   prometheus_exporter
   pry
-  puma
+  puma (>= 6.4.3)
   rails (~> 7.0.8)
   rspec-rails
   rubocop
@@ -532,7 +532,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 2.7.8p225
 
 BUNDLED WITH
    2.3.17

@@ -12,7 +12,7 @@ gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
-gem 'puma'
+gem 'puma', '>= 6.4.3'
 gem 'rails', '~> 7.0.8'
 gem 'uk_postcode'
 
