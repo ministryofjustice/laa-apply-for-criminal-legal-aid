@@ -34,6 +34,13 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         }
       end
 
+      before do
+        allow(record).to receive_messages(
+          require_client_other_charge_in_progress?: false,
+          require_partner_other_charge_in_progress?: false
+        )
+      end
+
       it 'does not add any errors' do
         subject.validate
       end
@@ -53,8 +60,17 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
           codefendants: [double(complete?: false)],
           is_first_court_hearing: 'no',
           first_court_hearing_name: nil,
-          values_at: [nil]
+          values_at: [nil],
+          client_other_charge_in_progress: nil,
+          partner_other_charge_in_progress: nil
         }
+      end
+
+      before do
+        allow(record).to receive_messages(
+          require_client_other_charge_in_progress?: true,
+          require_partner_other_charge_in_progress?: true
+        )
       end
 
       it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
@@ -64,6 +80,8 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:charges, :blank)
         expect(errors).to receive(:add).with(:charges_summary, :incomplete_records)
         expect(errors).to receive(:add).with(:codefendants_summary, :incomplete_records)
+        expect(errors).to receive(:add).with(:client_other_charge_in_progress, :blank)
+        expect(errors).to receive(:add).with(:partner_other_charge_in_progress, :blank)
         expect(errors).to receive(:add).with(:hearing_details, :blank)
         expect(errors).to receive(:add).with(:first_court_hearing, :blank)
 
@@ -75,6 +93,13 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
       # rubocop:disable RSpec/MultipleExpectations
       context 'when application is non means tested' do
         let(:non_means_tested) { true }
+
+        before do
+          allow(record).to receive_messages(
+            require_client_other_charge_in_progress?: false,
+            require_partner_other_charge_in_progress?: false
+          )
+        end
 
         it 'adds errors for all failed validations' do
           expect(errors).to receive(:add).with(:has_case_concluded, :blank)
@@ -441,6 +466,86 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         it 'returns false' do
           expect(subject.first_court_hearing_complete?).to be(false)
         end
+      end
+    end
+  end
+
+  describe '#client_other_charge_in_progress_complete?' do
+    let(:client_other_charge_in_progress) { nil }
+
+    before do
+      allow(record).to receive_messages(client_other_charge_in_progress:)
+    end
+
+    context 'when `client_other_charge_in_progress` is required' do
+      before do
+        allow(record).to receive(:require_client_other_charge_in_progress?).and_return(true)
+      end
+
+      context 'and it is present' do
+        let(:client_other_charge_in_progress) { 'yes' }
+
+        it 'returns true' do
+          expect(subject.client_other_charge_in_progress_complete?).to be(true)
+        end
+      end
+
+      context 'and it not present' do
+        let(:client_other_charge_in_progress) { nil }
+
+        it 'returns false' do
+          expect(subject.client_other_charge_in_progress_complete?).to be(false)
+        end
+      end
+    end
+
+    context 'when `client_other_charge_in_progress` is not required' do
+      before do
+        allow(record).to receive(:require_client_other_charge_in_progress?).and_return(false)
+      end
+
+      it 'returns true' do
+        expect(subject.client_other_charge_in_progress_complete?).to be(true)
+      end
+    end
+  end
+
+  describe '#partner_other_charge_in_progress_complete?' do
+    let(:partner_other_charge_in_progress) { nil }
+
+    before do
+      allow(record).to receive_messages(partner_other_charge_in_progress:)
+    end
+
+    context 'when `partner_other_charge_in_progress` is required' do
+      before do
+        allow(record).to receive(:require_partner_other_charge_in_progress?).and_return(true)
+      end
+
+      context 'and it is present' do
+        let(:partner_other_charge_in_progress) { 'yes' }
+
+        it 'returns true' do
+          expect(subject.partner_other_charge_in_progress_complete?).to be(true)
+        end
+      end
+
+      context 'and it not present' do
+        let(:partner_other_charge_in_progress) { nil }
+
+        it 'returns false' do
+          expect(subject.partner_other_charge_in_progress_complete?).to be(false)
+        end
+      end
+    end
+
+    context 'when `partner_other_charge_in_progress` is not required' do
+      before do
+        allow(record).to receive(:require_partner_other_charge_in_progress?).and_return(false)
+      end
+
+      it 'returns true' do
+        expect(subject.partner_other_charge_in_progress_complete?).to be(true)
       end
     end
   end

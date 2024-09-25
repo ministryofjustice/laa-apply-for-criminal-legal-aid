@@ -28,6 +28,14 @@ module Adapters
         codefendants.any? ? YesNoAnswer::YES : YesNoAnswer::NO
       end
 
+      def client_other_charge
+        OtherCharge.new(super.attributes) if super
+      end
+
+      def partner_other_charge
+        OtherCharge.new(super.attributes) if super
+      end
+
       def serializable_hash(options = {})
         super(
           options.merge(

@@ -73,6 +73,10 @@ RSpec.describe Adapters::Structs::CaseDetails do
           charges
           codefendants
           has_codefendants
+          client_other_charge_in_progress
+          partner_other_charge_in_progress
+          client_other_charge
+          partner_other_charge
           hearing_court_name
           hearing_date
           is_first_court_hearing
