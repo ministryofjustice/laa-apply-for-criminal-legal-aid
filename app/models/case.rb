@@ -1,4 +1,6 @@
 class Case < ApplicationRecord
+  include HasOtherCharges
+
   belongs_to :crime_application
 
   EARLIEST_HEARING_DATE = Date.parse('01-01-2010')

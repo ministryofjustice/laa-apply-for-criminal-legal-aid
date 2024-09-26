@@ -19,7 +19,7 @@ gem 'uk_postcode'
 # Authentication
 gem 'devise', '~> 4.8'
 gem 'omniauth-rails_csrf_protection'
-gem 'omniauth-saml', '~> 2.1.1'
+gem 'omniauth-saml', '~> 2.1.2'
 
 # Accessing soap apis
 gem 'savon'
@@ -45,12 +45,12 @@ gem 'importmap-rails'
 gem 'bootsnap', require: false
 
 gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.0',
+    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.1',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas',
-    tag: 'v1.3.2'
+    tag: 'v1.3.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

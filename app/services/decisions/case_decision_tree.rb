@@ -28,7 +28,11 @@ module Decisions
       when :delete_codefendant
         edit_codefendants
       when :codefendants_finished
-        edit(:hearing_details)
+        after_codefendants_finished
+      when :other_charge_in_progress
+        after_other_charge_in_progress
+      when :other_charge
+        after_other_charge
       when :hearing_details
         after_hearing_details
       when :first_court_hearing
@@ -78,6 +82,13 @@ module Decisions
 
     def after_has_codefendants
       return edit_codefendants if form_object.has_codefendants.yes?
+      return edit(:other_charge_in_progress, subject: 'client') if require_other_charge_in_progress?('client')
+
+      edit(:hearing_details)
+    end
+
+    def after_codefendants_finished
+      return edit(:other_charge_in_progress, subject: 'client') if require_other_charge_in_progress?('client')
 
       edit(:hearing_details)
     end
@@ -87,6 +98,31 @@ module Decisions
       codefendants.create! if add_blank || codefendants.empty?
 
       edit(:codefendants)
+    end
+
+    def after_other_charge_in_progress
+      subject = form_object.form_subject.to_param.to_s
+      return edit(:other_charge, subject:) if require_other_charge?(subject)
+
+      progress_from_other_charge(subject)
+    end
+
+    def after_other_charge
+      subject = form_object.form_subject.to_param.to_s
+
+      progress_from_other_charge(subject)
+    end
+
+    def progress_from_other_charge(subject)
+      case subject
+      when 'client'
+        if require_other_charge_in_progress?('partner')
+          edit(:other_charge_in_progress, subject: 'partner')
+        else
+          edit(:hearing_details)
+        end
+      when 'partner' then edit(:hearing_details)
+      end
     end
 
     def after_hearing_details
@@ -131,6 +167,14 @@ module Decisions
 
     def blank_date_required?
       current_charge.offence_dates.map(&:date_from).exclude?(nil)
+    end
+
+    def require_other_charge_in_progress?(subject)
+      kase.send(:"require_#{subject}_other_charge_in_progress?")
+    end
+
+    def require_other_charge?(subject)
+      kase.send(:"require_#{subject}_other_charge?")
     end
 
     def crime_application

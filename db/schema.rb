@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_17_084151) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_11_142608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -107,6 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_17_084151) do
     t.string "appeal_financial_circumstances_changed"
     t.string "appeal_reference_number"
     t.string "appeal_usn"
+    t.string "client_other_charge_in_progress"
+    t.string "partner_other_charge_in_progress"
     t.index ["crime_application_id"], name: "index_cases_on_crime_application_id", unique: true
   end
 
@@ -293,6 +295,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_17_084151) do
     t.index ["charge_id"], name: "index_offence_dates_on_charge_id"
   end
 
+  create_table "other_charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "case_id", null: false
+    t.text "charge"
+    t.string "hearing_court_name"
+    t.date "next_hearing_date"
+    t.string "ownership_type", default: "applicant", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_other_charges_on_case_id"
+  end
+
   create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "crime_application_id", null: false
     t.string "outgoings_more_than_income"
@@ -444,6 +457,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_17_084151) do
   add_foreign_key "iojs", "cases"
   add_foreign_key "national_savings_certificates", "crime_applications"
   add_foreign_key "offence_dates", "charges"
+  add_foreign_key "other_charges", "cases"
   add_foreign_key "outgoings", "crime_applications"
   add_foreign_key "partner_details", "crime_applications"
   add_foreign_key "payments", "crime_applications"

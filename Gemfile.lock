@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
-  revision: 0fb6084fce58f09c156b661c2c7d053f2ae86a78
-  tag: v1.2.0
+  revision: d909b89aea359a6a7b991947ec8a3fd46e0677ba
+  tag: v1.2.1
   specs:
     laa-criminal-applications-datastore-api-client (1.1.0)
       faraday (~> 2.7)
@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: d45d4f7d83940a225dcd385ac4359d44cbbe0e5d
-  tag: v1.3.2
+  revision: 28e036bd3e8b60bc8563b8d4045b548029cf59b1
+  tag: v1.3.3
   specs:
-    laa-criminal-legal-aid-schemas (1.3.2)
+    laa-criminal-legal-aid-schemas (1.3.3)
       dry-schema (~> 1.13)
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
@@ -190,7 +190,7 @@ GEM
       net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-protobuf (4.27.3)
+    google-protobuf (4.27.5)
       bigdecimal
       rake (>= 13)
     govuk-components (5.2.1)
@@ -231,7 +231,7 @@ GEM
     json (2.7.2)
     json-schema (4.0.0)
       addressable (>= 2.8)
-    jwt (2.8.2)
+    jwt (2.9.1)
       base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -297,9 +297,9 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth-saml (2.1.1)
+    omniauth-saml (2.1.2)
       omniauth (~> 2.1)
-      ruby-saml (>= 1.17)
+      ruby-saml (~> 1.17)
     orm_adapter (0.5.0)
     pagy (6.5.0)
     parallel (1.25.1)
@@ -315,7 +315,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.9)
@@ -476,7 +476,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -509,7 +509,7 @@ DEPENDENCIES
   lograge
   logstash-event
   omniauth-rails_csrf_protection
-  omniauth-saml (~> 2.1.1)
+  omniauth-saml (~> 2.1.2)
   pg (~> 1.4)
   prometheus_exporter
   pry
@@ -532,7 +532,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.3.17

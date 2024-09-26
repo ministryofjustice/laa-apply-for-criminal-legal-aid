@@ -101,10 +101,8 @@ Rails.application.routes.draw do
   scope 'applications/:id' do
     namespace :steps do
       namespace :circumstances do
-        if FeatureFlags.cifc_journey.enabled?
-          edit_step :pre_cifc_reference_number
-          edit_step :pre_cifc_reason
-        end
+        edit_step :pre_cifc_reference_number
+        edit_step :pre_cifc_reason
       end
 
 
@@ -169,6 +167,10 @@ Rails.application.routes.draw do
         edit_step :charges_summary
         edit_step :has_codefendants
         edit_step :codefendants
+        scope '/:subject/', constraints: -> (_) { FeatureFlags.other_charges.enabled? } do
+          edit_step :other_charge_in_progress
+          edit_step :other_charge
+        end
         edit_step :hearing_details
         edit_step :first_court_hearing
         edit_step :ioj_passport

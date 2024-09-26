@@ -15,6 +15,8 @@ module Summary
         case_details
         offences
         codefendants
+        client_other_charge
+        partner_other_charge
         next_court_hearing
         first_court_hearing
         justification_for_legal_aid
@@ -65,6 +67,8 @@ module Summary
         case_details
         offences
         codefendants
+        client_other_charge
+        partner_other_charge
         next_court_hearing
         first_court_hearing
         justification_for_legal_aid

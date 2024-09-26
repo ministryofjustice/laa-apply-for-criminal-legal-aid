@@ -258,12 +258,6 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
   context 'when application is Change in Financial Circumstances' do
     let(:cifc?) { true }
 
-    before do
-      allow(FeatureFlags).to receive(:cifc_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     context 'with completed fields' do
       before do
         allow_any_instance_of(SupportingEvidence::AnswersValidator).to(
