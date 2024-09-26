@@ -177,6 +177,11 @@ RSpec.describe Decisions::ClientDecisionTree do
     context 'with a change_in_financial_circumstances application' do
       let(:cifc?) { true }
 
+      before do
+        allow(crime_application).to receive(:date_stamp=)
+        allow(crime_application).to receive(:save).and_return(true)
+      end
+
       it { is_expected.to have_destination(:date_stamp, :edit, id: crime_application) }
     end
   end
