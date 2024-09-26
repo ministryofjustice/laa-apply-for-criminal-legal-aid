@@ -14,7 +14,7 @@ module CaseDetails
     # Adds the error to the first step name a user would need to go to
     # fix the issue.
 
-    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def validate # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity,Metrics/MethodLength
       errors.add(:has_case_concluded, :blank) unless case_concluded_complete?
       errors.add(:is_preorder_work_claimed, :blank) unless preorder_work_complete?
       errors.add(:is_client_remanded, :blank) if !non_means_tested? && !client_remanded_complete?
@@ -25,6 +25,8 @@ module CaseDetails
         errors.add(:has_codefendants, :blank) unless has_codefendants_complete?
         errors.add(:codefendants_summary, :incomplete_records) unless all_codefendants_complete?
         errors.add(:hearing_details, :blank) unless hearing_details_complete?
+        errors.add(:client_other_charge_in_progress, :blank) unless client_other_charge_in_progress_complete?
+        errors.add(:partner_other_charge_in_progress, :blank) unless partner_other_charge_in_progress_complete?
         errors.add(:first_court_hearing, :blank) unless first_court_hearing_complete?
       end
 
@@ -86,6 +88,18 @@ module CaseDetails
       return true unless kase.is_first_court_hearing == 'no'
 
       kase.first_court_hearing_name.present?
+    end
+
+    def client_other_charge_in_progress_complete?
+      return true unless kase.require_client_other_charge_in_progress?
+
+      kase.client_other_charge_in_progress.present?
+    end
+
+    def partner_other_charge_in_progress_complete?
+      return true unless kase.require_partner_other_charge_in_progress?
+
+      kase.partner_other_charge_in_progress.present?
     end
   end
 end

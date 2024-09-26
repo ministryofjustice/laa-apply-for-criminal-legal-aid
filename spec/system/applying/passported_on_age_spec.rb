@@ -68,6 +68,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when under 18 years old' do
       choose_answer('Does your client have any co-defendants in this case?', 'No')
       save_and_continue
 
+      # steps/case/client/other_charge_in_progress
+      choose_answer('Is any other criminal case or charge against your client in progress?', 'No')
+      save_and_continue
+
       # steps/case/hearing_details
       select('Derby Crown Court', from: 'Court name')
       fill_date('Date of next hearing', with: 1.week.from_now.to_date)

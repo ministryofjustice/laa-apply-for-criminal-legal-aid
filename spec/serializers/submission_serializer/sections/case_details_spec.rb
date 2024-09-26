@@ -36,6 +36,10 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
       first_court_hearing_name: 'First court',
       charges: double(complete: []), # `charges` serialisation tested in `definitions/offence_spec.rb`
       codefendants: [], # `codefendants` serialisation tested in `definitions/codefendant_spec.rb`
+      client_other_charge_in_progress: 'no',
+      partner_other_charge_in_progress: 'no',
+      client_other_charge: nil, # `client_other_charge` serialisation tested in `definitions/other_charge_spec.rb`
+      partner_other_charge: nil # `partner_other_charge` serialisation tested in `definitions/other_charge_spec.rb`
     )
   end
 
@@ -68,7 +72,11 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         is_first_court_hearing: 'no',
         first_court_hearing_name: 'First court',
         offences: [],
-        codefendants: []
+        codefendants: [],
+        client_other_charge_in_progress: 'no',
+        partner_other_charge_in_progress: 'no',
+        client_other_charge: nil,
+        partner_other_charge: nil
       }
     }.as_json
   end
@@ -87,7 +95,11 @@ RSpec.describe SubmissionSerializer::Sections::CaseDetails do
         is_first_court_hearing: 'no',
         first_court_hearing_name: 'First court',
         offences: [],
-        codefendants: []
+        codefendants: [],
+        client_other_charge_in_progress: 'no',
+        partner_other_charge_in_progress: 'no',
+        client_other_charge: nil,
+        partner_other_charge: nil
       }
     }.as_json
   end

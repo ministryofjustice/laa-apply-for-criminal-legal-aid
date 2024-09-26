@@ -35,6 +35,10 @@ module SubmissionSerializer
             json.first_court_hearing_name kase.first_court_hearing_name
             json.offences Definitions::Offence.generate(kase.charges.complete)
             json.codefendants Definitions::Codefendant.generate(kase.codefendants)
+            json.client_other_charge_in_progress kase.client_other_charge_in_progress
+            json.partner_other_charge_in_progress kase.partner_other_charge_in_progress
+            json.client_other_charge Definitions::OtherCharge.generate(kase.client_other_charge)
+            json.partner_other_charge Definitions::OtherCharge.generate(kase.partner_other_charge)
           end
         end
         # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength

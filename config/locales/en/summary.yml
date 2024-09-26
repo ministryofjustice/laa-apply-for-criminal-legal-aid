@@ -69,6 +69,9 @@ en:
       partner_details: Partner details
       codefendants: Co-defendants
       codefendant: Co-defendant
+      client_other_charge: "Other charges"
+      client_other_charge_explicit: "Other charges: client"
+      partner_other_charge: "Other charges: partner"
       details: Details
       dependants: Dependants
       files: Files
@@ -360,6 +363,24 @@ en:
           <<: *YESNO
 
       # END codefendants section
+
+      # BEGIN other charges section
+      client_other_charge_in_progress: &other_charge_in_progress
+        question: Other charges?
+        answers:
+          <<: *YESNO
+      client_other_charge_charge: &other_charge_charge
+        question: What is the charge?
+      client_other_charge_hearing_court_name: &other_charge_hearing_court_name
+        question: Court
+      client_other_charge_next_hearing_date: &other_charge_next_hearing_date
+        question: Next hearing
+      
+      partner_other_charge_in_progress: *other_charge_in_progress
+      partner_other_charge_charge: *other_charge_charge
+      partner_other_charge_hearing_court_name: *other_charge_hearing_court_name
+      partner_other_charge_next_hearing_date: *other_charge_next_hearing_date
+      # BEGIN other charges section
 
       # BEGIN next court hearing section
       hearing_court_name:

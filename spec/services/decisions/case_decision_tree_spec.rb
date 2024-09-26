@@ -143,7 +143,20 @@ RSpec.describe Decisions::CaseDecisionTree do
     context 'and answer is `no`' do
       let(:has_codefendants) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+      context 'and the `other charges in progress` question is required' do
+        before { allow(subject).to receive(:require_other_charge_in_progress?).with('client').and_return(true) }
+
+        it {
+          expect(subject).to have_destination(:other_charge_in_progress, :edit, id: crime_application,
+subject: 'client')
+        }
+      end
+
+      context 'and the `other charges in progress` question is not required' do
+        before { allow(subject).to receive(:require_other_charge_in_progress?).with('client').and_return(false) }
+
+        it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+      end
     end
 
     context 'and answer is `yes`' do
@@ -215,7 +228,17 @@ RSpec.describe Decisions::CaseDecisionTree do
     let(:form_object) { double('FormObject', case: kase) }
     let(:step_name) { :codefendants_finished }
 
-    it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+    context 'and the `other charges in progress` question is required' do
+      before { allow(subject).to receive(:require_other_charge_in_progress?).with('client').and_return(true) }
+
+      it { is_expected.to have_destination(:other_charge_in_progress, :edit, id: crime_application, subject: 'client') }
+    end
+
+    context 'and the `other charges in progress` question is not required' do
+      before { allow(subject).to receive(:require_other_charge_in_progress?).with('client').and_return(false) }
+
+      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+    end
   end
 
   context 'when the step is `charges`' do
@@ -343,6 +366,88 @@ RSpec.describe Decisions::CaseDecisionTree do
       let(:requires_means_assessment?) { false }
 
       it { is_expected.to have_destination('/steps/evidence/upload', :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `other_charge_in_progress`' do
+    let(:form_object) { double('FormObject', case: kase, form_subject: double('FormSubject', to_param: form_subject)) }
+    let(:step_name) { :other_charge_in_progress }
+    let(:form_subject) { nil }
+
+    context 'when the subject is the client' do
+      let(:form_subject) { 'client' }
+
+      context 'and the `other charge` question is required' do
+        before { allow(subject).to receive(:require_other_charge?).with(form_subject).and_return(true) }
+
+        it { is_expected.to have_destination(:other_charge, :edit, id: crime_application, subject: form_subject) }
+      end
+
+      context 'when the `other charge` question is not required' do
+        before { allow(subject).to receive(:require_other_charge?).with(form_subject).and_return(false) }
+
+        context 'and the `other charge in progress` question is required for the partner' do
+          before { allow(subject).to receive(:require_other_charge_in_progress?).with('partner').and_return(true) }
+
+          it {
+            expect(subject).to have_destination(:other_charge_in_progress, :edit, id: crime_application,
+subject: 'partner')
+          }
+        end
+
+        context 'and the `other charge in progress` question is not required for the partner' do
+          before { allow(subject).to receive(:require_other_charge_in_progress?).with('partner').and_return(false) }
+
+          it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+        end
+      end
+    end
+
+    context 'when the subject is the partner' do
+      let(:form_subject) { 'partner' }
+
+      context 'and the `other charge` question is required' do
+        before { allow(subject).to receive(:require_other_charge?).with(form_subject).and_return(true) }
+
+        it { is_expected.to have_destination(:other_charge, :edit, id: crime_application, subject: form_subject) }
+      end
+
+      context 'when the `other charge` question is not required' do
+        before { allow(subject).to receive(:require_other_charge?).with(form_subject).and_return(false) }
+
+        it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+      end
+    end
+  end
+
+  context 'when the step is `other_charge`' do
+    let(:form_object) { double('FormObject', case: kase, form_subject: double('FormSubject', to_param: form_subject)) }
+    let(:step_name) { :other_charge }
+    let(:form_subject) { nil }
+
+    context 'when the subject is the client' do
+      let(:form_subject) { 'client' }
+
+      context 'and the `other charge in progress` question is required for the partner' do
+        before { allow(subject).to receive(:require_other_charge_in_progress?).with('partner').and_return(true) }
+
+        it {
+          expect(subject).to have_destination(:other_charge_in_progress, :edit, id: crime_application,
+subject: 'partner')
+        }
+      end
+
+      context 'and the `other charge in progress` question is not required for the partner' do
+        before { allow(subject).to receive(:require_other_charge_in_progress?).with('partner').and_return(false) }
+
+        it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the subject is the partner' do
+      let(:form_subject) { 'partner' }
+
+      it { is_expected.to have_destination(:hearing_details, :edit, id: crime_application) }
     end
   end
 end

@@ -12,7 +12,7 @@ describe Summary::HtmlPresenter do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
       partner: double(first_name: 'Test first name', arc: nil), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
-      kase: (double case_type: 'either_way'), ioj: double, status: :in_progress,
+      kase: kase, ioj: double, status: :in_progress,
       income: income,
       outgoings: outgoings,
       documents: double, application_type: application_type,
@@ -24,6 +24,15 @@ describe Summary::HtmlPresenter do
     )
   end
   # rubocop:enable Layout/LineLength
+
+  let(:kase) do
+    instance_double(
+      Case,
+      case_type: 'either_way',
+      client_other_charge_in_progress: 'yes',
+      partner_other_charge_in_progress: 'no'
+    )
+  end
 
   let(:capital) do
     instance_double(
@@ -250,7 +259,7 @@ describe Summary::HtmlPresenter do
     context 'when an initial application' do
       let(:application_type) { 'initial' }
 
-      context 'for an "in progress" database application' do
+      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -293,13 +302,15 @@ describe Summary::HtmlPresenter do
             OtherCapitalDetails
             SupportingEvidence
             MoreInformation
+            ClientOtherCharge
+            PartnerOtherCharge
           ]
         end
 
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do
+      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
@@ -347,6 +358,8 @@ describe Summary::HtmlPresenter do
             MoreInformation
             Declarations
             LegalRepresentativeDetails
+            ClientOtherCharge
+            PartnerOtherCharge
           ]
         end
 
@@ -358,7 +371,7 @@ describe Summary::HtmlPresenter do
       let(:application_type) { 'change_in_financial_circumstances' }
       let(:cifc?) { true }
 
-      context 'for an "in progress" database application' do
+      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -400,13 +413,15 @@ describe Summary::HtmlPresenter do
             OtherCapitalDetails
             SupportingEvidence
             MoreInformation
+            ClientOtherCharge
+            PartnerOtherCharge
           ]
         end
 
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do
+      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
@@ -453,6 +468,8 @@ describe Summary::HtmlPresenter do
             MoreInformation
             Declarations
             LegalRepresentativeDetails
+            ClientOtherCharge
+            PartnerOtherCharge
           ]
         end
 
@@ -463,7 +480,7 @@ describe Summary::HtmlPresenter do
     context 'when a PSE application' do
       let(:application_type) { 'post_submission_evidence' }
 
-      context 'for an "in progress" database application' do
+      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -478,7 +495,7 @@ describe Summary::HtmlPresenter do
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do
+      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
