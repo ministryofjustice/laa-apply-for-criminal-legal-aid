@@ -11,6 +11,7 @@ module SubmissionSerializer
           json.created_at crime_application.created_at
           json.submitted_at crime_application.submitted_at
           json.date_stamp crime_application.date_stamp || crime_application.submitted_at
+          json.date_stamp_context crime_application.date_stamp_context.as_json
           json.is_means_tested crime_application.is_means_tested
           json.ioj_passport crime_application.ioj_passport
           json.means_passport(
