@@ -1,4 +1,4 @@
-FROM ruby:3.3.4-alpine3.20 AS base
+FROM ruby:3.3.5-alpine3.20 AS base
 LABEL maintainer="LAA Crime Apply Team"
 
 # dependencies required both at runtime and build time
