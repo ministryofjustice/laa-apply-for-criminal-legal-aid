@@ -2,19 +2,20 @@ require 'rails_helper'
 
 RSpec.describe TypeOfApplication do
   let(:crime_application_class) do
-    Struct.new(:reviewed_at, :returned_at, :application_type, :kase) do
+    Struct.new(:reviewed_at, :returned_at, :application_type, :kase, :parent_id) do
       include TypeOfApplication
     end
   end
 
   let(:crime_application) do
-    crime_application_class.new(reviewed_at, returned_at, application_type, kase)
+    crime_application_class.new(reviewed_at, returned_at, application_type, kase, parent_id)
   end
 
   let(:reviewed_at) { 1.day.ago }
   let(:returned_at) { nil }
   let(:application_type) { 'initial' }
   let(:kase) { nil }
+  let(:parent_id) { nil }
 
   describe '#reviewed?' do
     subject(:reviewed) { crime_application.reviewed? }
@@ -48,6 +49,30 @@ RSpec.describe TypeOfApplication do
     subject(:initial) { crime_application.initial? }
 
     context 'when application type is "initial"' do
+      it { is_expected.to be true }
+    end
+
+    context 'when application type is "post_submission_evidence"' do
+      let(:application_type) { 'post_submission_evidence' }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#resubmission?' do
+    subject(:resubmission?) { crime_application.resubmission? }
+
+    let(:parent_id) { '8d5c8b54-8ddf-4646-b678-1650ccf37758' }
+
+    context 'when application type is "initial"' do
+      let(:application_type) { 'initial' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when application type is "change in financial circumstances"' do
+      let(:application_type) { 'change_in_financial_circumstances' }
+
       it { is_expected.to be true }
     end
 

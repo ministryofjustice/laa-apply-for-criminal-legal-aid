@@ -27,12 +27,18 @@ module Steps
       def persist!
         return true unless changed?
 
-        applicant.update(
-          attributes.merge(
-            # The following are dependent attributes that need to be reset
-            attributes_to_reset
+        ::CrimeApplication.transaction do
+          if crime_application.resubmission? && changed?(:date_of_birth)
+            applicant.update!(confirm_dwp_result: nil)
+            crime_application.update!(is_means_tested: nil)
+          end
+
+          # Deliberately not using update! here to ensure general shared specs pattern
+          # continues to work as expected
+          applicant.update(
+            attributes.merge(attributes_to_reset)
           )
-        )
+        end
       end
 
       # If the last name or date of birth have changed, the DWP check

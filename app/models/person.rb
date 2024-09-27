@@ -27,6 +27,10 @@ class Person < ApplicationRecord
     datum.in_time_zone('London').to_date - 18.years >= date_of_birth
   end
 
+  def self.over_18?(from_date, date_of_birth)
+    from_date.in_time_zone('London').to_date - 18.years >= date_of_birth
+  end
+
   def nino
     return unless has_nino == YesNoAnswer::YES.to_s
 

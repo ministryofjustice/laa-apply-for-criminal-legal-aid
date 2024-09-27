@@ -21,7 +21,8 @@ module TypeOfApplication
   end
 
   def resubmission?
-    initial? && parent_id.present?
+    parent_id.present? &&
+      (application_type_eql?(:initial) || application_type_eql?(:change_in_financial_circumstances))
   end
 
   def post_submission_evidence?
