@@ -24,13 +24,20 @@ module Steps
         errors.add(:date_of_birth, :client_under_ten) if date_of_birth.beginning_of_day > 10.years.ago
       end
 
-      def persist!
+      def persist! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         return true unless changed?
 
         ::CrimeApplication.transaction do
+          # CRIMAPP-1313 prevents resubmitted application date_of_birth changes to
+          # maintain original application means passporting
           if crime_application.resubmission? && changed?(:date_of_birth)
-            applicant.update!(confirm_dwp_result: nil)
-            crime_application.update!(is_means_tested: nil)
+            if applicant.over_18_at_date_stamp? && Applicant.under_18?(Time.zone.now, date_of_birth)
+              crime_application.update!(is_means_tested: 'yes')
+              applicant.update!(confirm_dwp_result: nil)
+            elsif applicant.under_18_at_date_stamp? && Applicant.over_18?(Time.zone.now, date_of_birth)
+              applicant.update!(confirm_dwp_result: nil)
+              crime_application.update!(is_means_tested: nil)
+            end
           end
 
           # Deliberately not using update! here to ensure general shared specs pattern

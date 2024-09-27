@@ -24,11 +24,19 @@ class Person < ApplicationRecord
   def over_18_at_date_stamp?
     datum = crime_application&.date_stamp || Time.zone.now
 
-    datum.in_time_zone('London').to_date - 18.years >= date_of_birth
+    Person.over_18?(datum, date_of_birth)
+  end
+
+  def under_18_at_date_stamp?
+    !over_18_at_date_stamp?
   end
 
   def self.over_18?(from_date, date_of_birth)
     from_date.in_time_zone('London').to_date - 18.years >= date_of_birth
+  end
+
+  def self.under_18?(from_date, date_of_birth)
+    !over_18?(from_date, date_of_birth)
   end
 
   def nino

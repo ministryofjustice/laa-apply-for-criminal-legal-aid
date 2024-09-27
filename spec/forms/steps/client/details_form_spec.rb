@@ -40,7 +40,7 @@ RSpec.describe Steps::Client::DetailsForm do
     context 'date_of_birth' do
       it_behaves_like 'a multiparam date validation', attribute_name: :date_of_birth
 
-      context 'when it is changed after resubmission' do
+      context 'when it is changed after resubmission to be under 18' do
         let(:crime_application) do
           CrimeApplication.create!(
             parent_id: 'aac750e0-6161-4b22-926e-c7a611d0e9f5', # Returned
@@ -61,6 +61,37 @@ RSpec.describe Steps::Client::DetailsForm do
 
         # Now under 18
         let(:form_attributes) { super().merge(date_of_birth: 15.years.ago.to_date) }
+        let(:resubmission?) { true }
+
+        it 'resets DWP check and is_means_tested' do
+          expect(subject.save).to be(true)
+
+          expect(crime_application.reload.is_means_tested).to eq 'yes'
+          expect(applicant_record.reload.confirm_dwp_result).to be_nil
+        end
+      end
+
+      context 'when it is changed after resubmission to be over 18' do
+        let(:crime_application) do
+          CrimeApplication.create!(
+            parent_id: 'aac750e0-6161-4b22-926e-c7a611d0e9f5', # Returned
+            application_type: 'initial',
+            is_means_tested: 'yes',
+          )
+        end
+
+        let(:applicant_record) do
+          Applicant.create!(
+            crime_application: crime_application,
+            confirm_dwp_result: 'no',
+            first_name: 'Super',
+            last_name: 'Mario',
+            date_of_birth: 17.years.ago, # Originally under 18
+          )
+        end
+
+        # Now over 18
+        let(:form_attributes) { super().merge(date_of_birth: 18.years.ago.to_date) }
         let(:resubmission?) { true }
 
         it 'resets DWP check and is_means_tested' do
