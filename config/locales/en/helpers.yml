@@ -462,8 +462,10 @@ en:
           other: For example, Student Loans, pensions or employee benefits
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: This will be from HM Revenue and Customs (HMRC).
+        applicant_self_assessment_tax_bill_amount: Enter '0' if none.
       steps_income_partner_self_assessment_tax_bill_form:
         partner_self_assessment_tax_bill: This will be from HM Revenue and Customs (HMRC).
+        partner_self_assessment_tax_bill_amount: Enter '0' if none.
       steps_income_lost_job_in_custody_form:
         date_job_lost: For example, 27 3 2007
       steps_income_income_payments_form:
