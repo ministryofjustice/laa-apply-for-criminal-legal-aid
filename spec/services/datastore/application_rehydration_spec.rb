@@ -31,6 +31,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         parent_id: '47a93336-7da6-48ec-b139-808ddd555a41',
         is_means_tested: 'yes',
         date_stamp: an_instance_of(DateTime),
+        date_stamp_context: an_instance_of(LaaCrimeSchemas::Structs::DateStampContext),
         ioj_passport: an_instance_of(Array),
         means_passport: an_instance_of(Array),
         applicant: an_instance_of(Applicant),

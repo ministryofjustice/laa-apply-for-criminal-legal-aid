@@ -22,6 +22,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
+      date_stamp_context: date_stamp_context,
       is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       applicant: double,
@@ -36,6 +37,17 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
   let(:created_at) { DateTime.new(2022, 12, 12) }
   let(:submitted_at) { DateTime.new(2022, 12, 15) }
   let(:date_stamp) { DateTime.new(2022, 12, 13) }
+  let(:date_of_birth) { Date.new(1990, 1, 1) }
+
+  let(:date_stamp_context) do
+    DateStampContext.new(
+      first_name: 'Fred',
+      last_name: 'Flintstone',
+      date_of_birth: date_of_birth,
+      date_stamp: date_stamp,
+      created_at: date_stamp,
+    )
+  end
 
   let(:json_output) do
     {
@@ -47,6 +59,13 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       created_at: created_at,
       submitted_at: submitted_at,
       date_stamp: date_stamp,
+      date_stamp_context: {
+        first_name: 'Fred',
+        last_name: 'Flintstone',
+        date_of_birth: date_of_birth,
+        date_stamp: date_stamp,
+        created_at: date_stamp,
+      },
       is_means_tested: 'yes',
       ioj_passport: ['on_age_under18'],
       means_passport: ['on_age_under18'],

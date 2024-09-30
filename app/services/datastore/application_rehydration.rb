@@ -15,6 +15,7 @@ module Datastore
         parent_id: parent.id,
         is_means_tested: parent.is_means_tested,
         date_stamp: date_stamp,
+        date_stamp_context: parent.date_stamp_context,
         ioj_passport: parent.ioj_passport,
         means_passport: parent.means_passport,
         dependants: dependants,

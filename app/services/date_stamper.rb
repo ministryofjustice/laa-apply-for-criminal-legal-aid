@@ -2,6 +2,7 @@ class DateStamper
   def initialize(crime_app, case_type: 'none')
     @crime_app = crime_app
     @case_type = case_type
+    @date_stamp = Time.current
   end
 
   def call
@@ -25,7 +26,10 @@ class DateStamper
     return false if @crime_app.date_stamp.present?
 
     if @crime_app.not_means_tested? || CaseType.new(@case_type).date_stampable?
-      @crime_app.update(date_stamp: Time.current)
+      @crime_app.date_stamp = @date_stamp
+      @crime_app.date_stamp_context = DateStampContext.build(@crime_app, @date_stamp)
+
+      @crime_app.save
     else
       false
     end

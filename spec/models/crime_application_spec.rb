@@ -78,6 +78,26 @@ RSpec.describe CrimeApplication, type: :model do
     end
   end
 
+  describe '#date_stamp_context' do
+    it 'is be persisted and loaded' do
+      crime_application = described_class.new
+      crime_application.date_stamp_context = DateStampContext.new(
+        first_name: 'Sweeny',
+        last_name: 'Todd',
+        date_of_birth: Date.new(1990, 1, 1),
+        date_stamp: Time.current,
+      )
+
+      crime_application.save!
+      crime_application.reload
+
+      expect(crime_application.date_stamp_context.first_name).to eq 'Sweeny'
+      expect(crime_application.date_stamp_context.last_name).to eq 'Todd'
+      expect(crime_application.date_stamp_context.date_of_birth.to_s).to eq '1990-01-01'
+      expect(crime_application.date_stamp_context.date_stamp).to respond_to :to_time
+    end
+  end
+
   describe 'evidence' do
     it 'has an initial empty prompts' do
       expect(subject.evidence_prompts).to eq []

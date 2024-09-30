@@ -67,6 +67,13 @@ RSpec.describe SubmissionSerializer::Application do
         created_at: nil,
         submitted_at: nil,
         date_stamp: nil,
+        date_stamp_context: {
+          first_name: nil,
+          last_name: nil,
+          date_of_birth: nil,
+          date_stamp: nil,
+          created_at: nil,
+        },
         is_means_tested: nil,
         ioj_passport: [],
         means_passport: [],
