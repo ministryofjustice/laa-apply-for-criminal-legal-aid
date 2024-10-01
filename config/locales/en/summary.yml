@@ -375,7 +375,7 @@ en:
         question: Court
       client_other_charge_next_hearing_date: &other_charge_next_hearing_date
         question: Next hearing
-      
+
       partner_other_charge_in_progress: *other_charge_in_progress
       partner_other_charge_charge: *other_charge_charge
       partner_other_charge_hearing_court_name: *other_charge_hearing_court_name
@@ -384,9 +384,9 @@ en:
 
       # BEGIN next court hearing section
       hearing_court_name:
-        question: Court name
+        question: What court is the hearing at
       hearing_date:
-        question: Date of next hearing
+        question: When is the next hearing?
       is_first_court_hearing:
         question: Did this court also hear the first hearing?
         answers:
@@ -396,7 +396,7 @@ en:
 
       # BEGIN first court hearing section
       first_court_hearing_name:
-        question: Court name
+        question: What court is the hearing at
       # END first court hearing section
 
       # BEGIN justification for legal aid section
