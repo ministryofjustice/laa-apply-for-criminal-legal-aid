@@ -5,6 +5,10 @@ module Summary
         date_stampable_values_changed? && super
       end
 
+      def editable?
+        false
+      end
+
       # rubocop:disable Metrics/MethodLength
       def answers
         [
@@ -12,17 +16,18 @@ module Summary
             :date_stamp, date_stamp_context.date_stamp,
             i18n_opts: { format: :datestamp },
           ),
-          Components::FreeTextAnswer.new(
+          Components::ChangedDateStampAnswer.new(
             :first_name, date_stamp_context.first_name,
-            change_path: nil
+            changed: first_name_changed?,
           ),
-          Components::FreeTextAnswer.new(
+          Components::ChangedDateStampAnswer.new(
             :last_name, date_stamp_context.last_name,
-            change_path: nil
+            changed: last_name_changed?,
           ),
-          Components::DateAnswer.new(
+          Components::ChangedDateStampAnswer.new(
             :date_of_birth, date_stamp_context.date_of_birth,
             i18n_opts: { format: :dob },
+            changed: date_of_birth_changed?,
           ),
         ]
       end
