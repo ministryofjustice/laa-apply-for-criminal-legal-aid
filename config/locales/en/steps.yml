@@ -505,11 +505,11 @@ en:
       savings:
         edit:
           heading:
-            bank: Add the bank account details
-            building_society: Add the building society account details
-            cash_isa: Add the Cash ISA account details
-            national_savings_or_post_office: Add the National Savings or Post Office account details
-            other: Add the other cash investment account details
+            bank: The bank account details
+            building_society: The building society account details
+            cash_isa: The Cash ISA account details
+            national_savings_or_post_office: The National Savings or Post Office account details
+            other: The other cash investment account details
           info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
