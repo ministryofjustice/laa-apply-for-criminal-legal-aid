@@ -400,6 +400,8 @@ en:
             one: You added %{count} business
             other: You added %{count} businesses
       businesses:
+        edit:
+          info: Add the name and address of your client’s business, partnership or the private company they’re director or shareholder of.
         confirm_destroy:
           page_title: Delete %{subject}’s business
           heading: Are you sure you want to remove this business?

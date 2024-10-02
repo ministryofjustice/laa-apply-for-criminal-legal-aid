@@ -7,13 +7,20 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl"><%=legend_t(:details) %></h1>
+
+    <p class="govuk-!-margin-bottom-7"><%= t('.info') %></p>
+
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :trading_name, autocomplete: 'off' %>
-      <%= f.govuk_text_field :address_line_one, autocomplete: 'off' %>
-      <%= f.govuk_text_field :address_line_two, autocomplete: 'off' %>
-      <%= f.govuk_text_field :city, autocomplete: 'off', width: 'one-half' %>
-      <%= f.govuk_text_field :country, autocomplete: 'off', width: 'one-half' %>
-      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third' %>
+      <%= f.govuk_text_field :trading_name, autocomplete: 'off', label: { tag: 'h2', size: 'm' } %>
+
+
+      <%= f.govuk_label :address_line_one, text: 'hi' %>
+
+      <%= f.govuk_text_field :address_line_one, autocomplete: 'off', label: { tag: 'h2', size: 'm' }  %>
+      <%= f.govuk_text_field :address_line_two, autocomplete: 'off', label: { tag: 'h2', size: 'm' }  %>
+      <%= f.govuk_text_field :city, autocomplete: 'off', width: 'one-half', label: { tag: 'h2', size: 'm' }  %>
+      <%= f.govuk_text_field :country, autocomplete: 'off', width: 'one-half', label: { tag: 'h2', size: 'm' }  %>
+      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third', label: { tag: 'h2', size: 'm' }  %>
 
       <%= f.continue_button %>
     <% end %>

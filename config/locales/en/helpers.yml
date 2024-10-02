@@ -931,7 +931,7 @@ en:
 
       steps_income_businesses_form:
         details: Details of %{subject}’s business?
-        trading_name: Trading name of the business
+        trading_name: What is the trading name of the business?
         <<: *ADDRESS_DETAILS
       steps_income_businesses_summary_form:
         add_business_options: *YESNO
