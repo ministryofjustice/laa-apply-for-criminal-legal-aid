@@ -131,7 +131,7 @@ en:
         client_other_charge_in_progress: Is any other criminal case or charge against your client in progress?
         partner_other_charge_in_progress: Is any other criminal case or charge against the partner in progress?
       steps_case_hearing_details_form:
-        hearing_date: Date of next hearing
+        hearing_date: When is the next hearing?
         is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
@@ -425,7 +425,7 @@ en:
           date_from: For example, 27 3 2007
           date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
-        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court
+        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court.
         hearing_date: For example, 27 3 2024
       steps_case_first_court_hearing_form:
         first_court_hearing_name: Start typing to add a court. For example, Bristol Magistrates Court
@@ -702,7 +702,7 @@ en:
       steps_case_other_charge_in_progress_form:
         other_charge_in_progress_options: *YESNO
       steps_case_hearing_details_form:
-        hearing_court_name: Court name
+        hearing_court_name: What court is the hearing at?
         is_first_court_hearing_options:
           <<: *YESNO
           no_hearing_yet: There has not been a hearing yet
