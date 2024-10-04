@@ -13,14 +13,12 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :trading_name, autocomplete: 'off', label: { tag: 'h2', size: 'm' } %>
 
-
-      <%= f.govuk_label :address_line_one, text: 'hi' %>
-
-      <%= f.govuk_text_field :address_line_one, autocomplete: 'off', label: { tag: 'h2', size: 'm' }  %>
-      <%= f.govuk_text_field :address_line_two, autocomplete: 'off', label: { tag: 'h2', size: 'm' }  %>
-      <%= f.govuk_text_field :city, autocomplete: 'off', width: 'one-half', label: { tag: 'h2', size: 'm' }  %>
-      <%= f.govuk_text_field :country, autocomplete: 'off', width: 'one-half', label: { tag: 'h2', size: 'm' }  %>
-      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third', label: { tag: 'h2', size: 'm' }  %>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-4"><%= label_t(:address_title) %></h2>
+      <%= f.govuk_text_field :address_line_one, autocomplete: 'off', label: { tag: 'h3', size: 's' } %>
+      <%= f.govuk_text_field :address_line_two, autocomplete: 'off', label: { tag: 'h3', size: 's' }  %>
+      <%= f.govuk_text_field :city, autocomplete: 'off', width: 'one-half', label: { tag: 'h3', size: 's' }  %>
+      <%= f.govuk_text_field :country, autocomplete: 'off', width: 'one-half', label: { tag: 'h3', size: 's' }  %>
+      <%= f.govuk_text_field :postcode, autocomplete: 'off', width: 'one-third', label: { tag: 'h3', size: 's' }  %>
 
       <%= f.continue_button %>
     <% end %>
