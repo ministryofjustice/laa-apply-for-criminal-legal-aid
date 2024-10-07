@@ -617,12 +617,13 @@ en:
           attributes:
             base:
               none_selected: Select which payments your client gets, or select 'They do not get any of these payments'
-        steps/income/income_payment_fieldset_form: &income_payment_fieldset_form
+        steps/income/income_payment_fieldset_form:
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-              blank: "Enter amount for %{payment_type}"
+              blank: "Enter amount your client gets from %{payment_type}"
+              not_a_number: "Amount your client gets from %{payment_type} must be a number, like 50"
+              greater_than: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+              less_than_or_equal_to: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter the other sources of income they get
@@ -631,8 +632,9 @@ en:
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              blank: "Enter amount for %{payment_type}"
+              blank: "Enter amount your client gets from %{payment_type}"
+              greater_than: Amount your client gets must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount your client gets must be between £0 and £9,999,999,999.99
             frequency:
               blank: "Select how often they receive %{payment_type}"
             details:
@@ -641,7 +643,28 @@ en:
           attributes:
             base:
               none_selected: Select which payments the partner gets, or select 'They do not get any of these payments'
-        steps/income/partner/income_payment_fieldset_form: *income_payment_fieldset_form
+        steps/income/partner/income_payment_fieldset_form:
+          summary:
+            amount:
+              blank: "Enter amount the partner gets from %{payment_type}"
+              not_a_number: "Amount the partner gets from %{payment_type} must be a number, like 50"
+              greater_than: "Amount the partner gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+              less_than_or_equal_to: "Amount the partner gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter the other sources of income they get
+            frequency:
+              blank: "Select how often they get %{payment_type}"
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: "Enter amount the partner gets from %{payment_type}"
+              greater_than: Amount the partner gets must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount the partner gets must be between £0 and £9,999,999,999.99
+            frequency:
+              blank: "Select how often they get %{payment_type}"
+            details:
+              blank: Enter the other sources of income they get
         steps/income/income_benefits_form:
           attributes:
             base:
@@ -649,28 +672,51 @@ en:
         steps/income/income_benefit_fieldset_form: &income_benefit_fieldset_form
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-              blank: "Enter amount for %{payment_type}"
+              blank: "Enter amount your client gets from %{payment_type}"
+              not_a_number: "Amount your client gets from %{payment_type} must be a number, like 50"
+              greater_than: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+              less_than_or_equal_to: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter what benefits they get and the amount
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: "Select how often they get %{payment_type}"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              greater_than: Amount must be greater than 0
-              blank: "Enter amount for %{payment_type}"
+              blank: "Enter amount your client gets from %{payment_type}"
+              greater_than: Amount your client gets must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount your client gets must be between £0 and £9,999,999,999.99
             details:
               blank: Enter what benefits they get and the amount
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: "Select how often they get %{payment_type}"
         steps/income/partner/income_benefits_form:
           attributes:
             base:
               none_selected: Select which benefits the partner gets, or select 'They do not get any of these benefits'
-        steps/income/partner/income_benefit_fieldset_form: *income_benefit_fieldset_form
+        steps/income/partner/income_benefit_fieldset_form:
+          summary:
+            amount:
+              blank: "Enter amount your client gets from %{payment_type}"
+              not_a_number: "Amount your client gets from %{payment_type} must be a number, like 50"
+              greater_than: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+              less_than_or_equal_to: "Amount your client gets from %{payment_type} must be between £0 and £9,999,999,999.99"
+            details:
+              invalid: "Cannot add additional details for %{payment_type}"
+              blank: Enter what benefits they get and the amount
+            frequency:
+              blank: "Select how often they get %{payment_type}"
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+          attributes:
+            amount:
+              blank: "Enter amount your client gets from %{payment_type}"
+              greater_than: Amount the partner gets must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount the partner gets must be between £0 and £9,999,999,999.99
+            details:
+              blank: Enter what benefits they get and the amount
+            frequency:
+              blank: "Select how often they get %{payment_type}"
         steps/income/manage_without_income_form:
           attributes:
             manage_without_income:
@@ -815,21 +861,26 @@ en:
         steps/outgoings/outgoings_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client pays, or select 'They do not make any of these payments'
+              none_selected: Select which payments they pay, or select 'They do not make any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
+              not_a_number: "Amount they pay in %{payment_type} must be a number, like 50"
+              greater_than: "Amount they pay in %{payment_type} must be between £0 and £9,999,999,999.99"
+              less_than_or_equal_to: "Amount they pay in %{payment_type} must be between £0 and £9,999,999,999.99" 
             case_reference:
               invalid: "Cannot add case_reference for %{payment_type}"
               blank: Enter the case reference of the criminal rep order or civil certificate
             frequency:
-              blank: "%{payment_type} frequency can't be blank"
+              blank: "Select how often they pay %{payment_type}"
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
               blank: Enter an amount
+              greater_than: Amount they pay must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount they pay must be between £0 and £9,999,999,999.99
+            frequency:
+              blank: Select how often they pay
         steps/outgoings/income_tax_rate_form:
           attributes:
             income_tax_rate_above_threshold:
@@ -867,6 +918,8 @@ en:
             account_balance:
               blank: Enter the account balance
               not_a_number: The account balance must be a number, like 50
+              greater_than_or_equal_to: The account balance must be between £-99,999,999.99 and £99,999,999.99
+              less_than_or_equal_to: The account balance must be between -£99,999,999.99 and £99,999,999.99
             is_overdrawn:
               inclusion: Select yes if the account is overdrawn
             are_wages_paid_into_account:
@@ -885,6 +938,9 @@ en:
           attributes:
             premium_bonds_total_value:
               blank: Enter the total value of their bonds
+              not_a_number: The total value of their bonds must be a number, like 50
+              greater_than: The total value of their bonds must be between £0 and £49,999,999.99
+              less_than_or_equal_to: The total value of their bonds must be between £0 and £49,999,999.99
             premium_bonds_holder_number:
               blank: Enter the holder number
             has_premium_bonds:
@@ -893,6 +949,9 @@ en:
           attributes:
             partner_premium_bonds_total_value:
               blank: Enter the total value of their bonds
+              not_a_number: The total value of their bonds must be a number, like 50
+              greater_than: The total value of their bonds must be between £0 and £49,999,999.99
+              less_than_or_equal_to: The total value of their bonds must be between £0 and £49,999,999.99
             partner_premium_bonds_holder_number:
               blank: Enter the holder number
             partner_has_premium_bonds:
@@ -905,16 +964,28 @@ en:
           attributes:
             trust_fund_amount_held:
               blank: Enter the amount held in the fund
+              not_a_number: The total amount held in the fund must be a number, like 50
+              greater_than: The total amount held in the fund must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The total amount held in the fund must be between £0 and £99,999,999.99
             trust_fund_yearly_dividend:
               blank: Enter the yearly dividend
+              not_a_number: The yearly dividend must be a number, like 50
+              greater_than_or_equal_to: The yearly dividend must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The yearly dividend must be between £0 and £99,999,999.99
             will_benefit_from_trust_fund:
               inclusion: Select yes if your client stands to benefit from a trust fund inside or outside the UK
         steps/capital/partner_trust_fund_form:
           attributes:
             partner_trust_fund_amount_held:
               blank: Enter the amount held in the fund
+              not_a_number: The total amount held in the fund must be a number, like 50
+              greater_than_or_equal_to: The total amount held in the fund must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The total amount held in the fund must be between £0 and £99,999,999.99
             partner_trust_fund_yearly_dividend:
               blank: Enter the yearly dividend
+              not_a_number: The yearly dividend must be a number, like 50
+              greater_than: The yearly dividend must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The yearly dividend must be between £0 and £99,999,999.99
             partner_will_benefit_from_trust_fund:
               inclusion: Select yes if the partner stands to benefit from a trust fund inside or outside the UK
         steps/capital/residential_form:
@@ -928,9 +999,13 @@ en:
             value:
               blank: Enter how much the property is worth
               not_a_number: How much the property is worth must be a number, like 50
+              greater_than: How much the property is worth must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much the property is worth must be between £0 and £99,999,999.99
             outstanding_mortgage:
               blank: Enter how much is left to pay on the mortgage
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+              greater_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
@@ -947,10 +1022,10 @@ en:
               greater_than_or_equal_to: *property_partner_percentage_error
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
-              inclusion: Select yes if the address of the property is the same as your client's home address
+              blank: Select yes if the address of the property is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              inclusion: Select yes if anyone else owns part of the property
+              blank: Select yes if anyone else owns part of the property
         steps/capital/commercial_form:
           attributes:
             usage:
@@ -958,9 +1033,13 @@ en:
             value:
               blank: Enter how much the property is worth
               not_a_number: How much the property is worth must be a number, like 50
+              greater_than: How much the property is worth must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much the property is worth must be between £0 and £99,999,999.99
             outstanding_mortgage:
               blank: Enter how much is left to pay on the mortgage
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+              greater_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
@@ -977,10 +1056,10 @@ en:
               greater_than_or_equal_to: *property_partner_percentage_error
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
-              inclusion: Select yes if the address of the property is the same as your client's home address
+              blank: Select yes if the address of the property is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              inclusion: Select yes if anyone else owns part of the property
+              blank: Select yes if anyone else owns part of the property
         steps/capital/land_form:
           attributes:
             size_in_acres:
@@ -991,9 +1070,13 @@ en:
             value:
               blank: Enter how much the land is worth
               not_a_number: How much the land is worth must be a number, like 50
+              greater_than: How much the land is worth must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much the land is worth must be between £0 and £99,999,999.99
             outstanding_mortgage:
               blank: Enter how much is left to pay on the mortgage
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
+              greater_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
+              less_than_or_equal_to: How much there is left to pay on the mortgage must be between £0 and £99,999,999.99
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100%
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
@@ -1010,10 +1093,10 @@ en:
               greater_than_or_equal_to: *land_partner_percentage_error
               less_than_or_equal_to: *land_partner_percentage_error
             is_home_address:
-              inclusion: Select yes if the address of the land is the same as your client's home address
+              blank: Select yes if the address of the land is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              inclusion: Select yes if anyone else owns part of the land
+              blank: Select yes if anyone else owns part of the land
         steps/capital/property_address_form:
           attributes:
             address_line_one:
@@ -1085,6 +1168,8 @@ en:
             value:
               blank: Enter the value of the investment
               not_a_number: The value of their investment must be a number, like 50
+              greater_than: The value of their investment must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The value of their investment must be between £0 and £99,999,999.99
             ownership_type:
               inclusion: Select whose name the account is in
             confirm_in_applicants_name:
@@ -1108,6 +1193,8 @@ en:
             value:
               blank: Enter the value of the certificate
               not_a_number: The value of their certificate must be a number, like 50
+              greater_than: The value of their certificate must be between £0 and £99,999,999.99
+              less_than_or_equal_to: The value of their certificate must be between £0 and £99,999,999.99
             ownership_type:
               inclusion: Select who owns the certifcate
             confirm_in_applicants_name:
@@ -1153,8 +1240,9 @@ en:
               blank: Enter your client's job title
             amount:
               blank: Enter their salary or wage
-              not_a_number: Enter their salary or wage
-              greater_than: Salary or wage must be greater than 0
+              not_a_number: Salary or wage must be a number, like 50
+              greater_than: Salary or wage must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Salary or wage must be between £0 and £9,999,999,999.99
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -1166,8 +1254,9 @@ en:
               blank: Enter your client's job title
             amount:
               blank: Enter their salary or wage
-              not_a_number: Enter their salary or wage
-              greater_than: Salary or wage must be greater than 0
+              not_a_number: Salary or wage must be a number, like 50
+              greater_than: Salary or wage must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Salary or wage must be between £0 and £9,999,999,999.99
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -1180,8 +1269,9 @@ en:
               blank: Enter their job title
             amount:
               blank: Enter their salary or wage
-              not_a_number: Enter their salary or wage
-              greater_than: Salary or wage must be greater than 0
+              not_a_number: Salary or wage must be a number, like 50
+              greater_than: Salary or wage must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Salary or wage must be between £0 and £9,999,999,999.99
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -1193,8 +1283,9 @@ en:
               blank: Enter their job title
             amount:
               blank: Enter their salary or wage
-              not_a_number: Enter their salary or wage
-              greater_than: Salary or wage must be greater than 0
+              not_a_number: Salary or wage must be a number, like 50
+              greater_than: Salary or wage must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Salary or wage must be between £0 and £9,999,999,999.99
             before_or_after_tax:
               blank: Select before or after tax
               inclusion: Select before or after tax
@@ -1208,14 +1299,15 @@ en:
         steps/income/partner/deductions_form:
           attributes:
             base:
-              none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
+              none_selected: Select and enter a deduction or select that the partner does not have deductions taken from their pay
         steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
           summary:
             amount:
               blank: Enter how much %{deduction_type} gets deducted
               blank_alt: Enter amount of %{deduction_type}
               not_a_number: Enter amount
-              greater_than: Amount must be greater than 0
+              greater_than: Amount of %{deduction_type} deducted must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount of %{deduction_type} deducted must be between £0 and £9,999,999,999.99
             frequency:
               blank:
                 one: Select how often the %{deduction_type} gets deducted
@@ -1229,7 +1321,8 @@ en:
               blank: Enter how much %{deduction_type} gets deducted
               blank_alt: Enter amount of %{deduction_type}
               not_a_number: Enter amount
-              greater_than: Amount must be greater than 0
+              greater_than: Amount deducted must be between £0 and £9,999,999,999.99
+              less_than_or_equal_to: Amount deducted must be between £0 and £9,999,999,999.99
             frequency:
               blank:
                 one: Select how often the %{deduction_type} gets deducted

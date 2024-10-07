@@ -9,7 +9,8 @@ module Steps
 
         validates :job_title, :before_or_after_tax, presence: true
         validates :amount, numericality: {
-          greater_than: 0
+          greater_than: 0,
+          less_than_or_equal_to: 9_999_999_999.99
         }
         validates :frequency, presence: true, inclusion: { in: :frequencies }
         validates :before_or_after_tax, presence: true, inclusion: { in: :before_or_after_tax_options }
