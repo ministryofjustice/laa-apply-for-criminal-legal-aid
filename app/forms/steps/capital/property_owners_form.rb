@@ -1,6 +1,9 @@
 module Steps
   module Capital
     class PropertyOwnersForm < Steps::BaseFormObject
+      include TypeOfMeansAssessment
+      include Steps::ApplicantOrPartner
+
       delegate :property_owners_attributes=, to: :record
 
       validates_with CapitalAssessment::PropertyOwnersValidator,

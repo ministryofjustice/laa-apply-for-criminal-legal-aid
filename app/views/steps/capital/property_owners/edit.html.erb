@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t('.page_title', asset: PropertyType.to_phrase(@form_object.record.property_type)) %>
 <% step_header %>
 
 <div class="govuk-grid-row">
@@ -7,14 +7,19 @@
 
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-xl"><%=t ".heading.#{@form_object.record.property_type}" %></h1>
+
+    <h1 class="govuk-heading-xl">
+      <%= t(".heading.#{@form_object.record.property_type}") %>
+    </h1>
+
+    <p class="govuk-!-margin-bottom-7"><%= t('.info', asset: PropertyType.to_phrase(@form_object.record.property_type)) %></p>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.fields_for :property_owners do |po_field| %>
         <% index = po_field.index + 1 %>
-        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:) }, id: "property_owner_#{index}" do %>
+        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:), tag: 'h2', size: 'l' }, id: "property_owner_#{index}" do %>
           <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { text: label_t(:name, index: index.ordinalize_fully) }  %>
-          <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { size: 'm', text: legend_t(:relationship) } do %>
+          <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { tag: 'h3', size: 'm', text: legend_t(:relationship) } do %>
             <% @form_object.relationships.each_with_index do |option, index| %>
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
             <% end %>
@@ -23,8 +28,8 @@
               <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
             <%end%>
           <% end %>
-          <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third',
-                                          label: { text: label_t("percentage_owned_#{@form_object.record.property_type}") } %>
+          <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-quarter',
+                                          label: { text: label_t("percentage_owned_#{@form_object.record.property_type}"), tag: 'h3', size: 'm' } %>
 
           <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),
                         class: %w[govuk-button govuk-button--warning],
