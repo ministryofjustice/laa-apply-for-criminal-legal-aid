@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::InvestmentTypeController, type: :controller do
+  let(:investments) { [] }
+  let(:capital) { Capital.new }
+
+  let(:existing_case) do
+    CrimeApplication.create(capital: capital, investments: investments, applicant: Applicant.new)
+  end
+
+  before do
+    allow_any_instance_of(Capital).to receive(:investments).and_return(investments)
+  end
+
   it_behaves_like 'a generic step controller', Steps::Capital::InvestmentTypeForm, Decisions::CapitalDecisionTree do
     context 'when investments present' do
-      let(:existing_case) do
-        CrimeApplication.create(investments: [Investment.new(investment_type: :bank, ownership_type: 'applicant')],
-                                applicant: Applicant.new)
-      end
+      let(:investments) { [Investment.new(investment_type: :bank, ownership_type: 'applicant')] }
 
       describe '#edit' do
         it 'redirects to the investments summary page' do

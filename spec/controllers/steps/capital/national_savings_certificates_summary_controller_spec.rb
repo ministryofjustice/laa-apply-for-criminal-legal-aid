@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Steps::Capital::NationalSavingsCertificatesSummaryController, type: :controller do
   let(:existing_case) do
-    CrimeApplication.create(national_savings_certificates: national_savings_certificates, applicant: Applicant.new)
+    CrimeApplication.create(capital: Capital.new, national_savings_certificates: national_savings_certificates,
+                            applicant: Applicant.new)
+  end
+
+  before do
+    allow_any_instance_of(Capital).to receive(:national_savings_certificates).and_return(national_savings_certificates)
   end
 
   context 'when national savings certificates present' do

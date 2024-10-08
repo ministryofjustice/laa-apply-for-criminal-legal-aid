@@ -20,7 +20,8 @@ module Steps
       end
 
       def require_no_savings
-        return true if current_crime_application.savings.empty?
+        # pp current_crime_application.capital.savings
+        return true if current_crime_application.capital.savings.empty?
 
         redirect_to edit_steps_capital_savings_summary_path(current_crime_application)
       end
