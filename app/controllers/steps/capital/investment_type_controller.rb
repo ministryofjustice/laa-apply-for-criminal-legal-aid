@@ -20,7 +20,7 @@ module Steps
       end
 
       def require_no_investments
-        return true if current_crime_application.investments.empty?
+        return true if current_crime_application.capital.investments.empty?
 
         redirect_to edit_steps_capital_investments_summary_path(current_crime_application)
       end
