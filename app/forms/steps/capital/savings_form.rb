@@ -15,8 +15,13 @@ module Steps
       attribute :are_wages_paid_into_account, :value_object, source: YesNoAnswer
       attribute :are_partners_wages_paid_into_account, :value_object, source: YesNoAnswer
 
-      validates :provider_name, :sort_code, :account_number, :account_balance, presence: true
+      validates :provider_name, :sort_code, :account_number, presence: true
       validates :is_overdrawn, :are_wages_paid_into_account, inclusion: { in: YesNoAnswer.values }
+
+      validates :account_balance, numericality: {
+        greater_than_or_equal_to: -99_999_999.99,
+        less_than_or_equal_to: 99_999_999.99
+      }
 
       validates(
         :are_partners_wages_paid_into_account,

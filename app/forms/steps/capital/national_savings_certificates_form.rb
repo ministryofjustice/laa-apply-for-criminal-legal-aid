@@ -16,7 +16,12 @@ module Steps
       attribute :value, :pence
 
       validates :holder_number, format: { with: NSC_REGEXP }, presence: true
-      validates :certificate_number, :value, presence: true
+      validates :certificate_number, presence: true
+
+      validates :value, numericality: {
+        greater_than: 0,
+        less_than_or_equal_to: 99_999_999.99
+      }
 
       def persist!
         record.update(attributes)
