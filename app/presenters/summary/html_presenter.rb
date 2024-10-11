@@ -8,6 +8,7 @@ module Summary
       initial: %i[
         overview
         client_details
+        date_stamp_context
         contact_details
         partner_details
         passporting_benefit_check
@@ -60,6 +61,7 @@ module Summary
       change_in_financial_circumstances: %i[
         overview
         client_details
+        date_stamp_context
         contact_details
         partner_details
         passporting_benefit_check

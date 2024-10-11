@@ -20,7 +20,7 @@ module Steps
       end
 
       def require_certificates
-        return true if current_crime_application.national_savings_certificates.present?
+        return true if current_crime_application.capital.national_savings_certificates.present?
 
         redirect_to edit_steps_capital_has_national_savings_certificates_path(current_crime_application)
       end

@@ -72,6 +72,7 @@ en:
       client_other_charge: "Other charges"
       client_other_charge_explicit: "Other charges: client"
       partner_other_charge: "Other charges: partner"
+      date_stamp_context: Details entered for date stamp
       details: Details
       dependants: Dependants
       files: Files
@@ -375,7 +376,7 @@ en:
         question: Court
       client_other_charge_next_hearing_date: &other_charge_next_hearing_date
         question: Next hearing
-      
+
       partner_other_charge_in_progress: *other_charge_in_progress
       partner_other_charge_charge: *other_charge_charge
       partner_other_charge_hearing_court_name: *other_charge_hearing_court_name

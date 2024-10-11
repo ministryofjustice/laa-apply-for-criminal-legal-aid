@@ -1,5 +1,6 @@
 RSpec.shared_context 'means tested with partner' do
   let(:case_type) { 'Indictable' }
+  let(:full_means_assessment?) { true }
 
   before do
     visit root_path
@@ -30,6 +31,9 @@ RSpec.shared_context 'means tested with partner' do
 
     # steps/client/case_type
     choose(case_type)
+    save_and_continue
+
+    # steps/client/date_stamp
     save_and_continue
 
     # steps/client/residence_type
@@ -106,8 +110,10 @@ RSpec.shared_context 'means tested with partner' do
     save_and_continue
 
     # steps/case/client/other_charge_in_progress
-    choose_answer('Is any other criminal case or charge against your client in progress?', 'No')
-    save_and_continue
+    if full_means_assessment?
+      choose_answer('Is any other criminal case or charge against your client in progress?', 'No')
+      save_and_continue
+    end
 
     # steps/case/hearing_details
     select('Derby Crown Court', from: 'Court name')
