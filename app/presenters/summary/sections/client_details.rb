@@ -25,7 +25,8 @@ module Summary
 
           Components::DateAnswer.new(
             :date_of_birth, applicant.date_of_birth,
-            change_path: edit_steps_client_details_path
+            change_path: edit_steps_client_details_path,
+            i18n_opts: { format: :dob }
           ),
         ]
 

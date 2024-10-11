@@ -72,6 +72,7 @@ en:
       client_other_charge: "Other charges"
       client_other_charge_explicit: "Other charges: client"
       partner_other_charge: "Other charges: partner"
+      date_stamp_context: Details entered for date stamp
       details: Details
       dependants: Dependants
       files: Files

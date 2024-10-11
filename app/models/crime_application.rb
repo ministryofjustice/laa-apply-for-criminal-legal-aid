@@ -115,7 +115,8 @@ class CrimeApplication < ApplicationRecord
 
   # Ignore any stored date_stamp if the application is not date_stampable
   def date_stamp
-    return if not_means_tested? || kase&.case_type.blank?
+    return super if not_means_tested?
+    return if kase&.case_type.blank?
     return unless CaseType.new(kase.case_type).date_stampable?
 
     super
