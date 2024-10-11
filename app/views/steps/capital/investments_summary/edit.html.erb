@@ -9,7 +9,7 @@
     <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
 
     <h1 class="govuk-heading-xl">
-      <%=t '.heading', count: @form_object.investments.size %>
+      <%=t '.heading', count: @form_object.capital.investments.size %>
     </h1>
 
     <%= render Summary::Sections::Investments.new(current_crime_application, headless: true) %>

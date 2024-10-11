@@ -51,14 +51,10 @@ module PartnerDetails
     end
 
     def address?
-      return true unless include_partner_in_means_assessment?
-
-      record.has_same_address_as_client == 'no' ? crime_application.partner&.home_address.present? : true
+      record.has_same_address_as_client == 'no' ? crime_application.partner&.home_address? : true
     end
 
     def same_address?
-      return true unless include_partner_in_means_assessment?
-
       record.has_same_address_as_client.present?
     end
 

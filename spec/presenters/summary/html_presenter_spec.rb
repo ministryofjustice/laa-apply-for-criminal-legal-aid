@@ -3,14 +3,15 @@ require 'rails_helper'
 # This spec is just a high level, smoke test of the sections.
 # It is not intended to test conditionality or complex rules,
 # as that is tested individually in each of the sections specs.
-#
+
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Summary::HtmlPresenter do
   subject(:presenter) { described_class.new(crime_application:) }
 
   # rubocop:disable Layout/LineLength
   let(:database_application) do
     instance_double(
-      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes'),
+      CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes', first_name: 'Arnold', last_name: 'Slit', date_of_birth: Date.new(1990, 1, 1)),
       partner: double(first_name: 'Test first name', arc: nil), partner_detail: double(PartnerDetail, involvement_in_case: 'none'),
       kase: kase, ioj: double, status: :in_progress,
       income: income,
@@ -20,6 +21,7 @@ describe Summary::HtmlPresenter do
       savings: [double], investments: [double], national_savings_certificates: [double], properties: [double],
       is_means_tested: 'yes',
       non_means_tested?: false,
+      date_stamp_context: date_stamp_context,
       cifc?: cifc?,
     )
   end
@@ -90,6 +92,10 @@ describe Summary::HtmlPresenter do
   let(:manage_without_income) { nil }
 
   let(:cifc?) { false }
+
+  let(:date_stamp_context) do
+    double(DateStampContext, first_name: 'Arnold', last_name: 'Slit', date_of_birth: Date.new(1990, 1, 1))
+  end
 
   let(:datastore_application) do
     extra = {
@@ -259,7 +265,7 @@ describe Summary::HtmlPresenter do
     context 'when an initial application' do
       let(:application_type) { 'initial' }
 
-      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -310,13 +316,24 @@ describe Summary::HtmlPresenter do
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'with changed attributes in date stamp context' do
+        let(:date_stamp_context) do
+          double(DateStampContext, first_name: 'Arnie', last_name: 'Slight', date_of_birth: Date.new(1990, 1, 1))
+        end
+
+        let(:crime_application) { database_application }
+
+        it { is_expected.to include('DateStampContext') }
+      end
+
+      context 'for a "submitted" datastore application' do
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
           %w[
             Overview
             ClientDetails
+            DateStampContext
             ContactDetails
             PartnerDetails
             PassportingBenefitCheck
@@ -371,7 +388,7 @@ describe Summary::HtmlPresenter do
       let(:application_type) { 'change_in_financial_circumstances' }
       let(:cifc?) { true }
 
-      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -421,13 +438,14 @@ describe Summary::HtmlPresenter do
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'for a "submitted" datastore application' do
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
           %w[
             Overview
             ClientDetails
+            DateStampContext
             ContactDetails
             PartnerDetails
             PassportingBenefitCheck
@@ -480,7 +498,7 @@ describe Summary::HtmlPresenter do
     context 'when a PSE application' do
       let(:application_type) { 'post_submission_evidence' }
 
-      context 'for an "in progress" database application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'for an "in progress" database application' do
         let(:crime_application) { database_application }
 
         let(:expected_sections) do
@@ -495,7 +513,7 @@ describe Summary::HtmlPresenter do
         it { is_expected.to match_array(expected_sections) }
       end
 
-      context 'for a "submitted" datastore application' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      context 'for a "submitted" datastore application' do
         let(:crime_application) { datastore_application }
 
         let(:expected_sections) do
@@ -654,3 +672,4 @@ describe Summary::HtmlPresenter do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -5,9 +5,10 @@ module Summary
       include ApplicationHelper
       include StepsHelper
 
-      attr_reader :question, :value, :show, :change_path
+      attr_reader :question, :value, :show, :change_path, :changed
 
-      DEFAULT_OPTIONS = { default: nil, show: nil, change_path: nil, i18n_opts: {}, subject_type: nil }.freeze
+      DEFAULT_OPTIONS = { default: nil, show: nil, change_path: nil, i18n_opts: {}, subject_type: nil,
+                          changed: nil }.freeze
 
       def initialize(question, value, *args)
         options = extract_supported_options!(args)
@@ -18,6 +19,7 @@ module Summary
         @change_path = options[:change_path]
         @subject_type = options[:subject_type]
         @i18n_opts = options[:i18n_opts]
+        @changed = options[:changed]
       end
 
       def show?
@@ -30,6 +32,10 @@ module Summary
 
       def change_link?
         change_path.present?
+      end
+
+      def changed?
+        !!changed
       end
 
       def question_text
