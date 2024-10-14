@@ -10,11 +10,11 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_select :hearing_court_name, Court.all, :name, :name,
                                     data: { module: 'accessible-autocomplete' },
-                                    options: { include_blank: true }, label: { size: 'm' } %>
+                                    options: { include_blank: true }, label: { tag: 'h2', size: 'm' } %>
 
-      <%= f.govuk_date_field :hearing_date, maxlength_enabled: true %>
+      <%= f.govuk_date_field :hearing_date, maxlength_enabled: true, legend: { tag: 'h2', size: 'm' } %>
 
-      <%= f.govuk_collection_radio_buttons :is_first_court_hearing, @form_object.choices, :value %>
+      <%= f.govuk_collection_radio_buttons :is_first_court_hearing, @form_object.choices, :value, legend: { tag: 'h2', size: 'm' } %>
 
       <%= f.continue_button %>
     <% end %>

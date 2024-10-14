@@ -1,5 +1,5 @@
 <% if f.object.include_partner_in_means_assessment? %>
-  <%= f.govuk_collection_radio_buttons :ownership_type, values, :value, legend: { size: 's' } %>
+  <%= f.govuk_collection_radio_buttons :ownership_type, values, :value, legend: { tag: 'h2', size: 'm' } %>
 <% else %>
   <%= f.govuk_check_boxes_fieldset :confirm_in_applicants_name, multiple: false do %>
     <%= f.govuk_check_box :confirm_in_applicants_name, true, multiple: false, link_errors: true %>
