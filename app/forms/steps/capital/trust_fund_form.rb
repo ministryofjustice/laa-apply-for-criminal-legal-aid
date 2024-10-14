@@ -10,12 +10,15 @@ module Steps
 
       validates :will_benefit_from_trust_fund, inclusion: { in: YesNoAnswer.values }
 
-      validates(
-        :trust_fund_amount_held,
-        :trust_fund_yearly_dividend,
-        presence: true,
-        if: -> { will_benefit_from_trust_fund&.yes? }
-      )
+      validates :trust_fund_amount_held, numericality: {
+        greater_than: 0,
+        less_than_or_equal_to: 99_999_999.99
+      }, if: -> { will_benefit_from_trust_fund&.yes? }
+
+      validates :trust_fund_yearly_dividend, numericality: {
+        greater_than_or_equal_to: 0,
+        less_than_or_equal_to: 99_999_999.99
+      }, if: -> { will_benefit_from_trust_fund&.yes? }
 
       private
 
