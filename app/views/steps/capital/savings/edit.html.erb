@@ -13,15 +13,15 @@
     <p><%= t('.info') %></p>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :provider_name, autocomplete: 'off' %>
-      <%= f.govuk_text_field :sort_code, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
-      <%= f.govuk_text_field :account_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half' %>
-      <%= f.govuk_number_field :account_balance, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
-      <%= f.govuk_collection_radio_buttons :is_overdrawn, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
-      <%= f.govuk_collection_radio_buttons :are_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+      <%= f.govuk_text_field :provider_name, autocomplete: 'off', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_text_field :sort_code, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_text_field :account_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :account_balance, inputmode: 'numeric', prefix_text: '£', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_collection_radio_buttons :is_overdrawn, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_collection_radio_buttons :are_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
 
       <% if f.object.include_partner_in_means_assessment? %>
-        <%= f.govuk_collection_radio_buttons :are_partners_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+        <%= f.govuk_collection_radio_buttons :are_partners_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
       <% end %>
 
       <%= render partial: 'steps/shared/ownership_form_fields', locals: { f: f, values: OwnershipType.values } %>
