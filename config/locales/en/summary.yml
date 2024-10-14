@@ -8,6 +8,9 @@ en:
       YESNO: &YESNO
         'yes': 'Yes'
         'no': 'No'
+      PASSFAIL: &PASSFAIL
+        pass: Passed
+        fail: Failed
       OWNERSHIP_TYPE: &OWNERSHIP_TYPE
         applicant: 'Client'
         applicant_and_partner: 'Client and partner'
@@ -148,6 +151,8 @@ en:
       partner_work_benefits: Other work benefits
       employment_income: Pay from employment
       partner_employment_income: Pay from employment
+      funding_decisions: Funding decisions
+      case: Case
 
     questions:
       # BEGIN overview section
@@ -692,6 +697,43 @@ en:
       how_manage:
         question: How they cover outgoings that are more than income
       # END other outgoings details section
+
+      # BEGIN funding decisions section
+      funding_decision_maat_id:
+        question: MAAT ID
+      funding_decision_case_number:
+        question: Case number
+      funding_decision_ioj_result:
+        question: Interests of justice test result
+        answers:
+          <<: *PASSFAIL
+      funding_decision_ioj_reason:
+        question: Interests of justice reason
+      funding_decision_ioj_caseworker:
+        question: Interests of justice test caseworker name
+      funding_decision_ioj_date:
+        question: Date of interests of justice test
+      funding_decision_means_result:
+        question: Means test result
+        answers:
+          <<: *PASSFAIL
+      funding_decision_means_caseworker:
+        question: Means test caseworker name
+      funding_decision_means_date:
+        question: Date of means test
+      funding_decision_overall_result:
+        question: Overall result
+        answers:
+          granted:
+            value: Granted
+            colour: green
+          granted_on_ioj:
+            value: Granted
+            colour: green
+          fail_on_ioj:
+            value: Rejected
+            colour: red
+      # END funding decisions section
 
       # BEGIN declarations section
       legal_rep_has_client_declaration:

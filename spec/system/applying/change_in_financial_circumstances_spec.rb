@@ -135,7 +135,7 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/capital/which_savings
-      choose_answer('Which savings does your client have inside or outside the UK?',
+      choose_answer('Which savings do your client have inside or outside the UK?',
                     'They do not have any of these savings')
       save_and_continue
 
