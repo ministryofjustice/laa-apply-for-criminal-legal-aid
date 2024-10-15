@@ -1,6 +1,6 @@
 class Dependant < ApplicationRecord
   MAX_AGE = 18
-  MAX_TOTAL_DEPENDANTS = 50
+  MAX_TOTAL_DEPENDANTS = 18 # Maximum determined by MAAT
 
   belongs_to :crime_application
 
