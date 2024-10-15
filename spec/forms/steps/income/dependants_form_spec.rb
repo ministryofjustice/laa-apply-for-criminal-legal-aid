@@ -41,20 +41,20 @@ RSpec.describe Steps::Income::DependantsForm do
       end
     end
 
-    context 'when there are 50 dependants' do
+    context 'when there are 18 dependants' do
       let(:dependants_attributes) do
-        Array.new(50) { |i| [i.to_s, { 'age' => 5 }] }.to_h
+        Array.new(18) { |i| [i.to_s, { 'age' => 5 }] }.to_h
       end
 
       it 'is valid' do
-        expect(subject.crime_application.dependants.size).to eq 50
+        expect(subject.crime_application.dependants.size).to eq 18
         expect(subject).to be_valid
       end
     end
 
-    context 'when there are 51 or more dependants' do
+    context 'when there are 19 or more dependants' do
       let(:dependants_attributes) do
-        Array.new(51) { |i| [i.to_s, { 'age' => 5 }] }.to_h
+        Array.new(19) { |i| [i.to_s, { 'age' => 5 }] }.to_h
       end
 
       it 'is invalid' do
