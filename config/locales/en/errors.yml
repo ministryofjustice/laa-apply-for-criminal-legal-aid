@@ -605,7 +605,7 @@ en:
         steps/income/dependants_form:
           attributes:
             dependants:
-              too_long: Must have 18 or fewer dependants
+              too_long: Must have 50 or fewer dependants
         steps/income/dependant_fieldset_form:
           summary:
             age:
