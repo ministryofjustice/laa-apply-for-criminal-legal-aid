@@ -1,10 +1,6 @@
 module SubmissionSerializer
   module Definitions
     class Partner < Definitions::BaseDefinition
-      def present?
-        super && partner.present?
-      end
-
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
