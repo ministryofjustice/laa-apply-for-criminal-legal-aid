@@ -11,7 +11,7 @@ RSpec.describe SubmissionSerializer::Definitions::Document do
       s3_object_key: '123/abcdef1234',
       filename: 'test.pdf',
       content_type: 'application/pdf',
-      file_size: 1.megabytes,
+      file_size: 1.megabyte,
     )
   end
 
@@ -31,7 +31,7 @@ RSpec.describe SubmissionSerializer::Definitions::Document do
         s3_object_key: '123/abcdef1234',
         filename: 'test.pdf',
         content_type: 'application/pdf',
-        file_size: 1.megabytes,
+        file_size: 1.megabyte,
       },
       {
         s3_object_key: '321/abcdef1234',
