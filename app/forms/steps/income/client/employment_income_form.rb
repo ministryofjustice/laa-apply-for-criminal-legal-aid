@@ -7,7 +7,8 @@ module Steps
         attribute :frequency, :value_object, source: PaymentFrequencyType
 
         validates :amount, numericality: {
-          greater_than: 0
+          greater_than: 0,
+          less_than_or_equal_to: 9_999_999_999.99
         }
         validates :before_or_after_tax, inclusion: { in: :before_or_after_tax_options }
         validates :frequency, inclusion: { in: PaymentFrequencyType.values }
