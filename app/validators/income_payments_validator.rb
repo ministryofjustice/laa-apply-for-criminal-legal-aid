@@ -50,6 +50,6 @@ class IncomePaymentsValidator < ActiveModel::Validator
       "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
       scope: [:activemodel, :errors, :models],
       payment_type: payment_type
-    )
+    ).capitalize
   end
 end
