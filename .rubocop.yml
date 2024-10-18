@@ -52,6 +52,9 @@ Naming/VariableNumber:
 Rails/FilePath:
   Enabled: false
 
+Rails/EnumSyntax:
+  Enabled: false
+
 Naming/PredicateName:
   Enabled: false
 

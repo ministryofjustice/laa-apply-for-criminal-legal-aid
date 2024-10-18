@@ -77,7 +77,16 @@ RSpec.describe Evidence::Ruleset::Hydrated do
         /Key accidentally_deleted does not have a Rule definition - generate one/
       )
 
-      described_class.new(crime_application, [:example2, :accidentally_deleted]).rules
+      rules = described_class.new(crime_application, [:example2, :accidentally_deleted]).rules
+      expect(rules).to contain_exactly(Evidence::Rules::ExampleRule2)
+    end
+
+    context 'with keys that do not have definitions' do
+      it 'is empty' do
+        rules = described_class.new(crime_application, [:key_not_yet_implemented_with_definition_file]).rules
+
+        expect(rules).to be_empty
+      end
     end
   end
 end
