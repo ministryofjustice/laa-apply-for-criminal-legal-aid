@@ -1,5 +1,15 @@
 ---
 en:
+  table_headings:
+    applicant_name: Name
+    reference: Reference number (USN)
+    submitted_at: Date submitted
+    application_type: Application type
+    application_status: Application status
+  search:
+    total:
+      one: 1 search result
+      other: "%{count} search results"
   helpers/dictionary:
     address: &ADDRESS_DETAILS
       address_line_one: Address line 1

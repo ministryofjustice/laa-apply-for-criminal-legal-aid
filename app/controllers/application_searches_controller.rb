@@ -1,0 +1,48 @@
+class ApplicationSearchesController < ApplicationController
+  def new
+    @filter = ApplicationSearchFilter.new
+  end
+
+  def search
+    set_search(default_sorting: { sort_by: 'submitted_at', sort_direction: 'ascending' })
+  end
+
+  private
+
+  def search_params
+    params.permit(
+      :page,
+      :per_page,
+      :office_code,
+      filter: [:search_text],
+      sorting: ApplicationSearchSorting.attribute_names
+    )
+  end
+
+  def set_search(default_sorting: {})
+    set_sorting(default_sorting)
+    set_filter
+    set_pagination
+
+    @search = ApplicationSearch.new(
+      filter: @filter, sorting: @sorting, pagination: @pagination
+    )
+  end
+
+  def set_sorting(default = {})
+    @sorting = ApplicationSearchSorting.new(search_params[:sorting] || default)
+  end
+
+  def set_filter
+    @filter = ApplicationSearchFilter.new(search_text: search_params[:filter][:search_text],
+                                          status: %w[submitted],
+                                          office_code: current_office_code)
+  end
+
+  def set_pagination
+    @pagination = Pagination.new(
+      current_page: search_params[:page],
+      limit_value: search_params[:per_page]
+    )
+  end
+end

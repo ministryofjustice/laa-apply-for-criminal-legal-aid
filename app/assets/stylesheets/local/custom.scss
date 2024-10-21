@@ -146,3 +146,18 @@ $app-blue-button-colour: govuk-colour("blue");
 .app-evidence-upload-hidden {
   display: none;
 }
+
+form.search {
+  padding-top: 2em;
+  padding-left: 2em;
+  background-color: govuk-colour("light-grey");
+  .input-group {
+    display: flex;
+    .govuk-form-group {
+      margin-right: govuk-spacing(4);
+    }
+  }
+  input[type=date] {
+    width: 8em;
+  }
+}
