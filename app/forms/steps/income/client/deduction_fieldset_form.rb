@@ -12,7 +12,10 @@ module Steps
         validate { presence_with_deduction_type :amount }
         validate { presence_with_deduction_type :frequency }
 
-        validates :amount, numericality: { greater_than: 0 }
+        validates :amount, numericality: {
+          greater_than: 0,
+          less_than_or_equal_to: 99_999_999.99
+        }
         validates :frequency, inclusion: { in: :frequencies }
         validates :deduction_type, presence: true, inclusion: { in: :deduction_types }
 

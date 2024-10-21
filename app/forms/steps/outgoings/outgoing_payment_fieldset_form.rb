@@ -8,7 +8,8 @@ module Steps
       attribute :case_reference, :string
 
       validates :amount, numericality: {
-        greater_than: 0
+        greater_than: 0,
+        less_than_or_equal_to: 9_999_999_999.99
       }
 
       validates :payment_types, presence: true, inclusion: { in: :payment_types }

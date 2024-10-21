@@ -11,11 +11,15 @@ module Steps
       validates :partner_has_premium_bonds, inclusion: { in: YesNoAnswer.values }
 
       validates(
-        :partner_premium_bonds_total_value,
         :partner_premium_bonds_holder_number,
         presence: true,
         if: -> { partner_has_premium_bonds&.yes? }
       )
+
+      validates :partner_premium_bonds_total_value, numericality: {
+        greater_than: 0,
+        less_than_or_equal_to: 49_999_999.99
+      }, if: -> { partner_has_premium_bonds&.yes? }
 
       private
 
