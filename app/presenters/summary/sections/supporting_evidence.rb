@@ -7,22 +7,9 @@ module Summary
 
       def answers
         if submitted_documents?
-          [
-            documents.map do |document|
-              next if document.s3_object_key.nil?
-
-              Components::FreeTextAnswer.new(
-                :supporting_evidence, document.filename,
-                change_path: edit_steps_evidence_upload_path(crime_application)
-              )
-            end
-          ].flatten.compact.select(&:show?)
+          evidence_card
         else
-          [
-            Components::FreeTextAnswer.new(
-              :no_supporting_evidence, nil
-            )
-          ]
+          no_evidence_card
         end
       end
 
@@ -38,6 +25,27 @@ module Summary
 
       def name
         :files
+      end
+
+      def no_evidence_card
+        [
+          Components::FreeTextAnswer.new(
+            :no_supporting_evidence, nil
+          )
+        ]
+      end
+
+      def evidence_card
+        [
+          documents.map do |document|
+            next if document.s3_object_key.nil?
+
+            Components::FreeTextAnswer.new(
+              :supporting_evidence, document.filename,
+              change_path: edit_steps_evidence_upload_path(crime_application)
+            )
+          end
+        ].flatten.compact.select(&:show?)
       end
 
       private
