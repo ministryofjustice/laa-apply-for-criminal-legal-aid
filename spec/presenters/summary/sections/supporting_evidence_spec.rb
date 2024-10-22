@@ -60,7 +60,9 @@ describe Summary::Sections::SupportingEvidence do
       let(:documents) { [] }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(0)
+        expect(answers.count).to eq(1)
+        expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
+        expect(answers[0].question).to eq(:no_supporting_evidence)
       end
     end
   end

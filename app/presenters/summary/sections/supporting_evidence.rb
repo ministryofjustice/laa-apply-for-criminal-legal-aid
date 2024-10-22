@@ -6,16 +6,24 @@ module Summary
       end
 
       def answers
-        [
-          documents.map do |document|
-            next if document.s3_object_key.nil?
+        if submitted_documents?
+          [
+            documents.map do |document|
+              next if document.s3_object_key.nil?
 
+              Components::FreeTextAnswer.new(
+                :supporting_evidence, document.filename,
+                change_path: edit_steps_evidence_upload_path(crime_application)
+              )
+            end
+          ].flatten.compact.select(&:show?)
+        else
+          [
             Components::FreeTextAnswer.new(
-              :supporting_evidence, document.filename,
-              change_path: edit_steps_evidence_upload_path(crime_application)
+              :no_supporting_evidence, nil
             )
-          end
-        ].flatten.compact.select(&:show?)
+          ]
+        end
       end
 
       def change_path
@@ -36,6 +44,10 @@ module Summary
 
       def documents
         @documents ||= crime_application.documents
+      end
+
+      def submitted_documents?
+        documents.any?
       end
     end
   end
