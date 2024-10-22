@@ -733,6 +733,14 @@ en:
           fail_on_ioj:
             value: Rejected
             colour: red
+          failmeans:
+            value: Failed on means
+            colour: red
+          failioj:
+            value: Rejected
+            colour: red
+      funding_decision_further_info:
+        question: Further information about the decision
       # END funding decisions section
 
       # BEGIN declarations section

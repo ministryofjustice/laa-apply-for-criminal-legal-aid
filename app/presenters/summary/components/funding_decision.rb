@@ -34,6 +34,9 @@ module Summary
           ),
           Components::TagAnswer.new(
             :funding_decision_overall_result, funding_decision.funding_decision
+          ),
+          Components::FreeTextAnswer.new(
+            :funding_decision_further_info, funding_decision.comment
           )
         ].select(&:show?)
       end
