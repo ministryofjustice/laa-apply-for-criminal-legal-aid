@@ -760,6 +760,9 @@ en:
       # BEGIN supporting evidence section
       supporting_evidence:
         question: File name
+      no_supporting_evidence:
+        question: No files were uploaded
+        absence_answer: ''
       additional_information:
         question: Any additional information?
         absence_answer: *absence_none
