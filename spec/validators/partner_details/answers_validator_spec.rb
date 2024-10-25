@@ -30,7 +30,10 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     )
   end
 
-  let(:home_address) { instance_double(Address, type: 'HomeAddress', person: partner, postcode: 'SW1A 2AA') }
+  let(:home_address) do
+    instance_double(Address, type: 'HomeAddress', person: partner,
+                                       address_line_one: 'Test Address Line 1')
+  end
   let(:has_partner) { nil }
 
   before do
@@ -76,12 +79,20 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
         it { is_expected.to be true }
       end
 
-      context 'without address when living apart' do
+      context 'when living apart' do
         before { partner_detail.has_same_address_as_client = 'no' }
 
-        let(:home_address) { nil }
+        context 'without address' do
+          let(:home_address) { nil }
 
-        it { is_expected.to be false }
+          it { is_expected.to be false }
+        end
+
+        context 'when partner address incomplete' do
+          let(:home_address) { instance_double(Address, type: 'HomeAddress', person: partner, address_line_one: nil) }
+
+          it { is_expected.to be false }
+        end
       end
 
       context 'without address when living together' do

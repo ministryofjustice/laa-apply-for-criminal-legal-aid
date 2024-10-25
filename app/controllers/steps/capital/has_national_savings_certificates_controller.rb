@@ -16,7 +16,7 @@ module Steps
       private
 
       def require_no_certificates
-        return true if current_crime_application.national_savings_certificates.empty?
+        return true if current_crime_application.capital.national_savings_certificates.empty?
 
         redirect_to edit_steps_capital_national_savings_certificates_summary_path(
           current_crime_application

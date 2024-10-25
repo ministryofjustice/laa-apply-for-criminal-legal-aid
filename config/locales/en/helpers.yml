@@ -14,6 +14,10 @@ en:
       applicant: 'Client'
       applicant_and_partner: 'Client and partner'
       partner: 'Partner'
+    OWNERSHIP_PHRASE_OPTIONS: &OWNERSHIP_PHRASE_OPTIONS
+      applicant: "My client"
+      applicant_and_partner: "My client and their partner"
+      partner: "My client's partner"
     YESNO: &YESNO
       'yes': 'Yes'
       'no': 'No'
@@ -29,6 +33,10 @@ en:
       'four_weeks': 'Every 4 weeks'
       'month': 'Monthly'
       'annual': 'Yearly'
+    asset:
+      residential: residential property
+      commercial: commercial property
+      land: land
   helpers:
     back_link: Back
     back_to_portal: Back to the LAA Online Portal
@@ -131,7 +139,7 @@ en:
         client_other_charge_in_progress: Is any other criminal case or charge against your client in progress?
         partner_other_charge_in_progress: Is any other criminal case or charge against the partner in progress?
       steps_case_hearing_details_form:
-        hearing_date: Date of next hearing
+        hearing_date: When is the next hearing?
         is_first_court_hearing: Did this court also hear the first hearing?
       steps_case_ioj_form:
         types: Why should your client get legal aid?
@@ -321,7 +329,7 @@ en:
       steps_capital_other_property_type_form:
         property_type: Which other assets does %{subject} own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
-        saving_type: Which savings does %{subject} have inside or outside the UK?
+        saving_type: Which savings do %{subject} have inside or outside the UK?
       steps_capital_other_saving_type_form:
         saving_type: Which other savings does %{subject} have inside or outside the UK?
       steps_capital_savings_form:
@@ -425,7 +433,7 @@ en:
           date_from: For example, 27 3 2007
           date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
-        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court
+        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court.
         hearing_date: For example, 27 3 2024
       steps_case_first_court_hearing_form:
         first_court_hearing_name: Start typing to add a court. For example, Bristol Magistrates Court
@@ -702,7 +710,7 @@ en:
       steps_case_other_charge_in_progress_form:
         other_charge_in_progress_options: *YESNO
       steps_case_hearing_details_form:
-        hearing_court_name: Court name
+        hearing_court_name: What court is the hearing at?
         is_first_court_hearing_options:
           <<: *YESNO
           no_hearing_yet: There has not been a hearing yet
@@ -1104,7 +1112,6 @@ en:
           land: Land
           none: They do not own any of these assets
       steps_capital_other_property_type_form:
-        property_type: "asdfasdf"
         property_type_options: *PROPERTY_TYPE_OPTIONS
       steps_capital_saving_type_form:
         saving_type_options: &SAVING_TYPE_OPTIONS
@@ -1136,20 +1143,20 @@ en:
         is_overdrawn_options: *YESNO
         are_wages_paid_into_account_options: *YESNO
         are_partners_wages_paid_into_account_options: *YESNO
-        ownership_type_options: *OWNERSHIP_OPTIONS
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_investments_form:
         description: Describe the investment
         value: What is the value of the investment?
-        ownership_type_options: *OWNERSHIP_OPTIONS
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm the investment is in my client's name
       steps_capital_national_savings_certificates_form:
         holder_number: What is the customer number or holder number?
         certificate_number: What is the certificate number?
         value: What is the value of the certificate?
-        ownership_type_options: *OWNERSHIP_OPTIONS
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
           'true': I confirm my client owns the certificate
       steps_capital_savings_summary_form:

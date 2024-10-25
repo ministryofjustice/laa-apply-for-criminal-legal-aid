@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid' do
-  describe 'Submitting a change in financial circumstances application' do
+  describe 'Submitting an appeal to crown court (with changes) application' do
     before do
       visit root_path
       click_button('Start now')
@@ -14,17 +14,11 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
 
       # applications
       click_link('Start an application')
-      choose('A change in financial circumstances')
+      choose('New application')
       save_and_continue
 
-      # steps/circumstances/pre_cifc_reference_number
-      choose_answer('What is the reference number of the original application?', 'MAAT ID')
-      fill_in('Enter MAAT ID', with: '1234567')
-      save_and_continue
-
-      # steps/circumstances/pre_cifc_reason
-      fill_in("What has changed in your client's financial circumstances?", with: 'Redundancy')
-      save_and_continue
+      # edit (Task list)
+      click_link('Client details')
 
       # steps/client/details
       fill_in('First name', with: 'Jo')
@@ -32,8 +26,24 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       fill_date('Date of birth', with: 30.years.ago.to_date)
       save_and_continue
 
+      # steps/client/is_application_means_tested
+      save_and_continue
+
       # steps/client/case_type
-      choose('Indictable')
+      choose('Appeal to crown court')
+      save_and_continue
+
+      # steps/client/appeal_details
+      fill_date('When was the appeal lodged?', with: 1.month.ago.to_date)
+      choose_answer('Was a legal aid application submitted for the original case?', 'Yes')
+      save_and_continue
+
+      # steps/client/financial_circumstances_changed
+      choose_answer("Have your client's financial circumstances changed since the initial application?", 'Yes')
+      fill_in("What has changed in your client's financial circumstances?", with: 'Redundancy')
+      save_and_continue
+
+      # steps/client/date_stamp
       save_and_continue
 
       # steps/client/residence_type
@@ -48,8 +58,6 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/client/nino
-      choose('No')
-
       choose_answer('Does your client have a National Insurance number?', 'No')
       save_and_continue
 
@@ -74,6 +82,36 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
 
       # steps/case/haas_court_remanded_client_in_custody
       choose_answer('Has a court remanded your client in custody?', 'No')
+      save_and_continue
+
+      # steps/case/charges/#{charge_id}
+      fill_in('Offence', with: 'Theft from a shop (Over £100,000)')
+      fill_date('Start date 1', with: 1.month.ago.to_date)
+      save_and_continue
+
+      # steps/case/charges_summary
+      choose_answer('Do you want to add another offence?', 'No')
+      save_and_continue
+
+      # steps/case/has_codefendants
+      choose_answer('Does your client have any co-defendants in this case?', 'No')
+      save_and_continue
+
+      # steps/case/hearing_details
+      select('Derby Crown Court', from: 'What court is the hearing at?')
+      fill_date('When is the next hearing', with: 1.week.from_now.to_date)
+      choose_answer('Did this court also hear the first hearing?', 'Yes')
+      save_and_continue
+
+      # steps/case/ioj_passport
+      choose_answers(
+        'Why should your client get legal aid?',
+        ['It is likely that they will lose their livelihood']
+      )
+      fill_in(
+        'steps-case-ioj-form-loss-of-livelihood-justification-field',
+        with: 'IoJ justification details'
+      )
       save_and_continue
 
       # steps/income/what_is_clients_employment_status
@@ -129,29 +167,6 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       # outgoings cya
       save_and_continue
 
-      # steps/capital/which_assets_owned
-      choose_answer('Which assets does your client own or part-own inside or outside the UK?',
-                    'They do not own any of these assets')
-      save_and_continue
-
-      # steps/capital/which_savings
-      choose_answer('Which savings do your client have inside or outside the UK?',
-                    'They do not have any of these savings')
-      save_and_continue
-
-      # steps/capital/client_any_premium_bonds
-      choose_answer('Does your client have any Premium Bonds?', 'No')
-      save_and_continue
-
-      # steps/capital/any_national_savings_certificates
-      choose_answer('Does your client have any National Savings Certificates?', 'No')
-      save_and_continue
-
-      # steps/capital/which_investments
-      choose_answer('Which investments does your client have inside or outside the UK?',
-                    'They do not have any of these investments')
-      save_and_continue
-
       # steps/capital/client_benefit_from_trust_fund
       choose_answer('Does your client stand to benefit from a trust fund?', 'No')
       save_and_continue
@@ -169,9 +184,6 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/evidence/upload
-      # to bypass evidence validation requirements
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive_messages(validate: true,
-                                                                                      evidence_complete?: true)
       save_and_continue
 
       # steps/submission/more_information
@@ -194,7 +206,10 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
-          body['application_type'] == 'change_in_financial_circumstances'
+          body['case_details']['case_type'] == 'appeal_to_crown_court_with_changes' &&
+          body['case_details']['appeal_original_app_submitted'] == 'yes' &&
+          body['case_details']['appeal_financial_circumstances_changed'] == 'yes' &&
+          body['case_details']['appeal_with_changes_details'] == 'Redundancy'
         }
       ).to have_been_made.once
     end

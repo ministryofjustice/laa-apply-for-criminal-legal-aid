@@ -455,19 +455,19 @@ en:
             hearing_court_name:
               blank: Select a court name
             hearing_date:
-              blank: Date of next hearing cannot be blank
-              blank_day: Date of next hearing must include a day
-              blank_month: Date of next hearing must include a month
-              blank_year: Date of next hearing must include a year
-              blank_day_month: Date of next hearing must include a day and month
-              blank_day_year: Date of next hearing must include a day and year
-              blank_month_year: Date of next hearing must include a month and year
+              blank: The next hearing cannot be blank
+              blank_day: The next hearing must include a day
+              blank_month: The next hearing must include a month
+              blank_year: The next hearing must include a year
+              blank_day_month: The next hearing must include a day and month
+              blank_day_year: The next hearing must include a day and year
+              blank_month_year: The next hearing must include a month and year
               invalid: Enter a valid next hearing date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-              year_too_late: Date of next hearing is too far in the future
-              year_too_early: Date is too far in the past
+              invalid_day: Enter a valid day for the next hearing date
+              invalid_month: Enter a valid month for the next hearing date
+              invalid_year: Enter a valid year for the next hearing date
+              year_too_late: The next hearing is too far in the future
+              year_too_early: The next hearing is too far in the past
             is_first_court_hearing:
               inclusion: Select yes if this court also heard the first hearing
         steps/case/first_court_hearing_form:

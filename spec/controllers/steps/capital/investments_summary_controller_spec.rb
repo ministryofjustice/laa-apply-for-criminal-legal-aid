@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Steps::Capital::InvestmentsSummaryController, type: :controller do
   let(:existing_case) do
-    CrimeApplication.create(investments: investments, applicant: Applicant.new)
+    CrimeApplication.create(capital: Capital.new, investments: investments, applicant: Applicant.new)
+  end
+
+  before do
+    allow_any_instance_of(Capital).to receive(:investments).and_return(investments)
   end
 
   context 'when investments present' do

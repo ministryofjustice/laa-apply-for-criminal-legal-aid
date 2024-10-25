@@ -1,20 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
-  describe 'Submitting a means tested application with a self employed client and partner' do
+  describe 'Submitting a means tested application with an employed client and partner' do
     include_context 'means tested with partner'
 
     before do
       # steps/income/what_is_clients_employment_status
-      choose_answers("What is your client's employment status?", ['Self-employed'])
+      choose_answers("What is your client's employment status?", ['Employed'])
       save_and_continue
 
-      # steps/income/client/business_type
-      choose_answer('Which type of self-employed business do you want to add?', 'Self-employed business')
+      # steps/income/client/armed_forces
+      choose_answer('Is your client in the armed forces?', 'No')
       save_and_continue
 
-      # steps/income/client/businesses/:business_id
-      fill_in('Trading name of the business', with: 'Test business')
+      # steps/income/current_income_before_tax
+      choose_answer("Is your client and their partner's joint annual income more than £12,475 a year before tax?",
+                    'Yes')
+      save_and_continue
+
+      # steps/income/client/employer_details/:job_id
+      fill_in("Employer's name", with: 'Ministry of Justice')
       fill_in('Address line 1', with: 'Test address line 1')
       fill_in('Address line 2', with: 'Test address line 2')
       fill_in('Town or city', with: 'Test town')
@@ -22,32 +27,19 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       fill_in('Postcode', with: 'Test postcode')
       save_and_continue
 
-      # steps/income/client/nature_of_business/:business_id
-      fill_in('Give a brief description of what the business does', with: 'Dry cleaners')
+      # steps/income/client/employment_details/:job_id
+      fill_in('What is your client’s job title?', with: 'Software Developer')
+      fill_in('What is their salary or wage?', with: 35_000)
+      choose_answer('Is this before or after tax?', 'Before tax')
+      choose_answer('How often do they get this payment?', 'Monthly')
       save_and_continue
 
-      # steps/income/client/date_business_began_trading/:business_id
-      fill_date('When did the business begin trading?', with: 1.year.ago.to_date)
+      # steps/income/client/deductions_from_pay/:job_id
+      choose_answers('Deductions', ['The client does not have deductions taken from their pay'])
       save_and_continue
 
-      # steps/income/client/in_business_with_anyone_else/:business_id
-      choose_answer('Is your client in business with anyone else?', 'No')
-      save_and_continue
-
-      # steps/income/client/employees/:business_id
-      choose_answer('Does your client employ anyone through the business?', 'No')
-      save_and_continue
-
-      # steps/income/client/financials_of_business/:business_id
-      fill_in('Total turnover', with: 10_000)
-      fill_in('Total drawings', with: 1_000)
-      fill_in('Total profit', with: 5_000)
-      choose_answer_all('How often was this?', 'Monthly')
-      choose_answer('Over what period was this?', 'Monthly')
-      save_and_continue
-
-      # steps/client/businesses_summary
-      choose_answer('Do you need to add another business?', 'No')
+      # steps/income/client/add_employments
+      choose_answer('Do you want to add another job?', 'No')
       save_and_continue
 
       # steps/client/businesses_summary
@@ -71,15 +63,15 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/income/what_is_partners_employment_status
-      choose_answers("What is the partner's employment status?", ['Self-employed'])
+      choose_answers("What is the partner's employment status?", ['Employed'])
       save_and_continue
 
-      # steps/income/partner/business_type
-      choose_answer('Which type of self-employed business do you want to add?', 'Self-employed business')
+      # steps/income/partner/armed_forces
+      choose_answer('Is the partner in the armed forces?', 'No')
       save_and_continue
 
-      # steps/income/partner/businesses/:business_id
-      fill_in('Trading name of the business', with: 'Test partner business')
+      # steps/income/partner/employer_details/:job_id
+      fill_in("Employer's name", with: 'Ministry of Justice')
       fill_in('Address line 1', with: 'Test address line 1')
       fill_in('Address line 2', with: 'Test address line 2')
       fill_in('Town or city', with: 'Test town')
@@ -87,32 +79,19 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       fill_in('Postcode', with: 'Test postcode')
       save_and_continue
 
-      # steps/income/partner/nature_of_business/:business_id
-      fill_in('Give a brief description of what the business does', with: 'Dry cleaners')
+      # steps/income/partner/employment_details/:job_id
+      fill_in('What is their job title?', with: 'Software Developer')
+      fill_in('What is their salary or wage?', with: 35_000)
+      choose_answer('Is this before or after tax?', 'Before tax')
+      choose_answer('How often do they get this payment?', 'Monthly')
       save_and_continue
 
-      # steps/income/partner/date_business_began_trading/:business_id
-      fill_date('When did the business begin trading?', with: 1.year.ago.to_date)
+      # steps/income/partner/deductions_from_pay/:job_id
+      choose_answers('Deductions', ['The partner does not have deductions taken from their pay'])
       save_and_continue
 
-      # steps/income/partner/in_business_with_anyone_else/:business_id
-      choose_answer('Is the partner in business with anyone else?', 'No')
-      save_and_continue
-
-      # steps/income/partner/employees/:business_id
-      choose_answer('Does the partner employ anyone through the business?', 'No')
-      save_and_continue
-
-      # steps/income/partner/financials_of_business/:business_id
-      fill_in('Total turnover', with: 10_000)
-      fill_in('Total drawings', with: 1_000)
-      fill_in('Total profit', with: 5_000)
-      choose_answer_all('How often was this?', 'Monthly')
-      choose_answer('Over what period was this?', 'Monthly')
-      save_and_continue
-
-      # steps/income/partner/businesses_summary
-      choose_answer('Do you need to add another business?', 'No')
+      # steps/income/partner/add_employments
+      choose_answer('Do you want to add another job?', 'No')
       save_and_continue
 
       # steps/income/partner/self_assessment_partner
@@ -169,7 +148,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/capital/which_savings
-      choose_answer('Which savings does your client or their partner have inside or outside the UK?',
+      choose_answer('Which savings do your client or their partner have inside or outside the UK?',
                     'They do not have any of these savings')
       save_and_continue
 
@@ -236,8 +215,8 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
           body['is_means_tested'] == 'yes' &&
-            body['means_details']['income_details']['partner_employment_type'] == ['self_employed'] &&
-            body['means_details']['income_details']['employment_type'] == ['self_employed']
+            body['means_details']['income_details']['partner_employment_type'] == ['employed'] &&
+            body['means_details']['income_details']['employment_type'] == ['employed']
         }
       ).to have_been_made.once
     end

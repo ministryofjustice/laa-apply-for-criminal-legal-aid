@@ -269,7 +269,7 @@ en:
       hearing_details:
         edit:
           page_title: Next hearing court details
-          heading: Enter the details of the next court hearing
+          heading: The next court hearing
       first_court_hearing:
         edit:
           page_title: First court hearing
@@ -507,11 +507,11 @@ en:
       savings:
         edit:
           heading:
-            bank: Add the bank account details
-            building_society: Add the building society account details
-            cash_isa: Add the Cash ISA account details
-            national_savings_or_post_office: Add the National Savings or Post Office account details
-            other: Add the other cash investment account details
+            bank: The bank account details
+            building_society: The building society account details
+            cash_isa: The Cash ISA account details
+            national_savings_or_post_office: The National Savings or Post Office account details
+            other: The other cash investment account details
           info: You told us %{subject} has savings.
         confirm_destroy:
           page_title: Delete saving account confirmation
@@ -626,9 +626,9 @@ en:
       residential_property:
         edit:
           property_heading: &PROPERTY_HEADING
-            residential: Residential property owned by %{subject}
-            commercial: Commercial property owned by %{subject}
-            land: Land owned by %{subject}
+            residential: "%{subject}'s residential property"
+            commercial: "%{subject}'s commercial property"
+            land: "%{subject}'s land"
           heading:
             <<: *PROPERTY_HEADING
           info: You told us %{subject} owns or part-owns residential property.
@@ -658,15 +658,16 @@ en:
 
       property_owners:
         edit:
-          page_title: Other people who own the residential property
+          page_title: Other people who own the %{asset}
           heading:
-            residential: Other people who own the residential property
-            commercial: Other people who own the commercial property
-            land: Other people who own the land
+            residential: Other people who own %{subject}'s residential property
+            commercial: Other people who own %{subject}'s commercial property
+            land: Other people who own %{subject}'s land
           property_owners_fieldset_legend: Other owner %{index}
           add_button: Add another owner
           remove_button: Remove owner %{index}
           deleted_flash: The owner has been deleted
+          info: You told us %{subject} owns or part-owns the %{asset} with someone else.
 
       properties_summary:
         edit:

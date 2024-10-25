@@ -1,8 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
+RSpec.describe 'Apply for Criminal Legal Aid when partially means tested' do
   describe 'Submitting a means tested application with a not working client and partner' do
     include_context 'means tested with partner'
+    let(:case_type) { 'Summary only' }
+    let(:full_means_assessment?) { false }
 
     before do
       # steps/income/what_is_clients_employment_status
@@ -72,33 +74,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # outgoings cya
-      save_and_continue
-
-      # steps/capital/which_assets_owned
-      choose_answer('Which assets does your client or their partner own or part-own inside or outside the UK?',
-                    'They do not own any of these assets')
-      save_and_continue
-
-      # steps/capital/which_savings
-      choose_answer('Which savings does your client or their partner have inside or outside the UK?',
-                    'They do not have any of these savings')
-      save_and_continue
-
-      # steps/capital/client_any_premium_bonds
-      choose_answer('Does your client have any Premium Bonds?', 'No')
-      save_and_continue
-
-      # steps/capital/partner_any_premium_bonds
-      choose_answer('Does the partner have any Premium Bonds?', 'No')
-      save_and_continue
-
-      # steps/capital/any_national_savings_certificates
-      choose_answer('Does your client or their partner have any National Savings Certificates?', 'No')
-      save_and_continue
-
-      # steps/capital/which_investments
-      choose_answer('Which investments does your client or their partner have inside or outside the UK?',
-                    'They do not have any of these investments')
       save_and_continue
 
       # steps/capital/client_benefit_from_trust_fund

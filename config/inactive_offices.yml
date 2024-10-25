@@ -878,8 +878,6 @@ production:
     - 2P522Y
     - 2P278H
     - 0L744D
-    - 2Q622U
-    - 2Q623V
     - 2P544X
     - 2P542V
     - 2N301W
@@ -1011,10 +1009,6 @@ production:
     - 2E861J
     # Deactivate office code request - 25/09/2024
     # (0W464G was already deactivated)
-    - 1T524L
-    - 1Q101C
-    - 1R281K
-    - 1M383Y
     - 2P392G
     - 2Q341N
     - 0H167Q

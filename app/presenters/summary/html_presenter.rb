@@ -56,6 +56,7 @@ module Summary
         supporting_evidence
         more_information
         declarations
+        funding_decisions
         legal_representative_details
       ],
       change_in_financial_circumstances: %i[

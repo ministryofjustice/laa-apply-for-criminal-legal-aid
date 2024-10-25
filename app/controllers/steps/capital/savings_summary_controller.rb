@@ -20,7 +20,7 @@ module Steps
       end
 
       def require_savings
-        return true if current_crime_application.savings.present?
+        return true if current_crime_application.capital.savings.present?
 
         redirect_to edit_steps_capital_saving_type_path(current_crime_application)
       end

@@ -20,7 +20,7 @@ module Steps
       end
 
       def require_investments
-        return true if current_crime_application.investments.present?
+        return true if current_crime_application.capital.investments.present?
 
         redirect_to edit_steps_capital_investment_type_path(current_crime_application)
       end

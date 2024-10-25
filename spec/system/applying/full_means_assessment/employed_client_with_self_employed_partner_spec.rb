@@ -116,8 +116,8 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/case/hearing_details
-      select('Derby Crown Court', from: 'Court name')
-      fill_date('Date of next hearing', with: 1.week.from_now.to_date)
+      select('Derby Crown Court', from: 'What court is the hearing at?')
+      fill_date('When is the next hearing?', with: 1.week.from_now.to_date)
       choose_answer('Did this court also hear the first hearing?', 'Yes')
       save_and_continue
 

@@ -8,22 +8,22 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl">
-      <%= t(".heading.#{@form_object.property_type}") %>
+      <%= t(".heading.#{@form_object.property_type}").upcase_first %>
     </h1>
 
     <p><%= t('.info') %></p>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_number_field :size_in_acres, inputmode: 'numeric', suffix_text: 'acres', width: 'one-third' %>
-      <%= f.govuk_text_field :usage, autocomplete: 'off' %>
-      <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
-      <%= f.govuk_number_field :outstanding_mortgage, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
-      <%= f.govuk_number_field :percentage_applicant_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' %>
-      <%= f.govuk_number_field :percentage_partner_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third' if f.object.include_partner_in_means_assessment? %>
+      <%= f.govuk_number_field :size_in_acres, inputmode: 'numeric', suffix_text: 'acres', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_text_field :usage, autocomplete: 'off', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :value, inputmode: 'numeric', prefix_text: '£', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :outstanding_mortgage, inputmode: 'numeric', prefix_text: '£', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :percentage_applicant_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :percentage_partner_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-third', label: { tag: 'h2', size: 'm' } if f.object.include_partner_in_means_assessment? %>
       <% if f.object.person_has_home_address? %>
-        <%= f.govuk_collection_radio_buttons :is_home_address, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+        <%= f.govuk_collection_radio_buttons :is_home_address, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
       <% end %>
-      <%= f.govuk_collection_radio_buttons :has_other_owners, YesNoAnswer.values, :value, inline: true, legend: { size: 's' } %>
+      <%= f.govuk_collection_radio_buttons :has_other_owners, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
 
       <%= f.continue_button %>
     <% end %>
