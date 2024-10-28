@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
@@ -9,7 +10,8 @@ describe Summary::Sections::ClientDetails do
       to_param: '12345',
       applicant: applicant,
       application_type: application_type,
-      is_means_tested: is_means_tested
+      is_means_tested: is_means_tested,
+      means_passport: means_passport
     )
   end
 
@@ -31,6 +33,8 @@ describe Summary::Sections::ClientDetails do
   let(:has_arc) { nil }
   let(:application_type) { ApplicationType::INITIAL }
   let(:pse?) { false }
+  let(:appeal_no_changes?) { false }
+  let(:means_passport) { [] }
   let(:has_partner) { 'no' }
   let(:is_means_tested) { 'yes' }
 
@@ -45,6 +49,7 @@ describe Summary::Sections::ClientDetails do
 
     allow(crime_application).to receive_messages(
       pse?: pse?,
+      appeal_no_changes?: appeal_no_changes?,
       applicant: applicant,
     )
   end
@@ -69,7 +74,6 @@ describe Summary::Sections::ClientDetails do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#answers' do
     let(:answers) { subject.answers }
 
@@ -166,6 +170,22 @@ describe Summary::Sections::ClientDetails do
         expect(answers.count).to eq(7)
       end
     end
+
+    context 'when application is a appeal no changes application' do
+      let(:appeal_no_changes?) { true }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(7)
+      end
+    end
+
+    context 'when application is an under 18 application' do
+      let(:means_passport) { ['on_age_under18'] }
+
+      it 'has the correct rows' do
+        expect(answers.count).to eq(7)
+      end
+    end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
