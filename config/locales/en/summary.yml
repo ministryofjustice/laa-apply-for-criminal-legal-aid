@@ -733,6 +733,14 @@ en:
           fail_on_ioj:
             value: Rejected
             colour: red
+          failmeans:
+            value: Failed on means
+            colour: red
+          failioj:
+            value: Rejected
+            colour: red
+      funding_decision_further_info:
+        question: Further information about the decision
       # END funding decisions section
 
       # BEGIN declarations section
@@ -760,6 +768,9 @@ en:
       # BEGIN supporting evidence section
       supporting_evidence:
         question: File name
+      no_supporting_evidence:
+        question: No files were uploaded
+        absence_answer: ''
       additional_information:
         question: Any additional information?
         absence_answer: *absence_none

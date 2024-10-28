@@ -34,7 +34,7 @@ module Evidence
           definitions.first
         else
           Rails.logger.error "Key #{key} does not have a Rule definition - generate one"
-          nil
+          false
         end
       end
 
