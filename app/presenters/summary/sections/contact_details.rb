@@ -2,7 +2,7 @@ module Summary
   module Sections
     class ContactDetails < Sections::BaseSection
       def show?
-        applicant.present? && super
+        applicant.present? && !crime_application.appeal_no_changes? && super
       end
 
       # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

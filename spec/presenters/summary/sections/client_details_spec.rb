@@ -76,6 +76,7 @@ describe Summary::Sections::ClientDetails do
 
   describe '#answers' do
     let(:answers) { subject.answers }
+    let(:question_labels) { subject.answers.map(&:question) }
 
     it 'has the correct rows' do
       expect(answers.count).to eq(8)
@@ -168,22 +169,28 @@ describe Summary::Sections::ClientDetails do
 
       it 'has the correct rows' do
         expect(answers.count).to eq(7)
+        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth,
+                                       :has_partner, :relationship_status, :separation_date])
       end
     end
 
     context 'when application is a appeal no changes application' do
       let(:appeal_no_changes?) { true }
+      let(:has_partner) { nil }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(7)
+        expect(answers.count).to eq(4)
+        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth])
       end
     end
 
     context 'when application is an under 18 application' do
       let(:means_passport) { ['on_age_under18'] }
+      let(:has_partner) { nil }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(7)
+        expect(answers.count).to eq(4)
+        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth])
       end
     end
   end
