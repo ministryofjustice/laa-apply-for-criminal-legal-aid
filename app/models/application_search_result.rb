@@ -1,12 +1,16 @@
+require 'laa_crime_schemas'
+
 class ApplicationSearchResult < ApplicationStruct
-  attribute :applicant_name, Types::String
-  attribute :submitted_at, Types::DateTime
-  attribute :reference, Types::Integer
-  attribute :resource_id, Types::Uuid
-  attribute :status, Types::String
-  attribute? :application_type, Types::ApplicationType
-  attribute? :office_code, Types::String
-  attribute? :provider_name, Types::String
+  include LaaCrimeSchemas::Types
+
+  attribute :applicant_name, String
+  attribute :submitted_at, JSON::DateTime | Nominal::DateTime
+  attribute :reference, Integer
+  attribute :resource_id, Strict::String
+  attribute :status, String
+  attribute? :application_type, ApplicationType
+  attribute? :office_code, String
+  attribute? :provider_name, String
 
   alias id resource_id
 

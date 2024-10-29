@@ -1,13 +1,17 @@
+require 'laa_crime_schemas'
+
 class ApplicationSearchFilter < ApplicationStruct
+  include LaaCrimeSchemas::Types
+
   DATASTORE_FILTERS = %i[
     search_text
     status
     office_code
   ].freeze
 
-  attribute? :search_text, Types::Params::Nil | Types::Params::String
-  attribute? :status, Types::Array.of(Types::ApplicationStatus)
-  attribute? :office_code, Types::Params::String
+  attribute? :search_text, Params::Nil | Params::String
+  attribute? :status, Array.of(ApplicationStatus)
+  attribute? :office_code, Params::String
 
   def datastore_params
     DATASTORE_FILTERS.each_with_object({}) do |filter, params|

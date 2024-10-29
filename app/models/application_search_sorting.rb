@@ -1,4 +1,8 @@
+require 'laa_crime_schemas'
+
 class ApplicationSearchSorting < ApplicationStruct
+  include LaaCrimeSchemas::Types
+
   SORTABLE_COLUMNS = %w[
     applicant_name
     application_type
@@ -6,12 +10,12 @@ class ApplicationSearchSorting < ApplicationStruct
     reference
   ].freeze
 
-  SortDirection = Types::String.enum('descending', 'ascending')
+  SortDirection = String.enum('descending', 'ascending')
   DEFAULT_SORT_BY = 'submitted_at'.freeze
   DEFAULT_SORT_DIRECTION = SortDirection['ascending'].freeze
 
-  attribute? :sort_direction, Types::String.default(DEFAULT_SORT_DIRECTION).enum(*SortDirection.values)
-  attribute? :sort_by, Types::String.default(DEFAULT_SORT_BY).enum(*SORTABLE_COLUMNS)
+  attribute? :sort_direction, String.default(DEFAULT_SORT_DIRECTION).enum(*SortDirection.values)
+  attribute? :sort_by, String.default(DEFAULT_SORT_BY).enum(*SORTABLE_COLUMNS)
 
   def sortable_columns
     SORTABLE_COLUMNS
