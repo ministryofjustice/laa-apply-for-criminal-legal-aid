@@ -30,7 +30,7 @@ module Summary
           ),
         ]
 
-        unless post_submission_evidence?
+        unless nino_not_required?
           answers.push(Components::FreeTextAnswer.new(
                          :nino, applicant.nino,
                          change_path: edit_steps_nino_path(subject: 'client'),
@@ -84,16 +84,17 @@ module Summary
         @applicant ||= crime_application.applicant
       end
 
-      def post_submission_evidence?
-        crime_application.pse?
-      end
-
       def no_partner?
         crime_application.applicant.has_partner == 'no'
       end
 
       def client_separated?
         crime_application.applicant.relationship_status == ClientRelationshipStatusType::SEPARATED.to_s
+      end
+
+      def nino_not_required?
+        crime_application.pse? || crime_application.appeal_no_changes? ||
+          crime_application.means_passport.include?(MeansPassportType::ON_AGE_UNDER18.to_s)
       end
     end
   end
