@@ -25,7 +25,7 @@ module DataTable
     def cell_content
       return name unless sortable?
 
-      button_to(name, nil, params: sorted_params, method: :get)
+      button_to(name, nil, params: sorted_params, method: :post)
     end
 
     def default_classes

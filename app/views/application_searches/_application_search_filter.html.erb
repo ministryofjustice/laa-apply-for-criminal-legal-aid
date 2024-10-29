@@ -1,4 +1,4 @@
-<%= form_with url: search_application_searches_path, model: application_search_filter, scope: :filter, method: :get, class: 'search', id: 'search_filter' do |f| %>
+<%= form_with url: search_application_searches_path, model: application_search_filter, scope: :filter, method: :post, class: 'search', id: 'search_filter' do |f| %>
   <p class="govuk-label govuk-label--s">Enter submitted application information</p>
 
   <%= f.govuk_fieldset legend: { text: nil } do %>

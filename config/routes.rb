@@ -301,7 +301,7 @@ Rails.application.routes.draw do
   end
 
   resource :application_searches, only: [:new] do
-    get :search, on: :collection
+    post :search, on: :collection
   end
 
   # catch-all route
