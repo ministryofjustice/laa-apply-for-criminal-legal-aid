@@ -300,7 +300,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :application_searches, only: [:new] do
+  resource :application_searches, only: [:new], constraints: -> (_) { FeatureFlags.search.enabled? } do
     post :search, on: :collection
   end
 
