@@ -11,15 +11,6 @@ class ApplicationSearchResult
   attribute :office_code, :string
   attribute :provider_name, :string
 
-  attribute :reviewed_at, :datetime
-  attribute :review_status, :string
-  attribute :parent_id, :string
-  attribute :work_stream, :string
-  attribute :return_reason, :string
-  attribute :return_details, :string
-  attribute :case_type, :string
-  attribute :means_passport, :string
-
   alias id resource_id
 
   def to_param

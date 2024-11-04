@@ -13,7 +13,6 @@ class ApplicationSearchesController < ApplicationController
     params.permit(
       :page,
       :per_page,
-      :office_code,
       filter: [:search_text],
       sorting: ApplicationSearchSorting.attribute_names
     )

@@ -7,7 +7,7 @@ class ApplicationSearch
 
   def results
     @results ||= datastore_search_response.map do |result|
-      ApplicationSearchResult.new(result)
+      ApplicationSearchResult.new(result.slice(*ApplicationSearchResult.attribute_names))
     end
   end
 
