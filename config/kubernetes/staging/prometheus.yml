@@ -74,14 +74,14 @@ spec:
 
     - alert: CrimeApply-Ingress4XX
       expr: >-
-        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"4.."}[5m]) * 60 > 5)
+        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"40[0-35-9]|4[1-9][0-9]"}[5m]) * 60 > 5)
         by (exported_namespace)
       for: 1m
       labels:
         severity: laa-crime-apply-alerts
       annotations:
         message: Namespace `{{ $labels.exported_namespace }}` is serving 4XX responses.
-        dashboard_url: https://kibana.cloud-platform.service.justice.gov.uk/_plugin/kibana/app/discover#/?_g=(time:(from:now-24h,to:now))&_a=(columns:!(log_processed.status,log_processed.request_path),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',key:log_processed.status,negate:!f,params:(gte:400,lt:500),type:range),range:(log_processed.status:(gte:400,lt:500)))),index:'8a728bc0-00eb-11ec-9062-27aa363b66a2')
+        dashboard_url: https://kibana.cloud-platform.service.justice.gov.uk/_plugin/kibana/app/discover#/?_g=(time:(from:now-24h,to:now))&_a=(columns:!(log_processed.status,log_processed.request_path),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',key:log_processed.status,negate:!f,params:(gte:400,lt:500),type:range),range:(log_processed.status:(gte:400,lt:500))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',key:log_processed.status,negate:!t,params:(query:'404'),type:phrase),query:(match_phrase:(log_processed.status:'404')))),index:'8a728bc0-00eb-11ec-9062-27aa363b66a2',interval:auto,query:(language:lucene,query:''),sort:!())
 
     - alert: CrimeApply-Ingress5XX
       expr: >-
