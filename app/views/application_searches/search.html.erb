@@ -1,0 +1,44 @@
+<% title 'Search' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Search for an application </h1>
+    <%= govuk_warning_text text: 'This page is for test purposes only' %>
+    <p class="govuk-body"> You are searching for applications submitted and returned under office code [<%= current_office_code %>]. </p>
+    <%= render @search.filter %>
+  </div>
+</div>
+
+<% if @search.results.empty? %>
+  <%= render 'no_search_results' %>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="govuk-heading-s">
+        <%= t('search.total', count: @search.total) %>
+      </h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table app-table">
+        <%= render DataTable::HeadComponent.new(sorting: @search.sorting, filter: @search.filter) do |head|
+              head.with_row do |row|
+                row.with_cell(colname: :applicant_name)
+                row.with_cell(colname: :submitted_at)
+                row.with_cell(colname: :reference)
+                row.with_cell(colname: :application_type)
+                row.with_cell(colname: :application_status)
+              end
+            end %>
+        <tbody class="govuk-table__body">
+          <%= render partial: 'search_results_table_body',
+                     collection: @search.results,
+                     as: :result %>
+        </tbody>
+      </table>
+      <%= paginate @search.pagination %>
+    </div>
+  </div>
+<% end %>

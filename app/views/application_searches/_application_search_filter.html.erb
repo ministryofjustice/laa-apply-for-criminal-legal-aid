@@ -1,0 +1,18 @@
+<%= form_with url: search_application_searches_path, model: application_search_filter, scope: :filter, method: :get, class: 'search', id: 'search_filter' do |f| %>
+  <p class="govuk-label govuk-label--s">Enter application information</p>
+
+  <%= f.govuk_fieldset legend: { text: nil } do %>
+    <div class="input-group">
+      <%= f.govuk_text_field(
+            :search_text,
+            label: { text: "For example, reference number or applicant's first or last name" },
+            autocomplete: 'off'
+          ) %>
+    </div>
+
+    <div class="govuk-button-group">
+      <%= f.govuk_submit 'Search' %>
+      <%= link_to 'Clear', new_application_searches_path, class: 'govuk-link' %>
+    </div>
+  <% end %>
+<% end %>
