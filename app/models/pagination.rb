@@ -1,15 +1,14 @@
-require 'laa_crime_schemas'
-
-class Pagination < ApplicationStruct
-  include LaaCrimeSchemas::Types
+class Pagination
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
   DEFAULT_LIMIT_VALUE = 50
   DEFAULT_CURRENT_PAGE = 1
 
-  attribute? :current_page, Coercible::Integer.default(DEFAULT_CURRENT_PAGE)
-  attribute? :limit_value, Params::Integer.default(DEFAULT_LIMIT_VALUE)
-  attribute? :total_pages, Params::Integer
-  attribute? :total_count, Params::Integer
+  attribute :current_page, :integer, default: DEFAULT_CURRENT_PAGE
+  attribute :limit_value, :integer, default: DEFAULT_LIMIT_VALUE
+  attribute :total_pages, :integer
+  attribute :total_count, :integer
 
   def datastore_params
     {

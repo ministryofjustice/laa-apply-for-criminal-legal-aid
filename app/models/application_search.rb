@@ -34,7 +34,7 @@ class ApplicationSearch
     {
       search: @filter.datastore_params,
       pagination: @pagination.datastore_params,
-      sorting: @sorting.to_h
+      sorting: @sorting.attributes
     }
   end
 

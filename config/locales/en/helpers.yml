@@ -2,7 +2,7 @@
 en:
   table_headings:
     applicant_name: Name
-    reference: Reference number (USN)
+    reference: Reference number
     submitted_at: Date submitted
     application_type: Application type
     application_status: Application status

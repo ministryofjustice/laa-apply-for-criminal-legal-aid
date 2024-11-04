@@ -4,7 +4,7 @@ class ApplicationSearchesController < ApplicationController
   end
 
   def search
-    set_search(default_sorting: { sort_by: 'submitted_at', sort_direction: 'ascending' })
+    set_search(default_sorting: { sort_by: 'submitted_at', sort_direction: 'descending' })
   end
 
   private
@@ -35,7 +35,7 @@ class ApplicationSearchesController < ApplicationController
 
   def set_filter
     @filter = ApplicationSearchFilter.new(search_text: search_params[:filter][:search_text],
-                                          status: %w[submitted],
+                                          status: %w[submitted returned],
                                           office_code: current_office_code)
   end
 

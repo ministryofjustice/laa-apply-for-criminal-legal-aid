@@ -1,16 +1,24 @@
-require 'laa_crime_schemas'
+class ApplicationSearchResult
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
-class ApplicationSearchResult < ApplicationStruct
-  include LaaCrimeSchemas::Types
+  attribute :applicant_name, :string
+  attribute :submitted_at, :datetime
+  attribute :reference, :integer
+  attribute :resource_id, :string
+  attribute :status, :string
+  attribute :application_type, :string
+  attribute :office_code, :string
+  attribute :provider_name, :string
 
-  attribute :applicant_name, String
-  attribute :submitted_at, JSON::DateTime | Nominal::DateTime
-  attribute :reference, Integer
-  attribute :resource_id, Strict::String
-  attribute :status, String
-  attribute? :application_type, ApplicationType
-  attribute? :office_code, String
-  attribute? :provider_name, String
+  attribute :reviewed_at, :datetime
+  attribute :review_status, :string
+  attribute :parent_id, :string
+  attribute :work_stream, :string
+  attribute :return_reason, :string
+  attribute :return_details, :string
+  attribute :case_type, :string
+  attribute :means_passport, :string
 
   alias id resource_id
 

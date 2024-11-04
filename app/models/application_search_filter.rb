@@ -1,7 +1,6 @@
-require 'laa_crime_schemas'
-
-class ApplicationSearchFilter < ApplicationStruct
-  include LaaCrimeSchemas::Types
+class ApplicationSearchFilter
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
   DATASTORE_FILTERS = %i[
     search_text
@@ -9,14 +8,18 @@ class ApplicationSearchFilter < ApplicationStruct
     office_code
   ].freeze
 
-  attribute? :search_text, Params::Nil | Params::String
-  attribute? :status, Array.of(ApplicationStatus)
-  attribute? :office_code, Params::String
+  attribute :search_text, :string
+  attribute :office_code, :string
+  attribute :status, array: true
 
   def datastore_params
     DATASTORE_FILTERS.each_with_object({}) do |filter, params|
       params.merge!(send(:"#{filter}_datastore_param"))
     end
+  end
+
+  def to_partial_path
+    'application_search_filter'
   end
 
   private
