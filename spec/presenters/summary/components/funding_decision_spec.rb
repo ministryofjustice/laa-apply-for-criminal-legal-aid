@@ -62,6 +62,7 @@ describe Summary::Components::FundingDecision, type: :component do
       expect(page).to have_summary_row('Means test caseworker name', 'Grace Nolan')
       expect(page).to have_summary_row('Date of means test', '9 October 2024')
       expect(page).to have_summary_row('Overall result', 'Granted')
+      expect(page).to have_summary_row('Further information about the decision', 'Decision comment')
     end
   end
 end

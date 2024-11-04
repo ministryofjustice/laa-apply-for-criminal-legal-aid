@@ -56,6 +56,12 @@ describe Summary::Sections::ContactDetails do
   end
 
   describe '#show?' do
+    let(:appeal_no_changes?) { false }
+
+    before do
+      allow(crime_application).to receive_messages(appeal_no_changes?: appeal_no_changes?)
+    end
+
     context 'when there is an applicant' do
       it 'shows this section' do
         expect(subject.show?).to be(true)
@@ -64,6 +70,14 @@ describe Summary::Sections::ContactDetails do
 
     context 'when there is no applicant' do
       let(:applicant) { nil }
+
+      it 'does not show this section' do
+        expect(subject.show?).to be(false)
+      end
+    end
+
+    context 'when case type is appeal no changes' do
+      let(:appeal_no_changes?) { true }
 
       it 'does not show this section' do
         expect(subject.show?).to be(false)

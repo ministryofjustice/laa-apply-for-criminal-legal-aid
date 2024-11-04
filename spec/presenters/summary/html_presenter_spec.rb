@@ -23,6 +23,7 @@ describe Summary::HtmlPresenter do
       non_means_tested?: false,
       date_stamp_context: date_stamp_context,
       cifc?: cifc?,
+      appeal_no_changes?: appeal_no_changes?
     )
   end
   # rubocop:enable Layout/LineLength
@@ -92,6 +93,7 @@ describe Summary::HtmlPresenter do
   let(:manage_without_income) { nil }
 
   let(:cifc?) { false }
+  let(:appeal_no_changes?) { false }
 
   let(:date_stamp_context) do
     double(DateStampContext, first_name: 'Arnold', last_name: 'Slit', date_of_birth: Date.new(1990, 1, 1))
