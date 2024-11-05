@@ -50,7 +50,7 @@ RSpec.describe 'Search', :authorized do
     it 'displays search form' do
       assert_select 'h1', 'Search for an application'
       assert_select 'div.govuk-grid-column-full p',
-                    'You are searching for applications submitted and returned under office code [1A123B].'
+                    'You are searching for applications submitted and returned under office code 1A123B.'
       assert_select '.search .govuk-fieldset .input-group',
                     "For example, reference number or applicant's first or last name"
     end
