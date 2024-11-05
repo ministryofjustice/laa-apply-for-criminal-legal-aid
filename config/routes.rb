@@ -304,6 +304,10 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+  resource 'lkj123asdf', only: [:new], controller: :application_searches, alias: 'lkj123asdf' do
+    get :search, on: :collection
+  end
+
   # catch-all route
   # :nocov:
   match '*path', to: 'errors#not_found', via: :all, constraints:

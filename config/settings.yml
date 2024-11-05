@@ -44,7 +44,7 @@ feature_flags:
     staging: true
     production: true
   search:
-    local: true
+    local: false
     staging: true
     production: false
 
