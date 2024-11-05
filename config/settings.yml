@@ -44,8 +44,8 @@ feature_flags:
     staging: true
     production: true
   search:
-    local: false
-    staging: true
+    local: true
+    staging: false
     production: false
 
 # NOTE: consider if the setting you are adding here
