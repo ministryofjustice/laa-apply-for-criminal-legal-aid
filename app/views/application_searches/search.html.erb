@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Search for an application </h1>
     <%= govuk_warning_text text: 'This page is for test purposes only' %>
-    <p class="govuk-body"> You are searching for applications submitted and returned under office code [<%= current_office_code %>]. </p>
+    <p class="govuk-body"> You are searching for applications submitted and returned under office code <%= current_office_code %>. </p>
     <%= render @search.filter %>
   </div>
 </div>
