@@ -4,6 +4,8 @@ module PersonCapitalAssets
   %i[savings investments national_savings_certificates].each do |assets|
     define_method(:"client_#{assets}") do
       public_send(assets).select do |asset|
+        next if asset.ownership_type.blank?
+
         ownership_type = OwnershipType.new(asset.ownership_type)
         ownership_type.applicant? || ownership_type.applicant_and_partner?
       end
@@ -11,6 +13,8 @@ module PersonCapitalAssets
 
     define_method(:"partner_#{assets}") do
       public_send(assets).select do |asset|
+        next if asset.ownership_type.blank?
+
         ownership_type = OwnershipType.new(asset.ownership_type)
         ownership_type.partner? || ownership_type.applicant_and_partner?
       end
