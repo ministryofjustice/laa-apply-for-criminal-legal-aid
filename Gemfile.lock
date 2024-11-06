@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: a2b69c10443a70370bd618a98a59379decf44f4c
-  tag: v1.4.0
+  revision: 624d2b9518397e4380ce74c47cca390b30c61380
+  tag: v1.4.2
   specs:
-    laa-criminal-legal-aid-schemas (1.4.0)
+    laa-criminal-legal-aid-schemas (1.4.2)
       dry-schema (~> 1.13)
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
@@ -146,8 +146,9 @@ GEM
     dry-configurable (1.2.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
-    dry-core (1.0.1)
+    dry-core (1.0.2)
       concurrent-ruby (~> 1.0)
+      logger
       zeitwerk (~> 2.6)
     dry-inflector (1.1.0)
     dry-initializer (3.1.1)
