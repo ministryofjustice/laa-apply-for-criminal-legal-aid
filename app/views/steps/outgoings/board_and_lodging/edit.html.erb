@@ -8,25 +8,25 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_fieldset(legend: { text: t('.page_title'), tag: 'h1', size: 'xl' }) do %>
+      <%= f.govuk_fieldset(legend: { text: t('.page_title'), tag: 'h1', size: 'xl', class: 'govuk-!-margin-bottom-5' }) do %>
         <%= f.govuk_number_field(:board_amount,
-                                 label: { text: label_t(:board_amount) },
+                                 label: { text: label_t(:board_amount), tag: 'h2', size: 'm' },
                                  prefix_text: '£',
                                  width: 'one-half') %>
         <%= f.govuk_number_field(:food_amount,
+                                 label: { tag: 'h2', size: 'm' },
                                  prefix_text: '£',
                                  width: 'one-half') %>
         <%= f.govuk_collection_radio_buttons(:frequency,
                                              PaymentFrequencyType.values,
                                              :value,
-                                             legend: { size: 's',
-                                                       class: 'govuk-!-font-weight-regular' }) %>
+                                             legend: { tag: 'h2', size: 'm' }) %>
         <%= f.govuk_text_field(:payee_name,
-                               label: { text: label_t(:payee_name) },
+                               label: { text: label_t(:payee_name), tag: 'h2', size: 'm' },
                                width: 'one-half',
                                autocomplete: 'off') %>
         <%= f.govuk_text_field(:payee_relationship_to_client,
-                               label: { text: label_t(:payee_relationship_to_client) },
+                               label: { text: label_t(:payee_relationship_to_client), tag: 'h2', size: 'm' },
                                width: 'one-half',
                                autocomplete: 'off') %>
   <% end %>

@@ -171,8 +171,10 @@ en:
         partner_employment_status: What is the partner's employment status?
       steps_income_client_employment_income_form:
         before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_partner_employment_income_form:
         before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_client_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
@@ -949,7 +951,8 @@ en:
 
       steps_income_businesses_form:
         details: Details of %{subject}’s business?
-        trading_name: Trading name of the business
+        trading_name: What is the trading name of the business?
+        address: What is the address of the business?
         <<: *ADDRESS_DETAILS
       steps_income_businesses_summary_form:
         add_business_options: *YESNO
@@ -1156,7 +1159,7 @@ en:
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_investments_form:
-        description: Describe the investment
+        description: What is the investment?
         value: What is the value of the investment?
         ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
