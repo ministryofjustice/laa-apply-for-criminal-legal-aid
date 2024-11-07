@@ -20,8 +20,7 @@
         <%= f.govuk_collection_radio_buttons(:frequency,
                                              PaymentFrequencyType.values,
                                              :value,
-                                             legend: { size: 's',
-                                                       class: 'govuk-!-font-weight-regular' }) %>
+                                             legend: { tag: 'h2', size: 'm' }) %>
         <%= f.govuk_text_field(:payee_name,
                                label: { text: label_t(:payee_name), tag: 'h2', size: 'm' },
                                width: 'one-half',

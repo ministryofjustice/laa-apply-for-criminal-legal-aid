@@ -19,7 +19,7 @@
         <%= f.govuk_collection_radio_buttons(:frequency,
                                              PaymentFrequencyType.values,
                                              :value,
-                                             legend: { size: 's', class: 'govuk-!-font-weight-regular' }) %>
+                                             legend: { tag: 'h2', size: 'm' }) %>
         <% end %>
       <%= f.continue_button %>
     <% end %>
