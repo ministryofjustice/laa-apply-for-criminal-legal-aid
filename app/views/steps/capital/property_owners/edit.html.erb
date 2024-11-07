@@ -18,7 +18,7 @@
       <%= f.fields_for :property_owners do |po_field| %>
         <% index = po_field.index + 1 %>
         <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:), tag: 'h2', size: 'l' }, id: "property_owner_#{index}" do %>
-          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { text: label_t(:name, index: index.ordinalize_fully) }  %>
+          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { tag: 'h3', size: 'm', text: label_t(:name, index: index.ordinalize_fully) }  %>
           <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { tag: 'h3', size: 'm', text: legend_t(:relationship) } do %>
             <% @form_object.relationships.each_with_index do |option, index| %>
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>

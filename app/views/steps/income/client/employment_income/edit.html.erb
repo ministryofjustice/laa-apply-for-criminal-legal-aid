@@ -12,6 +12,7 @@
     </p>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_number_field(:amount,
+                               label: { tag: 'h2', size: 'm' },
                                prefix_text: '£',
                                width: 'one-half') %>
       <%= f.govuk_collection_radio_buttons(:before_or_after_tax,

@@ -14,7 +14,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/income/client/businesses/:business_id
-      fill_in('Trading name of the business', with: 'Test business')
+      fill_in('What is the trading name of the business?', with: 'Test business')
       fill_in('Address line 1', with: 'Test address line 1')
       fill_in('Address line 2', with: 'Test address line 2')
       fill_in('Town or city', with: 'Test town')
@@ -79,7 +79,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/income/partner/businesses/:business_id
-      fill_in('Trading name of the business', with: 'Test partner business')
+      fill_in('What is the trading name of the business?', with: 'Test partner business')
       fill_in('Address line 1', with: 'Test address line 1')
       fill_in('Address line 2', with: 'Test address line 2')
       fill_in('Town or city', with: 'Test town')

@@ -7,9 +7,9 @@
 
     <%= govuk_error_summary(@form_object) %>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_fieldset(legend: { text: t('.rent_legend'), tag: 'h1', size: 'xl' }) do %>
+      <%= f.govuk_fieldset(legend: { text: t('.rent_legend'), tag: 'h1', size: 'xl', class: 'govuk-!-margin-bottom-5' }) do %>
         <%= f.govuk_number_field(:amount,
-                                 label: { text: label_t(:amount) },
+                                 label: { text: label_t(:amount), tag: 'h2', size: 'm' },
                                  width: 'one-half',
                                  prefix_text: '£',
                                  hint: { text: t('.amount_hint') },
