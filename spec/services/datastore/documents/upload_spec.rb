@@ -91,7 +91,7 @@ RSpec.describe Datastore::Documents::Upload do
           .to_return(status: 200)
 
         allow(Clamby).to receive(:safe?).and_return(false)
-        allow(Rails.logger).to receive(:error).with(/Virus scan flagged potential malcious file -/)
+        allow(Rails.logger).to receive(:error).with(/Virus scan flagged potential malicious file -/)
       end
 
       it 'fails to upload' do
@@ -102,7 +102,7 @@ RSpec.describe Datastore::Documents::Upload do
       it 'logs errors' do
         subject.call
 
-        expect(Rails.logger).to have_received(:error).with(/Virus scan flagged potential malcious file -/)
+        expect(Rails.logger).to have_received(:error).with(/Virus scan flagged potential malicious file -/)
       end
     end
 
