@@ -110,6 +110,7 @@ module Summary
         supporting_evidence
         more_information
         declarations
+        funding_decisions
         legal_representative_details
       ],
       post_submission_evidence: %i[

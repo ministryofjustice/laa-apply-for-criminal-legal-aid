@@ -6,7 +6,7 @@ module Summary
       def answers # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
         [
           Components::FreeTextAnswer.new(
-            :funding_decision_maat_id, funding_decision.maat_id
+            :funding_decision_maat_id, funding_decision.maat_id.to_s
           ),
           Components::FreeTextAnswer.new(
             :funding_decision_case_number, funding_decision.reference
