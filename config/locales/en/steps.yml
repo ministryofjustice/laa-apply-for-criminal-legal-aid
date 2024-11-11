@@ -650,9 +650,9 @@ en:
       property_address:
         edit:
           heading:
-            residential: What is the address of the residential property %{subject} own?
-            commercial: What is the address of the commercial property %{subject} own?
-            land: What is the address of the land %{subject} own?
+            residential: What is the address of the residential property %{subject} owns?
+            commercial: What is the address of the commercial property %{subject} owns?
+            land: What is the address of the land %{subject} owns?
 
       property_owners:
         edit:
