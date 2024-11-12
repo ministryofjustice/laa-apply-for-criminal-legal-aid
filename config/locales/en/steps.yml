@@ -225,6 +225,7 @@ en:
         edit:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
+          subheading: If there is more than one charge, add one at a time.
           offence_dates_fieldset_legend: When did the offence happen?
           add_button: Add another date
           remove_button: Remove date %{index}

@@ -440,7 +440,7 @@ en:
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 27 3 2007
       steps_case_charges_form:
-        offence_name: Add one offence at a time, for example, robbery. You can add more later.
+        offence_name: Start typing to select an offence, for example, robbery. You can add more later.
         offence_dates_attributes:
           date_from: For example, 27 3 2007
           date_to: Leave blank if the offence happened on a single date
