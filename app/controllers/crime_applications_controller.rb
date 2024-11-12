@@ -2,6 +2,8 @@ class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
 
+  layout 'application_dashboard', only: [:index]
+
   def index
     @applications = in_progress_scope.merge(
       CrimeApplication.order(**sorting_params)

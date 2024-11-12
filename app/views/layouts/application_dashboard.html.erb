@@ -1,0 +1,7 @@
+<% if FeatureFlags.search.enabled? %>
+  <% content_for(:primary_navigation) do %>
+    <%= render partial: 'layouts/primary_navigation' %>
+  <% end %>
+<% end %>
+
+<%= render template: 'layouts/application', layout: false %>
