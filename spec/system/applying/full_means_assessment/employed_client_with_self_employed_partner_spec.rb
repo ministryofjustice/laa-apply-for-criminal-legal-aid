@@ -4,7 +4,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
   describe(
     'Summary only, client and partner no conflict, client employed, partner self-employed, joint income < £12,475'
   ) do
-
     include_context 'when logged in'
 
     before do
