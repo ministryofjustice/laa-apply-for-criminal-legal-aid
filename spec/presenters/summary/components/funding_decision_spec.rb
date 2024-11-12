@@ -4,11 +4,11 @@ describe Summary::Components::FundingDecision, type: :component do
   subject(:component) { render_summary_component(described_class.new(record: record, show_actions: false)) }
 
   let(:record) { instance_double(LaaCrimeSchemas::Structs::Decision, **attributes) }
-  let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
+  let(:crime_application) { instance_double(CrimeApplication, id: '445') }
 
   let(:attributes) do
     {
-      reference:,
+      case_id:,
       maat_id:,
       interests_of_justice:,
       means:,
@@ -17,7 +17,7 @@ describe Summary::Components::FundingDecision, type: :component do
     }
   end
 
-  let(:reference) { 'APP123' }
+  let(:case_id) { 'APP123' }
   let(:maat_id) { 'M123' }
   let(:interests_of_justice) do
     instance_double(
