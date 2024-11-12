@@ -54,7 +54,13 @@
 <p class="govuk-body">You agree that:</p>
 
 <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
-  <li>you have explained to your client why they may have to pay towards legal aid and the consequences of not paying contributions on time or at all</li>
-  <li>you have a signed declaration from your client</li>
   <li>you have provided correct and complete information in this application</li>
+  <li>you have explained to your client why they may have to pay towards legal aid and the consequences of not paying contributions on time or at all</li>
+  <% if partner_relevant %>
+    <li>you must get from your client and their partner and keep on file a digital signature or signed hard copy <%= govuk_link_to('of the applicant declaration (PDF, 452KB)', Settings.laa_applicant_declaration_form_url, new_tab: '') %></li>
+    <li>if it is not possible to get a digital or hard copy signature from your client or their partner at the point of submitting this application, you have explained the contents of the declaration and privacy notice to them and will get a digital or hard copy signature at the earliest opportunity</li>
+  <% else %>
+    <li>you must get and keep on file a digital signature or signed hard copy <%= govuk_link_to('of the applicant declaration (PDF, 452KB)', Settings.laa_applicant_declaration_form_url, new_tab: '') %></li>
+    <li>if it is not possible to get a digital or hard copy signature from your client at the point of submitting this application, you have explained the contents of the declaration and privacy notice to them and will get a digital or hard copy signature at the earliest opportunity</li>
+  <% end %>
 </ul>

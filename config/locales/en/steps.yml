@@ -650,9 +650,9 @@ en:
       property_address:
         edit:
           heading:
-            residential: What is the address of the residential property %{subject} own?
-            commercial: What is the address of the commercial property %{subject} own?
-            land: What is the address of the land %{subject} own?
+            residential: What is the address of %{subject}'s residential property?
+            commercial: What is the address of %{subject}'s commercial property?
+            land: What is the address of %{subject}'s land?
 
       property_owners:
         edit:
@@ -705,7 +705,7 @@ en:
             failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
-        scan_flagged: "Virus scan flagged potential malcious file - Crime Application ID: #{crime_application_id} Document ID: #{document_id} Scan result: #{scan_status}"
+        scan_flagged: "Virus scan flagged potential malicious file - Crime Application ID: #{crime_application_id} Document ID: #{document_id} Scan result: #{scan_status}"
         scan_inconclusive: Virus scan inconclusive
         success: "Document successfully uploaded. Object key: #{s3_object_key}"
       scan:
