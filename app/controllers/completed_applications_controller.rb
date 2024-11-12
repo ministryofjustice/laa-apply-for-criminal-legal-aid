@@ -4,6 +4,8 @@ class CompletedApplicationsController < DashboardController
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
 
+  layout 'application_dashboard', only: [:index]
+
   def index
     return @applications = [] if current_office_code.blank?
 

@@ -1,10 +1,12 @@
   <%= govuk_header(classes: "govuk-header-#{HostEnv.env_name}") do |header|
         if signed_in?
-          header.with_navigation_item(
-            text: t('layouts.header.your_applications'),
-            href: crime_applications_path,
-            active: false
-          )
+          unless FeatureFlags.search.enabled?
+            header.with_navigation_item(
+              text: t('layouts.header.your_applications'),
+              href: crime_applications_path,
+              active: false
+            )
+          end
 
           header.with_navigation_item(
             text: current_provider.display_name,

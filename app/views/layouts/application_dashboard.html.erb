@@ -1,0 +1,51 @@
+<% content_for?(:page_title) ? yield(:page_title) : fallback_title %>
+
+<% content_for(:head) do %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= render partial: 'layouts/analytics' if analytics_allowed? %>
+<% end %>
+
+<% content_for(:service_name) do %>
+  <%= link_to service_name, root_path,
+              class: 'govuk-header__link govuk-header__service-name', id: 'header-service-name' %>
+<% end %>
+
+<% content_for(:header) do %>
+  <% render partial: 'header' %>
+<% end %>
+
+<% content_for(:cookie_banner) do %>
+  <% unless analytics_consent_cookie.present? %>
+    <%= render partial: 'layouts/cookie_banner' %>
+  <% end %>
+
+  <% if flash['cookies_consent_updated'] %>
+    <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+  <% end %>
+<% end %>
+
+<% content_for(:phase_banner) do %>
+  <% env = HostEnv.env_name  %>
+  <%= govuk_phase_banner(tag: { text: t("layouts.phase_banner.tag.#{env}"), colour: t("layouts.phase_banner.colour.#{env}") },
+                         text: t('layouts.phase_banner.text_html', survey_url: Settings.feedback_survey_url),
+                         classes: "govuk-phase-banner-#{env}") %>
+<% end %>
+
+<% if FeatureFlags.search.enabled? %>
+  <% content_for(:primary_navigation) do %>
+    <%= render partial: 'layouts/primary_navigation' %>
+  <% end %>
+<% end %>
+
+<% content_for(:content) do %>
+  <%= yield %>
+<% end %>
+
+<% content_for(:footer_links) do %>
+  <% render partial: 'layouts/footer_links' %>
+<% end %>
+
+<% render partial: 'layouts/developer_tools' if FeatureFlags.developer_tools.enabled? %>
+
+<%= render template: 'layouts/govuk_template', layout: false %>
