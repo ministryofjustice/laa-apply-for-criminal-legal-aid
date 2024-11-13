@@ -1,9 +1,6 @@
 module Steps
   module ApplicantAndPartner
     extend ActiveSupport::Concern
-    def subject
-      I18n.t('dictionary.subject', subject_type: form_subject)
-    end
 
     def form_subject
       if include_partner_in_means_assessment?
