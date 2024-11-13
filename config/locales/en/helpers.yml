@@ -311,11 +311,11 @@ en:
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does %{subject} make where they usually live?
       steps_outgoings_mortgage_form:
-        frequency: Select how often they make mortgage payments
+        frequency: How often do they make the mortgage payment?
       steps_outgoings_rent_form:
-        frequency: Select how often they pay rent
+        frequency: How often do they pay that amount?
       steps_outgoings_board_and_lodging_form:
-        frequency: Select how often they pay for board and lodgings, and food
+        frequency: How often do they pay for board and lodgings, including food?
       steps_outgoings_council_tax_form:
         council_tax:
           one: Does %{subject} pay Council Tax where they usually live?
@@ -325,11 +325,11 @@ en:
           one: Which of these payments does %{subject} make?
           other: Which of these payments do %{subject} make?
         childcare:
-          frequency: Select how often they pay this
+          frequency: How often?
         maintenance:
-          frequency: Select how often they pay this
+          frequency: How often?
         legal_aid_contribution:
-          frequency: Select how often they pay this
+          frequency: How often?
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income: Are %{subject}'s outgoings more than their income?
       steps_submission_more_information_form:
@@ -1090,13 +1090,13 @@ en:
           legal_aid_contribution: Contributions to criminal or civil legal aid
           none: They do not make any of these payments
         childcare:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         maintenance:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         legal_aid_contribution:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
           case_reference: What is the case reference of the criminal rep order or civil certificate?
       steps_outgoings_outgoings_more_than_income_form:
