@@ -1,6 +1,6 @@
 # :nocov:
 module DeveloperTools
-  class CrimeApplicationsController < ApplicationController
+  class CrimeApplicationsController < ApplicationController # rubocop:disable Metrics/ClassLength
     def destroy
       current_crime_application.destroy
 
@@ -26,9 +26,11 @@ module DeveloperTools
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def bypass_dwp
       find_or_create_applicant
+      find_or_create_case
       find_or_create_partner_detail
 
       crime_application.update(
+        is_means_tested: 'yes',
         navigation_stack: [
           edit_steps_client_details_path(crime_application),
           edit_steps_client_is_means_tested_path(crime_application),
@@ -63,6 +65,7 @@ module DeveloperTools
       find_or_create_case
 
       crime_application.update(
+        is_means_tested: 'yes',
         navigation_stack: [
           edit_steps_client_details_path(crime_application),
           edit_steps_client_is_means_tested_path(crime_application),
@@ -103,8 +106,12 @@ module DeveloperTools
       end
     end
 
-    def find_or_create_case
-      Case.find_or_initialize_by(crime_application_id: crime_application.id)
+    def find_or_create_case(overrides = {})
+      Case.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
+        record.update(
+          case_type: overrides.fetch(:case_type, 'summary_only'),
+        )
+      end
     end
 
     def find_or_create_partner_detail(overrides = {})
