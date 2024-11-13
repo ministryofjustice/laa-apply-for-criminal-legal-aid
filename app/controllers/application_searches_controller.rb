@@ -1,6 +1,8 @@
 class ApplicationSearchesController < ApplicationController
   helper_method :new_search_url, :search_url
 
+  layout 'application_dashboard'
+
   def new
     @filter = ApplicationSearchFilter.new
   end

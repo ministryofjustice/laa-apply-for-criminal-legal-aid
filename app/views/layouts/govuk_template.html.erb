@@ -38,6 +38,13 @@
 
 <div class="govuk-width-container">
   <%= yield(:phase_banner) %>
+</div>
+
+<% if FeatureFlags.search.enabled? %>
+  <%= yield(:primary_navigation) %>
+<% end %>
+
+<div class="govuk-width-container">
   <%= yield(:back_link) %>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
