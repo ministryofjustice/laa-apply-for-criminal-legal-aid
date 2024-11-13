@@ -111,7 +111,6 @@ module DeveloperTools
 
     def find_or_create_partner_detail(overrides = {})
       PartnerDetail.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
-
         record.update(
           has_partner: overrides.fetch(:has_partner, 'no'),
           relationship_status: overrides.fetch(:relationship_status, 'single'),
