@@ -35,7 +35,7 @@ module TypeOfApplication
   alias cifc? change_in_financial_circumstances?
 
   def appeal_no_changes?
-    return false unless kase&.appeal_original_app_submitted == 'yes'
+    return false unless kase.present? && kase.appeal_original_app_submitted == 'yes'
 
     kase.case_type == CaseType::APPEAL_TO_CROWN_COURT.to_s &&
       kase.appeal_financial_circumstances_changed == 'no'
