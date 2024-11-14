@@ -147,8 +147,8 @@ en:
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
       partner_self_assessment_tax_bill: Self Assessment tax
-      work_benefits: Other work benefits
-      partner_work_benefits: Other work benefits
+      work_benefits: 'Other work benefits: client'
+      partner_work_benefits: 'Other work benefits: partner'
       employment_income: Pay from employment
       partner_employment_income: Pay from employment
       funding_decisions: Funding decisions
@@ -441,7 +441,7 @@ en:
 
       # BEGIN employment details section
       employment_status:
-        question: Client’s employment status?
+        question: Client’s employment status
         answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Not working
           employed: Employed
@@ -496,7 +496,7 @@ en:
 
       # BEGIN partner employment details section
       partner_employment_status:
-        question: Partner’s employment status?
+        question: Partner’s employment status
         answers: *EMPLOYMENT_STATUS_ANSWERS
       partner_in_armed_forces:
         question: Partner in armed forces?
@@ -530,7 +530,7 @@ en:
         answers:
           description: *payment_answer_format
       board_from_family_payment:
-        question: Board from family members living with %{ownership}
+        question: Board from family members
         answers:
           description: *payment_answer_format
       rent_payment:
@@ -538,7 +538,7 @@ en:
         answers:
           description: *payment_answer_format
       financial_support_with_access_payment:
-        question: Financial support from someone who allows %{ownership} access to their assets or money
+        question: Financial support from someone
         answers:
           description: *payment_answer_format
       from_friends_relatives_payment:
@@ -1006,18 +1006,18 @@ en:
           description: *payment_answer_format
 
       work_benefits:
-        question: Does your client receive any other benefits from work?
+        question: Other work benefits?
         answers: *YESNO
       work_benefits_payment:
-        question: Total value every year
+        question: Total value
         answers:
           description: *payment_answer_format
 
       partner_work_benefits:
-        question: Does the partner receive any other benefits from work?
+        question: Other work benefits?
         answers: *YESNO
       partner_work_benefits_payment:
-        question: Total value every year
+        question: Total value
         answers:
           description: *payment_answer_format
 
