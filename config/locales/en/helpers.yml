@@ -91,7 +91,7 @@ en:
       steps_client_relationship_status_form:
         relationship_status: What is your client's relationship status?
       steps_partner_relationship_form:
-        relationship_to_partner: What is the client’s relationship to their partner?
+        relationship_to_partner: What is your client’s relationship to their partner?
       steps_partner_details_form:
         date_of_birth: Date of birth
       steps_partner_involvement_form:
@@ -396,6 +396,9 @@ en:
         separation_date:
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.
+        date_of_birth: For example, 27 3 2007
+      steps_partner_details_form:
+        other_names: This includes aliases, nicknames or other names they may be known as.
         date_of_birth: For example, 27 3 2007
       steps_client_appeal_details_form:
         appeal_lodged_date: For example, 27 3 2007

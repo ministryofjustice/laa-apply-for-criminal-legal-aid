@@ -82,11 +82,11 @@ en:
     partner:
       relationship:
         edit:
-          page_title: What is the client’s relationship to their partner?
+          page_title: What is your client’s relationship to their partner?
       details:
         edit:
-          page_title: Enter the partner’s details
-          heading: Enter the partner’s details
+          page_title: The partner’s details
+          heading: The partner’s details
           full_name_legend: Partner’s full name
       nino:
         edit:
@@ -158,10 +158,10 @@ en:
               home_address: Partner’s home address
           heading:
             applicant:
-              home_address: Enter the address where your client usually lives
+              home_address: Enter the client's usual home address
               correspondence_address: Enter your client’s correspondence address
             partner:
-              home_address: Enter the address where the partner usually lives
+              home_address: Enter the partner's usual home address
           manual_entry: Enter address manually
       results:
         edit:
@@ -173,10 +173,10 @@ en:
               home_address: Partner’s home address selection
           heading:
             applicant:
-              home_address: Enter the address where your client usually lives
+              home_address: Enter the client's usual home address
               correspondence_address: Enter your client’s correspondence address
             partner:
-              home_address: Enter the address where the partner usually lives
+              home_address: Enter the partner's usual home address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list

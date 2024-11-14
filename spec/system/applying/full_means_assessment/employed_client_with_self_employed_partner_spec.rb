@@ -51,7 +51,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
 
       # steps/client/client_relationship_to_partner
-      choose_answer('What is the client’s relationship to their partner?', 'Living together')
+      choose_answer('What is your client’s relationship to their partner?', 'Living together')
       save_and_continue
 
       # steps/partner/partner_details
