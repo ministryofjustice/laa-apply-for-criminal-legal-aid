@@ -7,7 +7,7 @@ describe Summary::Sections::Savings do
     end
 
     let(:record) { Saving.new }
-    let(:expected_question_text) { 'Any savings?' }
+    let(:expected_question_text) { 'Savings?' }
     let(:expected_change_path) { 'applications/12345/steps/capital/which_savings' }
   end
 end

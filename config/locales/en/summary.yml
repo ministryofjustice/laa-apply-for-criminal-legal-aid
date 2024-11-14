@@ -813,13 +813,13 @@ en:
         question: Sort code or branch name
         absence_answer: ''
       has_capital_savings:
-        question: Any savings?
+        question: Savings?
         answers: *YESNO
       # END saving
 
       # START premium_bonds
       has_premium_bonds:
-        question: Any Premium Bonds?
+        question: Premium Bonds?
         answers: *YESNO
       premium_bonds_holder_number:
         question: Holder number
@@ -830,7 +830,7 @@ en:
 
       # START partner_premium_bonds
       partner_has_premium_bonds:
-        question: Any Premium Bonds?
+        question: Premium Bonds?
         answers: *YESNO
       partner_premium_bonds_holder_number:
         question: Holder number
@@ -851,7 +851,7 @@ en:
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_investments:
-        question: Any investments?
+        question: Investments?
         answers: *YESNO
       # END investments
 
@@ -870,7 +870,7 @@ en:
         answers: *OWNERSHIP_TYPE
         absence_answer: ''
       has_national_savings_certificate:
-        question: Any National Savings Certificates?
+        question: National Savings Certificates?
         answers:
           <<: *YESNO
       # END national_savings_certificates

@@ -258,13 +258,13 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
             [
               Summary::Components::FreeTextAnswer,
               'child_benefit',
-              'Does not get',
+              'No',
               '#steps-income-income-benefits-form-types-child-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
               'working_or_child_tax_credit_benefit',
-              'Does not get',
+              'No',
               '#steps-income-income-benefits-form-types-working-or-child-tax-credit-field'
             ],
             [
@@ -275,7 +275,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
             [
               Summary::Components::FreeTextAnswer,
               'industrial_injuries_disablement_benefit',
-              'Does not get',
+              'No',
               '#steps-income-income-benefits-form-types-industrial-injuries-disablement-field'
             ],
             [
@@ -286,7 +286,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
             [
               Summary::Components::FreeTextAnswer,
               'other_benefit',
-              'Does not get',
+              'No',
               '#steps-income-income-benefits-form-types-other-field'
             ]
           ]
