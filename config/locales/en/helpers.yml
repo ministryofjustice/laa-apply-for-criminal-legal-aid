@@ -701,7 +701,7 @@ en:
         lookup_id: Select an address
       steps_address_details_form: *ADDRESS_DETAILS
       steps_case_urn_form:
-        urn: What is the unique reference number (URN) for your client’s case (optional)
+        urn: What is the unique reference number (URN) for your client’s case? (optional)
       steps_case_has_case_concluded_form:
         has_case_concluded_options: *YESNO
       steps_case_is_preorder_work_claimed_form:

@@ -206,7 +206,7 @@ en:
       urn:
         edit:
           page_title: Enter your client’s URN
-          urn_guidance: This makes it easier for us to match the details you provide with HM Courts & Tribunals (HMCTS) records
+          urn_guidance: This makes it easier for us to match the details you provide with HM Courts & Tribunals (HMCTS) records.
       has_case_concluded:
         edit:
           page_title: Has the case concluded?
