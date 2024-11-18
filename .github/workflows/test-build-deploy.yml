@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload rspec coverage (if failure)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rspec-coverage
           path: coverage/*
