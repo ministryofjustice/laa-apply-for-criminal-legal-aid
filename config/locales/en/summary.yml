@@ -704,23 +704,27 @@ en:
       funding_decision_case_number:
         question: Case number
       funding_decision_ioj_result:
-        question: Interests of justice test result
+        question: Interests of justice (IoJ) test result
         answers:
-          <<: *PASSFAIL
+          pass: Passed
+          fail: Refused
       funding_decision_ioj_reason:
-        question: Interests of justice reason
+        question: IoJ comments
       funding_decision_ioj_caseworker:
-        question: Interests of justice test caseworker name
+        question: IoJ caseworker
       funding_decision_ioj_date:
-        question: Date of interests of justice test
+        question: IoJ test date
       funding_decision_means_result:
         question: Means test result
         answers:
-          <<: *PASSFAIL
+          pass: Passed
+          fail: Failed
+          full: Contribution
+          inel: Ineligible
       funding_decision_means_caseworker:
-        question: Means test caseworker name
+        question: Means test caseworker
       funding_decision_means_date:
-        question: Date of means test
+        question: Means test date
       funding_decision_overall_result:
         question: Overall result
         answers:
@@ -731,13 +735,16 @@ en:
             value: Granted
             colour: green
           fail_on_ioj:
-            value: Rejected
+            value: Failed IoJ
             colour: red
           failmeans:
-            value: Failed on means
+            value: Failed means
             colour: red
           failioj:
-            value: Rejected
+            value: Failed IoJ 
+            colour: red
+          failmeioj:
+            value: Failed means and IoJ
             colour: red
       funding_decision_further_info:
         question: Further information about the decision
