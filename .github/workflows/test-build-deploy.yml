@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -44,7 +44,7 @@ jobs:
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - name: JS package cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload rspec coverage (if failure)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rspec-coverage
           path: coverage/*
@@ -85,16 +85,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Assume role in Cloud Platform
-      - uses: aws-actions/configure-aws-credentials@v3
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ vars.ECR_REGION }}
 
       # Login to container repository
-      - uses: aws-actions/amazon-ecr-login@v1
+      - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
 
       - name: Store ECR endpoint as output
@@ -132,7 +132,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy staging
         uses: ./.github/actions/deploy
@@ -152,7 +152,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy production
         uses: ./.github/actions/deploy
