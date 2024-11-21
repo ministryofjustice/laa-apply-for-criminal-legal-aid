@@ -2,7 +2,7 @@
 en:
   table_headings:
     applicant_name: Name
-    reference: Reference number
+    reference: LAA reference
     submitted_at: Date submitted
     application_type: Application type
     application_status: Application status
@@ -10,6 +10,8 @@ en:
     total:
       one: 1 search result
       other: "%{count} search results"
+    heading: Search submitted applications
+    subheading: You are searching submitted and returned applications under office code %{current_office_code}.
   helpers/dictionary:
     address: &ADDRESS_DETAILS
       address_line_one: Address line 1
