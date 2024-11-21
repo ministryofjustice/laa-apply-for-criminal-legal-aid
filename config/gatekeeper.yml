@@ -2058,7 +2058,3 @@ production:
     - 2R123N
     # Add office code request - 15/11/2024
     - 2R118H
-    # Temporarily enable office codes - 21/11/2024
-    - 0W514L
-    - 0Z820E
-    - 2Q340M
