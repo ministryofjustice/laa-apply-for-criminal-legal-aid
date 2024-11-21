@@ -1,15 +1,10 @@
 <% title 'Search' %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">Search for an application</h1>
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5"><%= t('search.heading') %></h1>
     <%= govuk_warning_text text: 'This page is for test purposes only' %>
-    <p class="govuk-body"> You are searching for applications submitted and returned under office code <%= current_office_code %>. </p>
-  </div>
-</div>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column">
+    <p class="govuk-body"><%= t('search.subheading', current_office_code: current_office_code) %></p>
     <%= render @filter %>
   </div>
 </div>
