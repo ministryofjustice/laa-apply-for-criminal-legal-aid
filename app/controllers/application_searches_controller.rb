@@ -1,5 +1,5 @@
 class ApplicationSearchesController < ApplicationController
-  helper_method :new_search_url, :search_url
+  helper_method :new_search_url, :search_url, :sorted_filter_params
 
   layout 'application_dashboard'
 
@@ -32,6 +32,10 @@ class ApplicationSearchesController < ApplicationController
       filter: [:search_text],
       sorting: ApplicationSearchSorting.attribute_names
     )
+  end
+
+  def sorted_filter_params
+    { filter: @filter.params, sorting: @sorting.params }
   end
 
   def set_search(default_sorting: {})

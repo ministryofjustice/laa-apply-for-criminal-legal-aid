@@ -61,7 +61,7 @@ RSpec.describe 'Search', :authorized do
       stub_request(:post, 'http://datastore-webmock/api/v1/searches')
         .with(body:).to_return(body: datastore_response.to_json)
 
-      get search_application_searches_path, params: { filter: { 'search_text' => '' } }
+      post search_application_searches_path, params: { filter: { 'search_text' => '' } }
     end
 
     it 'shows a list of submitted applications' do
