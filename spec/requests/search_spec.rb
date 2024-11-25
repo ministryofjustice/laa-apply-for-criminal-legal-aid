@@ -48,11 +48,11 @@ RSpec.describe 'Search', :authorized do
     end
 
     it 'displays search form' do
-      assert_select 'h1', 'Search for an application'
+      assert_select 'h1', 'Search submitted applications'
       assert_select 'div.govuk-grid-column-full p',
-                    'You are searching for applications submitted and returned under office code 1A123B.'
+                    'You are searching submitted and returned applications under office code 1A123B.'
       assert_select '.search .govuk-fieldset .input-group',
-                    "For example, reference number or applicant's first or last name"
+                    'Enter any combination of client first name, last name, LAA reference'
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe 'Search', :authorized do
     it 'shows a list of submitted applications' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Search for an application'
+      assert_select 'h1', 'Search submitted applications'
       assert_select 'h2', '2 search results'
 
       assert_select 'tbody.govuk-table__body' do
@@ -86,7 +86,7 @@ RSpec.describe 'Search', :authorized do
         assert_select 'tr th.govuk-table__header', 5 do
           assert_select 'button', count: 1, text: 'Name'
           assert_select 'button', count: 1, text: 'Date submitted'
-          assert_select 'button', count: 1, text: 'Reference number'
+          assert_select 'button', count: 1, text: 'LAA reference'
           assert_select 'button', count: 1, text: 'Application type'
           assert_select 'th', count: 1, text: 'Application status'
         end
@@ -99,7 +99,7 @@ RSpec.describe 'Search', :authorized do
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
-        assert_select 'h1', 'Search for an application'
+        assert_select 'h1', 'Search submitted applications'
         assert_select 'h2', 'There are no results that match the criteria'
       end
     end
