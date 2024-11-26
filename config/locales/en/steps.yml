@@ -68,6 +68,9 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
+          reference_number_html: The client details you entered have been recorded under <span class="govuk-body-m govuk-!-font-weight-bold app-inverted-text">LAA reference number</span> %{reference}
+          applicant_name_html: <span class="govuk-body-m app-inverted-text">%{first_name} %{last_name}</span>
+          applicant_dob_html: <span class="govuk-body-m app-inverted-text">%{date_of_birth}</span>
       nino_exit:
         show:
           page_title: Use eForms for this application
