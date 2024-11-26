@@ -4,7 +4,7 @@ en:
       default: '%-d %B %Y'  # 3 January 2019
       compact: '%d/%m/%Y'   # 03/01/2019
       datetime: '%-d %B %Y %-l:%M%P'  # 3 January 2019 2:45pm
-      datetime_at: '%-d %B %Y at %-l:%M%P'  # 3 January 2019 2:45pm
+      datetime_at: '%-d %B %Y at %-l:%M%P'  # 3 January 2019 at 2:45pm
       datestamp: '%d/%m/%Y %H:%M%P' # 03/01/2019 15:29pm
       dob: '%-d %B %Y' # 1 January 1990
     subjects:
