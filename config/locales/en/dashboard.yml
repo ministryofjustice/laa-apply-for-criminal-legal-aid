@@ -127,7 +127,7 @@ en:
         submitted: There are no submitted applications
         returned: There are no returned applications
 
-  kaminari:
+  kaminari: &kaminari
     paginator:
       nav_aria_label: Pagination
     prev_page:
@@ -136,3 +136,5 @@ en:
       next_html: Next <span class="govuk-visually-hidden">page of applications</span>
     page:
       page: Page %{page}
+  application_searches:
+    kaminari: *kaminari

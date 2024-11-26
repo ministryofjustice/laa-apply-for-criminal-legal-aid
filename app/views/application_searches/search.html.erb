@@ -38,7 +38,8 @@
                      as: :result %>
         </tbody>
       </table>
-      <%= paginate @search.pagination %>
+
+      <%= paginate @search.pagination, views_prefix: 'application_searches'  %>
     </div>
   </div>
 <% end %>

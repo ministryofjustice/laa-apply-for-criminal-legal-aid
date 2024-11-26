@@ -303,7 +303,7 @@ Rails.application.routes.draw do
   # TODO: temporarily added - remove following UR
   if FeatureFlags.search.enabled?
     resource :application_searches, only: [:new] do
-      get :search, on: :collection
+      post :search, on: :collection
     end
   else
     resource 'lkj123asdf', only: [:new], controller: :application_searches, alias: 'lkj123asdf' do

@@ -1,4 +1,4 @@
-<%= form_with url: search_url, model: application_search_filter, scope: :filter, method: :get, class: 'search', id: 'search_filter' do |f| %>
+<%= form_with url: search_url, model: application_search_filter, scope: :filter, method: :post, class: 'search', id: 'search_filter' do |f| %>
 
   <%= f.govuk_fieldset legend: { text: nil } do %>
     <div class="input-group">
