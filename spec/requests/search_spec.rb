@@ -27,7 +27,7 @@ RSpec.describe 'Search', :authorized do
   let(:datastore_response) do
     pagination = Pagination.new(
       total_count: stubbed_search_results.size,
-      total_pages: 1,
+      total_pages: 2,
       limit_value: 50
     ).attributes
 
@@ -79,6 +79,8 @@ RSpec.describe 'Search', :authorized do
         assert_select 'td.govuk-table__cell:nth-of-type(3)', 'Initial'
         assert_select 'td.govuk-table__cell:nth-of-type(4)', 'Submitted'
       end
+
+      assert_select '.govuk-pagination__next button.app-button--link'
     end
 
     it 'includes the correct results table headings' do
