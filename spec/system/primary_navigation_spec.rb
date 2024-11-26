@@ -33,4 +33,38 @@ RSpec.describe 'Primary navigation' do
       expect(page).not_to have_content('Search')
     end
   end
+
+  context 'when on "Your applications"' do
+    before { click_link('Your applications') }
+
+    it 'the search tab is not the current tab' do
+      expect(search_tab_current?).to be false
+    end
+  end
+
+  context 'when on the new search page' do
+    before { click_link('Search') }
+
+    it 'the search tab is the current tab' do
+      expect(search_tab_current?).to be true
+    end
+  end
+
+  context 'when on the search results page' do
+    before do
+      stub_request(:post, 'http://datastore-webmock/api/v1/searches')
+        .to_return(body: { pagination: {}, records: [] }.to_json)
+
+      click_link('Search')
+      click_button('Search')
+    end
+
+    it 'the search tab is the current tab' do
+      expect(search_tab_current?).to be true
+    end
+  end
+
+  def search_tab_current?
+    page.find('a.moj-primary-navigation__link', text: 'Search')['aria-current'] == 'page'
+  end
 end
