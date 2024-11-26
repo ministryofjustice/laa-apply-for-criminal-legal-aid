@@ -3,7 +3,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-5"><%= t('search.heading') %></h1>
-    <%= govuk_warning_text text: 'This page is for test purposes only' %>
+    <% unless FeatureFlags.search.enabled? %>
+      <%= govuk_warning_text text: 'This page is for test purposes only' %>
+    <% end %>
     <p class="govuk-body"><%= t('search.subheading', current_office_code:) %></p>
     <%= render @filter %>
   </div>
