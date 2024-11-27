@@ -13,6 +13,7 @@
         <% @form_object.attributes.keys.each do |attribute| %>
           <%= f.govuk_number_field :"#{attribute}_amount",
                                    autocomplete: 'off',
+                                   label: { tag: 'h2', size: 'm' },
                                    inputmode: 'numeric',
                                    width: 'one-third',
                                    prefix_text: '£' %>

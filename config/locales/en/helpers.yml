@@ -1,5 +1,17 @@
 ---
 en:
+  table_headings:
+    applicant_name: Name
+    reference: LAA reference
+    submitted_at: Date submitted
+    application_type: Application type
+    application_status: Application status
+  search:
+    total:
+      one: 1 search result
+      other: "%{count} search results"
+    heading: Search submitted applications
+    subheading: You are searching submitted and returned applications under office code %{current_office_code}.
   helpers/dictionary:
     address: &ADDRESS_DETAILS
       address_line_one: Address line 1
@@ -161,8 +173,10 @@ en:
         partner_employment_status: What is the partner's employment status?
       steps_income_client_employment_income_form:
         before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_partner_employment_income_form:
         before_or_after_tax: Is this before or after tax?
+        frequency: How often do they get this payment?
       steps_income_client_employment_details_form:
         before_or_after_tax: Is this before or after tax?
         frequency: How often do they get this payment?
@@ -299,11 +313,11 @@ en:
       steps_outgoings_housing_payment_type_form:
         housing_payment_type: Which of these payments does %{subject} make where they usually live?
       steps_outgoings_mortgage_form:
-        frequency: Select how often they make mortgage payments
+        frequency: How often do they make the mortgage payment?
       steps_outgoings_rent_form:
-        frequency: Select how often they pay rent
+        frequency: How often do they pay that amount?
       steps_outgoings_board_and_lodging_form:
-        frequency: Select how often they pay for board and lodgings, and food
+        frequency: How often do they pay for board and lodgings, including food?
       steps_outgoings_council_tax_form:
         council_tax:
           one: Does %{subject} pay Council Tax where they usually live?
@@ -313,11 +327,11 @@ en:
           one: Which of these payments does %{subject} make?
           other: Which of these payments do %{subject} make?
         childcare:
-          frequency: Select how often they pay this
+          frequency: How often?
         maintenance:
-          frequency: Select how often they pay this
+          frequency: How often?
         legal_aid_contribution:
-          frequency: Select how often they pay this
+          frequency: How often?
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income: Are %{subject}'s outgoings more than their income?
       steps_submission_more_information_form:
@@ -428,7 +442,7 @@ en:
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 27 3 2007
       steps_case_charges_form:
-        offence_name: Add one offence at a time, for example, robbery. You can add more later.
+        offence_name: Start typing to select an offence, for example, robbery. You can add more later.
         offence_dates_attributes:
           date_from: For example, 27 3 2007
           date_to: Leave blank if the offence happened on a single date
@@ -689,7 +703,7 @@ en:
         lookup_id: Select an address
       steps_address_details_form: *ADDRESS_DETAILS
       steps_case_urn_form:
-        urn: Enter the unique reference number (URN) for your client’s case (optional)
+        urn: What is the unique reference number (URN) for your client’s case? (optional)
       steps_case_has_case_concluded_form:
         has_case_concluded_options: *YESNO
       steps_case_is_preorder_work_claimed_form:
@@ -939,7 +953,8 @@ en:
 
       steps_income_businesses_form:
         details: Details of %{subject}’s business?
-        trading_name: Trading name of the business
+        trading_name: What is the trading name of the business?
+        address: What is the address of the business?
         <<: *ADDRESS_DETAILS
       steps_income_businesses_summary_form:
         add_business_options: *YESNO
@@ -1077,13 +1092,13 @@ en:
           legal_aid_contribution: Contributions to criminal or civil legal aid
           none: They do not make any of these payments
         childcare:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         maintenance:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
         legal_aid_contribution:
-          amount: *amount_label
+          amount: How much?
           frequency_options: *frequency_options
           case_reference: What is the case reference of the criminal rep order or civil certificate?
       steps_outgoings_outgoings_more_than_income_form:
@@ -1146,7 +1161,7 @@ en:
         confirm_in_applicants_name_options:
           'true': I confirm that the account is in my client's name
       steps_capital_investments_form:
-        description: Describe the investment
+        description: What is the investment?
         value: What is the value of the investment?
         ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:

@@ -68,6 +68,9 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
+          reference_number_html: The client details you entered have been recorded under <span class="govuk-body-m govuk-!-font-weight-bold app-inverted-text">LAA reference number</span> %{reference}
+          applicant_name_html: <span class="govuk-body-m app-inverted-text">%{first_name} %{last_name}</span>
+          applicant_dob_html: <span class="govuk-body-m app-inverted-text">%{date_of_birth}</span>
       nino_exit:
         show:
           page_title: Use eForms for this application
@@ -206,7 +209,7 @@ en:
       urn:
         edit:
           page_title: Enter your client’s URN
-          urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
+          urn_guidance: This makes it easier for us to match the details you provide with HM Courts & Tribunals (HMCTS) records.
       has_case_concluded:
         edit:
           page_title: Has the case concluded?
@@ -225,6 +228,7 @@ en:
         edit:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
+          subheading: If there is more than one charge, add one at a time.
           offence_dates_fieldset_legend: When did the offence happen?
           add_button: Add another date
           remove_button: Remove date %{index}
@@ -650,9 +654,9 @@ en:
       property_address:
         edit:
           heading:
-            residential: What is the address of the residential property %{subject} own?
-            commercial: What is the address of the commercial property %{subject} own?
-            land: What is the address of the land %{subject} own?
+            residential: What is the address of %{subject}'s residential property?
+            commercial: What is the address of %{subject}'s commercial property?
+            land: What is the address of %{subject}'s land?
 
       property_owners:
         edit:
@@ -705,7 +709,7 @@ en:
             failure: "%{file_name} could not be deleted – try again"
         uploaded_file:
           remove_button: Delete
-        scan_flagged: "Virus scan flagged potential malcious file - Crime Application ID: #{crime_application_id} Document ID: #{document_id} Scan result: #{scan_status}"
+        scan_flagged: "Virus scan flagged potential malicious file - Crime Application ID: #{crime_application_id} Document ID: #{document_id} Scan result: #{scan_status}"
         scan_inconclusive: Virus scan inconclusive
         success: "Document successfully uploaded. Object key: #{s3_object_key}"
       scan:

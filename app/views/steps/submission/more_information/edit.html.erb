@@ -7,7 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
     <h1 class="govuk-heading-xl">Other relevant information</h1>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_radio_buttons_fieldset(:additional_information_required, legend: { tag: 'h1', size: 's' }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:additional_information_required, legend: { tag: 'h2', size: 'm' }) do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
           <% if choice.yes? %>
             <%= f.govuk_radio_button :additional_information_required, choice.value do %>

@@ -1,0 +1,17 @@
+<%= form_with url: search_url, model: application_search_filter, scope: :filter, method: :post, class: 'search', id: 'search_filter' do |f| %>
+
+  <%= f.govuk_fieldset legend: { text: nil } do %>
+    <div class="input-group">
+      <%= f.govuk_text_field(
+            :search_text,
+            label: { text: 'Enter any combination of client first name, last name, LAA reference', size: 's', class: 'govuk-!-margin-bottom-4' },
+            autocomplete: 'off'
+          ) %>
+    </div>
+
+    <div class="govuk-button-group">
+      <%= f.govuk_submit 'Search' %>
+      <%= link_to 'Clear', new_search_url, class: 'govuk-link' %>
+    </div>
+  <% end %>
+<% end %>

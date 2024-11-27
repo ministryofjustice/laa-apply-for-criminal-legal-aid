@@ -43,6 +43,10 @@ feature_flags:
     local: true
     staging: true
     production: true
+  search:
+    local: true
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
@@ -56,3 +60,4 @@ settings:
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: online-support@justice.gov.uk
   case_enquiries_tel: 0300 200 2020
+  laa_applicant_declaration_form_url: https://assets.publishing.service.gov.uk/media/62cd63f7d3bf7f2ffb6e6d60/applicant-declaration-form.pdf

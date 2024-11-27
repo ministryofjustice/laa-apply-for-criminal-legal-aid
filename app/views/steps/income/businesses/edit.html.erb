@@ -8,7 +8,8 @@
 
     <h1 class="govuk-heading-xl"><%=legend_t(:details) %></h1>
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_text_field :trading_name, autocomplete: 'off' %>
+      <%= f.govuk_text_field :trading_name, label: { tag: 'h2', size: 'm' }, autocomplete: 'off' %>
+      <h2 class="govuk-heading-m"><%= t('helpers.label.steps_income_businesses_form.address') %></h2>
       <%= f.govuk_text_field :address_line_one, autocomplete: 'off' %>
       <%= f.govuk_text_field :address_line_two, autocomplete: 'off' %>
       <%= f.govuk_text_field :city, autocomplete: 'off', width: 'one-half' %>

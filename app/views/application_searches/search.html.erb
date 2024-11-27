@@ -1,0 +1,47 @@
+<% title 'Search' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5"><%= t('search.heading') %></h1>
+    <% unless FeatureFlags.search.enabled? %>
+      <%= govuk_warning_text text: 'This page is for test purposes only' %>
+    <% end %>
+    <p class="govuk-body"><%= t('search.subheading', current_office_code:) %></p>
+    <%= render @search.filter %>
+  </div>
+</div>
+
+<% if @search.results.empty? %>
+  <%= render 'no_search_results' %>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="govuk-heading-s">
+        <%= t('search.total', count: @search.total) %>
+      </h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table app-table">
+        <%= render DataTable::HeadComponent.new(sorting: @search.sorting, filter: @search.filter) do |head|
+              head.with_row do |row|
+                row.with_cell(colname: :applicant_name)
+                row.with_cell(colname: :submitted_at)
+                row.with_cell(colname: :reference)
+                row.with_cell(colname: :application_type)
+                row.with_cell(colname: :application_status)
+              end
+            end %>
+        <tbody class="govuk-table__body">
+          <%= render partial: 'search_results_table_body',
+                     collection: @search.results,
+                     as: :result %>
+        </tbody>
+      </table>
+
+      <%= paginate @search.pagination, views_prefix: 'application_searches'  %>
+    </div>
+  </div>
+<% end %>

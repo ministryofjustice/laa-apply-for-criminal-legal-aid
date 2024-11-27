@@ -27,7 +27,7 @@ RSpec.describe Document, type: :model do
         crime_application: crime_application,
         filename: 'test.pdf',
         content_type: 'application/pdf',
-        file_size: 1.megabytes,
+        file_size: 1.megabyte,
       }
     end
 
