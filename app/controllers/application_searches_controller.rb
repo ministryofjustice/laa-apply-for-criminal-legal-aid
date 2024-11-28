@@ -1,5 +1,5 @@
 class ApplicationSearchesController < ApplicationController
-  helper_method :new_search_url, :search_url, :sorted_filter_params
+  helper_method :sorted_filter_params
 
   layout 'application_dashboard'
 
@@ -12,18 +12,6 @@ class ApplicationSearchesController < ApplicationController
   end
 
   private
-
-  def new_search_url
-    return new_lkj123asdf_path unless FeatureFlags.search.enabled?
-
-    new_application_searches_path
-  end
-
-  def search_url
-    return search_lkj123asdf_path unless FeatureFlags.search.enabled?
-
-    search_application_searches_path
-  end
 
   def search_params
     params.permit(

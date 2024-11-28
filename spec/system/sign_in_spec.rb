@@ -39,10 +39,6 @@ RSpec.describe 'Sign in user journey' do
     before do
       start_button.click
       visit root_path
-
-      allow(FeatureFlags).to receive(:search).and_return(
-        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-      )
     end
 
     it 'redirects to the select office path' do
