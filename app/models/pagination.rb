@@ -2,7 +2,7 @@ class Pagination
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  DEFAULT_LIMIT_VALUE = 50
+  DEFAULT_LIMIT_VALUE = Kaminari.config.default_per_page
   DEFAULT_CURRENT_PAGE = 1
 
   attribute :current_page, :integer, default: DEFAULT_CURRENT_PAGE
