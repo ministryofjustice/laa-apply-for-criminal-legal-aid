@@ -21,7 +21,7 @@ RSpec.describe Pagination do
     end
 
     context 'when no attribute provided' do
-      it { is_expected.to be 50 }
+      it { is_expected.to be 20 }
     end
   end
 end
