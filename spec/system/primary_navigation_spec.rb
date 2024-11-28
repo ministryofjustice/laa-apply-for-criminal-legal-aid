@@ -3,12 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Primary navigation' do
   include_context 'when logged in'
 
-  before do
-    allow(FeatureFlags).to receive(:search).and_return(
-      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-    )
-  end
-
   it 'takes you to the applications dashboard when you click "Your applications"' do
     click_on('Your applications')
 

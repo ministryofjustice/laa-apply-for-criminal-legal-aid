@@ -43,10 +43,6 @@ feature_flags:
     local: true
     staging: true
     production: true
-  search:
-    local: true
-    staging: true
-    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
