@@ -609,10 +609,17 @@ en:
         steps/income/dependant_fieldset_form:
           summary:
             age:
-              not_a_number: "The %{ordinal} dependant's age must be a number"
-              blank: "Enter %{ordinal} dependant's age"
-              less_than: "The %{ordinal} dependant must be under 18 years old"
-              greater_than_or_equal_to: "The %{ordinal} dependant must be at least 0 years old"
+              not_a_number: The %{ordinal} dependant's age must be a number
+              blank: Enter %{ordinal} dependant's age
+              less_than: The %{ordinal} dependant's age must be under 18
+              greater_than_or_equal_to: The %{ordinal} dependant must be at least 0
+          attributes:
+            age:
+              not_a_number: Dependant's age must be a number
+              blank: Enter dependant's age
+              less_than: Dependant's age must be under 18
+              greater_than_or_equal_to: Dependant's age must be at least 0
+
         steps/income/income_payments_form:
           attributes:
             base:
