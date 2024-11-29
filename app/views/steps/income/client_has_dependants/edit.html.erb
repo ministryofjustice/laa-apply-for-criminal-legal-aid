@@ -9,11 +9,11 @@
       <%= f.govuk_collection_radio_buttons :client_has_dependants, @form_object.choices,
                                            :value, inline: false,
                                            legend: { text: t('.client_has_dependants'), tag: 'h1', size: 'xl' } do %>
-        <p><%= t('.dependant_definitions.intro') %></p>
+        <p class="govuk-body"><%= t('.dependants_definition.intro') %></p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><%= t('.dependant_definitions.definition_1') %></li>
-          <li><%= t('.dependant_definitions.definition_2') %></li>
-          <li><%= t('.dependant_definitions.definition_3') %></li>
+          <% t('.dependants_definition.definitions').each do |definition| %>
+            <li><%= definition %></li>
+          <% end %>
         </ul>
       <% end %>
 

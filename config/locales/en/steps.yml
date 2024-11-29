@@ -325,11 +325,12 @@ en:
         edit:
           page_title: 'Does your client have any dependants?'
           client_has_dependants: 'Does your client have any dependants?'
-          dependant_definitions:
-            intro: 'Include anyone who is all of these:'
-            definition_1: 'under 18 years old'
-            definition_2: 'lives with your client'
-            definition_3: 'depends on your client for financial support'
+          dependants_definition: &dependants_definition
+            intro: 'Only include dependants if all of the following apply - if they:'
+            definitions:
+              - 'are under 18 years old'
+              - 'live with your client'
+              - 'depend on your client financially'
       dependants:
         edit:
           page_title: Dependants’ ages
@@ -339,6 +340,8 @@ en:
           remove_button: Remove %{ordinal} dependant
           add_button: Add another dependant
           deleted_flash: The dependant has been deleted
+          dependants_definition: *dependants_definition
+          under_one_instruction: Enter ‘0’ if a dependant is currently under 1 year old.
       answers:
         edit:
           page_title: Check your answers - Your client's income
