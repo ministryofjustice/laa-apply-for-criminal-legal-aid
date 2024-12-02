@@ -90,7 +90,7 @@ en:
         edit:
           page_title: The partner’s details
           heading: The partner’s details
-          full_name_legend: Partner’s full name
+          full_name_legend: What is the partner's full name?
       nino:
         edit:
           page_title: Does the partner have a National Insurance number?
@@ -164,7 +164,7 @@ en:
               home_address: Enter the client's usual home address
               correspondence_address: Enter your client’s correspondence address
             partner:
-              home_address: Enter the partner's usual home address
+              home_address: The partner's usual home address
           manual_entry: Enter address manually
       results:
         edit:
@@ -179,7 +179,7 @@ en:
               home_address: Enter the client's usual home address
               correspondence_address: Enter your client’s correspondence address
             partner:
-              home_address: Enter the partner's usual home address
+              home_address: The partner's usual home address
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
@@ -269,7 +269,7 @@ en:
           charge_label: What is the charge? (optional)
           hearing_court_name_label: Which court is hearing the case? (optional)
           hearing_date_legend: When is the next hearing? (optional)
-          hearing_date_hint: For example, 27 3 2007
+          hearing_date_hint: For example, 27 3 2007.
       hearing_details:
         edit:
           page_title: Next hearing court details

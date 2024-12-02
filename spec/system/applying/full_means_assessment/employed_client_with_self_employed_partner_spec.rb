@@ -57,7 +57,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       # steps/partner/partner_details
       fill_in('First name', with: 'John')
       fill_in('Last name', with: 'Huffman')
-      fill_date('Date of birth', with: 30.years.ago.to_date)
+      fill_date("What is the partner's date of birth?", with: 30.years.ago.to_date)
       save_and_continue
 
       # steps/partner/partner_involved_in_case
