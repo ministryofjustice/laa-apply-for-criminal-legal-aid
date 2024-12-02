@@ -9,9 +9,14 @@
     <%= render partial: 'shared/flash_banner' %>
     <%= govuk_error_summary(@form_object) %>
 
-    <div class="govuk-inset-text">
-      Enter ‘0’ if a dependant is currently under 1 year old.
-    </div>
+    <p class="govuk-body"><%= t('.dependants_definition.intro') %></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% t('.dependants_definition.definitions').each do |definition| %>
+        <li><%= definition %></li>
+      <% end %>
+    </ul>
+
+    <div class="govuk-inset-text"><%= t('.under_one_instruction') %></div>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.fields_for :dependants do |c| %>

@@ -147,8 +147,8 @@ en:
       employment: Job
       self_assessment_tax_bill: Self Assessment tax
       partner_self_assessment_tax_bill: Self Assessment tax
-      work_benefits: Other work benefits
-      partner_work_benefits: Other work benefits
+      work_benefits: 'Other work benefits: client'
+      partner_work_benefits: 'Other work benefits: partner'
       employment_income: Pay from employment
       partner_employment_income: Pay from employment
       funding_decisions: Funding decisions
@@ -441,7 +441,7 @@ en:
 
       # BEGIN employment details section
       employment_status:
-        question: Client’s employment status?
+        question: Client’s employment status
         answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Not working
           employed: Employed
@@ -496,7 +496,7 @@ en:
 
       # BEGIN partner employment details section
       partner_employment_status:
-        question: Partner’s employment status?
+        question: Partner’s employment status
         answers: *EMPLOYMENT_STATUS_ANSWERS
       partner_in_armed_forces:
         question: Partner in armed forces?
@@ -530,7 +530,7 @@ en:
         answers:
           description: *payment_answer_format
       board_from_family_payment:
-        question: Board from family members living with %{ownership}
+        question: Board from family members
         answers:
           description: *payment_answer_format
       rent_payment:
@@ -538,7 +538,7 @@ en:
         answers:
           description: *payment_answer_format
       financial_support_with_access_payment:
-        question: Financial support from someone who allows %{ownership} access to their assets or money
+        question: Financial support from someone
         answers:
           description: *payment_answer_format
       from_friends_relatives_payment:
@@ -704,23 +704,27 @@ en:
       funding_decision_case_number:
         question: Case number
       funding_decision_ioj_result:
-        question: Interests of justice test result
+        question: Interests of justice (IoJ) test result
         answers:
-          <<: *PASSFAIL
+          pass: Passed
+          fail: Refused
       funding_decision_ioj_reason:
-        question: Interests of justice reason
+        question: IoJ comments
       funding_decision_ioj_caseworker:
-        question: Interests of justice test caseworker name
+        question: IoJ caseworker
       funding_decision_ioj_date:
-        question: Date of interests of justice test
+        question: IoJ test date
       funding_decision_means_result:
         question: Means test result
         answers:
-          <<: *PASSFAIL
+          pass: Passed
+          fail: Failed
+          full: Contribution
+          inel: Ineligible
       funding_decision_means_caseworker:
-        question: Means test caseworker name
+        question: Means test caseworker
       funding_decision_means_date:
-        question: Date of means test
+        question: Means test date
       funding_decision_overall_result:
         question: Overall result
         answers:
@@ -731,13 +735,16 @@ en:
             value: Granted
             colour: green
           fail_on_ioj:
-            value: Rejected
+            value: Failed IoJ
             colour: red
           failmeans:
-            value: Failed on means
+            value: Failed means
             colour: red
           failioj:
-            value: Rejected
+            value: Failed IoJ 
+            colour: red
+          failmeioj:
+            value: Failed means and IoJ
             colour: red
       funding_decision_further_info:
         question: Further information about the decision
@@ -1006,18 +1013,18 @@ en:
           description: *payment_answer_format
 
       work_benefits:
-        question: Does your client receive any other benefits from work?
+        question: Other work benefits?
         answers: *YESNO
       work_benefits_payment:
-        question: Total value every year
+        question: Total value
         answers:
           description: *payment_answer_format
 
       partner_work_benefits:
-        question: Does the partner receive any other benefits from work?
+        question: Other work benefits?
         answers: *YESNO
       partner_work_benefits_payment:
-        question: Total value every year
+        question: Total value
         answers:
           description: *payment_answer_format
 

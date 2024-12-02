@@ -68,6 +68,9 @@ en:
         edit:
           page_title: Your application has been date stamped
           heading: Your application has been date stamped
+          reference_number_html: The client details you entered have been recorded under <span class='govuk-!-font-weight-bold'>LAA reference %{reference}:</span>
+          applicant_name_html: <span class='govuk-!-font-weight-bold'>Name:</span> %{first_name} %{last_name}
+          applicant_dob_html: <span class='govuk-!-font-weight-bold'>Date of birth:</span> %{date_of_birth}
       nino_exit:
         show:
           page_title: Use eForms for this application
@@ -206,7 +209,7 @@ en:
       urn:
         edit:
           page_title: Enter your client’s URN
-          urn_guidance: This makes it easier for LAA caseworkers to match the details you provide with HM Courts & Tribunals (HMCTS) records
+          urn_guidance: This makes it easier for us to match the details you provide with HM Courts & Tribunals (HMCTS) records.
       has_case_concluded:
         edit:
           page_title: Has the case concluded?
@@ -322,11 +325,12 @@ en:
         edit:
           page_title: 'Does your client have any dependants?'
           client_has_dependants: 'Does your client have any dependants?'
-          dependant_definitions:
-            intro: 'Include anyone who is all of these:'
-            definition_1: 'under 18 years old'
-            definition_2: 'lives with your client'
-            definition_3: 'depends on your client for financial support'
+          dependants_definition: &dependants_definition
+            intro: 'Only include dependants if all of the following apply - if they:'
+            definitions:
+              - 'are under 18 years old'
+              - 'live with your client'
+              - 'depend on your client financially'
       dependants:
         edit:
           page_title: Dependants’ ages
@@ -336,6 +340,8 @@ en:
           remove_button: Remove %{ordinal} dependant
           add_button: Add another dependant
           deleted_flash: The dependant has been deleted
+          dependants_definition: *dependants_definition
+          under_one_instruction: Enter ‘0’ if a dependant is currently under 1 year old.
       answers:
         edit:
           page_title: Check your answers - Your client's income

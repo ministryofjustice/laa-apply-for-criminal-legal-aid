@@ -47,6 +47,11 @@ body.js-enabled {
   // Buttons can't have different colours for visited/unvisited
   color: $govuk-link-colour;
 }
+.govuk-pagination__item--current { 
+  .app-button--link {
+    color: #fff;
+  }
+}
 
 .app-dashboard-table {
   .govuk-table__header,

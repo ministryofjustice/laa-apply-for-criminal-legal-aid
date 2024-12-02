@@ -32,7 +32,7 @@ module CapybaraHelpers
 
   # check boxes
   def choose_answers(question, choices = [])
-    q = find('legend', text: question).sibling('div.govuk-checkboxes')
+    q = page.find('legend', text: question).sibling('div.govuk-checkboxes')
 
     within q do
       choices.each do |choice|
@@ -43,5 +43,18 @@ module CapybaraHelpers
 
   def save_and_continue
     click_button('Save and continue')
+  end
+
+  def summary_card(card_title)
+    title = page.find(
+      :xpath,
+      "//h2[@class='govuk-summary-card__title' and text()='#{card_title}']"
+    )
+
+    title.ancestor('div.govuk-summary-card')
+  end
+
+  def within_card(card_title, &block)
+    within(summary_card(card_title), &block)
   end
 end

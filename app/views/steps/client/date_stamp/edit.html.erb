@@ -4,6 +4,12 @@
 <div class="govuk-grid-row app-inverted--card app-inverted-text">
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l app-inverted-text"><%= t('.heading')%></h1>
+    <p class="govuk-body-l app-inverted-text"><%= l(current_crime_application.date_stamp, format: :datetime_at) %></p>
+
+    <p class="govuk-body-m app-inverted-text">
+      <%= t('.reference_number_html', reference: current_crime_application.reference)%><br>
+      <%= t('.applicant_name_html', first_name: current_crime_application.applicant.first_name, last_name: current_crime_application.applicant.last_name)%><br>
+      <%= t('.applicant_dob_html', date_of_birth: l(current_crime_application.applicant.date_of_birth, format: :dob)) %><br>
 
     <%= step_form @form_object do |f| %>
       <%= f.continue_button(primary_opts: { class: 'app-button--m app-button--inverted' }) %>

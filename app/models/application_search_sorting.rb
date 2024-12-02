@@ -15,6 +15,8 @@ class ApplicationSearchSorting
   attribute :sort_direction, :string, default: DEFAULT_SORT_DIRECTION
   attribute :sort_by, :string, default: DEFAULT_SORT_BY
 
+  alias params attributes
+
   def reverse_direction
     return 'ascending' if sort_direction == 'descending'
 

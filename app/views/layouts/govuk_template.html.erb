@@ -40,9 +40,7 @@
   <%= yield(:phase_banner) %>
 </div>
 
-<% if FeatureFlags.search.enabled? %>
-  <%= yield(:primary_navigation) %>
-<% end %>
+<%= yield(:primary_navigation) %>
 
 <div class="govuk-width-container">
   <%= yield(:back_link) %>

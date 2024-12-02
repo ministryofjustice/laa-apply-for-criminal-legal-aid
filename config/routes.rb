@@ -300,15 +300,8 @@ Rails.application.routes.draw do
     end
   end
 
-  # TODO: temporarily added - remove following UR
-  if FeatureFlags.search.enabled?
-    resource :application_searches, only: [:new] do
-      get :search, on: :collection
-    end
-  else
-    resource 'lkj123asdf', only: [:new], controller: :application_searches, alias: 'lkj123asdf' do
-      get :search, on: :collection
-    end
+  resource :application_searches, only: [:new] do
+    post :search, on: :collection
   end
 
   # catch-all route

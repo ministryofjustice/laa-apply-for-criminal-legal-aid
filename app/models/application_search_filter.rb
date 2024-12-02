@@ -22,6 +22,12 @@ class ApplicationSearchFilter
     'application_search_filter'
   end
 
+  def params
+    {
+      search_text:
+    }
+  end
+
   private
 
   def search_text_datastore_param
