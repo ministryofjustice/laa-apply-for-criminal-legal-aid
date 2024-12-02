@@ -48,9 +48,9 @@ en:
           page_title: Use eForms for this application
       details:
         edit:
-          page_title: Enter your client’s details
-          heading: Enter your client’s details
-          full_name_legend: Client’s full name
+          page_title: Your client’s details
+          heading: Your client’s details
+          full_name_legend: What is their full name?
       case_type:
         edit:
           page_title: What is the case type?
@@ -161,8 +161,8 @@ en:
               home_address: Partner’s home address
           heading:
             applicant:
-              home_address: Enter the client's usual home address
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
               home_address: The partner's usual home address
           manual_entry: Enter address manually
@@ -176,8 +176,8 @@ en:
               home_address: Partner’s home address selection
           heading:
             applicant:
-              home_address: Enter the client's usual home address
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
               home_address: The partner's usual home address
           current_postcode: Postcode
@@ -199,11 +199,12 @@ en:
               home_address: Partner’s home address
           heading:
             applicant:
-              home_address: Enter your client’s home address
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
-              home_address: Enter your partner’s home address
+              home_address: The partner’s usual home address
               correspondence_address: Enter your partner’s correspondence address
+          subheading: What is the address?
 
     case:
       urn:

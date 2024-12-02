@@ -78,7 +78,7 @@ en:
       steps_client_has_partner_form:
         has_partner: Does your client have a partner?
       steps_client_details_form:
-        date_of_birth: Date of birth
+        date_of_birth: What is their date of birth?
       steps_client_case_type_form:
         case_type: What is the case type?
       steps_shared_nino_form:
@@ -597,7 +597,7 @@ en:
       steps_client_details_form:
         first_name: First name
         last_name: Last name
-        other_names: Other names (optional)
+        other_names: Are they known by any other names? (optional)
       steps_client_case_type_form:
         case_type_options:
           summary_only: Summary only

@@ -16,7 +16,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when under 18 years old' do
       # steps/client/details
       fill_in('First name', with: 'Jo')
       fill_in('Last name', with: 'Bloggs')
-      fill_date('Date of birth', with: 17.years.ago.to_date)
+      fill_date('What is their date of birth?', with: 17.years.ago.to_date)
       save_and_continue
 
       # steps/client/is_application_means_tested
