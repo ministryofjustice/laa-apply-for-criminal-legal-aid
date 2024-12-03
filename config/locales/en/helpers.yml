@@ -78,7 +78,7 @@ en:
       steps_client_has_partner_form:
         has_partner: Does your client have a partner?
       steps_client_details_form:
-        date_of_birth: Date of birth
+        date_of_birth: What is their date of birth?
       steps_client_case_type_form:
         case_type: What is the case type?
       steps_shared_nino_form:
@@ -93,9 +93,9 @@ en:
       steps_client_relationship_status_form:
         relationship_status: What is your client's relationship status?
       steps_partner_relationship_form:
-        relationship_to_partner: What is the client’s relationship to their partner?
+        relationship_to_partner: What is your client’s relationship to their partner?
       steps_partner_details_form:
-        date_of_birth: Date of birth
+        date_of_birth: What is the partner's date of birth?
       steps_partner_involvement_form:
         involvement_in_case: Is the partner involved in your client’s case?
       steps_partner_conflict_form:
@@ -398,9 +398,12 @@ en:
         separation_date:
       steps_client_details_form:
         other_names: This includes aliases, nicknames or other names your client may be known as.
-        date_of_birth: For example, 27 3 2007
+        date_of_birth: For example, 27 3 2007.
+      steps_partner_details_form:
+        other_names: This includes aliases, nicknames or other names they may be known as.
+        date_of_birth: For example, 27 3 2007.
       steps_client_appeal_details_form:
-        appeal_lodged_date: For example, 27 3 2007
+        appeal_lodged_date: For example, 27 3 2007.
         appeal_original_app_submitted: This is the case with the outcome your client wants to appeal.
       steps_client_appeal_reference_number_form:
         appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
@@ -435,16 +438,16 @@ en:
       steps_case_urn_form:
         urn: For example, ‘12 AB 3456789’.
       steps_case_has_case_concluded_form:
-        date_case_concluded: For example, 27 3 2007
+        date_case_concluded: For example, 27 3 2007.
       steps_case_is_preorder_work_claimed_form:
-        preorder_work_date: For example, 27 3 2007
+        preorder_work_date: For example, 27 3 2007.
         preorder_work_details: Enter details about the urgency of the work
       steps_case_is_client_remanded_form:
-        date_client_remanded: For example, 27 3 2007
+        date_client_remanded: For example, 27 3 2007.
       steps_case_charges_form:
         offence_name: Start typing to select an offence, for example, robbery. You can add more later.
         offence_dates_attributes:
-          date_from: For example, 27 3 2007
+          date_from: For example, 27 3 2007.
           date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
         hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court.
@@ -489,7 +492,7 @@ en:
         partner_self_assessment_tax_bill: This will be from HM Revenue and Customs (HMRC).
         partner_self_assessment_tax_bill_amount: Enter '0' if none.
       steps_income_lost_job_in_custody_form:
-        date_job_lost: For example, 27 3 2007
+        date_job_lost: For example, 27 3 2007.
       steps_income_income_payments_form:
         income_payments: Select all that apply.
         types_options:
@@ -519,7 +522,7 @@ en:
       steps_income_business_type_form:
         business_type: You can add more later.
       steps_income_business_start_date_form:
-        trading_start_date: For example, 27 3 2007
+        trading_start_date: For example, 27 3 2007.
       steps_income_business_employees_form:
         has_employees: Enter if they have employees, not including themself.
       steps_income_business_financials_form:
@@ -594,7 +597,7 @@ en:
       steps_client_details_form:
         first_name: First name
         last_name: Last name
-        other_names: Other names (optional)
+        other_names: Are they known by any other names? (optional)
       steps_client_case_type_form:
         case_type_options:
           summary_only: Summary only
@@ -654,7 +657,7 @@ en:
       steps_partner_details_form:
         first_name: First name
         last_name: Last name
-        other_names: Other names (optional)
+        other_names: Are they known by any other names? (optional)
       steps_partner_involvement_form:
         involvement_in_case_options:
           victim: Victim
@@ -698,7 +701,7 @@ en:
           'no': 'No, I need to change these details'
       steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_OPTIONS
       steps_address_lookup_form:
-        postcode: Postcode
+        postcode: What is the postcode?
       steps_address_results_form:
         lookup_id: Select an address
       steps_address_details_form: *ADDRESS_DETAILS

@@ -48,9 +48,9 @@ en:
           page_title: Use eForms for this application
       details:
         edit:
-          page_title: Enter your client’s details
-          heading: Enter your client’s details
-          full_name_legend: Client’s full name
+          page_title: Your client’s details
+          heading: Your client’s details
+          full_name_legend: What is their full name?
       case_type:
         edit:
           page_title: What is the case type?
@@ -85,12 +85,12 @@ en:
     partner:
       relationship:
         edit:
-          page_title: What is the client’s relationship to their partner?
+          page_title: What is your client’s relationship to their partner?
       details:
         edit:
-          page_title: Enter the partner’s details
-          heading: Enter the partner’s details
-          full_name_legend: Partner’s full name
+          page_title: The partner’s details
+          heading: The partner’s details
+          full_name_legend: What is the partner's full name?
       nino:
         edit:
           page_title: Does the partner have a National Insurance number?
@@ -161,10 +161,10 @@ en:
               home_address: Partner’s home address
           heading:
             applicant:
-              home_address: Enter the address where your client usually lives
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
-              home_address: Enter the address where the partner usually lives
+              home_address: The address where the partner usually lives
           manual_entry: Enter address manually
       results:
         edit:
@@ -176,10 +176,10 @@ en:
               home_address: Partner’s home address selection
           heading:
             applicant:
-              home_address: Enter the address where your client usually lives
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
-              home_address: Enter the address where the partner usually lives
+              home_address: The address where the partner usually lives
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
@@ -199,11 +199,12 @@ en:
               home_address: Partner’s home address
           heading:
             applicant:
-              home_address: Enter your client’s home address
-              correspondence_address: Enter your client’s correspondence address
+              home_address: The address where your client usually lives
+              correspondence_address: Your client’s correspondence address
             partner:
-              home_address: Enter your partner’s home address
+              home_address: The address where the partner usually lives
               correspondence_address: Enter your partner’s correspondence address
+          subheading: What is the address?
 
     case:
       urn:
@@ -269,7 +270,7 @@ en:
           charge_label: What is the charge? (optional)
           hearing_court_name_label: Which court is hearing the case? (optional)
           hearing_date_legend: When is the next hearing? (optional)
-          hearing_date_hint: For example, 27 3 2007
+          hearing_date_hint: For example, 27 3 2007.
       hearing_details:
         edit:
           page_title: Next hearing court details

@@ -8,6 +8,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <h1 class="govuk-heading-xl"><%=t @form_object.heading %></h1>
+    <h2 class="govuk-heading-m"> <%= t('.subheading') %></h2>
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_field :address_line_one, autocomplete: 'off' %>
