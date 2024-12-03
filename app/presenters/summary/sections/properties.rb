@@ -25,7 +25,7 @@ module Summary
       def has_records_answer
         case capital.has_no_properties
         when 'yes'
-          YesNoAnswer::NO
+          'none'
         when 'no'
           YesNoAnswer::YES
         else

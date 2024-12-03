@@ -350,22 +350,22 @@ describe Summary::Sections::IncomePaymentsDetails do
           [
             [
               Summary::Components::FreeTextAnswer,
-              'maintenance_payment', 'Does not get',
+              'maintenance_payment', 'No',
               '#steps-income-income-payments-form-types-maintenance-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'private_pension_payment', 'Does not get',
+              'private_pension_payment', 'No',
               '#steps-income-income-payments-form-types-private-pension-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'state_pension_payment', 'Does not get',
+              'state_pension_payment', 'No',
               '#steps-income-income-payments-form-types-state-pension-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'interest_investment_payment', 'Does not get',
+              'interest_investment_payment', 'No',
               '#steps-income-income-payments-form-types-interest-investment-field'
             ],
             [
@@ -375,12 +375,12 @@ describe Summary::Sections::IncomePaymentsDetails do
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'board_from_family_payment', 'Does not get',
+              'board_from_family_payment', 'No',
               '#steps-income-income-payments-form-types-board-from-family-field'
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'rent_payment', 'Does not get',
+              'rent_payment', 'No',
               '#steps-income-income-payments-form-types-rent-field'
             ],
             [
@@ -395,7 +395,7 @@ describe Summary::Sections::IncomePaymentsDetails do
             ],
             [
               Summary::Components::FreeTextAnswer,
-              'other_payment', 'Does not get',
+              'other_payment', 'No',
               '#steps-income-income-payments-form-types-other-field'
             ]
           ]
