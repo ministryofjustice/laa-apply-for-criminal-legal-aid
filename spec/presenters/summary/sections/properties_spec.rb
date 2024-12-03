@@ -12,6 +12,8 @@ describe Summary::Sections::Properties do
 
     let(:record) { Property.new }
     let(:expected_question_text) { 'Assets client owns' }
+    let(:expected_no_records_answer) { 'None' }
+    let(:expected_no_records_answer_value) { 'none' }
     let(:expected_change_path) { 'applications/12345/steps/capital/which_assets_owned' }
   end
 end
