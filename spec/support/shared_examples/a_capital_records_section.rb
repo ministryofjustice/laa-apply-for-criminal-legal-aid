@@ -10,6 +10,8 @@ RSpec.shared_examples 'a capital records section' do |_options|
   end
 
   let(:records) { [record] }
+  let(:expected_no_records_answer) { 'No' }
+  let(:expected_no_records_answer_value) { YesNoAnswer::NO }
 
   describe '#list?' do
     subject(:list?) { presenter.list? }
@@ -110,9 +112,9 @@ RSpec.shared_examples 'a capital records section' do |_options|
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question_text).to eq expected_question_text
-        expect(answers[0].answer_text).to eq 'No'
+        expect(answers[0].answer_text).to eq expected_no_records_answer
         expect(answers[0].change_path).to match expected_change_path
-        expect(answers[0].value).to eq(YesNoAnswer::NO)
+        expect(answers[0].value).to eq(expected_no_records_answer_value)
       end
     end
   end

@@ -923,12 +923,14 @@ en:
         absence_answer: *absence_none
       has_assets:
         question: Assets %{subject} owns
-        answers: *YESNO
+        answers:
+          <<: *YESNO
+          none: *absence_none
       # END property, address and owners
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Trust fund
+        question: Stands to benefit from a trust fund?
         answers: *YESNO
       trust_fund_amount_held:
         question: Amount in fund
@@ -938,7 +940,7 @@ en:
 
       # START partner_trust_fund
       partner_will_benefit_from_trust_fund:
-        question: Trust fund
+        question: Stands to benefit from a trust fund?
         answers: *YESNO
       partner_trust_fund_amount_held:
         question: Amount in fund
