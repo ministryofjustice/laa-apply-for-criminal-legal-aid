@@ -164,7 +164,7 @@ en:
               home_address: The address where your client usually lives
               correspondence_address: Your client’s correspondence address
             partner:
-              home_address: The partner's usual home address
+              home_address: The address where the partner usually lives
           manual_entry: Enter address manually
       results:
         edit:
@@ -179,7 +179,7 @@ en:
               home_address: The address where your client usually lives
               correspondence_address: Your client’s correspondence address
             partner:
-              home_address: The partner's usual home address
+              home_address: The address where the partner usually lives
           current_postcode: Postcode
           change_postcode_html: Change <span class="govuk-visually-hidden">postcode</span>
           address_not_listed: I can’t find the address in the list
@@ -202,7 +202,7 @@ en:
               home_address: The address where your client usually lives
               correspondence_address: Your client’s correspondence address
             partner:
-              home_address: The partner’s usual home address
+              home_address: The address where the partner usually lives
               correspondence_address: Enter your partner’s correspondence address
           subheading: What is the address?
 
