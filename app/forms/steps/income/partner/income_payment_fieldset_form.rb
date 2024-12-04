@@ -2,6 +2,8 @@ module Steps
   module Income
     module Partner
       class IncomePaymentFieldsetForm < Steps::BaseFormObject
+        include FieldValidation
+
         attribute :id, :string
         attribute :payment_type, :string
         attribute :amount, :pence
@@ -10,10 +12,7 @@ module Steps
 
         validate { presence_with_payment_type :amount }
         validate { presence_with_payment_type :frequency }
-
-        validates :amount, numericality: {
-          greater_than: 0
-        }
+        validate { numericality_with_payment_type(:amount, greater_than: 0) }
 
         validates :payment_types, presence: true, inclusion: { in: :payment_types }
         validates :frequency, inclusion: { in: :frequencies }
@@ -59,15 +58,21 @@ module Steps
         def presence_with_payment_type(attribute)
           return if send(attribute).present?
 
-          payment_type_str = I18n.t(
+          errors.add(attribute, :blank, payment_type: payment_type_presentable&.downcase!)
+        end
+
+        def numericality_with_payment_type(attribute, greater_than:)
+          numericality_errors = numericality(attribute, greater_than:)
+
+          numericality_errors.each do |error|
+            errors.add(attribute, error, payment_type: payment_type_presentable)
+          end
+        end
+
+        def payment_type_presentable
+          I18n.t(
             payment_type,
             scope: [:helpers, :label, :steps_income_income_payments_form, :types_options]
-          )&.downcase!
-
-          errors.add(
-            attribute,
-            :blank,
-            payment_type: payment_type_str
           )
         end
       end
