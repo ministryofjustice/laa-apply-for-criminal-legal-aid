@@ -7,7 +7,8 @@ module Summary
 
       def answers
         Components::Employment.with_collection(
-          employments, show_actions: editable?, show_record_actions: headless?
+          employments, show_actions: editable?, show_record_actions: headless?,
+          crime_application: crime_application
         )
       end
 

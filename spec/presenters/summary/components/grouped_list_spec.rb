@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 class MockComponent < ViewComponent::Base
-  def initialize(mock:, mock_counter:, show_actions:, show_record_actions:)
+  def initialize(mock:, mock_counter:, show_actions:, show_record_actions:, crime_application:)
     @type = mock.type
     @count = mock_counter
     super
@@ -18,7 +18,8 @@ RSpec.describe Summary::Components::GroupedList, type: :component do
       items: [double(type: 'foo'), double(type: 'bar'), double(type: 'foo')],
       group_by: :type,
       item_component: MockComponent,
-      show_actions: true
+      show_actions: true,
+      crime_application: nil
     )
   end
 
