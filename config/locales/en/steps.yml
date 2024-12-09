@@ -347,9 +347,7 @@ en:
         edit:
           page_title: Check your answers - Your client's income
           heading: Check your answers
-          subheading:
-            client: Your client’s income
-            partner: The partner’s income
+          subheading: Income and employment
       client:
         employer_details:
           edit:
@@ -500,7 +498,7 @@ en:
         edit:
           page_title: Check your answers - %{Subject}'s outgoings
           heading: Check your answers
-          subheading: "%{Subject}'s outgoings"
+          subheading: Outgoings
 
     capital:
       caption: Capital assessment

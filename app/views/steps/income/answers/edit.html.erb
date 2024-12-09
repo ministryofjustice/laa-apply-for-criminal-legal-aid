@@ -15,13 +15,11 @@
       <%=t '.heading' %>
     </h1>
 
-    <h1 class="govuk-heading-l"><%= t('.subheading.client') %></h1>
+    <h2 class="govuk-heading-l"><%= t('.subheading') %></h2>
 
     <%= render @presenter.income_sections %>
 
     <% if MeansStatus.include_partner?(current_crime_application) %>
-      <h1 class="govuk-heading-l"><%= t('.subheading.partner') %></h1>
-
       <%= render @presenter.partner_income_sections %>
     <% end %>
 
