@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Business < BaseRecord
+      include HasDynamicSubject
+
       GROUP_BY = :business_type
 
       alias business record
@@ -78,6 +80,8 @@ module Summary
       def subject
         SubjectType.new(business.ownership_type).to_param
       end
+
+      alias subject_type subject
     end
   end
 end

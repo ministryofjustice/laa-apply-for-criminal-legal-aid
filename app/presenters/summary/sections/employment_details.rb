@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class EmploymentDetails < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         income.present? && super
       end

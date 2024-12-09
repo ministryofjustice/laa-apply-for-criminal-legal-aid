@@ -4,6 +4,7 @@ module Summary
   module Sections
     class PartnerIncomeBenefitsDetails < Sections::PaymentDetails
       include TypeOfMeansAssessment
+      include HasDynamicSubject
 
       def show?
         return false if income.blank?
@@ -40,6 +41,10 @@ module Summary
 
       def payment_types
         LaaCrimeSchemas::Types::IncomeBenefitType.values
+      end
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
   end

@@ -3,13 +3,15 @@ module Summary
     class BaseRecord < ViewComponent::Base
       with_collection_parameter :record
 
-      attr_reader :record, :record_iteration, :show_actions, :show_record_actions
+      attr_reader :record, :record_iteration, :show_actions, :show_record_actions, :crime_application
 
-      def initialize(record:, record_iteration: nil, show_actions: true, show_record_actions: false)
+      def initialize(record:, record_iteration: nil, show_actions: true, show_record_actions: false,
+                     crime_application: nil)
         @record = record
         @record_iteration = record_iteration
         @show_actions = show_actions
         @show_record_actions = show_record_actions
+        @crime_application = crime_application
 
         super
       end

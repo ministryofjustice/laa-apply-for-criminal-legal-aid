@@ -1,6 +1,8 @@
 module Summary
   module Components
     class Employment < BaseRecord
+      include HasDynamicSubject
+
       alias employment record
 
       private
@@ -53,25 +55,27 @@ module Summary
         I18n.t('summary.sections.employment')
       end
 
+      def subject_type
+        OWNERSHIP_TYPE_MAPPING[employment.ownership_type]
+      end
+
       def full_address(address)
         return unless address
 
         address.values_at(*Address::ADDRESS_ATTRIBUTES.map(&:to_s)).compact_blank.join("\r\n")
       end
 
-      # rubocop:disable Layout/LineLength
       def change_path
-        send :"edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employer_details_path", employment_id: employment.id
+        send :"edit_steps_income_#{subject_type}_employer_details_path", employment_id: employment.id
       end
 
       def summary_path
-        send :"edit_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employments_summary_path", employment_id: employment.id
+        send :"edit_steps_income_#{subject_type}_employments_summary_path", employment_id: employment.id
       end
 
       def remove_path
-        send :"confirm_destroy_steps_income_#{OWNERSHIP_TYPE_MAPPING[employment.ownership_type]}_employments_path", employment_id: employment.id
+        send :"confirm_destroy_steps_income_#{subject_type}_employments_path", employment_id: employment.id
       end
-      # rubocop:enable Layout/LineLength
     end
   end
 end

@@ -74,6 +74,10 @@ module Summary
       def requires_extra_details(name)
         %w[other legal_aid_contribution].include?(name)
       end
+
+      def subject_type
+        SubjectType.new(:applicant)
+      end
     end
   end
 end
