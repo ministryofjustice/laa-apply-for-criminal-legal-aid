@@ -1195,12 +1195,12 @@ en:
       steps_capital_properties_summary_form:
         add_property_options: *YESNO
       steps_capital_trust_fund_form:
-        trust_fund_amount_held: Enter the amount held in the fund
-        trust_fund_yearly_dividend: Enter the yearly dividend
+        trust_fund_amount_held: How much is held in the fund?
+        trust_fund_yearly_dividend: How much is the yearly dividend?
         will_benefit_from_trust_fund_options: *YESNO
       steps_capital_partner_trust_fund_form:
-        partner_trust_fund_amount_held: Enter the amount held in the fund
-        partner_trust_fund_yearly_dividend: Enter the yearly dividend
+        partner_trust_fund_amount_held: How much is held in the fund?
+        partner_trust_fund_yearly_dividend: How much is the yearly dividend?
         partner_will_benefit_from_trust_fund_options: *YESNO
       steps_capital_residential_form:
         house_type_options:
@@ -1243,7 +1243,7 @@ en:
         percentage_owned_commercial: *percentage_owned_text
         property_owners_attributes:
           relationship_options:
-            business_associates: Business Associates
+            business_associates: Business associates
             ex_partner: Ex-partner
             family_members: Family members
             friends: Friends

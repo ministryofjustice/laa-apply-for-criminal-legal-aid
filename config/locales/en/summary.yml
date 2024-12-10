@@ -22,7 +22,7 @@ en:
         semidetached: Semi-detached
         terraced: Terraced
       RELATIONSHIP: &RELATIONSHIP
-        business_associates: Business Associates
+        business_associates: Business associates
         ex_partner: Ex-partner
         family_members: Family members
         friends: Friends
