@@ -3,6 +3,8 @@ require 'laa_crime_schemas'
 module Summary
   module Sections
     class IncomeBenefitsDetails < Sections::PaymentDetails
+      include HasDynamicSubject
+
       def show?
         return false if income.blank?
 

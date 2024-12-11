@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class PartnerEmploymentDetails < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         income.present? &&
           MeansStatus.include_partner?(crime_application) &&
@@ -18,6 +20,10 @@ module Summary
             change_path: edit_steps_income_armed_forces_path(subject: 'partner')
           ),
         ].flatten.select(&:show?)
+      end
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
   end
