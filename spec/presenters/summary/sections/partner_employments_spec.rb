@@ -39,7 +39,7 @@ describe Summary::Sections::PartnerEmployments do
         expect(subject.answers).to be component
 
         expect(Summary::Components::Employment).to have_received(:with_collection).with(
-          records, show_actions: true, show_record_actions: false
+          records, show_actions: true, show_record_actions: false, crime_application: crime_application
         )
       end
 
@@ -52,7 +52,7 @@ describe Summary::Sections::PartnerEmployments do
           expect(subject.answers).to be component
 
           expect(Summary::Components::Employment).to have_received(:with_collection).with(
-            records, show_actions: false, show_record_actions: false
+            records, show_actions: false, show_record_actions: false, crime_application: crime_application
           )
         end
       end

@@ -22,7 +22,7 @@ en:
         semidetached: Semi-detached
         terraced: Terraced
       RELATIONSHIP: &RELATIONSHIP
-        business_associates: Business Associates
+        business_associates: Business associates
         ex_partner: Ex-partner
         family_members: Family members
         friends: Friends
@@ -56,7 +56,7 @@ en:
     does_not_pay: Does not pay
     sections:
       application_details: Application details
-      assets: Assets
+      assets: 'Capital: Assets'
       overview: Overview
       businesses: Businesses
       business:
@@ -89,10 +89,10 @@ en:
       legal_representative_details: Legal representative
       employment_details: Employment
       income_details: Income
-      income_payments_details: Payments your client gets
-      partner_income_payments_details: Payments the partner gets
-      income_benefits_details: Benefits your client gets
-      partner_income_benefits_details: Benefits the partner gets
+      income_payments_details: Payments
+      partner_income_payments_details: Payments
+      income_benefits_details: Benefits
+      partner_income_benefits_details: Benefits
       other_income_details:
         one: "Other sources of income"
         other: "Other sources of income: client and partner"
@@ -102,17 +102,17 @@ en:
         one: Payments %{ownership} makes
         other: Payments %{ownership} make
       other_outgoings_details: Other outgoings
-      supporting_evidence: Supporting evidence
+      supporting_evidence: Supporting evidence and information
       more_information: Further information
       savings: Savings
-      savings_and_investments: Savings and investments
+      savings_and_investments: 'Capital: Savings and investments'
       saving:
         bank: Bank account
         building_society: Building society account
         cash_isa: Cash ISA
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
-      partner_employment_details: Partner's employment
+      partner_employment_details: Employment
       premium_bonds: "Premium Bonds: client"
       partner_premium_bonds: "Premium Bonds: partner"
       investments: Investments
@@ -145,8 +145,8 @@ en:
       client_employments: Jobs
       partner_employments: Jobs
       employment: Job
-      self_assessment_tax_bill: Self Assessment tax
-      partner_self_assessment_tax_bill: Self Assessment tax
+      self_assessment_tax_bill: 'Self Assessment: client'
+      partner_self_assessment_tax_bill: 'Self Assessment: partner'
       work_benefits: 'Other work benefits: client'
       partner_work_benefits: 'Other work benefits: partner'
       employment_income: Pay from employment
@@ -394,7 +394,7 @@ en:
       hearing_date:
         question: When is the next hearing?
       is_first_court_hearing:
-        question: Did this court also hear the first hearing?
+        question: Same court as first hearing?
         answers:
           <<: *YESNO
           no_hearing_yet: There has not been a hearing yet
@@ -1000,10 +1000,10 @@ en:
         answers:
           description: *payment_answer_format
       self_assessment_tax_bill:
-        question: "Self Assessment tax calculation: client?"
+        question: "Self assessment tax calculation?"
         answers: *YESNO
       partner_self_assessment_tax_bill:
-        question:  "Self Assessment tax calculation: partner?"
+        question:  "Self assessment tax calculation?"
         answers: *YESNO
       self_assessment_tax_bill_payment:
         question: Amount

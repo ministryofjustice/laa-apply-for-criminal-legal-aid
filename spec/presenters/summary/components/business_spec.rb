@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Summary::Components::Business, type: :component do
-  subject(:component) { render_summary_component(described_class.new(record:)) }
+  subject(:component) { render_summary_component(described_class.new(record:, crime_application:)) }
 
   let(:record) do
     instance_double(
@@ -12,7 +12,10 @@ RSpec.describe Summary::Components::Business, type: :component do
     )
   end
 
-  let(:crime_application) { instance_double(CrimeApplication, id: 'APP123') }
+  let(:crime_application) {
+    instance_double(CrimeApplication, id: 'APP123', applicant: applicant)
+  }
+  let(:applicant) { instance_double(Applicant, has_partner: 'no') }
 
   let(:attributes) do
     {
@@ -149,5 +152,21 @@ RSpec.describe Summary::Components::Business, type: :component do
     end
 
     it { is_expected.to eq 'Self-employed business' }
+
+    context 'when the application includes a partner' do
+      let(:applicant) { instance_double(Applicant, has_partner: 'yes') }
+
+      context 'and the business belongs to the client' do
+        let(:attributes) { super().merge(ownership_type: 'applicant') }
+
+        it { is_expected.to eq 'Self-employed business: client' }
+      end
+
+      context 'and the business belongs to the partner' do
+        let(:attributes) { super().merge(ownership_type: 'partner') }
+
+        it { is_expected.to eq 'Self-employed business: partner' }
+      end
+    end
   end
 end
