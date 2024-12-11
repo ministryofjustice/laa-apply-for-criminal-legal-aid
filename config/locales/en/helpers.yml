@@ -20,8 +20,8 @@ en:
       country: Country
       postcode: Postcode
     ioj_justification_hint: &ioj_justification_hint 'Enter justification'
-    frequency_legend: &frequency_legend 'Select how often they get this payment'
-    amount_label: &amount_label 'Enter amount'
+    frequency_legend: &frequency_legend 'How often?'
+    amount_label: &amount_label 'How much?'
     OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
       applicant: 'Client'
       applicant_and_partner: 'Client and partner'
@@ -228,7 +228,7 @@ en:
         from_friends_relatives:
           frequency: *frequency_legend
         other:
-          frequency: *frequency_legend
+          frequency: How often do they get this income?
       steps_income_partner_income_payments_form:
         income_payments: Which of these payments does the partner get?
         maintenance:
@@ -250,7 +250,7 @@ en:
         from_friends_relatives:
           frequency: *frequency_legend
         other:
-          frequency: *frequency_legend
+          frequency: How often do they get this income?
       steps_income_income_benefits_form:
         income_benefits: Which of these benefits does your client get?
         child:
@@ -903,9 +903,9 @@ en:
           amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount: Enter total amount of all other sources of income
+          amount: What is the total amount of all other sources of income?
           frequency_options: *frequency_options
-          details: Enter the other sources of income they get
+          details: Describe the other sources of income they get
       steps_income_income_benefits_form:
         types_options:
           child: Child Benefit
@@ -931,9 +931,9 @@ en:
           amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount: Enter total amount of all other benefits (except disregarded benefits)
+          amount: What is the total amount of all other benefits (except disregarded benefits)?
           frequency_options: *frequency_options
-          details: Enter what benefits they get and the amount
+          details: Describe the other benefits and the amounts
       steps_income_client_has_dependants_form:
         client_has_dependants_options: *YESNO
       steps_income_manage_without_income_form:
@@ -1022,9 +1022,9 @@ en:
           amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount: Enter total amount of all other sources of income
+          amount: What is the total amount of all other sources of income?
           frequency_options: *frequency_options
-          details: Enter the other sources of income they get
+          details: Describe the other sources of income they get
       steps_income_partner_income_benefits_form:
         types_options:
           child: Child Benefit
@@ -1050,9 +1050,9 @@ en:
           amount: *amount_label
           frequency_options: *frequency_options
         other:
-          amount: Enter total amount of all other benefits (except disregarded benefits)
+          amount: What is the total amount of all other benefits (except disregarded benefits)?
           frequency_options: *frequency_options
-          details: Enter what benefits they get and the amount
+          details: Describe the other benefits and the amounts
       # END: Partner Income
       steps_outgoings_housing_payment_type_form:
         housing_payment_type_options:
