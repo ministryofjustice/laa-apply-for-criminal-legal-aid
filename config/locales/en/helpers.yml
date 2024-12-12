@@ -905,7 +905,7 @@ en:
         other:
           amount: What is the total amount of all other sources of income?
           frequency_options: *frequency_options
-          details: Describe the other sources of income they get
+          details: Describe the other sources of income and amounts
       steps_income_income_benefits_form:
         types_options:
           child: Child Benefit
@@ -1024,7 +1024,7 @@ en:
         other:
           amount: What is the total amount of all other sources of income?
           frequency_options: *frequency_options
-          details: Describe the other sources of income they get
+          details: Describe the other sources of income and amounts
       steps_income_partner_income_benefits_form:
         types_options:
           child: Child Benefit
