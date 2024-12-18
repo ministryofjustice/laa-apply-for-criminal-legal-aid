@@ -14,6 +14,10 @@ module Summary
       def person
         @person ||= crime_application.partner
       end
+
+      def subject_type
+        SubjectType.new(:partner)
+      end
     end
   end
 end

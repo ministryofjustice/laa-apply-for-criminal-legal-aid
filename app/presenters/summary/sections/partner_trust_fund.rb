@@ -2,6 +2,8 @@ module Summary
   module Sections
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class PartnerTrustFund < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         capital.present? &&
           MeansStatus.include_partner?(crime_application) &&
@@ -35,6 +37,10 @@ module Summary
 
       def partner_will_benefit_from_trust_fund?
         YesNoAnswer.new(capital.partner_will_benefit_from_trust_fund.to_s).yes?
+      end
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

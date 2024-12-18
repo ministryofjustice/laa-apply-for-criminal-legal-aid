@@ -2,6 +2,8 @@ module Summary
   module Sections
     class PassportingBenefitCheck < Sections::BaseSection
       include TypeOfMeansAssessment
+      include HasDynamicSubject
+
       def show?
         benefit_selected? && super
       end
