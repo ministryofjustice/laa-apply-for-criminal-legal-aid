@@ -2,10 +2,8 @@
   <%= t('shared.errors.datastore.unavailable.heading') %>
 </h2>
 
-<p class="govuk-body">
-  <%= t('shared.errors.datastore.unavailable.explanation') %>
-</p>
-
-<p class="govuk-body">
-  <%= t('shared.errors.datastore.unavailable.contact_helpline_html', helpline_url: about_contact_path) %>
-</p>
+<% t('shared.errors.datastore.unavailable.body_html', helpline_url: about_contact_path).each do |paragraph| %>
+  <p class="govuk-body">
+    <%= paragraph %>
+  </p>
+<% end %>

@@ -7,15 +7,11 @@
       <%= t('.heading')%>
     </h1>
 
-    <p class="govuk-body">
-      <%= t('.lead_text') %>
-    </p>
-    <p class="govuk-body">
-      <%= t('.info_text') %>
-    </p>
-    <p class="govuk-body govuk-!-margin-bottom-6">
-      <%= t('.contact_helpline_html', helpline_url: about_contact_path) %>
-    </p>
+    <% t('.body_html', helpline_url: about_contact_path).each do |paragraph| %>
+      <p class="govuk-body">
+        <%= paragraph %>
+      </p>
+    <% end %>
 
     <%= step_form @form_object do |f| %>
       <%= f.continue_button(primary: :try_again, secondary: nil) %>
