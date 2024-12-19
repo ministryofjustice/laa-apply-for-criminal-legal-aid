@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class SelfAssessmentTaxBill < Sections::BaseSection
+      include HasDynamicSubject
+
       SelfAssessmentTaxBillPayment = Struct.new(:amount, :frequency)
 
       def show?

@@ -3,6 +3,7 @@ module Summary
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class TrustFund < Sections::BaseSection
       include TypeOfMeansAssessment
+      include HasDynamicSubject
 
       def show?
         capital.present? && capital.will_benefit_from_trust_fund.present?

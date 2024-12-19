@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class PartnerSelfAssessmentTaxBill < Sections::BaseSection
+      include HasDynamicSubject
+
       SelfAssessmentTaxBillPayment = Struct.new(:amount, :frequency)
 
       def show?
@@ -32,6 +34,12 @@ module Summary
           amount: income.partner_self_assessment_tax_bill_amount,
           frequency: income.partner_self_assessment_tax_bill_frequency
         )
+      end
+
+      private
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
   end

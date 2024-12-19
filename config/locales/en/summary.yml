@@ -88,7 +88,7 @@ en:
       declarations: Declarations
       legal_representative_details: Legal representative
       employment_details: Employment
-      income_details: Income
+      income_details: Income and employment
       income_payments_details: Payments
       partner_income_payments_details: Payments
       income_benefits_details: Benefits
@@ -137,18 +137,18 @@ en:
       property_owners:
         relationship:
           <<: *RELATIONSHIP
-      passporting_benefit_check: 'Passporting benefit check: client'
-      passporting_benefit_check_partner: 'Passporting benefit check: partner'
-      trust_fund: 'Trust funds: client'
-      partner_trust_fund: 'Trust funds: partner'
+      passporting_benefit_check: Passporting benefit check
+      passporting_benefit_check_partner: Passporting benefit check
+      trust_fund: Trust funds
+      partner_trust_fund: Trust funds
       other_capital_details: Other capital
       client_employments: Jobs
       partner_employments: Jobs
       employment: Job
-      self_assessment_tax_bill: 'Self Assessment: client'
-      partner_self_assessment_tax_bill: 'Self Assessment: partner'
-      work_benefits: 'Other work benefits: client'
-      partner_work_benefits: 'Other work benefits: partner'
+      self_assessment_tax_bill: Self assessment
+      partner_self_assessment_tax_bill: Self assessment
+      work_benefits: Other work benefits
+      partner_work_benefits: Other work benefits
       employment_income: Pay from employment
       partner_employment_income: Pay from employment
       funding_decisions: Funding decisions

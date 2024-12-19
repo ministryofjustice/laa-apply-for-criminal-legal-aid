@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class PartnerWorkBenefits < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         income.present? && income.partner_other_work_benefit_received.present?
       end
@@ -25,6 +27,12 @@ module Summary
 
       def work_benefits
         income.partner_work_benefits
+      end
+
+      private
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
   end

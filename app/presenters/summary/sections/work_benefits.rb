@@ -1,6 +1,8 @@
 module Summary
   module Sections
     class WorkBenefits < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         income.present? && income.applicant_other_work_benefit_received.present?
       end
