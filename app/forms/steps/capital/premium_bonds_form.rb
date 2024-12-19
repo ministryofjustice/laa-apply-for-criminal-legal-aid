@@ -10,8 +10,12 @@ module Steps
 
       validates :has_premium_bonds, inclusion: { in: YesNoAnswer.values }
 
+      validates :premium_bonds_total_value, numericality: {
+        greater_than: 0,
+        less_than_or_equal_to: 49_999_999.99
+      }, if: -> { has_premium_bonds&.yes? }
+
       validates(
-        :premium_bonds_total_value,
         :premium_bonds_holder_number,
         presence: true,
         if: -> { has_premium_bonds&.yes? }
