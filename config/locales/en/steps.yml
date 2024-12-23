@@ -739,8 +739,9 @@ en:
 
       failure:
         edit:
-          page_title: Application submission failed
+          page_title: Sorry, the service is unavailable
           heading: Sorry, there is a problem with the service
-          lead_text: We cannot connect to our database. This means you cannot submit applications in progress, or view returned and submitted applications.
-          info_text: We have saved your latest application in progress.
-          contact_helpline_html: <a href="%{helpline_url}">Contact the criminal applications helpline</a> if you need to get an update on submitted applications.
+          body_html:
+            - Try reloading the page.
+            - To continue editing another application, return to your applications list.
+            - If you're having problems submitting an application, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">contact the technical support team</a>.
