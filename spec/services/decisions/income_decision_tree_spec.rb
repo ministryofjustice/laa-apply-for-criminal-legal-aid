@@ -116,14 +116,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
         end
       end
-
-      context 'feature flag `employment_journey` is disabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
-        end
-      end
     end
 
     context 'when status selected is self-employed option' do
@@ -161,14 +153,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                 id: crime_application,
                                                 subject: applicant)
           end
-        end
-      end
-
-      context 'feature flag `self_employed_journey` is disabled' do
-        let(:feature_flag_self_employed_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
     end
@@ -221,14 +205,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
             expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
             expect(employments_double).to have_received(:create!)
           end
-        end
-      end
-
-      context 'feature flag `employment_journey` is disabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
         end
       end
     end
@@ -329,14 +305,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
           end
         end
       end
-
-      context 'feature flag `employment_journey` is disabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:employed_exit, :show, id: crime_application)
-        end
-      end
     end
 
     context 'when partner_employment_status selected is self-employed option' do
@@ -369,14 +337,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
                                                 id: crime_application,
                                                 subject: partner)
           end
-        end
-      end
-
-      context 'feature flag `self_employed_journey` is disabled' do
-        let(:feature_flag_self_employed_journey_enabled) { false }
-
-        it 'redirects to the `employed_exit` page' do
-          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
     end
@@ -429,14 +389,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
             expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
             expect(partner_employments_double).to have_received(:create!)
           end
-        end
-      end
-
-      context 'feature flag `employment_journey` is disabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-
-        it 'redirects to the `self_employed_exit` page' do
-          expect(subject).to have_destination(:self_employed_exit, :show, id: crime_application)
         end
       end
     end

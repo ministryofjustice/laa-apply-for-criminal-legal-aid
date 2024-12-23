@@ -30,23 +30,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     context 'and the answer is `yes`' do
       let(:confirm_dwp_result) { YesNoAnswer::YES }
 
-      before do
-        allow(FeatureFlags).to receive(:means_journey) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: means_enabled?)
-        }
-      end
-
-      context 'with means journey enabled' do
-        let(:means_enabled?) { true }
-
-        it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
-      end
-
-      context 'with means journey disabled' do
-        let(:means_enabled?) { false }
-
-        it { is_expected.to have_destination(:benefit_check_result_exit, :show, id: crime_application) }
-      end
+      it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
     end
 
     context 'and the answer is `no`' do
@@ -109,12 +93,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:benefit_type) { BenefitType::NONE }
       let(:benefit_check_passported) { false }
       let(:benefit_check_result) { nil }
-
-      context 'and feature flag `means_journey` is not enabled' do
-        let(:feature_flag_means_journey_enabled) { false }
-
-        it { is_expected.to have_destination(:benefit_exit, :show, id: crime_application) }
-      end
 
       context 'and feature flag `means_journey` is enabled' do
         let(:feature_flag_means_journey_enabled) { true }
@@ -250,13 +228,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:has_benefit_evidence) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-    end
-
-    context 'and the answer is `no` for a non means tested application' do
-      let(:feature_flag_means_journey_enabled) { false }
-      let(:has_benefit_evidence) { YesNoAnswer::NO }
-
-      it { is_expected.to have_destination(:evidence_exit, :show, id: crime_application) }
     end
   end
 

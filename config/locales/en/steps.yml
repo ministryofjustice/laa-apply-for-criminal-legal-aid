@@ -43,9 +43,6 @@ en:
         edit:
           page_title: What is your client's relationship status?
           separation_date: When did your client separate from their partner?
-      partner_exit:
-        show:
-          page_title: Use eForms for this application
       details:
         edit:
           page_title: Your client’s details
@@ -71,9 +68,6 @@ en:
           reference_number_html: The client details you entered have been recorded under <span class='govuk-!-font-weight-bold'>LAA reference %{reference}:</span>
           applicant_name_html: <span class='govuk-!-font-weight-bold'>Name:</span> %{first_name} %{last_name}
           applicant_dob_html: <span class='govuk-!-font-weight-bold'>Date of birth:</span> %{date_of_birth}
-      nino_exit:
-        show:
-          page_title: Use eForms for this application
       residence_type:
         edit:
           page_title: Where does your client usually live?
@@ -113,9 +107,6 @@ en:
         edit:
           page_title: Does the partner get one of these passporting benefits?
           last_jsa_appointment_date: *JSA_DATE_QUESTION
-      benefit_exit:
-        show:
-          page_title: Use eForms for this application
       benefit_check_result:
         edit:
           page_title: Benefit check result
@@ -124,9 +115,6 @@ en:
         edit:
           page_title: "%{Subject}'s passporting benefit evidence"
           heading: Do you have evidence %{subject} gets %{benefit_type}?
-      evidence_exit:
-        show:
-          page_title: Use eForms for this application
       cannot_check_benefit_status:
         edit:
           page_title: Cannot check benefit status
@@ -146,9 +134,6 @@ en:
         edit:
           page_title: Confirm %{subject} details
           heading: Check %{subject} details
-      benefit_check_result_exit:
-        show:
-          page_title: Use eForms for this application
 
     address:
       lookup:
@@ -296,12 +281,6 @@ en:
       partner_employment_status:
         edit:
           page_title: What is the partner's employment status?
-      employed_exit:
-        show:
-          page_title: Use eForms for this application
-      self_employed_exit:
-        show:
-          page_title: Use eForms for this application
       lost_job_in_custody:
         edit:
           page_title: Did your client lose their job as a result of being in custody?
