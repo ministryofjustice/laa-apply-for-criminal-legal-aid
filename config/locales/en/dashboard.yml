@@ -120,8 +120,9 @@ en:
       datastore:
         unavailable:
           heading: Sorry, there is a problem with the service
-          explanation: We cannot connect to our database. This means that you cannot view submitted or returned applications.
-          contact_helpline_html: Try reloading the page or <a href="%{helpline_url}">contact the criminal applications helpline</a> if you need to get an update on submitted applications.
+          body_html:
+            - Try reloading the page or return to your applications list.
+            - For an update on a submitted application, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">contact the criminal applications helpline</a>.
       no_records:
         in_progress: There are no applications in progress
         submitted: There are no submitted applications
