@@ -50,13 +50,6 @@ RSpec.describe Steps::Income::Partner::EmploymentDetailsController, type: :contr
       }
     end
 
-    context 'when valid income_payment attributes' do
-      it 'redirects to `employed_exit` page' do
-        put :update, params: expected_params, session: { crime_application_id: crime_application.id }
-        expect(response).to redirect_to edit_steps_income_partner_deductions_from_pay_path
-      end
-    end
-
     context 'when invalid address attributes' do
       before { expected_params[:steps_income_partner_employment_details_form].merge!(amount: nil, frequency: nil) }
 

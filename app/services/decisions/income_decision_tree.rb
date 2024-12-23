@@ -165,49 +165,25 @@ module Decisions
       determine_showing_no_income_page
     end
 
-    def start_client_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_client_employment_journey
       case form_object.employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        if FeatureFlags.employment_journey.enabled?
-          start_employed_for('client')
-        else
-          show(:employed_exit)
-        end
+        start_employed_for('client')
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        if FeatureFlags.self_employed_journey.enabled?
-          start_self_employed_for(crime_application.applicant)
-        else
-          show(:self_employed_exit)
-        end
+        start_self_employed_for(crime_application.applicant)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        if FeatureFlags.self_employed_journey.enabled?
-          employment_start
-        else
-          show(:employed_exit)
-        end
+        employment_start
       end
     end
 
-    def start_partner_employment_journey # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def start_partner_employment_journey
       case form_object.partner_employment_status
       when [EmploymentStatus::EMPLOYED.to_s]
-        if FeatureFlags.employment_journey.enabled?
-          start_employed_for('partner')
-        else
-          show(:employed_exit)
-        end
+        start_employed_for('partner')
       when [EmploymentStatus::SELF_EMPLOYED.to_s]
-        if FeatureFlags.self_employed_journey.enabled?
-          start_self_employed_for(crime_application.partner)
-        else
-          show(:self_employed_exit)
-        end
+        start_self_employed_for(crime_application.partner)
       when [EmploymentStatus::EMPLOYED.to_s, EmploymentStatus::SELF_EMPLOYED.to_s]
-        if FeatureFlags.self_employed_journey.enabled?
-          partner_employment_start
-        else
-          show(:self_employed_exit)
-        end
+        partner_employment_start
       end
     end
 

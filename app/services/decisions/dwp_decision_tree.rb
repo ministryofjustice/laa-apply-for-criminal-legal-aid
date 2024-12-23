@@ -32,11 +32,7 @@ module Decisions
 
     def after_confirm_result
       if form_object.confirm_dwp_result.yes?
-        if FeatureFlags.means_journey.enabled?
-          edit('steps/case/urn')
-        else
-          show(:benefit_check_result_exit)
-        end
+        edit('steps/case/urn')
       else
         edit(:confirm_details)
       end
@@ -62,11 +58,7 @@ module Decisions
 
     def benefit_check_routing(person)
       if form_object.benefit_type.none?
-        if FeatureFlags.means_journey.enabled?
-          edit('/steps/case/urn')
-        else
-          show(:benefit_exit)
-        end
+        edit('/steps/case/urn')
       elsif !has_nino(person)
         edit(:cannot_check_benefit_status)
       else
@@ -81,11 +73,7 @@ module Decisions
     end
 
     def after_has_benefit_evidence
-      if form_object.has_benefit_evidence.yes? || FeatureFlags.means_journey.enabled?
-        edit('/steps/case/urn')
-      else
-        show(:evidence_exit)
-      end
+      edit('/steps/case/urn')
     end
 
     def after_cannot_check_benefit_status

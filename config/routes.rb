@@ -115,7 +115,6 @@ Rails.application.routes.draw do
       namespace :client do
         edit_step :is_application_means_tested, alias: :is_means_tested
         edit_step :does_client_have_partner, alias: :has_partner
-        show_step :partner_exit
         edit_step :details
         edit_step :case_type
         edit_step :appeal_details
@@ -139,15 +138,12 @@ Rails.application.routes.draw do
       namespace :dwp do
         edit_step :benefit_type
         edit_step :partner_benefit_type
-        show_step :benefit_exit
         edit_step :benefit_check_result
         edit_step :cannot_check_benefit_status
         edit_step :has_benefit_evidence
-        show_step :evidence_exit
         edit_step :cannot_check_dwp_status
         edit_step :confirm_result
         edit_step :confirm_details
-        show_step :benefit_check_result_exit
       end
 
       namespace :address do
@@ -220,8 +216,6 @@ Rails.application.routes.draw do
           edit_step :other_work_benefits_partner, alias: :other_work_benefits
         end
 
-        show_step :employed_exit
-        show_step :self_employed_exit
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
         edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
