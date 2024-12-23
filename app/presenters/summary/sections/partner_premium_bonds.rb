@@ -2,6 +2,8 @@ module Summary
   module Sections
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class PartnerPremiumBonds < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         show_partner_premium_bonds? && super
       end
@@ -38,6 +40,10 @@ module Summary
 
       def partner_have_premium_bonds?
         YesNoAnswer.new(capital.partner_has_premium_bonds).yes?
+      end
+
+      def subject_type
+        SubjectType.new(:partner)
       end
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize

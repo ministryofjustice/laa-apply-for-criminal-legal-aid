@@ -113,8 +113,8 @@ en:
         national_savings_or_post_office: National Savings or Post Office account
         other: Other cash investment
       partner_employment_details: Employment
-      premium_bonds: "Premium Bonds: client"
-      partner_premium_bonds: "Premium Bonds: partner"
+      premium_bonds: Premium Bonds
+      partner_premium_bonds: Premium Bonds
       investments: Investments
       investment:
         bond: Investment bond
