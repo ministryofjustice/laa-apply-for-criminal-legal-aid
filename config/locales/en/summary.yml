@@ -6,15 +6,15 @@ en:
       payment_answer_format: &payment_answer_format "%{amount} every %{frequency} %{tax_status}"
       amount_and_frequency_answer: "%{amount} every %{frequency}"
       YESNO: &YESNO
-        'yes': 'Yes'
-        'no': 'No'
+        "yes": "Yes"
+        "no": "No"
       PASSFAIL: &PASSFAIL
         pass: Passed
         fail: Failed
       OWNERSHIP_TYPE: &OWNERSHIP_TYPE
-        applicant: 'Client'
-        applicant_and_partner: 'Client and partner'
-        partner: 'Partner'
+        applicant: "Client"
+        applicant_and_partner: "Client and partner"
+        partner: "Partner"
       HOUSE_TYPE: &HOUSE_TYPE
         bungalow: Bungalow
         detached: Detached
@@ -32,15 +32,15 @@ en:
         partner_with_a_contrary_interest: Partner with a contrary interest
         property_company: Property company
       subjects:
-        applicant: 'client'
-        applicant_and_partner: 'client and partner'
-        applicant_or_partner: 'client or partner'
-        partner: 'partner'
+        applicant: "client"
+        applicant_and_partner: "client and partner"
+        applicant_or_partner: "client or partner"
+        partner: "partner"
       ownership:
-        applicant: 'your client'
-        applicant_and_partner: 'your client and their partner'
-        applicant_or_partner: 'your client or their partner'
-        partner: 'the partner'
+        applicant: "your client"
+        applicant_and_partner: "your client and their partner"
+        applicant_or_partner: "your client or their partner"
+        partner: "the partner"
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -56,7 +56,7 @@ en:
     does_not_pay: Does not pay
     sections:
       application_details: Application details
-      assets: 'Capital: Assets'
+      assets: "Capital: Assets"
       overview: Overview
       businesses: Businesses
       business:
@@ -105,7 +105,7 @@ en:
       supporting_evidence: Supporting evidence and information
       more_information: Further information
       savings: Savings
-      savings_and_investments: 'Capital: Savings and investments'
+      savings_and_investments: "Capital: Savings and investments"
       saving:
         bank: Bank account
         building_society: Building society account
@@ -187,10 +187,10 @@ en:
       # BEGIN client details section
       first_name:
         question: First name
-        absence_answer: ''
+        absence_answer: ""
       last_name:
         question: Last name
-        absence_answer: ''
+        absence_answer: ""
       other_names:
         question: Other names
         absence_answer: *absence_none
@@ -261,7 +261,7 @@ en:
           victim: Victim
           prosecution_witness: Prosecution witness
           codefendant: Co-defendant
-          none: 'No'
+          none: "No"
       has_same_address_as_client:
         question: Lives at same address as client?
         answers:
@@ -432,11 +432,11 @@ en:
       passport:
         question: Not needed
         answers:
-          'true': You do not need to provide justification for this application
+          "true": You do not need to provide justification for this application
       passport_override:
         question: Needed
         answers:
-          'true': The case has been split, so you need to add justification for all offences
+          "true": The case has been split, so you need to add justification for all offences
       # END passport justification for legal aid section
 
       # BEGIN employment details section
@@ -706,8 +706,8 @@ en:
       funding_decision_ioj_result:
         question: Interests of justice (IoJ) test result
         answers:
-          pass: Passed
-          fail: Refused
+          passed: Passed
+          failed: Failed
       funding_decision_ioj_reason:
         question: IoJ comments
       funding_decision_ioj_caseworker:
@@ -717,10 +717,9 @@ en:
       funding_decision_means_result:
         question: Means test result
         answers:
-          pass: Passed
-          fail: Failed
-          full: Contribution
-          inel: Ineligible
+          passed: Passed
+          passed_with_contribution: Passed - with a contribution
+          failed: Failed
       funding_decision_means_caseworker:
         question: Means test caseworker
       funding_decision_means_date:
@@ -731,20 +730,8 @@ en:
           granted:
             value: Granted
             colour: green
-          granted_on_ioj:
-            value: Granted
-            colour: green
-          fail_on_ioj:
-            value: Failed IoJ
-            colour: red
-          failmeans:
-            value: Failed means
-            colour: red
-          failioj:
-            value: Failed IoJ 
-            colour: red
-          failmeioj:
-            value: Failed means and IoJ
+          refused:
+            value: Refused
             colour: red
       funding_decision_further_info:
         question: Further information about the decision
@@ -777,7 +764,7 @@ en:
         question: File name
       no_supporting_evidence:
         question: No files were uploaded
-        absence_answer: ''
+        absence_answer: ""
       additional_information:
         question: Any additional information?
         absence_answer: *absence_none
@@ -786,32 +773,32 @@ en:
       # BEGIN saving
       account_balance:
         question: Account balance
-        absence_answer: ''
+        absence_answer: ""
       saving_ownership_type:
         question: Account holder
         answers: *OWNERSHIP_TYPE
-        absence_answer: ''
+        absence_answer: ""
       account_number:
         question: Account number
-        absence_answer: ''
+        absence_answer: ""
       are_wages_paid_into_account:
         question: Client's wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: ''
+        absence_answer: ""
       are_partners_wages_paid_into_account:
         question: Partner's wages or benefits paid into this account?
         answers: *YESNO
-        absence_answer: ''
+        absence_answer: ""
       is_overdrawn:
         question: Account overdrawn?
         answers: *YESNO
-        absence_answer: ''
+        absence_answer: ""
       provider_name:
         question: Bank or building society
-        absence_answer: ''
+        absence_answer: ""
       sort_code:
         question: Sort code or branch name
-        absence_answer: ''
+        absence_answer: ""
       has_capital_savings:
         question: Savings?
         answers: *YESNO
@@ -823,7 +810,7 @@ en:
         answers: *YESNO
       premium_bonds_holder_number:
         question: Holder number
-        absence_answer: ''
+        absence_answer: ""
       premium_bonds_total_value:
         question: Total value
       # END premium_bonds
@@ -834,7 +821,7 @@ en:
         answers: *YESNO
       partner_premium_bonds_holder_number:
         question: Holder number
-        absence_answer: ''
+        absence_answer: ""
       partner_premium_bonds_total_value:
         question: Total value
       # END partner_premium_bonds
@@ -842,14 +829,14 @@ en:
       # START investments
       description:
         question: Investment description
-        absence_answer: ''
+        absence_answer: ""
       value:
         question: Value
         absence_answer: *absence_none
       ownership_type:
         question: Name the investment is in
         answers: *OWNERSHIP_TYPE
-        absence_answer: ''
+        absence_answer: ""
       has_investments:
         question: Investments?
         answers: *YESNO
@@ -858,17 +845,17 @@ en:
       # START national_savings_certificates
       national_savings_certificate_holder_number:
         question: Customer or holder number
-        absence_answer: ''
+        absence_answer: ""
       national_savings_certificate_certificate_number:
         question: Certificate number
-        absence_answer: ''
+        absence_answer: ""
       national_savings_certificate_value:
         question: Value
-        absence_answer: ''
+        absence_answer: ""
       national_savings_certificate_ownership_type:
         question: Who owns the certificate?
         answers: *OWNERSHIP_TYPE
-        absence_answer: ''
+        absence_answer: ""
       has_national_savings_certificate:
         question: National Savings Certificates?
         answers:
@@ -890,7 +877,7 @@ en:
         absence_answer: *absence_none
       # TODO :: Temporary fix to avoid duplicate keys
       property_value:
-        question: '%{Asset} value'
+        question: "%{Asset} value"
         absence_answer: *absence_none
       outstanding_mortgage:
         question: Mortgage amount left
@@ -951,22 +938,22 @@ en:
       employment:
         employer_name:
           question: Employer’s name
-          absence_answer: ''
+          absence_answer: ""
         address:
           question: Employer’s address
-          absence_answer: ''
+          absence_answer: ""
         job_title:
           question: Job title
-          absence_answer: ''
+          absence_answer: ""
         salary_or_wage:
           question: Salary or wage
           answers:
             description: *payment_answer_format
-          absence_answer: ''
+          absence_answer: ""
         has_no_deductions:
           question: Deductions
           answers:
-            'yes': 'None'
+            "yes": "None"
           absence_answer: *absence_none
 
       deduction:
@@ -976,21 +963,21 @@ en:
             description: *payment_answer_format
           details:
             question: income_tax details
-            absence_answer: ''
+            absence_answer: ""
         national_insurance:
           question: National Insurance
           answers:
             description: *payment_answer_format
           details:
             question: national_insurance details
-            absence_answer: ''
+            absence_answer: ""
         other:
           question: Other deductions total
           answers:
             description: *payment_answer_format
           details:
             question: Details of other deductions
-            absence_answer: ''
+            absence_answer: ""
       employment_income:
         question: Salary or wage
         answers:
@@ -1003,7 +990,7 @@ en:
         question: "Self assessment tax calculation?"
         answers: *YESNO
       partner_self_assessment_tax_bill:
-        question:  "Self assessment tax calculation?"
+        question: "Self assessment tax calculation?"
         answers: *YESNO
       self_assessment_tax_bill_payment:
         question: Amount
@@ -1032,53 +1019,53 @@ en:
 
       trading_name:
         question: Trading name
-        absence_answer: ''
+        absence_answer: ""
       business_address:
         question: Business address
-        absence_answer: ''
+        absence_answer: ""
       nature_of_business:
         question: Nature of business
-        absence_answer: ''
+        absence_answer: ""
       trading_start_date:
         question: Date began trading
-        absence_answer: ''
+        absence_answer: ""
       has_additional_owners:
         question: In business with anyone else?
         answers: *YESNO
       additional_owners:
         question: Name of others in business
-        absence_answer: ''
+        absence_answer: ""
       has_employees:
         question: Employees?
         answers: *YESNO
       number_of_employees:
         question: Number of employees
-        absence_answer: ''
+        absence_answer: ""
       turnover:
         question: Total turnover
         answers:
           description: *payment_answer_format
-        absence_answer: ''
+        absence_answer: ""
       drawings:
         question: Total drawings
         answers:
           description: *payment_answer_format
-        absence_answer: ''
+        absence_answer: ""
       profit:
         question: Total profit
         answers:
           description: *payment_answer_format
-        absence_answer: ''
+        absence_answer: ""
       salary:
         question: Salary or remuneration
         answers:
           description: *payment_answer_format
-        absence_answer: ''
+        absence_answer: ""
       total_income_share_sales:
         question: Income from share sales
         answers:
           description: *payment_answer_format
-        absence_answer: ''
+        absence_answer: ""
       percentage_profit_share:
         question: Share of profits
-        absence_answer: ''
+        absence_answer: ""
