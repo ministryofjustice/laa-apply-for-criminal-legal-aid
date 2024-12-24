@@ -164,13 +164,9 @@ RSpec.describe Passporting::IojPassporter do
   end
 
   describe '#offence_passported?' do
-    let(:feat_enabled) { true }
-
-    before do
-      allow(FeatureFlags).to receive(:offence_ioj_slipstream) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feat_enabled)
-      }
-    end
+    let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
+    let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
+    let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
 
     context 'for an appeal case type' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
@@ -178,40 +174,28 @@ RSpec.describe Passporting::IojPassporter do
       it { expect(subject.offence_passported?).to be(false) }
     end
 
-    context 'feature flag is disabled' do
-      let(:feat_enabled) { false }
+    context 'when there is at least one passported offence' do
+      let(:charges) { [non_passported_charge, passported_charge] }
+
+      it { expect(subject.offence_passported?).to be(true) }
+    end
+
+    context 'when there is at least one passported offence but also non listed offences' do
+      let(:charges) { [non_listed_charge, non_passported_charge, passported_charge] }
+
+      it { expect(subject.offence_passported?).to be(true) }
+    end
+
+    context 'when there is a mix of non listed offences and non passported offences' do
+      let(:charges) { [non_listed_charge, non_passported_charge] }
 
       it { expect(subject.offence_passported?).to be(false) }
     end
 
-    context 'feature flag is enabled' do
-      let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
-      let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
-      let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
+    context 'when there are only non listed offences' do
+      let(:charges) { [non_listed_charge] }
 
-      context 'when there is at least one passported offence' do
-        let(:charges) { [non_passported_charge, passported_charge] }
-
-        it { expect(subject.offence_passported?).to be(true) }
-      end
-
-      context 'when there is at least one passported offence but also non listed offences' do
-        let(:charges) { [non_listed_charge, non_passported_charge, passported_charge] }
-
-        it { expect(subject.offence_passported?).to be(true) }
-      end
-
-      context 'when there is a mix of non listed offences and non passported offences' do
-        let(:charges) { [non_listed_charge, non_passported_charge] }
-
-        it { expect(subject.offence_passported?).to be(false) }
-      end
-
-      context 'when there are only non listed offences' do
-        let(:charges) { [non_listed_charge] }
-
-        it { expect(subject.offence_passported?).to be(false) }
-      end
+      it { expect(subject.offence_passported?).to be(false) }
     end
   end
 end

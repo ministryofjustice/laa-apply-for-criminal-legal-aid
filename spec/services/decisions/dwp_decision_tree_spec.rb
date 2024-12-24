@@ -71,8 +71,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:applicant_double) { double(Applicant, has_nino:) }
     let(:step_name) { :benefit_type }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
-    let(:has_nino) { YesNoAnswer::YES }
-    let(:feature_flag_means_journey_enabled) { false }
+    let(:has_nino) { YesNoAnswer::YES.to_s }
     let(:partner_double) { nil }
     let(:arc) { nil }
 
@@ -83,10 +82,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       allow(applicant_double).to receive_messages(benefit_check_result:)
 
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(applicant_double).and_return(true)
-
-      allow(FeatureFlags).to receive(:means_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-      }
     end
 
     context 'and the benefit type is `none`' do
@@ -94,28 +89,24 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:benefit_check_passported) { false }
       let(:benefit_check_result) { nil }
 
-      context 'and feature flag `means_journey` is enabled' do
-        let(:feature_flag_means_journey_enabled) { true }
+      context 'and the partner is included in the means assessment' do
+        let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
 
-        context 'and the partner is included in the means assessment' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+        it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+      end
 
-          it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
-        end
+      context 'and the partner is not included in the means assessment' do
+        let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
 
-        context 'and the partner is not included in the means assessment' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
+      end
 
-          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-        end
+      context 'and the partner has an arc number' do
+        let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
+        let(:partner_double) { instance_double(Partner, arc:) }
+        let(:arc) { 'ABC12/345678/A' }
 
-        context 'and the partner has an arc number' do
-          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'victim') }
-          let(:partner_double) { instance_double(Partner, arc:) }
-          let(:arc) { 'ABC12/345678/A' }
-
-          it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
-        end
+        it { is_expected.to have_destination('/steps/case/urn', :edit, id: crime_application) }
       end
     end
 
@@ -159,13 +150,7 @@ RSpec.describe Decisions::DWPDecisionTree do
       let(:benefit_check_passported) { false }
       let(:has_nino) { YesNoAnswer::NO }
 
-      it { is_expected.to have_destination(:cannot_check_dwp_status, :edit, id: crime_application) }
-
-      context 'and feature flag `means_journey` is enabled' do
-        let(:feature_flag_means_journey_enabled) { true }
-
-        it { is_expected.to have_destination(:cannot_check_benefit_status, :edit, id: crime_application) }
-      end
+      it { is_expected.to have_destination(:cannot_check_benefit_status, :edit, id: crime_application) }
     end
   end
 
@@ -175,7 +160,6 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:step_name) { :partner_benefit_type }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES }
-    let(:feature_flag_means_journey_enabled) { true }
 
     before do
       allow(crime_application).to receive_messages(partner: partner_double,
@@ -184,10 +168,6 @@ RSpec.describe Decisions::DWPDecisionTree do
       allow(partner_double).to receive_messages(benefit_check_result:)
 
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(partner_double).and_return(true)
-
-      allow(FeatureFlags).to receive(:means_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-      }
     end
 
     context 'and the benefit type is `none`' do
@@ -210,13 +190,6 @@ RSpec.describe Decisions::DWPDecisionTree do
   context 'when the step is `has_benefit_evidence`' do
     let(:form_object) { double('FormObject', applicant:, has_benefit_evidence:) }
     let(:step_name) { :has_benefit_evidence }
-    let(:feature_flag_means_journey_enabled) { true }
-
-    before do
-      allow(FeatureFlags).to receive(:means_journey) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: feature_flag_means_journey_enabled)
-      }
-    end
 
     context 'and the answer is `yes`' do
       let(:has_benefit_evidence) { YesNoAnswer::YES }

@@ -342,16 +342,6 @@ RSpec.describe TypeOfMeansAssessment do
   describe '#requires_means_assessment?' do
     subject(:requires_means_assessment?) { assessable.requires_means_assessment? }
 
-    context 'when means journey FeatureFlag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:means_journey).and_return(
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        )
-      end
-
-      it { is_expected.to be false }
-    end
-
     context 'when means passported' do
       let(:means_passporter_result) { true }
 

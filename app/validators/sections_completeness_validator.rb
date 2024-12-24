@@ -72,7 +72,6 @@ class SectionsCompletenessValidator
   end
 
   def evidence_upload_complete?
-    return true unless FeatureFlags.evidence_validation.enabled?
     return true unless evidence_validator.applicable?
 
     evidence_validator.evidence_complete?

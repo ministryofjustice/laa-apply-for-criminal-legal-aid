@@ -42,26 +42,18 @@ module Case::HasOtherCharges # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def require_client_other_charge_in_progress?
-    return false unless FeatureFlags.other_charges.enabled?
-
     !crime_application.non_means_tested? && case_eligible_for_other_charge?
   end
 
   def require_client_other_charge?
-    return false unless FeatureFlags.other_charges.enabled?
-
     require_client_other_charge_in_progress? && client_other_charge_in_progress == YesNoAnswer::YES.to_s
   end
 
   def require_partner_other_charge_in_progress?
-    return false unless FeatureFlags.other_charges.enabled?
-
     !crime_application.non_means_tested? && case_eligible_for_other_charge? && partner_relevant_for_other_charge?
   end
 
   def require_partner_other_charge?
-    return false unless FeatureFlags.other_charges.enabled?
-
     require_partner_other_charge_in_progress? && partner_other_charge_in_progress == YesNoAnswer::YES.to_s
   end
 

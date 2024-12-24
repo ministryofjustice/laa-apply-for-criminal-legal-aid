@@ -115,23 +115,6 @@ RSpec.describe Case::HasOtherCharges do
   describe '#require_client_other_charge_in_progress?' do
     subject(:require_client_other_charge_in_progress?) { has_other_charges.require_client_other_charge_in_progress? }
 
-    before do
-      allow(FeatureFlags).to receive(:other_charges).and_return(
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      )
-      allow(crime_application).to receive(:non_means_tested?).and_return(false)
-    end
-
-    context 'when other_charges FeatureFlag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:other_charges).and_return(
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        )
-      end
-
-      it { is_expected.to be false }
-    end
-
     context 'when the application is non-means tested' do
       before do
         allow(crime_application).to receive(:non_means_tested?).and_return(true)
@@ -192,22 +175,6 @@ RSpec.describe Case::HasOtherCharges do
   describe '#require_client_other_charge?' do
     subject(:require_client_other_charge?) { has_other_charges.require_client_other_charge? }
 
-    before do
-      allow(FeatureFlags).to receive(:other_charges).and_return(
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      )
-    end
-
-    context 'when other_charges FeatureFlag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:other_charges).and_return(
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        )
-      end
-
-      it { is_expected.to be false }
-    end
-
     context 'when the other charge question is relevant' do
       before { allow(has_other_charges).to receive(:require_client_other_charge_in_progress?).and_return(true) }
 
@@ -233,23 +200,6 @@ RSpec.describe Case::HasOtherCharges do
 
   describe '#require_partner_other_charge_in_progress?' do
     subject(:require_partner_other_charge_in_progress?) { has_other_charges.require_partner_other_charge_in_progress? }
-
-    before do
-      allow(FeatureFlags).to receive(:other_charges).and_return(
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      )
-      allow(crime_application).to receive(:non_means_tested?).and_return(false)
-    end
-
-    context 'when other_charges FeatureFlag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:other_charges).and_return(
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        )
-      end
-
-      it { is_expected.to be false }
-    end
 
     context 'when the application is non-means tested' do
       before do
@@ -466,22 +416,6 @@ RSpec.describe Case::HasOtherCharges do
 
   describe '#require_partner_other_charge?' do
     subject(:require_partner_other_charge?) { has_other_charges.require_partner_other_charge? }
-
-    before do
-      allow(FeatureFlags).to receive(:other_charges).and_return(
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      )
-    end
-
-    context 'when other_charges FeatureFlag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:other_charges).and_return(
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        )
-      end
-
-      it { is_expected.to be false }
-    end
 
     context 'when the other charge question is relevant' do
       before { allow(has_other_charges).to receive(:require_partner_other_charge_in_progress?).and_return(true) }

@@ -13,11 +13,9 @@
         <% end %>
         <%= f.govuk_radio_button :has_arc_or_nino, YesNoAnswer::NO %>
 
-        <% if FeatureFlags.arc.enabled? %>
-          <%= f.govuk_radio_button :has_arc_or_nino, 'arc' do %>
-            <%= f.govuk_text_field :arc, autocomplete: 'off', width: 'one-third',
-                                   extra_letter_spacing: true %>
-          <% end %>
+        <%= f.govuk_radio_button :has_arc_or_nino, 'arc' do %>
+          <%= f.govuk_text_field :arc, autocomplete: 'off', width: 'one-third',
+                                 extra_letter_spacing: true %>
         <% end %>
       <% end %>
       <%= f.continue_button %>

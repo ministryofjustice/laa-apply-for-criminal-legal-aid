@@ -16,7 +16,7 @@ module Test
   end
 end
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers, RSpec/NestedGroups
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe ApplicationFulfilmentValidator, type: :model do
   subject { Test::CrimeApplicationValidatable.new(arguments) }
 
@@ -74,49 +74,19 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
       let(:means_result) { false }
 
       context 'and means details have been recorded' do
-        before do
-          allow(FeatureFlags).to receive(:employment_journey) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: employment_journey_feature_flag)
-          }
-        end
+        context 'employment_status is not_working' do
+          let(:employment_status) { ['not_working'] }
 
-        context 'when employment_journey feature flag is enabled' do
-          let(:employment_journey_feature_flag) { true }
-
-          context 'employment_status is not_working' do
-            let(:employment_status) { ['not_working'] }
-
-            it 'is valid' do
-              expect(subject).to be_valid
-            end
-          end
-
-          context 'employment_status is employed' do
-            let(:employment_status) { ['employed'] }
-
-            it 'is valid' do
-              expect(subject).to be_valid
-            end
+          it 'is valid' do
+            expect(subject).to be_valid
           end
         end
 
-        context 'when employment_journey feature flag is disabled' do
-          let(:employment_journey_feature_flag) { false }
+        context 'employment_status is employed' do
+          let(:employment_status) { ['employed'] }
 
-          context 'employment_status is not_working' do
-            let(:employment_status) { ['not_working'] }
-
-            it 'is valid' do
-              expect(subject).to be_valid
-            end
-          end
-
-          context 'employment_status is employed' do
-            let(:employment_status) { ['employed'] }
-
-            it 'is valid' do
-              expect(subject).not_to be_valid
-            end
+          it 'is valid' do
+            expect(subject).to be_valid
           end
         end
       end
@@ -333,4 +303,4 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers, RSpec/NestedGroups
+# rubocop:enable RSpec/MultipleMemoizedHelpers

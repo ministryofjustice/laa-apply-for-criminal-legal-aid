@@ -237,7 +237,7 @@ module Decisions
     end
 
     def after_extent_of_means_determined
-      return edit(:income_payments) unless FeatureFlags.employment_journey.enabled? && employed?
+      return edit(:income_payments) unless employed?
 
       employment_start
     end
@@ -316,8 +316,7 @@ module Decisions
     end
 
     def employed?
-      crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s) &&
-        FeatureFlags.employment_journey.enabled?
+      crime_application.income.employment_status&.include?(EmploymentStatus::EMPLOYED.to_s)
     end
 
     def not_working?(employment_status)

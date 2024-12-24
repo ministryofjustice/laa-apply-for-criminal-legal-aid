@@ -62,12 +62,7 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def means_record_present?
-    if FeatureFlags.employment_journey.enabled?
-      # TODO: Update definition
-      income.present? && income&.employment_status.present?
-    else
-      income.present? && income&.employment_status&.include?('not_working')
-    end
+    income.present? && income&.employment_status.present?
   end
 
   def client_remanded_in_custody?
@@ -79,7 +74,6 @@ class ApplicationFulfilmentValidator < BaseFulfilmentValidator
   end
 
   def evidence_upload_complete?
-    return true unless FeatureFlags.evidence_validation.enabled?
     return true unless evidence_validator.applicable?
 
     evidence_validator.evidence_complete?

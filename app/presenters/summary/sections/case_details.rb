@@ -143,20 +143,14 @@ module Summary
       end
 
       def case_concluded_change_path
-        return nil unless FeatureFlags.means_journey.enabled?
-
         edit_steps_case_has_case_concluded_path
       end
 
       def preorder_work_claimed_path
-        return nil unless FeatureFlags.means_journey.enabled?
-
         edit_steps_case_is_preorder_work_claimed_path
       end
 
       def client_remanded_change_path
-        return nil unless FeatureFlags.means_journey.enabled?
-
         edit_steps_case_is_client_remanded_path
       end
     end
