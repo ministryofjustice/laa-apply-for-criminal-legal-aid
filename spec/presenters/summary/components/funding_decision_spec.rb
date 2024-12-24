@@ -22,7 +22,7 @@ describe Summary::Components::FundingDecision, type: :component do
   let(:interests_of_justice) do
     instance_double(
       LaaCrimeSchemas::Structs::TestResult,
-      result: 'fail',
+      result: 'failed',
       details: 'IoJ details',
       assessed_by: 'Grace Nolan',
       assessed_on: Date.new(2024, 10, 8),
@@ -31,13 +31,13 @@ describe Summary::Components::FundingDecision, type: :component do
   let(:means) do
     instance_double(
       LaaCrimeSchemas::Structs::TestResult,
-      result: 'fail',
+      result: 'failed',
       details: 'Means details',
       assessed_by: 'Grace Nolan',
       assessed_on: Date.new(2024, 10, 9),
     )
   end
-  let(:funding_decision) { 'failmeioj' }
+  let(:funding_decision) { 'refused' }
   let(:comment) { 'Decision comment' }
 
   before { component }
@@ -47,14 +47,14 @@ describe Summary::Components::FundingDecision, type: :component do
       expect(summary_card('Case')).to have_rows(
         'MAAT ID', 'M123',
         'Case number', 'APP123',
-        'Interests of justice (IoJ) test result', 'Refused',
+        'Interests of justice (IoJ) test result', 'Failed',
         'IoJ comment', 'IoJ details',
         'IoJ caseworker', 'Grace Nolan',
         'IoJ test date', '8 October 2024',
         'Means test result', 'Failed',
         'Means test caseworker', 'Grace Nolan',
         'Means test date', '9 October 2024',
-        'Overall result', 'Failed means and IoJ',
+        'Overall result', 'Refused',
         'Further information about the decision', 'Decision comment'
       )
     end
