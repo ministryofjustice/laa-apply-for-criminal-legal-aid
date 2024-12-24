@@ -3,14 +3,6 @@ feature_flags:
     local: true
     staging: true
     production: false
-  u18_means_passport:
-    local: true
-    staging: true
-    production: true
-  u18_ioj_passport:
-    local: true
-    staging: true
-    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

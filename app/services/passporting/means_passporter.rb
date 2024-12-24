@@ -47,10 +47,6 @@ module Passporting
       crime_application.is_means_tested == 'no'
     end
 
-    def applicant_under18?
-      FeatureFlags.u18_means_passport.enabled? && super
-    end
-
     def benefit_check_passed?
       benefit_check_subject.benefit_check_result.present?
     end

@@ -164,15 +164,15 @@ RSpec.describe Passporting::IojPassporter do
   end
 
   describe '#offence_passported?' do
+    let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
+    let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
+    let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
+
     context 'for an appeal case type' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
 
       it { expect(subject.offence_passported?).to be(false) }
     end
-
-    let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
-    let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
-    let(:non_listed_charge) { Charge.new(offence_name: 'This is a test offence') }
 
     context 'when there is at least one passported offence' do
       let(:charges) { [non_passported_charge, passported_charge] }
