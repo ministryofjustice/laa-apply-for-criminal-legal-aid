@@ -11,38 +11,6 @@ feature_flags:
     local: true
     staging: true
     production: true
-  offence_ioj_slipstream:
-    local: true
-    staging: true
-    production: true
-  means_journey:
-    local: true
-    staging: true
-    production: true
-  employment_journey:
-    local: true
-    staging: true
-    production: true
-  self_employed_journey:
-    local: true
-    staging: true
-    production: true
-  evidence_validation:
-    local: true
-    staging: true
-    production: true
-  cifc_journey:
-    local: true
-    staging: true
-    production: true
-  arc:
-    local: true
-    staging: true
-    production: true
-  other_charges:
-    local: true
-    staging: true
-    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

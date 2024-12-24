@@ -62,7 +62,6 @@ module Steps
       end
 
       def arc_changed?
-        return false unless FeatureFlags.arc.enabled?
         return false if record.has_arc == has_arc.to_s
 
         record.arc != arc

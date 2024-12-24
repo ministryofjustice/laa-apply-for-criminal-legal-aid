@@ -153,17 +153,15 @@ Rails.application.routes.draw do
       end
 
       namespace :case do
-        if FeatureFlags.means_journey.enabled?
-          edit_step :has_the_case_concluded, alias: :has_case_concluded
-          edit_step :claim_pre_order_work,  alias: :is_preorder_work_claimed
-          edit_step :has_court_remanded_client_in_custody,  alias: :is_client_remanded
-        end
+        edit_step :has_the_case_concluded, alias: :has_case_concluded
+        edit_step :claim_pre_order_work,  alias: :is_preorder_work_claimed
+        edit_step :has_court_remanded_client_in_custody,  alias: :is_client_remanded
         edit_step :urn
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
         edit_step :has_codefendants
         edit_step :codefendants
-        scope '/:subject/', constraints: -> (_) { FeatureFlags.other_charges.enabled? } do
+        scope '/:subject/' do
           edit_step :other_charge_in_progress
           edit_step :other_charge
         end
@@ -173,10 +171,10 @@ Rails.application.routes.draw do
         edit_step :ioj
       end
 
-      namespace :income, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+      namespace :income do
         edit_step :what_is_clients_employment_status, alias: :employment_status
         edit_step :what_is_the_partners_employment_status, alias: :partner_employment_status
-        namespace :client, constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
+        namespace :client do
           crud_step :employments, param: :employment_id
           crud_step :employer_details, alias: :employer_details, param: :employment_id
           crud_step :employment_details, alias: :employment_details, param: :employment_id
@@ -187,7 +185,7 @@ Rails.application.routes.draw do
           edit_step :other_work_benefits_client, alias: :other_work_benefits
         end
 
-        scope '/:subject/', constraints: -> (_) { FeatureFlags.self_employed_journey.enabled? } do
+        scope '/:subject/' do
           edit_step :business_type
           edit_step :businesses_summary
           crud_step :businesses, param: :business_id
@@ -201,11 +199,11 @@ Rails.application.routes.draw do
           crud_step :percentage_share_of_profits, alias: :business_percentage_profit_share, param: :business_id, except: [:destroy]
         end
 
-        scope '/:subject/', constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
+        scope '/:subject/' do
           edit_step :armed_forces
         end
 
-        namespace :partner, constraints: -> (_) { FeatureFlags.employment_journey.enabled? } do
+        namespace :partner do
           crud_step :employments, param: :employment_id
           crud_step :employer_details, alias: :employer_details, param: :employment_id
           crud_step :employment_details, alias: :employment_details, param: :employment_id
@@ -232,7 +230,7 @@ Rails.application.routes.draw do
         edit_step :what_is_the_partners_employment_status, alias: :partner_employment_status
       end
 
-      namespace :outgoings, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+      namespace :outgoings do
         edit_step :housing_payments_where_lives, alias: :housing_payment_type
         edit_step :pay_council_tax, alias: :council_tax
         edit_step :client_paid_income_tax_rate, alias: :income_tax_rate
@@ -245,7 +243,7 @@ Rails.application.routes.draw do
         edit_step :check_your_answers_outgoings, alias: :answers
       end
 
-      namespace :capital, constraints: -> (_) { FeatureFlags.means_journey.enabled? } do
+      namespace :capital do
         edit_step :which_assets_owned, alias: :property_type
         crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :commercial_property, alias: :commercial_property, param: :property_id

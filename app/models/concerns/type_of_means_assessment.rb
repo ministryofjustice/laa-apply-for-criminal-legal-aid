@@ -5,7 +5,6 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
            :capital, :non_means_tested?, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
-    return false unless FeatureFlags.means_journey.enabled?
     return false if Passporting::MeansPassporter.new(crime_application).call
     return false if appeal_no_changes?
 

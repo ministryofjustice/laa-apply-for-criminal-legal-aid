@@ -117,8 +117,6 @@ module Decisions
     end
 
     def has_nino(person)
-      return true unless FeatureFlags.means_journey.enabled?
-
       person.has_nino == 'yes'
     end
 

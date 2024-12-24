@@ -31,8 +31,7 @@ module Passporting
       # Appeal cases do not trigger IoJ passporting
       return false if appeal_case_type?
 
-      FeatureFlags.offence_ioj_slipstream.enabled? &&
-        offences.any?(&:slipstreamable)
+     offences.any?(&:slipstreamable)
     end
 
     def passport_types_collection

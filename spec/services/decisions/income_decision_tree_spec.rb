@@ -61,8 +61,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
   let(:partner_incomplete_employments) { [] }
 
   let(:case_type) { nil }
-  let(:feature_flag_employment_journey_enabled) { false }
-  let(:feature_flag_self_employed_journey_enabled) { false }
   let(:partner_detail) { nil }
 
   let(:partner_employments_empty?) { true }
@@ -75,13 +73,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
     allow(subject).to receive(:evidence_of_passporting_means_forthcoming?).and_return(false)
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(false)
-
-    allow(FeatureFlags).to receive_messages(
-      employment_journey: instance_double(FeatureFlags::EnabledFeature,
-                                          enabled?: feature_flag_employment_journey_enabled),
-      self_employed_journey: instance_double(FeatureFlags::EnabledFeature,
-                                             enabled?: feature_flag_self_employed_journey_enabled)
-    )
   end
 
   it_behaves_like 'a decision tree'
@@ -97,62 +88,53 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
       end
 
-      context 'feature flag `employment_journey` is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
+      context 'and the armed forces question is required' do
+        before { allow(income).to receive(:require_client_in_armed_forces?).and_return(true) }
 
-        context 'and the armed forces question is required' do
-          before { allow(income).to receive(:require_client_in_armed_forces?).and_return(true) }
-
-          it 'redirects to the `armed_forces` page' do
-            expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'client')
-          end
+        it 'redirects to the `armed_forces` page' do
+          expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'client')
         end
+      end
 
-        context 'and the armed forces question is not required' do
-          before { allow(income).to receive(:require_client_in_armed_forces?).and_return(false) }
+      context 'and the armed forces question is not required' do
+        before { allow(income).to receive(:require_client_in_armed_forces?).and_return(false) }
 
-          it 'redirects to the `income_before_tax` page' do
-            expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
-          end
+        it 'redirects to the `income_before_tax` page' do
+          expect(subject).to have_destination(:income_before_tax, :edit, id: crime_application)
         end
       end
     end
 
     context 'when status selected is self-employed option' do
-      let(:feature_flag_employment_journey_enabled) { true }
       let(:employment_status) { [EmploymentStatus::SELF_EMPLOYED.to_s] }
 
       before do
         allow(form_object).to receive(:employment_status).and_return([EmploymentStatus::SELF_EMPLOYED.to_s])
       end
 
-      context 'feature flag `self_employed_journey` is enabled' do
-        let(:feature_flag_self_employed_journey_enabled) { true }
-
-        context 'when the client has no businesses' do
-          before do
-            allow(applicant).to receive_messages(businesses: [])
-          end
-
-          it 'redirects to the Business type page' do
-            expect(subject).to have_destination('/steps/income/business_type',
-                                                :edit,
-                                                id: crime_application,
-                                                subject: applicant)
-          end
+      context 'when the client has no businesses' do
+        before do
+          allow(applicant).to receive_messages(businesses: [])
         end
 
-        context 'when the client has businesses' do
-          before do
-            allow(applicant).to receive_messages(businesses: [instance_double(Business)])
-          end
+        it 'redirects to the Business type page' do
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: applicant)
+        end
+      end
 
-          it 'redirects to the Business type page' do
-            expect(subject).to have_destination('/steps/income/businesses_summary',
-                                                :edit,
-                                                id: crime_application,
-                                                subject: applicant)
-          end
+      context 'when the client has businesses' do
+        before do
+          allow(applicant).to receive_messages(businesses: [instance_double(Business)])
+        end
+
+        it 'redirects to the Business type page' do
+          expect(subject).to have_destination('/steps/income/businesses_summary',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: applicant)
         end
       end
     end
@@ -166,45 +148,40 @@ RSpec.describe Decisions::IncomeDecisionTree do
         )
       end
 
-      context 'feature flag `employment_journey` is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
-        let(:feature_flag_self_employed_journey_enabled) { true }
+      context 'with client employments present' do
+        let(:client_employments_empty?) { false }
 
-        context 'with client employments present' do
-          let(:client_employments_empty?) { false }
-
-          it 'redirects to the `client/employments_summary` page' do
-            expect(subject).to have_destination('/steps/income/client/employments_summary',
-                                                :edit, id: crime_application)
-          end
+        it 'redirects to the `client/employments_summary` page' do
+          expect(subject).to have_destination('/steps/income/client/employments_summary',
+                                              :edit, id: crime_application)
         end
+      end
 
-        context 'with client employments not present' do
-          let(:client_employments_empty?) { true }
+      context 'with client employments not present' do
+        let(:client_employments_empty?) { true }
 
-          it 'redirects to the `employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details',
-                                                :edit, id: crime_application)
-          end
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details',
+                                              :edit, id: crime_application)
         end
+      end
 
-        context 'with incomplete employments' do
-          let(:client_employments_empty?) { true }
-          let(:incomplete_employments) { [employment_double] }
+      context 'with incomplete employments' do
+        let(:client_employments_empty?) { true }
+        let(:incomplete_employments) { [employment_double] }
 
-          it 'redirects to the `employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            expect(employments_double).not_to have_received(:create!)
-          end
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+          expect(employments_double).not_to have_received(:create!)
         end
+      end
 
-        context 'with no incomplete employments' do
-          let(:incomplete_employments) { [] }
+      context 'with no incomplete employments' do
+        let(:incomplete_employments) { [] }
 
-          it 'redirects to the `employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            expect(employments_double).to have_received(:create!)
-          end
+        it 'redirects to the `employer_details` page' do
+          expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+          expect(employments_double).to have_received(:create!)
         end
       end
     end
@@ -245,62 +222,58 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::EMPLOYED.to_s])
       end
 
-      context 'feature flag `employment_journey` is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
+      context 'and the armed forces question is required' do
+        before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(true) }
 
-        context 'and the armed forces question is required' do
-          before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(true) }
+        it 'redirects to the `armed_forces` page' do
+          expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'partner')
+        end
+      end
 
-          it 'redirects to the `armed_forces` page' do
-            expect(subject).to have_destination(:armed_forces, :edit, id: crime_application, subject: 'partner')
+      context 'and the armed forces question is not required' do
+        before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(false) }
+
+        context 'when does not requires_full_means_assessment?' do
+          before do
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
+          end
+
+          it 'redirects to the `partner/employment_income` page' do
+            expect(subject).to have_destination('/steps/income/partner/employment_income', :edit,
+                                                id: crime_application)
           end
         end
 
-        context 'and the armed forces question is not required' do
-          before { allow(income).to receive(:require_partner_in_armed_forces?).and_return(false) }
+        context 'when requires_full_means_assessment?' do
+          before do
+            allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
+          end
 
-          context 'when does not requires_full_means_assessment?' do
-            before do
-              allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(false)
-            end
+          context 'with partner employments present' do
+            let(:partner_employments_empty?) { false }
 
-            it 'redirects to the `partner/employment_income` page' do
-              expect(subject).to have_destination('/steps/income/partner/employment_income', :edit,
+            it 'redirects to the `partner/employments_summary` page' do
+              expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
                                                   id: crime_application)
             end
           end
 
-          context 'when requires_full_means_assessment?' do
-            before do
-              allow_any_instance_of(described_class).to receive(:requires_full_means_assessment?).and_return(true)
+          context 'with incomplete partner employments' do
+            let(:partner_employments_empty?) { false }
+            let(:partner_incomplete_employments) { [employment_double] }
+
+            it 'redirects to the `partner/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                  id: crime_application)
             end
+          end
 
-            context 'with partner employments present' do
-              let(:partner_employments_empty?) { false }
+          context 'with partner employments not present' do
+            let(:partner_employments_empty?) { true }
 
-              it 'redirects to the `partner/employments_summary` page' do
-                expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
-                                                    id: crime_application)
-              end
-            end
-
-            context 'with incomplete partner employments' do
-              let(:partner_employments_empty?) { false }
-              let(:partner_incomplete_employments) { [employment_double] }
-
-              it 'redirects to the `partner/employer_details` page' do
-                expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
-                                                    id: crime_application)
-              end
-            end
-
-            context 'with partner employments not present' do
-              let(:partner_employments_empty?) { true }
-
-              it 'redirects to the `partner/employer_details` page' do
-                expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
-                                                    id: crime_application)
-              end
+            it 'redirects to the `partner/employer_details` page' do
+              expect(subject).to have_destination('/steps/income/partner/employer_details', :edit,
+                                                  id: crime_application)
             end
           end
         end
@@ -314,29 +287,25 @@ RSpec.describe Decisions::IncomeDecisionTree do
         allow(form_object).to receive(:partner_employment_status).and_return([EmploymentStatus::SELF_EMPLOYED.to_s])
       end
 
-      context 'feature flag `self_employed_journey` is enabled' do
-        let(:feature_flag_self_employed_journey_enabled) { true }
+      context 'when the partner has no businesses' do
+        let(:partner) { instance_double(Partner, businesses: []) }
 
-        context 'when the partner has no businesses' do
-          let(:partner) { instance_double(Partner, businesses: []) }
-
-          it 'redirects to the Business type page' do
-            expect(subject).to have_destination('/steps/income/business_type',
-                                                :edit,
-                                                id: crime_application,
-                                                subject: partner)
-          end
+        it 'redirects to the Business type page' do
+          expect(subject).to have_destination('/steps/income/business_type',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: partner)
         end
+      end
 
-        context 'when the partner already has businesses' do
-          let(:partner) { instance_double(Partner, businesses: [instance_double(Business)]) }
+      context 'when the partner already has businesses' do
+        let(:partner) { instance_double(Partner, businesses: [instance_double(Business)]) }
 
-          it 'redirects to the partner Business summary page' do
-            expect(subject).to have_destination('/steps/income/businesses_summary',
-                                                :edit,
-                                                id: crime_application,
-                                                subject: partner)
-          end
+        it 'redirects to the partner Business summary page' do
+          expect(subject).to have_destination('/steps/income/businesses_summary',
+                                              :edit,
+                                              id: crime_application,
+                                              subject: partner)
         end
       end
     end
@@ -350,45 +319,40 @@ RSpec.describe Decisions::IncomeDecisionTree do
         )
       end
 
-      context 'feature flag `employment_journey` and `employment_journey` enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
-        let(:feature_flag_self_employed_journey_enabled) { true }
+      context 'with partner employments present' do
+        let(:partner_employments_empty?) { true }
 
-        context 'with partner employments present' do
-          let(:partner_employments_empty?) { true }
-
-          it 'redirects to the `partner/employer_details` page' do
-            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
-          end
+        it 'redirects to the `partner/employer_details` page' do
+          expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
         end
+      end
 
-        context 'with partner employments not present' do
-          let(:partner_employments_empty?) { false }
+      context 'with partner employments not present' do
+        let(:partner_employments_empty?) { false }
 
-          it 'redirects to the `partner/employments_summary` page' do
-            expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
-                                                id: crime_application)
-          end
+        it 'redirects to the `partner/employments_summary` page' do
+          expect(subject).to have_destination('/steps/income/partner/employments_summary', :edit,
+                                              id: crime_application)
         end
+      end
 
-        context 'with incomplete employments' do
-          let(:partner_employments_empty?) { false }
-          let(:partner_incomplete_employments) { [partner_employment_double] }
+      context 'with incomplete employments' do
+        let(:partner_employments_empty?) { false }
+        let(:partner_incomplete_employments) { [partner_employment_double] }
 
-          it 'redirects to the `partner_employer_details` page' do
-            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
-            expect(partner_employments_double).not_to have_received(:create!)
-          end
+        it 'redirects to the `partner_employer_details` page' do
+          expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+          expect(partner_employments_double).not_to have_received(:create!)
         end
+      end
 
-        context 'with no incomplete employments' do
-          let(:partner_employments_empty?) { true }
-          let(:partner_incomplete_employments) { [] }
+      context 'with no incomplete employments' do
+        let(:partner_employments_empty?) { true }
+        let(:partner_incomplete_employments) { [] }
 
-          it 'redirects to the `partner_employer_details` page' do
-            expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
-            expect(partner_employments_double).to have_received(:create!)
-          end
+        it 'redirects to the `partner_employer_details` page' do
+          expect(subject).to have_destination('/steps/income/partner/employer_details', :edit, id: crime_application)
+          expect(partner_employments_double).to have_received(:create!)
         end
       end
     end
@@ -689,23 +653,14 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when income is above the threshold' do
       let(:income_above_threshold) { YesNoAnswer::YES.to_s }
 
-      context 'when the client is employed and the employed feature flag is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
+      context 'when the client is employed' do
         let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
         it { is_expected.to have_destination('/steps/income/client/employer_details', :edit, id: crime_application) }
       end
 
-      context 'when the client is not employed and employed feature flag is enabled' do
-        let(:feature_flag_employment_journey_enabled) { true }
+      context 'when the client is not employed' do
         let(:employment_status) { [EmploymentStatus::NOT_WORKING.to_s] }
-
-        it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
-      end
-
-      context 'when the client is employed and employed feature flag NOT enabled' do
-        let(:feature_flag_employment_journey_enabled) { false }
-        let(:employment_status) { [EmploymentStatus::EMPLOYED.to_s] }
 
         it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
       end
@@ -739,7 +694,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'when the client is employed' do
           let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
-          let(:feature_flag_employment_journey_enabled) { true }
 
           it 'redirects to the `employment_income` page' do
             expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
@@ -758,7 +712,6 @@ RSpec.describe Decisions::IncomeDecisionTree do
 
         context 'when the client is employed' do
           let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
-          let(:feature_flag_employment_journey_enabled) { true }
 
           it 'redirects to the `employment_income` page' do
             expect(subject).to have_destination('/steps/income/client/employment_income', :edit, id: crime_application)
@@ -785,41 +738,31 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when the client is employed' do
         let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
 
-        context 'when the employed feature flag is enabled' do
-          let(:feature_flag_employment_journey_enabled) { true }
+        context 'with client employments present' do
+          let(:client_employments_empty?) { true }
 
-          context 'with client employments present' do
-            let(:client_employments_empty?) { true }
-
-            it 'redirects to the `client/employer_details` page' do
-              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            end
-          end
-
-          context 'with incomplete client employments' do
-            let(:client_employments_empty?) { true }
-            let(:incomplete_employments) { [employment_double] }
-
-            it 'redirects to the `employer_details` page' do
-              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-              expect(employments_double).not_to have_received(:create!)
-            end
-          end
-
-          context 'with client employments not present' do
-            let(:client_employments_empty?) { false }
-
-            it 'redirects to the `client/employments_summary` page' do
-              expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
-                                                  id: crime_application)
-            end
+          it 'redirects to the `client/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
           end
         end
 
-        context 'when the employed feature flag is NOT enabled' do
-          let(:feature_flag_employment_journey_enabled) { false }
+        context 'with incomplete client employments' do
+          let(:client_employments_empty?) { true }
+          let(:incomplete_employments) { [employment_double] }
 
-          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with client employments not present' do
+          let(:client_employments_empty?) { false }
+
+          it 'redirects to the `client/employments_summary` page' do
+            expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
+                                                id: crime_application)
+          end
         end
       end
 
@@ -856,41 +799,31 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when the client is employed' do
         let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
 
-        context 'when the employed feature flag is enabled' do
-          let(:feature_flag_employment_journey_enabled) { true }
+        context 'with client employments present' do
+          let(:client_employments_empty?) { false }
 
-          context 'with client employments present' do
-            let(:client_employments_empty?) { false }
-
-            it 'redirects to the `client/employments_summary` page' do
-              expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
-                                                  id: crime_application)
-            end
-          end
-
-          context 'with incomplete employments' do
-            let(:client_employments_empty?) { true }
-            let(:incomplete_employments) { [employment_double] }
-
-            it 'redirects to the `employer_details` page' do
-              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-              expect(employments_double).not_to have_received(:create!)
-            end
-          end
-
-          context 'with client employments not present' do
-            let(:client_employments_empty?) { true }
-
-            it 'redirects to the `client/employer_details` page' do
-              expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            end
+          it 'redirects to the `client/employments_summary` page' do
+            expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
+                                                id: crime_application)
           end
         end
 
-        context 'when the employed feature flag is NOT enabled' do
-          let(:feature_flag_employment_journey_enabled) { false }
+        context 'with incomplete employments' do
+          let(:client_employments_empty?) { true }
+          let(:incomplete_employments) { [employment_double] }
 
-          it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+          it 'redirects to the `employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+            expect(employments_double).not_to have_received(:create!)
+          end
+        end
+
+        context 'with client employments not present' do
+          let(:client_employments_empty?) { true }
+
+          it 'redirects to the `client/employer_details` page' do
+            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
+          end
         end
       end
 
@@ -906,20 +839,13 @@ RSpec.describe Decisions::IncomeDecisionTree do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :has_savings }
 
-    context 'when the employed journey is not enabled' do
-      let(:feature_flag_employment_journey_enabled) { false }
-
-      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
-    end
-
     context 'when the client is not employed' do
       let(:employment_status) { ['not_working'] }
 
       it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
 
-    context 'when the employed journey is enabled and client is employed' do
-      let(:feature_flag_employment_journey_enabled) { true }
+    context 'when the client is employed' do
       let(:employment_status) { ['employed'] }
 
       context 'when they have savings' do
