@@ -195,10 +195,10 @@ GEM
     google-protobuf (4.28.2)
       bigdecimal
       rake (>= 13)
-    govuk-components (5.2.1)
+    govuk-components (5.7.1)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
-      pagy (~> 6.0)
-      view_component (>= 3.9, < 3.11)
+      pagy (>= 6, < 10)
+      view_component (>= 3.18, < 3.21)
     govuk_design_system_formbuilder (5.7.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -303,7 +303,7 @@ GEM
       omniauth (~> 2.1)
       ruby-saml (~> 1.17)
     orm_adapter (0.5.0)
-    pagy (6.5.0)
+    pagy (9.3.3)
     parallel (1.26.3)
     parser (3.3.5.0)
       ast (~> 2.4.1)
@@ -458,8 +458,8 @@ GEM
     uk_postcode (2.1.8)
     unicode-display_width (2.6.0)
     uri (0.13.1)
-    view_component (3.10.0)
-      activesupport (>= 5.2.0, < 8.0)
+    view_component (3.20.0)
+      activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
     warden (1.2.9)
@@ -500,7 +500,7 @@ DEPENDENCIES
   dotenv-rails
   erb_lint
   faraday (~> 2.7)
-  govuk-components (~> 5.2.1)
+  govuk-components
   govuk_design_system_formbuilder
   importmap-rails
   jbuilder (~> 2.11.5)

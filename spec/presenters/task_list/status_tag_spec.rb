@@ -1,71 +1,73 @@
 require 'rails_helper'
 
 RSpec.describe TaskList::StatusTag do
-  subject(:status_tag) { described_class.new(crime_application, name:, status:) }
+  describe '#to_hash' do
+    subject { status_tag.to_hash }
 
-  let(:name) { :foobar_task }
-  let(:crime_application) { double }
+    let(:status) { TaskStatus::IN_PROGRESS }
+    let(:status_tag) { described_class.new(status:) }
 
-  describe '#render' do
-    context 'with `completed` status' do
-      let(:status) { TaskStatus::COMPLETED }
-
-      it {
-        expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag">Completed</strong>'
-        )
-      }
-    end
-
-    context 'with `in_progress` status' do
+    context 'when status is IN_PROGRESS' do
       let(:status) { TaskStatus::IN_PROGRESS }
 
-      it {
-        expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--blue">' \
-          'In progress</strong>'
+      it 'includes the status as a tag component' do
+        expect(subject[:text]).to eq(
+          '<strong class="govuk-tag govuk-tag--light-blue">In progress</strong>'
         )
-      }
+      end
+
+      it 'does not set cannot_start_yet' do
+        expect(subject[:cannot_start_yet]).to be false
+      end
     end
 
-    context 'with `not_started` status' do
-      let(:status) { TaskStatus::NOT_STARTED }
-
-      it {
-        expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Not started</strong>'
-        )
-      }
-    end
-
-    context 'with `unreachable` status' do
+    context 'when status is UNREACHABLE' do
       let(:status) { TaskStatus::UNREACHABLE }
 
-      it {
-        expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Cannot yet start</strong>'
-        )
-      }
+      it 'includes the status as text only' do
+        expect(subject[:text]).to eq('Cannot start yet')
+      end
+
+      it 'sets cannot_start_yet to true' do
+        expect(subject[:cannot_start_yet]).to be true
+      end
     end
 
-    context 'with `not_applicable` status' do
+    context 'when status is NOT_APPLICABLE' do
       let(:status) { TaskStatus::NOT_APPLICABLE }
 
-      it {
-        expect(status_tag.render).to eq(
-          '<strong id="foobar_task-status" class="govuk-tag app-task-list__tag govuk-tag--grey">' \
-          'Not applicable</strong>'
-        )
-      }
+      it 'includes the status as text only' do
+        expect(subject[:text]).to eq('Not applicable')
+      end
+
+      it 'sets cannot_start_yet to true' do
+        expect(subject[:cannot_start_yet]).to be true
+      end
     end
 
-    context 'with an unknown status' do
-      let(:status) { :anything_else }
+    context 'when status is COMPLETED' do
+      let(:status) { TaskStatus::COMPLETED }
 
-      it 'raises an exception' do
-        expect { status_tag.render }.to raise_error(KeyError)
+      it 'includes the status as text only' do
+        expect(subject[:text]).to eq('Completed')
+      end
+
+      it 'sets cannot_start_yet to true' do
+        expect(subject[:cannot_start_yet]).to be false
+      end
+    end
+
+    context 'when status is NOT_STARTED' do
+      let(:status) { TaskStatus::NOT_STARTED }
+
+      it 'includes the status as a tag component' do
+        expect(subject[:text]).to eq(
+          '<strong class="govuk-tag govuk-tag--blue">Not started</strong>'
+        )
+      end
+
+      it 'does not set cannot_start_yet' do
+        expect(subject[:cannot_start_yet]).to be false
       end
     end
   end
