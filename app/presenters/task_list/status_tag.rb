@@ -1,32 +1,43 @@
 module TaskList
-  class StatusTag < BaseRenderer
+  class StatusTag
     attr_reader :status
-
-    DEFAULT_CLASSES = %w[govuk-tag app-task-list__tag].freeze
 
     STATUSES = {
       TaskStatus::COMPLETED => nil,
-      TaskStatus::IN_PROGRESS => 'govuk-tag--blue',
-      TaskStatus::NOT_STARTED => 'govuk-tag--grey',
-      TaskStatus::UNREACHABLE => 'govuk-tag--grey',
-      TaskStatus::NOT_APPLICABLE => 'govuk-tag--grey',
+      TaskStatus::IN_PROGRESS => 'light-blue',
+      TaskStatus::NOT_STARTED => 'blue',
+      TaskStatus::UNREACHABLE => nil,
+      TaskStatus::NOT_APPLICABLE => nil
     }.freeze
 
-    def initialize(crime_application, name:, status:)
-      super(crime_application, name:)
+    def initialize(status:)
       @status = status
     end
 
-    def render
-      tag.strong id: tag_id, class: tag_classes do
-        t!("tasklist.status.#{status}")
-      end
+    def to_hash
+      { text: status_arg, cannot_start_yet: cannot_start_yet? }
     end
 
     private
 
-    def tag_classes
-      DEFAULT_CLASSES | Array(STATUSES.fetch(status))
+    def text
+      I18n.t!("tasklist.status.#{status}")
+    end
+
+    def cannot_start_yet?
+      status == TaskStatus::UNREACHABLE || status == TaskStatus::NOT_APPLICABLE
+    end
+
+    def colour
+      STATUSES.fetch(status)
+    end
+
+    def status_arg
+      if colour.blank? || cannot_start_yet?
+        text
+      else
+        GovukComponent::TagComponent.new(text:, colour:).call
+      end
     end
   end
 end
