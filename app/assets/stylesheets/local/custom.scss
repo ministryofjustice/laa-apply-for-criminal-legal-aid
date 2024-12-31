@@ -53,6 +53,11 @@ body.js-enabled {
   }
 }
 
+.app-table-container {
+  overflow-x: auto
+}
+
+
 .app-dashboard-table {
   .govuk-table__header,
   .govuk-table__cell {
