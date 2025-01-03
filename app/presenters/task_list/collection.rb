@@ -1,9 +1,7 @@
 module TaskList
-  class Collection < SimpleDelegator
+  class Collection
     attr_reader :view, :crime_application
 
-    delegate :size, to: :all_tasks
-    delegate :tag, :safe_join, to: :view
     delegate :application_type, to: :crime_application
 
     # Sections and tasks will show in the same order they are declared here
@@ -32,41 +30,28 @@ module TaskList
       ]
     }.freeze
 
-    def initialize(view, crime_application:)
-      @view = view
+    def initialize(crime_application:)
       @crime_application = crime_application
-
-      super(collection)
-    end
-
-    def render
-      tag.ol class: 'moj-task-list' do
-        safe_join(map(&:render))
-      end
     end
 
     def completed
-      all_tasks.select(&:completed?)
+      all_tasks.select { |task| task.status.completed? }
     end
 
     def applicable
-      all_tasks.reject(&:not_applicable?)
+      all_tasks.reject { |task| task.status.not_applicable? }
+    end
+
+    def sections
+      @sections ||= SECTIONS.fetch(application_type.to_sym).map do |name, task_names|
+        Section.new(crime_application, name:, task_names:)
+      end
     end
 
     private
 
     def all_tasks
-      @all_tasks ||= map(&:items).flatten
-    end
-
-    def collection
-      sections.map.with_index(1) do |(name, tasks), idx|
-        Section.new(crime_application, name: name, tasks: tasks, index: idx)
-      end
-    end
-
-    def sections
-      SECTIONS.fetch(application_type.to_sym)
+      @all_tasks ||= sections.map(&:tasks).flatten
     end
   end
 end

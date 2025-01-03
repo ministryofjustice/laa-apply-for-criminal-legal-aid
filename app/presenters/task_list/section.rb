@@ -1,42 +1,21 @@
 module TaskList
-  class Section < BaseRenderer
-    attr_reader :tasks, :index
+  class Section
+    attr_reader :crime_application, :name
 
-    def initialize(crime_application, name:, tasks:, index:)
-      super(crime_application, name:)
-
-      @tasks = tasks
-      @index = index
+    def initialize(crime_application, name:, task_names:)
+      @crime_application = crime_application
+      @name = name
+      @task_names = task_names
     end
 
-    def render
-      tag.li do
-        safe_join(
-          [section_header, section_tasks]
-        )
+    def tasks
+      @tasks ||= task_names.map do |name|
+        Tasks::BaseTask.build(name, crime_application:)
       end
-    end
-
-    def items
-      @items ||= tasks.map { |name| Task.new(crime_application, name:) }
     end
 
     private
 
-    def section_header
-      tag.h2 class: 'moj-task-list__section' do
-        tag.span class: 'moj-task-list__section-number' do
-          "#{index}."
-        end.concat t!("tasklist.heading.#{name}")
-      end
-    end
-
-    def section_tasks
-      tag.ul class: 'moj-task-list__items' do
-        safe_join(
-          items.map(&:render)
-        )
-      end
-    end
+    attr_reader :task_names
   end
 end

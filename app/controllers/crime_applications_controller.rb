@@ -16,7 +16,7 @@ class CrimeApplicationsController < DashboardController
 
   def edit
     @tasklist = TaskList::Collection.new(
-      view_context, crime_application: current_crime_application
+      crime_application: current_crime_application
     )
   end
 
