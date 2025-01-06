@@ -111,9 +111,13 @@ module Datastore
     end
 
     def dependants
-      parent.means_details&.income_details&.dependants&.map do |struct|
+      income_details = parent.means_details&.income_details
+
+      return [] if income_details.blank? || income_details.dependants.blank?
+
+      income_details.dependants.map do |struct|
         Dependant.new(**struct)
-      end || []
+      end
     end
 
     def income
