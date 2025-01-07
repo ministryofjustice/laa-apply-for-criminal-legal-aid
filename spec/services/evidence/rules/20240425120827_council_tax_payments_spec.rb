@@ -93,8 +93,8 @@ RSpec.describe Evidence::Rules::CouncilTaxPayments do
             prompt: ['their Council Tax statement'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['their Council Tax statement'],
           },
           other: {
             result: false,

@@ -86,8 +86,8 @@ RSpec.describe Evidence::Rules::ChildMaintenanceCosts do
               prompt: ['proof of maintenance payments, for example bank statements showing payments'],
             },
             partner: {
-              result: false,
-              prompt: [],
+              result: true,
+              prompt: ['proof of maintenance payments, for example bank statements showing payments'],
             },
             other: {
               result: false,

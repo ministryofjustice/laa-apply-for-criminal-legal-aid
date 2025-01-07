@@ -145,8 +145,8 @@ RSpec.describe Evidence::Rules::HousingCosts do
             prompt: ['their rental, tenancy agreement or mortgage statement'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['their rental, tenancy agreement or mortgage statement'],
           },
           other: {
             result: false,

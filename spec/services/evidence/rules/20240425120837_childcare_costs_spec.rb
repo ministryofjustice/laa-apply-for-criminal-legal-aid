@@ -93,8 +93,8 @@ RSpec.describe Evidence::Rules::ChildcareCosts do
             prompt: ['proof of childcare costs, for example receipts or bank statements'],
           },
           partner: {
-            result: false,
-            prompt: [],
+            result: true,
+            prompt: ['proof of childcare costs, for example receipts or bank statements'],
           },
           other: {
             result: false,
