@@ -1,19 +1,23 @@
-<%
-  content_for(:row_question, flush: true) do
-    t("summary.questions.#{payment_answer.question}.question", **payment_answer.i18n_opts)
-  end
+<% content_for(:row_question, flush: true) do
+     t(
+       "summary.questions.#{payment_answer.question}.question",
+       **payment_answer.i18n_opts,
+     )
+   end
 
-  content_for(:row_answer, flush: true) do
-    simple_format(
-      t(
-        "summary.questions.#{payment_answer.question}.answers.description",
-        amount: number_to_currency(payment_answer.value.amount, unit: '£', separator: '.', delimiter: ','),
-        frequency: PaymentFrequencyType.to_phrase(payment_answer.value.frequency)
-      ),
-      { class: 'govuk-body' }
-    )
-  end
-%>
+   content_for(:row_answer, flush: true) do
+     simple_format(
+       t(
+         "summary.questions.#{payment_answer.question}.answers.description",
+         amount: number_to_currency(payment_answer.value.amount.to_s),
+         frequency: PaymentFrequencyType.to_phrase(payment_answer.value.frequency),
+       ),
+       { class: 'govuk-body' },
+     )
+   end %>
 
 <%= render partial: 'steps/submission/shared/summary_row',
-           locals: { row: payment_answer, editable: editable } %>
+           locals: {
+             row: payment_answer,
+             editable: editable,
+           } %>

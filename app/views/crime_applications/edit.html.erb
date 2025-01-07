@@ -4,20 +4,26 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t(@crime_application.application_type, scope: [:tasklist, :heading_text]) %>
+      <%= t(@crime_application.application_type, scope: %i[tasklist heading_text]) %>
     </h1>
 
     <h2 class="govuk-heading-s govuk-!-margin-bottom-2">
-      <%=t '.subheading' %>
+      <%= t '.subheading' %>
     </h2>
 
     <p class="govuk-body govuk-!-margin-bottom-7">
-      <%= t('.progress_counter', completed: @tasklist.completed.size, total: @tasklist.applicable.size) %>
+      <%= t(
+            '.progress_counter',
+            completed: @tasklist.completed.size,
+            total: @tasklist.applicable.size,
+          ) %>
     </p>
 
-    <%= @tasklist.render %>
+    <%= render TaskList::SectionComponent.with_collection(@tasklist.sections) %>
 
-    <%= link_button t('helpers.back_to_applications'), crime_applications_path, class: 'govuk-button--secondary' %>
+    <%= link_button t('helpers.back_to_applications'),
+                    crime_applications_path,
+                    class: 'govuk-button--secondary' %>
   </div>
 
   <div class="govuk-grid-column-one-third app-grid-column--sticky">

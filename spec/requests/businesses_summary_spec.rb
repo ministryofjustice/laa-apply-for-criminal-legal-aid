@@ -26,7 +26,7 @@ RSpec.describe 'Businesses summary page', :authorized do
       },
       'salary' => {
         'amount' => 90_000,
-        'frequency' => 'weekly'
+        'frequency' => 'week'
       },
       'total_income_share_sales' => nil,
       'trading_name' => 'Client Business LTD',
@@ -61,7 +61,7 @@ RSpec.describe 'Businesses summary page', :authorized do
       },
       'salary' => {
         'amount' => 90_000,
-        'frequency' => 'weekly'
+        'frequency' => 'week'
       },
       'total_income_share_sales' => nil,
       'trading_name' => 'Partner Business LTD',

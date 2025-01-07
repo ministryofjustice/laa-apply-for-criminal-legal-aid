@@ -7,7 +7,7 @@ module Summary
         simple_format(
           I18n.t(
             'summary.dictionary.amount_and_frequency_answer',
-            amount: number_to_currency(value.amount),
+            amount: number_to_currency(value.amount.to_s),
             frequency: PaymentFrequencyType.to_phrase(value.frequency)
           ),
           { class: 'govuk-body' }

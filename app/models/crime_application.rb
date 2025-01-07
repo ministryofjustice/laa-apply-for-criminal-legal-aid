@@ -82,7 +82,7 @@ class CrimeApplication < ApplicationRecord
 
   has_many(:businesses, inverse_of: :crime_application, dependent: :destroy)
 
-  enum status: ApplicationStatus.enum_values
+  enum :status, ApplicationStatus.enum_values
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
