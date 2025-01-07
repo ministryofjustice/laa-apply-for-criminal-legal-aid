@@ -2,19 +2,27 @@ en:
   evidence:
     persona:
       client:
-        income: Evidence of your client's income
-        outgoings: "Evidence of %{subject}'s outgoings"
-        capital: Evidence of your client's capital
-        none: Other evidence of your client's income, outgoings or capital
+        heading: Your client’s income, outgoings and capital
+        income: Income
+        outgoings: Outgoings
+        capital: Capital
+        none: Other
       partner:
-        income: Evidence of the partner's income
-        outgoings: Evidence of the partner's outgoings
-        capital: Evidence of the partner's capital
-        none: Other evidence of the partner's income, outgoings or capital
+        heading: The partner’s income, outgoings and capital
+        income: Income
+        outgoings: Outgoings
+        capital: Capital
+        none: Other
       other: Other evidence
     exempt:
       not_means_tested: it is not subject to the usual means or passported test
       under_18: your client was under 18 when the application was first made
+    cifc:
+      heading: For a change in financial circumstances
+      prompt: Bank statement or payslip showing the change.
+    other:
+      heading: Any other supporting evidence
+      prompt: Any other evidence that could support your client’s application. For example, if you want to attach a document where you have explained further interests of justice or appeal reasons.
     rule:
       # Test rules
       ExampleRule1:

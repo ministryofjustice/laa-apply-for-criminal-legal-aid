@@ -1,4 +1,7 @@
 <% if prompt.result_for?(group:, persona:) %>
+  <% if group == :income %>
+    <h2 class="govuk-heading-m"> <%= t("evidence.persona.#{persona}.heading") %> </h2>
+  <% end %>
   <h2 class="govuk-heading-s"><%= title %></h2>
 
   <ul class="govuk-body">
