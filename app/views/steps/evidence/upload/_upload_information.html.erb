@@ -8,13 +8,13 @@
   <%= govuk_warning_text(text: t("#{i18n_scope}.reject_warning")) %>
 
   <% if client_remanded || in_crown_court %>
-    <p class="govuk-body"> The exceptions are: </p>
+    <p class="govuk-body govuk-!-font-weight-bold"> The exceptions are: </p>
     <ul class="govuk-list govuk-list--bullet">
       <% if client_remanded %>
-        <li>your client is in court custody</li>
+        <li class="govuk-!-font-weight-bold">your client is in court custody</li>
       <% end %>
       <% if in_crown_court %>
-        <li>a Crown Court trial, for which you have up to 14 days to provide the evidence</li>
+        <li class="govuk-!-font-weight-bold">a Crown Court trial, for which you have up to 14 days to provide the evidence</li>
       <% end %>
     </ul>
   <% end %>
