@@ -245,6 +245,9 @@ Rails.application.routes.draw do
 
       namespace :capital do
         edit_step :which_assets_owned, alias: :property_type
+        if FeatureFlags.property_ownership_validation.enabled?
+          edit_step :usual_property_details
+        end
         crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :commercial_property, alias: :commercial_property, param: :property_id
         crud_step :land, alias: :land, param: :property_id
