@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title t(@crime_application.application_type, scope: %i[tasklist heading_text]) %>
 <% step_header(path: :back) %>
 
 <div class="govuk-grid-row">
