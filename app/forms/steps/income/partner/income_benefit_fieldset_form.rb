@@ -2,22 +2,17 @@ module Steps
   module Income
     module Partner
       class IncomeBenefitFieldsetForm < Steps::BaseFormObject
+        include Steps::PaymentFieldsetValidation
+
         attribute :id, :string
         attribute :payment_type, :string
         attribute :amount, :pence
         attribute :frequency, :string
         attribute :details, :string
 
-        validate { presence_with_payment_type :amount }
-        validate { presence_with_payment_type :frequency }
-
-        validates :amount, numericality: {
-          greater_than: 0
-        }
-
+        validate :validate_amount
+        validate :validate_frequency
         validates :payment_types, presence: true, inclusion: { in: :payment_types }
-        validates :frequency, inclusion: { in: :frequencies }
-
         validate :details_only_when_other?
 
         # Needed for `#fields_for` to render the uuids as hidden fields
@@ -56,20 +51,11 @@ module Steps
           end
         end
 
-        def presence_with_payment_type(attribute)
-          return if send(attribute).present?
-
-          payment_type_str = I18n.t(
+        def payment_type_label
+          I18n.t(
             payment_type,
             scope: [:helpers, :label, :steps_income_income_benefits_form, :types_options]
-          )
-          payment_type_str&.downcase! if payment_type == IncomeBenefitType::OTHER.to_s
-
-          errors.add(
-            attribute,
-            :blank,
-            payment_type: payment_type_str
-          )
+          )&.downcase!
         end
       end
     end

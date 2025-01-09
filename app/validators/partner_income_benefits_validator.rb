@@ -4,11 +4,11 @@ class PartnerIncomeBenefitsValidator < ActiveModel::Validator
   def validate(record)
     @record = record
 
-    record.types.each_with_index do |type, index|
+    record.types.each do |type|
       next if type == 'none'
 
       income_benefit = record.public_send(type)
-      add_indexed_errors(income_benefit, index) unless income_benefit.valid?
+      add_errors(income_benefit) unless income_benefit.valid?
     end
 
     return unless record.types.empty?
@@ -18,39 +18,15 @@ class PartnerIncomeBenefitsValidator < ActiveModel::Validator
 
   private
 
-  def add_indexed_errors(income_benefit, index)
+  def add_errors(income_benefit)
     income_benefit.errors.each do |error|
-      attr_name = indexed_attribute(index, income_benefit, error.attribute)
-
-      record.errors.add(
-        attr_name,
-        error.type,
-        message: error_message(income_benefit, error)
-      )
+      attr_name = "#{income_benefit.payment_type.dasherize}-#{error.attribute}"
+      record.errors.add(attr_name, error.type, message: error.message)
 
       # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
         income_benefit.public_send(error.attribute)
       end
     end
-  end
-
-  def indexed_attribute(_index, income_benefit, attr)
-    "#{income_benefit.payment_type.dasherize}-#{attr}"
-  end
-
-  # `activemodel.errors.models.steps/income/partner/income_benefit_fieldset_form.summary.x.y`
-  def error_message(obj, error)
-    payment_type = I18n.t(
-      obj.payment_type,
-      scope: [:helpers, :label, :steps_income_income_benefits_form, :types_options]
-    )
-    payment_type&.downcase! if obj.payment_type == IncomeBenefitType::OTHER.to_s
-
-    I18n.t(
-      "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
-      scope: [:activemodel, :errors, :models],
-      payment_type: payment_type
-    )
   end
 end

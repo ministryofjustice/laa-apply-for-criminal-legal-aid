@@ -89,7 +89,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsForm do
 
           it 'has error messages' do
             expect(subject.errors.count).to be(2)
-            expect(subject.errors.of_kind?('childcare-amount', :not_a_number)).to be(true)
+            expect(subject.errors.of_kind?('childcare-amount', :blank)).to be(true)
             expect(subject.errors.of_kind?('childcare-frequency', :inclusion)).to be(true)
 
             # Error attributes should respond
