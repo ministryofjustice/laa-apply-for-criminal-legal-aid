@@ -16,6 +16,8 @@ module Decisions
         after_properties_summary
       when :property_type
         after_property_type(form_object.property)
+      when :usual_property_details
+        after_usual_property_details
       when :residential_property, :commercial_property, :land
         after_properties
       when :property_address
@@ -97,7 +99,7 @@ module Decisions
     end
 
     def after_properties_summary
-      return edit(:saving_type) if form_object.add_property.no?
+      return no_property_path if form_object.add_property.no?
 
       edit(:other_property_type)
     end
@@ -117,7 +119,7 @@ module Decisions
     end
 
     def after_property_type(property)
-      return edit(:saving_type) unless property
+      return no_property_path unless property
 
       redirect_path = if property.property_type == PropertyType::LAND.to_s
                         property.property_type.to_sym
@@ -126,6 +128,21 @@ module Decisions
                       end
 
       edit(redirect_path, property_id: property)
+    end
+
+    def no_property_path
+      return edit(:usual_property_details) if crime_application.capital.usual_property_details_required?
+
+      edit(:saving_type)
+    end
+
+    def after_usual_property_details
+      if form_object.action == UsualPropertyDetailsAnswer::CHANGE_ANSWER.to_s
+        return edit('/steps/client/residence_type')
+      end
+
+      edit(:residential_property,
+           property_id: crime_application.properties.create!(property_type: PropertyType::RESIDENTIAL.to_s))
     end
 
     # TODO: : Fix nested conditions

@@ -858,6 +858,10 @@ en:
           attributes:
             property_type:
               blank: Select which assets %{subject} owns or part-owns inside or outside the UK, or select 'They do not own any of these assets'
+        steps/capital/usual_property_details_form:
+          attributes:
+            action:
+              blank: Select what you want to do next
         steps/capital/saving_type_form:
           attributes:
             saving_type:

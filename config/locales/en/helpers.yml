@@ -340,6 +340,8 @@ en:
         heading: You cannot submit this application yet, as we cannot check %{subject}'s benefit status without their National Insurance number
       steps_capital_property_type_form:
         property_type: Which assets does %{subject} own or part-own inside or outside the UK?
+      steps_capital_usual_property_details_form:
+        action: What do you want to do next?
       steps_capital_other_property_type_form:
         property_type: Which other assets does %{subject} own or part-own inside or outside the UK?
       steps_capital_saving_type_form:
@@ -1130,6 +1132,10 @@ en:
           none: They do not own any of these assets
       steps_capital_other_property_type_form:
         property_type_options: *PROPERTY_TYPE_OPTIONS
+      steps_capital_usual_property_details_form:
+        action_options:
+          provide_details: Provide the details of this property
+          change_answer: Change answer to where your client usually lives
       steps_capital_saving_type_form:
         saving_type_options: &SAVING_TYPE_OPTIONS
           bank: Bank accounts
