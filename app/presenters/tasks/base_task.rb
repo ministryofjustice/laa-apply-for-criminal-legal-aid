@@ -10,6 +10,10 @@ module Tasks
       @crime_application = crime_application
     end
 
+    def name
+      self.class.name.demodulize.underscore.to_sym
+    end
+
     def self.build(name, **kwargs)
       class_name = "Tasks::#{name.to_s.camelize}"
 

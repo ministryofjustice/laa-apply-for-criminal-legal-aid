@@ -23,6 +23,7 @@ module CapitalAssessment
         errors.add :national_savings_certificates, :incomplete_records unless national_savings_certificates_complete?
         errors.add :investment_type, :blank unless investment_type_complete?
         errors.add :investments, :incomplete_records unless investments_complete?
+        errors.add :usual_property_details, :blank unless usual_property_details_complete?
       end
 
       errors.add :trust_fund, :blank unless trust_fund_complete?
@@ -110,6 +111,10 @@ module CapitalAssessment
 
     def frozen_income_savings_assets_complete?
       record.has_frozen_income_or_assets.present? || income&.has_frozen_income_or_assets.present?
+    end
+
+    def usual_property_details_complete?
+      !record.usual_property_details_required?
     end
   end
 end

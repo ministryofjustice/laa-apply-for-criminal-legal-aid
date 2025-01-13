@@ -38,7 +38,7 @@ RSpec.describe Summary::Components::Business, type: :component do
       number_of_employees: 21,
       salary: AmountAndFrequency.new(
         amount: 90_001,
-        frequency: 'weekly'
+        frequency: 'week'
       ),
       total_income_share_sales: nil,
       percentage_profit_share: 100,

@@ -424,6 +424,7 @@ en:
               invalid_month: Enter a valid start date %{index} month
               invalid_year: Enter a valid start date %{index} year
               year_too_early: Start date %{index} is too far in the past
+              year_too_late: Start date %{index} is too far in the future
               future_not_allowed: Start date %{index} cannot be in the future
             date_to:
               blank_day: End date %{index} must include a day
@@ -437,6 +438,7 @@ en:
               invalid_month: Enter a valid end date %{index} month
               invalid_year: Enter a valid end date %{index} year
               year_too_early: End date %{index} is too far in the past
+              year_too_late: End date %{index} is too far in the future
               future_not_allowed: End date %{index} cannot be in the future
               before_date_from: End date %{index} cannot be before start date %{index}
         steps/case/other_charge_in_progress_form:
@@ -542,7 +544,8 @@ en:
           attributes:
             income_above_threshold:
               inclusion: Select yes if their income is currently more than £12,475 a year before tax
-        steps/income/frozen_income_savings_assets_form: &FROZEN_INCOME_ASSETS_VALIDATION
+        steps/income/frozen_income_savings_assets_form:
+          &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:
             has_frozen_income_or_assets:
               blank: Select yes if %{subject} has any income, savings or assets under a restraint or freezing order
@@ -706,7 +709,7 @@ en:
             city:
               blank: Enter town or city
             country:
-              blank:  Enter country
+              blank: Enter country
             postcode:
               blank: Enter postcode
         steps/income/business_nature_form:
@@ -869,6 +872,10 @@ en:
           attributes:
             property_type:
               blank: Select which assets %{subject} owns or part-owns inside or outside the UK, or select 'They do not own any of these assets'
+        steps/capital/usual_property_details_form:
+          attributes:
+            action:
+              blank: Select what you want to do next
         steps/capital/saving_type_form:
           attributes:
             saving_type:
@@ -1042,7 +1049,7 @@ en:
             city:
               blank: Enter town or city
             country:
-              blank:  Enter country
+              blank: Enter country
             postcode:
               blank: Enter postcode
         steps/income/client/employer_details_form:
@@ -1076,10 +1083,12 @@ en:
               blank: Enter the name of the other owner
             relationship:
               blank: Enter their relationship to your client
+              inclusion: Enter their relationship to your client
             other_relationship:
               blank: Enter their relationship
             percentage_owned:
               blank: Enter the percentage of the land they own
+              not_a_number: Enter the percentage of the land they own
               greater_than: The percentage of the property they own must be a number greater than 0 and less than 100
               less_than: The percentage of the property they own must be a number greater than 0 and less than 100
           attributes: *shared_property_owner_errors

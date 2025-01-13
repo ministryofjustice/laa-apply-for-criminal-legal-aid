@@ -5,15 +5,15 @@ ruby File.read('.ruby-version').chomp
 
 gem 'dartsass-rails', '~> 0.5.1'
 gem 'faraday', '~> 2.7'
-gem 'govuk-components', '~> 5.2.1'
+gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
-gem 'jbuilder', '~> 2.11.5'
+gem 'jbuilder', '~> 2.13.0'
 gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '7.2.2.1'
 gem 'uk_postcode'
 
 # Authentication

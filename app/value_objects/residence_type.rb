@@ -9,4 +9,12 @@ class ResidenceType < ValueObject
     SOMEONE_ELSE = new(:someone_else),
     NONE = new(:none),
   ].freeze
+
+  def owned?
+    [
+      APPLICANT_OWNED,
+      PARTNER_OWNED,
+      JOINT_OWNED
+    ].include?(self)
+  end
 end

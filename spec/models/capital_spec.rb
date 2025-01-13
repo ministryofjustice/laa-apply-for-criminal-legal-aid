@@ -247,5 +247,92 @@ RSpec.describe Capital, type: :model do
     end
   end
 
+  describe '#usual_property_details_required?' do
+    subject(:usual_property_details_required) { capital.usual_property_details_required? }
+
+    let(:capital) { described_class.create(crime_application:) }
+    let(:crime_application) { CrimeApplication.create(applicant:, properties:) }
+    let(:applicant) { Applicant.create(residence_type:) }
+    let(:residence_type) { nil }
+    let(:properties) { [] }
+
+    context 'when full capital is not required' do
+      before do
+        allow(MeansStatus).to receive(:full_capital_required?).and_return(false)
+      end
+
+      it { expect(usual_property_details_required).to be(false) }
+    end
+
+    context 'when full capital is required' do
+      before do
+        allow(MeansStatus).to receive(:full_capital_required?).and_return(true)
+      end
+
+      context 'and the client does not live in an owned proerty' do
+        let(:residence_type) { ResidenceType::RENTED.to_s }
+
+        it { expect(usual_property_details_required).to be(false) }
+      end
+
+      {
+        ResidenceType::APPLICANT_OWNED.to_s => 'they own',
+        ResidenceType::JOINT_OWNED.to_s => 'they and their partner both own'
+      }.each do |type, desc|
+        context "and the client lives in a property #{desc}" do
+          let(:residence_type) { type }
+
+          context 'and they have declared a property as their home address' do
+            let(:properties) {
+              [Property.create(property_type: PropertyType::RESIDENTIAL.to_s, is_home_address: YesNoAnswer::YES.to_s)]
+            }
+
+            it { expect(usual_property_details_required).to be(false) }
+          end
+
+          context 'and they have not declared a property as their home address' do
+            let(:properties) { [] }
+
+            it { expect(usual_property_details_required).to be(true) }
+          end
+        end
+      end
+
+      # rubocop:disable RSpec/NestedGroups
+      context 'and the client lives in a property their partner owns' do
+        let(:residence_type) { ResidenceType::PARTNER_OWNED.to_s }
+
+        context 'and the partner should be included in the assessment' do
+          before do
+            allow(MeansStatus).to receive(:include_partner?).and_return(true)
+          end
+
+          context 'and they have declared a property as their home address' do
+            let(:properties) {
+              [Property.create(property_type: PropertyType::RESIDENTIAL.to_s, is_home_address: YesNoAnswer::YES.to_s)]
+            }
+
+            it { expect(usual_property_details_required).to be(false) }
+          end
+
+          context 'and they have not declared a property as their home address' do
+            let(:properties) { [] }
+
+            it { expect(usual_property_details_required).to be(true) }
+          end
+        end
+
+        context 'and the partner should not be included in the assessment' do
+          before do
+            allow(MeansStatus).to receive(:include_partner?).and_return(false)
+          end
+
+          it { expect(usual_property_details_required).to be(false) }
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
   it_behaves_like 'it has a means ownership scope'
 end

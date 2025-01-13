@@ -9,7 +9,7 @@ module Summary
         simple_format(
           I18n.t(
             "summary.questions.#{question}.answers.description",
-            amount: number_to_currency(value.amount, unit: '£', separator: '.', delimiter: ','),
+            amount: number_to_currency(value.amount.to_s),
             frequency: PaymentFrequencyType.to_phrase(value.frequency),
             tax_status: tax_status
           ),

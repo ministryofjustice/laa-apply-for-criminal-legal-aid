@@ -12,7 +12,8 @@ RSpec.describe Decisions::CapitalDecisionTree do
       capital: capital,
       partner_detail: partner_detail,
       partner: nil,
-      non_means_tested?: false
+      non_means_tested?: false,
+      properties: properties
     )
   end
 
@@ -22,6 +23,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
   let(:involvement_in_case) { nil }
   let(:conflict_of_interest) { nil }
+  let(:properties) { Property.none }
 
   before do
     allow(form_object).to receive_messages(crime_application:)
@@ -116,8 +118,24 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has no properties' do
       let(:property) { nil }
 
-      it 'redirects to select saving type' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      context 'when usual property details are required' do
+        before do
+          allow(capital).to receive(:usual_property_details_required?).and_return(true)
+        end
+
+        it 'redirects to usual property details' do
+          expect(subject).to have_destination(:usual_property_details, :edit, id: crime_application)
+        end
+      end
+
+      context 'when usual property details are not required' do
+        before do
+          allow(capital).to receive(:usual_property_details_required?).and_return(false)
+        end
+
+        it 'redirects to select saving type' do
+          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        end
       end
     end
 
@@ -365,8 +383,50 @@ RSpec.describe Decisions::CapitalDecisionTree do
     context 'the client has selected no to adding an asset' do
       let(:add_property) { YesNoAnswer::NO }
 
-      it 'redirects to select saving type' do
-        expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+      context 'when usual property details are required' do
+        before do
+          allow(capital).to receive(:usual_property_details_required?).and_return(true)
+        end
+
+        it 'redirects to usual property details' do
+          expect(subject).to have_destination(:usual_property_details, :edit, id: crime_application)
+        end
+      end
+
+      context 'when usual property details are not required' do
+        before do
+          allow(capital).to receive(:usual_property_details_required?).and_return(false)
+        end
+
+        it 'redirects to select saving type' do
+          expect(subject).to have_destination(:saving_type, :edit, id: crime_application)
+        end
+      end
+    end
+  end
+
+  context 'when the step is `usual_property_details`' do
+    let(:form_object) { double('FormObject', action:) }
+    let(:step_name) { :usual_property_details }
+
+    context 'and they want to provide the details of the property' do
+      let(:action) { 'provide_details' }
+      let(:property) { instance_double(Property, property_type: 'residential') }
+
+      before do
+        allow(properties).to receive(:create!).and_return(property)
+      end
+
+      it 'redirects to `residential_property`' do
+        expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
+      end
+    end
+
+    context 'and they want to change the answer to where the client usually lives' do
+      let(:action) { 'change_answer' }
+
+      it 'redirects to `residence_type`' do
+        expect(subject).to have_destination('/steps/client/residence_type', :edit, id: crime_application)
       end
     end
   end
