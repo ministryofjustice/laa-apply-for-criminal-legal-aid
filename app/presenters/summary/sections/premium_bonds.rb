@@ -2,6 +2,8 @@ module Summary
   module Sections
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     class PremiumBonds < Sections::BaseSection
+      include HasDynamicSubject
+
       def show?
         shown_premium_bonds? && super
       end

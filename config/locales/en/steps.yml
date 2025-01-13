@@ -664,6 +664,15 @@ en:
         edit:
           page_title: Check your answers - Your client's capital
           heading: Check your answers
+      
+      usual_property_details:
+        edit:
+          heading: You need to give the details about the property your client usually lives in and that %{residence_ownership}
+          info: "You told us your client usually lives in a property %{residence_ownership}:"
+          residence_ownership:
+            applicant_owned: they own
+            partner_owned: their partner owns
+            joint_owned: they and their partner own
 
     evidence:
       upload:

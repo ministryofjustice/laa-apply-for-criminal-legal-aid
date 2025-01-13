@@ -97,6 +97,10 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
         }
       end
 
+      before do
+        allow(record).to receive(:usual_property_details_required?).and_return(false)
+      end
+
       it 'does not add any errors' do
         subject.validate
       end
@@ -125,6 +129,7 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
 
       before do
         allow(income).to receive(:has_frozen_income_or_assets).and_return(nil)
+        allow(record).to receive(:usual_property_details_required?).and_return(true)
       end
 
       it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
@@ -138,6 +143,7 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
         expect(errors).to receive(:add).with(:has_national_savings_certificates, :blank)
         expect(errors).to receive(:add).with(:national_savings_certificates, :incomplete_records)
         expect(errors).to receive(:add).with(:investments, :incomplete_records)
+        expect(errors).to receive(:add).with(:usual_property_details, :blank)
         expect(errors).to receive(:add).with(:trust_fund, :blank)
         expect(errors).to receive(:add).with(:partner_trust_fund, :blank)
         expect(errors).to receive(:add).with(:frozen_income_savings_assets_capital, :blank)
@@ -541,6 +547,24 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
 
         expect(subject.frozen_income_savings_assets_complete?).to be(false)
       end
+    end
+  end
+
+  describe '#usual_property_details_complete?' do
+    context 'when the usual property details are required' do
+      before do
+        allow(record).to receive(:usual_property_details_required?).and_return(true)
+      end
+
+      it { expect(subject.usual_property_details_complete?).to be(false) }
+    end
+
+    context 'when the usual property details are not required' do
+      before do
+        allow(record).to receive(:usual_property_details_required?).and_return(false)
+      end
+
+      it { expect(subject.usual_property_details_complete?).to be(true) }
     end
   end
 end

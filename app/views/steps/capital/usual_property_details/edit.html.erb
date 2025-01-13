@@ -1,0 +1,22 @@
+<% title t('.heading', residence_ownership: t(".residence_ownership.#{@form_object.residence_ownership}")) %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+
+    <span class="govuk-caption-xl"><%= t('steps.capital.caption') %></span>
+
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading', residence_ownership: t(".residence_ownership.#{@form_object.residence_ownership}")) %>
+    </h1>
+
+    <p class="govuk-body"><%= t('.info', residence_ownership: t(".residence_ownership.#{@form_object.residence_ownership}")) %></p>
+    <%= simple_format(@form_object.home_address, class: 'govuk-body') %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :action, @form_object.choices, :value %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
