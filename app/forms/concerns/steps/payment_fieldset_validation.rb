@@ -4,7 +4,10 @@ module Steps
 
     def validate_frequency
       errors.add(:frequency, :blank, payment_type: payment_type_label) if frequency.blank?
-      errors.add(:frequency, :inclusion, payment_type: payment_type_label&.capitalize) if frequencies.exclude?(frequency)
+      return unless frequencies.exclude?(frequency)
+
+      errors.add(:frequency, :inclusion,
+                 payment_type: payment_type_label&.capitalize)
     end
 
     def validate_amount
