@@ -25,7 +25,7 @@ class IncomePaymentsValidator < ActiveModel::Validator
 
       # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
-        outgoings_payment.public_send(error.attribute)
+        income_payment.public_send(error.attribute)
       end
     end
   end
