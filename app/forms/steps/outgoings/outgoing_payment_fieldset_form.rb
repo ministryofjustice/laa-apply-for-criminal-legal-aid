@@ -1,19 +1,17 @@
 module Steps
   module Outgoings
     class OutgoingPaymentFieldsetForm < Steps::BaseFormObject
+      include Steps::PaymentFieldsetValidation
+
       attribute :id, :string
       attribute :payment_type, :string
       attribute :amount, :pence
       attribute :frequency, :string
       attribute :case_reference, :string
 
-      validates :amount, numericality: {
-        greater_than: 0
-      }
-
+      validate :validate_amount
+      validate :validate_frequency
       validates :payment_types, presence: true, inclusion: { in: :payment_types }
-      validates :frequency, presence: true, inclusion: { in: :frequencies }
-
       validate :case_ref_when_legal_aid_contribution?
 
       # Needed for `#fields_for` to render the uuids as hidden fields
@@ -50,6 +48,13 @@ module Steps
         elsif (payment_type != OutgoingsPaymentType::LEGAL_AID_CONTRIBUTION.to_s) && case_reference.present?
           errors.add(:case_reference, :invalid)
         end
+      end
+
+      def payment_type_label
+        I18n.t(
+          payment_type,
+          scope: [:helpers, :label, :steps_outgoings_outgoings_payments_form, :types_options]
+        )&.downcase!
       end
     end
   end

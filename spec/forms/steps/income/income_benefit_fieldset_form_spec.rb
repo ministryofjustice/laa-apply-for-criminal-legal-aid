@@ -39,7 +39,7 @@ RSpec.describe Steps::Income::IncomeBenefitFieldsetForm do
     context 'when unsupported payment type selected and `details` provided' do
       subject(:fieldset_form) { described_class.new(arguments) }
 
-      let(:payment_type) { 'board_from_family' }
+      let(:payment_type) { 'incapacity' }
       let(:details) { 'I tampered with the form!' }
 
       it { is_expected.not_to be_valid }
@@ -49,7 +49,7 @@ RSpec.describe Steps::Income::IncomeBenefitFieldsetForm do
     context 'when unsupported payment type selected and `details` not provided' do
       subject(:fieldset_form) { described_class.new(arguments) }
 
-      let(:payment_type) { 'state_pension' }
+      let(:payment_type) { 'incapacity' }
       let(:details) { '' }
 
       it { is_expected.to be_valid }
