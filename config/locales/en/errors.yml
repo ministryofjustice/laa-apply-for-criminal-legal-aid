@@ -630,23 +630,26 @@ en:
         steps/income/income_payment_fieldset_form: &income_payment_fieldset_form
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-              blank: "Enter amount for %{payment_type}"
+              greater_than: Amount your client gets in %{payment_type} must be greater than 0
+              not_a_number: Amount your client gets in %{payment_type} must be a number
+              blank: Enter amount your client gets in %{payment_type}
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter the other sources of income they get
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: Select how often they receive %{payment_type}
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              blank: "Enter amount for %{payment_type}"
+              greater_than: Amount your client gets in %{payment_type} must be greater than 0
+              not_a_number: Amount your client gets in %{payment_type} must be a number
+              blank: Enter amount your client gets in %{payment_type}
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: Select how often they receive %{payment_type}
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
             details:
               blank: Enter the other sources of income they get
+              invalid: "Cannot add additional details for %{payment_type}"
         steps/income/partner/income_payments_form:
           attributes:
             base:
@@ -659,23 +662,25 @@ en:
         steps/income/income_benefit_fieldset_form: &income_benefit_fieldset_form
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
-              blank: "Enter amount for %{payment_type}"
+              greater_than: Amount your client gets in %{payment_type} must be greater than 0
+              not_a_number: Amount your client gets in %{payment_type} must be a number
+              blank: Enter amount your client gets in %{payment_type}
             details:
               invalid: "Cannot add additional details for %{payment_type}"
               blank: Enter what benefits they get and the amount
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: Select how often they receive %{payment_type}
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              greater_than: Amount must be greater than 0
-              blank: "Enter amount for %{payment_type}"
+              greater_than: Amount your client gets in %{payment_type} must be greater than 0
+              not_a_number: Amount your client gets in %{payment_type} must be a number
+              blank: Enter amount your client gets in %{payment_type}
             details:
               blank: Enter what benefits they get and the amount
             frequency:
-              blank: "Select how often they receive %{payment_type}"
+              blank: Select how often they receive %{payment_type}
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
         steps/income/partner/income_benefits_form:
           attributes:
             base:
@@ -829,17 +834,26 @@ en:
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
-              greater_than: "%{payment_type} amount must be greater than 0"
-              not_a_number: "%{payment_type} amount is not a number"
+              blank: Enter amount your client pays in %{payment_type}
+              greater_than: Amount your client pays in %{payment_type} must be greater than 0
+              not_a_number: Amount your client pays in %{payment_type} must be a number
             case_reference:
               invalid: "Cannot add case_reference for %{payment_type}"
               blank: Enter the case reference of the criminal rep order or civil certificate
             frequency:
-              blank: "%{payment_type} frequency can't be blank"
+              blank: Select how often they pay %{payment_type}
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              blank: Enter an amount
+              blank: Enter amount your client pays in %{payment_type}
+              not_a_number: Amount your client pays in %{payment_type} must be a number
+              greater_than: Amount your client pays in %{payment_type} must be greater than 0
+            frequency:
+              blank: Select how often they pay %{payment_type}
+              inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
+            case_reference:
+              invalid: "Cannot add case_reference for %{payment_type}"
+              blank: Enter the case reference of the criminal rep order or civil certificate
         steps/outgoings/income_tax_rate_form:
           attributes:
             income_tax_rate_above_threshold:

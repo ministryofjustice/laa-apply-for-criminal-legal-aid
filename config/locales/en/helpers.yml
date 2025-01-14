@@ -509,7 +509,7 @@ en:
           maintenance: Include child maintenance.
           private_pension: Include employer pensions.
           board_from_family: Include any payments, even if not agreed with a contract.
-          rent: Include payments your client gets from a property they do not live in, even if not agreed with a contract.
+          rent: Include payments the partner gets from a property they do not live in, even if not agreed with a contract.
           from_friends_relatives: Regular payments to help with living costs, not one-off amounts of money.
       steps_income_income_benefits_form:
         income_benefits: Select all that apply.
