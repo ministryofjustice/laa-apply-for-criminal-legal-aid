@@ -830,13 +830,13 @@ en:
         steps/outgoings/outgoings_payments_form:
           attributes:
             base:
-              none_selected: Select which payments your client pays, or select 'They do not make any of these payments'
+              none_selected: Select which payments they make, or select 'They do not make any of these payments'
         steps/outgoings/outgoing_payment_fieldset_form:
           summary:
             amount:
-              blank: Enter amount your client pays in %{payment_type}
-              greater_than: Amount your client pays in %{payment_type} must be greater than 0
-              not_a_number: Amount your client pays in %{payment_type} must be a number
+              blank: Enter amount they pay in %{payment_type}
+              greater_than: Amount they pay in %{payment_type} must be greater than 0
+              not_a_number: Amount they pay in %{payment_type} must be a number
             case_reference:
               invalid: "Cannot add case_reference for %{payment_type}"
               blank: Enter the case reference of the criminal rep order or civil certificate
@@ -845,9 +845,9 @@ en:
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
           attributes:
             amount:
-              blank: Enter amount your client pays in %{payment_type}
-              not_a_number: Amount your client pays in %{payment_type} must be a number
-              greater_than: Amount your client pays in %{payment_type} must be greater than 0
+              blank: Enter amount they pay in %{payment_type}
+              greater_than: Amount they pay in %{payment_type} must be greater than 0
+              not_a_number: Amount they pay in %{payment_type} must be a number
             frequency:
               blank: Select how often they pay %{payment_type}
               inclusion: "%{payment_type} frequency is not included in the list - must be one of Every week, Every 2 weeks, Every 4 weeks, Monthly or Yearly"
