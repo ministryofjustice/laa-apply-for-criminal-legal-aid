@@ -224,7 +224,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
 
     it 'lands on CYA page' do
       expect(page).to have_current_path(
-        "/applications/#{CrimeApplication.first.id}/steps/income/check_your_answers_income"
+        "/applications/#{CrimeApplication.first.id}/steps/income/check-your-answers-income"
       )
     end
 

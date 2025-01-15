@@ -34,10 +34,10 @@ RSpec.describe Tasks::PassportingBenefitCheck do
         allow(crime_application).to receive(:partner).and_return(partner_double)
       end
 
-      it { expect(task.path).to eq('/applications/12345/steps/dwp/partner_benefit_type') }
+      it { expect(task.path).to eq('/applications/12345/steps/dwp/partner-benefit-type') }
     end
 
-    it { expect(task.path).to eq('/applications/12345/steps/dwp/benefit_type') }
+    it { expect(task.path).to eq('/applications/12345/steps/dwp/benefit-type') }
   end
 
   describe '#not_applicable?' do

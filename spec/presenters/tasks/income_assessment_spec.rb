@@ -30,7 +30,7 @@ RSpec.describe Tasks::IncomeAssessment do
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/income/what_is_clients_employment_status') }
+    it { expect(subject.path).to eq('/applications/12345/steps/income/what-is-clients-employment-status') }
   end
 
   describe '#not_applicable?' do

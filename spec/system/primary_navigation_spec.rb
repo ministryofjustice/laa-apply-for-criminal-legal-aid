@@ -16,7 +16,7 @@ RSpec.describe 'Primary navigation' do
 
     heading_text = page.first('.govuk-heading-xl').text
     expect(heading_text).to eq('Search submitted applications')
-    expect(page).to have_current_path '/application_searches/new'
+    expect(page).to have_current_path '/application-searches/new'
   end
 
   context 'when drafting application' do

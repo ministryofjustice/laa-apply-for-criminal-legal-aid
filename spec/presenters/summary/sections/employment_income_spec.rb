@@ -59,7 +59,7 @@ describe Summary::Sections::EmploymentIncome do
         expect(answers.count).to eq(1)
         expect(answers[0]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[0].question).to eq(:employment_income)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/client/employment_income')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/client/employment-income')
         expect(answers[0].value).to eq(income_payment)
       end
     end

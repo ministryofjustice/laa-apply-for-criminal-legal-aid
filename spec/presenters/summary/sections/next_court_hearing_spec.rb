@@ -51,17 +51,17 @@ describe Summary::Sections::NextCourtHearing do
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[0].question).to eq(:hearing_court_name)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/hearing_details')
+      expect(answers[0].change_path).to match('applications/12345/steps/case/hearing-details')
       expect(answers[0].value).to eq('Court name')
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[1].question).to eq(:hearing_date)
-      expect(answers[1].change_path).to match('applications/12345/steps/case/hearing_details')
+      expect(answers[1].change_path).to match('applications/12345/steps/case/hearing-details')
       expect(answers[1].value).to eq(Date.new(2028, 1, 20))
 
       expect(answers[2]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[2].question).to eq(:is_first_court_hearing)
-      expect(answers[2].change_path).to match('applications/12345/steps/case/hearing_details')
+      expect(answers[2].change_path).to match('applications/12345/steps/case/hearing-details')
       expect(answers[2].value).to eq('yes')
     end
 

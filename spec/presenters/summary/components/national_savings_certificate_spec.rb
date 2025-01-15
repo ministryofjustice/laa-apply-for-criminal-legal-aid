@@ -32,7 +32,7 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/add_national_savings_certificates',
+          href: '/applications/APP123/steps/capital/add-national-savings-certificates',
           exact_text: 'Edit National Savings Certificate'
         )
       end
@@ -43,7 +43,7 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
         render_summary_component(described_class.new(record: record, show_record_actions: true))
       end
 
-      let(:path) { '/applications/APP123/steps/capital/national_savings_certificates/national_savings_certificate123' }
+      let(:path) { '/applications/APP123/steps/capital/national-savings-certificates/national_savings_certificate123' }
 
       describe 'change link' do
         it 'show the correct change link' do
@@ -56,7 +56,7 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       describe 'remove link' do
         it 'show the correct remove link' do
           expect(page).to have_link(
-            'Remove', href: "#{path}/confirm_destroy", exact_text: 'Remove National Savings Certificate'
+            'Remove', href: "#{path}/confirm-destroy", exact_text: 'Remove National Savings Certificate'
           )
         end
       end

@@ -86,34 +86,34 @@ describe Summary::Sections::PartnerDetails do
   describe '#answers' do
     let(:answers) { subject.answers }
 
-    client_partner_same_address_path = 'applications/12345/steps/partner/do_client_and_partner_live_same_address'
+    client_partner_same_address_path = 'applications/12345/steps/partner/do-client-and-partner-live-same-address'
 
     it 'has the correct rows' do
       expect(answers.count).to eq(10)
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[0].question).to eq(:relationship_to_partner)
-      expect(answers[0].change_path).to match('applications/12345/steps/partner/client_relationship_to_partner')
+      expect(answers[0].change_path).to match('applications/12345/steps/partner/client-relationship-to-partner')
       expect(answers[0].value).to eq('married_or_partnership')
 
       expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[1].question).to eq(:first_name)
-      expect(answers[1].change_path).to match('applications/12345/steps/partner/partner_details')
+      expect(answers[1].change_path).to match('applications/12345/steps/partner/partner-details')
       expect(answers[1].value).to eq('Drew')
 
       expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[2].question).to eq(:last_name)
-      expect(answers[2].change_path).to match('applications/12345/steps/partner/partner_details')
+      expect(answers[2].change_path).to match('applications/12345/steps/partner/partner-details')
       expect(answers[2].value).to eq('Barlow')
 
       expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[3].question).to eq(:other_names)
-      expect(answers[3].change_path).to match('applications/12345/steps/partner/partner_details')
+      expect(answers[3].change_path).to match('applications/12345/steps/partner/partner-details')
       expect(answers[3].value).to eq('')
 
       expect(answers[4]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[4].question).to eq(:date_of_birth)
-      expect(answers[4].change_path).to match('applications/12345/steps/partner/partner_details')
+      expect(answers[4].change_path).to match('applications/12345/steps/partner/partner-details')
       expect(answers[4].value).to eq(Date.new(1999, 1, 20))
 
       expect(answers[5]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -123,12 +123,12 @@ describe Summary::Sections::PartnerDetails do
 
       expect(answers[6]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[6].question).to eq(:involvement_in_case)
-      expect(answers[6].change_path).to match('applications/12345/steps/partner/partner_involved_in_case')
+      expect(answers[6].change_path).to match('applications/12345/steps/partner/partner-involved-in-case')
       expect(answers[6].value).to eq('codefendant')
 
       expect(answers[7]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[7].question).to eq(:conflict_of_interest)
-      expect(answers[7].change_path).to match('applications/12345/steps/partner/partner_conflict_of_interest')
+      expect(answers[7].change_path).to match('applications/12345/steps/partner/partner-conflict-of-interest')
       expect(answers[7].value).to eq('no')
 
       expect(answers[8]).to be_an_instance_of(Summary::Components::ValueAnswer)

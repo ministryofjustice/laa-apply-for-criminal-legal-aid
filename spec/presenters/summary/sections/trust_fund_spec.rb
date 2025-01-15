@@ -39,7 +39,7 @@ describe Summary::Sections::TrustFund do
 
     context 'when client benefits from a trust fund' do
       let(:expected_change_path) do
-        'applications/12345/steps/capital/client_benefit_from_trust_fund'
+        'applications/12345/steps/capital/client-benefit-from-trust-fund'
       end
 
       it 'shows all answers' do

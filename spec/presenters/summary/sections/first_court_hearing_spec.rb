@@ -48,7 +48,7 @@ describe Summary::Sections::FirstCourtHearing do
 
       expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
       expect(answers[0].question).to eq(:first_court_hearing_name)
-      expect(answers[0].change_path).to match('applications/12345/steps/case/first_court_hearing')
+      expect(answers[0].change_path).to match('applications/12345/steps/case/first-court-hearing')
       expect(answers[0].value).to eq('First court name')
     end
 

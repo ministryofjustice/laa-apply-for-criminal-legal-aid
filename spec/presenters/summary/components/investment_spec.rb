@@ -25,7 +25,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/add_investments',
+          href: '/applications/APP123/steps/capital/add-investments',
           exact_text: 'Edit Shares'
         )
       end
@@ -48,7 +48,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
         it 'show the correct remove link' do
           expect(page).to have_link(
             'Remove',
-            href: '/applications/APP123/steps/capital/investments/investment123/confirm_destroy',
+            href: '/applications/APP123/steps/capital/investments/investment123/confirm-destroy',
             exact_text: 'Remove Shares'
           )
         end

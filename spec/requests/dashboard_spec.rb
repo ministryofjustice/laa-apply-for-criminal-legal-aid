@@ -28,7 +28,7 @@ RSpec.describe 'Dashboard', :authorized do
 
       expect { post crime_applications_path, params: }.to change(CrimeApplication, :count).by(1)
       expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(/pre_cifc_reference_number/)
+      expect(response).to redirect_to(/pre-cifc-reference-number/)
     end
   end
 

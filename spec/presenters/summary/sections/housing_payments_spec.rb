@@ -131,19 +131,19 @@ describe Summary::Sections::HousingPayments do
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:housing_payment_type)
         expect(answers[0].change_path)
-          .to match('applications/12345/steps/outgoings/housing_payments_where_lives')
+          .to match('applications/12345/steps/outgoings/housing-payments-where-lives')
         expect(answers[0].value).to eq('rent')
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[1].question).to eq(:pays_council_tax)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/pay_council_tax')
+          .to match('applications/12345/steps/outgoings/pay-council-tax')
         expect(answers[1].value).to eq('yes')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[2].question).to eq(:council_tax)
         expect(answers[2].change_path)
-          .to match('applications/12345/steps/outgoings/pay_council_tax')
+          .to match('applications/12345/steps/outgoings/pay-council-tax')
         expect(answers[2].value.amount).to eq(6666)
         expect(answers[2].value.frequency).to eq('annual')
       end
@@ -164,7 +164,7 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:mortgage)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/mortgage_payments')
+          .to match('applications/12345/steps/outgoings/mortgage-payments')
         expect(answers[1].value.amount).to eq(333)
         expect(answers[1].value.frequency).to eq('year')
 
@@ -188,7 +188,7 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:rent)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/rent_payments')
+          .to match('applications/12345/steps/outgoings/rent-payments')
         expect(answers[1].value.amount).to eq(5555)
         expect(answers[1].value.frequency).to eq('month')
 
@@ -210,7 +210,7 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:mortgage)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/mortgage_payments')
+          .to match('applications/12345/steps/outgoings/mortgage-payments')
         expect(answers[1].value.amount).to eq(333)
         expect(answers[1].value.frequency).to eq('year')
       end
@@ -229,7 +229,7 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:rent)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/rent_payments')
+          .to match('applications/12345/steps/outgoings/rent-payments')
         expect(answers[1].value.amount).to eq(5555)
         expect(answers[1].value.frequency).to eq('month')
       end
@@ -248,27 +248,27 @@ describe Summary::Sections::HousingPayments do
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:board_amount)
         expect(answers[1].change_path)
-          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+          .to match('applications/12345/steps/outgoings/board-and-lodging-payments')
         expect(answers[1].value.amount).to eq('800.00')
         expect(answers[2].value.frequency.value).to eq(:month)
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[2].question).to eq(:food_amount)
         expect(answers[2].change_path)
-          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+          .to match('applications/12345/steps/outgoings/board-and-lodging-payments')
         expect(answers[2].value.amount).to eq('50.00')
         expect(answers[2].value.frequency.value).to eq(:month)
 
         expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[3].question).to eq(:payee_name)
         expect(answers[3].change_path)
-          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+          .to match('applications/12345/steps/outgoings/board-and-lodging-payments')
         expect(answers[3].value).to eq('George')
 
         expect(answers[4]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[4].question).to eq(:payee_relationship_to_client)
         expect(answers[4].change_path)
-          .to match('applications/12345/steps/outgoings/board_and_lodging_payments')
+          .to match('applications/12345/steps/outgoings/board-and-lodging-payments')
         expect(answers[4].value).to eq('Friend')
       end
     end

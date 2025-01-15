@@ -136,7 +136,7 @@ RSpec.describe 'Evidence upload page', :authorized do
         expect(document.crime_application).not_to eq crime_application
 
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(%r{/errors/not_found})
+        expect(response).to redirect_to(%r{/errors/not-found})
       end
     end
   end
