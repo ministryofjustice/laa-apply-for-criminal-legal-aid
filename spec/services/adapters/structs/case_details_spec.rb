@@ -35,6 +35,18 @@ RSpec.describe Adapters::Structs::CaseDetails do
     end
   end
 
+  describe '#client_other_charge' do
+    it 'returns the charge with correct ownership_type' do
+      expect(subject.client_other_charge.ownership_type).to eq(OwnershipType::APPLICANT.to_s)
+    end
+  end
+
+  describe '#partner_other_charge' do
+    it 'returns the charge with correct ownership_type' do
+      expect(subject.partner_other_charge.ownership_type).to eq(OwnershipType::PARTNER.to_s)
+    end
+  end
+
   describe '#serializable_hash' do
     it 'returns a serializable hash, including relationships' do
       expect(

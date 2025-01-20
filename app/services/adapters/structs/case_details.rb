@@ -29,11 +29,11 @@ module Adapters
       end
 
       def client_other_charge
-        OtherCharge.new(super.attributes) if super
+        OtherCharge.new(**super.attributes, ownership_type: OwnershipType::APPLICANT) if super
       end
 
       def partner_other_charge
-        OtherCharge.new(super.attributes) if super
+        OtherCharge.new(**super.attributes, ownership_type: OwnershipType::PARTNER) if super
       end
 
       def serializable_hash(options = {})
