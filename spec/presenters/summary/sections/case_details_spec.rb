@@ -96,19 +96,19 @@ describe Summary::Sections::CaseDetails do
         answer = answers[1]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:case_type)
-        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
+        expect(answer.change_path).to match('applications/12345/steps/client/case-type')
         expect(answer.value).to eq('foobar')
 
         answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:has_case_concluded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_the_case_concluded')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-the-case-concluded')
         expect(answer.value).to eq('no')
 
         answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:is_client_remanded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-court-remanded-client-in-custody')
         expect(answer.value).to eq('no')
       end
     end
@@ -131,13 +131,13 @@ describe Summary::Sections::CaseDetails do
           answer = answers[4]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:is_preorder_work_claimed)
-          expect(answer.change_path).to match('applications/12345/steps/case/claim_pre_order_work')
+          expect(answer.change_path).to match('applications/12345/steps/case/claim-pre-order-work')
           expect(answer.value).to eq('no')
 
           answer = answers[5]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:is_client_remanded)
-          expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
+          expect(answer.change_path).to match('applications/12345/steps/case/has-court-remanded-client-in-custody')
           expect(answer.value).to eq('no')
         end
       end
@@ -153,19 +153,19 @@ describe Summary::Sections::CaseDetails do
           answer = answers[4]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:is_preorder_work_claimed)
-          expect(answer.change_path).to match('applications/12345/steps/case/claim_pre_order_work')
+          expect(answer.change_path).to match('applications/12345/steps/case/claim-pre-order-work')
           expect(answer.value).to eq('yes')
 
           answer = answers[5]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
           expect(answer.question).to eq(:preorder_work_date)
-          expect(answer.change_path).to match('applications/12345/steps/case/claim_pre_order_work')
+          expect(answer.change_path).to match('applications/12345/steps/case/claim-pre-order-work')
           expect(answer.value).to eq(preorder_work_date)
 
           answer = answers[6]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:preorder_work_details)
-          expect(answer.change_path).to match('applications/12345/steps/case/claim_pre_order_work')
+          expect(answer.change_path).to match('applications/12345/steps/case/claim-pre-order-work')
           expect(answer.value).to eq('details')
         end
       end
@@ -189,25 +189,25 @@ describe Summary::Sections::CaseDetails do
         answer = answers[1]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:case_type)
-        expect(answer.change_path).to match('applications/12345/steps/client/case_type')
+        expect(answer.change_path).to match('applications/12345/steps/client/case-type')
         expect(answer.value).to eq('foobar')
 
         answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:has_case_concluded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_the_case_concluded')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-the-case-concluded')
         expect(answer.value).to eq('no')
 
         answer = answers[3]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:is_client_remanded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-court-remanded-client-in-custody')
         expect(answer.value).to eq('yes')
 
         answer = answers[4]
         expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
         expect(answer.question).to eq(:date_client_remanded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_court_remanded_client_in_custody')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-court-remanded-client-in-custody')
         expect(answer.value).to eq(date_client_remanded)
       end
     end
@@ -235,19 +235,19 @@ describe Summary::Sections::CaseDetails do
           answer = answers[1]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:case_type)
-          expect(answer.change_path).to match('applications/12345/steps/client/case_type')
+          expect(answer.change_path).to match('applications/12345/steps/client/case-type')
           expect(answer.value).to eq(case_type)
 
           answer = answers[2]
           expect(answer).to be_an_instance_of(Summary::Components::DateAnswer)
           expect(answer.question).to eq(:appeal_lodged_date)
-          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal-details')
           expect(answer.value).to eq(appeal_lodged_date)
 
           answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:appeal_original_app_submitted)
-          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal-details')
           expect(answer.value).to eq(appeal_original_app_submitted)
         end
       end
@@ -267,19 +267,19 @@ describe Summary::Sections::CaseDetails do
           answer = answers[3]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:appeal_original_app_submitted)
-          expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
+          expect(answer.change_path).to match('applications/12345/steps/client/appeal-details')
           expect(answer.value).to eq(appeal_original_app_submitted)
 
           answer = answers[4]
           expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answer.question).to eq(:appeal_financial_circumstances_changed)
-          expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
+          expect(answer.change_path).to match('applications/12345/steps/client/financial-circumstances-changed')
           expect(answer.value).to eq(appeal_financial_circumstances_changed)
 
           answer = answers[5]
           expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answer.question).to eq(:appeal_with_changes_details)
-          expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
+          expect(answer.change_path).to match('applications/12345/steps/client/financial-circumstances-changed')
           expect(answer.value).to eq(appeal_with_changes_details)
         end
       end
@@ -302,19 +302,19 @@ describe Summary::Sections::CaseDetails do
             answer = answers[3]
             expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
             expect(answer.question).to eq(:appeal_original_app_submitted)
-            expect(answer.change_path).to match('applications/12345/steps/client/appeal_details')
+            expect(answer.change_path).to match('applications/12345/steps/client/appeal-details')
             expect(answer.value).to eq(appeal_original_app_submitted)
 
             answer = answers[4]
             expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
             expect(answer.question).to eq(:appeal_financial_circumstances_changed)
-            expect(answer.change_path).to match('applications/12345/steps/client/financial_circumstances_changed')
+            expect(answer.change_path).to match('applications/12345/steps/client/financial-circumstances-changed')
             expect(answer.value).to eq(appeal_financial_circumstances_changed)
 
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:appeal_maat_id_or_usn)
-            expect(answer.change_path).to match('applications/12345/steps/client/appeal_reference_number')
+            expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_maat_id)
           end
         end
@@ -329,7 +329,7 @@ describe Summary::Sections::CaseDetails do
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:appeal_maat_id_or_usn)
-            expect(answer.change_path).to match('applications/12345/steps/client/appeal_reference_number')
+            expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_usn)
           end
         end
@@ -356,7 +356,7 @@ describe Summary::Sections::CaseDetails do
         answer = answers[1]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:has_case_concluded)
-        expect(answer.change_path).to match('applications/12345/steps/case/has_the_case_concluded')
+        expect(answer.change_path).to match('applications/12345/steps/case/has-the-case-concluded')
         expect(answer.value).to eq('no')
       end
       # rubocop:enable RSpec/MultipleMemoizedHelpers

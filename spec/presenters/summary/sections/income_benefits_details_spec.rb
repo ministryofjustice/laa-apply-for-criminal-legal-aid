@@ -191,7 +191,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_benefits_client'
+          path = 'applications/12345/steps/income/which-benefits-client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -293,7 +293,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
         }
 
         it 'has the correct rows' do
-          path = 'applications/12345/steps/income/which_benefits_client'
+          path = 'applications/12345/steps/income/which-benefits-client'
 
           expect(answers.count).to eq(rows.size)
 
@@ -346,7 +346,7 @@ describe Summary::Sections::IncomeBenefitsDetails do # rubocop:disable RSpec/Mul
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:which_benefits)
-          expect(answers[0].change_path).to match('applications/12345/steps/income/which_benefits')
+          expect(answers[0].change_path).to match('applications/12345/steps/income/which-benefits')
           expect(answers[0].value).to eq('none')
         end
       end

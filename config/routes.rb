@@ -1,9 +1,15 @@
 def edit_step(name, opts = {}, &block)
-  resource name,
+  resource name.to_s.dasherize,
            only: opts.fetch(:only, [:edit, :update]),
            controller: opts.fetch(:alias, name),
            as: opts.fetch(:alias, name),
            path_names: { edit: '' } do; block.call if block_given?; end
+  # temp underscored routes
+  if name.to_s.include?('_') && !block_given?
+    get name, to: "#{opts.fetch(:alias, name)}#edit"
+    patch name, to: "#{opts.fetch(:alias, name)}#update"
+    put name, to: "#{opts.fetch(:alias, name)}#update"
+  end
 end
 
 def crud_step(name, opts = {})
@@ -12,8 +18,17 @@ def crud_step(name, opts = {})
               except: opts.fetch(:except, []),
               controller: opts.fetch(:alias, name), param: opts.fetch(:param),
               path_names: { edit: '' } do
-      get :confirm_destroy, on: :member if parent_resource.actions.include?(:destroy)
+      get :confirm_destroy, path: 'confirm-destroy', on: :member if parent_resource.actions.include?(:destroy)
+      # temp underscored routes
+      get 'confirm_destroy', to: "#{opts.fetch(:alias, name)}#confirm_destroy", on: :member if parent_resource.actions.include?(:destroy) && !name.to_s.include?('_')
     end
+  end
+  # temp underscored routes
+  if name.to_s.include?('_')
+    get "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#edit"
+    patch "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#update"
+    put "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#update"
+    get "#{name}/:#{opts.fetch(:param)}/confirm_destroy", to: "#{opts.fetch(:alias, name)}#confirm_destroy" unless opts.fetch(:except, []).include?(:destroy)
   end
 end
 
@@ -30,15 +45,15 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resource :errors, only: [] do
-    get :application_not_found
-    get :invalid_session
-    get :invalid_token
+    get :application_not_found, path: 'application-not-found'
+    get :invalid_session, path: 'invalid-session'
+    get :invalid_token, path: 'invalid-token'
     get :unhandled
     get :unauthenticated
     get :reauthenticate
-    get :account_locked
-    get :not_enrolled
-    get :not_found
+    get :account_locked, path: 'account-locked'
+    get :not_enrolled, path: 'not-enrolled'
+    get :not_found, path: 'not-found'
   end
 
   devise_for :providers,
@@ -73,7 +88,9 @@ Rails.application.routes.draw do
   resource :cookies, only: [:show, :update]
 
   resources :crime_applications, except: [:show, :update], path: 'applications' do
-    get :confirm_destroy, on: :member
+    get :confirm_destroy, path: 'confirm-destroy', on: :member
+    # temp underscored routes
+    get 'confirm_destroy', to: 'crime_applications#confirm_destroy', on: :member
     get :start, on: :collection
 
     member do
@@ -295,7 +312,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :application_searches, only: [:new] do
+  # temp underscored routes
+  get '/application_searches/new', to: 'application_searches#new'
+  post '/application_searches/search', to: 'application_searches#search'
+  resource :application_searches, path: 'application-searches', only: [:new] do
     post :search, on: :collection
   end
 

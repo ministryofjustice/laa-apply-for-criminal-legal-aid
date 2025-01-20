@@ -35,7 +35,7 @@ RSpec.describe Steps::Income::Partner::EmploymentsController, type: :controller 
           it 'renders the employment status page again' do
             delete :destroy, params: expected_params, session: { crime_application_id: crime_application.id }
             expect(Employment.count).to be 0
-            expect(response).to redirect_to(%r{/steps/income/what_is_the_partners_employment_status})
+            expect(response).to redirect_to(%r{/steps/income/what-is-the-partners-employment-status})
           end
         end
 

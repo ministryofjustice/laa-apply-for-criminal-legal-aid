@@ -123,7 +123,7 @@ RSpec.describe 'Businesses summary page', :authorized do
         let(:involvement_in_case) { 'victim' }
 
         it 'redirects page not found' do
-          expect(response).to redirect_to(/not_found/)
+          expect(response).to redirect_to(/not-found/)
         end
       end
     end

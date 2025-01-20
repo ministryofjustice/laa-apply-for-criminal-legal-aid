@@ -37,13 +37,13 @@ RSpec.describe Tasks::CapitalAssessment do
     context 'full capital is required' do
       let(:needs_full_capital) { true }
 
-      it { is_expected.to eq '/applications/12345/steps/capital/which_assets_owned' }
+      it { is_expected.to eq '/applications/12345/steps/capital/which-assets-owned' }
     end
 
     context 'full capital is not required' do
       let(:needs_full_capital) { false }
 
-      it { is_expected.to eq '/applications/12345/steps/capital/client_benefit_from_trust_fund' }
+      it { is_expected.to eq '/applications/12345/steps/capital/client-benefit-from-trust-fund' }
     end
   end
 

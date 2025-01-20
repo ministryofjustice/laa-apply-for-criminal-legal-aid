@@ -77,7 +77,7 @@ describe Summary::Sections::Overview do
         answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:means_tested)
-        expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
+        expect(answer.change_path).to match('applications/12345/steps/client/is-application-means-tested')
         expect(answer.value).to eq('yes')
 
         answer = answers[3]
@@ -151,7 +151,7 @@ describe Summary::Sections::Overview do
         answer = answers[2]
         expect(answer).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answer.question).to eq(:means_tested)
-        expect(answer.change_path).to match('applications/12345/steps/client/is_application_means_tested')
+        expect(answer.change_path).to match('applications/12345/steps/client/is-application-means-tested')
         expect(answer.value).to eq('yes')
       end
 
@@ -180,7 +180,7 @@ describe Summary::Sections::Overview do
             answer = answers[2]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_reason)
-            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reason')
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre-cifc-reason')
             expect(answer.value).to eq('Won the lottery')
           end
         end
@@ -195,7 +195,7 @@ describe Summary::Sections::Overview do
             answer = answers[3]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
-            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre-cifc-reference-number')
             expect(answer.value).to eq('123456')
           end
         end
@@ -210,7 +210,7 @@ describe Summary::Sections::Overview do
             answer = answers[3]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
             expect(answer.question).to eq(:pre_cifc_maat_id_or_usn)
-            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre_cifc_reference_number')
+            expect(answer.change_path).to match('applications/12345/steps/circumstances/pre-cifc-reference-number')
             expect(answer.value).to eq('98765')
           end
         end

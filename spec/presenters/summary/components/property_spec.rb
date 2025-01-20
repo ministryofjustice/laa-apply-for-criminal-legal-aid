@@ -54,7 +54,7 @@ RSpec.describe Summary::Components::Property, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/add_assets',
+          href: '/applications/APP123/steps/capital/add-assets',
           exact_text: 'Edit Residential property'
         )
       end
@@ -67,7 +67,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         it 'show the correct change link' do
           expect(page).to have_link(
             'Change',
-            href: '/applications/APP123/steps/capital/residential_property/PROPERTY123',
+            href: '/applications/APP123/steps/capital/residential-property/PROPERTY123',
             exact_text: 'Change Residential property'
           )
         end
@@ -77,7 +77,7 @@ RSpec.describe Summary::Components::Property, type: :component do
         it 'show the correct remove link' do
           expect(page).to have_link(
             'Remove',
-            href: '/applications/APP123/steps/capital/properties/PROPERTY123/confirm_destroy',
+            href: '/applications/APP123/steps/capital/properties/PROPERTY123/confirm-destroy',
             exact_text: 'Remove Residential property'
           )
         end

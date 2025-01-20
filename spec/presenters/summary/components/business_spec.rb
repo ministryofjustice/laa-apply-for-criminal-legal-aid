@@ -64,7 +64,7 @@ RSpec.describe Summary::Components::Business, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/income/client/businesses_summary'
+          href: '/applications/APP123/steps/income/client/businesses-summary'
         )
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe Summary::Components::Business, type: :component do
       describe 'remove link' do
         it 'show the correct remove link' do
           expect(page).to have_link(
-            'Remove', href: "#{path}/confirm_destroy"
+            'Remove', href: "#{path}/confirm-destroy"
           )
         end
       end

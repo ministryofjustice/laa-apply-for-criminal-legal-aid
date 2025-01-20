@@ -94,7 +94,7 @@ describe Summary::Sections::Codefendants do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:has_codefendants)
-        expect(answers[0].change_path).to match('applications/12345/steps/case/has_codefendants')
+        expect(answers[0].change_path).to match('applications/12345/steps/case/has-codefendants')
         expect(answers[0].value).to eq('no')
       end
     end

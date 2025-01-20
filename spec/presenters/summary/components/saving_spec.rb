@@ -34,7 +34,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/capital/add_savings_accounts',
+          href: '/applications/APP123/steps/capital/add-savings-accounts',
          exact_text: 'Edit Bank account'
         )
       end
@@ -57,7 +57,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
         it 'show the correct remove link' do
           expect(page).to have_link(
             'Remove',
-            href: '/applications/APP123/steps/capital/savings/SAVING123/confirm_destroy',
+            href: '/applications/APP123/steps/capital/savings/SAVING123/confirm-destroy',
             exact_text: 'Remove Bank account'
           )
         end

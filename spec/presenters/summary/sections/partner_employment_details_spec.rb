@@ -78,7 +78,7 @@ describe Summary::Sections::PartnerEmploymentDetails do
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:partner_employment_status)
           expect(answers[0].change_path)
-            .to match('applications/12345/steps/income/what_is_the_partners_employment_status')
+            .to match('applications/12345/steps/income/what-is-the-partners-employment-status')
           expect(answers[0].value).to eq('not_working')
         end
       end
@@ -92,11 +92,11 @@ describe Summary::Sections::PartnerEmploymentDetails do
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:partner_employment_status)
           expect(answers[0].change_path)
-            .to match('applications/12345/steps/income/what_is_the_partners_employment_status')
+            .to match('applications/12345/steps/income/what-is-the-partners-employment-status')
           expect(answers[0].value).to eq('employed')
           expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[1].question).to eq(:partner_in_armed_forces)
-          expect(answers[1].change_path).to match('applications/12345/steps/income/partner/armed_forces')
+          expect(answers[1].change_path).to match('applications/12345/steps/income/partner/armed-forces')
           expect(answers[1].value).to eq('yes')
         end
       end

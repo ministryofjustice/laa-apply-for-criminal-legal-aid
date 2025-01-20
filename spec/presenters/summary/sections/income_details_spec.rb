@@ -53,19 +53,19 @@ describe Summary::Sections::IncomeDetails do
       [
         [
           :income_above_threshold,
-          'current_income_before_tax'
+          'current-income-before-tax'
         ],
         [
           :has_frozen_income_or_assets,
-          'income_savings_assets_under_restraint_freezing_order'
+          'income-savings-assets-under-restraint-freezing-order'
         ],
         [
           :client_owns_property,
-          'own_home_land_property'
+          'own-home-land-property'
         ],
         [
           :has_savings,
-          'any_savings_investments'
+          'any-savings-investments'
         ]
       ]
     }

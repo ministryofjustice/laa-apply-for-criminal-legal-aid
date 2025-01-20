@@ -78,11 +78,11 @@ describe Summary::Sections::PartnerWorkBenefits do
         expect(answers.count).to eq(2)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:partner_work_benefits)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/partner/other_work_benefits_partner')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/partner/other-work-benefits-partner')
         expect(answers[0].value).to eq('yes')
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:partner_work_benefits_payment)
-        expect(answers[1].change_path).to match('applications/12345/steps/income/partner/other_work_benefits_partner')
+        expect(answers[1].change_path).to match('applications/12345/steps/income/partner/other-work-benefits-partner')
         expect(answers[1].value).to eq(income_payment)
       end
     end
@@ -94,7 +94,7 @@ describe Summary::Sections::PartnerWorkBenefits do
         expect(answers.count).to eq(1)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:partner_work_benefits)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/partner/other_work_benefits_partner')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/partner/other-work-benefits-partner')
         expect(answers[0].value).to eq('no')
       end
     end

@@ -108,17 +108,17 @@ describe Summary::Sections::ClientDetails do
 
       expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[5].question).to eq(:has_partner)
-      expect(answers[5].change_path).to match('applications/12345/steps/client/does_client_have_partner')
+      expect(answers[5].change_path).to match('applications/12345/steps/client/does-client-have-partner')
       expect(answers[5].value).to eq('no')
 
       expect(answers[6]).to be_an_instance_of(Summary::Components::ValueAnswer)
       expect(answers[6].question).to eq(:relationship_status)
-      expect(answers[6].change_path).to match('applications/12345/steps/client/relationship_status')
+      expect(answers[6].change_path).to match('applications/12345/steps/client/relationship-status')
       expect(answers[6].value).to eq('separated')
 
       expect(answers[7]).to be_an_instance_of(Summary::Components::DateAnswer)
       expect(answers[7].question).to eq(:separation_date)
-      expect(answers[7].change_path).to match('applications/12345/steps/client/relationship_status')
+      expect(answers[7].change_path).to match('applications/12345/steps/client/relationship-status')
       expect(answers[7].value).to eq(Date.new(2001, 10, 12))
     end
 
@@ -130,7 +130,7 @@ describe Summary::Sections::ClientDetails do
 
         expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[5].question).to eq(:has_partner)
-        expect(answers[5].change_path).to match('applications/12345/steps/client/does_client_have_partner')
+        expect(answers[5].change_path).to match('applications/12345/steps/client/does-client-have-partner')
         expect(answers[5].value).to eq('yes')
       end
     end
