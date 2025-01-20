@@ -723,7 +723,7 @@ en:
         question: Means test result
         answers:
           passed: Passed
-          passed_with_contribution: Passed - with a contribution
+          passed_with_contribution: Passed - with contribution
           failed: Failed
       funding_decision_means_caseworker:
         question: Means test caseworker
@@ -735,7 +735,7 @@ en:
           granted: Granted
           refused: Refused
           granted_failed_means: Granted - failed means test
-          granted_with_contribution: Granted - with a contribution
+          granted_with_contribution: Granted - with contribution
 
       funding_decision_further_info:
         question: Further information about the decision

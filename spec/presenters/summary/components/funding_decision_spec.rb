@@ -73,7 +73,8 @@ describe Summary::Components::FundingDecision, type: :component do
     let(:funding_decision) { 'granted' }
     let(:means_result) { 'passed_with_contribution' }
 
-    it { is_expected.to have_text('Granted - with a contribution') }
+    it { is_expected.to have_text('Granted - with contribution') }
+    it { is_expected.to have_text('Passed - with contribution') }
   end
 
   context 'when funding decision is "granted" and means "failed"' do
