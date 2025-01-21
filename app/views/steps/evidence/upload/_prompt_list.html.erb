@@ -1,0 +1,21 @@
+<!-- Client & Partner evidence -->
+<% [:client, :partner].each do |persona| %>
+  <% [:income, :outgoings, :capital, :none].each do |group| %>
+    <%= render partial: 'steps/evidence/upload/prompt',
+               locals: { prompt: form_object.prompt, group: group, persona: persona, title: t("evidence.persona.#{persona}.#{group}") } %>
+  <% end %>
+<% end %>
+
+<!-- Other evidence only shows :none group -->
+<%= render partial: 'steps/evidence/upload/prompt',
+           locals: { prompt: form_object.prompt, group: :none, persona: :other, title: t('evidence.persona.other') } %>
+
+<% if form_object.cifc? %>
+  <h2 class="govuk-heading-m"> <%= t('evidence.cifc.heading') %> </h2>
+  <p class="govuk-body"> <%= t('evidence.cifc.prompt') %> </p>
+<% end %>
+
+<% if form_object.prompt.required? %>
+  <h2 class="govuk-heading-m"> <%= t('evidence.other.heading') %> </h2>
+  <p class="govuk-body"> <%= t('evidence.other.prompt') %> </p>
+<% end %>

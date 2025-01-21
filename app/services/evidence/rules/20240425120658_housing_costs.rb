@@ -19,6 +19,17 @@ module Evidence
 
         total > THRESHOLD
       end
+
+      partner do |crime_application|
+        costs = [
+          crime_application.outgoings&.rent,
+          crime_application.outgoings&.mortgage
+        ]
+
+        total = costs.compact.sum { |x| x.prorated_monthly.to_f }
+
+        total > THRESHOLD
+      end
     end
   end
 end

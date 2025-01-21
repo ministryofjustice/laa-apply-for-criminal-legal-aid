@@ -1,0 +1,34 @@
+<div class="govuk-form-group" id="upload-form">
+  <h2 class="govuk-heading-m">
+    <%= t("#{i18n_scope}.upload_files_heading") %>
+    <p class="govuk-body govuk-!-padding-top-2"> <%= t("#{i18n_scope}.rename_files") %> </p>
+    <span class="govuk-caption-m"> <%= t("#{i18n_scope}.upload_files_info", max_size: FileUploadValidator::MAX_FILE_SIZE) %> </span>
+  </h2>
+
+  <%# Required to display dropzone error messages %>
+  <p class="govuk-error-message app-evidence-upload-hidden" id="dropzone-error-message">
+    <span class="govuk-visually-hidden">Error:</span>
+  </p>
+
+  <%= form_for form_object, html: { id: 'dz-evidence-upload-form' },
+               url: crime_application_documents_path,
+               method: :post, multipart: true do |f| %>
+
+    <%= f.button t("#{i18n_scope}.choose_files_button"),
+                 id: 'choose_files_button',
+                 class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0 govuk-visually-hidden',
+                 type: 'button',
+                 data: { module: 'govuk-button' } %>
+
+    <div class="fallback">
+      <%# Keep `multiple` to false. This only affects non-javascript version, dropzone %>
+      <%# will still support multiple files. This greatly simplifies backend with little downside %>
+      <%= f.govuk_file_field :document, multiple: false,
+                             label: { size: 'm' }, class: 'govuk-file-upload' %>
+
+      <%= f.button t("#{i18n_scope}.upload_file_button"),
+                   class: 'govuk-button govuk-button--secondary',
+                   data: { module: 'govuk-button' } %>
+    </div>
+  <% end %>
+</div>

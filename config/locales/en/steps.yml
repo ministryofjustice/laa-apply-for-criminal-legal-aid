@@ -682,8 +682,10 @@ en:
           heading: Upload supporting evidence
           exempt: Your client's application does not need any supporting evidence because %{reasons}. You may still upload any documents that will help your application.
           optional: No supporting evidence is required based on your current application, but you may upload any documents that will help your application.
-          required: 'Based on your answers, use this page to provide:'
-          reject_warning: This application will be rejected if you have not uploaded the relevant evidence unless either the client is in Court Custody and therefore self-certifies, or it is a Crown Court Trial (in which case evidence may follow within 14 days).
+          required: Based on your answers, you need to provide the following evidence to support the application.
+          crown_court_reject_warning: If you do not have the evidence available at this time, you can submit it within 14 days.
+          remanded_reject_warning: If you do not have the evidence available at this time, you can submit it at a later date.
+          default_reject_warning: You must upload the required supporting evidence or the application will be returned to you.
           recent_docs: All evidence must be from the last 3 months.
           rename_files: It can help us process your claim more quickly if you give filenames clear descriptions. For example, 'client-bank-statement.pdf' instead of 'file23.pdf'.
           upload_file_button: Upload file

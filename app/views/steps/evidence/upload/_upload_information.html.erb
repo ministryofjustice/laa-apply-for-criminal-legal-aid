@@ -1,0 +1,27 @@
+<% if cifc  %>
+  <%= govuk_warning_text(text: t("#{i18n_scope}.cifc_warning")) %>
+<% elsif prompt.exempt? %>
+  <p class="govuk-body" data-ruleset="<%= prompt.ruleset %>">
+    <%= t("#{i18n_scope}.exempt", reasons: prompt.exempt_reasons.to_sentence) %>
+  </p>
+<% elsif prompt.required? %>
+  <% if in_crown_court %>
+    <%= govuk_warning_text(text: t("#{i18n_scope}.crown_court_reject_warning")) %>
+  <% elsif client_remanded %>
+    <%= govuk_warning_text(text: t("#{i18n_scope}.remanded_reject_warning")) %>
+  <% else %>
+   <%= govuk_warning_text(text: t("#{i18n_scope}.default_reject_warning")) %>
+  <% end %>
+
+  <p class="govuk-body" data-ruleset="<%= prompt.ruleset %>">
+    <%= t("#{i18n_scope}.required") %>
+  </p>
+<% else %>
+  <p class="govuk-body" data-ruleset="None">
+    <%= t("#{i18n_scope}.optional") %>
+  </p>
+<% end %>
+
+<p class="govuk-body">
+  <%= t("#{i18n_scope}.recent_docs") %>
+</p>
