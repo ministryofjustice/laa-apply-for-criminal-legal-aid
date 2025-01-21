@@ -5,18 +5,12 @@
     <%= t("#{i18n_scope}.exempt", reasons: prompt.exempt_reasons.to_sentence) %>
   </p>
 <% elsif prompt.required? %>
-  <%= govuk_warning_text(text: t("#{i18n_scope}.reject_warning")) %>
-
-  <% if client_remanded || in_crown_court %>
-    <p class="govuk-body govuk-!-font-weight-bold"> The exceptions are: </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <% if client_remanded %>
-        <li class="govuk-!-font-weight-bold">your client is in court custody</li>
-      <% end %>
-      <% if in_crown_court %>
-        <li class="govuk-!-font-weight-bold">a Crown Court trial, for which you have up to 14 days to provide the evidence</li>
-      <% end %>
-    </ul>
+  <% if in_crown_court %>
+    <%= govuk_warning_text(text: t("#{i18n_scope}.crown_court_reject_warning")) %>
+  <% elsif client_remanded %>
+    <%= govuk_warning_text(text: t("#{i18n_scope}.remanded_reject_warning")) %>
+  <% else %>
+   <%= govuk_warning_text(text: t("#{i18n_scope}.default_reject_warning")) %>
   <% end %>
 
   <p class="govuk-body" data-ruleset="<%= prompt.ruleset %>">
