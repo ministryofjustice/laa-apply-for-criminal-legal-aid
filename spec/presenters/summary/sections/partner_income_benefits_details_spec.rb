@@ -66,7 +66,7 @@ describe Summary::Sections::PartnerIncomeBenefitsDetails do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:which_benefits_partner)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/which_benefits_partner')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/which-benefits-partner')
         expect(answers[0].value).to eq('none')
       end
     end

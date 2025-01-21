@@ -63,7 +63,7 @@ describe Summary::Sections::ClientOtherCharge do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:client_other_charge_in_progress)
-        expect(answers[0].change_path).to match('applications/12345/steps/case/client/other_charge_in_progress')
+        expect(answers[0].change_path).to match('applications/12345/steps/case/client/other-charge-in-progress')
         expect(answers[0].value).to eq('yes')
       end
     end
@@ -83,17 +83,17 @@ describe Summary::Sections::ClientOtherCharge do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[0].question).to eq(:client_other_charge_charge)
-        expect(answers[0].change_path).to match('applications/12345/steps/case/client/other_charge')
+        expect(answers[0].change_path).to match('applications/12345/steps/case/client/other-charge')
         expect(answers[0].value).to eq('Theft')
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[1].question).to eq(:client_other_charge_hearing_court_name)
-        expect(answers[1].change_path).to match('applications/12345/steps/case/client/other_charge')
+        expect(answers[1].change_path).to match('applications/12345/steps/case/client/other-charge')
         expect(answers[1].value).to eq("Cardiff Magistrates' Court")
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::DateAnswer)
         expect(answers[2].question).to eq(:client_other_charge_next_hearing_date)
-        expect(answers[2].change_path).to match('applications/12345/steps/case/client/other_charge')
+        expect(answers[2].change_path).to match('applications/12345/steps/case/client/other-charge')
         expect(answers[2].value).to eq(Date.new(2025, 1, 15))
       end
     end

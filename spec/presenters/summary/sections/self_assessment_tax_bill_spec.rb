@@ -69,11 +69,11 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         expect(answers.count).to eq(2)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:self_assessment_tax_bill)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/client/self-assessment-client')
         expect(answers[0].value).to eq('yes')
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:self_assessment_tax_bill_payment)
-        expect(answers[1].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
+        expect(answers[1].change_path).to match('applications/12345/steps/income/client/self-assessment-client')
         expect(answers[1].value).to be_an_instance_of(
           Summary::Sections::SelfAssessmentTaxBill::SelfAssessmentTaxBillPayment
         )
@@ -87,7 +87,7 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         expect(answers.count).to eq(1)
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:self_assessment_tax_bill)
-        expect(answers[0].change_path).to match('applications/12345/steps/income/client/self_assessment_client')
+        expect(answers[0].change_path).to match('applications/12345/steps/income/client/self-assessment-client')
         expect(answers[0].value).to eq('no')
       end
     end

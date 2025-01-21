@@ -67,7 +67,7 @@ describe Summary::Sections::Dependants do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:client_has_dependants)
-        expect(answers[0].change_path).to match('/applications/12345/steps/income/does_client_have_dependants')
+        expect(answers[0].change_path).to match('/applications/12345/steps/income/does-client-have-dependants')
         expect(answers[0].value).to eq('no')
       end
     end
@@ -80,7 +80,7 @@ describe Summary::Sections::Dependants do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:client_has_dependants)
-        expect(answers[0].change_path).to match('/applications/12345/steps/income/does_client_have_dependants')
+        expect(answers[0].change_path).to match('/applications/12345/steps/income/does-client-have-dependants')
         expect(answers[0].value).to eq('yes')
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)

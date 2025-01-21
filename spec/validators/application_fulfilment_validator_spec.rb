@@ -186,7 +186,7 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
         it 'is invalid' do
           expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:base, :case_type_missing)).to be(true)
-          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case_type')
+          expect(subject.errors.first.details[:change_path]).to eq('/applications/12345/steps/client/case-type')
         end
       end
     end

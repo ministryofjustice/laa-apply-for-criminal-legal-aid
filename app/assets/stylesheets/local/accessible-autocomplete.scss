@@ -164,3 +164,10 @@
     line-height: 1.31579;
   }
 }
+
+/* Required to apply the govuk error message styling to the input field */
+.govuk-form-group--error {
+  .autocomplete__input {
+    border-color: govuk-colour("red");
+  }
+}

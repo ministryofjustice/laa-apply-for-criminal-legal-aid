@@ -31,7 +31,7 @@ RSpec.describe Tasks::OutgoingsAssessment do
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/outgoings/housing_payments_where_lives') }
+    it { expect(subject.path).to eq('/applications/12345/steps/outgoings/housing-payments-where-lives') }
   end
 
   describe '#not_applicable?' do

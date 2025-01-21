@@ -54,7 +54,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/income/client/add_employments?employment_id=EMPLOYMENT123',
+          href: '/applications/APP123/steps/income/client/add-employments?employment_id=EMPLOYMENT123',
           exact_text: 'Edit Job'
         )
       end
@@ -67,7 +67,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
         it 'show the correct change link' do
           expect(page).to have_link(
             'Change',
-            href: '/applications/APP123/steps/income/client/employer_details/EMPLOYMENT123',
+            href: '/applications/APP123/steps/income/client/employer-details/EMPLOYMENT123',
             exact_text: 'Change Job'
           )
         end
@@ -77,7 +77,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
         it 'show the correct remove link' do
           expect(page).to have_link(
             'Remove',
-            href: '/applications/APP123/steps/income/client/employments/EMPLOYMENT123/confirm_destroy',
+            href: '/applications/APP123/steps/income/client/employments/EMPLOYMENT123/confirm-destroy',
             exact_text: 'Remove Job'
           )
         end

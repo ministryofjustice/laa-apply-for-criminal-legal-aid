@@ -99,7 +99,7 @@ describe Summary::Sections::ContactDetails do
 
         expect(answers[1]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[1].question).to eq(:correspondence_address_type)
-        expect(answers[1].change_path).to match('applications/12345/steps/client/contact_details')
+        expect(answers[1].change_path).to match('applications/12345/steps/client/contact-details')
         expect(answers[1].value).to eq('other_address')
 
         expect(answers[2]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
@@ -109,7 +109,7 @@ describe Summary::Sections::ContactDetails do
 
         expect(answers[3]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[3].question).to eq(:telephone_number)
-        expect(answers[3].change_path).to match('applications/12345/steps/client/contact_details')
+        expect(answers[3].change_path).to match('applications/12345/steps/client/contact-details')
         expect(answers[3].value).to eq('123456789')
       end
     end
@@ -122,7 +122,7 @@ describe Summary::Sections::ContactDetails do
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:residence_type)
-        expect(answers[0].change_path).to match('/applications/12345/steps/client/residence_type')
+        expect(answers[0].change_path).to match('/applications/12345/steps/client/residence-type')
         expect(answers[0].value).to eq('parents')
       end
 
@@ -135,12 +135,12 @@ describe Summary::Sections::ContactDetails do
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:residence_type)
-          expect(answers[0].change_path).to match('/applications/12345/steps/client/residence_type')
+          expect(answers[0].change_path).to match('/applications/12345/steps/client/residence-type')
           expect(answers[0].value).to eq('someone_else')
 
           expect(answers[1]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
           expect(answers[1].question).to eq(:relationship_to_owner_of_usual_home_address)
-          expect(answers[1].change_path).to match('/applications/12345/steps/client/residence_type')
+          expect(answers[1].change_path).to match('/applications/12345/steps/client/residence-type')
           expect(answers[1].value).to eq('A friend')
         end
       end

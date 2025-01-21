@@ -11,7 +11,7 @@ RSpec.describe Tasks::MoreInformation do
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/submission/more_information') }
+    it { expect(subject.path).to eq('/applications/12345/steps/submission/more-information') }
   end
 
   describe '#can_start?' do

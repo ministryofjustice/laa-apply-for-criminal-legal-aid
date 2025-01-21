@@ -34,7 +34,7 @@ RSpec.describe Tasks::Ioj do
     context 'when the application is Ioj passported (and there is no override)' do
       let(:passporter_result) { true }
 
-      it { expect(subject.path).to eq('/applications/12345/steps/case/ioj_passport') }
+      it { expect(subject.path).to eq('/applications/12345/steps/case/ioj-passport') }
     end
 
     context 'when the application is not Ioj passported (or there is override)' do

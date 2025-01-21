@@ -703,6 +703,11 @@ en:
         question: MAAT ID
       funding_decision_case_number:
         question: Case number
+      funding_decision_court_type:
+        question: Means test
+        answers:
+          crown: Crown Court
+          magistrates: Magistrates Court
       funding_decision_ioj_result:
         question: Interests of justice (IoJ) test result
         answers:
@@ -718,7 +723,7 @@ en:
         question: Means test result
         answers:
           passed: Passed
-          passed_with_contribution: Passed - with a contribution
+          passed_with_contribution: Passed - with contribution
           failed: Failed
       funding_decision_means_caseworker:
         question: Means test caseworker
@@ -727,12 +732,11 @@ en:
       funding_decision_overall_result:
         question: Overall result
         answers:
-          granted:
-            value: Granted
-            colour: green
-          refused:
-            value: Refused
-            colour: red
+          granted: Granted
+          refused: Refused
+          granted_failed_means: Granted - failed means test
+          granted_with_contribution: Granted - with contribution
+
       funding_decision_further_info:
         question: Further information about the decision
       # END funding decisions section

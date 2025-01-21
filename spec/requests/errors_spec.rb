@@ -3,28 +3,28 @@ require 'rails_helper'
 RSpec.describe 'Error pages' do
   context 'invalid session' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/invalid_session'
+      get '/errors/invalid-session'
       expect(response).to have_http_status(:ok)
     end
   end
 
   context 'invalid token' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/invalid_token'
+      get '/errors/invalid-token'
       expect(response).to have_http_status(:bad_request)
     end
   end
 
   context 'application not found' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/application_not_found'
+      get '/errors/application-not-found'
       expect(response).to have_http_status(:not_found)
     end
   end
 
   context 'not found' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/not_found'
+      get '/errors/not-found'
       expect(response).to have_http_status(:not_found)
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe 'Error pages' do
 
   context 'not_enrolled' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/not_enrolled'
+      get '/errors/not-enrolled'
       expect(response).to have_http_status(:forbidden)
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe 'Error pages' do
 
   context 'account_locked' do
     it 'renders the expected page and has expected status code' do
-      get '/errors/account_locked'
+      get '/errors/account-locked'
       expect(response).to have_http_status(:ok)
     end
   end

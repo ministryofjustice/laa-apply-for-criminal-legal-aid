@@ -25,7 +25,7 @@ RSpec.describe Summary::Components::Offence, type: :component do
       it 'show the "Edit" change link' do
         expect(page).to have_link(
           'Edit',
-          href: '/applications/APP123/steps/case/charges_summary',
+          href: '/applications/APP123/steps/case/charges-summary',
           exact_text: 'Edit Offence'
         )
       end
@@ -48,7 +48,7 @@ RSpec.describe Summary::Components::Offence, type: :component do
         it 'show the correct remove link' do
           expect(page).to have_link(
             'Remove',
-            href: '/applications/APP123/steps/case/charges/OFF123/confirm_destroy',
+            href: '/applications/APP123/steps/case/charges/OFF123/confirm-destroy',
             exact_text: 'Remove Offence'
           )
         end

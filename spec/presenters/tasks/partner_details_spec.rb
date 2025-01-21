@@ -28,7 +28,7 @@ RSpec.describe Tasks::PartnerDetails do
   end
 
   describe '#path' do
-    it { expect(subject.path).to eq('/applications/12345/steps/client/does_client_have_partner') }
+    it { expect(subject.path).to eq('/applications/12345/steps/client/does-client-have-partner') }
   end
 
   describe '#not_applicable?' do
