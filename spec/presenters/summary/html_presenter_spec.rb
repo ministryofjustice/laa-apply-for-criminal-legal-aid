@@ -99,8 +99,8 @@ describe Summary::HtmlPresenter do
     double(DateStampContext, first_name: 'Arnold', last_name: 'Slit', date_of_birth: Date.new(1990, 1, 1))
   end
 
-  let(:datastore_application) do
-    extra = {
+  let(:extra) do
+    {
       'means_details' => {
         'income_details' => {
           'employments' => [
@@ -249,9 +249,33 @@ describe Summary::HtmlPresenter do
         }
       },
       'application_type' => application_type,
-      'case_details' => { 'case_type' => 'either_way' }
+      'case_details' => { 'case_type' => 'either_way' },
+      'decisions' => [
+        {
+          'reference' => nil,
+          'maat_id' => 6_060_001,
+          'case_id' => 'NOL123-123123',
+          'court_type' => 'crown',
+          'interests_of_justice' => {
+            'result' => 'passed',
+            'details' => 'Loss of liberty',
+            'assessed_by' => 'Ash Lee',
+            'assessed_on' => '2022-11-11'
+          },
+          'means' => {
+            'result' => 'failed',
+            'assessed_by' => 'John Brown',
+            'assessed_on' => '2022-11-11'
+          },
+          'funding_decision' => 'refused',
+          'overall_result' => 'Refused',
+        'comment' => 'Ineligible with current income'
+        }
+      ]
     }
+  end
 
+  let(:datastore_application) do
     JSON.parse(LaaCrimeSchemas.fixture(1.0).read).deep_merge(extra)
   end
 
@@ -379,6 +403,7 @@ describe Summary::HtmlPresenter do
             LegalRepresentativeDetails
             ClientOtherCharge
             PartnerOtherCharge
+            FundingDecisions
           ]
         end
 
@@ -490,6 +515,7 @@ describe Summary::HtmlPresenter do
             LegalRepresentativeDetails
             ClientOtherCharge
             PartnerOtherCharge
+            FundingDecisions
           ]
         end
 
