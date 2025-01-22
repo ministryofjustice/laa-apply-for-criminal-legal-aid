@@ -2,7 +2,7 @@
   <% if group == :income %>
     <h2 class="govuk-heading-m"> <%= t("evidence.persona.#{persona}.heading") %> </h2>
   <% end %>
-  <h2 class="govuk-heading-s"><%= title %></h2>
+  <p class="govuk-body govuk-!-margin-bottom-1"><%= title %>:</p>
 
   <ul class="govuk-body">
     <% prompt.result_for(group:, persona:).each do |rule| %>
