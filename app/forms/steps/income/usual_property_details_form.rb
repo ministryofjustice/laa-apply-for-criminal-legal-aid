@@ -1,16 +1,18 @@
 module Steps
-  module Capital
+  module Income
     class UsualPropertyDetailsForm < Steps::BaseFormObject
       include UsualPropertyDetails
+      include TypeOfMeansAssessment
+      include ApplicantOrPartner
 
       def choices
-        UsualPropertyDetailsCapitalAnswer.values
+        UsualPropertyDetailsIncomeAnswer.values
       end
 
       def action
         return if @action.nil?
 
-        UsualPropertyDetailsCapitalAnswer.new(@action)
+        UsualPropertyDetailsIncomeAnswer.new(@action)
       end
     end
   end

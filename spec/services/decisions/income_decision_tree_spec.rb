@@ -784,6 +784,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         has_frozen_income_or_assets: 'no',
         client_owns_property: client_owns_property,
         has_savings: nil,
+        change_to_usual_property_details_required?: false
       )
     end
 
@@ -831,6 +832,37 @@ RSpec.describe Decisions::IncomeDecisionTree do
         let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
 
         it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when change to the usual property details is required' do
+      let(:client_owns_property) { nil }
+
+      before { allow(income).to receive(:change_to_usual_property_details_required?).and_return(true) }
+
+      it 'redirects to `usual_property_details`' do
+        expect(subject).to have_destination(:usual_property_details, :edit, id: crime_application)
+      end
+    end
+  end
+
+  context 'when the step is `usual_property_details`' do
+    let(:form_object) { double('FormObject', action:) }
+    let(:step_name) { :usual_property_details }
+
+    context 'and they want to change whether they own their home, land or other property' do
+      let(:action) { UsualPropertyDetailsIncomeAnswer::CHANGE_OWN_HOME_LAND_PROPERTY }
+
+      it 'redirects to `client_owns_property`' do
+        expect(subject).to have_destination(:client_owns_property, :edit, id: crime_application)
+      end
+    end
+
+    context 'and they want to change whether they own the property they usually live in' do
+      let(:action) { UsualPropertyDetailsIncomeAnswer::CHANGE_RESIDENCE_TYPE }
+
+      it 'redirects to `residence_type`' do
+        expect(subject).to have_destination('/steps/client/residence_type', :edit, id: crime_application)
       end
     end
   end

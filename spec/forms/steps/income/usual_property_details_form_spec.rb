@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
+RSpec.describe Steps::Income::UsualPropertyDetailsForm do
   subject(:form) { described_class.new(crime_application:) }
 
   let(:applicant) { instance_double(Applicant, home_address:, residence_type:) }
@@ -10,7 +10,7 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
   let(:crime_application) { instance_double(CrimeApplication, applicant:, capital:) }
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:action, :blank, 'Select what you want to do next') }
+    it { is_expected.to validate_presence_of(:action, :blank, 'Select the question you want to change the answer to') }
 
     context 'when the action is an invalid option' do
       before { form.action = 'invalid_option' }
@@ -23,7 +23,7 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
   end
 
   describe '#choices' do
-    it { expect(form.choices).to eq(UsualPropertyDetailsCapitalAnswer.values) }
+    it { expect(form.choices).to eq(UsualPropertyDetailsIncomeAnswer.values) }
   end
 
   describe '#home_address' do

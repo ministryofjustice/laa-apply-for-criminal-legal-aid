@@ -92,6 +92,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     context 'when all validations pass' do
       before do
         allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: true)
+        allow(record).to receive(:change_to_usual_property_details_required?).and_return(false)
       end
 
       let(:income_payments) do
@@ -160,6 +161,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         before do
           allow(MeansStatus).to receive_messages(full_means_required?: true, include_partner?: true)
           allow(validator).to receive(:include_partner_in_means_assessment?).and_return(true)
+          allow(record).to receive(:change_to_usual_property_details_required?).and_return(true)
         end
 
         let(:record_attributes) do
@@ -175,7 +177,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
           }
         end
 
-        it 'adds errors for all failed validations' do
+        it 'adds errors for all failed validations' do # rubocop:disable RSpec/MultipleExpectations
           subject.validate
 
           expect(subject.errors.of_kind?('income_payments', :incomplete)).to be(true)
@@ -184,6 +186,7 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
           expect(subject.errors.of_kind?('partner_income_benefits', :incomplete)).to be(true)
           expect(subject.errors.of_kind?('dependants', :incomplete)).to be(true)
           expect(subject.errors.of_kind?('manage_without_income', :incomplete)).to be(true)
+          expect(subject.errors.of_kind?('usual_property_details', :invalid)).to be(true)
           expect(subject.errors.of_kind?('base', :incomplete_records)).to be(true)
         end
       end
@@ -626,6 +629,24 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
         allow(record).to receive_messages(partner_self_employed?: false)
         expect(subject.manage_without_income_complete?).to be(false)
       end
+    end
+  end
+
+  describe '#usual_property_details_valid?' do
+    context 'when the usual property details need to be changed' do
+      before do
+        allow(record).to receive(:change_to_usual_property_details_required?).and_return(true)
+      end
+
+      it { expect(subject.usual_property_details_valid?).to be(false) }
+    end
+
+    context 'when the usual property details do not need to be changed' do
+      before do
+        allow(record).to receive(:change_to_usual_property_details_required?).and_return(false)
+      end
+
+      it { expect(subject.usual_property_details_valid?).to be(true) }
     end
   end
 end
