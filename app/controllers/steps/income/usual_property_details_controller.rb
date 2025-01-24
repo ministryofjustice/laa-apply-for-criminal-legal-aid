@@ -1,6 +1,6 @@
 module Steps
-  module Capital
-    class UsualPropertyDetailsController < Steps::CapitalStepController
+  module Income
+    class UsualPropertyDetailsController < Steps::IncomeStepController
       include Steps::UsualPropertyDetailsStep
 
       private

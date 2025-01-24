@@ -137,7 +137,7 @@ module Decisions
     end
 
     def after_usual_property_details
-      if form_object.action == UsualPropertyDetailsAnswer::CHANGE_ANSWER.to_s
+      if form_object.action == UsualPropertyDetailsCapitalAnswer::CHANGE_ANSWER
         return edit('/steps/client/residence_type')
       end
 

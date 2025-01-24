@@ -410,7 +410,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     let(:step_name) { :usual_property_details }
 
     context 'and they want to provide the details of the property' do
-      let(:action) { 'provide_details' }
+      let(:action) { UsualPropertyDetailsCapitalAnswer::PROVIDE_DETAILS }
       let(:property) { instance_double(Property, property_type: 'residential') }
 
       before do
@@ -423,7 +423,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     end
 
     context 'and they want to change the answer to where the client usually lives' do
-      let(:action) { 'change_answer' }
+      let(:action) { UsualPropertyDetailsCapitalAnswer::CHANGE_ANSWER }
 
       it 'redirects to `residence_type`' do
         expect(subject).to have_destination('/steps/client/residence_type', :edit, id: crime_application)

@@ -235,6 +235,9 @@ Rails.application.routes.draw do
         edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
         edit_step :own_home_land_property, alias: :client_owns_property
+        if FeatureFlags.property_ownership_validation.enabled?
+          edit_step :usual_property_details
+        end
         edit_step :any_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
         edit_step :dependants, alias: :dependants

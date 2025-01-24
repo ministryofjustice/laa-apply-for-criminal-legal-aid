@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe UsualPropertyDetailsAnswer do
+RSpec.describe UsualPropertyDetailsIncomeAnswer do
   subject { described_class.new(value) }
 
   let(:value) { :foo }
 
   describe '.values' do
     it 'returns all possible values' do
-      expect(described_class.values.map(&:to_s)).to eq(%w[provide_details change_answer])
+      expect(described_class.values.map(&:to_s)).to eq(%w[change_own_home_land_property change_residence_type])
     end
   end
 end

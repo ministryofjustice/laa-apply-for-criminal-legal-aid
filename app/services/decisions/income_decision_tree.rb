@@ -34,6 +34,8 @@ module Decisions
         after_frozen_income_savings_assets
       when :client_owns_property
         after_client_owns_property
+      when :usual_property_details
+        after_usual_property_details
       when :has_savings
         after_has_savings
       when :client_employment_income
@@ -227,9 +229,18 @@ module Decisions
     end
 
     def after_client_owns_property
+      return edit(:usual_property_details) if crime_application.income.change_to_usual_property_details_required?
       return after_extent_of_means_determined if extent_of_means_assessment_determined?
 
       edit(:has_savings)
+    end
+
+    def after_usual_property_details
+      if form_object.action == UsualPropertyDetailsIncomeAnswer::CHANGE_OWN_HOME_LAND_PROPERTY
+        return edit(:client_owns_property)
+      end
+
+      edit('/steps/client/residence_type')
     end
 
     def after_has_savings

@@ -28,6 +28,7 @@ module IncomeAssessment
       errors.add(:partner_income_benefits, :incomplete) unless partner_income_benefits_complete?
       errors.add(:dependants, :incomplete) unless dependants_complete?
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
+      errors.add(:usual_property_details, :invalid) unless usual_property_details_valid?
 
       errors.add(:base, :incomplete_records) if errors.present?
     end
@@ -82,6 +83,10 @@ module IncomeAssessment
       return true unless insufficient_income_declared?
 
       record.manage_without_income.present?
+    end
+
+    def usual_property_details_valid?
+      !record.change_to_usual_property_details_required?
     end
   end
 end
