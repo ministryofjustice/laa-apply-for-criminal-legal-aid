@@ -4,9 +4,9 @@ feature_flags:
     staging: true
     production: false
   property_ownership_validation:
-    local: false
+    local: true
     staging: true
-    production: false
+    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
