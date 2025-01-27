@@ -16,7 +16,7 @@ settings:
   eforms_url: https://portal.legalservices.gov.uk/oamfed/idp/initiatesso?providerid=eForms
   portal_terms_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742318
   laa_privacy_notice_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742320
-  feedback_survey_url: https://eu.surveymonkey.com/r/feedbackapplyforcriminallegalaid
+  feedback_survey_url: https://www.smartsurvey.co.uk/s/crimeapply/
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: online-support@justice.gov.uk
   case_enquiries_tel: 0300 200 2020
