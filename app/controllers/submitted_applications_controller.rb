@@ -1,6 +1,7 @@
-class SubmittedApplicationsController < DashboardController
+class SubmittedApplicationsController < CompletedApplicationsController
   include ApplicationSearchable
-  layout 'application_dashboard'
+
+  # TODO: make sure office scopting happens!!!!
 
   def index
     set_search(

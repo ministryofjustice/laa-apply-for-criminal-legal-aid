@@ -18,7 +18,7 @@ module DataTable
     private
 
     def default_attributes
-      { class: "#{brand}-table__head" }
+      { class: "#{brand}-table__head", id: 'page-to' }
     end
   end
 end

@@ -65,6 +65,9 @@ class CrimeApplicationsController < DashboardController
     { helpers.sort_by => helpers.sort_direction }
   end
 
+  alias sorted_filter_params sorting_params
+  helper_method :sorted_filter_params
+
   def new_application_params
     params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
   end

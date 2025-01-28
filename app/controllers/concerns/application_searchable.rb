@@ -1,6 +1,10 @@
 module ApplicationSearchable
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :sorted_filter_params
+  end
+
   private
 
   def search_params
@@ -28,6 +32,10 @@ module ApplicationSearchable
 
   def set_filter(default = {})
     @filter = ApplicationSearchFilter.new(search_params[:filter] || default)
+  end
+
+  def sorted_filter_params
+    { filter: @filter.params, sorting: @sorting.params }
   end
 
   def set_pagination

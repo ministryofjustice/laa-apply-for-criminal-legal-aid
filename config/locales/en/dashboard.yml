@@ -49,19 +49,8 @@ en:
       success_flash: "%{applicant_name}’s application has been deleted"
   completed_applications:
     index:
-      page_title: Your submitted applications
-      delete_button: Delete
-      table_headings:
-        applicant_name: Name
-        submitted_at: Date submitted
-        reference: Reference number
-        application_type: Type of application
-        status: Status
-        action: Action
-      status:
-        in_progress: In progress
-        submitted: Submitted
-      no_records: There are no %{status} applications
+      page_title: Your applications
+      no_records: There are no applications
     show:
       page_title: Application representation order
       heading:

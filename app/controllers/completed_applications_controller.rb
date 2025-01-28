@@ -7,11 +7,7 @@ class CompletedApplicationsController < DashboardController
   layout 'application_dashboard', only: [:index]
 
   def index
-    return @applications = [] if current_office_code.blank?
-
-    @applications = Datastore::ListApplications.new(
-      filtering: filtering_params, sorting: sorting_params, pagination: pagination_params
-    ).call&.page(params[:page])
+    raise 'Define in sub-controller'
   end
 
   def show

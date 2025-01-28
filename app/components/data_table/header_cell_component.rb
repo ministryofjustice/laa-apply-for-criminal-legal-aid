@@ -25,7 +25,13 @@ module DataTable
     def cell_content
       return name unless sortable?
 
-      button_to(name, nil, params: sorted_params)
+      button_to(name, "##{colname}", params: sorted_params, method: http_method)
+    end
+
+    def http_method
+      return :post if request.method == 'POST'
+
+      :get
     end
 
     def default_classes

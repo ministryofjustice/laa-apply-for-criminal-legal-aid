@@ -1,6 +1,5 @@
-class ReturnedApplicationsController < DashboardController
+class ReturnedApplicationsController < CompletedApplicationsController
   include ApplicationSearchable
-  layout 'application_dashboard'
 
   def index
     set_search(
