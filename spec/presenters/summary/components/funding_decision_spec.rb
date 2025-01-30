@@ -12,7 +12,8 @@ describe Summary::Components::FundingDecision, type: :component do
       maat_id: 'M123',
       interests_of_justice: interests_of_justice,
       means: means,
-      funding_decision: funding_decision,
+      funding_decision: 'refused',
+      overall_result: 'Refused - failed means',
       court_type: 'crown',
       comment: 'Decision comment'
     }
@@ -21,7 +22,7 @@ describe Summary::Components::FundingDecision, type: :component do
   let(:interests_of_justice) do
     instance_double(
       LaaCrimeSchemas::Structs::TestResult,
-      result: 'failed',
+      result: 'passed',
       details: 'IoJ details',
       assessed_by: 'Grace Nolan',
       assessed_on: Date.new(2024, 10, 8),
@@ -31,15 +32,12 @@ describe Summary::Components::FundingDecision, type: :component do
   let(:means) do
     instance_double(
       LaaCrimeSchemas::Structs::TestResult,
-      result: means_result,
+      result: 'failed',
       details: 'Means details',
       assessed_by: 'Grace Nolan',
       assessed_on: Date.new(2024, 10, 9),
     )
   end
-
-  let(:funding_decision) { 'refused' }
-  let(:means_result) { 'failed' }
 
   before { component }
 
@@ -49,37 +47,16 @@ describe Summary::Components::FundingDecision, type: :component do
         'MAAT ID', 'M123',
         'Case number', 'APP123',
         'Means test', 'Crown Court',
-        'Interests of justice (IoJ) test result', 'Failed',
+        'Interests of justice (IoJ) test result', 'Passed',
         'IoJ comment', 'IoJ details',
         'IoJ caseworker', 'Grace Nolan',
         'IoJ test date', '8 October 2024',
         'Means test result', 'Failed',
         'Means test caseworker', 'Grace Nolan',
         'Means test date', '9 October 2024',
-        'Overall result', 'Refused',
+        'Overall result', 'Refused - failed means',
         'Further information about the decision', 'Decision comment'
       )
     end
-  end
-
-  context 'when funding decision is "granted" and means "passed"' do
-    let(:funding_decision) { 'granted' }
-    let(:means_result) { 'passed' }
-
-    it { is_expected.to have_text('Granted') }
-  end
-
-  context 'when funding decision is "granted" and means "passed_with_contribution"' do
-    let(:funding_decision) { 'granted' }
-    let(:means_result) { 'passed_with_contribution' }
-
-    it { is_expected.to have_text('Granted - with contribution') }
-    it { is_expected.to have_text('Passed - with contribution') }
-  end
-
-  context 'when funding decision is "granted" and means "failed"' do
-    let(:funding_decision) { 'granted' }
-
-    it { is_expected.to have_text('Granted - failed means test') }
   end
 end

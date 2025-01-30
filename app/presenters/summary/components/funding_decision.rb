@@ -35,8 +35,8 @@ module Summary
           Components::DateAnswer.new(
             :funding_decision_means_date, funding_decision.means&.assessed_on
           ),
-          Components::ValueAnswer.new(
-            :funding_decision_overall_result, overall_result
+          Components::FreeTextAnswer.new(
+            :funding_decision_overall_result, funding_decision.overall_result
           ),
           Components::FreeTextAnswer.new(
             :funding_decision_further_info, funding_decision.comment
@@ -50,26 +50,6 @@ module Summary
 
       def status_tag
         nil
-      end
-
-      # TODO: source from datastore once decision on simplified statuses resolved
-      def overall_result
-        return 'granted_failed_means' if granted? && failed_means?
-        return 'granted_with_contribution' if granted? && with_contribution?
-
-        record.funding_decision
-      end
-
-      def granted?
-        record.funding_decision == 'granted'
-      end
-
-      def failed_means?
-        record.means&.result == 'failed'
-      end
-
-      def with_contribution?
-        record.means&.result == 'passed_with_contribution'
       end
 
       def funding_decision
