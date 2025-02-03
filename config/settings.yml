@@ -7,6 +7,11 @@ feature_flags:
     local: true
     staging: true
     production: true
+  show_funding_decisions:
+    test: true
+    local: true
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
