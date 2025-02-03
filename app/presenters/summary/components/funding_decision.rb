@@ -35,7 +35,7 @@ module Summary
           Components::DateAnswer.new(
             :funding_decision_means_date, funding_decision.means&.assessed_on
           ),
-          Components::FreeTextAnswer.new(
+          Components::ValueAnswer.new(
             :funding_decision_overall_result, funding_decision.overall_result
           ),
           Components::FreeTextAnswer.new(

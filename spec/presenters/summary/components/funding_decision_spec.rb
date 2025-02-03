@@ -13,7 +13,7 @@ describe Summary::Components::FundingDecision, type: :component do
       interests_of_justice: interests_of_justice,
       means: means,
       funding_decision: 'refused',
-      overall_result: 'Refused - failed means',
+      overall_result: 'refused_failed_means',
       court_type: 'crown',
       comment: 'Decision comment'
     }

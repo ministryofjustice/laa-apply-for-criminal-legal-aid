@@ -733,9 +733,12 @@ en:
         question: Overall result
         answers:
           granted: Granted
-          refused: Refused
-          granted_failed_means: Granted - failed means test
           granted_with_contribution: Granted - with contribution
+          granted_failed_means: Granted - failed means
+          refused: Refused
+          refused_failed_ioj: Refused - failed IoJ
+          refused_failed_ioj_and_means: Refused - failed IoJ & means
+          refused_failed_means: Refused - failed means
 
       funding_decision_further_info:
         question: Further information about the decision
