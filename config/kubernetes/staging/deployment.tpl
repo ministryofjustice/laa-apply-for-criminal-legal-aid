@@ -71,7 +71,7 @@ spec:
           - configMapRef:
               name: configmap-staging
           - secretRef:
-              name: secrets-staging
+              name: laa-apply-for-criminal-legal-aid-secrets
         env:
           #
           # secrets created by `certificates.yml`
