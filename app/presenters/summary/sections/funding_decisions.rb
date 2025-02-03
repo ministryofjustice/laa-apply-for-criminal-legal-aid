@@ -6,6 +6,8 @@ module Summary
       end
 
       def show?
+        return false unless FeatureFlags.show_funding_decisions.enabled?
+
         crime_application.status == ApplicationStatus::SUBMITTED && funding_decisions.any? && super
       end
 
