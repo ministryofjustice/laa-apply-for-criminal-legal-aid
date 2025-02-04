@@ -71,7 +71,7 @@ spec:
           - configMapRef:
               name: configmap-production
           - secretRef:
-              name: secrets-production
+              name: laa-apply-for-criminal-legal-aid-secrets
         env:
           #
           # secrets created by `certificates.yml`
