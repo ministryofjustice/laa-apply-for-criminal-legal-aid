@@ -247,7 +247,7 @@ RSpec.describe Decisions::ClientDecisionTree do
       allow(crime_application).to receive(:date_stamp)
     end
 
-    context 'when the case type is not appeal to crown court' do
+    context 'when the case type is not appeal to Crown Court' do
       let(:case_type) { CaseType::INDICTABLE }
 
       it { is_expected.to have_destination(:residence_type, :edit, id: crime_application) }

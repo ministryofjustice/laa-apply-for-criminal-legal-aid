@@ -607,10 +607,10 @@ en:
           summary_only: Summary only
           either_way: Either way
           indictable: Indictable
-          already_in_crown_court: Trial already in crown court
+          already_in_crown_court: Trial already in Crown Court
           committal: Committal for sentence
-          appeal_to_crown_court: Appeal to crown court
-          appeal_to_crown_court_with_changes: Appeal to crown court with changes in financial circumstances
+          appeal_to_crown_court: Appeal to Crown Court
+          appeal_to_crown_court_with_changes: Appeal to Crown Court with changes in financial circumstances
       steps_shared_nino_form:
         nino: What is their National Insurance number?
         arc: What is their ARC number?

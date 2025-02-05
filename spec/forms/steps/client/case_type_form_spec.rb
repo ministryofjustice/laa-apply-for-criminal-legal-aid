@@ -35,7 +35,7 @@ RSpec.describe Steps::Client::CaseTypeForm do
       end
     end
 
-    context 'when `case_type` is `appeal to crown court with changes`' do
+    context 'when `case_type` is `appeal to Crown Court with changes`' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s }
 
       it 'is invalid' do
