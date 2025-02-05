@@ -43,7 +43,7 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         subject.validate
       end
 
-      context 'when application is appeal to crown court no changes' do
+      context 'when application is appeal to Crown Court no changes' do
         let(:appeal_no_changes?) { true }
 
         it 'adds any errors for details and case type' do
