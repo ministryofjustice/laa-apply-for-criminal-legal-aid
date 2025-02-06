@@ -703,11 +703,14 @@ en:
         question: MAAT ID
       funding_decision_case_number:
         question: Case number
-      funding_decision_court_type:
+      funding_decision_assessment_rules:
         question: Means test
         answers:
-          crown: Crown Court
-          magistrates: Magistrates Court
+          appeal_to_crown_court: Appeal to Crown Court
+          committal_for_sentence: Committal for sentence
+          crown_court: Crown Court
+          magistrates_court: Magistrates Court
+          non_means: Non-means
       funding_decision_ioj_result:
         question: Interests of justice (IoJ) test result
         answers:
@@ -737,8 +740,9 @@ en:
           granted_failed_means: Granted - failed means
           refused: Refused
           refused_failed_ioj: Refused - failed IoJ
-          refused_failed_ioj_and_means: Refused - failed IoJ & means
+          refused_failed_ioj_and_means: Refused - failed IoJ and means
           refused_failed_means: Refused - failed means
+          refused_ineligible: Refused - ineligible
 
       funding_decision_further_info:
         question: Further information about the decision
