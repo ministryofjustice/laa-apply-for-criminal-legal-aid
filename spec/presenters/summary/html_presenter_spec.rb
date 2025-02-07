@@ -255,7 +255,7 @@ describe Summary::HtmlPresenter do
           'reference' => nil,
           'maat_id' => 6_060_001,
           'case_id' => 'NOL123-123123',
-          'court_type' => 'crown',
+          'assessment_rules' => 'crown_court',
           'interests_of_justice' => {
             'result' => 'passed',
             'details' => 'Loss of liberty',
@@ -268,7 +268,7 @@ describe Summary::HtmlPresenter do
             'assessed_on' => '2022-11-11'
           },
           'funding_decision' => 'refused',
-          'overall_result' => 'Refused',
+          'overall_result' => 'refused_ineligible',
         'comment' => 'Ineligible with current income'
         }
       ]

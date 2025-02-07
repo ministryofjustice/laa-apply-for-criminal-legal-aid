@@ -12,7 +12,7 @@ module Summary
             :funding_decision_case_number, funding_decision.case_id
           ),
           Components::ValueAnswer.new(
-            :funding_decision_court_type, funding_decision.court_type
+            :funding_decision_assessment_rules, funding_decision.assessment_rules
           ),
           Components::ValueAnswer.new(
             :funding_decision_ioj_result, funding_decision.interests_of_justice&.result
