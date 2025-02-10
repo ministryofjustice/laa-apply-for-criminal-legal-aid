@@ -14,7 +14,7 @@ describe Summary::Components::FundingDecision, type: :component do
       means: means,
       funding_decision: 'refused',
       overall_result: 'refused_failed_means',
-      court_type: 'crown',
+      assessment_rules: 'crown_court',
       comment: 'Decision comment'
     }
   end
