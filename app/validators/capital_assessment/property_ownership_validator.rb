@@ -5,40 +5,27 @@ module CapitalAssessment
     def validate(form)
       @form = form
 
-      validate_applicant_ownership(form) unless other_owners?(form)
-      validate_other_owners(form) if other_owners?(form)
-      return unless form.include_partner_in_means_assessment? && !valid_ownership_total?(form)
-
-      validate_partner_ownership(form) unless other_owners?(form)
+      other_owners? ? validate_other_owners : validate_ownership
     end
 
     private
 
-    def validate_applicant_ownership(form)
-      return if valid_ownership_total?(form)
-
-      form.errors.add :percentage_applicant_owned, error_key(form)
+    def validate_ownership
+      return if valid_ownership_total?
+      form.errors.add :percentage_applicant_owned, error_key
+      form.errors.add :percentage_partner_owned, error_key if partner_included?
     end
 
-    def validate_partner_ownership(form)
-      form.errors.add :percentage_partner_owned, error_key(form)
+    def validate_other_owners
+      form.errors.add :has_other_owners, error_key unless valid_ownership_total?
     end
 
-    def validate_other_owners(form)
-      return if valid_ownership_total?(form)
-
-      form.errors.add :has_other_owners, error_key(form)
+    def valid_ownership_total?
+      total_percentages = all_percentage_ownerships.sum
+      other_owners? ? total_percentages < 100 : total_percentages == 100
     end
 
-    def valid_ownership_total?(form)
-      percentage_ownerships = all_percentage_ownerships(form)
-
-      return percentage_ownerships.sum < 100 if other_owners?(form)
-
-      percentage_ownerships.sum == 100
-    end
-
-    def all_percentage_ownerships(form)
+    def all_percentage_ownerships
       percentage_ownerships = []
       percentage_ownerships << form.percentage_applicant_owned unless form.percentage_applicant_owned.nil?
       percentage_ownerships << form.percentage_partner_owned unless form.percentage_partner_owned.nil?
@@ -46,12 +33,17 @@ module CapitalAssessment
       percentage_ownerships
     end
 
-    def other_owners?(form)
+    def partner_included?
+      form.include_partner_in_means_assessment?
+    end
+
+    def other_owners?
       form.has_other_owners&.yes?
     end
 
-    def error_key(form)
-      return :invalid_when_other_owners if other_owners?(form)
+    def error_key
+      return :invalid_when_other_owners if other_owners?
+      return :invalid_with_no_partner unless partner_included?
 
       :invalid
     end

@@ -967,6 +967,7 @@ en:
               not_a_number: How much there is left to pay on the mortgage must be a number, like 50
             percentage_applicant_owned:
               invalid: Percentages entered need to total 100% - check percentage owned by partner
+              invalid_with_no_partner: Percentages entered need to total 100%
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
               blank: Enter the percentage of the property your client owns
               not_a_number: &property_client_percentage_error The percentage of the property your client owns must be a number between 0 and 100
