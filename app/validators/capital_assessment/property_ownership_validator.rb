@@ -12,6 +12,7 @@ module CapitalAssessment
 
     def validate_ownership
       return if valid_ownership_total?
+
       form.errors.add :percentage_applicant_owned, error_key
       form.errors.add :percentage_partner_owned, error_key if partner_included?
     end
