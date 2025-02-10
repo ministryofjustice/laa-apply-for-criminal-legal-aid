@@ -184,7 +184,7 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
       end
     end
 
-    context 'when case is in crown court' do
+    context 'when case is in Crown Court' do
       let(:case_type) { CaseType::ALREADY_IN_CROWN_COURT.to_s }
 
       it 'the application does not require evidence validation' do
@@ -202,7 +202,7 @@ RSpec.describe SupportingEvidence::AnswersValidator, type: :model do
       end
     end
 
-    context 'when the case is neither indictable or in crown court and client is not remanded is custody' do
+    context 'when the case is neither indictable or in Crown Court and client is not remanded is custody' do
       before do
         allow(kase).to receive_messages(is_client_remanded: 'no')
       end

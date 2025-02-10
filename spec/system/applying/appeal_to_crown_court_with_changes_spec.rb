@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid' do
-  describe 'Submitting an appeal to crown court (with changes) application' do
+  describe 'Submitting an appeal to Crown Court (with changes) application' do
     include_context 'when logged in'
 
     before do
@@ -23,7 +23,7 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/client/case_type
-      choose('Appeal to crown court')
+      choose('Appeal to Crown Court')
       save_and_continue
 
       # steps/client/appeal_details

@@ -212,7 +212,7 @@ describe Summary::Sections::CaseDetails do
       end
     end
 
-    context 'for appeal to crown court' do
+    context 'for appeal to Crown Court' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT }
       let(:appeal_lodged_date) { Date.new(2018, 11, 22) }
 
