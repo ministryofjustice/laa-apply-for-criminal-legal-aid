@@ -14,11 +14,11 @@ module CapitalAssessment
       return if valid_ownership_total?
 
       form.errors.add :percentage_applicant_owned, error_key
-      form.errors.add :percentage_partner_owned, error_key if partner_included?
+      form.errors.add :percentage_partner_owned, :invalid if partner_included?
     end
 
     def validate_other_owners
-      form.errors.add :has_other_owners, error_key unless valid_ownership_total?
+      form.errors.add :has_other_owners, :invalid_when_other_owners unless valid_ownership_total?
     end
 
     def valid_ownership_total?
@@ -43,10 +43,7 @@ module CapitalAssessment
     end
 
     def error_key
-      return :invalid_when_other_owners if other_owners?
-      return :invalid_with_no_partner unless partner_included?
-
-      :invalid
+      partner_included? ? :invalid : :invalid_with_no_partner
     end
   end
 end
