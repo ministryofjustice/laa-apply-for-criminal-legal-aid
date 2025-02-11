@@ -50,7 +50,7 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
 
         it 'is invalid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid)).to be(true)
+          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid_with_no_partner)).to be(true)
         end
       end
     end
@@ -82,8 +82,7 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
       context 'when percentage ownership totals 100' do
         it 'is invalid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid_when_other_owners)).to be(true)
-          expect(subject.errors.of_kind?(:percentage_partner_owned, :invalid_when_other_owners)).to be(true)
+          expect(subject.errors.of_kind?(:has_other_owners, :invalid_when_other_owners)).to be(true)
         end
       end
 
@@ -92,8 +91,7 @@ RSpec.describe CapitalAssessment::PropertyOwnershipValidator, type: :model do
 
         it 'is invalid' do
           expect(subject).not_to be_valid
-          expect(subject.errors.of_kind?(:percentage_applicant_owned, :invalid_when_other_owners)).to be(true)
-          expect(subject.errors.of_kind?(:percentage_partner_owned, :invalid_when_other_owners)).to be(true)
+          expect(subject.errors.of_kind?(:has_other_owners, :invalid_when_other_owners)).to be(true)
         end
       end
 
