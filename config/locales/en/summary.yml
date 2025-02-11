@@ -745,7 +745,7 @@ en:
           refused_ineligible: Refused - ineligible
 
       funding_decision_further_info:
-        question: Further information about the decision
+        question: Comments
       # END funding decisions section
 
       # BEGIN declarations section
