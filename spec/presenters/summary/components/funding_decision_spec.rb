@@ -55,7 +55,7 @@ describe Summary::Components::FundingDecision, type: :component do
         'Means test caseworker', 'Grace Nolan',
         'Means test date', '9 October 2024',
         'Overall result', 'Refused - failed means',
-        'Further information about the decision', 'Decision comment'
+        'Comments', 'Decision comment'
       )
     end
   end
