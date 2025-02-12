@@ -141,8 +141,7 @@ module Decisions
         return edit('/steps/client/residence_type')
       end
 
-      edit(:residential_property,
-           property_id: form_object.residential_property)
+      edit(:residential_property, property_id: form_object.residential_property)
     end
 
     # TODO: : Fix nested conditions

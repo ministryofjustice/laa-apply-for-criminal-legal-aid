@@ -52,7 +52,10 @@ class Capital < ApplicationRecord
   end
 
   def has_no_properties
-    super if requires_full_capital?
+    return unless requires_full_capital?
+    return unless properties.empty?
+
+    super
   end
 
   def has_no_savings

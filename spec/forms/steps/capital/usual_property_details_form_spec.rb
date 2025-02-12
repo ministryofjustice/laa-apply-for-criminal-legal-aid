@@ -62,7 +62,6 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
     let(:residential_property) { instance_double(Property, property_type: PropertyType::RESIDENTIAL.to_s) }
 
     before do
-      allow(capital).to receive(:update).with(has_no_properties: nil).and_return(true)
       allow(properties).to receive(:create!)
         .with(property_type: PropertyType::RESIDENTIAL.to_s).and_return(residential_property)
     end
@@ -73,7 +72,6 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
         form.save
       end
 
-      it { expect(capital).not_to have_received(:update) }
       it { expect(properties).not_to have_received(:create!) }
       it { expect(form.residential_property).to be_nil }
     end
@@ -84,7 +82,6 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
         form.save
       end
 
-      it { expect(capital).to have_received(:update).with(has_no_properties: nil) }
       it { expect(properties).to have_received(:create!).with(property_type: PropertyType::RESIDENTIAL.to_s) }
       it { expect(form.residential_property).to eq(residential_property) }
     end

@@ -20,10 +20,7 @@ module Steps
       def persist!
         return true unless action == UsualPropertyDetailsCapitalAnswer::PROVIDE_DETAILS
 
-        ::CrimeApplication.transaction do
-          crime_application.capital.update(has_no_properties: nil)
-          @residential_property = crime_application.properties.create!(property_type: PropertyType::RESIDENTIAL.to_s)
-        end
+        @residential_property = crime_application.properties.create!(property_type: PropertyType::RESIDENTIAL.to_s)
       end
     end
   end
