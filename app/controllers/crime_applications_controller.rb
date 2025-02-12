@@ -4,10 +4,23 @@ class CrimeApplicationsController < DashboardController
 
   layout 'application_dashboard', only: [:index]
 
+  helper_method :sorted_filter_params
+
   def index
+    default = { sort_by: 'created_at' }
+    @sorting = InProgressSorting.new(search_params[:sorting] || default)
+
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(**sorting_params)
+      CrimeApplication.order(@sorting.active_record)
     ).page params[:page]
+  end
+
+  def search_params
+    params.permit(
+      :page,
+      :per_page,
+      sorting: ApplicationSearchSorting.attribute_names
+    )
   end
 
   def new

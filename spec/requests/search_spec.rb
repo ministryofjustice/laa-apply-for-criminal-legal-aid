@@ -37,7 +37,7 @@ RSpec.describe 'Search', :authorized do
   end
 
   let(:body) do
-    { 'search' => { 'search_text' => '', 'status' => %w[submitted returned], 'office_code' => '1A123B' },
+    { 'search' => { 'search_text' => '', 'status' => %w[submitted returned], 'review_status' => nil, 'office_code' => '1A123B' },
      'pagination' => { 'page' => nil, 'per_page' => nil },
      'sorting' => { 'sort_direction' => 'descending', 'sort_by' => 'submitted_at' } }.to_json
   end

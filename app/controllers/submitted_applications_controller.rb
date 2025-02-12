@@ -1,12 +1,15 @@
 class SubmittedApplicationsController < CompletedApplicationsController
-  include ApplicationSearchable
-
-  # TODO: make sure office scopting happens!!!!
+  include DatastoreApi::Sorting
 
   def index
-    set_search(
-      default_filter: { review_status: %w[application_received ready_for_assessment] },
-      default_sorting: { sort_by: 'submitted_at', sort_direction: 'descending' }
-    )
+    set_search(filter:)
+  end
+
+  private
+
+  def filter
+    return { status: %w[submitted returned] } if FeatureFlags.decided_applications_tab.disabled?
+
+    { review_status: %w[application_received ready_for_assessment] }
   end
 end

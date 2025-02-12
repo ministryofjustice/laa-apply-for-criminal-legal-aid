@@ -4,7 +4,7 @@ module DataTable
       DataTable::HeaderRowComponent.new(sorting: @sorting, filter: @filter, classes: classes)
     }
 
-    def initialize(sorting:, filter: {}, classes: [])
+    def initialize(sorting:, filter: nil, classes: [])
       @sorting = sorting
       @filter = filter
 

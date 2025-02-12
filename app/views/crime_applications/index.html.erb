@@ -12,23 +12,15 @@
       </h2>
     <% else %>
       <table class="govuk-table app-dashboard-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('created_at') %>">
-              <%=
-                button_to(
-                  t('.table_headings.created_at'),
-                  crime_applications_path, method: :get,
-                  params: { sort_by: 'created_at', sort_direction: flipped_sort_direction }
-                )
-              %>
-            </th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.application_type') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
-          </tr>
-        </thead>
+
+        <%= render DataTable::HeadComponent.new(sorting: @sorting) do |head|
+              head.with_row do |row|
+                row.with_cell(colname: :applicant_name)
+                row.with_cell(colname: :created_at)
+                row.with_cell(colname: :reference)
+                row.with_cell(colname: :application_type)
+              end
+            end %>
         <tbody class="govuk-table__body">
           <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
             <tr class="govuk-table__row">

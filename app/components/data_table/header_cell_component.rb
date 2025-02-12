@@ -62,8 +62,13 @@ module DataTable
     end
 
     def sorted_params
+      return sorting_params unless filter
+
+      { filter: filter.params }.merge(sorting_params)
+    end
+
+    def sorting_params
       {
-        filter: filter.params,
         sorting: {
           sort_by: colname.to_s,
           sort_direction: sorting.reverse_direction

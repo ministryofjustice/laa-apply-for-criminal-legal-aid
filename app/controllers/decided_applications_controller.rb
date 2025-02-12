@@ -1,10 +1,7 @@
 class DecidedApplicationsController < CompletedApplicationsController
-  include ApplicationSearchable
+  include DatastoreApi::Sorting
 
   def index
-    set_search(
-      default_filter: { review_status: ['assessment_completed'] },
-      default_sorting: { sort_by: 'submitted_at', sort_direction: 'descending' }
-    )
+    set_search(filter: { review_status: %w[assessment_completed] })
   end
 end
