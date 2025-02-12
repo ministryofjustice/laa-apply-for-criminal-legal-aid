@@ -1,3 +1,5 @@
+require 'laa_crime_schemas'
+
 class ApplicationSearchFilter
   include ActiveModel::Model
   include ActiveModel::Attributes
@@ -5,12 +7,14 @@ class ApplicationSearchFilter
   DATASTORE_FILTERS = %i[
     search_text
     status
+    review_status
     office_code
   ].freeze
 
   attribute :search_text, :string
   attribute :office_code, :string
   attribute :status, array: true
+  attribute :review_status, array: true
 
   def datastore_params
     DATASTORE_FILTERS.each_with_object({}) do |filter, params|
@@ -29,6 +33,10 @@ class ApplicationSearchFilter
   end
 
   private
+
+  def review_status_datastore_param
+    { review_status: }
+  end
 
   def search_text_datastore_param
     { search_text: }

@@ -6,16 +6,36 @@
                   'aria-current': aria_current_page(:in_progress) %>
     </li>
 
-    <li class="moj-sub-navigation__item" tabindex="-1">
-      <%= link_to t('.submitted'), completed_crime_applications_path(anchor: :tab),
-                  class: 'moj-sub-navigation__link',
-                  'aria-current': aria_current_page(:submitted) %>
-    </li>
+    <% if FeatureFlags.decided_applications_tab.disabled? %>
+      <li class="moj-sub-navigation__item" tabindex="-1">
+        <%= link_to t('.submitted'), completed_crime_applications_path(anchor: :tab),
+                    class: 'moj-sub-navigation__link',
+                    'aria-current': aria_current_page(:submitted) %>
+      </li>
 
-    <li class="moj-sub-navigation__item" tabindex="-1">
-      <%= link_to t('.returned', count: returned_count), completed_crime_applications_path(anchor: :tab, q: :returned),
-                  class: 'moj-sub-navigation__link',
-                  'aria-current': aria_current_page(:returned) %>
-    </li>
+      <li class="moj-sub-navigation__item" tabindex="-1">
+        <%= link_to t('.returned', count: returned_count), completed_crime_applications_path(anchor: :tab, q: :returned),
+                    class: 'moj-sub-navigation__link',
+                    'aria-current': aria_current_page(:returned) %>
+      </li>
+    <% else %>
+      <li class="moj-sub-navigation__item" tabindex="-1">
+        <%= link_to t('.submitted'), submitted_applications_path(anchor: :tab),
+                    class: 'moj-sub-navigation__link',
+                    aria: { current: current_page?(controller: :submitted_applications) ? 'page' : nil }
+                  %>
+      </li>
+
+      <li class="moj-sub-navigation__item" tabindex="-1">
+        <%= link_to t('.returned', count: returned_count), returned_applications_path(anchor: :tab),
+                    class: 'moj-sub-navigation__link',
+                    aria: { current: current_page?(controller: :returned_applications) ? 'page' : nil} %>
+      </li>
+      <li class="moj-sub-navigation__item" tabindex="-1">
+        <%= link_to t('.decided'), decided_applications_path(anchor: :tab),
+                    class: 'moj-sub-navigation__link',
+                    aria: { current: current_page?(controller: :decided_applications) ? 'page' : nil} %>
+      </li>
+    <% end %>
   </ul>
 </nav>

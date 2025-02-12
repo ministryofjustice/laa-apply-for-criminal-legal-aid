@@ -5,8 +5,8 @@ en:
       page_title: Are you making a new application or telling us about a change in financial circumstances?
       heading: Are you making a new application or telling us about a change in financial circumstances?
       options:
-        'no': 'New application'
-        'yes': 'A change in financial circumstances'
+        "no": "New application"
+        "yes": "A change in financial circumstances"
 
     index:
       page_title: Your applications
@@ -74,7 +74,7 @@ en:
       print_application: Print application
       helpline:
         intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
-        phone: 'Telephone: 0300 200 2020'
+        phone: "Telephone: 0300 200 2020"
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
       action:
         create_pse: Upload supporting evidence
@@ -96,7 +96,7 @@ en:
           <p class="govuk-body">
             A case is split into more than one when the Crown Prosecution Service decides offences are not related enough to be tried at the same time.
           </p>
-      caseworker_details: 'The caseworker who returned this application says: %{details}'
+      caseworker_details: "The caseworker who returned this application says: %{details}"
       action:
         default: Update application
         split_case: Add justification
@@ -116,6 +116,7 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
+      decided: Decided
     errors:
       datastore:
         unavailable:
@@ -127,6 +128,7 @@ en:
         in_progress: There are no applications in progress
         submitted: There are no submitted applications
         returned: There are no returned applications
+        decided: There are no decided applications
 
   kaminari: &kaminari
     paginator:
