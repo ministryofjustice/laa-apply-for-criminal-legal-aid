@@ -212,7 +212,6 @@ RSpec.describe Capital, type: :model do
     let(:attribute_names) do
       %i[
         has_national_savings_certificates
-        has_no_properties
         has_no_savings
         has_no_investments
         has_premium_bonds
@@ -331,6 +330,42 @@ RSpec.describe Capital, type: :model do
         end
       end
       # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
+  describe '#has_no_properties' do
+    subject(:has_no_properties) { capital.has_no_properties }
+
+    let(:crime_application) { CrimeApplication.new(properties:) }
+    let(:capital) { described_class.new(crime_application:) }
+    let(:properties) { [] }
+
+    before { capital.has_no_properties = 'yes' }
+
+    context 'when a full capital assessment is not required' do
+      before do
+        allow(MeansStatus).to receive(:full_capital_required?).and_return(false)
+      end
+
+      it { expect(has_no_properties).to be_nil }
+    end
+
+    context 'when a full capital assessment is required' do
+      before do
+        allow(MeansStatus).to receive(:full_capital_required?).and_return(true)
+      end
+
+      context 'and properties have been added' do
+        let(:properties) { [Property.new(property_type: 'land')] }
+
+        it { expect(has_no_properties).to be_nil }
+      end
+
+      context 'and no properties have been added' do
+        let(:properties) { [] }
+
+        it { expect(has_no_properties).to eq('yes') }
+      end
     end
   end
 

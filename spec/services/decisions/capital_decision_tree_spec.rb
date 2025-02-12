@@ -12,8 +12,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
       capital: capital,
       partner_detail: partner_detail,
       partner: nil,
-      non_means_tested?: false,
-      properties: properties
+      non_means_tested?: false
     )
   end
 
@@ -23,7 +22,6 @@ RSpec.describe Decisions::CapitalDecisionTree do
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
   let(:involvement_in_case) { nil }
   let(:conflict_of_interest) { nil }
-  let(:properties) { Property.none }
 
   before do
     allow(form_object).to receive_messages(crime_application:)
@@ -411,14 +409,15 @@ RSpec.describe Decisions::CapitalDecisionTree do
 
     context 'and they want to provide the details of the property' do
       let(:action) { UsualPropertyDetailsCapitalAnswer::PROVIDE_DETAILS }
-      let(:property) { instance_double(Property, property_type: 'residential') }
+      let(:residential_property) { instance_double(Property, property_type: 'residential') }
 
       before do
-        allow(properties).to receive(:create!).and_return(property)
+        allow(form_object).to receive(:residential_property).and_return(residential_property)
       end
 
       it 'redirects to `residential_property`' do
-        expect(subject).to have_destination(:residential_property, :edit, id: crime_application, property_id: property)
+        expect(subject).to have_destination(:residential_property, :edit, id: crime_application,
+property_id: residential_property)
       end
     end
 
