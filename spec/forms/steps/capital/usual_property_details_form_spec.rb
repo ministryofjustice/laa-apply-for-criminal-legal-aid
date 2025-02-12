@@ -7,7 +7,8 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
   let(:home_address) { nil }
   let(:residence_type) { nil }
   let(:capital) { instance_double(Capital) }
-  let(:crime_application) { instance_double(CrimeApplication, applicant:, capital:) }
+  let(:properties) { class_double(Property) }
+  let(:crime_application) { instance_double(CrimeApplication, applicant:, capital:, properties:) }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:action, :blank, 'Select what you want to do next') }
@@ -54,6 +55,38 @@ RSpec.describe Steps::Capital::UsualPropertyDetailsForm do
       let(:residence_type) { ResidenceType::JOINT_OWNED.to_s }
 
       it { expect(form.residence_ownership).to eq(ResidenceType::JOINT_OWNED.to_s) }
+    end
+  end
+
+  describe '#save' do
+    let(:residential_property) { instance_double(Property, property_type: PropertyType::RESIDENTIAL.to_s) }
+
+    before do
+      allow(capital).to receive(:update).with(has_no_properties: nil).and_return(true)
+      allow(properties).to receive(:create!)
+        .with(property_type: PropertyType::RESIDENTIAL.to_s).and_return(residential_property)
+    end
+
+    context 'when the action is `change_answer`' do
+      before do
+        form.action = 'change_answer'
+        form.save
+      end
+
+      it { expect(capital).not_to have_received(:update) }
+      it { expect(properties).not_to have_received(:create!) }
+      it { expect(form.residential_property).to be_nil }
+    end
+
+    context 'when the action is `provide_details`' do
+      before do
+        form.action = 'provide_details'
+        form.save
+      end
+
+      it { expect(capital).to have_received(:update).with(has_no_properties: nil) }
+      it { expect(properties).to have_received(:create!).with(property_type: PropertyType::RESIDENTIAL.to_s) }
+      it { expect(form.residential_property).to eq(residential_property) }
     end
   end
 end

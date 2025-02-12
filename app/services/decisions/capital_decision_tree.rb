@@ -142,7 +142,7 @@ module Decisions
       end
 
       edit(:residential_property,
-           property_id: crime_application.properties.create!(property_type: PropertyType::RESIDENTIAL.to_s))
+           property_id: form_object.residential_property)
     end
 
     # TODO: : Fix nested conditions
