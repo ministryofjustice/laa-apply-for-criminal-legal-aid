@@ -11,7 +11,7 @@ class CrimeApplicationsController < DashboardController
     @sorting = InProgressSorting.new(search_params[:sorting] || default)
 
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(@sorting.active_record)
+      CrimeApplication.order(**@sorting.order_params)
     ).page params[:page]
   end
 

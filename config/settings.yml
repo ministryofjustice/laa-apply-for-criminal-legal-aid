@@ -13,14 +13,8 @@ feature_flags:
     staging: true
     production: false
   decided_applications_tab:
-<<<<<<< HEAD
     local: true
-    staging: true
-=======
-    # local: false
-    local: false
     staging: false
->>>>>>> b734228c (wip)
     production: false
 
 # NOTE: consider if the setting you are adding here

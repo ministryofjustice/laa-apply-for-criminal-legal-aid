@@ -2,21 +2,26 @@ class InProgressSorting
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  SORTABLE_COLUMNS = %w[
-    application_type
-    created_at
-    reference
-  ].freeze
+  SORT_COLUMNS = {
+    applicant_name: [:last_name, :first_name],
+    application_type: [:application_type],
+    reference: [:reference],
+    created_at: [:created_at],
+  }.freeze
 
-  # FIXME: scope these values by sort_by !!!!!!!
-  #
-  DEFAULT_SORT_BY = 'submitted_at'.freeze
-  DEFAULT_SORT_DIRECTION = 'asc'.freeze
+  DEFAULT_SORT_BY = :created_at
+  DEFAULT_DIRECTION = :desc
 
-  attribute :sort_direction, :string, default: DEFAULT_SORT_DIRECTION
   attribute :sort_by, :string, default: DEFAULT_SORT_BY
+  attribute :sort_direction, :string, default: DEFAULT_DIRECTION
 
-  alias params attributes
+  def apply_to_scope(scope)
+    scope.order(**order_params)
+  end
+
+  def order_params
+    column_names.index_with { sort_direction.to_sym }
+  end
 
   def reverse_direction
     return 'asc' if sort_direction == 'desc'
@@ -24,7 +29,13 @@ class InProgressSorting
     'desc'
   end
 
-  def active_record
-    Hash[sort_by, sort_direction]
+  private
+
+  def column_names
+    SORT_COLUMNS.fetch(sort_by.to_sym)
+  end
+
+  def direction
+    SORT_DIRECTIONS.fetch(sort_direction.to_sym)
   end
 end
