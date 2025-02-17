@@ -2,7 +2,7 @@ module Summary
   module Components
     class PercentageAnswer < BaseAnswer
       def answer_text
-        number_to_percentage(value, precision: 2) if value
+        number_to_percentage(value, strip_insignificant_zeros: true)
       end
     end
   end
