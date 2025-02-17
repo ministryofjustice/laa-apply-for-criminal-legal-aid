@@ -10,7 +10,7 @@ class ApplicationSearchSorting
   ].freeze
 
   DEFAULT_SORT_BY = 'submitted_at'.freeze
-  DEFAULT_SORT_DIRECTION = 'ascending'.freeze
+  DEFAULT_SORT_DIRECTION = 'descending'.freeze
 
   attribute :sort_direction, :string, default: DEFAULT_SORT_DIRECTION
   attribute :sort_by, :string, default: DEFAULT_SORT_BY
@@ -21,5 +21,9 @@ class ApplicationSearchSorting
     return 'ascending' if sort_direction == 'descending'
 
     'descending'
+  end
+
+  def sortable_columns
+    SORTABLE_COLUMNS
   end
 end

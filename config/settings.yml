@@ -13,7 +13,8 @@ feature_flags:
     staging: true
     production: false
   decided_applications_tab:
-    local: true
+    test: false
+    local: false
     staging: false
     production: false
 

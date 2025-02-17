@@ -8,7 +8,7 @@ class SubmittedApplicationsController < CompletedApplicationsController
   private
 
   def filter
-    return { status: %w[submitted returned] } if FeatureFlags.decided_applications_tab.disabled?
+    return { status: %w[submitted returned] } unless FeatureFlags.decided_applications_tab.enabled?
 
     { review_status: %w[application_received ready_for_assessment] }
   end

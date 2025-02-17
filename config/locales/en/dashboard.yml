@@ -9,12 +9,19 @@ en:
   table_headings:
     action: Action
     applicant_name: Name
-    application_status: Application status
     application_type: Application type
     created_at: Start date
     reference: LAA reference
+    reviewed_at: Status
+    review_status: Status
     status: Status
     submitted_at: Date submitted
+  review_status:
+    application_received: Submitted
+    assessment_completed: Decided
+    ready_for_assessment: Submitted
+    returned_to_provider: Returned
+
   crime_applications:
     new:
       page_title: Are you making a new application or telling us about a change in financial circumstances?

@@ -3,39 +3,52 @@ class InProgressSorting
   include ActiveModel::Attributes
 
   SORT_COLUMNS = {
-    applicant_name: [:last_name, :first_name],
-    application_type: [:application_type],
-    reference: [:reference],
-    created_at: [:created_at],
+    'applicant_name' => [:last_name, :first_name],
+    'application_type' => [:application_type],
+    'reference' => [:reference],
+    'created_at' => [:created_at]
   }.freeze
 
-  DEFAULT_SORT_BY = :created_at
-  DEFAULT_DIRECTION = :desc
+  SORT_DIRECTIONS = {
+    'descending' => :desc,
+    'ascending' => :asc
+  }.freeze
+
+  DEFAULT_SORT_BY = 'created_at'
+  DEFAULT_DIRECTION = 'descending'
 
   attribute :sort_by, :string, default: DEFAULT_SORT_BY
   attribute :sort_direction, :string, default: DEFAULT_DIRECTION
 
-  def apply_to_scope(scope)
-    scope.order(**order_params)
-  end
-
-  def order_params
-    column_names.index_with { sort_direction.to_sym }
+  def order_scope
+    column_names.index_with { SORT_DIRECTIONS.fetch(sort_direction) }
   end
 
   def reverse_direction
-    return 'asc' if sort_direction == 'desc'
+    return 'ascending' if sort_direction == 'descending'
 
-    'desc'
+    'descending'
+  end
+
+  def sortable_columns
+    SORT_COLUMNS.keys
+  end
+
+  def sort_by
+    return super if sortable_columns.include?(super)
+
+    DEFAULT_SORT_BY
+  end
+
+  def sort_direction
+    return super if SORT_DIRECTIONS.has_key?(super)
+
+    DEFAULT_DIRECTION
   end
 
   private
 
   def column_names
-    SORT_COLUMNS.fetch(sort_by.to_sym)
-  end
-
-  def direction
-    SORT_DIRECTIONS.fetch(sort_direction.to_sym)
+    SORT_COLUMNS.fetch(sort_by)
   end
 end

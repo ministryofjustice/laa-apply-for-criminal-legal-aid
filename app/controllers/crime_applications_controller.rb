@@ -7,11 +7,10 @@ class CrimeApplicationsController < DashboardController
   helper_method :sorted_filter_params
 
   def index
-    default = { sort_by: 'created_at' }
-    @sorting = InProgressSorting.new(search_params[:sorting] || default)
+    @sorting = InProgressSorting.new(search_params[:sorting])
 
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(**@sorting.order_params)
+      CrimeApplication.order(**@sorting.order_scope)
     ).page params[:page]
   end
 
@@ -69,17 +68,6 @@ class CrimeApplicationsController < DashboardController
   def confirm_destroy; end
 
   private
-
-  def sortable_columns
-    %w[created_at]
-  end
-
-  def sorting_params
-    { helpers.sort_by => helpers.sort_direction }
-  end
-
-  alias sorted_filter_params sorting_params
-  helper_method :sorted_filter_params
 
   def new_application_params
     params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)

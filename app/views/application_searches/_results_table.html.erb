@@ -3,11 +3,11 @@
     <table class="govuk-table app-table">
       <%= render DataTable::HeadComponent.new(sorting: @search.sorting, filter: @search.filter) do |head|
             head.with_row do |row|
-              row.with_cell(colname: :applicant_name)
-              row.with_cell(colname: :submitted_at)
-              row.with_cell(colname: :reference)
-              row.with_cell(colname: :application_type)
-              row.with_cell(colname: :application_status)
+              row.with_cell(colname: 'applicant_name')
+              row.with_cell(colname: 'submitted_at')
+              row.with_cell(colname: 'reference')
+              row.with_cell(colname: 'application_type')
+              row.with_cell(colname: 'review_status')
             end
           end %>
       <tbody class="govuk-table__body">
@@ -27,7 +27,7 @@
               <%= result.application_type.humanize %>
             </td>
             <td class="govuk-table__cell">
-              <%= result.status.humanize %>
+              <%= t(result.review_status, scope: 'review_status') %>
             </td>
           </tr>
         <% end %>

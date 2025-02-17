@@ -18,7 +18,10 @@ module DatastoreApi::Sorting
 
   def set_search(filter:, default_sorting: {})
     set_sorting(default_sorting)
-    @filter = ApplicationSearchFilter.new(filter)
+
+    @filter = ApplicationSearchFilter.new(
+      filter.merge(office_code: current_office_code)
+    )
 
     set_pagination
 

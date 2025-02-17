@@ -46,17 +46,6 @@ class CompletedApplicationsController < DashboardController
 
   private
 
-  def sortable_columns
-    %w[submitted_at]
-  end
-
-  def sorting_params
-    {
-      sort_by: helpers.sort_by,
-      sort_direction: helpers.sort_direction
-    }
-  end
-
   def pagination_params
     {
       page: params[:page],

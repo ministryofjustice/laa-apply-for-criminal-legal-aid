@@ -58,7 +58,7 @@ module DataTable
     end
 
     def sortable?
-      ApplicationSearchSorting::SORTABLE_COLUMNS.include?(colname.to_s)
+      sorting.sortable_columns.include?(colname)
     end
 
     def sorted_params
@@ -70,7 +70,7 @@ module DataTable
     def sorting_params
       {
         sorting: {
-          sort_by: colname.to_s,
+          sort_by: colname,
           sort_direction: sorting.reverse_direction
         }
       }
@@ -88,7 +88,7 @@ module DataTable
     end
 
     def active?
-      colname.to_s == sorting.sort_by
+      colname == sorting.sort_by
     end
   end
 end

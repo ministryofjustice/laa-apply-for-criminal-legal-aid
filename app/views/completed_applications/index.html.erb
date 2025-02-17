@@ -12,10 +12,10 @@
       <table class="govuk-table app-table">
         <%= render DataTable::HeadComponent.new(sorting: @search.sorting) do |head|
               head.with_row do |row|
-                row.with_cell(colname: :applicant_name)
-                row.with_cell(colname: :submitted_at)
-                row.with_cell(colname: :reference)
-                row.with_cell(colname: :application_type)
+                row.with_cell(colname: 'applicant_name')
+                row.with_cell(colname: 'submitted_at')
+                row.with_cell(colname: 'reference')
+                row.with_cell(colname: 'application_type')
               end
             end %>
         <tbody class="govuk-table__body">

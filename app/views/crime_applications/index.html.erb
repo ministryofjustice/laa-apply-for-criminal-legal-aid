@@ -15,11 +15,11 @@
 
         <%= render DataTable::HeadComponent.new(sorting: @sorting) do |head|
               head.with_row do |row|
-                row.with_cell(colname: :applicant_name)
-                row.with_cell(colname: :created_at)
-                row.with_cell(colname: :reference)
-                row.with_cell(colname: :application_type)
-                row.with_cell(colname: :action)
+                row.with_cell(colname: 'applicant_name')
+                row.with_cell(colname: 'created_at')
+                row.with_cell(colname: 'reference')
+                row.with_cell(colname: 'application_type')
+                row.with_cell(colname: 'action')
               end
             end %>
         <tbody class="govuk-table__body">

@@ -22,10 +22,10 @@ RSpec.describe 'Dashboard', :authorized do
     let(:sort_direction) { nil }
 
     before do
-      get crime_applications_path, params: { sort_by:, sort_direction: }
+      get crime_applications_path, params: { sorting: { sort_by:, sort_direction: } }
     end
 
-    context 'when there are records to return' do
+    context 'when there are in progress records to return' do
       before :all do
         # sets up a few test records
         app1 = create_test_application(created_at: Date.new(2022, 10, 15))
@@ -67,7 +67,7 @@ RSpec.describe 'Dashboard', :authorized do
             assert_select 'td.govuk-table__cell:nth-of-type(1)', '15 October 2022'
             assert_select 'td.govuk-table__cell:nth-of-type(2)', /[[:digit:]]/
             assert_select 'td.govuk-table__cell:nth-of-type(4)' do
-              assert_select 'button.govuk-button', count: 2, text: 'Delete'
+              assert_select 'a.govuk-link', count: 2, text: 'Delete'
             end
           end
         end
@@ -77,7 +77,7 @@ RSpec.describe 'Dashboard', :authorized do
 
       context 'when the list is sorted by created_at asc' do
         let(:sort_by) { 'created_at' }
-        let(:sort_direction) { 'asc' }
+        let(:sort_direction) { 'ascending' }
 
         it 'renders the correct sort indicator in the column' do
           assert_select 'thead.govuk-table__head' do
@@ -98,7 +98,7 @@ RSpec.describe 'Dashboard', :authorized do
 
       context 'when the list is sorted by created_at desc' do
         let(:sort_by) { 'created_at' }
-        let(:sort_direction) { 'desc' }
+        let(:sort_direction) { 'descending' }
 
         it 'renders the correct sort indicator in the column' do
           assert_select 'thead.govuk-table__head' do
@@ -140,20 +140,12 @@ RSpec.describe 'Dashboard', :authorized do
   end
 
   describe 'list of submitted applications' do
-    let(:collection_fixture) do
-      format(
-        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
-        pagination_fixture: pagination_fixture,
-        application_fixture: application_fixture.read
-      )
-    end
+    include_context 'with stubbed search results'
+
+    let(:expected_status_filter) { %w[submitted returned] }
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: hash_including({ 'status' => 'submitted', 'office_code' => '1A123B' }))
-        .to_return(body: collection_fixture)
-
-      get completed_crime_applications_path
+      get '/applications/submitted'
     end
 
     it 'shows a list of submitted applications' do
@@ -166,11 +158,11 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)'
 
       assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row', 1 do
+        assert_select 'tr.govuk-table__row', 2 do
           assert_select 'a', count: 1, text: 'Kit Pound'
+          assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 October 2022'
+          assert_select 'td.govuk-table__cell:nth-of-type(2)', '120398120'
         end
-        assert_select 'td.govuk-table__cell:nth-of-type(1)', '24 October 2022'
-        assert_select 'td.govuk-table__cell:nth-of-type(2)', '6000001'
       end
     end
 
@@ -183,37 +175,56 @@ RSpec.describe 'Dashboard', :authorized do
     end
 
     context 'when there are no records to return' do
-      let(:collection_fixture) do
-        format(
-          '{"pagination":%<pagination_fixture>s,"records":[]}',
-          pagination_fixture:,
-        )
-      end
-      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0 }.to_json }
+      let(:stubbed_search_results) { [] }
 
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
-        assert_select 'h2', 'There are no submitted applications'
+        assert_select 'h2', 'There are no applications'
       end
     end
   end
 
+  describe 'list of submitted applications when decisions tab enabled' do
+    include_context 'with stubbed search results'
+
+    let(:expected_review_status_filter) { %w[application_received ready_for_assessment] }
+
+    before do
+      allow(FeatureFlags).to receive(:decided_applications_tab) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
+      get '/applications/submitted'
+    end
+
+    it 'shows a list of submitted applications' do
+      expect(response).to have_http_status(:success)
+
+      assert_select '.moj-sub-navigation__list > li:nth-child(4) > a', text: 'Decided'
+    end
+  end
+
   describe 'list of returned applications' do
-    let(:collection_fixture) do
-      format(
-        '{"pagination":%<pagination_fixture>s,"records":[%<application_fixture>s]}',
-        pagination_fixture: pagination_fixture,
-        application_fixture: returned_application_fixture.read
-      )
+    include_context 'with stubbed search results'
+
+    let(:expected_status_filter) { ['returned'] }
+
+    let(:stubbed_search_results) do
+      [
+        ApplicationSearchResult.new(
+          applicant_name: 'John POTTER',
+          resource_id: '696dd4fd-b619-4637-ab42-a5f4565bcf4a',
+          reference: 6_000_002,
+          status: 'returned',
+          submitted_at: '2022-09-27T14:09:11.000+00:00',
+          application_type: 'initial'
+        )
+      ]
     end
 
     before do
-      stub_request(:get, 'http://datastore-webmock/api/v1/applications')
-        .with(query: hash_including({ 'status' => 'returned', 'office_code' => '1A123B' }))
-        .to_return(body: collection_fixture)
-
-      get completed_crime_applications_path(q: 'returned', sort_by: 'submitted_at', sort_direction: 'desc')
+      get '/applications/returned'
     end
 
     it 'shows a list of returned applications' do
@@ -235,13 +246,55 @@ RSpec.describe 'Dashboard', :authorized do
     end
 
     context 'when there are no records to return' do
-      let(:pagination_fixture) { { per_page: 20, total_count: 0, total_pages: 0 }.to_json }
-      let(:application_fixture) { nil }
+      let(:stubbed_search_results) { [] }
 
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
-        assert_select 'h2', 'There are no returned applications'
+        assert_select 'h2', 'There are no applications'
+      end
+    end
+  end
+
+  describe 'list of decided applications' do
+    include_context 'with stubbed search results'
+
+    let(:expected_review_status_filter) { %w[assessment_completed] }
+
+    before do
+      allow(FeatureFlags).to receive(:decided_applications_tab) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
+      get '/applications/decided'
+    end
+
+    it 'shows a list of returned applications' do
+      expect(response).to have_http_status(:success)
+
+      assert_select 'h1', 'Your applications'
+
+      assert_select '.moj-sub-navigation__list > li:nth-child(1) > a', text: 'In progress'
+      assert_select '.moj-sub-navigation__list > li:nth-child(2) > a', text: 'Submitted'
+      assert_select '.moj-sub-navigation__list > li:nth-child(3) > a', text: 'Returned (5)'
+      assert_select '.moj-sub-navigation__list > li:nth-child(4) > a', text: 'Decided', 'aria-current': 'page'
+
+      assert_select 'tbody.govuk-table__body' do
+        assert_select 'tr.govuk-table__row', 2 do
+          assert_select 'a', count: 1, text: 'Kit Pound'
+          assert_select 'td.govuk-table__cell:nth-of-type(1)', '27 October 2022'
+          assert_select 'td.govuk-table__cell:nth-of-type(2)', '120398120'
+        end
+      end
+    end
+
+    context 'when there are no records to return' do
+      let(:stubbed_search_results) { [] }
+
+      it 'informs the user that there are no applications' do
+        expect(response).to have_http_status(:success)
+
+        assert_select 'h2', 'There are no applications'
       end
     end
   end
