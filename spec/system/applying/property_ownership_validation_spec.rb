@@ -209,7 +209,7 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
       save_and_continue
 
       # steps/outgoings/are-outgoings-more-than-income
-      choose_answer("Are your client's outgoings more than their income?", 'No')
+      choose_answer("Does your client have outgoings that are more than their income?", 'No')
       save_and_continue
 
       # steps/outgoings/check-your-answers-outgoings
