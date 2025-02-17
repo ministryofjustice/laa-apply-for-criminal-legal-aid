@@ -617,9 +617,9 @@ en:
       residential_property:
         edit:
           property_heading: &PROPERTY_HEADING
-            residential: "%{subject}'s residential property"
-            commercial: "%{subject}'s commercial property"
-            land: "%{subject}'s land"
+            residential: "The residential property owned by %{subject}"
+            commercial: "The commercial property owned by %{subject}"
+            land: "The land owned by %{subject}"
           heading:
             <<: *PROPERTY_HEADING
           info: You told us %{subject} owns or part-owns residential property.
@@ -643,22 +643,22 @@ en:
       property_address:
         edit:
           heading:
-            residential: What is the address of %{subject}'s residential property?
-            commercial: What is the address of %{subject}'s commercial property?
-            land: What is the address of %{subject}'s land?
+            residential: What is the address of the residential property %{subject} owns?
+            commercial: What is the address of the commercial property %{subject} owns?
+            land: What is the address of the land %{subject} owns?
 
       property_owners:
         edit:
           page_title: Other people who own the %{asset}
           heading:
-            residential: Other people who own %{subject}'s residential property
-            commercial: Other people who own %{subject}'s commercial property
-            land: Other people who own %{subject}'s land
+            residential: Other owners of the residential property
+            commercial: Other owners of the commercial property
+            land: Other owners of the land
           property_owners_fieldset_legend: Other owner %{index}
           add_button: Add another owner
           remove_button: Remove owner %{index}
           deleted_flash: The owner has been deleted
-          info: You told us %{subject} owns or part-owns the %{asset} with someone else.
+          info: You told us there are other owners of the land.
 
       properties_summary:
         edit:

@@ -335,7 +335,9 @@ en:
         legal_aid_contribution:
           frequency: How often?
       steps_outgoings_outgoings_more_than_income_form:
-        outgoings_more_than_income: Are %{subject}'s outgoings more than their income?
+        outgoings_more_than_income:
+          one: Does %{subject} have outgoings that are more than their income?
+          other: Do %{subject} have outgoings that are more than their income?
       steps_submission_more_information_form:
         additional_information_required: Do you want to add any other information?
       steps_submission_cannot_submit_without_nino_form:
@@ -385,7 +387,7 @@ en:
         is_home_address: Is the address of the land the same as your client’s home address?
         has_other_owners: Does anyone else own part of the land?
       steps_capital_property_owners_form:
-        relationship: What their relationship to %{subject}?
+        relationship: What is their relationship to %{subject}?
       steps_capital_answers_form:
         has_no_other_assets: Confirm the following
       steps_submission_declaration_form:
