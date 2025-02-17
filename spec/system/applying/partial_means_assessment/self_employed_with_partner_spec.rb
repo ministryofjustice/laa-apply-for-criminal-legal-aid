@@ -159,7 +159,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when partially means tested' do
       save_and_continue
 
       # steps/outgoings/are_outgoings_more_than_income
-      choose_answer("Do your client and their partner have outgoings that are more than their income?", 'No')
+      choose_answer('Do your client and their partner have outgoings that are more than their income?', 'No')
       save_and_continue
 
       # outgoings cya

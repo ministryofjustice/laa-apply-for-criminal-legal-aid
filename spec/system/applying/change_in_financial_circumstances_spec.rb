@@ -116,7 +116,7 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/outgoings/are_outgoings_more_than_income
-      choose_answer("Does your client have outgoings that are more than their income?", 'No')
+      choose_answer('Does your client have outgoings that are more than their income?', 'No')
       save_and_continue
 
       # outgoings cya
