@@ -9,9 +9,9 @@ module CapitalAssessment
 
       record.property_owners.each_with_index do |property_owner, index|
         add_indexed_errors(property_owner, index) unless property_owner.valid?
+        add_ownership_error(property_owner, index) unless valid_ownership_total?(record)
       end
 
-      add_ownership_error unless valid_ownership_total?(record)
     end
 
     private
@@ -49,12 +49,21 @@ module CapitalAssessment
       end
     end
 
-    def add_ownership_error
+    def add_ownership_error(property_owner, index)
+      attr_name = indexed_attribute(index, :percentage_owned)
+
       record.errors.add(
-        :base,
+        attr_name,  # Adds the error in the correct format
         :invalid,
-        message: error_message(record, Error.new(:base, :invalid))
+        message: "Percentages entered need to total 100%", index: index + 1
       )
+
+      property_owner.errors.add(:percentage_owned, :invalid, message: "Percentages entered need to total 100%")
+
+      # Ensure the form field can retrieve this error properly
+      record.define_singleton_method(attr_name) do
+        property_owner.public_send(:percentage_owned)
+      end
     end
 
     def valid_ownership_total?(record)
