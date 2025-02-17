@@ -4,9 +4,6 @@ inputs:
   environment-name:
     description: Environment to which the app is being deployed (staging, production, etc)
     required: true
-  git-crypt-key:
-    description: Base64 encoded git-crypt symmetric key
-    required: true
   ecr-url:
     description: ECR endpoint url
     required: true
@@ -26,11 +23,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Unlock git-crypt secrets
-      uses: sliteteam/github-action-git-crypt-unlock@8b1fa3ccc81e322c5c45fbab261eee46513fd3f8
-      env:
-        GIT_CRYPT_KEY: ${{ inputs.git-crypt-key }}
-
     - name: Authenticate to the cluster
       env:
         KUBE_CERT: ${{ inputs.kube-cert }}
