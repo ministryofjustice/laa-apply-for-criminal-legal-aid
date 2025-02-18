@@ -101,7 +101,7 @@ RSpec.describe Summary::Components::Employment, type: :component do
       )
       expect(page).to have_summary_row(
         'Salary or wage',
-        '£1,700.00 every week',
+        '£1,700 every week',
       )
     end
 
@@ -109,15 +109,33 @@ RSpec.describe Summary::Components::Employment, type: :component do
       it 'renders as summary list with other deductions' do
         expect(page).to have_summary_row(
           'Income Tax',
-          '£500.00 every week',
+          '£500 every week',
         )
         expect(page).to have_summary_row(
           'Other deductions total',
-          '£700.00 every week',
+          '£700 every week',
         )
         expect(page).to have_summary_row(
           'Details of other deductions',
           'deduction details',
+        )
+      end
+    end
+
+    context 'when deduction amount has non-zero value in decimal place' do
+      let(:deduction1) {
+        instance_double(Deduction,
+                        deduction_type: 'income_tax',
+                        amount: 500.50,
+                        other?: false,
+                        frequency: 'week',
+                        details: nil)
+      }
+
+      it 'renders as summary list with decimal place value present' do
+        expect(page).to have_summary_row(
+          'Income Tax',
+          '£500.50 every week',
         )
       end
     end
