@@ -86,9 +86,9 @@ RSpec.describe Summary::Components::Investment, type: :component do
 
       it 'renders as summary list with decimal place value present' do
         expect(page).to have_summary_row(
-                          'Value',
-                          '£100.50',
-                          )
+          'Value',
+          '£100.50',
+        )
       end
     end
 

@@ -119,9 +119,9 @@ RSpec.describe Summary::Components::Property, type: :component do
 
       it 'renders as summary list with decimal place value present' do
         expect(page).to have_summary_row(
-                          'Property value',
-                          '£200,000.50',
-                          )
+          'Property value',
+          '£200,000.50',
+        )
       end
     end
 
@@ -131,9 +131,9 @@ RSpec.describe Summary::Components::Property, type: :component do
 
       it 'renders as summary list with decimal place value stripped' do
         expect(page).to have_summary_row(
-                          'Percentage client owns',
-                          '70%',
-                          )
+          'Percentage client owns',
+          '70%',
+        )
       end
     end
 
