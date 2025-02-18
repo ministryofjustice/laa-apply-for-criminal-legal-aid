@@ -365,7 +365,7 @@ RSpec.shared_examples 'a basic amount with frequency' do |payment_class|
       end
 
       it 'has amount and frquency' do
-        expect(subject.amount).to eq '12239'
+        expect(subject.amount).to eq '12239.00'
         expect(subject.frequency.to_s).to eq 'month'
       end
     end
