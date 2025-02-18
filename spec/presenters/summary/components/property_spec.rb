@@ -113,6 +113,30 @@ RSpec.describe Summary::Components::Property, type: :component do
       )
     end
 
+    context 'when value has non-zero amount in decimal place' do
+      let(:attributes) { super().merge({ value: }) }
+      let(:value) { 200_000.50 }
+
+      it 'renders as summary list with decimal place value present' do
+        expect(page).to have_summary_row(
+                          'Property value',
+                          '£200,000.50',
+                          )
+      end
+    end
+
+    context 'when percentage has zero amount in decimal place' do
+      let(:attributes) { super().merge({ percentage_applicant_owned: }) }
+      let(:percentage_applicant_owned) { 70 }
+
+      it 'renders as summary list with decimal place value stripped' do
+        expect(page).to have_summary_row(
+                          'Percentage client owns',
+                          '70%',
+                          )
+      end
+    end
+
     context 'when client has no home address' do
       let(:is_home_address) { 'no' }
 

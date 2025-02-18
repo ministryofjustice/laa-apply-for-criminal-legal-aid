@@ -83,6 +83,26 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       )
     end
 
+    context 'when value has non-zero amount in decimal place' do
+      let(:attributes) do
+        {
+          id: 'national_savings_certificate123',
+          crime_application_id: 'APP123',
+          holder_number: 'A1',
+          certificate_number: 'B2',
+          value: 100.5,
+          ownership_type: 'applicant'
+        }
+      end
+
+      it 'renders as summary list with decimal place value present' do
+        expect(page).to have_summary_row(
+                          'Value',
+                          '£100.50',
+                          )
+      end
+    end
+
     context 'when answers are missing' do
       let(:attributes) do
         {

@@ -72,6 +72,26 @@ RSpec.describe Summary::Components::Investment, type: :component do
       )
     end
 
+    context 'when value has non-zero amount in decimal place' do
+      let(:attributes) do
+        {
+          id: 'investment123',
+          crime_application_id: 'APP123',
+          description: 'About the shares',
+          investment_type: 'share',
+          value: 100.5,
+          ownership_type: 'applicant'
+        }
+      end
+
+      it 'renders as summary list with decimal place value present' do
+        expect(page).to have_summary_row(
+                          'Value',
+                          '£100.50',
+                          )
+      end
+    end
+
     context 'when answers are missing' do
       let(:attributes) do
         {
