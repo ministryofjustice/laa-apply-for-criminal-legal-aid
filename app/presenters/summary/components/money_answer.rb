@@ -2,7 +2,10 @@ module Summary
   module Components
     class MoneyAnswer < BaseAnswer
       def answer_text
-        number_to_currency(value.to_s) if value
+        return unless value
+
+        total = number_to_currency(value.to_s)
+        total.sub(/\.00$/, '')
       end
     end
   end

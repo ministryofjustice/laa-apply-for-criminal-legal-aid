@@ -93,11 +93,11 @@ RSpec.describe Summary::Components::Property, type: :component do
       )
       expect(page).to have_summary_row(
         'Property value',
-        '£200,000.00',
+        '£200,000',
       )
       expect(page).to have_summary_row(
         'Mortgage amount left',
-        '£100,000.00',
+        '£100,000',
       )
       expect(page).to have_summary_row(
         'Percentage client owns',
@@ -111,6 +111,30 @@ RSpec.describe Summary::Components::Property, type: :component do
         'Other owners',
         'Yes',
       )
+    end
+
+    context 'when value has non-zero amount in decimal place' do
+      let(:attributes) { super().merge({ value: }) }
+      let(:value) { 200_000.50 }
+
+      it 'renders as summary list with decimal place value present' do
+        expect(page).to have_summary_row(
+          'Property value',
+          '£200,000.50',
+        )
+      end
+    end
+
+    context 'when percentage has zero amount in decimal place' do
+      let(:attributes) { super().merge({ percentage_applicant_owned: }) }
+      let(:percentage_applicant_owned) { 70 }
+
+      it 'renders as summary list with decimal place value stripped' do
+        expect(page).to have_summary_row(
+          'Percentage client owns',
+          '70%',
+        )
+      end
     end
 
     context 'when client has no home address' do
@@ -145,7 +169,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     describe 'summary list partner percentage' do
       context 'when partner percentage owned is present' do
         it 'renders as summary list with partner percentage' do
-          expect(page).to have_summary_row('Percentage partner owns', '50.00%')
+          expect(page).to have_summary_row('Percentage partner owns', '50%')
         end
       end
     end
