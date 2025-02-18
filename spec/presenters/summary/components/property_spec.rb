@@ -93,11 +93,11 @@ RSpec.describe Summary::Components::Property, type: :component do
       )
       expect(page).to have_summary_row(
         'Property value',
-        '£200,000.00',
+        '£200,000',
       )
       expect(page).to have_summary_row(
         'Mortgage amount left',
-        '£100,000.00',
+        '£100,000',
       )
       expect(page).to have_summary_row(
         'Percentage client owns',
@@ -145,7 +145,7 @@ RSpec.describe Summary::Components::Property, type: :component do
     describe 'summary list partner percentage' do
       context 'when partner percentage owned is present' do
         it 'renders as summary list with partner percentage' do
-          expect(page).to have_summary_row('Percentage partner owns', '50.00%')
+          expect(page).to have_summary_row('Percentage partner owns', '50%')
         end
       end
     end

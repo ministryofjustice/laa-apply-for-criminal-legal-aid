@@ -64,7 +64,7 @@ RSpec.describe Summary::Components::Investment, type: :component do
       )
       expect(page).to have_summary_row(
         'Value',
-        '£100.00'
+        '£100'
       )
       expect(page).to have_summary_row(
         'Name the investment is in',

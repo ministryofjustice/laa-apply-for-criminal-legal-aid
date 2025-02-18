@@ -9,7 +9,7 @@
      simple_format(
        t(
          "summary.questions.#{payment_answer.question}.answers.description",
-         amount: number_to_currency(payment_answer.value.amount.to_s),
+         amount: number_to_currency(payment_answer.value.amount.to_s, strip_insignificant_zeros: true),
          frequency: PaymentFrequencyType.to_phrase(payment_answer.value.frequency),
        ),
        { class: 'govuk-body' },

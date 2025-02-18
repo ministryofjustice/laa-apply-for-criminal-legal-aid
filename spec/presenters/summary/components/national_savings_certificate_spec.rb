@@ -75,7 +75,7 @@ RSpec.describe Summary::Components::NationalSavingsCertificate, type: :component
       )
       expect(page).to have_summary_row(
         'Value',
-        '£100.00'
+        '£100'
       )
       expect(page).to have_summary_row(
         'Who owns the certificate?',

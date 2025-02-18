@@ -54,7 +54,7 @@ RSpec.describe Steps::Outgoings::RentForm do
 
       it 'is valid' do
         expect(subject).to be_valid
-        expect(subject.amount).to eq '91891.00'
+        expect(subject.amount).to eq '91891'
         expect(subject.frequency).to eq PaymentFrequencyType::MONTHLY
       end
     end
