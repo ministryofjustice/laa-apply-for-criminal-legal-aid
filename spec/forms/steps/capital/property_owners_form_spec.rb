@@ -92,10 +92,36 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
         end
 
         it 'has errors when when total percentage ownership is over 100' do
-          expect(subject.errors.of_kind?('base', :invalid)).to be(true)
-          expect(subject.errors.messages_for('base').first).to eq(
-            'Percentages entered need to total 100%'
+          attr = 'property_owners-attributes[2].percentage_owned'
+          expect(subject.errors.of_kind?(attr, :invalid)).to be(true)
+          expect(subject.errors.messages_for(attr).first).to eq(
+            'The percentage of the property they own must be a number greater than 0 and less than 100'
           )
+        end
+
+        context 'when percentage does not equal 100' do
+          let(:property_owners_attributes3) {
+            { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '1' }
+          }
+
+          it 'has errors when when total percentage ownership does not equal 100' do
+            attr = 'property_owners-attributes[0].percentage_owned'
+            attr2 = 'property_owners-attributes[1].percentage_owned'
+            attr3 = 'property_owners-attributes[2].percentage_owned'
+
+            expect(subject.errors.of_kind?(attr, :invalid)).to be(true)
+            expect(subject.errors.messages_for(attr).first).to eq(
+              'Percentages entered need to total 100% - check percentage owned by Other owner 1'
+            )
+            expect(subject.errors.of_kind?(attr2, :invalid)).to be(true)
+            expect(subject.errors.messages_for(attr2).first).to eq(
+              'Percentages entered need to total 100% - check percentage owned by Other owner 2'
+            )
+            expect(subject.errors.of_kind?(attr3, :invalid)).to be(true)
+            expect(subject.errors.messages_for(attr3).first).to eq(
+              'Percentages entered need to total 100% - check percentage owned by Other owner 3'
+            )
+          end
         end
       end
 

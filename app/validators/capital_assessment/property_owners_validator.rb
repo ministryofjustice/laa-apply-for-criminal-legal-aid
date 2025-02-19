@@ -9,9 +9,8 @@ module CapitalAssessment
 
       record.property_owners.each_with_index do |property_owner, index|
         add_indexed_errors(property_owner, index) unless property_owner.valid?
-        add_ownership_error(property_owner, index) unless valid_ownership_total?(record)
+        add_ownership_error(property_owner, index) unless valid_ownership_total?
       end
-
     end
 
     private
@@ -40,7 +39,8 @@ module CapitalAssessment
       record.errors.add(
         attr_name,
         error.type,
-        message: error_message(property_owner, error), index: index + 1
+        message: error_message(property_owner, error),
+        index: index + 1
       )
 
       # We define the attribute getter as it doesn't really exist
@@ -51,28 +51,28 @@ module CapitalAssessment
 
     def add_ownership_error(property_owner, index)
       attr_name = indexed_attribute(index, :percentage_owned)
+      index += 1
 
-      record.errors.add(
-        attr_name,  # Adds the error in the correct format
-        :invalid,
-        message: "Percentages entered need to total 100%", index: index + 1
-      )
+      ownership_errors(record, attr_name, index)
 
-      property_owner.errors.add(:percentage_owned, :invalid, message: "Percentages entered need to total 100%")
+      # Ensure that the error appears on the percentage field(s)
+      ownership_errors(property_owner, :percentage_owned, index)
 
       # Ensure the form field can retrieve this error properly
       record.define_singleton_method(attr_name) do
-        property_owner.public_send(:percentage_owned)
+        property_owner.percentage_owned
       end
     end
 
-    def valid_ownership_total?(record)
-      percentage_ownerships = all_percentage_ownerships(record)
-
-      percentage_ownerships.sum == 100
+    def ownership_errors(obj, attr_name, index)
+      obj.errors.add(attr_name, :invalid, message: error_message(record, Error.new(:base, :invalid)), index: index)
     end
 
-    def all_percentage_ownerships(record)
+    def valid_ownership_total?
+      all_percentage_ownerships.sum == 100
+    end
+
+    def all_percentage_ownerships
       percentage_ownerships = record.property_owners.filter_map do |po|
         po.percentage_owned unless po.percentage_owned.nil?
       end
