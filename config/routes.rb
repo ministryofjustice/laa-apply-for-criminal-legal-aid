@@ -5,11 +5,11 @@ def edit_step(name, opts = {}, &block)
            as: opts.fetch(:alias, name),
            path_names: { edit: '' } do; block.call if block_given?; end
   # temp underscored routes
-  if name.to_s.include?('_') && !block_given?
-    get name, to: "#{opts.fetch(:alias, name)}#edit"
-    patch name, to: "#{opts.fetch(:alias, name)}#update"
-    put name, to: "#{opts.fetch(:alias, name)}#update"
-  end
+  # if name.to_s.include?('_') && !block_given?
+  #   get name, to: "#{opts.fetch(:alias, name)}#edit"
+  #   patch name, to: "#{opts.fetch(:alias, name)}#update"
+  #   put name, to: "#{opts.fetch(:alias, name)}#update"
+  # end
 end
 
 def crud_step(name, opts = {})
@@ -19,16 +19,7 @@ def crud_step(name, opts = {})
               controller: opts.fetch(:alias, name), param: opts.fetch(:param),
               path_names: { edit: '' } do
       get :confirm_destroy, path: 'confirm-destroy', on: :member if parent_resource.actions.include?(:destroy)
-      # temp underscored routes
-      get 'confirm_destroy', to: "#{opts.fetch(:alias, name)}#confirm_destroy", on: :member if parent_resource.actions.include?(:destroy) && !name.to_s.include?('_')
     end
-  end
-  # temp underscored routes
-  if name.to_s.include?('_')
-    get "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#edit"
-    patch "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#update"
-    put "#{name}/:#{opts.fetch(:param)}", to: "#{opts.fetch(:alias, name)}#update"
-    get "#{name}/:#{opts.fetch(:param)}/confirm_destroy", to: "#{opts.fetch(:alias, name)}#confirm_destroy" unless opts.fetch(:except, []).include?(:destroy)
   end
 end
 
@@ -89,8 +80,6 @@ Rails.application.routes.draw do
 
   resources :crime_applications, except: [:show, :update], path: 'applications' do
     get :confirm_destroy, path: 'confirm-destroy', on: :member
-    # temp underscored routes
-    get 'confirm_destroy', to: 'crime_applications#confirm_destroy', on: :member
     get :start, on: :collection
 
     member do
@@ -316,8 +305,6 @@ Rails.application.routes.draw do
   end
 
   # temp underscored routes
-  get '/application_searches/new', to: 'application_searches#new'
-  post '/application_searches/search', to: 'application_searches#search'
   resource :application_searches, path: 'application-searches', only: [:new] do
     post :search, on: :collection
   end
