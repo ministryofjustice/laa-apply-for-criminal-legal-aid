@@ -1,24 +1,40 @@
 ---
 en:
+  search:
+    total:
+      one: 1 search result
+      other: "%{count} search results"
+    heading: Search submitted applications
+    subheading: You are searching submitted and returned applications under office code %{current_office_code}.
+  table_headings:
+    action: Action
+    applicant_name: Name
+    application_type: Application type
+    created_at: Start date
+    reference: LAA reference
+    reviewed_at: Status
+    review_status: Application status
+    status: Application status
+    application_status: Application status
+    submitted_at: Date submitted
+  review_status:
+    application_received: Submitted
+    assessment_completed: Decided
+    ready_for_assessment: Submitted
+    returned_to_provider: Returned
+
   crime_applications:
     new:
       page_title: Are you making a new application or telling us about a change in financial circumstances?
       heading: Are you making a new application or telling us about a change in financial circumstances?
       options:
-        'no': 'New application'
-        'yes': 'A change in financial circumstances'
+        "no": "New application"
+        "yes": "A change in financial circumstances"
 
     index:
       page_title: Your applications
       delete_button: Delete
       delete_button_a11y: Delete %{applicant_name}’s application
-      table_headings:
-        applicant_name: Name
-        created_at: Start date
-        reference: Reference number
-        application_type: Type of application
-        status: Status
-        action: Action
       status:
         in_progress: In progress
         submitted: Submitted
@@ -49,19 +65,8 @@ en:
       success_flash: "%{applicant_name}’s application has been deleted"
   completed_applications:
     index:
-      page_title: Your submitted applications
-      delete_button: Delete
-      table_headings:
-        applicant_name: Name
-        submitted_at: Date submitted
-        reference: Reference number
-        application_type: Type of application
-        status: Status
-        action: Action
-      status:
-        in_progress: In progress
-        submitted: Submitted
-      no_records: There are no %{status} applications
+      page_title: Your applications
+      no_records: There are no applications
     show:
       page_title: Application representation order
       heading:
@@ -74,7 +79,7 @@ en:
       print_application: Print application
       helpline:
         intro: If you need to withdraw or update this application before it has been processed by the LAA, contact the criminal applications helpline.
-        phone: 'Telephone: 0300 200 2020'
+        phone: "Telephone: 0300 200 2020"
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
       action:
         create_pse: Upload supporting evidence
@@ -96,7 +101,7 @@ en:
           <p class="govuk-body">
             A case is split into more than one when the Crown Prosecution Service decides offences are not related enough to be tried at the same time.
           </p>
-      caseworker_details: 'The caseworker who returned this application says: %{details}'
+      caseworker_details: "The caseworker who returned this application says: %{details}"
       action:
         default: Update application
         split_case: Add justification
@@ -116,6 +121,7 @@ en:
         zero: Returned
         one: Returned (1)
         other: Returned (%{count})
+      decided: Decided
     errors:
       datastore:
         unavailable:
@@ -123,10 +129,7 @@ en:
           body_html:
             - Try reloading the page or return to your applications list.
             - For an update on a submitted application, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">contact the criminal applications helpline</a>.
-      no_records:
-        in_progress: There are no applications in progress
-        submitted: There are no submitted applications
-        returned: There are no returned applications
+      no_records: There are no applications
 
   kaminari: &kaminari
     paginator:

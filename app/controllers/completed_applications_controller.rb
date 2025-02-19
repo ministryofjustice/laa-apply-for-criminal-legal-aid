@@ -6,13 +6,11 @@ class CompletedApplicationsController < DashboardController
 
   layout 'application_dashboard', only: [:index]
 
+  # :nocov:
   def index
-    return @applications = [] if current_office_code.blank?
-
-    @applications = Datastore::ListApplications.new(
-      filtering: filtering_params, sorting: sorting_params, pagination: pagination_params
-    ).call&.page(params[:page])
+    raise 'Define in sub-controller'
   end
+  # :nocov:
 
   def show
     @presenter = Summary::HtmlPresenter.new(
@@ -46,32 +44,5 @@ class CompletedApplicationsController < DashboardController
     ).call
 
     redirect_to edit_steps_evidence_upload_path(pse_application)
-  end
-
-  private
-
-  def sortable_columns
-    %w[submitted_at]
-  end
-
-  def sorting_params
-    {
-      sort_by: helpers.sort_by,
-      sort_direction: helpers.sort_direction
-    }
-  end
-
-  def pagination_params
-    {
-      page: params[:page],
-      per_page: Kaminari.config.default_per_page,
-    }
-  end
-
-  def filtering_params
-    {
-      status: helpers.status_filter,
-      office_code: current_office_code,
-    }
   end
 end

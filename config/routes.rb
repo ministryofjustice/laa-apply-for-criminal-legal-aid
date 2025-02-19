@@ -3,7 +3,9 @@ def edit_step(name, opts = {}, &block)
            only: opts.fetch(:only, [:edit, :update]),
            controller: opts.fetch(:alias, name),
            as: opts.fetch(:alias, name),
-           path_names: { edit: '' } do; block.call if block_given?; end
+           path_names: { edit: '' } do
+    yield if block
+  end
   # temp underscored routes
   # if name.to_s.include?('_') && !block_given?
   #   get name, to: "#{opts.fetch(:alias, name)}#edit"
@@ -61,7 +63,7 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :developer_tools, constraints: -> (_) { FeatureFlags.developer_tools.enabled? } do
+  namespace :developer_tools, constraints: ->(_) { FeatureFlags.developer_tools.enabled? } do
     resources :crime_applications, only: [:update, :destroy], path: 'applications' do
       put :bypass_dwp, on: :member
       put :under18_bypass, on: :member
@@ -97,6 +99,12 @@ Rails.application.routes.draw do
     end
   end
 
+  scope 'applications' do
+    resources :submitted_applications, path: 'submitted', only: [:index]
+    resources :returned_applications, path: 'returned', only: [:index]
+    resources :decided_applications, path: 'decided', only: [:index]
+  end
+
   namespace :steps do
     namespace :provider do
       edit_step :confirm_office
@@ -110,7 +118,6 @@ Rails.application.routes.draw do
         edit_step :pre_cifc_reference_number
         edit_step :pre_cifc_reason
       end
-
 
       scope module: :shared do
         scope '/:subject/' do
@@ -160,8 +167,8 @@ Rails.application.routes.draw do
 
       namespace :case do
         edit_step :has_the_case_concluded, alias: :has_case_concluded
-        edit_step :claim_pre_order_work,  alias: :is_preorder_work_claimed
-        edit_step :has_court_remanded_client_in_custody,  alias: :is_client_remanded
+        edit_step :claim_pre_order_work, alias: :is_preorder_work_claimed
+        edit_step :has_court_remanded_client_in_custody, alias: :is_client_remanded
         edit_step :urn
         crud_step :charges, param: :charge_id
         edit_step :charges_summary
@@ -197,12 +204,16 @@ Rails.application.routes.draw do
           crud_step :businesses, param: :business_id
           crud_step :nature_of_business, alias: :business_nature, param: :business_id, except: [:destroy]
           crud_step :date_business_began_trading, alias: :business_start_date, param: :business_id, except: [:destroy]
-          crud_step :in_business_with_anyone_else, alias: :business_additional_owners, param: :business_id, except: [:destroy]
+          crud_step :in_business_with_anyone_else, alias: :business_additional_owners, param: :business_id,
+except: [:destroy]
           crud_step :employees, alias: :business_employees, param: :business_id, except: [:destroy]
           crud_step :financials_of_business, alias: :business_financials, param: :business_id, except: [:destroy]
-          crud_step :salary_or_remuneration_as_director_or_shareholder, alias: :business_salary_or_remuneration, param: :business_id, except: [:destroy]
-          crud_step :total_income_from_share_sales, alias: :business_total_income_share_sales, param: :business_id, except: [:destroy]
-          crud_step :percentage_share_of_profits, alias: :business_percentage_profit_share, param: :business_id, except: [:destroy]
+          crud_step :salary_or_remuneration_as_director_or_shareholder, alias: :business_salary_or_remuneration,
+param: :business_id, except: [:destroy]
+          crud_step :total_income_from_share_sales, alias: :business_total_income_share_sales, param: :business_id,
+except: [:destroy]
+          crud_step :percentage_share_of_profits, alias: :business_percentage_profit_share, param: :business_id,
+except: [:destroy]
         end
 
         scope '/:subject/' do
@@ -224,9 +235,7 @@ Rails.application.routes.draw do
         edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
         edit_step :own_home_land_property, alias: :client_owns_property
-        if FeatureFlags.property_ownership_validation.enabled?
-          edit_step :usual_property_details
-        end
+        edit_step :usual_property_details if FeatureFlags.property_ownership_validation.enabled?
         edit_step :any_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
         edit_step :dependants, alias: :dependants
@@ -254,9 +263,7 @@ Rails.application.routes.draw do
 
       namespace :capital do
         edit_step :which_assets_owned, alias: :property_type
-        if FeatureFlags.property_ownership_validation.enabled?
-          edit_step :usual_property_details
-        end
+        edit_step :usual_property_details if FeatureFlags.property_ownership_validation.enabled?
         crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :commercial_property, alias: :commercial_property, param: :property_id
         crud_step :land, alias: :land, param: :property_id
@@ -312,6 +319,6 @@ Rails.application.routes.draw do
   # catch-all route
   # :nocov:
   match '*path', to: 'errors#not_found', via: :all, constraints:
-    lambda { |_request| !Rails.application.config.consider_all_requests_local }
+    ->(_request) { !Rails.application.config.consider_all_requests_local }
   # :nocov:
 end

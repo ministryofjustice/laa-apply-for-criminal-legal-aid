@@ -12,6 +12,11 @@ feature_flags:
     local: true
     staging: true
     production: false
+  decided_applications_tab:
+    test: false
+    local: true
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

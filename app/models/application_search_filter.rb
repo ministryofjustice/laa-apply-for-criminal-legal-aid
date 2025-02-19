@@ -5,17 +5,24 @@ class ApplicationSearchFilter
   DATASTORE_FILTERS = %i[
     search_text
     status
+    review_status
     office_code
   ].freeze
 
   attribute :search_text, :string
   attribute :office_code, :string
   attribute :status, array: true
+  attribute :review_status, array: true
 
   def datastore_params
-    DATASTORE_FILTERS.each_with_object({}) do |filter, params|
-      params.merge!(send(:"#{filter}_datastore_param"))
-    end
+    raise Errors::UnscopedDatastoreQuery unless office_code
+
+    {
+      search_text:,
+      review_status:,
+      status:,
+      office_code:,
+    }
   end
 
   def to_partial_path
@@ -23,22 +30,6 @@ class ApplicationSearchFilter
   end
 
   def params
-    {
-      search_text:
-    }
-  end
-
-  private
-
-  def search_text_datastore_param
     { search_text: }
-  end
-
-  def status_datastore_param
-    { status: }
-  end
-
-  def office_code_datastore_param
-    { office_code: }
   end
 end

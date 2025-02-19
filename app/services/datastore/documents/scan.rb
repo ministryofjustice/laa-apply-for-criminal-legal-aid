@@ -75,7 +75,7 @@ module Datastore
         end
 
         def type_of(key)
-          ::LaaCrimeSchemas::Types::VirusScanStatus[key]
+          ::Types::VirusScanStatus[key]
         end
       end
 

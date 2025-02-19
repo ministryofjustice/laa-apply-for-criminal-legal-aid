@@ -1,9 +1,0 @@
-<li class='<%= "govuk-pagination__item #{'govuk-pagination__item--current' if page.current?}" %>'>
-  <%= button_to(
-        page,
-        search_application_searches_path(page:),
-        params: sorted_filter_params,
-        class: 'govuk-link govuk-pagination__link app-button--link',
-        aria: { label: t('.page', page:), current: ('page' if page.current?) }
-      ) %>
-</li>

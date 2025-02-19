@@ -4,9 +4,13 @@ class CrimeApplicationsController < DashboardController
 
   layout 'application_dashboard', only: [:index]
 
+  helper_method :sorted_filter_params
+
   def index
+    @sorting = InProgressSorting.new(search_params[:sorting])
+
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(**sorting_params)
+      CrimeApplication.order(**@sorting.order_scope)
     ).page params[:page]
   end
 
@@ -44,6 +48,18 @@ class CrimeApplicationsController < DashboardController
     end
   end
 
+  def search_params
+    params.permit(
+      :page,
+      :per_page,
+      sorting: InProgressSorting.attribute_names
+    )
+  end
+
+  def sorted_filter_params
+    { sorting: @sorting.params }
+  end
+
   def destroy
     ApplicationPurger.call(current_crime_application, log_context)
 
@@ -56,14 +72,6 @@ class CrimeApplicationsController < DashboardController
   def confirm_destroy; end
 
   private
-
-  def sortable_columns
-    %w[created_at]
-  end
-
-  def sorting_params
-    { helpers.sort_by => helpers.sort_direction }
-  end
 
   def new_application_params
     params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
