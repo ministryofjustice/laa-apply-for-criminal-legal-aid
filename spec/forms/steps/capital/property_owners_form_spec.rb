@@ -104,7 +104,7 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
             { 'name' => 'c', 'relationship' => PropertyOwner::OTHER_RELATIONSHIP, 'other_relationship' => 'other relationship name', 'percentage_owned' => '1' }
           }
 
-          it 'has errors when when total percentage ownership does not equal 100' do
+          it 'errors when total percentage ownership does not equal 100' do
             attr = 'property_owners-attributes[0].percentage_owned'
             attr2 = 'property_owners-attributes[1].percentage_owned'
             attr3 = 'property_owners-attributes[2].percentage_owned'
