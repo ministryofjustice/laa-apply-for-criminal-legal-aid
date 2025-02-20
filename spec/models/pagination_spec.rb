@@ -8,20 +8,20 @@ RSpec.describe Pagination do
   describe '#limit_value' do
     subject(:limit_value) { new.limit_value }
 
-    context 'when an string number is provided' do
+    context 'when a string number is provided' do
       let(:params) { { limit_value: '35' } }
 
       it { is_expected.to be 35 }
     end
 
     context 'when an integer' do
-      let(:params) { { limit_value: 30 } }
+      let(:params) { { limit_value: 40 } }
 
-      it { is_expected.to be 30 }
+      it { is_expected.to be 40 }
     end
 
     context 'when no attribute provided' do
-      it { is_expected.to be 20 }
+      it { is_expected.to be 30 }
     end
   end
 end

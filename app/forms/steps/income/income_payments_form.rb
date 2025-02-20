@@ -6,7 +6,7 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :income
 
-      PAYMENT_TYPES_ORDER = LaaCrimeSchemas::Types::OtherIncomePaymentType.values
+      PAYMENT_TYPES_ORDER = Types::OtherIncomePaymentType.values
 
       attr_writer :types
       attr_reader :new_payments

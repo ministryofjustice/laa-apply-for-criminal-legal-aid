@@ -16,4 +16,16 @@ class Pagination
       per_page: limit_value
     }
   end
+
+  def limit_value
+    return DEFAULT_LIMIT_VALUE unless super
+
+    super
+  end
+
+  def current_page
+    return DEFAULT_CURRENT_PAGE unless super
+
+    super
+  end
 end

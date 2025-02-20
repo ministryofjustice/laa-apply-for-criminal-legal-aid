@@ -25,7 +25,13 @@ module DataTable
     def cell_content
       return name unless sortable?
 
-      button_to(name, nil, params: sorted_params)
+      button_to(name, "##{colname}", params: sorted_params, method: http_method)
+    end
+
+    def http_method
+      return :post if request.method == 'POST'
+
+      :get
     end
 
     def default_classes
@@ -52,14 +58,19 @@ module DataTable
     end
 
     def sortable?
-      ApplicationSearchSorting::SORTABLE_COLUMNS.include?(colname.to_s)
+      sorting.sortable_columns.include?(colname)
     end
 
     def sorted_params
+      return sorting_params unless filter
+
+      { filter: filter.params }.merge(sorting_params)
+    end
+
+    def sorting_params
       {
-        filter: filter.params,
         sorting: {
-          sort_by: colname.to_s,
+          sort_by: colname,
           sort_direction: sorting.reverse_direction
         }
       }
@@ -77,7 +88,7 @@ module DataTable
     end
 
     def active?
-      colname.to_s == sorting.sort_by
+      colname == sorting.sort_by
     end
   end
 end

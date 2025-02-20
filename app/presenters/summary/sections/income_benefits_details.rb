@@ -40,7 +40,7 @@ module Summary
       end
 
       def payment_types
-        LaaCrimeSchemas::Types::IncomeBenefitType.values
+        Types::IncomeBenefitType.values
       end
     end
   end

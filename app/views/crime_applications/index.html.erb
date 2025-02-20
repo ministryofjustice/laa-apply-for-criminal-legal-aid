@@ -8,27 +8,20 @@
   <div class="govuk-grid-column-full app-table-container">
     <% if @applications.empty? %>
       <h2 class="govuk-heading-m">
-        <%= t("shared.errors.no_records.#{status_filter}") %>
+        <%= t('shared.errors.no_records') %>
       </h2>
     <% else %>
       <table class="govuk-table app-dashboard-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('created_at') %>">
-              <%=
-                button_to(
-                  t('.table_headings.created_at'),
-                  crime_applications_path, method: :get,
-                  params: { sort_by: 'created_at', sort_direction: flipped_sort_direction }
-                )
-              %>
-            </th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.application_type') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.action') %></th>
-          </tr>
-        </thead>
+
+        <%= render DataTable::HeadComponent.new(sorting: @sorting) do |head|
+              head.with_row do |row|
+                row.with_cell(colname: 'applicant_name')
+                row.with_cell(colname: 'created_at')
+                row.with_cell(colname: 'reference')
+                row.with_cell(colname: 'application_type')
+                row.with_cell(colname: 'action')
+              end
+            end %>
         <tbody class="govuk-table__body">
           <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
             <tr class="govuk-table__row">
@@ -44,10 +37,7 @@
               </td>
               <td class="govuk-table__cell"><%= app.application_type.humanize %></td>
               <td class="govuk-table__cell">
-                <%= button_to confirm_destroy_crime_application_path(app), method: :get,
-                  class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0',
-                  'aria-label': t('.delete_button_a11y', applicant_name: app.applicant_name),
-                  data: { module: 'govuk-button' } do; t('.delete_button'); end %>
+                <%= govuk_link_to t('.delete_button'), confirm_destroy_crime_application_path(app) %>
               </td>
             </tr>
           <% end %>
