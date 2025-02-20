@@ -25,7 +25,7 @@ module CapitalAssessment
       "property_owners-attributes[#{index}].#{attr}"
     end
 
-    # `activemodel.errors.models.steps/capital/property_owner_fieldset_form.summary.x.y`
+    # `activemodel.errors.models.steps/capital/{model_name.i18n_key}.summary.x.y`
     def error_message(obj, error)
       I18n.t(
         "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
@@ -55,7 +55,7 @@ module CapitalAssessment
 
       ownership_errors(record, attr_name, index)
 
-      # Ensure that the error appears on the percentage field(s)
+      # Ensure that the error also appears on the percentage field(s)
       ownership_errors(property_owner, :percentage_owned, index)
 
       # Ensure the form field can retrieve this error properly
@@ -65,7 +65,8 @@ module CapitalAssessment
     end
 
     def ownership_errors(obj, attr_name, index)
-      obj.errors.add(attr_name, :invalid, message: error_message(record, Error.new(:base, :invalid)), index: index)
+      obj.errors.add(attr_name, :invalid, message: error_message(record, Error.new(:percentage_owned, :invalid)),
+index: index)
     end
 
     def valid_ownership_total?
