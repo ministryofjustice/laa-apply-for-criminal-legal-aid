@@ -64,6 +64,11 @@ en:
     destroy:
       success_flash: "%{applicant_name}’s application has been deleted"
   completed_applications:
+    funding_decision_notification:
+      title: Important
+      heading: Outcome decided
+      processed_on: This application was processed on %{on}.
+      explanation: Funding decisions made after 12 midday 13 February 2025 will appear in this service.
     index:
       page_title: Your applications
       no_records: There are no applications
