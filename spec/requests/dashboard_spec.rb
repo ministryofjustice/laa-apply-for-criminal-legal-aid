@@ -43,7 +43,7 @@ RSpec.describe 'Dashboard', :authorized do
     it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for a criminal legal aid representation order'
+      assert_select 'h2', 'Application for a criminal legal aid representation order'
     end
 
     it 'has print buttons' do
@@ -148,6 +148,7 @@ RSpec.describe 'Dashboard', :authorized do
     let(:app_split_case) do
       LaaCrimeSchemas.fixture(1.0, name: 'application_returned') do |json|
         json.deep_merge(
+          'review_status' => 'returned_to_provider',
           'return_details' => {
             'reason' => 'split_case',
             'details' => 'Offence 1 reason requires more detail'
@@ -165,6 +166,8 @@ RSpec.describe 'Dashboard', :authorized do
 
     # rubocop:disable Layout/LineLength
     it 'has a notification banner with the return details' do
+      assert_select 'strong.govuk-tag.govuk-tag--blue', 'Returned'
+
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
@@ -194,7 +197,7 @@ RSpec.describe 'Dashboard', :authorized do
     it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for a criminal legal aid representation order'
+      assert_select 'h2', 'Application for a criminal legal aid representation order'
     end
 
     it 'does not have a button to "Upload supporting evidence"' do

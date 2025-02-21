@@ -1,4 +1,4 @@
-<% title t('.page_title') %>
+<% title @crime_application.applicant.full_name %>
 <% content_for(:head) do %>
   <%= stylesheet_link_tag 'print', media: 'print' %>
 <% end %>
@@ -8,7 +8,24 @@
     <%= render partial: 'return_notification',
                locals: { return_details: @crime_application.return_details } if @crime_application.returned? %>
 
-             <h1 class="govuk-heading-xl"><%= t(".heading.#{@crime_application.application_type}") %></h1>
+    <div class="govuk-!-margin-bottom-6">
+      <% if @crime_application.review_status.present? %>
+        <%= govuk_tag(text: t(@crime_application.review_status, scope: 'review_status'), colour: 'blue') %>
+      <% end %>
+      <% if @crime_application.decisions.present? %>
+          <%= govuk_link_to(t('.view_funding_decision'), '#funding_decisions', no_visited_state: true, class: 'govuk-!-margin-left-2 govuk-body-m') %>
+      <% end %>
+    </div>
+
+    <p class="govuk-body-l govuk-!-margin-bottom-1">
+      <%= @crime_application.reference %>
+    </p>
+
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      <%= @crime_application.applicant.full_name %>
+    </h1>
+
+    <h2 class="govuk-heading-l"><%= t(".heading.#{@crime_application.application_type}") %></h2>
 
     <% if @crime_application.can_be_withdrawn? %>
       <div class="govuk-inset-text">
@@ -23,7 +40,7 @@
       </div>
     <% end %>
 
-    <div class="govuk-!-margin-top-8 app-no-print">
+    <div class="govuk-!-margin-top-6 app-no-print">
       <%= link_button t('.print_application'), '#', data: { module: 'print' } %>
     </div>
   </div>

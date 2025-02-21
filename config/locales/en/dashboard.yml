@@ -68,7 +68,6 @@ en:
       page_title: Your applications
       no_records: There are no applications
     show:
-      page_title: Application representation order
       heading:
         initial: Application for a criminal legal aid representation order
         change_in_financial_circumstances: Change in financial circumstances
@@ -83,6 +82,7 @@ en:
         hours: 9am to 5pm, Monday to Friday (excluding bank holidays)
       action:
         create_pse: Upload supporting evidence
+      view_funding_decision: View funding decision
     return_notification:
       title: Important
       heading:
