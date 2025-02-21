@@ -1099,7 +1099,7 @@ en:
         steps/capital/property_owners_form:
           summary:
             percentage_owned:
-              invalid: Percentages entered need to total 100% - check percentage owned by Other owner %{index}
+              invalid: Percentages entered need to total 100% - check percentage owned by other owner %{index}
         steps/capital/properties_summary_form:
           attributes:
             add_property:
