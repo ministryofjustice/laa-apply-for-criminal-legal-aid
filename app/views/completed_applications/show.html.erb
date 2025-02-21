@@ -5,8 +5,15 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render partial: 'return_notification',
-               locals: { return_details: @crime_application.return_details } if @crime_application.returned? %>
+    <%= render(
+          partial: 'return_notification',
+          locals: { return_details: @crime_application.return_details }
+        ) %>
+
+    <%= render(
+          partial: 'funding_decision_notification',
+          locals: { application: @crime_application }
+        ) %>
 
     <div class="govuk-!-margin-bottom-6">
       <% if @crime_application.review_status.present? %>
