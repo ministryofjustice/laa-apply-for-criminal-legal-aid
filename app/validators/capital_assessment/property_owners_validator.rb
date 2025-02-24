@@ -6,14 +6,25 @@ module CapitalAssessment
 
     def validate(record)
       @record = record
-
-      record.property_owners.each_with_index do |property_owner, index|
-        add_indexed_errors(property_owner, index) unless property_owner.valid?
-        add_ownership_error(property_owner, index) unless valid_ownership_total?
-      end
+      validate_property_owners
+      validate_ownership_total
     end
 
     private
+
+    def validate_property_owners
+      record.property_owners.each_with_index do |property_owner, index|
+        add_indexed_errors(property_owner, index) unless property_owner.valid?
+      end
+    end
+
+    def validate_ownership_total
+      return if valid_ownership_total?
+
+      record.property_owners.each_with_index do |property_owner, index|
+        add_ownership_error(property_owner, index)
+      end
+    end
 
     def add_indexed_errors(property_owner, index)
       property_owner.errors.each do |error|
