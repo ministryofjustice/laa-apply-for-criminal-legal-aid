@@ -1,54 +1,45 @@
 <% title t('.page_title') %>
-
 <%= render partial: 'shared/dashboard_header' %>
-
 <%= render partial: 'shared/subnavigation' %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full app-table-container">
-    <% if @applications.nil? %>
-      <%= render partial: 'datastore_unavailable' %>
-    <% elsif @applications.empty? %>
-      <h2 class="govuk-heading-m">
-        <%= t("shared.errors.no_records.#{status_filter}") %>
-      </h2>
-    <% else %>
-      <table class="govuk-table app-dashboard-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.applicant_name') %></th>
-            <th scope="col" class="govuk-table__header" aria-sort="<%= aria_sort('submitted_at') %>">
-            <%=
-              button_to(
-                t('.table_headings.submitted_at'),
-                completed_crime_applications_path, method: :get,
-                params: { q: status_filter, sort_by: 'submitted_at', sort_direction: flipped_sort_direction },
-              )
-            %>
-            </th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.reference') %></th>
-            <th scope="col" class="govuk-table__header"><%= t('.table_headings.application_type') %></th>
-          </tr>
-        </thead>
+<% if @search.results.empty? %>
+  <h2 class="govuk-heading-m">
+    <%= t('.no_records') %>
+  </h2>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full app-table-container">
+      <table class="govuk-table app-table">
+        <%= render DataTable::HeadComponent.new(sorting: @search.sorting) do |head|
+              head.with_row do |row|
+                row.with_cell(colname: 'applicant_name')
+                row.with_cell(colname: 'submitted_at')
+                row.with_cell(colname: 'reference')
+                row.with_cell(colname: 'application_type')
+              end
+            end %>
         <tbody class="govuk-table__body">
-          <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
+          <% @search.results.each do |result| %>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">
-                <%= link_to app.applicant_name, completed_crime_application_path(app),
-                            class: 'govuk-link--no-visited-state' %>
+                <%= link_to result.applicant_name, completed_crime_application_path(result),
+                            class: 'govuk-link--no-visited-state govuk-!-font-weight-regular' %>
               </th>
               <td class="govuk-table__cell">
-                <%= l(app.submitted_at) %>
+                <%= l(result.submitted_at) %>
               </td>
               <td class="govuk-table__cell">
-                <%= app.reference %>
+                <%= result.reference %>
               </td>
-              <td class="govuk-table__cell"><%= app.application_type.humanize %></td>
+              <td class="govuk-table__cell">
+                <%= result.application_type.humanize %>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <%= paginate @applications %>
-    <% end %>
+
+      <%= paginate @search.pagination  %>
+    </div>
   </div>
-</div>
+<% end %>

@@ -1,4 +1,4 @@
-class CrimeApplication < ApplicationRecord
+class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include TypeOfApplication
   include Passportable
   include MeansOwnershipScope
@@ -135,5 +135,9 @@ class CrimeApplication < ApplicationRecord
     draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
 
     Adapters::Structs::CrimeApplication.new(draft.attributes!.as_json)
+  end
+
+  def review_status
+    nil
   end
 end
