@@ -84,7 +84,7 @@ index: index)
       all_percentage_ownerships.sum == 100
     end
 
-    def all_percentage_ownerships
+    def all_percentage_ownerships # rubocop:disable Metrics/AbcSize
       percentage_ownerships = record.property_owners.filter_map do |po|
         po.percentage_owned unless po.percentage_owned.nil?
       end

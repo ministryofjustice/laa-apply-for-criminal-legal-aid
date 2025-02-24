@@ -52,29 +52,33 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       end
 
       it 'has errors when name is blank' do
-        expect(subject.errors.of_kind?('property_owners-attributes[0].name', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owners-attributes[0].name').first).to eq(
+        attr = 'property_owners-attributes[0].name'
+        expect(subject.errors.of_kind?(attr, :blank)).to be(true)
+        expect(subject.errors.messages_for(attr).first).to eq(
           'Enter the name of the other owner'
         )
       end
 
       it 'has errors when the relationship is blank' do
-        expect(subject.errors.of_kind?('property_owners-attributes[1].relationship', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owners-attributes[1].relationship').first).to eq(
+        attr = 'property_owners-attributes[1].relationship'
+        expect(subject.errors.of_kind?(attr, :blank)).to be(true)
+        expect(subject.errors.messages_for(attr).first).to eq(
           'Enter their relationship to your client'
         )
       end
 
       it 'has errors when the relationship is other and other_relationship is blank' do
-        expect(subject.errors.of_kind?('property_owners-attributes[2].other_relationship', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owners-attributes[2].other_relationship').first).to eq(
+        attr = 'property_owners-attributes[2].other_relationship'
+        expect(subject.errors.of_kind?(attr, :blank)).to be(true)
+        expect(subject.errors.messages_for(attr).first).to eq(
           'Enter their relationship'
         )
       end
 
       it 'has errors when percentage_owned is blank' do
-        expect(subject.errors.of_kind?('property_owners-attributes[0].percentage_owned', :blank)).to be(true)
-        expect(subject.errors.messages_for('property_owners-attributes[0].percentage_owned').first).to eq(
+        attr = 'property_owners-attributes[0].percentage_owned'
+        expect(subject.errors.of_kind?(attr, :blank)).to be(true)
+        expect(subject.errors.messages_for(attr).first).to eq(
           'Enter the percentage of the land they own'
         )
       end
