@@ -18,12 +18,10 @@
                   aria: { current: current_page?(controller: :returned_applications) ? 'page' : nil } %>
     </li>
 
-    <% if FeatureFlags.decided_applications_tab.enabled? %>
-      <li class="moj-sub-navigation__item" tabindex="-1">
-        <%= link_to t('.decided'), decided_applications_path(anchor: :tab),
-                    class: 'moj-sub-navigation__link',
-                    aria: { current: current_page?(controller: :decided_applications) ? 'page' : nil } %>
-      </li>
-    <% end %>
+    <li class="moj-sub-navigation__item" tabindex="-1">
+      <%= link_to t('.decided'), decided_applications_path(anchor: :tab),
+                  class: 'moj-sub-navigation__link',
+                  aria: { current: current_page?(controller: :decided_applications) ? 'page' : nil } %>
+    </li>
   </ul>
 </nav>
