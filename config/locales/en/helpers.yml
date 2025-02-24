@@ -1118,7 +1118,7 @@ en:
         legal_rep_no_partner_declaration_reason: Explain the reason you could not get a signed declaration from the partner
         legal_rep_first_name: First name
         legal_rep_last_name: Last name
-        legal_rep_telephone: Telephone number
+        legal_rep_telephone: Telephone
       steps_submission_cannot_submit_without_nino_form:
         will_enter_nino_options:
           "yes": I will enter the National Insurance number now
