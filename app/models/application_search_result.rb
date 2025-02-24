@@ -10,6 +10,7 @@ class ApplicationSearchResult
   attribute :application_type, :string
   attribute :office_code, :string
   attribute :provider_name, :string
+  attribute :review_status, :string
 
   alias id resource_id
 

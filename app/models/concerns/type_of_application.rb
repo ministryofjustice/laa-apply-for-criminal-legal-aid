@@ -12,12 +12,23 @@ module TypeOfApplication
     reviewed?
   end
 
+  def funding_decision_missing?
+    return false unless decided?
+    return false if pse?
+
+    decisions.empty?
+  end
+
   def initial?
     application_type_eql?(:initial)
   end
 
   def returned?
     returned_at.present?
+  end
+
+  def decided?
+    review_status == Types::ReviewApplicationStatus['assessment_completed']
   end
 
   def resubmission?

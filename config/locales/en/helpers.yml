@@ -1,17 +1,5 @@
 ---
 en:
-  table_headings:
-    applicant_name: Name
-    reference: LAA reference
-    submitted_at: Date submitted
-    application_type: Application type
-    application_status: Application status
-  search:
-    total:
-      one: 1 search result
-      other: "%{count} search results"
-    heading: Search submitted applications
-    subheading: You are searching submitted and returned applications under office code %{current_office_code}.
   helpers/dictionary:
     address: &ADDRESS_DETAILS
       address_line_one: Address line 1
@@ -19,32 +7,32 @@ en:
       city: Town or city
       country: Country
       postcode: Postcode
-    ioj_justification_hint: &ioj_justification_hint 'Enter justification'
-    frequency_legend: &frequency_legend 'How often?'
-    amount_label: &amount_label 'How much?'
+    ioj_justification_hint: &ioj_justification_hint "Enter justification"
+    frequency_legend: &frequency_legend "How often?"
+    amount_label: &amount_label "How much?"
     OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
-      applicant: 'Client'
-      applicant_and_partner: 'Client and partner'
-      partner: 'Partner'
+      applicant: "Client"
+      applicant_and_partner: "Client and partner"
+      partner: "Partner"
     OWNERSHIP_PHRASE_OPTIONS: &OWNERSHIP_PHRASE_OPTIONS
       applicant: "My client"
       applicant_and_partner: "My client and their partner"
       partner: "My client's partner"
     YESNO: &YESNO
-      'yes': 'Yes'
-      'no': 'No'
+      "yes": "Yes"
+      "no": "No"
     frequency_phrases: &frequency_phrases
-      'week': 'week'
-      'fortnight': '2 weeks'
-      'four_weeks': '4 weeks'
-      'month': 'month'
-      'annual': 'year'
+      "week": "week"
+      "fortnight": "2 weeks"
+      "four_weeks": "4 weeks"
+      "month": "month"
+      "annual": "year"
     frequency_options: &frequency_options
-      'week': 'Every week'
-      'fortnight': 'Every 2 weeks'
-      'four_weeks': 'Every 4 weeks'
-      'month': 'Monthly'
-      'annual': 'Yearly'
+      "week": "Every week"
+      "fortnight": "Every 2 weeks"
+      "four_weeks": "Every 4 weeks"
+      "month": "Monthly"
+      "annual": "Yearly"
     asset:
       residential: residential property
       commercial: commercial property
@@ -122,7 +110,8 @@ en:
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_LEGEND
         benefit_type: Do you have evidence %{subject} gets %{benefit_type}?
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_LEGEND
-      steps_dwp_cannot_check_benefit_status_form:  &CANNOT_CHECK_BENEFIT_STATUS_LEGEND
+      steps_dwp_cannot_check_benefit_status_form:
+        &CANNOT_CHECK_BENEFIT_STATUS_LEGEND
         heading: We cannot check %{subject}'s benefit status without their National Insurance number
         upload_evidence: You must upload evidence that %{subject} gets a passporting benefit.
       steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
@@ -427,14 +416,14 @@ en:
       steps_dwp_partner_benefit_type_form: *BENEFIT_TYPE_HINT
       steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_HINT
         will_enter_nino_options:
-          'no': You may not be able to submit your application without the National Insurance number
+          "no": You may not be able to submit your application without the National Insurance number
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
         has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or an image from a government app showing %{subject}'s name and their benefit details.
         has_benefit_evidence_options:
-          'yes': You'll need to upload evidence at the end of this application.
+          "yes": You'll need to upload evidence at the end of this application.
           # TODO: check with design
-          'no': You'll need to tell us about their income if you do not have evidence.
+          "no": You'll need to tell us about their income if you do not have evidence.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
         page_title: Sorry, we cannot check %{subject}’s information with DWP
@@ -580,12 +569,12 @@ en:
     label:
       cookies_settings_form:
         consent_options:
-          accept: 'Yes'
-          reject: 'No'
+          accept: "Yes"
+          reject: "No"
       steps_provider_confirm_office_form:
         is_current_office_options:
-          'yes': 'Yes'
-          'no': 'No, another office is handling this application'
+          "yes": "Yes"
+          "no": "No, another office is handling this application"
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number_options:
           pre_cifc_maat_id: MAAT ID
@@ -596,8 +585,8 @@ en:
         pre_cifc_reason: What has changed in your client's financial circumstances?
       steps_client_is_means_tested_form:
         is_means_tested_options:
-          'yes': Yes - the application is subject to the test
-          'no': No - the application covers non-means tested prescribed proceedings
+          "yes": Yes - the application is subject to the test
+          "no": No - the application covers non-means tested prescribed proceedings
       steps_client_has_partner_form:
         has_partner_options: *YESNO
       steps_client_details_form:
@@ -617,8 +606,8 @@ en:
         nino: What is their National Insurance number?
         arc: What is their ARC number?
         has_arc_or_nino_options:
-          'yes': 'Yes'
-          'no': 'No'
+          "yes": "Yes"
+          "no": "No"
           arc: No, but the client has an application registration card (ARC)
       steps_client_appeal_details_form:
         appeal_original_app_submitted_options: *YESNO
@@ -692,19 +681,19 @@ en:
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_OPTIONS
       steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_OPTIONS
         will_enter_nino_options:
-          'yes': I will enter the National Insurance number now
-          'no': I will enter the National Insurance number later
+          "yes": I will enter the National Insurance number now
+          "no": I will enter the National Insurance number later
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
         confirm_dwp_result_options:
-          'yes': 'Yes'
+          "yes": "Yes"
           # TODO: Check with design
-          'no': No, they receive a passporting benefit
+          "no": No, they receive a passporting benefit
       steps_dwp_confirm_result_partner_form: *CONFIRM_DWP_RESULT_OPTIONS
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
-          'yes': 'Yes'
-          'no': 'No, I need to change these details'
+          "yes": "Yes"
+          "no": "No, I need to change these details"
       steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_OPTIONS
       steps_address_lookup_form:
         postcode: What is the postcode?
@@ -992,7 +981,6 @@ en:
       steps_income_business_percentage_profit_share_form:
         percentage_profit_share: What is %{subject}’s percentage share of profits from the business or partnership?
 
-
       # BEGIN: Partner Income
       steps_income_partner_income_payments_form:
         types_options:
@@ -1133,8 +1121,8 @@ en:
         legal_rep_telephone: Telephone number
       steps_submission_cannot_submit_without_nino_form:
         will_enter_nino_options:
-          'yes': I will enter the National Insurance number now
-          'no': I will save and come back later to enter the National Insurance number
+          "yes": I will enter the National Insurance number now
+          "no": I will save and come back later to enter the National Insurance number
       steps_capital_property_type_form:
         property_type_options: &PROPERTY_TYPE_OPTIONS
           residential: Residential property
@@ -1179,20 +1167,20 @@ en:
         are_partners_wages_paid_into_account_options: *YESNO
         ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm that the account is in my client's name
+          "true": I confirm that the account is in my client's name
       steps_capital_investments_form:
         description: What is the investment?
         value: What is the value of the investment?
         ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm the investment is in my client's name
+          "true": I confirm the investment is in my client's name
       steps_capital_national_savings_certificates_form:
         holder_number: What is the customer number or holder number?
         certificate_number: What is the certificate number?
         value: What is the value of the certificate?
         ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
         confirm_in_applicants_name_options:
-          'true': I confirm my client owns the certificate
+          "true": I confirm my client owns the certificate
       steps_capital_savings_summary_form:
         add_saving_options: *YESNO
       steps_capital_investments_summary_form:
@@ -1274,6 +1262,6 @@ en:
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
       steps_capital_answers_form:
-        'yes':
+        "yes":
           one: Tick to confirm %{subject} does not have any other assets or capital
           other: Tick to confirm %{subject} do not have any other assets or capital

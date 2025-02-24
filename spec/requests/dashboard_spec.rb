@@ -43,7 +43,7 @@ RSpec.describe 'Dashboard', :authorized do
     it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for a criminal legal aid representation order'
+      assert_select 'h2', 'Application for a criminal legal aid representation order'
     end
 
     it 'has print buttons' do
@@ -60,11 +60,24 @@ RSpec.describe 'Dashboard', :authorized do
 
     context 'when the application has been reviewed' do
       let(:application_fixture) do
-        LaaCrimeSchemas.fixture(1.0) { |data| data.merge('reviewed_at' => 1.day.ago) }.to_json
+        LaaCrimeSchemas.fixture(1.0) do |data|
+          data.merge(reviewed_at: '2025-02-01', review_status: 'assessment_completed').to_json
+        end
       end
 
       it 'has a button to "Upload supporting evidence"' do
         assert_select 'button.govuk-button', count: 1, text: 'Upload supporting evidence'
+      end
+
+      it 'shows funding decision notification if decisions are empty' do
+        assert_select 'strong.govuk-tag.govuk-tag--blue', 'Decided'
+
+        assert_select 'div.govuk-notification-banner' do
+          assert_select 'h2', 'Important'
+          assert_select 'p.govuk-notification-banner__heading', 'Outcome decided'
+          assert_select 'p', 'This application was processed on 1 February 2025.'
+          assert_select 'p', 'Funding decisions made after 12 midday 13 February 2025 will appear in this service.'
+        end
       end
 
       it 'creates a new PSE application' do
@@ -148,6 +161,7 @@ RSpec.describe 'Dashboard', :authorized do
     let(:app_split_case) do
       LaaCrimeSchemas.fixture(1.0, name: 'application_returned') do |json|
         json.deep_merge(
+          'review_status' => 'returned_to_provider',
           'return_details' => {
             'reason' => 'split_case',
             'details' => 'Offence 1 reason requires more detail'
@@ -165,6 +179,8 @@ RSpec.describe 'Dashboard', :authorized do
 
     # rubocop:disable Layout/LineLength
     it 'has a notification banner with the return details' do
+      assert_select 'strong.govuk-tag.govuk-tag--blue', 'Returned'
+
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
         assert_select 'div.govuk-notification-banner__content' do
@@ -194,7 +210,7 @@ RSpec.describe 'Dashboard', :authorized do
     it 'renders the representation order page' do
       expect(response).to have_http_status(:success)
 
-      assert_select 'h1', 'Application for a criminal legal aid representation order'
+      assert_select 'h2', 'Application for a criminal legal aid representation order'
     end
 
     it 'does not have a button to "Upload supporting evidence"' do

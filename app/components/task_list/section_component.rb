@@ -23,7 +23,7 @@ module TaskList
     end
 
     def header_content
-      tag.h2(class: 'govuk-heading-m') { section_title }
+      tag.h2(class: 'govuk-heading-m', id: name) { section_title }
     end
 
     def section_title

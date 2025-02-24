@@ -1,7 +1,5 @@
 <% if list_section.heading %>
-  <h2 class="govuk-heading-l">
-    <%= t(list_section.heading, scope: 'summary.sections') %>
-  </h2>
+  <%= tag.h2(class: 'govuk-heading-l', id: list_section.heading) { t(list_section.heading, scope: 'summary.sections') } %>
 <% end %>
 
 <%= render list_section.answers, editable: list_section.editable? %>

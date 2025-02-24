@@ -1,10 +1,16 @@
 <div class="govuk-pagination__prev">
-  <a class="govuk-link govuk-pagination__link govuk-link--no-visited-state" href="<%= url %>">
+  <%= button_to(
+        "?page=#{current_page - 1}#page-to",
+        params: sorted_filter_params.merge(page: current_page - 1),
+        method: request.method.downcase,
+        class: 'govuk-link govuk-pagination__link app-button--link'
+      ) do %>
+
     <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
       <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
     </svg>
     <span class="govuk-pagination__link-title">
       <%= t('.previous_html') %>
     </span>
-  </a>
+  <% end %>
 </div>

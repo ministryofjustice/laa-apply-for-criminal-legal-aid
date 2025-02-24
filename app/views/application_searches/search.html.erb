@@ -24,21 +24,38 @@
       <table class="govuk-table app-table">
         <%= render DataTable::HeadComponent.new(sorting: @search.sorting, filter: @search.filter) do |head|
               head.with_row do |row|
-                row.with_cell(colname: :applicant_name)
-                row.with_cell(colname: :submitted_at)
-                row.with_cell(colname: :reference)
-                row.with_cell(colname: :application_type)
-                row.with_cell(colname: :application_status)
+                row.with_cell(colname: 'applicant_name')
+                row.with_cell(colname: 'submitted_at')
+                row.with_cell(colname: 'reference')
+                row.with_cell(colname: 'application_type')
+                row.with_cell(colname: 'application_status')
               end
             end %>
         <tbody class="govuk-table__body">
-          <%= render partial: 'search_results_table_body',
-                     collection: @search.results,
-                     as: :result %>
+          <% @search.results.each do |result| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                <%= link_to result.applicant_name, completed_crime_application_path(result),
+                            class: 'govuk-link--no-visited-state govuk-!-font-weight-regular' %>
+              </th>
+              <td class="govuk-table__cell">
+                <%= l(result.submitted_at) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= result.reference %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= result.application_type.humanize %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= t(result.review_status, scope: 'review_status') %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
 
-      <%= paginate @search.pagination, views_prefix: 'application_searches'  %>
+      <%= paginate @search.pagination %>
     </div>
   </div>
 <% end %>
