@@ -69,7 +69,7 @@ module CapitalAssessment
       # Ensure that the error also appears on the percentage field(s)
       ownership_errors(property_owner, :percentage_owned, index)
 
-      # Ensure the form field can retrieve this error properly
+      # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
         property_owner.percentage_owned
       end
