@@ -5,10 +5,6 @@ RSpec.describe 'Viewing Submitted Criminal Legal Aid applications' do
   include_context 'with stubbed search results'
 
   before do
-    allow(FeatureFlags).to receive(:decided_applications_tab) {
-      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-    }
-
     visit 'applications/submitted'
   end
 

@@ -48,18 +48,6 @@ describe Summary::Sections::FundingDecisions do
       end
     end
 
-    context 'when the funding decision feature flag is disabled' do
-      before do
-        allow(FeatureFlags).to receive(:show_funding_decisions) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-        }
-      end
-
-      it 'does not show this section' do
-        expect(subject.show?).to be(false)
-      end
-    end
-
     context 'when there are no funding decisions' do
       let(:decisions) { [] }
 
