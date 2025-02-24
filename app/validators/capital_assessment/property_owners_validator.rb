@@ -37,7 +37,7 @@ module CapitalAssessment
     end
 
     # `activemodel.errors.models.steps/capital/property_owner_fieldset_form.summary.x.y`
-    # # `activemodel.errors.models.steps/capital/property_owner_form.summary.percentage_owned.invalid`
+    # `activemodel.errors.models.steps/capital/property_owner_form.summary.percentage_owned.invalid`
     def error_message(obj, error)
       I18n.t(
         "#{obj.model_name.i18n_key}.summary.#{error.attribute}.#{error.type}",
