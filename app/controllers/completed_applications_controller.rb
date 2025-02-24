@@ -6,11 +6,9 @@ class CompletedApplicationsController < DashboardController
 
   layout 'application_dashboard', only: [:index]
 
-  # :nocov:
   def index
-    raise 'Define in sub-controller'
+    redirect_to submitted_applications_path
   end
-  # :nocov:
 
   def show
     @presenter = Summary::HtmlPresenter.new(

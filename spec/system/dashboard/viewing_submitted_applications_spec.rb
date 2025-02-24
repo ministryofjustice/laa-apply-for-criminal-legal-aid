@@ -41,4 +41,10 @@ RSpec.describe 'Viewing Submitted Criminal Legal Aid applications' do
   end
 
   it_behaves_like 'a datastore api results table'
+
+  it 'redirects back here when visiting the old completed applications path' do
+    visit('completed/applications')
+
+    expect(page).to have_current_path(submitted_applications_path)
+  end
 end
