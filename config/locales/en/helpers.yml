@@ -325,8 +325,8 @@ en:
           frequency: How often?
       steps_outgoings_outgoings_more_than_income_form:
         outgoings_more_than_income:
-          one: Does %{subject} have outgoings that are more than their income?
-          other: Do %{subject} have outgoings that are more than their income?
+          one: Does %{subject} have outgoings that are more than their combined income?
+          other: Do %{subject} have outgoings that are more than their combined income?
       steps_submission_more_information_form:
         additional_information_required: Do you want to add any other information?
       steps_submission_cannot_submit_without_nino_form:
