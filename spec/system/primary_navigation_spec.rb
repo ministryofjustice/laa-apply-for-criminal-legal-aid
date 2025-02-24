@@ -31,8 +31,35 @@ RSpec.describe 'Primary navigation' do
   context 'when on "Your applications"' do
     before { click_link('Your applications') }
 
-    it 'the search tab is not the current tab' do
+    it '`Your applications` is the current tab' do
       expect(search_tab_current?).to be false
+      expect(your_applications_tab_current?).to be true
+    end
+  end
+
+  context 'when on the Submitted applications page' do
+    include_context 'with stubbed search results'
+
+    before do
+      click_link('Submitted')
+    end
+
+    it '`Your applications` is the current tab' do
+      expect(search_tab_current?).to be false
+      expect(your_applications_tab_current?).to be true
+    end
+  end
+
+  context 'when on the Returned applications page' do
+    include_context 'with stubbed search results'
+
+    before do
+      click_link('Returned')
+    end
+
+    it '`Your applications` is the current tab' do
+      expect(search_tab_current?).to be false
+      expect(your_applications_tab_current?).to be true
     end
   end
 
@@ -60,5 +87,9 @@ RSpec.describe 'Primary navigation' do
 
   def search_tab_current?
     page.find('a.moj-primary-navigation__link', text: 'Search')['aria-current'] == 'page'
+  end
+
+  def your_applications_tab_current?
+    page.find('a.moj-primary-navigation__link', text: 'Your applications')['aria-current'] == 'page'
   end
 end

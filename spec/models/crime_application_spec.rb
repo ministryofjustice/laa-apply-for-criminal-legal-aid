@@ -129,4 +129,10 @@ RSpec.describe CrimeApplication, type: :model do
   end
 
   it_behaves_like 'it has a means ownership scope'
+
+  describe '#decided?' do
+    it 'returns false' do
+      expect(subject.decided?).to be false
+    end
+  end
 end
