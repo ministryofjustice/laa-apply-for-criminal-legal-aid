@@ -100,7 +100,7 @@ RSpec.describe Summary::Components::Business, type: :component do
       expect(page).to have_summary_row 'Business address', 'address_line_one_r, city_r, postcode_r, country_r'
       expect(page).to have_summary_row 'Date began trading', '2 January 2000'
       expect(page).to have_summary_row 'In business with anyone else?', 'Yes'
-      expect(page).to have_summary_row 'Name of others', 'Ben, Kim, Ali'
+      expect(page).to have_summary_row 'Names of others', 'Ben, Kim, Ali'
       expect(page).to have_summary_row 'Employees?', 'Yes'
       expect(page).to have_summary_row 'Number of employees', '21'
       expect(page).to have_summary_row 'Total turnover', '£90,010.12 every year'

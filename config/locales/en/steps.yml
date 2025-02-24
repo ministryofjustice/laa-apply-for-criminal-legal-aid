@@ -339,7 +339,7 @@ en:
         employer_details:
           edit:
             page_title: Who is your client employed by?
-            heading: Who does the client work for?
+            heading: Who does your client work for?
             subheading: Add the name and address of your client’s employer. If they have more than one employer, you can add more.
         employment_details:
           edit:
