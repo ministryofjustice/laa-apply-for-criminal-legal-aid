@@ -68,6 +68,23 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     click_link(applicant)
   end
 
+  # to fake a scan fail include 'fails_scan' in file name
+  def upload_evidence_file(file_name)
+    attach_file 'steps_evidence_upload_form[document]', Rails.root.join("spec/fixtures/files/uploads/#{file_name}")
+
+    presign_upload_url = 'https://localhost.localstack.cloud:4566/crime-apply-documents-dev/2/etc/etc'
+
+    stub_request(:put, 'http://datastore-webmock/api/v1/documents/presign_upload')
+      .to_return(status: 201, body: { object_key: '123/abcdef1234', url: presign_upload_url }.to_json)
+
+    stub_request(:put, presign_upload_url)
+      .to_return(status: 200)
+
+    allow(Clamby).to receive(:safe?).and_return(!file_name['fails_scan'])
+
+    click_button 'Upload file'
+  end
+
   def draft_age_passported_application(case_type:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     click_link('Start an application')
     choose('New application')

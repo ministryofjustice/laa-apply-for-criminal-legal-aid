@@ -529,6 +529,7 @@ DEPENDENCIES
   laa-criminal-legal-aid-schemas!
   lograge
   logstash-event
+  marcel
   omniauth-rails_csrf_protection
   omniauth-saml (~> 2.1.2)
   pg (~> 1.4)
