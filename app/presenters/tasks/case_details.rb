@@ -11,7 +11,7 @@ module Tasks
     end
 
     def can_start?
-      return fulfilled?(ClientDetails) if applicant&.under18? || not_means_tested? || appeal_no_changes?
+      return fulfilled?(ClientDetails) if partner_information_not_required?
 
       fulfilled?(PassportingBenefitCheck)
     end

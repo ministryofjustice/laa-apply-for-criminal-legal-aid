@@ -86,63 +86,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '#over_18_at_date_stamp?' do
-    subject(:over_18_at_date_stamp?) { person.over_18_at_date_stamp? }
-
-    let(:eighteen_today_dob) { 18.years.ago.in_time_zone('London').to_date }
-    let(:date_stamp) { nil }
-
-    before do
-      allow(person).to receive(:crime_application).and_return(
-        instance_double(CrimeApplication, date_stamp:)
-      )
-
-      person.date_of_birth = date_of_birth
-    end
-
-    context 'when date_stamp is not set' do
-      context 'when person 18 tomorrow' do
-        let(:date_of_birth) { eighteen_today_dob.next_day }
-
-        it { is_expected.to be false }
-      end
-
-      context 'when person 18 today' do
-        let(:date_of_birth) { eighteen_today_dob }
-
-        it { is_expected.to be true }
-      end
-
-      context 'when person 18 yesterday' do
-        let(:date_of_birth) { eighteen_today_dob.prev_day }
-
-        it { is_expected.to be true }
-      end
-    end
-
-    context 'when date_stamp was yesterday' do
-      let(:date_stamp) { 1.day.ago }
-
-      context 'when person 18 tomorrow' do
-        let(:date_of_birth) { eighteen_today_dob.next_day }
-
-        it { is_expected.to be false }
-      end
-
-      context 'when person 18 today' do
-        let(:date_of_birth) { eighteen_today_dob }
-
-        it { is_expected.to be false }
-      end
-
-      context 'when person 18 yeterday' do
-        let(:date_of_birth) { eighteen_today_dob.prev_day }
-
-        it { is_expected.to be true }
-      end
-    end
-  end
-
   describe '#nino' do
     before do
       attributes.merge!(has_nino: has_nino, nino: 'AB123456A')

@@ -2,7 +2,8 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   delegate :applicant, :partner, :kase, :income, :outgoings, :income_payments, :income_benefits,
-           :capital, :non_means_tested?, :appeal_no_changes?, :partner_detail, to: :crime_application, allow_nil: true
+           :capital, :non_means_tested?, :appeal_no_changes?, :partner_detail, :age_passported?,
+           to: :crime_application, allow_nil: true
 
   def requires_means_assessment?
     return false if Passporting::MeansPassporter.new(crime_application).call
@@ -99,6 +100,12 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def benefit_check_not_required(person)
     person&.benefit_type == 'none' || person&.arc.present?
+  end
+
+  # Information about the partner, including whether the applicant has a partner,
+  # is not required, regardless of their involvement in the case.
+  def partner_information_not_required?
+    age_passported? || non_means_tested? || appeal_no_changes?
   end
 
   # involvement_in_case is stored on partner_detail when a database applications and

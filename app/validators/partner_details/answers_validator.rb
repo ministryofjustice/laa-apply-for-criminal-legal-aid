@@ -3,8 +3,8 @@ module PartnerDetails
     include TypeOfMeansAssessment
 
     def applicable?
+      return false if partner_information_not_required?
       return false unless record
-      return false if applicant&.under18? || not_means_tested? || appeal_no_changes?
 
       record.has_partner != 'no'
     end

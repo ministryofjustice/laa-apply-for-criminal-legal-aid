@@ -202,7 +202,7 @@ RSpec.describe Evidence::Prompt do
 
     context 'when the client is under 18' do
       before do
-        allow(applicant).to receive(:under18?).and_return true
+        allow(applicant).to receive(:date_of_birth).and_return 18.years.ago.next_day
       end
 
       it 'returns true and sets the reason' do

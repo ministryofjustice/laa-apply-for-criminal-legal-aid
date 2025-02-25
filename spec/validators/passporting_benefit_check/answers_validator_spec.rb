@@ -11,15 +11,18 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
   let(:applicant) { instance_double(Applicant, benefit_type: benefit_type, arc: nil) }
   let(:benefit_type) { nil }
   let(:appeal_no_changes?) { false }
-  let(:under18?) { false }
+  let(:age_passported?) { false }
   let(:means_passported?) { false }
   let(:partner) { nil }
   let(:partner_detail) { nil }
 
   before do
-    allow(record).to receive_messages(appeal_no_changes?: appeal_no_changes?)
-    allow(record).to receive_messages(is_means_tested: true)
-    allow(applicant).to receive_messages(under18?: under18?)
+    allow(record).to receive_messages(
+      appeal_no_changes?: appeal_no_changes?,
+      age_passported?: age_passported?,
+      is_means_tested: true
+    )
+
     allow_any_instance_of(Passporting::MeansPassporter).to receive(:call).and_return(means_passported?)
   end
 
@@ -35,7 +38,15 @@ RSpec.describe PassportingBenefitCheck::AnswersValidator, type: :model do
     end
 
     context 'when under 18' do
-      let(:under18?) { true }
+      let(:age_passported?) { true }
+
+      it { is_expected.to be(false) }
+    end
+
+    context 'when non_means_tested' do
+      before do
+        allow(record).to receive(:non_means_tested?).and_return(true)
+      end
 
       it { is_expected.to be(false) }
     end
