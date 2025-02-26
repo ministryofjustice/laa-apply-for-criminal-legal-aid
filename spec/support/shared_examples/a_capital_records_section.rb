@@ -7,7 +7,7 @@ RSpec.shared_examples 'a capital records section' do |_options|
       to_param: 12_345,
       capital: capital,
       in_progress?: true,
-      has_partner: nil
+      partner: nil
     )
   end
 

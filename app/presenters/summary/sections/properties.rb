@@ -26,7 +26,7 @@ module Summary
       end
 
       def subject_type
-        if crime_application.has_partner?
+        if crime_application.partner.present?
           SubjectType.new(:applicant_and_partner)
         else
           SubjectType.new(:applicant)
