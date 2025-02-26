@@ -53,8 +53,8 @@ module ClientDetails
       kase.case_type.present?
     end
 
-    def has_nino_complete? # rubocop:disable Metrics/AbcSize
-      return true if applicant.under18? || appeal_no_changes?
+    def has_nino_complete?
+      return true if age_passported? || appeal_no_changes?
       return false if applicant.has_nino.blank? && applicant.has_arc.blank?
       return true if applicant.has_nino == 'no'
 
@@ -62,13 +62,13 @@ module ClientDetails
     end
 
     def has_partner_complete?
-      return true if applicant.under18? || non_means_tested? || appeal_no_changes?
+      return true if partner_information_not_required?
 
       record.partner_detail&.has_partner.present?
     end
 
-    def relationship_status_complete? # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      return true if applicant.under18? || non_means_tested? || appeal_no_changes?
+    def relationship_status_complete?
+      return true if partner_information_not_required?
       return true if record.partner_detail&.has_partner == 'yes'
 
       record.partner_detail&.has_partner == 'no' && record.partner_detail&.relationship_status.present?

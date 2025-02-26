@@ -9,9 +9,9 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
       client_details_complete?: true,
       passporting_benefit_complete?: true,
       kase: double(complete?: true),
-      partner_detail: double(complete?: true),
+      partner_detail: double(has_partner: 'no'),
       appeal_no_changes?: false,
-      applicant: double(under18?: false),
+      age_passported?: false
     }
   end
   let(:errors) { double(:errors, empty?: false) }
@@ -124,9 +124,9 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
           passporting_benefit_complete?: true,
           kase: double(complete?: true),
           income: double(complete?: true),
-          partner_detail: double(complete?: true),
+          partner_detail: double(has_partner: 'no'),
           appeal_no_changes?: false,
-          applicant: double(under18?: false),
+          age_passported?: false
         }
       end
 
@@ -152,9 +152,9 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             income: double(complete?: true),
             outgoings: double(complete?: true),
             capital: double(complete?: true),
-            partner_detail: double(complete?: true),
+            partner_detail: double(has_partner: 'no'),
             appeal_no_changes?: false,
-            applicant: double(under18?: false),
+            age_passported?: false
           }
         end
 
@@ -172,9 +172,10 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             income: double(complete?: false),
             outgoings: double(complete?: false),
             capital: double(complete?: false),
-            partner_detail: double(complete?: false),
+            partner_detail: PartnerDetail.new(has_partner: 'yes'),
+            partner: nil,
             appeal_no_changes?: false,
-            applicant: double(under18?: false),
+            age_passported?: false
           }
         end
 
@@ -209,9 +210,9 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             income: double(complete?: true),
             outgoings: double(complete?: true),
             capital: double(complete?: true),
-            partner_detail: double(complete?: true),
+            partner_detail: nil,
             appeal_no_changes?: false,
-            applicant: double(under18?: false),
+            age_passported?: false
           }
         end
 
@@ -235,13 +236,14 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
             income: nil,
             outgoings: nil,
             capital: nil,
-            partner_detail: nil,
+            partner_detail: PartnerDetail.new,
+            partner: Partner.new,
             appeal_no_changes?: appeal_no_changes,
-            applicant: double(under18?: under18),
+            age_passported?: age_passported?
           }
         end
 
-        let(:under18) { false }
+        let(:age_passported?) { false }
         let(:appeal_no_changes) { false }
 
         it 'adds errors to all sections and base' do
@@ -255,7 +257,7 @@ RSpec.describe SectionsCompletenessValidator, type: :model do
         end
 
         context 'when applicant is under 18' do
-          let(:under18) { true }
+          let(:age_passported?) { true }
 
           it 'does not add an error for the partner details section' do
             expect(errors).not_to receive(:add).with(:partner_details, :incomplete)

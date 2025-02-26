@@ -10,6 +10,7 @@ RSpec.describe Tasks::PassportingBenefitCheck do
       applicant: applicant,
       kase: kase,
       appeal_no_changes?: false,
+      age_passported?: false,
       non_means_tested?: false
     )
   end
@@ -45,18 +46,34 @@ RSpec.describe Tasks::PassportingBenefitCheck do
 
     it { is_expected.to be(false) }
 
-    context 'when applicant is under 18' do
+    context 'when applicant is age passported' do
       before do
-        allow(applicant).to receive(:under18?).and_return(true)
+        allow(crime_application).to receive(:age_passported?).and_return(true)
       end
 
       it { is_expected.to be(true) }
     end
 
-    context 'when case type is appeal no changes' do
+    context 'when appeal_no_changes' do
       before do
-        allow(crime_application).to receive(:appeal_no_changes?).and_return true
-        allow(crime_application).to receive_messages(is_means_tested: 'yes')
+        allow(crime_application).to receive(:appeal_no_changes?).and_return(true)
+      end
+
+      it { is_expected.to be(true) }
+    end
+
+    context 'when non_means_tested' do
+      before do
+        allow(crime_application).to receive(:non_means_tested?).and_return(true)
+      end
+
+      it { is_expected.to be(true) }
+    end
+
+    context 'when not_applicable_on_arc?' do
+      before do
+        allow(applicant).to receive(:arc).and_return('ABC12/345678/A')
+        allow(crime_application).to receive(:partner)
       end
 
       it { is_expected.to be(true) }

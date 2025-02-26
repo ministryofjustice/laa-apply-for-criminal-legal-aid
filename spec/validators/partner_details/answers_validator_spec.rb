@@ -17,7 +17,7 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     )
   end
 
-  let(:crime_application) { CrimeApplication.new(partner:) }
+  let(:crime_application) { CrimeApplication.new(applicant:, partner:) }
 
   let(:partner) do
     Partner.new(
@@ -30,11 +30,20 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
     )
   end
 
+  let(:applicant) do
+    Applicant.new(
+      first_name: 'Jenny',
+      last_name: 'Mack',
+      date_of_birth: under18? ? 17.years.ago : Date.new(1977, 3, 15),
+    )
+  end
+
   let(:home_address) do
     instance_double(Address, type: 'HomeAddress', person: partner,
                                        address_line_one: 'Test Address Line 1')
   end
   let(:has_partner) { nil }
+  let(:under18?) { false }
 
   before do
     allow(partner).to receive(:home_address).and_return(home_address)
@@ -49,8 +58,12 @@ RSpec.describe PartnerDetails::AnswersValidator, type: :model do
       it { is_expected.to be true }
     end
 
-    context 'when client does not have partner' do
-      let(:has_partner) { 'no' }
+    context '`has_partner` unanswered' do
+      it { is_expected.to be true }
+    end
+
+    context 'when under18' do
+      let(:under18?) { true }
 
       it { is_expected.to be false }
     end

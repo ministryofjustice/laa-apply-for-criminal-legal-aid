@@ -31,7 +31,7 @@ RSpec.shared_context 'serializable application' do # rubocop:disable RSpec/Multi
     )
 
     applicant = Applicant.new(
-      date_of_birth: (age_passported? ? 17 : 19).years.ago
+      date_of_birth: (age_passported? ? 17 : 30).years.ago
     )
 
     CrimeApplication.create(
