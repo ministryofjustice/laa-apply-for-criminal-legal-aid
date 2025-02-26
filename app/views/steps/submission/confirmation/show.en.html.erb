@@ -6,7 +6,7 @@
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
         <% if @crime_application.resubmission? %>
-          <%= t(".heading.#{@crime_application.application_type}") %>
+          <%= t('.heading.resubmission') %>
         <% else %>
           <%= t(".heading.#{@crime_application.application_type}") %>
         <% end %>
@@ -28,7 +28,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to 'Give feedback', Settings.feedback_survey_url, rel: 'external' %> to help us improve this service.
+      <%= link_to t('.what_happens_next.give_feedback'), Settings.feedback_survey_url, rel: 'external' %> <%= t('.what_happens_next.feedback') %>
     </p>
 
     <div class="govuk-button-group govuk-!-margin-top-8">
