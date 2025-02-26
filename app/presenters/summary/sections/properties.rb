@@ -9,8 +9,11 @@ module Summary
 
       def has_no_records_component
         Components::ValueAnswer.new(
-          :has_assets, has_records_answer,
-          change_path: edit_steps_capital_property_type_path
+          :has_assets,
+          has_records_answer,
+          change_path: edit_steps_capital_property_type_path,
+          subject_type: subject_type,
+          i18n_opts: i18n_opts
         )
       end
 
@@ -20,6 +23,18 @@ module Summary
 
       def records
         @records ||= capital.properties
+      end
+
+      def subject_type
+        if crime_application.partner.present?
+          SubjectType.new(:applicant_or_partner)
+        else
+          SubjectType.new(:applicant)
+        end
+      end
+
+      def i18n_opts
+        { count: subject_type.applicant_or_partner? ? 2 : 1 }
       end
 
       def has_records_answer

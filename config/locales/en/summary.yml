@@ -921,7 +921,9 @@ en:
         question: Percentage owner %{index} owns
         absence_answer: *absence_none
       has_assets:
-        question: Assets %{subject} owns
+        question:
+          one: Assets %{subject} owns
+          other: Assets %{subject} own or part own
         answers:
           <<: *YESNO
           none: *absence_none
