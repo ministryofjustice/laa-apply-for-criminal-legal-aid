@@ -132,15 +132,6 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
       save_and_continue
 
       # steps/income/own-home-land-property
-      choose_answer('Does your client own their home, or any other land or property?', 'No')
-      save_and_continue
-
-      # steps/income/usual-property-details
-      choose_answer('Select the question you want to change the answer to:',
-                    'Whether your client owns their home, land or other property')
-      save_and_continue
-
-      # steps/income/own-home-land-property
       choose_answer('Does your client own their home, or any other land or property?', 'Yes')
       save_and_continue
 

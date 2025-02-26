@@ -119,19 +119,6 @@ class Income < ApplicationRecord
     super
   end
 
-  def change_to_usual_property_details_required?
-    return false unless FeatureFlags.property_ownership_validation.enabled?
-
-    residence_type = ResidenceType.new(crime_application.applicant.residence_type)
-    if residence_type.owned?
-      return false if residence_type == ResidenceType::PARTNER_OWNED && !MeansStatus.include_partner?(crime_application)
-
-      return client_owns_property == YesNoAnswer::NO.to_s
-    end
-
-    false
-  end
-
   delegate :partner, :applicant, to: :crime_application
 
   private
