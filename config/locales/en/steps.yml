@@ -747,10 +747,12 @@ en:
             initial: We will check your application and email you with the outcome.
             post_submission_evidence: We will check the evidence submitted and email you with the outcome.
             change_in_financial_circumstances: We will check the new information submitted and email you with the outcome.
+            sub_heading: What happens next
           view_application:
             initial: View completed application
             post_submission_evidence: View submitted evidence
             change_in_financial_circumstances: View completed application
+          reference: LAA reference
       cannot_submit_without_nino:
         edit:
           page_title: Cannot submit application without National Insurance number

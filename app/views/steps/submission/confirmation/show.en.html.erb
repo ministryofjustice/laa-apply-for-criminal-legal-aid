@@ -6,13 +6,13 @@
     <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
         <% if @crime_application.resubmission? %>
-          Application updated
+          <%= t(".heading.#{@crime_application.application_type}") %>
         <% else %>
           <%= t(".heading.#{@crime_application.application_type}") %>
         <% end %>
       </h1>
       <div class="govuk-panel__body">
-        LAA reference<br>
+        <%= t(".reference") %><br>
         <strong>
           <%= @crime_application.reference %>
         </strong>
@@ -20,7 +20,7 @@
     </div>
 
     <h2 class="govuk-heading-m">
-      What happens next
+      <%= t(".what_happens_next.sub_heading") %>
     </h2>
 
     <p class="govuk-body">
