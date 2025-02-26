@@ -27,14 +27,14 @@ module Summary
 
       def subject_type
         if crime_application.partner.present?
-          SubjectType.new(:applicant_and_partner)
+          SubjectType.new(:applicant_or_partner)
         else
           SubjectType.new(:applicant)
         end
       end
 
       def i18n_opts
-        { count: subject_type.applicant_and_partner? ? 2 : 1 }
+        { count: subject_type.applicant_or_partner? ? 2 : 1 }
       end
 
       def has_records_answer
