@@ -1,4 +1,5 @@
 module Passporting
+  AGE_PASSPORTED_UNTIL = 18.years
   class BasePassporter
     attr_reader :crime_application
 
@@ -24,8 +25,14 @@ module Passporting
 
     private
 
-    def applicant_under18?
-      applicant.under18?
+    def age_passported_at_datestamp_or_now?
+      return false unless applicant&.date_of_birth
+
+      applicant.date_of_birth.to_date > birth_date_threshold
+    end
+
+    def birth_date_threshold
+      (crime_application.date_stamp || Time.zone.now).in_time_zone('London').to_date - AGE_PASSPORTED_UNTIL
     end
 
     def passported_on?(kind)

@@ -7,20 +7,19 @@ RSpec.describe Tasks::CaseDetails do
     instance_double(
       CrimeApplication,
       to_param: '12345',
-      applicant: applicant,
+      age_passported?: age_passported?,
       kase: kase,
       appeal_no_changes?: appeal_no_changes,
       non_means_tested?: false
     )
   end
 
-  let(:applicant) { double under18?: under18? }
   let(:kase) { nil }
 
   let(:client_details_fulfilled) { true }
   let(:passporting_benefit_fulfilled) { true }
   let(:appeal_no_changes) { false }
-  let(:under18?) { false }
+  let(:age_passported?) { false }
 
   before do
     allow(
@@ -54,8 +53,8 @@ RSpec.describe Tasks::CaseDetails do
       end
     end
 
-    context 'when the applicant is under 18' do
-      let(:under18?) { true }
+    context 'when passported on age' do
+      let(:age_passported?) { true }
 
       context 'when the client details task has been completed' do
         it { expect(task.can_start?).to be(true) }

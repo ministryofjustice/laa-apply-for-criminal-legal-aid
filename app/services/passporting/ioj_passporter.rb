@@ -24,7 +24,7 @@ module Passporting
       # instead of running a new age calculation
       return passported_on?(IojPassportType::ON_AGE_UNDER18) if resubmission?
 
-      applicant_under18?
+      age_passported_at_datestamp_or_now?
     end
 
     def offence_passported?

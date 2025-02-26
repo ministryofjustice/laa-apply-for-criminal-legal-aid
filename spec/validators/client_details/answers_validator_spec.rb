@@ -5,10 +5,13 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
 
   let(:record) {
     instance_double(CrimeApplication, errors: errors, applicant: applicant, kase: kase,
-    partner_detail: partner_detail, non_means_tested?: false)
+    partner_detail: partner_detail, non_means_tested?: false, age_passported?: under18?)
   }
+  let(:applicant) do
+    instance_double(Applicant, residence_type: ResidenceType::VALUES.sample)
+  end
+
   let(:errors) { double(:errors, empty?: false) }
-  let(:applicant) { instance_double(Applicant, residence_type: 'house', under18?: under18?) }
   let(:kase) { instance_double(Case, case_type:) }
   let(:appeal_no_changes?) { false }
   let(:under18?) { false }

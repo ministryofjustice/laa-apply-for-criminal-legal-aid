@@ -6,8 +6,9 @@ RSpec.describe Passporting::IojPassporter do
   let(:crime_application) do
     instance_double(
       CrimeApplication,
-      applicant: instance_double(Applicant, under18?: under18),
+      applicant: instance_double(Applicant, date_of_birth:),
       case: instance_double(Case, case_type:, charges:),
+      date_stamp: nil,
       ioj: ioj,
       resubmission?: resubmission?
     )
@@ -16,9 +17,14 @@ RSpec.describe Passporting::IojPassporter do
   let(:resubmission?) { false }
   let(:under18) { nil }
   let(:ioj) { nil }
-
   let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
   let(:charges) { [] }
+
+  let(:date_of_birth) do
+    return nil if under18.nil?
+
+    under18 ? 18.years.ago.next_day : 18.years.ago
+  end
 
   before do
     allow(crime_application).to receive_messages(ioj_passport: [], not_means_tested?: false)

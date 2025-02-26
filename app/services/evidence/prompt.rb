@@ -86,7 +86,7 @@ module Evidence
     private
 
     def not_means_tested?
-      return false unless crime_application.is_means_tested == 'no'
+      return false unless crime_application.not_means_tested?
 
       @exempt_reasons << I18n.t('evidence.exempt.not_means_tested')
 
@@ -94,12 +94,11 @@ module Evidence
     end
 
     def under18?
-      return false unless crime_application.applicant
+      return false unless crime_application.age_passported?
 
-      result = crime_application.applicant&.under18?
-      @exempt_reasons << I18n.t('evidence.exempt.under_18') if result
+      @exempt_reasons << I18n.t('evidence.exempt.under_18')
 
-      result
+      true
     end
   end
 end

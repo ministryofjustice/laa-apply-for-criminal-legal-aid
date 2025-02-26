@@ -3,37 +3,61 @@ require 'rails_helper'
 RSpec.describe Passporting::MeansPassporter do
   subject(:passporter) { described_class.new(crime_application) }
 
-  let(:crime_application) {
+  let(:crime_application) do
     instance_double(
       CrimeApplication,
-      case: case_record,
-      applicant: applicant,
+      case: instance_double(Case, case_type:, appeal_financial_circumstances_changed:),
+      applicant: instance_double(Applicant, date_of_birth:, benefit_check_result:),
       resubmission?: resubmission?,
       is_means_tested: is_means_tested,
+      date_stamp: date_stamp,
       partner_detail: nil,
       partner: nil,
       non_means_tested?: false
     )
-  }
-
-  let(:case_record) { instance_double(Case, case_type:, appeal_financial_circumstances_changed:) }
-  let(:applicant) { instance_double(Applicant, under18?: under18, benefit_check_result: benefit_check_result) }
+  end
 
   let(:case_type) { 'either_way' }
   let(:appeal_financial_circumstances_changed) { nil }
-
   let(:resubmission?) { false }
   let(:under18) { nil }
+  let(:date_stamp) { nil }
   let(:benefit_check_result) { nil }
   let(:is_means_tested) { 'yes' }
 
+  let(:date_of_birth) do
+    return nil if under18.nil?
+
+    under18 ? 18.years.ago.next_day : 18.years.ago
+  end
+
   describe '#means_passport' do
     subject(:means_passport) { passporter.means_passport }
+
+    context 'when date of birth is not known' do
+      let(:under18) { nil }
+
+      it { is_expected.to eq([]) }
+    end
 
     context 'when applicant is over 18' do
       let(:under18) { false }
 
       it { is_expected.to eq([]) }
+    end
+
+    context 'when applicant is over 18 but was under 18 at date_stamp' do
+      let(:under18) { false }
+      let(:date_stamp) { 1.day.ago }
+
+      it { is_expected.to eq([MeansPassportType::ON_AGE_UNDER18]) }
+    end
+
+    context 'when applicant is over 18 and was over 18 at date_stamp' do
+      let(:date_of_birth) { 18.years.ago - 1.week }
+      let(:date_stamp) { 6.days.ago }
+
+      it { is_expected.to eq [] }
     end
 
     context 'when applicant is under 18' do

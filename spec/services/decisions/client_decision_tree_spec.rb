@@ -37,7 +37,7 @@ RSpec.describe Decisions::ClientDecisionTree do
   context 'when the step is `has_partner`' do
     let(:form_object) { double('FormObject', has_partner:) }
     let(:step_name) { :has_partner }
-    let(:applicant) { instance_double(Applicant, under18?: false) }
+    let(:applicant) { instance_double(Applicant) }
 
     context 'and answer is `no`' do
       let(:has_partner) { YesNoAnswer::NO }

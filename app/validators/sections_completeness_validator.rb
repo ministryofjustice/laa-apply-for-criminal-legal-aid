@@ -30,10 +30,11 @@ class SectionsCompletenessValidator
   delegate :client_details_complete?, :passporting_benefit_complete?, to: :crime_application
 
   def partner_detail_complete?
-    return true if applicant&.under18? || not_means_tested? || appeal_no_changes?
-    return false unless partner_detail
+    validator = PartnerDetails::AnswersValidator.new(record: partner_detail, crime_application: crime_application)
 
-    partner_detail.complete?
+    return true unless validator.applicable?
+
+    validator.complete?
   end
 
   def interests_of_justice_complete?
