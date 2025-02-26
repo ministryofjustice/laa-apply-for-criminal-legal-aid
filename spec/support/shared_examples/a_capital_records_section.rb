@@ -5,7 +5,9 @@ RSpec.shared_examples 'a capital records section' do |_options|
     instance_double(
       CrimeApplication,
       to_param: 12_345,
-      capital: capital, in_progress?: true
+      capital: capital,
+      in_progress?: true,
+      has_partner: nil
     )
   end
 
