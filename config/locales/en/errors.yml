@@ -1098,8 +1098,8 @@ en:
           attributes: *shared_property_owner_errors
         steps/capital/property_owners_form:
           summary:
-            base:
-              invalid: Percentages entered need to total 100%
+            percentage_owned:
+              invalid: Percentages entered need to total 100% - check percentage owned by other owner %{index}
         steps/capital/properties_summary_form:
           attributes:
             add_property:

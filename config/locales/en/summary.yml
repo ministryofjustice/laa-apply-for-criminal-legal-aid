@@ -88,7 +88,8 @@ en:
       declarations: Declarations
       legal_representative_details: Legal representative
       employment_details: Employment
-      income_details: Income and employment
+      income_details: Income
+      income_and_employment_details: Income and employment
       income_payments_details: Payments
       partner_income_payments_details: Payments
       income_benefits_details: Benefits
@@ -243,7 +244,7 @@ en:
           providers_office_address: Provider’s office
           other_address: Somewhere else
       telephone_number:
-        question: Telephone number
+        question: Telephone
         absence_answer: *absence_none
       # END contact details section
 
@@ -390,7 +391,7 @@ en:
 
       # BEGIN next court hearing section
       hearing_court_name:
-        question: What court is the hearing at
+        question: Court name
       hearing_date:
         question: When is the next hearing?
       is_first_court_hearing:
@@ -402,7 +403,7 @@ en:
 
       # BEGIN first court hearing section
       first_court_hearing_name:
-        question: What court is the hearing at
+        question: Court name
       # END first court hearing section
 
       # BEGIN justification for legal aid section
@@ -623,7 +624,7 @@ en:
           rent: Rent
           mortgage: Mortgage
           board_and_lodging: Board and lodgings
-          none: My client does not pay any of these payments
+          none: None
       mortgage:
         question: Amount
         answers:
@@ -1046,7 +1047,7 @@ en:
         question: In business with anyone else?
         answers: *YESNO
       additional_owners:
-        question: Name of others in business
+        question: Names of others in business
         absence_answer: ""
       has_employees:
         question: Employees?

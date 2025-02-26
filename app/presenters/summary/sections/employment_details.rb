@@ -35,7 +35,7 @@ module Summary
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def heading
-        :income_details unless crime_application.respond_to?(:navigation_stack)
+        :income_and_employment_details unless crime_application.respond_to?(:navigation_stack)
       end
     end
   end
