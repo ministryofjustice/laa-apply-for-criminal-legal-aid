@@ -118,34 +118,5 @@ RSpec.describe Passporting::MeansPassporter do
 
       it { is_expected.to be(false) }
     end
-
-    context 'when a resubmission' do
-      let(:under18) { false }
-      let(:resubmission?) { true }
-
-      before do
-        allow(crime_application).to receive(:means_passport).and_return(
-          stored_means_passport
-        )
-      end
-
-      context 'when was age passported' do
-        let(:stored_means_passport) { [MeansPassportType::ON_AGE_UNDER18.to_s] }
-
-        it { is_expected.to be(true) }
-      end
-
-      context 'when was passported but not age passported' do
-        let(:stored_means_passport) { [MeansPassportType::ON_BENEFIT_CHECK.to_s] }
-
-        it { is_expected.to be(false) }
-      end
-
-      context 'when was not age passported' do
-        let(:stored_means_passport) { nil }
-
-        it { is_expected.to be(false) }
-      end
-    end
   end
 end

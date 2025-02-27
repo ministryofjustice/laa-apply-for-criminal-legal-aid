@@ -27,14 +27,7 @@ module Passporting
     end
 
     def age_passported?
-      parent_was_age_passported? || age_passported_at_datestamp_or_now?
-    end
-
-    def parent_was_age_passported?
-      return false unless resubmission?
-      return false if crime_application.means_passport.blank?
-
-      crime_application.means_passport.include?(MeansPassportType::ON_AGE_UNDER18.to_s)
+      age_passported_at_datestamp_or_now?
     end
 
     def benefit_check_passported?

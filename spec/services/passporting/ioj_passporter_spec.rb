@@ -9,12 +9,10 @@ RSpec.describe Passporting::IojPassporter do
       applicant: instance_double(Applicant, date_of_birth:),
       case: instance_double(Case, case_type:, charges:),
       date_stamp: nil,
-      ioj: ioj,
-      resubmission?: resubmission?
+      ioj: ioj
     )
   end
 
-  let(:resubmission?) { false }
   let(:under18) { nil }
   let(:ioj) { nil }
   let(:case_type) { CaseType::SUMMARY_ONLY.to_s }
@@ -143,26 +141,6 @@ RSpec.describe Passporting::IojPassporter do
 
       context 'for over 18' do
         let(:under18) { false }
-
-        it { expect(subject.age_passported?).to be(false) }
-      end
-    end
-
-    context 'for a resubmitted application' do
-      let(:resubmission?) { true }
-
-      before do
-        allow(crime_application).to receive(:ioj_passport).and_return(ioj_passport)
-      end
-
-      context 'passported on age' do
-        let(:ioj_passport) { [IojPassportType::ON_AGE_UNDER18.to_s] }
-
-        it { expect(subject.age_passported?).to be(true) }
-      end
-
-      context 'not passported on age' do
-        let(:ioj_passport) { [] }
 
         it { expect(subject.age_passported?).to be(false) }
       end
