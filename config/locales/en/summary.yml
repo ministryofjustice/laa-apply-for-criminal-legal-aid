@@ -923,7 +923,7 @@ en:
       has_assets:
         question:
           one: Assets %{subject} owns
-          other: Assets %{subject} own or part own
+          other: Assets %{subject} owns or part owns
         answers:
           <<: *YESNO
           none: *absence_none
