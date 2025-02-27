@@ -158,5 +158,25 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     fill_in('Telephone number', with: '07715339488')
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
+      .with { |req|
+      @submitted_body = req.body
+      true
+    }
+  end
+
+  def return_submitted_application
+    submitted = JSON.parse(@submitted_body)['application']
+    application_id = submitted.fetch('id')
+
+    returned_application_body = submitted.merge(
+      reviewed_at: Time.zone.now, status: 'returned',
+      review_status: 'returned_to_provider',
+      return_details: { reason: 'evidence_issue', details: 'Age is wrong' }
+    )
+
+    stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_id}")
+      .to_return(body: returned_application_body.to_json)
+
+    visit completed_crime_application_path(application_id)
   end
 end
