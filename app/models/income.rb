@@ -119,6 +119,12 @@ class Income < ApplicationRecord
     super
   end
 
+  def client_owns_property
+    return if MeansStatus.residence_owned?(crime_application)
+
+    super
+  end
+
   delegate :partner, :applicant, to: :crime_application
 
   private

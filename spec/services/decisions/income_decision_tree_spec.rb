@@ -728,7 +728,30 @@ RSpec.describe Decisions::IncomeDecisionTree do
       context 'when case type is not summary only or committal' do
         let(:case_type) { 'indictable' }
 
-        it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
+        context "and the client's usual residence is not owned" do
+          let(:applicant) { instance_double(Applicant, residence_type: ResidenceType::RENTED.to_s) }
+
+          it { is_expected.to have_destination(:client_owns_property, :edit, id: crime_application) }
+        end
+
+        context "and the client's usual residence is owned" do
+          let(:applicant) { instance_double(Applicant, residence_type: ResidenceType::APPLICANT_OWNED.to_s) }
+
+          context 'and the client is employed' do
+            let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+
+            it 'redirects to the `employer_details` page' do
+              expect(subject).to have_destination('/steps/income/client/employer_details', :edit,
+                                                  id: crime_application)
+            end
+          end
+
+          context 'and the client is not employed' do
+            let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+            it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
+          end
+        end
       end
     end
 
@@ -785,6 +808,7 @@ RSpec.describe Decisions::IncomeDecisionTree do
         client_owns_property: client_owns_property,
         has_savings: nil
       )
+      allow(applicant).to receive(:residence_type).and_return(ResidenceType::RENTED.to_s)
     end
 
     context 'when they do not have property' do
