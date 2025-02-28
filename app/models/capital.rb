@@ -74,17 +74,10 @@ class Capital < ApplicationRecord
     super if requires_full_capital?
   end
 
-  def usual_property_details_required? # rubocop:disable Metrics/AbcSize
+  def usual_property_details_required?
     return false unless FeatureFlags.property_ownership_validation.enabled?
     return false unless requires_full_capital?
-    return false if crime_application.applicant.residence_type.blank?
-
-    residence_type = ResidenceType.new(crime_application.applicant.residence_type)
-    if residence_type.owned?
-      return false if residence_type == ResidenceType::PARTNER_OWNED && !MeansStatus.include_partner?(crime_application)
-
-      return crime_application.properties.home_address.blank?
-    end
+    return crime_application.properties.home_address.blank? if MeansStatus.residence_owned?(crime_application)
 
     false
   end

@@ -24,10 +24,11 @@ RSpec.describe TypeOfMeansAssessment do
     )
   end
 
-  let(:applicant) { instance_double(Applicant, has_benefit_evidence:) }
+  let(:applicant) { instance_double(Applicant, has_benefit_evidence:, residence_type:) }
   let(:partner) { nil }
   let(:benefit_check_subject) { applicant }
   let(:has_benefit_evidence) { nil }
+  let(:residence_type) { nil }
   let(:kase) { instance_double(Case) }
   let(:income) { instance_double(Income) }
   let(:means_passporter_result) { false }
@@ -644,6 +645,54 @@ RSpec.describe TypeOfMeansAssessment do
       end
 
       it { is_expected.to be true }
+    end
+  end
+
+  describe '#residence_owned?' do
+    subject(:residence_owned?) { assessable.residence_owned? }
+
+    context 'when `residence_type` is nil' do
+      let(:residence_type) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when `residence_type` is not an owned property' do
+      let(:residence_type) { ResidenceType::RENTED.to_s }
+
+      it { is_expected.to be false }
+    end
+
+    {
+      ResidenceType::APPLICANT_OWNED.to_s => 'they own',
+      ResidenceType::JOINT_OWNED.to_s => 'they and their partner both own'
+    }.each do |type, desc|
+      context "when `residence_type` is a property #{desc}" do
+        let(:residence_type) { type }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when `residence_type` is a property the partner owns' do
+      let(:residence_type) { ResidenceType::PARTNER_OWNED.to_s }
+
+      context 'and there is no conflict of interest' do
+        let(:partner_detail) do
+          instance_double(PartnerDetail, involvement_in_case: 'none', has_partner: 'yes')
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'and there is a conflict of interest' do
+        let(:partner_detail) do
+          instance_double(PartnerDetail, involvement_in_case: 'codefendant', has_partner: 'yes',
+conflict_of_interest: 'yes')
+        end
+
+        it { is_expected.to be false }
+      end
     end
   end
 end

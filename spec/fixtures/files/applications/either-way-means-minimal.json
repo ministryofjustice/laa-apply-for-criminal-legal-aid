@@ -1,0 +1,798 @@
+{
+  "id": "f0a37089-1933-452d-897e-4f8d3fcf2d21",
+  "parent_id": null,
+  "reference": 1,
+  "created_at": "2025-01-17T13:07:42.401Z",
+  "date_stamp": "2025-01-17T13:08:42.299Z",
+  "case_details": {
+    "urn": "",
+    "offences": [
+      {
+        "name": "Theft from a shop (£30,000 or less)",
+        "dates": [
+          {
+            "date_to": null,
+            "date_from": "2025-02-01"
+          }
+        ],
+        "offence_class": "F",
+        "slipstreamable": false
+      }
+    ],
+    "case_type": "either_way",
+    "appeal_usn": null,
+    "codefendants": [],
+    "hearing_date": "2025-03-01",
+    "appeal_maat_id": null,
+    "appeal_lodged_date": null,
+    "has_case_concluded": "no",
+    "hearing_court_name": "Cardiff Magistrates' Court",
+    "is_client_remanded": "no",
+    "preorder_work_date": null,
+    "client_other_charge": null,
+    "date_case_concluded": null,
+    "date_client_remanded": null,
+    "partner_other_charge": null,
+    "preorder_work_details": null,
+    "is_first_court_hearing": "yes",
+    "appeal_reference_number": null,
+    "first_court_hearing_name": "Cardiff Magistrates' Court",
+    "is_preorder_work_claimed": null,
+    "appeal_with_changes_details": null,
+    "appeal_original_app_submitted": null,
+    "client_other_charge_in_progress": "no",
+    "partner_other_charge_in_progress": null,
+    "appeal_financial_circumstances_changed": null
+  },
+  "ioj_passport": [],
+  "pre_cifc_usn": null,
+  "submitted_at": "2025-01-17T13:08:42.299Z",
+  "means_details": {
+    "income_details": {
+      "businesses": [],
+      "dependants": [],
+      "employments": [],
+      "has_savings": "no",
+      "date_job_lost": null,
+      "employment_type": [
+        "not_working"
+      ],
+      "income_benefits": [],
+      "income_payments": [],
+      "lost_job_in_custody": null,
+      "client_owns_property": "no",
+      "manage_other_details": null,
+      "client_has_dependants": null,
+      "manage_without_income": "friends_sofa",
+      "client_in_armed_forces": null,
+      "has_no_income_benefits": "yes",
+      "has_no_income_payments": "yes",
+      "income_above_threshold": "no",
+      "partner_in_armed_forces": null,
+      "employment_income_payments": [],
+      "has_frozen_income_or_assets": "no",
+      "ended_employment_within_three_months": "no",
+      "applicant_other_work_benefit_received": null
+    },
+    "capital_details": {},
+    "outgoings_details": {}
+  },
+  "client_details": {
+    "partner": null,
+    "applicant": {
+      "arc": null,
+      "nino": null,
+      "has_arc": "no",
+      "has_nino": "no",
+      "last_name": "Bloggs",
+      "first_name": "Jo",
+      "has_partner": "no",
+      "other_names": "",
+      "benefit_type": "none",
+      "home_address": {
+        "city": "London",
+        "country": "United Kingdom",
+        "postcode": "SW1 1RT",
+        "lookup_id": null,
+        "address_line_one": "23 East Milton Court",
+        "address_line_two": ""
+      },
+      "date_of_birth": "1989-02-24",
+      "residence_type": "rented",
+      "confirm_details": null,
+      "separation_date": null,
+      "will_enter_nino": null,
+      "telephone_number": "",
+      "confirm_dwp_result": null,
+      "relationship_status": "single",
+      "benefit_check_result": null,
+      "benefit_check_status": "no_check_required",
+      "has_benefit_evidence": null,
+      "correspondence_address": null,
+      "relationship_to_partner": null,
+      "last_jsa_appointment_date": null,
+      "correspondence_address_type": "home_address",
+      "relationship_to_owner_of_usual_home_address": null
+    }
+  },
+  "means_passport": [],
+  "schema_version": 1,
+  "is_means_tested": "yes",
+  "pre_cifc_reason": null,
+  "application_type": "initial",
+  "evidence_details": {
+    "last_run_at": "2025-02-19T13:51:40.310Z",
+    "evidence_prompts": [
+      {
+        "id": "SalariedEmployee",
+        "key": "income_employed_0a",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "BenefitsRecipient",
+        "key": "income_benefits_0b",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "SelfAssessed",
+        "key": "income_p60_sa302_2",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "SelfEmployed",
+        "key": "income_selfemployed_3",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "BenefitsInKind",
+        "key": "income_noncash_benefit_4",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "PrivatePensionIncome",
+        "key": "income_private_pension_5",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "MaintenanceIncome",
+        "key": "income_maintenance_6",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "InterestAndInvestments",
+        "key": "income_investments_7",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "RentalIncome",
+        "key": "income_rent_8",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "AnyOtherIncome",
+        "key": "income_other_9",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "TrustFund",
+        "key": "income_trust_10",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "income",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "HousingCosts",
+        "key": "outgoings_housing_11",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "outgoings",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "CouncilTaxPayments",
+        "key": "outgoings_counciltax_12",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "outgoings",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "ChildcareCosts",
+        "key": "outgoings_childcare_14",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "outgoings",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "ChildMaintenanceCosts",
+        "key": "outgoings_maintenance_15",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "outgoings",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "BankAccounts",
+        "key": "capital_bank_accounts_16",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "BuildingSocietyAccounts",
+        "key": "capital_building_society_accounts_17",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "CashIsa",
+        "key": "capital_cash_isa_18",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "NationalSavingsAccount",
+        "key": "capital_nsa_19",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "CashInvestments",
+        "key": "capital_cash_investments_20",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "PremiumBonds",
+        "key": "capital_premium_bonds_21",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "SavingsCerts",
+        "key": "capital_savings_certs_22",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "StocksAndGilts",
+        "key": "capital_stocks_gilts_23",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "OwnShares",
+        "key": "capital_shares_24",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "PepPlans",
+        "key": "capital_pep_25",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "ShareIsa",
+        "key": "capital_share_isa_26",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "UnitTrusts",
+        "key": "capital_unit_trusts_27",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "InvestmentBonds",
+        "key": "capital_investment_bonds_28",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "OtherLumpSums",
+        "key": "capital_other_lump_sums_29",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "capital",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "NationalInsuranceNumber",
+        "key": "national_insurance_32",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "none",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "LostJob",
+        "key": "lost_job_33",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "none",
+        "ruleset": "Latest"
+      },
+      {
+        "id": "RestraintOrFreezingOrder",
+        "key": "restraint_freezing_order_31",
+        "run": {
+          "other": {
+            "prompt": [],
+            "result": false
+          },
+          "client": {
+            "prompt": [],
+            "result": false
+          },
+          "partner": {
+            "prompt": [],
+            "result": false
+          }
+        },
+        "group": "none",
+        "ruleset": "Latest"
+      }
+    ]
+  },
+  "pre_cifc_maat_id": null,
+  "provider_details": {
+    "office_code": "2A555X",
+    "provider_email": "provider@example.com",
+    "legal_rep_last_name": "User",
+    "legal_rep_telephone": "01632960001",
+    "legal_rep_first_name": "Test",
+    "legal_rep_has_partner_declaration": null,
+    "legal_rep_no_partner_declaration_reason": null
+  },
+  "date_stamp_context": {
+    "last_name": "Bloggs",
+    "created_at": "2025-01-17T13:08:42.299+00:00",
+    "date_stamp": "2025-01-17T13:08:42.299Z",
+    "first_name": "Jo",
+    "date_of_birth": "1989-02-24"
+  },
+  "supporting_evidence": [],
+  "interests_of_justice": [
+    {
+      "type": "question_of_law",
+      "reason": "Est accusamus ut dol"
+    },
+    {
+      "type": "other",
+      "reason": "At et doloribus id"
+    }
+  ],
+  "additional_information": null,
+  "pre_cifc_reference_number": null
+}

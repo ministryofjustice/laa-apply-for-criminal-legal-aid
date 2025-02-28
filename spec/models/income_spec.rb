@@ -671,4 +671,26 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
       it { is_expected.to be_nil }
     end
   end
+
+  describe '#client_owns_property' do
+    subject(:client_owns_property) { income.client_owns_property }
+
+    before { income.client_owns_property = 'no' }
+
+    context "when the client's usual residence is not owned" do
+      before do
+        allow(MeansStatus).to receive(:residence_owned?).and_return(false)
+      end
+
+      it { is_expected.to eq('no') }
+    end
+
+    context "when the client's usual residence is owned" do
+      before do
+        allow(MeansStatus).to receive(:residence_owned?).and_return(true)
+      end
+
+      it { is_expected.to be_nil }
+    end
+  end
 end
