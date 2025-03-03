@@ -20,10 +20,6 @@ module Passporting
       # Appeal cases do not trigger IoJ passporting
       return false if appeal_case_type?
 
-      # For resubmissions, we use the original age passport result,
-      # instead of running a new age calculation
-      return passported_on?(IojPassportType::ON_AGE_UNDER18) if resubmission?
-
       age_passported_at_datestamp_or_now?
     end
 

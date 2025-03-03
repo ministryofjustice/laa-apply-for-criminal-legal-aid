@@ -34,9 +34,5 @@ module Passporting
     def birth_date_threshold
       (crime_application.date_stamp || Time.zone.now).in_time_zone('London').to_date - AGE_PASSPORTED_UNTIL
     end
-
-    def passported_on?(kind)
-      passport_types_collection.include?(kind.to_s)
-    end
   end
 end
