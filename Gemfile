@@ -27,6 +27,8 @@ gem 'savon'
 # Monitoring
 gem 'prometheus_exporter'
 
+gem 'marcel'
+
 # Virus scan with ClamAV
 gem 'clamby', '1.6.10', require: false
 

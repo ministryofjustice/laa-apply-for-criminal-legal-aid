@@ -27,9 +27,20 @@ class Document < ApplicationRecord
     create(
       crime_application: crime_application,
       filename: file.original_filename,
-      content_type: file.content_type,
+      content_type: sniff_type_from_file(file:),
       file_size: file.tempfile.size,
       tempfile: file.tempfile,
     )
+  end
+
+  def self.sniff_type_from_file(file:)
+    sniffed_type = Marcel::MimeType.for(file.tempfile)
+
+    # only allow .csv or .txt if sniffed_type could be csv or txt and file is named as such
+    unless sniffed_type == 'application/octet-stream' && %w[text/csv text/plain].include?(file.content_type)
+      return sniffed_type
+    end
+
+    Marcel::MimeType.for(file.tempfile, name: file.original_filename)
   end
 end
