@@ -11,7 +11,7 @@ const ERR_FILE_SIZE_TOO_SMALL = 'must be bigger than 3KB'
 const ERR_CONTENT_TYPE = 'must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF'
 const ALLOWED_CONTENT_TYPES = [
   // dropzone checks both the mimetype and the file extension so this list covers everything
-  'csv', '.doc', '.docx', '.rtf', '.odt', '.jpg', '.jpeg', '.bpm', '.png', '.tif', '.tiff', '.pdf',
+  '.csv', '.doc', '.docx', '.rtf', '.odt', '.jpg', '.jpeg', '.bmp', '.png', '.tif', '.tiff', '.pdf',
   'application/pdf',
   'application/msword',
   'application/vnd.oasis.opendocument.text',
