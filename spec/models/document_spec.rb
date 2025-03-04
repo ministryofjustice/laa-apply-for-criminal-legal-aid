@@ -6,15 +6,23 @@ RSpec.describe Document, type: :model do
   include_context 'with an existing document'
 
   describe '.create_from_file' do
+    before do
+      allow(Marcel::MimeType).to receive(:for)
+        .with(file.tempfile).and_return(sniffed_type)
+    end
+
+    let(:sniffed_type) { 'application/tiff' }
+
     it 'creates a record with the expected file attributes' do
       expect(
         described_class
       ).to receive(:create).with(
         crime_application: crime_application,
         filename: 'test.pdf',
-        content_type: 'application/pdf',
+        content_type: sniffed_type,
+        declared_content_type: declared_content_type,
         file_size: 14_077,
-        tempfile: kind_of(Tempfile),
+        tempfile: file.tempfile,
       )
 
       described_class.create_from_file(file:, crime_application:)
@@ -22,18 +30,9 @@ RSpec.describe Document, type: :model do
   end
 
   describe 'validations' do
-    let(:attributes) do
-      {
-        crime_application: crime_application,
-        filename: 'test.pdf',
-        content_type: 'application/pdf',
-        file_size: 1.megabyte,
-      }
-    end
-
     context 'criteria' do
       context 'file is too small' do
-        let(:attributes) { super().merge(file_size: 2.kilobytes) }
+        let(:file_size) { 2.kilobytes }
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
@@ -42,7 +41,7 @@ RSpec.describe Document, type: :model do
       end
 
       context 'file is too big' do
-        let(:attributes) { super().merge(file_size: 11.megabytes) }
+        let(:file_size) { 11.megabytes }
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
@@ -50,12 +49,48 @@ RSpec.describe Document, type: :model do
         end
       end
 
-      context 'content type not allowed' do
-        let(:attributes) { super().merge(content_type: 'text/unknown') }
+      context 'declared content type not allowed' do
+        let(:declared_content_type) { 'text/unknown' }
 
         it 'has a validation error on the field' do
           expect(subject).not_to be_valid(:criteria)
           expect(subject.errors.of_kind?(:content_type, :invalid)).to be(true)
+        end
+      end
+
+      context 'file extension not allowed' do
+        let(:filename) { 'test.dmg' }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid(:criteria)
+          expect(subject.errors.of_kind?(:content_type, :invalid)).to be(true)
+        end
+      end
+
+      context 'file extension not present' do
+        let(:filename) { 'test' }
+
+        it { is_expected.to be_valid(:criteria) }
+      end
+
+      context 'when content_type undetermined' do
+        let(:content_type) { 'application/octet-stream' }
+
+        it 'has a validation error on the field' do
+          expect(subject).not_to be_valid(:criteria)
+          expect(subject.errors.of_kind?(:content_type, :invalid)).to be(true)
+        end
+
+        context 'when declared type text/csv' do
+          let(:declared_content_type) { 'text/csv' }
+
+          it { is_expected.to be_valid(:criteria) }
+        end
+
+        context 'when declared type text/plain' do
+          let(:declared_content_type) { 'text/plain' }
+
+          it { is_expected.to be_valid(:criteria) }
         end
       end
 

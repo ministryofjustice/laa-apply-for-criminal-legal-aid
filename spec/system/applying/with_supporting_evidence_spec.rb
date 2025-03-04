@@ -91,19 +91,23 @@ RSpec.describe 'Supporting evidence' do
 
       # With a fake pdf file
       upload_evidence_file('not_really.pdf')
-      expect(page).to have_content(
+
+      expect(page).to have_file_error(
+        'not_really.pdf',
         'File could not be uploaded – file must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF'
       )
 
       # With a small file
       upload_evidence_file('small.txt')
-      expect(page).to have_content(
+      expect(page).to have_file_error(
+        'small.txt',
         'File could not be uploaded – file must be bigger than 3KB'
       )
 
       # With a pdf that fails the scan
       upload_evidence_file('fails_scan.pdf')
-      expect(page).to have_content(
+      expect(page).to have_file_error(
+        'fails_scan.pdf',
         'File could not be uploaded – try again'
       )
 

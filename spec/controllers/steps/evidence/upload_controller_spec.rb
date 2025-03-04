@@ -4,12 +4,11 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
   it_behaves_like 'a generic step controller', Steps::Evidence::UploadForm, Decisions::EvidenceDecisionTree
   it_behaves_like 'a step that can be drafted', Steps::Evidence::UploadForm
 
-  describe 'additional CRUD actions' do
-    let(:crime_application) { CrimeApplication.create }
-    let(:document) { crime_application.documents.create({ filename: 'test.pdf' }) }
+  include_context('with an existing document')
 
+  describe 'additional CRUD actions' do
     before do
-      document
+      document.save!
     end
 
     context 'deleting a document' do

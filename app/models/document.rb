@@ -4,6 +4,8 @@ class Document < ApplicationRecord
   # Using UUIDs as the record IDs. We can't trust sequential ordering by ID
   default_scope { order(created_at: :asc) }
 
+  validates :content_type, :filename, :file_size, presence: true, on: :create
+
   # Use with: `document.valid?(:criteria)`
   validates_with FileUploadValidator, on: [:criteria, :storage]
 
@@ -27,20 +29,10 @@ class Document < ApplicationRecord
     create(
       crime_application: crime_application,
       filename: file.original_filename,
-      content_type: sniff_type_from_file(file:),
+      content_type: Marcel::MimeType.for(file.tempfile),
       file_size: file.tempfile.size,
       tempfile: file.tempfile,
+      declared_content_type: file.content_type
     )
-  end
-
-  def self.sniff_type_from_file(file:)
-    sniffed_type = Marcel::MimeType.for(file.tempfile)
-
-    # only allow .csv or .txt if sniffed_type could be csv or txt and file is named as such
-    unless sniffed_type == 'application/octet-stream' && %w[text/csv text/plain].include?(file.content_type)
-      return sniffed_type
-    end
-
-    Marcel::MimeType.for(file.tempfile, name: file.original_filename)
   end
 end

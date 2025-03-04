@@ -33,6 +33,25 @@ RSpec::Matchers.define :have_step_error do |error|
   end
 end
 
+RSpec::Matchers.define :have_file_error do |filename, error|
+  match do |page|
+    document_row = page.find('span._uploaded_file__filename', text: filename)
+                       .ancestor('.govuk-table__cell', match: :first)
+
+    @actual_text = document_row.find('.govuk-error-message').text(:all)
+
+    @actual_text[error]
+  end
+
+  description do
+    "renders an error '#{error}' on file '#{filename}'"
+  end
+
+  failure_message do
+    "Expected error '#{error}' on file '#{filename}' got '#{@actual_text}'"
+  end
+end
+
 RSpec::Matchers.define :have_errors do |*question_errors|
   match do |page|
     question_errors.each_slice(2).each do |question, error|
