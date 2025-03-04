@@ -20,6 +20,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
     raise Errors::CannotYetDetermineFullMeans unless income_below_threshold? && has_no_frozen_assets?
 
     return false if summary_only? || committal?
+    return true if residence_owned?
     return true if has_property? || has_savings?
     return false if no_property? && no_savings?
 
@@ -92,6 +93,15 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
 
   def insufficient_income_declared?
     !(income&.all_income_over_zero? || income&.client_self_employed? || income&.partner_self_employed?)
+  end
+
+  def residence_owned?
+    return false if applicant.residence_type.nil?
+
+    residence_type = ResidenceType.new(applicant.residence_type)
+    return false unless residence_type.owned?
+
+    !(residence_type == ResidenceType::PARTNER_OWNED && !include_partner_in_means_assessment?)
   end
 
   private

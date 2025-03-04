@@ -154,8 +154,6 @@ en:
       steps_income_client_owns_property_form:
         client_owns_property: Does %{subject} own their home, or any other land or property?
         client_owns_property_info: Include land or property fully or partly owned, inside or outside the UK.
-      steps_income_usual_property_details_form:
-        action: "Select the question you want to change the answer to:"
       steps_income_has_savings_form:
         has_savings: Does %{subject} have any savings or investments?
       steps_income_employment_status_form:
@@ -843,13 +841,6 @@ en:
         has_frozen_income_or_assets_options: *YESNO
       steps_income_client_owns_property_form:
         client_owns_property_options: *YESNO
-      steps_income_usual_property_details_form:
-        change_own_home_land_property: Whether %{subject} owns their home, land or other property
-        change_residence_type: Whether your %{residence_ownership} the property where they usually live
-        residence_ownership:
-          applicant_owned: client owns
-          partner_owned: client's partner owns
-          joint_owned: client and their partner own
       steps_income_has_savings_form:
         has_savings_options: *YESNO
       steps_income_client_employment_income_form:
