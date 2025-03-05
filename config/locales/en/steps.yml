@@ -289,14 +289,6 @@ en:
         edit:
           has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
           hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
-      usual_property_details:
-        edit:
-          heading: You told us your client usually lives in a property %{residence_ownership}
-          info: "Property address:"
-          residence_ownership:
-            applicant_owned: they own
-            partner_owned: their partner owns
-            joint_owned: they and their partner own
       income_payments:
         edit:
           page_title: Which of these payments does your client get?
