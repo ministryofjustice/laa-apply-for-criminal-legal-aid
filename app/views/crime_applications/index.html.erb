@@ -25,9 +25,8 @@
         <tbody class="govuk-table__body">
           <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header">
-                <%= link_to app.applicant_name, edit_crime_application_path(app),
-                            class: 'govuk-link--no-visited-state' %>
+              <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
+                <%= govuk_link_to app.applicant_name, edit_crime_application_path(app), no_visited_state: true %>
               </th>
               <td class="govuk-table__cell">
                 <%= l(app.created_at) %>
