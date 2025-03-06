@@ -553,11 +553,6 @@ en:
           attributes:
             client_owns_property:
               inclusion: Select yes if they own their home, or any other land or property
-        steps/income/usual_property_details_form:
-          attributes:
-            action:
-              blank: Select the question you want to change the answer to
-              inclusion: Select the question you want to change the answer to
         steps/income/has_savings_form:
           attributes:
             has_savings:

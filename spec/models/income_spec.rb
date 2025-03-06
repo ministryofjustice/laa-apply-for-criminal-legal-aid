@@ -672,68 +672,25 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
     end
   end
 
-  describe '#change_to_usual_property_details_required?' do
-    subject(:change_to_usual_property_details_required) { income.change_to_usual_property_details_required? }
+  describe '#client_owns_property' do
+    subject(:client_owns_property) { income.client_owns_property }
 
-    let(:crime_application) { CrimeApplication.new(applicant:) }
-    let(:applicant) { Applicant.new(residence_type:) }
-    let(:residence_type) { nil }
+    before { income.client_owns_property = 'no' }
 
-    context 'when the client does not live in an owned proerty' do
-      let(:residence_type) { ResidenceType::RENTED.to_s }
+    context "when the client's usual residence is not owned" do
+      before do
+        allow(MeansStatus).to receive(:residence_owned?).and_return(false)
+      end
 
-      it { expect(change_to_usual_property_details_required).to be(false) }
+      it { is_expected.to eq('no') }
     end
 
-    {
-      ResidenceType::APPLICANT_OWNED.to_s => 'they own',
-      ResidenceType::JOINT_OWNED.to_s => 'they and their partner both own'
-    }.each do |type, desc|
-      context "when the client lives in a property #{desc}" do
-        let(:residence_type) { type }
-
-        context 'and they have answered that they do not own their home, or any other land or property' do
-          before { income.client_owns_property = YesNoAnswer::NO.to_s }
-
-          it { expect(change_to_usual_property_details_required).to be(true) }
-        end
-
-        context 'and they have answered that they own their home, or any other land or property' do
-          before { income.client_owns_property = YesNoAnswer::YES.to_s }
-
-          it { expect(change_to_usual_property_details_required).to be(false) }
-        end
-      end
-    end
-
-    context 'when the client lives in a property their partner owns' do
-      let(:residence_type) { ResidenceType::PARTNER_OWNED.to_s }
-
-      context 'and the partner should be included in the assessment' do
-        before do
-          allow(MeansStatus).to receive(:include_partner?).and_return(true)
-        end
-
-        context 'and they have answered that they do not own their home, or any other land or property' do
-          before { income.client_owns_property = YesNoAnswer::NO.to_s }
-
-          it { expect(change_to_usual_property_details_required).to be(true) }
-        end
-
-        context 'and they have answered that they own their home, or any other land or property' do
-          before { income.client_owns_property = YesNoAnswer::YES.to_s }
-
-          it { expect(change_to_usual_property_details_required).to be(false) }
-        end
+    context "when the client's usual residence is owned" do
+      before do
+        allow(MeansStatus).to receive(:residence_owned?).and_return(true)
       end
 
-      context 'and the partner should not be included in the assessment' do
-        before do
-          allow(MeansStatus).to receive(:include_partner?).and_return(false)
-        end
-
-        it { expect(change_to_usual_property_details_required).to be(false) }
-      end
+      it { is_expected.to be_nil }
     end
   end
 end
