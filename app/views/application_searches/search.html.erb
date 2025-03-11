@@ -21,7 +21,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full app-table-container">
-      <table class="govuk-table app-table">
+      <table class="govuk-table app-table" aria-roledescription="." aria-label="<%= t('search.table_label') %> <%= t('search.total', count: @search.total) %>">
         <%= render DataTable::HeadComponent.new(sorting: @search.sorting, filter: @search.filter) do |head|
               head.with_row do |row|
                 row.with_cell(colname: 'applicant_name')
