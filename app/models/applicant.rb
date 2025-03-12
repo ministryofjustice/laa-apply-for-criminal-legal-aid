@@ -39,4 +39,22 @@ class Applicant < Person
   def ownership_type
     OwnershipType::APPLICANT
   end
+
+  def confirm_details
+    return nil if benefit_check_result
+
+    super
+  end
+
+  def has_benefit_evidence
+    return nil if benefit_check_result
+
+    super
+  end
+
+  def confirm_dwp_result
+    return nil if benefit_check_result
+
+    super
+  end
 end
