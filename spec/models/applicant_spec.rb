@@ -64,4 +64,42 @@ RSpec.describe Applicant, type: :model do
       expect(subject.separation_date).to eq Date.new(1991, 8, 7)
     end
   end
+
+  describe 'benefit check reset behaviour' do
+    before do
+      applicant.confirm_details = 'yes'
+      applicant.confirm_dwp_result = 'no'
+      applicant.has_benefit_evidence = 'yes'
+    end
+
+    context 'when the benefit check result is true' do
+      before do
+        applicant.benefit_check_result = true
+      end
+
+      it { expect(applicant.confirm_details).to be_nil }
+      it { expect(applicant.confirm_dwp_result).to be_nil }
+      it { expect(applicant.has_benefit_evidence).to be_nil }
+    end
+
+    context 'when the benefit check result is false' do
+      before do
+        applicant.benefit_check_result = false
+      end
+
+      it { expect(applicant.confirm_details).to eq 'yes' }
+      it { expect(applicant.confirm_dwp_result).to eq 'no' }
+      it { expect(applicant.has_benefit_evidence).to eq 'yes' }
+    end
+
+    context 'when the benefit check result is nil' do
+      before do
+        applicant.benefit_check_result = nil
+      end
+
+      it { expect(applicant.confirm_details).to eq 'yes' }
+      it { expect(applicant.confirm_dwp_result).to eq 'no' }
+      it { expect(applicant.has_benefit_evidence).to eq 'yes' }
+    end
+  end
 end

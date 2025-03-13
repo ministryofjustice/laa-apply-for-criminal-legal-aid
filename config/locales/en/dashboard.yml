@@ -1,6 +1,7 @@
 ---
 en:
   search:
+    table_label: Application search results table,
     total:
       one: 1 search result
       other: "%{count} search results"
