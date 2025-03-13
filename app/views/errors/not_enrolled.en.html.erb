@@ -1,32 +1,19 @@
-<% title 'You need to apply using eForms' %>
+<% title t('errors.not_enrolled') %>
 <% step_header(path: Settings.portal_url) %>
 
-<div class="govuk-grid-row app-inverted--card app-inverted-text">
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l app-inverted-text">
-      You need to apply using eForms
-    </h1>
+    <h1 class="govuk-heading-l"><%= t('errors.not_enrolled') %></h1>
+    <p class="govuk-body"><%= t('errors.not_enrolled_subheading') %></p>
 
-    <p class="govuk-body app-inverted-text">
-      You do not have access to the ‘<%= service_name %>’ service yet. This is because it is only available to some
-      providers while we test and improve it.
-    </p>
-
-    <p class="govuk-body app-inverted-text">
-      We’ll contact your law firm when you can use this service. Until then, you should apply using eForms.
-    </p>
-
-    <p class="govuk-body app-inverted-text">
-      Contact <%= mail_to Settings.onboarding_email, class: 'app-link--inverted' %>
-      if you have any questions.
-    </p>
-
-    <div class="govuk-button-group govuk-!-margin-top-6">
-      <%= link_button t('helpers.submit.apply_in_eforms'), Settings.eforms_url,
-                      class: 'app-button--m app-button--inverted' %>
-    </div>
-
-    <%= link_to t('helpers.back_to_portal'), Settings.portal_url,
-                class: 'app-link--inverted govuk-!-font-size-19' %>
+    <h2 class="govuk-heading-s"><%= t('helpers.contact.telephone') %></h2>
+    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, <%= t('helpers.contact.extension_option_three') %></p>
+    <p class="govuk-body"><%= t('helpers.contact.opening_hours') %></p>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.call_charges'), Settings.call_charges_url) %></p>
+    <h2 class="govuk-heading-s"><%= t('helpers.contact.email') %></h2>
+    <p class="govuk-body"><%= mail_to Settings.support_email, class: 'govuk-link--no-visited-state' %></p>
+    <p class="govuk-body"><%= t('helpers.contact.email_response_time') %></p>
+    <h2 class="govuk-heading-s"><%= t('helpers.contact.webchat') %></h2>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.webchat_adviser'), Settings.laa_contact_url) %></p>
   </div>
 </div>

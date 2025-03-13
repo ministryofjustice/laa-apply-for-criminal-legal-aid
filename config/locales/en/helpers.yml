@@ -52,7 +52,21 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
-      apply_in_eforms: Apply using eForms
+    contact:
+      call_charges: Find out about call charges
+      case_enquiries: Case enquiries
+      case_enquiries_subheading: For enquiries about Criminal Legal Aid applications.
+      contact_us: Contact us
+      email: Email
+      email_response_time: We aim to respond within 5 working days.
+      extension_option_two: option 2
+      extension_option_three: option 3
+      opening_hours: 9am to 5pm, Monday to Friday (excluding public holidays)
+      technical_support: Technical support
+      technical_support_subheading: For help using the Apply for Criminal Legal Aid service.
+      telephone: Telephone
+      webchat: Webchat
+      webchat_adviser: Speak to an adviser now
 
     legend:
       cookies_settings_form:

@@ -9,6 +9,8 @@ en:
       incomplete_records_heading: There is a problem
 
     incomplete_records: You need to complete all questions before you can submit the application
+    not_enrolled: You’re not enrolled in the service
+    not_enrolled_subheading: 'If you have a login, try again or contact our technical support:'
 
   activerecord:
     errors:
