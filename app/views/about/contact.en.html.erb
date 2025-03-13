@@ -1,37 +1,27 @@
-<%# CONTNENT NEEDS CREATING %>
-
-<% title 'Contact us' %>
+<% title t('helpers.contact.contact_us') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Contact us</h1>
-    <h2 class="govuk-heading-m">Case enquiries</h2>
-    <p class="govuk-body">For enquiries about Criminal Legal Aid applications.</p>
-    <h3 class="govuk-heading-s">Telephone</h3>
-    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, option 2</p>
-    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding public holidays)</p>
-    <p class="govuk-body">
-      <%= govuk_link_to('Find out about call charges', 'https://www.gov.uk/call-charges') %>
-    </p>
-    <h3 class="govuk-heading-s">Webchat</h3>
-    <p class="govuk-body">
-      <%= govuk_link_to('Speak to an adviser now', 'https://legalaidlearning.justice.gov.uk/totara/dashboard/index.php?id=34') %>
-    </p>
+    <h1 class="govuk-heading-xl"><%= t('helpers.contact.contact_us') %></h1>
+    <h2 class="govuk-heading-m"><%= t('helpers.contact.case_enquiries') %></h2>
+    <p class="govuk-body"><%= t('helpers.contact.case_enquiries_subheading') %></p>
+    <h3 class="govuk-heading-s"><%= t('helpers.contact.telephone') %></h3>
+    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, <%= t('helpers.contact.extension_option_two') %></p>
+    <p class="govuk-body"><%= t('helpers.contact.opening_hours') %></p>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.call_charges'), Settings.call_charges_url) %></p>
+    <h3 class="govuk-heading-s"><%= t('helpers.contact.webchat') %></h3>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.webchat_adviser'), Settings.laa_contact_url) %></p>
 
-    <h2 class="govuk-heading-m">Technical support</h2>
-    <p class="govuk-body">For help using the Apply for Criminal Legal Aid service.</p>
-    <h3 class="govuk-heading-s">Telephone</h3>
-    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, option 3</p>
-    <p class="govuk-body">9am to 5pm, Monday to Friday (excluding public holidays)</p>
-    <p class="govuk-body">
-      <%= govuk_link_to('Find out about call charges', 'https://www.gov.uk/call-charges') %>
-    </p>
-    <h3 class="govuk-heading-s">Email</h3>
+    <h2 class="govuk-heading-m"><%= t('helpers.contact.technical_support') %></h2>
+    <p class="govuk-body"><%= t('helpers.contact.technical_support_subheading') %></p>
+    <h3 class="govuk-heading-s"><%= t('helpers.contact.telephone') %></h3>
+    <p class="govuk-body"><%= Settings.case_enquiries_tel %>, <%= t('helpers.contact.extension_option_three') %></p>
+    <p class="govuk-body"><%= t('helpers.contact.opening_hours') %></p>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.call_charges'), Settings.call_charges_url) %></p>
+    <h3 class="govuk-heading-s"><%= t('helpers.contact.email') %></h3>
     <p class="govuk-body"><%= mail_to Settings.support_email, class: 'govuk-link--no-visited-state' %></p>
-    <p class="govuk-body">We aim to respond within 5 working days.</p>
-    <h3 class="govuk-heading-s">Webchat</h3>
-    <p class="govuk-body">
-      <%= govuk_link_to('Speak to an adviser now', 'https://legalaidlearning.justice.gov.uk/totara/dashboard/index.php?id=34') %>
-    </p>
+    <p class="govuk-body"><%= t('helpers.contact.email_response_time') %></p>
+    <h3 class="govuk-heading-s"><%= t('helpers.contact.webchat') %></h3>
+    <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.webchat_adviser'), Settings.laa_contact_url) %></p>
   </div>
 </div>
