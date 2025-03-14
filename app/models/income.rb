@@ -40,7 +40,7 @@ class Income < ApplicationRecord
                           not_working_owners, employed_income_payment_types)
     end
 
-    @income_payments = scope
+    @income_payments = scope.select(&:complete?)
   end
 
   def income_benefits
