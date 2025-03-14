@@ -12,6 +12,7 @@ class Payment < ApplicationRecord
 
   scope :for_client, -> { where(ownership_type: OwnershipType::APPLICANT.to_s) }
   scope :for_partner, -> { where(ownership_type: OwnershipType::PARTNER.to_s) }
+  scope :completed, -> { where.not(payment_type: '').where.not(frequency: '') }
 
   def complete?
     values_at(:amount, :payment_type, :frequency).all?(&:present?)
