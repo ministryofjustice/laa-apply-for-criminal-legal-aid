@@ -62,6 +62,23 @@ RSpec.describe Steps::Income::Partner::EmploymentIncomeForm do
       expect(form.before_or_after_tax).to eq(BeforeOrAfterTax::AFTER)
       expect(form.frequency).to eq(PaymentFrequencyType::FOUR_WEEKLY)
     end
+
+    context 'when the model metadata is incomplete' do
+      let(:existing_employment_income_payment) {
+        IncomePayment.new(crime_application: crime_application,
+                          payment_type: IncomePaymentType::EMPLOYMENT.to_s,
+                          amount: 655,
+                          frequency: nil,
+                          ownership_type: 'applicant',
+                          metadata: {})
+      }
+
+      it 'successfully sets the form attributes' do
+        expect(form.amount).to eq Money.new(655)
+        expect(form.before_or_after_tax).to be_nil
+        expect(form.frequency).to be_nil
+      end
+    end
   end
 
   describe '#save' do

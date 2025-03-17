@@ -31,6 +31,7 @@ class Income < ApplicationRecord
     # disregard payments for people not included in means assessemnt
     # as well as obsolete payment types
     scope = crime_application.income_payments
+                             .completed
                              .owned_by(ownership_types)
                              .not_of_type(obsolete_employed_income_payment_types)
 

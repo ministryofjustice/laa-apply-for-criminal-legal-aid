@@ -166,7 +166,8 @@ describe EmploymentIncomePaymentsCalculator do
     income_payment = IncomePayment.new(amount: 100,
                                        frequency: 'week',
                                        ownership_type: ownership_type,
-                                       payment_type: 'employment')
+                                       payment_type: 'employment',
+                                       before_or_after_tax: 'after_tax')
 
     crime_application.income_payments << income_payment
   end
