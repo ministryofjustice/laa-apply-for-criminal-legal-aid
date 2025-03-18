@@ -67,7 +67,7 @@ RSpec.describe 'Sign in user journey' do
 
     it 'redirects to the error page' do
       expect(current_url).to match(not_enrolled_errors_path)
-      expect(page).to have_content('You’re not enrolled in the service')
+      expect(page).to have_content('You’re not enrolled in the apply for criminal legal aid service')
     end
   end
 
