@@ -10,7 +10,7 @@ en:
 
     incomplete_records: You need to complete all questions before you can submit the application
     not_enrolled: You’re not enrolled in the apply for criminal legal aid service
-    not_enrolled_subheading: 'If you have a login, try again or contact our technical support:'
+    not_enrolled_subheading: 'Try logging in again, or if you think this is not correct contact our technical support:'
 
   activerecord:
     errors:
