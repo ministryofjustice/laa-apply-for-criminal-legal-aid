@@ -2,13 +2,10 @@
 # yarn lockfile v1
 
 
-"@ministryofjustice/frontend@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.1.0.tgz#6e39ecdb0e34ab3a673b837800cf1e55d4b6a088"
-  integrity sha512-Dp2xqgXNM2om56EQdjNXaEKju3k330sTRoXNMEQEHI2qYTSwyz67VW3PkUHrWH1BXE7E2MyU/Q3OVA6ZhcZBsA==
-  dependencies:
-    govuk-frontend "^5.0.0"
-    moment "^2.27.0"
+"@ministryofjustice/frontend@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-3.7.0.tgz#fd694f79d06f1c5a2ba581c1f5c89506810aa4a6"
+  integrity sha512-o84Sqy+1jqc1vaxIZfyG4VwJzdpDUK88O9COJFVLcFmW+Np80onlFlGAVjDUxNHYvtBdJx40w1dayq53wmtxgQ==
 
 "@swc/helpers@^0.2.13":
   version "0.2.14"
@@ -28,17 +25,7 @@ govuk-frontend@5.7.1:
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.7.1.tgz#d4c561ebf8c0b76130f31df8c2e4d70d340cd63f"
   integrity sha512-jF1cq5rn57kxZmJRprUZhTQ31zaBBK4b5AyeJaPX3Yhg22lk90Mx/dQLvOk/ycV3wM7e0y+s4IPvb2fFaPlCGg==
 
-govuk-frontend@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.0.0.tgz#c08a4d1115fb31eb39b6d19979c627f816185dd7"
-  integrity sha512-3WSfvQ+3kw/q/m8jrq/t8XnMUA8D2r0uhGyZaDbIh1gWTJBQzJBHbHiKYI9nc9ixIXdCFsc9RozkgEm57a795g==
-
 just-extend@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/just-extend/-/just-extend-5.1.1.tgz#4f33b1fc719964f816df55acc905776694b713ab"
   integrity sha512-b+z6yF1d4EOyDgylzQo5IminlUmzSeqR1hs/bzjBNjuGras4FXq/6TrzjxfN0j+TmI0ltJzTNlqXUMCniciwKQ==
-
-moment@^2.27.0:
-  version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
-  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
