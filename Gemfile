@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
-gem 'dartsass-rails', '~> 0.5.1'
 gem 'faraday', '~> 2.7'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
@@ -36,12 +35,6 @@ gem 'clamby', '1.6.10', require: false
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'stackprof'
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -78,3 +71,11 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock'
 end
+
+gem 'cssbundling-rails', '~> 1.4'
+
+gem 'jsbundling-rails', '~> 1.3'
+
+gem 'propshaft', '~> 1.1'
+
+gem 'csv', '~> 3.3'

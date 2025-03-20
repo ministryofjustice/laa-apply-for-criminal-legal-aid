@@ -1,6 +1,8 @@
 // Blue card styles - used by masthead and intro slides
 // Inspired by https://github.com/UKGovernmentBEIS/beis-opss-psd
 
+@use "govuk-frontend/dist/govuk" as *;
+
 .app-inverted--card {
   //override govuk-main-wrapper
   margin-top: -15px;
