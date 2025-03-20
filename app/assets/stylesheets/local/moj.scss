@@ -4,23 +4,28 @@
 // NOTE: using hand-picked components instead of importing
 // the whole library, as we only need a few ones.
 
+// MOJ Design System
+// https://design-patterns.service.justice.gov.uk
+//
+// NOTE: using hand-picked components instead of importing
+// the whole library, as we only need a few ones.
+
 // Badge
 // https://design-patterns.service.justice.gov.uk/components/badge/
-@import "@ministryofjustice/frontend/moj/components/badge/badge";
+@use "@ministryofjustice/frontend/moj/components/badge/badge";
 
 // Task List
 // https://design-patterns.service.justice.gov.uk/patterns/task-list/
-@import "@ministryofjustice/frontend/moj/components/task-list/task-list";
+@use "@ministryofjustice/frontend/moj/components/task-list/task-list";
+
 
 // Sub navigation
-// https://design-patterns.service.justice.gov.uk/components/sub-navigation/
-@import "@ministryofjustice/frontend/moj/components/sub-navigation/sub-navigation";
+@use "@ministryofjustice/frontend/moj/components/sub-navigation/sub-navigation";
 
-// Sortable table
-// https://design-patterns.service.justice.gov.uk/components/sortable-table/
-@import "@ministryofjustice/frontend/moj/components/sortable-table/sortable-table";
+// Sortable tables
+@use "@ministryofjustice/frontend/moj/components/sortable-table/sortable-table";
 
 // Primary navigation
-@import "@ministryofjustice/frontend/moj/settings/measurements";
-@import "@ministryofjustice/frontend/moj/objects/width-container";
-@import "@ministryofjustice/frontend/moj/components/primary-navigation/primary-navigation";
+@use "@ministryofjustice/frontend/moj/settings/measurements";
+@use "@ministryofjustice/frontend/moj/objects/width-container";
+@use "@ministryofjustice/frontend/moj/components/primary-navigation/primary-navigation";

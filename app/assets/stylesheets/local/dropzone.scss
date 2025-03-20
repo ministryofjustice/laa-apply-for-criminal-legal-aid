@@ -1,4 +1,6 @@
-@import "dropzone/dist/dropzone";
+@use "govuk-frontend/dist/govuk" as *;
+
+@forward "dropzone/dist/dropzone";
 
 // Additional dropzone overrides added below
 .dropzone {

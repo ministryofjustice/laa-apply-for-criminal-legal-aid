@@ -1,22 +1,22 @@
 // Design systems
-@import "local/govuk";
-@import "local/moj";
+@use "local/govuk";
+@use "local/moj";
 
 // Custom components or features
-@import "local/info_card";
+@use "local/info_card";
 
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453
-@import "local/suggestions";
+@use "local/suggestions";
 
 // NOTE: accessible-autocomplete copied from:
 // https://github.com/alphagov/accessible-autocomplete/blob/main/src/autocomplete.css
 // commit:aff5a284dba8ed674706bb8db3b3c1b7752c1285
 // customised to include govuk styling in local/custom.scss
-@import "local/accessible-autocomplete";
+@use "local/accessible-autocomplete";
 
 // Dropzone custom styling
-@import "local/dropzone";
+@use "local/dropzone";
 
 // App-specific custom styles and overrides
-@import "local/custom";
+@use "local/custom";
