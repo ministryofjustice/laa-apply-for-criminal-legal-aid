@@ -1,6 +1,9 @@
+@use "govuk-frontend/dist/govuk" as *;
+
 // App-specific custom styles and overrides
 // Please use BEM convention: http://getbem.com/naming/
 //
+
 @mixin app-button-reset {
   padding: 0;
   margin: 0;
@@ -95,6 +98,8 @@ body.js-enabled {
   max-width: 100%;
 }
 
+
+$button-shadow-size: $govuk-border-width-form-element;
 $app-blue-button-colour: govuk-colour("blue");
 .app-button--blue {
   background-color: $app-blue-button-colour;

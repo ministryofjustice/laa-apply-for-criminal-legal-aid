@@ -1,19 +1,17 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-
 // https://frontend.design-system.service.gov.uk/importing-css-assets-and-javascript/#javascript
 import { initAll } from 'govuk-frontend'
 initAll()
 
 // Cookie banner -- Script name is obfuscated to avoid browsers blocking it
 // https://design-system.service.gov.uk/components/cookie-banner/
-import Cbc from "local/cbc"
+import Cbc from "./local/cbc"
 const $cookieBanner = document.querySelector('[data-module="govuk-cookie-banner"]')
 if ($cookieBanner) {
   new Cbc($cookieBanner).init()
 }
 
 // Dropzone component initialisation and configuration
-import DropzoneCfg from "local/dropzone-cfg"
+import DropzoneCfg from "./local/dropzone-cfg"
 new DropzoneCfg({
   dropzoneContainer: "form#dz-evidence-upload-form",
   feedbackContainer: "div.app-multi-file__uploaded-files"
@@ -21,7 +19,7 @@ new DropzoneCfg({
 
 // NOTE: suggestions input component not yet part of GOV.UK frontend
 // https://github.com/alphagov/govuk-frontend/pull/2453
-import Input from "local/suggestions"
+import Input from "./local/suggestions"
 const $inputs = document.querySelectorAll('[data-module="govuk-input"]')
 if ($inputs) {
   for (let i = 0; i < $inputs.length; i++) {
@@ -43,7 +41,7 @@ if ($acElements) {
 // Keep focus on the sub-navigation
 // This improves accessibility when navigating with
 // keyboard or screen readers
-import SubNavigation from 'local/subnavigation'
+import SubNavigation from './local/subnavigation'
 const $subNavigation = document.querySelector('nav.moj-sub-navigation')
 new SubNavigation($subNavigation).init()
 
@@ -55,7 +53,7 @@ if ($headerNavigation) {
 }
 
 // Allow window.print(), otherwise blocked by CSP
-import PrintAction from "local/print-action"
+import PrintAction from "./local/print-action"
 const $elements = document.querySelectorAll('[data-module="print"]')
 for (let i = 0; i < $elements.length; i++) {
   new PrintAction($elements[i]).init()
@@ -64,7 +62,7 @@ for (let i = 0; i < $elements.length; i++) {
 // Duplicate "main" submit and place it hidden higher than others
 // in the DOM hierarchy, so pressing `enter` key picks this one
 // Used in forms with secondary submit actions in between
-import MultiActionForm from "local/multi-action-form"
+import MultiActionForm from "./local/multi-action-form"
 const $forms = document.querySelectorAll('form[data-module="multi-action-form"]')
 for (let i = 0; i < $forms.length; i++) {
   new MultiActionForm($forms[i]).init()
@@ -72,5 +70,5 @@ for (let i = 0; i < $forms.length; i++) {
 
 // Google analytics additional tracking
 // Keep this at the bottom of this file
-import GAEvents from "local/ga-events"
+import GAEvents from "./local/ga-events"
 new GAEvents(window).init()
