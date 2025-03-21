@@ -18,8 +18,7 @@
   <%= favicon_link_tag asset_path('manifest.json'), rel: 'manifest' %>
 
   <%= stylesheet_link_tag 'application', media: 'all', nonce: true %>
-  <%= javascript_include_tag 'application', defer: true %>
-
+  <%= javascript_include_tag 'application', defer: true, nonce: true %>
 
   <%= yield :head %>
 </head>
