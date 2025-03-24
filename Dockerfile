@@ -27,7 +27,12 @@ RUN rails assets:precompile --trace
 
 FROM base
 
-ARG APPUID=1000
+RUN mkdir -p /usr/src/app && \
+  mkdir -p /usr/src/app/log && \
+  mkdir -p /usr/src/app/tmp && \
+  mkdir -p /usr/src/app/tmp/pids
+
+ENV APPUID=1000
 RUN addgroup -g $APPUID -S appgroup && \
   adduser -u $APPUID -S appuser -G appgroup
 
@@ -45,6 +50,15 @@ RUN chmod -R 777 log tmp && \
 ENV RDS_COMBINED_CA_BUNDLE=/usr/src/app/config/global-bundle.pem
 RUN wget -O $RDS_COMBINED_CA_BUNDLE https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem && \
   chmod +r $RDS_COMBINED_CA_BUNDLE
+
+ARG APP_BUILD_DATE
+ENV APP_BUILD_DATE=${APP_BUILD_DATE}
+
+ARG APP_BUILD_TAG
+ENV APP_BUILD_TAG=${APP_BUILD_TAG}
+
+ARG APP_GIT_COMMIT
+ENV APP_GIT_COMMIT=${APP_GIT_COMMIT}
 
 USER appuser
 

@@ -11,32 +11,32 @@ The instructions assume you have [Homebrew](https://brew.sh) installed in your m
 
 **1. Pre-requirements**
 
-* `brew bundle`
-* `gem install bundler`
-* `bundle install`
+- `brew bundle`
+- `gem install bundler`
+- `bundle install`
 
 **2. Configuration**
 
-* Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
-* Copy `.env.test` to `.env.test.local` and modify with suitable values for your local machine
+- Copy `.env.development` to `.env.development.local` and modify with suitable values for your local machine
+- Copy `.env.test` to `.env.test.local` and modify with suitable values for your local machine
 
 After you've defined your DB configuration in the above files, run the following:
 
-* `bin/rails db:prepare` (for the development database)
-* `RAILS_ENV=test bin/rails db:prepare` (for the test database)
+- `bin/rails db:prepare` (for the development database)
+- `RAILS_ENV=test bin/rails db:prepare` (for the test database)
 
 **3. GOV.UK Frontend (styles, javascript and other assets)**
 
-* `yarn`
+- `yarn`
 
 **4. Run the app locally**
 
 Once all the above is done, you should be able to run the application as follows:
 
-a) `bin/dev` - will run foreman, spawning a rails server and `dartsass:watch` to process SCSS files and watch for any changes.
+a) `bin/dev` - will run foreman, spawning a rails server, `yarn build --watch`, and `yarn build:css --watch` to process javascript and SCSS files and watch for any changes.
 b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
 
-You can also compile assets manually with `rails dartsass:build` at any time, and just run the rails server, without foreman.
+You can also compile assets manually with `rails assets:precompile` at any time, and just run the rails server, without foreman.
 
 If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
 
@@ -65,29 +65,28 @@ Once the hooks are installed, if you need to you can skip them with the `-n` fla
 
 You can run all the code linters and tests with:
 
-* `rake`
+- `rake`
 
 The tasks run by default when using `rake`, are defined in the `Rakefile`.
 
 Or you can run them individually:
 
-* `rake spec`
-* `rake erblint`
-* `rake rubocop`
-* `rake brakeman`
+- `rake spec`
+- `rake erblint`
+- `rake rubocop`
+- `rake brakeman`
 
 ## Docker
 
 The application can be run inside a docker container. This will take care of the ruby environment, postgres database
 and any other dependency for you, without having to configure anything in your machine.
 
-* `docker-compose up`
+- `docker compose up`
 
 The application will be run in "production" mode, so will be as accurate as possible to the real production environment.
 
-**NOTE:** never use `docker-compose` for a real production environment. This is only provided to test a local container. The
+**NOTE:** never use `docker compose` for a real production environment. This is only provided to test a local container. The
 actual docker images used in the cluster are built as part of the deploy pipeline.
-
 
 ## Feature Flags
 
@@ -114,7 +113,6 @@ To check if a feature is enabled / disabled and run code accordingly, use:
 FeatureFlags.your_new_feature.enabled?
 FeatureFlags.your_new_feature.disabled?
 ```
-
 
 ## Settings
 
@@ -146,11 +144,10 @@ To start the ClamAV server:
 
 ```
 cd /my/apply-repo
-docker-compose up clamav
+docker compose up clamav
 ```
 
 The ClamAv server will take approximately 1 minute to become fully available.
-
 
 ## Kubernetes deployment
 
@@ -160,8 +157,9 @@ AWS infrastructure is created by Cloud Platforms via PR to [their repository](ht
 Read [how to connect the cluster](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html).
 
 **Namespaces for this service:**
-* [staging namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-staging)
-* [production namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-production)
+
+- [staging namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-staging)
+- [production namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-production)
 
 ### Applying the configuration
 
@@ -181,7 +179,6 @@ All this is done through **github actions**.
 The secrets needed for these actions are created automatically as part of the **terraforming**. You can read more about
 it in [this document](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/github-actions-continuous-deployment.html#automating-the-deployment-process).
 
-
 ## Virus scanning with ClamAV
 
 [ClamAV](https://www.clamav.net/) is used to ensure system safety against malicious file uploads.
@@ -191,7 +188,6 @@ Virus scanning is performed using a dedicated ClamAV server, built from the offi
 The server has been configured to allow ClamAV to accept file streams over TCP. Interaction with the ClamAV server is performed using the [Clamby](https://github.com/kobaltz/clamby) gem.
 
 Please note the `clamav` service will take longer to initialise than the rest of the application, meaning deployment of the overall Apply system could be delayed depending on the size of any Clam updates on startup.
-
 
 ## Architectural decision records
 
