@@ -12,7 +12,7 @@ module Steps
       def advance_as
         if params.key?('add_property_owner')
           :add_property_owner
-        elsif params.to_s.include?('"_destroy"=>"1"')
+        elsif params.to_s.include?('"_destroy" => "1"')
           :delete_property_owner
         else
           :property_owners

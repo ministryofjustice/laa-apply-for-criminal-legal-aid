@@ -1,9 +1,18 @@
 {
   "name": "laa-apply-for-criminal-legal-aid",
-  "private": "true",
   "dependencies": {
-    "@ministryofjustice/frontend": "3.1.0",
+    "@ministryofjustice/frontend": "^4.0.1",
+    "accessible-autocomplete": "^3.0.1",
     "dropzone": "^6.0.0-beta.2",
-    "govuk-frontend": "5.7.1"
+    "esbuild": "^0.25.1",
+    "govuk-frontend": "^5.9.0"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css  --no-source-map  --load-path=.  --load-path=node_modules  --quiet-deps"
+  },
+  "packageManager": "yarn@4.7.0",
+  "devDependencies": {
+    "sass": "^1.86.0"
   }
 }
