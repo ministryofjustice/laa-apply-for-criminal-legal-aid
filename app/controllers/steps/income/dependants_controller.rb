@@ -14,7 +14,7 @@ module Steps
       def step_name
         if params.key?('add_dependant')
           :add_dependant
-        elsif params.to_s.include?('"_destroy"=>"1"')
+        elsif params.to_s.include?('"_destroy" => "1"')
           :delete_dependant
         else
           :dependants_finished
