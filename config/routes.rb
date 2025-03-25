@@ -101,7 +101,11 @@ Rails.application.routes.draw do
 
   scope 'applications' do
     resources :submitted_applications, path: 'submitted', only: [:index]
-    resources :returned_applications, path: 'returned', only: [:index]
+    resources :returned_applications, path: 'returned', only: [:index] do
+      get :confirm_destroy, path: 'confirm-destroy', on: :member
+      get :draft_application_found, path: 'confirm-destroy/draft-application-found', on: :member
+      post :archive, on: :member
+    end
     resources :decided_applications, path: 'decided', only: [:index]
   end
 
@@ -310,7 +314,6 @@ except: [:destroy]
     end
   end
 
-  # temp underscored routes
   resource :application_searches, path: 'application-searches', only: [:new] do
     post :search, on: :collection
   end

@@ -36,4 +36,8 @@ class CrimeApplicationPresenter < BasePresenter
   def date_stampable?
     CaseType.new(case_type.to_s).date_stampable?
   end
+
+  def draft
+    CrimeApplication.find_by(parent_id: id)
+  end
 end

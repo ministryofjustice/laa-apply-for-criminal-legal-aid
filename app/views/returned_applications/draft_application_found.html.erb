@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% step_header(path: returned_applications_path) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="moj-interruption-card">
+      <div class="moj-interruption-card__content">
+        <h1 class="govuk-heading-l moj-interruption-card__heading"><%= t('.heading') %></h1>
+        <div class="govuk-body-l moj-interruption-card__body">
+          <p><%= t('.body', draft_link: govuk_link_to(t('.draft_link'), edit_crime_application_path(@draft), inverse: true)).html_safe %></p>
+        </div>
+        <div class="govuk-button-group moj-interruption-card__actions">
+          <%= link_button(t('.continue_to_delete_button'), confirm_destroy_crime_application_path(@draft), class: 'govuk-button--inverse') %>
+          <%= govuk_link_to(t('.go_back_link'), returned_applications_path, inverse: true) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
