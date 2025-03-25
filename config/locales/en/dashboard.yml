@@ -58,9 +58,6 @@ en:
       confirm_delete_button: Delete application
       go_back_link: Back to your applications
       confirm_delete_button_a11y: Delete this application
-      # status:
-      #   in_progress: in progress
-      #   returned: returned
     destroy:
       success_flash: "%{applicant_name}’s in progress application has been deleted"
   completed_applications: &COMPLETED_APPLICATIONS
@@ -121,7 +118,7 @@ en:
     draft_application_found:
       page_title: There is another version of this application open
       heading: There is another version of this application open
-      body: You or someone in your office has started editing this application and it’s in progress. Check the %{draft_link}.
+      body_html: You or someone in your office has started editing this application and it’s in progress. Check the <a class="govuk-link govuk-link--inverse" href="%{draft_link}">in progress version</a>.
       draft_link: in progress version
       continue_to_delete_button: Continue to delete application
       go_back_link: Back to applications

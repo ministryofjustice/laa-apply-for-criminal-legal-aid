@@ -4,7 +4,7 @@ RSpec.describe Datastore::ApplicationCounters do
   subject { described_class.new(office_code: 'XYZ') }
 
   let(:expected_query) do
-    { 'status' => status, 'office_code' => 'XYZ', 'per_page' => 1 }
+    { 'status' => status, 'office_code' => 'XYZ', 'exclude_archived' => true, 'per_page' => 1 }
   end
 
   let(:datastore_result) do

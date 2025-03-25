@@ -21,7 +21,8 @@ RSpec.describe ApplicationSearchFilter do
           office_code: office_code,
           search_text: nil,
           status: nil,
-          review_status: nil
+          review_status: nil,
+          exclude_archived: true
         }
       )
     end
@@ -32,7 +33,8 @@ RSpec.describe ApplicationSearchFilter do
           search_text: 'David 100003',
           office_code: '1A123B',
           status: %w[submitted returned],
-          review_status: ['application_recieved']
+          review_status: ['application_recieved'],
+          exclude_archived: true
         }
       end
 

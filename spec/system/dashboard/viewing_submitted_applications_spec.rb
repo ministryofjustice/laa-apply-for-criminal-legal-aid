@@ -20,7 +20,8 @@ RSpec.describe 'Viewing Submitted Criminal Legal Aid applications' do
             Types::ReviewApplicationStatus['ready_for_assessment']
           ],
           status: nil,
-          office_code: '2A555X'
+          office_code: '2A555X',
+          exclude_archived: true
         }
       }
     ))
