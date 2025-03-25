@@ -40,16 +40,13 @@ WORKDIR /usr/src/app
 
 COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
 COPY --from=dependencies /usr/src/app/public ./public
-COPY --from=dependencies /usr/src/app/tmp ./tmp 
-COPY --from=dependencies /usr/src/app/log ./log
 COPY . .
 
-RUN chmod -R 777 log tmp && \
-  chown -R appuser:appgroup log tmp
+RUN chown -R appuser:appgroup log tmp
 
-ENV RDS_COMBINED_CA_BUNDLE=/usr/src/app/config/global-bundle.pem
-RUN wget -O $RDS_COMBINED_CA_BUNDLE https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem && \
-  chmod +r $RDS_COMBINED_CA_BUNDLE
+ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/global-bundle.pem
+ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem $RDS_COMBINED_CA_BUNDLE
+RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
 ARG APP_BUILD_DATE
 ENV APP_BUILD_DATE=${APP_BUILD_DATE}
@@ -60,7 +57,7 @@ ENV APP_BUILD_TAG=${APP_BUILD_TAG}
 ARG APP_GIT_COMMIT
 ENV APP_GIT_COMMIT=${APP_GIT_COMMIT}
 
-USER appuser
+USER $APPUID
 
 ENV PORT=3000
 EXPOSE $PORT
