@@ -46,9 +46,7 @@ module Datastore
         self.class.flagged?(document)
       end
 
-      def type_of(key)
-        self.class.type_of(key)
-      end
+      delegate :type_of, to: :class
 
       # See specs for expected STDOUT/STDERR outputs
       def unavailable?

@@ -11,9 +11,7 @@ module Devise
         current_sign_in_at < reauthenticate_in.ago
       end
 
-      def reauthenticate_in
-        self.class.reauthenticate_in
-      end
+      delegate :reauthenticate_in, to: :class
 
       module ClassMethods
         Devise::Models.config(self, :reauthenticate_in)
