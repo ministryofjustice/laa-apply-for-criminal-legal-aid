@@ -32,8 +32,8 @@ RSpec.describe 'Archiving Returned Criminal Legal Aid applications' do
 
   context 'when the returned application has no child drafts' do
     before do
-      stub_request(:post, "http://datastore-webmock/api/v1/applications/#{application_id}/archive")
-        .to_return(status: 200)
+      stub_request(:put, "http://datastore-webmock/api/v1/applications/#{application_id}/archive")
+        .to_return(status: 200, body: '{}')
 
       within('.govuk-table__row', text: 'John Potter') do
         click_link('Delete')
@@ -42,7 +42,7 @@ RSpec.describe 'Archiving Returned Criminal Legal Aid applications' do
     end
 
     it 'archives the application' do
-      expect(page).to have_text("John Potter's application has been deleted")
+      expect(page).to have_text('John POTTER’s returned application has been deleted')
     end
   end
 
@@ -56,8 +56,8 @@ RSpec.describe 'Archiving Returned Criminal Legal Aid applications' do
       end
     end
 
-    it 'tells the user to delete the child draft application first' do
-      expect(page).to have_text('An update to this returned application was made')
+    it 'tells the user that there is a child draft application' do
+      expect(page).to have_text('There is another version of this application open')
     end
   end
 end
