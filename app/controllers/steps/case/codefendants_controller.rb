@@ -20,7 +20,7 @@ module Steps
       def step_name
         if params.key?('add_codefendant')
           :add_codefendant
-        elsif params.to_s.include?('"_destroy"=>"1"')
+        elsif params.to_s.include?('"_destroy" => "1"')
           :delete_codefendant
         else
           :codefendants_finished

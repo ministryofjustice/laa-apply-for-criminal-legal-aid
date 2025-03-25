@@ -1,14 +1,7 @@
 # CVEs that are outside of our control
 #
-# Accept all risks until 2025-05-14 - may have been resolved by cloud platform
-GHSA-9763-4f94-gfch exp:2025-05-14
-CVE-2024-41110 exp:2025-05-14
-CVE-2023-49569 exp:2025-05-14
-CVE-2023-49568 exp:2025-05-14
-CVE-2024-3817 exp:2025-05-14
-CVE-2024-6257 exp:2025-05-14
-CVE-2024-23652 exp:2025-05-14
-CVE-2024-23653 exp:2025-05-14
-CVE-2024-23651 exp:2025-05-14
-CVE-2024-21626 exp:2025-05-14
-CVE-2024-26147 exp:2025-05-14
+
+# Accept all risks until 2025-08-20 - may have been resolved by cloud platform
+CVE-2025-21613 exp:2025-08-20
+CVE-2025-21614 exp:2025-08-20
+CVE-2024-45337 exp:2025-08-20 

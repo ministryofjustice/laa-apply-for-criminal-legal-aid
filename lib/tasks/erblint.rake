@@ -1,3 +1,3 @@
 task :erblint do
-  sh 'bundle exec erblint --lint-all'
+  sh 'bundle exec erb_lint --lint-all'
 end
