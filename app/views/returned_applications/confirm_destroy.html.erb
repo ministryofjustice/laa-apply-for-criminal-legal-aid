@@ -4,12 +4,46 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <%= t('.heading', applicant_name: @crime_application.applicant_name) %>
+      <%= t('.heading') %>
     </h1>
 
-    <p class="govuk-body">
-      <%= t('.subheading', application_status: @crime_application.status.to_s.humanize(capitalize: false)) %>
-    </p>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.body.client_name') %>:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @crime_application.applicant_name %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.body.submitted_date') %>:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= l(@crime_application.submitted_at) %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.body.laa_reference') %>:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @crime_application.reference %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t('.body.status') %>:
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= @crime_application.status.to_s.humanize %>
+        </dd>
+      </div>
+    </dl>
 
     <%= form_with url: archive_returned_application_path do |f| %>
       <div class="govuk-button-group">

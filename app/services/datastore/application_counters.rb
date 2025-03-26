@@ -22,7 +22,7 @@ module Datastore
 
       Rails.error.handle(fallback: -> { FALLBACK_COUNT }) do
         result = DatastoreApi::Requests::ListApplications.new(
-          status: status.to_s, office_code: office_code, exclude_archived: true, per_page: PER_PAGE_LIMIT
+          status: status.to_s, office_code: office_code, per_page: PER_PAGE_LIMIT
         ).call
 
         result.pagination.fetch('total_count')

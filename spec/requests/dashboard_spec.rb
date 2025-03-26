@@ -340,7 +340,7 @@ RSpec.describe 'Dashboard', :authorized do
 
       get confirm_destroy_crime_application_path(app)
 
-      expect(response.body).to include('Confirm you want to delete Jane Doe’s application')
+      expect(response.body).to include('Confirm you want to delete this application')
       expect(response.body).to include('Delete application')
       expect(response.body).to include('Back to your applications')
     end
