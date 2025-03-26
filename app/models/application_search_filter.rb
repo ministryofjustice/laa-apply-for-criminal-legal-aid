@@ -7,14 +7,12 @@ class ApplicationSearchFilter
     status
     review_status
     office_code
-    exclude_archived
   ].freeze
 
   attribute :search_text, :string
   attribute :office_code, :string
   attribute :status, array: true
   attribute :review_status, array: true
-  attribute :exclude_archived, :boolean, default: true
 
   def datastore_params
     raise Errors::UnscopedDatastoreQuery unless office_code
@@ -24,7 +22,6 @@ class ApplicationSearchFilter
       review_status:,
       status:,
       office_code:,
-      exclude_archived:,
     }
   end
 

@@ -584,8 +584,7 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
           'search_text' => nil,
           'review_status' => nil,
           'status' => ['returned'],
-          'office_code' => '2A555X',
-          'exclude_archived' => true
+          'office_code' => '2A555X'
         },
         'pagination' => {
           'page' => 1,

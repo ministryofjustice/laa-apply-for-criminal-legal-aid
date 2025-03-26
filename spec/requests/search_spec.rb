@@ -33,8 +33,7 @@ RSpec.describe 'Search', :authorized do
             search_text: '',
             review_status: nil,
             status: %w[submitted returned],
-            office_code: '1A123B',
-            exclude_archived: true
+            office_code: '1A123B'
           }
         }
       ))
