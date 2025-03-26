@@ -64,18 +64,18 @@ module StepsHelper
   end
   # rubocop:enable Metrics/MethodLength
 
-  def legend_translate(attr, **options)
-    form_translate(attr, :legend, **options)
+  def legend_translate(attr, **)
+    form_translate(attr, :legend, **)
   end
   alias legend_t legend_translate
 
-  def label_translate(attr, **options)
-    form_translate(attr, :label, **options)
+  def label_translate(attr, **)
+    form_translate(attr, :label, **)
   end
   alias label_t label_translate
 
-  def hint_translate(attr, **options)
-    form_translate(attr, :hint, **options)
+  def hint_translate(attr, **)
+    form_translate(attr, :hint, **)
   end
   alias hint_t hint_translate
 

@@ -14,13 +14,13 @@ module Tasks
       self.class.name.demodulize.underscore.to_sym
     end
 
-    def self.build(name, **kwargs)
+    def self.build(name, **)
       class_name = "Tasks::#{name.to_s.camelize}"
 
       if const_defined?(class_name)
-        class_name.constantize.new(**kwargs)
+        class_name.constantize.new(**)
       else
-        new(**kwargs)
+        new(**)
       end
     end
 

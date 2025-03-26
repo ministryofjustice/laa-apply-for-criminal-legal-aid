@@ -25,7 +25,7 @@ module TaskList
     end
 
     def cannot_start_yet?
-      status == TaskStatus::UNREACHABLE || status == TaskStatus::NOT_APPLICABLE
+      [TaskStatus::UNREACHABLE, TaskStatus::NOT_APPLICABLE].include?(status)
     end
 
     def colour

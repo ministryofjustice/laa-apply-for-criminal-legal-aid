@@ -1,22 +1,24 @@
-require:
+plugins:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+
+require:
   # Add custom cops for this project below
   - ./lib/rubocop/custom_cops/govuk_formbuilder/text_field_autocomplete.rb
 
 AllCops:
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.4
   SuggestExtensions: false
   NewCops: enable
   Exclude:
-    - 'db/**/*'
-    - 'bin/**/*'
-    - 'config/**/*'
-    - 'lib/tasks/**/*'
-    - 'lib/generators/**/*'
-    - 'features/**/*'
-    - 'vendor/**/*'
+    - "db/**/*"
+    - "bin/**/*"
+    - "config/**/*"
+    - "lib/tasks/**/*"
+    - "lib/generators/**/*"
+    - "features/**/*"
+    - "vendor/**/*"
 
 ####################################
 ## Customization for this project ##
@@ -97,7 +99,7 @@ RSpec/NoExpectationExample:
 RSpec/SpecFilePathFormat:
   Enabled: true
   Exclude:
-    - '**/spec/services/evidence/rules/*'
+    - "**/spec/services/evidence/rules/*"
 
 # Enabled but tweaked cops
 ##########################
@@ -108,7 +110,7 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Exclude:
-    - '**/app/services/evidence/rules/*'
+    - "**/app/services/evidence/rules/*"
 
 # To be tweaked until we find the right balance
 Metrics/AbcSize:
@@ -137,7 +139,7 @@ Style/HashEachMethods:
 # Allow expectations with block syntax in tests, for improved readability
 Style/BlockDelimiters:
   Exclude:
-    - 'spec/**/*'
+    - "spec/**/*"
 
 # TODO: adjust these values towards the rubocop defaults
 RSpec/MultipleMemoizedHelpers:

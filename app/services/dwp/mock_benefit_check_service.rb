@@ -8,8 +8,8 @@ module DWP
       'WALKER'  => { nino: 'JA293483A', dob: '10-01-1980' },
     }.freeze
 
-    def self.call(*args)
-      new(*args).call
+    def self.call(*)
+      new(*).call
     end
 
     attr_reader :applicant
