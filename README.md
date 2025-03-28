@@ -36,9 +36,9 @@ Once all the above is done, you should be able to run the application as follows
 a) `bin/dev` - will run foreman, spawning a rails server, `yarn build --watch`, and `yarn build:css --watch` to process javascript and SCSS files and watch for any changes.
 b) `rails server` - will only run the rails server, usually fine if you are not making changes to the CSS.
 
-You can also compile assets manually with `rails assets:precompile` at any time, and just run the rails server, without foreman.
-
-If you ever feel something is not right with the CSS or JS, run `rails assets:clobber` to purge the local cache.
+In development, Rails is configured to bypass asset caching. This means that when you modify assets (e.g., CSS, JavaScript),
+Rails will serve the most up-to-date version directly from the file system. If you have run `rails assets:precompile` locally
+you will need to remove the compiled assets from public/assets for this to work.
 
 **Note about the datastore service**
 
