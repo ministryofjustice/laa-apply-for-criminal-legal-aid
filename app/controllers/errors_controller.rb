@@ -40,7 +40,7 @@ class ErrorsController < UnauthenticatedController
   def respond_with_status(status)
     respond_to do |format|
       format.html { render status: }
-      format.all  { head status }
+      format.all  { head status, content_type: 'text/plain' }
     end
   end
 end
