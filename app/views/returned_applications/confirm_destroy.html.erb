@@ -1,5 +1,5 @@
 <% title t('.page_title') %>
-<% step_header(path: crime_applications_path) %>
+<% step_header(path: returned_applications_path) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -19,10 +19,10 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
-          <%= t('.body.start_date') %>:
+          <%= t('.body.submitted_date') %>:
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= l(@crime_application.created_at) %>
+          <%= l(@crime_application.submitted_at) %>
         </dd>
       </div>
 
@@ -45,13 +45,13 @@
       </div>
     </dl>
 
-    <%= form_with url: crime_application_path, method: :delete do |f| %>
+    <%= form_with url: archive_returned_application_path do |f| %>
       <div class="govuk-button-group">
         <%= f.button t('.confirm_delete_button'),
                      class: 'govuk-button govuk-button--warning',
                      data: { module: 'govuk-button' } %>
 
-        <%= govuk_link_to t('.go_back_link'), crime_applications_path, no_visited_state: true %>
+        <%= govuk_link_to t('.go_back_link'), returned_applications_path, no_visited_state: true %>
       </div>
     <% end %>
   </div>

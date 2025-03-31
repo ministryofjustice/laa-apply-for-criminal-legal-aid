@@ -340,9 +340,9 @@ RSpec.describe 'Dashboard', :authorized do
 
       get confirm_destroy_crime_application_path(app)
 
-      expect(response.body).to include('Are you sure you want to delete Jane Doe’s application?')
-      expect(response.body).to include('Yes, delete it')
-      expect(response.body).to include('No, do not delete it')
+      expect(response.body).to include('Confirm you want to delete this application')
+      expect(response.body).to include('Delete application')
+      expect(response.body).to include('Back to your applications')
     end
 
     it 'can delete an application' do
@@ -360,7 +360,7 @@ RSpec.describe 'Dashboard', :authorized do
 
       assert_select 'div.govuk-notification-banner--success', 1 do
         assert_select 'h2', 'Success'
-        assert_select 'p', 'Jane Doe’s application has been deleted'
+        assert_select 'p', 'Jane Doe’s in progress application has been deleted'
       end
     end
   end
