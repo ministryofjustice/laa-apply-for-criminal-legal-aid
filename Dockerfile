@@ -3,8 +3,6 @@ LABEL maintainer="LAA Crime Apply Team"
 
 RUN apk add --no-cache \
   postgresql15-dev tzdata gcompat nodejs npm build-base yaml-dev git && \
-  apk add --update clamav-clamdscan && \
-  apk del clamav-daemon freshclam && \
   rm -rf /var/cache/apk/*
 
 FROM base AS dependencies
