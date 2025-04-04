@@ -74,7 +74,7 @@ metadata:
         "id:1008,phase:2,pass,nolog,\
         ctl:ruleRemoveById=942230"
 spec:
-  ingressClassName: modsec
+  ingressClassName: modsec-non-prod
   tls:
   - hosts:
     - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
