@@ -26,42 +26,41 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       containers:
-      - name: clamav
-        image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
-        imagePullPolicy: Always
-        command: ['/bin/sh', '-c', 'freshclam && clamd && touch startup.txt && clamdscan startup.txt']
-        ports:
-          - containerPort: 3310
-            protocol: TCP
-        volumeMounts:
-          - mountPath: /var/lib/clamav
-            name: clamav-signatures
+        - name: clamav
+          image: ghcr.io/ministryofjustice/clamav-docker/laa-clamav:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3310
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/clamav
+              name: clamav-signatures
+          resources:
+            requests:
+              cpu: 25m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 3Gi
+          readinessProbe:
+            tcpSocket:
+              port: 3310
+            initialDelaySeconds: 300
+            periodSeconds: 120
+          livenessProbe:
+            tcpSocket:
+              port: 3310
+            initialDelaySeconds: 300
+            periodSeconds: 120
+  volumeClaimTemplates:
+    - metadata:
+        name: clamav-signatures
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 25m
-            memory: 1Gi
-          limits:
-            cpu: 500m
-            memory: 3Gi
-        readinessProbe:
-          tcpSocket:
-            port: 3310
-          initialDelaySeconds: 300
-          periodSeconds: 120
-        livenessProbe:
-          tcpSocket:
-            port: 3310
-          initialDelaySeconds: 300
-          periodSeconds: 120
-  volumeClaimTemplates:
-  - metadata:
-      name: clamav-signatures
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
@@ -72,8 +71,8 @@ metadata:
     app: apply-for-criminal-legal-aid-clamav-staging
 spec:
   ports:
-  - port: 3310
-    name: clamav
-    targetPort: 3310
+    - port: 3310
+      name: clamav
+      targetPort: 3310
   selector:
     app: apply-for-criminal-legal-aid-clamav-staging

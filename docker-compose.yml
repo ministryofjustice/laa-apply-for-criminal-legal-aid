@@ -3,7 +3,6 @@
 #
 # Do not use docker-compose in production environments.
 #
-version: '3'
 
 volumes:
   clamav-signatures:
@@ -15,11 +14,14 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   clamav:
-    image: ghcr.io/ministryofjustice/hmpps-clamav-freshclammed
+    image: ghcr.io/ministryofjustice/clamav-docker/laa-clamav:latest
     ports:
       - "3310:3310"
     volumes:
       - clamav-signatures:/var/lib/clamav
+    environment:
+      - FRESHCLAM_CHECKS=24
+      - MIRROR_URL=https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
 
   web:
     build: .

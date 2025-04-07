@@ -1,15 +1,19 @@
 # Clam AV
+
 Apply requires evidence files to be scanned for viruses. We use ClamAV CLI to do that.
 
 See the general README for setup guide.
 
 ## Overview
-The Apply ClamAV setup relies on pre-existing work by HMPPS - specifically their ready-made ClamAV image:
+
+The Apply ClamAV setup in the live services relies on pre-existing work by HMPPS - specifically their ready-made ClamAV image:
 
 ```
 docker pull ghcr.io/ministryofjustice/hmpps-clamav-freshclammed:latest
 docker run -p 3310:3310 --name clamav-server ghcr.io/ministryofjustice/hmpps-clamav-freshclammed
 ```
+
+On staging and locally we're testing <https://github.com/ministryofjustice/clamav-mirror> and <https://github.com/ministryofjustice/clamav-docker>
 
 ## Troubleshooting
 
