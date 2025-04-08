@@ -203,14 +203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ministryofjustice/frontend@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@ministryofjustice/frontend@npm:4.0.1"
+"@ministryofjustice/frontend@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@ministryofjustice/frontend@npm:5.1.0"
   peerDependencies:
-    govuk-frontend: 5.x
-    jquery: 3.x
-    moment: 2.x
-  checksum: 10c0/bc8acc915089508a8678065f6fc106f6bf61a61df5f0fd9e25ea8535e6225c16f62b6e5550062246af904318e4206aaa41adc66fc102230f18fe2fe21322d0f9
+    govuk-frontend: 5.9.0
+    moment: 2.30.1
+  checksum: 10c0/5a6ad509c92d8bff0c6f00cff71a89725f6074fb5de522c6b5dc1425a79bcf790cecaab43d57eb542115ef45dbf361754aebd5454b167b126e25fc990cc88459
   languageName: node
   linkType: hard
 
@@ -899,7 +898,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "laa-apply-for-criminal-legal-aid@workspace:."
   dependencies:
-    "@ministryofjustice/frontend": "npm:^4.0.1"
+    "@ministryofjustice/frontend": "npm:5.1.0"
     accessible-autocomplete: "npm:^3.0.1"
     dropzone: "npm:^6.0.0-beta.2"
     esbuild: "npm:^0.25.1"
