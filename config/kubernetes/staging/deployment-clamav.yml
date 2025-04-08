@@ -35,6 +35,11 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/clamav
               name: clamav-signatures
+          env:
+            - name: FRESHCLAM_CHECKS
+              value: 24
+            - name: MIRROR_URL
+              value: https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
           resources:
             requests:
               cpu: 25m
