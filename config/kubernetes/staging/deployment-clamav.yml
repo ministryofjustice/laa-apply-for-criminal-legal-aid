@@ -47,16 +47,27 @@ spec:
             limits:
               cpu: 500m
               memory: 3Gi
+          startupProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - echo "started" > /tmp/starttest && clamdscan --no-summary /tmp/starttest
+            failureThreshold: 60
+            periodSeconds: 5
           readinessProbe:
             tcpSocket:
               port: 3310
-            initialDelaySeconds: 300
-            periodSeconds: 120
+            periodSeconds: 10
+            failureThreshold: 3
           livenessProbe:
-            tcpSocket:
-              port: 3310
-            initialDelaySeconds: 300
-            periodSeconds: 120
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - clamdscan --no-summary /tmp/starttest
+            periodSeconds: 30
+            failureThreshold: 3
   volumeClaimTemplates:
     - metadata:
         name: clamav-signatures
