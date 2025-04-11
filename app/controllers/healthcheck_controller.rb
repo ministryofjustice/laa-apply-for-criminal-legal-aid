@@ -3,6 +3,13 @@ class HealthcheckController < BareApplicationController
     render json: { healthcheck: healthcheck_result }, status: http_status
   end
 
+  def readiness
+    return head :service_unavailable unless database_connected?
+    return head :service_unavailable unless virus_scan_ready?
+
+    head :ok
+  end
+
   def ping
     render json: build_args, status: :ok
   end
@@ -20,7 +27,7 @@ class HealthcheckController < BareApplicationController
   def green?
     # add more checks as needed:
     # database_connected? && redis_connected etc...
-    database_connected? && virus_scan_ready?
+    database_connected?
   end
 
   def database_connected?

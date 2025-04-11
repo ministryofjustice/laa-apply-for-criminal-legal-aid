@@ -4,7 +4,7 @@ RSpec.describe 'Healthcheck endpoint' do
   let(:error_response)   { '{"healthcheck":"NOT OK"}' }
   let(:success_response) { '{"healthcheck":"OK"}' }
 
-  describe 'healthchecks' do
+  describe '/health' do
     context 'when database and virus scan are healthy' do
       it 'reports a success' do
         allow(ActiveRecord::Base.connection).to receive(:active?)
@@ -36,13 +36,55 @@ RSpec.describe 'Healthcheck endpoint' do
         allow(ActiveRecord::Base.connection).to receive(:active?)
           .and_return(true)
 
-        allow(Clamby).to receive(:safe?)
-          .and_raise(Clamby::ClamscanClientError, 'Clamscan client error')
+        allow(Clamby).to receive(:safe?).and_raise(Clamby::ClamscanClientError)
 
         get '/health'
-        expect(response.body).to eq(error_response)
-        expect(response).to have_http_status(:service_unavailable)
+        expect(response.body).to eq(success_response)
+        expect(response).to have_http_status(:ok)
       end
+    end
+  end
+
+  describe '/readyz' do
+    subject(:readyz_response) { response }
+
+    context 'when database and virus scan are healthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
+
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/readyz'
+      end
+
+      it { is_expected.to have_http_status :ok }
+    end
+
+    context 'when database is unhealthy and virus scan is healthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:execute)
+          .and_raise(StandardError)
+
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/readyz'
+      end
+
+      it { is_expected.to have_http_status :service_unavailable }
+    end
+
+    context 'when database is healthy and virus scan is unhealthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
+
+        allow(Clamby).to receive(:safe?).and_raise(Clamby::ClamscanClientError)
+
+        get '/readyz'
+      end
+
+      it { is_expected.to have_http_status :service_unavailable }
     end
   end
 
