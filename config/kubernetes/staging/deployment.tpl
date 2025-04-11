@@ -36,7 +36,7 @@ spec:
             memory: 3Gi
         readinessProbe:
           httpGet:
-            path: /health
+            path: /readyz
             port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
