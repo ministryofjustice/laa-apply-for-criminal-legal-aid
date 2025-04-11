@@ -5,22 +5,44 @@ RSpec.describe 'Healthcheck endpoint' do
   let(:success_response) { '{"healthcheck":"OK"}' }
 
   describe 'healthchecks' do
-    it 'can report a success' do
-      allow(ActiveRecord::Base.connection).to receive(:active?)
-        .and_return(true)
+    context 'when database and virus scan are healthy' do
+      it 'reports a success' do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
 
-      get '/health'
-      expect(response.body).to eq(success_response)
-      expect(response).to have_http_status(:ok)
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/health'
+        expect(response.body).to eq(success_response)
+        expect(response).to have_http_status(:ok)
+      end
     end
 
-    it 'can report a failure' do
-      allow(ActiveRecord::Base.connection).to receive(:execute)
-        .and_raise(StandardError)
+    context 'when database is unhealthy and virus scan is healthy' do
+      it 'reports a failure' do
+        allow(ActiveRecord::Base.connection).to receive(:execute)
+          .and_raise(StandardError)
 
-      get '/health'
-      expect(response.body).to eq(error_response)
-      expect(response).to have_http_status(:service_unavailable)
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/health'
+        expect(response.body).to eq(error_response)
+        expect(response).to have_http_status(:service_unavailable)
+      end
+    end
+
+    context 'when database is healthy and virus scan is unhealthy' do
+      it 'reports a failure' do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
+
+        allow(Clamby).to receive(:safe?)
+          .and_raise(Clamby::ClamscanClientError, 'Clamscan client error')
+
+        get '/health'
+        expect(response.body).to eq(error_response)
+        expect(response).to have_http_status(:service_unavailable)
+      end
     end
   end
 
