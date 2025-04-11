@@ -5,6 +5,12 @@ class HealthcheckController < BareApplicationController
 
   def readiness
     return head :service_unavailable unless database_connected?
+
+    head :ok
+  end
+
+  def startup
+    return head :service_unavailable unless database_connected?
     return head :service_unavailable unless virus_scan_ready?
 
     head :ok

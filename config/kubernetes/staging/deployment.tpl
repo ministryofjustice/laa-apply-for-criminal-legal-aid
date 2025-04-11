@@ -58,7 +58,7 @@ spec:
           periodSeconds: 10
         startupProbe:
           httpGet:
-            path: /ping
+            path: /startupz
             port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
