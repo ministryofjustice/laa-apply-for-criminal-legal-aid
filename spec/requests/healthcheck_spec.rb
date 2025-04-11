@@ -84,6 +84,49 @@ RSpec.describe 'Healthcheck endpoint' do
         get '/readyz'
       end
 
+      it { is_expected.to have_http_status :ok }
+    end
+  end
+
+  describe '/startupz' do
+    subject(:startupz_response) { response }
+
+    context 'when database and virus scan are healthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
+
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/startupz'
+      end
+
+      it { is_expected.to have_http_status :ok }
+    end
+
+    context 'when database is unhealthy and virus scan is healthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:execute)
+          .and_raise(StandardError)
+
+        allow(Clamby).to receive(:safe?).and_return(true)
+
+        get '/startupz'
+      end
+
+      it { is_expected.to have_http_status :service_unavailable }
+    end
+
+    context 'when database is healthy and virus scan is unhealthy' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:active?)
+          .and_return(true)
+
+        allow(Clamby).to receive(:safe?).and_raise(Clamby::ClamscanClientError)
+
+        get '/startupz'
+      end
+
       it { is_expected.to have_http_status :service_unavailable }
     end
   end

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get :health, to: 'healthcheck#show'
   get :ping, to: 'healthcheck#ping'
   get :readyz, to: 'healthcheck#readiness'
+  get :startupz, to: 'healthcheck#startup'
 
   root 'home#index'
 
