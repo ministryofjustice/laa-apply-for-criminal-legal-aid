@@ -353,10 +353,13 @@ en:
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
-      offence_type_and_class:
-        question: Offence type and class
+      offence_type:
+        question: Type
+      offence_class:
+        question: Class
+        absence_answer: Not determined
       offence_date:
-        question: Offence date
+        question: Date
       # END offences section
 
       # BEGIN codefendants section
