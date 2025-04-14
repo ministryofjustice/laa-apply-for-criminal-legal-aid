@@ -5,8 +5,11 @@ module Summary
 
       def answers
         [
-          OffenceTypeAndClassAnswer.new(
-            :offence_type_and_class, offence
+          OffenceTypeAnswer.new(
+            :offence_type, offence
+          ),
+          OffenceClassAnswer.new(
+            :offence_class, offence
           ),
           OffenceDateAnswer.new(
             :offence_date, offence
