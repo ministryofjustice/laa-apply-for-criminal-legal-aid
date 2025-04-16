@@ -41,6 +41,9 @@ module LaaApplyForCriminalLegalAid
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    # Prohibit all HTML tags
+    config.action_view.sanitized_allowed_tags = []
+
     config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
     config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
     config.x.analytics.cookies_consent_expiration = 6.months
