@@ -59,11 +59,15 @@ RSpec.describe Summary::Components::Offence, type: :component do
   describe 'answers' do
     it 'renders as summary list' do
       expect(page).to have_summary_row(
-        'Offence type and class',
-        'Common assaultC'
+        'Type',
+        'Common assault'
       )
       expect(page).to have_summary_row(
-        'Offence date',
+        'Class',
+        'C'
+      )
+      expect(page).to have_summary_row(
+        'Date',
         '28 March 2023 – 18 December 202318 December 2023'
       )
     end
@@ -75,11 +79,15 @@ RSpec.describe Summary::Components::Offence, type: :component do
 
       it 'renders as summary list with the correct absence_answer' do
         expect(page).to have_summary_row(
-          'Offence type and class',
+          'Type',
           ''
         )
         expect(page).to have_summary_row(
-          'Offence date',
+          'Class',
+          'Not determined'
+        )
+        expect(page).to have_summary_row(
+          'Date',
           ''
         )
       end
