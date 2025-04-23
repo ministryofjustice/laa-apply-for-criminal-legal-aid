@@ -36,7 +36,7 @@ spec:
             memory: 3Gi
         readinessProbe:
           httpGet:
-            path: /health
+            path: /readyz
             port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
@@ -58,7 +58,7 @@ spec:
           periodSeconds: 10
         startupProbe:
           httpGet:
-            path: /ping
+            path: /startupz
             port: 3000
             httpHeaders:
               - name: X-Forwarded-Proto
