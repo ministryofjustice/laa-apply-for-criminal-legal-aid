@@ -24,9 +24,6 @@ metadata:
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
-      SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
-      SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
-      SecRuleUpdateTargetById 932160 !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
@@ -73,43 +70,49 @@ metadata:
       SecRule REQUEST_URI "@endsWith /steps/income/how_manage_with_no_income" \
         "id:1008,phase:2,pass,nolog,\
         ctl:ruleRemoveById=942230"
+      SecRule REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@rx .+" \
+        "id:1009,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932160,\
+        ctl:ruleRemoveByTag=attack-injection-php,\
+        ctl:ruleRemoveByTag=attack-xss,\
+        ctl:ruleRemoveByTag=attack-sqli"
 spec:
   ingressClassName: modsec
   tls:
-  - hosts:
-    - laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
-    - laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
-  - hosts:
-    - apply-for-criminal-legal-aid.service.justice.gov.uk
-    secretName: domain-tls-certificate-production
+    - hosts:
+        - laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
+        - laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
+    - hosts:
+        - apply-for-criminal-legal-aid.service.justice.gov.uk
+      secretName: domain-tls-certificate-production
   rules:
-  - host: laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: service-production
-            port:
-              number: 80
-  - host: laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: service-production
-            port:
-              number: 80
-  - host: apply-for-criminal-legal-aid.service.justice.gov.uk
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: service-production
-            port:
-              number: 80
+    - host: laa-apply-for-criminal-legal-aid-production.apps.live.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-production
+                port:
+                  number: 80
+    - host: laa-apply-for-criminal-legal-aid-production.apps.cloud-platform.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-production
+                port:
+                  number: 80
+    - host: apply-for-criminal-legal-aid.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-production
+                port:
+                  number: 80
