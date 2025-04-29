@@ -45,6 +45,7 @@ metadata:
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
         ctl:ruleRemoveById=932150,\
+        ctl:ruleRemoveById=932380,\
         ctl:ruleRemoveById=942230"
       SecRule REQUEST_URI "@endsWith /steps/circumstances/pre_cifc_reason" \
         "id:1003,phase:2,pass,nolog,\
