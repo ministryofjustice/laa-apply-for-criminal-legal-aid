@@ -42,7 +42,7 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/submission/more_information" \
+      SecRule REQUEST_URI "@endsWith /steps/submission/more-information" \
         "id:1002,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
         ctl:ruleRemoveById=932100,\
@@ -55,7 +55,7 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/circumstances/pre_cifc_reason" \
+      SecRule REQUEST_URI "@endsWith /steps/circumstances/pre-cifc-reason" \
         "id:1003,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
         ctl:ruleRemoveById=932100,\
@@ -68,12 +68,12 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/client/other_charge" \
+      SecRule REQUEST_URI "@endsWith /steps/case/client/other-charge" \
         "id:1004,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/partner/other_charge" \
+      SecRule REQUEST_URI "@endsWith /steps/case/partner/other-charge" \
         "id:1005,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
@@ -86,7 +86,7 @@ metadata:
         "id:1007,phase:2,pass,nolog,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100"
-      SecRule REQUEST_URI "@endsWith /steps/income/how_manage_with_no_income" \
+      SecRule REQUEST_URI "@endsWith /steps/income/how-manage-with-no-income" \
         "id:1008,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
         ctl:ruleRemoveById=932100,\
