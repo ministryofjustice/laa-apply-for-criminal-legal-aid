@@ -101,7 +101,7 @@ metadata:
         ctl:ruleRemoveById=942230"
       SecRule REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@rx .+" \
         "id:1009,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=932160,\
+        ctl:ruleRemoveByTag=attack-rce,\
         ctl:ruleRemoveByTag=attack-injection-php,\
         ctl:ruleRemoveByTag=attack-xss,\
         ctl:ruleRemoveByTag=attack-sqli"
