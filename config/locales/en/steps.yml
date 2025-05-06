@@ -126,10 +126,11 @@ en:
         edit:
           page_title: Sorry, we cannot check %{subject} information with DWP
           heading: Sorry, we cannot check %{subject} information with DWP
-      confirm_result:
+      confirm_result: &CONFIRM_RESULT_HEADING
         edit:
           heading: DWP records show that %{subject} does not receive a passporting benefit
           page_title: Benefit check result
+      partner_confirm_result: *CONFIRM_RESULT_HEADING
       confirm_details:
         edit:
           page_title: Confirm %{subject} details

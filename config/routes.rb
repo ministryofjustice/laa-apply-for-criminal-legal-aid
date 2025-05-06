@@ -6,12 +6,6 @@ def edit_step(name, opts = {}, &block)
            path_names: { edit: '' } do
     yield if block
   end
-  # temp underscored routes
-  # if name.to_s.include?('_') && !block_given?
-  #   get name, to: "#{opts.fetch(:alias, name)}#edit"
-  #   patch name, to: "#{opts.fetch(:alias, name)}#update"
-  #   put name, to: "#{opts.fetch(:alias, name)}#update"
-  # end
 end
 
 def crud_step(name, opts = {})
@@ -162,6 +156,7 @@ Rails.application.routes.draw do
         edit_step :has_benefit_evidence
         edit_step :cannot_check_dwp_status
         edit_step :confirm_result
+        edit_step :partner_confirm_result
         edit_step :confirm_details
       end
 
