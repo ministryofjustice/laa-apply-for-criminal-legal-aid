@@ -1,0 +1,28 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_error_summary(@form_object) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row app-inverted--card app-inverted-text govuk-!-margin-bottom-5">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0" id="dwp-partner-confirm-result-desc">
+      <%= legend_t(:heading) %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_collection_radio_buttons :confirm_dwp_result, @form_object.choices, :value,
+                                           inline: false,
+                                           legend: { 'aria-describedby': 'dwp-partner-confirm-result-desc' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>
