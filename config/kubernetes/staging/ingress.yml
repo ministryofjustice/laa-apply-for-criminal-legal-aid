@@ -105,6 +105,16 @@ metadata:
         ctl:ruleRemoveByTag=attack-injection-php,\
         ctl:ruleRemoveByTag=attack-xss,\
         ctl:ruleRemoveByTag=attack-sqli"
+      SecRule REQUEST_URI "@streq /providers/auth/saml/callback" \
+        "id:1010,phase:2,pass,nolog,chain"
+        SecRule REQUEST_METHOD "@streq POST" \
+          "ctl:ruleRemoveById=921110,\
+          ctl:ruleRemoveById=932235,\
+          ctl:ruleRemoveById=932250,\
+          ctl:ruleRemoveById=932260,\
+          ctl:ruleRemoveById=932370,\
+          ctl:ruleRemoveById=933150,\
+          ctl:ruleRemoveById=941130"
 spec:
   ingressClassName: modsec-non-prod
   tls:
