@@ -18,12 +18,14 @@ metadata:
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
       }
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
+    nginx.ingress.kubernetes.io/custom-http-errors: "423"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
