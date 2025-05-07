@@ -25,7 +25,7 @@ metadata:
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
@@ -114,6 +114,8 @@ metadata:
           ctl:ruleRemoveById=932260,\
           ctl:ruleRemoveById=932370,\
           ctl:ruleRemoveById=933150"
+      SecRule REQUEST_COOKIES_NAMES "@contains _laa_apply_for_criminal_legal_aid_session" \
+        "id:1011,phase:3,t:none,setvar:tx.status_code=423,nolog,status:423"
 spec:
   ingressClassName: modsec-non-prod
   tls:
