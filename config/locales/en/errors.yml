@@ -977,11 +977,11 @@ en:
               greater_than_or_equal_to: *property_partner_percentage_error
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
-              blank: Select if the address of the property is the same as your client's home address
+              blank: Select yes if the address of the property is the same as your client's home address
               inclusion: Select yes if the address of the property is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              blank: Select if anyone else owns part of the property
+              blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the property
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
         steps/capital/commercial_form:
@@ -1008,11 +1008,11 @@ en:
               greater_than_or_equal_to: *property_partner_percentage_error
               less_than_or_equal_to: *property_partner_percentage_error
             is_home_address:
-              blank: Select if the address of the property is the same as your client's home address
+              blank: Select yes if the address of the property is the same as your client's home address
               inclusion: Select yes if the address of the property is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              blank: Select if anyone else owns part of the property
+              blank: Select yes if anyone else owns part of the property
               inclusion: Select yes if anyone else owns part of the property
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
         steps/capital/land_form:
@@ -1042,11 +1042,11 @@ en:
               greater_than_or_equal_to: *land_partner_percentage_error
               less_than_or_equal_to: *land_partner_percentage_error
             is_home_address:
-              blank: Select if the address of the property is the same as your client's home address
+              blank: Select yes if the address of the property is the same as your client's home address
               inclusion: Select yes if the address of the land is the same as your client's home address
               invalid: Client can only have 1 home address
             has_other_owners:
-              blank: Select if anyone else owns part of the land
+              blank: Select yes if anyone else owns part of the land
               inclusion: Select yes if anyone else owns part of the land
               invalid_when_other_owners: The property cannot be partly owned by someone else if percentage ownership totals 100%
         steps/capital/property_address_form:
