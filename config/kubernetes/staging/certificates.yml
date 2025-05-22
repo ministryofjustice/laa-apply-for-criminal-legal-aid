@@ -26,7 +26,7 @@ spec:
   subject:
     organizations:
       - LAA
-  duration: 87600h  # 10 years
+  duration: 87600h # 10 years
   renewBefore: 360h # 15d
   privateKey:
     algorithm: RSA
@@ -38,7 +38,7 @@ spec:
     - key agreement
 
 ---
-# [LAA Portal STAGING] -- https://portal.stg.legalservices.gov.uk/oamfed/idp/metadata
+# [LAA Portal STAGING] -- https://portal.uat.legalservices.gov.uk/oamfed/idp/metadata
 #
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -55,7 +55,7 @@ spec:
   subject:
     organizations:
       - LAA
-  duration: 87600h  # 10 years
+  duration: 87601h # 10 years
   renewBefore: 360h # 15d
   privateKey:
     algorithm: RSA
