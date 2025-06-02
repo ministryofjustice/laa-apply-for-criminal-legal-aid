@@ -6,9 +6,19 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_radio_buttons :has_benefit_evidence, @form_object.choices,
-                                             :value, inline: false,
-                                             hint: { text: hint_t(:has_benefit_evidence) },
+        <%= f.govuk_collection_radio_buttons :has_benefit_evidence,
+                                             @form_object.choices,
+                                             :value,
+                                             inline: false,
+                                             hint: -> {
+                                               safe_join([
+                                                           hint_t(:has_benefit_evidence),
+                                                           govuk_warning_text(
+                                                             text: t("steps.dwp.benefit_check_result.edit.required_evidence_warning"),
+                                                             classes: "govuk-!-margin-top-3"
+                                                           )
+                                                         ])
+                                             },
                                              legend: { tag: 'h1', size: 'xl', text: legend_t(
                                                :benefit_type, benefit_type: t(
                                                  @form_object.benefit_check_subject.benefit_type,
