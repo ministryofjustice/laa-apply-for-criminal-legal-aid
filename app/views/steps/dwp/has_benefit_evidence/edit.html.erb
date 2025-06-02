@@ -19,6 +19,10 @@
                                                            )
                                                          ])
                                              },
+                                             hint_method: ->(option_value) {
+                                               t("helpers.hint.steps_dwp_has_benefit_evidence_form.has_benefit_evidence_options.#{option_value}",)
+                                             },
+                                             bold_labels: false,
                                              legend: { tag: 'h1', size: 'xl', text: legend_t(
                                                :benefit_type, benefit_type: t(
                                                  @form_object.benefit_check_subject.benefit_type,
