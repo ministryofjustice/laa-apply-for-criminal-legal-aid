@@ -19,7 +19,7 @@
                                                            )
                                                          ])
                                              end,
-                                             hint_method: lambda do |option_value|
+                                             hint_method: lambda do |option_value| # required for dynamic subject on the "no" answer label e.g "your client's"
                                                t("helpers.hint.steps_dwp_has_benefit_evidence_form.has_benefit_evidence_options.#{option_value}",)
                                              end,
                                              bold_labels: false,
