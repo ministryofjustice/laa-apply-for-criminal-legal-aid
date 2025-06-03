@@ -4,6 +4,7 @@ metadata:
   name: ingress-production
   namespace: laa-apply-for-criminal-legal-aid-production
   annotations:
+    nginx.ingress.kubernetes.io/temporal-redirect: https://laa-holding-page-production.apps.live.cloud-platform.service.justice.gov.uk
     external-dns.alpha.kubernetes.io/set-identifier: ingress-production-laa-apply-for-criminal-legal-aid-production-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/server-snippet: |
@@ -108,10 +109,13 @@ metadata:
       SecRule REQUEST_URI "@streq /providers/auth/saml/callback" \
         "id:1010,phase:2,pass,nolog,chain"
         SecRule REQUEST_METHOD "@streq POST" \
-          "ctl:ruleRemoveById=932235,\
+          "ctl:ruleRemoveById=921110,\
+          ctl:ruleRemoveById=932235,\
+          ctl:ruleRemoveById=932250,\
           ctl:ruleRemoveById=932260,\
           ctl:ruleRemoveById=932370,\
-          ctl:ruleRemoveById=933150"
+          ctl:ruleRemoveById=933150,\
+          ctl:ruleRemoveById=941130"
 spec:
   ingressClassName: modsec
   tls:

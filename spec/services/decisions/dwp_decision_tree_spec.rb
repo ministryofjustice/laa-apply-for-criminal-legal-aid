@@ -8,7 +8,7 @@ RSpec.describe Decisions::DWPDecisionTree do
     instance_double(CrimeApplication, partner: partner, partner_detail: partner_detail,
   non_means_tested?: false)
   }
-  let(:applicant) { double(Applicant, benefit_check_result:) }
+  let(:applicant) { double(Applicant, benefit_check_result: benefit_check_result, type: 'Applicant') }
   let(:benefit_check_result) { false }
   let(:benefit_check_subject) { applicant }
   let(:partner) { nil }
@@ -26,6 +26,38 @@ RSpec.describe Decisions::DWPDecisionTree do
   context 'when the step is `confirm_result`' do
     let(:form_object) { double('FormObject', applicant:, confirm_dwp_result:) }
     let(:step_name) { :confirm_result }
+
+    context 'and the answer is `yes`' do
+      let(:confirm_dwp_result) { YesNoAnswer::YES }
+      let(:applicant) { double(Applicant, benefit_type:) }
+      let(:benefit_type) { BenefitType::NONE.to_s }
+
+      before do
+        allow(crime_application).to receive_messages(applicant:)
+        allow(applicant).to receive_messages(benefit_type:)
+      end
+
+      context 'when the partners benefit check is required' do
+        let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+        it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+      end
+
+      context 'when the partners benefit check is not required' do
+        it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+      end
+    end
+
+    context 'and the answer is `no`' do
+      let(:confirm_dwp_result) { YesNoAnswer::NO }
+
+      it { is_expected.to have_destination(:confirm_details, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `partner_confirm_result`' do
+    let(:form_object) { double('FormObject', applicant:, confirm_dwp_result:) }
+    let(:step_name) { :partner_confirm_result }
 
     context 'and the answer is `yes`' do
       let(:confirm_dwp_result) { YesNoAnswer::YES }
@@ -68,7 +100,7 @@ RSpec.describe Decisions::DWPDecisionTree do
 
   context 'when the step is `benefit_type`' do
     let(:form_object) { double('FormObject', benefit_type:) }
-    let(:applicant_double) { double(Applicant, has_nino:) }
+    let(:applicant_double) { double(Applicant, has_nino: has_nino, type: 'Applicant') }
     let(:step_name) { :benefit_type }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES.to_s }

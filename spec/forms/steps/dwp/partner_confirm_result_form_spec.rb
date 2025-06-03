@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Steps::DWP::ConfirmResultPartnerForm do
+RSpec.describe Steps::DWP::PartnerConfirmResultForm do
   subject { described_class.new(arguments) }
 
   let(:arguments) do

@@ -115,7 +115,7 @@ en:
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
         heading: DWP records show that %{subject} does not receive a passporting benefit
         confirm_dwp_result: Are the DWP records correct?
-      steps_dwp_confirm_result_partner_form: *CONFIRM_DWP_RESULT_HEADING
+      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
         page_title: Confirm %{subject}’s details
         heading: Check %{subject}’s details
@@ -431,11 +431,10 @@ en:
           "no": You may not be able to submit your application without the National Insurance number
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
-        has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or an image from a government app showing %{subject}'s name and their benefit details.
+        has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or a screenshot of a government app. It must show your %{subject}'s name, benefit amount and how often they receive it.
         has_benefit_evidence_options:
           "yes": You'll need to upload evidence at the end of this application.
-          # TODO: check with design
-          "no": You'll need to tell us about their income if you do not have evidence.
+          "no": You'll need to tell us about %{subject}’s income if you do not have evidence.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
         page_title: Sorry, we cannot check %{subject}’s information with DWP
@@ -699,9 +698,8 @@ en:
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
         confirm_dwp_result_options:
           "yes": "Yes"
-          # TODO: Check with design
           "no": No, they receive a passporting benefit
-      steps_dwp_confirm_result_partner_form: *CONFIRM_DWP_RESULT_OPTIONS
+      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": "Yes"

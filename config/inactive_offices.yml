@@ -208,7 +208,6 @@ production:
     - 2E981P
     - 2M288V
     - 2P652P
-    - 0C063T
     - 0Q801N
     - 0W336T
     - 0W551B
@@ -260,6 +259,7 @@ production:
     - 2M923K
     - 2P276F
     # Make onboarded codes inactive - 08/12/2023
+    # (0H428Z, 0E160X, 0E813G, 2Q040L, 0P003J, 0P496V, 0D024M were already deactivated)
     - 0D619J
     - 2P662A
     - 2E961T
@@ -291,12 +291,8 @@ production:
     - 2N648Y
     - 0C411W
     - 0R064Z
-    - 0H428Z
-    - 0E160X
-    - 0E813G
     - 0N783V
     - 0N992X
-    - 2Q040L
     - 0P618C
     - 0Z208P
     - 2C761B
@@ -316,11 +312,9 @@ production:
     - 0P965E
     - 0Q066P
     #- 0P974P
-    - 0C411W
     - 0J496K
     - 0A022Z
     - 0C876B
-    - 0D024M
     - 0D058Z
     - 0H089F
     - 2P841V
@@ -334,9 +328,6 @@ production:
     - 2N795H
     - 0T530T
     - 0L304A
-    - 0L304A
-    - 0P003J
-    - 0P496V
     - 2Q674A
     - 2Q675B
     - 0T429H
@@ -958,6 +949,7 @@ production:
     # Code appeared in a firm's list but does not exist and is not associated with any of their offices.
     - 2P039Y
     # Inactive codes for thirty-first onboarding tranche - 04/06/2024
+    # (0X337F was already deactivated)
     - 2M161G
     - 0N722D
     - 0X383F
@@ -972,7 +964,6 @@ production:
     - 2F021H
     - 0E871V
     - 0F809P
-    - 0X337F
     - 2M237P
     - 2P072J
     # Deactivate office codes that no longer have contract - 28/06/2024
@@ -1210,3 +1201,63 @@ production:
     - 0W600E
     - 0Z820E
     - 2Q340M
+    # Deactivate office code request - 06/05/2025
+    - 0A096E
+    - 0A746L
+    - 0A869V
+    - 0B100W
+    - 0C381N
+    - 0F661D
+    - 0G402J
+    - 0G764C
+    - 0K689G
+    - 0K912Z
+    - 0M426V
+    - 0M624K
+    - 0N053B
+    - 0N233X
+    - 0N882C
+    - 0P972M
+    - 0R308P
+    - 0T607B
+    - 0W916Y
+    - 0X110J
+    - 0X987M
+    - 1J110Q
+    - 1T861C
+    - 1U682V
+    - 1Y681R
+    - 2F081Y
+    - 2L533Z
+    - 2L584E
+    - 2L880B
+    - 2M013W
+    - 2M036W
+    - 2M462J
+    - 2M835P
+    - 2N212Z
+    - 2N617P
+    - 2N861E
+    - 2P057T
+    - 2P101Q
+    - 2P335V
+    - 2P336W
+    - 2P710C
+    - 2Q271M
+    - 2Q301V
+    - 2Q312G
+    - 2Q317M
+    - 2Q434P
+    - 2Q439V
+    - 2Q440W
+    - 2Q441X
+    - 2Q490A
+    - 2Q508V
+    - 2Q516D
+    - 2Q603Y
+    - 2Q619Q
+    - 2Q630C
+    - 2Q646V
+    - 2Q649Y
+    - 2Q805T
+    - 2R122M

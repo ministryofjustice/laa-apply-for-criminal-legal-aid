@@ -6,15 +6,29 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-        <%= f.govuk_collection_radio_buttons :has_benefit_evidence, @form_object.choices,
-                                             :value, inline: false,
-                                             hint: { text: hint_t(:has_benefit_evidence) },
+        <%= f.govuk_collection_radio_buttons(:has_benefit_evidence,
+                                             @form_object.choices,
+                                             :value,
+                                             inline: false,
+                                             hint: lambda do
+                                               safe_join([
+                                                           hint_t(:has_benefit_evidence),
+                                                           govuk_warning_text(
+                                                             text: t('steps.dwp.benefit_check_result.edit.required_evidence_warning'),
+                                                             classes: 'govuk-!-margin-top-3'
+                                                           )
+                                                         ])
+                                             end,
+                                             hint_method: lambda do |option_value| # required for dynamic subject on the "no" answer label e.g "your client's"
+                                               t("helpers.hint.steps_dwp_has_benefit_evidence_form.has_benefit_evidence_options.#{option_value}",)
+                                             end,
+                                             bold_labels: false,
                                              legend: { tag: 'h1', size: 'xl', text: legend_t(
                                                :benefit_type, benefit_type: t(
                                                  @form_object.benefit_check_subject.benefit_type,
                                                  scope: 'helpers.label.steps_dwp_benefit_type_form.benefit_type_options'
                                                ),
-                                             ) }%>
+                                             ) })%>
 
         <%= f.continue_button %>
     <% end %>

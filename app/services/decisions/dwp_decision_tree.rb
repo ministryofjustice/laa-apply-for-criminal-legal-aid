@@ -20,6 +20,8 @@ module Decisions
         after_cannot_check_dwp_status
       when :confirm_result
         after_confirm_result
+      when :partner_confirm_result
+        after_partner_confirm_result
       when :confirm_details
         after_confirm_details
       else
@@ -31,6 +33,16 @@ module Decisions
     private
 
     def after_confirm_result
+      if form_object.confirm_dwp_result.yes?
+        return edit(:partner_benefit_type) if include_partner_in_means_assessment?
+
+        edit('steps/case/urn')
+      else
+        edit(:confirm_details)
+      end
+    end
+
+    def after_partner_confirm_result
       if form_object.confirm_dwp_result.yes?
         edit('steps/case/urn')
       else
@@ -106,6 +118,8 @@ module Decisions
       elsif person.benefit_check_result
         edit(:benefit_check_result)
       else
+        return edit(:partner_confirm_result) if person.type == 'Partner'
+
         edit(:confirm_result)
       end
     end
