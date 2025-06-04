@@ -20,105 +20,116 @@ metadata:
     prometheus: cloud-platform
 spec:
   groups:
-  - name: application-rules
-    rules:
-    - alert: CrimeApply-DeploymentReplicasMismatch
-      expr: >-
-        kube_deployment_spec_replicas{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
-        != kube_deployment_status_replicas_available{job="kube-state-metrics"}
-      for: 30m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Deployment `{{ $labels.deployment }}` has not matched the expected number of replicas for more than 30m.
+    - name: application-rules
+      rules:
+        - alert: CrimeApply-DeploymentReplicasMismatch
+          expr: >-
+            kube_deployment_spec_replicas{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
+            != kube_deployment_status_replicas_available{job="kube-state-metrics"}
+          for: 30m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Deployment `{{ $labels.deployment }}` has not matched the expected number of replicas for more than 30m.
 
-    - alert: CrimeApply-KubePodCrashLooping
-      expr: >-
-        rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0
-      for: 5m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Pod `{{ $labels.pod }}` has been restarting in `{{ $labels.namespace }}` for the last 5m.
+        - alert: CrimeApply-KubePodCrashLooping
+          expr: >-
+            rate(kube_pod_container_status_restarts_total{job="kube-state-metrics", namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0
+          for: 5m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Pod `{{ $labels.pod }}` has been restarting in `{{ $labels.namespace }}` for the last 5m.
 
-    - alert: CrimeApply-KubeQuotaExceeded
-      expr: >-
-        100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
-        / ignoring(instance, job, type) (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0) > 90
-      for: 5m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Namespace `{{ $labels.namespace }}` is using {{ printf "%0.0f" $value}}% of its {{ $labels.resource }} quota.
+        - alert: CrimeApply-KubeQuotaExceeded
+          expr: >-
+            100 * kube_resourcequota{job="kube-state-metrics", type="used", namespace=~"^laa-apply-for-criminal-legal-aid.*"}
+            / ignoring(instance, job, type) (kube_resourcequota{job="kube-state-metrics", type="hard"} > 0) > 90
+          for: 5m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Namespace `{{ $labels.namespace }}` is using {{ printf "%0.0f" $value}}% of its {{ $labels.resource }} quota.
 
-    - alert: CrimeApply-KubePodNotReady
-      expr: >-
-        sum by (namespace, pod) (kube_pod_status_phase{namespace=~"^laa-apply-for-criminal-legal-aid.*", job="kube-state-metrics", phase=~"Pending|Unknown"}) > 0
-      for: 1h
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Pod `{{ $labels.pod }}` in `{{ $labels.namespace }}` has been in a non-ready state for longer than 1h.
+        - alert: CrimeApply-KubePodNotReady
+          expr: >-
+            sum by (namespace, pod) (kube_pod_status_phase{namespace=~"^laa-apply-for-criminal-legal-aid.*", job="kube-state-metrics", phase=~"Pending|Unknown"}) > 0
+          for: 1h
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Pod `{{ $labels.pod }}` in `{{ $labels.namespace }}` has been in a non-ready state for longer than 1h.
 
-    - alert: CrimeApply-SlowResponses
-      expr: >-
-        avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m])
-        / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0)
-        by (exported_namespace) > 3
-      for: 1m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Namespace `{{ $labels.exported_namespace }}` is serving slow responses.
-        dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/f1e13059dfd23fdcaf479f4fa833f92610c2dfa5/kubernetes-ingress-traffic?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.exported_namespace }}&var-ingress={{ $labels.ingress }}
+        - alert: CrimeApply-SlowResponses
+          expr: >-
+            avg(rate(nginx_ingress_controller_request_duration_seconds_sum{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m])
+            / rate(nginx_ingress_controller_request_duration_seconds_count{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*"}[5m]) > 0)
+            by (exported_namespace) > 3
+          for: 1m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Namespace `{{ $labels.exported_namespace }}` is serving slow responses.
+            dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/f1e13059dfd23fdcaf479f4fa833f92610c2dfa5/kubernetes-ingress-traffic?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.exported_namespace }}&var-ingress={{ $labels.ingress }}
 
-    - alert: CrimeApply-Ingress4XX
-      expr: >-
-        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"40[0-35-9]|4[1-9][0-9]"}[5m]) * 60 > 5)
-        by (exported_namespace)
-      for: 1m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Namespace `{{ $labels.exported_namespace }}` is serving 4XX responses.
-        dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(log_processed.kubernetes_namespace,log_processed.request_method,log_processed.request_path,log_processed.status,log_processed.upstream_addr,log_processed.upstream_status,log_processed.request_query,log_processed.request_uri),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(gte:400,lt:500),type:range),range:(log_processed.status:(gte:400,lt:500))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!t,params:(query:'404'),type:phrase),query:(match_phrase:(log_processed.status:'404')))),query:(language:kuery,query:''))
+        - alert: CrimeApply-Ingress4XX
+          expr: >-
+            sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"40[0-35-9]|4[1-9][0-9]"}[5m]) * 60 > 5)
+            by (exported_namespace)
+          for: 1m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Namespace `{{ $labels.exported_namespace }}` is serving 4XX responses.
+            dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(log_processed.kubernetes_namespace,log_processed.request_method,log_processed.request_path,log_processed.status,log_processed.upstream_addr,log_processed.upstream_status,log_processed.request_query,log_processed.request_uri),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(gte:400,lt:500),type:range),range:(log_processed.status:(gte:400,lt:500))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!t,params:(query:'404'),type:phrase),query:(match_phrase:(log_processed.status:'404')))),query:(language:kuery,query:''))
 
-    - alert: CrimeApply-Ingress5XX
-      expr: >-
-        sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[5m]) * 60 > 5)
-        by (exported_namespace)
-      for: 1m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Namespace `{{ $labels.exported_namespace }}` is serving 5XX responses.
-        dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(log_processed.kubernetes_namespace,log_processed.request_method,log_processed.request_path,log_processed.status,log_processed.upstream_addr,log_processed.upstream_status,log_processed.request_query,log_processed.request_uri),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(gte:500,lt:600),type:range),range:(log_processed.status:(gte:500,lt:600)))),query:(language:kuery,query:''))
+        - alert: CrimeApply-BlockedRequest
+          expr: >-
+            sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"423"}[5m]) > 0)
+            by (exported_namespace)
+          for: 1m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Request blocked on `{{ $labels.exported_namespace }}`.
+            dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(_source),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(query:'423'),type:phrase),query:(match_phrase:(log_processed.status:'423'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }})))),query:(language:kuery,query:''))
 
-    - alert: CrimeApply-TrivyVulns
-      expr: >-
-        sum by (namespace, image_repository, image_tag, trivy_severity) (
-          label_replace(
-            trivy_image_vulnerabilities{namespace=~"^laa-apply-for-criminal-legal-aid.*",severity=~"Critical|High"}
-          >
-            0,
-          "trivy_severity",
-          "$1",
-          "severity",
-          "(.*)"
-          )
-        )
-      for: 1h
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Image `{{ $labels.image_repository }}:{{ $labels.image_tag }}` in namespace `{{ $labels.namespace }}` has {{ $value }} {{ $labels.trivy_severity }} vulnerabilities.
-        dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/trivy_starboard_operator123/trivy-operator-image-vulnerability?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.namespace }}
+        - alert: CrimeApply-Ingress5XX
+          expr: >-
+            sum(rate(nginx_ingress_controller_requests{exported_namespace=~"^laa-apply-for-criminal-legal-aid.*", status=~"5.."}[5m]) * 60 > 5)
+            by (exported_namespace)
+          for: 1m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Namespace `{{ $labels.exported_namespace }}` is serving 5XX responses.
+            dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(log_processed.kubernetes_namespace,log_processed.request_method,log_processed.request_path,log_processed.status,log_processed.upstream_addr,log_processed.upstream_status,log_processed.request_query,log_processed.request_uri),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(gte:500,lt:600),type:range),range:(log_processed.status:(gte:500,lt:600)))),query:(language:kuery,query:''))
 
-    - alert: CrimeApply-PrometheusExporterFailure
-      expr: >-
-        ruby_collector_working{namespace=~"^laa-apply-for-criminal-legal-aid.*"} != 1
-      for: 30m
-      labels:
-        severity: laa-crime-apply-alerts
-      annotations:
-        message: Prometheus exporter not working in pod `{{ $labels.pod }}` for more than 30m.
+        - alert: CrimeApply-TrivyVulns
+          expr: >-
+            sum by (namespace, image_repository, image_tag, trivy_severity) (
+              label_replace(
+                trivy_image_vulnerabilities{namespace=~"^laa-apply-for-criminal-legal-aid.*",severity=~"Critical|High"}
+              >
+                0,
+              "trivy_severity",
+              "$1",
+              "severity",
+              "(.*)"
+              )
+            )
+          for: 1h
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Image `{{ $labels.image_repository }}:{{ $labels.image_tag }}` in namespace `{{ $labels.namespace }}` has {{ $value }} {{ $labels.trivy_severity }} vulnerabilities.
+            dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/trivy_starboard_operator123/trivy-operator-image-vulnerability?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.namespace }}
+
+        - alert: CrimeApply-PrometheusExporterFailure
+          expr: >-
+            ruby_collector_working{namespace=~"^laa-apply-for-criminal-legal-aid.*"} != 1
+          for: 30m
+          labels:
+            severity: laa-crime-apply-alerts
+          annotations:
+            message: Prometheus exporter not working in pod `{{ $labels.pod }}` for more than 30m.
