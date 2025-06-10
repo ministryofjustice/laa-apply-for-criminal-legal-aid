@@ -31,5 +31,13 @@ class Person < ApplicationRecord
     super
   end
 
+  def benefit_check_result
+    # TODO: add comment
+    return true if dwp_response == 'Yes'
+    return false if %w[No Undetermined].include?(dwp_response)
+
+    super
+  end
+
   delegate :capital, :income, to: :crime_application
 end

@@ -113,14 +113,16 @@ module Decisions
 
       DWP::UpdateBenefitCheckResultService.call(person)
 
-      if person.benefit_check_result.nil?
+      if person.dwp_response.nil?
         edit(:cannot_check_dwp_status)
-      elsif person.benefit_check_result
+      elsif person.dwp_response == 'Yes'
         edit(:benefit_check_result)
-      else
+      elsif person.dwp_response == 'Undetermined'
         return edit(:partner_confirm_result) if person.type == 'Partner'
 
         edit(:confirm_result)
+      else
+        edit(:has_benefit_evidence)
       end
     end
 

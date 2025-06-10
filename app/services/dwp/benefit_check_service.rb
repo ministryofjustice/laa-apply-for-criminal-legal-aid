@@ -2,6 +2,7 @@ module DWP
   class BenefitCheckService
     BENEFIT_CHECKER_NAMESPACE = 'https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check'.freeze
     REQUEST_TIMEOUT = 30.seconds
+    BENEFIT_CHECKER_RESPONSES = %w[Yes No Undetermined].freeze
 
     def initialize(applicant)
       @applicant = applicant
@@ -18,7 +19,9 @@ module DWP
       result = call(applicant)
       return result if result.nil?
 
-      result[:benefit_checker_status].casecmp('yes').zero?
+      return 'Undetermined' unless result[:benefit_checker_status].in?(BENEFIT_CHECKER_RESPONSES)
+
+      result[:benefit_checker_status]
     end
 
     def self.use_mock?
