@@ -1,6 +1,6 @@
 class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :reauthable, :trackable,
-         :omniauthable, omniauth_providers: %i[saml]
+         :omniauthable
 
   store_accessor :settings,
                  :selected_office_code,
@@ -38,6 +38,10 @@ class Provider < ApplicationRecord
           office_codes: auth.info.office_codes
         )
       end
+    end
+
+    def omniauth_providers
+      [ENV.fetch('AUTH_IDP', 'saml').to_sym]
     end
   end
 end
