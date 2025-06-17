@@ -1,7 +1,7 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
-    before_action :check_provider_is_enrolled, only: [:saml]
+    before_action :check_provider_is_enrolled, only: [:saml, :azure_ad]
 
     def saml
       provider = Provider.from_omniauth(auth_hash)
@@ -10,6 +10,12 @@ module Providers
         provider, event: :authentication
       )
     end
+
+    # :nocov:
+    def azure_ad
+      saml
+    end
+    # :nocov:
 
     def failure
       # Let the application generic error handling deal with the
