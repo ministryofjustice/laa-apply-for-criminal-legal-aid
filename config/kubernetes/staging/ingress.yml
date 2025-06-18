@@ -7,6 +7,12 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-public-laa-apply-for-criminal-legal-aid-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine On
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($request_method !~ ^GET$) {
         return 405;
@@ -53,7 +59,6 @@ metadata:
   name: ingress-staging
   namespace: laa-apply-for-criminal-legal-aid-staging
   annotations:
-    nginx.ingress.kubernetes.io/whitelist-source-range: "165.1.170.106,165.1.170.107,134.231.143.70,134.231.143.71"
     external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-laa-apply-for-criminal-legal-aid-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/server-snippet: |
@@ -68,12 +73,16 @@ metadata:
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
       }
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/custom-http-errors: "423"
+    nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+      SecRule REMOTE_ADDR "!@ipMatch 165.1.170.106,165.1.170.107,134.231.143.70,134.231.143.71,51.149.249.0/29,194.33.249.0/29,51.149.249.32/29,194.33.248.0/29,20.49.214.199/32,20.49.214.228/32,20.26.11.71/32,20.26.11.108/32,128.77.75.64/26,18.169.147.172/32,35.176.93.186/32,18.130.148.126/32,35.176.148.126/32" \
+        "id:999,deny,status:403,tag:github_team=laa-crime-apply"
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
@@ -149,12 +158,6 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@rx .+" \
-        "id:1009,phase:2,pass,nolog,\
-        ctl:ruleRemoveByTag=attack-rce,\
-        ctl:ruleRemoveByTag=attack-injection-php,\
-        ctl:ruleRemoveByTag=attack-xss,\
-        ctl:ruleRemoveByTag=attack-sqli"
       SecRule REQUEST_URI "@streq /providers/auth/saml/callback" \
         "id:1010,phase:2,pass,nolog,chain"
         SecRule REQUEST_METHOD "@streq POST" \
@@ -165,6 +168,10 @@ metadata:
           ctl:ruleRemoveById=932370,\
           ctl:ruleRemoveById=933150,\
           ctl:ruleRemoveById=941130"
+      SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag injection-php !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
 spec:
   ingressClassName: modsec-non-prod
   tls:
