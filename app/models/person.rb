@@ -39,5 +39,15 @@ class Person < ApplicationRecord
     super
   end
 
+  # def dwp_response
+  #   if dwp_response.nil?
+  #     return 'Yes' if benefit_check_result
+  #     return 'No' if confirm_dwp_result == 'no' && means_assessment_as_benefit_evidence?
+  #     return 'Undetermined' if confirm_dwp_result == 'no' && benefit_evidence_forthcoming?
+  #   end
+  #
+  #   super
+  # end
+
   delegate :capital, :income, to: :crime_application
 end

@@ -158,6 +158,7 @@ Rails.application.routes.draw do
         edit_step :confirm_result
         edit_step :partner_confirm_result
         edit_step :confirm_details
+        edit_step :cannot_match_details
       end
 
       namespace :address do
