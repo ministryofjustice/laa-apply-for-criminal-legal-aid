@@ -32,4 +32,4 @@ data:
   #
   LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
   # Auth identity prodivder - 'saml' (Portal) or 'azure_ad'
-  AUTH_IDP: azure_ad
+  AUTH_IDP: saml
