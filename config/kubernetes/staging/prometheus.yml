@@ -105,26 +105,6 @@ spec:
             message: Namespace `{{ $labels.exported_namespace }}` is serving 5XX responses.
             dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(log_processed.kubernetes_namespace,log_processed.request_method,log_processed.request_path,log_processed.status,log_processed.upstream_addr,log_processed.upstream_status,log_processed.request_query,log_processed.request_uri),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }}))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(gte:500,lt:600),type:range),range:(log_processed.status:(gte:500,lt:600)))),query:(language:kuery,query:''))
 
-        - alert: CrimeApply-TrivyVulns
-          expr: >-
-            sum by (namespace, image_repository, image_tag, trivy_severity) (
-              label_replace(
-                trivy_image_vulnerabilities{namespace=~"^laa-apply-for-criminal-legal-aid.*",severity=~"Critical|High"}
-              >
-                0,
-              "trivy_severity",
-              "$1",
-              "severity",
-              "(.*)"
-              )
-            )
-          for: 1h
-          labels:
-            severity: laa-crime-apply-alerts
-          annotations:
-            message: Image `{{ $labels.image_repository }}:{{ $labels.image_tag }}` in namespace `{{ $labels.namespace }}` has {{ $value }} {{ $labels.trivy_severity }} vulnerabilities.
-            dashboard_url: https://grafana.live.cloud-platform.service.justice.gov.uk/d/trivy_starboard_operator123/trivy-operator-image-vulnerability?orgId=1&from=now-24h&to=now&var-namespace={{ $labels.namespace }}
-
         - alert: CrimeApply-PrometheusExporterFailure
           expr: >-
             ruby_collector_working{namespace=~"^laa-apply-for-criminal-legal-aid.*"} != 1
