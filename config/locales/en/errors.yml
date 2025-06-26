@@ -449,16 +449,7 @@ en:
               inclusion: Select yes if there is a criminal case or charge against the %{subject} in progress
         steps/case/other_charge_form:
           attributes:
-            next_hearing_date:
-              invalid: Enter a valid date
-              invalid_day: Enter a valid day
-              invalid_month: Enter a valid month
-              invalid_year: Enter a valid year
-        steps/case/hearing_details_form:
-          attributes:
-            hearing_court_name:
-              blank: Select a court name
-            hearing_date:
+            next_hearing_date: &hearing_date_errors
               blank: The next hearing cannot be blank
               blank_day: The next hearing must include a day
               blank_month: The next hearing must include a month
@@ -472,6 +463,11 @@ en:
               invalid_year: Enter a valid year for the next hearing date
               year_too_late: The next hearing is too far in the future
               year_too_early: The next hearing is too far in the past
+        steps/case/hearing_details_form:
+          attributes:
+            hearing_court_name:
+              blank: Select a court name
+            hearing_date: *hearing_date_errors
             is_first_court_hearing:
               inclusion: Select yes if this court also heard the first hearing
         steps/case/first_court_hearing_form:
