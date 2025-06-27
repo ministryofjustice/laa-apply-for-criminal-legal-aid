@@ -92,7 +92,7 @@ spec:
             severity: laa-crime-apply-alerts
           annotations:
             message: Request blocked on `{{ $labels.exported_namespace }}`.
-            dashboard_url: https://app-logs.cloud-platform.service.justice.gov.uk/_dashboards/app/data-explorer/discover#?_a=(discover:(columns:!(_source),isDirty:!t,sort:!()),metadata:(indexPattern:ef705d70-0d2e-11ef-afac-8f79b1004d33,view:discover))&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_q=(filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.status,negate:!f,params:(query:'423'),type:phrase),query:(match_phrase:(log_processed.status:'423'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ef705d70-0d2e-11ef-afac-8f79b1004d33,key:log_processed.kubernetes_namespace,negate:!f,params:(query:{{ $labels.exported_namespace }}),type:phrase),query:(match_phrase:(log_processed.kubernetes_namespace:{{ $labels.exported_namespace }})))),query:(language:kuery,query:''))
+            dashboard_url: https://logs.cloud-platform.service.justice.gov.uk/_dashboards/app/discover#/?_g=(time:(from:now-1d,to:now))&_a=(columns:!(transaction.messages),index:b95d8900-dd15-11ed-87c8-170407f57c9c,query:(language:kuery,query:'"transaction.response.http_code":"423"'))
 
         - alert: CrimeApply-Ingress5XX
           expr: >-
