@@ -216,6 +216,8 @@ GEM
       rexml (~> 3.0)
     hashdiff (1.1.1)
     hashie (5.0.0)
+    highline (3.1.2)
+      reline
     html-attributes-utils (1.0.2)
       activesupport (>= 6.1.4.4)
     httpi (4.0.4)
@@ -225,6 +227,17 @@ GEM
       rack (>= 2.0, < 4)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    i18n-tasks (1.0.15)
+      activesupport (>= 4.0.2)
+      ast (>= 2.1.0)
+      erubi
+      highline (>= 2.0.0)
+      i18n
+      parser (>= 3.2.2.1)
+      rails-i18n
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.8, >= 1.8.1)
+      terminal-table (>= 1.5.1)
     ice_nine (0.11.2)
     io-console (0.8.0)
     irb (1.15.1)
@@ -371,6 +384,9 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-i18n (7.0.10)
+      i18n (>= 0.7, < 2)
+      railties (>= 6.0.0, < 8)
     railties (7.2.2.1)
       actionpack (= 7.2.2.1)
       activesupport (= 7.2.2.1)
@@ -472,6 +488,8 @@ GEM
     smart_properties (1.17.0)
     stackprof (0.2.26)
     stringio (3.1.5)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
     thor (1.3.2)
     timeout (0.4.3)
     tzinfo (2.0.6)
@@ -528,6 +546,7 @@ DEPENDENCIES
   faraday (~> 2.7)
   govuk-components
   govuk_design_system_formbuilder
+  i18n-tasks
   jbuilder (~> 2.13.0)
   jsbundling-rails (~> 1.3)
   kaminari

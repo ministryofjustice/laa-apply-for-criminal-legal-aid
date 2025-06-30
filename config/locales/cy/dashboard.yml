@@ -1,0 +1,43 @@
+cy:
+  shared:
+    dashboard_header:
+      heading: Eich ceisiadau
+      start_button: Dechrau cais
+      create_button: Gwneud cais newydd
+    subnavigation:
+      nav_aria_label: Ceisiadau yn ôl statws
+      in_progress:
+        zero: Ar y gweill
+        one: Ar y gweill (1)
+        other: Ar y gweill (%{count})
+      submitted: Wedi’i chyflwyno
+      returned:
+        zero: Wedi’i dychwelyd
+        one: Wedi’i dychwelyd (1)
+        other: Wedi’i dychwelyd (%{count})
+      decided: Wedi’i phenderfynu
+  crime_applications:
+    index:
+      page_title: Eich ceisiadau
+      delete_button: Dileu
+      delete_button_a11y: Dileu cais %{applicant_name}
+      status:
+        in_progress: Ar y gweill
+        submitted: Wedi’i chyflwyno
+        returned: Wedi’i dychwelyd
+  table_headings:
+    action: Gweithred
+    applicant_name: Enw
+    application_type: Math o gais
+    created_at: Dyddiad cychwyn
+    reference: Cyfeirnod LAA
+    reviewed_at: Statws
+    review_status: Statws y cais
+    status: Statws y cais
+    application_status: Statws y cais
+    submitted_at: Dyddiad cyflwyno
+  review_status:
+    application_received: Wedi’i chyflwyno
+    assessment_completed: Wedi’i phenderfynu
+    ready_for_assessment: Wedi’i chyflwyno
+    returned_to_provider: Wedi’i dychwelyd

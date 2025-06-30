@@ -1,0 +1,48 @@
+cy:
+  layouts:
+    phase_banner:
+      text_html: This is a new service – your <a href="%{survey_url}" rel="external">feedback</a> will help us to improve it.
+      tag:
+        production: Beta
+        staging: Staging
+        local: Dev
+        test: Test
+      colour:
+        production: blue
+        staging: orange
+        local: green
+        test: blue
+
+    header:
+      menu_button: Menu
+      nav_aria_label: Menu
+      button_aria_label: Show or hide menu
+      your_applications: Your applications
+      sign_in: Sign in
+      sign_out: Sign out
+
+    footer_links:
+      header: Support links
+      cookies: Cookies
+      contact: Contact
+      feedback: Feedback
+      privacy: Privacy
+      accessibility: Accessibility statement
+      terms_and_conditions: Terms and conditions
+
+    cookie_banner:
+      title: Cookies on %{service_name}
+      content_line1: We use some essential cookies to make this service work.
+      content_line2: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      accept_button: Accept analytics cookies
+      reject_button: Reject analytics cookies
+      cookies_link: View cookies
+    cookie_banner_confirmation:
+      title: Cookies on %{service_name}
+      result:
+        accept: You’ve accepted analytics cookies.
+        reject: You’ve rejected analytics cookies.
+      content_html: |
+        You can <a href="%{cookies_link}" class="govuk-link ga-pageLink" data-ga-category="cookie banner"
+        data-ga-label="change cookies">change your cookie settings</a> at any time.
+      hide_button: Hide cookie message

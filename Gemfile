@@ -57,6 +57,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'i18n-tasks'
   gem 'web-console'
 end
 
