@@ -1,18 +1,56 @@
-  <%= govuk_header(classes: "govuk-header-#{HostEnv.env_name}") do |header|
-        if signed_in?
-          header.with_navigation_item(
-            text: current_provider.display_name,
-            href: nil,
-            active: false,
-            html_attributes: { aria: { role: 'paragraph' } },
-            classes: 'app-header__auth-user'
-          )
+<%= govuk_header(classes: "govuk-header-#{HostEnv.env_name}") do |header| %>
+  <% if signed_in? %>
+    <%= header.with_navigation_item(
+          text: current_provider.display_name,
+          href: nil,
+          active: false,
+          html_attributes: { aria: { role: 'paragraph' } },
+          classes: 'app-header__auth-user'
+        ) %>
 
-          header.with_navigation_item(
-            text: t('layouts.header.sign_out'),
-            href: providers_logout_path,
-            active: false,
-            html_attributes: { aria: { role: 'button' } }
-          )
-        end
-      end %>
+    <%= header.with_navigation_item(
+          text: t('layouts.header.sign_out'),
+          href: providers_logout_path,
+          active: false,
+          html_attributes: { aria: { role: 'button' } }
+        ) %>
+  <% end %>
+
+  <% if I18n.locale == :en %>
+    <%= header.with_navigation_item(
+          text: "English",
+          href: nil,
+          active: true,
+          html_attributes: { 'aria-current': 'true' }
+        ) %>
+    <%= header.with_navigation_item(
+          text: "Cymraeg",
+          href: url_for(locale: :cy),
+          active: false,
+          html_attributes: {
+            hreflang: "cy",
+            lang: "cy",
+            rel: "alternate",
+            aria: { label: "Newid yr iaith i’r Gymraeg" }
+          }
+        ) %>
+  <% else %>
+    <%= header.with_navigation_item(
+          text: "English",
+          href: url_for(locale: :en),
+          active: false,
+          html_attributes: {
+            hreflang: "en",
+            lang: "en",
+            rel: "alternate",
+            aria: { label: "Switch language to English" }
+          }
+        ) %>
+    <%= header.with_navigation_item(
+          text: "Cymraeg",
+          href: nil,
+          active: true,
+          html_attributes: { 'aria-current': 'true' }
+        ) %>
+  <% end %>
+<% end %>
