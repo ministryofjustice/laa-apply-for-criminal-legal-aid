@@ -42,7 +42,7 @@ module LaaApplyForCriminalLegalAid
     end
 
     config.i18n.available_locales = %i[en cy]
-    config.i18n.default_locale = :cy # temporary for testing, the default should be :en
+    config.i18n.default_locale = :en
 
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
