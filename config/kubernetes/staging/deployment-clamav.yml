@@ -87,7 +87,7 @@ spec:
           emptyDir: {}
         - name: freshclam-config
           configMap:
-            name: configmap-clamav-staging
+            name: clamav-configmap-staging
         - name: tmp
           emptyDir: {}
   volumeClaimTemplates:
