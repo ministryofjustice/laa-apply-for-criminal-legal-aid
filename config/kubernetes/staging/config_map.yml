@@ -17,6 +17,9 @@ data:
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: '20'
+  OMNIAUTH_AZURE_CLIENT_ID: 7d95f6ff-2ff5-4ba0-aaf3-06d8769557ef
+  OMNIAUTH_AZURE_TENANT_ID: 8352c342-da15-413a-8b5b-d89545766f0c
+  OMNIAUTH_AZURE_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/azure_ad/callback
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
@@ -28,3 +31,5 @@ data:
   # corresponding certificates, if required (in `deployment.tpl` file)
   #
   LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
+  # Auth identity prodivder - 'saml' (Portal) or 'azure_ad'
+  AUTH_IDP: saml
