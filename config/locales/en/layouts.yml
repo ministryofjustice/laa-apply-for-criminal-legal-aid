@@ -15,6 +15,7 @@ en:
         test: blue
 
     header:
+      service_name: Apply for criminal legal aid
       menu_button: Menu
       nav_aria_label: Menu
       button_aria_label: Show or hide menu

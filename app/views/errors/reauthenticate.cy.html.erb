@@ -1,0 +1,19 @@
+<% title 'Rydym wedi eich allgofnodi' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Er eich diogelwch, rydym wedi eich allgofnodi
+    </h1>
+
+    <p class="govuk-body">
+      Mae hyn oherwydd eich bod wedi bod wedi mewngofnodi i Borth Ar-lein yr LAA am fwy na <%= hours_or_minutes(Rails.configuration.x.session.reauthenticate_in) %>.
+    </p>
+
+    <p class="govuk-body">
+      Mewngofnodwch eto i barhau i ddefnyddio’r gwasanaeth.
+    </p>
+
+    <%= render partial: 'shared/portal_sign_in_button' %>
+  </div>
+</div>

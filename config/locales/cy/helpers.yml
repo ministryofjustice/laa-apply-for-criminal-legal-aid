@@ -1,4 +1,26 @@
 cy:
   helpers:
+    back_link: Yn ôl
+    back_to_portal: Yn ôl i Borth Ar-lein yr LAA
+    back_to_applications: Yn ôl i’ch ceisiadau
     submit:
-      sign_in: Sign in
+      start: Dechrau nawr
+      save_and_continue: Cadw a pharhau
+      save_and_come_back_later: Cadw a dod yn ôl yn nes ymlaen
+      save_and_submit_initial: Cadw a chyflwyno’r cais
+      save_and_submit_change_in_financial_circumstances: Cadw a chyflwyno’r cais
+      save_and_submit_post_submission_evidence: Cadw a chyflwyno’r dystiolaeth
+      save_cookie_settings: Cadw gosodiadau cwcis
+      sign_in: Mewngofnodi
+      find_address: Dod o hyd i gyfeiriad
+      try_again: Rhoi cynnig arall
+    label:
+      cookies_settings_form:
+        consent_options:
+          accept: "Ie"
+          reject: "Na"
+      steps_provider_confirm_office_form:
+        is_current_office_options:
+          "yes": "Ie"
+          "no": "Na, mae swyddfa arall yn ymdrin â’r cais hwn"
+

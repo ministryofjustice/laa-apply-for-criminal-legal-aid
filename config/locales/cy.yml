@@ -12,8 +12,15 @@ cy:
       applicant_and_partner: 'eich cleient a’u partner'
       applicant_or_partner: 'eich cleient neu eu partner'
       partner: 'y partner'
+  hours_or_minutes:
+    hours:
+      one: an hour
+      other: '%{count} hours'
+    minutes:
+      one: a minute
+      other: '%{count} minutes'
   service:
-    name: Welsh name
+    name: Gwneud cais am gymorth cyfreithiol troseddol
   date:
     abbr_day_names:
       - Sul
