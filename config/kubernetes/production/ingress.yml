@@ -170,9 +170,9 @@ metadata:
           ctl:ruleRemoveById=933150,\
           ctl:ruleRemoveById=941130"
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
-            SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
-            SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
-            SecRuleUpdateTargetByTag injection-php !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
+      SecRuleUpdateTargetByTag attack-injection-php !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
 spec:
   ingressClassName: modsec
   tls:
