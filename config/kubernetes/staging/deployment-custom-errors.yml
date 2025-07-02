@@ -21,13 +21,29 @@ spec:
       containers:
         - name: nginx-error-server
           image: registry.k8s.io/ingress-nginx/nginx-errors:v20230505@sha256:3600dcd1bbd0d05959bb01af4b272714e94d22d24a64e91838e7183c80e53f7f
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           volumeMounts:
             - name: custom-error-pages
               mountPath: /www
           securityContext:
-            runAsUser: 1000
+            runAsUser: 10000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            requests:
+              cpu: 25m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 3Gi
 
       volumes:
         - name: custom-error-pages
