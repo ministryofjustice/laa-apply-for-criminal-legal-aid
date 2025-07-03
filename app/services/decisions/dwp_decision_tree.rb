@@ -24,6 +24,8 @@ module Decisions
         after_partner_confirm_result
       when :confirm_details
         after_confirm_details
+      when :cannot_match_details
+        after_cannot_match_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -33,6 +35,7 @@ module Decisions
     private
 
     def after_confirm_result
+      throw 'here'
       if form_object.confirm_dwp_result.yes?
         return edit(:partner_benefit_type) if include_partner_in_means_assessment?
 
@@ -113,10 +116,12 @@ module Decisions
 
       DWP::UpdateBenefitCheckResultService.call(person)
 
-      if person.benefit_check_result.nil?
+      if person.dwp_response.nil?
         edit(:cannot_check_dwp_status)
-      elsif person.benefit_check_result
+      elsif person.dwp_response == 'Yes'
         edit(:benefit_check_result)
+      elsif person.dwp_response == 'Undetermined'
+        edit(:cannot_match_details)
       else
         return edit(:partner_confirm_result) if person.type == 'Partner'
 
@@ -128,6 +133,10 @@ module Decisions
       person = benefit_check_subject
 
       determine_dwp_result_page(person)
+    end
+
+    def after_cannot_match_details
+      edit(:confirm_details)
     end
 
     def has_nino(person)
