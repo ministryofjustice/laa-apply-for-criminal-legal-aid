@@ -1,0 +1,11 @@
+---
+cy:
+  steps:
+    provider:
+      confirm_office:
+        edit:
+          page_title: Cadarnhau rhif cyfrif swyddfa
+          current_office_legend: Ai %{office_code} yw rhif cyfrif eich swyddfa?
+      select_office:
+        edit:
+          page_title: Dewis rhif cyfrif swyddfa

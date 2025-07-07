@@ -25,6 +25,17 @@ cy:
         in_progress: Ar y gweill
         submitted: Wedi’i chyflwyno
         returned: Wedi’i dychwelyd
+    edit:
+      page_title: Rhestr dasgau’r cais
+      heading: Gwneud cais newydd
+      subheading: Cais heb ei gwblhau
+      progress_counter: Rydych wedi cwblhau %{completed} o %{total} adran.
+      aside:
+        reference: Rhif cyfeirnod
+        first_name: Enw cyntaf
+        last_name: Cyfenw
+        date_of_birth: Dyddiad geni
+        date_stamp: Stamp dyddiad
   table_headings:
     action: Gweithred
     applicant_name: Enw
