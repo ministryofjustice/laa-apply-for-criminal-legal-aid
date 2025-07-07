@@ -1,0 +1,23 @@
+<nav class="govuk-!-margin-top-3 language-toggle" aria-label="Language toggle">
+  <p class="govuk-body govuk-!-text-align-right govuk-!-font-size-16" style="margin-bottom: 0;">
+    <% if I18n.locale == :en %>
+      <span class="govuk-link--no-underline" aria-current="true">English</span>
+    <% else %>
+      <%= link_to "English", url_for(locale: :en),
+                  class: "govuk-link govuk-link--no-visited-state",
+                  hreflang: "en", lang: "en", rel: "alternate",
+                  aria: { label: "Apply for criminal legal aid in English" } %>
+    <% end %>
+
+    <span aria-hidden="true"> | </span>
+
+    <% if I18n.locale == :cy %>
+      <span class="govuk-link--no-underline" aria-current="true">Cymraeg</span>
+    <% else %>
+      <%= link_to "Cymraeg", url_for(locale: :cy),
+                  class: "govuk-link govuk-link--no-visited-state",
+                  hreflang: "cy", lang: "cy", rel: "alternate",
+                  aria: { label: "Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg" } %>
+    <% end %>
+  </p>
+</nav>

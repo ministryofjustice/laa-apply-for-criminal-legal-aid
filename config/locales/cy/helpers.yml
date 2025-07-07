@@ -23,4 +23,6 @@ cy:
         is_current_office_options:
           "yes": "Ie"
           "no": "Na, mae swyddfa arall yn ymdrin â’r cais hwn"
-
+    language_toggle:
+      english: English
+      welsh: Cymraeg

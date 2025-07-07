@@ -67,6 +67,9 @@ en:
       telephone: Telephone
       webchat: Webchat
       webchat_adviser: Speak to an adviser now
+    language_toggle:
+      english: English
+      welsh: Cymraeg
 
     legend:
       cookies_settings_form:
