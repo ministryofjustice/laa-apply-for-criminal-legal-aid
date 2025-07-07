@@ -10,7 +10,7 @@
 
     <%= header.with_navigation_item(
           text: t('layouts.header.sign_out'),
-          href: providers_logout_path,
+          href: url_for(providers_logout_path(locale: I18n.locale)),
           active: false,
           html_attributes: { aria: { role: 'button' } }
         ) %>
