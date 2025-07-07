@@ -20,7 +20,7 @@ module Providers
     private
 
     def after_sign_in_path_for(_)
-      Providers::OfficeRouter.call(current_provider)
+      Providers::OfficeRouter.call(current_provider, locale)
     end
 
     def auth_hash
