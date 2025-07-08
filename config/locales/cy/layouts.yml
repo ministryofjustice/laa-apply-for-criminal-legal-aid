@@ -13,6 +13,10 @@ cy:
         local: green
         test: blue
 
+    primary_navigation:
+      your_applications: Eich ceisiadau
+      search: Chwilio
+
     header:
       service_name: Gwneud cais am gymorth cyfreithiol troseddol
       menu_button: Dewislen

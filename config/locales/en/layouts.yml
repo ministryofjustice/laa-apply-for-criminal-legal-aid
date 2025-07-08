@@ -14,6 +14,10 @@ en:
         local: green
         test: blue
 
+    primary_navigation:
+      your_applications: Your applications
+      search: Search
+
     header:
       service_name: Apply for criminal legal aid
       menu_button: Menu

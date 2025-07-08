@@ -585,6 +585,7 @@ en:
         consent_options:
           accept: "Yes"
           reject: "No"
+      search: Enter any combination of client first name, last name, LAA reference
       steps_provider_confirm_office_form:
         is_current_office_options:
           "yes": "Yes"
