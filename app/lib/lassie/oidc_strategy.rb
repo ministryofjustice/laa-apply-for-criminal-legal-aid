@@ -4,8 +4,11 @@ module Lassie
 
     private
 
+    # The `LAA_ACCOUNTS` custom claim can be either a single office code (as a string)
+    # or multiple office codes (as an array). Here we normalizes the value to always
+    # return an array.
     def office_codes
-      user_info.raw_attributes.fetch('LAA_ACCOUNTS')
+      [*user_info.raw_attributes.fetch('LAA_ACCOUNTS')]
     end
 
     def email

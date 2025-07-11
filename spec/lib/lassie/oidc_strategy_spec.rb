@@ -5,12 +5,14 @@ RSpec.describe Lassie::OidcStrategy do
   let(:mock_auth) { strategy_class.mock_auth }
 
   describe '#info' do
+    let(:laa_accounts) { %w[1A123B 2A555X 3B345C 4C567D] }
+
     let(:strategy_instance) do
       strategy_class.new(nil).tap do |strategy|
         allow(strategy).to receive(:user_info).and_return(
           OpenIDConnect::ResponseObject::UserInfo.new(
             :email => 'provider@example.com',
-            'LAA_ACCOUNTS' => %w[1A123B 2A555X 3B345C 4C567D]
+            'LAA_ACCOUNTS' => laa_accounts
           )
         )
       end
@@ -22,6 +24,18 @@ RSpec.describe Lassie::OidcStrategy do
         roles: ['ACCESS_CRIME_APPLY'],
         office_codes: %w[1A123B 2A555X 3B345C 4C567D]
       )
+    end
+
+    context 'when LAA_ACCOUNTS` custom claim is a single office code (as a string)' do
+      let(:laa_accounts) { '1A123B' }
+
+      it 'normalizes the `office_codes` value to return an array' do
+        expect(strategy_instance.info).to include(
+          email: 'provider@example.com',
+          roles: ['ACCESS_CRIME_APPLY'],
+          office_codes: %w[1A123B]
+        )
+      end
     end
   end
 
