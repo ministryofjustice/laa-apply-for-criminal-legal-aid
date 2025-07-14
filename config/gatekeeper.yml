@@ -10,8 +10,7 @@ localhost:
     - 1K022G # portal dev/stg test user
     - 2A555X # portal dev/stg test user
     - 3B345C # portal dev/stg test user which is inactive
-    - 64dc8505-5fd6-493b-bacb-5d3020364001
-    - faffacac-8a4b-42a4-8cd7-85031194268e
+    - 0A719G
     # - 4C567D not enrolled office portal dev/stg test user
 
 staging:
