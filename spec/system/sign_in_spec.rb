@@ -24,7 +24,7 @@ RSpec.describe 'Sign in user journey' do
 
   context 'user is not signed in' do
     it 'has a start button with action saml authorize' do
-      expect(start_button_form_action).to eq(provider_saml_omniauth_authorize_path)
+      expect(start_button_form_action).to eq(provider_entra_omniauth_authorize_path)
     end
 
     it 'redirects to the unauthenticated page if trying to access protected routes' do
@@ -59,7 +59,7 @@ RSpec.describe 'Sign in user journey' do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        saml: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
+        entra: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
       )
 
       start_button.click
@@ -201,8 +201,11 @@ RSpec.describe 'Sign in user journey' do
 
   context 'when the sign in fails' do
     before do
-      allow(OmniAuth.config).to receive(:test_mode).and_return(false)
-      allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
+      OmniAuth.config.mock_auth[:entra] = :access_denied
+    end
+
+    after do
+      OmniAuth.config.mock_auth[:entra] = Lassie::OidcStrategy.mock_auth
     end
 
     it 're-raises the exception for handling by the `ApplicationController`' do
