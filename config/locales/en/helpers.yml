@@ -42,6 +42,8 @@ en:
     back_to_portal: Back to the LAA Online Portal
     back_to_applications: Back to your applications
     submit:
+      clear: Clear
+      search: Search
       start: Start now
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
@@ -398,6 +400,7 @@ en:
         legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
+      search: Enter any combination of client first name, last name, LAA reference
       steps_provider_select_office_form:
         office_code: "If your office account number is not listed, email: %{support_email}"
       steps_circumstances_pre_cifc_reference_number_form:
@@ -585,7 +588,11 @@ en:
         consent_options:
           accept: "Yes"
           reject: "No"
-      search: Enter any combination of client first name, last name, LAA reference
+      language_toggle:
+        english:
+          aria_label: Apply for criminal legal aid in English
+        welsh:
+          aria_label: Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg
       steps_provider_confirm_office_form:
         is_current_office_options:
           "yes": "Yes"

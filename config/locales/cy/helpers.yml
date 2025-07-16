@@ -3,7 +3,11 @@ cy:
     back_link: Yn ôl
     back_to_portal: Yn ôl i Borth Ar-lein yr LAA
     back_to_applications: Yn ôl i’ch ceisiadau
+    hint:
+      search: Nodwch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, neu gyfeirnod LAA
     submit:
+      clear: Clir
+      search: Chwilio
       start: Dechrau nawr
       save_and_continue: Cadw a pharhau
       save_and_come_back_later: Cadw a dod yn ôl yn nes ymlaen
@@ -19,6 +23,11 @@ cy:
         consent_options:
           accept: "Ie"
           reject: "Na"
+      language_toggle:
+        english:
+          aria_label: Apply for criminal legal aid in English
+        welsh:
+          aria_label: Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg
       steps_provider_confirm_office_form:
         is_current_office_options:
           "yes": "Ie"
