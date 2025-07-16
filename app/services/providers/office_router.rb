@@ -12,6 +12,10 @@ module Providers
       new(provider).path
     end
 
+    def default_url_options
+      I18n.locale == I18n.default_locale ? {} : { locale: I18n.locale }
+    end
+
     def path
       if provider.selected_office_code.blank?
         edit_steps_provider_select_office_path

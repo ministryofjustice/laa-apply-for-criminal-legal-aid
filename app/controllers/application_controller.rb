@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :success
 
+  around_action :switch_locale
+
   def current_crime_application
     @current_crime_application ||= CrimeApplication.find_by(
       id: application_id,
@@ -21,6 +23,15 @@ class ApplicationController < ActionController::Base
     @current_office_code ||= current_provider&.selected_office_code
   end
   helper_method :current_office_code
+
+  def switch_locale(&action)
+    locale = params[:locale] || I18n.default_locale
+    I18n.with_locale(locale, &action)
+  end
+
+  def default_url_options
+    I18n.locale == I18n.default_locale ? {} : { locale: I18n.locale }
+  end
 
   private
 

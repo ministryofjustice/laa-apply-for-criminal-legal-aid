@@ -1,0 +1,10 @@
+cy:
+  summary:
+    questions:
+      # BEGIN overview section
+      application_type:
+        question: Math o gais
+        answers:
+          initial: Cychwynnol
+          change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+          post_submission_evidence: Tystiolaeth ar ôl cyflwyno
