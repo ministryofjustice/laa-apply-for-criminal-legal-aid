@@ -4,8 +4,8 @@
       <span class="govuk-link--no-underline" aria-current="true">English</span>
     <% else %>
       <%= govuk_link_to t('helpers.language_toggle.english'), url_for(locale: nil),
-                  class: "govuk-link govuk-link--no-visited-state",
-                  hreflang: "en", lang: "en", rel: "alternate",
+                  class: 'govuk-link govuk-link--no-visited-state',
+                  hreflang: 'en', lang: 'en', rel: 'alternate',
                   aria: { label: "Apply for criminal legal aid in English" } %>
     <% end %>
 
@@ -15,8 +15,8 @@
       <span class="govuk-link--no-underline" aria-current="true">Cymraeg</span>
     <% else %>
       <%= govuk_link_to t('helpers.language_toggle.welsh'), url_for(locale: :cy),
-                  class: "govuk-link govuk-link--no-visited-state",
-                  hreflang: "cy", lang: "cy", rel: "alternate",
+                  class: 'govuk-link govuk-link--no-visited-state',
+                  hreflang: 'cy', lang: 'cy', rel: 'alternate',
                   aria: { label: "Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg" } %>
     <% end %>
   </p>
