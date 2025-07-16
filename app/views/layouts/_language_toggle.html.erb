@@ -3,10 +3,11 @@
     <% if I18n.locale == :en %>
       <span class="govuk-link--no-underline" aria-current="true">English</span>
     <% else %>
-      <%= govuk_link_to t('helpers.language_toggle.english'), url_for(locale: nil),
-                  class: 'govuk-link govuk-link--no-visited-state',
-                  hreflang: 'en', lang: 'en', rel: 'alternate',
-                  aria: { label: t('helpers.label.language_toggle.english.aria_label') } %>
+      <%= govuk_link_to t('helpers.language_toggle.english'),
+                        url_for(locale: nil),
+                        class: 'govuk-link govuk-link--no-visited-state',
+                        hreflang: 'en', lang: 'en', rel: 'alternate',
+                        aria: { label: t('helpers.label.language_toggle.english.aria_label') } %>
     <% end %>
 
     <span aria-hidden="true"> | </span>
@@ -14,10 +15,11 @@
     <% if I18n.locale == :cy %>
       <span class="govuk-link--no-underline" aria-current="true">Cymraeg</span>
     <% else %>
-      <%= govuk_link_to t('helpers.language_toggle.welsh'), url_for(locale: :cy),
-                  class: 'govuk-link govuk-link--no-visited-state',
-                  hreflang: 'cy', lang: 'cy', rel: 'alternate',
-                  aria: { label: t('helpers.label.language_toggle.welsh.aria_label') } %>
+      <%= govuk_link_to t('helpers.language_toggle.welsh'),
+                        url_for(locale: :cy),
+                        class: 'govuk-link govuk-link--no-visited-state',
+                        hreflang: 'cy', lang: 'cy', rel: 'alternate',
+                        aria: { label: t('helpers.label.language_toggle.welsh.aria_label') } %>
     <% end %>
   </p>
 </nav>
