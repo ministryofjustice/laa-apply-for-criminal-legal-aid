@@ -53,4 +53,3 @@ RSpec.describe 'Language toggle' do
     end
   end
 end
-
