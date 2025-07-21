@@ -108,8 +108,8 @@ metadata:
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecRule REMOTE_ADDR "!@ipMatch 165.1.170.106,165.1.170.107,134.231.143.70,134.231.143.71,51.149.249.0/29,194.33.249.0/29,51.149.249.32/29,194.33.248.0/29,20.49.214.199/32,20.49.214.228/32,20.26.11.71/32,20.26.11.108/32,128.77.75.64/26,18.169.147.172/32,35.176.93.186/32,18.130.148.126/32,35.176.148.126/32" \
-        "id:999,deny,status:403,tag:github_team=laa-crime-apply"
+      SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
+        "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
