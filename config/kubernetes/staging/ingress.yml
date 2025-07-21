@@ -13,10 +13,6 @@ metadata:
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      if ($request_method !~ ^GET$) {
-        return 405;
-      }
 spec:
   ingressClassName: modsec-non-prod
   rules:
