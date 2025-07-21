@@ -114,6 +114,9 @@ metadata:
     external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-laa-apply-for-criminal-legal-aid-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/server-snippet: |
+      if ($scheme = http) {
+        return 444;
+      }
       if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk') {
         return 301 https://laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk;
       }
