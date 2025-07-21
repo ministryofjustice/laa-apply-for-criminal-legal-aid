@@ -37,6 +37,34 @@ spec:
                 name: service-staging
                 port:
                   number: 80
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /cookies
+            pathType: Exact
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /about
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /errors
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
 ---
 # pingdom ingress
 apiVersion: networking.k8s.io/v1
