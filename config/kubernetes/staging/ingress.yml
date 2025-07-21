@@ -1,11 +1,25 @@
-# staging public ingress
+# internal healthcheck ingress
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-staging-public
+  name: ingress-staging-internal
   namespace: laa-apply-for-criminal-legal-aid-staging
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-public-laa-apply-for-criminal-legal-aid-staging-green
+    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-internal-laa-apply-for-criminal-legal-aid-staging-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location ~* ^/(health|readyz|startupz|datastore/health) {
+        deny all;
+      }
+---
+# pingdom ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-staging-pingdom
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-pingdom-laa-apply-for-criminal-legal-aid-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
@@ -13,9 +27,15 @@ metadata:
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+      SecRule REMOTE_ADDR "!@ipMatch 212.78.83.12,212.78.83.16,23.106.37.99" \
+        "id:5001,deny,status:403,tag:github_team=laa-crime-apply"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($request_method !~ ^GET$) {
         return 405;
+      }
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ($scheme = http) {
+        return 444;
       }
 spec:
   ingressClassName: modsec
@@ -30,13 +50,6 @@ spec:
                 name: service-staging
                 port:
                   number: 80
-          - path: /health
-            pathType: Exact
-            backend:
-              service:
-                name: service-staging
-                port:
-                  number: 80
           - path: /datastore/ping
             pathType: Exact
             backend:
@@ -44,15 +57,68 @@ spec:
                 name: service-staging
                 port:
                   number: 80
-          - path: /datastore/health
+---
+# public ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-staging-public
+  namespace: laa-apply-for-criminal-legal-aid-staging
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-public-laa-apply-for-criminal-legal-aid-staging-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ($scheme = http) {
+        return 444;
+      }
+      location = /.well-known/security.txt {
+        auth_basic off;
+        return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
+      }
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+    nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine On
+      SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+
+spec:
+  ingressClassName: modsec
+  rules:
+    - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
+      http:
+        paths:
+          - path: /
             pathType: Exact
             backend:
               service:
                 name: service-staging
                 port:
                   number: 80
+          - path: /cookies
+            pathType: Exact
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /about
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /errors
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+
 ---
-# staging application ingress
+# application ingress
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -61,17 +127,6 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-laa-apply-for-criminal-legal-aid-staging-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
-    nginx.ingress.kubernetes.io/server-snippet: |
-      if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk') {
-        return 301 https://laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk;
-      }
-      if ($host = 'laa-apply-for-criminal-legal-aid-staging.apps.cloud-platform.service.justice.gov.uk') {
-        return 301 https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk;
-      }
-      location = /.well-known/security.txt {
-        auth_basic off;
-        return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
-      }
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/custom-http-errors: "423"
     nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
@@ -80,8 +135,8 @@ metadata:
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecRule REMOTE_ADDR "!@ipMatch 165.1.170.106,165.1.170.107,134.231.143.70,134.231.143.71,51.149.249.0/29,194.33.249.0/29,51.149.249.32/29,194.33.248.0/29,20.49.214.199/32,20.49.214.228/32,20.26.11.71/32,20.26.11.108/32,128.77.75.64/26,18.169.147.172/32,35.176.93.186/32,18.130.148.126/32,35.176.148.126/32" \
-        "id:999,deny,status:403,tag:github_team=laa-crime-apply"
+      SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
+        "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
