@@ -33,6 +33,13 @@ spec:
                 name: service-staging
                 port:
                   number: 80
+          - path: /applications
+            pathType: Exact
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
           - path: /about
             pathType: Prefix
             backend:
