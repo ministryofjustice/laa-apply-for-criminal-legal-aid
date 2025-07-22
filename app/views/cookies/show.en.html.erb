@@ -12,8 +12,6 @@
     <p class="govuk-body">The ‘<%= service_name %>’ service puts small files (known as ‘cookies’) onto your device to collect
       information about how you use the service.</p>
 
-    <p class="govuk-body">You’ll normally see a message on the site before we set a cookie on your device.</p>
-
     <p class="govuk-body">Cookies are not used to identify you personally.</p>
 
     <p class="govuk-body">Find out
@@ -21,9 +19,6 @@
         to manage cookies</a> from the Information Commissioner’s Office.</p>
 
     <h2 class="govuk-heading-l">Essential cookies (strictly necessary)</h2>
-
-    <p class="govuk-body">We use these cookies to remember your progress on this device and your cookie consent
-      settings.</p>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
@@ -45,52 +40,7 @@
             When you close your browser
           </td>
         </tr>
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header">
-            <%= Rails.configuration.x.analytics.cookies_consent_name %>
-          </th>
-          <td class="govuk-table__cell">
-            Saves your cookie consent settings
-          </td>
-          <td class="govuk-table__cell">
-            After <%= Rails.configuration.x.analytics.cookies_consent_expiration.inspect %>
-          </td>
-        </tr>
       </tbody>
     </table>
-
-    <h2 class="govuk-heading-l">Analytics cookies (optional)</h2>
-    <p class="govuk-body">
-      We use Google Analytics software to collect information about how you use this service. We do this to help make sure
-      this service is meeting the needs of its users and to help us make improvements. Google Analytics stores information
-      about:
-    </p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>the pages you visit</li>
-      <li>how long you spend on each page</li>
-      <li>the device and browser you use</li>
-      <li>what you click on while you’re visiting the site</li>
-    </ul>
-
-    <p class="govuk-body">We do not allow Google to use or share our analytics data.</p>
-
-    <p class="govuk-body">We only set analytics cookies when:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>you’ve accepted them</li>
-      <li>JavaScript is running in your browser</li>
-    </ul>
-
-    <p class="govuk-body"> If you choose not to run JavaScript we will only set essential cookies.</p>
-
-    <h3 class="govuk-heading-m govuk-!-margin-top-8">
-      Change your cookie settings
-    </h3>
-
-    <%= form_for @form_object, url: cookies_path, method: :put do |f| %>
-      <%= f.govuk_collection_radio_buttons :consent, Cookies::SettingsForm::VALUES,
-                                           :to_s, legend: { size: 's' } %>
-      <%= f.continue_button(primary: :save_cookie_settings, secondary: false) %>
-    <% end %>
   </div>
 </div>

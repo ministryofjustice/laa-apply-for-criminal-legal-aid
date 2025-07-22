@@ -67,8 +67,3 @@ const $forms = document.querySelectorAll('form[data-module="multi-action-form"]'
 for (let i = 0; i < $forms.length; i++) {
   new MultiActionForm($forms[i]).init()
 }
-
-// Google analytics additional tracking
-// Keep this at the bottom of this file
-import GAEvents from "./local/ga-events"
-new GAEvents(window).init()
