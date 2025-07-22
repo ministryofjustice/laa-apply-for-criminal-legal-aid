@@ -14,7 +14,7 @@ metadata:
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
 spec:
-  ingressClassName: modsec-non-prod
+  ingressClassName: modsec
   rules:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
@@ -84,7 +84,7 @@ metadata:
         return 405;
       }
 spec:
-  ingressClassName: modsec-non-prod
+  ingressClassName: modsec
   rules:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
@@ -228,7 +228,7 @@ metadata:
       SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-injection-php !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
 spec:
-  ingressClassName: modsec-non-prod
+  ingressClassName: modsec
   tls:
     - hosts:
         - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
