@@ -7,12 +7,8 @@
 Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self, :https
-    policy.base_uri    :none
-    policy.style_src   :self
     policy.font_src    :self, :https, :data
-    policy.img_src     :self, :https, :data, 'https://*.google-analytics.com', 'https://*.googletagmanager.com'
-    policy.connect_src :self, 'https://ga.jspm.io', 'https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'
-    policy.form_action :self, 'https://*.legalservices.gov.uk/oamfed/idp/samlv20', 'https://login.microsoftonline.com'
+    policy.img_src     :self, :https, :data
     policy.object_src  :none
     policy.script_src  :self, :https
     policy.style_src   :self, :https
