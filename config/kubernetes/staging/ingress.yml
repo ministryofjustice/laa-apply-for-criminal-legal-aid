@@ -19,20 +19,6 @@ spec:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
         paths:
-          - path: /health
-            pathType: Exact
-            backend:
-              service:
-                name: service-staging
-                port:
-                  number: 80
-          - path: /datastore/health
-            pathType: Exact
-            backend:
-              service:
-                name: service-staging
-                port:
-                  number: 80
           - path: /
             pathType: Exact
             backend:
@@ -41,6 +27,13 @@ spec:
                 port:
                   number: 80
           - path: /cookies
+            pathType: Exact
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /applications
             pathType: Exact
             backend:
               service:
@@ -126,6 +119,9 @@ metadata:
       location = /.well-known/security.txt {
         auth_basic off;
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
+      }
+      location ~* ^/(health|readyz|startupz|datastore/health) {
+        deny all;
       }
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/custom-http-errors: "423"
