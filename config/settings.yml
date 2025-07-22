@@ -1,7 +1,7 @@
 feature_flags:
   developer_tools:
     local: true
-    staging: true
+    staging: false
     production: false
   property_ownership_validation:
     local: true
