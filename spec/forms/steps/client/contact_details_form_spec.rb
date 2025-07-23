@@ -7,7 +7,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     {
       crime_application:,
       telephone_number:,
-      correspondence_address_type:
+      correspondence_address_type:,
+      preferred_correspondence_language:
     }
   end
   let(:applicant_double) { instance_double(Applicant, residence_type:) }
@@ -104,6 +105,12 @@ RSpec.describe Steps::Client::ContactDetailsForm do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to be(true)
       end
+    end
+
+    context 'when preferred_correspondence_language is blank' do
+      let(:preferred_correspondence_language) { '' }
+
+      it { is_expected.not_to validate_presence_of(:preferred_correspondence_language) }
     end
   end
 
