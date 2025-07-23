@@ -1,5 +1,6 @@
 class ApplicationSearchesController < ApplicationController
   helper_method :sorted_filter_params
+  before_action :set_security_headers
 
   layout 'application_dashboard'
 
