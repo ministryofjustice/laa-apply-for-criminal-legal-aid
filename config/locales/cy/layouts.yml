@@ -51,3 +51,6 @@ cy:
         Gallwch <a href="%{cookies_link}" class="govuk-link ga-pageLink" data-ga-category="cookie banner"
         data-ga-label="change cookies">newid eich gosodiadau cwcis</a> unrhyw bryd.
       hide_button: Cuddio neges cwcis
+    govuk_template_html: |
+      Mae’r holl gynnwys ar gael o dan y
+      <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Drwydded Llywodraeth Agored fersiwn v3.0</a>, ac eithrio lle nodir yn wahanol

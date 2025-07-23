@@ -12,6 +12,14 @@
                                            @form_object.choices,
                                            :value %>
 
+      <%= f.govuk_check_boxes_fieldset :welsh_correspondence, multiple: false, legend: nil do %>
+        <%= f.govuk_check_box :welsh_correspondence,
+                              true,
+                              multiple: false,
+                              label: { text: t('helpers.label.steps_client_contact_details_form.welsh_correspondence_options.true') },
+                              hint: { text: t('helpers.hint.steps_client_contact_details_form.welsh_translation') } %>
+      <% end %>
+
       <%= f.govuk_phone_field :telephone_number, autocomplete: 'off', width: 'one-third',
                               extra_letter_spacing: true,
                               label: { size: 'm' } %>

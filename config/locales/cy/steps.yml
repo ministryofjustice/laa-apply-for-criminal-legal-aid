@@ -9,3 +9,52 @@ cy:
       select_office:
         edit:
           page_title: Dewis rhif cyfrif swyddfa
+    client:
+      is_means_tested:
+        edit:
+          page_title: A yw’r cais hwn yn destun y prawf modd arferol neu'r prawf pasbort?
+      has_partner:
+        edit:
+          page_title: Oes gan eich cleient bartner?
+          partner_definitions:
+            intro: 'Mae partner yn rhywun y mae eich cleient:'
+            definition_1: wedi priodi
+            definition_2: mewn partneriaeth sifil gyda
+            definition_3: yn byw gyda fel cwpl fel arfer, hyd yn oed os nad ydynt yn byw gyda’i gilydd ar hyn o bryd – er enghraifft, os yw un ohonynt yn yr ysbyty, yn y carchar neu dramor
+            exclusion: Nid yw’n cynnwys unrhyw un y mae eich cleient wedi gwahanu’n barhaol ag ef neu hi.
+      relationship_status:
+        edit:
+          page_title: Beth yw statws perthynas eich cleient?
+          separation_date: Pryd wnaeth eich cleient wahanu oddi wrth eu partner?
+      details:
+        edit:
+          page_title: Manylion eich cleient
+          heading: Manylion eich cleient
+          full_name_legend: Beth yw ei enw llawn?
+      case_type:
+        edit:
+          page_title: Beth yw math yr achos?
+      appeal_details:
+        edit:
+          page_title: Apêl eich cleient i’r Llys y Goron
+          heading: Apêl eich cleient i’r Llys y Goron
+      appeal_financial_circumstances:
+        edit:
+          page_title: A yw amgylchiadau ariannol eich cleient wedi newid ers y cais cychwynnol?
+      appeal_reference_number:
+        edit:
+          page_title: Beth yw rhif cyfeirnod y cais gwreiddiol?
+      date_stamp:
+        edit:
+          page_title: Mae’ch cais wedi’i stampio’n ffurfiol
+          heading: Mae’ch cais wedi’i stampio’n ffurfiol
+          reference_number_html: Mae’r manylion cleient a nodwyd gennych wedi’u cofnodi o dan <span class='govuk-!-font-weight-bold'>Cyfeirnod LAA %{reference}:</span>
+          applicant_name_html: <span class='govuk-!-font-weight-bold'>Enw:</span> %{first_name} %{last_name}
+          applicant_dob_html: <span class='govuk-!-font-weight-bold'>Dyddiad geni:</span> %{date_of_birth}
+      residence_type:
+        edit:
+          page_title: Ble mae eich cleient fel arfer yn byw?
+      contact_details:
+        edit:
+          page_title: Manylion cyswllt y cleient
+          heading: Manylion cyswllt eich cleient

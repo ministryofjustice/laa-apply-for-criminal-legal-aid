@@ -5,6 +5,8 @@ cy:
     back_to_applications: Yn ôl i’ch ceisiadau
     hint:
       search: Nodwch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, neu gyfeirnod LAA
+      steps_client_contact_details_form:
+        welsh_translation: Bydd yn cael ei anfon yn Saesneg hefyd. O dan Ddeddf yr Iaith Gymraeg, bydd rhywfaint o ohebiaeth yn cael ei hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
     submit:
       clear: Clir
       search: Chwilio
@@ -32,6 +34,14 @@ cy:
         is_current_office_options:
           "yes": "Ie"
           "no": "Na, mae swyddfa arall yn ymdrin â’r cais hwn"
+      steps_client_contact_details_form:
+        telephone_number: Beth yw rhif ffôn eich cleient? (dewisol)
+        correspondence_address_type_options:
+          home_address: Yr un fath â'r cyfeiriad cartref arferol
+          providers_office_address: Swyddfa'r darparwr
+          other_address: Man arall
+        welsh_correspondence_options:
+          "true": Ticiwch i anfon gohebiaeth yn Gymraeg
     language_toggle:
       english: English
       welsh: Cymraeg

@@ -420,6 +420,8 @@ en:
         appeal_original_app_submitted: This is the case with the outcome your client wants to appeal.
       steps_client_appeal_reference_number_form:
         appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
+      steps_client_contact_details_form:
+        welsh_translation: It will also be sent in English. Under the Welsh Language Act, some correspondence will be automatically sent in Welsh if the hearing is at certain Welsh courts.
       steps_shared_nino_form:
         has_arc_or_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
@@ -659,6 +661,8 @@ en:
           home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
+        welsh_correspondence_options:
+          "true": Tick for correspondence to be sent in Welsh
       steps_client_relationship_status_form:
         relationship_status_options:
           single: Single

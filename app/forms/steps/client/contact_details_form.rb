@@ -9,6 +9,7 @@ module Steps
 
       attribute :telephone_number, :string
       attribute :correspondence_address_type, :value_object, source: CorrespondenceType
+      attribute :welsh_correspondence
 
       validates :telephone_number,
                 format: { with: TEL_REGEXP },
@@ -16,6 +17,10 @@ module Steps
 
       validates :correspondence_address_type,
                 inclusion: { in: :choices }
+
+      validates :welsh_correspondence,
+                inclusion: { in: :choices },
+                allow_blank: true
 
       def telephone_number=(str)
         super(str.delete(' ')) if str
