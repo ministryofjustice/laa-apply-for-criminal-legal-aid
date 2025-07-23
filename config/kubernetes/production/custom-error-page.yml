@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: custom-error-pages
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  namespace: laa-apply-for-criminal-legal-aid-production
   labels:
     app.kubernetes.io/name: nginx-errors
     app.kubernetes.io/part-of: ingress-nginx
@@ -47,7 +47,7 @@ data:
               </a>
             </div>
             <div class="govuk-header__content">
-              <a href="https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/" class="govuk-header__link govuk-header__service-name">
+              <a href="https://apply-for-criminal-legal-aid.service.justice.gov.uk/" class="govuk-header__link govuk-header__service-name">
                 Apply for criminal legal aid
               </a>
             </div>
@@ -59,12 +59,12 @@ data:
             <div class="govuk-grid-row">
               <div class="govuk-grid-column-two-thirds">
                 <h1 class="govuk-heading-l">Sorry, there is a problem with the service</h1>
-                <p class="govuk-body">Anything you entered on the previous page has not been saved. You can try:</p>
+                <p class="govuk-body">What you have entered on the previous page will not have been saved. You could try:</p>
                 <ul class="govuk-list govuk-list--bullet">
-                  <li>clearing your saved browser cookies</li>
-                  <li>going back and entering different information</li>
+                  <li>clearing your browser cookie</li>
+                  <li>going back and amending what you have entered</li>
                 </ul>
-                <p class="govuk-body">If you still cannot use the service, email: <a href="mailto:online-support@justice.gov.uk">online-support@justice.gov.uk</a></p>
+                <p class="govuk-body">If this is preventing you using the service please contact <a href="mailto:online-support@justice.gov.uk">online-support@justice.gov.uk</a> so it can be fixed.</p>
               </div>
             </div>
           </main>

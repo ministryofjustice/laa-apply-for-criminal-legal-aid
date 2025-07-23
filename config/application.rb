@@ -57,6 +57,8 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
 
+    config.x.auth_idp = ENV.fetch('AUTH_IDP', 'entra')
+
     # Time after which a user's session will expire if they
     # haven’t interacted with the service.
     config.x.session.timeout_in = ENV.fetch('SESSION_TIMEOUT_MINUTES', 60).to_i.minutes

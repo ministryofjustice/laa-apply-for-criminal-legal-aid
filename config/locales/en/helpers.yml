@@ -439,7 +439,7 @@ en:
           "no": You may not be able to submit your application without the National Insurance number
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
-        has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or a screenshot of a government app. It must show your %{subject}'s name, benefit amount and how often they receive it.
+        has_benefit_evidence: This can be a letter from Department for Work and Pensions (DWP) or JobCentre Plus, or a screenshot of a government app. It must show %{subject}'s name, benefit amount and how often they receive it.
         has_benefit_evidence_options:
           "yes": You'll need to upload evidence at the end of this application.
           "no": You'll need to tell us about %{subject}’s income if you do not have evidence.

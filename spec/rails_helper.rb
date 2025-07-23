@@ -50,7 +50,7 @@ RSpec.configure do |config|
 
   # Only request specs tagged with `authorized: true` will perform
   # an automatic sign in. Otherwise assume user is signed out.
-  config.before(:all, :authorized, type: :request) { post provider_saml_omniauth_callback_path }
+  config.before(:all, :authorized, type: :request) { post provider_entra_omniauth_callback_path }
 
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }

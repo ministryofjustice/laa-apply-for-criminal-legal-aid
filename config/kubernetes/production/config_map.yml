@@ -17,4 +17,4 @@ data:
   DATASTORE_API_ROOT: http://service-production.laa-criminal-applications-datastore-production.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   LAA_PORTAL_IDP_METADATA_URL: https://portal.legalservices.gov.uk/oamfed/idp/metadata
-  VIRUS_SCAN_TIMEOUT: '20'
+  VIRUS_SCAN_TIMEOUT: "20"

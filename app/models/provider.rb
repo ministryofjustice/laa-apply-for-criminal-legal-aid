@@ -1,6 +1,6 @@
 class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :reauthable, :trackable,
-         :omniauthable, omniauth_providers: %i[saml]
+         :omniauthable, omniauth_providers: [Rails.configuration.x.auth_idp]
 
   store_accessor :settings,
                  :selected_office_code,

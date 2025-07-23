@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-errors
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  namespace: laa-apply-for-criminal-legal-aid-production
   labels:
     app.kubernetes.io/name: nginx-errors
     app.kubernetes.io/part-of: ingress-nginx
