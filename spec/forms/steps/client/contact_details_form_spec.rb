@@ -107,7 +107,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       end
     end
 
-    context 'when welsh_correspondence is blank' do # this may be stored differently, as a locale value rather than a simple YesNo / TrueFalse
+    context 'when welsh_correspondence is blank' do
       let(:welsh_correspondence) { '' }
 
       it { is_expected.not_to validate_presence_of(:welsh_correspondence) }
