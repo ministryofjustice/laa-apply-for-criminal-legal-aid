@@ -14,7 +14,6 @@ module SubmissionSerializer
           json.correspondence_address_type applicant.correspondence_address_type
           json.home_address Definitions::Address.generate(applicant.home_address)
           json.correspondence_address Definitions::Address.generate(applicant.correspondence_address)
-          json.welsh_correspondence applicant.welsh_correspondence
 
           json.has_nino applicant.has_nino
           json.has_arc applicant.has_arc

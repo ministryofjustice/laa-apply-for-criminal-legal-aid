@@ -661,8 +661,6 @@ en:
           home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
-        welsh_correspondence_options:
-          "true": Tick for correspondence to be sent in Welsh
       steps_client_relationship_status_form:
         relationship_status_options:
           single: Single

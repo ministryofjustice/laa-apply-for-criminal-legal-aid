@@ -40,8 +40,6 @@ cy:
           home_address: Yr un fath â'r cyfeiriad cartref arferol
           providers_office_address: Swyddfa'r darparwr
           other_address: Man arall
-        welsh_correspondence_options:
-          "true": Ticiwch i anfon gohebiaeth yn Gymraeg
     language_toggle:
       english: English
       welsh: Cymraeg

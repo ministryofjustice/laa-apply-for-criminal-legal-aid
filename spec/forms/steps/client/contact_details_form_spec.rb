@@ -8,7 +8,6 @@ RSpec.describe Steps::Client::ContactDetailsForm do
       crime_application:,
       telephone_number:,
       correspondence_address_type:,
-      welsh_correspondence:
     }
   end
   let(:applicant_double) { instance_double(Applicant, residence_type:) }
@@ -105,12 +104,6 @@ RSpec.describe Steps::Client::ContactDetailsForm do
         expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to be(true)
       end
-    end
-
-    context 'when welsh_correspondence is blank' do
-      let(:welsh_correspondence) { '' }
-
-      it { is_expected.not_to validate_presence_of(:welsh_correspondence) }
     end
   end
 
