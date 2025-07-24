@@ -17,8 +17,8 @@ data:
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: "20"
-  OMNIAUTH_ENTRA_CLIENT_ID: abd5ebbe-44b2-4c14-b815-a741ebfd21b2
-  OMNIAUTH_ENTRA_TENANT_ID: ff260a8b-cb92-4cfe-8ae9-d48bb0fd9851
+  OMNIAUTH_ENTRA_CLIENT_ID: 7d95f6ff-2ff5-4ba0-aaf3-06d8769557ef
+  OMNIAUTH_ENTRA_TENANT_ID: 8352c342-da15-413a-8b5b-d89545766f0c
   OMNIAUTH_ENTRA_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
 
   # If this is uncommented, authentication will be mocked
