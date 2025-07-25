@@ -1,6 +1,13 @@
----
 cy:
   steps:
+    shared:
+      offence_class: Dosbarth %{class}
+      charge:
+        unknown_name: Enw heb ei nodi
+        incomplete_tag: Anghyflawn
+      saving:
+        incomplete_tag: Anghyflawn
+
     provider:
       confirm_office:
         edit:
@@ -9,19 +16,28 @@ cy:
       select_office:
         edit:
           page_title: Dewis rhif cyfrif swyddfa
+
+    circumstances:
+      pre_cifc_reference_number:
+        edit:
+          page_title: Beth yw rhif cyfeirnod y cais gwreiddiol?
+      pre_cifc_reason:
+        edit:
+          page_title: Beth sydd wedi newid yn amgylchiadau ariannol eich cleient?
+
     client:
       is_means_tested:
         edit:
-          page_title: A yw’r cais hwn yn destun y prawf modd arferol neu'r prawf pasbort?
+          page_title: A yw’r cais hwn yn destun y prawf modd arferol neu brawf pasbort?
       has_partner:
         edit:
-          page_title: Oes gan eich cleient bartner?
+          page_title: A oes gan eich cleient bartner?
           partner_definitions:
             intro: 'Mae partner yn rhywun y mae eich cleient:'
-            definition_1: wedi priodi
-            definition_2: mewn partneriaeth sifil gyda
-            definition_3: yn byw gyda fel cwpl fel arfer, hyd yn oed os nad ydynt yn byw gyda’i gilydd ar hyn o bryd – er enghraifft, os yw un ohonynt yn yr ysbyty, yn y carchar neu dramor
-            exclusion: Nid yw’n cynnwys unrhyw un y mae eich cleient wedi gwahanu’n barhaol ag ef neu hi.
+            definition_1: wedi priodi ag ef/hi
+            definition_2: mewn partneriaeth sifil ag ef/hi
+            definition_3: fel arfer yn byw gyda nhw fel cwpl, hyd yn oed os nad ydynt yn byw gyda'i gilydd ar hyn o bryd – er enghraifft, os yw un ohonynt yn yr ysbyty, yn y carchar neu dramor
+            exclusion: Nid yw hyn yn cynnwys unrhyw un y mae eich cleient wedi gwahanu oddi wrthynt yn barhaol.
       relationship_status:
         edit:
           page_title: Beth yw statws perthynas eich cleient?
@@ -30,10 +46,10 @@ cy:
         edit:
           page_title: Manylion eich cleient
           heading: Manylion eich cleient
-          full_name_legend: Beth yw ei enw llawn?
+          full_name_legend: Beth yw eu henw llawn?
       case_type:
         edit:
-          page_title: Beth yw math yr achos?
+          page_title: Beth yw’r math o achos?
       appeal_details:
         edit:
           page_title: Apêl eich cleient i’r Llys y Goron
@@ -46,9 +62,9 @@ cy:
           page_title: Beth yw rhif cyfeirnod y cais gwreiddiol?
       date_stamp:
         edit:
-          page_title: Mae’ch cais wedi’i stampio’n ffurfiol
-          heading: Mae’ch cais wedi’i stampio’n ffurfiol
-          reference_number_html: Mae’r manylion cleient a nodwyd gennych wedi’u cofnodi o dan <span class='govuk-!-font-weight-bold'>Cyfeirnod LAA %{reference}:</span>
+          page_title: Mae’ch cais wedi’i stampio â dyddiad
+          heading: Mae’ch cais wedi’i stampio â dyddiad
+          reference_number_html: Mae manylion y cleient a nodwyd gennych wedi'u cofnodi o dan <span class='govuk-!-font-weight-bold'>cyfeirnod LAA %{reference}:</span>
           applicant_name_html: <span class='govuk-!-font-weight-bold'>Enw:</span> %{first_name} %{last_name}
           applicant_dob_html: <span class='govuk-!-font-weight-bold'>Dyddiad geni:</span> %{date_of_birth}
       residence_type:
@@ -58,3 +74,692 @@ cy:
         edit:
           page_title: Manylion cyswllt y cleient
           heading: Manylion cyswllt eich cleient
+
+    partner:
+      relationship:
+        edit:
+          page_title: Beth yw perthynas eich cleient â’u partner?
+      details:
+        edit:
+          page_title: Manylion y partner
+          heading: Manylion y partner
+          full_name_legend: Beth yw enw llawn y partner?
+      nino:
+        edit:
+          page_title: A oes gan y partner rif Yswiriant Gwladol?
+      involvement:
+        edit:
+          page_title: A yw’r partner yn rhan o achos eich cleient?
+      conflict:
+        edit:
+          page_title: A oes gan y partner wrthdaro buddiannau?
+      same_address:
+        edit:
+          page_title: A yw eich cleient a’u partner yn byw yn yr un cyfeiriad?
+
+    dwp:
+      benefit_type:
+        edit:
+          page_title: A yw eich cleient yn cael un o’r budd-daliadau pasbort hyn?
+          last_jsa_appointment_date: &JSA_DATE_QUESTION Pryd oedd eu hapwyntiad diwethaf gyda'u hyfforddwr gwaith JSA?
+      partner_benefit_type:
+        edit:
+          page_title: A yw’r partner yn cael un o’r budd-daliadau pasbort hyn?
+          last_jsa_appointment_date: *JSA_DATE_QUESTION
+      benefit_check_result:
+        edit:
+          page_title: Canlyniad gwirio budd-dal
+          heading: Mae cofnodion DWP yn dangos bod %{subject} yn cael budd-dal pasbort
+          required_evidence_warning: Rhaid i’r dystiolaeth ddangos swm y budd-dal a pha mor aml y cânt ef, neu efallai y caiff eich cais ei ddychwelyd.
+      has_benefit_evidence:
+        edit:
+          page_title: Tystiolaeth budd-dal pasbort %{subject}
+          heading: A oes gennych dystiolaeth bod %{subject} yn cael %{benefit_type}?
+      cannot_check_benefit_status:
+        edit:
+          page_title: Methu gwirio statws budd-dal
+          heading: Ni allwn wirio statws budd-dal %{subject} heb eu Rhif Yswiriant Gwladol
+          upload_evidence: Rhaid i chi lwytho tystiolaeth bod %{subject} yn cael budd-dal pasbort.
+          rejection_warning: Os nad yw’r achos yn y Llys y Goron, efallai y bydd eich cais yn cael ei wrthod ar ôl ei gyflwyno.
+          deadline: Os yw’r achos yn y Llys y Goron, mae gennych 14 diwrnod i gyflwyno’r dystiolaeth.
+      cannot_check_dwp_status:
+        edit:
+          page_title: Ymddiheuriadau, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+          heading: Ymddiheuriadau, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+      confirm_result: &CONFIRM_RESULT_HEADING
+        edit:
+          heading: Mae cofnodion DWP yn dangos nad yw %{subject} yn cael budd-dal pasbort
+          page_title: Canlyniad gwirio budd-dal
+      partner_confirm_result: *CONFIRM_RESULT_HEADING
+      confirm_details:
+        edit:
+          page_title: Cadarnhau manylion %{subject}
+          heading: Gwirio manylion %{subject}
+
+    address:
+      lookup:
+        edit:
+          page_title:
+            applicant:
+              home_address: Cyfeiriad cartref y cleient
+              correspondence_address: Cyfeiriad gohebiaeth y cleient
+            partner:
+              home_address: Cyfeiriad cartref y partner
+          heading:
+            applicant:
+              home_address: Y cyfeiriad lle mae eich cleient yn byw fel arfer
+              correspondence_address: Cyfeiriad gohebiaeth eich cleient
+            partner:
+              home_address: Y cyfeiriad lle mae’r partner yn byw fel arfer
+          manual_entry: Nodwch y cyfeiriad â llaw
+      results:
+        edit:
+          page_title:
+            applicant:
+              home_address: Dewis cyfeiriad cartref y cleient
+              correspondence_address: Dewis cyfeiriad gohebiaeth y cleient
+            partner:
+              home_address: Dewis cyfeiriad cartref y partner
+          heading:
+            applicant:
+              home_address: Y cyfeiriad lle mae eich cleient yn byw fel arfer
+              correspondence_address: Cyfeiriad gohebiaeth eich cleient
+            partner:
+              home_address: Y cyfeiriad lle mae’r partner yn byw fel arfer
+          current_postcode: Cod post
+          change_postcode_html: Newid <span class="govuk-visually-hidden">cod post</span>
+          address_not_listed: Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr
+          results_count:
+            one: "%{count} cyfeiriad wedi’i ganfod"
+            other: "%{count} cyfeiriad wedi’u canfod"
+          no_results:
+            info: Ni allwn ddod o hyd i unrhyw gyfeiriadau ar gyfer y cod post a nodwyd. Mae hyn yn gallu digwydd os yw’n god post newydd iawn neu hen iawn.
+            manual_entry: Nodwch y cyfeiriad â llaw
+      details:
+        edit:
+          page_title:
+            applicant:
+              home_address: Cyfeiriad cartref y cleient
+              correspondence_address: Cyfeiriad gohebiaeth y cleient
+            partner:
+              home_address: Cyfeiriad cartref y partner
+          heading:
+            applicant:
+              home_address: Y cyfeiriad lle mae eich cleient yn byw fel arfer
+              correspondence_address: Cyfeiriad gohebiaeth eich cleient
+            partner:
+              home_address: Y cyfeiriad lle mae’r partner yn byw fel arfer
+              correspondence_address: Nodwch gyfeiriad gohebiaeth eich partner
+          subheading: Beth yw’r cyfeiriad?
+
+    case:
+      urn:
+        edit:
+          page_title: Nodwch URN eich cleient
+          urn_guidance: Mae hyn yn ein helpu i baru’r manylion rydych wedi’u rhoi gyda chofnodion Llys a Thribiwnlysoedd EM (HMCTS).
+      has_case_concluded:
+        edit:
+          page_title: A yw’r achos wedi dod i ben?
+          date_case_concluded: Nodwch pryd y daeth yr achos i ben
+      is_preorder_work_claimed:
+        edit:
+          page_title: A ydych yn bwriadu hawlio gwaith cyn archeb?
+          preorder_work_date: Nodwch pryd y cawsoch chi neu’ch cwmni’ch cyfarwyddo gyntaf
+          preorder_work_details: Nodwch fanylion am frys y gwaith
+          hint: "'Gwaith cyn archeb' yw gwaith a wneir cyn i orchymyn cynrychiolaeth gael ei roi."
+      is_client_remanded:
+        edit:
+          page_title: A yw’r llys wedi cadw eich cleient yn y ddalfa?
+          date_client_remanded: Nodwch pryd y cawsant eu cadw yn y ddalfa
+      charges:
+        edit:
+          page_title: Gyda beth mae eich cleient wedi’i gyhuddo?
+          heading: Gyda beth mae eich cleient wedi’i gyhuddo?
+          subheading: Os oes mwy nag un cyhuddiad, ychwanegwch un ar y tro.
+          offence_dates_fieldset_legend: Pryd ddigwyddodd y drosedd?
+          add_button: Ychwanegu dyddiad arall
+          remove_button: Dileu dyddiad %{index}
+          deleted_flash: Mae dyddiad y drosedd wedi’i ddileu
+        confirm_destroy:
+          page_title: Cadarnhau dileu’r drosedd
+          heading: Ydych chi’n siŵr eich bod am ddileu’r drosedd hon?
+          confirm_delete_button: Ie, dileuwch hi
+          cancel_delete_button: Na, peidiwch â’i dileu
+          confirm_delete_button_a11y: Ie, dileuwch y drosedd hon
+          cancel_delete_button_a11y: Na, peidiwch â dileu’r drosedd hon
+        destroy:
+          success_flash: Mae’r drosedd wedi’i dileu
+      charges_summary:
+        edit:
+          page_title: Rhestr grynodeb o droseddau
+          heading:
+            zero: Nid ydych wedi ychwanegu unrhyw droseddau eto
+            one: Rydych wedi ychwanegu %{count} trosedd
+            other: Rydych wedi ychwanegu %{count} trosedd
+        offence_details:
+          change_link_html: Newid <span class="govuk-visually-hidden">trosedd</span>
+          remove_link_html: Dileu <span class="govuk-visually-hidden">trosedd</span>
+      has_codefendants:
+        edit:
+          page_title: A oes gan eich cleient gyd-ddiffynyddion?
+      codefendants:
+        edit:
+          page_title: Manylion y cyd-ddiffynyddion
+          heading: Nodwch fanylion unrhyw gyd-ddiffynyddion yn yr achos
+          codefendant_legend: Cyd-ddiffynnydd %{index}
+          add_button: Ychwanegu cyd-ddiffynnydd arall
+          remove_button: Dileu cyd-ddiffynnydd %{index}
+          deleted_flash: Mae’r cyd-ddiffynnydd wedi’i ddileu
+      other_charge:
+        edit:
+          heading: Manylion unrhyw achos neu gyhuddiad arall
+          charge_label: Beth yw’r gyhuddiad? (dewisol)
+          hearing_court_name_label: Ym mha lys y mae’r achos yn cael ei glywed? (dewisol)
+          hearing_date_legend: Pryd yw’r gwrandawiad nesaf? (dewisol)
+          hearing_date_hint: Er enghraifft, 27 3 2007.
+      hearing_details:
+        edit:
+          page_title: Manylion llys y gwrandawiad nesaf
+          heading: Y gwrandawiad llys nesaf
+      first_court_hearing:
+        edit:
+          page_title: Y gwrandawiad llys cyntaf
+      ioj_passport:
+        edit:
+          page_title: Pasbort ar sail IOJ
+          heading: Yn seiliedig ar y manylion a ddarparwyd gennych, nid oes angen rhesymu pellach dros gymorth cyfreithiol
+          info: Efallai y bydd angen i chi ddarparu manylion ariannol eich cleient o hyd i wneud cais am gymorth cyfreithiol.
+      ioj:
+        edit:
+          page_title: Pam y dylai eich cleient gael cymorth cyfreithiol?
+
+    income:
+      caption: Asesiad incwm
+      employment_status:
+        edit:
+          page_title: Beth yw statws cyflogaeth eich cleient?
+          ended_employment_within_three_months: A yw eich cleient wedi gorffen gwaith yn y 3 mis diwethaf?
+      partner_employment_status:
+        edit:
+          page_title: Beth yw statws cyflogaeth y partner?
+      lost_job_in_custody:
+        edit:
+          page_title: A yw eich cleient wedi colli eu swydd o ganlyniad i gael eu cadw yn y ddalfa?
+          date_job_lost: Pryd gollwyd y swydd?
+      frozen_income_savings_assets: &FROZEN_INCOME_ASSETS_PAGE_TEXT
+        edit:
+          has_frozen_income_or_assets: A oes gan %{subject} unrhyw incwm, cynilion neu asedau o dan orchymyn cyfyngu neu rewi?
+          hint: Pan fo gan %{subject} orchymyn llys sy’n eu hatal rhag cael mynediad at, defnyddio neu symud asedau penodol heb ganiatâd.
+      income_payments:
+        edit:
+          page_title: Pa daliadau o’r rhain mae eich cleient yn eu cael?
+      income_benefits:
+        edit:
+          page_title: Pa fudd-daliadau o’r rhain mae eich cleient yn eu cael?
+      income_payments_partner:
+        edit:
+          page_title: Pa daliadau o’r rhain mae’r partner yn eu cael?
+      income_benefits_partner:
+        edit:
+          page_title: Pa fudd-daliadau o’r rhain mae’r partner yn eu cael?
+      client_has_dependants:
+        edit:
+          page_title: A oes gan eich cleient unrhyw ddibynyddion?
+          client_has_dependants: A oes gan eich cleient unrhyw ddibynyddion?
+          dependants_definition: &dependants_definition
+            intro:
+              Dylech gynnwys dibynyddion yn unig os yw’r canlynol i gyd yn berthnasol – os ydynt:
+            definitions:
+              - yn iau na 18 oed
+              - yn byw gyda’ch cleient
+              - yn dibynnu’n ariannol ar eich cleient
+      dependants:
+        edit:
+          page_title: Oedran y dibynyddion
+          heading: Oedran y dibynyddion
+          age: Beth yw oedran y dibynydd %{ordinal}?
+          age_hint: oed
+          remove_button: Dileu dibynydd %{ordinal}
+          add_button: Ychwanegu dibynydd arall
+          deleted_flash: Mae’r dibynydd wedi’i ddileu
+          dependants_definition: *dependants_definition
+          under_one_instruction: Nodwch ‘0’ os yw’r dibynydd ar hyn o bryd yn iau na blwydd oed.
+      answers:
+        edit:
+          page_title: Gwiriwch eich atebion – Incwm eich cleient
+          heading: Gwiriwch eich atebion
+          subheading: Incwm a chyflogaeth
+      client:
+        employer_details:
+          edit:
+            page_title: Pwy sy’n cyflogi eich cleient?
+            heading: Pwy sy’n cyflogi’ch cleient?
+            subheading: Ychwanegwch enw a chyfeiriad cyflogwr eich cleient. Os oes ganddynt fwy nag un cyflogwr, gallwch ychwanegu rhagor.
+        employment_details:
+          edit:
+            page_title: Manylion cyflogaeth eich cleient
+            heading: Manylion cyflogaeth eich cleient
+        employment_income:
+          edit:
+            page_title: Incwm cyflogaeth eich cleient
+            heading: Incwm cyflogaeth eich cleient
+            page_text: Dywedasoch wrthym fod eich cleient yn gyflogedig.
+        self_assessment_tax_bill:
+          edit:
+            page_title: A yw eich cleient wedi derbyn cyfrifiad treth Hunanasesiad yn ystod y 2 flynedd diwethaf?
+        deductions:
+          edit:
+            page_title: Didyniadau o gyflog eich cleient
+            heading: Didyniadau o gyflog eich cleient
+            page_text: Dywedasoch wrthym fod eich cleient yn gyflogedig.
+        employments_summary:
+          edit:
+            page_title: Eich swyddi
+            heading:
+              zero: Nid ydych wedi ychwanegu unrhyw swyddi eto
+              one: Rydych wedi ychwanegu %{count} swydd
+              other: Rydych wedi ychwanegu %{count} swyddi
+        employments:
+          confirm_destroy:
+            page_title: Cadarnhau dileu swydd
+            heading: Ydych chi’n siŵr eich bod am dynnu’r swydd hon?
+            confirm_delete_button: Ie, tynnu’r swydd
+            cancel_delete_button: Na, peidiwch â thynnu’r swydd
+            confirm_delete_button_a11y: Ie, tynnu’r swydd hon
+            cancel_delete_button_a11y: Na, peidiwch â thynnu’r swydd hon
+          destroy:
+            success_flash: Rydych wedi tynnu’r swydd
+        other_work_benefits:
+          edit:
+            page_title: A yw eich cleient yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            applicant_other_work_benefit_received: A yw eich cleient yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            heading: A yw eich cleient yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            page_text:
+              Gallai’r rhain fod, er enghraifft:
+            list: |
+              talebau gofal plant
+              cerbyd cwmni
+              taliadau adleoli
+              yswiriant iechyd preifat
+      businesses_summary:
+        edit:
+          page_title: Busnesau %{Subject}
+          heading:
+            one: Rydych wedi ychwanegu %{count} busnes
+            other: Rydych wedi ychwanegu %{count} fusnes
+      businesses:
+        confirm_destroy:
+          page_title: Dileu busnes %{subject}
+          heading: Ydych chi’n siŵr eich bod am dynnu’r busnes hwn?
+          confirm_delete_button: Ie, tynnu
+          cancel_delete_button: Na, peidiwch â thynnu
+          confirm_delete_button_a11y: Ie, tynnu’r busnes hwn
+          cancel_delete_button_a11y: Na, peidiwch â thynnu’r busnes hwn
+          destroy:
+            success_flash: Rydych wedi tynnu’r busnes
+
+      partner:
+        employer_details:
+          edit:
+            page_title: Pwy sy’n cyflogi’ch partner?
+            heading: Pwy sy’n cyflogi’r partner?
+            subheading: Ychwanegwch fanylion cyflogwr y partner. Os oes ganddynt fwy nag un swydd, gallwch ychwanegu rhagor.
+        employment_details:
+          edit:
+            page_title: Manylion cyflogaeth y partner
+            heading: Manylion cyflogaeth y partner
+        employment_income:
+          edit:
+            page_title: Incwm cyflogaeth y partner
+            heading: Incwm cyflogaeth y partner
+            page_text: Dywedasoch wrthym fod partner eich cleient yn gyflogedig.
+        self_assessment_tax_bill:
+          edit:
+            page_title: A yw’r partner wedi derbyn cyfrifiad treth Hunanasesiad yn ystod y 2 flynedd diwethaf?
+        deductions:
+          edit:
+            page_title: Didyniadau o gyflog y partner
+            heading: Didyniadau o gyflog y partner
+            page_text: Dywedasoch wrthym fod eich partner yn gyflogedig.
+        employments_summary:
+          edit:
+            page_title: Eich swyddi
+            heading:
+              zero: Nid ydych wedi ychwanegu unrhyw swyddi eto
+              one: Rydych wedi ychwanegu %{count} swydd
+              other: Rydych wedi ychwanegu %{count} swyddi
+        employments:
+          confirm_destroy:
+            page_title: Cadarnhau dileu swydd
+            heading: Ydych chi’n siŵr eich bod am dynnu’r swydd hon?
+            confirm_delete_button: Ie, tynnu
+            cancel_delete_button: Na, peidiwch â thynnu
+            confirm_delete_button_a11y: Ie, tynnu’r swydd hon
+            cancel_delete_button_a11y: Na, peidiwch â thynnu’r swydd hon
+          destroy:
+            success_flash: Rydych wedi tynnu’r swydd
+        other_work_benefits:
+          edit:
+            page_title: A yw’r partner yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            partner_other_work_benefit_received: A yw’r partner yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            heading: A yw’r partner yn cael unrhyw fudd-daliadau eraill gan y gwaith?
+            page_text:
+              Gallai’r rhain fod, er enghraifft:
+            list: |
+              talebau gofal plant
+              cerbyd cwmni
+              taliadau adleoli
+              yswiriant iechyd preifat
+    outgoings:
+      caption: Asesiad allbynnau
+      mortgage:
+        edit:
+          page_title: Taliadau morgais
+          mortgage_legend: Taliadau morgais
+          amount_hint: Dim ond cynnwys taliadau morgais lle maent fel arfer yn byw.
+      rent:
+        edit:
+          page_title: Taliadau rhent
+          rent_legend: Taliadau rhent
+          amount_hint: Dim ond cynnwys taliadau rhent lle maent fel arfer yn byw.
+      board_and_lodging:
+        edit:
+          page_title: Taliadau llety a bwyd
+      income_tax_rate:
+        edit:
+          page_title: A yw eich cleient wedi talu’r gyfradd treth incwm o 40% yn ystod y 2 flynedd diwethaf?
+          income_tax_rate_above_threshold: A yw eich cleient wedi talu’r gyfradd treth incwm o 40% yn ystod y 2 flynedd diwethaf?
+      partner_income_tax_rate:
+        edit:
+          page_title: A yw’r partner wedi talu’r gyfradd treth incwm o 40% yn ystod y 2 flynedd diwethaf?
+          partner_income_tax_rate_above_threshold: A yw’r partner wedi talu’r gyfradd treth incwm o 40% yn ystod y 2 flynedd diwethaf?
+      outgoings_more_than_income:
+        edit:
+          page_title: A yw allbynnau eich cleient yn fwy na’u hincwm?
+          outgoings_more_than_income: A yw allbynnau eich cleient yn fwy na’u hincwm?
+      answers:
+        edit:
+          page_title: Gwiriwch eich atebion – Allbynnau %{Subject}
+          heading: Gwiriwch eich atebion
+          subheading: Allbynnau
+
+    capital:
+      caption: Asesiad cyfalaf
+      saving_type:
+        edit:
+          page_title: Pa gynilion sydd gan %{subject} y tu mewn neu y tu allan i’r DU?
+      other_saving_type:
+        edit:
+          page_title: Pa gynilion eraill sydd gan %{subject} y tu mewn neu y tu allan i’r DU?
+      savings:
+        edit:
+          heading:
+            bank: Manylion y cyfrif banc
+            building_society: Manylion y cyfrif cymdeithas adeiladu
+            cash_isa: Manylion y cyfrif ISA Arian Parod
+            national_savings_or_post_office: Manylion y cyfrif Cynilion Cenedlaethol neu Swyddfa’r Post
+            other: Manylion y cyfrif buddsoddi arian parod arall
+          info: Dywedasoch wrthym fod gan %{subject} gynilion.
+        confirm_destroy:
+          page_title: Cadarnhau dileu cyfrif cynilo
+          heading: Ydych chi’n siŵr eich bod am dynnu’r cyfrif cynilo hwn?
+          confirm_delete_button: Ie, tynnu
+          cancel_delete_button: Na, peidiwch â thynnu
+          confirm_delete_button_a11y: Ie, tynnu’r cyfrif cynilo hwn
+          cancel_delete_button_a11y: Na, peidiwch â thynnu’r cyfrif cynilo hwn
+        destroy:
+          success_flash: Rydych wedi tynnu’r cyfrif cynilo
+      savings_summary:
+        edit:
+          page_title: Cynilion %{Subject}
+          heading:
+            zero: Nid ydych wedi ychwanegu cynilion eto
+            one: Rydych wedi ychwanegu %{count} cyfrif cynilo
+            other: Rydych wedi ychwanegu %{count} cyfrifon cynilo
+        saving_details:
+          change_link_html: Newid <span class="govuk-visually-hidden">cynilo</span>
+          remove_link_html: Tynnu <span class="govuk-visually-hidden">cynilo</span>
+
+      other_investment_type:
+        edit:
+          page_title: Pa fuddsoddiadau eraill sydd gan %{subject} y tu mewn neu y tu allan i’r DU?
+      investments:
+        edit:
+          page_title: Ychwanegu manylion buddsoddiad
+          heading:
+            bond: Bondiau buddsoddi
+            pep: Cynlluniau ecwiti personol (PEPs)
+            share: Cyfranddaliadau
+            share_isa: ISA cyfranddaliadau
+            stock: Stociau, gan gynnwys gilts a bondiau’r llywodraeth
+            unit_trust: Ymddiriedolaethau uned
+            other: Buddsoddiadau unwaith ac am byth eraill
+          info: Dywedasoch wrthym fod gan %{subject} fuddsoddiadau.
+        confirm_destroy:
+          page_title: Cadarnhau dileu buddsoddiad
+          heading: Ydych chi’n siŵr eich bod am dynnu’r buddsoddiad hwn?
+          confirm_delete_button: Ie, tynnu
+          cancel_delete_button: Na, peidiwch â thynnu
+          confirm_delete_button_a11y: Ie, tynnu’r buddsoddiad hwn
+          cancel_delete_button_a11y: Na, peidiwch â thynnu’r buddsoddiad hwn
+        destroy:
+          success_flash: Rydych wedi tynnu’r buddsoddiad
+      investments_summary:
+        edit:
+          page_title: Buddsoddiadau %{Subject}
+          heading:
+            zero: Nid ydych wedi ychwanegu buddsoddiadau eto
+            one: Rydych wedi ychwanegu %{count} buddsoddiad
+            other: Rydych wedi ychwanegu %{count} buddsoddiad
+        investment_details:
+          change_link_html: Newid <span class="govuk-visually-hidden">buddsoddiad</span>
+          remove_link_html: Tynnu <span class="govuk-visually-hidden">buddsoddiad</span>
+
+      premium_bonds:
+        edit:
+          page_title: A oes gan eich cleient unrhyw Fandiau Premiwm?
+          heading: A oes gan eich cleient unrhyw Fandiau Premiwm?
+      partner_premium_bonds:
+        edit:
+          page_title: A oes gan y partner unrhyw Fandiau Premiwm?
+          heading: A oes gan y partner unrhyw Fandiau Premiwm?
+      has_national_savings_certificates:
+        edit:
+          heading: A oes gan %{subject} unrhyw Dystysgrifau Cynilion Cenedlaethol?
+      national_savings_certificates:
+        edit:
+          heading: Tystysgrifau Cynilion Cenedlaethol
+          info: Dywedasoch wrthym fod gan %{subject} Dystysgrifau Cynilion Cenedlaethol.
+        confirm_destroy:
+          page_title: Cadarnhau dileu Tystysgrif Cynilion Cenedlaethol
+          heading: Ydych chi’n siŵr eich bod am dynnu’r Dystysgrif Cynilion Cenedlaethol hon?
+          confirm_delete_button: Ie, tynnu
+          cancel_delete_button: Na, peidiwch â thynnu
+          confirm_delete_button_a11y: Ie, tynnu’r Dystysgrif Cynilion Cenedlaethol hon
+          cancel_delete_button_a11y: Na, peidiwch â thynnu’r Dystysgrif Cynilion Cenedlaethol hon
+        destroy:
+          success_flash: Rydych wedi tynnu’r Dystysgrif Cynilion Cenedlaethol
+      national_savings_certificates_summary:
+        edit:
+          page_title: Tystysgrifau Cynilion Cenedlaethol %{Subject}
+          heading:
+            zero: Nid ydych wedi ychwanegu Tystysgrifau Cynilion Cenedlaethol eto
+            one: Rydych wedi ychwanegu %{count} Dystysgrif Cynilion Cenedlaethol
+            other: Rydych wedi ychwanegu %{count} Tystysgrif Cynilion Cenedlaethol
+        investment_details:
+          change_link_html: Newid <span class="govuk-visually-hidden">Tystysgrif Cynilion Cenedlaethol</span>
+          remove_link_html: Tynnu <span class="govuk-visually-hidden">Tystysgrif Cynilion Cenedlaethol</span>
+      trust_fund:
+        edit:
+          page_title: A yw eich cleient yn debygol o elwa o gronfa ymddiriedolaeth?
+          heading: A yw eich cleient yn debygol o elwa o gronfa ymddiriedolaeth?
+          hint: Gan gynnwys unrhyw gronfeydd ymddiriedolaeth y tu mewn neu y tu allan i’r DU.
+      partner_trust_fund:
+        edit:
+          page_title: A yw’r partner yn debygol o elwa o gronfa ymddiriedolaeth?
+          heading: A yw’r partner yn debygol o elwa o gronfa ymddiriedolaeth?
+          hint: Gan gynnwys unrhyw gronfeydd ymddiriedolaeth y tu mewn neu y tu allan i’r DU.
+
+      properties:
+        confirm_destroy:
+          page_title: Cadarnhau dileu ased
+          heading: Ydych chi’n siŵr eich bod am dynnu’r ased hwn?
+          confirm_delete_button: Ie, tynnu
+          cancel_delete_button: Na, peidiwch â thynnu
+          confirm_delete_button_a11y: Ie, tynnu’r ased hwn
+          cancel_delete_button_a11y: Na, peidiwch â thynnu’r ased hwn
+        destroy:
+          success_flash: Mae’r ased wedi’i ddileu
+      residential_property:
+        edit:
+          property_heading: &PROPERTY_HEADING
+            residential: "Yr eiddo preswyl a berchnogir gan %{subject}"
+            commercial: "Yr eiddo masnachol a berchnogir gan %{subject}"
+            land: "Y tir a berchnogir gan %{subject}"
+          heading:
+            <<: *PROPERTY_HEADING
+          info: Dywedasoch wrthym fod gan %{subject} berchnogaeth neu gyd-berchnogaeth o eiddo preswyl.
+        destroy:
+          success_flash: Mae’r ased wedi’i ddileu
+      commercial_property:
+        edit:
+          heading:
+            <<: *PROPERTY_HEADING
+          info: Dywedasoch wrthym fod gan %{subject} berchnogaeth neu gyd-berchnogaeth o eiddo masnachol.
+        destroy:
+          success_flash: Mae’r ased wedi’i ddileu
+      land:
+        edit:
+          heading:
+            <<: *PROPERTY_HEADING
+          info: Dywedasoch wrthym fod gan %{subject} berchnogaeth neu gyd-berchnogaeth o dir.
+        destroy:
+          success_flash: Mae’r ased wedi’i ddileu
+
+      property_address:
+        edit:
+          heading:
+            residential: Beth yw cyfeiriad yr eiddo preswyl y mae %{subject} yn berchen arno?
+            commercial: Beth yw cyfeiriad yr eiddo masnachol y mae %{subject} yn berchen arno?
+            land: Beth yw cyfeiriad y tir y mae %{subject} yn berchen arno?
+
+      property_owners:
+        edit:
+          page_title: Pobl eraill sy’n berchen ar y %{asset}
+          heading:
+            residential: Perchnogion eraill yr eiddo preswyl
+            commercial: Perchnogion eraill yr eiddo masnachol
+            land: Perchnogion eraill y tir
+          property_owners_fieldset_legend: Perchennog arall %{index}
+          add_button: Ychwanegu perchennog arall
+          remove_button: Tynnu perchennog %{index}
+          deleted_flash: Mae’r perchennog wedi’i ddileu
+          info: Dywedasoch wrthym fod perchnogion eraill y tir.
+
+      properties_summary:
+        edit:
+          page_title: Asedau %{Subject}
+          heading:
+            zero: Nid ydych wedi ychwanegu asedau eto
+            one: Rydych wedi ychwanegu %{count} ased
+            other: Rydych wedi ychwanegu %{count} ased
+      frozen_income_savings_assets_capital: *FROZEN_INCOME_ASSETS_PAGE_TEXT
+      answers:
+        edit:
+          page_title: Gwiriwch eich atebion - Cyfalaf eich cleient
+          heading: Gwiriwch eich atebion
+
+      usual_property_details:
+        edit:
+          heading: Mae angen i chi roi’r manylion am yr eiddo y mae eich cleient yn byw ynddo fel arfer ac y %{residence_ownership}
+          info: "Dywedasoch wrthym fod eich cleient yn byw fel arfer mewn eiddo %{residence_ownership}:"
+          residence_ownership:
+            applicant_owned: y maent yn berchen arno
+            partner_owned: y mae eu partner yn berchen arno
+            joint_owned: y maent hwy a’u partner yn berchen arno
+
+    evidence:
+      upload:
+        edit:
+          cifc_warning: Rhaid i chi ddarparu tystiolaeth o bob newid mewn amgylchiadau ariannol
+          page_title: Uwchlwytho tystiolaeth ategol
+          heading: Uwchlwytho tystiolaeth ategol
+          exempt: Nid oes angen unrhyw dystiolaeth ategol ar gyfer cais eich cleient oherwydd %{reasons}. Efallai y byddwch yn dal i uwchlwytho unrhyw ddogfennau a fydd yn helpu eich cais.
+          optional: Nid oes angen unrhyw dystiolaeth ategol yn seiliedig ar eich cais presennol, ond efallai y byddwch yn uwchlwytho unrhyw ddogfennau a fydd yn helpu eich cais.
+          required: Yn seiliedig ar eich atebion, mae angen i chi ddarparu’r dystiolaeth ganlynol i gefnogi’r cais.
+          crown_court_reject_warning: Os nad oes gennych y dystiolaeth ar gael ar hyn o bryd, gallwch ei chyflwyno o fewn 14 diwrnod.
+          remanded_reject_warning: Os nad oes gennych y dystiolaeth ar gael ar hyn o bryd, gallwch ei chyflwyno yn nes ymlaen.
+          default_reject_warning: Rhaid i chi uwchlwytho’r dystiolaeth ategol ofynnol neu bydd y cais yn cael ei ddychwelyd atoch.
+          recent_docs: Rhaid i bob tystiolaeth fod o fewn y 3 mis diwethaf.
+          rename_files: Gall roi disgrifiadau clir i enwau ffeiliau helpu i brosesu eich cais yn gyflymach. Er enghraifft, 'datganiad-banc-cleient.pdf' yn lle 'ffeil23.pdf'.
+          upload_file_button: Uwchlwytho ffeil
+          upload_files_heading: Uwchlwytho ffeiliau
+          upload_files_info: Uchafswm maint pob ffeil yw %{max_size}MB. Rhaid i ffeiliau fod yn DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV neu PDF.
+          choose_files_button: Dewiswch ffeiliau
+          uploaded_files_heading: Ffeiliau wedi’u huwchlwytho
+          uploaded_files_info: Pan fyddwch yn cyflwyno’r cais hwn, bydd swyddog achos yn gallu cael mynediad at y ffeiliau hyn.
+          file_name: Enw’r ffeil
+          uploaded: Wedi’i huwchlwytho
+          delete:
+            success: "Fe wnaethoch ddileu %{file_name}"
+            failure: Methu dileu %{file_name} – ceisiwch eto
+        uploaded_file:
+          remove_button: Dileu
+        scan_flagged: "Canfuwyd ffeil faleisus bosibl gan y sgan firws - ID Cais Trosedd: #{crime_application_id} ID Dogfen: #{document_id} Canlyniad sgan: #{scan_status}"
+        scan_inconclusive: Sgan firws yn amwys
+        success: "Dogfen wedi’i huwchlwytho’n llwyddiannus. Allwedd gwrthrych: #{s3_object_key}"
+      scan:
+        document_missing: Nid yw’r ddogfen yn bresennol
+        bad_timeout: "Rhaid i newidyn amgylchedd TIMEOUT fod yn fwy na %{min} eiliad, presennol: %{current}"
+        attempted: "Ymgais i sganio dogfen. Canlyniad: '%{scan_status}'"
+        unavailable: Nid yw Gwasanaeth Sganio ClamAV ar gael
+        not_installed: "Gwall Sgan ClamAV - rhaid i becyn clamdscan gael ei osod a bod yn weithredol. Eithriad: %{message}"
+        timeout: "Methodd sgan ffeil ClamAV â chwblhau cyn pen %{timeout} eiliad, canslwyd y sgan"
+
+    submission:
+      more_information:
+        edit:
+          page_title: Mwy o wybodaeth
+      review:
+        edit:
+          page_title: Adolygu’r cais
+          heading: Adolygu’r cais
+      declaration:
+        edit:
+          page_title: Datganiadau
+          legal_representative_legend: Cynrychiolydd cyfreithiol
+        fulfilment_errors:
+          heading: Mae angen i chi gwblhau’r wybodaeth ganlynol cyn y gellir cyflwyno’r cais
+          change_link: Newid
+      confirmation:
+        show:
+          page_title: Cais wedi’i gyflwyno
+          heading:
+            initial: Cais wedi’i gwblhau
+            post_submission_evidence: Tystiolaeth wedi’i chyflwyno
+            change_in_financial_circumstances: Newid mewn amgylchiadau ariannol wedi’i gyflwyno
+            resubmission: Cais wedi’i ddiweddaru
+          what_happens_next:
+            initial: Byddwn yn gwirio eich cais ac yn anfon e-bost atoch gyda’r canlyniad.
+            post_submission_evidence: Byddwn yn gwirio’r dystiolaeth a gyflwynwyd ac yn anfon e-bost atoch gyda’r canlyniad.
+            change_in_financial_circumstances: Byddwn yn gwirio’r wybodaeth newydd a gyflwynwyd ac yn anfon e-bost atoch gyda’r canlyniad.
+            give_feedback: Rhoi adborth
+            feedback: i’n helpu i wella’r gwasanaeth hwn.
+            sub_heading: Yr hyn sy’n digwydd nesaf
+          view_application:
+            initial: Gweld cais a gwblhawyd
+            post_submission_evidence: Gweld tystiolaeth a gyflwynwyd
+            change_in_financial_circumstances: Gweld cais a gwblhawyd
+          reference: Cyfeirnod LAA
+      cannot_submit_without_nino:
+        edit:
+          page_title: Methu cyflwyno’r cais heb Rif Yswiriant Gwladol
+
+      failure:
+        edit:
+          page_title: Mae’n ddrwg gennym, nid yw’r gwasanaeth ar gael
+          heading: Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+          body_html:
+            - Ceisiwch ail-lwytho’r dudalen.
+            - I barhau i olygu cais arall, ewch yn ôl i’ch rhestr o geisiadau.
+            - Os ydych yn cael problemau wrth gyflwyno cais, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">cysylltwch â’r tîm cymorth technegol</a>.

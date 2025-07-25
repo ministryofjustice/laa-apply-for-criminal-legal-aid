@@ -111,6 +111,7 @@ en:
               invalid_year: Enter a valid year
               year_too_early: Date your client separated is too far in the past
               future_not_allowed: Date your client separated must be today or in the past
+
         steps/client/details_form:
           attributes:
             first_name:

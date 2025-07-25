@@ -1,11 +1,4 @@
 cy:
-  activerecord:
-    errors:
-      messages:
-        record_invalid: 'Wedi methu dilysu: %{errors}'
-        restrict_dependent_destroy:
-          has_many: Methu dileu cofnod oherwydd bod %{record} yn bodoli
-          has_one: Methu dileu cofnod oherwydd bod %{record} yn bodoli
   dictionary:
     subjects:
       applicant: 'eich cleient'
@@ -19,20 +12,20 @@ cy:
       datetime_at: '%-d %B %Y at %-l:%M%P'  # 3 Ionawr 2019 am 2:45yp
       datestamp: '%d/%m/%Y %-l:%M%P' # 03/01/2019 3:29yp
       dob: '%-d %B %Y' # 1 Ionawr 1990
-  hours_or_minutes:
-    hours:
-      one: an hour
-      other: '%{count} hours'
-    minutes:
-      one: a minute
-      other: '%{count} minutes'
   service:
     name: Gwneud cais am gymorth cyfreithiol troseddol
 
-  time:
+  cookies:
+    show:
+      settings_updated:
+        accept: Rydych wedi derbyn cwcis dadansoddeg.
+        reject: Rydych wedi gwrthod cwcis dadansoddeg.
+
+
+  date:
     formats:
       <<: *DATE_FORMATS
-  date:
+  time:
     formats:
       <<: *DATE_FORMATS
     abbr_day_names:
@@ -94,6 +87,7 @@ cy:
       title: Pwysig
     alert:
       title: Rhybudd
+
   support:
     array:
       # defaults for `array.to_sentence`
