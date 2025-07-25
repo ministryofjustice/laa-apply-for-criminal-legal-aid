@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   end
 
   # Handle the cookies consent
-  resource :cookies, only: [:show, :update]
+  resource :cookies, only: [:show]
 
   resources :crime_applications, except: [:show, :update], path: 'applications' do
     get :confirm_destroy, path: 'confirm-destroy', on: :member

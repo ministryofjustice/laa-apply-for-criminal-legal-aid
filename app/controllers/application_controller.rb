@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   include ErrorHandling
 
   helper StepsHelper,
-         AnalyticsHelper,
          AuthHelper
 
   prepend_before_action :authenticate_provider!
