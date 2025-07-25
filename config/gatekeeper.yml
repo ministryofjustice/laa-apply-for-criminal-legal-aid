@@ -20,6 +20,13 @@ staging:
     - 0Z981E
     - 0A719G
 
+preprod:
+  office_codes:
+    - 1A123B # mock and tests
+    - 1K022G
+    - 0Z981E
+    - 0A719G
+
 production:
   office_codes:
     - 1A123B # mock and tests

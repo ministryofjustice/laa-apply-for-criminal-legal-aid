@@ -159,6 +159,7 @@ Read [how to connect the cluster](https://user-guide.cloud-platform.service.just
 **Namespaces for this service:**
 
 - [staging namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-staging)
+- [preprod namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-preprod)
 - [production namespace](https://github.com/ministryofjustice/cloud-platform-environments/tree/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-apply-for-criminal-legal-aid-production)
 
 ### Applying the configuration
@@ -171,7 +172,7 @@ kubectl apply -f config/kubernetes/staging/ingress.yml
 
 ### Continuous integration and delivery
 
-The application is setup to trigger tests on every pull request and, in addition, to build and release to staging
+The application is setup to trigger tests on every pull request and, in addition, to build and release to staging and preprod
 automatically on merge to `main` branch. Release to production will need to be approved manually.
 
 All this is done through **github actions**.
