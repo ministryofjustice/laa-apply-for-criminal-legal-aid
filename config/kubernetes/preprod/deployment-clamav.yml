@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: clamav-preprod
+  namespace: laa-apply-for-criminal-legal-aid-preprod
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  minReadySeconds: 15
+  serviceName: clamav
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: apply-for-criminal-legal-aid-clamav-preprod
+  template:
+    metadata:
+      labels:
+        app: apply-for-criminal-legal-aid-clamav-preprod
+        tier: backend
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 10000
+        runAsGroup: 10000
+        runAsNonRoot: true
+      containers:
+        - name: clamav
+          image: clamav/clamav-debian:stable
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3310
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/clamav
+              name: clamav-signatures
+            - mountPath: /var/log/clamav
+              name: clamav-log
+            - mountPath: /etc/clamav/freshclam.conf
+              name: freshclam-config
+              subPath: freshclam.conf
+              readOnly: true
+            - mountPath: /tmp
+              name: tmp
+          env:
+            - name: FRESHCLAM_CHECKS
+              value: "24"
+          command: ["/init-unprivileged"]
+          resources:
+            requests:
+              cpu: 25m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 3Gi
+          startupProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - echo "started" > /tmp/starttest && clamdscan --no-summary /tmp/starttest
+            failureThreshold: 60
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 3310
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - clamdscan --no-summary /tmp/starttest
+            periodSeconds: 30
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: clamav-log
+          emptyDir: {}
+        - name: freshclam-config
+          configMap:
+            name: clamav-configmap-preprod
+        - name: tmp
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: clamav-signatures
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clamav-configmap-preprod
+  namespace: laa-apply-for-criminal-legal-aid-preprod
+data:
+  freshclam.conf: |
+    PrivateMirror https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
+    UpdateLogFile /var/log/clamav/freshclam.log
+    NotifyClamd /etc/clamav/clamd.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clamav-service-preprod
+  namespace: laa-apply-for-criminal-legal-aid-preprod
+  labels:
+    app: apply-for-criminal-legal-aid-clamav-preprod
+spec:
+  ports:
+    - port: 3310
+      name: clamav
+      targetPort: 3310
+  selector:
+    app: apply-for-criminal-legal-aid-clamav-preprod

@@ -6,10 +6,12 @@ en:
       tag:
         production: Beta
         staging: Staging
+        preprod: Pre-production
         local: Dev
         test: Test
       colour:
         production: blue
+        preprod: blue
         staging: orange
         local: green
         test: blue
