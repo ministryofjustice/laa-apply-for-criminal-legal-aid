@@ -32,6 +32,10 @@
                          classes: "govuk-phase-banner-#{env}") %>
 <% end %>
 
+<% content_for(:language_toggle) do %>
+  <%= render partial: 'layouts/language_toggle' %>
+<% end %>
+
 <% content_for(:content) do %>
   <%= yield %>
 <% end %>
