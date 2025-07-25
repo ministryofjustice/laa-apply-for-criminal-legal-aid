@@ -22,12 +22,13 @@ cy:
         reject: Rydych wedi gwrthod cwcis dadansoddeg.
 
 
-  date:
-    formats:
-      <<: *DATE_FORMATS
   time:
     formats:
       <<: *DATE_FORMATS
+  date:
+    formats:
+      <<: *DATE_FORMATS
+
     abbr_day_names:
       - Sul
       - Llun
