@@ -14,7 +14,8 @@ data:
   REAUTHENTICATE_AFTER_MINUTES: "1440"
   ENABLE_PROMETHEUS_EXPORTER: "true"
   CLAMD_CONF_FILENAME: "clamd.preprod.conf"
-  DATASTORE_API_ROOT: http://service-preprod.laa-criminal-applications-datastore-preprod.svc.cluster.local
+  DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
+  DATASTORE_API_CONSUMER: crime-apply-preprod
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: "20"
 
