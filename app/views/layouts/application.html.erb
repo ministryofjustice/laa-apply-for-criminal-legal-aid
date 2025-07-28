@@ -15,13 +15,15 @@
   <% render partial: 'header' %>
 <% end %>
 
-<% content_for(:cookie_banner) do %>
-  <% unless analytics_consent_cookie.present? %>
-    <%= render partial: 'layouts/cookie_banner' %>
-  <% end %>
+<% if FeatureFlags.google_analytics.enabled? %>
+  <% content_for(:cookie_banner) do %>
+    <% unless analytics_consent_cookie.present? %>
+      <%= render partial: 'layouts/cookie_banner' %>
+    <% end %>
 
-  <% if flash['cookies_consent_updated'] %>
-    <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+    <% if flash['cookies_consent_updated'] %>
+      <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+    <% end %>
   <% end %>
 <% end %>
 
