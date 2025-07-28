@@ -50,6 +50,14 @@ RSpec.describe Lassie::OidcStrategy do
       expect(strategy.pkce).to be(true)
     end
 
+    it 'sets the correct logout path' do
+      expect(strategy.logout_path).to match('/logout')
+    end
+
+    it 'sets the correct post logout redirect uri' do
+      expect(strategy.post_logout_redirect_uri).to match('https://www.example.com/providers/logout')
+    end
+
     it 'uses the tennant url for issuer descovery' do
       expect(strategy.discovery).to be(true)
       expect(strategy.issuer).to match(
