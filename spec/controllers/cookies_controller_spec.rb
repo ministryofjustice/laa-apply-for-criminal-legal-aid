@@ -47,7 +47,7 @@ RSpec.describe CookiesController do
         ).not_to receive(:new).with(
           consent: param_value,
           cookies: an_instance_of(ActionDispatch::Cookies::CookieJar),
-          ).and_call_original
+        ).and_call_original
 
         post :update, params: { cookies_settings_form: { consent: param_value } }
 
