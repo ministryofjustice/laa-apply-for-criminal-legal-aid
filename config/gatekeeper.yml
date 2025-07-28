@@ -19,6 +19,9 @@ staging:
     - 1K022G
     - 0Z981E
     - 0A719G
+    - 2D141P
+    - 2L573T
+    - 2M456C
 
 preprod:
   office_codes:
@@ -26,6 +29,9 @@ preprod:
     - 1K022G
     - 0Z981E
     - 0A719G
+    - 2D141P
+    - 2L573T
+    - 2M456C
 
 production:
   office_codes:
