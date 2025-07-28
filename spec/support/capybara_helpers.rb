@@ -59,7 +59,7 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   end
 
   def return_to_application_later(applicant: 'Jo Bloggs', time_lapsed: 1.week)
-    click_link('Sign out')
+    visit('providers/logout')
     travel time_lapsed
     visit root_path
     click_button('Start now')

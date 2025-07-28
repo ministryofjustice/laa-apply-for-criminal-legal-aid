@@ -8,4 +8,8 @@ module AuthHelper
     provider_saml_omniauth_authorize_path
     # :nocov:
   end
+
+  def provider_omniauth_logout_path
+    '/providers/auth/entra/logout'
+  end
 end

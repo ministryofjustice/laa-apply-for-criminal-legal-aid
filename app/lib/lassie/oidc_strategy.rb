@@ -1,7 +1,6 @@
 module Lassie
   class OidcStrategy < OmniAuth::Strategies::OpenIDConnect
     info { { email:, roles:, office_codes: } }
-
     private
 
     # The `LAA_ACCOUNTS` custom claim can be either a single office code (as a string)
