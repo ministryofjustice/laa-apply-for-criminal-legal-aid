@@ -34,8 +34,10 @@
                          classes: "govuk-phase-banner-#{env}") %>
 <% end %>
 
-<% content_for(:language_toggle) do %>
-  <%= render partial: 'layouts/language_toggle' %>
+<% if FeatureFlags.welsh_translation.enabled? %>
+  <% content_for(:language_toggle) do %>
+    <%= render partial: 'layouts/language_toggle' %>
+  <% end %>
 <% end %>
 
 <% content_for(:content) do %>
