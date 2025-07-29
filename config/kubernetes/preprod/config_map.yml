@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap-staging
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  name: configmap-preprod
+  namespace: laa-apply-for-criminal-legal-aid-preprod
 data:
-  ENV_NAME: staging
+  ENV_NAME: preprod
   RACK_ENV: production
   RAILS_ENV: production
   RAILS_SERVE_STATIC_FILES: enabled
@@ -13,14 +13,16 @@ data:
   SESSION_TIMEOUT_MINUTES: "60"
   REAUTHENTICATE_AFTER_MINUTES: "1440"
   ENABLE_PROMETHEUS_EXPORTER: "true"
-  CLAMD_CONF_FILENAME: "clamd.staging.conf"
+  CLAMD_CONF_FILENAME: "clamd.preprod.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
+  DATASTORE_API_CONSUMER: crime-apply-preprod
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: "20"
-  OMNIAUTH_ENTRA_CLIENT_ID: abd5ebbe-44b2-4c14-b815-a741ebfd21b2
-  OMNIAUTH_ENTRA_TENANT_ID: ff260a8b-cb92-4cfe-8ae9-d48bb0fd9851
-  OMNIAUTH_ENTRA_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
-  OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
+
+  OMNIAUTH_ENTRA_CLIENT_ID: 7d95f6ff-2ff5-4ba0-aaf3-06d8769557ef
+  OMNIAUTH_ENTRA_TENANT_ID: 8352c342-da15-413a-8b5b-d89545766f0c
+  OMNIAUTH_ENTRA_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
+  OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
@@ -28,9 +30,5 @@ data:
   # LAA Portal metadata endpoint or file
   # (endpoint not accessible from inside CP, using locally stored file)
   #
-  # Important: make sure whatever Portal env is declared here, uses the
-  # corresponding certificates, if required (in `deployment.tpl` file)
-  #
-  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
   # Auth identity prodivder - 'saml' (Portal) or 'entra' (LASSIE)
   AUTH_IDP: entra

@@ -1,3 +1,5 @@
+require 'host_env'
+
 # Determine whether or not a feature is enabled in this environment.
 #
 # usage (for e.g. feature :foobar):

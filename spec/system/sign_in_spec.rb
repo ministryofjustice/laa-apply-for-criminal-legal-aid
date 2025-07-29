@@ -104,7 +104,9 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'on sign out it redirects to the home' do
-      click_link 'Sign out'
+      expect(page).to have_link('Sign out', href: '/providers/auth/entra/logout')
+
+      visit 'providers/logout'
 
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')

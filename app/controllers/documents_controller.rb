@@ -3,6 +3,7 @@ class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
   before_action :set_document, only: :download
   before_action :require_document
+  before_action :set_security_headers
 
   respond_to :html, :json, :js
 

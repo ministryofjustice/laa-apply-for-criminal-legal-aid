@@ -52,4 +52,9 @@ class ApplicationController < ActionController::Base
   def application_id
     params[:id]
   end
+
+  def set_security_headers
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+  end
 end

@@ -28,7 +28,7 @@
   document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
 <% end %>
 
-<%= yield(:cookie_banner) unless controller_name == 'cookies' %>
+<%= yield(:cookie_banner) if FeatureFlags.google_analytics.enabled? && controller_name != 'cookies' %>
 
 <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">
   <%= content_for?(:skip_link_message) ? yield(:skip_link_message) : 'Skip to main content' %>

@@ -49,7 +49,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
         draft_age_passported_application(case_type:)
         click_button 'Save and submit application'
 
-        click_link('Sign out')
+        visit('providers/logout')
         travel 1.week
 
         visit root_path

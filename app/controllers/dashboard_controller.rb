@@ -4,9 +4,7 @@ class DashboardController < ApplicationController
 
   before_action(
     :require_current_office!,
-    # Avoid the browser caching any of the dashboard pages so the
-    # back button after signing out can't load any sensitive details
-    :no_store
+    :set_security_headers
   )
 
   private

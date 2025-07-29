@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-preprod
+  namespace: laa-apply-for-criminal-legal-aid-preprod
+  labels:
+    app: apply-for-criminal-legal-aid-web-preprod
+spec:
+  ports:
+    - port: 80
+      name: http
+      targetPort: 3000
+  selector:
+    app: apply-for-criminal-legal-aid-web-preprod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-errors
+  namespace: laa-apply-for-criminal-legal-aid-preprod
+  labels:
+    app.kubernetes.io/name: nginx-errors
+    app.kubernetes.io/part-of: ingress-nginx
+spec:
+  selector:
+    app.kubernetes.io/name: nginx-errors
+    app.kubernetes.io/part-of: ingress-nginx
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http

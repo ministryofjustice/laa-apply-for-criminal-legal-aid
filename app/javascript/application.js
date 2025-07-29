@@ -68,7 +68,8 @@ for (let i = 0; i < $forms.length; i++) {
   new MultiActionForm($forms[i]).init()
 }
 
+// Disabled for time being, see CRIMAPP-1877
 // Google analytics additional tracking
 // Keep this at the bottom of this file
-import GAEvents from "./local/ga-events"
-new GAEvents(window).init()
+// import GAEvents from "./local/ga-events"
+// new GAEvents(window).init()
