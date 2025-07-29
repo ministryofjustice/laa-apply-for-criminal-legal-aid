@@ -9,7 +9,7 @@ module AuthHelper
     # :nocov:
   end
 
-  def provider_omniauth_logout_path
-    '/providers/auth/entra/logout'
+  def provider_omniauth_logout_path(locale: I18n.locale)
+    "/providers/auth/entra/logout?locale=#{locale}"
   end
 end
