@@ -60,4 +60,21 @@ RSpec.describe 'Cookie consent banner' do
       expect(page).not_to have_css('.govuk-cookie-banner')
     end
   end
+
+  context 'when google analytics feature flag is not enabled' do
+    before do
+      allow(FeatureFlags).to receive(:google_analytics) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
+
+      visit root_path
+    end
+
+    it 'does not show the consent banner' do
+      expect(page).not_to have_css('.govuk-cookie-banner', text: 'Cookies on Apply for criminal legal aid')
+      expect(page).not_to have_button('Accept analytics cookies')
+      expect(page).not_to have_button('Reject analytics cookies')
+      expect(page).not_to have_link('View cookies', href: cookies_path)
+    end
+  end
 end
