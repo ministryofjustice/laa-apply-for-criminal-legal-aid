@@ -53,6 +53,7 @@ cy:
       sign_in: Mewngofnodi
       find_address: Dod o hyd i gyfeiriad
       try_again: Ceisio eto
+      try_again_now: Ceisiwch eto nawr
     contact:
       call_charges: Darganfod gwybodaeth am gostau galwadau
       case_enquiries: Ymholiadau achos
@@ -445,6 +446,10 @@ cy:
       steps_dwp_cannot_check_dwp_status_form:
         page_title: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
         heading: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+        next_steps_label: "Gallwch wneud un o’r canlynol:"
+        next_steps_html: |
+          <li>parhewch â’r cais hwn i uwchlwytho tystiolaeth ategol</li>
+          <li>arbedwch a dewch yn ôl yn hwyrach i geisio eto</li>
       steps_address_lookup_form:
         postcode: Rhaid i hwn fod yn god post y DU dilys. Er enghraifft, SW1A 2AA.
       steps_case_urn_form:
@@ -681,20 +686,19 @@ cy:
           none: Na, nid yw’r partner yn rhan o’r achos
       steps_partner_conflict_form:
         conflict_of_interest_options:
-          yes: "Ie"
-          no: "Na"
+          <<: *YESNO
       steps_partner_same_address_form:
         has_same_address_as_client_options:
-          yes: "Ie"
-          no: "Na"
-      steps_partner_address_form:
-        address_line_one: Llinell cyfeiriad 1
-        address_line_two: Llinell cyfeiriad 2 (dewisol)
-        city: Tref neu ddinas
-        country: Gwlad
-        postcode: Cod post
+          <<: *YESNO
+      steps_partner_address_form: *ADDRESS_DETAILS
       steps_dwp_benefit_type_form:
         benefit_type_options: &BENEFIT_TYPE_OPTIONS
+          universal_credit: Credyd Cynhwysol
+          guarantee_pension: Elfen Credyd Gwarant o Gredyd Pensiwn
+          jsa: Lwfans Ceisio Gwaith ar sail Incwm (JSA)
+          esa: Lwfans Cyflogaeth a Chymorth ar sail Incwm (ESA)
+          income_support: Cymorth Incwm
+          none: Dim un o'r rhain
       steps_dwp_partner_benefit_type_form:
         benefit_type_options: *BENEFIT_TYPE_OPTIONS
       steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_OPTIONS

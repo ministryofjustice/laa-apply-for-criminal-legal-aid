@@ -1,10 +1,5 @@
 cy:
   dictionary:
-    subjects:
-      applicant: 'eich cleient'
-      applicant_and_partner: 'eich cleient a’u partner'
-      applicant_or_partner: 'eich cleient neu eu partner'
-      partner: 'y partner'
     DATE_FORMATS: &DATE_FORMATS
       default: '%-d %B %Y'  # 3 Ionawr 2019
       compact: '%d/%m/%Y'   # 03/01/2019
@@ -12,6 +7,11 @@ cy:
       datetime_at: '%-d %B %Y at %-l:%M%P'  # 3 Ionawr 2019 am 2:45yp
       datestamp: '%d/%m/%Y %-l:%M%P' # 03/01/2019 3:29yp
       dob: '%-d %B %Y' # 1 Ionawr 1990
+    subjects:
+      applicant: 'eich cleient'
+      applicant_and_partner: 'eich cleient a’u partner'
+      applicant_or_partner: 'eich cleient neu eu partner'
+      partner: 'y partner'
   service:
     name: Gwneud cais am gymorth cyfreithiol troseddol
 
@@ -21,10 +21,11 @@ cy:
         accept: Rydych wedi derbyn cwcis dadansoddeg.
         reject: Rydych wedi gwrthod cwcis dadansoddeg.
 
-
   time:
     formats:
       <<: *DATE_FORMATS
+    am: yb
+    pm: yp
   date:
     formats:
       <<: *DATE_FORMATS
