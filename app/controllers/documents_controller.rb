@@ -69,7 +69,7 @@ class DocumentsController < ApplicationController
   def error_for(document)
     return nil if document.errors.empty?
 
-    document.errors.first.full_message.html_safe # rubocop:disable Rails/OutputSafety
+    document.errors.first.full_message
   end
 
   # TODO: unify if possible the submission params
