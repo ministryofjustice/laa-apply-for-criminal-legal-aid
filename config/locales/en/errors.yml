@@ -41,7 +41,7 @@ en:
               blank: File could not be uploaded – try again
             scan_status:
               flagged: File may have a virus - please check the file is safe before trying again
-              inconclusive: File scanning service failed - please contact <a href="mailto:%{support_email}">%{support_email}</a>
+              inconclusive: There may be a problem with the selected file. Try uploading again or upload a different document.
 
         amount_and_frequency:
           attributes:
