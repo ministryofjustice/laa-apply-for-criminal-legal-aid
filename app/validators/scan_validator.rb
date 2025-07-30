@@ -12,7 +12,7 @@ class ScanValidator < ActiveModel::Validator
   # rubocop:disable Style/GuardClause, Style/IfUnlessModifier
   def perform_validations
     if Datastore::Documents::Scan.inconclusive?(record)
-      record.errors.add(:scan_status, :inconclusive, support_email: Settings.support_email)
+      record.errors.add(:scan_status, :inconclusive)
     end
 
     if Datastore::Documents::Scan.flagged?(record)
