@@ -44,6 +44,9 @@
 
 <div class="govuk-width-container">
   <%= yield(:back_link) %>
+  <% if FeatureFlags.welsh_translation.enabled? %>
+    <%= yield(:language_toggle) %>
+  <% end %>
 
   <main class="govuk-main-wrapper" id="main-content" role="main">
     <%= yield(:content) %>
