@@ -27,7 +27,7 @@ RSpec.describe 'Language toggle' do
       visit root_path
     end
 
-    it 'does not show the language toggle' do
+    it 'shows the language toggle' do
       expect(page).to have_css('.language-toggle')
       expect(page).to have_link('Cymraeg', href: '/applications?locale=cy')
       expect(page).to have_css('.govuk-link--no-underline', text: 'English')
