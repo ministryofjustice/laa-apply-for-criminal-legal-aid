@@ -32,6 +32,10 @@ cy:
         "yes": "Newid mewn amgylchiadau ariannol"
 
     index:
+      application_type:
+        initial: Cychwynnol
+        post_submission_evidence: Uwchlwytho tystiolaeth ategol
+        change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
       page_title: Eich ceisiadau
       delete_button: Dileu
       delete_button_a11y: Dileu cais %{applicant_name}

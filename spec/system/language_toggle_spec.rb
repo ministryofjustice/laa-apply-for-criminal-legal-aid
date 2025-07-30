@@ -34,7 +34,7 @@ RSpec.describe 'Language toggle' do
       expect(page).to have_css('.govuk-link--no-underline', text: 'English')
     end
   end
-  
+
   it 'shows the language toggle links' do
     visit root_path
     toggle_text = page.find('.language-toggle').text

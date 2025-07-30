@@ -158,116 +158,116 @@ cy:
     questions:
       # BEGIN overview section
       application_type:
-        question: Application type
+        question: Math o gais
         answers:
-          initial: Initial
-          change_in_financial_circumstances: Change in financial circumstances
-          post_submission_evidence: Post submission evidence
+          initial: Cychwynnol
+          change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+          post_submission_evidence: Tystiolaeth ar ôl cyflwyno
       reference:
-        question: LAA reference number
+        question: Rhif cyfeirnod LAA
       pre_cifc_maat_id_or_usn:
-        question: "%{ref_type} of original application"
+        question: "%{ref_type} y cais gwreiddiol"
         absence_answer: *absence_not_provided
       pre_cifc_reason:
-        question: Changes in client's financial circumstances
+        question: Newidiadau yng nghyflwr ariannol y cleient
         absence_answer: *absence_not_provided
       means_tested:
-        question: Means tested application
+        question: Cais wedi’i brofi’n ariannol
         answers:
           <<: *YESNO
       date_stamp:
-        question: Date stamp
+        question: Stampa dyddiad
       date_submitted:
-        question: Date submitted
+        question: Dyddiad cyflwyno
       provider_email:
-        question: Submitted by
+        question: Wedi’i gyflwyno gan
       office_code:
-        question: Office account number
+        question: Rhif cyfrif swyddfa
       # END overview section
 
       # BEGIN client details section
       first_name:
-        question: First name
+        question: Enw cyntaf
         absence_answer: ""
       last_name:
-        question: Last name
+        question: Cyfenw
         absence_answer: ""
       other_names:
-        question: Other names
+        question: Enwau eraill
         absence_answer: *absence_none
       date_of_birth:
-        question: Date of birth
+        question: Dyddiad geni
       nino:
-        question: National Insurance number
+        question: Rhif Yswiriant Gwladol
         absence_answer: *absence_not_provided
       arc:
-        question: Application registration card (ARC) number
+        question: Rhif cerdyn cofrestru cais (ARC)
       has_partner:
         question: Partner
         answers:
           <<: *YESNO
       relationship_status:
-        question: Relationship status
+        question: Statws perthynas
         answers:
-          single: Single
-          widowed: Widowed
-          divorced: Divorced
-          separated: Separated
-          prefer_not_to_say: They prefer not to say
+          single: Sengl
+          widowed: Gweddw
+          divorced: Wedi ysgaru
+          separated: Wedi gwahanu
+          prefer_not_to_say: Yn well ganddynt beidio dweud
       separation_date:
-        question: Date client separated from partner
+        question: Dyddiad y gwahanodd y cleient oddi wrth y partner
       # END client details section
 
       # BEGIN contact details section
       residence_type:
-        question: Where the client usually lives
+        question: Lle mae’r cleient yn byw fel arfer
         answers:
-          rented: In rented accommodation
-          temporary: In temporary accommodation
-          parents: With their parents
-          applicant_owned: In a property they own
-          partner_owned: In a property their partner owns
-          joint_owned: In a property they and their partner both own
-          someone_else: In someone else's home
-          none: They do not have a fixed home address
+          rented: Mewn llety rhent
+          temporary: Mewn llety dros dro
+          parents: Gyda’u rhieni
+          applicant_owned: Mewn eiddo y maent yn berchen arno
+          partner_owned: Mewn eiddo y mae eu partner yn berchen arno
+          joint_owned: Mewn eiddo y mae’r ddau yn berchen arno
+          someone_else: Yn nhŷ rhywun arall
+          none: Nid oes ganddynt gyfeiriad cartref sefydlog
       relationship_to_owner_of_usual_home_address:
-        question: Relationship to client
+        question: Perthynas â’r cleient
       home_address:
-        question: Usual home address
+        question: Cyfeiriad cartref arferol
         absence_answer: *absence_none
       correspondence_address:
-        question: Correspondence address
+        question: Cyfeiriad gohebiaeth
       correspondence_address_type:
-        question: Correspondence
+        question: Gohebiaeth
         answers:
-          home_address: Same as usual home address
-          providers_office_address: Provider’s office
-          other_address: Somewhere else
+          home_address: Yr un fath â’r cyfeiriad cartref arferol
+          providers_office_address: Swyddfa’r darparwr
+          other_address: Rhywle arall
       telephone_number:
-        question: Telephone
+        question: Rhif ffôn
         absence_answer: *absence_none
       # END contact details section
 
       # BEGIN partner details section
       # NOTE: conflict_of_interest defined by co-defendants section
       relationship_to_partner:
-        question: Relationship to client
+        question: Perthynas â’r cleient
         answers:
-          married_or_partnership: Married or in a civil partnership
-          living_together: Living together
-          prefer_not_to_say: They prefer not to say
+          married_or_partnership: Priod neu mewn partneriaeth sifil
+          living_together: Yn byw gyda’i gilydd
+          prefer_not_to_say: Yn well ganddynt beidio dweud
       involvement_in_case:
-        question: Partner involved in the case?
+        question: A yw’r partner wedi’i gynnwys yn yr achos?
         answers:
-          victim: Victim
-          prosecution_witness: Prosecution witness
-          codefendant: Co-defendant
-          none: "No"
+          victim: Dioddefwr
+          prosecution_witness: Tyst i’r erlyniad
+          codefendant: Cyd-ddiffynnydd
+          none: "Na"
       has_same_address_as_client:
-        question: Lives at same address as client?
+        question: Yn byw ar yr un cyfeiriad â’r cleient?
         answers:
           <<: *YESNO
-      # END partner details section
+          # END partner details section
 
       # BEGIN passporting benefit check section
       passporting_benefit:
