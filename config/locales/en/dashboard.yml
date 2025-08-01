@@ -33,6 +33,10 @@ en:
         "yes": "A change in financial circumstances"
 
     index:
+      application_type:
+        initial: Initial
+        change_in_financial_circumstances: Change in financial circumstances
+        post_submission_evidence: Post submission evidence
       page_title: Your applications
       delete_button: Delete
       delete_button_a11y: Delete %{applicant_name}’s application

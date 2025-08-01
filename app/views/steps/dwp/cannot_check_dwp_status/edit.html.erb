@@ -9,17 +9,16 @@
         <h1 class="govuk-heading-xl"><%= legend_t(:cannot_check_dwp_status_heading)%></h1>
 
         <p class="govuk-body">
-          You can do one of the following:
+          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_label') %>
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
           <li>
             <%= step_form @form_object do |f| %>
-              <%= f.button 'try again now', class: 'app-button--link' %>
+              <%= f.button t('helpers.submit.try_again_now'), class: 'app-button--link' %>
             <% end %>
           </li>
-          <li>continue with this application to upload supporting evidence</li>
-          <li>save and come back later to try again</li>
+          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_html') %>
         </ul>
     </div>
 

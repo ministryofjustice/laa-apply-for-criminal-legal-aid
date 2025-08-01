@@ -6,6 +6,7 @@ RSpec.describe ApplicationController do
     def invalid_session = raise(Errors::InvalidSession)
     def application_not_found = raise(Errors::ApplicationNotFound)
     def another_exception = raise(StandardError)
+    def missing_translation = [I18n.t('cy.missing_key'), I18n.t('en.missing_key')]
   end
 
   context 'Exceptions handling' do
@@ -39,6 +40,16 @@ RSpec.describe ApplicationController do
 
         get :application_not_found
         expect(response).to redirect_to(application_not_found_errors_path)
+      end
+    end
+
+    context 'I18n::MissingTranslationData' do
+      it 'raises an exception when locale is missing' do
+        routes.draw { get 'missing_translation' => 'anonymous#missing_translation' }
+
+        expect {
+          get :missing_translation
+        }.to raise_error(I18n::MissingTranslationData)
       end
     end
 
