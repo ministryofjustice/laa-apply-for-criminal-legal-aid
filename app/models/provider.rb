@@ -25,6 +25,8 @@ class Provider < ApplicationRecord
   end
 
   def office_codes
+    return super if FeatureFlags.provider_data_api.enabled?
+
     super & Providers::Gatekeeper.active_office_codes
   end
 

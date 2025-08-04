@@ -37,6 +37,26 @@ RSpec.describe Lassie::OidcStrategy do
         )
       end
     end
+
+    context 'when the provider data API feature is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:provider_data_api) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+
+        allow(ProviderDataApi::ActiveOfficeCodesFilter).to receive(:call).and_return(
+          %w[1A123B 3B345C]
+        )
+      end
+
+      it 'filters the office codes using the active office code filter' do
+        expect(strategy_instance.info[:office_codes]).to eq %w[1A123B 3B345C]
+
+        expect(ProviderDataApi::ActiveOfficeCodesFilter).to have_received(:call).with(
+          laa_accounts, area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER']
+        )
+      end
+    end
   end
 
   describe 'Devise OmniAuth strategy configuration' do

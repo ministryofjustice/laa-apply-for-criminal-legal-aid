@@ -15,6 +15,11 @@ feature_flags:
     local: true
     staging: false
     production: false
+  provider_data_api:
+    local: true
+    test: false
+    staging: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

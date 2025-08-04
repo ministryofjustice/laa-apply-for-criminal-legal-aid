@@ -74,5 +74,8 @@ module LaaApplyForCriminalLegalAid
     config.x.inactive_offices = config_for(
       :inactive_offices, env: ENV.fetch('ENV_NAME', 'localhost')
     )
+
+    config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
+    config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
   end
 end
