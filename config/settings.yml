@@ -19,6 +19,7 @@ feature_flags:
     local: true
     test: false
     staging: true
+    preprod: true
     production: false
 
 # NOTE: consider if the setting you are adding here
