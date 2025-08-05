@@ -1,0 +1,15 @@
+cy:
+  devise:
+    failure:
+      already_authenticated: ""
+      locked: ""
+      timeout: ""
+      reauthenticate: ""
+      unauthenticated: ""
+    omniauth_callbacks:
+      failure: ""
+      success: ""
+    sessions:
+      signed_in: ""
+      signed_out: "Rydych wedi allgofnodi"
+      already_signed_out: ""

@@ -42,6 +42,8 @@ en:
     back_to_portal: Back to the LAA Online Portal
     back_to_applications: Back to your applications
     submit:
+      clear: Clear
+      search: Search
       start: Start now
       save_and_continue: Save and continue
       save_and_come_back_later: Save and come back later
@@ -52,6 +54,7 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
+      try_again_now: try again now
     contact:
       call_charges: Find out about call charges
       case_enquiries: Case enquiries
@@ -67,6 +70,9 @@ en:
       telephone: Telephone
       webchat: Webchat
       webchat_adviser: Speak to an adviser now
+    language_toggle:
+      english: English
+      welsh: Cymraeg
 
     legend:
       cookies_settings_form:
@@ -395,6 +401,7 @@ en:
         legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
+      search: Enter any combination of client first name, last name, LAA reference
       steps_provider_select_office_form:
         office_code: "If your office account number is not listed, email: %{support_email}"
       steps_circumstances_pre_cifc_reference_number_form:
@@ -414,6 +421,8 @@ en:
         appeal_original_app_submitted: This is the case with the outcome your client wants to appeal.
       steps_client_appeal_reference_number_form:
         appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
+      steps_client_contact_details_form:
+        welsh_translation: It will also be sent in English. Under the Welsh Language Act, some correspondence will be automatically sent in Welsh if the hearing is at certain Welsh courts.
       steps_shared_nino_form:
         has_arc_or_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
@@ -439,6 +448,10 @@ en:
       steps_dwp_cannot_check_dwp_status_form:
         page_title: Sorry, we cannot check %{subject}’s information with DWP
         heading: Sorry, we cannot check %{subject}’s information with DWP
+        next_steps_label: "You can do one of the following:"
+        next_steps_html: |
+          <li>continue with this application to upload supporting evidence</li>
+          <li>save and come back later to try again</li>
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
@@ -582,6 +595,11 @@ en:
         consent_options:
           accept: "Yes"
           reject: "No"
+      language_toggle:
+        english:
+          aria_label: Apply for criminal legal aid in English
+        welsh:
+          aria_label: Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg
       steps_provider_confirm_office_form:
         is_current_office_options:
           "yes": "Yes"

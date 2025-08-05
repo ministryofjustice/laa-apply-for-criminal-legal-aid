@@ -69,7 +69,7 @@ module Summary
 
       # Used by the `Routing` module to build the `change` urls
       def default_url_options
-        { id: crime_application }
+        super.merge(id: crime_application)
       end
 
       private

@@ -12,7 +12,7 @@ feature_flags:
     staging: false
     production: false
   welsh_translation:
-    local: false
+    local: true
     staging: false
     production: false
 

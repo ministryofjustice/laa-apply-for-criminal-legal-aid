@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Routing
   include ErrorHandling
 
   helper StepsHelper,
@@ -8,6 +9,8 @@ class ApplicationController < ActionController::Base
   prepend_before_action :authenticate_provider!
 
   add_flash_types :success
+
+  around_action :switch_locale
 
   def current_crime_application
     @current_crime_application ||= CrimeApplication.find_by(
@@ -21,6 +24,11 @@ class ApplicationController < ActionController::Base
     @current_office_code ||= current_provider&.selected_office_code
   end
   helper_method :current_office_code
+
+  def switch_locale(&action)
+    locale = params[:locale] || I18n.default_locale
+    I18n.with_locale(locale, &action)
+  end
 
   private
 

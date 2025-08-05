@@ -16,7 +16,12 @@ en:
         local: green
         test: blue
 
+    primary_navigation:
+      your_applications: Your applications
+      search: Search
+
     header:
+      service_name: Apply for criminal legal aid
       menu_button: Menu
       nav_aria_label: Menu
       button_aria_label: Show or hide menu
@@ -49,3 +54,6 @@ en:
         You can <a href="%{cookies_link}" class="govuk-link ga-pageLink" data-ga-category="cookie banner"
         data-ga-label="change cookies">change your cookie settings</a> at any time.
       hide_button: Hide cookie message
+    govuk_template_html: |
+     All content is available under the
+     <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
