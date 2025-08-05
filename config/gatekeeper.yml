@@ -26,6 +26,7 @@ preprod:
     - 1K022G
     - 0Z981E
     - 0A719G
+    - 2L928D # for testing Xservice sign out
 
 production:
   office_codes:

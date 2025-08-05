@@ -11,8 +11,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
     end
 
     it 'is passported on age when submitted' do
-      click_button 'Save and submit application'
-
+      submit_drafted_application
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
@@ -47,7 +46,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
     context 'when applicant is no longer under 18' do
       before do
         draft_age_passported_application(case_type:)
-        click_button 'Save and submit application'
+        submit_drafted_application
 
         visit('providers/logout')
         travel 1.week
@@ -55,6 +54,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
         visit root_path
         click_button('Start now')
         choose('Yes')
+
         return_submitted_application
 
         click_button('Update application')
@@ -79,11 +79,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
 
     describe 'when Date of Birth changed on resubmission' do
       let(:case_type) { 'Either way' }
-      let(:new_age) { 17.years.ago }
 
       before do
         draft_age_passported_application(case_type:)
-        click_button 'Save and submit application'
+        submit_drafted_application
         return_submitted_application
 
         click_button('Update application')
@@ -102,16 +101,16 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
       context 'when new age passported on date_stamp' do
         let(:new_age) { 17.years.ago }
 
-        it 'the resubmission is age passported' do
-          expect(page).to have_link('Review the application')
+        it 'the resubmission remains age passported' do
+          expect(page).to have_content('You have completed 3 of 7 sections')
         end
       end
 
       context 'when new age not passported on date_stamp' do
         let(:new_age) { 20.years.ago }
 
-        it 'the resubmission is age passported' do
-          expect(page).not_to have_link('Review the application')
+        it 'the resubmission is not age passported' do
+          expect(page).to have_content('You have completed 0 of 10 sections')
         end
       end
     end
