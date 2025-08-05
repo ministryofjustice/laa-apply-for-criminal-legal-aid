@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  include ErrorHandling,
-          Routing
+  include Routing
+  include ErrorHandling
 
   helper StepsHelper,
          AnalyticsHelper,
