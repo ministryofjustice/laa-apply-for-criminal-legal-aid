@@ -1,7 +1,7 @@
 module Providers
   class OfficeRouter
-    include Rails.application.routes.url_helpers,
-            Routing
+    include Rails.application.routes.url_helpers
+    include Routing
 
     attr_reader :provider
 
