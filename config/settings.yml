@@ -13,7 +13,7 @@ feature_flags:
     production: false
   welsh_translation:
     local: true
-    staging: true
+    staging: false
     production: false
 
 # NOTE: consider if the setting you are adding here
