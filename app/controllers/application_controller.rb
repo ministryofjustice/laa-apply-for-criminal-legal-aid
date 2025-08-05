@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  include ErrorHandling
+  include ErrorHandling,
+          Routing
 
   helper StepsHelper,
          AnalyticsHelper,
@@ -27,10 +28,6 @@ class ApplicationController < ActionController::Base
   def switch_locale(&action)
     locale = params[:locale] || I18n.default_locale
     I18n.with_locale(locale, &action)
-  end
-
-  def default_url_options
-    I18n.locale == I18n.default_locale ? {} : { locale: I18n.locale }
   end
 
   private

@@ -31,8 +31,7 @@ module Tasks
 
     # Used by the `Routing` module to build the urls
     def default_url_options
-      locale_option = I18n.locale == I18n.default_locale ? {} : { locale: I18n.locale }
-      { id: crime_application }.merge(locale_option)
+      super.merge(id: crime_application)
     end
 
     def status

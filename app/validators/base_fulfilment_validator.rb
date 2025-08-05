@@ -12,7 +12,7 @@ class BaseFulfilmentValidator < ActiveModel::Validator
 
   # Used by the `Routing` module to build the urls
   def default_url_options
-    { id: record }
+    super.merge(id: record)
   end
 
   private

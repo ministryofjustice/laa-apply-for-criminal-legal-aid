@@ -1,6 +1,7 @@
 module Providers
   class OfficeRouter
-    include Rails.application.routes.url_helpers
+    include Rails.application.routes.url_helpers,
+            Routing
 
     attr_reader :provider
 
@@ -10,10 +11,6 @@ module Providers
 
     def self.call(provider)
       new(provider).path
-    end
-
-    def default_url_options
-      I18n.locale == I18n.default_locale ? {} : { locale: I18n.locale }
     end
 
     def path
