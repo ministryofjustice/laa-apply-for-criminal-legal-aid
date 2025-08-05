@@ -21,6 +21,14 @@ cy:
         accept: Rydych wedi derbyn cwcis dadansoddeg.
         reject: Rydych wedi gwrthod cwcis dadansoddeg.
 
+  hours_or_minutes:
+    hours:
+      one: awr
+      other: '%{count} awr'
+    minutes:
+      one: munud
+      other: '%{count} munud'
+
   time:
     formats:
       <<: *DATE_FORMATS
