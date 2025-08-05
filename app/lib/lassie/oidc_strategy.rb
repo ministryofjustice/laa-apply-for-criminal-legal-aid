@@ -1,12 +1,23 @@
 module Lassie
   class OidcStrategy < OmniAuth::Strategies::OpenIDConnect
     info { { email:, roles:, office_codes: } }
+
     private
+
+    # If the Provider Data API fature is enabled, laa_accounts are filtered
+    # to include only active crime office_codes.
+    def office_codes
+      return laa_accounts unless FeatureFlags.provider_data_api.enabled?
+
+      ProviderDataApi::ActiveOfficeCodesFilter.call(
+        laa_accounts, area_of_law: 'CRIME LOWER'
+      )
+    end
 
     # The `LAA_ACCOUNTS` custom claim can be either a single office code (as a string)
     # or multiple office codes (as an array). Here we normalizes the value to always
     # return an array.
-    def office_codes
+    def laa_accounts
       [*user_info.raw_attributes.fetch('LAA_ACCOUNTS')]
     end
 

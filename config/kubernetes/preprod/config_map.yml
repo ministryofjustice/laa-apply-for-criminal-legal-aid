@@ -18,11 +18,11 @@ data:
   DATASTORE_API_CONSUMER: crime-apply-preprod
   BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: "20"
-
   OMNIAUTH_ENTRA_CLIENT_ID: 7d95f6ff-2ff5-4ba0-aaf3-06d8769557ef
   OMNIAUTH_ENTRA_TENANT_ID: 8352c342-da15-413a-8b5b-d89545766f0c
   OMNIAUTH_ENTRA_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
   OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
+  PROVIDER_DATA_API_URL: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
