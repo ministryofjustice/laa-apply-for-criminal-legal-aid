@@ -21,6 +21,11 @@ feature_flags:
     staging: true
     preprod: true
     production: false
+  entra_logout:
+    local: false
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
