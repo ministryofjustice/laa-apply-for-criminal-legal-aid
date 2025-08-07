@@ -450,9 +450,6 @@ en:
         next_steps_evidence: provide evidence of a passporting benefit if available
         next_steps_client_check: provide details about your client's income
         next_steps_partner_check: provide details about your client's and partner's income
-#        next_steps_html: |
-#          <li>provide evidence of a passporting benefit if available</li>
-#          <li>provide details about %{subject}'s income</li>
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
