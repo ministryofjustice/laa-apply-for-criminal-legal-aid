@@ -1,3 +1,4 @@
+<% subject = @form_object.form_subject.to_param %>
 <% title legend_t(:cannot_check_dwp_status_page_title) %>
 <% step_header %>
 
@@ -7,18 +8,15 @@
 
     <div class="govuk-!-margin-bottom-6">
         <h1 class="govuk-heading-xl"><%= legend_t(:cannot_check_dwp_status_heading)%></h1>
+        <p class="govuk-body"><%= legend_t(:cannot_check_dwp_status_subheading)%></p>
 
         <p class="govuk-body">
           <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_label') %>
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>
-            <%= step_form @form_object do |f| %>
-              <%= f.button t('helpers.submit.try_again_now'), class: 'app-button--link' %>
-            <% end %>
-          </li>
-          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_html') %>
+          <li><%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_evidence') %></li>
+          <li><%= t("helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_#{subject}_check") %></li>
         </ul>
     </div>
 

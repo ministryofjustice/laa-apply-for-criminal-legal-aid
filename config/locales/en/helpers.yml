@@ -54,7 +54,6 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
-      try_again_now: try again now
     contact:
       call_charges: Find out about call charges
       case_enquiries: Case enquiries
@@ -136,8 +135,9 @@ en:
         upload_evidence: You must upload evidence that %{subject} gets a passporting benefit.
       steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
       steps_dwp_cannot_check_dwp_status_form:
-        cannot_check_dwp_status_page_title: Sorry, we cannot check %{subject}’s information with DWP
-        cannot_check_dwp_status_heading: Sorry, we cannot check %{subject}’s information with DWP
+        cannot_check_dwp_status_page_title: Sorry, the DWP service is currently unavailable
+        cannot_check_dwp_status_heading: Sorry, the DWP service is currently unavailable
+        cannot_check_dwp_status_subheading: This means we cannot check %{subject}'s passporting benefit.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: DWP records show that %{subject} receives a passporting benefit
       steps_case_has_case_concluded_form:
@@ -446,12 +446,13 @@ en:
           "no": You'll need to tell us about %{subject}’s income if you do not have evidence.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
-        page_title: Sorry, we cannot check %{subject}’s information with DWP
-        heading: Sorry, we cannot check %{subject}’s information with DWP
-        next_steps_label: "You can do one of the following:"
-        next_steps_html: |
-          <li>continue with this application to upload supporting evidence</li>
-          <li>save and come back later to try again</li>
+        next_steps_label: "You can continue with this application and either:"
+        next_steps_evidence: provide evidence of a passporting benefit if available
+        next_steps_client_check: provide details about your client's income
+        next_steps_partner_check: provide details about your client's and partner's income
+#        next_steps_html: |
+#          <li>provide evidence of a passporting benefit if available</li>
+#          <li>provide details about %{subject}'s income</li>
       steps_address_lookup_form:
         postcode: This must be a valid UK postcode. For example, SW1A 2AA.
       steps_case_urn_form:
