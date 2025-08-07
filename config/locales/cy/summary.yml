@@ -288,7 +288,7 @@ cy:
           no_check_required: Dim angen gwiriad
           undetermined: Dim cyfatebiaeth - gwiriwch fod y manylion yn gywir
           no_record_found: Dim cofnod o fudd-dal pasbortio wedi’i ganfod
-          checker_unavailable: Nid oedd DWP ar gael, gallwch geisio eto
+          checker_unavailable: Nid oedd DWP ar gael
           no_check_no_nino: Dim gwiriad wedi’i wneud gan nad oes rhif Yswiriant Gwladol wedi’i ddarparu
       confirmed_details:
         question: A yw’r manylion cadarnhau’n gywir?
