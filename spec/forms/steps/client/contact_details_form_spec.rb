@@ -109,7 +109,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     end
 
     context 'when preferred_correspondence_language is blank' do
-      let(:preferred_correspondence_language) { '' }
+      let(:preferred_correspondence_language) { nil }
 
       it { is_expected.not_to validate_presence_of(:preferred_correspondence_language) }
     end
