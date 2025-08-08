@@ -65,6 +65,7 @@ RSpec.describe Adapters::Structs::Applicant do
           telephone_number
           home_address
           correspondence_address
+          preferred_correspondence_language
           has_nino
           has_arc
           residence_type
