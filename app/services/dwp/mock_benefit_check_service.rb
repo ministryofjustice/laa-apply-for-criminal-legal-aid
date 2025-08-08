@@ -1,11 +1,15 @@
 module DWP
   class MockBenefitCheckService
-    KNOWN = {
+    CONFIRMED = {
       'SMITH'   => { nino: 'NC123459A', dob: '11-01-1999' },
       'JONES'   => { nino: 'NC123458A', dob: '01-06-1980' },
       'BLOGGS'  => { nino: 'NC123457A', dob: '04-01-1990' },
       'WRINKLE' => { nino: 'NC010150A', dob: '01-01-1950' },
       'WALKER'  => { nino: 'JA293483A', dob: '10-01-1980' },
+    }.freeze
+
+    NOT_IN_RECEIPT = {
+      'BROWN'   => { nino: 'PA435162A', dob: '01-07-1986' },
     }.freeze
 
     def self.call(*)
@@ -28,13 +32,21 @@ module DWP
     end
 
     def result
-      known? ? 'Yes' : 'No'
+      if known_confirmed?
+        'Yes'
+      else
+        not_in_receipt? ? 'No' : 'Undetermined'
+      end
     end
 
     private
 
-    def known?
-      KNOWN.fetch(last_name.to_s.upcase, nil) == applicant_data
+    def known_confirmed?
+      CONFIRMED.fetch(last_name.to_s.upcase, nil) == applicant_data
+    end
+
+    def not_in_receipt?
+      NOT_IN_RECEIPT.fetch(last_name.to_s.upcase, nil) == applicant_data
     end
 
     def applicant_data
