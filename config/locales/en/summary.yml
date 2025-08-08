@@ -249,6 +249,9 @@ en:
       telephone_number:
         question: Telephone
         absence_answer: *absence_none
+      requested_welsh_correspondence:
+        question: Correspondence requested in Welsh?
+        absence_answer: *absence_none
       # END contact details section
 
       # BEGIN partner details section

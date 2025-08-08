@@ -44,6 +44,11 @@ module Summary
             :telephone_number, applicant.telephone_number, show: true,
             change_path: edit_steps_client_contact_details_path
           ),
+
+          Components::FreeTextAnswer.new(
+            :requested_welsh_correspondence, requested_welsh_correspondence, show: true,
+            change_path: edit_steps_client_contact_details_path
+          ),
         ]
 
         answers.flatten.select(&:show?)
@@ -62,6 +67,10 @@ module Summary
 
       def correspondence_address
         applicant.correspondence_address
+      end
+
+      def requested_welsh_correspondence
+        applicant.preferred_correspondence_language == 'cy' ? 'Yes' : 'No'
       end
 
       def change_address_path(address)

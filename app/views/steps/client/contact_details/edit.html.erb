@@ -14,10 +14,10 @@
 
       <%= f.govuk_check_boxes_fieldset :preferred_correspondence_language, multiple: false, legend: nil do %>
         <%= f.govuk_check_box :preferred_correspondence_language,
-                              true,
+                              "cy",
                               multiple: false,
-                              label: { text: t('helpers.label.steps_client_contact_details_form.welsh_correspondence_options.true') },
-                              hint: { text: t('helpers.hint.steps_client_contact_details_form.welsh_translation') } %>
+                              label: { text: t('helpers.label.steps_client_contact_details_form.requested_welsh_correspondence') },
+                              hint: { text: t('helpers.hint.steps_client_contact_details_form.requested_welsh_correspondence') } %>
       <% end %>
 
       <%= f.govuk_phone_field :telephone_number, autocomplete: 'off', width: 'one-third',
