@@ -6,6 +6,8 @@ class CookiesController < UnauthenticatedController
   end
 
   def update
+    raise Errors::NotFound unless FeatureFlags.google_analytics.enabled?
+
     result = Cookies::SettingsForm.new(
       consent: consent_param,
       cookies: cookies

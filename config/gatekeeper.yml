@@ -10,6 +10,7 @@ localhost:
     - 1K022G # portal dev/stg test user
     - 2A555X # portal dev/stg test user
     - 3B345C # portal dev/stg test user which is inactive
+    - 0A719G
     # - 4C567D not enrolled office portal dev/stg test user
 
 staging:
@@ -18,6 +19,14 @@ staging:
     - 1K022G
     - 0Z981E
     - 0A719G
+
+preprod:
+  office_codes:
+    - 1A123B # mock and tests
+    - 1K022G
+    - 0Z981E
+    - 0A719G
+    - 2L928D # for testing Xservice sign out
 
 production:
   office_codes:

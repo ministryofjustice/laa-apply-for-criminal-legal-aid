@@ -1,6 +1,6 @@
 module ApplicationHelper
   def service_name
-    t('service.name')
+    t('layouts.header.service_name')
   end
 
   def title(page_title)

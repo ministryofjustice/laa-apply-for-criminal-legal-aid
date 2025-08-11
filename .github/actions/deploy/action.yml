@@ -2,7 +2,7 @@ name: Deploy
 description: Deploy built docker image to a kubernetes namespace
 inputs:
   environment-name:
-    description: Environment to which the app is being deployed (staging, production, etc)
+    description: Environment to which the app is being deployed (staging, preprod, production, etc)
     required: true
   ecr-url:
     description: ECR endpoint url

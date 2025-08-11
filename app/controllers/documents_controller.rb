@@ -3,6 +3,7 @@ class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
   before_action :set_document, only: :download
   before_action :require_document
+  before_action :set_security_headers
 
   respond_to :html, :json, :js
 
@@ -68,7 +69,7 @@ class DocumentsController < ApplicationController
   def error_for(document)
     return nil if document.errors.empty?
 
-    document.errors.first.full_message.html_safe # rubocop:disable Rails/OutputSafety
+    document.errors.first.full_message
   end
 
   # TODO: unify if possible the submission params

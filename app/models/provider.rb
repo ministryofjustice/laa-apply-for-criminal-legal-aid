@@ -1,6 +1,6 @@
 class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :reauthable, :trackable,
-         :omniauthable
+         :omniauthable, omniauth_providers: [Rails.configuration.x.auth_idp]
 
   store_accessor :settings,
                  :selected_office_code,
@@ -25,6 +25,8 @@ class Provider < ApplicationRecord
   end
 
   def office_codes
+    return super if FeatureFlags.provider_data_api.enabled?
+
     super & Providers::Gatekeeper.active_office_codes
   end
 
@@ -38,10 +40,6 @@ class Provider < ApplicationRecord
           office_codes: auth.info.office_codes
         )
       end
-    end
-
-    def omniauth_providers
-      [ENV.fetch('AUTH_IDP', 'saml').to_sym]
     end
   end
 end

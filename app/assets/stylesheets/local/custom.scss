@@ -17,7 +17,7 @@
 
 // Differentiate the header in non-production envs by
 // overriding the default colour
-$colours: ("staging": govuk-colour("orange"), "local": govuk-colour("green"));
+$colours: ("staging": govuk-colour("orange"), "preprod": govuk-colour("blue"), "local": govuk-colour("green"));
 
 @each $key, $colour in $colours {
   .govuk-phase-banner-#{$key} {

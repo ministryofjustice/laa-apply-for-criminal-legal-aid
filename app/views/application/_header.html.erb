@@ -1,18 +1,18 @@
-  <%= govuk_header(classes: "govuk-header-#{HostEnv.env_name}") do |header|
-        if signed_in?
-          header.with_navigation_item(
-            text: current_provider.display_name,
-            href: nil,
-            active: false,
-            html_attributes: { aria: { role: 'paragraph' } },
-            classes: 'app-header__auth-user'
-          )
+<%= govuk_header(service_name: service_name, homepage_url: root_path, classes: "govuk-header-#{HostEnv.env_name}") do |header| %>
+  <% if signed_in? %>
+    <%= header.with_navigation_item(
+          text: current_provider.display_name,
+          href: nil,
+          active: false,
+          html_attributes: { aria: { role: 'paragraph' } },
+          classes: 'app-header__auth-user'
+        ) %>
 
-          header.with_navigation_item(
-            text: t('layouts.header.sign_out'),
-            href: providers_logout_path,
-            active: false,
-            html_attributes: { aria: { role: 'button' } }
-          )
-        end
-      end %>
+    <%= header.with_navigation_item(
+          text: t('layouts.header.sign_out'),
+          href: provider_omniauth_logout_path,
+          active: false,
+          html_attributes: { aria: { role: 'button' } }
+        ) %>
+  <% end %>
+<% end %>

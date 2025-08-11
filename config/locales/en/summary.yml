@@ -288,7 +288,7 @@ en:
           no_check_required: No check required
           undetermined: No match - check details are correct
           no_record_found: No record of passporting benefit found
-          checker_unavailable: DWP was unavailable, you can try again
+          checker_unavailable: DWP was unavailable
           no_check_no_nino: No check made as no National Insurance number provided
       confirmed_details:
         question: Confirmed details correct?

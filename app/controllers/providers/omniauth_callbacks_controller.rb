@@ -1,21 +1,22 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
-    before_action :check_provider_is_enrolled, only: [:saml, :azure_ad]
+    before_action :check_provider_is_enrolled, only: [:saml, :entra]
 
+    # :nocov:
+    # Portal/SAML auth will be removed once staging users onboarded to LASSIE
     def saml
+      entra
+    end
+    # :nocov:
+
+    def entra
       provider = Provider.from_omniauth(auth_hash)
 
       sign_in_and_redirect(
         provider, event: :authentication
       )
     end
-
-    # :nocov:
-    def azure_ad
-      saml
-    end
-    # :nocov:
 
     def failure
       # Let the application generic error handling deal with the
@@ -34,13 +35,18 @@ module Providers
     end
 
     def check_provider_is_enrolled
-      gatekeeper = Providers::Gatekeeper.new(auth_hash.info)
-      return if gatekeeper.provider_enrolled?
+      return if provider_enrolled?
 
       Rails.logger.warn 'Not enrolled provider access attempt. ' \
                         "UID: #{auth_hash.uid}, accounts: #{auth_hash.info.office_codes}"
 
       redirect_to not_enrolled_errors_path
+    end
+
+    def provider_enrolled?
+      return auth_hash.info.office_codes.any? if FeatureFlags.provider_data_api.enabled?
+
+      Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
     end
   end
 end

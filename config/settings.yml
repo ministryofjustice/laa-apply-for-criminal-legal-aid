@@ -1,12 +1,31 @@
 feature_flags:
   developer_tools:
     local: true
-    staging: true
+    staging: false
     production: false
   property_ownership_validation:
     local: true
     staging: true
     production: true
+  google_analytics:
+    local: false
+    staging: false
+    production: false
+  welsh_translation:
+    local: true
+    staging: false
+    production: false
+  provider_data_api:
+    local: true
+    test: false
+    staging: true
+    preprod: true
+    production: false
+  entra_logout:
+    local: false
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

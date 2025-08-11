@@ -5,6 +5,7 @@ Devise.setup do |config|
   require 'devise/models/reauthable'
   require 'laa_portal/saml_strategy'
   require 'laa_portal/saml_setup'
+  require 'lassie/oidc_strategy'
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -62,25 +63,28 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :saml,
-                  name: 'saml',
+                  name: :saml,
                   setup: LaaPortal::SamlSetup,
                   strategy_class: LaaPortal::SamlStrategy
 
   config.omniauth(
     :openid_connect,
     {
-      name: :azure_ad,
+      name: :entra,
       scope: [:openid, :email],
       response_type: :code,
+      send_nonce: true,
       client_options: {
-        identifier: ENV.fetch('OMNIAUTH_AZURE_CLIENT_ID', nil),
-        secret: ENV.fetch('OMNIAUTH_AZURE_CLIENT_SECRET', nil),
-        redirect_uri: ENV.fetch('OMNIAUTH_AZURE_REDIRECT_URI', nil)
+        identifier: ENV.fetch('OMNIAUTH_ENTRA_CLIENT_ID', nil),
+        secret: ENV.fetch('OMNIAUTH_ENTRA_CLIENT_SECRET', nil),
+        redirect_uri: ENV.fetch('OMNIAUTH_ENTRA_REDIRECT_URI', nil)
       },
       discovery: true,
       pkce: true,
-      issuer: "https://login.microsoftonline.com/#{ENV.fetch('OMNIAUTH_AZURE_TENANT_ID', nil)}/v2.0",
-      strategy_class: OmniAuth::Strategies::OpenIDConnect
+      issuer: "https://login.microsoftonline.com/#{ENV.fetch('OMNIAUTH_ENTRA_TENANT_ID', nil)}/v2.0",
+      logout_path: "/logout",
+      post_logout_redirect_uri: ENV.fetch('OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI', nil),
+      strategy_class: Lassie::OidcStrategy
     }
   )
 end

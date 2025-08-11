@@ -12,6 +12,6 @@ module AnalyticsHelper
   end
 
   def analytics_allowed?
-    analytics_tracking_id.present? && analytics_consent_accepted?
+    FeatureFlags.google_analytics.enabled? && analytics_tracking_id.present? && analytics_consent_accepted?
   end
 end

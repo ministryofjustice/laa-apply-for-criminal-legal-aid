@@ -45,6 +45,18 @@ RSpec.describe AnalyticsHelper, type: :helper do
       allow(helper).to receive(:analytics_consent_accepted?).and_return(consent_accepted)
     end
 
+    context 'when the google analytics feature flag is not enabled' do
+      let(:consent_accepted) { nil }
+
+      before do
+        allow(FeatureFlags).to receive(:google_analytics) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it { expect(helper.analytics_allowed?).to be(false) }
+    end
+
     context 'when there is no GA_TRACKING_ID set' do
       let(:ga_tracking_id) { nil }
       let(:consent_accepted) { nil }

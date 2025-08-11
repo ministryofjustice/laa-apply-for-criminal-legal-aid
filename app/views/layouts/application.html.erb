@@ -15,13 +15,15 @@
   <% render partial: 'header' %>
 <% end %>
 
-<% content_for(:cookie_banner) do %>
-  <% unless analytics_consent_cookie.present? %>
-    <%= render partial: 'layouts/cookie_banner' %>
-  <% end %>
+<% if FeatureFlags.google_analytics.enabled? %>
+  <% content_for(:cookie_banner) do %>
+    <% unless analytics_consent_cookie.present? %>
+      <%= render partial: 'layouts/cookie_banner' %>
+    <% end %>
 
-  <% if flash['cookies_consent_updated'] %>
-    <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+    <% if flash['cookies_consent_updated'] %>
+      <%= render partial: 'layouts/cookie_banner_confirmation', locals: { result: flash['cookies_consent_updated'] } %>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -30,6 +32,12 @@
   <%= govuk_phase_banner(tag: { text: t("layouts.phase_banner.tag.#{env}"), colour: t("layouts.phase_banner.colour.#{env}") },
                          text: t('layouts.phase_banner.text_html', survey_url: Settings.feedback_survey_url),
                          classes: "govuk-phase-banner-#{env}") %>
+<% end %>
+
+<% if FeatureFlags.welsh_translation.enabled? %>
+  <% content_for(:language_toggle) do %>
+    <%= render partial: 'layouts/language_toggle' %>
+  <% end %>
 <% end %>
 
 <% content_for(:content) do %>

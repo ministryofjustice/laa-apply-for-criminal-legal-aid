@@ -41,6 +41,9 @@ module LaaApplyForCriminalLegalAid
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    config.i18n.available_locales = %i[en cy]
+    config.i18n.default_locale = :en
+
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
 
@@ -53,6 +56,8 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
+
+    config.x.auth_idp = ENV.fetch('AUTH_IDP', 'entra')
 
     # Time after which a user's session will expire if they
     # haven’t interacted with the service.
@@ -69,5 +74,8 @@ module LaaApplyForCriminalLegalAid
     config.x.inactive_offices = config_for(
       :inactive_offices, env: ENV.fetch('ENV_NAME', 'localhost')
     )
+
+    config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
+    config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
   end
 end

@@ -3,7 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby File.read('.ruby-version').chomp
 
-gem 'faraday', '~> 2.7'
+gem 'faraday', '~> 2.13'
+gem 'faraday-retry'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder'
 gem 'jbuilder', '~> 2.13.0'
@@ -16,7 +17,7 @@ gem 'rails', '7.2.2.1'
 gem 'uk_postcode'
 
 # Authentication
-gem 'devise', '~> 4.8'
+gem 'devise'
 gem 'omniauth_openid_connect', '0.8.0'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-saml', '~> 2.1.3'

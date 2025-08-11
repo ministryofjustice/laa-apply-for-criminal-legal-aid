@@ -23,11 +23,12 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 10000
+        runAsGroup: 10000
+        runAsNonRoot: true
       containers:
         - name: clamav
-          image: ghcr.io/ministryofjustice/clamav-docker/laa-clamav:latest
+          image: clamav/clamav-debian:stable
           imagePullPolicy: Always
           ports:
             - containerPort: 3310
@@ -35,11 +36,18 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/clamav
               name: clamav-signatures
+            - mountPath: /var/log/clamav
+              name: clamav-log
+            - mountPath: /etc/clamav/freshclam.conf
+              name: freshclam-config
+              subPath: freshclam.conf
+              readOnly: true
+            - mountPath: /tmp
+              name: tmp
           env:
             - name: FRESHCLAM_CHECKS
               value: "24"
-            - name: MIRROR_URL
-              value: https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
+          command: ["/init-unprivileged"]
           resources:
             requests:
               cpu: 25m
@@ -68,6 +76,20 @@ spec:
                 - clamdscan --no-summary /tmp/starttest
             periodSeconds: 30
             failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: clamav-log
+          emptyDir: {}
+        - name: freshclam-config
+          configMap:
+            name: clamav-configmap-production
+        - name: tmp
+          emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: clamav-signatures
@@ -77,6 +99,17 @@ spec:
         resources:
           requests:
             storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clamav-configmap-production
+  namespace: laa-apply-for-criminal-legal-aid-production
+data:
+  freshclam.conf: |
+    PrivateMirror https://laa-clamav-mirror-production.apps.live.cloud-platform.service.justice.gov.uk
+    UpdateLogFile /var/log/clamav/freshclam.log
+    NotifyClamd /etc/clamav/clamd.conf
 ---
 apiVersion: v1
 kind: Service

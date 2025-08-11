@@ -13,8 +13,15 @@ RSpec.describe 'Sign in user journey' do
 
   let(:start_button) { find('button.govuk-button--start') }
   let(:start_button_form_action) { start_button.ancestor('form')['action'] }
+  let(:disable_entra_logout_feature) { false }
 
   before do
+    if disable_entra_logout_feature
+      allow(FeatureFlags).to receive(:entra_logout) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
+    end
+
     allow_any_instance_of(
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
@@ -24,7 +31,7 @@ RSpec.describe 'Sign in user journey' do
 
   context 'user is not signed in' do
     it 'has a start button with action saml authorize' do
-      expect(start_button_form_action).to eq(provider_saml_omniauth_authorize_path)
+      expect(start_button_form_action).to eq(provider_entra_omniauth_authorize_path)
     end
 
     it 'redirects to the unauthenticated page if trying to access protected routes' do
@@ -59,7 +66,7 @@ RSpec.describe 'Sign in user journey' do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        saml: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
+        entra: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
       )
 
       start_button.click
@@ -104,11 +111,24 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'on sign out it redirects to the home' do
-      click_link 'Sign out'
+      expect(page).to have_link('Sign out', href: '/providers/auth/entra/logout?locale=en')
+
+      visit 'providers/logout'
 
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')
       expect(page).not_to have_css('nav.govuk-header__navigation')
+    end
+
+    context 'when entra logout diabled' do
+      let(:disable_entra_logout_feature) { true }
+
+      it 'on sign out it redirects to the home' do
+        click_link('Sign out')
+        expect(current_url).to match(root_path)
+        expect(page).to have_content('You have signed out')
+        expect(page).not_to have_css('nav.govuk-header__navigation')
+      end
     end
   end
 
@@ -201,8 +221,11 @@ RSpec.describe 'Sign in user journey' do
 
   context 'when the sign in fails' do
     before do
-      allow(OmniAuth.config).to receive(:test_mode).and_return(false)
-      allow_any_instance_of(LaaPortal::SamlSetup).to receive(:setup).and_raise(StandardError)
+      OmniAuth.config.mock_auth[:entra] = :access_denied
+    end
+
+    after do
+      OmniAuth.config.mock_auth[:entra] = Lassie::OidcStrategy.mock_auth
     end
 
     it 're-raises the exception for handling by the `ApplicationController`' do
