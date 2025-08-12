@@ -6,7 +6,7 @@
     <%= step_form @form_object do |f| %>
       <h1 class="govuk-heading-l app-inverted-text"><%= legend_t(:cannot_match_details) %></h1>
 
-      <%= f.continue_button(primary: :check_details, secondary: false, primary_opts: { class: 'app-button--m app-button--inverted' }) %>
+      <%= f.continue_button(primary: "check_details_#{@form_object.form_subject.to_param}", secondary: false, primary_opts: { class: 'app-button--m app-button--inverted' }) %>
     <% end %>
   </div>
 </div>

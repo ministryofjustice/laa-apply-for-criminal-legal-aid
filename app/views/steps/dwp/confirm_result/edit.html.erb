@@ -3,18 +3,17 @@
 
 <div class="govuk-grid-row app-inverted--card app-inverted-text">
   <div class="govuk-grid-column-full">
-    <%= step_form @form_object do |f| %>
       <h1 class="govuk-heading-l app-inverted-text" id="dwp-confirm-result-desc">
         <%= legend_t(:heading) %>
       </h1>
 
-      <%# TODO: conditional routing required %>
-      <%= link_button t('.yes_continue'), edit_steps_dwp_confirm_details_path,
-                      class: 'app-button--m app-button--inverted' %>
+    <%= step_form @form_object do |f| %>
+        <div class="govuk-button-group">
+          <%= f.button t('.yes_continue'), class: 'govuk-button app-button--m app-button--inverted' %>
 
-      <%= link_button t('.no_link'), edit_steps_dwp_has_benefit_evidence_path,
-                      class: 'govuk-button--secondary' %>
-
+          <%= link_to t('.no_link'), edit_steps_dwp_has_benefit_evidence_path,
+                      class: 'app-link--inverted app-inverted-text' %>
+        </div>
     <% end %>
   </div>
 </div>

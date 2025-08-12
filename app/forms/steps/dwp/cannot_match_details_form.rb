@@ -9,4 +9,3 @@ module Steps
     end
   end
 end
-

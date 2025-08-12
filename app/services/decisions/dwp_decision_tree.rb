@@ -35,22 +35,15 @@ module Decisions
     private
 
     def after_confirm_result
-      throw 'here'
-      if form_object.confirm_dwp_result.yes?
-        return edit(:partner_benefit_type) if include_partner_in_means_assessment?
-
-        edit('steps/case/urn')
+      if include_partner_in_means_assessment?
+        edit(:partner_benefit_type)
       else
-        edit(:confirm_details)
+        edit('steps/case/urn')
       end
     end
 
     def after_partner_confirm_result
-      if form_object.confirm_dwp_result.yes?
-        edit('steps/case/urn')
-      else
-        edit(:confirm_details)
-      end
+      edit('steps/case/urn')
     end
 
     def after_confirm_details

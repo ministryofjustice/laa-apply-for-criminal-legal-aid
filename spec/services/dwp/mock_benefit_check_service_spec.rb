@@ -25,11 +25,21 @@ RSpec.describe DWP::MockBenefitCheckService do
       expect(subject[:benefit_checker_status]).to eq('Yes')
     end
 
+    context 'when status is No' do
+      let(:last_name) { 'Brown' }
+      let(:date_of_birth) { '1986/07/01'.to_date }
+      let(:nino) { 'PA435162A' }
+
+      it "returns 'No' with known data" do
+        expect(subject[:benefit_checker_status]).to eq('No')
+      end
+    end
+
     context 'with incorrect date' do
       let(:date_of_birth) { '2012/01/10'.to_date }
 
-      it 'returns no' do
-        expect(subject[:benefit_checker_status]).to eq('No')
+      it 'returns undetermined' do
+        expect(subject[:benefit_checker_status]).to eq('Undetermined')
       end
 
       it 'returns confirmation_ref' do
@@ -40,8 +50,8 @@ RSpec.describe DWP::MockBenefitCheckService do
     context 'with unknown name' do
       let(:last_name) { 'Unknown' }
 
-      it 'returns no' do
-        expect(subject[:benefit_checker_status]).to eq('No')
+      it 'returns undetermined' do
+        expect(subject[:benefit_checker_status]).to eq('Undetermined')
       end
     end
   end

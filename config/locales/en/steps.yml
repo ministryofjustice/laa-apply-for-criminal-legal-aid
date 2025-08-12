@@ -140,7 +140,7 @@ en:
           heading: Check %{subject} details
       cannot_match_details:
         edit:
-          page_title: Cannot match details #TODO: confirm content
+          page_title: Cannot match details
           heading: DWP cannot match the details you entered for %{subject}
 
     address:
