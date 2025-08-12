@@ -24,8 +24,6 @@ class SectionsCompletenessValidator
       errors.add(:client_details, :incomplete)
     end
 
-    # throw errors
-
     errors.add :base, :incomplete_records unless errors.empty?
   end
 

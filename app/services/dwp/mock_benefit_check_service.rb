@@ -10,6 +10,7 @@ module DWP
 
     NOT_IN_RECEIPT = {
       'BROWN'   => { nino: 'PA435162A', dob: '01-07-1986' },
+      'EVANS'   => { nino: 'PB123457A', dob: '10-09-1990' },
     }.freeze
 
     def self.call(*)

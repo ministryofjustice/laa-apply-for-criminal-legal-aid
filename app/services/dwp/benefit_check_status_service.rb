@@ -32,18 +32,19 @@ module DWP
     end
 
     def undetermined
-      benefit_check_subject.dwp_response == 'Undetermined' || (benefit_check_subject.confirm_dwp_result == 'no' && benefit_evidence_forthcoming?)
+      benefit_check_subject.dwp_response == 'Undetermined' ||
+        (benefit_check_subject.confirm_dwp_result == 'no' && benefit_evidence_forthcoming?)
     end
 
     def not_in_receipt
-      benefit_check_subject.dwp_response == 'No' || (benefit_check_subject.confirm_dwp_result == 'no' && means_assessment_as_benefit_evidence?)
+      benefit_check_subject.dwp_response == 'No' ||
+        (benefit_check_subject.confirm_dwp_result == 'no' && means_assessment_as_benefit_evidence?)
     end
 
     def confirmed
-      benefit_check_subject.dwp_response == 'Yes' || benefit_check_subject.benefit_check_result
+      benefit_check_subject.benefit_check_result
     end
 
-    # TODO: does this logic hold up??
     def checker_down
       benefit_check_subject.benefit_check_result.nil? && benefit_check_subject.has_benefit_evidence.present?
     end

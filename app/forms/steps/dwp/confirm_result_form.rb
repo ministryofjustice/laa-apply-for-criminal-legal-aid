@@ -6,21 +6,10 @@ module Steps
       include Steps::HasOneAssociation
       has_one_association :applicant
 
-      attribute :confirm_dwp_result, :value_object, source: YesNoAnswer
-      validates :confirm_dwp_result, inclusion: { in: :choices }
-
-      def choices
-        YesNoAnswer.values
-      end
-
       private
 
       def persist!
-        applicant.update(attributes)
-
-        return true if confirm_dwp_result.no?
-
-        update_person_attributes if confirm_dwp_result.yes?
+        update_person_attributes
       end
 
       def update_person_attributes

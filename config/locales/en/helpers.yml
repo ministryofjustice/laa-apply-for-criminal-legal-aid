@@ -53,7 +53,8 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
-      check_details: Check details
+      check_details_client: Check client details
+      check_details_partner: Check partner details
     contact:
       call_charges: Find out about call charges
       case_enquiries: Case enquiries
@@ -712,11 +713,6 @@ en:
           "yes": I will enter the National Insurance number now
           "no": I will enter the National Insurance number later
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
-      steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
-        confirm_dwp_result_options:
-          "yes": "Yes"
-          "no": No, they receive a passporting benefit
-      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": "Yes"

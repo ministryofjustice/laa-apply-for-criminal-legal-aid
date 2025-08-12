@@ -4,19 +4,19 @@ module DWP
     REQUEST_TIMEOUT = 30.seconds
     BENEFIT_CHECKER_RESPONSES = %w[Yes No Undetermined].freeze
 
-    def initialize(applicant)
-      @applicant = applicant
+    def initialize(person)
+      @person = person
       @config = Rails.configuration.x.benefit_checker
     end
 
-    def self.call(applicant)
-      return MockBenefitCheckService.call(applicant) if use_mock?
+    def self.call(person)
+      return MockBenefitCheckService.call(person) if use_mock?
 
-      new(applicant).call
+      new(person).call
     end
 
-    def self.passporting_benefit?(applicant)
-      result = call(applicant)
+    def self.benefit_check_result(person)
+      result = call(person)
       return result if result.nil?
 
       return 'Undetermined' unless result[:benefit_checker_status].in?(BENEFIT_CHECKER_RESPONSES)
@@ -38,14 +38,14 @@ module DWP
 
     private
 
-    attr_reader :applicant, :config
+    attr_reader :person, :config
 
     def benefit_checker_params
       {
-        clientReference: applicant.crime_application_id,
-        nino: applicant.nino,
-        surname: applicant.last_name.strip.upcase,
-        dateOfBirth: applicant.date_of_birth.strftime('%Y%m%d'),
+        clientReference: person.crime_application_id,
+        nino: person.nino,
+        surname: person.last_name.strip.upcase,
+        dateOfBirth: person.date_of_birth.strftime('%Y%m%d'),
       }.merge(credential_params)
     end
 

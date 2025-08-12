@@ -7,7 +7,7 @@ RSpec.describe Passporting::MeansPassporter do
     instance_double(
       CrimeApplication,
       case: instance_double(Case, case_type:, appeal_financial_circumstances_changed:),
-      applicant: instance_double(Applicant, date_of_birth:, benefit_check_result:),
+      applicant: instance_double(Applicant, date_of_birth:, benefit_check_result:, dwp_response:),
       resubmission?: resubmission?,
       is_means_tested: is_means_tested,
       date_stamp: date_stamp,
@@ -23,6 +23,7 @@ RSpec.describe Passporting::MeansPassporter do
   let(:under18) { nil }
   let(:date_stamp) { nil }
   let(:benefit_check_result) { nil }
+  let(:dwp_response) { nil }
   let(:is_means_tested) { 'yes' }
 
   let(:date_of_birth) do
@@ -68,16 +69,34 @@ RSpec.describe Passporting::MeansPassporter do
 
     context 'when DWP benefit check has been successful' do
       let(:under18) { false }
-      let(:benefit_check_result) { true }
 
-      it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
+      context 'when dwp_response is set' do
+        let(:dwp_response) { 'Yes' }
+
+        it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
+      end
+
+      context 'when dwp_response is not set' do
+        let(:benefit_check_result) { true }
+
+        it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
+      end
     end
 
     context 'when DWP benefit check has failed' do
       let(:under18) { false }
-      let(:benefit_check_result) { nil }
 
-      it { is_expected.to eq([]) }
+      context 'when dwp_response is set' do
+        let(:dwp_response) { 'No' }
+
+        it { is_expected.to eq([]) }
+      end
+
+      context 'when dwp_response is not set' do
+        let(:benefit_check_result) { nil }
+
+        it { is_expected.to eq([]) }
+      end
     end
 
     context 'when means passporting on non-means tested' do
@@ -114,9 +133,18 @@ RSpec.describe Passporting::MeansPassporter do
 
     context 'when benefit check passported' do
       let(:under18) { false }
-      let(:benefit_check_result) { true }
 
-      it { is_expected.to be(false) }
+      context 'when dwp_response is set' do
+        let(:dwp_response) { 'Yes' }
+
+        it { is_expected.to be(false) }
+      end
+
+      context 'when dwp_response is not set' do
+        let(:benefit_check_result) { true }
+
+        it { is_expected.to be(false) }
+      end
     end
   end
 end

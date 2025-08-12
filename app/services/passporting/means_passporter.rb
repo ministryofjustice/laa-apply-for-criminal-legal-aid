@@ -42,7 +42,7 @@ module Passporting
     end
 
     def benefit_check_passed?
-      benefit_check_subject.dwp_response == 'Yes' || benefit_check_subject.benefit_check_result
+      benefit_check_subject.dwp_response == 'Yes' || benefit_check_subject.benefit_check_result.present?
     end
   end
 end

@@ -1,7 +1,7 @@
 module DWP
   class UpdateBenefitCheckResultService
-    def initialize(applicant)
-      @applicant = applicant
+    def initialize(person)
+      @person = person
     end
 
     def self.call(*)
@@ -9,9 +9,9 @@ module DWP
     end
 
     def call
-      dwp_response = BenefitCheckService.passporting_benefit?(@applicant)
+      dwp_response = BenefitCheckService.benefit_check_result(@person)
 
-      @applicant.update(dwp_response:)
+      @person.update(dwp_response:)
     end
   end
 end

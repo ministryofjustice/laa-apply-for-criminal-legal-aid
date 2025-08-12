@@ -10,14 +10,6 @@ module Steps
       def update
         update_and_advance(ConfirmResultForm, as: :confirm_result)
       end
-
-      # def step_name
-      #   if params.key?('confirm_dwp_result')
-      #     throw 'here'
-      #   else
-      #     :confirm_result
-      #   end
-      # end
     end
   end
 end
