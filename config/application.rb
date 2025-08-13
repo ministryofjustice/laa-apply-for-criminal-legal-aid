@@ -65,7 +65,7 @@ module LaaApplyForCriminalLegalAid
 
     # Time after which a user will be required to sign in again,
     # regardless of their activity (session lifespan).
-    config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 1440).to_i.minutes
+    config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 720).to_i.minutes
 
     config.x.gatekeeper= config_for(
       :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')

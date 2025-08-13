@@ -11,7 +11,7 @@ data:
   RAILS_LOG_TO_STDOUT: enabled
   GA_TRACKING_ID: G-5V1GTJM5K7
   SESSION_TIMEOUT_MINUTES: "60"
-  REAUTHENTICATE_AFTER_MINUTES: "1440"
+  REAUTHENTICATE_AFTER_MINUTES: "720"
   ENABLE_PROMETHEUS_EXPORTER: "true"
   CLAMD_CONF_FILENAME: "clamd.preprod.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
