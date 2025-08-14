@@ -61,6 +61,8 @@ class CrimeApplicationsController < DashboardController
   end
 
   def destroy
+    raise Errors::NotFound unless FeatureFlags.delete_drafts.enabled?
+
     ApplicationPurger.call(current_crime_application, log_context)
 
     redirect_to crime_applications_path,

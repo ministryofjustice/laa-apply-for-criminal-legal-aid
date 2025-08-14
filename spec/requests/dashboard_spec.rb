@@ -345,6 +345,23 @@ RSpec.describe 'Dashboard', :authorized do
       expect(response.body).to include('Back to your applications')
     end
 
+    context 'when the delete drafts feature flag is not enabled' do
+      before do
+        allow(FeatureFlags).to receive(:delete_drafts) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'cannot delete an application' do
+        applicant = Applicant.find_by(first_name: 'Jane')
+        app = applicant.crime_application
+
+        expect do
+          delete crime_application_path(app)
+        end.not_to change(CrimeApplication, :count)
+      end
+    end
+
     it 'can delete an application' do
       applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
