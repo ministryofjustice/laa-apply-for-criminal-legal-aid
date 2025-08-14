@@ -1,0 +1,2 @@
+class DeletionLog < ApplicationRecord
+end
