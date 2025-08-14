@@ -27,7 +27,8 @@ RSpec.describe DWP::BenefitCheckStatusService do
       will_enter_nino:,
       confirm_details:,
       has_benefit_evidence:,
-      confirm_dwp_result:
+      confirm_dwp_result:,
+      dwp_response:
     )
   end
 
@@ -43,6 +44,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
   let(:confirm_details) { nil }
   let(:has_benefit_evidence) { nil }
   let(:confirm_dwp_result) { nil }
+  let(:dwp_response) { nil }
 
   describe '#call' do
     context 'when benefit check outcome undetermined' do
@@ -54,7 +56,7 @@ RSpec.describe DWP::BenefitCheckStatusService do
       let(:confirm_details) { YesNoAnswer::YES.to_s }
       let(:confirm_dwp_result) { YesNoAnswer::NO.to_s }
 
-      context 'and has benefit evidence is yes' do
+      context 'when confirm_dwp_result is no and has benefit evidence is yes' do
         let(:has_benefit_evidence) { YesNoAnswer::YES.to_s }
 
         it 'returns a benefit check status of undetermined' do
@@ -62,8 +64,36 @@ RSpec.describe DWP::BenefitCheckStatusService do
         end
       end
 
-      context 'and has benefit evidence is no' do
+      context 'when dwp_response is undetermined' do
+        let(:confirm_dwp_result) { nil }
+        let(:dwp_response) { 'Undetermined' }
+
+        it 'returns a benefit check status of undetermined' do
+          expect(subject.call).to eq('undetermined')
+        end
+      end
+    end
+
+    context 'when benefit check outcome is no' do
+      let(:benefit_type) { BenefitType::JSA.to_s }
+      let(:last_jsa_appointment_date) { Date.new(2024, 2, 21) }
+      let(:has_nino) { YesNoAnswer::YES.to_s }
+      let(:nino) { '123456' }
+      let(:benefit_check_result) { false }
+      let(:confirm_details) { YesNoAnswer::YES.to_s }
+      let(:confirm_dwp_result) { YesNoAnswer::NO.to_s }
+
+      context 'when confirm_dwp_result is no set and has benefit evidence is no' do
         let(:has_benefit_evidence) { YesNoAnswer::NO.to_s }
+
+        it 'returns a benefit check status of no_record_found' do
+          expect(subject.call).to eq('no_record_found')
+        end
+      end
+
+      context 'when dwp_response is no' do
+        let(:confirm_dwp_result) { nil }
+        let(:dwp_response) { 'No' }
 
         it 'returns a benefit check status of no_record_found' do
           expect(subject.call).to eq('no_record_found')
