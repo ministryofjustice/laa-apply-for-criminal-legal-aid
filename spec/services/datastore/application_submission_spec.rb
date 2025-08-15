@@ -182,6 +182,9 @@ RSpec.describe Datastore::ApplicationSubmission do
 
     context 'submission to the datastore' do
       before do
+        Provider.create!(legal_rep_first_name: 'Jane',
+                         legal_rep_last_name: 'Doe',
+                         legal_rep_telephone: '999999999', auth_provider: 'entra', uid: '1')
         service.call
       end
 
@@ -205,6 +208,10 @@ RSpec.describe Datastore::ApplicationSubmission do
 
       it 'purges the application from the local database' do
         expect(crime_application).to have_received(:destroy!)
+      end
+
+      it 'does not create a deletion entry' do
+        expect(DeletionLog.count).to eq(0)
       end
     end
 
