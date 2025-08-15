@@ -18,3 +18,9 @@ data:
   BC_WSDL_URL: https://benefitchecker.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   LAA_PORTAL_IDP_METADATA_URL: https://portal.legalservices.gov.uk/oamfed/idp/metadata
   VIRUS_SCAN_TIMEOUT: "20"
+  OMNIAUTH_ENTRA_CLIENT_ID: b76794bf-ce81-476a-9c01-aab9f5248139
+  OMNIAUTH_ENTRA_TENANT_ID: 6f16715c-a01d-47e1-934a-f7938affb973
+  OMNIAUTH_ENTRA_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
+  OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
+
+  AUTH_IDP: entra
