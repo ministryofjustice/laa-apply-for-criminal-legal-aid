@@ -61,7 +61,7 @@ class CrimeApplicationsController < DashboardController
   end
 
   def destroy
-    ApplicationPurger.call(current_crime_application, log_context)
+    ApplicationPurger.call(current_crime_application, current_provider, log_context)
 
     redirect_to crime_applications_path,
                 flash: {

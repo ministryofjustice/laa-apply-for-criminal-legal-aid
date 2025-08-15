@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationPurger do
-  let(:crime_application) { instance_double(CrimeApplication) }
-  let(:log_context) { LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123') }
+  let(:crime_application) { instance_double(CrimeApplication, id: '12345', reference: 10_000_001) }
+  let(:log_context) { LogContext.new(current_provider: current_provider, ip_address: '123.123.123.123') }
+  let(:current_provider) { instance_double(Provider, id: 1) }
+  let(:documents) { [] }
   let(:document) { instance_double(Document) }
 
   before do
@@ -16,6 +18,16 @@ RSpec.describe ApplicationPurger do
   end
 
   describe '.call' do
+    it 'logs the deletion' do
+      expect do
+        described_class.call(crime_application, current_provider, log_context)
+      end.to change(DeletionLog, :count).by(1)
+
+      deletion_log = DeletionLog.first
+      expect(deletion_log.record_id).to eq('12345')
+      expect(deletion_log.deleted_by).to eq('1')
+    end
+
     context 'when it has orphaned documents' do
       let(:documents) { [document] }
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
@@ -26,26 +38,24 @@ RSpec.describe ApplicationPurger do
 
       it 'deletes s3 objects' do
         expect(delete_double).to receive(:call)
-        described_class.call(crime_application, log_context)
+        described_class.call(crime_application, current_provider, log_context)
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, log_context)
+        described_class.call(crime_application, current_provider, log_context)
       end
     end
 
     context 'when it does not have orphaned documents' do
-      let(:documents) { [] }
-
       it 'does not try to delete s3 objects' do
         expect(Datastore::Documents::Delete).not_to receive(:new)
-        described_class.call(crime_application, log_context)
+        described_class.call(crime_application, current_provider, log_context)
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, log_context)
+        described_class.call(crime_application, current_provider, log_context)
       end
     end
   end
