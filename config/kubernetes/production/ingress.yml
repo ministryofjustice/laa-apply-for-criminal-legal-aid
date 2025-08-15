@@ -59,10 +59,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-staging-pingdom
-  namespace: laa-apply-for-criminal-legal-aid-staging
+  name: ingress-production-pingdom
+  namespace: laa-apply-for-criminal-legal-aid-production
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: ingress-staging-pingdom-laa-apply-for-criminal-legal-aid-staging-green
+    external-dns.alpha.kubernetes.io/set-identifier: ingress-production-pingdom-laa-apply-for-criminal-legal-aid-production-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
