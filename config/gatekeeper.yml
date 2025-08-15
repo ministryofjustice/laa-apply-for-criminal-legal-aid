@@ -2044,7 +2044,6 @@ production:
     - 2Q850R
     - 2Q851T
     # Add office code 06/07/2024
-    - OF319G
     - 1Q241E
     # Add office code request - 09/10/2024
     - 1M383Z
@@ -2069,3 +2068,5 @@ production:
     - 2R118H
     # Add office code request - 21/01/2025
     - 2R125Q
+    # [CRIMAPP-1902] Updated office codes - 14/08/2025
+    - 2R241R
