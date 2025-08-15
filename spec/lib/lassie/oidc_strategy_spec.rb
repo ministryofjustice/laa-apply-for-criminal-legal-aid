@@ -85,6 +85,10 @@ RSpec.describe Lassie::OidcStrategy do
       )
     end
 
+    it 'requires account selection on log in' do
+      expect(strategy.prompt).to eq :select_account
+    end
+
     it 'sets the correct client options' do
       expected_options = {
         identifier: 'TestEntraClientID',
