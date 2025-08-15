@@ -72,6 +72,7 @@ Devise.setup do |config|
     {
       name: :entra,
       scope: [:openid, :email],
+      prompt: :select_account,
       response_type: :code,
       send_nonce: true,
       client_options: {
