@@ -21,11 +21,11 @@ RSpec.describe ApplicationPurger do
     it 'logs the deletion' do
       expect do
         described_class.call(crime_application, current_provider, log_context)
-      end.to change(DeletionLog, :count).by(1)
+      end.to change(DeletionEntry, :count).by(1)
 
-      deletion_log = DeletionLog.first
-      expect(deletion_log.record_id).to eq('12345')
-      expect(deletion_log.deleted_by).to eq('1')
+      deletion_entry = DeletionEntry.first
+      expect(deletion_entry.record_id).to eq('12345')
+      expect(deletion_entry.deleted_by).to eq('1')
     end
 
     context 'when it has orphaned documents' do

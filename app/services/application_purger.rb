@@ -33,7 +33,7 @@ class ApplicationPurger
   end
 
   def log_deletion
-    DeletionLog.create!(
+    DeletionEntry.create!(
       record_id: crime_application.id,
       record_type: RecordType::APPLICATION.to_s,
       business_reference: crime_application.reference,

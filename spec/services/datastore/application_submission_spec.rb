@@ -208,7 +208,7 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
 
       it 'does not create a deletion entry' do
-        expect(DeletionLog.count).to eq(0)
+        expect(DeletionEntry.count).to eq(0)
       end
     end
 

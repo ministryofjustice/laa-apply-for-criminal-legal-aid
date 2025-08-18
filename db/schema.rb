@@ -171,7 +171,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_14_120134) do
     t.index ["employment_id"], name: "index_deductions_on_employment_id"
   end
 
-  create_table "deletion_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "deletion_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "record_id", null: false

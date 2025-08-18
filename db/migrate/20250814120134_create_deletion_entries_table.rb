@@ -1,6 +1,6 @@
-class CreateDeletionLogsTable < ActiveRecord::Migration[7.2]
+class CreateDeletionEntriesTable < ActiveRecord::Migration[7.2]
   def change
-    create_table :deletion_logs, id: :uuid do |t|
+    create_table :deletion_entries, id: :uuid do |t|
       t.timestamps
 
       t.string :record_id, null: false
