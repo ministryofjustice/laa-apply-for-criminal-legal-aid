@@ -77,7 +77,7 @@ Rails.application.routes.draw do
   resource :cookies, only: [:show, :update]
 
   resources :crime_applications, except: [:show, :update], path: 'applications' do
-    get :confirm_destroy, path: 'confirm-destroy', on: :member
+    get :confirm_destroy, path: 'confirm-destroy', on: :member if FeatureFlags.delete_drafts.enabled?
     get :start, on: :collection
 
     member do

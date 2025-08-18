@@ -19,7 +19,7 @@
                 row.with_cell(colname: 'created_at')
                 row.with_cell(colname: 'reference')
                 row.with_cell(colname: 'application_type')
-                row.with_cell(colname: 'action')
+                row.with_cell(colname: 'action') if FeatureFlags.delete_drafts.enabled?
               end
             end %>
         <tbody class="govuk-table__body">
@@ -37,9 +37,11 @@
               <td class="govuk-table__cell">
                 <%= t("crime_applications.index.application_type.#{app.application_type}") %>
               </td>
-              <td class="govuk-table__cell">
-                <%= govuk_link_to t('.delete_button'), confirm_destroy_crime_application_path(app) %>
-              </td>
+              <% if FeatureFlags.delete_drafts.enabled? %>
+                <td class="govuk-table__cell">
+                  <%= govuk_link_to t('.delete_button'), confirm_destroy_crime_application_path(app) %>
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
