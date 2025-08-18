@@ -1,5 +1,5 @@
 class ApplicationPurger
-  attr_reader :crime_application, :log_context, :current_provider,
+  attr_reader :crime_application, :log_context, :current_provider
 
   def self.call(crime_application, log_context, current_provider = nil)
     new(crime_application, log_context, current_provider).call
@@ -37,8 +37,8 @@ class ApplicationPurger
       record_id: crime_application.id,
       record_type: RecordType::APPLICATION.to_s,
       business_reference: crime_application.reference,
-      deleted_by: current_provider&.id,
-      reason: current_provider ? DeletionReason::MANUAL.to_s : DeletionReason::SYSTEM_AUTOMATED.to_s
+      deleted_by: current_provider ? current_provider.id : 'system_automated',
+      reason: current_provider ? DeletionReason::PROVIDER_ACTION.to_s : DeletionReason::RETENTION_RULE.to_s
     )
   end
 end

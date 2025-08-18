@@ -26,6 +26,7 @@ RSpec.describe ApplicationPurger do
       deletion_entry = DeletionEntry.first
       expect(deletion_entry.record_id).to eq('12345')
       expect(deletion_entry.deleted_by).to eq('1')
+      expect(deletion_entry.reason).to eq(DeletionReason::PROVIDER_ACTION.to_s)
     end
 
     context 'when it has orphaned documents' do
@@ -66,8 +67,8 @@ RSpec.describe ApplicationPurger do
         described_class.call(crime_application, log_context, current_provider)
 
         deletion_entry = DeletionEntry.first
-        expect(deletion_entry.deleted_by).to eq(nil)
-        expect(deletion_entry.reason).to eq(DeletionReason::SYSTEM_AUTOMATED.to_s)
+        expect(deletion_entry.deleted_by).to eq('system_automated')
+        expect(deletion_entry.reason).to eq(DeletionReason::RETENTION_RULE.to_s)
       end
     end
   end
