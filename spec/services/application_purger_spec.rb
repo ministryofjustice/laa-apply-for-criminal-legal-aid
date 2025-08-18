@@ -20,7 +20,7 @@ RSpec.describe ApplicationPurger do
   describe '.call' do
     it 'logs the deletion' do
       expect do
-        described_class.call(crime_application, current_provider, log_context)
+        described_class.call(crime_application, log_context, current_provider)
       end.to change(DeletionEntry, :count).by(1)
 
       deletion_entry = DeletionEntry.first
@@ -38,24 +38,36 @@ RSpec.describe ApplicationPurger do
 
       it 'deletes s3 objects' do
         expect(delete_double).to receive(:call)
-        described_class.call(crime_application, current_provider, log_context)
+        described_class.call(crime_application, log_context, current_provider)
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, current_provider, log_context)
+        described_class.call(crime_application, log_context, current_provider)
       end
     end
 
     context 'when it does not have orphaned documents' do
       it 'does not try to delete s3 objects' do
         expect(Datastore::Documents::Delete).not_to receive(:new)
-        described_class.call(crime_application, current_provider, log_context)
+        described_class.call(crime_application, log_context, current_provider)
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, current_provider, log_context)
+        described_class.call(crime_application, log_context, current_provider)
+      end
+    end
+
+    context 'when current_provider is nil' do
+      let(:current_provider) { nil }
+
+      it 'logs the deletion reason as system automated' do
+        described_class.call(crime_application, log_context, current_provider)
+
+        deletion_entry = DeletionEntry.first
+        expect(deletion_entry.deleted_by).to eq(nil)
+        expect(deletion_entry.reason).to eq(DeletionReason::SYSTEM_AUTOMATED.to_s)
       end
     end
   end
