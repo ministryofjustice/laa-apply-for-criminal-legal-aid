@@ -135,4 +135,64 @@ RSpec.describe CrimeApplication, type: :model do
       expect(subject.decided?).to be false
     end
   end
+
+  describe '#to_be_deleted' do
+    let(:retention_period) { Rails.configuration.x.retention_period.ago }
+
+    context 'when application has reached the retention period' do
+      let(:attributes) { { updated_at: retention_period } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is older than the retention period' do
+      let(:attributes) { { updated_at: retention_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is younger than the retention period' do
+      let(:attributes) { { updated_at: retention_period + 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_deleted.count).to eq(0)
+      end
+    end
+  end
+
+  describe '#soft_deleted?' do
+    context 'when soft_deleted_at is nil' do
+      it 'does not return application' do
+        expect(described_class.soft_deleted.count).to eq(0)
+      end
+    end
+
+    context 'when soft_deleted_at is set' do
+      let(:attributes) { { soft_deleted_at: 1.day.ago } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.soft_deleted.count).to eq(1)
+      end
+    end
+  end
 end
