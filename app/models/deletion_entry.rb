@@ -1,0 +1,2 @@
+class DeletionEntry < ApplicationRecord
+end
