@@ -72,6 +72,7 @@ Devise.setup do |config|
     {
       name: :entra,
       scope: [:openid, :email],
+      prompt: :select_account,
       response_type: :code,
       send_nonce: true,
       client_options: {
@@ -82,6 +83,8 @@ Devise.setup do |config|
       discovery: true,
       pkce: true,
       issuer: "https://login.microsoftonline.com/#{ENV.fetch('OMNIAUTH_ENTRA_TENANT_ID', nil)}/v2.0",
+      logout_path: "/logout",
+      post_logout_redirect_uri: ENV.fetch('OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI', nil),
       strategy_class: Lassie::OidcStrategy
     }
   )

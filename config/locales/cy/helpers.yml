@@ -1,0 +1,1304 @@
+cy:
+  helpers/dictionary:
+    address: &ADDRESS_DETAILS
+      address_line_one: Llinell cyfeiriad 1
+      address_line_two: Llinell cyfeiriad 2 (dewisol)
+      city: Tref neu ddinas
+      country: Gwlad
+      postcode: Cod post
+    ioj_justification_hint: &ioj_justification_hint "Rhowch resymu"
+    frequency_legend: &frequency_legend "Pa mor aml?"
+    amount_label: &amount_label "Faint?"
+    OWNERSHIP_OPTIONS: &OWNERSHIP_OPTIONS
+      applicant: "Cleient"
+      applicant_and_partner: "Cleient a phartner"
+      partner: "Partner"
+    OWNERSHIP_PHRASE_OPTIONS: &OWNERSHIP_PHRASE_OPTIONS
+      applicant: "Fy nghleient"
+      applicant_and_partner: "Fy nghleient a’u partner"
+      partner: "Partner fy nghleient"
+    YESNO: &YESNO
+      "yes": "Ie"
+      "no": "Na"
+    frequency_phrases: &frequency_phrases
+      "week": "wythnos"
+      "fortnight": "2 wythnos"
+      "four_weeks": "4 wythnos"
+      "month": "mis"
+      "annual": "blwyddyn"
+    frequency_options: &frequency_options
+      "week": "Bob wythnos"
+      "fortnight": "Bob 2 wythnos"
+      "four_weeks": "Bob 4 wythnos"
+      "month": "Bob mis"
+      "annual": "Bob blwyddyn"
+    asset:
+      residential: eiddo preswyl
+      commercial: eiddo masnachol
+      land: tir
+  helpers:
+    back_link: Yn ôl
+    back_to_portal: Yn ôl i Borth Ar-lein LAA
+    back_to_applications: Yn ôl at eich ceisiadau
+    submit:
+      clear: Clirio
+      search: Chwilio
+      start: Dechrau nawr
+      save_and_continue: Cadw a pharhau
+      save_and_come_back_later: Cadw a dychwelyd yn hwyrach
+      save_and_submit_initial: Cadw a chyflwyno’r cais
+      save_and_submit_change_in_financial_circumstances: Cadw a chyflwyno’r cais
+      save_and_submit_post_submission_evidence: Cadw a chyflwyno tystiolaeth
+      save_cookie_settings: Cadw gosodiadau cwcis
+      sign_in: Mewngofnodi
+      find_address: Dod o hyd i gyfeiriad
+      try_again: Ceisio eto
+    contact:
+      call_charges: Darganfod gwybodaeth am gostau galwadau
+      case_enquiries: Ymholiadau achos
+      case_enquiries_subheading: Ar gyfer ymholiadau am geisiadau cymorth cyfreithiol troseddol.
+      contact_us: Cysylltwch â ni
+      email: E-bost
+      email_response_time: Ein nod yw ymateb o fewn 5 diwrnod gwaith.
+      extension_option_two: opsiwn 2
+      extension_option_three: opsiwn 3
+      opening_hours: 9yb tan 5yp, dydd Llun i ddydd Gwener (heblaw gwyliau cyhoeddus)
+      technical_support: Cymorth technegol
+      technical_support_subheading: Ar gyfer cymorth gyda’r gwasanaeth gwneud cais am gymorth cyfreithiol troseddol.
+      telephone: Ffôn
+      webchat: Sgwrs we
+      webchat_adviser: Siaradwch â chynghorydd nawr
+    language_toggle:
+      english: English
+      welsh: Cymraeg
+
+    legend:
+      cookies_settings_form:
+        consent: Ydych chi am dderbyn cwcis dadansoddol?
+      steps_provider_select_office_form:
+        office_code: Dewiswch rif cyfrif eich swyddfa
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number: Beth yw cyfeirnod y cais gwreiddiol?
+      steps_client_is_means_tested_form:
+        is_means_tested: A yw'r cais hwn yn ddarostyngedig i brawf modd neu brawf pasbort?
+      steps_client_has_partner_form:
+        has_partner: A oes gan eich cleient bartner?
+      steps_client_details_form:
+        date_of_birth: Beth yw eu dyddiad geni?
+      steps_client_case_type_form:
+        case_type: Beth yw math yr achos?
+      steps_shared_nino_form:
+        has_arc_or_nino: A oes gan %{subject} rif Yswiriant Gwladol?
+      steps_client_appeal_details_form:
+        appeal_lodged_date: Pryd y cafodd yr apêl ei gyflwyno?
+        appeal_original_app_submitted: A gafodd cais am gymorth cyfreithiol ei gyflwyno ar gyfer yr achos gwreiddiol?
+      steps_client_appeal_financial_circumstances_form:
+        appeal_financial_circumstances_changed: A yw amgylchiadau ariannol eich cleient wedi newid ers y cais cychwynnol?
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number: Beth yw cyfeirnod y cais gwreiddiol?
+      steps_client_relationship_status_form:
+        relationship_status: Beth yw statws perthynas eich cleient?
+      steps_partner_relationship_form:
+        relationship_to_partner: Beth yw perthynas eich cleient â’u partner?
+      steps_partner_details_form:
+        date_of_birth: Beth yw dyddiad geni’r partner?
+      steps_partner_involvement_form:
+        involvement_in_case: A yw’r partner yn rhan o achos eich cleient?
+      steps_partner_conflict_form:
+        conflict_of_interest: A oes gan y partner wrthdaro buddiannau?
+      steps_partner_same_address_form:
+        has_same_address_as_client: A yw eich cleient a’u partner yn byw yn yr un cyfeiriad?
+      steps_dwp_benefit_type_form:
+        benefit_type: A yw eich cleient yn cael un o’r budd-daliadau pasbortio hyn?
+      steps_dwp_partner_benefit_type_form:
+        benefit_type: A yw’r partner yn cael un o’r budd-daliadau pasbortio hyn?
+      steps_client_residence_type_form:
+        residence_type: Ble mae eich cleient yn byw fel arfer?
+      steps_client_contact_details_form:
+        correspondence_address_type: Ble ddylem ni anfon gohebiaeth?
+      steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
+        heading: Mae cofnodion yr Adran Gwaith a Phensiynau (DWP) yn dangos nad yw %{subject} yn derbyn budd-dal pasbortio
+        confirm_dwp_result: A yw cofnodion yr Adran Gwaith a Phensiynau yn gywir?
+      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
+      steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
+        page_title: Cadarnhewch fanylion %{subject}
+        heading: Gwiriwch fanylion %{subject}
+        confirm_details: A yw’r manylion hyn yn gywir?
+      steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_LEGEND
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_LEGEND
+        benefit_type: A oes gennych dystiolaeth bod %{subject} yn cael %{benefit_type}?
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_LEGEND
+      steps_dwp_cannot_check_benefit_status_form: &CANNOT_CHECK_BENEFIT_STATUS_LEGEND
+        heading: Ni allwn wirio statws budd-dal %{subject} heb eu rhif Yswiriant Gwladol
+        upload_evidence: Rhaid i chi lwytho tystiolaeth bod %{subject} yn cael budd-dal pasbortio.
+      steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
+      steps_dwp_cannot_check_dwp_status_form:
+        cannot_check_dwp_status_page_title: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+        cannot_check_dwp_status_heading: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+      steps_dwp_benefit_check_result_form:
+        benefit_check_result: Mae cofnodion y DWP yn dangos bod %{subject} yn derbyn budd-dal pasbortio
+      steps_case_has_case_concluded_form:
+        has_case_concluded: A yw’r achos wedi dod i ben?
+      steps_case_is_preorder_work_claimed_form:
+        is_preorder_work_claimed: Ydych chi'n bwriadu hawlio gwaith cyn archeb?
+      steps_case_is_client_remanded_form:
+        is_client_remanded: A yw’r llys wedi cadw eich cleient yn y ddalfa?
+      steps_case_charges_form:
+        date_from: Dyddiad cychwyn %{index}
+        date_to: Dyddiad dod i ben %{index} (dewisol)
+        steps_case_charges_summary_form:
+          add_offence: Ydych chi am ychwanegu trosedd arall?
+        steps_case_has_codefendants_form:
+          has_codefendants: A oes gan eich cleient gyd-ddiffynyddion yn yr achos hwn?
+        steps_case_codefendants_form:
+          codefendants_attributes:
+            conflict_of_interest: A oes gwrthdaro buddiannau gyda'r cyd-ddiffynnydd hwn?
+        steps_case_other_charge_in_progress_form:
+          client_other_charge_in_progress: A oes achos neu gyhuddiad troseddol arall yn erbyn eich cleient yn mynd rhagddo?
+          partner_other_charge_in_progress: A oes achos neu gyhuddiad troseddol arall yn erbyn y partner yn mynd rhagddo?
+        steps_case_hearing_details_form:
+          hearing_date: Pryd yw’r gwrandawiad nesaf?
+          is_first_court_hearing: A wnaeth y llys hwn hefyd wrando ar y gwrandawiad cyntaf?
+        steps_case_ioj_form:
+          types: Pam ddylai eich cleient gael cymorth cyfreithiol?
+        steps_income_income_before_tax_form:
+          income_above_threshold:
+            one: A yw incwm blynyddol eich cleient ar hyn o bryd yn fwy na £12,475 y flwyddyn cyn treth?
+            other: A yw incwm blynyddol ar y cyd eich cleient a’i bartner yn fwy na £12,475 cyn treth?
+        steps_income_armed_forces_form:
+          client_in_armed_forces: A yw eich cleient yn y lluoedd arfog?
+          partner_in_armed_forces: A yw’r partner yn y lluoedd arfog?
+        steps_income_client_owns_property_form:
+          client_owns_property: A yw %{subject} yn berchen ar eu cartref, neu unrhyw dir neu eiddo arall?
+          client_owns_property_info: Cynhwyswch dir neu eiddo y maent yn berchen arno'n llawn neu'n rhannol, yn y DU neu y tu allan iddi.
+        steps_income_has_savings_form:
+          has_savings: A oes gan %{subject} unrhyw gynilion neu fuddsoddiadau?
+        steps_income_employment_status_form:
+          employment_status: Beth yw statws cyflogaeth eich cleient?
+        steps_income_partner_employment_status_form:
+          partner_employment_status: Beth yw statws cyflogaeth y partner?
+        steps_income_client_employment_income_form:
+          before_or_after_tax: A yw hyn cyn neu ar ôl treth?
+          frequency: Pa mor aml y cânt y taliad hwn?
+        steps_income_partner_employment_income_form:
+          before_or_after_tax: A yw hyn cyn neu ar ôl treth?
+          frequency: Pa mor aml y cânt y taliad hwn?
+        steps_income_client_employment_details_form:
+          before_or_after_tax: A yw hyn cyn neu ar ôl treth?
+          frequency: Pa mor aml y cânt y taliad hwn?
+        steps_income_partner_employment_details_form:
+          before_or_after_tax: A yw hyn cyn neu ar ôl treth?
+          frequency: Pa mor aml y cânt y taliad hwn?
+        steps_income_client_deductions_form:
+          income_tax:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+          national_insurance:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+          other:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+        steps_income_partner_deductions_form:
+          income_tax:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+          national_insurance:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+          other:
+            frequency: Pa mor aml y caiff hyn ei ddidynnu?
+        steps_income_client_employments_summary_form:
+          add_client_employment: Ydych chi am ychwanegu swydd arall?
+        steps_income_partner_employments_summary_form:
+          add_partner_employment: Ydych chi am ychwanegu swydd arall?
+        steps_income_client_self_assessment_tax_bill_form:
+          applicant_self_assessment_tax_bill: A yw eich cleient wedi derbyn cyfrifiad treth Hunanasesiad yn ystod y 2 flynedd diwethaf?
+          applicant_self_assessment_tax_bill_frequency: Pa mor aml y maent yn talu’r swm hwn?
+        steps_income_partner_self_assessment_tax_bill_form:
+          partner_self_assessment_tax_bill: A yw’r partner wedi derbyn cyfrifiad treth Hunanasesiad yn ystod y 2 flynedd diwethaf?
+          partner_self_assessment_tax_bill_frequency: Pa mor aml y maent yn talu’r swm hwn?
+        steps_income_income_payments_form:
+          income_payments: Pa rai o’r taliadau hyn y mae eich cleient yn eu derbyn?
+          maintenance:
+            frequency: *frequency_legend
+          private_pension:
+            frequency: *frequency_legend
+          state_pension:
+            frequency: *frequency_legend
+          interest_investment:
+            frequency: *frequency_legend
+          student_loan_grant:
+            frequency: *frequency_legend
+          board_from_family:
+            frequency: *frequency_legend
+          rent:
+            frequency: *frequency_legend
+          financial_support_with_access:
+            frequency: *frequency_legend
+          from_friends_relatives:
+            frequency: *frequency_legend
+          other:
+            frequency: Pa mor aml y maent yn cael yr incwm hwn?
+        steps_income_partner_income_payments_form:
+          income_payments: Pa rai o’r taliadau hyn y mae’r partner yn eu derbyn?
+          maintenance:
+            frequency: *frequency_legend
+          private_pension:
+            frequency: *frequency_legend
+          state_pension:
+            frequency: *frequency_legend
+          interest_investment:
+            frequency: *frequency_legend
+          student_loan_grant:
+            frequency: *frequency_legend
+          board_from_family:
+            frequency: *frequency_legend
+          rent:
+            frequency: *frequency_legend
+          financial_support_with_access:
+            frequency: *frequency_legend
+          from_friends_relatives:
+            frequency: *frequency_legend
+          other:
+            frequency: Pa mor aml y maent yn cael yr incwm hwn?
+        steps_income_income_benefits_form:
+          income_benefits: Pa rai o’r budd-daliadau hyn y mae eich cleient yn eu derbyn?
+          child:
+            frequency: *frequency_legend
+          working_or_child_tax_credit:
+            frequency: *frequency_legend
+          incapacity:
+            frequency: *frequency_legend
+          industrial_injuries_disablement:
+            frequency: *frequency_legend
+          jsa:
+            frequency: *frequency_legend
+          other:
+            frequency: *frequency_legend
+        steps_income_partner_income_benefits_form:
+          income_benefits: Pa rai o’r budd-daliadau hyn y mae’r partner yn eu derbyn?
+          child:
+            frequency: *frequency_legend
+          working_or_child_tax_credit:
+            frequency: *frequency_legend
+          incapacity:
+            frequency: *frequency_legend
+          industrial_injuries_disablement:
+            frequency: *frequency_legend
+          jsa:
+            frequency: *frequency_legend
+          other:
+            frequency: *frequency_legend
+        steps_income_lost_job_in_custody_form:
+          lost_job_in_custody: A gollodd eich cleient ei swydd o ganlyniad i gael ei gadw yn y ddalfa?
+        steps_income_manage_without_income_form:
+          manage_without_income:
+            one: Sut mae %{subject} yn ymdopi heb incwm?
+            other: Sut mae %{subject} yn ymdopi heb incwm?
+        steps_income_business_type_form:
+          business_type: Pa fath o fusnes hunangyflogedig ydych chi am ei ychwanegu?
+        steps_income_businesses_summary_form:
+          add_business: Ydych chi angen ychwanegu busnes arall?
+        steps_income_businesses_form:
+          details: Manylion busnes %{subject}
+        steps_income_business_nature_form:
+          description: Beth yw natur y busnes?
+        steps_income_business_start_date_form:
+          trading_start_date: Pryd ddechreuodd y busnes fasnachu?
+        steps_income_business_additional_owners_form:
+          has_additional_owners: A yw %{subject} mewn partneriaeth fusnes â rhywun arall?
+        steps_income_business_employees_form:
+          has_employees: A yw %{subject} yn cyflogi unrhyw un drwy’r busnes?
+        steps_income_business_financials_form:
+          financials: Manylion ariannol busnes %{subject}
+          turnover_frequency: Pa mor aml oedd hyn?
+          drawings_frequency: Pa mor aml oedd hyn?
+          profit_frequency: Dros ba gyfnod oedd hyn?
+        steps_income_business_salary_or_remuneration_form:
+          salary_amount: Beth yw cyflog neu dâl %{subject} fel cyfarwyddwr neu gyfranddaliwr?
+        steps_income_business_total_income_share_sales_form:
+          total_income_share_sales_amount: Beth yw cyfanswm incwm %{subject} o werthiannau cyfranddaliadau?
+        steps_income_business_percentage_profit_share_form:
+          percentage_profit_share: Beth yw canran cyfran %{subject} o’r elw o’r busnes neu’r bartneriaeth?
+        steps_outgoings_housing_payment_type_form:
+          housing_payment_type: Pa un o’r taliadau hyn y mae %{subject} yn eu gwneud lle maent yn byw fel arfer?
+        steps_outgoings_mortgage_form:
+          frequency: Pa mor aml y maent yn gwneud y taliad morgais?
+        steps_outgoings_rent_form:
+          frequency: Pa mor aml y maent yn talu’r swm hwn?
+        steps_outgoings_board_and_lodging_form:
+          frequency: Pa mor aml y maent yn talu am fwyd a llety?
+        steps_outgoings_council_tax_form:
+          council_tax:
+            one: A yw %{subject} yn talu’r Dreth Gyngor lle maent yn byw fel arfer?
+            other: A yw %{subject} yn talu’r Dreth Gyngor lle maent yn byw fel arfer?
+        steps_outgoings_outgoings_payments_form:
+          outgoings_payments:
+            one: Pa un o’r taliadau hyn y mae %{subject} yn eu gwneud?
+            other: Pa un o’r taliadau hyn y mae %{subject} yn eu gwneud?
+          childcare:
+            frequency: Pa mor aml?
+          maintenance:
+            frequency: Pa mor aml?
+          legal_aid_contribution:
+            frequency: Pa mor aml?
+        steps_outgoings_outgoings_more_than_income_form:
+          outgoings_more_than_income:
+            one: A yw gan %{subject} wariant sy’n fwy na’u hincwm?
+            other: A yw gan %{subject} wariant sy’n fwy na’u hincwm ar y cyd?
+        steps_submission_more_information_form:
+          additional_information_required: Ydych chi am ychwanegu unrhyw wybodaeth arall?
+        steps_submission_cannot_submit_without_nino_form:
+          heading: Ni allwch gyflwyno’r cais hwn eto, gan na allwn wirio statws budd-daliadau %{subject} heb eu Rhif Yswiriant Gwladol
+        steps_capital_property_type_form:
+          property_type: Pa asedion y mae %{subject} yn berchen arnynt neu’n berchen ar ran ohonynt, y tu mewn neu’r tu allan i’r DU?
+        steps_capital_usual_property_details_form:
+          action: Beth ydych chi am ei wneud nesaf?
+        steps_capital_other_property_type_form:
+          property_type: Pa asedion eraill y mae %{subject} yn berchen arnynt neu’n berchen ar ran ohonynt, y tu mewn neu’r tu allan i’r DU?
+        steps_capital_saving_type_form:
+          saving_type: Pa gynilion sydd gan %{subject} y tu mewn neu’r tu allan i’r DU?
+        steps_capital_other_saving_type_form:
+          saving_type: Pa gynilion eraill sydd gan %{subject} y tu mewn neu’r tu allan i’r DU?
+        steps_capital_savings_form:
+          is_overdrawn: A yw’r cyfrif dros ei ben?
+          are_wages_paid_into_account: A yw cyflogau neu fudd-daliadau eich cleient yn cael eu talu i’r cyfrif hwn?
+          are_partners_wages_paid_into_account: A yw cyflogau neu fudd-daliadau’r partner yn cael eu talu i’r cyfrif hwn?
+          confirm_in_applicants_name: Cadarnhewch y canlynol
+          ownership_type: Ym mhwy mae enw’r cyfrif?
+        steps_capital_savings_summary_form:
+          add_saving: Ydych chi am ychwanegu cyfrif cynilo arall?
+        steps_capital_investment_type_form:
+          investment_type: Pa fuddsoddiadau sydd gan %{subject} y tu mewn neu’r tu allan i’r DU?
+        steps_capital_other_investment_type_form:
+          investment_type: Pa fuddsoddiadau eraill sydd gan %{subject} y tu mewn neu’r tu allan i’r DU?
+        steps_capital_investments_form:
+          ownership_type: Ym mhwy mae enw’r buddsoddiad?
+          confirm_in_applicants_name: Cadarnhewch y canlynol
+        steps_capital_national_savings_certificates_form:
+          ownership_type: Pwy sy’n berchen ar y dystysgrif?
+          confirm_in_applicants_name: Cadarnhewch y canlynol
+        steps_capital_investments_summary_form:
+          add_investment: Ydych chi am ychwanegu buddsoddiad arall?
+        steps_capital_national_savings_certificates_summary_form:
+          add_national_savings_certificate: Ydych chi am ychwanegu Tystysgrif Cynilion Cenedlaethol arall?
+        steps_capital_properties_summary_form:
+          add_property: Ydych chi am ychwanegu ased arall?
+        steps_capital_residential_form:
+          house_type: Pa fath o eiddo ydyw?
+          is_home_address: A yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient?
+          has_other_owners: A oes unrhyw un arall yn berchen ar ran o’r eiddo?
+        steps_capital_commercial_form:
+          is_home_address: A yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient?
+          has_other_owners: A oes unrhyw un arall yn berchen ar ran o’r eiddo?
+        steps_capital_land_form:
+          is_home_address: A yw cyfeiriad y tir yr un fath â chyfeiriad cartref eich cleient?
+          has_other_owners: A oes unrhyw un arall yn berchen ar ran o’r tir?
+        steps_capital_property_owners_form:
+          relationship: Beth yw eu perthynas â %{subject}?
+        steps_capital_answers_form:
+          has_no_other_assets: Cadarnhewch y canlynol
+        steps_submission_declaration_form:
+          legal_rep_has_partner_declaration: A oes gennych ddatganiad wedi’i lofnodi gan bartner eich cleient?
+
+    hint:
+      search: Rhowch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, cyfeirnod LAA
+      steps_provider_select_office_form:
+        office_code: "Os nad yw rhif cyfrif eich swyddfa yn cael ei restru, ebostiwch: %{support_email}"
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number: Mae arnom angen eich MAAT ID neu’ch rhif cyflwyno unigryw (USN).
+      steps_client_is_means_tested_form:
+        is_means_tested: Mae’r rhan fwyaf o geisiadau yn destun prawf modd neu brawf pasbortio, gan gynnwys pobl dan 18 oed, oni bai bod eu cyfarfodydd heb brawf modd fel y nodir yn y Llawlyfr Cymorth Cyfreithiol Troseddol.
+      steps_client_relationship_status_form:
+        separation_date: ""
+      steps_client_details_form:
+        other_names: Mae hyn yn cynnwys aliasau, llysenwau neu enwau eraill y gall eich cleient eu hadnabod fel.
+        date_of_birth: Er enghraifft, 27 3 2007.
+      steps_partner_details_form:
+        other_names: Mae hyn yn cynnwys aliasau, llysenwau neu enwau eraill y gallant eu hadnabod fel.
+        date_of_birth: Er enghraifft, 27 3 2007.
+      steps_client_appeal_details_form:
+        appeal_lodged_date: Er enghraifft, 27 3 2007.
+        appeal_original_app_submitted: Dyma’r achos gyda’r canlyniad yr hoffai eich cleient apêl.
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number: Mae arnom angen eich MAAT ID neu’ch rhif cyflwyno unigryw (USN).
+      steps_client_contact_details_form:
+        welsh_translation: Bydd hefyd yn cael ei anfon yn Saesneg. O dan Ddeddf Iaith Gymraeg, caiff rhai gohebiaethau eu hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
+      steps_shared_nino_form:
+        has_arc_or_nino: Mae ar eu cerdyn Yswiriant Gwladol, llythyr budd-dal, slip cyflog neu P60. Er enghraifft, ‘QQ 12 34 56 C’.
+        nino: Er enghraifft, QQ 12 34 56 C
+        arc: Er enghraifft, 'ABC12/345678/A'.
+        has_arc_or_nino_options:
+          arc: Mae’r ARC yn gerdyn plastig maint cerdyn credyd a roddir gan y Swyddfa Gartref i bobl sy’n ceisio lloches.
+        has_nino_options:
+          arc: Mae’r ARC yn gerdyn plastig maint cerdyn credyd a roddir gan y Swyddfa Gartref i bobl sy’n ceisio lloches.
+      steps_dwp_benefit_type_form: &BENEFIT_TYPE_HINT
+        benefit_type: Bydd hyn yn helpu i ni adolygu’ch cais. Ni fydd yn effeithio ar wirio’r DWP.
+        last_jsa_appointment_date: Weithiau gelwir hyn yn “arwyddo arno”.
+      steps_dwp_partner_benefit_type_form: *BENEFIT_TYPE_HINT
+      steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_HINT
+        will_enter_nino_options:
+          "no": Efallai na allwch gyflwyno eich cais heb y Rhif Yswiriant Gwladol
+      steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_HINT
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_HINT
+        has_benefit_evidence: Gall hyn fod yn lythyr gan Adran Gwaith a Phensiynau (DWP) neu Ganolfan Byd Gwaith, neu gip o sgrin o ap llywodraeth. Rhaid iddo ddangos enw %{subject}, swm y budd-dal a pha mor aml maent yn ei dderbyn.
+        has_benefit_evidence_options:
+          "yes": Bydd angen i chi uwchlwytho’r dystiolaeth ar ddiwedd y cais hwn.
+          "no": Bydd angen i chi ddweud wrthym am incwm %{subject} os nad oes gennych dystiolaeth.
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
+      steps_dwp_cannot_check_dwp_status_form:
+        page_title: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+        heading: Mae’n ddrwg gennym, ni allwn wirio gwybodaeth %{subject} gyda’r DWP
+        next_steps_label: "Gallwch wneud un o’r canlynol:"
+        next_steps_html: |
+          <li>parhewch â’r cais hwn i uwchlwytho tystiolaeth ategol</li>
+          <li>arbedwch a dewch yn ôl yn hwyrach i geisio eto</li>
+      steps_address_lookup_form:
+        postcode: Rhaid i hwn fod yn god post y DU dilys. Er enghraifft, SW1A 2AA.
+      steps_case_urn_form:
+        urn: Er enghraifft, ‘12 AB 3456789’.
+      steps_case_has_case_concluded_form:
+        date_case_concluded: Er enghraifft, 27 3 2007.
+      steps_case_is_preorder_work_claimed_form:
+        preorder_work_date: Er enghraifft, 27 3 2007.
+        preorder_work_details: Rhowch fanylion am ddyddiad y gwaith.
+      steps_case_is_client_remanded_form:
+        date_client_remanded: Er enghraifft, 27 3 2007.
+      steps_case_charges_form:
+        offence_name: Dechreuwch deipio i ddewis trosedd, er enghraifft, lladrad. Gallwch ychwanegu mwy wedyn.
+        offence_dates_attributes:
+          date_from: Er enghraifft, 27 3 2007.
+          date_to: Gadewch yn wag os digwyddodd y drosedd ar un dyddiad yn unig.
+      steps_case_hearing_details_form:
+        hearing_court_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys San Steffan Caerdydd.
+        hearing_date: Er enghraifft, 27 3 2024.
+      steps_case_first_court_hearing_form:
+        first_court_hearing_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys y Goron Bristol.
+      steps_case_ioj_form:
+        loss_of_liberty_justification: "Rhowch resymu"
+        suspended_sentence_justification: "Rhowch resymu"
+        loss_of_livelihood_justification: "Rhowch resymu"
+        reputation_justification: "Rhowch resymu"
+        question_of_law_justification: "Rhowch resymu"
+        understanding_justification: "Rhowch resymu"
+        witness_tracing_justification: "Rhowch resymu"
+        expert_examination_justification: "Rhowch resymu"
+        interest_of_another_justification: "Rhowch resymu"
+        other_justification: "Rhowch resymu"
+      steps_income_income_before_tax_form:
+        income_above_threshold:
+          one: Peidiwch â chynnwys unrhyw incwm cyflogaeth os yw eich cleient wedi colli ei swydd neu wedi rhoi’r gorau i gyflogaeth.
+          other: Peidiwch â chynnwys unrhyw incwm cyflogaeth os yw eich cleient neu ei bartner wedi colli eu swydd neu wedi rhoi’r gorau i gyflogaeth.
+      steps_income_client_owns_property_form:
+        client_owns_property: Cynhwyswch dir neu eiddo y maent yn berchen arno’n llawn neu’n rhannol, y tu mewn neu’r tu allan i’r DU.
+      steps_income_has_savings_form:
+        has_savings: Cynhwyswch unrhyw gynilion neu fuddsoddiadau yn y DU neu dramor.
+      steps_income_employment_status_form:
+        employment_status: Dewiswch bob un sy’n gymwys.
+        employment_status_options:
+          employed: Maent yn cael cyflog gan gyflogwr.
+          self_employed: Mae’n cynnwys os ydynt mewn partneriaeth fusnes, neu’n gyfarwyddwr neu gyfranddaliwr mewn cwmni preifat.
+          not_working: Mae’n cynnwys os ydynt wedi dod â chyflogaeth i ben yn ystod y 3 mis diwethaf, erioed heb swydd, neu'n bensiynwr.
+      steps_income_partner_employment_status_form:
+      steps_income_client_deductions_form:
+        types_options:
+          other: Er enghraifft, Benthyciadau Myfyrwyr, pensiynau neu fudd-daliadau cyflogwyr
+      steps_income_client_self_assessment_tax_bill_form:
+        applicant_self_assessment_tax_bill: Bydd hyn yn dod gan HM Revenue and Customs (HMRC).
+        applicant_self_assessment_tax_bill_amount: Rhowch '0' os nad oes.
+      steps_income_partner_self_assessment_tax_bill_form:
+        partner_self_assessment_tax_bill: Bydd hyn yn dod gan HM Revenue and Customs (HMRC).
+        partner_self_assessment_tax_bill_amount: Rhowch '0' os nad oes.
+      steps_income_lost_job_in_custody_form:
+        date_job_lost: Er enghraifft, 27 3 2007.
+      steps_income_income_payments_form:
+        income_payments: Dewiswch bob un sy’n gymwys.
+        types_options:
+          maintenance: Cynhwyswch gynhaliaeth plant.
+          private_pension: Cynhwyswch bensiynau cyflogwyr.
+          board_from_family: Cynhwyswch unrhyw daliadau, hyd yn oed os nad yw’n seiliedig ar gytundeb.
+          rent: Cynhwyswch taliadau incwm rhent eich cleient o eiddo nad ydynt yn byw ynddo, hyd yn oed os nad yw’n seiliedig ar gytundeb.
+          from_friends_relatives: Taliadau rheolaidd i helpu gyda chostau byw, nid taliadau un tro.
+      steps_income_partner_income_payments_form:
+        income_payments: Dewiswch bob un sy’n gymwys.
+        types_options:
+          maintenance: Cynhwyswch gynhaliaeth plant.
+          private_pension: Cynhwyswch bensiynau cyflogwyr.
+          board_from_family: Cynhwyswch unrhyw daliadau, hyd yn oed os nad yw’n seiliedig ar gytundeb.
+          rent: Cynhwyswch taliadau incwm rhent y mae’r partner yn eu derbyn o eiddo nad ydynt yn byw ynddo, hyd yn oed os nad yw’n seiliedig ar gytundeb.
+          from_friends_relatives: Taliadau rheolaidd i helpu gyda chostau byw, nid taliadau un tro.
+      steps_income_income_benefits_form:
+        income_benefits: Dewiswch bob un sy’n gymwys.
+        types_options:
+          jsa: Mae hyn yn cynnwys JSA Math Newydd.
+          other: Mae budd-daliadau heb eu cyfri yn cynnwys Budd-dal Tai a Taliad Annibyniaeth Bersonol (PIP).
+      steps_income_partner_income_benefits_form:
+      steps_income_business_type_form:
+        business_type: Gallwch ychwanegu mwy wedyn.
+      steps_income_business_start_date_form:
+        trading_start_date: Er enghraifft, 27 3 2007.
+      steps_income_business_employees_form:
+        has_employees: Nodiwch os oes ganddynt gyflogeion, heb gynnwys hwy eu hunain.
+      steps_income_business_financials_form:
+        financials: Darparwch fanylion ariannol busnes %{subject} o'r 12 mis diwethaf. Rhowch 0 os nad oes.
+        turnover_amount: Cyfanswm incwm o waith hunangyflogedig.
+        drawings_amount: Arian neu asedau a dynwyd o’r busnes at ddefnydd personol.
+        profit_amount: Y swm sy’n weddill ar ôl tynnu costau busnes.
+      steps_income_business_salary_or_remuneration_form:
+        salary_amount: Rhowch y swm blynyddol. Rhowch 0 os nad oes.
+      steps_income_business_total_income_share_sales_form:
+        total_income_share_sales_amount: Rhowch y swm blynyddol. Rhowch 0 os nad oes.
+      steps_income_business_percentage_profit_share_form:
+        percentage_profit_share: Rhowch y swm blynyddol. Rhowch 0 os nad oes.
+      steps_outgoings_board_and_lodging_form:
+        food_amount: Rhowch '0' os nad oes.
+      steps_capital_property_type_form:
+        property_type: Ychwanegwch un ased ar y tro. Gallwch ychwanegu mwy wedyn.
+      steps_capital_saving_type_form:
+        saving_type: Ychwanegwch un cyfrif cynilo ar y tro. Gallwch ychwanegu mwy wedyn.
+      steps_capital_other_saving_type_form:
+        saving_type: Ychwanegwch un cyfrif cynilo ar y tro. Gallwch ychwanegu mwy wedyn.
+      steps_capital_investment_type_form:
+        investment_type: Ychwanegwch un buddsoddiad ar y tro. Gallwch ychwanegu mwy wedyn.
+      steps_capital_other_investment_type_form:
+        investment_type: Add one investment at a time. You can add more later.
+      steps_capital_investments_form:
+        description: Er enghraifft, pa gwmnïau mae %{subject} wedi buddsoddi ynddynt, gwerth pob cyfranddaliad a phryd y gallant gyrchu’r buddsoddiad.
+      steps_capital_national_savings_certificates_form:
+        value: Rhowch amcangyfrif os nad ydych yn gwybod y gwerth manwl.
+      steps_capital_premium_bonds_form:
+        premium_bonds_total_value: Rhowch amcangyfrif os nad ydych yn gwybod y gwerth manwl.
+      steps_outgoings_outgoings_payments_form:
+        outgoings_payments: Dewiswch bob un sy’n gymwys.
+        types_options:
+          childcare: Er enghraifft, i ofalwr plant, nyrs neu fferyllfa.
+          maintenance: Mae hyn yn cynnwys cynhaliaeth plant.
+      steps_capital_other_property_type_form:
+        property_type: Ychwanegwch un ased ar y tro. Gallwch ychwanegu mwy wedyn.
+      steps_capital_residential_form:
+        bedrooms: Rhowch ‘0’ os yw’r eiddo’n stiwdio.
+        value: Gallwch ddefnyddio gwefannau eiddo i ddod o hyd i werth bras.
+      steps_capital_commercial_form:
+        value: Gallwch ddefnyddio gwefannau eiddo i ddod o hyd i werth bras.
+      steps_capital_land_form:
+        value: Gallwch ddefnyddio gwefannau eiddo i ddod o hyd i werth bras.
+
+    label:
+      cookies_settings_form:
+        consent_options:
+          accept: "Ie"
+          reject: "Na"
+      language_toggle:
+        english:
+          aria_label: Apply for criminal legal aid in English
+        welsh:
+          aria_label: Gwneud cais am gymorth cyfreithiol troseddol yn y Gymraeg
+      steps_provider_confirm_office_form:
+        is_current_office_options:
+          "yes": "Ie"
+          "no": "Na, mae swyddfa arall yn delio â’r cais hwn"
+      steps_circumstances_pre_cifc_reference_number_form:
+        pre_cifc_reference_number_options:
+          pre_cifc_maat_id: MAAT ID
+          pre_cifc_usn: USN
+        pre_cifc_maat_id: Rhowch MAAT ID
+        pre_cifc_usn: Rhowch USN
+      steps_circumstances_pre_cifc_reason_form:
+        pre_cifc_reason: Beth sydd wedi newid yn amgylchiadau ariannol eich cleient?
+      steps_client_is_means_tested_form:
+        is_means_tested_options:
+          "yes": Ie – mae’r cais yn destun y prawf
+          "no": Na – mae’r cais yn cynnwys achosion heb brofi modd
+      steps_client_has_partner_form:
+        has_partner_options:
+          yes: "Ie"
+          no: "Na"
+      steps_client_details_form:
+        first_name: Enw cyntaf
+        last_name: Cyfenw
+        other_names: A ydynt yn cael eu hadnabod dan enwau eraill? (dewisol)
+      steps_client_case_type_form:
+        case_type_options:
+          summary_only: Crynodeb yn unig
+          either_way: Un neu’r llall
+          indictable: Trosedd difrifol
+          already_in_crown_court: Prawf eisoes yn y Llys Goron
+          committal: Anfon at y Goron
+          appeal_to_crown_court: Apêl i’r Llys Goron
+          appeal_to_crown_court_with_changes: Apêl gyda newidiadau ariannol
+      steps_shared_nino_form:
+        nino: Beth yw eu Rhif Yswiriant Gwladol?
+        arc: Beth yw eu Rhif ARC?
+        has_arc_or_nino_options:
+          "yes": "Ie"
+          "no": "Na"
+          arc: "Na, ond mae gan y cleient gerdyn cofrestru cais (ARC)"
+      steps_client_appeal_details_form:
+        appeal_original_app_submitted_options:
+          yes: "Ie"
+          no: "Na"
+      steps_client_appeal_financial_circumstances_form:
+        appeal_with_changes_details: Beth sydd wedi newid yn amgylchiadau ariannol eich cleient?
+        appeal_financial_circumstances_changed_options:
+          yes: "Ie"
+          no: "Na"
+      steps_client_appeal_reference_number_form:
+        appeal_reference_number_options:
+          appeal_maat_id: MAAT ID
+          appeal_usn: USN
+        appeal_maat_id: Rhowch MAAT ID
+        appeal_usn: Rhowch USN
+      steps_client_residence_type_form:
+        residence_type_options:
+          rented: Mewn llety rhent
+          temporary: Mewn llety dros dro
+          parents: Gyda’r rhieni
+          applicant_owned: Mewn eiddo y maent yn ei berchen
+          partner_owned: Mewn eiddo sydd gan y partner
+          joint_owned: Mewn eiddo y maent yn ei berchen gyda’u partner
+          someone_else: Mewn cartref rhywun arall
+          none: Does ganddynt ddim cyfeiriad cartref sefydlog
+        relationship_to_owner_of_usual_home_address: Beth yw perthynas eich cleient i’r person hwnnw?
+      steps_client_contact_details_form:
+        telephone_number: Beth yw rhif ffôn eich cleient? (dewisol)
+        correspondence_address_type_options:
+          home_address: Yr un â’r cartref arferol
+          providers_office_address: Swyddfa’r darparwr
+          other_address: Rywle arall
+      steps_client_relationship_status_form:
+        relationship_status_options:
+          single: Sengl
+          widowed: Gweddw
+          divorced: Ymadawedig
+          separated: Wedi gwahanu
+          prefer_not_to_say: Mae’n well ganddynt beidio dweud
+      steps_partner_relationship_form:
+        relationship_to_partner_options:
+          married_or_partnership: Priod neu mewn partneriaeth sifil
+          living_together: Byw gyda’i gilydd
+          prefer_not_to_say: Mae’n well ganddynt beidio dweud
+      steps_partner_details_form:
+        first_name: Enw cyntaf
+        last_name: Cyfenw
+        other_names: A ydynt yn cael eu hadnabod dan enwau eraill? (dewisol)
+      steps_partner_involvement_form:
+        involvement_in_case_options:
+          victim: Diolchgarwr
+          prosecution_witness: Tystiolaeth er gwrthgyhuddiad
+          codefendant: Cyd-ddiffynnydd
+          none: Na, nid yw’r partner yn rhan o’r achos
+      steps_partner_conflict_form:
+        conflict_of_interest_options:
+          <<: *YESNO
+      steps_partner_same_address_form:
+        has_same_address_as_client_options:
+          <<: *YESNO
+      steps_partner_address_form: *ADDRESS_DETAILS
+      steps_dwp_benefit_type_form:
+        benefit_type_options: &BENEFIT_TYPE_OPTIONS
+          universal_credit: Credyd Cynhwysol
+          guarantee_pension: Elfen Credyd Gwarant o Gredyd Pensiwn
+          jsa: Lwfans Ceisio Gwaith ar sail Incwm (JSA)
+          esa: Lwfans Cyflogaeth a Chymorth ar sail Incwm (ESA)
+          income_support: Cymorth Incwm
+          none: Dim un o'r rhain
+      steps_dwp_partner_benefit_type_form:
+        benefit_type_options: *BENEFIT_TYPE_OPTIONS
+      steps_dwp_has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_OPTIONS
+        has_benefit_evidence_options: *YESNO
+      steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_OPTIONS
+      steps_dwp_cannot_check_benefit_status_form: &WILL_ENTER_NINO_OPTIONS
+        will_enter_nino_options:
+          "yes": Byddaf yn nodi’r Rhif Yswiriant Gwladol nawr
+          "no": Byddaf yn nodi’r Rhif Yswiriant Gwladol yn nes ymlaen
+      steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
+      steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
+        confirm_dwp_result_options:
+          yes: "Ie"
+          no: "Na, maent yn derbyn budd-dal pasbortio"
+      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
+      steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
+        confirm_details_options:
+          yes: "Ie"
+          no: "Na, mae angen i mi newid y manylion hyn"
+      steps_dwp_confirm_partner_details_form: *CONFIRM_DETAILS_OPTIONS
+      steps_address_lookup_form:
+        postcode: Beth yw’r cod post?
+      steps_address_results_form:
+        lookup_id: Dewiswch gyfeiriad
+      steps_address_details_form:
+        address_line_one: Llinell cyfeiriad 1
+        address_line_two: Llinell cyfeiriad 2 (dewisol)
+        city: Tref neu ddinas
+        country: Gwlad
+        postcode: Cod post
+      steps_case_urn_form:
+        urn: Beth yw’r rhif cyfeirnod unigryw (URN) ar gyfer achos eich cleient? (dewisol)
+      steps_case_has_case_concluded_form:
+        has_case_concluded_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_is_preorder_work_claimed_form:
+        is_preorder_work_claimed_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_is_client_remanded_form:
+        is_client_remanded_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_charges_form:
+        offence_name: Offense
+      steps_case_charges_summary_form:
+        add_offence_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_has_codefendants_form:
+        has_codefendants_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_codefendants_form:
+        first_name: Enw cyntaf
+        last_name: Cyfenw
+        conflict_of_interest_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_other_charge_in_progress_form:
+        other_charge_in_progress_options:
+          yes: "Ie"
+          no: "Na"
+      steps_case_hearing_details_form:
+        hearing_court_name: Pa lys mae’r gwrandawiad yn digwydd?
+        is_first_court_hearing_options:
+          yes: "Ie"
+          no: "Na"
+          no_hearing_yet: Nid oes gwrandawiad eto
+      steps_case_first_court_hearing_form:
+        first_court_hearing_name: Ble cafodd y gwrandawiad cyntaf ei gynnal?
+      steps_case_ioj_form:
+        loss_of_liberty_justification: Rhesymeg colli rhyddid
+        suspended_sentence_justification: Rhesymeg dedfryd aildrosglwyddedig
+        loss_of_livelihood_justification: Rhesymeg colli bywoliaeth
+        reputation_justification: Rhesymeg niwed i enw da
+        question_of_law_justification: Rhesymeg cwestiwn cyfreithiol
+        understanding_justification: Rhesymeg methu cyflwyno achos
+        witness_tracing_justification: Rhesymeg olrhain tystion
+        expert_examination_justification: Rhesymeg croesholi arbenigwr
+        interest_of_another_justification: Rhesymeg lles person arall
+        other_justification: Rhesymeg arall
+        ioj_justification_hint_a11y: Rhowch rhesymeg ar gyfer cymorth cyfreithiol yn unol â’ch dewis
+        types_options:
+          loss_of_liberty: Mae’n debygol y cânt eu colli eu rhyddid os penderfynir yn eu herbyn ar unrhyw agwedd yn y weithdrefn
+          suspended_sentence: Maent wedi derbyn dedfryd aildrosglwyddedig neu heb fod yn garchar. Os torrynt hyn, gall y llys eu trin am y drosedd wreiddiol
+          loss_of_livelihood: Mae’n debygol y cânt eu colli eu bywoliaeth
+          reputation: Mae’n debygol y cânt eu niweidio’n ddifrifol o ran eu henw da
+          question_of_law: Mae’n bosibl bod cwestiwn cyfreithiol sylweddol ynghlwm (o ddeddfwriaeth, awdurdod barnwrol neu ffynhonnell arall)
+          understanding: Efallai na fyddant yn deall y weithdrefnau llys neu’n gallu cyflwyno eu hachos eu hunain
+          witness_tracing: Efallai y bydd angen olrhain neu gyfweld tystion ar eu rhan
+          expert_examination: Gall y weithdrefnau gynnwys croesholi arbenigwr o dan dystiad er gwrthgyhuddiad
+          interest_of_another: Mae’n o fudd i berson arall (megis y sawl a wnaeth gŵyn neu dyst arall) i gael eu cynrychioli
+          other: Arall
+      steps_income_employment_status_form:
+        employment_status_options: &EMPLOYMENT_STATUS_OPTIONS
+          employed: Gweithredol
+          self_employed: Hunangyflogedig
+          not_working: Ddim yn gweithio
+        ended_employment_within_three_months_options: *YESNO
+      steps_income_partner_employment_status_form:
+        partner_employment_status_options: *EMPLOYMENT_STATUS_OPTIONS
+      steps_income_client_employer_details_form:
+        employer_name: Enw’r cyflogwr
+        address: *ADDRESS_DETAILS
+      steps_income_partner_employer_details_form:
+        employer_name: Enw’r cyflogwr
+        address: *ADDRESS_DETAILS
+      steps_income_client_employment_details_form:
+        job_title: Beth yw teitl swydd eich cleient?
+        amount: Beth yw’u cyflog neu gyflog am bob cyfnod?
+        before_or_after_tax_options:
+          before_tax: Cyn treth
+          after_tax: Ar ôl treth
+        frequency_options:
+          week: Wythnosol
+          fortnight: Bob 2 wythnos
+          four_weeks: Bob 4 wythnos
+          month: Misol
+          annual: Blynyddol
+      steps_income_partner_employment_details_form:
+        job_title: Beth yw teitl swydd y partner?
+        amount: Beth yw’u cyflog neu gyflog am bob cyfnod?
+        before_or_after_tax_options:
+          before_tax: Cyn treth
+          after_tax: Ar ôl treth
+        frequency_options: *frequency_options
+      steps_income_client_deductions_form:
+        types_options:
+          income_tax: Treth Incwm
+          national_insurance: Yswiriant Gwladol
+          other: Diddyniadau eraill
+          none: Nid oes diddyniadau'n cael eu tynnu o gyflog y cleient
+        deduction_attributes:
+          amount: Beth yw eu cyflog neu gyflog?
+        income_tax:
+          amount: Faint?
+          frequency_options: *frequency_options
+        national_insurance:
+          amount: Faint?
+          frequency_options: *frequency_options
+        other:
+          amount: Rhowch swm cyfanswm pob didyniad arall
+          frequency_options: *frequency_options
+          details: Rhowch fanylion y didyniadau eraill
+      steps_income_partner_deductions_form:
+        types_options:
+          income_tax: Treth Incwm
+          national_insurance: Yswiriant Gwladol
+          other: Diddyniadau eraill
+          none: Nid oes diddyniadau'n cael eu tynnu o gyflog y partner
+        deduction_attributes:
+          amount: Beth yw eu cyflog neu gyflog?
+        income_tax:
+          amount: Faint?
+          frequency_options: *frequency_options
+        national_insurance:
+          amount: Faint?
+          frequency_options: *frequency_options
+        other:
+          amount: Rhowch swm cyfanswm pob didyniad arall
+          frequency_options: *frequency_options
+          details: Rhowch fanylion y didyniadau eraill
+      steps_income_client_self_assessment_tax_bill_form:
+        applicant_self_assessment_tax_bill_options: *YESNO
+        applicant_self_assessment_tax_bill_amount: Faint maen nhw'n ei dalu?
+        applicant_self_assessment_tax_bill_frequency_options: *frequency_options
+      steps_income_partner_self_assessment_tax_bill_form:
+        partner_self_assessment_tax_bill_options: *YESNO
+        partner_self_assessment_tax_bill_amount: Faint maen nhw'n ei dalu?
+        partner_self_assessment_tax_bill_frequency_options: *frequency_options
+      steps_income_client_employments_summary_form:
+        add_client_employment_options: *YESNO
+      steps_income_partner_employments_summary_form:
+        add_partner_employment_options: *YESNO
+      steps_income_client_other_work_benefits_form:
+        applicant_other_work_benefit_received_options: *YESNO
+        amount: Beth yw cyfanswm gwerth blynyddol?
+      steps_income_partner_other_work_benefits_form:
+        partner_other_work_benefit_received_options: *YESNO
+        amount: Beth yw cyfanswm gwerth blynyddol?
+      steps_income_lost_job_in_custody_form:
+        lost_job_in_custody_options: *YESNO
+      steps_income_income_before_tax_form:
+        income_above_threshold_options: *YESNO
+      steps_income_armed_forces_form:
+        in_armed_forces_options: *YESNO
+      steps_income_frozen_income_savings_assets_form:
+        has_frozen_income_or_assets_options: *YESNO
+      steps_income_client_owns_property_form:
+        client_owns_property_options: *YESNO
+      steps_income_has_savings_form:
+        has_savings_options: *YESNO
+      steps_income_client_employment_income_form:
+        amount: Beth yw eu cyflog neu gyflog?
+        before_or_after_tax_options:
+          before_tax: Cyn treth
+          after_tax: Ar ôl treth
+        frequency_options: *frequency_options
+      steps_income_partner_employment_income_form:
+        amount: Beth yw eu cyflog neu gyflog?
+        before_or_after_tax_options:
+          before_tax: Cyn treth
+          after_tax: Ar ôl treth
+        frequency_options: *frequency_options
+      steps_income_income_payments_form:
+        types_options:
+          maintenance: Taliadau cynhaliaeth
+          private_pension: Pensiynau preifat
+          state_pension: Pensiwn y Wladwriaeth
+          interest_investment: Llog neu incwm o gynilion neu fuddsoddiadau
+          student_loan_grant: Grant neu fenthyciad myfyriwr
+          board_from_family: Llety gan aelodau o'r teulu sy’n byw gyda’ch cleient
+          rent: Rhent gan denant
+          financial_support_with_access: Cymorth ariannol gan rywun sy’n caniatáu mynediad at eu hasedau neu arian
+          from_friends_relatives: Taliadau rheolaidd gan ffrind neu berthynas
+          other: Ffynonellau incwm eraill
+          none: Nid ydynt yn cael unrhyw un o'r taliadau hyn
+        maintenance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        private_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        state_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        interest_investment:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        student_loan_grant:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        board_from_family:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        rent:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        financial_support_with_access:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        from_friends_relatives:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Beth yw cyfanswm yr holl ffynonellau eraill o incwm?
+          frequency_options: *frequency_options
+          details: Disgrifiwch y ffynonellau incwm eraill a’r symiau
+      steps_income_income_benefits_form:
+        types_options:
+          child: Budd-dal Plant
+          working_or_child_tax_credit: Credyd Treth Gwaith neu Gredyd Treth Plant
+          incapacity: Budd-dal Anallu
+          industrial_injuries_disablement: Budd-dal Anafiadau Diwydiannol
+          jsa: Lwfans Ceisio Gwaith (JSA) ar sail cyfraniadau
+          other: Budd-daliadau eraill (heblaw’r rhai sy’n cael eu hanwybyddu)
+          none: Nid ydynt yn cael unrhyw un o'r budd-daliadau hyn
+        child:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        working_or_child_tax_credit:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        incapacity:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        industrial_injuries_disablement:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        jsa:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Beth yw cyfanswm pob budd-dal arall (heblaw’r rhai sy’n cael eu hanwybyddu)?
+          frequency_options: *frequency_options
+          details: Disgrifiwch y budd-daliadau eraill a’r symiau
+      steps_income_client_has_dependants_form:
+        client_has_dependants_options: *YESNO
+      steps_income_manage_without_income_form:
+        manage_without_income_options:
+          friends_sofa: Maent yn cysgu ar soffa ffrind yn rhad ac am ddim
+          family: Maent yn aros gyda’r teulu yn rhad ac am ddim
+          living_on_streets: Maent yn byw ar y strydoedd neu’n ddigartref
+          custody: Maent wedi bod yn y ddalfa am fwy na 3 mis
+          other: Arall
+        manage_other_details:
+          one: Dywedwch wrthym sut mae %{subject} yn ymdopi heb incwm
+          other: Dywedwch wrthym sut mae %{subject} yn ymdopi heb incwm
+      steps_income_business_type_form:
+        business_type_options:
+          self_employed: Busnes hunangyflogedig
+          partnership: Partneriaeth fusnes
+          director_or_shareholder: Cyfarwyddwr cwmni neu gyfranddaliwr
+      steps_income_business_nature_form:
+        description: Rhowch ddisgrifiad byr o beth mae’r busnes yn ei wneud
+      steps_income_businesses_form:
+        details: Manylion busnes %{subject}
+        trading_name: Beth yw enw masnachu'r busnes?
+        address: Beth yw cyfeiriad y busnes?
+        <<: *ADDRESS_DETAILS
+      steps_income_businesses_summary_form:
+        add_business_options: *YESNO
+      steps_income_business_additional_owners_form:
+        has_additional_owners_options: *YESNO
+        additional_owners: Rhestrwch yr enwau
+      steps_income_business_employees_form:
+        has_employees_options: *YESNO
+        number_of_employees: Faint o weithwyr?
+      steps_income_business_financials_form:
+        turnover_amount: Cyfanswm trosiant
+        drawings_amount: Cyfanswm darluniau
+        profit_amount: Cyfanswm elw
+        turnover_frequency_options: *frequency_options
+        profit_frequency_options: *frequency_options
+        drawings_frequency_options: *frequency_options
+      steps_income_business_percentage_profit_share_form:
+        percentage_profit_share: Beth yw canran cyfran elw %{subject} o'r busnes neu'r bartneriaeth?
+      # BEGIN: Partner Income
+      steps_income_partner_income_payments_form:
+        types_options:
+          maintenance: Taliadau cynhaliaeth
+          private_pension: Pensiynau preifat
+          state_pension: Pensiwn y Wladwriaeth
+          interest_investment: Llog neu incwm o gynilion neu fuddsoddiadau
+          student_loan_grant: Grant neu fenthyciad myfyriwr
+          board_from_family: Llety gan aelodau'r teulu sy'n byw gyda'r partner
+          rent: Rhent gan denant
+          financial_support_with_access: Cymorth ariannol gan rywun sy’n caniatáu i’r partner gael mynediad at eu hasedau neu arian
+          from_friends_relatives: Arian gan ffrindiau neu deulu
+          other: Ffynonellau eraill o incwm
+          none: Nid ydynt yn cael unrhyw un o’r taliadau hyn
+        maintenance:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        private_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        state_pension:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        interest_investment:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        student_loan_grant:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        board_from_family:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        rent:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        financial_support_with_access:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        from_friends_relatives:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Beth yw cyfanswm yr holl ffynonellau eraill o incwm?
+          frequency_options: *frequency_options
+          details: Disgrifiwch y ffynonellau eraill o incwm a’r symiau
+
+      steps_income_partner_income_benefits_form:
+        types_options:
+          child: Budd-dal Plant
+          working_or_child_tax_credit: Credyd Treth Gwaith neu Gredyd Treth Plant
+          incapacity: Budd-dal Anallu
+          industrial_injuries_disablement: Budd-dal Anabledd Anafiadau Diwydiannol
+          jsa: Lwfans Ceisio Gwaith yn seiliedig ar gyfraniadau (JSA)
+          other: Budd-daliadau eraill (heblaw am y rhai a anwybyddir)
+          none: Nid ydynt yn cael unrhyw un o’r budd-daliadau hyn
+        child:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        working_or_child_tax_credit:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        incapacity:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        industrial_injuries_disablement:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        jsa:
+          amount: *amount_label
+          frequency_options: *frequency_options
+        other:
+          amount: Beth yw cyfanswm y budd-daliadau eraill i gyd (heblaw'r rhai a anwybyddir)?
+          frequency_options: *frequency_options
+          details: Disgrifiwch y budd-daliadau eraill a’r symiau
+      # END: Partner Income
+
+      steps_outgoings_housing_payment_type_form:
+        housing_payment_type_options:
+          rent: Rhent
+          mortgage: Morgais
+          board_and_lodging: Bwrdd a llety
+          none: Nid ydynt yn gwneud unrhyw un o’r taliadau hyn
+      steps_outgoings_mortgage_form:
+        amount:
+          one: Faint yw taliadau’r morgais y mae %{subject} yn eu gwneud?
+          other: Faint yw taliadau’r morgais y mae %{subject} yn eu gwneud?
+        frequency_options: *frequency_options
+      steps_outgoings_rent_form:
+        amount:
+          one: Faint o rent mae %{subject} yn ei dalu, ar ôl tynnu Budd-dal Tai?
+          other: Faint o rent mae %{subject} yn ei dalu, ar ôl tynnu Budd-dal Tai?
+        frequency_options: *frequency_options
+      steps_outgoings_board_and_lodging_form:
+        board_amount:
+          one: Faint mae %{subject} yn ei dalu am fwrdd a llety?
+          other: Faint mae %{subject} yn ei dalu am fwrdd a llety?
+        food_amount: Faint o’r taliad am fwrdd a llety sy’n talu am fwyd?
+        payee_name:
+          one: Beth yw enw’r person mae %{subject} yn talu am fwrdd a llety?
+          other: Beth yw enw’r person mae %{subject} yn talu am fwrdd a llety?
+        payee_relationship_to_client: Beth yw perthynas y person hwn â %{subject}?
+        frequency_options: *frequency_options
+      steps_outgoings_council_tax_form:
+        pays_council_tax_options: *YESNO
+        amount: Faint ydyn nhw’n ei dalu’n flynyddol?
+      steps_outgoings_income_tax_rate_form:
+        income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_partner_income_tax_rate_form:
+        partner_income_tax_rate_above_threshold_options: *YESNO
+      steps_outgoings_outgoings_payments_form:
+        types_options:
+          childcare: Taliadau gofal plant
+          maintenance: Taliadau cynhaliaeth i gyn-bartner
+          legal_aid_contribution: Cyfraniadau at gymorth cyfreithiol troseddol neu sifil
+          none: Nid ydynt yn gwneud unrhyw un o’r taliadau hyn
+        childcare:
+          amount: Faint?
+          frequency_options: *frequency_options
+        maintenance:
+          amount: Faint?
+          frequency_options: *frequency_options
+        legal_aid_contribution:
+          amount: Faint?
+          frequency_options: *frequency_options
+          case_reference: Beth yw cyfeirnod yr achos ar gyfer y gorchymyn cynrychiolaeth droseddol neu dystysgrif sifil?
+      steps_outgoings_outgoings_more_than_income_form:
+        outgoings_more_than_income_options: *YESNO
+        how_manage: Sut maen nhw'n ymdopi os yw'r gwariant yn fwy na'r incwm?
+      steps_evidence_upload_form:
+        upload_files: Llwytho ffeiliau i fyny
+      steps_submission_more_information_form:
+        additional_information_required_options: *YESNO
+        additional_information: Ychwanegu gwybodaeth arall
+      steps_submission_declaration_form:
+        legal_rep_has_partner_declaration_options: *YESNO
+        legal_rep_no_partner_declaration_reason: Esboniwch pam na allech gael datganiad llofnodedig gan y partner
+        legal_rep_first_name: Enw cyntaf
+        legal_rep_last_name: Cyfenw
+        legal_rep_telephone: Rhif ffôn
+      steps_submission_cannot_submit_without_nino_form:
+        will_enter_nino_options:
+          "yes": Rwy'n mynd i nodi'r rhif Yswiriant Gwladol nawr
+          "no": Rwy'n mynd i gadw a dod yn ôl yn nes ymlaen i nodi'r rhif Yswiriant Gwladol
+      steps_capital_property_type_form:
+        property_type_options: &PROPERTY_TYPE_OPTIONS
+          residential: Eiddo preswyl
+          commercial: Eiddo masnachol
+          land: Tir
+          none: Nid ydynt yn berchen ar unrhyw un o'r asedau hyn
+      steps_capital_other_property_type_form:
+        property_type_options: *PROPERTY_TYPE_OPTIONS
+      steps_capital_usual_property_details_form:
+        action_options:
+          provide_details: Darparu manylion yr eiddo hwn
+          change_answer: Newid yr ateb i ble mae eich cleient yn byw fel arfer
+      steps_capital_saving_type_form:
+        saving_type_options: &SAVING_TYPE_OPTIONS
+          bank: Cyfrifon banc
+          building_society: Cyfrifon cymdeithas adeiladu
+          cash_isa: ISA Arian Parod
+          national_savings_or_post_office: Cyfrifon Cynilion Cenedlaethol neu Swyddfa'r Post
+          other: Unrhyw fuddsoddiad arian parod arall
+          none: Nid oes ganddynt unrhyw un o’r cynilion hyn
+      steps_capital_investment_type_form:
+        investment_type_options: &INVESTMENT_TYPE_OPTIONS
+          bond: Bondiau buddsoddi
+          pep: Cynlluniau ecwiti personol (PEPs)
+          share: Cyfranddaliadau
+          share_isa: ISA Cyfranddaliadau
+          stock: Stociau, gan gynnwys gilts a bondiau'r llywodraeth
+          unit_trust: Ymddiriedolaethau unedol
+          other: Unrhyw fuddsoddiadau cyfandaliad eraill
+          none: Nid oes ganddynt unrhyw un o’r buddsoddiadau hyn
+      steps_capital_other_saving_type_form:
+        saving_type_options: *SAVING_TYPE_OPTIONS
+      steps_capital_other_investment_type_form:
+        investment_type_options: *INVESTMENT_TYPE_OPTIONS
+      steps_capital_savings_form:
+        provider_name: Beth yw enw'r banc, cymdeithas adeiladu neu ddeiliad arall y cynilion?
+        sort_code: Beth yw’r cod didoli neu enw’r gangen?
+        account_number: Beth yw rhif y cyfrif?
+        account_balance: Beth yw balans y cyfrif?
+        is_overdrawn_options: *YESNO
+        are_wages_paid_into_account_options: *YESNO
+        are_partners_wages_paid_into_account_options: *YESNO
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
+        confirm_in_applicants_name_options:
+          "true": Rwy’n cadarnhau bod y cyfrif yn enw fy nghleient
+      steps_capital_investments_form:
+        description: Beth yw’r buddsoddiad?
+        value: Beth yw gwerth y buddsoddiad?
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
+        confirm_in_applicants_name_options:
+          "true": Rwy’n cadarnhau bod y buddsoddiad yn enw fy nghleient
+      steps_capital_national_savings_certificates_form:
+        holder_number: Beth yw’r rhif cwsmer neu rif y deiliad?
+        certificate_number: Beth yw rhif y dystysgrif?
+        value: Beth yw gwerth y dystysgrif?
+        ownership_type_options: *OWNERSHIP_PHRASE_OPTIONS
+        confirm_in_applicants_name_options:
+          "true": Rwy’n cadarnhau bod fy nghleient yn berchen ar y dystysgrif
+      steps_capital_savings_summary_form:
+        add_saving_options: *YESNO
+      steps_capital_investments_summary_form:
+        add_investment_options: *YESNO
+      steps_capital_national_savings_certificates_summary_form:
+        add_national_savings_certificate_options: *YESNO
+      steps_capital_premium_bonds_form:
+        premium_bonds_holder_number: Beth yw rhif y deiliad?
+        premium_bonds_total_value: Beth yw cyfanswm gwerth eu bondiau?
+        has_premium_bonds_options: *YESNO
+      steps_capital_partner_premium_bonds_form:
+        partner_premium_bonds_holder_number: Beth yw rhif y deiliad?
+        partner_premium_bonds_total_value: Beth yw cyfanswm gwerth eu bondiau?
+        partner_has_premium_bonds_options: *YESNO
+      steps_capital_has_national_savings_certificates_form:
+        has_national_savings_certificates_options: *YESNO
+      steps_capital_properties_summary_form:
+        add_property_options: *YESNO
+      steps_capital_trust_fund_form:
+        trust_fund_amount_held: Faint sydd wedi'i ddal yn y gronfa?
+        trust_fund_yearly_dividend: Faint yw'r difidend blynyddol?
+        will_benefit_from_trust_fund_options: *YESNO
+      steps_capital_partner_trust_fund_form:
+        partner_trust_fund_amount_held: Faint sydd wedi'i ddal yn y gronfa?
+        partner_trust_fund_yearly_dividend: Faint yw'r difidend blynyddol?
+        partner_will_benefit_from_trust_fund_options: *YESNO
+      steps_capital_residential_form:
+        house_type_options:
+          bungalow: Bwnga
+          detached: Tŷ ar wahân
+          flat_or_maisonette: Fflat neu maisonette
+          semidetached: Tŷ pâr
+          terraced: Tŷ teras
+          other: Nid yw’r math o eiddo wedi’i restru
+        other_house_type: Nodwch y math o eiddo
+        bedrooms: Sawl ystafell wely sydd yno?
+        value: Faint yw gwerth yr eiddo?
+        outstanding_mortgage: Faint sydd ar ôl i’w dalu ar y morgais?
+        percentage_applicant_owned: Pa ganran o’r eiddo sy’n eiddo i’ch cleient?
+        percentage_partner_owned: Pa ganran o’r eiddo sy’n eiddo i bartner eich cleient?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_commercial_form:
+        usage: Beth yw defnydd yr eiddo?
+        value: Faint yw gwerth yr eiddo?
+        outstanding_mortgage: Faint sydd ar ôl i’w dalu ar y morgais?
+        percentage_applicant_owned: Pa ganran o’r eiddo sy’n eiddo i’ch cleient?
+        percentage_partner_owned: Pa ganran o’r eiddo sy’n eiddo i bartner eich cleient?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_land_form:
+        size_in_acres: Beth yw maint y tir mewn erwau?
+        usage: Sut mae'r tir yn cael ei ddefnyddio?
+        value: Faint yw gwerth y tir?
+        outstanding_mortgage: Faint sydd ar ôl i’w dalu ar y morgais?
+        percentage_applicant_owned: Pa ganran o’r tir sy’n eiddo i’ch cleient?
+        percentage_partner_owned: Pa ganran o’r tir sy’n eiddo i bartner eich cleient?
+        is_home_address_options: *YESNO
+        has_other_owners_options: *YESNO
+      steps_capital_property_address_form: *ADDRESS_DETAILS
+      steps_capital_property_owners_form:
+        name: Beth yw enw'r perchennog arall rhif %{index}?
+        percentage_owned_land: Pa ganran o’r tir y maent yn berchen arno?
+        percentage_owned_residential: &percentage_owned_text Pa ganran o’r eiddo y maent yn berchen arno?
+        percentage_owned_commercial: *percentage_owned_text
+        property_owners_attributes:
+          relationship_options:
+            business_associates: Cysylltiadau busnes
+            ex_partner: Cyn-bartner
+            family_members: Aelodau'r teulu
+            friends: Ffrindiau
+            house_builder: Adeiladwr tai
+            housing_association: Cymdeithas dai
+            local_authority: Awdurdod lleol
+            partner_with_a_contrary_interest: Partner ag unrhyw fuddiant gwrthgyferbyniol
+            property_company: Cwmni eiddo
+            other: Nid yw’r berthynas wedi’i restru
+          other_relationship: Beth yw eu perthynas?
+      steps_capital_frozen_income_savings_assets_form:
+        has_frozen_income_or_assets_options: *YESNO
+      steps_capital_answers_form:
+        "yes":
+          one: Ticiwch i gadarnhau nad oes gan %{subject} unrhyw asedau neu gyfalaf arall
+          other: Ticiwch i gadarnhau nad oes gan %{subject} unrhyw asedau neu gyfalaf arall

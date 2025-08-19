@@ -20,6 +20,11 @@ staging:
     # Uncomment to test feature on staging
     # - 0A719G
 
+preprod:
+  inactive_office_codes:
+    # Uncomment to test feature on staging
+    # - 0A719G
+
 production:
   inactive_office_codes:
     # Inactive codes up to sixth onboarding tranche - 07/09/23
@@ -1261,3 +1266,8 @@ production:
     - 2Q649Y
     - 2Q805T
     - 2R122M
+    # [CRIMAPP-1902] Updated office codes - 14/08/2025
+    - 0N991W
+    - 2M073L
+    - 2P299F
+    - 0K760J

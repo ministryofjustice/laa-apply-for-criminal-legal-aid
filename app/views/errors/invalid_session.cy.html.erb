@@ -1,0 +1,19 @@
+<% title 'Rydym wedi eich allgofnodi' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Er eich diogelwch, rydym wedi eich allgofnodi
+    </h1>
+
+    <p class="govuk-body">
+      Mae hyn oherwydd eich bod wedi bod yn segur am <%= hours_or_minutes(Rails.configuration.x.session.timeout_in) %>.
+    </p>
+
+    <p class="govuk-body">
+      Mewngofnodwch i barhau o’r man lle gwnaethoch gadw’ch cais ddiwethaf.
+    </p>
+
+    <%= render partial: 'shared/portal_sign_in_button' %>
+  </div>
+</div>

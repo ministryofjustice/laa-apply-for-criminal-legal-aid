@@ -1,0 +1,106 @@
+cy:
+  dictionary:
+    DATE_FORMATS: &DATE_FORMATS
+      default: '%-d %B %Y'  # 3 Ionawr 2019
+      compact: '%d/%m/%Y'   # 03/01/2019
+      datetime: '%-d %B %Y %-l:%M%P'  # 3 Ionawr 2019 2:45yp
+      datetime_at: '%-d %B %Y at %-l:%M%P'  # 3 Ionawr 2019 am 2:45yp
+      datestamp: '%d/%m/%Y %-l:%M%P' # 03/01/2019 3:29yp
+      dob: '%-d %B %Y' # 1 Ionawr 1990
+    subjects:
+      applicant: 'eich cleient'
+      applicant_and_partner: 'eich cleient a’u partner'
+      applicant_or_partner: 'eich cleient neu eu partner'
+      partner: 'y partner'
+  service:
+    name: Gwneud cais am gymorth cyfreithiol troseddol
+
+  cookies:
+    show:
+      settings_updated:
+        accept: Rydych wedi derbyn cwcis dadansoddeg.
+        reject: Rydych wedi gwrthod cwcis dadansoddeg.
+
+  hours_or_minutes:
+    hours:
+      one: awr
+      other: '%{count} awr'
+    minutes:
+      one: munud
+      other: '%{count} munud'
+
+  time:
+    formats:
+      <<: *DATE_FORMATS
+    am: yb
+    pm: yp
+  date:
+    formats:
+      <<: *DATE_FORMATS
+
+    abbr_day_names:
+      - Sul
+      - Llun
+      - Maw
+      - Mer
+      - Iau
+      - Gwe
+      - Sad
+    abbr_month_names:
+      -
+      - Ion
+      - Chw
+      - Maw
+      - Ebr
+      - Mai
+      - Meh
+      - Gor
+      - Awst
+      - Med
+      - Hyd
+      - Tach
+      - Rha
+    day_names:
+      - Dydd Sul
+      - Dydd Llun
+      - Dydd Mawrth
+      - Dydd Mercher
+      - Dydd Iau
+      - Dydd Gwener
+      - Dydd Sadwrn
+    month_names:
+      -
+      - Ionawr
+      - Chwefror
+      - Mawrth
+      - Ebrill
+      - Mai
+      - Mehefin
+      - Gorffennaf
+      - Awst
+      - Medi
+      - Hydref
+      - Tachwedd
+      - Rhagfyr
+    order:
+      - :year
+      - :month
+      - :day
+  number:
+    currency:
+      format:
+        unit: '£'
+  flash:
+    success:
+      title: Llwyddiant
+    notice:
+      title: Pwysig
+    alert:
+      title: Rhybudd
+
+  support:
+    array:
+      # defaults for `array.to_sentence`
+      words_connector: ", "
+      two_words_connector: " a "
+      last_word_connector: ", a "

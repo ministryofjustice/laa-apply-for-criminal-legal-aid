@@ -41,6 +41,9 @@ module LaaApplyForCriminalLegalAid
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    config.i18n.available_locales = %i[en cy]
+    config.i18n.default_locale = :en
+
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
 
@@ -62,7 +65,7 @@ module LaaApplyForCriminalLegalAid
 
     # Time after which a user will be required to sign in again,
     # regardless of their activity (session lifespan).
-    config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 1440).to_i.minutes
+    config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 720).to_i.minutes
 
     config.x.gatekeeper= config_for(
       :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
@@ -71,5 +74,8 @@ module LaaApplyForCriminalLegalAid
     config.x.inactive_offices = config_for(
       :inactive_offices, env: ENV.fetch('ENV_NAME', 'localhost')
     )
+
+    config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
+    config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
   end
 end

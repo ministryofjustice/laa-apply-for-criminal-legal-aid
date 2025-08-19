@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Assume role in Cloud Platform
       - uses: aws-actions/configure-aws-credentials@v4
@@ -127,7 +127,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Deploy staging
         uses: ./.github/actions/deploy
@@ -139,6 +139,25 @@ jobs:
           kube-cluster: ${{ secrets.KUBE_STAGING_CLUSTER }}
           kube-namespace: ${{ secrets.KUBE_STAGING_NAMESPACE }}
 
+  deploy-preprod:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: preprod
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Deploy preprod
+        uses: ./.github/actions/deploy
+        with:
+          environment-name: preprod
+          ecr-url: ${{ needs.build.outputs.ecr_url }}
+          kube-cert: ${{ secrets.KUBE_PREPROD_CERT }}
+          kube-token: ${{ secrets.KUBE_PREPROD_TOKEN }}
+          kube-cluster: ${{ secrets.KUBE_PREPROD_CLUSTER }}
+          kube-namespace: ${{ secrets.KUBE_PREPROD_NAMESPACE }}
+
   deploy-production:
     runs-on: ubuntu-latest
     needs: [build, deploy-staging]
@@ -146,7 +165,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Deploy production
         uses: ./.github/actions/deploy

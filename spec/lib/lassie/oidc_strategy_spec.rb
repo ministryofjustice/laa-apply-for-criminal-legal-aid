@@ -37,6 +37,26 @@ RSpec.describe Lassie::OidcStrategy do
         )
       end
     end
+
+    context 'when the provider data API feature is enabled' do
+      before do
+        allow(FeatureFlags).to receive(:provider_data_api) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+        }
+
+        allow(ProviderDataApi::ActiveOfficeCodesFilter).to receive(:call).and_return(
+          %w[1A123B 3B345C]
+        )
+      end
+
+      it 'filters the office codes using the active office code filter' do
+        expect(strategy_instance.info[:office_codes]).to eq %w[1A123B 3B345C]
+
+        expect(ProviderDataApi::ActiveOfficeCodesFilter).to have_received(:call).with(
+          laa_accounts, area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER']
+        )
+      end
+    end
   end
 
   describe 'Devise OmniAuth strategy configuration' do
@@ -50,11 +70,23 @@ RSpec.describe Lassie::OidcStrategy do
       expect(strategy.pkce).to be(true)
     end
 
+    it 'sets the correct logout path' do
+      expect(strategy.logout_path).to match('/logout')
+    end
+
+    it 'sets the correct post logout redirect uri' do
+      expect(strategy.post_logout_redirect_uri).to match('https://www.example.com/providers/logout')
+    end
+
     it 'uses the tennant url for issuer descovery' do
       expect(strategy.discovery).to be(true)
       expect(strategy.issuer).to match(
         'https://login.microsoftonline.com/TestEntraTenantID/v2.0'
       )
+    end
+
+    it 'requires account selection on log in' do
+      expect(strategy.prompt).to eq :select_account
     end
 
     it 'sets the correct client options' do

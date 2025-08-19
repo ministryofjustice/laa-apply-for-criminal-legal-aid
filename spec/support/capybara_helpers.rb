@@ -59,7 +59,7 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   end
 
   def return_to_application_later(applicant: 'Jo Bloggs', time_lapsed: 1.week)
-    click_link('Sign out')
+    visit('providers/logout')
     travel time_lapsed
     visit root_path
     click_button('Start now')
@@ -85,7 +85,7 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     click_button 'Upload file'
   end
 
-  def draft_age_passported_application(case_type:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def draft_age_passported_application(case_type: 'Either way') # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     click_link('Start an application')
     choose('New application')
     save_and_continue
@@ -172,29 +172,39 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     # steps/submission/declaration
     fill_in('First name', with: 'Zoe')
     fill_in('Last name', with: 'Bar')
-    fill_in('Telephone number', with: '07715339488')
+    fill_in('Telephone number', with: '01234567890')
+  end
 
-    stub_request(:post, 'http://datastore-webmock/api/v1/applications')
-      .with { |req|
-      @submitted_body = req.body
-      true
-    }
+  def submit_drafted_application(application_id = nil)
+    @submitted_application_id = application_id || current_path[%r{/applications/([a-f0-9\-]{36})/}, 1]
+
+    stub_request(:post, 'http://datastore-webmock/api/v1/applications').to_return_json(
+      body: lambda { |req|
+        @submitted_body = JSON.parse(req.body).fetch('application').merge(status: 'submitted')
+      }
+    )
+
+    stub_request(:get, "http://datastore-webmock/api/v1/applications/#{@submitted_application_id}")
+      .to_return_json(body: -> { @submitted_body })
+
+    click_button 'Save and submit application'
   end
 
   def return_submitted_application
-    submitted = JSON.parse(@submitted_body)['application']
-    application_id = submitted.fetch('id')
-
-    returned_application_body = submitted.merge(
+    returned_application_body = @submitted_body.merge(
       reviewed_at: Time.zone.now, status: 'returned',
       review_status: 'returned_to_provider',
       return_details: { reason: 'evidence_issue', details: 'Age is wrong' }
     )
 
-    stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_id}")
-      .to_return(body: returned_application_body.to_json)
+    stub_request(:get, "http://datastore-webmock/api/v1/applications/#{@submitted_application_id}")
+      .to_return_json(body: -> { returned_application_body })
 
-    visit completed_crime_application_path(application_id)
+    visit_returned_application
+  end
+
+  def visit_returned_application
+    visit completed_crime_application_path(@submitted_application_id)
   end
 
   # mock_result format 'Yes' or 'No'

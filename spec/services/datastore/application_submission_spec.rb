@@ -206,6 +206,10 @@ RSpec.describe Datastore::ApplicationSubmission do
       it 'purges the application from the local database' do
         expect(crime_application).to have_received(:destroy!)
       end
+
+      it 'does not create a deletion entry' do
+        expect(DeletionEntry.count).to eq(0)
+      end
     end
 
     context 'handling of errors' do

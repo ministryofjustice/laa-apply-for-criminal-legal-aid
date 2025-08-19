@@ -17,23 +17,15 @@ class CompletedApplicationsController < DashboardController
   end
 
   def recreate
-    usn = current_crime_application.reference
-    application_type = current_crime_application['application_type']
-
-    # There can only be one application in progress with same USN across all offices
-    crime_application = CrimeApplication.find_by(usn:) || initialize_crime_application(usn:, application_type:)
-
-    # Ensure that the 'in progress' application is associated with the correct office code.
-    # If this exception is raised, there may be an issue with the data integrity.
-    raise 'In progress in another office.' unless crime_application.office_code == current_office_code
+    crime_application = initialize_crime_application(usn:, application_type:)
 
     Datastore::ApplicationRehydration.new(
       crime_application, parent: current_crime_application
     ).call
 
-    # Redirect to the check your answers (review) page
-    # of the newly created application
     redirect_to edit_steps_submission_review_path(crime_application)
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to edit_crime_application_path CrimeApplication.find_by!(usn:)
   end
 
   def create_pse
@@ -42,5 +34,15 @@ class CompletedApplicationsController < DashboardController
     ).call
 
     redirect_to edit_steps_evidence_upload_path(pse_application)
+  end
+
+  private
+
+  def usn
+    current_crime_application.reference
+  end
+
+  def application_type
+    current_crime_application['application_type']
   end
 end

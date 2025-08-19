@@ -2,10 +2,7 @@ module Steps
   class BaseStepController < ApplicationController
     before_action :check_crime_application_presence
     before_action :update_navigation_stack, only: [:show, :edit]
-
-    # Avoid the browser caching any of the step pages so the
-    # back button after signing out can't load any sensitive details
-    before_action :no_store
+    before_action :set_security_headers
 
     # :nocov:
     def show

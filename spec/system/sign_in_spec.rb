@@ -13,8 +13,15 @@ RSpec.describe 'Sign in user journey' do
 
   let(:start_button) { find('button.govuk-button--start') }
   let(:start_button_form_action) { start_button.ancestor('form')['action'] }
+  let(:disable_entra_logout_feature) { false }
 
   before do
+    if disable_entra_logout_feature
+      allow(FeatureFlags).to receive(:entra_logout) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
+    end
+
     allow_any_instance_of(
       Datastore::ApplicationCounters
     ).to receive_messages(returned_count: 5)
@@ -104,11 +111,24 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'on sign out it redirects to the home' do
-      click_link 'Sign out'
+      expect(page).to have_link('Sign out', href: '/providers/auth/entra/logout?locale=en')
+
+      visit 'providers/logout'
 
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')
       expect(page).not_to have_css('nav.govuk-header__navigation')
+    end
+
+    context 'when entra logout diabled' do
+      let(:disable_entra_logout_feature) { true }
+
+      it 'on sign out it redirects to the home' do
+        click_link('Sign out')
+        expect(current_url).to match(root_path)
+        expect(page).to have_content('You have signed out')
+        expect(page).not_to have_css('nav.govuk-header__navigation')
+      end
     end
   end
 

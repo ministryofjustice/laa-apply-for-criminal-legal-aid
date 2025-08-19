@@ -4,14 +4,14 @@
     <div class="input-group">
       <%= f.govuk_text_field(
             :search_text,
-            label: { text: 'Enter any combination of client first name, last name, LAA reference', size: 's', class: 'govuk-!-margin-bottom-4' },
+            label: { text: t('helpers.hint.search'), size: 's', class: 'govuk-!-margin-bottom-4' },
             autocomplete: 'off'
           ) %>
     </div>
 
     <div class="govuk-button-group">
-      <%= f.govuk_submit 'Search' %>
-      <%= link_to 'Clear', new_application_searches_path, class: 'govuk-link' %>
+      <%= f.govuk_submit t('helpers.submit.search') %>
+      <%= link_to t('helpers.submit.clear'), new_application_searches_path, class: 'govuk-link' %>
     </div>
   <% end %>
 <% end %>
