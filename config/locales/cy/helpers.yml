@@ -419,7 +419,7 @@ cy:
       steps_client_appeal_reference_number_form:
         appeal_reference_number: Mae arnom angen eich MAAT ID neu’ch rhif cyflwyno unigryw (USN).
       steps_client_contact_details_form:
-        welsh_translation: Bydd hefyd yn cael ei anfon yn Saesneg. O dan Ddeddf Iaith Gymraeg, caiff rhai gohebiaethau eu hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
+        requested_welsh_correspondence: Bydd hefyd yn cael ei anfon yn Saesneg. O dan Ddeddf Iaith Gymraeg, caiff rhai gohebiaethau eu hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
       steps_shared_nino_form:
         has_arc_or_nino: Mae ar eu cerdyn Yswiriant Gwladol, llythyr budd-dal, slip cyflog neu P60. Er enghraifft, ‘QQ 12 34 56 C’.
         nino: Er enghraifft, QQ 12 34 56 C
@@ -656,6 +656,7 @@ cy:
           none: Does ganddynt ddim cyfeiriad cartref sefydlog
         relationship_to_owner_of_usual_home_address: Beth yw perthynas eich cleient i’r person hwnnw?
       steps_client_contact_details_form:
+        requested_welsh_correspondence: Ticiwch i ohebiaeth gael ei hanfon yn Gymraeg
         telephone_number: Beth yw rhif ffôn eich cleient? (dewisol)
         correspondence_address_type_options:
           home_address: Yr un â’r cartref arferol
