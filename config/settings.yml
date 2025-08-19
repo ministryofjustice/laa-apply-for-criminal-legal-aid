@@ -19,7 +19,7 @@ feature_flags:
     local: true
     test: false
     staging: true
-    preprod: true
+    preprod: false
     production: false
   entra_logout:
     local: false
