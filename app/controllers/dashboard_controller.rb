@@ -27,7 +27,7 @@ class DashboardController < ApplicationController
   end
 
   def in_progress_scope
-    CrimeApplication.with_applicant.where(office_code: current_office_code)
+    CrimeApplication.active.with_applicant.where(office_code: current_office_code)
   end
 
   def application_counters

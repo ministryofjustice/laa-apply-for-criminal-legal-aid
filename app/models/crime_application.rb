@@ -84,13 +84,15 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum :status, ApplicationStatus.enum_values
 
-  default_scope { where(soft_deleted_at: nil) }
+  scope :active, -> { where(soft_deleted_at: nil) }
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
-  scope :to_be_soft_deleted, -> { where('updated_at <= ?', Rails.configuration.x.retention_period.ago ) }
+  scope :to_be_soft_deleted, -> { active.where(updated_at: ..Rails.configuration.x.retention_period.ago) }
 
-  scope :to_be_hard_deleted, -> { unscoped.where('soft_deleted_at <= ?', Rails.configuration.x.soft_deletion_period.ago) }
+  scope :to_be_hard_deleted, lambda {
+    where(soft_deleted_at: ..Rails.configuration.x.soft_deletion_period.ago)
+  }
 
   alias_attribute :reference, :usn
 
