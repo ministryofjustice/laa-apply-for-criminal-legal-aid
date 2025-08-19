@@ -70,7 +70,8 @@ module Summary
       end
 
       def requested_welsh_correspondence
-        applicant.preferred_correspondence_language == 'cy' ? 'Yes' : 'No'
+        key = applicant.preferred_correspondence_language == 'cy' ? 'yes' : 'no'
+        I18n.t("summary.questions.requested_welsh_correspondence.answers.#{key}")
       end
 
       def change_address_path(address)
