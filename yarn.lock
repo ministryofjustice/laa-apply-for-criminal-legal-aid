@@ -749,10 +749,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.9.0":
-  version: 5.9.0
-  resolution: "govuk-frontend@npm:5.9.0"
-  checksum: 10c0/dc6275eae0e9f2858ae7c1ea062df6d2119c9857847f89ef5bbce55f65c64b7ea03c484c8132e40b7972a2f371135d6718f58fa907c94860a819e0fde7842883
+"govuk-frontend@npm:^5.11.1":
+  version: 5.11.1
+  resolution: "govuk-frontend@npm:5.11.1"
+  checksum: 10c0/e194673fb4147b5a536b014db48baadcb69506023973bdc4a97964d0d377dc42aa6ce1e4671ee73efbf38aa448c5d3e9d9504fbfd6ff9483e301071c3767eb94
   languageName: node
   linkType: hard
 
@@ -902,7 +902,7 @@ __metadata:
     accessible-autocomplete: "npm:^3.0.1"
     dropzone: "npm:^6.0.0-beta.2"
     esbuild: "npm:^0.25.1"
-    govuk-frontend: "npm:^5.9.0"
+    govuk-frontend: "npm:^5.11.1"
     sass: "npm:^1.86.0"
   languageName: unknown
   linkType: soft
