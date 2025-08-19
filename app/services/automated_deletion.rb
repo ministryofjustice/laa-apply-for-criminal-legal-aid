@@ -10,6 +10,6 @@ class AutomatedDeletion
       ApplicationPurger.call(application, LogContext.new)
     end
 
-    Rails.logger.info('End of automated deletion task.')
+    Rails.logger.info('End of automated deletion task')
   end
 end

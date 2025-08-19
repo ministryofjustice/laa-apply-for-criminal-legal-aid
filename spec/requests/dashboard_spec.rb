@@ -364,4 +364,16 @@ RSpec.describe 'Dashboard', :authorized do
       end
     end
   end
+
+  describe 'accessing a soft-deleted application' do
+    before do
+      crime_application = CrimeApplication.create!(reference: 700_000_1, documents: [], soft_deleted_at: 2.weeks.ago,
+                                                   updated_at: 2.years.ago - 2.weeks, office_code: '1A123B')
+      get edit_crime_application_path(crime_application)
+    end
+
+    it 'redirects to the dashboard' do
+      expect(response).to redirect_to(crime_applications_path)
+    end
+  end
 end

@@ -1,6 +1,7 @@
 class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
-                :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
+                :present_crime_application,
+                :soft_deleted_check, only: [:edit, :destroy, :confirm_destroy]
 
   layout 'application_dashboard', only: [:index]
 
@@ -83,5 +84,15 @@ class CrimeApplicationsController < DashboardController
 
   def cifc?
     @cifc ||= (new_application_params[:is_cifc] == 'yes')
+  end
+
+  def soft_deleted_check
+    return unless current_crime_application.soft_deleted?
+
+    Rails.error.report(
+      StandardError.new("Attempted to access soft-deleted application #{current_crime_application.reference}"),
+      handled: true
+    )
+    redirect_to crime_applications_path
   end
 end
