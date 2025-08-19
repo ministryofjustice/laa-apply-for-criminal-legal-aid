@@ -34,7 +34,7 @@ RSpec.describe ApplicationPurger do
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
 
       before do
-        allow(Datastore::Documents::Delete).to receive(:new).with(document:, log_context:).and_return(delete_double)
+        allow(Datastore::Documents::Delete).to receive(:new).with(document:, log_context:, current_provider:).and_return(delete_double)
       end
 
       it 'deletes s3 objects' do

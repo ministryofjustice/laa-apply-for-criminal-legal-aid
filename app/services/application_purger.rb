@@ -24,7 +24,7 @@ class ApplicationPurger
 
   def delete_orphan_stored_documents
     orphan_documents.each do |document|
-      Datastore::Documents::Delete.new(document:, log_context:).call
+      Datastore::Documents::Delete.new(document:, log_context:, current_provider:).call
     end
   end
 
