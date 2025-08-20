@@ -372,8 +372,8 @@ RSpec.describe 'Dashboard', :authorized do
       get edit_crime_application_path(crime_application)
     end
 
-    it 'redirects to the dashboard' do
-      expect(response).to redirect_to(crime_applications_path)
+    it 'redirects to 404 error page' do
+      expect(response).to redirect_to(application_not_found_errors_path)
     end
   end
 end
