@@ -4,7 +4,7 @@
     "@ministryofjustice/frontend": "5.1.0",
     "accessible-autocomplete": "^3.0.1",
     "dropzone": "^6.0.0-beta.2",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.9",
     "govuk-frontend": "^5.11.1"
   },
   "scripts": {
