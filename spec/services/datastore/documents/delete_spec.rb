@@ -34,8 +34,7 @@ RSpec.describe Datastore::Documents::Delete do
         stub_request(:delete, 'http://datastore-webmock/api/v1/documents/MTIzL2FiY2RlZjEyMzQ=')
           .to_return(status: 200, body: '{"object_key":"123/abcdef1234"}')
 
-        allow(document).to receive(:id).and_return('d9e31559')
-        allow(document).to receive(:crime_application_id).and_return('b32a70f86e2')
+        allow(document).to receive_messages(id: 'd9e31559', crime_application_id: 'b32a70f86e2')
         allow(CrimeApplication).to receive(:find).with('b32a70f86e2').and_return(crime_application)
       end
 
