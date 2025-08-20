@@ -148,8 +148,4 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def review_status
     nil
   end
-
-  def soft_deleted?
-    soft_deleted_at.present?
-  end
 end
