@@ -4,7 +4,7 @@ metadata:
   name: automated-deletion-cron-job-staging
   namespace: laa-apply-for-criminal-legal-aid-staging
 spec:
-  schedule: "0 0 * * *" # daily at midnight
+  schedule: "*/15 * * * *" # every 15 min
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
