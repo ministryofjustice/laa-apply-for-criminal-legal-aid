@@ -28,13 +28,8 @@ module Steps
         :delete_document
       end
 
-      def log_context
-        LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
-      end
-
       def deleted?(document)
-        Datastore::Documents::Delete.new(document: document, log_context: log_context,
-                                         deleted_by: current_provider.id,
+        Datastore::Documents::Delete.new(document: document, deleted_by: current_provider.id,
                                          deletion_reason: DeletionReason::PROVIDER_ACTION.to_s).call
       end
     end

@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::Documents::Upload do
-  subject { described_class.new(document:, log_context:) }
+  subject { described_class.new(document:) }
 
   include_context 'with an existing document'
-  let(:log_context) { LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123') }
   let(:expected_query) do
     { object_key: %r{123/.*}, s3_opts: { expires_in: 15 } }
   end

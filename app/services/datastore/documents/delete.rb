@@ -1,11 +1,10 @@
 module Datastore
   module Documents
     class Delete
-      attr_reader :document, :log_context, :deleted_by, :deletion_reason
+      attr_reader :document, :deleted_by, :deletion_reason
 
-      def initialize(document:, log_context:, deleted_by:, deletion_reason:)
+      def initialize(document:, deleted_by:, deletion_reason:)
         @document = document
-        @log_context = log_context
         @deleted_by = deleted_by
         @deletion_reason = deletion_reason
       end
@@ -13,7 +12,7 @@ module Datastore
       def call
         return true unless deletable?
 
-        Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
+        Rails.error.handle(fallback: -> { false }, severity: :error) do
           DatastoreApi::Requests::Documents::Delete.new(object_key:).call
           log_document_deletion
           Rails.logger.info "Document successfully deleted. Object key: #{document.s3_object_key}"
@@ -31,11 +30,6 @@ module Datastore
 
       def object_key
         document.s3_object_key
-      end
-
-      def context
-        log_context << { file_type: document.content_type, s3_object_key: object_key }
-        log_context.to_h
       end
 
       def crime_application

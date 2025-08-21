@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationPurger do
-  subject { described_class.call(crime_application, log_context, deleted_by, deletion_reason) }
+  subject { described_class.call(crime_application:, deleted_by:, deletion_reason:) }
 
   let(:crime_application) { instance_double(CrimeApplication, id: '12345', reference: 10_000_001) }
-  let(:log_context) { LogContext.new }
   let(:deleted_by) { '1' }
   let(:deletion_reason) { DeletionReason::PROVIDER_ACTION.to_s }
   let(:documents) { [] }
@@ -35,7 +34,7 @@ RSpec.describe ApplicationPurger do
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
 
       before do
-        allow(Datastore::Documents::Delete).to receive(:new).with(document:, log_context:, deleted_by:,
+        allow(Datastore::Documents::Delete).to receive(:new).with(document:, deleted_by:,
                                                                   deletion_reason:).and_return(delete_double)
       end
 

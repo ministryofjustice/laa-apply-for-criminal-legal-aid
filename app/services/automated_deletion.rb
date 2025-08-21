@@ -6,8 +6,9 @@ class AutomatedDeletion
     CrimeApplication.to_be_soft_deleted.update_all(soft_deleted_at: Time.zone.now) # rubocop:disable Rails/SkipsModelValidations
 
     Rails.logger.info("#{CrimeApplication.to_be_hard_deleted.count} application(s) will be deleted")
-    CrimeApplication.to_be_hard_deleted.each do |application|
-      ApplicationPurger.call(application, LogContext.new, 'system_automated', DeletionReason::RETENTION_RULE.to_s)
+    CrimeApplication.to_be_hard_deleted.find_each do |application|
+      ApplicationPurger.call(crime_application: application, deleted_by: 'system_automated',
+                             deletion_reason: DeletionReason::RETENTION_RULE.to_s)
     end
 
     Rails.logger.info('End of automated deletion task')

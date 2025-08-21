@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Datastore::Documents::Delete do
   subject {
-    described_class.new(document: document,
-                        log_context: LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123'),
-                        deleted_by: '1',
+    described_class.new(document: document, deleted_by: '1',
                         deletion_reason: DeletionReason::PROVIDER_ACTION.to_s)
   }
 
