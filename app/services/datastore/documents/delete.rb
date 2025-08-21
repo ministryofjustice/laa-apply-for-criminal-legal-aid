@@ -1,12 +1,13 @@
 module Datastore
   module Documents
     class Delete
-      attr_reader :document, :log_context, :current_provider
+      attr_reader :document, :log_context, :deleted_by, :deletion_reason
 
-      def initialize(document:, log_context:, current_provider:)
+      def initialize(document:, log_context:, deleted_by:, deletion_reason:)
         @document = document
         @log_context = log_context
-        @current_provider = current_provider
+        @deleted_by = deleted_by
+        @deletion_reason = deletion_reason
       end
 
       def call
@@ -46,8 +47,8 @@ module Datastore
           record_id: document.id,
           record_type: RecordType::DOCUMENT.to_s,
           business_reference: crime_application.reference,
-          deleted_by: current_provider ? current_provider.id : 'system_automated',
-          reason: current_provider ? DeletionReason::PROVIDER_ACTION.to_s : DeletionReason::RETENTION_RULE.to_s
+          deleted_by: deleted_by,
+          reason: deletion_reason
         )
       end
     end

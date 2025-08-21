@@ -1,14 +1,15 @@
 class ApplicationPurger
-  attr_reader :crime_application, :log_context, :current_provider
+  attr_reader :crime_application, :log_context, :deleted_by, :deletion_reason
 
-  def self.call(crime_application, log_context, current_provider = nil)
-    new(crime_application, log_context, current_provider).call
+  def self.call(crime_application, log_context, deleted_by, deletion_reason)
+    new(crime_application, log_context, deleted_by, deletion_reason).call
   end
 
-  def initialize(crime_application, log_context, current_provider = nil)
+  def initialize(crime_application, log_context, deleted_by, deletion_reason)
     @crime_application = crime_application
     @log_context = log_context
-    @current_provider = current_provider
+    @deleted_by = deleted_by
+    @deletion_reason = deletion_reason
   end
   private_class_method :new
 
@@ -24,7 +25,7 @@ class ApplicationPurger
 
   def delete_orphan_stored_documents
     orphan_documents.each do |document|
-      Datastore::Documents::Delete.new(document:, log_context:, current_provider:).call
+      Datastore::Documents::Delete.new(document:, log_context:, deleted_by:, deletion_reason:).call
     end
   end
 
@@ -37,8 +38,8 @@ class ApplicationPurger
       record_id: crime_application.id,
       record_type: RecordType::APPLICATION.to_s,
       business_reference: crime_application.reference,
-      deleted_by: current_provider ? current_provider.id : 'system_automated',
-      reason: current_provider ? DeletionReason::PROVIDER_ACTION.to_s : DeletionReason::RETENTION_RULE.to_s
+      deleted_by: deleted_by,
+      reason: deletion_reason
     )
   end
 end

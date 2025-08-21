@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::Documents::Delete do
-  subject { described_class.new(document:, log_context:, current_provider:) }
+  subject {
+    described_class.new(document: document,
+                        log_context: LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123'),
+                        deleted_by: '1',
+                        deletion_reason: DeletionReason::PROVIDER_ACTION.to_s)
+  }
 
   let(:document) { instance_double(Document, submitted_at:, s3_object_key:, content_type:) }
-  let(:log_context) { LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123') }
-  let(:current_provider) { instance_double(Provider, id: 1) }
   let(:submitted_at) { nil }
   let(:s3_object_key) { '123/abcdef1234' }
   let(:content_type) { 'application/pdf' }

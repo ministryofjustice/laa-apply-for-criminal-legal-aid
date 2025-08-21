@@ -7,7 +7,7 @@ class AutomatedDeletion
 
     Rails.logger.info("#{CrimeApplication.to_be_hard_deleted.count} application(s) will be deleted")
     CrimeApplication.to_be_hard_deleted.each do |application|
-      ApplicationPurger.call(application, LogContext.new)
+      ApplicationPurger.call(application, LogContext.new, 'system_automated', DeletionReason::RETENTION_RULE.to_s)
     end
 
     Rails.logger.info('End of automated deletion task')
