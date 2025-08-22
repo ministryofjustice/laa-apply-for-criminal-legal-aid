@@ -18,6 +18,7 @@ describe Summary::Sections::ContactDetails do
       correspondence_address:,
       correspondence_address_type:,
       telephone_number:,
+      preferred_correspondence_language:,
       residence_type:,
       relationship_to_owner_of_usual_home_address:
     )
@@ -27,6 +28,7 @@ describe Summary::Sections::ContactDetails do
   let(:correspondence_address_type) { CorrespondenceType::OTHER_ADDRESS.to_s }
   let(:residence_type) { nil }
   let(:relationship_to_owner_of_usual_home_address) { nil }
+  let(:preferred_correspondence_language) { nil }
 
   let(:home_address) do
     HomeAddress.new(
@@ -90,7 +92,7 @@ describe Summary::Sections::ContactDetails do
 
     context 'when there is no residence type record' do
       it 'has the correct rows' do
-        expect(answers.count).to eq(4)
+        expect(answers.count).to eq(5)
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[0].question).to eq(:home_address)
@@ -118,7 +120,7 @@ describe Summary::Sections::ContactDetails do
       let(:residence_type) { ResidenceType::PARENTS.to_s }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(5)
+        expect(answers.count).to eq(6)
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
         expect(answers[0].question).to eq(:residence_type)
@@ -131,7 +133,7 @@ describe Summary::Sections::ContactDetails do
         let(:relationship_to_owner_of_usual_home_address) { 'A friend' }
 
         it 'has the correct rows' do
-          expect(answers.count).to eq(6)
+          expect(answers.count).to eq(7)
 
           expect(answers[0]).to be_an_instance_of(Summary::Components::ValueAnswer)
           expect(answers[0].question).to eq(:residence_type)
@@ -151,7 +153,7 @@ describe Summary::Sections::ContactDetails do
       let(:home_address) { HomeAddress.new(id: 'ff53a8dd-43f3-4e82-acba-53b1c0ce2b4c') }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(4)
+        expect(answers.count).to eq(5)
 
         expect(answers[0]).to be_an_instance_of(Summary::Components::FreeTextAnswer)
         expect(answers[0].question).to eq(:home_address)
@@ -163,7 +165,7 @@ describe Summary::Sections::ContactDetails do
         let(:residence_type) { ResidenceType::NONE.to_s }
 
         it 'does not display home address as it was not asked' do
-          expect(answers.count).to eq(4)
+          expect(answers.count).to eq(5)
 
           expect(answers[0].question).not_to eq(:home_address)
           expect(answers[0].question).to eq(:residence_type)
@@ -176,7 +178,7 @@ describe Summary::Sections::ContactDetails do
       let(:correspondence_address) { nil }
 
       it 'does not show the correspondence address' do
-        expect(answers.count).to eq(3)
+        expect(answers.count).to eq(4)
 
         expect(answers[0].question).to eq(:home_address)
 
@@ -192,7 +194,7 @@ describe Summary::Sections::ContactDetails do
       let(:correspondence_address) { nil }
 
       it 'does not show the correspondence address' do
-        expect(answers.count).to eq(3)
+        expect(answers.count).to eq(4)
 
         expect(answers[0].question).to eq(:home_address)
 
@@ -207,10 +209,30 @@ describe Summary::Sections::ContactDetails do
       let(:telephone_number) { '' }
 
       it 'has the correct rows' do
-        expect(answers.count).to eq(4)
+        expect(answers.count).to eq(5)
 
         expect(answers[3].question).to eq(:telephone_number)
         expect(answers[3].value).to eq('')
+      end
+    end
+
+    context 'when welsh correspondence is requested' do
+      let(:preferred_correspondence_language) { 'cy' }
+
+      it 'has the correct row' do
+        expect(answers.count).to eq(5)
+
+        expect(answers[4].question).to eq(:requested_welsh_correspondence)
+        expect(answers[4].value).to eq('Yes')
+      end
+    end
+
+    context 'when welsh correspondence is not requested' do
+      it 'has the correct row' do
+        expect(answers.count).to eq(5)
+
+        expect(answers[4].question).to eq(:requested_welsh_correspondence)
+        expect(answers[4].value).to eq('No')
       end
     end
   end
