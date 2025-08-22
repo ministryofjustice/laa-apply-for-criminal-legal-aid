@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Datastore::Documents::Download do
-  subject { described_class.new(document:, log_context:) }
+  subject { described_class.new(document:) }
 
   let(:document) { instance_double(Document, s3_object_key:, content_type:, filename:) }
-  let(:log_context) { LogContext.new(current_provider: Provider.new, ip_address: '123.123.123.123') }
   let(:s3_object_key) { '123/abcdef1234' }
   let(:content_type) { 'application/pdf' }
   let(:filename) { 'bankstatement.pdf' }

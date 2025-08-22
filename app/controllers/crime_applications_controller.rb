@@ -10,7 +10,7 @@ class CrimeApplicationsController < DashboardController
     @sorting = InProgressSorting.new(search_params[:sorting])
 
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(**@sorting.order_scope)
+      CrimeApplication.active.order(**@sorting.order_scope)
     ).page params[:page]
   end
 
@@ -61,7 +61,9 @@ class CrimeApplicationsController < DashboardController
   end
 
   def destroy
-    ApplicationPurger.call(current_crime_application, current_provider, log_context)
+    ApplicationPurger.call(crime_application: current_crime_application,
+                           deleted_by: current_provider.id,
+                           deletion_reason: DeletionReason::PROVIDER_ACTION.to_s)
 
     redirect_to crime_applications_path,
                 flash: {
@@ -75,10 +77,6 @@ class CrimeApplicationsController < DashboardController
 
   def new_application_params
     params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
-  end
-
-  def log_context
-    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
   end
 
   def cifc?

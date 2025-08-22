@@ -23,6 +23,8 @@ data:
   OMNIAUTH_ENTRA_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
   OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://preprod.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
   PROVIDER_DATA_API_URL: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
+  RETENTION_PERIOD: "438000" # 10 months
+  SOFT_DELETION_PERIOD: "15" # 15 min
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"

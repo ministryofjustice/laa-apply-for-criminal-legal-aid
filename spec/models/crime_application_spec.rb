@@ -135,4 +135,84 @@ RSpec.describe CrimeApplication, type: :model do
       expect(subject.decided?).to be false
     end
   end
+
+  describe '#to_be_soft_deleted' do
+    let(:retention_period) { Rails.configuration.x.retention_period.ago }
+
+    context 'when application has reached the retention period' do
+      let(:attributes) { { updated_at: retention_period } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is older than the retention period' do
+      let(:attributes) { { updated_at: retention_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is younger than the retention period' do
+      let(:attributes) { { updated_at: retention_period + 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
+  end
+
+  describe '#to_be_hard_deleted' do
+    let(:soft_deletion_period) { Rails.configuration.x.soft_deletion_period.ago }
+
+    context 'when application has reached the soft deletion period' do
+      let(:attributes) { { soft_deleted_at: soft_deletion_period } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_hard_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is older than the soft deletion period' do
+      let(:attributes) { { soft_deleted_at: soft_deletion_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'returns application' do
+        expect(described_class.to_be_hard_deleted.count).to eq(1)
+      end
+    end
+
+    context 'when application is younger than the soft deletion period' do
+      let(:attributes) { { soft_deleted_at: soft_deletion_period + 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_hard_deleted.count).to eq(0)
+      end
+    end
+  end
 end

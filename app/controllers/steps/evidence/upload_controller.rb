@@ -18,7 +18,7 @@ module Steps
 
         document = current_crime_application.documents.find(params['document_id'])
 
-        if Datastore::Documents::Delete.new(document:, log_context:).call
+        if deleted?(document)
           @flash = { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }
           document.destroy
         else
@@ -28,8 +28,9 @@ module Steps
         :delete_document
       end
 
-      def log_context
-        LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
+      def deleted?(document)
+        Datastore::Documents::Delete.new(document: document, deleted_by: current_provider.id,
+                                         deletion_reason: DeletionReason::PROVIDER_ACTION.to_s).call
       end
     end
   end

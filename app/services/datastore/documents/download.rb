@@ -3,15 +3,14 @@ module Datastore
     class Download
       PRESIGNED_URL_EXPIRES_IN = 15 # seconds
 
-      attr_accessor :document, :log_context
+      attr_accessor :document
 
-      def initialize(document:, log_context:)
+      def initialize(document:)
         @document = document
-        @log_context = log_context
       end
 
       def call
-        Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
+        Rails.error.handle(fallback: -> { false }, severity: :error) do
           DatastoreApi::Requests::Documents::PresignDownload.new(
             object_key:, expires_in:, response_content_disposition:
           ).call
@@ -31,11 +30,6 @@ module Datastore
       def response_content_disposition
         # To force download of file rather than opening in another window
         %(attachment; filename="#{@document.filename}")
-      end
-
-      def context
-        log_context << { file_type: document.content_type, s3_object_key: object_key }
-        log_context.to_h
       end
     end
   end

@@ -12,6 +12,12 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
     end
 
     context 'deleting a document' do
+      let(:provider) { Provider.new }
+
+      before do
+        allow(controller).to receive(:current_provider).and_return(provider)
+      end
+
       it 'has the expected step name' do
         allow_any_instance_of(Datastore::Documents::Delete).to receive(:call).and_return(true)
 

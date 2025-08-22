@@ -77,5 +77,8 @@ module LaaApplyForCriminalLegalAid
 
     config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
     config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
+
+    config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 1051200).to_i.minutes # 2 years
+    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 20160).to_i.minutes # 2 weeks
   end
 end

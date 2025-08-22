@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
 
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.find_by(
+    @current_crime_application ||= CrimeApplication.active.find_by(
       id: application_id,
       office_code: current_office_code
     )

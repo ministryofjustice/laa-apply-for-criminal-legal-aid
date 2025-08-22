@@ -1,6 +1,6 @@
 class DeletionReason < ValueObject
   VALUES = [
-    MANUAL = new(:manual),
-    SYSTEM_AUTOMATED = new(:system_automated),
+    PROVIDER_ACTION = new(:provider_action),
+    RETENTION_RULE = new(:retention_rule),
   ].freeze
 end
