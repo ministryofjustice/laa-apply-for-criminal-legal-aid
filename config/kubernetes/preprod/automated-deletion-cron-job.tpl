@@ -4,7 +4,7 @@ metadata:
   name: automated-deletion-cron-job-preprod
   namespace: laa-apply-for-criminal-legal-aid-preprod
 spec:
-  schedule: "15 14 * * *" # daily at 2:15 PM
+  schedule: "30 14 * * *" # daily at 2:30 PM
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
