@@ -22,5 +22,7 @@ data:
   OMNIAUTH_ENTRA_TENANT_ID: 6f16715c-a01d-47e1-934a-f7938affb973
   OMNIAUTH_ENTRA_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
   OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
+  RETENTION_PERIOD: "2" # 2 years
+  SOFT_DELETION_PERIOD: "30" # 30 min
 
   AUTH_IDP: entra
