@@ -23,6 +23,6 @@ data:
   OMNIAUTH_ENTRA_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
   OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
   RETENTION_PERIOD: "2" # 2 years
-  SOFT_DELETION_PERIOD: "30" # 30 min
+  SOFT_DELETION_PERIOD: "2" # 2 weeks
 
   AUTH_IDP: entra
