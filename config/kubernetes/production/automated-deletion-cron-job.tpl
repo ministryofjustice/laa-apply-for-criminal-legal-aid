@@ -4,7 +4,8 @@ metadata:
   name: automated-deletion-cron-job-production
   namespace: laa-apply-for-criminal-legal-aid-production
 spec:
-  schedule: "0 12 * * *" # daily at 12 PM
+  schedule: "0 0 * * *" # daily at midnight
+  timeZone: "Europe/London"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
