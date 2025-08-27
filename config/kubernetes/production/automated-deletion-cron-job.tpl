@@ -5,6 +5,7 @@ metadata:
   namespace: laa-apply-for-criminal-legal-aid-production
 spec:
   schedule: "0 0 * * *" # daily at midnight
+  timeZone: "Europe/London"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -13,7 +14,6 @@ spec:
           labels:
             tier: worker
         spec:
-          timeZone: "Europe/London"
           restartPolicy: OnFailure
           containers:
           - name: automated-deletion-job
