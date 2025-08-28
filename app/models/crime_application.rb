@@ -88,7 +88,10 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
-  scope :to_be_soft_deleted, -> { active.where(updated_at: ..Rails.configuration.x.retention_period.ago) }
+  scope :to_be_soft_deleted, lambda {
+    active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
+          .where(parent_id: nil, updated_at: ..Rails.configuration.x.retention_period.ago)
+  }
 
   scope :to_be_hard_deleted, lambda {
     where(soft_deleted_at: ..Rails.configuration.x.soft_deletion_period.ago)
