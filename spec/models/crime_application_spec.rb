@@ -174,6 +174,32 @@ RSpec.describe CrimeApplication, type: :model do
         expect(described_class.to_be_soft_deleted.count).to eq(0)
       end
     end
+
+    context 'when application is PSE' do
+      let(:attributes) {
+        { application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s, updated_at: retention_period - 1.day }
+      }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
+
+    context 'when application is submitted' do
+      let(:attributes) { { parent_id: SecureRandom.uuid, updated_at: retention_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
   end
 
   describe '#to_be_hard_deleted' do
