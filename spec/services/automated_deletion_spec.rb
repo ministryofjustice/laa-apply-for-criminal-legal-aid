@@ -15,13 +15,15 @@ RSpec.describe AutomatedDeletion do
     # app to remain unaffected due to having a parent application
     CrimeApplication.create(reference: 700_000_5, parent_id: SecureRandom.uuid,
                             documents: [], updated_at: 2.years.ago)
+    # app to be remain unaffected due to exemption
+    CrimeApplication.create(reference: 700_000_6, documents: [], updated_at: 2.years.ago, exempt_from_deletion: true)
   end
 
   it 'deletes applications as required' do
     expect {
       described_class.call
     }.to change(CrimeApplication,
-                :count).from(5).to(4)
+                :count).from(6).to(5)
     expect(CrimeApplication.find_by(reference: 700_000_1)).to be_nil
   end
 
@@ -33,6 +35,12 @@ RSpec.describe AutomatedDeletion do
 
   it 'ignores an application if it has parent application' do
     exempt_app = CrimeApplication.find_by(reference: 700_000_5)
+
+    expect { described_class.call }.not_to(change { exempt_app.reload.soft_deleted_at })
+  end
+
+  it 'ignores an application if it is exempt' do
+    exempt_app = CrimeApplication.find_by(reference: 700_000_6)
 
     expect { described_class.call }.not_to(change { exempt_app.reload.soft_deleted_at })
   end
