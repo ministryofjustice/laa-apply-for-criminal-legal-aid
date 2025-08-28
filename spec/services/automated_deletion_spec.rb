@@ -12,7 +12,7 @@ RSpec.describe AutomatedDeletion do
     # app to remain unaffected due to being PSE
     CrimeApplication.create(reference: 700_000_4, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s,
                             documents: [], updated_at: 2.years.ago)
-    # app to remain unaffected due to being submitted
+    # app to remain unaffected due to having a parent application
     CrimeApplication.create(reference: 700_000_5, parent_id: SecureRandom.uuid,
                             documents: [], updated_at: 2.years.ago)
   end
@@ -31,7 +31,7 @@ RSpec.describe AutomatedDeletion do
     expect { described_class.call }.not_to(change { exempt_app.reload.soft_deleted_at })
   end
 
-  it 'ignores an application if it is submitted' do
+  it 'ignores an application if it has parent application' do
     exempt_app = CrimeApplication.find_by(reference: 700_000_5)
 
     expect { described_class.call }.not_to(change { exempt_app.reload.soft_deleted_at })

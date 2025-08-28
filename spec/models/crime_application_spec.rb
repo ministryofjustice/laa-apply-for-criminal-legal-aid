@@ -189,7 +189,7 @@ RSpec.describe CrimeApplication, type: :model do
       end
     end
 
-    context 'when application is submitted' do
+    context 'when application has parent application' do
       let(:attributes) { { parent_id: SecureRandom.uuid, updated_at: retention_period - 1.day } }
 
       before do
