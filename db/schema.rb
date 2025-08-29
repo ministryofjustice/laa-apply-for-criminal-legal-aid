@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_18_101902) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_27_134435) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_18_101902) do
     t.string "pre_cifc_reason"
     t.jsonb "date_stamp_context"
     t.datetime "soft_deleted_at"
+    t.boolean "exempt_from_deletion", default: false
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["parent_id"], name: "index_crime_applications_on_parent_id", unique: true
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
