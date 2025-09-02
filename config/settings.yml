@@ -18,7 +18,7 @@ feature_flags:
   provider_data_api:
     local: true
     test: false
-    staging: true
+    staging: false
     preprod: false
     production: false
   entra_logout:
