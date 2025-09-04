@@ -16,7 +16,7 @@ data:
   CLAMD_CONF_FILENAME: "clamd.preprod.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
   DATASTORE_API_CONSUMER: crime-apply-preprod
-  BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
+  BC_WSDL_URL: https://uat.laa-benefit-checker.service.justice.gov.uk/lsx/lsc-services/benefitChecker
   VIRUS_SCAN_TIMEOUT: "20"
   OMNIAUTH_ENTRA_CLIENT_ID: 7d95f6ff-2ff5-4ba0-aaf3-06d8769557ef
   OMNIAUTH_ENTRA_TENANT_ID: 8352c342-da15-413a-8b5b-d89545766f0c
