@@ -15,7 +15,7 @@ data:
   ENABLE_PROMETHEUS_EXPORTER: "true"
   CLAMD_CONF_FILENAME: "clamd.production.conf"
   DATASTORE_API_ROOT: http://service-production.laa-criminal-applications-datastore-production.svc.cluster.local
-  BC_WSDL_URL: https://laa-benefit-checker.service.justice.gov.uk/lsx/lsc-services/benefitChecker
+  BC_WSDL_URL: https://laa-benefitchecker.apps.live.cloud-platform.service.justice.gov.uk/lsx/lsc-services/benefitChecker
   LAA_PORTAL_IDP_METADATA_URL: https://portal.legalservices.gov.uk/oamfed/idp/metadata
   VIRUS_SCAN_TIMEOUT: "20"
   OMNIAUTH_ENTRA_CLIENT_ID: b76794bf-ce81-476a-9c01-aab9f5248139
