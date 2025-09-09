@@ -189,7 +189,7 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed out if portal session lifespan is exceeded' do
+  context 'user is signed out if session lifespan is exceeded' do
     before do
       allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
       allow(Provider).to receive(:reauthenticate_in).and_return(5.minutes)

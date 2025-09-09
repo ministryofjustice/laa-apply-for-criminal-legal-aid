@@ -25,7 +25,7 @@ module Lassie
       user_info.email
     end
 
-    # Access to Crime Apply will be managed by LASSIE and EntraID.
+    # Access to Crime Apply will be managed by SILAS and EntraID.
     # Setting roles as `ACCESS_CRIME_APPLY` here until that is confirmed.
     # Once confirmed, `role` can be removed from providers althogether.
     def roles

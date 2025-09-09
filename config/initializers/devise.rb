@@ -3,8 +3,6 @@
 Devise.setup do |config|
   require 'devise/orm/active_record'
   require 'devise/models/reauthable'
-  require 'laa_portal/saml_strategy'
-  require 'laa_portal/saml_setup'
   require 'lassie/oidc_strategy'
 
   # ==> Configuration for :timeoutable
@@ -58,14 +56,6 @@ Devise.setup do |config|
   config.warden do |manager|
     manager.failure_app = Devise::CustomFailureApp
   end
-
-  # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  config.omniauth :saml,
-                  name: :saml,
-                  setup: LaaPortal::SamlSetup,
-                  strategy_class: LaaPortal::SamlStrategy
 
   config.omniauth(
     :openid_connect,
