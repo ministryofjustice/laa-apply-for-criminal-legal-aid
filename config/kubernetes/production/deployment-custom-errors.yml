@@ -57,3 +57,5 @@ spec:
             items:
               - key: "423"
                 path: "423.html"
+              - key: "503"
+                path: "503.html"
