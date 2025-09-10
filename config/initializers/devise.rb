@@ -3,7 +3,7 @@
 Devise.setup do |config|
   require 'devise/orm/active_record'
   require 'devise/models/reauthable'
-  require 'lassie/oidc_strategy'
+  require 'silas/oidc_strategy'
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -75,7 +75,7 @@ Devise.setup do |config|
       issuer: "https://login.microsoftonline.com/#{ENV.fetch('OMNIAUTH_ENTRA_TENANT_ID', nil)}/v2.0",
       logout_path: "/logout",
       post_logout_redirect_uri: ENV.fetch('OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI', nil),
-      strategy_class: Lassie::OidcStrategy
+      strategy_class: Silas::OidcStrategy
     }
   )
 end

@@ -225,7 +225,7 @@ RSpec.describe 'Sign in user journey' do
     end
 
     after do
-      OmniAuth.config.mock_auth[:entra] = Lassie::OidcStrategy.mock_auth
+      OmniAuth.config.mock_auth[:entra] = Silas::OidcStrategy.mock_auth
     end
 
     it 're-raises the exception for handling by the `ApplicationController`' do

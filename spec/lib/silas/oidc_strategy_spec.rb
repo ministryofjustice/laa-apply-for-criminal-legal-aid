@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Lassie::OidcStrategy do
+RSpec.describe Silas::OidcStrategy do
   let(:strategy_class) { described_class }
   let(:mock_auth) { strategy_class.mock_auth }
 

@@ -1,10 +1,10 @@
-module Lassie
+module Silas
   class OidcStrategy < OmniAuth::Strategies::OpenIDConnect
     info { { email:, roles:, office_codes: } }
 
     private
 
-    # If the Provider Data API fature is enabled, laa_accounts are filtered
+    # If the Provider Data API feature is enabled, laa_accounts are filtered
     # to include only active crime office_codes.
     def office_codes
       return laa_accounts unless FeatureFlags.provider_data_api.enabled?
@@ -15,7 +15,7 @@ module Lassie
     end
 
     # The `LAA_ACCOUNTS` custom claim can be either a single office code (as a string)
-    # or multiple office codes (as an array). Here we normalizes the value to always
+    # or multiple office codes (as an array). Here we normalise the value to always
     # return an array.
     def laa_accounts
       [*user_info.raw_attributes.fetch('LAA_ACCOUNTS')]
@@ -27,7 +27,7 @@ module Lassie
 
     # Access to Crime Apply will be managed by SILAS and EntraID.
     # Setting roles as `ACCESS_CRIME_APPLY` here until that is confirmed.
-    # Once confirmed, `role` can be removed from providers althogether.
+    # Once confirmed, `role` can be removed from providers altogether.
     def roles
       ['ACCESS_CRIME_APPLY']
     end
