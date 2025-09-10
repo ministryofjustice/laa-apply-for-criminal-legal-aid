@@ -27,6 +27,3 @@ data:
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
-
-  # Auth identity provider - 'entra'
-  AUTH_IDP: entra

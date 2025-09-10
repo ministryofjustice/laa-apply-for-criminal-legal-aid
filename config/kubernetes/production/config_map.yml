@@ -24,4 +24,3 @@ data:
   RETENTION_PERIOD: "2" # 2 years
   SOFT_DELETION_PERIOD: "2" # 2 weeks
 
-  AUTH_IDP: entra
