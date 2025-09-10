@@ -133,6 +133,10 @@ metadata:
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
+      SecRule TIME_WDAY "!@pm 1 2 3 4 5" \
+        "id:997,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
+      SecRule TIME_HOUR "!@pm 06 07 08 09 10 11 12 13 14 15 16 17" \
+        "id:998,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
       SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
         "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
