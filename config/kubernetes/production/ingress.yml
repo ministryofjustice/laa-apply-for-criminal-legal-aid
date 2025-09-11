@@ -54,6 +54,13 @@ spec:
                 name: service-production
                 port:
                   number: 80
+          - path: /assets
+            pathType: Prefix
+            backend:
+              service:
+                name: service-production
+                port:
+                  number: 80
 ---
 # pingdom ingress
 apiVersion: networking.k8s.io/v1

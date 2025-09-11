@@ -54,8 +54,3 @@ spec:
         - name: custom-error-pages
           configMap:
             name: custom-error-pages
-            items:
-              - key: "423"
-                path: "423.html"
-              - key: "503"
-                path: "503.html"
