@@ -3,9 +3,7 @@
 Devise.setup do |config|
   require 'devise/orm/active_record'
   require 'devise/models/reauthable'
-  require 'laa_portal/saml_strategy'
-  require 'laa_portal/saml_setup'
-  require 'lassie/oidc_strategy'
+  require 'silas/oidc_strategy'
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -59,14 +57,6 @@ Devise.setup do |config|
     manager.failure_app = Devise::CustomFailureApp
   end
 
-  # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  config.omniauth :saml,
-                  name: :saml,
-                  setup: LaaPortal::SamlSetup,
-                  strategy_class: LaaPortal::SamlStrategy
-
   config.omniauth(
     :openid_connect,
     {
@@ -85,7 +75,7 @@ Devise.setup do |config|
       issuer: "https://login.microsoftonline.com/#{ENV.fetch('OMNIAUTH_ENTRA_TENANT_ID', nil)}/v2.0",
       logout_path: "/logout",
       post_logout_redirect_uri: ENV.fetch('OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI', nil),
-      strategy_class: Lassie::OidcStrategy
+      strategy_class: Silas::OidcStrategy
     }
   )
 end

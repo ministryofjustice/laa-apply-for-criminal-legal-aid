@@ -1,14 +1,7 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token
-    before_action :check_provider_is_enrolled, only: [:saml, :entra]
-
-    # :nocov:
-    # Portal/SAML auth will be removed once staging users onboarded to LASSIE
-    def saml
-      entra
-    end
-    # :nocov:
+    before_action :check_provider_is_enrolled, only: [:entra]
 
     def entra
       provider = Provider.from_omniauth(auth_hash)

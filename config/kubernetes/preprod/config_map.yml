@@ -28,9 +28,3 @@ data:
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
-
-  # LAA Portal metadata endpoint or file
-  # (endpoint not accessible from inside CP, using locally stored file)
-  #
-  # Auth identity prodivder - 'saml' (Portal) or 'entra' (LASSIE)
-  AUTH_IDP: entra

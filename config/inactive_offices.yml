@@ -2,8 +2,9 @@
 #
 # Temporary solution to allow us to onboard over the next few months.
 # Plan is to build an API to glean this info from other systems, but
-# in the intrim this this was agreed as a way to continue onboarding.
+# in the interim this was agreed as a way to continue onboarding.
 #
+# TODO: active/inactive office codes need configuring with new IDAM solution
 # This is used by Provider::ActiveOfficeChecker to filter out inactive
 # offices from the array that Crime Apply receives from the portal auth_info
 #
@@ -13,7 +14,7 @@
 #
 localhost:
   inactive_office_codes:
-    - 3B345C # portal dev/stg test user
+    - 3B345C # dev/stg test user
 
 staging:
   inactive_office_codes:

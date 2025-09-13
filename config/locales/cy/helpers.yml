@@ -38,7 +38,6 @@ cy:
       land: tir
   helpers:
     back_link: Yn ôl
-    back_to_portal: Yn ôl i Borth Ar-lein LAA
     back_to_applications: Yn ôl at eich ceisiadau
     submit:
       clear: Clirio

@@ -2,14 +2,10 @@ require_relative "boot"
 
 require "rails"
 require "active_record/railtie"
-# require "active_storage/engine"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
-# require "action_cable/engine"
-# require "action_mailbox/engine"
-# require "action_text/engine"
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -55,8 +51,6 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
-
-    config.x.auth_idp = ENV.fetch('AUTH_IDP', 'entra')
 
     # Time after which a user's session will expire if they
     # haven’t interacted with the service.
