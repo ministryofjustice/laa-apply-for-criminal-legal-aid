@@ -27,13 +27,3 @@ data:
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
-
-  # LAA Portal metadata endpoint or file
-  # (endpoint not accessible from inside CP, using locally stored file)
-  #
-  # Important: make sure whatever Portal env is declared here, uses the
-  # corresponding certificates, if required (in `deployment.tpl` file)
-  #
-  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
-  # Auth identity prodivder - 'saml' (Portal) or 'entra' (LASSIE)
-  AUTH_IDP: entra
