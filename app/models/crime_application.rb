@@ -3,6 +3,8 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Passportable
   include MeansOwnershipScope
 
+  before_destroy :check_deletion_exemption
+
   attr_readonly :application_type
   attribute :date_stamp, :datetime
   attribute :date_stamp_context, Type::DateStampContextType.new
@@ -88,7 +90,10 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
-  scope :to_be_soft_deleted, -> { active.where(updated_at: ..Rails.configuration.x.retention_period.ago) }
+  scope :to_be_soft_deleted, lambda {
+    active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
+          .where(exempt_from_deletion: false, parent_id: nil, updated_at: ..Rails.configuration.x.retention_period.ago)
+  }
 
   scope :to_be_hard_deleted, lambda {
     where(soft_deleted_at: ..Rails.configuration.x.soft_deletion_period.ago)
@@ -147,5 +152,19 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def review_status
     nil
+  end
+
+  def exempt_from_deletion!
+    self.soft_deleted_at = nil
+    self.exempt_from_deletion = true
+    save!
+  end
+
+  private
+
+  def check_deletion_exemption
+    return unless exempt_from_deletion?
+
+    raise ActiveRecord::RecordNotDestroyed, 'Application exempt from deletion'
   end
 end
