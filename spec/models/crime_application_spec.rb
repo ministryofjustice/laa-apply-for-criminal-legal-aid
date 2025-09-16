@@ -174,6 +174,44 @@ RSpec.describe CrimeApplication, type: :model do
         expect(described_class.to_be_soft_deleted.count).to eq(0)
       end
     end
+
+    context 'when application is PSE' do
+      let(:attributes) {
+        { application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s, updated_at: retention_period - 1.day }
+      }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
+
+    context 'when application has parent application' do
+      let(:attributes) { { parent_id: SecureRandom.uuid, updated_at: retention_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
+
+    context 'when application is exempt from deletion' do
+      let(:attributes) { { exempt_from_deletion: true, updated_at: retention_period - 1.day } }
+
+      before do
+        application.save!
+      end
+
+      it 'does not return application' do
+        expect(described_class.to_be_soft_deleted.count).to eq(0)
+      end
+    end
   end
 
   describe '#to_be_hard_deleted' do
@@ -212,6 +250,51 @@ RSpec.describe CrimeApplication, type: :model do
 
       it 'does not return application' do
         expect(described_class.to_be_hard_deleted.count).to eq(0)
+      end
+    end
+  end
+
+  describe '#exempt_from_deletion' do
+    it 'is false by default' do
+      expect(described_class.new.exempt_from_deletion).to be(false)
+    end
+  end
+
+  describe '#exempt_from_deletion!' do
+    let(:attributes) { { soft_deleted_at: Time.zone.now } }
+
+    before { application.save }
+
+    it 'clears soft_deleted_at' do
+      expect { application.exempt_from_deletion! }.to change(application, :soft_deleted_at).to(nil)
+    end
+
+    it 'sets exempt_from_deletion to true' do
+      expect { application.exempt_from_deletion! }.to change(application, :exempt_from_deletion).from(false).to(true)
+    end
+  end
+
+  describe 'Deleting an application' do
+    before { application.save }
+
+    context 'when the application is exempt from deletion' do
+      let(:attributes) { { exempt_from_deletion: true } }
+
+      it 'destroy raises an exception' do
+        expect {
+          application.destroy!
+        }.to raise_error(ActiveRecord::RecordNotDestroyed,
+                         'Application exempt from deletion').and(not_change(described_class, :count))
+      end
+    end
+
+    context 'when the application is not exempt from deletion' do
+      let(:attributes) { { exempt_from_deletion: false } }
+
+      it 'destroys the application' do
+        expect {
+          application.destroy!
+        }.to change(described_class, :count).from(1).to(0)
       end
     end
   end

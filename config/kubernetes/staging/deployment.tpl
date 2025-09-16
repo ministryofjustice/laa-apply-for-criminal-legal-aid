@@ -74,19 +74,6 @@ spec:
               name: laa-apply-for-criminal-legal-aid-secrets
         env:
           #
-          # secrets created by `certificates.yml`
-          #
-          - name: LAA_PORTAL_SP_CERT
-            valueFrom:
-              secretKeyRef:
-                name: portal-sp-certificate-staging
-                key: tls.crt
-          - name: LAA_PORTAL_SP_PRIVATE_KEY
-            valueFrom:
-              secretKeyRef:
-                name: portal-sp-certificate-staging
-                key: tls.key
-          #
           # secrets created by `terraform`
           #
           - name: DATABASE_URL

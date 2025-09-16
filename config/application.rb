@@ -2,14 +2,10 @@ require_relative "boot"
 
 require "rails"
 require "active_record/railtie"
-# require "active_storage/engine"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
-# require "action_cable/engine"
-# require "action_mailbox/engine"
-# require "action_text/engine"
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -46,7 +42,6 @@ module LaaApplyForCriminalLegalAid
 
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
-
     config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
     config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
     config.x.analytics.cookies_consent_expiration = 6.months
@@ -56,8 +51,6 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.lsc_service_name = ENV.fetch('BC_LSC_SERVICE_NAME', nil)
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
-
-    config.x.auth_idp = ENV.fetch('AUTH_IDP', 'entra')
 
     # Time after which a user's session will expire if they
     # haven’t interacted with the service.
@@ -79,6 +72,6 @@ module LaaApplyForCriminalLegalAid
     config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
 
     config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 2).to_i.years # 2 years
-    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 20160).to_i.minutes # 2 weeks
+    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 2).to_i.weeks # 2 weeks
   end
 end

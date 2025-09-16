@@ -15,7 +15,7 @@ data:
   ENABLE_PROMETHEUS_EXPORTER: "true"
   CLAMD_CONF_FILENAME: "clamd.staging.conf"
   DATASTORE_API_ROOT: http://service-staging.laa-criminal-applications-datastore-staging.svc.cluster.local
-  BC_WSDL_URL: https://benefitchecker.stg.legalservices.gov.uk/lsx/lsc-services/benefitChecker?wsdl
+  BC_WSDL_URL: https://uat.laa-benefit-checker.service.justice.gov.uk/lsx/lsc-services/benefitChecker?wsdl
   VIRUS_SCAN_TIMEOUT: "20"
   OMNIAUTH_ENTRA_CLIENT_ID: abd5ebbe-44b2-4c14-b815-a741ebfd21b2
   OMNIAUTH_ENTRA_TENANT_ID: ff260a8b-cb92-4cfe-8ae9-d48bb0fd9851
@@ -23,17 +23,7 @@ data:
   OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
   PROVIDER_DATA_API_URL: https://laa-provider-details-api-preprod.apps.live.cloud-platform.service.justice.gov.uk
   RETENTION_PERIOD: "2" # 2 years
-  SOFT_DELETION_PERIOD: "30" # 30 min
+  SOFT_DELETION_PERIOD: "2" # 2 weeks
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
-
-  # LAA Portal metadata endpoint or file
-  # (endpoint not accessible from inside CP, using locally stored file)
-  #
-  # Important: make sure whatever Portal env is declared here, uses the
-  # corresponding certificates, if required (in `deployment.tpl` file)
-  #
-  LAA_PORTAL_IDP_METADATA_FILE: config/laa_portal/metadata/staging.xml
-  # Auth identity prodivder - 'saml' (Portal) or 'entra' (LASSIE)
-  AUTH_IDP: entra
