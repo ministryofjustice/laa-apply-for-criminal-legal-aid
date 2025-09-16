@@ -17,8 +17,8 @@ cy:
         test: blue
 
     primary_navigation:
-      your_applications: Your applications
-      search: Search
+      your_applications: Eich ceisiadau
+      search: Chwilio
 
     header:
       service_name: Apply for criminal legal aid
