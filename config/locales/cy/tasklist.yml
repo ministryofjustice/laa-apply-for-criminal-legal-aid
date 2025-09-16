@@ -3,32 +3,32 @@ cy:
   tasklist:
     heading_text:
       initial: Gwneud cais newydd
-      post_submission_evidence: Llwytho tystiolaeth ategol
-      change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+      post_submission_evidence: Lanlwytho tystiolaeth ategol
+      change_in_financial_circumstances: Newid mewn sefyllfa ariannol
     heading:
-      about_your_client: Ynglŷn â’ch cleient
-      case_details: Manylion yr achos
+      about_your_client: Gwybodaeth am eich cleient
+      case_details: Manylion achos
       means_assessment: Asesiad modd
       support_evidence: Tystiolaeth ategol
       more_information: Rhagor o wybodaeth
       review_confirm: Adolygu a chadarnhau
     task:
-      more_information: Ychwanegu rhagor o wybodaeth
+      more_information: Ychwanegu unrhyw wybodaeth arall
       client_details: Manylion y cleient
       partner_details: Manylion y partner
-      case_details: Manylion yr achos
-      passporting_benefit_check: Gwiriad budd-daliadau pasbort
+      case_details: Manylion achos
+      passporting_benefit_check: Gwirio budd-daliadau pasbortio
       ioj: Cyfiawnhad dros gymorth cyfreithiol
       income_assessment: Asesiad incwm
-      outgoings_assessment: Asesiad allbynnau
+      outgoings_assessment: Asesiad o wariant
       capital_assessment: Asesiad cyfalaf
-      evidence_upload: Llwytho tystiolaeth
-      review: Adolygu’r cais
-      declaration: Cadarnhau datganiad a chyflwyno’r cais
+      evidence_upload: Lanlwytho tystiolaeth
+      review: Adolygu'r cais
+      declaration: Cadarnhau'r datganiad a chyflwyno'r cais
       confirm_and_submit: Cadarnhau a chyflwyno’r cais
     status:
-      completed: Wedi’i gwblhau
-      in_progress: Ar y gweill
+      completed: Cwblhawyd
+      in_progress: Yn mynd rhagddo
       not_started: Heb ddechrau
-      unreachable: Methu dechrau eto
+      unreachable: Does dim modd cychwyn eto
       not_applicable: Ddim yn berthnasol

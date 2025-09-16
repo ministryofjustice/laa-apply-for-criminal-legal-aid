@@ -2,35 +2,35 @@ cy:
   evidence:
     persona:
       client:
-        heading: Incwm, allanfeydd a chyfalaf eich cleient
+        heading: Incwm, gwariant a chyfalaf eich cleient
         income: Incwm
-        outgoings: Allanfeydd
+        outgoings: Gwariant
         capital: Cyfalaf
         none: Arall
       partner:
-        heading: Incwm, allanfeydd a chyfalaf y partner
+        heading: Incwm, gwariant a chyfalaf y partner
         income: Incwm
-        outgoings: Allanfeydd
+        outgoings: Gwariant
         capital: Cyfalaf
         none: Arall
       other: Tystiolaeth arall
     exempt:
-      not_means_tested: nid yw’n destun prawf modd arferol na phrawf pasbortio
-      under_18: roedd eich cleient yn iau na 18 pan wnaed y cais gyntaf
+      not_means_tested: nid yw'n amodol ar y prawf modd neu basbortio arferol
+      under_18: roedd eich cleient o dan 18 oed pan wnaed y cais gyntaf
     cifc:
-      heading: Ar gyfer newid mewn amgylchiadau ariannol
-      prompt: Datganiad banc neu slip cyflog sy’n dangos y newid.
+      heading: Ar gyfer newid mewn sefyllfa ariannol
+      prompt: Cyfriflen banc neu slip cyflog yn dangos y newid.
     other:
       heading: Unrhyw dystiolaeth ategol arall
-      prompt: Unrhyw dystiolaeth arall a allai gefnogi cais eich cleient. Er enghraifft, os ydych am atodi dogfen lle rydych wedi egluro rhagor ar fuddiannau cyfiawnder neu resymau apêl.
+      prompt: Unrhyw dystiolaeth arall a allai gefnogi cais eich cleient. Er enghraifft, os ydych chi am atodi dogfen lle rydych chi wedi egluro rhagor o fuddiannau cyfiawnder neu resymau dros apelio.
     rule:
       # Rheolau prawf
       ExampleRule1:
-        client: datganiad banc ar gyfer eich cleient
-        partner: datganiad banc ar gyfer y partner
+        client: cyfriflen banc ar gyfer eich cleient
+        partner: cyfriflen banc ar gyfer y partner
       ExampleRule2:
-        client: mae’r rheol cleient hon wedi’i harchifo
-        partner: mae’r rheol partner hon wedi’i harchifo
+        client: mae'r rheol cleient hon wedi'i harchifo
+        partner: mae'r rheol partner hon wedi'i harchifo
       ExampleRule2Budget2024:
         client:
           - tystysgrif geni
@@ -42,97 +42,97 @@ cy:
 
       # Rheolau gweithredol
       RestraintOrFreezingOrder:
-        client: y gorchymyn cyfyngu neu rewi
-        partner: y gorchymyn cyfyngu neu rewi
+        client: y gorchymyn rhewi neu gyfyngiad
+        partner: y gorchymyn rhewi neu gyfyngiad
       NationalInsuranceNumber:
         client: eu rhif Yswiriant Gwladol
         partner: eu rhif Yswiriant Gwladol
       HousingCosts:
-        client: eu rhent, cytundeb tenantiaeth neu ddatganiad morgais
-        partner: eu rhent, cytundeb tenantiaeth neu ddatganiad morgais
+        client: eu cytundeb rhent, tenantiaeth neu gyfriflen morgais
+        partner: eu cytundeb rhent, tenantiaeth neu gyfriflen morgais
       CouncilTaxPayments:
-        client: eu datganiad Treth y Cyngor
-        partner: eu datganiad Treth y Cyngor
+        client: eu datganiad Treth Gyngor
+        partner: eu datganiad Treth Gyngor
       ChildcareCosts:
-        client: tystiolaeth costau gofal plant, e.e. derbynebau neu ddatganiadau banc
-        partner: tystiolaeth costau gofal plant, e.e. derbynebau neu ddatganiadau banc
+        client: prawf o gostau gofal plant, er enghraifft derbynebau neu gyfriflenni banc
+        partner: prawf o gostau gofal plant, er enghraifft derbynebau neu gyfriflenni banc
       ChildMaintenanceCosts:
-        client: tystiolaeth taliadau cynhaliaeth, e.e. datganiadau banc sy’n dangos y taliadau
-        partner: tystiolaeth taliadau cynhaliaeth, e.e. datganiadau banc sy’n dangos y taliadau
+        client: prawf o daliadau cynhaliaeth, er enghraifft cyfriflenni banc yn dangos y taliadau
+        partner: prawf o daliadau cynhaliaeth, er enghraifft cyfriflenni banc yn dangos y taliadau
       SalariedEmployee:
-        client: slipiau cyflog, cyngor cyflog neu lythyr gan gyflogwr os ydynt yn cael eu talu mewn arian parod
-        partner: slipiau cyflog, cyngor cyflog neu lythyr gan gyflogwr os ydynt yn cael eu talu mewn arian parod
+        client: slipiau cyflog, cyngor ar gyflog, neu lythyr gan eu cyflogwr os cânt eu talu ag arian parod
+        partner: slipiau cyflog, cyngor ar gyflog, neu lythyr gan eu cyflogwr os cânt eu talu ag arian parod
       BenefitsRecipient:
-        client: llyfr budd-dal neu hysbysiad hawl neu lythyr gan Ganolfan Byd Gwaith sy’n nodi’r budd-daliadau a dderbynnir
-        partner: llyfr budd-dal neu hysbysiad hawl neu lythyr gan Ganolfan Byd Gwaith sy’n nodi’r budd-daliadau a dderbynnir
+        client: llyfr budd-daliadau neu hysbysiad o hawl neu lythyr gan y Ganolfan Byd Gwaith yn nodi'r budd-daliadau y mae eich cleient yn eu cael
+        partner: llyfr budd-daliadau neu hysbysiad o hawl neu lythyr gan y Ganolfan Byd Gwaith yn nodi'r budd-daliadau y mae'r partner yn eu cael
       SelfAssessed:
-        client: naill ai eu P60 neu gyfrifiad treth hunanasesiad (SA302)
-        partner: naill ai eu P60 neu gyfrifiad treth hunanasesiad (SA302)
+        client: naill ai eu P60 neu eu cyfrifiad treth Hunanasesu (SA302)
+        partner: naill ai eu P60 neu eu cyfrifiad treth Hunanasesu (SA302)
       SelfEmployed:
-        client: cyfrifon ariannol llawn, ffurflen dreth, datganiadau banc, llyfr arian parod neu gofnodion busnes eraill
-        partner: cyfrifon ariannol llawn, ffurflen dreth, datganiadau banc, llyfr arian parod neu gofnodion busnes eraill
+        client: cwblhau cyfrifon ariannol, ffurflen dreth, cyfriflenni banc, llyfr arian neu gofnodion busnes eraill
+        partner: cwblhau cyfrifon ariannol, ffurflen dreth, cyfriflenni banc, llyfr arian neu gofnodion busnes eraill
       BenefitsInKind:
-        client: eu ffurflen P11D ar gyfer ‘budd-daliadau mewn nwyddau neu wasanaethau’
-        partner: eu ffurflen P11D ar gyfer ‘budd-daliadau mewn nwyddau neu wasanaethau’
+        client: eu ffurflen P11D ar gyfer ‘buddion mewn nwyddau’
+        partner: eu ffurflen P11D ar gyfer ‘buddion mewn nwyddau’
       PrivatePensionIncome:
-        client: datganiadau banc neu ddatganiad pensiwn
-        partner: datganiadau banc neu ddatganiad pensiwn
+        client: naill ai cyfriflenni banc neu eu datganiad pensiwn
+        partner: naill ai cyfriflenni banc neu eu datganiad pensiwn
       MaintenanceIncome:
-        client: datganiadau banc sy’n dangos y taliadau cynhaliaeth, neu orchymyn llys neu gytundeb gyda’r Gwasanaeth Cynnal Plant
-        partner: datganiadau banc sy’n dangos y taliadau cynhaliaeth, neu orchymyn llys neu gytundeb gyda’r Gwasanaeth Cynnal Plant
+        client: cyfriflenni banc sy’n dangos y taliadau cynhaliaeth, neu'r gorchymyn llys neu'r cytundeb Gwasanaeth Cynhaliaeth Plant
+        partner: cyfriflenni banc sy’n dangos y taliadau cynhaliaeth, neu'r gorchymyn llys neu'r cytundeb Gwasanaeth Cynhaliaeth Plant
       InterestAndInvestments:
-        client: datganiadau banc sy’n dangos llog o gynilion neu fuddsoddiadau
-        partner: datganiadau banc sy’n dangos llog o gynilion neu fuddsoddiadau
+        client: cyfriflenni banc sy'n dangos llog o'u cynilion neu eu buddsoddiadau
+        partner: cyfriflenni banc sy'n dangos llog o'u cynilion neu eu buddsoddiadau
       RentalIncome:
-        client: datganiadau banc sy’n dangos incwm rhent
-        partner: datganiadau banc sy’n dangos incwm rhent
+        client: cyfriflenni banc sy'n dangos yr incwm rhent
+        partner: cyfriflenni banc sy'n dangos yr incwm rhent
       AnyOtherIncome:
-        client: datganiadau banc sy’n dangos incwm o ffynonellau eraill
-        partner: datganiadau banc sy’n dangos incwm o ffynonellau eraill
+        client: cyfriflenni banc sy'n dangos yr incwm o ffynonellau eraill
+        partner: cyfriflenni banc sy'n dangos yr incwm o ffynonellau eraill
       TrustFund:
         client: y ddogfen ymddiriedolaeth, neu gopi ardystiedig
         partner: y ddogfen ymddiriedolaeth, neu gopi ardystiedig
       BankAccounts:
-        client: datganiadau banc 3 mis diwethaf ar gyfer pob cyfrif, gan gynnwys unrhyw gyfrif ar y cyd â phartner
-        partner: datganiadau banc 3 mis diwethaf ar gyfer pob cyfrif, gan gynnwys unrhyw gyfrif ar y cyd â’r cleient
+        client: cyfriflenni banc ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif, gan gynnwys unrhyw gyfrif ar y cyd â phartner
+        partner: cyfriflenni banc ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif, gan gynnwys unrhyw gyfrif ar y cyd a ddelir gyda'ch cleient
       BuildingSocietyAccounts:
-        client: datganiad cymdeithas adeiladu neu lyfr cyfrif sy’n dangos trafodion 3 mis diwethaf ar gyfer pob cyfrif
-        partner: datganiad cymdeithas adeiladu neu lyfr cyfrif sy’n dangos trafodion 3 mis diwethaf ar gyfer pob cyfrif
+        client: cyfriflen cymdeithas adeiladu neu baslyfr yn dangos trafodion ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
+        partner: cyfriflen cymdeithas adeiladu neu baslyfr yn dangos trafodion ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
       CashIsa:
-        client: datganiadau ISA arian parod sy’n dangos trafodion 3 mis diwethaf
-        partner: datganiadau ISA arian parod sy’n dangos trafodion 3 mis diwethaf
+        client: cyfriflen ISA arian sy'n dangos trafodion ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
+        partner: cyfriflen ISA arian sy'n dangos trafodion ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
       NationalSavingsAccount:
-        client: datganiadau cyfrif Cynilion Cenedlaethol neu Swyddfa’r Post yn cwmpasu 3 mis diwethaf
-        partner: datganiadau cyfrif Cynilion Cenedlaethol neu Swyddfa’r Post yn cwmpasu 3 mis diwethaf
+        client: Cyfriflenni Cynilion Cenedlaethol neu gyfrifon Swyddfa'r Post ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
+        partner: Cyfriflenni Cynilion Cenedlaethol neu gyfrifon Swyddfa'r Post ar gyfer y 3 mis diwethaf, ar gyfer pob cyfrif
       CashInvestments:
-        client: datganiad, llyfr cyfrif neu dystysgrif o fuddsoddiadau arian parod yn cwmpasu’r 3 mis diwethaf
-        partner: datganiad, llyfr cyfrif neu dystysgrif o fuddsoddiadau arian parod yn cwmpasu’r 3 mis diwethaf
+        client: cyfriflen, paslyfr neu dystysgrif buddsoddiadau arian parod dros y 3 mis diwethaf
+        partner: cyfriflen, paslyfr neu dystysgrif buddsoddiadau arian parod dros y 3 mis diwethaf
       PremiumBonds:
-        client: copi o’r Bondiau Cynilo Premiwm neu gofnod Bond
-        partner: copi o’r Bondiau Cynilo Premiwm neu gofnod Bond
+        client: copi o'r Bondiau Cynilo Premiwm neu gofnod Bond
+        partner: copi o'r Bondiau Cynilo Premiwm neu gofnod Bond
       SavingsCerts:
-        client: y Tystysgrifau Cynilion Cenedlaethol neu lyfr cyfrif
-        partner: y Tystysgrifau Cynilion Cenedlaethol neu lyfr cyfrif
+        client: paslyfr neu Dystysgrifau Cynilion Cenedlaethol
+        partner: paslyfr neu Dystysgrifau Cynilion Cenedlaethol
       StocksAndGilts:
-        client: tystysgrif neu ddatganiad ar gyfer pob stoc, gilt neu fond llywodraeth
-        partner: tystysgrif neu ddatganiad ar gyfer pob stoc, gilt neu fond llywodraeth
+        client: tystysgrif neu gyfriflen ar gyfer pob stoc, gilt neu fond y llywodraeth
+        partner: tystysgrif neu gyfriflen ar gyfer pob stoc, gilt neu fond y llywodraeth
       OwnShares:
-        client: tystysgrif cyfranddaliadau neu daliad difidend diweddaraf ar gyfer pob cwmni y maent yn berchen cyfranddaliadau ynddo
-        partner: tystysgrif cyfranddaliadau neu daliad difidend diweddaraf ar gyfer pob cwmni y maent yn berchen cyfranddaliadau ynddo
+        client: tystysgrif cyfranddaliadau neu wrth-ddalen y difidend diweddaraf ar gyfer pob cwmni y mae ganddyn nhw gyfranddaliadau ynddo
+        partner: tystysgrif cyfranddaliadau neu wrth-ddalen y difidend diweddaraf ar gyfer pob cwmni y mae ganddyn nhw gyfranddaliadau ynddo
       PepPlans:
-        client: tystysgrif neu ddatganiad ar gyfer pob buddsoddiad Cynllun Ecwiti Personol
-        partner: tystysgrif neu ddatganiad ar gyfer pob buddsoddiad Cynllun Ecwiti Personol
+        client: tystysgrif neu gyfriflen ar gyfer pob buddsoddiad Cynllun Ecwiti Personol
+        partner: tystysgrif neu gyfriflen ar gyfer pob buddsoddiad Cynllun Ecwiti Personol
       ShareIsa:
-        client: tystysgrif neu ddatganiad ar gyfer pob ISA Cyfranddaliadau
-        partner: tystysgrif neu ddatganiad ar gyfer pob ISA Cyfranddaliadau
+        client: tystysgrif neu gyfriflen ar gyfer pob ISA Cyfranddaliadau
+        partner: tystysgrif neu gyfriflen ar gyfer pob ISA Cyfranddaliadau
       UnitTrusts:
-        client: tystysgrif neu ddatganiad ar gyfer pob buddsoddiad Ymddiriedolaeth Unedol
-        partner: tystysgrif neu ddatganiad ar gyfer pob buddsoddiad Ymddiriedolaeth Unedol
+        client: tystysgrif neu gyfriflen ar gyfer pob buddsoddiad Ymddiriedolaeth Unedol
+        partner: tystysgrif neu gyfriflen ar gyfer pob buddsoddiad Ymddiriedolaeth Unedol
       InvestmentBonds:
-        client: tystysgrif neu ddatganiad ar gyfer pob bond buddsoddi
-        partner: tystysgrif neu ddatganiad ar gyfer pob bond buddsoddi
+        client: tystysgrif neu gyfriflen ar gyfer pob bond buddsoddi
+        partner: tystysgrif neu gyfriflen ar gyfer pob bond buddsoddi
       OtherLumpSums:
-        client: datganiad, llyfr cyfrif neu dystysgrif o fuddsoddiadau cyfandaliad eraill yn cwmpasu trafodion 6 mis diwethaf
-        partner: datganiad, llyfr cyfrif neu dystysgrif o fuddsoddiadau cyfandaliad eraill yn cwmpasu trafodion 6 mis diwethaf
+        client: cyfriflen, paslyfr neu dystysgrif buddsoddiadau cyfandaliad eraill, sy'n cynnwys trafodion ar gyfer y 6 mis diwethaf
+        partner: cyfriflen, paslyfr neu dystysgrif buddsoddiadau cyfandaliad eraill, sy'n cynnwys trafodion ar gyfer y 6 mis diwethaf
       LostJob:
-        client: eu P45 neu lythyr gan gyn-gyflogwr
+        client: eu P45 neu lythyr gan eu cyn gyflogwr

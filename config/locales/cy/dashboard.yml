@@ -1,119 +1,120 @@
 cy:
   search:
-    table_label: Tabl canlyniadau chwilio ceisiadau
+    table_label: Tabl canlyniadau chwilio’r cais,
     total:
       one: 1 canlyniad chwilio
       other: "%{count} canlyniad chwilio"
-    heading: Chwilio ceisiadau a gyflwynwyd
-    subheading: Rydych yn chwilio ceisiadau a gyflwynwyd ac wedi'u dychwelyd o dan god swyddfa %{current_office_code}.
+    heading: Chwilio ceisiadau sydd wedi'u cyflwyno
+    subheading: Rydych chi'n chwilio drwy geisiadau sydd wedi'u cyflwyno a'u dychwelyd o dan y cod swyddfa %{current_office_code}.
   table_headings:
-    action: Gweithredu
+    action: Cam gweithredu
     applicant_name: Enw
     application_type: Math o gais
-    created_at: Dyddiad dechrau
-    reference: Cyfeirnod LAA
+    created_at: Dyddiad cychwyn
+    reference: Cyfeirnod yr Asiantaeth Cymorth Cyfreithiol
     reviewed_at: Statws
     review_status: Statws y cais
     status: Statws y cais
     application_status: Statws y cais
     submitted_at: Dyddiad cyflwyno
   review_status:
-    application_received: Wedi'i gyflwyno
+    application_received: Wedi cyflwyno
     assessment_completed: Penderfynwyd
-    ready_for_assessment: Wedi'i gyflwyno
-    returned_to_provider: Dychwelwyd
+    ready_for_assessment: Wedi cyflwyno
+    returned_to_provider: Wedi dychwelyd
 
   crime_applications:
     new:
-      page_title: Ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid mewn amgylchiadau ariannol?
-      heading: Ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid mewn amgylchiadau ariannol?
+      page_title: Ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol?
+      heading: Ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol?
       options:
         "no": "Cais newydd"
         "yes": "Newid mewn amgylchiadau ariannol"
-
     index:
       application_type:
         initial: Cychwynnol
-        post_submission_evidence: Uwchlwytho tystiolaeth ategol
-        change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+        post_submission_evidence: Tystiolaeth ategol
+        change_in_financial_circumstances: Newid mewn sefyllfa ariannol
       page_title: Eich ceisiadau
       delete_button: Dileu
       delete_button_a11y: Dileu cais %{applicant_name}
       status:
-        in_progress: Ar y gweill
-        submitted: Wedi'i gyflwyno
-        returned: Wedi'i ddychwelyd
+        in_progress: Yn mynd rhagddo
+        submitted: Wedi cyflwyno
+        returned: Wedi dychwelyd
     edit:
-      page_title: Rhestr dasgau'r cais
+      page_title: Rhestr tasgau'r cais
       heading: Gwneud cais newydd
-      subheading: Cais heb ei gwblhau
-      progress_counter: Rydych wedi cwblhau %{completed} o %{total} adran.
+      subheading: Cais yn anghyflawn
+      progress_counter: Rydych chi wedi cwblhau %{completed} o %{total} adran.
       aside:
-        reference: Rhif cyfeirnod
+        reference: Cyfeirnod
         first_name: Enw cyntaf
         last_name: Cyfenw
         date_of_birth: Dyddiad geni
         date_stamp: Stamp dyddiad
     confirm_destroy: &CRIME_APPLICATIONS_CONFIRM_DESTROY
-      page_title: Cadarnhewch eich bod am ddileu'r cais hwn
-      heading: "Cadarnhewch eich bod am ddileu'r cais hwn"
+      page_title: Cadarnhau eich bod am ddileu'r cais hwn
+      heading: "Cadarnhau eich bod am ddileu'r cais hwn"
       body:
-        client_name: Enw'r cleient
-        start_date: Dyddiad dechrau
-        laa_reference: Cyfeirnod LAA
+        client_name: Enw’r cleient
+        start_date: Dyddiad cychwyn
+        laa_reference: Cyfeirnod yr Asiantaeth Cymorth Cyfreithiol
         status: Statws
       confirm_delete_button: Dileu cais
       go_back_link: Yn ôl i'ch ceisiadau
       confirm_delete_button_a11y: Dileu'r cais hwn
     destroy:
-      success_flash: Mae cais %{applicant_name} ar y gweill wedi'i ddileu
+      success_flash: Mae cais %{applicant_name} sy’n mynd rhagddo wedi cael ei ddileu
+
   completed_applications: &COMPLETED_APPLICATIONS
     funding_decision_notification:
       title: Pwysig
       heading: Canlyniad wedi'i benderfynu
-      processed_on: Cafodd y cais hwn ei brosesu ar %{on}.
-      explanation: Bydd penderfyniadau ariannu a wneir ar ôl hanner dydd ar 13 Chwefror 2025 yn ymddangos yn y gwasanaeth hwn.
+      processed_on: Proseswyd y cais hwn ar %{on}.
+      explanation: Bydd penderfyniadau cyllido a wneir ar ôl 12pm ar 13 Chwefror 2025 yn ymddangos yn y gwasanaeth hwn.
     index: &COMPLETED_APPLICATIONS_INDEX
       page_title: Eich ceisiadau
-      no_records: Nid oes unrhyw geisiadau
+      no_records: Does dim ceisiadau
     show:
       heading:
         initial: Cais am orchymyn cynrychiolaeth cymorth cyfreithiol troseddol
-        change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+        change_in_financial_circumstances: Newid mewn sefyllfa ariannol
         post_submission_evidence: Tystiolaeth ategol
-      laa_reference: "Rhif cyfeirnod:"
+      laa_reference: "Cyfeirnod:"
       date_stamp: "Stamp dyddiad:"
       date_submitted: "Dyddiad cyflwyno:"
       print_application: Argraffu cais
       helpline:
-        intro: Os oes angen i chi dynnu neu ddiweddaru’r cais hwn cyn iddo gael ei brosesu gan yr LAA, cysylltwch â’r llinell gymorth ceisiadau troseddol.
+        intro: Os oes angen i chi dynnu'r cais hwn yn ôl neu ei ddiweddaru cyn iddo gael ei brosesu gan yr Asiantaeth Cymorth Cyfreithiol, cysylltwch â'r llinell gymorth ceisiadau troseddol.
         phone: "Ffôn: 0300 200 2020"
-        hours: 9am i 5pm, dydd Llun i ddydd Gwener (ac eithrio gwyliau banc)
+        hours: 9am i 5pm, o ddydd Llun i ddydd Gwener (ac eithrio gwyliau banc)
       action:
-        create_pse: Llwytho tystiolaeth ategol
-      view_funding_decision: Gweld penderfyniad ariannu
+        create_pse: Lanlwytho tystiolaeth ategol
+      view_funding_decision: Gweld penderfyniad cyllido
     return_notification:
       title: Pwysig
       heading:
-        clarification_required: Rydym wedi dychwelyd y cais hwn oherwydd bod angen eglurhad pellach.
-        evidence_issue: Rydym wedi dychwelyd y cais hwn oherwydd bod problem gyda’r dystiolaeth a anfonwyd.
-        duplicate_application: Rydym wedi dychwelyd y cais hwn oherwydd ei fod yn gais dyblyg.
-        case_concluded: Rydym wedi dychwelyd y cais hwn oherwydd bod y achos eisoes wedi'i gloi.
-        provider_request: Rydym wedi dychwelyd y cais hwn ar eich cais chi.
+        clarification_required: Rydyn ni wedi dychwelyd y cais hwn oherwydd bod angen eglurhad pellach arnom.
+        evidence_issue: Rydyn ni wedi dychwelyd y cais hwn oherwydd bod problem gyda'r dystiolaeth a anfonwyd.
+        duplicate_application: Rydyn ni wedi dychwelyd y cais hwn gan ei fod yn gais dyblyg.
+        case_concluded: Rydyn ni wedi dychwelyd y cais hwn oherwydd bod yr achos eisoes wedi dod i ben.
+        provider_request: Rydyn ni wedi dychwelyd y cais hwn yn unol â’ch dymuniad.
         split_case: Mae angen i chi ddweud wrthym pam y dylai eich cleient gael cymorth cyfreithiol.
       explanation:
         default_html: ""
         split_case_html: |
           <p class="govuk-body">
-            Rydym wedi dychwelyd eich cais oherwydd mae angen i chi ychwanegu cyfiawnhad ar gyfer pob trosedd. Mae hyn oherwydd bod yr achos wedi cael ei ‘rannu’.
+            Rydyn ni wedi dychwelyd eich cais oherwydd bod angen i chi ychwanegu cyfiawnhad dros bob trosedd. Y rheswm am hyn yw am fod yr achos wedi'i 'rannu'.
           </p>
           <p class="govuk-body">
-            Rhennir achos yn fwy nag un pan fydd y Gwasanaeth Erlyn y Goron yn penderfynu nad yw’r troseddau’n ddigon cysylltiedig i’w treialu gyda’i gilydd.
+            Mae achos yn cael ei rannu pan fydd Gwasanaeth Erlyn y Goron yn penderfynu nad oes digon o gysylltiad rhwng y troseddau i'w rhoi ar brawf ar yr un pryd.
           </p>
-      caseworker_details: "Dywed y gweithiwr achos a ddychwelodd y cais hwn: %{details}"
+      caseworker_details: "Mae’r gweithiwr achos a ddychwelodd y cais hwn yn dweud: %{details}"
       action:
         default: Diweddaru cais
         split_case: Ychwanegu cyfiawnhad
+
   returned_applications:
     <<: *COMPLETED_APPLICATIONS
     index:
@@ -122,52 +123,53 @@ cy:
     confirm_destroy:
       <<: *CRIME_APPLICATIONS_CONFIRM_DESTROY
       body:
-        client_name: Enw'r cleient
+        client_name: Enw’r cleient
         submitted_date: Dyddiad cyflwyno
-        laa_reference: Cyfeirnod LAA
+        laa_reference: Cyfeirnod yr Asiantaeth Cymorth Cyfreithiol
         status: Statws
     archive:
-      success_flash: Mae cais wedi'i ddychwelyd %{applicant_name} wedi'i ddileu
+      success_flash: Mae cais %{applicant_name} sydd wedi cael ei ddychwelyd wedi cael ei ddileu
     draft_application_found:
-      page_title: Mae fersiwn arall o’r cais hwn ar agor
-      heading: Mae fersiwn arall o’r cais hwn ar agor
-      body_html: Rydych chi neu rywun yn eich swyddfa wedi dechrau golygu’r cais hwn ac mae ar y gweill. Edrychwch ar y <a class="govuk-link govuk-link--inverse" href="%{draft_link}">fersiwn ar y gweill</a>.
-      draft_link: fersiwn ar y gweill
-      continue_to_delete_button: Parhau i ddileu cais
-      go_back_link: Yn ôl i geisiadau
+      page_title: Mae fersiwn arall o'r cais hwn ar agor
+      heading: Mae fersiwn arall o'r cais hwn ar agor
+      body_html: Rydych chi neu rywun yn eich swyddfa wedi dechrau golygu'r cais hwn ac mae’n mynd rhagddo.  Gwirio’r <a class="govuk-link govuk-link--inverse" href="%{draft_link}">fersiwn sy’n mynd rhagddo</a>.
+      draft_link: fersiwn sy’n mynd rhagddo
+      continue_to_delete_button: Bwrw ymlaen i ddileu'r cais
+      go_back_link: Yn ôl i'r ceisiadau
+
   shared:
     dashboard_header:
       heading: Eich ceisiadau
-      start_button: Dechrau cais
+      start_button: Cychwyn cais
       create_button: Gwneud cais newydd
     subnavigation:
       nav_aria_label: Ceisiadau yn ôl statws
       in_progress:
-        zero: Ar y gweill
-        one: Ar y gweill (1)
-        other: Ar y gweill (%{count})
-      submitted: Wedi’i gyflwyno
+        zero: Yn mynd rhagddo
+        one: Yn mynd rhagddo (1)
+        other: Yn mynd rhagddo (%{count})
+      submitted: Wedi cyflwyno
       returned:
-        zero: Wedi’i ddychwelyd
-        one: Wedi’i ddychwelyd (1)
-        other: Wedi’i ddychwelyd (%{count})
+        zero: Wedi dychwelyd
+        one: Wedi dychwelyd (1)
+        other: Wedi dychwelyd (%{count})
       decided: Penderfynwyd
     errors:
       datastore:
         unavailable:
-          heading: Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+          heading: Yn anffodus mae problem gyda’r gwasanaeth
           body_html:
-            - Rhowch gynnig arall ar lwytho’r dudalen neu ewch yn ôl i’ch rhestr geisiadau.
-            - I gael diweddariad ar gais a gyflwynwyd, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">cysylltwch â’r llinell gymorth ceisiadau troseddol</a>.
-      no_records: Nid oes unrhyw geisiadau
+            - Ceisiwch ail-lwytho'r dudalen neu fynd yn ôl i'ch rhestr ceisiadau.
+            - I gael y diweddaraf am gais sydd wedi’i gyflwyno, <a class="govuk-link govuk-link--no-visited-state" href="%{helpline_url}">cysylltwch â'r llinell gymorth ceisiadau troseddol</a>.
+      no_records: Does dim ceisiadau
 
   kaminari: &kaminari
     paginator:
       nav_aria_label: Tudaleniad
     prev_page:
-      previous_html: Blaenorol <span class="govuk-visually-hidden">dudalen o geisiadau</span>
+      previous_html: Tudalen flaenorol <span class="govuk-visually-hidden">o geisiadau</span>
     next_page:
-      next_html: Nesaf <span class="govuk-visually-hidden">dudalen o geisiadau</span>
+      next_html: Tudalen nesaf <span class="govuk-visually-hidden">o geisiadau</span>
     page:
       page: Tudalen %{page}
   application_searches:
