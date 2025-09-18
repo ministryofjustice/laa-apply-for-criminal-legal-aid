@@ -1,0 +1,137 @@
+<% title 'Cwcis' %>
+
+<% if FeatureFlags.google_analytics.enabled? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render partial: 'shared/flash_banner',
+                 locals: {
+                   flash: { success: t(".settings_updated.#{flash['cookies_consent_updated']}") }
+                 } if flash['cookies_consent_updated'] %>
+
+      <h1 class="govuk-heading-xl">Cwcis</h1>
+
+      <p class="govuk-body">Mae’r gwasanaeth ‘<%= service_name %>’ yn rhoi ffeiliau bach (a elwir yn ‘gwcis’) ar eich dyfais i gasglu gwybodaeth am sut rydych chi’n defnyddio’r gwasanaeth.</p>
+
+      <p class="govuk-body">Fel arfer, byddwch yn gweld neges ar y safle cyn i ni osod cwci ar eich dyfais.</p>
+
+      <p class="govuk-body">Dydy cwcis ddim yn cael eu defnyddio i ddatgelu pwy ydych chi.</p>
+
+      <p class="govuk-body">Mae rhagor o wybodaeth am
+        <a class="govuk-link" rel="external" target="_blank" href="https://ico.org.uk/for-the-public/online/cookies">sut i reoli cwcis</a>
+        ar gael gan Swyddfa’r Comisiynydd Gwybodaeth.
+      </p>
+
+      <h2 class="govuk-heading-l">Cwcis hanfodol (rhai cwbl angenrheidiol)</h2>
+
+      <p class="govuk-body">Rydyn ni’n defnyddio’r cwcis hyn i gofio eich cynnydd ar y ddyfais hon a’ch gosodiadau caniatâd cwcis.</p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Enw</th>
+          <th class="govuk-table__header">Pwrpas</th>
+          <th class="govuk-table__header">Dod i ben</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">
+            _laa_apply_for_criminal_legal_aid_session
+          </th>
+          <td class="govuk-table__cell">
+            Mae’n cadw eich cynnydd presennol ar y ddyfais hon ac yn tracio cyfnodau segur
+          </td>
+          <td class="govuk-table__cell">
+            Pan fyddwch chi’n cau eich porwr
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">
+            <%= Rails.configuration.x.analytics.cookies_consent_name %>
+          </th>
+          <td class="govuk-table__cell">
+            Mae’n cadw eich gosodiadau caniatâd cwcis
+          </td>
+          <td class="govuk-table__cell">
+            Ar ôl <%= Rails.configuration.x.analytics.cookies_consent_expiration.inspect %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-l">Cwcis dadansoddeg (dewisol)</h2>
+      <p class="govuk-body">
+        Rydyn ni’n defnyddio meddalwedd Google Analytics i gasglu gwybodaeth ynghylch sut rydych chi’n defnyddio’r gwasanaeth hwn. Rydyn ni’n gwneud hyn i sicrhau bod y gwasanaeth yn diwallu anghenion ei ddefnyddwyr ac i’n helpu i wneud gwelliannau. Mae Google Analytics yn storio gwybodaeth am:
+      </p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>y tudalennau rydych chi’n ymweld â nhw</li>
+        <li>faint o amser rydych chi’n ei dreulio ar bob tudalen</li>
+        <li>y ddyfais a’r porwr rydych chi’n eu defnyddio</li>
+        <li>beth rydych chi’n ei glicio arno wrth ddefnyddio’r safle</li>
+      </ul>
+
+      <p class="govuk-body">Nid ydym yn caniatáu i Google ddefnyddio na rhannu ein data dadansoddeg.</p>
+
+      <p class="govuk-body">Dim ond pan fydd y canlynol yn berthnasol y byddwn yn gosod cwcis dadansoddeg:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>rydych chi wedi’u derbyn</li>
+        <li>mae JavaScript yn rhedeg yn eich porwr</li>
+      </ul>
+
+      <p class="govuk-body">Os byddwch chi’n dewis peidio â rhedeg JavaScript, dim ond cwcis hanfodol y byddwn yn eu gosod.</p>
+
+      <h3 class="govuk-heading-m govuk-!-margin-top-8">
+        Newid eich gosodiadau cwcis
+      </h3>
+
+      <%= form_for @form_object, url: cookies_path, method: :put do |f| %>
+        <%= f.govuk_collection_radio_buttons :consent, Cookies::SettingsForm::VALUES,
+                                             :to_s, legend: { size: 's' } %>
+        <%= f.continue_button(primary: :save_cookie_settings, secondary: false) %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Cwcis</h1>
+
+      <p class="govuk-body">Mae’r gwasanaeth ‘<%= service_name %>’ yn rhoi ffeil fach (a elwir yn ‘cwci’) ar eich dyfais i gadw eich cynnydd presennol ac i dracio cyfnodau segur.</p>
+
+      <p class="govuk-body">Dydy cwcis ddim yn cael eu defnyddio i ddatgelu pwy ydych chi.</p>
+
+      <p class="govuk-body">Mae rhagor o wybodaeth am
+        <a class="govuk-link" rel="external" target="_blank" href="https://ico.org.uk/for-the-public/online/cookies">sut i reoli cwcis</a>
+        ar gael gan Swyddfa’r Comisiynydd Gwybodaeth.
+      </p>
+
+      <h2 class="govuk-heading-l">Cwcis hanfodol (rhai cwbl angenrheidiol)</h2>
+
+      <p class="govuk-body">Rydyn ni’n defnyddio’r cwci hwn i gofio eich cynnydd ar y ddyfais rydych chi’n ei defnyddio a’ch gosodiadau caniatâd cwcis.</p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">Enw ffeil cwci</th>
+          <th class="govuk-table__header">Pwrpas</th>
+          <th class="govuk-table__header">Dod i ben</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header">
+            _laa_apply_for_criminal_legal_aid_session
+          </th>
+          <td class="govuk-table__cell">
+            Mae’n cadw eich cynnydd presennol ar y ddyfais hon ac yn tracio cyfnodau segur
+          </td>
+          <td class="govuk-table__cell">
+            Pan fyddwch chi’n cau eich porwr
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

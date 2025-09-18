@@ -1,14 +1,17 @@
+---
 cy:
   layouts:
     phase_banner:
-      text_html: Gwasanaeth newydd yw hwn – bydd eich <a href="%{survey_url}" rel="external">adborth</a> yn ein helpu i’w wella.
+      text_html: Gwasanaeth newydd yw hwn – bydd eich adborth <a href="%{survey_url}" rel="external"></a> yn ein helpu i’w wella.
       tag:
         production: Beta
         staging: Staging
+        preprod: Pre-production
         local: Dev
         test: Test
       colour:
         production: blue
+        preprod: blue
         staging: orange
         local: green
         test: blue
@@ -18,10 +21,10 @@ cy:
       search: Chwilio
 
     header:
-      service_name: Gwneud cais am gymorth cyfreithiol troseddol
+      service_name: Apply for criminal legal aid
       menu_button: Dewislen
       nav_aria_label: Dewislen
-      button_aria_label: Dangos neu guddio’r ddewislen
+      button_aria_label: Dangos neu guddio'r ddewislen
       your_applications: Eich ceisiadau
       sign_in: Mewngofnodi
       sign_out: Allgofnodi
@@ -29,28 +32,28 @@ cy:
     footer_links:
       header: Dolenni cymorth
       cookies: Cwcis
-      contact: Cysylltu
+      contact: Cyswllt
       feedback: Adborth
       privacy: Preifatrwydd
       accessibility: Datganiad hygyrchedd
-      terms_and_conditions: Telerau ac amodau
+      terms_and_conditions: Telerau ac Amodau
 
     cookie_banner:
       title: Cwcis ar %{service_name}
-      content_line1: Rydym yn defnyddio rhai cwcis hanfodol i wneud i’r gwasanaeth hwn weithio.
-      content_line2: Hoffem hefyd ddefnyddio cwcis dadansoddeg i ddeall sut rydych yn defnyddio’r gwasanaeth a gwneud gwelliannau.
+      content_line1: Rydyn ni'n defnyddio rhai cwcis hanfodol i wneud i’r gwasanaeth hwn weithio.
+      content_line2: Hoffem hefyd ddefnyddio cwcis dadansoddeg er mwyn i ni allu deall sut rydych chi’n defnyddio’r gwasanaeth ac i wneud gwelliannau.
       accept_button: Derbyn cwcis dadansoddeg
       reject_button: Gwrthod cwcis dadansoddeg
-      cookies_link: Gweld cwcis
+      cookies_link: Gweld y cwcis
     cookie_banner_confirmation:
       title: Cwcis ar %{service_name}
       result:
-        accept: Rydych wedi derbyn cwcis dadansoddeg.
-        reject: Rydych wedi gwrthod cwcis dadansoddeg.
+        accept: Rydych chi wedi derbyn cwcis dadansoddeg.
+        reject: Rydych chi wedi gwrthod cwcis dadansoddeg.
       content_html: |
         Gallwch <a href="%{cookies_link}" class="govuk-link ga-pageLink" data-ga-category="cookie banner"
         data-ga-label="change cookies">newid eich gosodiadau cwcis</a> unrhyw bryd.
       hide_button: Cuddio neges cwcis
     govuk_template_html: |
-      Mae’r holl gynnwys ar gael o dan y
-      <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Drwydded Llywodraeth Agored fersiwn v3.0</a>, ac eithrio lle nodir yn wahanol
+      Mae’r holl gynnwys ar gael o dan
+      <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Trwydded Llywodraeth Agored f3.0</a>, ac eithrio lle y nodir yn wahanol
