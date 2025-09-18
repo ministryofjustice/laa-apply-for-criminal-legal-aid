@@ -21,7 +21,7 @@ cy:
       search: Chwilio
 
     header:
-      service_name: Apply for criminal legal aid
+      service_name: Gwneud cais am gymorth cyfreithiol troseddol
       menu_button: Dewislen
       nav_aria_label: Dewislen
       button_aria_label: Dangos neu guddio'r ddewislen
