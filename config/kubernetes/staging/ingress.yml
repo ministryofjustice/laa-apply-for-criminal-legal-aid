@@ -129,7 +129,7 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/custom-http-errors: "423,503,403"
+    nginx.ingress.kubernetes.io/custom-http-errors: "503,403"
     nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
