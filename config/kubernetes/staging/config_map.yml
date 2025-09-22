@@ -25,5 +25,6 @@ data:
   RETENTION_PERIOD: "2" # 2 years
   SOFT_DELETION_PERIOD: "2" # 2 weeks
 
+
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"
