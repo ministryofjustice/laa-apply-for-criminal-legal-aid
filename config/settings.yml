@@ -29,7 +29,7 @@ feature_flags:
   deletion_events:
     local: true
     staging: false
-    preprod: false
+    preprod: true
     production: false
 
 # NOTE: consider if the setting you are adding here
