@@ -55,6 +55,8 @@ RSpec.configure do |config|
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }
 
+  # Stubs the following requests to the datastore that are triggered when an application is created/updated/deleted
+  # globally as they are frequently called. There are specific tests for these requests.
   # rubocop:disable Layout/LineLength
   config.before do
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_created')

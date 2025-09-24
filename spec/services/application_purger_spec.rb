@@ -48,6 +48,26 @@ RSpec.describe ApplicationPurger do
         ))
     end
 
+    context 'when feature flag is disabled' do # TODO: remove when feature flag enabled
+      before do
+        allow(FeatureFlags).to receive(:deletion_events) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'does not make request to publish a draft deletion event' do
+        subject
+        expect(WebMock).not_to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
+          .with(body: hash_including(
+            'entity_id' => crime_application.id,
+            'entity_type' => crime_application.application_type.to_s,
+            'business_reference' => crime_application.reference,
+            'reason' => deletion_reason,
+            'deleted_by' => deleted_by,
+          ))
+      end
+    end
+
     context 'when it has orphaned documents' do
       let(:documents) { [document] }
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
