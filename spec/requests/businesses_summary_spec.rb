@@ -81,10 +81,6 @@ RSpec.describe 'Businesses summary page', :authorized do
     )
   end
 
-  after do
-    CrimeApplication.destroy_all
-  end
-
   let(:crime_application) { CrimeApplication.first }
 
   describe 'list of added businesses in summary page' do

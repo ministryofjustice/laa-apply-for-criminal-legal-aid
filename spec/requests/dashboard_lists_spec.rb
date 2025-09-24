@@ -27,11 +27,6 @@ RSpec.describe 'Dashboard', :authorized do
       get crime_applications_path, params: { sorting: { sort_by:, sort_direction: } }
     end
 
-    after do
-      # do not leave leftovers in the test database
-      CrimeApplication.destroy_all
-    end
-
     context 'when there are in progress records to return' do
       it 'contains only applications having the applicant name entered' do
         expect(response).to have_http_status(:success)

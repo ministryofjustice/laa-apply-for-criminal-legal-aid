@@ -19,11 +19,6 @@ RSpec.describe 'DWP passporting sub journey', :authorized do
       get edit_steps_dwp_confirm_details_path(crime_application)
     end
 
-    after do
-      # do not leave leftovers in the test database
-      CrimeApplication.destroy_all
-    end
-
     # rubocop:disable RSpec/ExampleLength
     it 'has a read only version of the client details summary' do
       expect(response).to have_http_status(:success)

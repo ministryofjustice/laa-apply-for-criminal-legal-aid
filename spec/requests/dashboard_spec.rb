@@ -275,10 +275,6 @@ RSpec.describe 'Dashboard', :authorized do
       get edit_crime_application_path(app)
     end
 
-    after do
-      CrimeApplication.destroy_all
-    end
-
     it 'shows the task list for the application' do
       expect(response).to have_http_status(:success)
 
@@ -322,10 +318,6 @@ RSpec.describe 'Dashboard', :authorized do
       allow_any_instance_of(
         Datastore::ApplicationCounters
       ).to receive_messages(returned_count: 5)
-    end
-
-    after do
-      CrimeApplication.destroy_all
     end
 
     it 'allows a user to check before deleting an application' do

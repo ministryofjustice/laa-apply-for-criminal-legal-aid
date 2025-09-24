@@ -12,11 +12,6 @@ RSpec.describe 'Charges/offences summary page', :authorized do
     )
   end
 
-  after do
-    # do not leave leftovers in the test database
-    CrimeApplication.destroy_all
-  end
-
   describe 'list of added offences in summary page' do
     let(:crime_application) { CrimeApplication.first }
 
