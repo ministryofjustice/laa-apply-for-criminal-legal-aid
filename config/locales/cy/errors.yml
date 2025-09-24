@@ -8,52 +8,52 @@ cy:
       heading: Mae problem ar y dudalen hon
       incomplete_records_heading: Mae problem
 
-    incomplete_records: Mae angen i chi gwblhau pob cwestiwn cyn y gallwch gyflwyno’r cais
-    not_enrolled: Nid ydych wedi’ch cofrestru ar wasanaeth gwneud cais am gymorth cyfreithiol troseddol
-    not_enrolled_subheading: 'Ceisiwch fewngofnodi eto, neu os ydych yn meddwl nad yw hyn yn gywir cysylltwch â’n cymorth technegol:'
+    incomplete_records: Mae angen i chi ateb pob cwestiwn cyn i chi allu cyflwyno'r cais
+    not_enrolled: Dydych chi ddim wedi cofrestru â'r gwasanaeth gwneud cais am gymorth cyfreithiol troseddol
+    not_enrolled_subheading: "Ceisiwch fewngofnodi eto, neu os ydych chi'n meddwl nad yw hyn yn gywir, cysylltwch â'n cymorth technegol:"
 
   activerecord:
     errors:
       models:
-        # fulfillment validation errors
+        # fulfilment validation errors
         crime_application:
-          incomplete_records: Mae angen i chi gwblhau pob cwestiwn cyn y gallwch gyflwyno’r cais
+          incomplete_records: Mae angen i chi ateb pob cwestiwn cyn i chi allu cyflwyno'r cais
           attributes:
             base:
               case_type_missing: Mae angen dewis math o achos
               circumstances_reference: Mae angen cwblhau ID MAAT neu rif cyflwyno unigryw (USN) eich cleient
-              circumstances_reason: Mae angen cwblhau newidiadau yn amgylchiadau ariannol y cleient
+              circumstances_reason: Mae angen cwblhau’r newidiadau yn sefyllfa ariannol y cleient
             means_passport:
-              blank: Nid yw’r ymgeisydd wedi’i basbortio ar sail modd
+              blank: Dydy’r ymgeisydd ddim wedi'i basbortio ar sail modd
             ioj_passport:
-              blank: Mae angen rhoi cyfiawnhad dros gymorth cyfreithiol
+              blank: Mae angen cwblhau'r cyfiawnhad dros gymorth cyfreithiol
             documents:
-              blank: Llwythwch dystiolaeth ategol
+              blank: Lanlwytho tystiolaeth ategol
         # evidence upload data model
         document:
           attributes:
             file_size:
-              too_small: Methu llwytho’r ffeil – rhaid i’r ffeil fod yn fwy na %{min_size}KB
-              too_big: Methu llwytho’r ffeil – rhaid i’r ffeil fod yn llai na %{max_size}MB
+              too_small: Doedd dim modd lanlwytho'r ffeil – rhaid i'r ffeil fod yn fwy na %{min_size}KB
+              too_big: Doedd dim modd lanlwytho'r ffeil – rhaid i'r ffeil fod yn llai na %{max_size}MB
             content_type:
-              invalid: Methu llwytho’r ffeil – rhaid i’r ffeil fod yn DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV neu PDF
+              invalid: Doedd dim modd lanlwytho’r ffeil – rhaid iddi fod yn ffeil DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV neu PDF
             s3_object_key:
-              blank: Methu llwytho’r ffeil – rhowch gynnig arall arni
+              blank: Doedd dim modd lanlwytho'r ffeil – rhowch gynnig arall arni
             scan_status:
-              flagged: Efallai bod firws ar y ffeil - gwiriwch fod y ffeil yn ddiogel cyn ceisio eto
-              inconclusive: Methodd y gwasanaeth sganio ffeiliau - cysylltwch â <a href="mailto:%{support_email}">%{support_email}</a>
+              flagged: Efallai fod firws ar y ffeil - gwnewch yn siŵr bod y ffeil yn ddiogel cyn rhoi cynnig arall arni
+              inconclusive: Mae'r gwasanaeth sganio ffeiliau wedi methu - cysylltwch â <a href="mailto:%{support_email}">%{support_email}</a>
 
         amount_and_frequency:
           attributes:
             amount:
-              blank: Nodwch swm
+              blank: Rhowch swm
             frequency:
               blank: Dewiswch pa mor aml
 
         payment:
           attributes:
             amount:
-              blank: Nodwch swm
+              blank: Rhowch swm
             frequency:
               blank: Dewiswch pa mor aml
   activemodel:
@@ -61,34 +61,34 @@ cy:
       models:
         start/is_cifc_form:
           is_cifc:
-            inclusion: Dewiswch a ydych yn gwneud cais newydd neu’n rhoi gwybod am newid yn yr amgylchiadau ariannol
+            inclusion: Dewiswch a ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol
 
         steps/circumstances/pre_cifc_reference_number_form:
           attributes:
             pre_cifc_reference_number:
               blank: Dewiswch ID MAAT neu USN
             pre_cifc_maat_id:
-              blank: Nodwch ID MAAT
-              invalid: Nodwch ID MAAT dilys
+              blank: Rhowch ID MAAT
+              invalid: Rhowch ID MAAT dilys
             pre_cifc_usn:
-              blank: Nodwch USN
+              blank: Rhowch USN
         steps/circumstances/pre_cifc_reason_form:
           attributes:
             pre_cifc_reason:
-              blank: Nodwch beth sydd wedi newid yn amgylchiadau ariannol eich cleient
+              blank: Nodwch beth sydd wedi newid yn sefyllfa ariannol eich cleient
         steps/provider/confirm_office_form:
           attributes:
             is_current_office:
-              inclusion: Dewiswch ie os mai hwn yw rhif cyfrif swyddfa chi
+              inclusion: Dewiswch ie os mai dyma rif cyfrif eich swyddfa
         steps/provider/select_office_form:
           attributes:
             office_code:
-              inclusion: Dewiswch rif cyfrif swyddfa o’r rhestr
+              inclusion: Dewiswch rif cyfrif swyddfa o'r rhestr
         steps/client/is_means_tested_form:
           attributes:
             is_means_tested:
-              inclusion: Dewiswch ie os yw’r cais hwn yn seiliedig ar brawf modd
-              cifc: Rhaid i gais am newid yn yr amgylchiadau ariannol fod yn seiliedig ar brawf modd
+              inclusion: Dewiswch ie os yw'r cais hwn yn amodol ar brawf modd
+              cifc: Rhaid i'r cais am newid mewn sefyllfa ariannol fod yn amodol ar brawf modd
         steps/client/has_partner_form:
           attributes:
             has_partner:
@@ -96,44 +96,44 @@ cy:
         steps/client/relationship_status_form:
           attributes:
             relationship_status:
-              inclusion: Dewiswch statws perthynas eich cleient neu os yw’n well ganddo beidio â dweud
+              inclusion: Dewiswch statws perthynas eich cleient neu os yw'n well ganddynt beidio â dweud
             separation_date:
-              blank: Nodwch ddyddiad y gwahanodd eich cleient
-              blank_day: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys mis
-              blank_year: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad y gwahanodd eich cleient gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad y gwahanodd eich cleient yn rhy bell yn ôl
-              future_not_allowed: Rhaid i’r dyddiad y gwahanodd eich cleient fod heddiw neu yn y gorffennol
+              blank: Rhowch y dyddiad y gwahanodd eich cleient
+              blank_day: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys mis
+              blank_year: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad y gwnaeth eich cleient wahanu yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y gwnaeth eich cleient wahanu fod heddiw neu yn y gorffennol
 
         steps/client/details_form:
           attributes:
             first_name:
-              blank: Nodwch enw cyntaf
+              blank: Rhowch enw cyntaf
             last_name:
-              blank: Nodwch enw olaf
+              blank: Rhowch gyfenw
             date_of_birth:
-              blank: Nodwch ddyddiad geni
+              blank: Rhowch ddyddiad geni
               blank_day: Rhaid i’r dyddiad geni gynnwys diwrnod
               blank_month: Rhaid i’r dyddiad geni gynnwys mis
               blank_year: Rhaid i’r dyddiad geni gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad geni gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad geni gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad geni gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_late: Mae’r dyddiad geni yn rhy bell yn y dyfodol
-              year_too_early: Mae’r dyddiad geni yn rhy bell yn y gorffennol
+              blank_day_month: Rhaid i'r dyddiad geni gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad geni gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad geni gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_late: Mae'r dyddiad geni yn rhy bell yn y dyfodol
+              year_too_early: Mae'r dyddiad geni yn rhy bell yn y gorffennol
               future_not_allowed: Rhaid i’r dyddiad geni fod yn y gorffennol
-              client_under_ten: Rhaid i’ch cleient fod yn 10 oed neu’n hŷn i fod wedi’i gyhuddo yng Nghymru a Lloegr
+              client_under_ten: Rhaid i'ch cleient fod yn 10 oed neu'n hŷn i gael ei gyhuddo yng Nghymru a Lloegr
         steps/client/case_type_form:
           attributes:
             case_type:
@@ -141,1139 +141,1140 @@ cy:
         steps/client/appeal_details_form:
           attributes:
             appeal_lodged_date:
-              blank: Nodwch y dyddiad y cafodd yr apêl ei chyflwyno
-              blank_day: Rhaid i’r dyddiad cyflwyno gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad cyflwyno gynnwys mis
-              blank_year: Rhaid i’r dyddiad cyflwyno gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad cyflwyno gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad cyflwyno gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad cyflwyno gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad cyflwyno yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad cyflwyno fod heddiw neu yn y gorffennol
+              blank: Rhowch ddyddiad cyflwyno'r apêl
+              blank_day: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys mis
+              blank_year: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y cyflwynwyd yr apêl gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad y cyflwynwyd yr apêl yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y cyflwynwyd yr apêl fod heddiw neu yn y gorffennol
             appeal_original_app_submitted:
               inclusion: Dewiswch ie os cafodd cais am gymorth cyfreithiol ei gyflwyno ar gyfer yr achos gwreiddiol
         steps/client/appeal_financial_circumstances_form:
           attributes:
             appeal_financial_circumstances_changed:
-              inclusion: Dewiswch ie os yw amgylchiadau ariannol eich cleient wedi newid ers y cais gwreiddiol
+              inclusion: Dewiswch ie os yw sefyllfa ariannol eich cleient wedi newid ers y cais gwreiddiol
             appeal_with_changes_details:
-              blank: Nodwch fanylion y newidiadau mewn amgylchiadau ariannol
+              blank: Rhowch fanylion newidiadau mewn sefyllfaoedd ariannol
         steps/client/appeal_reference_number_form:
           attributes:
             appeal_reference_number:
               blank: Dewiswch ID MAAT neu USN
             appeal_maat_id:
-              blank: Nodwch ID MAAT
-              invalid: Nodwch ID MAAT dilys
+              blank: Rhowch ID MAAT
+              invalid: Rhowch ID MAAT dilys
             appeal_usn:
-              blank: Nodwch USN
+              blank: Rhowch USN
         steps/client/residence_type_form:
           attributes:
             residence_type:
-              inclusion: Dewiswch ble mae’ch cleient yn byw fel arfer neu os nad oes ganddo gyfeiriad sefydlog
+              inclusion: Dewiswch ble mae eich cleient yn byw fel arfer neu os nad oes ganddynt gyfeiriad sefydlog
             relationship_to_owner_of_usual_home_address:
-              blank: Nodwch berthynas eich cleient â’r person y mae’n byw yn ei gartref
+              blank: Nodwch berthynas eich cleient â'r unigolyn y mae'n byw yn ei gartref
         steps/shared/nino_form:
           attributes:
             has_arc_or_nino:
-              blank: Dewiswch ie os oes ganddo rif Yswiriant Gwladol
+              blank: Dewiswch ie os oes ganddynt rif Yswiriant Gwladol
             nino:
-              blank: Nodwch rif Yswiriant Gwladol
-              invalid: Nodwch rif Yswiriant Gwladol yn y fformat cywir
+              blank: Rhowch rif Yswiriant Gwladol
+              invalid: Rhowch rif Yswiriant Gwladol yn y fformat cywir
             arc:
-              blank: Nodwch rif ARC
-              invalid: Nodwch rif ARC yn y fformat cywir
+              blank: Rhowch rif ARC
+              invalid: Rhowch rif ARC yn y fformat cywir
         steps/partner/relationship_form:
           attributes:
             relationship_to_partner:
-              inclusion: Dewiswch beth yw perthynas eich cleient â’i bartner
+              inclusion: Dewiswch beth yw perthynas eich cleient â'u partner
         steps/partner/involvement_form:
           attributes:
             involvement_in_case:
-              inclusion: Dewiswch sut mae’r partner yn ymwneud ag achos eich cleient neu dewiswch 'na, nid yw’r partner yn rhan o’r achos'
+              inclusion: Dewiswch sut mae'r partner yn ymwneud ag achos eich cleient neu dewiswch 'na, dydy’r partner ddim yn gysylltiedig'
         steps/partner/conflict_form:
           attributes:
             conflict_of_interest:
-              inclusion: Dewiswch ie os oes gan y partner wrthdaro buddiannau
+              inclusion: Dewiswch ie os oes gan y partner wrthdaro rhwng buddiannau
         steps/partner/same_address_form:
           attributes:
             has_same_address_as_client:
-              inclusion: Dewiswch ie os yw’ch cleient a’i bartner yn byw yn yr un cyfeiriad
+              inclusion: Dewiswch ie os yw eich cleient a'i bartner yn byw yn yr un cyfeiriad
         steps/partner/details_form:
           attributes:
             first_name:
-              blank: Nodwch enw cyntaf
+              blank: Rhowch enw cyntaf
             last_name:
-              blank: Nodwch enw olaf
+              blank: Rhowch gyfenw
             date_of_birth:
-              blank: Nodwch ddyddiad geni
+              blank: Rhowch ddyddiad geni
               blank_day: Rhaid i’r dyddiad geni gynnwys diwrnod
               blank_month: Rhaid i’r dyddiad geni gynnwys mis
               blank_year: Rhaid i’r dyddiad geni gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad geni gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad geni gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad geni gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_late: Mae’r dyddiad geni yn rhy bell yn y dyfodol
-              year_too_early: Mae’r dyddiad geni yn rhy bell yn y gorffennol
+              blank_day_month: Rhaid i'r dyddiad geni gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad geni gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad geni gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_late: Mae'r dyddiad geni yn rhy bell yn y dyfodol
+              year_too_early: Mae'r dyddiad geni yn rhy bell yn y gorffennol
               future_not_allowed: Rhaid i’r dyddiad geni fod yn y gorffennol
         steps/dwp/benefit_type_form:
           attributes:
             benefit_type:
               inclusion: Dewiswch fath o fudd-dal
             last_jsa_appointment_date:
-              blank: Nodwch y dyddiad y mynychodd eich cleient apwyntiad diwethaf gyda’i hyfforddwr gwaith JSA
-              blank_day: Rhaid i’r dyddiad hwn gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad hwn gynnwys mis
-              blank_year: Rhaid i’r dyddiad hwn gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad hwn gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad hwn gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad hwn gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
+              blank: Rhowch y dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith
+              blank_day: Rhaid i'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys mis
+              blank_year: Rhaid i'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys blwyddyn
+              blank_day_month: Rhaid i’r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i’r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad diwethaf i'ch cleient fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith fod heddiw neu yn y gorffennol
         steps/dwp/partner_benefit_type_form:
           attributes:
             benefit_type:
               inclusion: Dewiswch fath o fudd-dal
             last_jsa_appointment_date:
-              blank: Nodwch y dyddiad y mynychodd y partner apwyntiad diwethaf gyda’i hyfforddwr gwaith JSA
-              blank_day: Rhaid i’r dyddiad hwn gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad hwn gynnwys mis
-              blank_year: Rhaid i’r dyddiad hwn gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad hwn gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad hwn gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad hwn gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
+              blank: Rhowch y dyddiad diwethaf i'r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith
+              blank_day: Rhaid i'r dyddiad diwethaf i’r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad diwethaf i’r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys mis
+              blank_year: Rhaid i'r dyddiad diwethaf i’r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys blwyddyn
+              blank_day_month: Rhaid i’r dyddiad diwethaf i'r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad diwethaf i’r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i’r dyddiad diwethaf i'r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad diwethaf i'r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad diwethaf i’r partner fynd i apwyntiad gyda’i hyfforddwr gwaith Lwfans Ceisio Gwaith fod heddiw neu yn y gorffennol
         steps/dwp/has_benefit_evidence_form: &HAS_BENEFIT_EVIDENCE_VALIDATION
           attributes:
             has_benefit_evidence:
-              inclusion: Dewiswch ie os oes gennych dystiolaeth o’u budd-dal
+              inclusion: Dewiswch ie os oes gennych chi dystiolaeth o'u budd-dal
         steps/dwp/has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_VALIDATION
         steps/dwp/cannot_check_benefit_status_form: &WILL_ENTER_NINO_VALIDATION
           attributes:
             will_enter_nino:
-              inclusion: Dewiswch a fyddwch yn nodi’r rhif Yswiriant Gwladol nawr neu yn ddiweddarach
+              inclusion: Dewiswch a fyddwch chi'n rhoi'r rhif Yswiriant Gwladol nawr neu wedyn
         steps/dwp/cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_VALIDATION
         steps/client/contact_details_form:
           attributes:
             telephone_number:
-              invalid: Nodwch rif ffôn yn y fformat cywir
+              invalid: Rhowch rif ffôn yn y fformat cywir
             correspondence_address_type:
-              inclusion: Dewiswch gyfeiriad gohebiaeth
+              inclusion: Dewiswch gyfeiriad gohebu
         steps/dwp/confirm_details_form: &CONFIRM_DETAILS_VALIDATION
           attributes:
             confirm_details:
-              inclusion: Dewiswch ie os yw’r manylion hyn yn gywir
+              inclusion: Dewiswch ie os yw'r manylion hyn yn gywir
         steps/dwp/confirm_partner_details_form: *CONFIRM_DETAILS_VALIDATION
         steps/dwp/confirm_result_form: &CONFIRM_RESULT_VALIDATION
           attributes:
             confirm_dwp_result:
-              inclusion: Dewiswch ie os nad ydynt yn derbyn budd-dal pasbortio
+              inclusion: Dewiswch ie os nad ydynt yn cael budd-dal pasbortio
         steps/dwp/partner_confirm_result_form: *CONFIRM_RESULT_VALIDATION
         steps/address/lookup_form:
           attributes:
             postcode:
-              blank: Nodwch god post
-              invalid: Nodwch god post dilys yn y DU
+              blank: Rhowch god post
+              invalid: Rhowch god post dilys yn y DU
         steps/address/results_form:
           attributes:
             lookup_id:
-              inclusion: Dewiswch gyfeiriad o’r rhestr
+              inclusion: Dewiswch gyfeiriad o'r rhestr
         steps/address/details_form:
           attributes:
             address_line_one:
-              blank: Nodwch linell gyntaf y cyfeiriad
+              blank: Rhowch linell gyntaf y cyfeiriad
             city:
-              blank: Nodwch ddinas
+              blank: Rhowch ddinas
             country:
-              blank: Nodwch wlad
+              blank: Rhowch wlad
             postcode:
-              blank: Nodwch god post
+              blank: Rhowch god post
         steps/case/urn_form:
           attributes:
             urn:
-              invalid: Nodwch URN dilys
+              invalid: Rhowch URN dilys
         steps/case/has_case_concluded_form:
           attributes:
             has_case_concluded:
-              inclusion: Dewiswch ie os yw’r achos wedi dod i ben
+              inclusion: Dewiswch ie os yw'r achos wedi dod i ben
             date_case_concluded:
-              blank: Nodwch pryd daeth yr achos i ben
-              blank_day: Rhaid i’r dyddiad gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad gynnwys mis
-              blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
+              blank: Nodwch pryd y daeth yr achos i ben
+              blank_day: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys mis
+              blank_year: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y daeth yr achos i ben gynnwys diwrnod a mis
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y daeth yr achos i ben fod heddiw neu yn y gorffennol
         steps/case/is_preorder_work_claimed_form:
           attributes:
             is_preorder_work_claimed:
-              inclusion: Dewiswch ie os ydych yn bwriadu hawlio gwaith cyn-archebu
+              inclusion: Dewiswch ie os ydych chi'n bwriadu hawlio gwaith cyn-archebu
             preorder_work_date:
-              blank: Nodwch pryd y cawsoch chi neu’ch cwmni eich cyfarwyddo gyntaf
-              blank_day: Rhaid i’r dyddiad gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad gynnwys mis
-              blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
+              blank: Nodwch pryd y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf
+              blank_day: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys mis
+              blank_year: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y cawsoch chi neu eich cwmni eich cyfarwyddo gyntaf fod heddiw neu yn y gorffennol
             preorder_work_details:
-              blank: Nodwch fanylion am frys y gwaith
+              blank: Rhowch fanylion am frys y gwaith
         steps/case/is_client_remanded_form:
           attributes:
             is_client_remanded:
-              inclusion: Dewiswch ie os yw’ch cleient wedi’i gadw yn y ddalfa gan lys
+              inclusion: Dewiswch ie os yw llys wedi remandio eich cleient yn y ddalfa
             date_client_remanded:
-              blank: Nodwch pryd y cawsant eu cadw yn y ddalfa
-              blank_day: Rhaid i’r dyddiad gynnwys diwrnod
-              blank_month: Rhaid i’r dyddiad gynnwys mis
-              blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
-              blank_day_month: Rhaid i’r dyddiad gynnwys diwrnod a mis
-              blank_day_year: Rhaid i’r dyddiad gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i’r dyddiad gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dilys
-              invalid_day: Nodwch ddiwrnod dilys
-              invalid_month: Nodwch fis dilys
-              invalid_year: Nodwch flwyddyn ddilys
-              year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-              future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
+              blank: Nodwch pryd y cawsant eu remandio
+              blank_day: Rhaid i'r dyddiad y cawsant eu remandio gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y cawsant eu remandio gynnwys mis
+              blank_year: Rhaid i'r dyddiad y cawsant eu remandio gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y cawsant eu remandio gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y cawsant eu remandio gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y cawsant eu remandio gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y cawsant eu remandio fod heddiw neu yn y gorffennol
         steps/case/has_codefendants_form:
           attributes:
             has_codefendants:
-              inclusion: Dewiswch ie os oes gan eich cleient gyd-ddiffynyddion
+              inclusion: Dewiswch ie os oes gan eich cleient unrhyw gyd-ddiffynyddion
         steps/case/codefendant_fieldset_form:
           summary:
             first_name:
-              blank: Nodwch enw cyntaf y cyd-ddiffynnydd %{index}
+              blank: Rhowch enw cyntaf y cyd-ddiffynnydd %{index}
             last_name:
-              blank: Nodwch enw olaf y cyd-ddiffynnydd %{index}
+              blank: Rhowch gyfenw’r cyd-ddiffynnydd %{index}
             conflict_of_interest:
-              inclusion: Dewiswch ie os oes gwrthdaro buddiannau gyda’r cyd-ddiffynnydd %{index}
+              inclusion: Dewiswch ie os oes gwrthdaro rhwng buddiannau gyda'r cyd-ddiffynnydd %{index}
           attributes:
             first_name:
-              blank: Nodwch enw cyntaf
+              blank: Rhowch enw cyntaf
             last_name:
-              blank: Nodwch enw olaf
+              blank: Rhowch gyfenw
             conflict_of_interest:
-              inclusion: Dewiswch ie os oes gwrthdaro buddiannau
+              inclusion: Dewiswch ie os oes gwrthdaro rhwng buddiannau
         steps/case/charges_form:
           attributes:
             offence_name:
-              blank: Nodwch neu dewiswch drosedd
+              blank: Rhowch neu dewiswch trosedd
         steps/case/charges_summary_form:
           attributes:
             base:
-              missing_details: Rhaid i chi gwblhau manylion pob trosedd er mwyn symud ymlaen
+              missing_details: Rhaid i chi lenwi holl fanylion y trosedd er mwyn bwrw ymlaen
             add_offence:
-              inclusion: Dewiswch ie os ydych am ychwanegu trosedd arall
+              inclusion: Dewiswch ie os ydych chi am ychwanegu trosedd arall
         steps/case/offence_date_fieldset_form:
           shared_date_errors: &shared_date_errors
-            blank: Ni all y dyddiad fod yn wag
+            blank: Does dim modd i'r dyddiad fod yn wag
             blank_day: Rhaid i’r dyddiad gynnwys diwrnod
             blank_month: Rhaid i’r dyddiad gynnwys mis
             blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
-            blank_day_month: Rhaid i’r dyddiad gynnwys diwrnod a mis
-            blank_day_year: Rhaid i’r dyddiad gynnwys diwrnod a blwyddyn
-            blank_month_year: Rhaid i’r dyddiad gynnwys mis a blwyddyn
-            invalid: Nodwch ddyddiad dilys
-            invalid_day: Nodwch ddiwrnod dilys
-            invalid_month: Nodwch fis dilys
-            invalid_year: Nodwch flwyddyn ddilys
-            year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-            future_not_allowed: Ni all y dyddiad fod yn y dyfodol
-            before_date_from: Ni all y dyddiad dod i ben fod cyn y dyddiad cychwyn
+            blank_day_month: Rhaid i'r dyddiad gynnwys diwrnod a mis
+            blank_day_year: Rhaid i'r dyddiad gynnwys diwrnod a blwyddyn
+            blank_month_year: Rhaid i'r dyddiad gynnwys mis a blwyddyn
+            invalid: Rhowch ddyddiad dilys
+            invalid_day: Rhowch ddiwrnod dilys
+            invalid_month: Rhowch fis dilys
+            invalid_year: Rhowch flwyddyn ddilys
+            year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+            future_not_allowed: Does dim modd i'r dyddiad fod yn y dyfodol
+            before_date_from: Does dim modd i’r dyddiad gorffen fod cyn y dyddiad cychwyn
           attributes:
             date_from: *shared_date_errors
             date_to: *shared_date_errors
           summary:
             date_from:
-              blank: Ni all dyddiad cychwyn %{index} fod yn wag
-              blank_day: Rhaid i ddyddiad cychwyn %{index} gynnwys diwrnod
-              blank_month: Rhaid i ddyddiad cychwyn %{index} gynnwys mis
-              blank_year: Rhaid i ddyddiad cychwyn %{index} gynnwys blwyddyn
-              blank_day_month: Rhaid i ddyddiad cychwyn %{index} gynnwys diwrnod a mis
-              blank_day_year: Rhaid i ddyddiad cychwyn %{index} gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i ddyddiad cychwyn %{index} gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad cychwyn dilys %{index}
-              invalid_day: Nodwch ddiwrnod cychwyn dilys %{index}
-              invalid_month: Nodwch fis cychwyn dilys %{index}
-              invalid_year: Nodwch flwyddyn gychwyn ddilys %{index}
-              year_too_early: Mae dyddiad cychwyn %{index} yn rhy bell yn y gorffennol
-              year_too_late: Mae dyddiad cychwyn %{index} yn rhy bell yn y dyfodol
-              future_not_allowed: Ni all dyddiad cychwyn %{index} fod yn y dyfodol
+              blank: Does dim modd i'r dyddiad cychwyn %{index} fod yn wag
+              blank_day: Rhaid i'r dyddiad cychwyn %{index} gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad cychwyn %{index} gynnwys mis
+              blank_year: Rhaid i'r dyddiad cychwyn %{index} gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad cychwyn %{index} gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad cychwyn %{index} gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad cychwyn %{index} gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad cychwyn dilys %{index}
+              invalid_day: Rhowch ddiwrnod dilys ar gyfer y dyddiad cychwyn %{index}
+              invalid_month: Rhowch fis dilys ar gyfer y dyddiad cychwyn %{index}
+              invalid_year: Rhowch flwyddyn ddilys ar gyfer y dyddiad cychwyn %{index}
+              year_too_early: Mae'r dyddiad cychwyn %{index} yn rhy bell yn y gorffennol
+              year_too_late: Mae'r dyddiad cychwyn %{index} yn rhy bell yn y dyfodol
+              future_not_allowed: Does dim modd i'r dyddiad cychwyn %{index} fod yn y dyfodol
             date_to:
-              blank_day: Rhaid i ddyddiad dod i ben %{index} gynnwys diwrnod
-              blank_month: Rhaid i ddyddiad dod i ben %{index} gynnwys mis
-              blank_year: Rhaid i ddyddiad dod i ben %{index} gynnwys blwyddyn
-              blank_day_month: Rhaid i ddyddiad dod i ben %{index} gynnwys diwrnod a mis
-              blank_day_year: Rhaid i ddyddiad dod i ben %{index} gynnwys diwrnod a blwyddyn
-              blank_month_year: Rhaid i ddyddiad dod i ben %{index} gynnwys mis a blwyddyn
-              invalid: Nodwch ddyddiad dod i ben dilys %{index}
-              invalid_day: Nodwch ddiwrnod dod i ben dilys %{index}
-              invalid_month: Nodwch fis dod i ben dilys %{index}
-              invalid_year: Nodwch flwyddyn ddod i ben ddilys %{index}
-              year_too_early: Mae dyddiad dod i ben %{index} yn rhy bell yn y gorffennol
-              year_too_late: Mae dyddiad dod i ben %{index} yn rhy bell yn y dyfodol
-              future_not_allowed: Ni all dyddiad dod i ben %{index} fod yn y dyfodol
-              before_date_from: Ni all dyddiad dod i ben %{index} fod cyn dyddiad cychwyn %{index}
+              blank_day: Rhaid i'r dyddiad gorffen %{index} gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad gorffen %{index} gynnwys mis
+              blank_year: Rhaid i'r dyddiad gorffen %{index} gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad gorffen %{index} gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad gorffen %{index} gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad gorffen %{index} gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad gorffen dilys %{index}
+              invalid_day: Rhowch ddiwrnod dilys ar gyfer y dyddiad gorffen %{index}
+              invalid_month: Rhowch fis dilys ar gyfer y dyddiad gorffen %{index}
+              invalid_year: Rhowch flwyddyn ddilys ar gyfer y dyddiad gorffen %{index}
+              year_too_early: Mae'r dyddiad gorffen %{index} yn rhy bell yn y gorffennol
+              year_too_late: Mae'r dyddiad gorffen %{index} yn rhy bell yn y dyfodol
+              future_not_allowed: Does dim modd i'r dyddiad gorffen %{index} fod yn y dyfodol
+              before_date_from: Does dim modd i’r dyddiad gorffen %{index} fod cyn y dyddiad cychwyn %{index}
         steps/case/other_charge_in_progress_form:
           attributes:
             other_charge_in_progress:
-              inclusion: Dewiswch ie os oes achos troseddol neu gyhuddiad yn erbyn y %{subject} ar y gweill
-          steps/case/other_charge_form:
-            attributes:
-              next_hearing_date: &hearing_date_errors
-                blank: Ni all y gwrandawiad nesaf fod yn wag
-                blank_day: Rhaid i’r gwrandawiad nesaf gynnwys diwrnod
-                blank_month: Rhaid i’r gwrandawiad nesaf gynnwys mis
-                blank_year: Rhaid i’r gwrandawiad nesaf gynnwys blwyddyn
-                blank_day_month: Rhaid i’r gwrandawiad nesaf gynnwys diwrnod a mis
-                blank_day_year: Rhaid i’r gwrandawiad nesaf gynnwys diwrnod a blwyddyn
-                blank_month_year: Rhaid i’r gwrandawiad nesaf gynnwys mis a blwyddyn
-                invalid: Nodwch ddyddiad dilys ar gyfer y gwrandawiad nesaf
-                invalid_day: Nodwch ddiwrnod dilys ar gyfer y gwrandawiad nesaf
-                invalid_month: Nodwch fis dilys ar gyfer y gwrandawiad nesaf
-                invalid_year: Nodwch flwyddyn ddilys ar gyfer y gwrandawiad nesaf
-                year_too_late: Mae’r gwrandawiad nesaf yn rhy bell yn y dyfodol
-                year_too_early: Mae’r gwrandawiad nesaf yn rhy bell yn y gorffennol
-          steps/case/hearing_details_form:
-            attributes:
-              hearing_court_name:
-                blank: Dewiswch enw llys
-              hearing_date: *hearing_date_errors
-              is_first_court_hearing:
-                inclusion: Dewiswch ie os gwnaeth y llys hwn hefyd glywed y gwrandawiad cyntaf
-          steps/case/first_court_hearing_form:
-            attributes:
-              first_court_hearing_name:
-                blank: Dewiswch enw llys
-          steps/case/ioj_form:
-            attributes:
-              types:
-                invalid: Dewiswch pam y dylai eich cleient gael cymorth cyfreithiol
-              loss_of_liberty_justification:
-                blank: Nodwch fanylion pam mae’n debygol y byddant yn colli eu rhyddid os caiff unrhyw fater yn yr achos ei benderfynu yn eu herbyn
-              suspended_sentence_justification:
-                blank: Nodwch fanylion pam y rhoddwyd dedfryd ohiriedig neu heb garchar iddynt
-              loss_of_livelihood_justification:
-                blank: Nodwch fanylion pam mae’n debygol y byddant yn colli eu bywoliaeth
-              reputation_justification:
-                blank: Nodwch fanylion pam mae’n debygol y bydd difrod difrifol i’w henw da
-              question_of_law_justification:
-                blank: Nodwch fanylion pam y gall cwestiwn cyfreithiol sylweddol godi
-              understanding_justification:
-                blank: Nodwch fanylion pam efallai na fyddant yn gallu deall y gwrandawiad llys nac ymddangos dros eu hunain
-              witness_tracing_justification:
-                blank: Nodwch fanylion pam y gallai fod angen olrhain neu gyfweld tystion
-              expert_examination_justification:
-                blank: Nodwch fanylion pam y gallai'r achos gynnwys croesholi tyst arbenigol gan y cyhuddiad
-              interest_of_another_justification:
-                blank: Nodwch fanylion pam mae er budd unigolyn arall bod eich cleient yn cael cynrychiolaeth
-              other_justification:
-                blank: Nodwch fanylion pam y dylai eich cleient gael cymorth cyfreithiol
-          steps/income/employment_status_form:
-            attributes:
-              employment_status:
-                invalid: Dewiswch statws cyflogaeth eich cleient neu 'Ddim yn gweithio'
-              ended_employment_within_three_months:
-                inclusion: Dewiswch ie os gwnaeth eich cleient ddod â chyflogaeth i ben yn y 3 mis diwethaf
-          steps/income/partner_employment_status_form:
-            attributes:
-              partner_employment_status:
-                invalid: Dewiswch statws cyflogaeth y partner, neu 'Ddim yn gweithio'
-          steps/income/client/employments_summary_form:
-            attributes:
-              add_client_employment:
-                inclusion: Dewiswch ie os ydych am ychwanegu swydd arall
-          steps/income/partner/employments_summary_form:
-            attributes:
-              add_partner_employment:
-                inclusion: Dewiswch ie os ydych am ychwanegu swydd arall
-          steps/income/lost_job_in_custody_form:
-            attributes:
-              lost_job_in_custody:
-                inclusion: Dewiswch ie os collodd eich cleient eu swydd o ganlyniad i fod yn y ddalfa
-              date_job_lost:
-                blank: Nodwch y dyddiad collwyd y swydd
-                blank_day: Rhaid i'r dyddiad gynnwys diwrnod
-                blank_month: Rhaid i'r dyddiad gynnwys mis
-                blank_year: Rhaid i'r dyddiad gynnwys blwyddyn
-                blank_day_month: Rhaid i'r dyddiad gynnwys diwrnod a mis
-                blank_day_year: Rhaid i'r dyddiad gynnwys diwrnod a blwyddyn
-                blank_month_year: Rhaid i'r dyddiad gynnwys mis a blwyddyn
-                invalid: Nodwch ddyddiad dilys
-                invalid_day: Nodwch ddiwrnod dilys
-                invalid_month: Nodwch fis dilys
-                invalid_year: Nodwch flwyddyn ddilys
-                year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-                future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
-          steps/income/armed_forces_form:
-            attributes:
-              in_armed_forces:
-                inclusion: Dewiswch ie os yw’r %{subject} yn y lluoedd arfog
-          steps/income/income_before_tax_form:
-            attributes:
-              income_above_threshold:
-                inclusion: Dewiswch ie os yw’r incwm ar hyn o bryd yn fwy na £12,475 y flwyddyn cyn treth
-          steps/income/frozen_income_savings_assets_form:
-            &FROZEN_INCOME_ASSETS_VALIDATION
-            attributes:
-              has_frozen_income_or_assets:
-                blank: Dewiswch ie os oes gan %{subject} unrhyw incwm, cynilion neu asedau wedi’u rhewi neu dan orchymyn atafaelu
-          steps/income/client_owns_property_form:
-            attributes:
-              client_owns_property:
-                inclusion: Dewiswch ie os ydynt yn berchen ar eu cartref, tir neu eiddo arall
-          steps/income/has_savings_form:
-            attributes:
-              has_savings:
-                inclusion: Dewiswch ie os oes ganddynt gynilion neu fuddsoddiadau
-          steps/income/client/employment_income_form:
-            attributes:
-              amount:
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-              before_or_after_tax:
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                inclusion: Dewiswch pa mor aml y cânt y taliad hwn
-          steps/income/partner/employment_income_form:
-            attributes:
-              amount:
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-              before_or_after_tax:
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                inclusion: Dewiswch pa mor aml y cânt y taliad hwn
-          steps/income/client/self_assessment_tax_bill_form:
-            attributes:
-              applicant_self_assessment_tax_bill:
-                inclusion: Dewiswch ie os yw eich cleient yn talu bil treth Hunanasesiad a dderbyniwyd yn y 2 flynedd diwethaf
-              applicant_self_assessment_tax_bill_amount:
-                not_a_number: Nodwch y swm a delir ganddynt
-              applicant_self_assessment_tax_bill_frequency:
-                inclusion: Dewiswch pa mor aml y cânt eu talu
-          steps/income/partner/self_assessment_tax_bill_form:
-            attributes:
-              partner_self_assessment_tax_bill:
-                inclusion: Dewiswch ie os yw’r partner yn talu bil treth Hunanasesiad a dderbyniwyd yn y 2 flynedd diwethaf
-              partner_self_assessment_tax_bill_amount:
-                not_a_number: Nodwch y swm a delir ganddynt
-              partner_self_assessment_tax_bill_frequency:
-                inclusion: Dewiswch pa mor aml y cânt eu talu
-          steps/income/client/other_work_benefits_form:
-            attributes:
-              applicant_other_work_benefit_received:
-                inclusion: Dewiswch ie os yw eich cleient yn cael unrhyw fuddiannau eraill o’u gwaith
-              amount:
-                not_a_number: Nodwch cyfanswm blynyddol eu buddiannau gwaith eraill
-          steps/income/partner/other_work_benefits_form:
-            attributes:
-              partner_other_work_benefit_received:
-                inclusion: Dewiswch ie os ydynt yn cael unrhyw fuddiannau eraill o’u gwaith
-              amount:
-                not_a_number: Nodwch cyfanswm blynyddol eu buddiannau gwaith eraill
-          steps/income/client_has_dependants_form:
-            attributes:
-              client_has_dependants:
-                inclusion: Dewiswch ie os oes gan eich cleient unrhyw ddibynyddion
-          steps/income/dependants_form:
-            attributes:
-              dependants:
-                too_long: Rhaid bod 50 neu lai o ddibynyddion
-          steps/income/dependant_fieldset_form:
-            summary:
-              age:
-                not_a_number: Rhaid i oedran %{ordinal} dibynnydd fod yn rhif
-                blank: Nodwch oedran %{ordinal} dibynnydd
-                less_than: Rhaid i oedran %{ordinal} dibynnydd fod o dan 18
-                greater_than_or_equal_to: Rhaid i %{ordinal} dibynnydd fod yn o leiaf 0
-            attributes:
-              age:
-                not_a_number: Rhaid i oedran y dibynnydd fod yn rhif
-                blank: Nodwch oedran y dibynnydd
-                less_than: Rhaid i oedran y dibynnydd fod o dan 18
-                greater_than_or_equal_to: Rhaid i oedran y dibynnydd fod yn o leiaf 0
-          steps/income/income_payments_form:
-            attributes:
-              base:
-                none_selected: Dewiswch pa daliadau mae eich cleient yn eu cael, neu dewiswch 'Nid ydynt yn cael unrhyw un o'r taliadau hyn'
-          steps/income/income_payment_fieldset_form: &income_payment_fieldset_form
-            summary:
-              amount:
-                greater_than: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn rhif
-                blank: Nodwch swm mae eich cleient yn ei gael o %{payment_type}
-              details:
-                invalid: "Methu ychwanegu manylion ychwanegol ar gyfer %{payment_type}"
-                blank: Nodwch y ffynonellau eraill o incwm y maent yn eu cael
-              frequency:
-                blank: Dewiswch pa mor aml y maent yn cael %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-            attributes:
-              amount:
-                greater_than: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn rhif
-                blank: Nodwch swm mae eich cleient yn ei gael o %{payment_type}
-              frequency:
-                blank: Dewiswch pa mor aml y maent yn cael %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-              details:
-                blank: Nodwch y ffynonellau eraill o incwm y maent yn eu cael
-                invalid: "Methu ychwanegu manylion ychwanegol ar gyfer %{payment_type}"
-          steps/income/partner/income_payments_form:
-            attributes:
-              base:
-                none_selected: Dewiswch pa daliadau mae’r partner yn eu cael, neu dewiswch 'Nid yw’n cael unrhyw un o’r taliadau hyn'
-          steps/income/partner/income_payment_fieldset_form: *income_payment_fieldset_form
-          steps/income/income_benefits_form:
-            attributes:
-              base:
-                none_selected: Dewiswch pa fudd-daliadau mae eich cleient yn eu cael, neu dewiswch 'Nid ydynt yn cael unrhyw un o’r budd-daliadau hyn'
-          steps/income/income_benefit_fieldset_form: &income_benefit_fieldset_form
-            summary:
-              amount:
-                greater_than: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn rhif
-                blank: Nodwch swm mae eich cleient yn ei gael o %{payment_type}
-              details:
-                invalid: "Methu ychwanegu manylion ychwanegol ar gyfer %{payment_type}"
-                blank: Nodwch pa fudd-daliadau y maent yn eu cael a’r swm
-              frequency:
-                blank: Dewiswch pa mor aml y maent yn cael %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-            attributes:
-              amount:
-                greater_than: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i'r swm mae eich cleient yn ei gael o %{payment_type} fod yn rhif
-                blank: Nodwch swm mae eich cleient yn ei gael o %{payment_type}
-              details:
-                blank: Nodwch pa fudd-daliadau y maent yn eu cael a’r swm
-              frequency:
-                blank: Dewiswch pa mor aml y maent yn cael %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-          steps/income/partner/income_benefits_form:
-            attributes:
-              base:
-                none_selected: Dewiswch pa fudd-daliadau mae’r partner yn eu cael, neu dewiswch 'Nid yw’n cael unrhyw un o’r budd-daliadau hyn'
-          steps/income/partner/income_benefit_fieldset_form: *income_benefit_fieldset_form
-          steps/income/manage_without_income_form:
-            attributes:
-              manage_without_income:
-                inclusion: Dewiswch sut maent yn ymdopi heb incwm
-              manage_other_details:
-                blank: Nodwch fanylion am sut maent yn ymdopi heb incwm
-          steps/income/business_type_form:
-            attributes:
-              business_type:
-                inclusion: Dewiswch fath o fusnes
-          steps/income/businesses_summary_form:
-            attributes:
-              add_business:
-                inclusion: Dewiswch ie os ydych am ychwanegu busnes arall
-          steps/income/businesses_form:
-            attributes:
-              trading_name:
-                blank: Nodwch enw masnachu’r busnes
-              address_line_one:
-                blank: Nodwch linell cyfeiriad 1, fel arfer yr adeilad a’r stryd
-              city:
-                blank: Nodwch dref neu ddinas
-              country:
-                blank: Nodwch wlad
-              postcode:
-                blank: Nodwch god post
-          steps/income/business_nature_form:
-            attributes:
-              description:
-                blank: Nodwch ddisgrifiad o’r busnes
-          steps/income/business_start_date_form:
-            attributes:
-              trading_start_date:
-                blank: Nodwch y dyddiad dechreuodd y busnes fasnachu
-                blank_day: Rhaid i’r dyddiad gynnwys diwrnod
-                blank_month: Rhaid i’r dyddiad gynnwys mis
-                blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
-                blank_day_month: Rhaid i’r dyddiad gynnwys diwrnod a mis
-                blank_day_year: Rhaid i’r dyddiad gynnwys diwrnod a blwyddyn
-                blank_month_year: Rhaid i’r dyddiad gynnwys mis a blwyddyn
-                invalid: Nodwch ddyddiad dilys
-                invalid_day: Nodwch ddiwrnod dilys
-                invalid_month: Nodwch fis dilys
-                invalid_year: Nodwch flwyddyn ddilys
-                year_too_early: Mae’r dyddiad yn rhy bell yn y gorffennol
-                future_not_allowed: Rhaid i’r dyddiad fod heddiw neu yn y gorffennol
-          steps/income/business_additional_owners_form:
-            attributes:
-              has_additional_owners:
-                inclusion: Dewiswch ie neu na
-              additional_owners:
-                blank: Nodwch enwau’r bobl sy’n rhedeg y busnes gyda nhw
-          steps/income/business_employees_form:
-            attributes:
-              has_employees:
-                inclusion: Dewiswch ie neu na
-              number_of_employees:
-                not_a_number: Nodwch nifer y gweithwyr
-                greater_than: Dewiswch na os yw nifer y gweithwyr yn 0
-          steps/income/business_financials_form:
-            attributes:
-              turnover_amount:
-                blank: Nodwch cyfanswm trosiant y busnes
-              turnover_frequency:
-                inclusion: Dewiswch pa mor aml y cafodd y swm hwn ei gynhyrchu
-              drawings_amount:
-                blank: Nodwch cyfanswm y tyniadau
-              drawings_frequency:
-                inclusion: Dewiswch pa mor aml y tynnwyd y swm hwn
-              profit_amount:
-                blank: Nodwch cyfanswm yr elw
-              profit_frequency:
-                inclusion: Dewiswch ar gyfer pa gyfnod oedd yr elw hwn
-          steps/income/business_salary_or_remuneration_form:
-            attributes:
-              salary_amount:
-                blank: Nodwch y swm
-                not_a_number: Nodwch y swm
-          steps/income/business_total_income_share_sales_form:
-            attributes:
-              total_income_share_sales_amount:
-                blank: Nodwch y swm
-                not_a_number: Nodwch y swm
-                greater_than: Rhaid i gyfanswm incwm cyfranddaliadau’r gwerthiannau fod yn fwy na 0
-          steps/income/business_percentage_profit_share_form:
-            attributes:
-              percentage_profit_share:
-                not_a_number: Nodwch ganran
-                greater_than_or_equal_to: Rhaid i ganran cyfran yr elw fod rhwng 0 a 100
-                less_than_or_equal_to: Rhaid i ganran cyfran yr elw fod rhwng 0 a 100
-          steps/outgoings/housing_payment_type_form:
-            attributes:
-              housing_payment_type:
-                inclusion: Dewiswch pa daliad mae eich cleient yn ei dalu lle mae'n byw fel arfer
-          steps/outgoings/mortgage_form:
-            attributes:
-              amount:
-                blank: Nodwch faint yw eu taliadau morgais, ar ôl tynnu Budd-dal Tai
-                greater_than: Rhaid i’w taliadau morgais fod yn fwy na 0
-                invalid: Rhaid i’w taliadau morgais, ar ôl tynnu Budd-dal Tai, fod yn rhif, fel 50
-                not_a_number: Rhaid i’w taliadau morgais, ar ôl tynnu Budd-dal Tai, fod yn rhif, fel 50
-              frequency:
-                blank: Dewiswch pa mor aml maent yn talu’r morgais
-                inclusion: Dewiswch pa mor aml maent yn talu’r morgais
-          steps/outgoings/rent_form:
-            attributes:
-              amount:
-                blank: Nodwch faint rhent maent yn ei dalu, ar ôl tynnu Budd-dal Tai
-                greater_than: Rhaid i daliadau rhent fod yn fwy na 0
-                invalid: Rhaid i’r rhent a dalwyd, ar ôl tynnu Budd-dal Tai, fod yn rhif, fel 50
-                not_a_number: Rhaid i’r rhent a dalwyd, ar ôl tynnu Budd-dal Tai, fod yn rhif, fel 50
-              frequency:
-                blank: Dewiswch pa mor aml maent yn talu rhent
-                inclusion: Dewiswch pa mor aml maent yn talu rhent
-          steps/outgoings/board_and_lodging_form:
-            attributes:
-              board_amount:
-                blank: Nodwch faint maent yn ei dalu am lety a bwyd
-                invalid: Rhaid i daliadau am lety a bwyd fod yn rhif, fel 50
-                greater_than: Rhaid i daliadau am lety a bwyd fod yn fwy na 0
-              food_amount:
-                blank: Nodwch faint o'r taliad am lety a bwyd sy'n ymwneud â bwyd
-                invalid: Rhaid i daliadau am fwyd fod yn rhif, fel 50
-                greater_than_or_equal_to: Rhaid i daliadau am fwyd fod yn 0 neu fwy
-                more_than_board: Ni all taliadau am fwyd fod yn fwy na'r taliadau am lety a bwyd
-              frequency:
-                inclusion: Dewiswch pa mor aml maent yn talu am lety a bwyd
-              payee_name:
-                blank: Nodwch enw’r person y maent yn talu am lety a bwyd
-              payee_relationship_to_client:
-                blank: Nodwch eu perthynas
-          steps/outgoings/council_tax_form:
-            attributes:
-              pays_council_tax:
-                inclusion: Dewiswch ie os ydynt yn talu Treth Cyngor lle maent yn byw fel arfer
-                not_payable: Ni ellir talu Treth Cyngor os yw’r math o lety yn lety a bwyd
-              amount:
-                blank: Nodwch faint maent yn ei dalu bob blwyddyn
-                greater_than: Rhaid i'r swm blynyddol a delir fod yn fwy na 0
-                invalid: Rhaid i'r swm blynyddol a delir fod yn rhif, fel 50
-                not_a_number: Rhaid i'r swm blynyddol a delir fod yn rhif, fel 50
-          steps/outgoings/outgoings_payments_form:
-            attributes:
-              base:
-                none_selected: Dewiswch pa daliadau maent yn eu gwneud, neu dewiswch 'Nid ydynt yn gwneud unrhyw un o’r taliadau hyn'
-          steps/outgoings/outgoing_payment_fieldset_form:
-            summary:
-              amount:
-                blank: Nodwch y swm y maent yn ei dalu yn %{payment_type}
-                greater_than: Rhaid i’r swm y maent yn ei dalu yn %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i’r swm y maent yn ei dalu yn %{payment_type} fod yn rhif
-              case_reference:
-                invalid: "Methu ychwanegu cyfeirnod achos ar gyfer %{payment_type}"
-                blank: Nodwch gyfeirnod yr achos ar gyfer y gorchymyn cynrychiolaeth droseddol neu dystysgrif sifil
-              frequency:
-                blank: Dewiswch pa mor aml maent yn talu %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-            attributes:
-              amount:
-                blank: Nodwch y swm y maent yn ei dalu yn %{payment_type}
-                greater_than: Rhaid i’r swm y maent yn ei dalu yn %{payment_type} fod yn fwy na 0
-                not_a_number: Rhaid i’r swm y maent yn ei dalu yn %{payment_type} fod yn rhif
-              frequency:
-                blank: Dewiswch pa mor aml maent yn talu %{payment_type}
-                inclusion: "Nid yw amlder %{payment_type} wedi’i gynnwys yn y rhestr - rhaid iddo fod yn Unwaith yr wythnos, Bob 2 wythnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn"
-              case_reference:
-                invalid: "Methu ychwanegu cyfeirnod achos ar gyfer %{payment_type}"
-                blank: Nodwch gyfeirnod yr achos ar gyfer y gorchymyn cynrychiolaeth droseddol neu dystysgrif sifil
-          steps/outgoings/income_tax_rate_form:
-            attributes:
-              income_tax_rate_above_threshold:
-                inclusion: Dewiswch ie os yw eich cleient wedi talu’r gyfradd dreth incwm 40% yn y 2 flynedd diwethaf
-          steps/outgoings/partner_income_tax_rate_form:
-            attributes:
-              partner_income_tax_rate_above_threshold:
-                inclusion: Dewiswch ie os yw’r partner wedi talu’r gyfradd dreth incwm 40% yn y 2 flynedd diwethaf
-          steps/outgoings/outgoings_more_than_income_form:
-            attributes:
-              outgoings_more_than_income:
-                inclusion: Dewiswch ie os yw eu taliadau’n fwy na’u hincwm
-              how_manage:
-                blank: Nodwch sut maent yn ymdopi os yw’r taliadau’n fwy na’r incwm
-          steps/capital/property_type_form:
-            attributes:
-              property_type:
-                blank: Dewiswch pa asedau y mae %{subject} yn berchen neu'n rhan-berchen arnynt y tu mewn neu'r tu allan i'r DU, neu dewiswch 'Nid ydynt yn berchen ar unrhyw un o’r asedau hyn'
-          steps/capital/usual_property_details_form:
-            attributes:
-              action:
-                blank: Dewiswch beth rydych am ei wneud nesaf
-                inclusion: Dewiswch beth rydych am ei wneud nesaf
-          steps/capital/saving_type_form:
-            attributes:
-              saving_type:
-                blank: Dewiswch pa gynilion sydd gan %{subject} y tu mewn neu’r tu allan i’r DU, neu dewiswch 'Nid oes ganddynt unrhyw un o’r cynilion hyn'
-          steps/capital/other_saving_type_form:
-            attributes:
-              saving_type:
-                blank: Dewiswch pa gynilion eraill sydd gan %{subject} y tu mewn neu’r tu allan i’r DU
-          steps/capital/savings_form:
-            attributes:
-              provider_name:
-                blank: Nodwch enw’r banc, cymdeithas adeiladu neu ddeiliad cynilion arall
-              sort_code:
-                blank: Nodwch y cod didoli neu enw’r gangen
-              account_number:
-                blank: Nodwch rif y cyfrif
-              account_balance:
-                blank: Nodwch gydbwysedd y cyfrif
-                not_a_number: Rhaid i gydbwysedd y cyfrif fod yn rhif, fel 50
-              is_overdrawn:
-                inclusion: Dewiswch ie os yw’r cyfrif dros ei ben
-              are_wages_paid_into_account:
-                inclusion: Dewiswch ie os yw cyflogau neu fudd-daliadau eich cleient yn cael eu talu i’r cyfrif hwn
-              are_partners_wages_paid_into_account:
-                inclusion: Dewiswch ie os yw cyflogau neu fudd-daliadau’r partner yn cael eu talu i’r cyfrif hwn
-              ownership_type:
-                inclusion: Dewiswch enw pwy sydd ar y cyfrif
-              confirm_in_applicants_name:
-                confirm: Cadarnhewch fod y cyfrif yn enw eich cleient
-          steps/capital/savings_summary_form:
-            attributes:
-              add_saving:
-                inclusion: Dewiswch ie os ydych am ychwanegu cyfrif cynilo arall
-          steps/capital/premium_bonds_form:
-            attributes:
-              premium_bonds_total_value:
-                blank: Nodwch gyfanswm gwerth eu bondiau
-              premium_bonds_holder_number:
-                blank: Nodwch rif y deiliad
-              has_premium_bonds:
-                inclusion: Dewiswch ie os oes gan eich cleient unrhyw Fondiau Premiwm
-          steps/capital/partner_premium_bonds_form:
-            attributes:
-              partner_premium_bonds_total_value:
-                blank: Nodwch gyfanswm gwerth eu bondiau
-              partner_premium_bonds_holder_number:
-                blank: Nodwch rif y deiliad
-              partner_has_premium_bonds:
-                inclusion: Dewiswch ie os oes gan y partner unrhyw Fondiau Premiwm
-          steps/capital/other_property_type_form:
-            attributes:
-              property_type:
-                blank: Dewiswch pa asedau eraill sydd gan %{subject} y tu mewn neu’r tu allan i’r DU
-          steps/capital/trust_fund_form:
-            attributes:
-              trust_fund_amount_held:
-                blank: Nodwch y swm sydd yn y gronfa
-              trust_fund_yearly_dividend:
-                blank: Nodwch y difidend blynyddol
-              will_benefit_from_trust_fund:
-                inclusion: Dewiswch ie os yw eich cleient yn debygol o elwa o gronfa ymddiriedolaeth y tu mewn neu’r tu allan i’r DU
-          steps/capital/partner_trust_fund_form:
-            attributes:
-              partner_trust_fund_amount_held:
-                blank: Nodwch y swm sydd yn y gronfa
-              partner_trust_fund_yearly_dividend:
-                blank: Nodwch y difidend blynyddol
-              partner_will_benefit_from_trust_fund:
-                inclusion: Dewiswch ie os yw’r partner yn debygol o elwa o gronfa ymddiriedolaeth y tu mewn neu’r tu allan i’r DU
-          steps/capital/residential_form:
-            attributes:
-              house_type:
-                blank: Nodwch fath yr eiddo
-              other_house_type:
-                blank: Nodwch fath yr eiddo
-              bedrooms:
-                blank: Nodwch sawl ystafell wely sydd
-              value:
-                blank: Nodwch gwerth yr eiddo
-                not_a_number: Rhaid i werth yr eiddo fod yn rhif, fel 50
-              outstanding_mortgage:
-                blank: Nodwch faint sydd ar ôl i’w dalu ar y morgais
-                not_a_number: Rhaid i'r swm sy'n weddill ar y morgais fod yn rhif, fel 50
-              percentage_applicant_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r cleient
-                invalid_with_no_partner: Rhaid i'r canrannau a gofnodwyd gyfateb i 100%
-                blank: Nodwch y ganran o'r eiddo sydd gan eich cleient
-                not_a_number: &property_client_percentage_error Rhaid i ganran yr eiddo sydd gan eich cleient fod yn rhif rhwng 0 a 100
-                greater_than: Rhaid i ganran yr eiddo sydd gan eich cleient fod yn fwy na 0 ac yn llai na 100
-                greater_than_or_equal_to: *property_client_percentage_error
-                less_than_or_equal_to: *property_client_percentage_error
-              percentage_partner_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r partner
-                blank: Nodwch y ganran o'r eiddo sydd gan bartner eich cleient
-                not_a_number: &property_partner_percentage_error Rhaid i ganran yr eiddo sydd gan bartner eich cleient fod yn rhif rhwng 0 a 100
-                greater_than_or_equal_to: *property_partner_percentage_error
-                less_than_or_equal_to: *property_partner_percentage_error
-              is_home_address:
-                blank: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
-                inclusion: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
-                invalid: Dim ond un cyfeiriad cartref all fod gan y cleient
-              has_other_owners:
-                blank: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r eiddo
-                inclusion: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r eiddo
-                invalid_when_other_owners: Ni all yr eiddo gael ei rannu os yw cyfanswm y perchnogaeth yn 100%
-          steps/capital/commercial_form:
-            attributes:
-              usage:
-                blank: Nodwch beth mae’r eiddo’n cael ei ddefnyddio ar ei gyfer
-              value:
-                blank: Nodwch werth yr eiddo
-                not_a_number: Rhaid i werth yr eiddo fod yn rhif, fel 50
-              outstanding_mortgage:
-                blank: Nodwch faint sydd ar ôl i’w dalu ar y morgais
-                not_a_number: Rhaid i'r swm sy'n weddill ar y morgais fod yn rhif, fel 50
-              percentage_applicant_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r cleient
-                blank: Nodwch y ganran o'r eiddo sydd gan eich cleient
-                not_a_number: Rhaid i ganran yr eiddo sydd gan eich cleient fod yn rhif rhwng 0 a 100
-                greater_than: Rhaid i ganran yr eiddo sydd gan eich cleient fod yn fwy na 0 ac yn llai na 100
-                greater_than_or_equal_to: *property_client_percentage_error
-                less_than_or_equal_to: *property_client_percentage_error
-              percentage_partner_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r partner
-                blank: Nodwch y ganran o'r eiddo sydd gan bartner eich cleient
-                not_a_number: Rhaid i ganran yr eiddo sydd gan bartner eich cleient fod yn rhif rhwng 0 a 100
-                greater_than_or_equal_to: *property_partner_percentage_error
-                less_than_or_equal_to: *property_partner_percentage_error
-              is_home_address:
-                blank: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
-                inclusion: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
-                invalid: Dim ond un cyfeiriad cartref all fod gan y cleient
-              has_other_owners:
-                blank: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r eiddo
-                inclusion: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r eiddo
-                invalid_when_other_owners: Ni all yr eiddo gael ei rannu os yw cyfanswm y perchnogaeth yn 100%
-          steps/capital/land_form:
-            attributes:
-              size_in_acres:
-                blank: Nodwch faint o erwau sydd gan y tir
-                not_a_number: Rhaid i faint y tir mewn erwau fod yn rhif, fel 50
-              usage:
-                blank: Nodwch beth mae’r tir yn cael ei ddefnyddio ar ei gyfer
-              value:
-                blank: Nodwch werth y tir
-                not_a_number: Rhaid i werth y tir fod yn rhif, fel 50
-              outstanding_mortgage:
-                blank: Nodwch faint sydd ar ôl i’w dalu ar y morgais
-                not_a_number: Rhaid i'r swm sy'n weddill ar y morgais fod yn rhif, fel 50
-              percentage_applicant_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r cleient
-                blank: Nodwch y ganran o’r tir sydd gan eich cleient
-                not_a_number: &land_client_percentage_error Rhaid i ganran y tir sydd gan eich cleient fod yn rhif rhwng 0 a 100
-                greater_than: Rhaid i ganran y tir sydd gan eich cleient fod yn fwy na 0 ac yn llai na 100
-                greater_than_or_equal_to: *land_client_percentage_error
-                less_than_or_equal_to: *land_client_percentage_error
-              percentage_partner_owned:
-                invalid: Rhaid i'r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran sy’n eiddo i’r partner
-                blank: Nodwch y ganran o’r tir sydd gan bartner eich cleient
-                not_a_number: &land_partner_percentage_error Rhaid i ganran y tir sydd gan bartner eich cleient fod yn rhif rhwng 0 a 100
-                greater_than_or_equal_to: *land_partner_percentage_error
-                less_than_or_equal_to: *land_partner_percentage_error
-              is_home_address:
-                blank: Dewiswch ie os yw cyfeiriad y tir yr un fath â chyfeiriad cartref eich cleient
-                inclusion: Dewiswch ie os yw cyfeiriad y tir yr un fath â chyfeiriad cartref eich cleient
-                invalid: Dim ond un cyfeiriad cartref all fod gan y cleient
-              has_other_owners:
-                blank: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r tir
-                inclusion: Dewiswch ie os yw unrhyw un arall yn berchen ar ran o’r tir
-                invalid_when_other_owners: Ni all y tir gael ei rannu os yw cyfanswm y perchnogaeth yn 100%
-          steps/capital/property_address_form:
-            attributes:
-              address_line_one:
-                blank: Nodwch linell 1 y cyfeiriad, fel arfer yr adeilad a’r stryd
-              city:
-                blank: Nodwch dref neu ddinas
-              country:
-                blank: Nodwch wlad
-              postcode:
-                blank: Nodwch god post
-          steps/income/client/employer_details_form:
-            attributes:
-              employer_name:
-                blank: Nodwch enw’r cyflogwr
-              address_line_one:
-                blank: Nodwch linell cyfeiriad 1, fel arfer yr adeilad a’r stryd
-              city:
-                blank: Nodwch dref neu ddinas
-              country:
-                blank: Nodwch wlad
-              postcode:
-                blank: Nodwch god post
-          steps/income/partner/employer_details_form:
-            attributes:
-              employer_name:
-                blank: Nodwch enw’r cyflogwr
-              address_line_one:
-                blank: Nodwch linell cyfeiriad 1, fel arfer yr adeilad a’r stryd
-              city:
-                blank: Nodwch dref neu ddinas
-              country:
-                blank: Nodwch wlad
-              postcode:
-                blank: Nodwch god post
-          steps/capital/property_owner_fieldset_form:
-            summary: &shared_property_owner_errors
-              name:
-                # TODO: Change text to -> Enter the name of the %{index} other owner
-                blank: Nodwch enw’r perchennog arall
-              relationship:
-                blank: Nodwch eu perthynas â’ch cleient
-                inclusion: Nodwch eu perthynas â’ch cleient
-              other_relationship:
-                blank: Nodwch eu perthynas
-              percentage_owned:
-                blank: Nodwch y ganran o’r tir y maent yn ei berchen
-                not_a_number: Nodwch y ganran o’r tir y maent yn ei berchen
-                greater_than: Rhaid i’r ganran o’r eiddo y maent yn ei berchen fod yn fwy na 0 ac yn llai na 100
-                less_than: Rhaid i’r ganran o’r eiddo y maent yn ei berchen fod yn fwy na 0 ac yn llai na 100
-            attributes: *shared_property_owner_errors
-          steps/capital/property_owners_form:
-            summary:
-              percentage_owned:
-                invalid: Rhaid i’r canrannau a gofnodwyd gyfateb i 100% - gwiriwch ganran y perchennog arall %{index}
-          steps/capital/properties_summary_form:
-            attributes:
-              add_property:
-                inclusion: Dewiswch ie os ydych am ychwanegu ased arall
-          steps/capital/investment_type_form:
-            attributes:
-              investment_type:
-                blank: Dewiswch pa fuddsoddiadau sydd gan %{subject} y tu mewn neu’r tu allan i’r DU, neu dewiswch 'Nid oes ganddynt unrhyw un o’r buddsoddiadau hyn'
-          steps/capital/other_investment_type_form:
-            attributes:
-              investment_type:
-                blank: Dewiswch pa fuddsoddiadau eraill sydd gan %{subject} y tu mewn neu’r tu allan i’r DU, neu dewiswch 'Nid oes ganddynt unrhyw un o’r buddsoddiadau hyn'
-          steps/capital/investments_form:
-            attributes:
-              description:
-                blank: Disgrifiwch y buddsoddiad
-              value:
-                blank: Nodwch werth y buddsoddiad
-                not_a_number: Rhaid i werth eu buddsoddiad fod yn rhif, fel 50
-              ownership_type:
-                inclusion: Dewiswch enw pwy sydd ar y cyfrif
-              confirm_in_applicants_name:
-                confirm: Cadarnhewch fod y buddsoddiad yn enw eich cleient
-          steps/capital/investments_summary_form:
-            attributes:
-              add_investment:
-                inclusion: Dewiswch ie os ydych am ychwanegu buddsoddiad arall
+              inclusion: Dewiswch ie os oes achos troseddol neu gyhuddiad yn mynd rhagddo yn erbyn y %{subject}
+        steps/case/other_charge_form:
+          attributes:
+            next_hearing_date: &hearing_date_errors
+              blank: Does dim modd i'r gwrandawiad nesaf fod yn wag
+              blank_day: Rhaid i'r gwrandawiad nesaf gynnwys diwrnod
+              blank_month: Rhaid i'r gwrandawiad nesaf gynnwys mis
+              blank_year: Rhaid i'r gwrandawiad nesaf gynnwys blwyddyn
+              blank_day_month: Rhaid i'r gwrandawiad nesaf gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r gwrandawiad nesaf gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r gwrandawiad nesaf gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys ar gyfer y gwrandawiad nesaf
+              invalid_day: Rhowch ddiwrnod dilys ar gyfer dyddiad y gwrandawiad nesaf
+              invalid_month: Rhowch fis dilys ar gyfer dyddiad y gwrandawiad nesaf
+              invalid_year: Rhowch flwyddyn ddilys ar gyfer dyddiad y gwrandawiad nesaf
+              year_too_late: Mae'r gwrandawiad nesaf yn rhy bell yn y dyfodol
+              year_too_early: Mae'r gwrandawiad nesaf yn rhy bell yn y gorffennol
+        steps/case/hearing_details_form:
+          attributes:
+            hearing_court_name:
+              blank: Dewiswch enw'r llys
+            hearing_date: *hearing_date_errors
+            is_first_court_hearing:
+              inclusion: Dewiswch ie os cynhaliwyd y gwrandawiad cyntaf yn y llys hwn hefyd
+        steps/case/first_court_hearing_form:
+          attributes:
+            first_court_hearing_name:
+              blank: Dewiswch enw'r llys
+        steps/case/ioj_form:
+          attributes:
+            types:
+              invalid: Dewiswch pam y dylai eich cleient gael cymorth cyfreithiol
+            loss_of_liberty_justification:
+              blank: Rhowch fanylion pam ei bod yn debygol y byddant yn colli eu rhyddid os bydd unrhyw fater yn yr achos yn cael ei benderfynu yn eu herbyn
+            suspended_sentence_justification:
+              blank: Rhowch fanylion pam eu bod wedi cael dedfryd ohiriedig neu ddigarchar
+            loss_of_livelihood_justification:
+              blank: Rhowch fanylion pam ei bod yn debygol y byddant yn colli eu bywoliaeth
+            reputation_justification:
+              blank: Rhowch fanylion pam ei bod yn debygol y byddant yn wynebu niwed difrifol i'w henw da
+            question_of_law_justification:
+              blank: Rhowch fanylion pam y gallai cwestiwn cyfreithiol sylweddol fod yn gysylltiedig
+            understanding_justification:
+              blank: Rhowch fanylion pam na fyddant, o bosibl, yn gallu deall yr achos llys na chyflwyno eu hachos eu hunain
+            witness_tracing_justification:
+              blank: Rhowch fanylion pam y gallai fod angen dod o hyd i dystion neu gyfweld â nhw
+            expert_examination_justification:
+              blank: Rhowch fanylion pam y gallai'r achos gynnwys croesholi tyst dros yr erlyniad mewn ffordd arbenigol
+            interest_of_another_justification:
+              blank: Rhowch fanylion pam ei bod er budd rhywun arall fod eich cleient yn cael ei gynrychioli
+            other_justification:
+              blank: Rhowch fanylion pam y dylai eich cleient gael cymorth cyfreithiol
+        steps/income/employment_status_form:
+          attributes:
+            employment_status:
+              invalid: Dewiswch statws cyflogaeth eich cleient, neu dewiswch 'Ddim yn gweithio'
+            ended_employment_within_three_months:
+              inclusion: Dewiswch ie os gorffennodd eich cleient weithio yn ystod y 3 mis diwethaf
+        steps/income/partner_employment_status_form:
+          attributes:
+            partner_employment_status:
+              invalid: Dewiswch statws cyflogaeth y partner, neu dewiswch 'Ddim yn gweithio'
+        steps/income/client/employments_summary_form:
+          attributes:
+            add_client_employment:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu swydd arall
+        steps/income/partner/employments_summary_form:
+          attributes:
+            add_partner_employment:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu swydd arall
+        steps/income/lost_job_in_custody_form:
+          attributes:
+            lost_job_in_custody:
+              inclusion: Dewiswch ie os collodd eich cleient ei swydd o ganlyniad i fod yn y ddalfa
+            date_job_lost:
+              blank: Rhowch y dyddiad iddyn nhw golli eu swydd
+              blank_day: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys diwrnod
+              blank_month: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys mis
+              blank_year: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad y gwnaethant golli eu swydd gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad y gwnaethant golli eu swydd fod heddiw neu yn y gorffennol
+        steps/income/armed_forces_form:
+          attributes:
+            in_armed_forces:
+              inclusion: Dewiswch ie os yw %{subject} yn y lluoedd arfog
+        steps/income/income_before_tax_form:
+          attributes:
+            income_above_threshold:
+              inclusion: Dewiswch ie os yw eu hincwm ar hyn o bryd yn fwy na ¬¨¬£12,475 y flwyddyn cyn treth
+        steps/income/frozen_income_savings_assets_form:
+          &FROZEN_INCOME_ASSETS_VALIDATION
+          attributes:
+            has_frozen_income_or_assets:
+              blank: Dewiswch ie os oes gan %{subject} unrhyw incwm, cynilion neu asedau dan orchymyn rhewi neu gyfyngiad
+        steps/income/client_owns_property_form:
+          attributes:
+            client_owns_property:
+              inclusion: Dewiswch ie os ydyn nhw'n berchen ar eu cartref, neu ar unrhyw dir neu eiddo arall
+        steps/income/has_savings_form:
+          attributes:
+            has_savings:
+              inclusion: Dewiswch ie os oes ganddynt gynilion neu fuddsoddiadau
+        steps/income/client/employment_income_form:
+          attributes:
+            amount:
+              not_a_number: Rhowch eu cyflog
+            before_or_after_tax:
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+        steps/income/partner/employment_income_form:
+          attributes:
+            amount:
+              not_a_number: Rhowch eu cyflog
+            before_or_after_tax:
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+        steps/income/client/self_assessment_tax_bill_form:
+          attributes:
+            applicant_self_assessment_tax_bill:
+              inclusion: Dewiswch ie os yw eich cleient yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+            applicant_self_assessment_tax_bill_amount:
+              not_a_number: Rhowch y swm maen nhw'n ei dalu
+            applicant_self_assessment_tax_bill_frequency:
+              inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
+        steps/income/partner/self_assessment_tax_bill_form:
+          attributes:
+            partner_self_assessment_tax_bill:
+              inclusion: Dewiswch ie os yw eich partner yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+            partner_self_assessment_tax_bill_amount:
+              not_a_number: Rhowch y swm maen nhw'n ei dalu
+            partner_self_assessment_tax_bill_frequency:
+              inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
+        steps/income/client/other_work_benefits_form:
+          attributes:
+            applicant_other_work_benefit_received:
+              inclusion: Dewiswch ie os yw eich cleient yn derbyn unrhyw fuddion eraill o'r gwaith
+            amount:
+              not_a_number: Rhowch gyfanswm gwerth blynyddol eu buddion gwaith eraill
+        steps/income/partner/other_work_benefits_form:
+          attributes:
+            partner_other_work_benefit_received:
+              inclusion: Dewiswch ie os ydyn nhw’n cael unrhyw fuddion eraill o'r gwaith
+            amount:
+              not_a_number: Rhowch gyfanswm gwerth blynyddol eu buddion gwaith eraill
+        steps/income/client_has_dependants_form:
+          attributes:
+            client_has_dependants:
+              inclusion: Dewiswch ie os oes gan eich cleient unrhyw ddibynyddion
+        steps/income/dependants_form:
+          attributes:
+            dependants:
+              too_long: Rhaid bod gennych 50 neu lai o ddibynyddion
+        steps/income/dependant_fieldset_form:
+          summary:
+            age:
+              not_a_number: Rhaid i oedran y %{ordinal} dibynnydd fod yn rhif
+              blank: Rhowch oedran y %{ordinal} dibynnydd
+              less_than: Rhaid i’r %{ordinal} dibynnydd fod o dan 18 oed
+              greater_than_or_equal_to: Rhaid i'r %{ordinal} dibynnydd fod yn 0 o leiaf
+          attributes:
+            age:
+              not_a_number: Rhaid i oedran y dibynnydd fod yn rhif
+              blank: Rhowch oedran y dibynnydd
+              less_than: Rhaid i ddibynyddion fod o dan 18 oed
+              greater_than_or_equal_to: Rhaid i oedran y dibynnydd fod yn 0 o leiaf
 
-          steps/capital/has_national_savings_certificates_form:
-            attributes:
-              has_national_savings_certificates:
-                blank: Dewiswch ie os oes gan %{subject} unrhyw Dystysgrifau Cynilion Cenedlaethol
-          steps/capital/national_savings_certificates_form:
-            attributes:
-              holder_number:
-                blank: Nodwch y rhif cwsmer neu rif deiliad
-                invalid: Nodwch rif cwsmer neu rif deiliad dilys
-              certificate_number:
-                blank: Nodwch rif y dystysgrif
-              value:
-                blank: Nodwch werth y dystysgrif
-                not_a_number: Rhaid i werth eu tystysgrif fod yn rhif, fel 50
-              ownership_type:
-                inclusion: Dewiswch pwy sy’n berchen ar y dystysgrif
-              confirm_in_applicants_name:
-                confirm: Cadarnhewch fod eich cleient yn berchen ar y dystysgrif
-          steps/capital/national_savings_certificates_summary_form:
-            attributes:
-              add_national_savings_certificate:
-                inclusion: Dewiswch ie os ydych am ychwanegu Tystysgrif Cynilion Cenedlaethol arall
-          steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
-          steps/capital/answers_form:
-            attributes:
-              base:
-                incomplete_records: Rhaid i chi gwblhau pob cwestiwn cyn y gallwch gyflwyno’r cais
-              has_no_other_assets:
-                blank: Cadarnhewch a oes unrhyw asedau neu gyfalaf arall
-          steps/submission/more_information_form:
-            attributes:
-              additional_information:
-                blank: Nodwch fanylion y mae angen eu hychwanegu at y cais
-              additional_information_required:
-                inclusion: Dewiswch ie os ydych am ychwanegu unrhyw wybodaeth arall
-          steps/submission/declaration_form:
-            attributes:
-              legal_rep_has_partner_declaration:
-                inclusion: Dewiswch ie os oes gennych ddatganiad wedi’i lofnodi gan bartner eich cleient
-              legal_rep_no_partner_declaration_reason:
-                blank: Nodwch y rheswm na allwch gael datganiad wedi’i lofnodi gan y partner
-              legal_rep_first_name:
-                blank: Nodwch enw cyntaf
-              legal_rep_last_name:
-                blank: Nodwch enw olaf
-              legal_rep_telephone:
-                blank: Nodwch rif ffôn
-                invalid: Nodwch rif ffôn yn y fformat cywir
-              # fulfillment validation errors
-              crime_application:
-                invalid: Mae rhai manylion cais ar goll
-          steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
+        steps/income/income_payments_form:
+          attributes:
+            base:
+              none_selected: Dewiswch pa daliadau mae eich cleient yn eu cael, neu dewiswch 'Dydyn nhw ddim yn cael unrhyw un o'r taliadau hyn'
+        steps/income/income_payment_fieldset_form: &income_payment_fieldset_form
+          summary:
+            amount:
+              greater_than: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn rhif
+              blank: Rhowch swm y %{payment_type} mae eich cleient yn ei gael
+            details:
+              invalid: Does dim modd ychwanegu manylion ychwanegol ar gyfer %{payment_type}
+              blank: Rhowch y ffynonellau incwm eraill maen nhw'n eu cael
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael %{payment_type}
+              inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+          attributes:
+            amount:
+              greater_than: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn rhif
+              blank: Rhowch swm y %{payment_type} mae eich cleient yn ei gael
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael %{payment_type}
+              inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+            details:
+              blank: Rhowch y ffynonellau incwm eraill maen nhw'n eu cael
+              invalid: Does dim modd ychwanegu manylion ychwanegol ar gyfer %{payment_type}
+        steps/income/partner/income_payments_form:
+          attributes:
+            base:
+              none_selected: Dewiswch pa daliadau mae'r partner yn eu cael, neu dewiswch 'Dydyn nhw ddim yn cael unrhyw un o'r taliadau hyn'
+        steps/income/partner/income_payment_fieldset_form: *income_payment_fieldset_form
+        steps/income/income_benefits_form:
+          attributes:
+            base:
+              none_selected: Dewiswch pa fudd-daliadau mae eich cleient yn eu cael, neu dewiswch 'Dydyn nhw ddim yn cael unrhyw un o'r budd-daliadau hyn'
+        steps/income/income_benefit_fieldset_form: &income_benefit_fieldset_form
+          summary:
+            amount:
+              greater_than: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn rhif
+              blank: Rhowch swm y %{payment_type} mae eich cleient yn ei gael
+            details:
+              invalid: Does dim modd ychwanegu manylion ychwanegol ar gyfer %{payment_type}
+              blank: Nodwch pa fudd-daliadau maen nhw'n eu cael a’r swm
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael %{payment_type}
+              inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+          attributes:
+            amount:
+              greater_than: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} mae eich cleient yn ei gael fod yn rhif
+              blank: Rhowch swm y %{payment_type} mae eich cleient yn ei gael
+            details:
+              blank: Nodwch pa fudd-daliadau maen nhw'n eu cael a’r swm
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael %{payment_type}
+              inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+        steps/income/partner/income_benefits_form:
+          attributes:
+            base:
+              none_selected: Dewiswch pa fudd-daliadau mae'r partner yn eu cael, neu dewiswch 'Dydyn nhw ddim yn cael unrhyw un o'r budd-daliadau hyn'
+        steps/income/partner/income_benefit_fieldset_form: *income_benefit_fieldset_form
+        steps/income/manage_without_income_form:
+          attributes:
+            manage_without_income:
+              inclusion: Dewiswch sut maen nhw'n ymdopi heb incwm
+            manage_other_details:
+              blank: Rhowch fanylion sut maen nhw'n ymdopi heb incwm
+        steps/income/business_type_form:
+          attributes:
+            business_type:
+              inclusion: Dewiswch fath o fusnes
+        steps/income/businesses_summary_form:
+          attributes:
+            add_business:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu busnes arall
+        steps/income/businesses_form:
+          attributes:
+            trading_name:
+              blank: Rhowch enw masnachol y busnes
+            address_line_one:
+              blank: Rhowch linell cyfeiriad 1, sef yr adeilad a'r stryd fel arfer
+            city:
+              blank: Rhowch dref neu ddinas
+            country:
+              blank: Rhowch wlad
+            postcode:
+              blank: Rhowch god post
+        steps/income/business_nature_form:
+          attributes:
+            description:
+              blank: Rhowch ddisgrifiad o'r busnes
+        steps/income/business_start_date_form:
+          attributes:
+            trading_start_date:
+              blank: Rhowch y dyddiad y dechreuodd y busnes fasnachu
+              blank_day: Rhaid i’r dyddiad gynnwys diwrnod
+              blank_month: Rhaid i’r dyddiad gynnwys mis
+              blank_year: Rhaid i’r dyddiad gynnwys blwyddyn
+              blank_day_month: Rhaid i'r dyddiad gynnwys diwrnod a mis
+              blank_day_year: Rhaid i'r dyddiad gynnwys diwrnod a blwyddyn
+              blank_month_year: Rhaid i'r dyddiad gynnwys mis a blwyddyn
+              invalid: Rhowch ddyddiad dilys
+              invalid_day: Rhowch ddiwrnod dilys
+              invalid_month: Rhowch fis dilys
+              invalid_year: Rhowch flwyddyn ddilys
+              year_too_early: Mae'r dyddiad yn rhy bell yn y gorffennol
+              future_not_allowed: Rhaid i'r dyddiad fod heddiw neu yn y gorffennol
+        steps/income/business_additional_owners_form:
+          attributes:
+            has_additional_owners:
+              inclusion: Dewiswch ie neu na
+            additional_owners:
+              blank: Rhowch enwau'r bobl maen nhw mewn busnes gyda nhw
+        steps/income/business_employees_form:
+          attributes:
+            has_employees:
+              inclusion: Dewiswch ie neu na
+            number_of_employees:
+              not_a_number: Rhowch nifer y cyflogeion
+              greater_than: Dewiswch na os mai 0 yw nifer y cyflogeion
+        steps/income/business_financials_form:
+          attributes:
+            turnover_amount:
+              blank: Rhowch gyfanswm y trosiant
+            turnover_frequency:
+              inclusion: Dewiswch pa mor aml roedd y swm yma’n cael ei gynhyrchu
+            drawings_amount:
+              blank: Rhowch gyfanswm yr arian a dynnwyd allan
+            drawings_frequency:
+              inclusion: Dewiswch pa mor aml roedd y swm yma’n cael ei dynnu allan
+            profit_amount:
+              blank: Rhowch gyfanswm yr elw
+            profit_frequency:
+              inclusion: Dewiswch ar gyfer pa gyfnod roedd cyfanswm yr elw hwn
+        steps/income/business_salary_or_remuneration_form:
+          attributes:
+            salary_amount:
+              blank: Rhowch y swm
+              not_a_number: Rhowch y swm
+        steps/income/business_total_income_share_sales_form:
+          attributes:
+            total_income_share_sales_amount:
+              blank: Rhowch y swm
+              not_a_number: Rhowch y swm
+              greater_than: Rhaid i gyfanswm yr incwm o werthu cyfranddaliadau fod yn fwy na 0
+        steps/income/business_percentage_profit_share_form:
+          attributes:
+            percentage_profit_share:
+              not_a_number: Rhowch ganran
+              greater_than_or_equal_to: Rhaid i gyfran ganrannol yr elw fod yn rhif rhwng 0 a 100
+              less_than_or_equal_to: Rhaid i gyfran ganrannol yr elw fod yn rhif rhwng 0 a 100
+        steps/outgoings/housing_payment_type_form:
+          attributes:
+            housing_payment_type:
+              inclusion: Dewiswch pa daliad mae eich cleient yn ei dalu lle maen nhw fel arfer yn byw
+        steps/outgoings/mortgage_form:
+          attributes:
+            amount:
+              blank: Nodwch faint yw eu taliadau morgais, ar ôl didynnu'r Budd-dal Tai
+              greater_than: Rhaid i’w taliadau rhent fod yn fwy na 0
+              invalid: Rhaid i’w taliadau morgais, ar ôl didynnu Budd-dal Tai, fod yn rhif, fel 50
+              not_a_number: Rhaid i’w taliadau morgais, ar ôl didynnu Budd-dal Tai, fod yn rhif, fel 50
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n gwneud taliadau morgais
+              inclusion: Dewiswch pa mor aml maen nhw'n gwneud taliadau morgais
+        steps/outgoings/rent_form:
+          attributes:
+            amount:
+              blank: Nodwch faint o rent maen nhw’n ei dalu ar ôl didynnu Budd-dal Tai
+              greater_than: Rhaid i daliadau rhent fod yn fwy na 0
+              invalid: Rhaid i'r rhent maen nhw'n ei dalu, ar ôl didynnu Budd-dal Tai, fod yn rhif, fel 50
+              not_a_number: Rhaid i'r rhent maen nhw'n ei dalu, ar ôl didynnu Budd-dal Tai, fod yn rhif, fel 50
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n talu rhent
+              inclusion: Dewiswch pa mor aml maen nhw'n talu rhent
+        steps/outgoings/board_and_lodging_form:
+          attributes:
+            board_amount:
+              blank: Nodwch faint maen nhw’n ei dalu am fwyd a llety
+              invalid: Rhaid i’r taliadau am fwyd a llety fod yn rhif, fel 50
+              greater_than: Rhaid i’r taliadau am fwyd a llety fod yn fwy na 0
+            food_amount:
+              blank: Nodwch faint o'r taliad “bwyd a llety” sydd ar gyfer bwyd
+              invalid: Rhaid i’r taliadau am fwyd fod yn rhif, fel 50
+              greater_than_or_equal_to: Rhaid i’r taliadau am fwyd fod yn 0 neu’n fwy
+              more_than_board: Dydy’r taliadau am fwyd ddim yn gallu bod yn fwy na’r taliadau am fwyd a llety
+            frequency:
+              inclusion: Dewiswch pa mor aml maen nhw’n talu am “fwyd a llety”, ac am fwyd
+            payee_name:
+              blank: Rhowch enw’r unigolyn maen nhw’n ei dalu am fwyd a llety
+            payee_relationship_to_client:
+              blank: Nodwch eu perthynas
+        steps/outgoings/council_tax_form:
+          attributes:
+            pays_council_tax:
+              inclusion: Dewiswch ie os ydyn nhw’n talu Treth Gyngor lle maen nhw fel arfer yn byw
+              not_payable: Dydy’r dreth gyngor ddim yn daladwy os mai “bwyd a llety” yw eu math o dŷ
+            amount:
+              blank: Nodwch faint maen nhw'n ei dalu bob blwyddyn
+              greater_than: Rhaid i'r swm maen nhw'n ei dalu bob blwyddyn fod yn fwy na 0
+              invalid: Rhaid i’r swm maen nhw’n ei dalu bob blwyddyn fod yn rhif, fel 50
+              not_a_number: Rhaid i’r swm maen nhw’n ei dalu bob blwyddyn fod yn rhif, fel 50
+        steps/outgoings/outgoings_payments_form:
+          attributes:
+            base:
+              none_selected: Dewiswch pa daliadau maen nhw’n eu gwneud, neu dewiswch 'Dydyn nhw ddim yn gwneud unrhyw un o'r taliadau hyn'
+        steps/outgoings/outgoing_payment_fieldset_form:
+          summary:
+            amount:
+              blank: Rhowch swm y %{payment_type} maen nhw’n ei dalu
+              greater_than: Rhaid i swm y %{payment_type} maen nhw’n ei dalu fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} maen nhw’n ei dalu fod yn rhif
+        case_reference:
+          invalid: Does dim modd ychwanegu cyfeirnod_achos ar gyfer %{payment_type}
+          blank: Rhowch gyfeirnod achos y gorchymyn cynrychiolaeth droseddol neu'r dystysgrif sifil
+          frequency:
+            blank: Dewiswch pa mor aml maen nhw'n talu %{payment_type}
+            inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+          attributes:
+            amount:
+              blank: Rhowch swm y %{payment_type} maen nhw’n ei dalu
+              greater_than: Rhaid i swm y %{payment_type} maen nhw’n ei dalu fod yn fwy na 0
+              not_a_number: Rhaid i swm y %{payment_type} maen nhw’n ei dalu fod yn rhif
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n talu %{payment_type}
+              inclusion: Dydy amlder %{payment_type} ddim wedi'i gynnwys yn y rhestr - rhaid iddo fod naill ai Bob wythnos, Bob pythefnos, Bob 4 wythnos, Bob mis neu Bob blwyddyn
+            case_reference:
+              invalid: Does dim modd ychwanegu cyfeirnod_achos ar gyfer %{payment_type}
+              blank: Rhowch gyfeirnod achos y gorchymyn cynrychiolaeth droseddol neu'r dystysgrif sifil
+        steps/outgoings/income_tax_rate_form:
+          attributes:
+            income_tax_rate_above_threshold:
+              inclusion: Dewiswch ie os yw eich cleient wedi talu'r gyfradd dreth incwm o 40% yn ystod y 2 flynedd diwethaf
+        steps/outgoings/partner_income_tax_rate_form:
+          attributes:
+            partner_income_tax_rate_above_threshold:
+              inclusion: Dewiswch ie os yw'r partner wedi talu'r gyfradd dreth incwm o 40% yn ystod y 2 flynedd diwethaf
+        steps/outgoings/outgoings_more_than_income_form:
+          attributes:
+            outgoings_more_than_income:
+              inclusion: Dewiswch ie yw eu gwariant yn fwy na'u hincwm
+            how_manage:
+              blank: Nodwch sut maen nhw'n ymdopi os yw eu gwariant yn fwy na'u hincwm
+        steps/capital/property_type_form:
+          attributes:
+            property_type:
+              blank: Dewiswch pa asedau mae %{subject} yn berchen arnyn nhw neu'n berchen arnyn nhw’n rhannol yn y DU neu'r tu allan i'r DU, neu dewiswch 'Dydyn nhw ddim yn berchen ar unrhyw un o'r asedau hyn'
+        steps/capital/usual_property_details_form:
+          attributes:
+            action:
+              blank: Dewiswch beth rydych chi’n dymuno ei wneud nesaf
+              inclusion: Dewiswch beth rydych chi’n dymuno ei wneud nesaf
+        steps/capital/saving_type_form:
+          attributes:
+            saving_type:
+              blank: Dewiswch pa gynilion sydd gan %{subject} yn y DU neu'r tu allan i'r DU, neu dewiswch 'Does ganddyn nhw ddim un o'r cynilion hyn'
+        steps/capital/other_saving_type_form:
+          attributes:
+            saving_type:
+              blank: Dewiswch pa gynilion eraill sydd gan %{subject} yn y DU neu'r tu allan i'r DU
+        steps/capital/savings_form:
+          attributes:
+            provider_name:
+              blank: Rhowch enw’r banc, y gymdeithas adeiladu neu ddeiliad arall y cynilion
+            sort_code:
+              blank: Rhowch y cod didoli neu enw'r gangen
+            account_number:
+              blank: Rhowch rif y cyfrif
+            account_balance:
+              blank: Rhowch falans y cyfrif
+              not_a_number: Rhaid i falans y cyfrif fod yn rhif, fel 50
+            is_overdrawn:
+              inclusion: Dewiswch ie os yw'r cyfrif mewn dyled
+            are_wages_paid_into_account:
+              inclusion: Dewiswch ie os yw cyflog neu fudd-daliadau eich cleient yn cael eu talu i'r cyfrif hwn
+            are_partners_wages_paid_into_account:
+              inclusion: Dewiswch ie os yw cyflog neu fudd-daliadau'r partner yn cael eu talu i'r cyfrif hwn
+            ownership_type:
+              inclusion: Dewiswch enw pwy sydd ar y cyfrif
+            confirm_in_applicants_name:
+              confirm: Cadarnhau bod y cyfrif yn enw eich cleient
+        steps/capital/savings_summary_form:
+          attributes:
+            add_saving:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu cyfrif cynilo arall
+        steps/capital/premium_bonds_form:
+          attributes:
+            premium_bonds_total_value:
+              blank: Rhowch gyfanswm gwerth eu bondiau
+            premium_bonds_holder_number:
+              blank: Rhowch rif y deiliad
+            has_premium_bonds:
+              inclusion: Dewiswch ie os oes gan eich cleient unrhyw Fondiau Premiwm
+        steps/capital/partner_premium_bonds_form:
+          attributes:
+            partner_premium_bonds_total_value:
+              blank: Rhowch gyfanswm gwerth eu bondiau
+            partner_premium_bonds_holder_number:
+              blank: Rhowch rif y deiliad
+            partner_has_premium_bonds:
+              inclusion: Dewiswch ie os oes gan y partner unrhyw Fondiau Premiwm
+        steps/capital/other_property_type_form:
+          attributes:
+            property_type:
+              blank: Dewiswch pa asedau eraill mae %{subject] yn berchen arnyn nhw neu'n berchen arnyn nhw’n rhannol yn y DU neu'r tu allan i'r DU
+        steps/capital/trust_fund_form:
+          attributes:
+            trust_fund_amount_held:
+              blank: Rhowch y swm sydd yn y gronfa
+            trust_fund_yearly_dividend:
+              blank: Rhowch y difidend blynyddol
+            will_benefit_from_trust_fund:
+              inclusion: Dewiswch ie os yw eich cleient yn mynd i elwa o gronfa ymddiriedolaeth yn y DU neu'r tu allan i'r DU
+        steps/capital/partner_trust_fund_form:
+          attributes:
+            partner_trust_fund_amount_held:
+              blank: Rhowch y swm sydd yn y gronfa
+            partner_trust_fund_yearly_dividend:
+              blank: Rhowch y difidend blynyddol
+            partner_will_benefit_from_trust_fund:
+              inclusion: Dewiswch ie os yw'r partner yn mynd i elwa o gronfa ymddiriedolaeth yn y DU neu'r tu allan i'r DU
+        steps/capital/residential_form:
+          attributes:
+            house_type:
+              blank: Rhowch y math o eiddo
+            other_house_type:
+              blank: Rhowch y math o eiddo
+            bedrooms:
+              blank: Nodwch sawl ystafell wely sydd yno
+            value:
+              blank: Nodwch werth yr eiddo
+              not_a_number: Rhaid i werth yr eiddo fod yn rhif, fel 50
+            outstanding_mortgage:
+              blank: Nodwch faint sydd ar ôl i'w dalu ar y morgais
+              not_a_number: Rhaid i faint sydd ar ôl i'w dalu ar y morgais fod yn rhif, fel 50
+            percentage_applicant_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r cleient
+              invalid_with_no_partner: Mae angen i gyfanswm y canrannau a nodwyd fod yn 100%
+              blank: Rhowch ganran yr eiddo y mae eich cleient yn berchen arno
+              not_a_number: &property_client_percentage_error Rhaid i ganran yr eiddo y mae eich cleient yn berchen arno fod yn rhif rhwng 0 a 100
+              greater_than: Rhaid i ganran yr eiddo y mae eich cleient yn berchen arno fod yn fwy na 0 ac yn llai na 100
+              greater_than_or_equal_to: *property_client_percentage_error
+              less_than_or_equal_to: *property_client_percentage_error
+            percentage_partner_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r partner
+              blank: Rhowch ganran yr eiddo y mae partner eich cleient yn berchen arno
+              not_a_number: &property_partner_percentage_error Rhaid i ganran yr eiddo y mae partner eich cleient yn berchen arno fod yn rhif rhwng 0 a 100
+              greater_than_or_equal_to: *property_partner_percentage_error
+              less_than_or_equal_to: *property_partner_percentage_error
+            is_home_address:
+              blank: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
+              inclusion: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
+              invalid: Dim ond 1 cyfeiriad cartref mae modd i'r cleient ei gael
+            has_other_owners:
+              blank: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r eiddo
+              inclusion: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r eiddo
+              invalid_when_other_owners: Ni all rhywun arall fod yn berchen yn rhannol ar yr eiddo os yw'r ganran perchnogaeth yn dod i 100%
+        steps/capital/commercial_form:
+          attributes:
+            usage:
+              blank: Nodwch ar gyfer beth y defnyddir yr eiddo
+            value:
+              blank: Nodwch werth yr eiddo
+              not_a_number: Rhaid i werth yr eiddo fod yn rhif, fel 50
+            outstanding_mortgage:
+              blank: Nodwch faint sydd ar ôl i'w dalu ar y morgais
+              not_a_number: Rhaid i faint sydd ar ôl i'w dalu ar y morgais fod yn rhif, fel 50
+            percentage_applicant_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r cleient
+              blank: Rhowch ganran yr eiddo y mae eich cleient yn berchen arno
+              not_a_number: Rhaid i ganran yr eiddo y mae eich cleient yn berchen arno fod yn rhif rhwng 0 a 100
+              greater_than: Rhaid i ganran yr eiddo y mae eich cleient yn berchen arno fod yn fwy na 0 ac yn llai na 100
+              greater_than_or_equal_to: *property_client_percentage_error
+              less_than_or_equal_to: *property_client_percentage_error
+            percentage_partner_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r partner
+              blank: Rhowch ganran yr eiddo y mae partner eich cleient yn berchen arno
+              not_a_number: Rhaid i ganran yr eiddo y mae partner eich cleient yn berchen arno fod yn rhif rhwng 0 a 100
+              greater_than_or_equal_to: *property_partner_percentage_error
+              less_than_or_equal_to: *property_partner_percentage_error
+            is_home_address:
+              blank: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
+              inclusion: Dewiswch ie os yw cyfeiriad yr eiddo yr un fath â chyfeiriad cartref eich cleient
+              invalid: Dim ond 1 cyfeiriad cartref mae modd i'r cleient ei gael
+            has_other_owners:
+              blank: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r eiddo
+              inclusion: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r eiddo
+              invalid_when_other_owners: Ni all rhywun arall fod yn berchen yn rhannol ar yr eiddo os yw'r ganran perchnogaeth yn dod i 100%
+        steps/capital/land_form:
+          attributes:
+            size_in_acres:
+              blank: Rhowch faint y tir mewn erwau
+              not_a_number: Rhaid i faint y tir mewn erwau fod yn rhif, fel 50
+            usage:
+              blank: Nodwch sut mae’r tir yn cael ei ddefnyddio
+            value:
+              blank: Nodwch werth y tir
+              not_a_number: Rhaid i werth y tir fod yn rhif, fel 50
+            outstanding_mortgage:
+              blank: Nodwch faint sydd ar ôl i'w dalu ar y morgais
+              not_a_number: Rhaid i faint sydd ar ôl i'w dalu ar y morgais fod yn rhif, fel 50
+            percentage_applicant_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r cleient
+              blank: Rhowch ganran y tir y mae eich cleient yn berchen arno
+              not_a_number: &land_client_percentage_error Rhaid i ganran y tir sy’n eiddo i’ch cleient fod yn rhif rhwng 0 a 100
+              greater_than: Rhaid i ganran y tir sy’n eiddo i’ch cleient fod yn fwy na 0 ac yn llai na 100
+              greater_than_or_equal_to: *land_client_percentage_error
+              less_than_or_equal_to: *land_client_percentage_error
+            percentage_partner_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy'n eiddo i'r partner
+              blank: Rhowch ganran y tir y mae partner eich cleient yn berchen arno
+              not_a_number: &land_partner_percentage_error Rhaid i ganran y tir sy’n eiddo i bartner eich cleient fod yn rhif rhwng 0 a 100
+              greater_than_or_equal_to: *land_partner_percentage_error
+              less_than_or_equal_to: *land_partner_percentage_error
+            is_home_address:
+              blank: Dewiswch ie os yw cyfeiriad y tir yr un fath â chyfeiriad cartref eich cleient
+              inclusion: Dewiswch ie os yw cyfeiriad y tir yr un fath â chyfeiriad cartref eich cleient
+              invalid: Dim ond 1 cyfeiriad cartref mae modd i'r cleient ei gael
+            has_other_owners:
+              blank: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r tir
+              inclusion: Dewiswch ie os oes unrhyw un arall yn berchen ar ran o'r tir
+              invalid_when_other_owners: §Ni all rhywun arall fod yn berchen yn rhannol ar yr eiddo os yw'r ganran perchnogaeth yn dod i 100%
+        steps/capital/property_address_form:
+          attributes:
+            address_line_one:
+              blank: Rhowch linell cyfeiriad 1, sef yr adeilad a'r stryd fel arfer
+            city:
+              blank: Rhowch dref neu ddinas
+            country:
+              blank: Rhowch wlad
+            postcode:
+              blank: Rhowch god post
+        steps/income/client/employer_details_form:
+          attributes:
+            employer_name:
+              blank: Rhowch enw’r cyflogwr
+            address_line_one:
+              blank: Rhowch linell cyfeiriad 1, sef yr adeilad a'r stryd fel arfer
+            city:
+              blank: Rhowch dref neu ddinas
+            country:
+              blank: Rhowch wlad
+            postcode:
+              blank: Rhowch god post
+        steps/income/partner/employer_details_form:
+          attributes:
+            employer_name:
+              blank: Rhowch enw’r cyflogwr
+            address_line_one:
+              blank: Rhowch linell cyfeiriad 1, sef yr adeilad a'r stryd fel arfer
+            city:
+              blank: Rhowch dref neu ddinas
+            country:
+              blank: Rhowch wlad
+            postcode:
+              blank: Rhowch god post
+        steps/capital/property_owner_fieldset_form:
+          summary: &shared_property_owner_errors
+            name:
+              # TODO: Change text to -> Enter the name of the %{index} other owner
+              blank: Rhowch enw'r perchennog arall
+            relationship:
+              blank: Nodwch eu perthynas â'ch cleient
+              inclusion: Nodwch eu perthynas â'ch cleient
+            other_relationship:
+              blank: Nodwch eu perthynas
+            percentage_owned:
+              blank: Rhowch ganran y tir maen nhw'n berchen arno
+              not_a_number: Rhowch ganran y tir maen nhw'n berchen arno
+              greater_than: Rhaid i ganran yr eiddo maen nhw’n berchen arno fod yn rhif sy'n fwy na 0 ac yn llai na 100
+              less_than: Rhaid i ganran yr eiddo maen nhw’n berchen arno fod yn rhif sy'n fwy na 0 ac yn llai na 100
+          attributes: *shared_property_owner_errors
+        steps/capital/property_owners_form:
+          summary:
+            percentage_owned:
+              invalid: Mae angen i'r canrannau a nodwyd fod yn 100% - gwiriwch y ganran sy’n eiddo i’r perchennog arall %{index}
+        steps/capital/properties_summary_form:
+          attributes:
+            add_property:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu ased arall
+        steps/capital/investment_type_form:
+          attributes:
+            investment_type:
+              blank: Dewiswch pa fuddsoddiadau sydd gan %{subject} yn y DU neu'r tu allan i'r DU, neu dewiswch 'Does ganddyn nhw ddim un o'r buddsoddiadau hyn'
+        steps/capital/other_investment_type_form:
+          attributes:
+            investment_type:
+              blank: Dewiswch pa fuddsoddiadau eraill sydd gan %{subject} yn y DU neu'r tu allan i'r DU, neu dewiswch 'Does ganddyn nhw ddim un o'r buddsoddiadau hyn'
+        steps/capital/investments_form:
+          attributes:
+            description:
+              blank: Disgrifiwch y buddsoddiad
+            value:
+              blank: Rhowch werth y buddsoddiad
+              not_a_number: Rhaid i werth eu buddsoddiad fod yn rhif, fel 50
+            ownership_type:
+              inclusion: Dewiswch enw pwy sydd ar y cyfrif
+            confirm_in_applicants_name:
+              confirm: Cadarnhau bod y buddsoddiad yn enw eich cleient
+        steps/capital/investments_summary_form:
+          attributes:
+            add_investment:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu buddsoddiad arall
 
-          steps/income/client/employment_details_form:
-            attributes:
-              job_title:
-                blank: Nodwch deitl swydd eich cleient
-              amount:
-                blank: Nodwch eu cyflog neu gyflog wythnosol
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-                greater_than: Rhaid i’r cyflog neu gyflog wythnosol fod yn fwy na 0
-              before_or_after_tax:
-                blank: Dewiswch cyn neu ar ôl treth
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                blank: Dewiswch pa mor aml maent yn cael y taliad hwn
-                inclusion: Dewiswch pa mor aml maent yn cael y taliad hwn
-            summary:
-              job_title:
-                blank: Nodwch deitl swydd eich cleient
-              amount:
-                blank: Nodwch eu cyflog neu gyflog wythnosol
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-                greater_than: Rhaid i’r cyflog neu gyflog wythnosol fod yn fwy na 0
-              before_or_after_tax:
-                blank: Dewiswch cyn neu ar ôl treth
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                blank: Dewiswch pa mor aml maent yn cael y taliad hwn
-                inclusion: Dewiswch pa mor aml maent yn cael y taliad hwn
-          steps/income/partner/employment_details_form:
-            attributes:
-              job_title:
-                blank: Nodwch deitl eu swydd
-              amount:
-                blank: Nodwch eu cyflog neu gyflog wythnosol
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-                greater_than: Rhaid i’r cyflog neu gyflog wythnosol fod yn fwy na 0
-              before_or_after_tax:
-                blank: Dewiswch cyn neu ar ôl treth
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                blank: Dewiswch pa mor aml maent yn cael y taliad hwn
-                inclusion: Dewiswch pa mor aml maent yn cael y taliad hwn
-            summary:
-              job_title:
-                blank: Nodwch deitl eu swydd
-              amount:
-                blank: Nodwch eu cyflog neu gyflog wythnosol
-                not_a_number: Nodwch eu cyflog neu gyflog wythnosol
-                greater_than: Rhaid i’r cyflog neu gyflog wythnosol fod yn fwy na 0
-              before_or_after_tax:
-                blank: Dewiswch cyn neu ar ôl treth
-                inclusion: Dewiswch cyn neu ar ôl treth
-              frequency:
-                blank: Dewiswch pa mor aml maent yn cael y taliad hwn
-                inclusion: Dewiswch pa mor aml maent yn cael y taliad hwn
-          steps/income/client/deductions_form:
-            attributes:
-              base:
-                none_selected: Dewiswch ac ysgrifennwch ddidyniad neu dewiswch nad oes gan eich cleient unrhyw ddidyniadau o’i gyflog
-          steps/income/partner/deductions_form:
-            attributes:
-              base:
-                none_selected: Dewiswch ac ysgrifennwch ddidyniad neu dewiswch nad oes gan eich cleient unrhyw ddidyniadau o’i gyflog
-          steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
-            summary:
-              amount:
-                blank: Nodwch faint sy’n cael ei ddidynnu ar gyfer %{deduction_type}
-                blank_alt: Nodwch swm %{deduction_type}
-                not_a_number: Nodwch swm
-                greater_than: Rhaid i’r swm fod yn fwy na 0
-              frequency:
-                blank:
-                  one: Dewiswch pa mor aml mae %{deduction_type} yn cael ei ddidynnu
-                  other: Dewiswch pa mor aml mae %{deduction_type} yn cael eu didynnu
-                inclusion: Dewiswch pa mor aml mae’r swm yn cael ei ddidynnu
-              details:
-                blank: Nodwch fanylion didyniadau eraill
-                invalid: Nid oes angen manylion
-            attributes:
-              amount:
-                blank: Nodwch faint sy’n cael ei ddidynnu ar gyfer %{deduction_type}
-                blank_alt: Nodwch swm %{deduction_type}
-                not_a_number: Nodwch swm
-                greater_than: Rhaid i’r swm fod yn fwy na 0
-              frequency:
-                blank:
-                  one: Dewiswch pa mor aml mae %{deduction_type} yn cael ei ddidynnu
-                  other: Dewiswch pa mor aml mae %{deduction_type} yn cael eu didynnu
-                inclusion: Dewiswch pa mor aml mae’r swm yn cael ei ddidynnu
-              details:
-                blank: Nodwch fanylion didyniadau eraill
-                invalid: Nid oes angen manylion
-          steps/income/partner/deduction_fieldset_form: *deduction_fieldset_form
-          steps/evidence/upload_form:
-            attributes:
-              documents:
-                blank: Rhaid i chi ddarparu’r dystiolaeth ofynnol
+        steps/capital/has_national_savings_certificates_form:
+          attributes:
+            has_national_savings_certificates:
+              blank: Dewiswch ie os oes gan %{subject} unrhyw Dystysgrifau Cynilion Cenedlaethol
+        steps/capital/national_savings_certificates_form:
+          attributes:
+            holder_number:
+              blank: Rhowch rif cwsmer neu rif deiliad
+              invalid: Rhowch rif cwsmer neu rif deiliad dilys
+            certificate_number:
+              blank: Rhowch rif y dystysgrif
+            value:
+              blank: Rhowch werth y dystysgrif
+              not_a_number: Rhaid i werth eu tystysgrif fod yn rhif, fel 50
+            ownership_type:
+              inclusion: Dewiswch pwy sy'n berchen ar y dystysgrif
+            confirm_in_applicants_name:
+              confirm: Cadarnhau mai eich cleient biau'r dystysgrif
+        steps/capital/national_savings_certificates_summary_form:
+          attributes:
+            add_national_savings_certificate:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu Tystysgrif Cynilion Cenedlaethol
+        steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
+        steps/capital/answers_form:
+          attributes:
+            base:
+              incomplete_records: Mae angen i chi ateb pob cwestiwn cyn i chi allu cyflwyno'r cais
+            has_no_other_assets:
+              blank: Cadarnhau a oes unrhyw asedau neu gyfalaf arall
+        steps/submission/more_information_form:
+          attributes:
+            additional_information:
+              blank: Rhowch y manylion y mae angen i chi eu hychwanegu at y cais
+            additional_information_required:
+              inclusion: Dewiswch ie os ydych chi am ychwanegu unrhyw wybodaeth arall
+        steps/submission/declaration_form:
+          attributes:
+            legal_rep_has_partner_declaration:
+              inclusion: Dewiswch ie os oes gennych ddatganiad wedi'i lofnodi gan bartner eich cleient
+            legal_rep_no_partner_declaration_reason:
+              blank: Rhowch y rheswm pam nad oeddech yn gallu cael datganiad wedi'i lofnodi gan y partner
+            legal_rep_first_name:
+              blank: Rhowch enw cyntaf
+            legal_rep_last_name:
+              blank: Rhowch gyfenw
+            legal_rep_telephone:
+              blank: Rhowch rif ffôn
+              invalid: Rhowch rif ffôn yn y fformat cywir
+            # fulfillment validation errors
+            crime_application:
+              invalid: Mae rhai manylion y cais ar goll
+        steps/submission/cannot_submit_without_nino: *WILL_ENTER_NINO_VALIDATION
+
+        steps/income/client/employment_details_form:
+          attributes:
+            job_title:
+              blank: Rhowch deitl swydd eich cleient
+            amount:
+              blank: Rhowch eu cyflog
+              not_a_number: Rhowch eu cyflog
+              greater_than: Rhaid i'r cyflog fod yn fwy na 0
+            before_or_after_tax:
+              blank: Dewiswch cyn neu ar ôl treth
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+          summary:
+            job_title:
+              blank: Rhowch deitl swydd eich cleient
+            amount:
+              blank: Rhowch eu cyflog
+              not_a_number: Rhowch eu cyflog
+              greater_than: Rhaid i'r cyflog fod yn fwy na 0
+            before_or_after_tax:
+              blank: Dewiswch cyn neu ar ôl treth
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+        steps/income/partner/employment_details_form:
+          attributes:
+            job_title:
+              blank: Rhowch eu teitl swydd
+            amount:
+              blank: Rhowch eu cyflog
+              not_a_number: Rhowch eu cyflog
+              greater_than: Rhaid i'r cyflog fod yn fwy na 0
+            before_or_after_tax:
+              blank: Dewiswch cyn neu ar ôl treth
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+          summary:
+            job_title:
+              blank: Rhowch eu teitl swydd
+            amount:
+              blank: Rhowch eu cyflog
+              not_a_number: Rhowch eu cyflog
+              greater_than: Rhaid i'r cyflog fod yn fwy na 0
+            before_or_after_tax:
+              blank: Dewiswch cyn neu ar ôl treth
+              inclusion: Dewiswch cyn neu ar ôl treth
+            frequency:
+              blank: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+              inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
+        steps/income/client/deductions_form:
+          attributes:
+            base:
+              none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog eich cleient
+        steps/income/partner/deductions_form:
+          attributes:
+            base:
+              none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog eich cleient
+        steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
+          summary:
+            amount:
+              blank: Nodwch faint o %{deduction_type} sy’n cael ei ddidynnu
+              blank_alt: Rhowch swm y %{deduction_type}
+              not_a_number: Rhowch swm
+              greater_than: Rhaid i'r swm fod yn fwy na 0
+            frequency:
+              blank:
+                one: Dewiswch pa mor aml mae’r %{deduction_type} yn cael ei ddidynnu
+                other: Dewiswch pa mor aml mae’r %{deduction_type} yn cael eu didynnu
+              inclusion: Dewiswch pa mor aml mae'r swm yn cael ei ddidynnu
+            details:
+              blank: Rhowch fanylion didyniadau eraill
+              invalid: Does dim angen manylion
+          attributes:
+            amount:
+              blank: Nodwch faint o %{deduction_type} sy’n cael ei ddidynnu
+              blank_alt: Rhowch swm y %{deduction_type}
+              not_a_number: Rhowch swm
+              greater_than: Rhaid i'r swm fod yn fwy na 0
+            frequency:
+              blank:
+                one: Dewiswch pa mor aml mae’r %{deduction_type} yn cael ei ddidynnu
+                other: Dewiswch pa mor aml mae’r %{deduction_type} yn cael eu didynnu
+              inclusion: Dewiswch pa mor aml mae'r swm yn cael ei ddidynnu
+            details:
+              blank: Rhowch fanylion didyniadau eraill
+              invalid: Does dim angen manylion
+        steps/income/partner/deduction_fieldset_form: *deduction_fieldset_form
+        steps/evidence/upload_form:
+          attributes:
+            documents:
+              blank: Rhaid i chi ddarparu'r dystiolaeth ofynnol
 

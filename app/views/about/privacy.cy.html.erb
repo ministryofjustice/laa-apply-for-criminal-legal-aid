@@ -1,0 +1,279 @@
+<%# N.B. Update the updated at date at the bottom of this file when modifying this page %>
+
+<% title 'Hysbysiad preifatrwydd' %>
+
+<% if FeatureFlags.google_analytics.enabled? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-!-margin-bottom-9">
+        <h1 class="govuk-heading-xl">Hysbysiad preifatrwydd</h1>
+        <p class="govuk-body">Darperir y gwasanaeth ‘<%= service_name %>’ gan yr
+          <%= link_to 'Asiantaeth Cymorth Cyfreithiol (LAA)', 'https://www.gov.uk/government/organisations/legal-aid-agency/', rel: 'external' %>,
+          sy’n rhan o’r Weinyddiaeth Gyfiawnder.
+        </p>
+
+        <p class="govuk-body">Mae'r hysbysiad preifatrwydd hwn yn ymdrin â sut mae'r gwasanaeth hwn yn casglu data personol gan ddarparwyr sy'n cyflwyno gwybodaeth ar ran eu cleientiaid.</p>
+
+        <p class="govuk-body">
+          I gael manylion sut mae'r Asiantaeth Cymorth Cyfreithiol yn casglu ac yn rheoli'r data personol a gyflwynir yn y cais, edrychwch ar
+          <%= link_to 'hysbysiad preifatrwydd yr Asiantaeth Cymorth Cyfreithiol', Settings.laa_privacy_notice_url, rel: 'external' %>.
+        </p>
+
+        <h2 class="govuk-heading-l">Pa ddata rydyn ni’n ei gasglu</h2>
+
+        <p class="govuk-body">Rydyn ni’n casglu:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              eich manylion mewngofnodi i’r porth a’r rhif cyfrif swyddfa a ddarparwyd gan wasanaeth Porth yr Asiantaeth Cymorth Cyfreithiol
+              (<%= link_to 'Telerau ac amodau Porth yr Asiantaeth Cymorth Cyfreithiol', Settings.portal_terms_url, rel: 'external' %>)
+            </li>
+            <li>
+              eich cyfeiriad Protocol Rhyngrwyd (IP)
+            </li>
+            <li>
+              manylion pa fersiwn o
+              <%= link_to 'borwr gwe', 'https://www.gov.uk/support/browsers', rel: 'external' %>
+              y gwnaethoch ei ddefnyddio
+            </li>
+            <li>
+              gwybodaeth am sut rydych chi’n defnyddio’r wefan, gan ddefnyddio <%= link_to 'cwcis', cookies_path %> a thechnegau tagio tudalennau
+            </li>
+          </ul>
+        </div>
+
+        <p class="govuk-body">Os ydych wedi rhoi eich caniatâd, rydyn ni’n defnyddio
+          <%= link_to 'cwcis Google Analytics', 'https://support.google.com/analytics/topic/2919631', rel: 'external' %>.
+          Mae Google Analytics yn prosesu gwybodaeth am y canlynol:
+        </p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>y tudalennau rydych chi’n ymweld â nhw yn y gwasanaeth hwn</li>
+            <li>faint o amser rydych chi’n ei dreulio ar bob tudalen</li>
+            <li>sut daethoch chi at y gwasanaeth hwn</li>
+            <li>beth rydych chi’n ei glicio wrth ddefnyddio'r gwasanaeth</li>
+          </ul>
+        </div>
+
+        <p class="govuk-body">Rydyn ni’n gwneud yn siŵr nad yw data Google Analytics yn datgelu pwy ydych chi. Dydyn ni ddim yn trosglwyddo unrhyw ran o’ch data personol i Google Analytics, a dydy Google Analytics ddim yn storio eich cyfeiriad IP.</p>
+        <p class="govuk-body">Fyddwn ni ddim yn cyfuno gwybodaeth ddadansoddi â setiau data eraill mewn ffordd a fyddai’n datgelu pwy ydych chi.</p>
+        <p class="govuk-body">Dysgwch <%= link_to 'sut rydyn ni’n defnyddio Google Analytics a chwcis eraill ar y gwasanaeth hwn', cookies_path %>.</p>
+
+        <h2 class="govuk-heading-l">Pam ein bod yn casglu eich data</h2>
+
+        <p class="govuk-body">Rydyn ni’n casglu eich data er mwyn:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>casglu adborth i wella ein gwasanaethau</li>
+            <li>monitro sut caiff y wefan ei defnyddio i ganfod bygythiadau i ddiogelwch</li>
+          </ul>
+        </div>
+
+        <p class="govuk-body">Rydyn ni’n defnyddio’r wybodaeth rydyn ni’n ei chasglu drwy Google Analytics i weld sut rydych chi’n defnyddio’r gwasanaeth ac i weld pa mor dda mae’n perfformio ar eich dyfais.</p>
+        <p class="govuk-body">Rydyn ni’n gwneud hyn i helpu i wneud y canlynol:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>sicrhau bod y gwasanaeth yn diwallu anghenion ei ddefnyddwyr</li>
+            <li>gwella’r gwasanaeth</li>
+            <li>gwella perfformiad, er enghraifft, gwella amser llwytho tudalennau a’r data a ddefnyddir</li>
+          </ul>
+        </div>
+
+        <h2 class="govuk-heading-l">Ein sail gyfreithiol dros ddefnyddio eich data</h2>
+        <p class="govuk-body">Y sail gyfreithiol dros brosesu data personol mewn perthynas â diogelwch y wefan yw ein buddiannau dilys ni a buddiannau dilys ein defnyddwyr, i sicrhau diogelwch ac uniondeb y gwasanaeth hwn.</p>
+        <p class="govuk-body">Eich caniatâd chi yw’r sail gyfreithiol dros brosesu data a gesglir gyda Google Analytics yn y gwasanaeth hwn.</p>
+
+        <h2 class="govuk-heading-l">Beth rydyn ni’n ei wneud gyda’ch data</h2>
+
+        <p class="govuk-body">Mae'r data rydyn ni’n ei gasglu gyda chwcis Google Analytics yn cael ei drosglwyddo a’i storio gyda Google lle rydyn ni’n ei ddadansoddi gyda meddalwedd Google Analytics (Google Analytics 4). Dydyn ni ddim yn caniatáu i Google ddefnyddio na rhannu’r data hwn at ei ddibenion ei hun.</p>
+        <p class="govuk-body">Ni fydd unrhyw wybodaeth a roddwch yn cael ei rhannu y tu allan i’r Weinyddiaeth Gyfiawnder, heblaw gyda darparwyr TG y Weinyddiaeth Gyfiawnder sy’n darparu gwasanaethau sy’n helpu i redeg y gwasanaeth hwn.</p>
+
+        <p class="govuk-body">Ni fyddwn yn gwneud y canlynol:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>gwerthu na rhentu eich data i drydydd partïon</li>
+            <li>rhannu data â thrydydd partïon at ddibenion marchnata</li>
+          </ul>
+        </div>
+
+        <h2 class="govuk-heading-l">Am ba mor hir y byddwn yn cadw eich data</h2>
+
+        <p class="govuk-body">Byddwn ond yn cadw eich data cyhyd ag y bydd ei angen at y dibenion a nodir ar y dudalen hon.</p>
+        <p class="govuk-body">Byddwn yn cadw cofnodion cryno hirdymor o gysylltiadau â'r gwasanaeth, ond mae’r cofnodion hyn yn gwbl ddienw.</p>
+        <p class="govuk-body">Caiff hyn ei reoli yn unol â
+          <%= link_to 'rhestrau cadw a gwaredu Cofnodion Pencadlys y Weinyddiaeth Gyfiawnder',
+                      'https://www.gov.uk/government/publications/record-retention-and-disposition-schedules'%>.
+        </p>
+
+        <h2 class="govuk-heading-l">Ble caiff eich data ei brosesu a’i storio</h2>
+        <p class="govuk-body">Rydyn ni’n dylunio, yn creu ac yn rhedeg ein systemau i wneud yn siŵr bod eich data mor ddiogel â phosibl ym mhob cam, pan gaiff ei brosesu a phan gaiff ei storio. Caiff yr holl ddata personol ei brosesu yn yr Ardal Economaidd Ewropeaidd.</p>
+
+        <h2 class="govuk-heading-l">Sut rydyn ni’n diogelu eich data ac yn ei gadw’n ddiogel</h2>
+        <p class="govuk-body">Rydyn ni wedi ymrwymo i wneud popeth o fewn ein gallu i gadw eich data’n ddiogel. Rydyn ni wedi sefydlu systemau a phrosesau i atal mynediad neu ddatgelu eich data heb awdurdod - er enghraifft, rydyn ni’n diogelu eich data gan ddefnyddio lefelau amrywiol o amgryptio.</p>
+
+        <h2 class="govuk-heading-l">Cysylltu â ni neu wneud cwyn</h2>
+
+        <p class="govuk-body">Cysylltwch â ni drwy anfon e-bost at <%= mail_to Settings.support_email %> os ydych chi:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>yn cael cwestiwn am unrhyw beth yn yr hysbysiad preifatrwydd hwn</li>
+            <li>yn meddwl bod eich data personol wedi cael ei drin neu ei ddefnyddio’n amhriodol</li>
+          </ul>
+        </div>
+
+        <h3 class="govuk-heading-m">Swyddog Diogelu Data (DPO)</h3>
+        <p class="govuk-body">Gallwch hefyd gysylltu â’n DPO:</p>
+        <p class="govuk-body"><%= mail_to 'dataprotection@justice.gov.uk' %></p>
+        <p class="govuk-body">
+          Data Protection Officer<br>
+          Ministry of Justice<br>
+          102 Petty France<br>
+          London<br>
+          SW1H 9AJ
+        </p>
+
+        <p class="govuk-body">Y Swyddog Diogelu Data sy’n arwain ar bob agwedd ar ddiogelu data ar gyfer y Weinyddiaeth Gyfiawnder.</p>
+
+        <h3 class="govuk-heading-m">Y Comisiynydd Gwybodaeth</h3>
+        <p class="govuk-body">Pan fyddwn yn gofyn i chi am wybodaeth, byddwn yn cydymffurfio â’r gyfraith. Os ydych chi’n credu bod eich gwybodaeth bersonol wedi cael ei thrin yn anghywir, gallwch gysylltu â’r Comisiynydd Gwybodaeth i gael cyngor annibynnol ar ddiogelu data:</p>
+        <p class="govuk-body"><%= mail_to 'icocasework@ico.org.uk' %></p>
+        <p class="govuk-body">Ffôn: 0303 123 1113</p>
+        <p class="govuk-body">Ffôn testun: 01625 545860</p>
+        <p class="govuk-body">Dydd Llun i ddydd Gwener 9am tan 4:30pm</p>
+        <p class="govuk-body">
+          <%= link_to 'Costau galwadau', 'https://www.gov.uk/call-charges', rel: 'external' %>
+        </p>
+        <p class="govuk-body">
+          Information Commissioner’s Office<br>
+          Wycliffe House<br>
+          Water Lane<br>
+          Wilmslow<br>
+          SK9 5AF<br>
+        </p>
+
+        <h2 class="govuk-heading-l">Newidiadau i’r polisi hwn</h2>
+
+        <p class="govuk-body">Efallai y byddwn yn newid yr hysbysiad preifatrwydd hwn. Os felly, bydd y dyddiad ‘diweddarwyd ddiwethaf’ ar waelod y dudalen hon hefyd yn newid. Bydd unrhyw newidiadau i’r hysbysiad preifatrwydd hwn yn berthnasol i chi a’ch data ar unwaith.</p>
+      </div>
+      <div class="app-c-updated-date">
+        <%# TODO Implement non-hardcoded solution %>
+
+        <p class="govuk-body-s">Diweddarwyd ddiwethaf 20 Mehefin 2023</p>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-!-margin-bottom-9">
+        <h1 class="govuk-heading-xl">Hysbysiad preifatrwydd</h1>
+        <p class="govuk-body">Darperir y gwasanaeth ‘<%= service_name %>’ gan yr
+          <%= link_to 'Asiantaeth Cymorth Cyfreithiol (LAA)', 'https://www.gov.uk/government/organisations/legal-aid-agency/', rel: 'external' %>,
+          sy’n rhan o’r Weinyddiaeth Gyfiawnder.
+        </p>
+
+        <p class="govuk-body">Mae'r hysbysiad preifatrwydd hwn yn ymdrin â sut mae'r gwasanaeth hwn yn casglu data personol gan ddarparwyr sy'n cyflwyno gwybodaeth ar ran eu cleientiaid.</p>
+
+        <p class="govuk-body">
+          I gael manylion sut mae'r Asiantaeth Cymorth Cyfreithiol yn casglu ac yn rheoli'r data personol a gyflwynir yn y cais, edrychwch ar
+          <%= link_to 'hysbysiad preifatrwydd yr Asiantaeth Cymorth Cyfreithiol', Settings.laa_privacy_notice_url, rel: 'external' %>.
+        </p>
+
+        <h2 class="govuk-heading-l">Pa ddata rydyn ni’n ei gasglu</h2>
+
+        <p class="govuk-body">Rydyn ni’n casglu:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>
+              eich manylion mewngofnodi a rhif cyfrif swyddfa ar gyfer gwasanaethau cymorth cyfreithiol a ddarperir gan yr LAA
+            </li>
+            <li>
+              eich cyfeiriad Protocol Rhyngrwyd (IP)
+            </li>
+            <li>
+              ffeiliau o’r enw <%= link_to 'cwcis', cookies_path %> i gadw eich cynnydd presennol ar eich dyfais ac i dracio cyfnodau segur
+            </li>
+          </ul>
+        </div>
+
+        <h2 class="govuk-heading-l">Ein sail gyfreithiol dros brosesu’ch data</h2>
+        <p class="govuk-body">Y sail gyfreithiol dros brosesu data personol mewn perthynas â diogelwch y wefan yw ein buddiannau dilys ni a buddiannau dilys ein defnyddwyr, i sicrhau diogelwch ac uniondeb y gwasanaeth hwn.</p>
+
+        <h2 class="govuk-heading-l">Beth rydyn ni’n ei wneud gyda’ch data</h2>
+        <p class="govuk-body">Ni fydd unrhyw wybodaeth a roddwch yn cael ei rhannu y tu allan i’r Weinyddiaeth Gyfiawnder, heblaw gyda darparwyr TG y Weinyddiaeth Gyfiawnder sy’n darparu gwasanaethau sy’n helpu i redeg y gwasanaeth hwn.</p>
+
+        <p class="govuk-body">Ni fyddwn yn gwneud y canlynol:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>gwerthu na rhentu data i drydydd partïon</li>
+            <li>rhannu data â thrydydd partïon at ddibenion marchnata</li>
+          </ul>
+        </div>
+
+        <h2 class="govuk-heading-l">Am ba mor hir y byddwn yn cadw’ch data</h2>
+
+        <p class="govuk-body">Byddwn ond yn cadw’ch data cyhyd ag y bydd ei angen at y dibenion a nodir ar y dudalen hon.</p>
+        <p class="govuk-body">Byddwn yn cadw cofnodion cryno hirdymor o gysylltiadau â'r gwasanaeth, ond mae’r cofnodion hyn yn gwbl ddienw.</p>
+        <p class="govuk-body">Caiff hyn ei reoli yn unol â
+          <%= link_to 'rhestrau cadw a gwaredu Cofnodion Pencadlys y Weinyddiaeth Gyfiawnder',
+                      'https://www.gov.uk/government/publications/record-retention-and-disposition-schedules'%>.
+        </p>
+
+        <h2 class="govuk-heading-l">Ble caiff eich data ei brosesu a’i storio</h2>
+        <p class="govuk-body">Rydyn ni’n dylunio, yn creu ac yn rhedeg ein systemau i wneud yn siŵr bod eich data mor ddiogel â phosibl ym mhob cam, pan gaiff ei brosesu a phan gaiff ei storio. Caiff yr holl ddata personol ei brosesu yn yr Ardal Economaidd Ewropeaidd.</p>
+
+        <h2 class="govuk-heading-l">Sut rydyn ni’n diogelu’ch data ac yn ei gadw’n ddiogel</h2>
+        <p class="govuk-body">Rydyn ni wedi ymrwymo i wneud popeth o fewn ein gallu i gadw’ch data’n ddiogel. Rydyn ni wedi sefydlu systemau a phrosesau i atal mynediad neu ddatgelu’ch data heb awdurdod - er enghraifft, rydyn ni’n diogelu’ch data gan ddefnyddio lefelau amrywiol o amgryptio.</p>
+
+        <h2 class="govuk-heading-l">Cysylltu â ni neu wneud cwyn</h2>
+
+        <p class="govuk-body">Cysylltwch â ni drwy anfon e-bost at <%= mail_to Settings.support_email %> os ydych chi:</p>
+        <div class="govuk-list">
+          <ul class="govuk-list govuk-list--bullet">
+            <li>yn cael cwestiwn am unrhyw beth yn yr hysbysiad preifatrwydd hwn</li>
+            <li>yn meddwl bod eich data personol wedi cael ei drin neu ei ddefnyddio’n amhriodol</li>
+          </ul>
+        </div>
+
+        <h3 class="govuk-heading-m">Swyddog Diogelu Data (DPO)</h3>
+        <p class="govuk-body">Gallwch hefyd gysylltu â’n DPO:</p>
+        <p class="govuk-body"><%= mail_to 'dataprotection@justice.gov.uk' %></p>
+        <p class="govuk-body">
+          Data Protection Officer<br>
+          Ministry of Justice<br>
+          102 Petty France<br>
+          London<br>
+          SW1H 9AJ
+        </p>
+
+        <p class="govuk-body">Y Swyddog Diogelu Data sy’n arwain ar bob agwedd ar ddiogelu data ar gyfer y Weinyddiaeth Gyfiawnder.</p>
+
+        <h3 class="govuk-heading-m">Y Comisiynydd Gwybodaeth</h3>
+        <p class="govuk-body">Pan fyddwn yn gofyn i chi am wybodaeth, byddwn yn cydymffurfio â’r gyfraith. Os ydych chi’n credu bod eich gwybodaeth bersonol wedi cael ei thrin yn anghywir, gallwch gysylltu â’r Comisiynydd Gwybodaeth i gael cyngor annibynnol ar ddiogelu data:</p>
+        <p class="govuk-body"><%= mail_to 'icocasework@ico.org.uk' %></p>
+        <p class="govuk-body">Ffôn: 0303 123 1113</p>
+        <p class="govuk-body">Ffôn testun: 01625 545860</p>
+        <p class="govuk-body">Dydd Llun i ddydd Gwener 9am tan 4:30pm</p>
+        <p class="govuk-body">
+          <%= link_to 'Costau galwadau', 'https://www.gov.uk/call-charges', rel: 'external' %>
+        </p>
+        <p class="govuk-body">
+          Information Commissioner’s Office<br>
+          Wycliffe House<br>
+          Water Lane<br>
+          Wilmslow<br>
+          SK9 5AF<br>
+        </p>
+
+        <h2 class="govuk-heading-l">Newidiadau i’r polisi hwn</h2>
+
+        <p class="govuk-body">Efallai y byddwn yn newid yr hysbysiad preifatrwydd hwn. Os felly, bydd y dyddiad ‘diweddarwyd ddiwethaf’ ar waelod y dudalen hon hefyd yn newid. Bydd unrhyw newidiadau i’r hysbysiad preifatrwydd hwn yn berthnasol i chi a’ch data ar unwaith.</p>
+      </div>
+      <div class="app-c-updated-date">
+        <%# TODO Implement non-hardcoded solution %>
+
+        <p class="govuk-body-s">Diweddarwyd ddiwethaf 04 Awst 2025</p>
+      </div>
+    </div>
+  </div>
+<% end %>

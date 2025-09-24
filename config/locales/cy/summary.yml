@@ -2,34 +2,34 @@ cy:
   summary:
     dictionary:
       absence_none: &absence_none "Dim"
-      absence_not_provided: &absence_not_provided "Heb ei ddarparu"
+      absence_not_provided: &absence_not_provided "Heb ddarparu"
       payment_answer_format: &payment_answer_format "%{amount} bob %{frequency} %{tax_status}"
       amount_and_frequency_answer: "%{amount} bob %{frequency}"
       YESNO: &YESNO
         "yes": "Ie"
         "no": "Na"
       PASSFAIL: &PASSFAIL
-        pass: Llwyddo
-        fail: Methu
+        pass: Wedi pasio
+        fail: Wedi methu
       OWNERSHIP_TYPE: &OWNERSHIP_TYPE
         applicant: "Cleient"
         applicant_and_partner: "Cleient a phartner"
         partner: "Partner"
       HOUSE_TYPE: &HOUSE_TYPE
-        bungalow: Bwnga
-        detached: Tŷ unol
+        bungalow: Byngalo
+        detached: Wedi datgysylltu
         flat_or_maisonette: Fflat neu maisonette
-        semidetached: Lled-unanol
-        terraced: Teras
+        semidetached: Tŷ pâr
+        terraced: Tŷ teras
       RELATIONSHIP: &RELATIONSHIP
-        business_associates: Cysylltiadau busnes
-        ex_partner: Cynbartner
-        family_members: Aelodau’r teulu
+        business_associates: Cymdeithion busnes
+        ex_partner: Cyn-bartner
+        family_members: Aelodau o’r teulu
         friends: Ffrindiau
-        house_builder: Adeiladwr tŷ
+        house_builder: Adeiladwr tai
         housing_association: Cymdeithas dai
         local_authority: Awdurdod lleol
-        partner_with_a_contrary_interest: Partner â budd gwrthgyferbyniol
+        partner_with_a_contrary_interest: Partner gyda buddiant croes
         property_company: Cwmni eiddo
       subjects:
         applicant: "cleient"
@@ -38,8 +38,8 @@ cy:
         partner: "partner"
       ownership:
         applicant: "eich cleient"
-        applicant_and_partner: "eich cleient a’u partner"
-        applicant_or_partner: "eich cleient neu’u partner"
+        applicant_and_partner: "eich cleient a'i bartner"
+        applicant_or_partner: "eich cleient neu ei bartner"
         partner: "y partner"
 
     change_link_html: Newid <span class="govuk-visually-hidden">%{a11y_question}</span>
@@ -52,8 +52,8 @@ cy:
       four_weeks: pedair wythnos
       month: mis
       annual: blwyddyn
-    does_not_get: Nid yw'n cael
-    does_not_pay: Nid yw'n talu
+    does_not_get: Ddim yn cael
+    does_not_pay: Ddim yn talu
     sections:
       application_details: Manylion y cais
       assets: "Cyfalaf: Asedau"
@@ -63,28 +63,28 @@ cy:
         self_employed: Busnes hunangyflogedig
         partnership: Partneriaeth
         director_or_shareholder: Cyfarwyddwr neu gyfranddaliwr
-      client_businesses: Busnesau'r cleient
-      partner_businesses: Busnesau'r partner
-      case_details: Manylion yr achos
+      client_businesses: Busnesau cleient
+      partner_businesses: Busnesau partner
+      case_details: Manylion achos
       case_details_and_offences: Manylion yr achos a throseddau
       client_details: Manylion y cleient
       contact_details: Manylion cyswllt y cleient
       partner_details: Manylion y partner
       codefendants: Cyd-ddiffynyddion
       codefendant: Cyd-ddiffynnydd
-      client_other_charge: "Taliadau eraill"
-      client_other_charge_explicit: "Taliadau eraill: cleient"
-      partner_other_charge: "Taliadau eraill: partner"
-      date_stamp_context: Manylion wedi'u nodi ar gyfer stamp dyddiad
+      client_other_charge: "Cyhuddiadau eraill"
+      client_other_charge_explicit: "Cyhuddiadau eraill: cleient"
+      partner_other_charge: "Cyhuddiadau eraill: partner"
+      date_stamp_context: Manylion a roddwyd ar gyfer stamp dyddiad
       details: Manylion
       dependants: Dibynyddion
       files: Ffeiliau
       offences: Troseddau
       offence: Trosedd
-      next_court_hearing: Gwrandawiad nesaf yn y llys
-      first_court_hearing: Gwrandawiad cyntaf yn y llys
-      justification_for_legal_aid: Rhesymu dros gymorth cyfreithiol
-      passport_justification_for_legal_aid: Rhesymu dros gymorth cyfreithiol
+      next_court_hearing: Y gwrandawiad llys nesaf
+      first_court_hearing: Gwrandawiad llys cyntaf
+      justification_for_legal_aid: Cyfiawnhad dros gymorth cyfreithiol
+      passport_justification_for_legal_aid: Cyfiawnhad dros gymorth cyfreithiol
       declarations: Datganiadau
       legal_representative_details: Cynrychiolydd cyfreithiol
       employment_details: Cyflogaeth
@@ -95,14 +95,14 @@ cy:
       income_benefits_details: Budd-daliadau
       partner_income_benefits_details: Budd-daliadau
       other_income_details:
-        one: "Ffynonellau eraill o incwm"
-        other: "Ffynonellau eraill o incwm: cleient a phartner"
+        one: "Ffynonellau incwm eraill"
+        other: "Ffynonellau incwm eraill: cleient a phartner"
       housing_payments: Taliadau tai
-      outgoings: Allanfeydd
+      outgoings: Gwariant
       outgoings_payments_details:
-        one: Taliadau a wnaed gan %{ownership}
-        other: Taliadau a wneir gan %{ownership}
-      other_outgoings_details: Allanfeydd eraill
+        one: Taliadau mae %{ownership} yn eu gwneud
+        other: Taliadau mae %{ownership} yn eu gwneud
+      other_outgoings_details: Gwariant arall
       supporting_evidence: Tystiolaeth a gwybodaeth ategol
       more_information: Rhagor o wybodaeth
       savings: Cynilion
@@ -110,9 +110,9 @@ cy:
       saving:
         bank: Cyfrif banc
         building_society: Cyfrif cymdeithas adeiladu
-        cash_isa: ISA arian parod
-        national_savings_or_post_office: Cyfrif Cynilion Cenedlaethol neu Swyddfa’r Post
-        other: Buddsoddiad arian parod arall
+        cash_isa: ISA arian
+        national_savings_or_post_office: Cynilion Cenedlaethol neu gyfrif Swyddfa’r Post
+        other: Buddsoddiad ariannol arall
       partner_employment_details: Cyflogaeth
       premium_bonds: Bondiau Premiwm
       partner_premium_bonds: Bondiau Premiwm
@@ -121,7 +121,7 @@ cy:
         bond: Bond buddsoddi
         pep: Cynllun ecwiti personol (PEP)
         share: Cyfranddaliadau
-        share_isa: ISA cyfranddaliadau
+        share_isa: ISA Cyfranddaliadau
         stock: Stociau, gan gynnwys giltiau a bondiau’r llywodraeth
         unit_trust: Ymddiriedolaeth unedol
         other: Buddsoddiad cyfandaliad arall
@@ -138,8 +138,8 @@ cy:
       property_owners:
         relationship:
           <<: *RELATIONSHIP
-      passporting_benefit_check: Gwiriad budd-dal pasbortio
-      passporting_benefit_check_partner: Gwiriad budd-dal pasbortio
+      passporting_benefit_check: Gwirio budd-daliadau pasbortio
+      passporting_benefit_check_partner: Gwirio budd-daliadau pasbortio
       trust_fund: Cronfeydd ymddiriedolaeth
       partner_trust_fund: Cronfeydd ymddiriedolaeth
       other_capital_details: Cyfalaf arall
@@ -148,11 +148,11 @@ cy:
       employment: Swydd
       self_assessment_tax_bill: Hunanasesiad
       partner_self_assessment_tax_bill: Hunanasesiad
-      work_benefits: Budd-daliadau gwaith eraill
-      partner_work_benefits: Budd-daliadau gwaith eraill
-      employment_income: Tâl o gyflogaeth
-      partner_employment_income: Tâl o gyflogaeth
-      funding_decisions: Penderfyniad ariannu
+      work_benefits: Buddion gwaith eraill
+      partner_work_benefits: Buddion gwaith eraill
+      employment_income: Cyflog o gyflogaeth
+      partner_employment_income: Cyflog o gyflogaeth
+      funding_decisions: Penderfyniad cyllido
       case: Achos
 
     questions:
@@ -161,28 +161,28 @@ cy:
         question: Math o gais
         answers:
           initial: Cychwynnol
-          change_in_financial_circumstances: Newid mewn amgylchiadau ariannol
+          change_in_financial_circumstances: Newid mewn sefyllfa ariannol
           post_submission_evidence: Tystiolaeth ar ôl cyflwyno
       reference:
-        question: Rhif cyfeirnod LAA
+        question: Cyfeirnod yr Asiantaeth Cymorth Cyfreithiol
       pre_cifc_maat_id_or_usn:
-        question: "%{ref_type} y cais gwreiddiol"
+        question: "%{ref_type} cais gwreiddiol"
         absence_answer: *absence_not_provided
       pre_cifc_reason:
-        question: Newidiadau yng nghyflwr ariannol y cleient
+        question: Newidiadau yn sefyllfa ariannol y cleient
         absence_answer: *absence_not_provided
       means_tested:
-        question: Cais wedi’i brofi’n ariannol
+        question: Cais ar sail prawf modd
         answers:
           <<: *YESNO
       date_stamp:
-        question: Stampa dyddiad
+        question: Stamp dyddiad
       date_submitted:
         question: Dyddiad cyflwyno
       provider_email:
-        question: Wedi’i gyflwyno gan
+        question: Cyflwynwyd gan
       office_code:
-        question: Rhif cyfrif swyddfa
+        question: Rhif cyfrif y swyddfa
       # END overview section
 
       # BEGIN client details section
@@ -213,38 +213,38 @@ cy:
           widowed: Gweddw
           divorced: Wedi ysgaru
           separated: Wedi gwahanu
-          prefer_not_to_say: Yn well ganddynt beidio dweud
+          prefer_not_to_say: Mae’n well ganddyn nhw beidio â dweud
       separation_date:
-        question: Dyddiad y gwahanodd y cleient oddi wrth y partner
+        question: Dyddiad y gwahanodd y cleient oddi wrth ei bartner
       # END client details section
 
       # BEGIN contact details section
       residence_type:
-        question: Lle mae’r cleient yn byw fel arfer
+        question: Ble mae'r cleient yn byw fel arfer
         answers:
           rented: Mewn llety rhent
           temporary: Mewn llety dros dro
-          parents: Gyda’u rhieni
-          applicant_owned: Mewn eiddo y maent yn berchen arno
+          parents: Gyda'u rhieni
+          applicant_owned: Mewn eiddo maen nhw'n berchen arno
           partner_owned: Mewn eiddo y mae eu partner yn berchen arno
-          joint_owned: Mewn eiddo y mae’r ddau yn berchen arno
-          someone_else: Yn nhŷ rhywun arall
-          none: Nid oes ganddynt gyfeiriad cartref sefydlog
+          joint_owned: Mewn eiddo y maen nhw a'u partner yn berchen arno
+          someone_else: Yng nghartref rhywun arall
+          none: Does ganddyn nhw ddim cyfeiriad cartref sefydlog
       relationship_to_owner_of_usual_home_address:
         question: Perthynas â’r cleient
       home_address:
         question: Cyfeiriad cartref arferol
         absence_answer: *absence_none
       correspondence_address:
-        question: Cyfeiriad gohebiaeth
+        question: Cyfeiriad gohebu
       correspondence_address_type:
         question: Gohebiaeth
         answers:
           home_address: Yr un fath â’r cyfeiriad cartref arferol
-          providers_office_address: Swyddfa’r darparwr
+          providers_office_address: Swyddfa'r darparwr
           other_address: Rhywle arall
       telephone_number:
-        question: Rhif ffôn
+        question: Ffôn
         absence_answer: *absence_none
       # END contact details section
 
@@ -253,45 +253,45 @@ cy:
       relationship_to_partner:
         question: Perthynas â’r cleient
         answers:
-          married_or_partnership: Priod neu mewn partneriaeth sifil
-          living_together: Yn byw gyda’i gilydd
-          prefer_not_to_say: Yn well ganddynt beidio dweud
+          married_or_partnership: Yn briod neu mewn partneriaeth sifil
+          living_together: Cyd-fyw
+          prefer_not_to_say: Mae’n well ganddyn nhw beidio â dweud
       involvement_in_case:
-        question: A yw’r partner wedi’i gynnwys yn yr achos?
+        question: Partner yn ymwneud â'r achos?
         answers:
           victim: Dioddefwr
-          prosecution_witness: Tyst i’r erlyniad
+          prosecution_witness: Tyst dros yr erlyniad
           codefendant: Cyd-ddiffynnydd
           none: "Na"
       has_same_address_as_client:
-        question: Yn byw ar yr un cyfeiriad â’r cleient?
+        question: Byw yn yr un cyfeiriad â'r cleient?
         answers:
           <<: *YESNO
-          # END partner details section
+      # END partner details section
 
       # BEGIN passporting benefit check section
       passporting_benefit:
-        question: Budd-dal pasbortio?
+        question: Budd-daliadau pasbortio?
         answers:
           universal_credit: Credyd Cynhwysol
-          guarantee_pension: Elfen Credyd Gwarant o Gredyd Pensiwn
-          jsa: Lwfans Ceisio Gwaith ar sail incwm (JSA)
-          esa: Lwfans Cyflogaeth a Chymorth ar sail incwm (ESA)
-          income_support: Cymorth Incwm
+          guarantee_pension: Elfen Gwarant Credyd o’r Credyd Pensiwn
+          jsa: Lwfans Ceisio Gwaith (JSA) yn seiliedig ar Incwm
+          esa: Lwfans Cyflogaeth a Chymorth (ESA) yn gysylltiedig ag incwm
+          income_support: Cymhorthdal Incwm
           none: Dim
       last_jsa_appointment_date:
-        question: Dyddiad apwyntiad JSA diweddaraf
+        question: Dyddiad yr apwyntiad Lwfans Ceisio Gwaith diweddaraf
       passporting_benefit_check_outcome:
-        question: Canlyniad y gwiriad budd-dal pasbortio
+        question: Canlyniad gwirio budd-daliadau pasbortio
         answers:
           confirmed: Cadarnhawyd
           no_check_required: Dim angen gwiriad
-          undetermined: Dim cyfatebiaeth - gwiriwch fod y manylion yn gywir
-          no_record_found: Dim cofnod o fudd-dal pasbortio wedi’i ganfod
-          checker_unavailable: Nid oedd DWP ar gael
-          no_check_no_nino: Dim gwiriad wedi’i wneud gan nad oes rhif Yswiriant Gwladol wedi’i ddarparu
+          undetermined: Dim cyfatebiad - gwnewch yn siŵr bod y manylion yn gywir
+          no_record_found: Heb ddod o hyd i gofnod o fudd-dal pasbortio
+          checker_unavailable: Doedd DWP ddim ar gael, gallwch roi cynnig arall arni
+          no_check_no_nino: Heb wirio gan nad oes rhif Yswiriant Gwladol wedi'i ddarparu
       confirmed_details:
-        question: A yw’r manylion cadarnhau’n gywir?
+        question: Ydy'r manylion a gadarnhawyd yn gywir?
         answers:
           <<: *YESNO
       has_benefit_evidence:
@@ -302,52 +302,52 @@ cy:
 
       # BEGIN case details section
       case_urn:
-        question: Rhif cyfeirnod unigryw
+        question: Cyfeirnod unigryw
         absence_answer: *absence_none
       case_type:
         question: Math o achos
         answers:
-          summary_only: Crynodeb yn unig
-          either_way: Unrhyw ffordd
-          indictable: Erlynadwy
-          already_in_crown_court: Treial eisoes yn y Llys y Goron
-          committal: Cyfeirio i’w ddedfrydu
-          appeal_to_crown_court: Apêl i’r Llys y Goron
-          appeal_to_crown_court_with_changes: Apêl i’r Llys y Goron
+          summary_only: Diannod yn Unig
+          either_way: Y naill ffordd neu'r llall
+          indictable: Ditiadwy
+          already_in_crown_court: Treial yn Llys y Goron yn barod
+          committal: Traddodi am ddedfryd
+          appeal_to_crown_court: Apêl i Lys y Goron
+          appeal_to_crown_court_with_changes: Apêl i Lys y Goron
       appeal_lodged_date:
-        question: Dyddiad cyflwyno’r apêl
+        question: Dyddiad cyflwyno'r apêl
       appeal_original_app_submitted:
         question: Cais am gymorth cyfreithiol ar gyfer yr achos gwreiddiol?
         answers:
           <<: *YESNO
       appeal_financial_circumstances_changed:
-        question: Newidiadau i amgylchiadau ariannol ers y cais gwreiddiol?
+        question: Newidiadau i’r sefyllfa ariannol ers y cais gwreiddiol?
         answers:
           <<: *YESNO
       appeal_with_changes_details:
-        question: Manylion y newidiadau
+        question: Manylion newidiadau
       appeal_maat_id_or_usn:
         question: "Cais gwreiddiol %{ref_type}"
       has_case_concluded:
-        question: A yw’r achos wedi dod i ben?
+        question: Yr achos wedi dod i ben?
         answers:
           <<: *YESNO
       date_case_concluded:
-        question: Dyddiad i’r achos ddod i ben
+        question: Dyddiad y daeth yr achos i ben
       is_preorder_work_claimed:
-        question: Hawlio am waith cyn archeb?
+        question: Hawlio am waith cyn-archebu?
         answers:
           <<: *YESNO
       preorder_work_date:
-        question: Dyddiad y cyfarwyddwyd y cwmni gyntaf
+        question: Dyddiad cyfarwyddo’r cwmni am y tro cyntaf
       preorder_work_details:
         question: Manylion brys
       is_client_remanded:
-        question: Y cleient mewn cadw?
+        question: Cleient yn y ddalfa?
         answers:
           <<: *YESNO
       date_client_remanded:
-        question: Dyddiad cadw’r cleient
+        question: Dyddiad remandio'r cleient
       # END case details section
 
       # BEGIN offences section
@@ -368,14 +368,15 @@ cy:
         answers:
           <<: *YESNO
       conflict_of_interest:
-        question: Gwrthdaro buddiannau?
+        question: Gwrthdaro rhwng buddiannau?
         answers:
           <<: *YESNO
+
       # END codefendants section
 
       # BEGIN other charges section
       client_other_charge_in_progress: &other_charge_in_progress
-        question: Taliadau eraill?
+        question: Cyhuddiadau eraill?
         answers:
           <<: *YESNO
       client_other_charge_charge: &other_charge_charge
@@ -383,29 +384,29 @@ cy:
       client_other_charge_hearing_court_name: &other_charge_hearing_court_name
         question: Llys
       client_other_charge_next_hearing_date: &other_charge_next_hearing_date
-        question: Gwrandawiad nesaf
+        question: Y gwrandawiad nesaf
 
       partner_other_charge_in_progress: *other_charge_in_progress
       partner_other_charge_charge: *other_charge_charge
       partner_other_charge_hearing_court_name: *other_charge_hearing_court_name
       partner_other_charge_next_hearing_date: *other_charge_next_hearing_date
-      # END other charges section
+      # BEGIN other charges section
 
       # BEGIN next court hearing section
       hearing_court_name:
-        question: Enw’r llys
+        question: Enw'r Llys
       hearing_date:
-        question: Pryd yw’r gwrandawiad nesaf?
+        question: Pryd mae'r gwrandawiad nesaf?
       is_first_court_hearing:
-        question: Yr un llys â’r gwrandawiad cyntaf?
+        question: Yr un llys â'r gwrandawiad cyntaf?
         answers:
           <<: *YESNO
-          no_hearing_yet: Nid oes gwrandawiad eto
+          no_hearing_yet: Ni chynhaliwyd gwrandawiad eto
       # END next court hearing section
 
       # BEGIN first court hearing section
       first_court_hearing_name:
-        question: Enw’r llys
+        question: Enw'r Llys
       # END first court hearing section
 
       # BEGIN justification for legal aid section
@@ -416,15 +417,15 @@ cy:
       loss_of_livelihood:
         question: Colli bywoliaeth
       reputation:
-        question: Difrod i enw da
+        question: Niweidio enw da
       question_of_law:
-        question: Cwestiwn cyfreithiol
+        question: Cwestiynau cyfreithiol
       understanding:
-        question: Methu cynrychioli ei hun
+        question: Yn methu cynrychioli eu hunain
       witness_tracing:
-        question: Olrhain tystion
+        question: Dod o hyd i dystion
       expert_examination:
-        question: Croesholi arbenigwr
+        question: Croesholi arbenigol
       interest_of_another:
         question: Buddiant person arall
       other:
@@ -433,13 +434,13 @@ cy:
 
       # BEGIN passport justification for legal aid section
       passport:
-        question: Ddim yn angenrheidiol
+        question: Dim angen
         answers:
-          "true": Nid oes angen i chi ddarparu rheswm ar gyfer y cais hwn
+          "true": Does dim angen i chi roi cyfiawnhad dros y cais hwn
       passport_override:
         question: Angenrheidiol
         answers:
-          "true": Mae’r achos wedi’i rannu, felly mae angen rhesymu ar gyfer pob trosedd
+          "true": Mae'r achos wedi'i rannu, felly mae angen i chi ychwanegu cyfiawnhad dros bob trosedd
       # END passport justification for legal aid section
 
       # BEGIN employment details section
@@ -447,35 +448,35 @@ cy:
         question: Statws cyflogaeth y cleient
         answers: &EMPLOYMENT_STATUS_ANSWERS
           not_working: Ddim yn gweithio
-          employed: Wedi’i gyflogi
+          employed: Cyflogedig
           self_employed: Hunangyflogedig
-          employed_and_self_employed: Cyflogedig a hunangyflogedig
+          employed_and_self_employed: Cyflogedig a Hunangyflogedig
       client_in_armed_forces:
-        question: Y cleient yn y lluoedd arfog?
+        question: Cleient yn y lluoedd arfog?
         answers:
           <<: *YESNO
       ended_employment_within_three_months:
-        question: A ddaeth cyflogaeth i ben yn y 3 mis diwethaf?
+        question: Cyflogaeth wedi dod i ben yn y 3 mis diwethaf?
         answers:
           <<: *YESNO
       lost_job_in_custody:
-        question: A ddaeth cyflogaeth i ben oherwydd bod y cleient mewn cadw?
+        question: Daeth cyflogaeth i ben oherwydd eu bod yn y ddalfa?
         answers:
           <<: *YESNO
       date_job_lost:
-        question: Dyddiad diwedd cyflogaeth
+        question: Dyddiad y daeth y gyflogaeth i ben
       # END employment details section
 
       # BEGIN income details section
       income_above_threshold:
-        question: "%{prefix} mwy na £12,475 y flwyddyn cyn treth?"
+        question: "%{prefix} mwy na ¬£12,475 y flwyddyn cyn treth?"
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
-        question: Incwm, cynilion neu asedau o dan orchymyn rhewi neu atal
+        question: Incwm, cynilion neu asedau dan orchymyn rhewi neu gyfyngiad
         answers: *YESNO
       client_owns_property:
-        question: "%{Subject} yn berchen ar gartref, tir neu eiddo?"
+        question: "Ydy %{Subject} yn berchen ar gartref, tir neu eiddo?"
         answers:
           <<: *YESNO
       has_savings:
@@ -490,10 +491,10 @@ cy:
         answers:
           <<: *YESNO
       dependant:
-        question: Oedran dibynnydd %{ordinal}
+        question: Oed y %{ordinal} dibynnydd
         answers:
           age:
-            one: "%{count} blwydd oed"
+            one: "%{count} oed"
             other: "%{count} oed"
       # END dependants section
 
@@ -502,14 +503,14 @@ cy:
         question: Statws cyflogaeth y partner
         answers: *EMPLOYMENT_STATUS_ANSWERS
       partner_in_armed_forces:
-        question: Y partner yn y lluoedd arfog?
+        question: Partner yn y lluoedd arfog?
         answers:
           <<: *YESNO
       # END partner employment details section
 
       # BEGIN income payments details section
       which_payments:
-        question: Taliadau y mae’r cleient yn eu cael
+        question: Taliadau mae eich cleient yn eu cael
         answers:
           none: Dim
       maintenance_payment:
@@ -521,7 +522,7 @@ cy:
         answers:
           description: *payment_answer_format
       state_pension_payment:
-        question: Pensiwn y wladwriaeth
+        question: Pensiwn Gwladol
         answers:
           description: *payment_answer_format
       interest_investment_payment:
@@ -533,7 +534,7 @@ cy:
         answers:
           description: *payment_answer_format
       board_from_family_payment:
-        question: Llety gan aelodau’r teulu
+        question: Aros gydag aelodau o'r teulu
         answers:
           description: *payment_answer_format
       rent_payment:
@@ -558,14 +559,14 @@ cy:
 
       # BEGIN partner income payments details section
       which_payments_partner:
-        question: Taliadau y mae’r partner yn eu cael
+        question: Taliadau mae'r partner yn eu cael
         answers:
           none: Dim
       # END partner income payments details section
 
       # BEGIN income benefits details section
       which_benefits:
-        question: Budd-daliadau y mae’r cleient yn eu cael
+        question: Budd-daliadau mae eich cleient yn eu cael
         answers:
           none: Dim
       child_benefit:
@@ -577,11 +578,11 @@ cy:
         answers:
           description: *payment_answer_format
       incapacity_benefit:
-        question: Budd-dal Anallu
+        question: Budd-dal Analluogrwydd
         answers:
           description: *payment_answer_format
       industrial_injuries_disablement_benefit:
-        question: Budd-dal Anaf Diwydiannol
+        question: Budd-dal Anabledd Anafiadau Diwydiannol
         answers:
           description: *payment_answer_format
       jsa_benefit:
@@ -598,7 +599,7 @@ cy:
 
       # BEGIN partner income benefits details section
       which_benefits_partner:
-        question: Budd-daliadau mae’r partner yn eu cael
+        question: Budd-daliadau mae'r partner yn eu cael
         answers:
           none: Dim
       # END partner income benefits details section
@@ -609,12 +610,13 @@ cy:
           one: Sut mae %{subject} yn byw heb incwm
           other: Sut mae %{subject} yn byw heb incwm
         answers:
-          friends_sofa: Yn cysgu ar soffa ffrind am ddim
-          family: Yn aros gyda’r teulu am ddim
-          living_on_streets: Yn byw ar y stryd neu'n ddigartref
-          custody: Wedi bod mewn cadw am fwy na 3 mis
+          friends_sofa: Maen nhw’n cysgu ar soffa ffrind am ddim
+          family: Maen nhw'n aros gyda theulu am ddim
+          living_on_streets: Maen nhw’n byw ar y stryd neu'n ddigartref
+          custody: Maen nhw wedi bod yn y ddalfa am dros 3 mis
           other: Arall
       manage_other_details:
+        #TODO: Question title has no design and needs to be checked/updated when designs are finalized
         question: Manylion
       # END other sources of income details section
 
@@ -624,45 +626,45 @@ cy:
         answers:
           rent: Rhent
           mortgage: Morgais
-          board_and_lodging: Llety a bwyd
+          board_and_lodging: Bwyd a llety
           none: Dim
       mortgage:
         question: Swm
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       rent:
         question: Swm
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       # BEGIN board and lodgings section
       board_amount:
         question: Swm
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       food_amount:
-        question: Swm bwyd
+        question: Swm ar fwyd
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       payee_name:
-        question: Enw’r person y mae’r taliad yn mynd ato
+        question: Enw'r person maen nhw’n ei dalu
         answers:
           description: "%{name}"
       payee_relationship_to_client:
-        question: Perthynas â’r person hwnnw
+        question: Perthynas â’r unigolyn hwnnw
         answers:
           description: "%{relationship}"
       # END board and lodgings section
       pays_council_tax:
-        question: Treth y Cyngor
+        question: Treth Gyngor
         answers:
           <<: *YESNO
       council_tax:
-        question: Swm blynyddol Treth y Cyngor
+        question: Swm y Dreth Gyngor bob blwyddyn
         answers:
           description: "%{amount}"
       # END housing payments section
 
-      # BEGIN outgoings payments section
+      # BEGIN  outgoings payments section
       which_outgoings:
         question: Math o daliadau
         answers:
@@ -670,66 +672,66 @@ cy:
       childcare_outgoing:
         question: Taliadau gofal plant
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       maintenance_outgoing:
-        question: Taliadau cynhaliaeth i bartner blaenorol
+        question: Taliadau cynhaliaeth i gyn bartner
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       legal_aid_contribution_outgoing:
         question: Cyfraniadau cymorth cyfreithiol troseddol neu sifil
         answers:
-          description: *payment_answer_format
+          description: "%{amount} bob %{frequency} %{tax_status}"
       legal_aid_contribution_outgoing_details:
-        question: Cyfeirnod achos y gorchymyn cynrychiolaeth droseddol neu dystysgrif sifil
+        question: Cyfeirnod achos y gorchymyn cynrychiolaeth droseddol neu'r dystysgrif sifil
       # END outgoings payments section
 
       # BEGIN other outgoings details section
       income_tax_rate_above_threshold:
-        question: A dalodd y cleient 40% Treth Incwm yn y 2 flynedd diwethaf?
+        question: Cleient wedi talu 40% o Dreth Incwm yn ystod y 2 flynedd diwethaf?
         answers:
           <<: *YESNO
       partner_income_tax_rate_above_threshold:
-        question: A dalodd y partner 40% Treth Incwm yn y 2 flynedd diwethaf?
+        question: Partner wedi talu 40% o Dreth Incwm yn ystod y 2 flynedd diwethaf?
         answers:
           <<: *YESNO
       outgoings_more_than_income:
-        question: A yw’r allanfeydd yn fwy na’r incwm?
+        question: Gwariant yn fwy nag incwm?
         answers:
           <<: *YESNO
       how_manage:
-        question: Sut maent yn talu allanfeydd sy’n fwy na’r incwm
+        question: Sut maen nhw'n talu costau sy'n fwy nag incwm
       # END other outgoings details section
 
       # BEGIN funding decisions section
       funding_decision_maat_id:
         question: ID MAAT
       funding_decision_case_number:
-        question: Rhif achos
+        question: Rhif yr achos
       funding_decision_assessment_rules:
         question: Prawf modd
         answers:
-          appeal_to_crown_court: Apêl i’r Llys y Goron
-          committal_for_sentence: Cyfeirio i’w ddedfrydu
+          appeal_to_crown_court: Apêl i Lys y Goron
+          committal_for_sentence: Traddodi am ddedfryd
           crown_court: Llys y Goron
-          magistrates_court: Llys yr Ynadon
-          non_means: Heb brawf modd
+          magistrates_court: Llys Ynadon
+          non_means: Ddim yn seiliedig ar fodd
       funding_decision_ioj_result:
-        question: Canlyniad prawf buddiannau cyfiawnder (IoJ)
+        question: Canlyniad prawf buddiannau cyfiawnder
         answers:
-          passed: Llwyddwyd
-          failed: Methwyd
+          passed: Wedi pasio
+          failed: Wedi methu
       funding_decision_ioj_reason:
-        question: Sylwadau IoJ
+        question: Sylwadau’n ymwneud â buddiannau cyfiawnder
       funding_decision_ioj_caseworker:
-        question: Gweithiwr achos IoJ
+        question: Gweithiwr achos buddiannau cyfiawnder
       funding_decision_ioj_date:
-        question: Dyddiad prawf IoJ
+        question: Dyddiad prawf buddiannau cyfiawnder
       funding_decision_means_result:
         question: Canlyniad prawf modd
         answers:
-          passed: Llwyddwyd
-          passed_with_contribution: Llwyddwyd – gyda chyfraniad
-          failed: Methwyd
+          passed: Wedi pasio
+          passed_with_contribution: Wedi pasio - gyda chyfraniad
+          failed: Wedi methu
       funding_decision_means_caseworker:
         question: Gweithiwr achos prawf modd
       funding_decision_means_date:
@@ -737,14 +739,15 @@ cy:
       funding_decision_overall_result:
         question: Canlyniad cyffredinol
         answers:
-          granted: Wedi’i roi
-          granted_with_contribution: Wedi’i roi – gyda chyfraniad
-          granted_failed_means: Wedi’i roi – methodd prawf modd
+          granted: Caniatawyd
+          granted_with_contribution: Caniatawyd - gyda chyfraniad
+          granted_failed_means: Caniatawyd - wedi methu’r prawf modd
           refused: Gwrthodwyd
-          refused_failed_ioj: Gwrthodwyd – methodd IoJ
-          refused_failed_ioj_and_means: Gwrthodwyd – methodd IoJ a phrawf modd
-          refused_failed_means: Gwrthodwyd – methodd prawf modd
-          refused_ineligible: Gwrthodwyd – anghymwys
+          refused_failed_ioj: Gwrthodwyd - wedi methu’r prawf buddiannau cyfiawnder
+          refused_failed_ioj_and_means: Gwrthodwyd - wedi methu’r prawf buddiannau cyfiawnder a’r prawf modd
+          refused_failed_means: Gwrthodwyd - wedi methu’r prawf modd
+          refused_ineligible: Gwrthodwyd - anghymwys
+
       funding_decision_further_info:
         question: Sylwadau
       # END funding decisions section
@@ -759,7 +762,7 @@ cy:
         answers:
           <<: *YESNO
       legal_rep_no_partner_declaration_reason:
-        question: Rheswm dros ddim datganiad partner
+        question: Rheswm dros beidio â chael datganiad partner
       # END declarations section
 
       # BEGIN legal representative details section
@@ -768,14 +771,14 @@ cy:
       legal_rep_last_name:
         question: Cyfenw
       legal_rep_telephone:
-        question: Rhif ffôn
+        question: Ffôn
       # END legal representative details section
 
       # BEGIN supporting evidence section
       supporting_evidence:
         question: Enw’r ffeil
       no_supporting_evidence:
-        question: Ni lwythwyd unrhyw ffeiliau i fyny
+        question: Heb lanlwytho ffeiliau
         absence_answer: ""
       additional_information:
         question: Unrhyw wybodaeth ychwanegol?
@@ -784,25 +787,25 @@ cy:
 
       # BEGIN saving
       account_balance:
-        question: Balans y cyfrif
+        question: Balans cyfrif
         absence_answer: ""
       saving_ownership_type:
         question: Deiliad y cyfrif
         answers: *OWNERSHIP_TYPE
         absence_answer: ""
       account_number:
-        question: Rhif cyfrif
+        question: Rhif y cyfrif
         absence_answer: ""
       are_wages_paid_into_account:
-        question: A yw tâl neu fudd-daliadau’r cleient yn cael eu talu i’r cyfrif hwn?
+        question: Ydy cyflog neu fudd-daliadau'r cleient yn cael eu talu i'r cyfrif hwn?
         answers: *YESNO
         absence_answer: ""
       are_partners_wages_paid_into_account:
-        question: A yw tâl neu fudd-daliadau’r partner yn cael eu talu i’r cyfrif hwn?
+        question: Ydy cyflog neu fudd-daliadau'r partner yn cael eu talu i'r cyfrif hwn?
         answers: *YESNO
         absence_answer: ""
       is_overdrawn:
-        question: A yw’r cyfrif dros ei ben?
+        question: Cyfrif mewn dyled?
         answers: *YESNO
         absence_answer: ""
       provider_name:
@@ -821,7 +824,7 @@ cy:
         question: Bondiau Premiwm?
         answers: *YESNO
       premium_bonds_holder_number:
-        question: Rhif deiliad
+        question: Rhif y deiliad
         absence_answer: ""
       premium_bonds_total_value:
         question: Cyfanswm gwerth
@@ -832,7 +835,7 @@ cy:
         question: Bondiau Premiwm?
         answers: *YESNO
       partner_premium_bonds_holder_number:
-        question: Rhif deiliad
+        question: Rhif y deiliad
         absence_answer: ""
       partner_premium_bonds_total_value:
         question: Cyfanswm gwerth
@@ -840,13 +843,13 @@ cy:
 
       # START investments
       description:
-        question: Disgrifiad y buddsoddiad
+        question: Disgrifiad o'r buddsoddiad
         absence_answer: ""
       value:
         question: Gwerth
         absence_answer: *absence_none
       ownership_type:
-        question: Enw’r buddsoddiad wedi’i gofrestru ynddo
+        question: Yn enw pwy mae’r buddsoddiad
         answers: *OWNERSHIP_TYPE
         absence_answer: ""
       has_investments:
@@ -856,16 +859,16 @@ cy:
 
       # START national_savings_certificates
       national_savings_certificate_holder_number:
-        question: Rhif cwsmer neu ddeiliad
+        question: Rhif y cwsmer neu’r deiliad
         absence_answer: ""
       national_savings_certificate_certificate_number:
-        question: Rhif y dystysgrif
+        question: Rhif tystysgrif
         absence_answer: ""
       national_savings_certificate_value:
         question: Gwerth
         absence_answer: ""
       national_savings_certificate_ownership_type:
-        question: Pwy sy’n berchen ar y dystysgrif?
+        question: Pwy sy'n berchen ar y dystysgrif?
         answers: *OWNERSHIP_TYPE
         absence_answer: ""
       has_national_savings_certificate:
@@ -885,22 +888,23 @@ cy:
         question: Maint y tir
         absence_answer: *absence_none
       usage:
-        question: Sut mae %{asset} yn cael ei ddefnyddio
+        question: Sut defnyddiwyd %{asset}
         absence_answer: *absence_none
+      # TODO :: Temporary fix to avoid duplicate keys
       property_value:
-        question: Gwerth %{Asset}
+        question: "Gwerth %{Asset}"
         absence_answer: *absence_none
       outstanding_mortgage:
-        question: Swm morgais sydd ar ôl
+        question: Swm y morgais sydd ar ôl
         absence_answer: *absence_none
       percentage_applicant_owned:
-        question: Canran sy’n eiddo i’r cleient
+        question: Canran sy'n eiddo i'r cleient
         absence_answer: *absence_none
       percentage_partner_owned:
-        question: Canran sy’n eiddo i’r partner
+        question: Canran sy'n eiddo i'r partner
         absence_answer: *absence_none
       is_home_address:
-        question: Cyfeiriad yr un fath â chartref y cleient
+        question: Y cyfeiriad yr un fath â chartref y cleient
         answers: *YESNO
         absence_answer: *absence_none
       has_other_owners:
@@ -911,7 +915,7 @@ cy:
         question: Cyfeiriad
         absence_answer: *absence_none
       name:
-        question: Enw perchennog arall %{index}
+        question: Enw'r perchennog arall %{index}
         absence_answer: *absence_none
       relationship:
         question: Perthynas â %{subject}
@@ -922,15 +926,15 @@ cy:
       has_assets:
         question:
           one: Asedau sy’n eiddo i %{subject}
-          other: Asedau sy’n eiddo i neu’n rhannol eiddo i %{subject}
+          other: Asedau sy’n eiddo neu’n eiddo rhannol i %{subject}
         answers:
           <<: *YESNO
-          none: *absence_none
+          none: Dim
       # END property, address and owners
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: A fydd yn elwa o gronfa ymddiriedolaeth?
+        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       trust_fund_amount_held:
         question: Swm yn y gronfa
@@ -940,7 +944,7 @@ cy:
 
       # START partner_trust_fund
       partner_will_benefit_from_trust_fund:
-        question: A fydd y partner yn elwa o gronfa ymddiriedolaeth?
+        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       partner_trust_fund_amount_held:
         question: Swm yn y gronfa
@@ -956,7 +960,7 @@ cy:
           question: Cyfeiriad y cyflogwr
           absence_answer: ""
         job_title:
-          question: Teitl y swydd
+          question: Teitl swydd
           absence_answer: ""
         salary_or_wage:
           question: Cyflog neu dâl
@@ -975,14 +979,14 @@ cy:
           answers:
             description: *payment_answer_format
           details:
-            question: Manylion treth incwm
+            question: Manylion treth_incwm
             absence_answer: ""
         national_insurance:
           question: Yswiriant Gwladol
           answers:
             description: *payment_answer_format
           details:
-            question: Manylion yswiriant gwladol
+            question: manylion yswiriant_gwladol
             absence_answer: ""
         other:
           question: Cyfanswm didyniadau eraill
@@ -991,48 +995,40 @@ cy:
           details:
             question: Manylion didyniadau eraill
             absence_answer: ""
-
       employment_income:
         question: Cyflog neu dâl
         answers:
           description: *payment_answer_format
-
       partner_employment_income:
         question: Cyflog neu dâl
         answers:
           description: *payment_answer_format
-
       self_assessment_tax_bill:
-        question: Cyfrifiad treth hunanasesiad?
+        question: Cyfrifiad treth hunan-asesu?
         answers: *YESNO
-
       partner_self_assessment_tax_bill:
-        question: Cyfrifiad treth hunanasesiad?
+        question: Cyfrifiad treth hunan-asesu?
         answers: *YESNO
-
       self_assessment_tax_bill_payment:
         question: Swm
         answers:
           description: *payment_answer_format
-
       partner_self_assessment_tax_bill_payment:
         question: Swm
         answers:
           description: *payment_answer_format
 
       work_benefits:
-        question: Budd-daliadau gwaith eraill?
+        question: Buddion gwaith eraill?
         answers: *YESNO
-
       work_benefits_payment:
         question: Cyfanswm gwerth
         answers:
           description: *payment_answer_format
 
       partner_work_benefits:
-        question: Budd-daliadau gwaith eraill?
+        question: Buddion gwaith eraill?
         answers: *YESNO
-
       partner_work_benefits_payment:
         question: Cyfanswm gwerth
         answers:
@@ -1041,65 +1037,52 @@ cy:
       trading_name:
         question: Enw masnachu
         absence_answer: ""
-
       business_address:
-        question: Cyfeiriad y busnes
+        question: Cyfeiriad busnes
         absence_answer: ""
-
       nature_of_business:
         question: Natur y busnes
         absence_answer: ""
-
       trading_start_date:
         question: Dyddiad dechrau masnachu
         absence_answer: ""
-
       has_additional_owners:
-        question: A yw’n masnachu gyda rhywun arall?
+        question: Mewn busnes ag unrhyw un arall?
         answers: *YESNO
-
       additional_owners:
-        question: Enwau’r rhai eraill yn y busnes
+        question: Enwau pobl eraill yn y busnes
         absence_answer: ""
-
       has_employees:
-        question: Gweithwyr?
+        question: Cyflogeion?
         answers: *YESNO
-
       number_of_employees:
-        question: Nifer y gweithwyr
+        question: Nifer y cyflogeion
         absence_answer: ""
-
       turnover:
         question: Cyfanswm trosiant
         answers:
           description: *payment_answer_format
         absence_answer: ""
-
       drawings:
         question: Cyfanswm y tyniadau
         answers:
           description: *payment_answer_format
         absence_answer: ""
-
       profit:
         question: Cyfanswm yr elw
         answers:
           description: *payment_answer_format
         absence_answer: ""
-
       salary:
-        question: Cyflog neu dâl
+        question: Cyflog neu dâl cydnabyddiaeth
         answers:
           description: *payment_answer_format
         absence_answer: ""
-
       total_income_share_sales:
         question: Incwm o werthu cyfranddaliadau
         answers:
           description: *payment_answer_format
         absence_answer: ""
-
       percentage_profit_share:
-        question: Canran yr elw
+        question: Cyfran o'r elw
         absence_answer: ""

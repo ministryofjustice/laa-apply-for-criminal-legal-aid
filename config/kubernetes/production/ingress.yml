@@ -129,7 +129,7 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/custom-http-errors: "423,503,403"
+    nginx.ingress.kubernetes.io/custom-http-errors: "503,403"
     nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
@@ -218,16 +218,7 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@streq /providers/auth/saml/callback" \
-        "id:1010,phase:2,pass,nolog,chain"
-        SecRule REQUEST_METHOD "@streq POST" \
-          "ctl:ruleRemoveById=921110,\
-          ctl:ruleRemoveById=932235,\
-          ctl:ruleRemoveById=932250,\
-          ctl:ruleRemoveById=932260,\
-          ctl:ruleRemoveById=932370,\
-          ctl:ruleRemoveById=933150,\
-          ctl:ruleRemoveById=941130"
+      SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session

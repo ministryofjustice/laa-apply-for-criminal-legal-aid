@@ -9,7 +9,7 @@ cy:
       dob: '%-d %B %Y' # 1 Ionawr 1990
     subjects:
       applicant: 'eich cleient'
-      applicant_and_partner: 'eich cleient a’u partner'
+      applicant_and_partner: "eich cleient a'u partner"
       applicant_or_partner: 'eich cleient neu eu partner'
       partner: 'y partner'
   service:
@@ -18,8 +18,8 @@ cy:
   cookies:
     show:
       settings_updated:
-        accept: Rydych wedi derbyn cwcis dadansoddeg.
-        reject: Rydych wedi gwrthod cwcis dadansoddeg.
+        accept: Rydych chi wedi derbyn cwcis dadansoddeg.
+        reject: Rydych chi wedi gwrthod cwcis dadansoddeg.
 
   hours_or_minutes:
     hours:
@@ -102,5 +102,5 @@ cy:
     array:
       # defaults for `array.to_sentence`
       words_connector: ", "
-      two_words_connector: " a "
+      two_words_connector: " a"
       last_word_connector: ", a "
