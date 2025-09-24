@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe ApplicationPurger do
   subject { described_class.call(crime_application:, deleted_by:, deletion_reason:) }
 
-  let(:crime_application) { instance_double(CrimeApplication, id: '12345', reference: 10_000_001) }
+  let(:crime_application) {
+    instance_double(CrimeApplication, id: '696dd4fd-b619-4637-ab42-a5f4565bcf4a', reference: 10_000_001,
+   application_type: ApplicationType::INITIAL)
+  }
   let(:deleted_by) { '1' }
   let(:deletion_reason) { DeletionReason::PROVIDER_ACTION.to_s }
   let(:documents) { [] }
@@ -17,6 +20,10 @@ RSpec.describe ApplicationPurger do
       crime_application
     ).to receive_message_chain(:documents, :stored, :not_submitted).and_return(documents)
     # rubocop:enable RSpec/MessageChain
+
+    allow(FeatureFlags).to receive(:deletion_events) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+    }
   end
 
   describe '.call' do
@@ -24,9 +31,21 @@ RSpec.describe ApplicationPurger do
       expect { subject }.to change(DeletionEntry, :count).by(1)
 
       deletion_entry = DeletionEntry.first
-      expect(deletion_entry.record_id).to eq('12345')
+      expect(deletion_entry.record_id).to eq('696dd4fd-b619-4637-ab42-a5f4565bcf4a')
       expect(deletion_entry.deleted_by).to eq('1')
       expect(deletion_entry.reason).to eq(DeletionReason::PROVIDER_ACTION.to_s)
+    end
+
+    it 'makes a request to publish a draft deletion event' do
+      subject
+      expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
+        .with(body: hash_including(
+          'entity_id' => crime_application.id,
+          'entity_type' => crime_application.application_type.to_s,
+          'business_reference' => crime_application.reference,
+          'reason' => deletion_reason,
+          'deleted_by' => deleted_by,
+        ))
     end
 
     context 'when it has orphaned documents' do

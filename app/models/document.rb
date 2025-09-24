@@ -1,5 +1,5 @@
 class Document < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   # Using UUIDs as the record IDs. We can't trust sequential ordering by ID
   default_scope { order(created_at: :asc) }

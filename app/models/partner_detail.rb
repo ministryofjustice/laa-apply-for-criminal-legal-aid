@@ -1,5 +1,5 @@
 class PartnerDetail < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   validate on: :submission do
     answers_validator.validate

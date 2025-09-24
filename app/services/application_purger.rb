@@ -17,6 +17,7 @@ class ApplicationPurger
       delete_orphan_stored_documents
       log_deletion
       crime_application.destroy!
+      publish_deletion_event if FeatureFlags.deletion_events.enabled?
     end
   end
 
@@ -40,5 +41,13 @@ class ApplicationPurger
       deleted_by: deleted_by,
       reason: deletion_reason
     )
+  end
+
+  def publish_deletion_event
+    Datastore::Events::DraftDeleted.new(entity_id: crime_application.id,
+                                        entity_type: crime_application.application_type,
+                                        business_reference: crime_application.reference,
+                                        deleted_by: deleted_by,
+                                        reason: deletion_reason).call
   end
 end

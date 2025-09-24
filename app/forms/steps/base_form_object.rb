@@ -10,7 +10,7 @@ module Steps
 
     # Initialize a new form object given an AR model, reading and setting
     # the attributes declared in the form object.
-    # Most of the times, `record` is just the main DB table, but sometimes,
+    # Most of the time, `record` is just the main DB table, but sometimes,
     # for example in has_one or has_many, `record` is a different table.
     def self.build(record, crime_application: nil)
       raise ArgumentError, "expected `ApplicationRecord`, got `#{record.class}`" unless record.is_a?(ApplicationRecord)

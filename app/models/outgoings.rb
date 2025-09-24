@@ -2,7 +2,7 @@ class Outgoings < ApplicationRecord
   include MeansOwnershipScope
   include TypesOfOutgoings
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
   has_many :outgoings_payments, through: :crime_application
 
   validate on: :submission do

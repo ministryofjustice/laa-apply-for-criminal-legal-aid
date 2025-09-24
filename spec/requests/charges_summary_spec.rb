@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Charges/offences summary page', :authorized do
-  before :all do
+  before do
     # sets up a few test records
     app = CrimeApplication.create
     kase = Case.create(crime_application: app)
@@ -12,8 +12,8 @@ RSpec.describe 'Charges/offences summary page', :authorized do
     )
   end
 
-  after :all do
-    # do not leave left overs in the test database
+  after do
+    # do not leave leftovers in the test database
     CrimeApplication.destroy_all
   end
 

@@ -26,6 +26,11 @@ feature_flags:
     staging: false
     preprod: false
     production: false
+  deletion_events:
+    local: true
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

@@ -59,8 +59,7 @@ module Steps
       stack_until_current_page = current_crime_application
                                  .navigation_stack.take_while { |path| path != request.fullpath }
 
-      current_crime_application.navigation_stack = stack_until_current_page + [request.fullpath]
-      current_crime_application.save!(touch: false)
+      current_crime_application.update_column(:navigation_stack, stack_until_current_page + [request.fullpath]) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def current_form_object

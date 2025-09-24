@@ -1,5 +1,5 @@
 class Business < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   default_scope { order(created_at: :asc) }
 

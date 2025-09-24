@@ -1,7 +1,7 @@
 class Case < ApplicationRecord
   include HasOtherCharges
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   EARLIEST_HEARING_DATE = Date.parse('01-01-2010')
   LATEST_HEARING_DATE = Date.parse('31-12-2035')
