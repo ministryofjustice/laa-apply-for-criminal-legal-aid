@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
   include AnnualizedAmountCalculator
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   attribute :amount, :pence
   attribute :payment_type

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Businesses summary page', :authorized do
-  before :all do
+  before do
     business = Business.new(
       'additional_owners' => '',
       'address' => {
@@ -79,10 +79,6 @@ RSpec.describe 'Businesses summary page', :authorized do
       partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
       businesses: [business, partner_business]
     )
-  end
-
-  after :all do
-    CrimeApplication.destroy_all
   end
 
   let(:crime_application) { CrimeApplication.first }

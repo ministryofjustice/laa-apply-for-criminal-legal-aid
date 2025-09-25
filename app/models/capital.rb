@@ -1,7 +1,7 @@
 class Capital < ApplicationRecord
   include MeansOwnershipScope
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   attribute :premium_bonds_total_value, :pence
   attribute :partner_premium_bonds_total_value, :pence

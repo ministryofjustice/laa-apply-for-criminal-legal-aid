@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Evidence upload page', :authorized do
-  before :all do
+  before do
     crime_application = CrimeApplication.create(
       applicant: Applicant.new(date_of_birth: 20.years.ago.to_date)
     )
@@ -42,7 +42,7 @@ RSpec.describe 'Evidence upload page', :authorized do
     )
   end
 
-  after :all do
+  after do
     CrimeApplication.destroy_all
   end
 

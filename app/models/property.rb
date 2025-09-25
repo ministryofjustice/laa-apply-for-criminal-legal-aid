@@ -1,5 +1,5 @@
 class Property < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   OTHER_HOUSE_TYPE = 'other'.freeze
 

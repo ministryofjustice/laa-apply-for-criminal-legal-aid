@@ -1,5 +1,5 @@
 class Person < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
   has_many :addresses, dependent: :destroy
 
   has_one :home_address, dependent: :destroy, class_name: 'HomeAddress'

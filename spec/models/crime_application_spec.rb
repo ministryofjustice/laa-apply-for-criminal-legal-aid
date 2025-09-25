@@ -298,4 +298,50 @@ RSpec.describe CrimeApplication, type: :model do
       end
     end
   end
+
+  describe 'Events' do
+    it 'makes requests to publish a draft created/updated event' do
+      crime_application = described_class.create
+      expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
+        .with(body: hash_including(
+          'entity_id' => crime_application.id,
+          'entity_type' => crime_application.application_type.to_s,
+          'business_reference' => crime_application.reference
+        ))
+
+      crime_application.touch # rubocop:disable Rails/SkipsModelValidations
+      expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_updated')
+        .with(body: hash_including(
+          'entity_id' => crime_application.id,
+          'entity_type' => crime_application.application_type.to_s,
+          'business_reference' => crime_application.reference
+        ))
+    end
+
+    context 'when feature flag is disabled' do # TODO: remove when feature flag enabled
+      before do
+        allow(FeatureFlags).to receive(:deletion_events) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'does not make request to publish a draft created/updated event' do
+        crime_application = described_class.create
+        expect(WebMock).not_to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
+          .with(body: hash_including(
+            'entity_id' => crime_application.id,
+            'entity_type' => crime_application.application_type.to_s,
+            'business_reference' => crime_application.reference
+          ))
+
+        crime_application.touch # rubocop:disable Rails/SkipsModelValidations
+        expect(WebMock).not_to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_updated')
+          .with(body: hash_including(
+            'entity_id' => crime_application.id,
+            'entity_type' => crime_application.application_type.to_s,
+            'business_reference' => crime_application.reference
+          ))
+      end
+    end
+  end
 end

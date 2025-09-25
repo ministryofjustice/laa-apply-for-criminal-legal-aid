@@ -14,28 +14,20 @@ RSpec.describe 'Dashboard', :authorized do
     let(:sort_direction) { nil }
 
     before do
+      app1 = create_test_application(created_at: Date.new(2022, 10, 15))
+      app2 = create_test_application(created_at: Date.new(2022, 10, 12)) # Different date
+      app3 = create_test_application(office_code: 'XYZ') # a different office
+      app4 = create_test_application
+
+      Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
+      Applicant.create(crime_application: app2, first_name: 'John', last_name: 'Last')
+      Applicant.create(crime_application: app3, first_name: 'Jane', last_name: 'Doe')
+      Applicant.create(crime_application: app4, first_name: '', last_name: '')
+
       get crime_applications_path, params: { sorting: { sort_by:, sort_direction: } }
     end
 
     context 'when there are in progress records to return' do
-      before :all do
-        # sets up a few test records
-        app1 = create_test_application(created_at: Date.new(2022, 10, 15))
-        app2 = create_test_application(created_at: Date.new(2022, 10, 12)) # Different date
-        app3 = create_test_application(office_code: 'XYZ') # a different office
-        app4 = create_test_application
-
-        Applicant.create(crime_application: app1, first_name: 'John', last_name: 'Doe')
-        Applicant.create(crime_application: app2, first_name: 'John', last_name: 'Last')
-        Applicant.create(crime_application: app3, first_name: 'Jane', last_name: 'Doe')
-        Applicant.create(crime_application: app4, first_name: '', last_name: '')
-      end
-
-      after :all do
-        # do not leave left overs in the test database
-        CrimeApplication.destroy_all
-      end
-
       it 'contains only applications having the applicant name entered' do
         expect(response).to have_http_status(:success)
 
