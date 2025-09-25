@@ -23,7 +23,6 @@ en:
     assessment_completed: Decided
     ready_for_assessment: Submitted
     returned_to_provider: Returned
-
   crime_applications:
     new:
       page_title: Are you making a new application or telling us about a change in financial circumstances?
@@ -68,6 +67,9 @@ en:
       confirm_delete_button_a11y: Delete this application
     destroy:
       success_flash: "%{applicant_name}’s in progress application has been deleted"
+    show:
+      page_title: In progress application
+      print_application: Print application
   completed_applications: &COMPLETED_APPLICATIONS
     funding_decision_notification:
       title: Important
@@ -78,10 +80,6 @@ en:
       page_title: Your applications
       no_records: There are no applications
     show:
-      heading:
-        initial: Application for a criminal legal aid representation order
-        change_in_financial_circumstances: Change in financial circumstances
-        post_submission_evidence: Supporting evidence
       laa_reference: "Reference number:"
       date_stamp: "Date stamp:"
       date_submitted: "Date submitted:"
@@ -137,6 +135,16 @@ en:
       continue_to_delete_button: Continue to delete application
       go_back_link: Back to applications
   shared:
+    application_overview:
+      heading:
+        initial: Application for a criminal legal aid representation order
+        change_in_financial_circumstances: Change in financial circumstances
+        post_submission_evidence: Supporting evidence
+    contingent_liability_notice:
+      restriction: You cannot use this account to start, change or submit applications.
+      explanation: The crime contract linked to office account number  %{office_code} is currently under Contingent Liability.
+      questions: If you have any questions, contact your contract manager.
+
     dashboard_header:
       heading: Your applications
       start_button: Start an application

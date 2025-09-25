@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Client::EmploymentsController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Income::Client::EmploymentDetailsForm }
   let(:decision_tree_class) { Decisions::IncomeDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
 
   describe '#destroy' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }

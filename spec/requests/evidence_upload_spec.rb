@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Evidence upload page', :authorized do
+  include_context 'with office code selected'
   before do
     crime_application = CrimeApplication.create(
+      office_code: selected_office_code,
       applicant: Applicant.new(date_of_birth: 20.years.ago.to_date)
     )
 

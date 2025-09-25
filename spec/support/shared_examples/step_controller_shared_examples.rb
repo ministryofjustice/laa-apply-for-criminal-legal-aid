@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'a show step controller' do
+  include_context 'current provider with active office'
   let(:base_params) { {} }
+
+  include_context 'current provider with active office'
 
   describe '#show' do
     context 'when application is not found' do
@@ -12,7 +15,7 @@ RSpec.shared_examples 'a show step controller' do
     end
 
     context 'when application is found' do
-      let(:existing_case) { CrimeApplication.create }
+      let(:existing_case) { CrimeApplication.create(office_code:) }
 
       it 'responds with HTTP success' do
         get :show, params: base_params.merge(id: existing_case)
@@ -23,7 +26,9 @@ RSpec.shared_examples 'a show step controller' do
 end
 
 RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_class|
+  include_context 'current provider with active office'
   let(:base_params) { {} }
+
   describe '#edit' do
     context 'when application is not found' do
       before do
@@ -45,10 +50,11 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     context 'when application is found' do
       unless method_defined?(:existing_case)
         let(:existing_case) do
-          CrimeApplication.create(
+          CrimeApplication.create!(
             applicant: Applicant.new,
             partner: Partner.new,
-            partner_detail: PartnerDetail.new(involvement_in_case: false)
+            partner_detail: PartnerDetail.new(involvement_in_case: false),
+            office_code: office_code
           )
         end
       end
@@ -81,7 +87,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { CrimeApplication.create } unless method_defined?(:existing_case)
+      let(:existing_case) { CrimeApplication.create!(office_code:) } unless method_defined?(:existing_case)
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
@@ -117,6 +123,7 @@ RSpec.shared_examples 'a generic step controller' do |form_class, decision_tree_
 end
 
 RSpec.shared_examples 'a no-op advance step controller' do |step_name, decision_tree_class|
+  include_context 'current provider with active office'
   describe '#edit' do
     context 'when application is not found' do
       before do
@@ -132,7 +139,7 @@ RSpec.shared_examples 'a no-op advance step controller' do |step_name, decision_
     end
 
     context 'when application is found' do
-      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new, office_code: office_code) }
 
       it 'responds with HTTP success' do
         get :edit, params: { id: existing_case }
@@ -163,7 +170,7 @@ RSpec.shared_examples 'a no-op advance step controller' do |step_name, decision_
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { CrimeApplication.create }
+      let(:existing_case) { CrimeApplication.create(office_code:) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
@@ -188,6 +195,7 @@ RSpec.shared_examples 'a no-op advance step controller' do |step_name, decision_
 end
 
 RSpec.shared_examples 'an address step controller' do |form_class, decision_tree_class|
+  include_context 'current provider with active office'
   describe '#edit' do
     context 'when application is not found' do
       before do
@@ -203,7 +211,7 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
     end
 
     context 'when application is found' do
-      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new, office_code: office_code) }
       let(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
 
       it 'responds with HTTP success' do
@@ -237,7 +245,7 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { CrimeApplication.create(applicant: Applicant.new) }
+      let(:existing_case) { CrimeApplication.create(office_code: office_code, applicant: Applicant.new) }
       let(:existing_address) { HomeAddress.find_or_create_by(person: existing_case.applicant) }
 
       before do
@@ -276,6 +284,7 @@ RSpec.shared_examples 'an address step controller' do |form_class, decision_tree
 end
 
 RSpec.shared_examples 'a step that can be drafted' do |form_class|
+  include_context 'current provider with active office'
   describe '#update' do
     let(:form_object) { instance_double(form_class, attributes: { foo: double }) }
     let(:form_class_params_name) { form_class.name.underscore }
@@ -297,7 +306,7 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
     end
 
     context 'when an application in progress is found' do
-      let(:existing_case) { CrimeApplication.create }
+      let(:existing_case) { CrimeApplication.create(office_code:) }
 
       before do
         allow(form_class).to receive(:new).and_return(form_object)
@@ -329,8 +338,12 @@ RSpec.shared_examples 'a step that can be drafted' do |form_class|
 end
 
 RSpec.shared_examples 'a step disallowed for change in financial circumstances applications' do
+  include_context 'current provider with active office'
   let(:existing_case) do
-    CrimeApplication.create!(application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES)
+    CrimeApplication.create!(
+      application_type: ApplicationType::CHANGE_IN_FINANCIAL_CIRCUMSTANCES,
+      office_code: office_code
+    )
   end
 
   describe '#edit' do
@@ -351,8 +364,9 @@ RSpec.shared_examples 'a step disallowed for change in financial circumstances a
 end
 
 RSpec.shared_examples 'a step disallowed for non change in financial circumstances applications' do
+  include_context 'current provider with active office'
   let(:existing_case) do
-    CrimeApplication.create!(application_type: ApplicationType::INITIAL)
+    CrimeApplication.create!(office_code: office_code, application_type: ApplicationType::INITIAL)
   end
 
   describe '#edit' do

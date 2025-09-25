@@ -4,7 +4,8 @@ RSpec.describe Steps::Capital::PropertyTypeController, type: :controller do
   it_behaves_like('a generic step controller', Steps::Capital::PropertyTypeForm, Decisions::CapitalDecisionTree) do
     context 'when properties present' do
       let(:existing_case) do
-        CrimeApplication.create(properties: [Property.new(property_type: :bank)], applicant: Applicant.new)
+        CrimeApplication.create(office_code: office_code, properties: [Property.new(property_type: :bank)],
+                                applicant: Applicant.new)
       end
 
       describe '#edit' do

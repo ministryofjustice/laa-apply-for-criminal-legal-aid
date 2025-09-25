@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::PropertiesSummaryController, type: :controller do
+  include_context 'current provider with active office'
   let(:existing_case) do
-    CrimeApplication.create(properties: properties, applicant: Applicant.new)
+    CrimeApplication.create(properties: properties, applicant: Applicant.new, office_code: office_code)
   end
 
   context 'when properties present' do

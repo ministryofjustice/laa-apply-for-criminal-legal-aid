@@ -25,6 +25,19 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_office_code
 
+  def current_office
+    return nil unless current_office_code
+
+    @current_office ||= Office.find(current_office_code)
+  end
+  helper_method :current_office
+
+  def require_current_office!
+    return if current_office&.active?
+
+    redirect_to steps_provider_select_office_path
+  end
+
   def switch_locale(&action)
     locale = params[:locale] || I18n.default_locale
     I18n.with_locale(locale, &action)

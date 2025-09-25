@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'NationalSavingsCertificates summary page', :authorized do
+  include_context 'with office code selected'
+
   before do
     allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
 
-    app = CrimeApplication.create(capital: Capital.new(has_national_savings_certificates: 'yes'))
+    app = CrimeApplication.create(
+      office_code: selected_office_code,
+      capital: Capital.new(has_national_savings_certificates: 'yes')
+    )
     app.national_savings_certificates.create!(
       holder_number: 'A!',
       certificate_number: 'B2',

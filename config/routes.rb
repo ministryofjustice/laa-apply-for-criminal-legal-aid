@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   resource :errors, only: [] do
     get :application_not_found, path: 'application-not-found'
+    get :contingent_liability, path: 'contingent-liability'
     get :invalid_session, path: 'invalid-session'
     get :invalid_token, path: 'invalid-token'
     get :unhandled
@@ -76,7 +77,17 @@ Rails.application.routes.draw do
   # Handle the cookies consent
   resource :cookies, only: [:show, :update]
 
-  resources :crime_applications, except: [:show, :update], path: 'applications' do
+  scope 'applications' do
+    resources :submitted_applications, path: 'submitted', only: [:index]
+    resources :returned_applications, path: 'returned', only: [:index] do
+      get :confirm_destroy, path: 'confirm-destroy', on: :member
+      get :draft_application_found, path: 'confirm-destroy/draft-application-found', on: :member
+      post :archive, on: :member
+    end
+    resources :decided_applications, path: 'decided', only: [:index]
+  end
+
+  resources :crime_applications, except: [:update], path: 'applications' do
     get :confirm_destroy, path: 'confirm-destroy', on: :member
     get :start, on: :collection
 
@@ -93,16 +104,8 @@ Rails.application.routes.draw do
       put :recreate, on: :member
       post(:create_pse, on: :member)
     end
-  end
 
-  scope 'applications' do
-    resources :submitted_applications, path: 'submitted', only: [:index]
-    resources :returned_applications, path: 'returned', only: [:index] do
-      get :confirm_destroy, path: 'confirm-destroy', on: :member
-      get :draft_application_found, path: 'confirm-destroy/draft-application-found', on: :member
-      post :archive, on: :member
-    end
-    resources :decided_applications, path: 'decided', only: [:index]
+    get :start, on: :collection
   end
 
   namespace :steps do

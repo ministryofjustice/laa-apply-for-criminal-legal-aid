@@ -10,7 +10,10 @@ en:
 
     incomplete_records: You need to complete all questions before you can submit the application
     not_enrolled: You’re not enrolled in the apply for criminal legal aid service
-    not_enrolled_subheading: 'Try logging in again, or if you think this is not correct contact our technical support:'
+    not_enrolled_subheading: "Try logging in again, or if you think this is not correct contact our technical support:"
+    contingent_liability:
+      title: Contingent Liability error
+      restriction: You cannot start, change or submit applications using this account.
 
   activerecord:
     errors:

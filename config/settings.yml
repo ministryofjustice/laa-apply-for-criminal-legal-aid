@@ -16,11 +16,11 @@ feature_flags:
     staging: true
     production: false
   provider_data_api:
-    local: true
+    local: false
     test: false
     staging: true
-    preprod: false
-    production: false
+    preprod: true
+    production: true
   entra_logout:
     local: false
     staging: false

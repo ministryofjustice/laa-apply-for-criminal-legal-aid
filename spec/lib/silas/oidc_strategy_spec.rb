@@ -53,7 +53,9 @@ RSpec.describe Silas::OidcStrategy do
         expect(strategy_instance.info[:office_codes]).to eq %w[1A123B 3B345C]
 
         expect(ProviderDataApi::ActiveOfficeCodesFilter).to have_received(:call).with(
-          laa_accounts, area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER']
+          laa_accounts,
+          area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER'],
+          translator: Providers::SchedulesToOfficeTranslator
         )
       end
     end

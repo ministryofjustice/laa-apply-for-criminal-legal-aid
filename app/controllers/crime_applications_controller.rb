@@ -1,6 +1,7 @@
 class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
-                :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
+                :present_crime_application, only: [:edit, :destroy, :confirm_destroy, :show]
+  before_action :block_contingent_liability!, except: [:index, :edit, :show]
 
   layout 'application_dashboard', only: [:index]
 
@@ -14,11 +15,20 @@ class CrimeApplicationsController < DashboardController
     ).page params[:page]
   end
 
+  def show
+    @presenter = Summary::HtmlPresenter.new(
+      crime_application: current_crime_application.draft_submission,
+      editable: !current_office&.contingent_liability?
+    )
+  end
+
   def new
     @form_object = Start::IsCifcForm.new
   end
 
   def edit
+    redirect_to action: :show if current_office.contingent_liability?
+
     @tasklist = TaskList::Collection.new(
       crime_application: current_crime_application
     )

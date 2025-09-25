@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'a business resource step controller' do |form_class|
+  include_context 'current provider with active office'
+
   let(:crime_application) do
     CrimeApplication.create(
+      office_code: office_code,
       applicant: Applicant.new,
       partner: Partner.new,
       partner_detail: PartnerDetail.new(involvement_in_case: 'none'),

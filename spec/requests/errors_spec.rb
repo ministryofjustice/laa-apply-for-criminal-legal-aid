@@ -43,6 +43,13 @@ RSpec.describe 'Error pages' do
     end
   end
 
+  context 'contingent_liability' do
+    it 'renders the expected page and has expected status code' do
+      get '/errors/contingent-liability'
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
+
   context 'unauthenticated' do
     it 'renders the expected page and has expected status code' do
       get '/errors/unauthenticated'

@@ -1,9 +1,11 @@
 RSpec.shared_examples 'capital properties controller' do |parameter|
+  include_context 'current provider with active office'
+
   let(:property_type) { parameter }
   let(:form_class) { "Steps::Capital::#{property_type.titleize}Form".constantize }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
 
   describe '#edit' do
     context 'when application is not found' do
@@ -26,7 +28,10 @@ RSpec.shared_examples 'capital properties controller' do |parameter|
 
     context 'when property is for another application' do
       let(:property) do
-        Property.create!(property_type: property_type, crime_application: CrimeApplication.create!)
+        Property.create!(
+          property_type: property_type,
+          crime_application: CrimeApplication.create!(office_code:)
+        )
       end
 
       it 'responds with HTTP success' do
@@ -61,7 +66,7 @@ RSpec.shared_examples 'capital properties controller' do |parameter|
 
     context 'when property is for another application' do
       let(:property) do
-        Property.create!(property_type: property_type, crime_application: CrimeApplication.create!)
+        Property.create!(property_type: property_type, crime_application: CrimeApplication.create!(office_code:))
       end
 
       it 'responds with HTTP success' do

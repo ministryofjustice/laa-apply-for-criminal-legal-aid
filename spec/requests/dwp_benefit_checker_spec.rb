@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'DWP passporting sub journey', :authorized do
+  include_context 'with office code selected'
+
   describe 'confirm applicant personal details page' do
     let(:crime_application) { CrimeApplication.first }
 
     before do
       # sets up a few test records
-      app = CrimeApplication.create
+      app = CrimeApplication.create(office_code:)
 
       Applicant.create(
         crime_application: app,

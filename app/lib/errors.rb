@@ -1,6 +1,7 @@
 module Errors
   class ApplicationCannotReceivePse < StandardError; end
   class CannotYetDetermineFullMeans < StandardError; end
+  class ContingentLiability < StandardError; end
   class DateOfBirthPending < StandardError; end
   class InvalidRuleset < StandardError; end
   class InvalidSession < StandardError; end
@@ -17,4 +18,5 @@ module Errors
   class PropertyNotFound < NotFound; end
   class SavingNotFound < NotFound; end
   class SubjectNotFound < NotFound; end
+  class OfficeNotFound < NotFound; end
 end

@@ -9,12 +9,6 @@ class DashboardController < ApplicationController
 
   private
 
-  def require_current_office!
-    return if current_office_code.present?
-
-    redirect_to steps_provider_select_office_path
-  end
-
   # Implement in sub-controllers to narrow down allowed columns
   # :nocov:
   def sortable_columns

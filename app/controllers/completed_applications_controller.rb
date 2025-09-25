@@ -3,6 +3,7 @@ class CompletedApplicationsController < DashboardController
 
   before_action :check_crime_application_presence,
                 :present_crime_application, only: [:show]
+  before_action :block_contingent_liability!, except: [:index, :show]
 
   layout 'application_dashboard', only: [:index]
 

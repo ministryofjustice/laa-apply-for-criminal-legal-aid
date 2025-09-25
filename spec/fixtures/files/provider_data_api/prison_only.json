@@ -1,0 +1,71 @@
+{
+  "firm": {
+    "firmNumber": "12345",
+    "firmId": 12345,
+    "ccmsFirmId": 5678,
+    "parentFirmId": 0,
+    "firmName": "SAMPLE SOLICITORS LTD",
+    "firmType": "Legal Services Provider",
+    "constitutionalStatus": "Limited Company",
+    "solicitorAdvocateYN": null,
+    "advocateLevel": null,
+    "barCouncilRoll": null,
+    "companyHouseNumber": "789101112"
+  },
+  "office": {
+    "firmOfficeId": 2345,
+    "ccmsFirmOfficeId": 891011,
+    "firmOfficeCode": "0P803Q",
+    "officeName": "0P803Q,TOP FLOOR, TREE HOUSE",
+    "officeCodeAlt": "SAMPLE SOLICITORS LTD",
+    "type": "Legal Services Supplier (Civil/Crime/Both/Mediator)"
+  },
+  "pds": false,
+  "schedules": [
+    {
+      "contractType": "Standard",
+      "contractDescription": "2017 Standard Crime Contract",
+      "contractNumber": "1234567",
+      "contractReference": "CRM/CL/07/0P803Q/1",
+      "contractStatus": "Open",
+      "contractAuthorizationStatus": "APPROVED",
+      "contractStartDate": "2025-01-01",
+      "contractEndDate": "2026-05-31",
+      "areaOfLaw": "CRIME LOWER",
+      "scheduleType": "Standard",
+      "scheduleNumber": "CRM/0P803Q/21.6",
+      "scheduleContractNumber": "12345678",
+      "scheduleContractReference": "CRM/CL/07/0P803Q/1",
+      "scheduleAuthorizationStatus": "APPROVED",
+      "scheduleStatus": "Open",
+      "scheduleStartDate": "2025-01-01",
+      "scheduleEndDate": "2026-05-31",
+      "scheduleLines": [
+        {
+          "areaOfLaw": "CRIME LOWER",
+          "categoryOfLaw": "PRISON",
+          "description": "Crime Lower. Prisons",
+          "devolvedPowersStatus": null,
+          "dpTypeOfChange": null,
+          "dpReasonForChange": null,
+          "dpDateOfChange": null,
+          "remainderWorkFlag": null,
+          "minimumCasesAllowedCount": "1",
+          "maximumCasesAllowedCount": null,
+          "minimumToleranceCount": null,
+          "maximumToleranceCount": null,
+          "minimumLicenseCount": null,
+          "maximumLicenseCount": null,
+          "workInProgressCount": "1",
+          "outreach": null,
+          "cancelFlag": "N",
+          "cancelReason": null,
+          "cancelDate": null,
+          "closedDate": null,
+          "closedReason": null
+        }
+      ],
+      "nmsAuths": []
+    }
+  ]
+}

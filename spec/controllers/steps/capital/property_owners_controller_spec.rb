@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::PropertyOwnersController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Capital::PropertyOwnersForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
   let(:property) do
     Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application,
                      percentage_applicant_owned: percentage_applicant_owned)
