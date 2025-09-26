@@ -6,14 +6,9 @@
 
     <h1 class="govuk-heading-xl"><%= service_name %></h1>
     <p class="govuk-body">Defnyddiwch y gwasanaeth hwn i wneud cais am gymorth cyfreithiol troseddol.</p>
-    <%= button_to provider_entra_omniauth_authorize_path(locale: :cy),
+    <%= button_to t('helpers.submit.start'), provider_entra_omniauth_authorize_path(locale: :cy),
                   method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
-                  data: { module: 'govuk-button' }, role: 'button', draggable: false do %>
-      <%= t('helpers.submit.start') %>
-      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-      </svg>
-    <% end %>
+                  data: { module: 'govuk-button' }, role: 'button', draggable: false %>
   </div>
 </div>
