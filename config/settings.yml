@@ -13,7 +13,7 @@ feature_flags:
     production: false
   welsh_translation:
     local: true
-    staging: false
+    staging: true
     production: false
   provider_data_api:
     local: true
