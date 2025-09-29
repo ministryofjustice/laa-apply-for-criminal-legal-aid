@@ -28,7 +28,7 @@ feature_flags:
     production: false
   deletion_events:
     local: true
-    staging: false
+    staging: true
     preprod: true
     production: false
 
