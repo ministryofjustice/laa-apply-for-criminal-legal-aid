@@ -143,7 +143,8 @@ metadata:
       SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
         "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
-      SecRuleUpdateTargetByTag "OWASP_CRS" "!ARGS:authenticity_token"
+      SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 933150 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
