@@ -34,12 +34,12 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
       let(:status) { 200 }
       let(:translator_active?) { false }
 
-      it 'keeps the office code in the list' do
+      it 'applies the translators determination' do
         expect(filtered_office_codes).to be_empty
       end
     end
 
-    describe 'when an office is inactive one PDA' do
+    describe 'when an office is inactive on PDA' do
       let(:status) { 204 }
 
       it 'office_code is filtered from the list' do
