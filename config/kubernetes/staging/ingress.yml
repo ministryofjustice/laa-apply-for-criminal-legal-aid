@@ -185,7 +185,11 @@ metadata:
         ctl:ruleRemoveById=932235"
       SecRule REQUEST_URI "@endsWith /steps/client/nino" \
         "id:1007,phase:2,pass,nolog,\
-         ctl:ruleRemoveById=932250"
+        ctl:ruleRemoveById=932235,\
+        ctl:ruleRemoveById=932250"
+      SecRule REQUEST_URI "@endsWith /return" \
+        "id:1000,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932235"
       SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
