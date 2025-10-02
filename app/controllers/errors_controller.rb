@@ -36,7 +36,7 @@ class ErrorsController < UnauthenticatedController
   end
 
   def contingent_liability
-    respond_with_status(:forbidden)
+    respond_with_status(:ok)
   end
 
   private

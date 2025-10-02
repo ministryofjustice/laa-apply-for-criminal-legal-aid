@@ -40,8 +40,6 @@ RSpec.describe 'Viewing dashboard with Contingent Liability Criminal Legal Aid a
       within('.govuk-error-summary') do |error|
         expect(error).to have_content('You cannot start, change or submit applications using this account')
       end
-
-      expect(page).to have_http_status :forbidden
     end
 
     it 'shows error message when trying delete a draft application' do
