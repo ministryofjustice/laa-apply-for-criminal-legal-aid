@@ -9,6 +9,8 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
     let(:translator) do
       class_double(ProviderDataApi::DefaultSchedulesToOfficeTranslator)
     end
+
+    let(:body) { file_fixture('provider_data_api/public_defender_service.json').read }
     let(:status) { 200 }
     let(:translator_active?) { true }
 
@@ -17,9 +19,9 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
         double(ProviderDataApi::DefaultSchedulesToOfficeTranslator, active?: translator_active?)
       )
       stub_request(:get, 'https://pda.example.com/provider-offices/2B3C4E/schedules')
-        .to_return_json(status: 200)
+        .to_return_json(status: 200, body: body)
       stub_request(:get, 'https://pda.example.com/provider-offices/1A2B3C/schedules')
-        .to_return_json(status:)
+        .to_return_json(status:, body:)
     end
 
     describe 'when an office is active on PDA' do
@@ -77,9 +79,9 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
 
       context 'when API responds successfully after two attempts' do
         before do
-          stub_request(:get, url).to_return(
-            { status: 409 },
-            { status: 200 }
+          stub_request(:get, url).to_return_json(
+            { status: 409, body: body },
+            { status: 200, body: body }
           )
         end
 
@@ -93,9 +95,9 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
       context 'when API does not respond successfully' do
         before do
           stub_request(:get, url).to_return(
-            { status: 409 },
-            { status: 409 },
-            { status: 409 }
+            { status: 409, body: body },
+            { status: 409, body: body },
+            { status: 409, body: body }
           )
         end
 
@@ -110,7 +112,7 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
     describe 'when `area_of_law` is specified' do
       it 'scopes PDA request by the area of law' do
         stub_request(:get, 'https://pda.example.com/provider-offices/9B3C4E/schedules?areaOfLaw=CIVIL%20FUNDING')
-          .to_return(status: 200)
+          .to_return_json(status: 200, body: body)
 
         described_class.call(['9B3C4E'], area_of_law: 'CIVIL FUNDING')
       end
