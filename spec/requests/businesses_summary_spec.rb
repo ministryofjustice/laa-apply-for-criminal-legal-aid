@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Businesses summary page', :authorized do
+  include_context 'with office code selected'
+
   before do
     business = Business.new(
       'additional_owners' => '',
@@ -73,6 +75,7 @@ RSpec.describe 'Businesses summary page', :authorized do
     )
 
     CrimeApplication.create(
+      office_code: office_code,
       income: Income.new,
       applicant: Applicant.new,
       partner: Partner.new,

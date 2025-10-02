@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Capital::NationalSavingsCertificatesForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
   let(:crime_application) do
     CrimeApplication.create!(
+      office_code: office_code,
       partner: Partner.new,
       partner_detail: PartnerDetail.new(involvement_in_case: 'none'),
       applicant: Applicant.new
@@ -33,7 +36,10 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when National Savings Certificate is for another application' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!, ownership_type: 'applicant')
+        NationalSavingsCertificate.create!(
+          crime_application: CrimeApplication.create!(office_code:),
+          ownership_type: 'applicant'
+        )
       end
 
       it 'responds with HTTP success' do
@@ -68,7 +74,8 @@ RSpec.describe Steps::Capital::NationalSavingsCertificatesController, type: :con
 
     context 'when National Savings Certificate is for another application' do
       let(:national_savings_certificate) do
-        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!, ownership_type: 'applicant')
+        NationalSavingsCertificate.create!(crime_application: CrimeApplication.create!(office_code:),
+                                           ownership_type: 'applicant')
       end
 
       it 'responds with HTTP success' do

@@ -1,7 +1,9 @@
 module Steps
   class ProviderStepController < BaseStepController
     skip_before_action :check_crime_application_presence,
-                       :update_navigation_stack
+                       :update_navigation_stack,
+                       :block_contingent_liability!,
+                       :require_current_office!
 
     private
 

@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Client::EmploymentsSummaryController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:existing_case) do
-    CrimeApplication.create(client_employments: client_employments, applicant: Applicant.new)
+    CrimeApplication.create(office_code: office_code, client_employments: client_employments, applicant: Applicant.new)
   end
 
   context 'when client_employments present' do

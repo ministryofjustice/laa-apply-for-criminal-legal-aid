@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::BusinessTypeController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:existing_case) do
     CrimeApplication.create!(
+      office_code: office_code,
       partner: Partner.new,
       applicant: Applicant.new,
       businesses: businesses

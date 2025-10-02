@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Income::Partner::EmploymentDetailsController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Income::Partner::EmploymentDetailsForm }
   let(:decision_tree_class) { Decisions::IncomeDecisionTree }
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
   let(:employment) do
     Employment.create!(crime_application: crime_application, ownership_type: OwnershipType::PARTNER.to_s)
   end
@@ -25,7 +27,8 @@ RSpec.describe Steps::Income::Partner::EmploymentDetailsController, type: :contr
 
     context 'when employment is for another application' do
       let(:employment) do
-        Employment.create!(crime_application: CrimeApplication.create!, ownership_type: OwnershipType::PARTNER.to_s)
+        Employment.create!(crime_application: CrimeApplication.create!(office_code:),
+                           ownership_type: OwnershipType::PARTNER.to_s)
       end
 
       it 'responds with HTTP success' do

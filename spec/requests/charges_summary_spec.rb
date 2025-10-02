@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Charges/offences summary page', :authorized do
+  include_context 'with office code selected'
+
   before do
     # sets up a few test records
-    app = CrimeApplication.create
+    app = CrimeApplication.create(office_code: selected_office_code)
     kase = Case.create(crime_application: app)
 
     charge = kase.charges.create!(offence_name: 'Robbery')

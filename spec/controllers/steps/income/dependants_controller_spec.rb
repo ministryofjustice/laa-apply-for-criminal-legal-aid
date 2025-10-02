@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Steps::Income::DependantsController, type: :controller do
   it_behaves_like 'a generic step controller', Steps::Income::DependantsForm, Decisions::IncomeDecisionTree do
     describe 'CRUD actions' do
-      let(:crime_application) { CrimeApplication.create }
+      let(:crime_application) { CrimeApplication.create(office_code:) }
 
       context 'adding a new dependant' do
         it 'has the expected step name' do

@@ -10,7 +10,9 @@ module Silas
       return laa_accounts unless FeatureFlags.provider_data_api.enabled?
 
       ProviderDataApi::ActiveOfficeCodesFilter.call(
-        laa_accounts, area_of_law: 'CRIME LOWER'
+        laa_accounts,
+        area_of_law: 'CRIME LOWER',
+        translator: Providers::SchedulesToOfficeTranslator
       )
     end
 

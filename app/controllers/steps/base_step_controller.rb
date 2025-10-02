@@ -1,6 +1,8 @@
 module Steps
   class BaseStepController < ApplicationController
     before_action :check_crime_application_presence
+    before_action :require_current_office!
+    before_action :block_contingent_liability!
     before_action :update_navigation_stack, only: [:show, :edit]
     before_action :set_security_headers
 

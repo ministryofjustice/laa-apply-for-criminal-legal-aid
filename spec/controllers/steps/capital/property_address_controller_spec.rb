@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Capital::PropertyAddresForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
   let(:property) do
     Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: crime_application)
   end
@@ -25,7 +27,8 @@ RSpec.describe Steps::Capital::PropertyAddressController, type: :controller do
 
     context 'when property is for another application' do
       let(:property) do
-        Property.create!(property_type: PropertyType::RESIDENTIAL, crime_application: CrimeApplication.create!)
+        Property.create!(property_type: PropertyType::RESIDENTIAL,
+                         crime_application: CrimeApplication.create!(office_code:))
       end
 
       it 'responds with HTTP success' do

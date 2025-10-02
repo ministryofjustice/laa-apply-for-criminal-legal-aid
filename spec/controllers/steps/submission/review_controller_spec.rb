@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Submission::ReviewController, type: :controller do
+  include_context 'current provider with active office'
   context 'when applicant details not set' do
-    let(:existing_case) { CrimeApplication.create }
+    let(:existing_case) { CrimeApplication.create(office_code:) }
 
     before do
       allow(Rails.error).to receive(:report)
@@ -23,8 +24,14 @@ RSpec.describe Steps::Submission::ReviewController, type: :controller do
 
   context 'when applicant name and age are known' do
     let(:existing_case) {
-      CrimeApplication.create(applicant: Applicant.new(first_name: 'Bob', last_name: 'Smith',
-                                                       date_of_birth: '2000-01-01'))
+      CrimeApplication.create(
+        office_code: office_code,
+        applicant: Applicant.new(
+          first_name: 'Bob',
+          last_name: 'Smith',
+          date_of_birth: '2000-01-01'
+        )
+      )
     }
 
     it_behaves_like 'a generic step controller', Steps::Submission::ReviewForm, Decisions::SubmissionDecisionTree

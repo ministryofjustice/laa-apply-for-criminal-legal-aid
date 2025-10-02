@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Employments summary page', :authorized do
+  include_context 'with office code selected'
+
   let(:crime_application) do
     CrimeApplication.create!(
+      office_code: office_code,
       income: Income.new(employment_status: ['employed']),
       applicant: Applicant.new
     )

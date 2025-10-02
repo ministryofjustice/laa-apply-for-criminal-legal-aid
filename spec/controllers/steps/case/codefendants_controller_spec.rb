@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::CodefendantsController, type: :controller do
+  include_context 'current provider with active office'
   it_behaves_like 'a generic step controller', Steps::Case::CodefendantsForm, Decisions::CaseDecisionTree do
     describe 'additional CRUD actions' do
-      let(:existing_case) { CrimeApplication.create }
+      let(:existing_case) { CrimeApplication.create(office_code:) }
 
       context 'adding a new codefendant' do
         it 'has the expected step name' do

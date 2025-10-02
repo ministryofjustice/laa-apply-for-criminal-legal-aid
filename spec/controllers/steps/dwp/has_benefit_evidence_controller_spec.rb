@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Steps::DWP::HasBenefitEvidenceController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:applicant) { Applicant.new }
   let(:partner) { Partner.new }
   let(:partner_detail) { PartnerDetail.new(involvement_in_case: 'victim') }
 
   let(:existing_case) do
     CrimeApplication.create(partner:,
+                            office_code:,
                             partner_detail:,
                             applicant:)
   end

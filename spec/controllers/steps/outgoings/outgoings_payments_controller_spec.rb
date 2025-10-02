@@ -4,7 +4,7 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsController, type: :controller 
   # rubocop:disable Layout/LineLength
   it_behaves_like 'a generic step controller', Steps::Outgoings::OutgoingsPaymentsForm, Decisions::OutgoingsDecisionTree do
     describe 'CRUD actions' do
-      let(:crime_application) { CrimeApplication.create }
+      let(:crime_application) { CrimeApplication.create office_code: }
 
       context 'finishing outgoings payments' do
         it 'has the expected step name' do

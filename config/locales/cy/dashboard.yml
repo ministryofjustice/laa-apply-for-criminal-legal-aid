@@ -53,6 +53,10 @@ cy:
         last_name: Cyfenw
         date_of_birth: Dyddiad geni
         date_stamp: Stamp dyddiad
+    show:
+      page_title: Yn mynd rhagddo
+      in_progress: Yn mynd rhagddo
+      print_application: Argraffu cais
     confirm_destroy: &CRIME_APPLICATIONS_CONFIRM_DESTROY
       page_title: Cadarnhau eich bod am ddileu'r cais hwn
       heading: "Cadarnhau eich bod am ddileu'r cais hwn"
@@ -77,10 +81,6 @@ cy:
       page_title: Eich ceisiadau
       no_records: Does dim ceisiadau
     show:
-      heading:
-        initial: Cais am orchymyn cynrychiolaeth cymorth cyfreithiol troseddol
-        change_in_financial_circumstances: Newid mewn sefyllfa ariannol
-        post_submission_evidence: Tystiolaeth ategol
       laa_reference: "Cyfeirnod:"
       date_stamp: "Stamp dyddiad:"
       date_submitted: "Dyddiad cyflwyno:"
@@ -136,8 +136,12 @@ cy:
       draft_link: fersiwn sy’n mynd rhagddo
       continue_to_delete_button: Bwrw ymlaen i ddileu'r cais
       go_back_link: Yn ôl i'r ceisiadau
-
   shared:
+    application_overview:
+      heading:
+        initial: Cais am orchymyn cynrychiolaeth cymorth cyfreithiol troseddol
+        change_in_financial_circumstances: Newid mewn sefyllfa ariannol
+        post_submission_evidence: Tystiolaeth ategol
     dashboard_header:
       heading: Eich ceisiadau
       start_button: Cychwyn cais

@@ -7,6 +7,8 @@ class DummyStepController < Steps::BaseStepController
 end
 
 RSpec.describe DummyStepController, type: :controller do
+  include_context 'current provider with active office'
+
   before do
     Rails.application.routes.append do
       get '/dummy_step/:id', to: 'dummy_step#show'
@@ -17,7 +19,7 @@ RSpec.describe DummyStepController, type: :controller do
   end
 
   describe 'navigation stack' do
-    let!(:crime_application) { CrimeApplication.create }
+    let!(:crime_application) { CrimeApplication.create(office_code:) }
     let(:dummy_step_path) { "/dummy_step/#{crime_application.to_param}" }
 
     before do
