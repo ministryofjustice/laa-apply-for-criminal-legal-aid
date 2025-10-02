@@ -6,12 +6,15 @@ module ProviderDataApi
       @http_client = http_client
     end
 
-    # Returns a ProviderDataApi::OfficeSchedules struct
+    # If found returns a ProviderDataApi::OfficeSchedules struct
+    # otherwise raises ProviderDataApi::RecordNotFound
     def call
       response = http_client.get(schedules_endpoint(office_code))
-      raise ProviderDataApi::RecordNotFound unless response.status == 200
+      raise RecordNotFound unless response.status == 200
 
-      ProviderDataApi::OfficeSchedules.new(response.body)
+      OfficeSchedules.new(response.body)
+    rescue Faraday::ResourceNotFound
+      raise RecordNotFound
     end
 
     class << self

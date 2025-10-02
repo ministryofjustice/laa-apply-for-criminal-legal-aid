@@ -19,11 +19,11 @@ module ProviderDataApi
     # an active office
     def call
       office_codes.filter do |office_code|
-        response = http_client.get(schedules_endpoint(office_code))
-
-        response.status == 200 && translator.translate(response.body).active?
-      rescue Faraday::ResourceNotFound
-        next
+        translator.translate(
+          GetOfficeSchedules.call(office_code, area_of_law:)
+        ).active?
+      rescue RecordNotFound
+        false
       end
     end
 
@@ -37,19 +37,5 @@ module ProviderDataApi
     private
 
     attr_reader :office_codes, :http_client, :area_of_law, :translator
-
-    def schedules_endpoint(office_code)
-      path = "/provider-offices/#{office_code}/schedules"
-
-      URI::Generic.build(path:, query:)
-    end
-
-    def query
-      return unless area_of_law
-
-      URI.encode_www_form(
-        'areaOfLaw' => area_of_law
-      )
-    end
   end
 end
