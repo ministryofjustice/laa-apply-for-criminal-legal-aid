@@ -13,6 +13,7 @@ module ProviderDataApi
 
     CategoryOfLaw = String.enum(
       'ALL',
+      'AAP',
       'APPEALS',
       'INVEST',
       'PRISON'
