@@ -2,7 +2,7 @@
 cy:
   layouts:
     phase_banner:
-      text_html: Gwasanaeth newydd yw hwn – bydd eich adborth <a href="%{survey_url}" rel="external"></a> yn ein helpu i’w wella.
+      text_html: Gwasanaeth newydd yw hwn – bydd eich <a href="%{survey_url}" rel="external">adborth</a> yn ein helpu i’w wella.
       tag:
         production: Beta
         staging: Staging
