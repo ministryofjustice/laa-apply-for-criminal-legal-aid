@@ -160,7 +160,7 @@ data:
                 <div class="govuk-grid-column-two-thirds">
                     <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
                     <p class="govuk-body">You can use this service from Monday to Friday, 7am to 7pm.</p>
-                    <p class="govuk-body">If you were using the service when it became unavailable, we saved your answers up to the last time you selected 'Save', before the service became unavailable.</p>
+                    <p class="govuk-body">We saved your answers up to the last time you selected 'Save', before the service became unavailable.</p>
                 </div>
             </div>
             </main>
