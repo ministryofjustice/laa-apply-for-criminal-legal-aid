@@ -11,6 +11,7 @@ Rails.application.config.filter_parameters += [
   # It does partial matching (i.e. `telephone_number` is covered by `phone`)
   :address_line,
   :appeal_with_changes_details,
+  :code,
   :date_of_birth,
   :description,
   :email,
@@ -24,5 +25,7 @@ Rails.application.config.filter_parameters += [
   :phone,
   :postcode,
   :reason,
+  :session_state,
+  :state,
   :urn,
 ]
