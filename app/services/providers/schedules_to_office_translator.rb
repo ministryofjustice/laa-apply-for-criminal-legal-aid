@@ -33,11 +33,8 @@ module Providers
 
     def active?
       return true if public_defender_service?
-      return false unless crime_schedule
 
-      crime_schedule.scheduleLines.any? do |sl|
-        sl.areaOfLaw == crime_lower && sl.categoryOfLaw == ProviderDataApi::Types::CategoryOfLaw['INVEST']
-      end
+      !active_crime_schedules.empty?
     end
 
     def public_defender_service?
@@ -45,13 +42,25 @@ module Providers
     end
 
     def contingent_liability?
-      return false unless crime_schedule
+      return false if active_crime_schedules.empty?
 
-      crime_schedule.scheduleType == ProviderDataApi::Types::Schedule['Contingent Liability']
+      active_crime_schedules.all? do |s|
+        s.scheduleType == ProviderDataApi::Types::Schedule['Contingent Liability']
+      end
     end
 
-    def crime_schedule
-      schedules.find { |s| s.areaOfLaw == crime_lower }
+    def active_crime_schedules
+      @active_crime_schedules ||= schedules.select do |s|
+        next unless s.areaOfLaw == crime_lower
+
+        s.scheduleLines.any? do |sl|
+          sl.areaOfLaw == crime_lower && sl.categoryOfLaw == investigations
+        end
+      end
+    end
+
+    def investigations
+      ProviderDataApi::Types::CategoryOfLaw['INVEST']
     end
 
     def crime_lower

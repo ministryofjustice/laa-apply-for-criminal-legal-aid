@@ -62,5 +62,19 @@ RSpec.describe Providers::SchedulesToOfficeTranslator do
         expect(translate.contingent_liability?).to be false
       end
     end
+
+    describe 'an office with overlapping CL and active schedules' do
+      let(:office_schedules_json) do
+        file_fixture('provider_data_api/contingent_and_active_schedules.json').read
+      end
+
+      it 'returns an Office with correct attributes' do
+        expect(translate.office_code).to eq('YYYYYY')
+        expect(translate.name).to eq('YYYYYY,SUITE 99')
+        expect(translate.active?).to be true
+        # we take the highest privilaged schedule when there is a conflict
+        expect(translate.contingent_liability?).to be false
+      end
+    end
   end
 end
