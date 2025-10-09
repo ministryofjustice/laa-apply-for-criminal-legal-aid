@@ -144,11 +144,15 @@ metadata:
         "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 933150 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 932260 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 932230 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=920120"
-      SecRule REQUEST_URI "@endsWith /steps/case/ioj" \
+        ctl:ruleRemoveById=920120,\
+        ctl:ruleRemoveById=933150"
+      SecRule REQUEST_URI "@rx /steps/(case/ioj|submission/more-information|circumstances/pre-cifc-reason|income/how-manage-with-no-income)" \
         "id:1001,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
         ctl:ruleRemoveById=932100,\
@@ -156,68 +160,38 @@ metadata:
         ctl:ruleRemoveById=932115,\
         ctl:ruleRemoveById=932125,\
         ctl:ruleRemoveById=932235,\
+        ctl:ruleRemoveById=932250,\
         ctl:ruleRemoveById=932370,\
         ctl:ruleRemoveById=932380,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/submission/more-information" \
+      SecRule REQUEST_URI "@rx /steps/case/(client|partner)/other-charge" \
         "id:1002,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
-        ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
-        ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/circumstances/pre-cifc-reason" \
-        "id:1003,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
-        ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
-        ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/client/other-charge" \
-        "id:1004,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/partner/other-charge" \
-        "id:1005,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=942230"
+        ctl:ruleRemoveById=942230,\
+        ctl:ruleRemoveById=942360"
       SecRule REQUEST_URI "@rx .*/steps/capital/investments/[a-f0-9-]+$" \
-        "id:1006,phase:2,pass,nolog,\
+        "id:1003,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115"
       SecRule REQUEST_URI "@rx .*/steps/case/charges/[a-f0-9-]+$" \
-        "id:1007,phase:2,pass,nolog,\
+        "id:1004,phase:2,pass,nolog,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100"
-      SecRule REQUEST_URI "@endsWith /steps/income/how-manage-with-no-income" \
-        "id:1008,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
+      SecRule REQUEST_URI "@rx /steps/income/client/deductions-from-pay/[a-f0-9-]+$" \
+        "id:1005,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
         ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
+        ctl:ruleRemoveById=932125"
+      SecRule REQUEST_URI "@rx /steps/income/client/nature-of-business/[a-f0-9-]+$" \
+        "id:1006,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932235"
+      SecRule REQUEST_URI "@endsWith /steps/client/nino" \
+        "id:1007,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932235,\
+        ctl:ruleRemoveById=932250"
       SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
