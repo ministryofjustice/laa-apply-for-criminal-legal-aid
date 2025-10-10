@@ -22,17 +22,11 @@ RSpec.describe Provider, type: :model do
   end
 
   describe '#multiple_offices?' do
-    context 'provider has more than 1 office account' do
+    context 'when provider has more than 1 office account' do
       it { expect(provider.multiple_offices?).to be(true) }
     end
 
-    context 'provider has more than 1 office account but only one is active' do
-      let(:set_office_codes) { %w[2A555X 3B345C] }
-
-      it { expect(provider.multiple_offices?).to be(false) }
-    end
-
-    context 'provider has only 1 office account' do
+    context 'when provider has only 1 office account' do
       let(:set_office_codes) { %w[1K022G] }
 
       it { expect(provider.multiple_offices?).to be(false) }
@@ -44,13 +38,7 @@ RSpec.describe Provider, type: :model do
 
     it { is_expected.to be_nil }
 
-    context 'when selected office code is inactive' do
-      let(:set_selected_office_code) { '3B345C' }
-
-      it { is_expected.to be_nil }
-    end
-
-    context 'when selected office code enroled but not set on providers' do
+    context 'when selected office code is not a provider office code' do
       let(:set_selected_office_code) { '1A123B' }
 
       it { is_expected.to be_nil }
@@ -63,9 +51,9 @@ RSpec.describe Provider, type: :model do
     end
 
     context 'when there is only one active office code' do
-      let(:set_office_codes) { %w[1K022G 3B345C 4C567D] }
+      let(:set_office_codes) { %w[1K022G] }
 
-      it 'defaults to the one active office code' do
+      it 'defaults to the active office code' do
         expect(selected_office_code).to eq('1K022G')
       end
     end
@@ -74,6 +62,6 @@ RSpec.describe Provider, type: :model do
   describe '#office_codes' do
     subject(:office_codes) { provider.office_codes }
 
-    it { is_expected.to eq %w[1K022G 2A555X] }
+    it { is_expected.to eq %w[1K022G 2A555X 3B345C 4C567D] }
   end
 end

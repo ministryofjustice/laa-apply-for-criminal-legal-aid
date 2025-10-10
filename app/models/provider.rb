@@ -24,12 +24,6 @@ class Provider < ApplicationRecord
     office_codes.first unless multiple_offices?
   end
 
-  def office_codes
-    return super if FeatureFlags.provider_data_api.enabled?
-
-    super & Providers::Gatekeeper.active_office_codes
-  end
-
   class << self
     def from_omniauth(auth)
       find_or_initialize_by(auth_provider: auth.provider, uid: auth.uid).tap do |record|
