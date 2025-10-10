@@ -62,9 +62,8 @@ module DataTable
     end
 
     def sorted_params
-      return sorting_params unless filter
-
-      { filter: filter.params }.merge(sorting_params)
+      request_params = request.query_parameters || {}
+      request_params.merge(filter ? { filter: filter.params } : {}).merge(sorting_params)
     end
 
     def sorting_params
