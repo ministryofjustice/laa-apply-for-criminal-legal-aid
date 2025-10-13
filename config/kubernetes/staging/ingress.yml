@@ -165,6 +165,7 @@ metadata:
         ctl:ruleRemoveById=932380,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
+        ctl:ruleRemoveById=949110,\
         ctl:ruleRemoveById=942230"
       SecRule REQUEST_URI "@rx /steps/case/(client|partner)/other-charge" \
         "id:1002,phase:2,pass,nolog,\
