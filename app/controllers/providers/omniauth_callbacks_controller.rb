@@ -1,6 +1,5 @@
 module Providers
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-    skip_before_action :verify_authenticity_token
     before_action :check_provider_is_enrolled, only: [:entra]
 
     def entra
@@ -37,9 +36,7 @@ module Providers
     end
 
     def provider_enrolled?
-      return auth_hash.info.office_codes.any? if FeatureFlags.provider_data_api.enabled?
-
-      Providers::Gatekeeper.new(auth_hash.info).provider_enrolled?
+      auth_hash.info.office_codes.any?
     end
   end
 end
