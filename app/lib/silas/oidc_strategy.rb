@@ -7,8 +7,6 @@ module Silas
     # If the Provider Data API feature is enabled, laa_accounts are filtered
     # to include only active crime office_codes.
     def office_codes
-      return laa_accounts unless FeatureFlags.provider_data_api.enabled?
-
       ProviderDataApi::ActiveOfficeCodesFilter.call(
         laa_accounts,
         area_of_law: 'CRIME LOWER',

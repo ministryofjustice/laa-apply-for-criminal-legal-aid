@@ -1,6 +1,8 @@
 RSpec.shared_context 'when logged in' do
   let(:office_code) { '2A555X' }
 
+  include_context 'with mock provider data'
+
   before do
     visit root_path
     click_button('Start now')
