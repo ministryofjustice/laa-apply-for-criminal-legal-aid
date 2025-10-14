@@ -193,6 +193,7 @@ cy:
         before_or_after_tax: Ydy hyn cyn neu ar ôl treth?
         frequency: Pa mor aml maen nhw'n cael y taliad hwn?
       steps_income_client_deductions_form:
+        deductions: Didyniadau
         income_tax:
           frequency: Pa mor aml mae hyn yn cael ei ddidynnu?
         national_insurance:
@@ -500,7 +501,6 @@ cy:
         partner_employment_status: Dewiswch bob un sy'n berthnasol.
         partner_employment_status_options: *EMPLOYMENT_STATUS_HINTS
       steps_income_client_deductions_form:
-        deductions: Didyniadau
         types_options:
           other: Er enghraifft, Benthyciadau Myfyrwyr, pensiynau neu fuddion i gyflogeion
       steps_income_client_self_assessment_tax_bill_form:
@@ -1106,7 +1106,7 @@ cy:
         pays_council_tax_options: *YESNO
         amount: Faint maen nhw'n ei dalu bob blwyddyn?
       steps_outgoings_income_tax_rate_form:
-        income_tax_rate_above_threshold_options: Faint maen nhw'n ei dalu bob blwyddyn?
+        income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_partner_income_tax_rate_form:
         partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:

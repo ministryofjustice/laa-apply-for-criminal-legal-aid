@@ -18,7 +18,7 @@
         <% @form_object.house_types.each_with_index do |option, index| %>
           <%= f.govuk_radio_button :house_type, option, link_errors: index.zero? %>
         <% end %>
-        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_divider I18n.t('divider_text') %>
         <%= f.govuk_radio_button :house_type, 'other' do %>
           <%= f.govuk_text_field :other_house_type, autocomplete: 'off', width: 'one-third' %>
         <%end%>
