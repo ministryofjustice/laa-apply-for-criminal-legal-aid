@@ -60,7 +60,7 @@ RSpec.configure do |config|
   # rubocop:disable Layout/LineLength
   config.before do
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
-      .with(body: /\{"entity_id":"[0-9a-f\-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+}/)
+      .with(body: /\{"entity_id":"[0-9a-f\-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"created_at":null}/)
       .to_return(body: '{}')
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_updated')
