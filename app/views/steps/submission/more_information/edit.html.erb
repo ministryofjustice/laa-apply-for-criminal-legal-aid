@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <%= govuk_error_summary(@form_object) %>
-    <h1 class="govuk-heading-xl">Other relevant information</h1>
+    <h1 class="govuk-heading-xl"><% t('.heading') %></h1>
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:additional_information_required, legend: { tag: 'h2', size: 'm' }) do %>
         <% @form_object.choices.each_with_index do |choice, index| %>

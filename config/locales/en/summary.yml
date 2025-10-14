@@ -41,6 +41,9 @@ en:
         applicant_and_partner: "your client and their partner"
         applicant_or_partner: "your client or their partner"
         partner: "the partner"
+      change: Change
+      edit: Edit
+      remove: Remove
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 

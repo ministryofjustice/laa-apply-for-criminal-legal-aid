@@ -22,6 +22,9 @@ en:
         reject: You’ve rejected analytics cookies.
 
   date:
+    day: Day
+    month: Month
+    year: Year
     formats:
       <<: *DATE_FORMATS
   time:

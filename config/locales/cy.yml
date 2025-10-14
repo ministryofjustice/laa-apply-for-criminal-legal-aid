@@ -35,6 +35,9 @@ cy:
     am: yb
     pm: yp
   date:
+    day: Diwrnod
+    month: Mis
+    year: Blwyddyn
     formats:
       <<: *DATE_FORMATS
 
