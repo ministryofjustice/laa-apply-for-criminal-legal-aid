@@ -937,7 +937,7 @@ cy:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
+        question: Ydy eich cleient yn mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       trust_fund_amount_held:
         question: Swm yn y gronfa
@@ -947,7 +947,7 @@ cy:
 
       # START partner_trust_fund
       partner_will_benefit_from_trust_fund:
-        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
+        question: Ydy’r partner yn mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       partner_trust_fund_amount_held:
         question: Swm yn y gronfa
