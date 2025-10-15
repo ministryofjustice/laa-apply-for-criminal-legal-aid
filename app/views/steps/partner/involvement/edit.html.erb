@@ -8,7 +8,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :involvement_in_case, legend: { tag: 'h1', size: 'xl' } do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
-          <%= f.govuk_radio_divider if choice == PartnerInvolvementType::NONE %>
+          <%= f.govuk_radio_divider I18n.t('divider_text') if choice == PartnerInvolvementType::NONE %>
 
           <%= f.govuk_radio_button :involvement_in_case, choice.value, link_errors: index.zero? %>
         <% end %>

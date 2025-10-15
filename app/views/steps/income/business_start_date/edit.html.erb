@@ -8,6 +8,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_date_field :trading_start_date, maxlength_enabled: true,
+                             segment_names: f.segment_names,
                               legend: {
                                 size: 'xl'
                               } %>

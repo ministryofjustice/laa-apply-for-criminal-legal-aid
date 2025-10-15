@@ -8,7 +8,7 @@
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_date_field :appeal_lodged_date, maxlength_enabled: true, legend: { size: 's' } %>
+      <%= f.govuk_date_field :appeal_lodged_date, maxlength_enabled: true, legend: { size: 's' }, segment_names: f.segment_names %>
 
       <%= f.govuk_radio_buttons_fieldset :appeal_original_app_submitted, legend: { tag: 'h2', size: 's' } do %>
         <% @form_object.yes_no_choices.each_with_index do |option, index| %>

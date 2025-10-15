@@ -10,6 +10,10 @@ module FormBuilderHelper
     end
   end
 
+  def segment_names
+    { day: I18n.t('date.day'), month: I18n.t('date.month'), year: I18n.t('date.year') }
+  end
+
   private
 
   def submit_button(i18n_key, opts = {}, &block)

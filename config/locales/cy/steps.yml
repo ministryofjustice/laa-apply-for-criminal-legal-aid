@@ -210,7 +210,7 @@ cy:
           hint: Mae 'gwaith cyn-archebu' yn waith a wneir cyn cyhoeddi gorchymyn cynrychiolaeth.
       is_client_remanded:
         edit:
-          page_title: Oes llys wedi eich remandio yn y ddalfa?
+          page_title: Oes llys wedi remandio eich cleient yn y ddalfa?
           date_client_remanded: Nodwch pryd y cawsant eu remandio
       charges:
         edit:
@@ -718,6 +718,7 @@ cy:
       more_information:
         edit:
           page_title: Rhagor o wybodaeth
+          heading: Gwybodaeth berthnasol arall
       review:
         edit:
           page_title: Adolygu'r cais
