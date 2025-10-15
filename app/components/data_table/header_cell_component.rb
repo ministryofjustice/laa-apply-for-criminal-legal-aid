@@ -62,8 +62,7 @@ module DataTable
     end
 
     def sorted_params
-      request_params = request.query_parameters || {}
-      request_params.merge(filter ? { filter: filter.params } : {}).merge(sorting_params)
+      locale_param.merge(filter ? { filter: filter.params } : {}).merge(sorting_params)
     end
 
     def sorting_params
@@ -88,6 +87,12 @@ module DataTable
 
     def active?
       colname == sorting.sort_by
+    end
+
+    private
+
+    def locale_param
+      request.query_parameters.slice("locale") || {}
     end
   end
 end
