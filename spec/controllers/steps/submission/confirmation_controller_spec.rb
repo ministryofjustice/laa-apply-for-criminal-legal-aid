@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Steps::Submission::ConfirmationController, type: :controller do
   describe 'confirmation page' do
+    include_context 'current provider with active office'
+
     let(:application_id) { '696dd4fd-b619-4637-ab42-a5f4565bcf4a' }
     let(:application_fixture) { LaaCrimeSchemas.fixture(1.0) }
 
     before do
-      allow(controller).to receive(:current_office_code).and_return('1A123B')
-
       stub_request(:get, "http://datastore-webmock/api/v1/applications/#{application_id}")
         .to_return(body: application_fixture)
     end
