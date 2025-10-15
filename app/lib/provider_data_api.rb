@@ -11,15 +11,35 @@ module ProviderDataApi
       'CRIME LOWER'
     )
 
-    CategoryOfLaw = String.enum(
-      'ALL',
-      'AAP',
-      'APPEALS',
-      'INVEST',
-      'PRISON'
-    )
+    CategoryOfLaw = String.enum(*%w[
+      AAP
+      ALL
+      APPEALS
+      CLA
+      COM
+      CON
+      DEB
+      DISC
+      EDU
+      ELA
+      EMP
+      HOU
+      IMMAS
+      IMMOT
+      INVEST
+      MAT
+      MED
+      MHE
+      MSC
+      PI
+      PRISON
+      PUB
+      WB
+    ])
 
     Schedule = String.enum(
+      'Individual Case Contract',
+      'CLA',
       'Standard',
       'Contingent Liability'
     )
