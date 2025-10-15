@@ -89,10 +89,8 @@ module DataTable
       colname == sorting.sort_by
     end
 
-    private
-
     def locale_param
-      request.query_parameters.slice("locale") || {}
+      request.query_parameters.slice('locale') || {}
     end
   end
 end
