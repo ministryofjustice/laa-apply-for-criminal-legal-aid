@@ -12,13 +12,14 @@
         <% if option.jsa? %>
             <%= f.govuk_radio_button :benefit_type, option.value do %>
               <%= f.govuk_date_field :last_jsa_appointment_date, maxlength_enabled: true,
+                                     segment_names: f.segment_names,
                                       legend: {
                                         text: t('.last_jsa_appointment_date'),
                                         size: 's', class: 'govuk-!-font-weight-regular'
                                       } %>
             <% end %>
           <% elsif option.none? %>
-            <%= f.govuk_radio_divider %>
+            <%= f.govuk_radio_divider I18n.t('divider_text') %>
             <%= f.govuk_radio_button :benefit_type, option, link_errors: index.zero? %>
           <% else %>
             <%= f.govuk_radio_button :benefit_type, option, link_errors: index.zero? %>

@@ -14,7 +14,7 @@
       <% end %>
 
       <%= f.govuk_text_field :other_names, autocomplete: 'off', width: 'three-quarters', label: { size: 'm' } %>
-      <%= f.govuk_date_field :date_of_birth, maxlength_enabled: true, legend: { size: 'm' } %>
+      <%= f.govuk_date_field :date_of_birth, maxlength_enabled: true, legend: { size: 'm' }, segment_names: f.segment_names %>
       <%= f.continue_button %>
     <% end %>
   </div>
