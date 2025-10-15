@@ -10,6 +10,7 @@
           <% if choice == YesNoAnswer::YES %>
             <%= f.govuk_radio_button :has_case_concluded, choice.value do %>
               <%= f.govuk_date_field :date_case_concluded, maxlength_enabled: true,
+                                     segment_names: f.segment_names,
                                      legend: {
                                        text: t('.date_case_concluded',),
                                        size: 's'

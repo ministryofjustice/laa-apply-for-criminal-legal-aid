@@ -12,7 +12,7 @@
         <% @form_object.choices.each_with_index do |option, index| %>
           <%= f.govuk_radio_button :investment_type, option, link_errors: index.zero? %>
         <% end %>
-        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_divider I18n.t('divider_text') %>
         <%= f.govuk_radio_button :investment_type, 'none' %>
       <% end %>
 

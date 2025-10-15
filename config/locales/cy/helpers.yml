@@ -52,7 +52,7 @@ cy:
       save_and_submit_post_submission_evidence: Cadw a chyflwyno tystiolaeth
       save_cookie_settings: Cadw’r gosodiadau cwcis
       sign_in: Mewngofnodi
-      find_address: Dod i hyd i gyfeiriad
+      find_address: Dod o hyd i gyfeiriad
       try_again: Rhoi cynnig arall arni
     contact:
       call_charges: Gwybodaeth am gostau galwadau
@@ -145,7 +145,7 @@ cy:
       steps_case_is_preorder_work_claimed_form:
         is_preorder_work_claimed: Ydych chi'n bwriadu hawlio gwaith cyn-archebu?
       steps_case_is_client_remanded_form:
-        is_client_remanded: Oes llys wedi eich remandio yn y ddalfa?
+        is_client_remanded: Oes llys wedi remandio eich cleient yn y ddalfa?
       steps_case_charges_form:
         date_from: Dyddiad cychwyn %{index}
         date_to: Dyddiad gorffen %{index} (dewisol)
@@ -193,6 +193,7 @@ cy:
         before_or_after_tax: Ydy hyn cyn neu ar ôl treth?
         frequency: Pa mor aml maen nhw'n cael y taliad hwn?
       steps_income_client_deductions_form:
+        deductions: Didyniadau
         income_tax:
           frequency: Pa mor aml mae hyn yn cael ei ddidynnu?
         national_insurance:
@@ -622,7 +623,7 @@ cy:
         other_names: Ydyn nhw’n cael eu hadnabod wrth enwau eraill? (dewisol)
       steps_client_case_type_form:
         case_type_options:
-          summary_only: Diannod yn Unig
+          summary_only: Diannod yn unig
           either_way: Y naill ffordd neu'r llall
           indictable: Ditiadwy
           already_in_crown_court: Treial yn Llys y Goron yn barod
@@ -1087,7 +1088,7 @@ cy:
         frequency_options: *frequency_options
       steps_outgoings_rent_form:
         amount:
-          one: Faint o rent mae % %{subject} yn ei dalu ar ôl tynnu'r Budd-dal Tai?
+          one: Faint o rent mae %{subject} yn ei dalu ar ôl tynnu'r Budd-dal Tai?
           other: Faint o rent mae %{subject} yn ei dalu ar ôl tynnu’r Budd-dal Tai?
         frequency_options: *frequency_options
       steps_outgoings_board_and_lodging_form:
@@ -1105,7 +1106,7 @@ cy:
         pays_council_tax_options: *YESNO
         amount: Faint maen nhw'n ei dalu bob blwyddyn?
       steps_outgoings_income_tax_rate_form:
-        income_tax_rate_above_threshold_options: Faint maen nhw'n ei dalu bob blwyddyn?
+        income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_partner_income_tax_rate_form:
         partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:
