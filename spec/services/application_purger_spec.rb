@@ -1,9 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationPurger do
-  let(:crime_application) { instance_double(CrimeApplication, id: '12345', reference: 10_000_001) }
-  let(:log_context) { LogContext.new(current_provider: current_provider, ip_address: '123.123.123.123') }
-  let(:current_provider) { instance_double(Provider, id: 1) }
+  subject { described_class.call(crime_application:, deleted_by:, deletion_reason:) }
+
+  let(:crime_application) {
+    instance_double(CrimeApplication, id: '696dd4fd-b619-4637-ab42-a5f4565bcf4a', reference: 10_000_001,
+   application_type: ApplicationType::INITIAL)
+  }
+  let(:deleted_by) { '1' }
+  let(:deletion_reason) { DeletionReason::PROVIDER_ACTION.to_s }
   let(:documents) { [] }
   let(:document) { instance_double(Document) }
 
@@ -15,17 +20,52 @@ RSpec.describe ApplicationPurger do
       crime_application
     ).to receive_message_chain(:documents, :stored, :not_submitted).and_return(documents)
     # rubocop:enable RSpec/MessageChain
+
+    allow(FeatureFlags).to receive(:deletion_events) {
+      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+    }
   end
 
   describe '.call' do
     it 'logs the deletion' do
-      expect do
-        described_class.call(crime_application, current_provider, log_context)
-      end.to change(DeletionEntry, :count).by(1)
+      expect { subject }.to change(DeletionEntry, :count).by(1)
 
       deletion_entry = DeletionEntry.first
-      expect(deletion_entry.record_id).to eq('12345')
+      expect(deletion_entry.record_id).to eq('696dd4fd-b619-4637-ab42-a5f4565bcf4a')
       expect(deletion_entry.deleted_by).to eq('1')
+      expect(deletion_entry.reason).to eq(DeletionReason::PROVIDER_ACTION.to_s)
+    end
+
+    it 'makes a request to publish a draft deletion event' do
+      subject
+      expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
+        .with(body: hash_including(
+          'entity_id' => crime_application.id,
+          'entity_type' => crime_application.application_type.to_s,
+          'business_reference' => crime_application.reference,
+          'reason' => deletion_reason,
+          'deleted_by' => deleted_by,
+        ))
+    end
+
+    context 'when feature flag is disabled' do # TODO: remove when feature flag enabled
+      before do
+        allow(FeatureFlags).to receive(:deletion_events) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'does not make request to publish a draft deletion event' do
+        subject
+        expect(WebMock).not_to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
+          .with(body: hash_including(
+            'entity_id' => crime_application.id,
+            'entity_type' => crime_application.application_type.to_s,
+            'business_reference' => crime_application.reference,
+            'reason' => deletion_reason,
+            'deleted_by' => deleted_by,
+          ))
+      end
     end
 
     context 'when it has orphaned documents' do
@@ -33,29 +73,43 @@ RSpec.describe ApplicationPurger do
       let(:delete_double) { instance_double(Datastore::Documents::Delete, call: true) }
 
       before do
-        allow(Datastore::Documents::Delete).to receive(:new).with(document:, log_context:).and_return(delete_double)
+        allow(Datastore::Documents::Delete).to receive(:new).with(document:, deleted_by:,
+                                                                  deletion_reason:).and_return(delete_double)
       end
 
       it 'deletes s3 objects' do
         expect(delete_double).to receive(:call)
-        described_class.call(crime_application, current_provider, log_context)
+        subject
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, current_provider, log_context)
+        subject
       end
     end
 
     context 'when it does not have orphaned documents' do
       it 'does not try to delete s3 objects' do
         expect(Datastore::Documents::Delete).not_to receive(:new)
-        described_class.call(crime_application, current_provider, log_context)
+        subject
       end
 
       it 'purges the application from the local database' do
         expect(crime_application).to receive(:destroy!)
-        described_class.call(crime_application, current_provider, log_context)
+        subject
+      end
+    end
+
+    context 'when current_provider is nil' do
+      let(:deleted_by) { 'system_automated' }
+      let(:deletion_reason) { DeletionReason::RETENTION_RULE.to_s }
+
+      it 'logs the deletion reason as system automated' do
+        subject
+
+        deletion_entry = DeletionEntry.first
+        expect(deletion_entry.deleted_by).to eq('system_automated')
+        expect(deletion_entry.reason).to eq(DeletionReason::RETENTION_RULE.to_s)
       end
     end
   end

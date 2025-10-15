@@ -1,20 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Charges/offences summary page', :authorized do
-  before :all do
+  include_context 'with office code selected'
+
+  before do
     # sets up a few test records
-    app = CrimeApplication.create
+    app = CrimeApplication.create(office_code: selected_office_code)
     kase = Case.create(crime_application: app)
 
     charge = kase.charges.create!(offence_name: 'Robbery')
     charge.offence_dates.first.update(
       date_from: Date.new(1990, 2, 1), date_to: Date.new(1990, 2, 5)
     )
-  end
-
-  after :all do
-    # do not leave left overs in the test database
-    CrimeApplication.destroy_all
   end
 
   describe 'list of added offences in summary page' do

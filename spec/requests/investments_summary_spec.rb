@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Investments summary page', :authorized do
+  include_context 'with office code selected'
+
   before do
     allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
 
-    app = CrimeApplication.create(capital: Capital.new)
+    app = CrimeApplication.create(capital: Capital.new, office_code: selected_office_code)
     app.investments.create!(investment_type: InvestmentType::BOND,
                             description: 'About the Bond',
                             value: 10_001,

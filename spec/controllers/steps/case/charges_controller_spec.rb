@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Case::ChargesController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Case::ChargesForm }
   let(:decision_tree_class) { Decisions::CaseDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
 
   describe 'offence date actions' do
     let(:form_class_params_name) { form_class.name.underscore }
@@ -83,7 +85,7 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
     end
 
     context 'when application is found' do
-      let!(:existing_application) { CrimeApplication.create(case: Case.new) }
+      let!(:existing_application) { CrimeApplication.create(office_code: office_code, case: Case.new) }
       let!(:existing_charge) { Charge.find_or_create_by(case: existing_application.case) }
 
       it 'responds with HTTP success' do
@@ -117,7 +119,7 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
     end
 
     context 'when an application in progress is found' do
-      let(:existing_application) { CrimeApplication.create(case: Case.new) }
+      let(:existing_application) { CrimeApplication.create(office_code: office_code, case: Case.new) }
       let(:existing_charge) { Charge.find_or_create_by(case: existing_application.case) }
 
       before do

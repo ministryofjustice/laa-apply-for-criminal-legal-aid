@@ -15,6 +15,8 @@ RSpec.describe 'Sign in user journey' do
   let(:start_button_form_action) { start_button.ancestor('form')['action'] }
   let(:disable_entra_logout_feature) { false }
 
+  include_context 'with mock provider data'
+
   before do
     if disable_entra_logout_feature
       allow(FeatureFlags).to receive(:entra_logout) {
@@ -66,7 +68,7 @@ RSpec.describe 'Sign in user journey' do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        entra: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
+        entra: OmniAuth::AuthHash.new(info: { office_codes: [] })
       )
 
       start_button.click
@@ -150,7 +152,7 @@ RSpec.describe 'Sign in user journey' do
 
     context 'when the user attempts to access the dashboard after the selected office code is deactivated' do
       it 'redirects to the select the office page' do
-        allow(Providers::Gatekeeper).to receive(:inactive_office_codes).and_return(['1A123B'])
+        mock_pda('1A123B', status: 204)
         visit 'applications'
         expect(current_url).to match(steps_provider_select_office_path)
       end
@@ -189,7 +191,7 @@ RSpec.describe 'Sign in user journey' do
     end
   end
 
-  context 'user is signed out if portal session lifespan is exceeded' do
+  context 'user is signed out if session lifespan is exceeded' do
     before do
       allow_any_instance_of(Provider).to receive(:office_codes).and_return(['A1'])
       allow(Provider).to receive(:reauthenticate_in).and_return(5.minutes)
@@ -225,7 +227,7 @@ RSpec.describe 'Sign in user journey' do
     end
 
     after do
-      OmniAuth.config.mock_auth[:entra] = Lassie::OidcStrategy.mock_auth
+      OmniAuth.config.mock_auth[:entra] = Silas::OidcStrategy.mock_auth
     end
 
     it 're-raises the exception for handling by the `ApplicationController`' do

@@ -3,7 +3,7 @@ class Income < ApplicationRecord
   include EmployedIncome
   include SelfEmployedIncome
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
   has_many :dependants, through: :crime_application
 
   attribute :applicant_self_assessment_tax_bill_amount, :pence

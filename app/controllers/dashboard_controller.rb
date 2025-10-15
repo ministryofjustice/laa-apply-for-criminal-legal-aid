@@ -9,12 +9,6 @@ class DashboardController < ApplicationController
 
   private
 
-  def require_current_office!
-    return if current_office_code.present?
-
-    redirect_to steps_provider_select_office_path
-  end
-
   # Implement in sub-controllers to narrow down allowed columns
   # :nocov:
   def sortable_columns
@@ -27,7 +21,7 @@ class DashboardController < ApplicationController
   end
 
   def in_progress_scope
-    CrimeApplication.with_applicant.where(office_code: current_office_code)
+    CrimeApplication.active.with_applicant.where(office_code: current_office_code)
   end
 
   def application_counters

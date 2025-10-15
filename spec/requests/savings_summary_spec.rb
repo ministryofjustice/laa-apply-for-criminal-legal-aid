@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Savings summary page', :authorized do
+  include_context 'with office code selected'
+
   before do
     allow(MeansStatus).to receive(:full_capital_required?).and_return('true')
 
-    app = CrimeApplication.create(capital: Capital.new)
+    app = CrimeApplication.create(
+      capital: Capital.new,
+      office_code: selected_office_code
+    )
     app.savings.create!(saving_type: SavingType::BANK,
                         provider_name: 'Bank of Test',
                         ownership_type: OwnershipType::APPLICANT,

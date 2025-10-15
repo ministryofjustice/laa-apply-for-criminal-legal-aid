@@ -1,7 +1,7 @@
 class Saving < ApplicationRecord
   include TypeOfMeansAssessment
 
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   attribute :account_balance, :pence
 

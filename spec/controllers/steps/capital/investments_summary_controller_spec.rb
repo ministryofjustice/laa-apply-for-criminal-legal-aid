@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::InvestmentsSummaryController, type: :controller do
+  include_context 'current provider with active office'
   let(:existing_case) do
-    CrimeApplication.create(capital: Capital.new, investments: investments, applicant: Applicant.new)
+    CrimeApplication.create(office_code: office_code, capital: Capital.new, investments: investments,
+                            applicant: Applicant.new)
   end
 
   before do

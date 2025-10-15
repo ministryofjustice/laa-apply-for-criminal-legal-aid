@@ -4,11 +4,14 @@ RSpec.describe Steps::Evidence::UploadController, type: :controller do
   it_behaves_like 'a generic step controller', Steps::Evidence::UploadForm, Decisions::EvidenceDecisionTree
   it_behaves_like 'a step that can be drafted', Steps::Evidence::UploadForm
 
-  include_context('with an existing document')
-
   describe 'additional CRUD actions' do
+    include_context 'current provider with active office'
+    include_context('with an existing document')
+    let(:crime_application) { CrimeApplication.create(usn: 123, office_code: office_code) }
+
     before do
       document.save!
+      allow(current_provider).to receive(:id).and_return(SecureRandom.uuid)
     end
 
     context 'deleting a document' do

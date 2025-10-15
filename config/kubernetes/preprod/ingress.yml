@@ -13,6 +13,8 @@ metadata:
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
 spec:
   ingressClassName: modsec
   rules:
@@ -33,13 +35,6 @@ spec:
                 name: service-preprod
                 port:
                   number: 80
-          - path: /applications
-            pathType: Exact
-            backend:
-              service:
-                name: service-preprod
-                port:
-                  number: 80
           - path: /about
             pathType: Prefix
             backend:
@@ -48,6 +43,13 @@ spec:
                 port:
                   number: 80
           - path: /errors
+            pathType: Prefix
+            backend:
+              service:
+                name: service-preprod
+                port:
+                  number: 80
+          - path: /assets
             pathType: Prefix
             backend:
               service:
@@ -73,6 +75,7 @@ metadata:
       SecRule REMOTE_ADDR "!@ipMatch 13.232.220.164,23.22.2.46,23.83.129.219,23.92.127.2,23.106.37.99,23.111.152.74,23.111.159.174,43.225.198.122,43.229.84.12,46.20.45.18,46.246.122.10,50.2.185.66,50.16.153.186,52.0.204.16,52.24.42.103,52.48.244.35,52.52.34.158,52.52.95.213,52.52.118.192,52.57.132.90,52.59.46.112,52.59.147.246,52.62.12.49,52.63.142.2,52.63.164.147,52.63.167.55,52.67.148.55,52.73.209.122,52.89.43.70,52.194.115.181,52.197.31.124,52.197.224.235,52.198.25.184,52.201.3.199,52.209.34.226,52.209.186.226,52.210.232.124,54.68.48.199,54.70.202.58,54.94.206.111,64.237.49.203,64.237.55.3,66.165.229.130,66.165.233.234,72.46.130.18,72.46.131.10,76.164.234.106,76.164.234.130,82.103.136.16,82.103.139.165,82.103.145.126,85.195.116.134,89.163.146.247,89.163.242.206,94.75.211.73,94.75.211.74,94.247.174.83,103.47.211.210,107.182.234.77,108.181.70.3,148.72.170.233,148.72.171.17,151.106.52.134,162.218.67.34,162.253.128.178,168.1.203.46,169.51.2.18,169.54.70.214,172.241.112.86,173.248.147.18,174.34.156.130,175.45.132.20,178.162.206.244,179.50.12.212,184.75.210.90,184.75.210.226,184.75.214.66,184.75.214.98,185.39.146.214,185.39.146.215,185.70.76.23,185.93.3.65,185.136.156.82,185.152.65.167,185.180.12.65,185.246.208.82,190.120.230.7,196.240.207.18,196.244.191.18,196.245.151.42,199.87.228.66,200.58.101.248,201.33.21.5,207.244.80.239,209.58.139.193,209.58.139.194,209.95.50.14,212.78.83.12,212.78.83.16" \
         "id:5001,deny,status:403,tag:github_team=laa-crime-apply"
     nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
       if ($request_method !~ ^GET$) {
         return 405;
       }
@@ -123,23 +126,33 @@ metadata:
       location ~* ^/(health|readyz|startupz|datastore/health) {
         deny all;
       }
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/custom-http-errors: "423"
+    nginx.ingress.kubernetes.io/custom-http-errors: "503,403"
     nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
+      SecRule TIME_WDAY "!@pm 1 2 3 4 5" \
+        "id:997,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
+      SecRule TIME_HOUR "!@pm 06 07 08 09 10 11 12 13 14 15 16 17" \
+        "id:998,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
       SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
         "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
       SecRuleUpdateTargetById 942100 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 933150 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 932260 !ARGS:authenticity_token
+      SecRuleUpdateTargetById 932230 !ARGS:authenticity_token
       SecRule REQUEST_URI "@endsWith /documents" \
         "id:1000,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=920120"
-      SecRule REQUEST_URI "@endsWith /steps/case/ioj" \
+        ctl:ruleRemoveById=920120,\
+        ctl:ruleRemoveById=933150"
+      SecRule REQUEST_URI "@rx /steps/(case/ioj|submission/more-information|circumstances/pre-cifc-reason|income/how-manage-with-no-income)" \
         "id:1001,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
         ctl:ruleRemoveById=932100,\
@@ -147,78 +160,42 @@ metadata:
         ctl:ruleRemoveById=932115,\
         ctl:ruleRemoveById=932125,\
         ctl:ruleRemoveById=932235,\
+        ctl:ruleRemoveById=932250,\
         ctl:ruleRemoveById=932370,\
         ctl:ruleRemoveById=932380,\
+        ctl:ruleRemoveById=933160,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/submission/more-information" \
+        ctl:ruleRemoveById=942230,\
+        ctl:ruleRemoveById=942360,\
+        ctl:ruleRemoveById=949110"
+      SecRule REQUEST_URI "@rx /steps/case/(client|partner)/other-charge" \
         "id:1002,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
-        ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
-        ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/circumstances/pre-cifc-reason" \
-        "id:1003,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
-        ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
-        ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/client/other-charge" \
-        "id:1004,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@endsWith /steps/case/partner/other-charge" \
-        "id:1005,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=942230"
+        ctl:ruleRemoveById=942230,\
+        ctl:ruleRemoveById=942360"
       SecRule REQUEST_URI "@rx .*/steps/capital/investments/[a-f0-9-]+$" \
-        "id:1006,phase:2,pass,nolog,\
+        "id:1003,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115"
       SecRule REQUEST_URI "@rx .*/steps/case/charges/[a-f0-9-]+$" \
-        "id:1007,phase:2,pass,nolog,\
+        "id:1004,phase:2,pass,nolog,\
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100"
-      SecRule REQUEST_URI "@endsWith /steps/income/how-manage-with-no-income" \
-        "id:1008,phase:2,pass,nolog,\
-        ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=932100,\
-        ctl:ruleRemoveById=932110,\
-        ctl:ruleRemoveById=932115,\
-        ctl:ruleRemoveById=932125,\
+      SecRule REQUEST_URI "@rx /steps/income/client/deductions-from-pay/[a-f0-9-]+$" \
+        "id:1005,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932235,\
-        ctl:ruleRemoveById=932370,\
         ctl:ruleRemoveById=932380,\
-        ctl:ruleRemoveById=933210,\
-        ctl:ruleRemoveById=942100,\
-        ctl:ruleRemoveById=942230"
-      SecRule REQUEST_URI "@streq /providers/auth/saml/callback" \
-        "id:1010,phase:2,pass,nolog,chain"
-        SecRule REQUEST_METHOD "@streq POST" \
-          "ctl:ruleRemoveById=921110,\
-          ctl:ruleRemoveById=932235,\
-          ctl:ruleRemoveById=932250,\
-          ctl:ruleRemoveById=932260,\
-          ctl:ruleRemoveById=932370,\
-          ctl:ruleRemoveById=933150,\
-          ctl:ruleRemoveById=941130"
+        ctl:ruleRemoveById=932125"
+      SecRule REQUEST_URI "@rx /steps/income/client/nature-of-business/[a-f0-9-]+$" \
+        "id:1006,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932235"
+      SecRule REQUEST_URI "@endsWith /steps/client/nino" \
+        "id:1007,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=932235,\
+        ctl:ruleRemoveById=932250"
+      SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session

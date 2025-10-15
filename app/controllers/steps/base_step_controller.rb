@@ -1,6 +1,8 @@
 module Steps
   class BaseStepController < ApplicationController
     before_action :check_crime_application_presence
+    before_action :require_current_office!
+    before_action :block_contingent_liability!
     before_action :update_navigation_stack, only: [:show, :edit]
     before_action :set_security_headers
 
@@ -59,8 +61,7 @@ module Steps
       stack_until_current_page = current_crime_application
                                  .navigation_stack.take_while { |path| path != request.fullpath }
 
-      current_crime_application.navigation_stack = stack_until_current_page + [request.fullpath]
-      current_crime_application.save!(touch: false)
+      current_crime_application.update_column(:navigation_stack, stack_until_current_page + [request.fullpath]) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def current_form_object

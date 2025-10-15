@@ -257,7 +257,7 @@ RSpec.describe 'Dashboard', :authorized do
   end
 
   describe 'edit an in progress application (aka task list)' do
-    before :all do
+    before do
       # sets up a test record
       app = CrimeApplication.create(
         date_stamp: DateTime.new(2023, 4, 20, 23, 15), # date is past March daylight saving change
@@ -269,13 +269,6 @@ RSpec.describe 'Dashboard', :authorized do
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe',
                        date_of_birth: Date.new(1990, 2, 1))
-    end
-
-    after :all do
-      CrimeApplication.destroy_all
-    end
-
-    before do
       applicant = Applicant.find_by(first_name: 'Jane')
       app = applicant.crime_application
 
@@ -317,18 +310,11 @@ RSpec.describe 'Dashboard', :authorized do
   end
 
   describe 'deleting in progress applications' do
-    before :all do
+    before do
       # sets up a few test records
       app = CrimeApplication.create(office_code: '1A123B')
 
       Applicant.create(crime_application: app, first_name: 'Jane', last_name: 'Doe')
-    end
-
-    after :all do
-      CrimeApplication.destroy_all
-    end
-
-    before do
       allow_any_instance_of(
         Datastore::ApplicationCounters
       ).to receive_messages(returned_count: 5)
@@ -362,6 +348,18 @@ RSpec.describe 'Dashboard', :authorized do
         assert_select 'h2', 'Success'
         assert_select 'p', 'Jane Doe’s in progress application has been deleted'
       end
+    end
+  end
+
+  describe 'accessing a soft-deleted application' do
+    before do
+      crime_application = CrimeApplication.create!(reference: 700_000_1, documents: [], soft_deleted_at: 2.weeks.ago,
+                                                   updated_at: 2.years.ago - 2.weeks, office_code: '1A123B')
+      get edit_crime_application_path(crime_application)
+    end
+
+    it 'redirects to 404 error page' do
+      expect(response).to redirect_to(application_not_found_errors_path)
     end
   end
 end

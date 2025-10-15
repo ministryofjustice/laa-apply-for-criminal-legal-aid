@@ -10,6 +10,8 @@ module ErrorHandling
         redirect_to invalid_session_errors_path
       when Errors::ApplicationNotFound
         redirect_to application_not_found_errors_path
+      when Errors::ContingentLiability
+        render '/errors/contingent_liability'
       when Errors::NotFound
         redirect_to not_found_errors_path
       # NOTE: Add more custom errors as they are needed, for instance:
@@ -29,5 +31,9 @@ module ErrorHandling
 
   def check_crime_application_presence
     raise Errors::ApplicationNotFound unless current_crime_application
+  end
+
+  def block_contingent_liability!
+    raise Errors::ContingentLiability if current_office&.contingent_liability?
   end
 end

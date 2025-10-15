@@ -1,0 +1,66 @@
+<h1 class="govuk-heading-xl">
+  Datganiadau
+</h1>
+
+<p class="govuk-body">Mae eich cleient yn cytuno:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>eu bod wedi cyfarwyddo eich cwmni cyfreithiol i'w cynrychioli</li>
+  <li>eu bod wedi darllen yr <%= link_to 'hysbysiad preifatrwydd LAA (yn agor mewn tab newydd)', Settings.laa_privacy_notice_url, target: '_blank', rel: 'noopener' %></li>
+  <li>y gallwn rannu eu gwybodaeth gydag adrannau eraill y llywodraeth gan gynnwys yr Adran Gwaith a Phensiynau a Chyllid a Thollau EF</li>
+  <li>gallwn wirio eu manylion gydag asiantaethau banc ac asiantaethau cyfeirio credyd</li>
+  <li>os cânt eu dyfarnu'n euog o unrhyw droseddau, efallai y bydd yn rhaid iddynt dalu tuag at gymorth cyfreithiol trwy unrhyw incwm neu gyfalaf sydd ganddynt</li>
+  <li>mae'r wybodaeth maen nhw wedi'i rhoi yn gyflawn ac yn gywir</li>
+  <li>byddant yn adrodd am unrhyw newidiadau mewn amgylchiadau ariannol  <%= 'gan gynnwys rhai eu partner' if partner_relevant %> ar unwaith</li>
+</ul>
+
+<% if partner_relevant %>
+  <p class="govuk-body">Mae partner eich cleient yn cytuno:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>eu bod wedi darllen yr <%= link_to 'hysbysiad preifatrwydd LAA (yn agor mewn tab newydd)', Settings.laa_privacy_notice_url, target: '_blank', rel: 'noopener' %></li>
+    <li>y gallwn rannu eu gwybodaeth gydag adrannau eraill y llywodraeth gan gynnwys yr Adran Gwaith a Phensiynau a Chyllid a Thollau EF</li>
+    <li>gallwn wirio eu manylion gydag asiantaethau banc ac asiantaethau cyfeirio credyd</li>
+    <li>mae'r wybodaeth maen nhw wedi'i rhoi yn gyflawn ac yn gywir</li>
+  </ul>
+
+    <%= f.govuk_radio_buttons_fieldset(:legal_rep_has_partner_declaration, legend: { size: 's' }) do %>
+      <% form_object.choices.each_with_index do |choice, index| %>
+        <% if choice == YesNoAnswer::NO %>
+          <%= f.govuk_radio_button :legal_rep_has_partner_declaration, choice.value do %>
+            <%= f.govuk_text_area :legal_rep_no_partner_declaration_reason, autocomplete: 'off', width: 'one-third',
+                                   extra_letter_spacing: true %>
+          <% end %>
+        <% else %>
+          <%= f.govuk_radio_button :legal_rep_has_partner_declaration, choice.value, link_errors: index.zero? %>
+        <% end %>
+      <% end %>
+    <% end %>
+<% end %>
+
+<div class="govuk-warning-text govuk-!-margin-bottom-0">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive govuk-visually-hidden">Rhybudd</span>
+    Os byddant yn rhoi gwybodaeth anghywir neu anghyflawn, ddim yn dweud am newidiadau, neu os canfyddir eu bod wedi cyflawni twyll o ran budd-daliadau, gallant:
+    <ul class="govuk-list govuk-list--bullet govuk-!-font-weight-bold">
+      <li>gael eu herlyn</li>
+      <li>orfod talu cosb ariannol</li>
+      <li>atal eu cymorth cyfreithiol a gorfod talu'r costau yn ôl</li>
+    </ul>
+  </strong>
+</div>
+
+<p class="govuk-body">Rydych chi'n cytuno:</p>
+
+<ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+  <li>eich bod wedi darparu gwybodaeth gywir a chyflawn yn y cais hwn</li>
+  <li>eich bod wedi esbonio i'ch cleient pam y gallai fod yn rhaid iddynt dalu tuag at gymorth cyfreithiol a’r canlyniadau o ran peidio â thalu cyfraniadau ar amser neu o gwbl</li>
+  <% if partner_relevant %>
+    <li>rhaid i chi gael llofnod digidol neu gopi caled wedi'i lofnodi <%= govuk_link_to('o ddatganiad y ceisydd (PDF, 452KB)', Settings.laa_applicant_declaration_form_url, new_tab: '') %> gan eich cleient a'u partner a dylid sicrhau ei fod yn cael ei gadw ar ffeil</li>
+    <li>os nad yw'n bosibl cael llofnod digidol neu gopi caled gan eich cleient neu eu partner ar adeg cyflwyno'r cais hwn, rydych wedi esbonio cynnwys y datganiad a'r hysbysiad preifatrwydd iddynt a byddwch yn cael llofnod digidol neu gopi caled cyn gynted ag y bo modd</li>
+  <% else %>
+    <li>rhaid i chi gael a chadw llofnod digidol neu gopi caled wedi'i lofnodi <%= govuk_link_to('o ddatganiad y ceisydd (PDF, 452KB)', Settings.laa_applicant_declaration_form_url, new_tab: '') %></li>
+    <li>os nad yw'n bosibl cael llofnod digidol neu gopi caled gan eich cleient ar adeg cyflwyno'r cais hwn, rydych wedi esbonio cynnwys y datganiad a'r hysbysiad preifatrwydd iddynt a byddwch yn cael llofnod digidol neu gopi caled cyn gynted ag y bo modd</li>
+  <% end %>
+</ul>

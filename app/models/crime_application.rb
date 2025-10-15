@@ -3,6 +3,10 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Passportable
   include MeansOwnershipScope
 
+  after_create :publish_creation_event
+  before_destroy :check_deletion_exemption
+  after_touch :publish_update_event
+
   attr_readonly :application_type
   attribute :date_stamp, :datetime
   attribute :date_stamp_context, Type::DateStampContextType.new
@@ -84,7 +88,18 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum :status, ApplicationStatus.enum_values
 
+  scope :active, -> { where(soft_deleted_at: nil) }
+
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
+
+  scope :to_be_soft_deleted, lambda {
+    active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
+          .where(exempt_from_deletion: false, parent_id: nil, updated_at: ..Rails.configuration.x.retention_period.ago)
+  }
+
+  scope :to_be_hard_deleted, lambda {
+    where(soft_deleted_at: ..Rails.configuration.x.soft_deletion_period.ago)
+  }
 
   alias_attribute :reference, :usn
 
@@ -139,5 +154,35 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def review_status
     nil
+  end
+
+  def exempt_from_deletion!
+    self.soft_deleted_at = nil
+    self.exempt_from_deletion = true
+    save!
+  end
+
+  private
+
+  def check_deletion_exemption
+    return unless exempt_from_deletion?
+
+    raise ActiveRecord::RecordNotDestroyed, 'Application exempt from deletion'
+  end
+
+  def publish_update_event
+    return unless FeatureFlags.deletion_events.enabled?
+
+    Datastore::Events::DraftUpdated.new(entity_id: id,
+                                        entity_type: application_type,
+                                        business_reference: reference).call
+  end
+
+  def publish_creation_event
+    return unless FeatureFlags.deletion_events.enabled?
+
+    Datastore::Events::DraftCreated.new(entity_id: id,
+                                        entity_type: application_type,
+                                        business_reference: reference).call
   end
 end

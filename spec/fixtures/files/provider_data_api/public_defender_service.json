@@ -1,0 +1,25 @@
+{
+  "firm": {
+    "firmNumber": "45678",
+    "firmId": 1979179,
+    "ccmsFirmId": 3334445,
+    "parentFirmId": 0,
+    "firmName": "PUBLIC DEFENDER SERVICE LEWES",
+    "firmType": "Legal Services Provider",
+    "constitutionalStatus": "Government Funded Organisation",
+    "solicitorAdvocateYN": null,
+    "advocateLevel": null,
+    "barCouncilRoll": null,
+    "companyHouseNumber": null
+  },
+  "office": {
+    "firmOfficeId": 99777,
+    "ccmsFirmOfficeId": 3336661,
+    "firmOfficeCode": "2N990V",
+    "officeName": "2N990V,THE GATEHOUSE",
+    "officeCodeAlt": "PUBLIC DEFENDER SERVICE LEWES",
+    "type": "Special Defender Service (PDS)"
+  },
+  "pds": true,
+  "schedules": []
+}

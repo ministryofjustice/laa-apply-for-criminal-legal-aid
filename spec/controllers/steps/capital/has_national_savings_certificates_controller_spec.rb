@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::HasNationalSavingsCertificatesController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:national_savings_certificates) { [] }
   let(:capital) { Capital.new }
 
   let(:existing_case) do
     CrimeApplication.create(
+      office_code: office_code,
       capital: capital,
       national_savings_certificates: national_savings_certificates,
       applicant: Applicant.new,

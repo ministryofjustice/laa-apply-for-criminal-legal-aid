@@ -1,5 +1,5 @@
 class NationalSavingsCertificate < ApplicationRecord
-  belongs_to :crime_application
+  belongs_to :crime_application, touch: true
 
   attribute :value, :pence
 

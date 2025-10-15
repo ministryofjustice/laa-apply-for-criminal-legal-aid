@@ -35,6 +35,10 @@ class ErrorsController < UnauthenticatedController
     respond_with_status(:internal_server_error)
   end
 
+  def contingent_liability
+    respond_with_status(:ok)
+  end
+
   private
 
   def respond_with_status(status)

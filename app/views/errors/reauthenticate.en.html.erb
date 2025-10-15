@@ -7,7 +7,7 @@
     </h1>
 
     <p class="govuk-body">
-      This is because you were signed in to the LAA Online Portal for more
+      This is because you were signed in for more
       than <%= hours_or_minutes(Rails.configuration.x.session.reauthenticate_in) %>.
     </p>
 
@@ -15,6 +15,6 @@
       Sign in again to continue using the service.
     </p>
 
-    <%= render partial: 'shared/portal_sign_in_button' %>
+    <%= render partial: 'shared/sign_in_button' %>
   </div>
 </div>

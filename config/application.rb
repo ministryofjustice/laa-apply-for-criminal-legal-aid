@@ -2,14 +2,10 @@ require_relative "boot"
 
 require "rails"
 require "active_record/railtie"
-# require "active_storage/engine"
 require "action_controller/railtie"
 require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
-# require "action_cable/engine"
-# require "action_mailbox/engine"
-# require "action_text/engine"
 require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -46,7 +42,6 @@ module LaaApplyForCriminalLegalAid
 
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
-
     config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
     config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
     config.x.analytics.cookies_consent_expiration = 6.months
@@ -57,8 +52,6 @@ module LaaApplyForCriminalLegalAid
     config.x.benefit_checker.client_org_id = ENV.fetch('BC_CLIENT_ORG_ID', nil)
     config.x.benefit_checker.client_user_id = ENV.fetch('BC_CLIENT_USER_ID', nil)
 
-    config.x.auth_idp = ENV.fetch('AUTH_IDP', 'entra')
-
     # Time after which a user's session will expire if they
     # haven’t interacted with the service.
     config.x.session.timeout_in = ENV.fetch('SESSION_TIMEOUT_MINUTES', 60).to_i.minutes
@@ -67,15 +60,10 @@ module LaaApplyForCriminalLegalAid
     # regardless of their activity (session lifespan).
     config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 720).to_i.minutes
 
-    config.x.gatekeeper= config_for(
-      :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
-    )
-
-    config.x.inactive_offices = config_for(
-      :inactive_offices, env: ENV.fetch('ENV_NAME', 'localhost')
-    )
-
     config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
     config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
+
+    config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 2).to_i.years # 2 years
+    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 2).to_i.weeks # 2 weeks
   end
 end

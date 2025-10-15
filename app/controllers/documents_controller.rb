@@ -13,7 +13,7 @@ class DocumentsController < ApplicationController
       file: file_from_params, crime_application: current_crime_application
     )
 
-    Datastore::Documents::Upload.new(document:, log_context:).call if document.valid?(:criteria)
+    Datastore::Documents::Upload.new(document:).call if document.valid?(:criteria)
 
     document.url = download_crime_application_document_path(current_crime_application, document)
 
@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def download
-    presign_download = Datastore::Documents::Download.new(document: @document, log_context: log_context).call
+    presign_download = Datastore::Documents::Download.new(document: @document).call
 
     unless presign_download
       raise Errors::DocumentUnavailable,
@@ -48,10 +48,6 @@ class DocumentsController < ApplicationController
     @document = current_crime_application.documents.find(params[:document_id])
   rescue ActiveRecord::RecordNotFound
     raise Errors::DocumentUnavailable, 'CrimeApplication/Document mismatch'
-  end
-
-  def log_context
-    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
   end
 
   def evidence_upload_step

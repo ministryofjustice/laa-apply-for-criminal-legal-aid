@@ -1,6 +1,7 @@
 class CrimeApplicationsController < DashboardController
   before_action :check_crime_application_presence,
-                :present_crime_application, only: [:edit, :destroy, :confirm_destroy]
+                :present_crime_application, only: [:edit, :destroy, :confirm_destroy, :show]
+  before_action :block_contingent_liability!, except: [:index, :edit, :show]
 
   layout 'application_dashboard', only: [:index]
 
@@ -10,8 +11,15 @@ class CrimeApplicationsController < DashboardController
     @sorting = InProgressSorting.new(search_params[:sorting])
 
     @applications = in_progress_scope.merge(
-      CrimeApplication.order(**@sorting.order_scope)
+      CrimeApplication.active.order(**@sorting.order_scope)
     ).page params[:page]
+  end
+
+  def show
+    @presenter = Summary::HtmlPresenter.new(
+      crime_application: current_crime_application.draft_submission,
+      editable: !current_office&.contingent_liability?
+    )
   end
 
   def new
@@ -19,6 +27,8 @@ class CrimeApplicationsController < DashboardController
   end
 
   def edit
+    redirect_to action: :show if current_office.contingent_liability?
+
     @tasklist = TaskList::Collection.new(
       crime_application: current_crime_application
     )
@@ -61,7 +71,9 @@ class CrimeApplicationsController < DashboardController
   end
 
   def destroy
-    ApplicationPurger.call(current_crime_application, current_provider, log_context)
+    ApplicationPurger.call(crime_application: current_crime_application,
+                           deleted_by: current_provider.id,
+                           deletion_reason: DeletionReason::PROVIDER_ACTION.to_s)
 
     redirect_to crime_applications_path,
                 flash: {
@@ -75,10 +87,6 @@ class CrimeApplicationsController < DashboardController
 
   def new_application_params
     params.fetch(:start_is_cifc_form, {}).permit(:is_cifc)
-  end
-
-  def log_context
-    LogContext.new(current_provider: current_provider, ip_address: request.remote_ip)
   end
 
   def cifc?

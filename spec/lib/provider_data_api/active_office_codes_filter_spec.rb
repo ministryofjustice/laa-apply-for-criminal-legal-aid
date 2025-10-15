@@ -4,18 +4,27 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
   let(:office_codes) { %w[1A2B3C 2B3C4E] }
 
   describe '.call' do
-    subject(:filtered_office_codes) { described_class.call(office_codes) }
+    subject(:filtered_office_codes) { described_class.call(office_codes, translator:) }
 
-    before do
-      stub_request(:head, 'https://pda.example.com/provider-offices/2B3C4E/schedules')
-        .to_return(status: 200)
-      stub_request(:head, 'https://pda.example.com/provider-offices/1A2B3C/schedules')
-        .to_return(status:)
+    let(:translator) do
+      class_double(ProviderDataApi::DefaultSchedulesToOfficeTranslator)
     end
 
+    let(:body) { file_fixture('provider_data_api/public_defender_service.json').read }
     let(:status) { 200 }
+    let(:translator_active?) { true }
 
-    describe 'when an office is active' do
+    before do
+      allow(translator).to receive(:translate).and_return(
+        double(ProviderDataApi::DefaultSchedulesToOfficeTranslator, active?: translator_active?)
+      )
+      stub_request(:get, 'https://pda.example.com/provider-offices/2B3C4E/schedules')
+        .to_return_json(status: 200, body: body)
+      stub_request(:get, 'https://pda.example.com/provider-offices/1A2B3C/schedules')
+        .to_return_json(status:, body:)
+    end
+
+    describe 'when an office is active on PDA' do
       let(:status) { 200 }
 
       it 'keeps the office code in the list' do
@@ -23,7 +32,16 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
       end
     end
 
-    describe 'when an office is inactive' do
+    describe 'when an office is active on PDA but the translator returns inactive' do
+      let(:status) { 200 }
+      let(:translator_active?) { false }
+
+      it 'applies the translators determination' do
+        expect(filtered_office_codes).to be_empty
+      end
+    end
+
+    describe 'when an office is inactive on PDA' do
       let(:status) { 204 }
 
       it 'office_code is filtered from the list' do
@@ -61,40 +79,40 @@ describe ProviderDataApi::ActiveOfficeCodesFilter do
 
       context 'when API responds successfully after two attempts' do
         before do
-          stub_request(:head, url).to_return(
-            { status: 409 },
-            { status: 200 }
+          stub_request(:get, url).to_return_json(
+            { status: 409, body: body },
+            { status: 200, body: body }
           )
         end
 
         it 'keeps the office code in the list after retry' do
           expect(filtered_office_codes).to eq %w[1A2B3C 2B3C4E C1C83H]
 
-          expect(WebMock).to have_requested(:head, url).times(2)
+          expect(WebMock).to have_requested(:get, url).times(2)
         end
       end
 
       context 'when API does not respond successfully' do
         before do
-          stub_request(:head, url).to_return(
-            { status: 409 },
-            { status: 409 },
-            { status: 409 }
+          stub_request(:get, url).to_return(
+            { status: 409, body: body },
+            { status: 409, body: body },
+            { status: 409, body: body }
           )
         end
 
         it 'raise a conflict error' do
           expect { filtered_office_codes }.to raise_error(Faraday::ConflictError)
 
-          expect(WebMock).to have_requested(:head, url).times(3)
+          expect(WebMock).to have_requested(:get, url).times(3)
         end
       end
     end
 
     describe 'when `area_of_law` is specified' do
       it 'scopes PDA request by the area of law' do
-        stub_request(:head, 'https://pda.example.com/provider-offices/9B3C4E/schedules?areaOfLaw=CIVIL%20FUNDING')
-          .to_return(status: 200)
+        stub_request(:get, 'https://pda.example.com/provider-offices/9B3C4E/schedules?areaOfLaw=CIVIL%20FUNDING')
+          .to_return_json(status: 200, body: body)
 
         described_class.call(['9B3C4E'], area_of_law: 'CIVIL FUNDING')
       end

@@ -112,8 +112,9 @@ module Summary
       ]
     }.freeze
 
-    def initialize(crime_application:)
+    def initialize(crime_application:, editable: true)
       @crime_application = Adapters::BaseApplication.build(crime_application)
+      @editable = editable
     end
 
     def sections
@@ -142,9 +143,11 @@ module Summary
 
     private
 
+    attr_reader :editable
+
     def build_sections(relevant_sections)
       SECTIONS.fetch(relevant_sections).map do |section|
-        Sections.const_get(section.to_s.camelize).new(crime_application)
+        Sections.const_get(section.to_s.camelize).new(crime_application, editable:)
       end.select(&:show?)
     end
   end

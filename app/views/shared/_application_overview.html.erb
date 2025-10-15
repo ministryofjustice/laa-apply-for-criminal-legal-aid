@@ -1,0 +1,11 @@
+<% title t(".heading.#{@crime_application.application_type}") %>
+
+<p class="govuk-body-l govuk-!-margin-bottom-1">
+  <%= application.reference %>
+</p>
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+  <%= application.applicant_name %>
+</h1>
+
+<h2 class="govuk-heading-l"><%= t(".heading.#{application.application_type}") %></h2>

@@ -5,18 +5,17 @@ module Datastore
 
       PRESIGNED_URL_EXPIRES_IN = 15 # seconds
 
-      attr_reader :document, :log_context, :presign_upload
+      attr_reader :document, :presign_upload
 
-      def initialize(document:, log_context:)
+      def initialize(document:)
         @document = document
-        @log_context = log_context
         @presign_upload = nil
       end
 
       def call
         return false if document.s3_object_key.present?
 
-        Rails.error.handle(fallback: -> { false }, context: context, severity: :error) do
+        Rails.error.handle(fallback: -> { false }, severity: :error) do
           scan
           set_presign_upload
           upload_to_s3(@presign_upload&.url)
@@ -81,11 +80,6 @@ module Datastore
 
       def expires_in
         PRESIGNED_URL_EXPIRES_IN
-      end
-
-      def context
-        log_context << { file_type: document.content_type }
-        log_context.to_h
       end
 
       def t(key, **args)

@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::SavingsController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Capital::SavingsForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
 
   describe '#edit' do
     context 'when application is not found' do
@@ -28,7 +30,7 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when saving is for another application' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!,
+        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!(office_code:),
                        ownership_type: 'applicant')
       end
 
@@ -64,7 +66,7 @@ RSpec.describe Steps::Capital::SavingsController, type: :controller do
 
     context 'when saving is for another application' do
       let(:saving) do
-        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!,
+        Saving.create!(saving_type: SavingType::BANK, crime_application: CrimeApplication.create!(office_code:),
                        ownership_type: 'applicant')
       end
 

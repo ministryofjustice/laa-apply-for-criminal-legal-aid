@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::InvestmentsController, type: :controller do
+  include_context 'current provider with active office'
+
   let(:form_class) { Steps::Capital::InvestmentsForm }
   let(:decision_tree_class) { Decisions::CapitalDecisionTree }
 
-  let(:crime_application) { CrimeApplication.create }
+  let(:crime_application) { CrimeApplication.create(office_code:) }
 
   describe '#edit' do
     context 'when application is not found' do

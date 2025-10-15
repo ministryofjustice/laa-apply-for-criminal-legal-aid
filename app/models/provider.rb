@@ -1,6 +1,6 @@
 class Provider < ApplicationRecord
   devise :lockable, :timeoutable, :reauthable, :trackable,
-         :omniauthable, omniauth_providers: [Rails.configuration.x.auth_idp]
+         :omniauthable, omniauth_providers: [:entra]
 
   store_accessor :settings,
                  :selected_office_code,
@@ -22,12 +22,6 @@ class Provider < ApplicationRecord
     return super if office_codes.include?(super)
 
     office_codes.first unless multiple_offices?
-  end
-
-  def office_codes
-    return super if FeatureFlags.provider_data_api.enabled?
-
-    super & Providers::Gatekeeper.active_office_codes
   end
 
   class << self

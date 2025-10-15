@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'DWP passporting sub journey', :authorized do
+  include_context 'with office code selected'
+
   describe 'confirm applicant personal details page' do
-    before :all do
+    let(:crime_application) { CrimeApplication.first }
+
+    before do
       # sets up a few test records
-      app = CrimeApplication.create
+      app = CrimeApplication.create(office_code:)
 
       Applicant.create(
         crime_application: app,
@@ -13,16 +17,7 @@ RSpec.describe 'DWP passporting sub journey', :authorized do
         has_nino: 'yes',
         nino: 'AB123456A'
       )
-    end
 
-    after :all do
-      # do not leave left overs in the test database
-      CrimeApplication.destroy_all
-    end
-
-    let(:crime_application) { CrimeApplication.first }
-
-    before do
       get edit_steps_dwp_confirm_details_path(crime_application)
     end
 

@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
 
   def current_crime_application
-    @current_crime_application ||= CrimeApplication.find_by(
+    @current_crime_application ||= CrimeApplication.active.find_by(
       id: application_id,
       office_code: current_office_code
     )
@@ -24,6 +24,19 @@ class ApplicationController < ActionController::Base
     @current_office_code ||= current_provider&.selected_office_code
   end
   helper_method :current_office_code
+
+  def current_office
+    return nil unless current_office_code
+
+    @current_office ||= Office.find(current_office_code)
+  end
+  helper_method :current_office
+
+  def require_current_office!
+    return if current_office&.active?
+
+    redirect_to steps_provider_select_office_path
+  end
 
   def switch_locale(&action)
     locale = params[:locale] || I18n.default_locale

@@ -1,0 +1,55 @@
+cy:
+  integer:
+    ordinalize_fully:
+      0: serofed
+      1: cyntaf
+      2: ail
+      3: trydydd
+      4: pedwerydd
+      5: pumed
+      6: chweched
+      7: seithfed
+      8: wythfed
+      9: nawfed
+      10: degfed
+      11: unfed ar ddeg
+      12: deuddegfed
+      13: trydydd ar ddeg
+      14: pedwerydd ar ddeg
+      15: pymthegfed
+      16: unfed ar bymtheg
+      17: ail ar bymtheg
+      18: deunawfed
+      19: pedwerydd ar bymtheg
+      20: ugeinfed
+      21: unfed ar hugain
+      22: ail ar hugain
+      23: trydydd ar hugain
+      24: pedwerydd ar hugain
+      25: pumed ar hugain
+      26: chweched ar hugain
+      27: seithfed ar hugain
+      28: wythfed ar hugain
+      29: nawfed ar hugain
+      30: degfed ar hugain
+      31: unfed ar ddeg ar hugain
+      32: deuddegfed ar hugain
+      33: trydydd ar ddeg ar hugain
+      34: pedwerydd ar ddeg ar hugain
+      35: pymthegfed ar hugain
+      36: unfed ar bymtheg ar hugain
+      37: ail ar bymtheg ar hugain
+      38: deunawfed ar hugain
+      39: pedwerydd ar bymtheg ar hugain
+      40: deugeinfed
+      41: unfed a deugain
+      42: ail a deugain
+      43: trydydd a deugain
+      44: pedwerydd a deugain
+      45: pumed a deugain
+      46: chweched a deugain
+      47: seithfed a deugain
+      48: wythfed a deugain
+      49: nawfed a deugain
+      50: hanner canfed
+      51: unfed a hanner cant
