@@ -29,6 +29,7 @@ module ProviderDataApi
       INVEST
       MAT
       MED
+      MEDI
       MHE
       MSC
       PI
@@ -41,7 +42,8 @@ module ProviderDataApi
       'Individual Case Contract',
       'CLA',
       'Standard',
-      'Contingent Liability'
+      'Contingent Liability',
+      'Contingent Liability (No Subs)'
     )
   end
 
@@ -49,15 +51,23 @@ module ProviderDataApi
     transform_keys(&:to_sym)
 
     attribute :areaOfLaw, Types::AreaOfLaw
-    attribute :categoryOfLaw, Types::CategoryOfLaw
+    attribute :categoryOfLaw, Types::String #CategoryOfLaw
   end
 
   class Schedule < Dry::Struct
     transform_keys(&:to_sym)
 
-    attribute :scheduleType, Types::Schedule
     attribute :areaOfLaw, Types::AreaOfLaw
+    attribute :contractDescription, Types::String
+    attribute :contractType, Types::String
     attribute :scheduleLines, Types::Array.of(ScheduleLines)
+    attribute :scheduleType, Types::Schedule
+  end
+
+  class Firm < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :firmName, Types::String
   end
 
   class Office < Dry::Struct
@@ -70,6 +80,7 @@ module ProviderDataApi
   class OfficeSchedules < Dry::Struct
     transform_keys(&:to_sym)
 
+    attribute :firm, Firm
     attribute :office, Office
     attribute :schedules, Types::Array.of(Schedule)
     attribute :pds, Types::Bool
