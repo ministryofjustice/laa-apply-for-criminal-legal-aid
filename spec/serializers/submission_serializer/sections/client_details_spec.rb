@@ -35,6 +35,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       relationship_to_owner_of_usual_home_address: nil,
       confirm_dwp_result: 'no',
       benefit_check_result: false,
+      dwp_response: nil,
       will_enter_nino: nil,
       has_benefit_evidence: 'yes',
       confirm_details: 'yes',
