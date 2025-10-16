@@ -473,6 +473,8 @@ en:
       # BEGIN income details section
       income_above_threshold:
         question: "%{prefix} more than £12,475 a year before tax?"
+        income: Income
+        joint_annual_income: Joint annual income
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
