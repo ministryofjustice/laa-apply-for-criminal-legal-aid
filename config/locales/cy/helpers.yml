@@ -660,6 +660,7 @@ cy:
           none: Does ganddyn nhw ddim cyfeiriad cartref sefydlog
         relationship_to_owner_of_usual_home_address: Beth yw perthynas eich cleient â’r unigolyn hwnnw?
       steps_client_contact_details_form:
+        requested_welsh_correspondence: Ticiwch i ohebiaeth gael ei hanfon yn Gymraeg
         telephone_number: Beth yw rhif ffôn eich cleient? (dewisol)
         correspondence_address_type_options:
           home_address: Yr un fath â’r cyfeiriad cartref arferol
