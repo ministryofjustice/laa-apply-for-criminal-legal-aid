@@ -4,8 +4,7 @@ RSpec.describe ApplicationPurger do
   subject { described_class.call(crime_application:, deleted_by:, deletion_reason:) }
 
   let(:crime_application) {
-    instance_double(CrimeApplication, id: '696dd4fd-b619-4637-ab42-a5f4565bcf4a', reference: 10_000_001,
-   application_type: ApplicationType::INITIAL)
+    CrimeApplication.create!(reference: 10_000_001, application_type: ApplicationType::INITIAL)
   }
   let(:deleted_by) { '1' }
   let(:deletion_reason) { DeletionReason::PROVIDER_ACTION.to_s }
@@ -13,8 +12,6 @@ RSpec.describe ApplicationPurger do
   let(:document) { instance_double(Document) }
 
   before do
-    allow(crime_application).to receive(:destroy!)
-
     # rubocop:disable RSpec/MessageChain
     allow(
       crime_application
@@ -31,7 +28,7 @@ RSpec.describe ApplicationPurger do
       expect { subject }.to change(DeletionEntry, :count).by(1)
 
       deletion_entry = DeletionEntry.first
-      expect(deletion_entry.record_id).to eq('696dd4fd-b619-4637-ab42-a5f4565bcf4a')
+      expect(deletion_entry.record_id).to eq(crime_application.id)
       expect(deletion_entry.deleted_by).to eq('1')
       expect(deletion_entry.reason).to eq(DeletionReason::PROVIDER_ACTION.to_s)
     end
@@ -46,6 +43,21 @@ RSpec.describe ApplicationPurger do
           'reason' => deletion_reason,
           'deleted_by' => deleted_by,
         ))
+    end
+
+    context 'when the Datastore API fails on deletion' do
+      before do
+        stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
+          .to_return(status: 500, body: '{}', headers: {})
+      end
+
+      it 'rolls back the transaction' do
+        expect {
+          subject
+        }.to(raise_error(DatastoreApi::Errors::ServerError)
+         .and(not_change(CrimeApplication, :count))
+         .and(not_change(DeletionEntry, :count)))
+      end
     end
 
     context 'when feature flag is disabled' do # TODO: remove when feature flag enabled
@@ -83,8 +95,7 @@ RSpec.describe ApplicationPurger do
       end
 
       it 'purges the application from the local database' do
-        expect(crime_application).to receive(:destroy!)
-        subject
+        expect { subject }.to change(CrimeApplication, :count).from(1).to(0)
       end
     end
 
@@ -95,8 +106,7 @@ RSpec.describe ApplicationPurger do
       end
 
       it 'purges the application from the local database' do
-        expect(crime_application).to receive(:destroy!)
-        subject
+        expect { subject }.to change(CrimeApplication, :count).from(1).to(0)
       end
     end
 
