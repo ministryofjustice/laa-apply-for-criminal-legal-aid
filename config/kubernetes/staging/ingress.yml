@@ -193,6 +193,9 @@ metadata:
         "id:1007,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932235,\
         ctl:ruleRemoveById=932250"
+      SecRule REQUEST_URI "@beginsWith /providers/auth/entra/callback" \
+        "id:1008,phase:1,pass,nolog,\
+        ctl:ruleRemoveTargetByTag=attack-injection-php;ARGS:code"
       SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
