@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Body>
+    <benefitCheckerResponse xmlns="https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check">
+      <ns1:originalClientRef xmlns:ns1="http://lsc.gov.uk/benefitchecker/data/1.0">5678</ns1:originalClientRef>
+      <ns2:benefitCheckerStatus xmlns:ns2="http://lsc.gov.uk/benefitchecker/data/1.0">Undetermined</ns2:benefitCheckerStatus>
+      <ns3:confirmationRef xmlns:ns3="http://lsc.gov.uk/benefitchecker/data/1.0">T1675786402666</ns3:confirmationRef>
+    </benefitCheckerResponse>
+  </soapenv:Body>
+</soapenv:Envelope>
