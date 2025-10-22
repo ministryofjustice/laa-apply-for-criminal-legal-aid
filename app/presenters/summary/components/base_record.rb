@@ -35,7 +35,7 @@ module Summary
 
       def change_link
         govuk_link_to(
-          'Change',
+          I18n.t('summary.dictionary.change'),
           change_path,
           visually_hidden_suffix: name,
           no_visited_state: true
@@ -44,7 +44,7 @@ module Summary
 
       def summary_link
         govuk_link_to(
-          'Edit',
+          I18n.t('summary.dictionary.edit'),
           summary_path,
           visually_hidden_suffix: name,
           no_visited_state: true
@@ -53,7 +53,7 @@ module Summary
 
       def remove_link
         govuk_link_to(
-          'Remove',
+          I18n.t('summary.dictionary.remove'),
           remove_path,
           visually_hidden_suffix: name,
           no_visited_state: true

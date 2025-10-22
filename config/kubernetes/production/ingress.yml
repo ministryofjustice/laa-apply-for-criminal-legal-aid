@@ -136,8 +136,6 @@ metadata:
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecRule TIME_WDAY "!@pm 1 2 3 4 5" \
-        "id:997,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
       SecRule TIME_HOUR "!@pm 06 07 08 09 10 11 12 13 14 15 16 17" \
         "id:998,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
       SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
@@ -195,6 +193,9 @@ metadata:
         "id:1007,phase:2,pass,nolog,\
         ctl:ruleRemoveById=932235,\
         ctl:ruleRemoveById=932250"
+      SecRule REQUEST_URI "@beginsWith /providers/auth/entra/callback" \
+        "id:1008,phase:1,pass,nolog,\
+        ctl:ruleRemoveTargetByTag=attack-injection-php;ARGS:code"
       SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session

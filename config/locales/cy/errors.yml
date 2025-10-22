@@ -542,7 +542,7 @@ cy:
         steps/income/income_before_tax_form:
           attributes:
             income_above_threshold:
-              inclusion: Dewiswch ie os yw eu hincwm ar hyn o bryd yn fwy na ¬¨¬£12,475 y flwyddyn cyn treth
+              inclusion: Dewiswch ie os yw eu hincwm ar hyn o bryd yn fwy na £12,475 y flwyddyn cyn treth
         steps/income/frozen_income_savings_assets_form:
           &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:

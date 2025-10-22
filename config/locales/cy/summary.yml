@@ -41,6 +41,9 @@ cy:
         applicant_and_partner: "eich cleient a'i bartner"
         applicant_or_partner: "eich cleient neu ei bartner"
         partner: "y partner"
+      change: Newid
+      edit: Dileu
+      remove: Golygu
 
     change_link_html: Newid <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -312,7 +315,7 @@ cy:
       case_type:
         question: Math o achos
         answers:
-          summary_only: Diannod yn Unig
+          summary_only: Diannod yn unig
           either_way: Y naill ffordd neu'r llall
           indictable: Ditiadwy
           already_in_crown_court: Treial yn Llys y Goron yn barod
@@ -474,7 +477,9 @@ cy:
 
       # BEGIN income details section
       income_above_threshold:
-        question: "%{prefix} mwy na ¬£12,475 y flwyddyn cyn treth?"
+        question: "%{prefix} mwy na £12,475 y flwyddyn cyn treth?"
+        income: Incwm
+        joint_annual_income: Incwm blynyddol ar y cyd
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:
@@ -939,7 +944,7 @@ cy:
 
       # START trust_fund
       will_benefit_from_trust_fund:
-        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
+        question: Ydy eich cleient yn mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       trust_fund_amount_held:
         question: Swm yn y gronfa
@@ -949,7 +954,7 @@ cy:
 
       # START partner_trust_fund
       partner_will_benefit_from_trust_fund:
-        question: Ydych chi'n mynd i elwa o gronfa ymddiriedolaeth?
+        question: Ydy’r partner yn mynd i elwa o gronfa ymddiriedolaeth?
         answers: *YESNO
       partner_trust_fund_amount_held:
         question: Swm yn y gronfa

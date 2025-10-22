@@ -12,7 +12,7 @@
         <% @form_object.choices.each_with_index do |choice, index| %>
           <span id="<%= choice %>"></span>
           <% if choice.not_working? %>
-            <%= f.govuk_check_box_divider %>
+            <%= f.govuk_check_box_divider I18n.t('divider_text') %>
             <%= f.govuk_check_box :partner_employment_status, choice.to_s, exclusive: true %>
           <% else %>
             <%= f.govuk_check_box :partner_employment_status, choice.to_s, link_errors: index.zero? %>

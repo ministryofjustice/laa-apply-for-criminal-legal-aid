@@ -23,7 +23,7 @@
             <% @form_object.relationships.each_with_index do |option, index| %>
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
             <% end %>
-            <%= po_field.govuk_radio_divider %>
+            <%= po_field.govuk_radio_divider I18n.t('divider_text') %>
             <%= po_field.govuk_radio_button :relationship, 'other' do %>
               <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
             <%end%>

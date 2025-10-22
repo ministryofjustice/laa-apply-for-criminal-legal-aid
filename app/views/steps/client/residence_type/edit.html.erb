@@ -13,7 +13,7 @@
               <%= f.govuk_text_field :relationship_to_owner_of_usual_home_address, autocomplete: 'off', width: 'one-third' %>
             <% end %>
           <% elsif option.none? %>
-            <%= f.govuk_radio_divider %>
+            <%= f.govuk_radio_divider I18n.t('divider_text') %>
             <%= f.govuk_radio_button :residence_type, option, link_errors: index.zero? %>
           <% else %>
             <%= f.govuk_radio_button :residence_type, option, link_errors: index.zero? %>
