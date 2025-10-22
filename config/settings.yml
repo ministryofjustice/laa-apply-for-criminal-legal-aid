@@ -3,10 +3,6 @@ feature_flags:
     local: true
     staging: false
     production: false
-  property_ownership_validation:
-    local: true
-    staging: true
-    production: true
   google_analytics:
     local: false
     staging: false
@@ -21,6 +17,11 @@ feature_flags:
     staging: true
     preprod: true
     production: true
+  correspondence_preference:
+    local: true
+    staging: true
+    preprod: true
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
