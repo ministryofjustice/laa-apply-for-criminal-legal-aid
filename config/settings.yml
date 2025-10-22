@@ -11,10 +11,6 @@ feature_flags:
     local: false
     staging: false
     production: false
-  welsh_translation:
-    local: true
-    staging: true
-    production: true
   entra_logout:
     local: false
     staging: false
