@@ -142,9 +142,8 @@ en:
         post_submission_evidence: Supporting evidence
     contingent_liability_notice:
       restriction: You cannot use this account to start, change or submit applications.
-      explanation: The crime contract linked to office account number  %{office_code} is currently under Contingent Liability.
+      explanation: The crime contract linked to office account number %{office_code} is currently under Contingent Liability.
       questions: If you have any questions, contact your contract manager.
-
     dashboard_header:
       heading: Your applications
       start_button: Start an application

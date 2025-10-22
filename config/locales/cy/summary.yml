@@ -291,7 +291,7 @@ cy:
           no_check_required: Dim angen gwiriad
           undetermined: Dim cyfatebiad - gwnewch yn siŵr bod y manylion yn gywir
           no_record_found: Heb ddod o hyd i gofnod o fudd-dal pasbortio
-          checker_unavailable: Doedd DWP ddim ar gael, gallwch roi cynnig arall arni
+          checker_unavailable: Nid oedd DWP ar gael
           no_check_no_nino: Heb wirio gan nad oes rhif Yswiriant Gwladol wedi'i ddarparu
       confirmed_details:
         question: Ydy'r manylion a gadarnhawyd yn gywir?
