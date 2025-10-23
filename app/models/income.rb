@@ -28,7 +28,7 @@ class Income < ApplicationRecord
   def income_payments
     return @income_payments if @income_payments
 
-    # disregard payments for people not included in means assessemnt
+    # disregard payments for people not included in means assessment
     # as well as obsolete payment types
     scope = crime_application.income_payments
                              .completed
