@@ -364,8 +364,8 @@ payment_type: IncomePaymentType::WORK_BENEFITS.to_s)
     it { is_expected.to eq(expected) }
   end
 
-  describe '#partenr_work_benefits' do
-    subject(:partenr_work_benefits) { income.partner_work_benefits }
+  describe '#partner_work_benefits' do
+    subject(:partner_work_benefits) { income.partner_work_benefits }
 
     let(:expected) {
       instance_double(
@@ -620,7 +620,7 @@ metadata: {} }
             income.partner_employment_status = ['employed']
           end
 
-          it 'employent payments are still excluded' do
+          it 'employment payments are still excluded' do
             expect(owners).to contain_exactly 'applicant'
             expect(payment_types).to contain_exactly 'maintenance'
           end

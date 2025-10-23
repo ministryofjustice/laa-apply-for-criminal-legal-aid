@@ -122,7 +122,7 @@ RSpec.describe 'Sign in user journey' do
       expect(page).not_to have_css('nav.govuk-header__navigation')
     end
 
-    context 'when entra logout diabled' do
+    context 'when entra logout disabled' do
       let(:disable_entra_logout_feature) { true }
 
       it 'on sign out it redirects to the home' do

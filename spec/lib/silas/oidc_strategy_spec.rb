@@ -76,7 +76,7 @@ RSpec.describe Silas::OidcStrategy do
       expect(strategy.post_logout_redirect_uri).to match('https://www.example.com/providers/logout')
     end
 
-    it 'uses the tennant url for issuer descovery' do
+    it 'uses the tenant url for issuer discovery' do
       expect(strategy.discovery).to be(true)
       expect(strategy.issuer).to match(
         'https://login.microsoftonline.com/TestEntraTenantID/v2.0'
