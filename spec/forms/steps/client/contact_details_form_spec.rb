@@ -7,7 +7,8 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     {
       crime_application:,
       telephone_number:,
-      correspondence_address_type:
+      correspondence_address_type:,
+      preferred_correspondence_language:,
     }
   end
   let(:applicant_double) { instance_double(Applicant, residence_type:) }
@@ -18,6 +19,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
   let(:telephone_number) { nil }
   let(:correspondence_address_type) { nil }
   let(:has_home_address) { true }
+  let(:preferred_correspondence_language) { nil }
 
   before do
     allow(subject).to receive(:applicant).and_return(applicant_double)
@@ -105,11 +107,27 @@ RSpec.describe Steps::Client::ContactDetailsForm do
         expect(subject.errors.of_kind?(:correspondence_address_type, :inclusion)).to be(true)
       end
     end
+
+    context 'when preferred_correspondence_language is blank' do
+      let(:preferred_correspondence_language) { nil }
+
+      it { is_expected.not_to validate_presence_of(:preferred_correspondence_language) }
+    end
+
+    context 'when preferred_correspondence_language contains a non existent key' do
+      let(:preferred_correspondence_language) { 'xx' }
+
+      it 'has a validation error on the field' do
+        expect(subject).not_to be_valid
+        expect(subject.errors.of_kind?(:preferred_correspondence_language, :inclusion)).to be(true)
+      end
+    end
   end
 
   # rubocop:disable Style/HashSyntax
   describe '#save' do
     let(:telephone_number) { '07000 000 000' }
+    let(:preferred_correspondence_language) { 'cy' }
 
     # We've tested validations above, here for simplicity we just assume
     # the form is valid so we don't have to deal again with applicant home address.
@@ -126,6 +144,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
                       expected_attributes: {
                         'telephone_number' => '07000000000',
                         'correspondence_address_type' => CorrespondenceType::HOME_ADDRESS,
+                        'preferred_correspondence_language' => 'cy',
                         # destroy correspondence address record, as not applicable
                         correspondence_address: nil,
                       }
@@ -139,6 +158,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
                       expected_attributes: {
                         'telephone_number' => '07000000000',
                         'correspondence_address_type' => CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
+                        'preferred_correspondence_language' => 'cy',
                         # destroy correspondence address record, as not applicable
                         correspondence_address: nil,
                       }
@@ -151,6 +171,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
                       association_name: :applicant,
                       expected_attributes: {
                         'telephone_number' => '07000000000',
+                        'preferred_correspondence_language' => 'cy',
                         'correspondence_address_type' => CorrespondenceType::OTHER_ADDRESS
                       }
     end
