@@ -142,6 +142,10 @@ cy:
         initial: Cais am orchymyn cynrychiolaeth cymorth cyfreithiol troseddol
         change_in_financial_circumstances: Newid mewn sefyllfa ariannol
         post_submission_evidence: Tystiolaeth ategol
+    contingent_liability_notice:
+      restriction: Ni allwch ddefnyddio'r cyfrif hwn i gychwyn, newid na chyflwyno ceisiadau.
+      explanation: Mae’r contract trosedd sy’n gysylltiedig â rhif cyfrif swyddfa %{office_code} o dan Rwymedigaeth Wrth Gefn ar hyn o bryd.
+      questions: Os oes gennych unrhyw gwestiynau, cysylltwch â’ch rheolwr contract.
     dashboard_header:
       heading: Eich ceisiadau
       start_button: Cychwyn cais
