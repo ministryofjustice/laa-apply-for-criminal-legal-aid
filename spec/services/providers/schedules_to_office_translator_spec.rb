@@ -58,7 +58,7 @@ RSpec.describe Providers::SchedulesToOfficeTranslator do
         expect(translate.office_code).to eq('XXXXXX')
         expect(translate.name).to eq('XXXXXX,OVERLAPPING STREET')
         expect(translate.active?).to be true
-        # we take the highest privilaged schedule when there is a conflict
+        # we take the highest privileged schedule when there is a conflict
         expect(translate.contingent_liability?).to be false
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe Providers::SchedulesToOfficeTranslator do
         expect(translate.office_code).to eq('YYYYYY')
         expect(translate.name).to eq('YYYYYY,SUITE 99')
         expect(translate.active?).to be true
-        # we take the highest privilaged schedule when there is a conflict
+        # we take the highest privileged schedule when there is a conflict
         expect(translate.contingent_liability?).to be false
       end
     end

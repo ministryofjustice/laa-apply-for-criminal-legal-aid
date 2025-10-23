@@ -14,8 +14,8 @@ RSpec.describe Evidence::Ruleset::Hydrated do
   describe '#rules' do
     # NOTE: After a prompt is generated and persisted for the first
     # time, the ruleset will be 'Latest' as that was the ruleset executed.
-    # When the Hyrdated ruleset is executed the prompt will be re-saved with
-    # ruleset: 'Hyrdrated'
+    # When the Hydrated ruleset is executed the prompt will be re-saved with
+    # ruleset: 'Hydrated'
     let(:evidence_prompts) do
       [
         {

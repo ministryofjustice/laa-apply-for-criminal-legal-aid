@@ -514,7 +514,7 @@ RSpec.describe TypeOfMeansAssessment do
       it { is_expected.to be true }
     end
 
-    context 'when case is already in crown courst' do
+    context 'when case is already in crown court' do
       let(:case_type) { 'already_in_crown_court' }
 
       it { is_expected.to be true }

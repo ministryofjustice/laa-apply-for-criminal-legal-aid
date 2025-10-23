@@ -46,7 +46,7 @@ RSpec.describe Steps::Capital::SavingTypeForm do
   describe '#saving_type' do
     subject(:saving_type) { form.saving_type }
 
-    context 'when the quesiton has not been answered' do
+    context 'when the question has not been answered' do
       before { allow(capital).to receive(:has_no_savings).and_return(nil) }
 
       it { is_expected.to be_nil }
