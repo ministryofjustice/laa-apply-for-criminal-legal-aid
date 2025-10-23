@@ -13,9 +13,9 @@ module ProviderDataApi
       @translator = translator || DefaultSchedulesToOfficeTranslator
     end
 
-    # Filters a list of offices codes to return only those that are active.
-    # NB offices in Contingent Liablity are considdered active by PDA.
-    # Using the default translator effectivly proxies PDAs definition of
+    # Filters a list of office codes to return only those that are active.
+    # NB offices in Contingent Liability are considered active by PDA.
+    # Using the default translator effectively proxies PDAs definition of
     # an active office
     def call
       office_codes.filter do |office_code|

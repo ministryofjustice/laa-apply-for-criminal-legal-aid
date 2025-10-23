@@ -27,7 +27,7 @@ module Evidence
               # Archived rules prevent a rule from executing even if set for a historic ruleset
               archived false
 
-              # A rule can apply to 0, 1 or more personas. The personas availble are:
+              # A rule can apply to 0, 1 or more personas. The personas available are:
               #   - client
               #   - partner
               #   - other

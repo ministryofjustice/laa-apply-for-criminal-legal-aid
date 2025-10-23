@@ -115,7 +115,7 @@ RSpec.describe TypeOfApplication do
       it { is_expected.to be false }
     end
 
-    context 'when kase nil' do
+    context 'when kase is nil' do
       before do
         allow(crime_application).to receive(:kase)
       end

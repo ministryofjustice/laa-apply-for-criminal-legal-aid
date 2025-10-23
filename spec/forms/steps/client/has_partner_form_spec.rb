@@ -95,14 +95,14 @@ RSpec.describe Steps::Client::HasPartnerForm do
           ownership_type: 'applicant',
           amount: 1,
           frequency: 'week',
-          payment_type: 'maintainance',
+          payment_type: 'maintenance',
         )
 
         crime_application.income_payments << IncomePayment.new(
           ownership_type: 'partner',
           amount: 1,
           frequency: 'week',
-          payment_type: 'maintainance',
+          payment_type: 'maintenance',
         )
 
         crime_application.income_benefits << IncomeBenefit.new(

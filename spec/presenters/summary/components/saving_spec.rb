@@ -169,7 +169,7 @@ RSpec.describe Summary::Components::Saving, type: :component do
       it { is_expected.to eq 'Cash ISA' }
     end
 
-    context 'when National sacings or PO' do
+    context 'when National savings or PO' do
       let(:saving_type) { :national_savings_or_post_office }
 
       it { is_expected.to eq 'National Savings or Post Office account' }
