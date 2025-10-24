@@ -75,7 +75,6 @@ class Capital < ApplicationRecord
   end
 
   def usual_property_details_required?
-    return false unless FeatureFlags.property_ownership_validation.enabled?
     return false unless requires_full_capital?
     return crime_application.properties.home_address.blank? if MeansStatus.residence_owned?(crime_application)
 

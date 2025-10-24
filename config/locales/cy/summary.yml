@@ -249,6 +249,11 @@ cy:
       telephone_number:
         question: Ffôn
         absence_answer: *absence_none
+      requested_welsh_correspondence:
+        question: A ofynnwyd am ohebiaeth yn Gymraeg?
+        absence_answer: *absence_none
+        answers:
+          <<: *YESNO
       # END contact details section
 
       # BEGIN partner details section
