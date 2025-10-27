@@ -46,7 +46,7 @@ module Evidence
     end
 
     # Partner evidence exempted per rule because it is not a reason to
-    # skip prompt result generatation.
+    # skip prompt result generation.
     #
     # See Rule#partner_evidence_exempt?
     def exempt?

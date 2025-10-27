@@ -7,7 +7,7 @@ RSpec.describe SubmissionSerializer::Sections::PseApplicationDetails do
   let(:submitted_at) { DateTime.new(2022, 12, 15) }
 
   describe '#generate' do
-    context 'whith an PSE application' do
+    context 'with a PSE application' do
       let(:crime_application) do
         instance_double(
           CrimeApplication,

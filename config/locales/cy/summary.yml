@@ -473,6 +473,8 @@ cy:
       # BEGIN income details section
       income_above_threshold:
         question: "%{prefix} mwy na £12,475 y flwyddyn cyn treth?"
+        income: Incwm
+        joint_annual_income: Incwm blynyddol ar y cyd
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:

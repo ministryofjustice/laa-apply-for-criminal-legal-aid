@@ -24,7 +24,7 @@ feature_flags:
     local: true
     staging: true
     preprod: true
-    production: false
+    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
@@ -32,7 +32,7 @@ feature_flags:
 settings:
   portal_url: https://portal.legalservices.gov.uk
   portal_terms_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742318
-  laa_privacy_notice_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742320
+  laa_privacy_notice_url: https://www.gov.uk/guidance/legal-aid-agency-privacy-notice
   feedback_survey_url: https://www.smartsurvey.co.uk/s/crimeapply/
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: online-support@justice.gov.uk
