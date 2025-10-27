@@ -54,12 +54,12 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
       save_and_continue
 
       # steps/dwp/benefit-type
-      mock_benefit_check('No')
+      mock_benefit_check('Undetermined')
       choose_answer('Does your client get one of these passporting benefits?', 'Universal Credit')
       save_and_continue
 
-      # steps/dwp/confirm-result
-      choose_answer('Are the DWP records correct?', 'No, they receive a passporting benefit')
+      # steps/dwp/cannot-match-details
+      click_button('Check client details')
       save_and_continue
 
       # steps/dwp/confirm-details
