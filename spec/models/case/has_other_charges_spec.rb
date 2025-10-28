@@ -147,7 +147,7 @@ RSpec.describe Case::HasOtherCharges do
       it { is_expected.to be false }
     end
 
-    context 'when the case type is `commital`' do
+    context 'when the case type is `committal`' do
       let(:case_type) { CaseType::COMMITTAL.to_s }
 
       it { is_expected.to be false }
@@ -389,7 +389,7 @@ RSpec.describe Case::HasOtherCharges do
       it { is_expected.to be false }
     end
 
-    context 'when the case type is `commital`' do
+    context 'when the case type is `committal`' do
       let(:case_type) { CaseType::COMMITTAL.to_s }
 
       it { is_expected.to be false }
