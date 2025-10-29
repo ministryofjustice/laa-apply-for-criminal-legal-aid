@@ -92,7 +92,9 @@ cy:
   number:
     currency:
       format:
-        unit: '£'
+        unit: "£"
+        precision: 2
+        strip_insignificant_zeros: true
   flash:
     success:
       title: Llwyddiant
