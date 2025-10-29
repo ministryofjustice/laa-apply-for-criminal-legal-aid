@@ -94,7 +94,6 @@ cy:
       format:
         unit: '£'
         precision: 2
-        strip_insignificant_zeros: true
   flash:
     success:
       title: Llwyddiant
