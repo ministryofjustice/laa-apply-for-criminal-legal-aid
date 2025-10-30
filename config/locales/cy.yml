@@ -93,6 +93,7 @@ cy:
     currency:
       format:
         unit: '£'
+        precision: 2
   flash:
     success:
       title: Llwyddiant
