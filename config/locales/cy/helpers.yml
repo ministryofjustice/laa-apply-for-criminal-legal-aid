@@ -39,8 +39,8 @@ cy:
       land: tir
   helpers:
     back_link: Yn ôl
-    back_to_portal: Yn ôl i Borth Ar-lein yr Asiantaeth Cymorth Cyfreithiol
     back_to_applications: Yn ôl i'ch ceisiadau
+    important: Pwysig
     submit:
       clear: Clirio
       search: Chwilio
@@ -135,8 +135,8 @@ cy:
         upload_evidence: Rhaid i chi lanlwytho tystiolaeth bod %{subject} yn cael budd-dal pasbortio.
       steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
       steps_dwp_cannot_check_dwp_status_form:
-        cannot_check_dwp_status_page_title: Yn anffodus, does dim modd i ni wirio gwybodaeth %{subject} gyda’r Adran Gwaith a Phensiynau
-        cannot_check_dwp_status_heading: Yn anffodus, does dim modd i ni wirio gwybodaeth %{subject} gyda’r Adran Gwaith a Phensiynau
+        cannot_check_dwp_status_page_title: Yn anffodus, nid yw’r gwasanaeth DWP ar gael
+        cannot_check_dwp_status_heading: Yn anffodus, nid yw’r gwasanaeth DWP ar gael
         cannot_check_dwp_status_subheading: Mae hyn yn golygu nad ydym yn gallu gwirio budd-dal pasbortio %{subject}.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos bod %{subject} yn cael budd-dal pasbortio

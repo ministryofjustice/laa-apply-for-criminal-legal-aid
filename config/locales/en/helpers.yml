@@ -40,6 +40,7 @@ en:
   helpers:
     back_link: Back
     back_to_applications: Back to your applications
+    important: Important
     submit:
       clear: Clear
       search: Search
