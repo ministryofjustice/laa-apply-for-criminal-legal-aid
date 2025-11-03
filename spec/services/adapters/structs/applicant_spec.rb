@@ -80,6 +80,7 @@ RSpec.describe Adapters::Structs::Applicant do
           has_benefit_evidence
           confirm_details
           confirm_dwp_result
+          dwp_response
         ]
       )
     end

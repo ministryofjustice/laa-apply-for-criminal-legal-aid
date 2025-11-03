@@ -3,7 +3,7 @@ module SubmissionSerializer
     class Applicant < Definitions::BaseDefinition
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
       def to_builder
-        Jbuilder.new do |json|
+        Jbuilder.new do |json| # rubocop:disable Metrics/BlockLength
           json.first_name applicant.first_name
           json.last_name applicant.last_name
           json.other_names applicant.other_names
@@ -30,6 +30,7 @@ module SubmissionSerializer
             json.confirm_details applicant.confirm_details
             json.confirm_dwp_result applicant.confirm_dwp_result
             json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
+            json.dwp_response applicant.dwp_response
 
             partner_attributes(json)
           end

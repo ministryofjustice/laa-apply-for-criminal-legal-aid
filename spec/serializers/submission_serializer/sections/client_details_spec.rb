@@ -101,6 +101,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          dwp_response: nil,
         },
         partner: nil,
       }
@@ -191,6 +192,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
         )
       end
 
@@ -229,6 +231,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
           is_included_in_means_assessment: true
         }
 
@@ -273,6 +276,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
         )
       end
 
