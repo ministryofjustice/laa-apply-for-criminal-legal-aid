@@ -39,8 +39,8 @@ cy:
       land: tir
   helpers:
     back_link: Yn ôl
-    back_to_portal: Yn ôl i Borth Ar-lein yr Asiantaeth Cymorth Cyfreithiol
     back_to_applications: Yn ôl i'ch ceisiadau
+    important: Pwysig
     submit:
       clear: Clirio
       search: Chwilio

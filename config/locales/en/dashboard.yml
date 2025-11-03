@@ -72,7 +72,6 @@ en:
       print_application: Print application
   completed_applications: &COMPLETED_APPLICATIONS
     funding_decision_notification:
-      title: Important
       heading: Outcome decided
       processed_on: This application was processed on %{on}.
       explanation: Funding decisions made after 12 midday 13 February 2025 will appear in this service.
@@ -92,7 +91,6 @@ en:
         create_pse: Upload supporting evidence
       view_funding_decision: View funding decision
     return_notification:
-      title: Important
       heading:
         clarification_required: We have returned this application because we need further clarification.
         evidence_issue: We have returned this application because there was an issue with the evidence that was sent.

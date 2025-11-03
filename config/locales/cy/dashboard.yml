@@ -73,7 +73,6 @@ cy:
 
   completed_applications: &COMPLETED_APPLICATIONS
     funding_decision_notification:
-      title: Pwysig
       heading: Canlyniad wedi'i benderfynu
       processed_on: Proseswyd y cais hwn ar %{on}.
       explanation: Bydd penderfyniadau cyllido a wneir ar ôl 12pm ar 13 Chwefror 2025 yn ymddangos yn y gwasanaeth hwn.
@@ -93,7 +92,6 @@ cy:
         create_pse: Lanlwytho tystiolaeth ategol
       view_funding_decision: Gweld penderfyniad cyllido
     return_notification:
-      title: Pwysig
       heading:
         clarification_required: Rydyn ni wedi dychwelyd y cais hwn oherwydd bod angen eglurhad pellach arnom.
         evidence_issue: Rydyn ni wedi dychwelyd y cais hwn oherwydd bod problem gyda'r dystiolaeth a anfonwyd.
