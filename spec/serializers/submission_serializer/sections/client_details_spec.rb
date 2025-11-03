@@ -31,6 +31,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       correspondence_address: correspondence_address,
       telephone_number: '123456789',
       correspondence_address_type: 'home_address',
+      preferred_correspondence_language: nil,
       residence_type: 'rented',
       relationship_to_owner_of_usual_home_address: nil,
       confirm_dwp_result: 'no',
@@ -86,6 +87,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           correspondence_address: nil,
           telephone_number: '123456789',
           correspondence_address_type: 'home_address',
+          preferred_correspondence_language: nil,
           residence_type: 'rented',
           relationship_to_owner_of_usual_home_address: nil,
           benefit_check_result: false,
@@ -127,6 +129,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           correspondence_address: nil,
           telephone_number: '123456789',
           correspondence_address_type: 'home_address',
+          preferred_correspondence_language: nil,
           residence_type: 'rented',
           relationship_to_owner_of_usual_home_address: nil,
         }

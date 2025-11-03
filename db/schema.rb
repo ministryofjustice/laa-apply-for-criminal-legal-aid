@@ -386,6 +386,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_27_134435) do
     t.string "confirm_dwp_result"
     t.string "arc"
     t.string "has_arc"
+    t.string "preferred_correspondence_language"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
