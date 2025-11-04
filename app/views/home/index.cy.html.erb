@@ -5,6 +5,7 @@
     <%= render partial: 'shared/flash_banner' %>
 
     <h1 class="govuk-heading-xl"><%= service_name %></h1>
+    <p class="govuk-body">Mae’r gwasanaeth hwn ar gael rhwng 7am a 9:30pm.</p>
     <p class="govuk-body">Defnyddiwch y gwasanaeth hwn i wneud cais am gymorth cyfreithiol troseddol.</p>
     <%= button_to provider_entra_omniauth_authorize_path(locale: :cy),
                   method: :post,
