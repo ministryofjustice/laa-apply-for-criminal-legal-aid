@@ -13,7 +13,6 @@ module Passporting
       passport << MeansPassportType::ON_NOT_MEANS_TESTED if app_not_means_tested?
       passport << MeansPassportType::ON_AGE_UNDER18      if age_passported?
       passport << MeansPassportType::ON_BENEFIT_CHECK    if benefit_check_passed?
-      # TODO: Should means_passport be set if evidence will be provided?
 
       @means_passport = passport
     end
