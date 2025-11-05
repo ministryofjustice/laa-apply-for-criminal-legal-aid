@@ -5,6 +5,9 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is run' do
 
   describe 'Submitting an application where the client benefit check result is undetermined' do
     before do
+      # ClamAV is available
+      allow(Open3).to receive(:capture3).and_return ['ClamAV', nil]
+
       # applications
       click_link('Start an application')
       choose('New application')
