@@ -159,7 +159,7 @@ RSpec.describe Person, type: :model do
       let(:dwp_response) { 'Yes' }
 
       it 'returns true' do
-        expect(subject.benefit_check_result).to eq(true)
+        expect(subject.benefit_check_result).to be(true)
       end
     end
 
@@ -167,7 +167,7 @@ RSpec.describe Person, type: :model do
       let(:dwp_response) { 'No' }
 
       it 'returns false' do
-        expect(subject.benefit_check_result).to eq(false)
+        expect(subject.benefit_check_result).to be(false)
       end
     end
 
@@ -175,7 +175,7 @@ RSpec.describe Person, type: :model do
       let(:dwp_response) { 'Undetermined' }
 
       it 'returns false' do
-        expect(subject.benefit_check_result).to eq(false)
+        expect(subject.benefit_check_result).to be(false)
       end
     end
 
