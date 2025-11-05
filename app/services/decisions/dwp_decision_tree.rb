@@ -35,15 +35,21 @@ module Decisions
     private
 
     def after_confirm_result
-      if include_partner_in_means_assessment?
-        edit(:partner_benefit_type)
-      else
+      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
+        return edit(:partner_benefit_type) if include_partner_in_means_assessment?
+
         edit('steps/case/urn')
+      else
+        edit(:confirm_details)
       end
     end
 
     def after_partner_confirm_result
-      edit('steps/case/urn')
+      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
+        edit('steps/case/urn')
+      else
+        edit(:confirm_details)
+      end
     end
 
     def after_confirm_details
@@ -109,11 +115,11 @@ module Decisions
 
       DWP::UpdateBenefitCheckResultService.call(person)
 
-      if person.dwp_response.nil?
+      if benefit_checker_down?(person)
         edit(:cannot_check_dwp_status)
-      elsif person.dwp_response == 'Yes'
+      elsif confirmed_result?(person)
         edit(:benefit_check_result)
-      elsif person.dwp_response == 'Undetermined'
+      elsif undetermined_result?(person)
         edit(:cannot_match_details)
       else
         return edit(:partner_confirm_result) if person.type == 'Partner'
@@ -150,6 +156,24 @@ module Decisions
 
     def partner_is_recipient?
       partner&.has_passporting_benefit?
+    end
+
+    def benefit_checker_down?(person)
+      return person.dwp_response.nil? if FeatureFlags.dwp_undetermined.enabled?
+
+      person.benefit_check_result.nil?
+    end
+
+    def confirmed_result?(person)
+      return person.dwp_response == 'Yes' if FeatureFlags.dwp_undetermined.enabled?
+
+      person.benefit_check_result
+    end
+
+    def undetermined_result?(person)
+      return person.dwp_response == 'Undetermined' if FeatureFlags.dwp_undetermined.enabled?
+
+      false
     end
   end
   # rubocop:enable Metrics/ClassLength

@@ -22,26 +22,114 @@ RSpec.describe Decisions::DWPDecisionTree do
 
   it_behaves_like 'a decision tree'
 
-  context 'when the step is `confirm_result`' do
-    let(:form_object) { double('FormObject') }
-    let(:step_name) { :confirm_result }
-
-    context 'when the partners benefit check is required' do
-      let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
-
-      it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+  context 'when dwp undetermined feature is enabled' do
+    before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
     end
 
-    context 'when the partners benefit check is not required' do
+    context 'when the step is `confirm_result`' do
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :confirm_result }
+
+      context 'when the partners benefit check is required' do
+        let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+        it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+      end
+
+      context 'when the partners benefit check is not required' do
+        it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the step is `partner_confirm_result`' do
+      let(:form_object) { double('FormObject') }
+      let(:step_name) { :partner_confirm_result }
+
       it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
     end
   end
 
-  context 'when the step is `partner_confirm_result`' do
-    let(:form_object) { double('FormObject') }
-    let(:step_name) { :partner_confirm_result }
+  context 'when dwp undetermined feature is disabled' do
+    let(:applicant) { double(Applicant, benefit_check_result: benefit_check_result, type: 'Applicant') }
+    let(:benefit_check_result) { false }
 
-    it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+    context 'when the step is `confirm_result`' do
+      let(:form_object) { double('FormObject', applicant:, confirm_dwp_result:) }
+      let(:step_name) { :confirm_result }
+
+      context 'and the answer is `yes`' do
+        let(:confirm_dwp_result) { YesNoAnswer::YES }
+        let(:applicant) { double(Applicant, benefit_type:) }
+        let(:benefit_type) { BenefitType::NONE.to_s }
+
+        before do
+          allow(crime_application).to receive_messages(applicant:)
+          allow(applicant).to receive_messages(benefit_type:)
+        end
+
+        context 'when the partners benefit check is required' do
+          let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case: 'none') }
+
+          it { is_expected.to have_destination(:partner_benefit_type, :edit, id: crime_application) }
+        end
+
+        context 'when the partners benefit check is not required' do
+          it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+        end
+      end
+
+      context 'and the answer is `no`' do
+        let(:confirm_dwp_result) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:confirm_details, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the step is `partner_confirm_result`' do
+      let(:form_object) { double('FormObject', applicant:, confirm_dwp_result:) }
+      let(:step_name) { :partner_confirm_result }
+
+      context 'and the answer is `yes`' do
+        let(:confirm_dwp_result) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination('steps/case/urn', :edit, id: crime_application) }
+      end
+
+      context 'and the answer is `no`' do
+        let(:confirm_dwp_result) { YesNoAnswer::NO }
+
+        it { is_expected.to have_destination(:confirm_details, :edit, id: crime_application) }
+      end
+    end
+
+    context 'when the step is `confirm_details`' do
+      let(:form_object) { double('FormObject', applicant:, confirm_details:) }
+      let(:step_name) { :confirm_details }
+
+      context 'and the answer is `yes`' do
+        let(:confirm_details) { YesNoAnswer::YES }
+
+        it { is_expected.to have_destination(:has_benefit_evidence, :edit, id: crime_application) }
+      end
+
+      context 'and the answer is `no`' do
+        let(:confirm_details) { YesNoAnswer::NO }
+
+        context 'when the benefit check recipient is the applicant' do
+          it { is_expected.to have_destination('steps/client/details', :edit, id: crime_application) }
+        end
+
+        context 'when the benefit check recipient is the partner' do
+          let(:partner) { double(Partner, has_passporting_benefit?: has_passporting_benefit) }
+          let(:has_passporting_benefit) { true }
+
+          it { is_expected.to have_destination('steps/partner/details', :edit, id: crime_application) }
+        end
+      end
+    end
   end
 
   context 'when the step is `confirm_details`' do
@@ -80,6 +168,10 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:arc) { nil }
 
     before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
       allow(crime_application).to receive_messages(applicant: applicant_double, partner: partner_double,
                                                    benefit_check_passported?: benefit_check_passported)
 
@@ -159,19 +251,18 @@ RSpec.describe Decisions::DWPDecisionTree do
   end
 
   context 'when the step is `partner_benefit_type`' do
+    # The dwp check decision tree has been tested for the benefit type step so this does not test all routes
+
     let(:form_object) { double('FormObject', benefit_type:) }
     let(:partner_double) { double(Partner, has_nino:) }
     let(:step_name) { :partner_benefit_type }
     let(:benefit_type) { BenefitType::UNIVERSAL_CREDIT }
     let(:has_nino) { YesNoAnswer::YES }
-    let(:dwp_response) { nil }
     let(:benefit_check_passported) { false }
 
     before do
       allow(crime_application).to receive_messages(partner: partner_double,
                                                    benefit_check_passported?: benefit_check_passported)
-
-      allow(partner_double).to receive_messages(dwp_response:)
 
       allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(partner_double).and_return(true)
     end
@@ -249,6 +340,10 @@ RSpec.describe Decisions::DWPDecisionTree do
     let(:benefit_check_subject) { applicant }
 
     before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
       allow(crime_application).to receive_messages(applicant: applicant,
                                                    partner: partner,
                                                    benefit_check_passported?: benefit_check_passported)
@@ -268,6 +363,20 @@ RSpec.describe Decisions::DWPDecisionTree do
         allow(partner).to receive_messages(dwp_response:)
 
         allow(DWP::UpdateBenefitCheckResultService).to receive(:call).with(partner).and_return(true)
+      end
+
+      it { is_expected.to have_destination(:confirm_result, :edit, id: crime_application) }
+    end
+
+    context 'when dwp undetermined feature is disabled' do
+      let(:benefit_check_result) { false }
+
+      before do
+        allow(FeatureFlags).to receive(:dwp_undetermined) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+
+        allow(applicant).to receive_messages(benefit_check_result:)
       end
 
       it { is_expected.to have_destination(:confirm_result, :edit, id: crime_application) }

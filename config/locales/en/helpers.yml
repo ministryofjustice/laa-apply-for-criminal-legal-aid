@@ -121,6 +121,9 @@ en:
         correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
         heading: DWP records show that %{subject} does not receive a passporting benefit. Is this correct?
+        # CRIMAPP-1975 remove once feature released
+        old_heading: DWP records show that %{subject} does not receive a passporting benefit
+        confirm_dwp_result: Are the DWP records correct?
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
         page_title: Confirm %{subject}’s details
@@ -715,6 +718,13 @@ en:
           "yes": I will enter the National Insurance number now
           "no": I will enter the National Insurance number later
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
+      steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
+        confirm_dwp_result_options:
+          "yes": "Yes"
+          "no": No, they receive a passporting benefit
+      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": "Yes"

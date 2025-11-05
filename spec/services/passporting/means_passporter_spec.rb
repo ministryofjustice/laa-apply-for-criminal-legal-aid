@@ -70,13 +70,19 @@ RSpec.describe Passporting::MeansPassporter do
     context 'when DWP benefit check has been successful' do
       let(:under18) { false }
 
-      context 'when dwp_response is set' do
+      context 'when dwp_response is `Yes`' do
         let(:dwp_response) { 'Yes' }
+
+        before do
+          allow(FeatureFlags).to receive(:dwp_undetermined) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+          }
+        end
 
         it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
       end
 
-      context 'when dwp_response is not set' do
+      context 'when benefit_check_result is `true`' do
         let(:benefit_check_result) { true }
 
         it { is_expected.to eq([MeansPassportType::ON_BENEFIT_CHECK]) }
@@ -86,14 +92,28 @@ RSpec.describe Passporting::MeansPassporter do
     context 'when DWP benefit check has failed' do
       let(:under18) { false }
 
-      context 'when dwp_response is set' do
-        let(:dwp_response) { 'No' }
+      context 'when dwp undetermined feature is enabled' do
+        before do
+          allow(FeatureFlags).to receive(:dwp_undetermined) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+          }
+        end
 
-        it { is_expected.to eq([]) }
+        context 'when dwp_response is `No`' do
+          let(:dwp_response) { 'No' }
+
+          it { is_expected.to eq([]) }
+        end
+
+        context 'when dwp_response is `Undetermined`' do
+          let(:dwp_response) { 'Undetermined' }
+
+          it { is_expected.to eq([]) }
+        end
       end
 
-      context 'when dwp_response is not set' do
-        let(:benefit_check_result) { nil }
+      context 'when benefit_check_result is not performed' do
+        let(:benefit_check_result) { false }
 
         it { is_expected.to eq([]) }
       end
@@ -134,13 +154,19 @@ RSpec.describe Passporting::MeansPassporter do
     context 'when benefit check passported' do
       let(:under18) { false }
 
-      context 'when dwp_response is set' do
+      context 'when dwp_response is `Yes`' do
         let(:dwp_response) { 'Yes' }
+
+        before do
+          allow(FeatureFlags).to receive(:dwp_undetermined) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+          }
+        end
 
         it { is_expected.to be(false) }
       end
 
-      context 'when dwp_response is not set' do
+      context 'when benefit_check_result is `true`' do
         let(:benefit_check_result) { true }
 
         it { is_expected.to be(false) }

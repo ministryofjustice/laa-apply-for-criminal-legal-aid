@@ -22,6 +22,12 @@ feature_flags:
     staging: true
     preprod: true
     production: false
+  dwp_undetermined:
+    local: true
+    test: false
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

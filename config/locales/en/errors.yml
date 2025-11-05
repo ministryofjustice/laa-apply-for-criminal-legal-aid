@@ -284,6 +284,13 @@ en:
             confirm_details:
               inclusion: Select yes if these details are correct
         steps/dwp/confirm_partner_details_form: *CONFIRM_DETAILS_VALIDATION
+        # CRIMAPP-1975 remove once feature released START
+        steps/dwp/confirm_result_form: &CONFIRM_RESULT_VALIDATION
+          attributes:
+            confirm_dwp_result:
+              inclusion: Select yes if they do not receive a passporting benefit
+        steps/dwp/partner_confirm_result_form: *CONFIRM_RESULT_VALIDATION
+        # CRIMAPP-1975 remove once feature released END
         steps/address/lookup_form:
           attributes:
             postcode:

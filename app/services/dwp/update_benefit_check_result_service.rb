@@ -9,9 +9,13 @@ module DWP
     end
 
     def call
-      dwp_response = BenefitCheckService.benefit_check_result(@person)
-
-      @person.update(dwp_response:)
+      if FeatureFlags.dwp_undetermined.enabled?
+        dwp_response = BenefitCheckService.benefit_check_result(@person)
+        @person.update(dwp_response:)
+      else
+        benefit_check_result = BenefitCheckService.passporting_benefit?(@person)
+        @person.update(benefit_check_result:)
+      end
     end
   end
 end

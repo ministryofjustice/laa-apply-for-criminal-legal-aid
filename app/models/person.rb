@@ -32,6 +32,7 @@ class Person < ApplicationRecord
   end
 
   def benefit_check_result
+    return super unless FeatureFlags.dwp_undetermined.enabled?
     return true if dwp_response == 'Yes'
     return false if %w[No Undetermined].include?(dwp_response)
 

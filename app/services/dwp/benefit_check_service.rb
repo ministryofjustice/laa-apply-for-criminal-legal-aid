@@ -15,6 +15,13 @@ module DWP
       new(person).call
     end
 
+    def self.passporting_benefit?(person)
+      result = call(person)
+      return result if result.nil?
+
+      result[:benefit_checker_status].casecmp('yes').zero?
+    end
+
     def self.benefit_check_result(person)
       result = call(person)
       return result if result.nil?

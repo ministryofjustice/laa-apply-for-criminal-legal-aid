@@ -30,7 +30,7 @@ module SubmissionSerializer
             json.confirm_details applicant.confirm_details
             json.confirm_dwp_result applicant.confirm_dwp_result
             json.benefit_check_status DWP::BenefitCheckStatusService.call(self, applicant)
-            json.dwp_response applicant.dwp_response
+            json.dwp_response applicant.dwp_response if FeatureFlags.dwp_undetermined.enabled?
 
             partner_attributes(json)
           end

@@ -5,6 +5,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
 
   describe 'Submitting an application where the benefit check result changes from undetermined to confirmed' do
     before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
       # applications
       click_link('Start an application')
       choose('New application')

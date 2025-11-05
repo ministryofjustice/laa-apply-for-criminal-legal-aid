@@ -145,4 +145,60 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+  describe '#benefit_check_result' do
+    before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
+      attributes.merge!(dwp_response: dwp_response, benefit_check_result: nil)
+    end
+
+    context 'when dwp_response is `Yes`' do
+      let(:dwp_response) { 'Yes' }
+
+      it 'returns true' do
+        expect(subject.benefit_check_result).to eq(true)
+      end
+    end
+
+    context 'when dwp_response is `No`' do
+      let(:dwp_response) { 'No' }
+
+      it 'returns false' do
+        expect(subject.benefit_check_result).to eq(false)
+      end
+    end
+
+    context 'when dwp_response is `Undetermined`' do
+      let(:dwp_response) { 'Undetermined' }
+
+      it 'returns false' do
+        expect(subject.benefit_check_result).to eq(false)
+      end
+    end
+
+    context 'when dwp_response is nil' do
+      let(:dwp_response) { nil }
+
+      it 'returns current value' do
+        expect(subject.benefit_check_result).to be_nil
+      end
+    end
+
+    context 'when dwp undetermined feature flag is disabled' do
+      let(:dwp_response) { nil }
+
+      before do
+        allow(FeatureFlags).to receive(:dwp_undetermined) {
+          instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+        }
+      end
+
+      it 'returns nil' do
+        expect(subject.benefit_check_result).to be_nil
+      end
+    end
+  end
 end

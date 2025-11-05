@@ -65,6 +65,12 @@ RSpec.describe DWP::BenefitCheckStatusService do
       end
 
       context 'when dwp_response is undetermined' do
+        before do
+          allow(FeatureFlags).to receive(:dwp_undetermined) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+          }
+        end
+
         let(:confirm_dwp_result) { nil }
         let(:dwp_response) { 'Undetermined' }
 
@@ -92,6 +98,12 @@ RSpec.describe DWP::BenefitCheckStatusService do
       end
 
       context 'when dwp_response is no' do
+        before do
+          allow(FeatureFlags).to receive(:dwp_undetermined) {
+            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+          }
+        end
+
         let(:confirm_dwp_result) { nil }
         let(:dwp_response) { 'No' }
 
