@@ -17,8 +17,8 @@ RSpec.describe DWP::UpdateBenefitCheckResultService do
       context 'with a `Yes` result' do
         let(:benefit_check_result) { 'Yes' }
 
-        it 'updates the applicant record with `Yes`' do
-          expect(applicant).to receive(:update).with({ dwp_response: 'Yes' })
+        it 'updates the applicant record' do
+          expect(applicant).to receive(:update).with(dwp_response: 'Yes', benefit_check_result: true)
           described_class.call(applicant)
         end
       end
@@ -26,8 +26,8 @@ RSpec.describe DWP::UpdateBenefitCheckResultService do
       context 'with a `No` result' do
         let(:benefit_check_result) { 'No' }
 
-        it 'updates the applicant record with `No`' do
-          expect(applicant).to receive(:update).with(dwp_response: 'No')
+        it 'updates the applicant record' do
+          expect(applicant).to receive(:update).with(dwp_response: 'No', benefit_check_result: false)
           described_class.call(applicant)
         end
       end
@@ -35,8 +35,8 @@ RSpec.describe DWP::UpdateBenefitCheckResultService do
       context 'with an `Undetermined` result' do
         let(:benefit_check_result) { 'Undetermined' }
 
-        it 'updates the applicant record with `Undetermined`' do
-          expect(applicant).to receive(:update).with(dwp_response: 'Undetermined')
+        it 'updates the applicant record' do
+          expect(applicant).to receive(:update).with(dwp_response: 'Undetermined', benefit_check_result: false)
           described_class.call(applicant)
         end
       end
@@ -56,7 +56,7 @@ RSpec.describe DWP::UpdateBenefitCheckResultService do
         let(:benefit_check_result) { true }
 
         it 'updates the applicant record with `true`' do
-          expect(applicant).to receive(:update).with({ benefit_check_result: true })
+          expect(applicant).to receive(:update).with(benefit_check_result: true)
           described_class.call(applicant)
         end
       end

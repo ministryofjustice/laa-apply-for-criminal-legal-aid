@@ -115,9 +115,9 @@ module Decisions
 
       DWP::UpdateBenefitCheckResultService.call(person)
 
-      if benefit_checker_down?(person)
+      if person.benefit_check_result.nil?
         edit(:cannot_check_dwp_status)
-      elsif confirmed_result?(person)
+      elsif person.benefit_check_result
         edit(:benefit_check_result)
       elsif undetermined_result?(person)
         edit(:cannot_match_details)
@@ -156,18 +156,6 @@ module Decisions
 
     def partner_is_recipient?
       partner&.has_passporting_benefit?
-    end
-
-    def benefit_checker_down?(person)
-      return person.dwp_response.nil? if FeatureFlags.dwp_undetermined.enabled?
-
-      person.benefit_check_result.nil?
-    end
-
-    def confirmed_result?(person)
-      return person.dwp_response == 'Yes' if FeatureFlags.dwp_undetermined.enabled?
-
-      person.benefit_check_result
     end
 
     def undetermined_result?(person)

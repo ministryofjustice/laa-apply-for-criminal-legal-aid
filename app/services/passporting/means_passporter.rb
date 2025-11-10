@@ -41,8 +41,6 @@ module Passporting
     end
 
     def benefit_check_passed?
-      return benefit_check_subject.dwp_response == 'Yes' if FeatureFlags.dwp_undetermined.enabled?
-
       benefit_check_subject.benefit_check_result.present?
     end
   end
