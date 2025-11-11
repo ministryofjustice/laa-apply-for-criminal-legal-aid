@@ -11,7 +11,7 @@ module DWP
     def call
       if FeatureFlags.dwp_undetermined.enabled?
         dwp_response = BenefitCheckService.benefit_check_result(@person)
-        benefit_check_result = dwp_response.casecmp('yes').zero?
+        benefit_check_result = dwp_response&.casecmp('yes')&.zero?
         @person.update(dwp_response:, benefit_check_result:)
       else
         benefit_check_result = BenefitCheckService.passporting_benefit?(@person)
