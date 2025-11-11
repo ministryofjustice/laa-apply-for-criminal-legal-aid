@@ -444,7 +444,8 @@ en:
           "no": You'll need to tell us about %{subject}’s income if you do not have evidence.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
-        next_steps_label: "You can continue with this application and either:"
+        next_steps_label_html: | 
+          You can <button type="submit" class="app-button--link">try again now</button>, or continue with the application and either:
         next_steps_evidence: provide evidence of a passporting benefit if available
         next_steps_client_check: provide details about your client's income
         next_steps_partner_check: provide details about your client's and partner's income
