@@ -19,7 +19,13 @@ module Providers
 
     class << self
       def call(office_code)
+        return MockGetActiveOffice.call(office_code) if use_mock?
+
         new(office_code:).call
+      end
+
+      def use_mock?
+        Rails.configuration.x.provider_data_api.use_mock.inquiry.true?
       end
     end
   end

@@ -3,30 +3,21 @@ feature_flags:
     local: true
     staging: false
     production: false
-  property_ownership_validation:
-    local: true
-    staging: true
-    production: true
   google_analytics:
     local: false
     staging: false
     production: false
-  welsh_translation:
-    local: true
-    staging: true
-    production: true
-  provider_data_api:
-    local: false
-    test: false
-    staging: true
-    preprod: true
-    production: true
   entra_logout:
     local: false
     staging: false
     preprod: false
     production: false
   deletion_events:
+    local: true
+    staging: true
+    preprod: true
+    production: true
+  correspondence_preference:
     local: true
     staging: true
     preprod: true
@@ -38,7 +29,7 @@ feature_flags:
 settings:
   portal_url: https://portal.legalservices.gov.uk
   portal_terms_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742318
-  laa_privacy_notice_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742320
+  laa_privacy_notice_url: https://www.gov.uk/guidance/legal-aid-agency-privacy-notice
   feedback_survey_url: https://www.smartsurvey.co.uk/s/crimeapply/
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: online-support@justice.gov.uk

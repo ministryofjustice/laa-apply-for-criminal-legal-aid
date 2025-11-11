@@ -60,16 +60,9 @@ module LaaApplyForCriminalLegalAid
     # regardless of their activity (session lifespan).
     config.x.session.reauthenticate_in = ENV.fetch('REAUTHENTICATE_AFTER_MINUTES', 720).to_i.minutes
 
-    config.x.gatekeeper= config_for(
-      :gatekeeper, env: ENV.fetch('ENV_NAME', 'localhost')
-    )
-
-    config.x.inactive_offices = config_for(
-      :inactive_offices, env: ENV.fetch('ENV_NAME', 'localhost')
-    )
-
     config.x.provider_data_api.url = ENV.fetch('PROVIDER_DATA_API_URL', nil)
     config.x.provider_data_api.secret = ENV.fetch('PROVIDER_DATA_API_SECRET', nil)
+    config.x.provider_data_api.use_mock = ENV.fetch('PROVIDER_DATA_API_USE_MOCK', 'false')
 
     config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 2).to_i.years # 2 years
     config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 2).to_i.weeks # 2 weeks

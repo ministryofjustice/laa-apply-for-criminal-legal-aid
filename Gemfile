@@ -6,7 +6,7 @@ ruby File.read('.ruby-version').chomp
 gem 'faraday', '~> 2.13'
 gem 'faraday-retry'
 gem 'govuk-components'
-gem 'govuk_design_system_formbuilder'
+gem 'govuk_design_system_formbuilder', '~> 5.11'
 gem 'jbuilder', '~> 2.13.0'
 gem 'kaminari'
 gem 'lograge'
@@ -46,7 +46,7 @@ gem 'laa-criminal-applications-datastore-api-client',
 
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas',
-    tag: 'v1.7.1'
+    tag: 'v1.7.5'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

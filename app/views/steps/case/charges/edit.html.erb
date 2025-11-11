@@ -29,12 +29,14 @@
           <% index = od.index + 1 %>
 
           <%= od.govuk_date_field :date_from, maxlength_enabled: true,
+                                  segment_names: f.segment_names,
                                   legend: {
                                     text: t("helpers.legend.#{f.object_name}.date_from", index:),
                                     size: 's'
                                   } %>
 
           <%= od.govuk_date_field :date_to, maxlength_enabled: true,
+                                  segment_names: f.segment_names,
                                   legend: {
                                     text: t("helpers.legend.#{f.object_name}.date_to", index:),
                                     size: 's'

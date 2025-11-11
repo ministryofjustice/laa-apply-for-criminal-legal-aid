@@ -8,11 +8,12 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :relationship_status, legend: { tag: 'h1', size: 'xl' } do %>
         <% @form_object.choices.each_with_index do |choice, index| %>
-          <%= f.govuk_radio_divider if choice == ClientRelationshipStatusType::NOT_SAYING %>
+          <%= f.govuk_radio_divider I18n.t('divider_text') if choice == ClientRelationshipStatusType::NOT_SAYING %>
 
           <% if choice == ClientRelationshipStatusType::SEPARATED %>
             <%= f.govuk_radio_button :relationship_status, choice.value do %>
               <%= f.govuk_date_field :separation_date, maxlength_enabled: true,
+                                     segment_names: f.segment_names,
                                       legend: {
                                         text: t('.separation_date'),
                                         size: 's', class: 'govuk-!-font-weight-regular'

@@ -41,6 +41,9 @@ en:
         applicant_and_partner: "your client and their partner"
         applicant_or_partner: "your client or their partner"
         partner: "the partner"
+      change: Change
+      edit: Edit
+      remove: Remove
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
@@ -246,6 +249,11 @@ en:
       telephone_number:
         question: Telephone
         absence_answer: *absence_none
+      requested_welsh_correspondence:
+        question: Correspondence requested in Welsh?
+        absence_answer: *absence_none
+        answers:
+          <<: *YESNO
       # END contact details section
 
       # BEGIN partner details section
@@ -470,6 +478,8 @@ en:
       # BEGIN income details section
       income_above_threshold:
         question: "%{prefix} more than £12,475 a year before tax?"
+        income: Income
+        joint_annual_income: Joint annual income
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:

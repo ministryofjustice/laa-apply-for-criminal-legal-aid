@@ -12,7 +12,7 @@
                                     data: { module: 'accessible-autocomplete' },
                                     options: { include_blank: true }, label: { tag: 'h2', size: 'm' } %>
 
-      <%= f.govuk_date_field :hearing_date, maxlength_enabled: true, legend: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_date_field :hearing_date, maxlength_enabled: true, legend: { tag: 'h2', size: 'm' }, segment_names: f.segment_names %>
 
       <%= f.govuk_collection_radio_buttons :is_first_court_hearing, @form_object.choices, :value, legend: { tag: 'h2', size: 'm' } %>
 

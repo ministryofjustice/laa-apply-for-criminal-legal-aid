@@ -4,15 +4,7 @@ RSpec.describe 'Viewing dashboard with Contingent Liability Criminal Legal Aid a
   include_context 'when logged in'
   include_context 'with stubbed search results'
 
-  let(:provider_data_api_response) { file_fixture('provider_data_api/contingent_liability.json').read }
-
   before do
-    allow(FeatureFlags).to receive(:provider_data_api) {
-      instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-    }
-    stub_request(:get, 'https://pda.example.com/provider-offices/2A555X/schedules?areaOfLaw=CRIME%20LOWER')
-      .to_return_json(status: 200, body: file_fixture('provider_data_api/public_defender_service.json').read)
-
     click_link('Start an application')
     choose('New application')
     save_and_continue
@@ -28,12 +20,15 @@ RSpec.describe 'Viewing dashboard with Contingent Liability Criminal Legal Aid a
       with: Passporting::AGE_PASSPORTED_UNTIL.ago.to_date.next_day
     )
     save_and_continue
-    stub_request(:get, 'https://pda.example.com/provider-offices/2A555X/schedules?areaOfLaw=CRIME%20LOWER')
-      .to_return_json(status: 200, body: provider_data_api_response)
-    visit('/')
   end
 
   context 'when an office transitions to Contingent Liability' do
+    before do
+      mock_pda('2A555X', fixture: 'contingent_liability')
+
+      visit('/')
+    end
+
     it 'shows error message when trying to start a new application' do
       click_on('Start an application')
 

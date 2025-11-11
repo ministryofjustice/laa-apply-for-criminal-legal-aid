@@ -1,6 +1,6 @@
 <% return unless current_office&.contingent_liability? %>
 
-<%= govuk_notification_banner(title_text: 'Important') do |nb| %>
+<%= govuk_notification_banner(title_text: t('helpers.important')) do |nb| %>
   <% nb.with_heading(text: t('.restriction')) %>
   <p><%= t('.explanation', office_code: current_office_code) %></p>
   <p><%= t('.questions') %></p>

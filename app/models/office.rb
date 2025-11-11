@@ -16,15 +16,7 @@ class Office
     end
 
     def find!(office_code)
-      return Providers::GetActiveOffice.call(office_code) if FeatureFlags.provider_data_api.enabled?
-
-      # Static list offices are all non-Contingent Liability and active
-      new(
-        office_code: office_code,
-        name: office_code,
-        active?: true,
-        contingent_liability?: false
-      )
+      Providers::GetActiveOffice.call(office_code)
     end
   end
 end

@@ -15,6 +15,8 @@ RSpec.describe 'Sign in user journey' do
   let(:start_button_form_action) { start_button.ancestor('form')['action'] }
   let(:disable_entra_logout_feature) { false }
 
+  include_context 'with mock provider data'
+
   before do
     if disable_entra_logout_feature
       allow(FeatureFlags).to receive(:entra_logout) {
@@ -66,7 +68,7 @@ RSpec.describe 'Sign in user journey' do
       allow(
         OmniAuth.config
       ).to receive(:mock_auth).and_return(
-        entra: OmniAuth::AuthHash.new(info: { office_codes: ['1X000X'] })
+        entra: OmniAuth::AuthHash.new(info: { office_codes: [] })
       )
 
       start_button.click
@@ -120,7 +122,7 @@ RSpec.describe 'Sign in user journey' do
       expect(page).not_to have_css('nav.govuk-header__navigation')
     end
 
-    context 'when entra logout diabled' do
+    context 'when entra logout disabled' do
       let(:disable_entra_logout_feature) { true }
 
       it 'on sign out it redirects to the home' do
@@ -150,7 +152,7 @@ RSpec.describe 'Sign in user journey' do
 
     context 'when the user attempts to access the dashboard after the selected office code is deactivated' do
       it 'redirects to the select the office page' do
-        allow(Providers::Gatekeeper).to receive(:inactive_office_codes).and_return(['1A123B'])
+        mock_pda('1A123B', status: 204)
         visit 'applications'
         expect(current_url).to match(steps_provider_select_office_path)
       end

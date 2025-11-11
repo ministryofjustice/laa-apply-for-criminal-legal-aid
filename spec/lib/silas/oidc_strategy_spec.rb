@@ -4,6 +4,12 @@ RSpec.describe Silas::OidcStrategy do
   let(:strategy_class) { described_class }
   let(:mock_auth) { strategy_class.mock_auth }
 
+  before do
+    allow(ProviderDataApi::ActiveOfficeCodesFilter).to receive(:call).and_return(
+      %w[1A123B 3B345C]
+    )
+  end
+
   describe '#info' do
     let(:laa_accounts) { %w[1A123B 2A555X 3B345C 4C567D] }
 
@@ -22,7 +28,17 @@ RSpec.describe Silas::OidcStrategy do
       expect(strategy_instance.info).to include(
         email: 'provider@example.com',
         roles: ['ACCESS_CRIME_APPLY'],
-        office_codes: %w[1A123B 2A555X 3B345C 4C567D]
+        office_codes: %w[1A123B 3B345C]
+      )
+    end
+
+    it 'filters the office codes using the active office code filter' do
+      expect(strategy_instance.info[:office_codes]).to eq %w[1A123B 3B345C]
+
+      expect(ProviderDataApi::ActiveOfficeCodesFilter).to have_received(:call).with(
+        laa_accounts,
+        area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER'],
+        translator: Providers::SchedulesToOfficeTranslator
       )
     end
 
@@ -30,30 +46,10 @@ RSpec.describe Silas::OidcStrategy do
       let(:laa_accounts) { '1A123B' }
 
       it 'normalizes the `office_codes` value to return an array' do
-        expect(strategy_instance.info).to include(
-          email: 'provider@example.com',
-          roles: ['ACCESS_CRIME_APPLY'],
-          office_codes: %w[1A123B]
-        )
-      end
-    end
-
-    context 'when the provider data API feature is enabled' do
-      before do
-        allow(FeatureFlags).to receive(:provider_data_api) {
-          instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-        }
-
-        allow(ProviderDataApi::ActiveOfficeCodesFilter).to receive(:call).and_return(
-          %w[1A123B 3B345C]
-        )
-      end
-
-      it 'filters the office codes using the active office code filter' do
         expect(strategy_instance.info[:office_codes]).to eq %w[1A123B 3B345C]
 
         expect(ProviderDataApi::ActiveOfficeCodesFilter).to have_received(:call).with(
-          laa_accounts,
+          ['1A123B'],
           area_of_law: ProviderDataApi::Types::AreaOfLaw['CRIME LOWER'],
           translator: Providers::SchedulesToOfficeTranslator
         )
@@ -80,7 +76,7 @@ RSpec.describe Silas::OidcStrategy do
       expect(strategy.post_logout_redirect_uri).to match('https://www.example.com/providers/logout')
     end
 
-    it 'uses the tennant url for issuer descovery' do
+    it 'uses the tenant url for issuer discovery' do
       expect(strategy.discovery).to be(true)
       expect(strategy.issuer).to match(
         'https://login.microsoftonline.com/TestEntraTenantID/v2.0'
