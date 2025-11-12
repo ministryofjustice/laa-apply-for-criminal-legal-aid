@@ -453,7 +453,6 @@ cy:
           "no": Os nad oes gennych chi dystiolaeth, bydd angen i chi roi gwybod i ni am incwm %{subject}.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
-        next_steps_label: "Gallwch barhau â’r cais hwn a naill ai:"
         next_steps_label_html: |
           Gallwch chi <button type="submit" class="app-button--link">ceisiwch eto nawr</button>, neu barhau â’r cais hwn a naill ai:
         next_steps_evidence: rhoi tystiolaeth o fudd-dal pasbortio os oes ar gael
