@@ -54,6 +54,8 @@ cy:
       sign_in: Mewngofnodi
       find_address: Dod o hyd i gyfeiriad
       try_again: Rhoi cynnig arall arni
+      check_details_client: Gwiriwch fanylion y cleient
+      check_details_partner: Gwiriwch fanylion partner
     contact:
       call_charges: Gwybodaeth am gostau galwadau
       case_enquiries: Ymholiadau achos
@@ -118,7 +120,9 @@ cy:
       steps_client_contact_details_form:
         correspondence_address_type: I ble ddylen ni anfon gohebiaeth?
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
-        heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
+        heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio. Ydy hyn yn gywir?
+        # CRIMAPP-1975 remove once feature released
+        old_heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
         confirm_dwp_result: Ydy cofnodion yr Adran Gwaith a Phensiynau yn gywir?
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
@@ -140,6 +144,8 @@ cy:
         cannot_check_dwp_status_subheading: Mae hyn yn golygu nad ydym yn gallu gwirio budd-dal pasbortio %{subject}.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos bod %{subject} yn cael budd-dal pasbortio
+      steps_dwp_cannot_match_details_form:
+        cannot_match_details: Ni all yr Adran Gwaith a Phensiynau gyfateb y manylion rydych chi wedi'u darparu ar gyfer y %{subject}
       steps_case_has_case_concluded_form:
         has_case_concluded: Ydy'r achos wedi dod i ben?
       steps_case_is_preorder_work_claimed_form:

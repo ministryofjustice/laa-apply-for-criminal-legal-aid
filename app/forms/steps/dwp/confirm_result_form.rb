@@ -7,7 +7,7 @@ module Steps
       has_one_association :applicant
 
       attribute :confirm_dwp_result, :value_object, source: YesNoAnswer
-      validates :confirm_dwp_result, inclusion: { in: :choices }
+      validates :confirm_dwp_result, inclusion: { in: :choices }, unless: :undetermined_routing_enabled?
 
       def choices
         YesNoAnswer.values
@@ -16,11 +16,14 @@ module Steps
       private
 
       def persist!
-        applicant.update(attributes)
+        if FeatureFlags.dwp_undetermined.enabled?
+          update_person_attributes
+        else
+          applicant.update(attributes)
+          return true if confirm_dwp_result.no?
 
-        return true if confirm_dwp_result.no?
-
-        update_person_attributes if confirm_dwp_result.yes?
+          update_person_attributes if confirm_dwp_result.yes?
+        end
       end
 
       def update_person_attributes
@@ -33,6 +36,10 @@ module Steps
           'has_benefit_evidence' => nil,
           'confirm_details' => nil
         }
+      end
+
+      def undetermined_routing_enabled?
+        FeatureFlags.dwp_undetermined.enabled?
       end
     end
   end

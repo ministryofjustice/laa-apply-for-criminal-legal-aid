@@ -207,9 +207,16 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     visit completed_crime_application_path(@submitted_application_id)
   end
 
-  # mock_result format 'Yes' or 'No'
+  # mock_result format 'Yes', 'No' or 'Undetermined'
   def mock_benefit_check(mock_result)
-    fixture_name = mock_result == 'Yes' ? 'successful.xml' : 'unsuccessful.xml'
+    fixture_name = case mock_result
+                   when 'Yes'
+                     'successful.xml'
+                   when 'No'
+                     'unsuccessful.xml'
+                   else
+                     'undetermined.xml'
+                   end
 
     stub_request(:post, 'http://benefit-checker/?wsdl')
       .to_return(body: file_fixture("benefit_checker_responses/#{fixture_name}").read)

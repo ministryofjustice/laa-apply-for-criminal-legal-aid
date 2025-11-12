@@ -16,21 +16,31 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
     context 'when applicant has a passported benefit' do
       before do
         applicant.benefit_type = 'jsa'
-        applicant.benefit_check_result = true
         applicant.has_nino = 'yes'
         applicant.nino = 'QQ123456A'
+        applicant.has_benefit_evidence = has_benefit_evidence
+
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(benefit_check_status)
       end
 
       context 'when DWP check passed' do
+        let(:benefit_check_status) { BenefitCheckStatus::CONFIRMED.to_s }
+        let(:has_benefit_evidence) { nil }
+
         it { is_expected.to be false }
+
+        context 'when they have no benefit evidence' do
+          # This is not a scenario that would occur via application routing, but might be if a user
+          # changes the details to undergo the check and previously went through a different dwp route
+          let(:has_benefit_evidence) { 'no' }
+
+          it { is_expected.to be false }
+        end
       end
 
-      context 'when DWP check failed' do
-        before do
-          applicant.benefit_check_result = false
-          applicant.confirm_dwp_result = 'no'
-          applicant.has_benefit_evidence = 'yes'
-        end
+      context 'when DWP result is `No`' do
+        let(:benefit_check_status) { BenefitCheckStatus::NO_RECORD_FOUND.to_s }
+        let(:has_benefit_evidence) { 'yes' }
 
         it { is_expected.to be true }
 
@@ -41,17 +51,33 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
         end
 
         context 'when they have no benefit evidence' do
-          before do
-            applicant.has_benefit_evidence = 'no'
-          end
+          let(:has_benefit_evidence) { 'no' }
 
           it { is_expected.to be false }
         end
+      end
 
-        context 'when they confirm the DWP result' do
-          before do
-            applicant.confirm_dwp_result = 'yes'
-          end
+      context 'when DWP result is undetermined' do
+        let(:benefit_check_status) { BenefitCheckStatus::UNDETERMINED.to_s }
+        let(:has_benefit_evidence) { 'yes' }
+
+        it { is_expected.to be true }
+
+        context 'when they have no benefit evidence' do
+          let(:has_benefit_evidence) { 'no' }
+
+          it { is_expected.to be false }
+        end
+      end
+
+      context 'when DWP checker is unavailable' do
+        let(:benefit_check_status) { BenefitCheckStatus::CHECKER_UNAVAILABLE.to_s }
+        let(:has_benefit_evidence) { 'yes' }
+
+        it { is_expected.to be true }
+
+        context 'when they have no benefit evidence' do
+          let(:has_benefit_evidence) { 'no' }
 
           it { is_expected.to be false }
         end
@@ -66,31 +92,33 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
       before do
         applicant.benefit_type = 'none'
         partner.benefit_type = 'jsa'
-        partner.benefit_check_result = true
         partner.has_nino = 'yes'
         partner.nino = 'QQ123456A'
+        partner.has_benefit_evidence = has_benefit_evidence
+
+        allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(benefit_check_status)
       end
 
       context 'when DWP check passed' do
+        let(:benefit_check_status) { BenefitCheckStatus::CONFIRMED.to_s }
+        let(:has_benefit_evidence) { nil }
+
         it { is_expected.to be false }
-      end
 
-      context 'when DWP check failed' do
-        before do
-          partner.benefit_check_result = false
-          partner.confirm_dwp_result = 'no'
-          partner.has_benefit_evidence = 'yes'
-        end
-
-        it { is_expected.to be true }
-
-        context 'when applicant has a passporting benefit' do
-          before do
-            applicant.benefit_type = 'jsa'
-          end
+        context 'when they have no benefit evidence' do
+          # This is not a scenario that would occur via application routing, but might be if a user
+          # changes the details to undergo the check and previously went through a different dwp route
+          let(:has_benefit_evidence) { 'no' }
 
           it { is_expected.to be false }
         end
+      end
+
+      context 'when DWP result is `No`' do
+        let(:benefit_check_status) { BenefitCheckStatus::NO_RECORD_FOUND.to_s }
+        let(:has_benefit_evidence) { 'yes' }
+
+        it { is_expected.to be true }
 
         context 'when they are passported on age' do
           let(:age_passported?) { true }
@@ -99,17 +127,33 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
         end
 
         context 'when they have no benefit evidence' do
-          before do
-            partner.has_benefit_evidence = 'no'
-          end
+          let(:has_benefit_evidence) { 'no' }
 
           it { is_expected.to be false }
         end
+      end
 
-        context 'when they confirm the DWP result' do
-          before do
-            partner.confirm_dwp_result = 'yes'
-          end
+      context 'when DWP result is undetermined' do
+        let(:benefit_check_status) { BenefitCheckStatus::UNDETERMINED.to_s }
+        let(:has_benefit_evidence) { 'yes' }
+
+        it { is_expected.to be true }
+
+        context 'when they have no benefit evidence' do
+          let(:has_benefit_evidence) { 'no' }
+
+          it { is_expected.to be false }
+        end
+      end
+
+      context 'when DWP checker is unavailable' do
+        let(:benefit_check_status) { BenefitCheckStatus::CHECKER_UNAVAILABLE.to_s }
+        let(:has_benefit_evidence) { 'yes' }
+
+        it { is_expected.to be true }
+
+        context 'when they have no benefit evidence' do
+          let(:has_benefit_evidence) { 'no' }
 
           it { is_expected.to be false }
         end
@@ -123,7 +167,7 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
     it { is_expected.to be false }
   end
 
-  describe '#to_h', skip: 'Double check expected behavior of benefit check status service' do
+  describe '#to_h' do
     let(:expected_hash) do
       {
         id: 'BenefitsRecipient',
@@ -148,20 +192,17 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
     end
 
     before do
-      applicant.benefit_type = applicant_benefit
-      applicant.nino = 'QQ123456A'
-      applicant.benefit_check_result = false
-      applicant.confirm_dwp_result = 'no'
-      applicant.has_benefit_evidence = 'yes'
-      partner.benefit_type = 'jsa'
-      partner.nino = 'AA123456A'
-      partner.benefit_check_result = false
-      partner.confirm_dwp_result = 'no'
-      partner.has_benefit_evidence = 'yes'
+      applicant.has_benefit_evidence = applicant_has_evidence
+      partner.has_benefit_evidence = partner_has_evidence
+
+      allow(DWP::BenefitCheckStatusService).to receive(:call).and_return(
+        BenefitCheckStatus::UNDETERMINED.to_s
+      )
     end
 
     context 'when applicant is benefit recipient' do
-      let(:applicant_benefit) { 'jsa' }
+      let(:applicant_has_evidence) { 'yes' }
+      let(:partner_has_evidence) { nil }
 
       let(:expected_applicant_prompt) do
         ['benefit book or notice of entitlement or letter from Jobcentre Plus ' \
@@ -176,7 +217,8 @@ RSpec.describe Evidence::Rules::BenefitsRecipient do
     end
 
     context 'when partner is benefit recipient' do
-      let(:applicant_benefit) { 'none' }
+      let(:applicant_has_evidence) { nil }
+      let(:partner_has_evidence) { 'yes' }
 
       let(:expected_partner_prompt) do
         ['benefit book or notice of entitlement or letter from Jobcentre Plus ' \

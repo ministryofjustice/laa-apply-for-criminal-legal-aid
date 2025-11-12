@@ -36,6 +36,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       relationship_to_owner_of_usual_home_address: nil,
       confirm_dwp_result: 'no',
       benefit_check_result: false,
+      dwp_response: 'Undetermined',
       will_enter_nino: nil,
       has_benefit_evidence: 'yes',
       confirm_details: 'yes',
@@ -100,6 +101,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           relationship_to_partner: relationship_to_partner,
           relationship_status: relationship_status,
           separation_date: nil,
+          dwp_response: 'Undetermined',
         },
         partner: nil,
       }
@@ -139,6 +141,12 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
 
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#generate' do
+    before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+    end
+
     context 'without partner' do
       let(:has_partner) { 'no' }
       let(:relationship_to_partner) { nil }
@@ -190,6 +198,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
         )
       end
 
@@ -228,6 +237,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
           is_included_in_means_assessment: true
         }
 
@@ -272,6 +282,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
           has_benefit_evidence: nil,
           confirm_details: nil,
           confirm_dwp_result: nil,
+          dwp_response: nil,
         )
       end
 

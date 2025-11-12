@@ -22,22 +22,37 @@ module DWP
     attr_reader :crime_application, :person
 
     def benefit_check_status
-      return BenefitCheckStatus::NO_CHECK_NO_NINO.to_s if nino_forthcoming?
-      return undetermined_status if dwp_undetermined
       return BenefitCheckStatus::NO_CHECK_REQUIRED.to_s if benefit_check_subject.benefit_type == 'none'
+      return BenefitCheckStatus::NO_CHECK_NO_NINO.to_s if nino_forthcoming?
       return BenefitCheckStatus::CHECKER_UNAVAILABLE.to_s if checker_down
+      return BenefitCheckStatus::UNDETERMINED.to_s if undetermined
+      return BenefitCheckStatus::NO_RECORD_FOUND.to_s if not_in_receipt
 
-      BenefitCheckStatus::CONFIRMED.to_s if benefit_check_subject.benefit_check_result
+      BenefitCheckStatus::CONFIRMED.to_s if confirmed
     end
 
-    def undetermined_status
-      return BenefitCheckStatus::UNDETERMINED.to_s if benefit_evidence_forthcoming?
+    def undetermined
+      unless FeatureFlags.dwp_undetermined.enabled?
+        return benefit_check_subject.confirm_dwp_result == 'no' && benefit_evidence_forthcoming?
+      end
 
-      BenefitCheckStatus::NO_RECORD_FOUND.to_s if means_assessment_as_benefit_evidence?
+      benefit_check_subject.dwp_response == 'Undetermined' ||
+        (benefit_check_subject.dwp_response.nil? && benefit_check_subject.confirm_dwp_result == 'no' &&
+          benefit_evidence_forthcoming?)
     end
 
-    def dwp_undetermined
-      benefit_check_subject.confirm_dwp_result == 'no'
+    def not_in_receipt
+      unless FeatureFlags.dwp_undetermined.enabled?
+        return benefit_check_subject.confirm_dwp_result == 'no' && means_assessment_as_benefit_evidence?
+      end
+
+      benefit_check_subject.dwp_response == 'No' ||
+        (benefit_check_subject.dwp_response.nil? && benefit_check_subject.confirm_dwp_result == 'no' &&
+          means_assessment_as_benefit_evidence?)
+    end
+
+    def confirmed
+      benefit_check_subject.benefit_check_result
     end
 
     def checker_down
