@@ -54,6 +54,8 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
+      check_details_client: Check client details
+      check_details_partner: Check partner details
     contact:
       call_charges: Find out about call charges
       case_enquiries: Case enquiries
@@ -118,7 +120,9 @@ en:
       steps_client_contact_details_form:
         correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
-        heading: DWP records show that %{subject} does not receive a passporting benefit
+        heading: DWP records show that %{subject} does not receive a passporting benefit. Is this correct?
+        # CRIMAPP-1975 remove once feature released
+        old_heading: DWP records show that %{subject} does not receive a passporting benefit
         confirm_dwp_result: Are the DWP records correct?
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
@@ -140,6 +144,8 @@ en:
         cannot_check_dwp_status_subheading: This means we cannot check %{subject}'s passporting benefit.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: DWP records show that %{subject} receives a passporting benefit
+      steps_dwp_cannot_match_details_form:
+        cannot_match_details: DWP cannot match the details you entered for %{subject}
       steps_case_has_case_concluded_form:
         has_case_concluded: Has the case concluded?
       steps_case_is_preorder_work_claimed_form:
@@ -713,11 +719,13 @@ en:
           "yes": I will enter the National Insurance number now
           "no": I will enter the National Insurance number later
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
         confirm_dwp_result_options:
           "yes": "Yes"
           "no": No, they receive a passporting benefit
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": "Yes"
