@@ -317,6 +317,7 @@ except: [:destroy]
 
   resource :application_searches, path: 'application-searches', only: [:new] do
     post :search, on: :collection
+    get :search, on: :collection
   end
 
   # catch-all route

@@ -42,7 +42,7 @@ class ApplicationSearchesController < ApplicationController
   end
 
   def set_filter
-    @filter = ApplicationSearchFilter.new(search_text: search_params[:filter][:search_text],
+    @filter = ApplicationSearchFilter.new(search_text: search_params.dig(:filter, :search_text),
                                           status: %w[submitted returned],
                                           office_code: current_office_code)
   end
