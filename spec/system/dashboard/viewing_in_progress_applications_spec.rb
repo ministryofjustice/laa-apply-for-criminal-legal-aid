@@ -34,6 +34,12 @@ RSpec.describe 'Viewing In Progress Criminal Legal Aid applications' do
       end
     end
 
+    it 'preserves the locale when sorting' do
+      click_link 'Cymraeg'
+      click_button 'Enw'
+      expect(find(:element, 'aria-sort': 'ascending')).to have_text 'Enw'
+    end
+
     context 'when there are more than 30 records' do
       let(:number_of_records) { Kaminari.config.default_per_page + 1 }
 

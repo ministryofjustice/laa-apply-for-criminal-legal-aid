@@ -62,17 +62,17 @@ module DataTable
     end
 
     def sorted_params
-      return sorting_params unless filter
-
-      { filter: filter.params }.merge(sorting_params)
+      {
+        locale: I18n.locale,
+        sorting: sorting_params,
+        filter: filter&.params
+      }.compact
     end
 
     def sorting_params
       {
-        sorting: {
-          sort_by: colname,
-          sort_direction: sorting.reverse_direction
-        }
+        sort_by: colname,
+        sort_direction: sorting.reverse_direction
       }
     end
 
