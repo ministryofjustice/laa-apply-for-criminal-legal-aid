@@ -54,13 +54,14 @@ cy:
       sign_in: Mewngofnodi
       find_address: Dod o hyd i gyfeiriad
       try_again: Rhoi cynnig arall arni
-      check_details_client: Gwiriwch fanylion y cleient
-      check_details_partner: Gwiriwch fanylion partner
+      check_details_client: Gwirio manylion y cleient
+      check_details_partner: Gwirio manylion y partner
     contact:
       call_charges: Gwybodaeth am gostau galwadau
       case_enquiries: Ymholiadau achos
       case_enquiries_subheading: Ar gyfer ymholiadau am geisiadau am gymorth cyfreithiol troseddol.
       contact_us: Cysylltu â ni
+      criminal_legal_aid_manual: Criminal legal aid manual
       email: E-bost
       email_response_time: Ein nod yw ymateb o fewn 5 diwrnod gwaith.
       extension_option_two: opsiwn 2
@@ -145,7 +146,7 @@ cy:
       steps_dwp_benefit_check_result_form:
         benefit_check_result: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos bod %{subject} yn cael budd-dal pasbortio
       steps_dwp_cannot_match_details_form:
-        cannot_match_details: Ni all yr Adran Gwaith a Phensiynau gyfateb y manylion rydych chi wedi'u darparu ar gyfer y %{subject}
+        cannot_match_details: Ni all DWP gyfateb y manylion a roesoch ar gyfer %{subject}
       steps_case_has_case_concluded_form:
         has_case_concluded: Ydy'r achos wedi dod i ben?
       steps_case_is_preorder_work_claimed_form:
