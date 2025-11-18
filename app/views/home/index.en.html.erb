@@ -5,8 +5,7 @@
     <%= render partial: 'shared/flash_banner' %>
 
     <h1 class="govuk-heading-xl"><%= service_name %></h1>
-    <p class="govuk-body">This service is available Monday to Friday, 7am to 7pm.</p>
-    <p class="govuk-body">Use this service to apply for criminal legal aid.</p>
+    <p class="govuk-body">This service is available from 7am until 9:30pm.</p>
     <%= button_to provider_entra_omniauth_authorize_path, method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
                   data: { module: 'govuk-button' }, role: 'button', draggable: false do %>
@@ -15,5 +14,7 @@
         <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
       </svg>
     <% end %>
+
+    <p class="govuk-body">Find out what you’ll need to apply in the <%= govuk_link_to(t('helpers.contact.criminal_legal_aid_manual'), Settings.criminal_legal_aid_manual) %> (PDF). Go to section 3: Applying for criminal legal aid.</p>
   </div>
 </div>

@@ -12,7 +12,7 @@ RSpec.describe Evidence::Ruleset::Base do
   end
 
   describe '#initialize' do
-    it 'shoud be used as abstract class' do
+    it 'is used as an abstract class' do
       expect { described_class.new(crime_application).rules }.to raise_exception NotImplementedError
     end
 

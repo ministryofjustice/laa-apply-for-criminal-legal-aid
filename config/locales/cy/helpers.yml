@@ -39,8 +39,8 @@ cy:
       land: tir
   helpers:
     back_link: Yn ôl
-    back_to_portal: Yn ôl i Borth Ar-lein yr Asiantaeth Cymorth Cyfreithiol
     back_to_applications: Yn ôl i'ch ceisiadau
+    important: Pwysig
     submit:
       clear: Clirio
       search: Chwilio
@@ -52,13 +52,16 @@ cy:
       save_and_submit_post_submission_evidence: Cadw a chyflwyno tystiolaeth
       save_cookie_settings: Cadw’r gosodiadau cwcis
       sign_in: Mewngofnodi
-      find_address: Dod i hyd i gyfeiriad
+      find_address: Dod o hyd i gyfeiriad
       try_again: Rhoi cynnig arall arni
+      check_details_client: Gwirio manylion y cleient
+      check_details_partner: Gwirio manylion y partner
     contact:
       call_charges: Gwybodaeth am gostau galwadau
       case_enquiries: Ymholiadau achos
       case_enquiries_subheading: Ar gyfer ymholiadau am geisiadau am gymorth cyfreithiol troseddol.
       contact_us: Cysylltu â ni
+      criminal_legal_aid_manual: Criminal legal aid manual
       email: E-bost
       email_response_time: Ein nod yw ymateb o fewn 5 diwrnod gwaith.
       extension_option_two: opsiwn 2
@@ -118,7 +121,9 @@ cy:
       steps_client_contact_details_form:
         correspondence_address_type: I ble ddylen ni anfon gohebiaeth?
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
-        heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
+        heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio. Ydy hyn yn gywir?
+        # CRIMAPP-1975 remove once feature released
+        old_heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
         confirm_dwp_result: Ydy cofnodion yr Adran Gwaith a Phensiynau yn gywir?
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
@@ -135,17 +140,19 @@ cy:
         upload_evidence: Rhaid i chi lanlwytho tystiolaeth bod %{subject} yn cael budd-dal pasbortio.
       steps_dwp_cannot_check_benefit_status_partner_form: *CANNOT_CHECK_BENEFIT_STATUS_LEGEND
       steps_dwp_cannot_check_dwp_status_form:
-        cannot_check_dwp_status_page_title: Yn anffodus, does dim modd i ni wirio gwybodaeth %{subject} gyda’r Adran Gwaith a Phensiynau
-        cannot_check_dwp_status_heading: Yn anffodus, does dim modd i ni wirio gwybodaeth %{subject} gyda’r Adran Gwaith a Phensiynau
+        cannot_check_dwp_status_page_title: Yn anffodus, nid yw’r gwasanaeth DWP ar gael
+        cannot_check_dwp_status_heading: Yn anffodus, nid yw’r gwasanaeth DWP ar gael
         cannot_check_dwp_status_subheading: Mae hyn yn golygu nad ydym yn gallu gwirio budd-dal pasbortio %{subject}.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos bod %{subject} yn cael budd-dal pasbortio
+      steps_dwp_cannot_match_details_form:
+        cannot_match_details: Ni all DWP gyfateb y manylion a roesoch ar gyfer %{subject}
       steps_case_has_case_concluded_form:
         has_case_concluded: Ydy'r achos wedi dod i ben?
       steps_case_is_preorder_work_claimed_form:
         is_preorder_work_claimed: Ydych chi'n bwriadu hawlio gwaith cyn-archebu?
       steps_case_is_client_remanded_form:
-        is_client_remanded: Oes llys wedi eich remandio yn y ddalfa?
+        is_client_remanded: Oes llys wedi remandio eich cleient yn y ddalfa?
       steps_case_charges_form:
         date_from: Dyddiad cychwyn %{index}
         date_to: Dyddiad gorffen %{index} (dewisol)
@@ -193,6 +200,7 @@ cy:
         before_or_after_tax: Ydy hyn cyn neu ar ôl treth?
         frequency: Pa mor aml maen nhw'n cael y taliad hwn?
       steps_income_client_deductions_form:
+        deductions: Didyniadau
         income_tax:
           frequency: Pa mor aml mae hyn yn cael ei ddidynnu?
         national_insurance:
@@ -422,7 +430,7 @@ cy:
       steps_client_appeal_reference_number_form:
         appeal_reference_number: Mae angen naill ai ID MAAT neu rif cyflwyno unigryw (USN) eich cleient.
       steps_client_contact_details_form:
-        welsh_translation: Fe’i hanfonir hefyd yn Saesneg. O dan Ddeddf yr Iaith Gymraeg, bydd rhywfaint o ohebiaeth yn cael ei hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
+        requested_welsh_correspondence: Fe’i hanfonir hefyd yn Saesneg. O dan Ddeddf yr Iaith Gymraeg, bydd rhywfaint o ohebiaeth yn cael ei hanfon yn awtomatig yn Gymraeg os yw’r gwrandawiad mewn rhai llysoedd yng Nghymru.
       steps_shared_nino_form:
         has_arc_or_nino: Mae ar eu cerdyn Yswiriant Gwladol, eu llythyr budd-daliadau, eu slip cyflog neu eu P60. Er enghraifft, ‘QQ 12 34 56 C’.
         nino: Er enghraifft, QQ 12 34 56 C
@@ -446,7 +454,8 @@ cy:
           "no": Os nad oes gennych chi dystiolaeth, bydd angen i chi roi gwybod i ni am incwm %{subject}.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
-        next_steps_label: "Gallwch barhau â’r cais hwn a naill ai:"
+        next_steps_label_html: |
+          Gallwch chi <button type="submit" class="app-button--link">ceisiwch eto nawr</button>, neu barhau â’r cais hwn a naill ai:
         next_steps_evidence: rhoi tystiolaeth o fudd-dal pasbortio os oes ar gael
         next_steps_client_check: rhoi manylion am incwm eich cleient
         next_steps_partner_check: rhoi manylion am incwm eich cleient a’u partner
@@ -622,7 +631,7 @@ cy:
         other_names: Ydyn nhw’n cael eu hadnabod wrth enwau eraill? (dewisol)
       steps_client_case_type_form:
         case_type_options:
-          summary_only: Diannod yn Unig
+          summary_only: Diannod yn unig
           either_way: Y naill ffordd neu'r llall
           indictable: Ditiadwy
           already_in_crown_court: Treial yn Llys y Goron yn barod
@@ -664,6 +673,7 @@ cy:
           home_address: Yr un fath â’r cyfeiriad cartref arferol
           providers_office_address: Swyddfa'r darparwr
           other_address: Rhywle arall
+        requested_welsh_correspondence: Ticiwch i ohebiaeth gael ei hanfon yn Gymraeg
       steps_client_relationship_status_form:
         relationship_status_options:
           single: Sengl
@@ -1087,7 +1097,7 @@ cy:
         frequency_options: *frequency_options
       steps_outgoings_rent_form:
         amount:
-          one: Faint o rent mae % %{subject} yn ei dalu ar ôl tynnu'r Budd-dal Tai?
+          one: Faint o rent mae %{subject} yn ei dalu ar ôl tynnu'r Budd-dal Tai?
           other: Faint o rent mae %{subject} yn ei dalu ar ôl tynnu’r Budd-dal Tai?
         frequency_options: *frequency_options
       steps_outgoings_board_and_lodging_form:
@@ -1105,7 +1115,7 @@ cy:
         pays_council_tax_options: *YESNO
         amount: Faint maen nhw'n ei dalu bob blwyddyn?
       steps_outgoings_income_tax_rate_form:
-        income_tax_rate_above_threshold_options: Faint maen nhw'n ei dalu bob blwyddyn?
+        income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_partner_income_tax_rate_form:
         partner_income_tax_rate_above_threshold_options: *YESNO
       steps_outgoings_outgoings_payments_form:

@@ -19,7 +19,7 @@ RSpec.describe Steps::Capital::InvestmentTypeForm do
   describe '#investment_type' do
     subject(:investment_type) { form.investment_type }
 
-    context 'when the quesiton has not been answered' do
+    context 'when the question has not been answered' do
       before { allow(capital).to receive(:has_no_investments).and_return(nil) }
 
       it { is_expected.to be_nil }

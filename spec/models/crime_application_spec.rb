@@ -343,5 +343,19 @@ RSpec.describe CrimeApplication, type: :model do
           ))
       end
     end
+
+    context 'when the Datastore API fails on creation' do
+      before do
+        stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
+          .to_return(status: 500, body: '{}', headers: {})
+      end
+
+      it 'rolls back the transaction' do
+        expect {
+          described_class.create!
+        }.to(raise_error(DatastoreApi::Errors::ServerError)
+         .and(not_change(described_class, :count)))
+      end
+    end
   end
 end

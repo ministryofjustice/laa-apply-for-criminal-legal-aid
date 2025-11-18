@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
-  revision: 033dce9a4bcad554fc4fde2f3296ce893f3feecd
-  tag: v1.7.1
+  revision: d2efbe6d7e31969fced3301fd824b72d26f7e232
+  tag: v1.7.6
   specs:
-    laa-criminal-legal-aid-schemas (1.7.1)
+    laa-criminal-legal-aid-schemas (1.7.6)
       dry-schema (~> 1.13)
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
@@ -216,7 +216,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.21)
-    govuk_design_system_formbuilder (5.7.0)
+    govuk_design_system_formbuilder (5.11.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -575,7 +575,7 @@ DEPENDENCIES
   faraday (~> 2.13)
   faraday-retry
   govuk-components
-  govuk_design_system_formbuilder
+  govuk_design_system_formbuilder (~> 5.11)
   jbuilder (~> 2.13.0)
   jsbundling-rails (~> 1.3)
   kaminari

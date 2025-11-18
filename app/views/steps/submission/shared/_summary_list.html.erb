@@ -6,7 +6,7 @@
 
           if section.editable?
             row.with_action(
-              text: 'Change',
+              text: I18n.t('summary.dictionary.change'),
               href: answer.change_path,
               visually_hidden_text: answer.visually_hidden_action_text
             )

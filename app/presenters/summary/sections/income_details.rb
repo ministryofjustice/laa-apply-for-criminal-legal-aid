@@ -33,7 +33,11 @@ module Summary
       private
 
       def income_above_threshold_prefix
-        include_partner_in_means_assessment? ? 'Joint annual income' : 'Income'
+        if include_partner_in_means_assessment?
+          I18n.t('summary.questions.income_above_threshold.joint_annual_income')
+        else
+          I18n.t('summary.questions.income_above_threshold.income')
+        end
       end
 
       def property_ownership_type

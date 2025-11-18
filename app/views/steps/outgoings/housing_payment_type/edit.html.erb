@@ -10,7 +10,7 @@
      <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :housing_payment_type, legend: { text: legend_t(:housing_payment_type), tag: 'h1', size: 'xl' } do %>
         <% @form_object.choices.each_with_index do |option, index| %>
-          <%= f.govuk_radio_divider if option.none? %>
+          <%= f.govuk_radio_divider I18n.t('divider_text') if option.none? %>
           <%= f.govuk_radio_button :housing_payment_type, option, link_errors: index.zero? %>
         <% end %>
       <% end %>

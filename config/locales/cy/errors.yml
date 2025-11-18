@@ -11,6 +11,9 @@ cy:
     incomplete_records: Mae angen i chi ateb pob cwestiwn cyn i chi allu cyflwyno'r cais
     not_enrolled: Dydych chi ddim wedi cofrestru â'r gwasanaeth gwneud cais am gymorth cyfreithiol troseddol
     not_enrolled_subheading: "Ceisiwch fewngofnodi eto, neu os ydych chi'n meddwl nad yw hyn yn gywir, cysylltwch â'n cymorth technegol:"
+    contingent_liability:
+      title: Gwall Rhwymedigaeth Wrth Gefn
+      restriction: Ni allwch ddechrau, newid na chyflwyno ceisiadau gan ddefnyddio'r cyfrif hwn.
 
   activerecord:
     errors:
@@ -542,7 +545,7 @@ cy:
         steps/income/income_before_tax_form:
           attributes:
             income_above_threshold:
-              inclusion: Dewiswch ie os yw eu hincwm ar hyn o bryd yn fwy na ¬¨¬£12,475 y flwyddyn cyn treth
+              inclusion: Dewiswch ie os yw eu hincwm ar hyn o bryd yn fwy na £12,475 y flwyddyn cyn treth
         steps/income/frozen_income_savings_assets_form:
           &FROZEN_INCOME_ASSETS_VALIDATION
           attributes:

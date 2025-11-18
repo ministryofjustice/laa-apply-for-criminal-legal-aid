@@ -10,9 +10,11 @@
         <h1 class="govuk-heading-xl"><%= legend_t(:cannot_check_dwp_status_heading)%></h1>
         <p class="govuk-body"><%= legend_t(:cannot_check_dwp_status_subheading)%></p>
 
+      <%= step_form @form_object do %>
         <p class="govuk-body">
-          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_label') %>
+          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_label_html') %>
         </p>
+      <% end %>
 
         <ul class="govuk-list govuk-list--bullet">
           <li><%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_evidence') %></li>

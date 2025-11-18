@@ -131,11 +131,17 @@ en:
         edit:
           heading: DWP records show that %{subject} does not receive a passporting benefit
           page_title: Benefit check result
+          yes_continue: Yes, continue
+          no_link: No, they do receive a passporting benefit
       partner_confirm_result: *CONFIRM_RESULT_HEADING
       confirm_details:
         edit:
           page_title: Confirm %{subject} details
           heading: Check %{subject} details
+      cannot_match_details:
+        edit:
+          page_title: Cannot match details
+          heading: DWP cannot match the details you entered for %{subject}
 
     address:
       lookup:
@@ -718,6 +724,7 @@ en:
       more_information:
         edit:
           page_title: More information
+          heading: Other relevant information
       review:
         edit:
           page_title: Review the application

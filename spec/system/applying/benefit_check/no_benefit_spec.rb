@@ -1,10 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran' do
+RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is run' do
   include_context 'when logged in'
 
-  describe 'Submitting an application where the benefit check result changes from undetermined to confirmed' do
+  describe 'Submitting an application where the client benefit check result is `No`' do
     before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
+      }
+
+      # ClamAV is available
+      allow(Open3).to receive(:capture3).and_return ['ClamAV', nil]
+
       # applications
       click_link('Start an application')
       choose('New application')
@@ -15,8 +22,8 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
 
       # steps/client/details
       fill_in('First name', with: 'Jo')
-      fill_in('Last name', with: 'WALKER')
-      fill_date('What is their date of birth?', with: Date.new(1980, 0o1, 10))
+      fill_in('Last name', with: 'BROWN')
+      fill_date('What is their date of birth?', with: Date.new(1986, 0o7, 0o1))
       save_and_continue
 
       # steps/client/is-application-means-tested
@@ -42,7 +49,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
 
       # steps/client/nino
       choose_answer('Does your client have a National Insurance number?', 'Yes')
-      fill_in('What is their National Insurance number?', with: 'JA293483A')
+      fill_in('What is their National Insurance number?', with: 'PA435162A')
       save_and_continue
 
       # steps/client/does-client-have-partner
@@ -59,11 +66,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
       save_and_continue
 
       # steps/dwp/confirm-result
-      choose_answer('Are the DWP records correct?', 'No, they receive a passporting benefit')
-      save_and_continue
-
-      # steps/dwp/confirm-details
-      choose_answer('Are these details correct?', 'Yes')
+      click_link('No, they do receive a passporting benefit')
       save_and_continue
 
       # steps/dwp/has-benefit-evidence
@@ -112,9 +115,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
       save_and_continue
 
       # steps/evidence/upload
-      # to bypass evidence validation requirements
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive_messages(validate: true,
-                                                                                      evidence_complete?: true)
+      upload_evidence_file('test.csv')
       save_and_continue
 
       # steps/submission/more-information
@@ -123,60 +124,9 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
 
       # steps/submission/review
       expect(page).to have_content('Passporting benefit?Universal Credit')
-      expect(page).to have_content('Passporting benefit check outcomeNo match - check details are correct')
-      expect(page).to have_content('Confirmed details correct?Yes')
-      expect(page).to have_content('Evidence can be provided?Yes')
-
-      # Redo passporting benefit check to get confirmed result
-      within('.govuk-summary-card__title-wrapper', text: 'Passporting benefit check') do
-        click_link('Change')
-      end
-
-      # steps/dwp/benefit-type
-      mock_benefit_check('Yes')
-      save_and_continue
-
-      # steps/dwp/benefit-check-result
-      save_and_continue
-
-      # steps/case/urn
-      save_and_continue
-
-      # steps/case/has-the-case-concluded
-      save_and_continue
-
-      # steps/case/has-court-remanded-client-in-custody
-      save_and_continue
-
-      # steps/case/charges-summary
-      choose_answer('Do you want to add another offence?', 'No')
-      save_and_continue
-
-      # steps/case/has-codefendants
-      save_and_continue
-
-      # steps/case/hearing-details
-      save_and_continue
-
-      # steps/case/ioj
-      save_and_continue
-
-      # steps/evidence/upload
-      # to bypass evidence validation requirements
-      allow_any_instance_of(SupportingEvidence::AnswersValidator).to receive_messages(validate: true,
-                                                                                      evidence_complete?: true)
-      save_and_continue
-
-      # steps/submission/more-information
-      choose_answer('Do you want to add any other information?', 'No')
-      save_and_continue
-
-      # steps/submission/review
-      # Assert that benefit check result has changed
-      expect(page).to have_content('Passporting benefit?Universal Credit')
-      expect(page).to have_content('Passporting benefit check outcomeConfirmed')
+      expect(page).to have_content('Passporting benefit check outcomeNo record of passporting benefit found')
       expect(page).not_to have_content('Confirmed details correct?Yes')
-      expect(page).not_to have_content('Evidence can be provided?Yes')
+      expect(page).to have_content('Evidence can be provided?Yes')
       save_and_continue
 
       # steps/submission/declaration
@@ -194,10 +144,11 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is re-ran'
           body = JSON.parse(req.body)['application']
           body['client_details']['applicant']['benefit_type'] == 'universal_credit' &&
           body['client_details']['applicant']['confirm_details'].nil? &&
-          body['client_details']['applicant']['has_benefit_evidence'].nil? &&
+          body['client_details']['applicant']['has_benefit_evidence'] == 'yes' &&
           body['client_details']['applicant']['confirm_dwp_result'].nil? &&
-          body['client_details']['applicant']['benefit_check_result'] == true &&
-          body['client_details']['applicant']['benefit_check_status'] == 'confirmed'
+          body['client_details']['applicant']['benefit_check_result'] == false &&
+          body['client_details']['applicant']['benefit_check_status'] == 'no_record_found' &&
+          body['client_details']['applicant']['dwp_response'] == 'No'
         }
       ).to have_been_made.once
     end
