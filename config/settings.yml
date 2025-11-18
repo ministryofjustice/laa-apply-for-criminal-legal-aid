@@ -25,7 +25,7 @@ feature_flags:
   dwp_undetermined:
     local: true
     test: false
-    staging: false
+    staging: true
     preprod: false
     production: false
 
