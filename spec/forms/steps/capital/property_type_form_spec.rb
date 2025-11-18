@@ -19,7 +19,7 @@ RSpec.describe Steps::Capital::PropertyTypeForm do
   describe '#property_type' do
     subject(:property_type) { form.property_type }
 
-    context 'when the quesiton has not been answered' do
+    context 'when the question has not been answered' do
       before { allow(capital).to receive(:has_no_properties).and_return(nil) }
 
       it { is_expected.to be_nil }

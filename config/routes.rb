@@ -161,6 +161,7 @@ Rails.application.routes.draw do
         edit_step :confirm_result
         edit_step :partner_confirm_result
         edit_step :confirm_details
+        edit_step :cannot_match_details
       end
 
       namespace :address do
@@ -266,7 +267,7 @@ except: [:destroy]
 
       namespace :capital do
         edit_step :which_assets_owned, alias: :property_type
-        edit_step :usual_property_details if FeatureFlags.property_ownership_validation.enabled?
+        edit_step :usual_property_details
         crud_step :residential_property, alias: :residential_property, param: :property_id
         crud_step :commercial_property, alias: :commercial_property, param: :property_id
         crud_step :land, alias: :land, param: :property_id

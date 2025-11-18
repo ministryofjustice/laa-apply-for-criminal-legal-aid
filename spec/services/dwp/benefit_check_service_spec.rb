@@ -101,16 +101,47 @@ RSpec.describe DWP::BenefitCheckService do
             exception, hash_including(handled: true)
           )
 
-          subject.passporting_benefit?(applicant)
+          subject.benefit_check_result(applicant)
         end
 
         it 'returns nil' do
-          expect(subject.passporting_benefit?(applicant)).to be_nil
+          expect(subject.benefit_check_result(applicant)).to be_nil
         end
       end
     end
   end
 
+  describe '.benefit_check_result' do
+    describe 'behaviour without mock' do
+      before do
+        allow_any_instance_of(described_class).to receive(:call).and_return({ benefit_checker_status: 'Yes' })
+      end
+
+      it 'calls an instance call method' do
+        expect(subject.benefit_check_result(applicant)).to eq('Yes')
+      end
+    end
+
+    describe 'behaviour with mock' do
+      let(:use_mock) { 'true' }
+
+      it 'returns the right parameters' do
+        expect(subject.benefit_check_result(applicant)).to eq('Yes')
+      end
+
+      context 'with matching data' do
+        let(:last_name) { 'Smith' }
+        let(:date_of_birth) { '1999/01/11'.to_date }
+        let(:nino) { 'NC123459A' }
+
+        it 'returns Yes' do
+          expect(subject.benefit_check_result(applicant)).to eq('Yes')
+        end
+      end
+    end
+  end
+
+  # CRIMAPP-1785 remove method + spec once feature is enabled
   describe '.passporting_benefit?' do
     describe 'behaviour without mock' do
       before do

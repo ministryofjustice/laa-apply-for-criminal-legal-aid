@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_27_134435) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_15_102332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -386,6 +386,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_27_134435) do
     t.string "confirm_dwp_result"
     t.string "arc"
     t.string "has_arc"
+    t.string "dwp_response"
+    t.string "preferred_correspondence_language"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 

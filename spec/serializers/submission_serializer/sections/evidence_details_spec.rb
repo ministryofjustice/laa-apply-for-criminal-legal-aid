@@ -12,7 +12,7 @@ RSpec.describe SubmissionSerializer::Sections::EvidenceDetails do
   end
 
   describe '#generate' do
-    context 'when evidence prompts availale' do
+    context 'when evidence prompts available' do
       let(:evidence_last_run_at) { DateTime.parse('2024-10-01 13:23:55.000000000 +0000') }
       let(:evidence_prompts) do
         [

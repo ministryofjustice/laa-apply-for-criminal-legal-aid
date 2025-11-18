@@ -45,6 +45,7 @@ en:
     currency:
       format:
         unit: '£'
+        precision: 2
 
   flash:
     success:

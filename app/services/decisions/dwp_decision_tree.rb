@@ -24,6 +24,8 @@ module Decisions
         after_partner_confirm_result
       when :confirm_details
         after_confirm_details
+      when :cannot_match_details
+        after_cannot_match_details
       else
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
@@ -33,7 +35,7 @@ module Decisions
     private
 
     def after_confirm_result
-      if form_object.confirm_dwp_result.yes?
+      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
         return edit(:partner_benefit_type) if include_partner_in_means_assessment?
 
         edit('steps/case/urn')
@@ -43,7 +45,7 @@ module Decisions
     end
 
     def after_partner_confirm_result
-      if form_object.confirm_dwp_result.yes?
+      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
         edit('steps/case/urn')
       else
         edit(:confirm_details)
@@ -117,6 +119,8 @@ module Decisions
         edit(:cannot_check_dwp_status)
       elsif person.benefit_check_result
         edit(:benefit_check_result)
+      elsif undetermined_result?(person)
+        edit(:cannot_match_details)
       else
         return edit(:partner_confirm_result) if person.type == 'Partner'
 
@@ -128,6 +132,10 @@ module Decisions
       person = benefit_check_subject
 
       determine_dwp_result_page(person)
+    end
+
+    def after_cannot_match_details
+      edit(:confirm_details)
     end
 
     def has_nino(person)
@@ -148,6 +156,12 @@ module Decisions
 
     def partner_is_recipient?
       partner&.has_passporting_benefit?
+    end
+
+    def undetermined_result?(person)
+      return person.dwp_response == 'Undetermined' if FeatureFlags.dwp_undetermined.enabled?
+
+      false
     end
   end
   # rubocop:enable Metrics/ClassLength

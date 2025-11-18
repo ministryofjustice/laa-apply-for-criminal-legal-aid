@@ -7,8 +7,11 @@ module Steps
       # Very basic validation to allow numeric and common telephone number symbols
       TEL_REGEXP = /\A[0-9#+()-.]{7,18}\z/
 
+      ADDITIONAL_CORRESPONDENCE_LANGUAGES = %w[cy].freeze
+
       attribute :telephone_number, :string
       attribute :correspondence_address_type, :value_object, source: CorrespondenceType
+      attribute :preferred_correspondence_language, :string
 
       validates :telephone_number,
                 format: { with: TEL_REGEXP },
@@ -17,8 +20,16 @@ module Steps
       validates :correspondence_address_type,
                 inclusion: { in: :choices }
 
+      validates :preferred_correspondence_language,
+                inclusion: { in: :language_choices },
+                allow_blank: true
+
       def telephone_number=(str)
         super(str.delete(' ')) if str
+      end
+
+      def language_choices
+        ADDITIONAL_CORRESPONDENCE_LANGUAGES
       end
 
       def choices

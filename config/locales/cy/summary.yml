@@ -249,6 +249,11 @@ cy:
       telephone_number:
         question: Ffôn
         absence_answer: *absence_none
+      requested_welsh_correspondence:
+        question: A ofynnwyd am ohebiaeth yn Gymraeg?
+        absence_answer: *absence_none
+        answers:
+          <<: *YESNO
       # END contact details section
 
       # BEGIN partner details section
@@ -291,7 +296,7 @@ cy:
           no_check_required: Dim angen gwiriad
           undetermined: Dim cyfatebiad - gwnewch yn siŵr bod y manylion yn gywir
           no_record_found: Heb ddod o hyd i gofnod o fudd-dal pasbortio
-          checker_unavailable: Doedd DWP ddim ar gael, gallwch roi cynnig arall arni
+          checker_unavailable: Nid oedd DWP ar gael
           no_check_no_nino: Heb wirio gan nad oes rhif Yswiriant Gwladol wedi'i ddarparu
       confirmed_details:
         question: Ydy'r manylion a gadarnhawyd yn gywir?
@@ -473,6 +478,8 @@ cy:
       # BEGIN income details section
       income_above_threshold:
         question: "%{prefix} mwy na £12,475 y flwyddyn cyn treth?"
+        income: Incwm
+        joint_annual_income: Incwm blynyddol ar y cyd
         answers:
           <<: *YESNO
       has_frozen_income_or_assets:

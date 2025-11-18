@@ -131,11 +131,17 @@ cy:
         edit:
           heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
           page_title: Canlyniad gwirio budd-daliadau
+          yes_continue: Ie, parhewch
+          no_link: Na, maen nhw’n cael budd-dal wedi’i awdurdodi
       partner_confirm_result: *CONFIRM_RESULT_HEADING
       confirm_details:
         edit:
           page_title: Cadarnhau manylion %{subject}
           heading: Gwirio manylion %{subject}
+      cannot_match_details:
+        edit:
+          page_title: Ni ellir cyfateb y manylion
+          heading: Ni all DWP gyfateb y manylion a roesoch ar gyfer %{subject}
 
     address:
       lookup:

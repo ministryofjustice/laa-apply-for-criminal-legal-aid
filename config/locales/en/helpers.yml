@@ -40,6 +40,7 @@ en:
   helpers:
     back_link: Back
     back_to_applications: Back to your applications
+    important: Important
     submit:
       clear: Clear
       search: Search
@@ -53,11 +54,14 @@ en:
       sign_in: Sign in
       find_address: Find address
       try_again: Try again
+      check_details_client: Check client details
+      check_details_partner: Check partner details
     contact:
       call_charges: Find out about call charges
       case_enquiries: Case enquiries
       case_enquiries_subheading: For enquiries about criminal legal aid applications.
       contact_us: Contact us
+      criminal_legal_aid_manual: Criminal legal aid manual
       email: Email
       email_response_time: We aim to respond within 5 working days.
       extension_option_two: option 2
@@ -117,7 +121,9 @@ en:
       steps_client_contact_details_form:
         correspondence_address_type: Where shall we send correspondence?
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_HEADING
-        heading: DWP records show that %{subject} does not receive a passporting benefit
+        heading: DWP records show that %{subject} does not receive a passporting benefit. Is this correct?
+        # CRIMAPP-1975 remove once feature released
+        old_heading: DWP records show that %{subject} does not receive a passporting benefit
         confirm_dwp_result: Are the DWP records correct?
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_HEADING
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_LEGEND
@@ -139,6 +145,8 @@ en:
         cannot_check_dwp_status_subheading: This means we cannot check %{subject}'s passporting benefit.
       steps_dwp_benefit_check_result_form:
         benefit_check_result: DWP records show that %{subject} receives a passporting benefit
+      steps_dwp_cannot_match_details_form:
+        cannot_match_details: DWP cannot match the details you entered for %{subject}
       steps_case_has_case_concluded_form:
         has_case_concluded: Has the case concluded?
       steps_case_is_preorder_work_claimed_form:
@@ -420,8 +428,6 @@ en:
         appeal_original_app_submitted: This is the case with the outcome your client wants to appeal.
       steps_client_appeal_reference_number_form:
         appeal_reference_number: We need either your client's MAAT ID or unique submission number (USN).
-      steps_client_contact_details_form:
-        welsh_translation: It will also be sent in English. Under the Welsh Language Act, some correspondence will be automatically sent in Welsh if the hearing is at certain Welsh courts.
       steps_shared_nino_form:
         has_arc_or_nino: It’s on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         nino: For example, QQ 12 34 56 C
@@ -445,7 +451,8 @@ en:
           "no": You'll need to tell us about %{subject}’s income if you do not have evidence.
       steps_dwp_has_benefit_evidence_partner_form: *HAS_BENEFIT_EVIDENCE_HINT
       steps_dwp_cannot_check_dwp_status_form:
-        next_steps_label: "You can continue with this application and either:"
+        next_steps_label_html: | 
+          You can <button type="submit" class="app-button--link">try again now</button>, or continue with the application and either:
         next_steps_evidence: provide evidence of a passporting benefit if available
         next_steps_client_check: provide details about your client's income
         next_steps_partner_check: provide details about your client's and partner's income
@@ -470,6 +477,8 @@ en:
         hearing_date: For example, 27 3 2024
       steps_case_first_court_hearing_form:
         first_court_hearing_name: Start typing to add a court. For example, Bristol Magistrates Court
+      steps_client_contact_details_form:
+        requested_welsh_correspondence: It will also be sent in English. Under the Welsh Language Act, some correspondence will be automatically sent in Welsh if the hearing is at certain Welsh courts.
       steps_case_ioj_form:
         loss_of_liberty_justification: *ioj_justification_hint
         suspended_sentence_justification: *ioj_justification_hint
@@ -663,6 +672,7 @@ en:
           home_address: Same as usual home address
           providers_office_address: Provider’s office
           other_address: Somewhere else
+        requested_welsh_correspondence: Tick for correspondence to be sent in Welsh
       steps_client_relationship_status_form:
         relationship_status_options:
           single: Single
@@ -710,11 +720,13 @@ en:
           "yes": I will enter the National Insurance number now
           "no": I will enter the National Insurance number later
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
       steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
         confirm_dwp_result_options:
           "yes": "Yes"
           "no": No, they receive a passporting benefit
       steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
+      # CRIMAPP-1975 remove once feature released START
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": "Yes"

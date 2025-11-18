@@ -1,6 +1,6 @@
 <% return unless application.funding_decision_missing? %>
 
-<%= govuk_notification_banner(title_text: t('.title')) do |nb| %>
+<%= govuk_notification_banner(title_text: t('helpers.important')) do |nb| %>
   <% nb.with_heading(text: t('.heading')) %>
   <p><%= t '.processed_on', on: l(application.reviewed_at) %></p>
   <p><%= t '.explanation' %></p>

@@ -159,8 +159,14 @@ data:
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
-                    <p class="govuk-body">You can use this service from 7am until 7pm.</p>
+                    <p class="govuk-body">You can use this service from 7am until 9:30pm.</p>
                     <p class="govuk-body">We saved your answers up to the last time you selected 'Save', before the service became unavailable.</p>
+                    
+                    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl">
+                    
+                    <h1 class="govuk-heading-l">Yn anffodus, nid yw’r gwasanaeth ar gael</h1>
+                    <p class="govuk-body">Gallwch ddefnyddio’r gwasanaeth hwn rhwng 7am a 9:30pm.</p>
+                    <p class="govuk-body">Fe wnaethon ni gadw eich atebion hyd at y tro diwethaf i chi ddewis ‘Cadw’, cyn i’r gwasanaeth beidio â bod ar gael.</p>
                 </div>
             </div>
             </main>

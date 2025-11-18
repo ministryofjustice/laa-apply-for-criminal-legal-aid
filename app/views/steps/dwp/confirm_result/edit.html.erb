@@ -1,28 +1,47 @@
 <% title t('.page_title') %>
 <% step_header %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= govuk_error_summary(@form_object) %>
-  </div>
-</div>
-
-<div class="govuk-grid-row app-inverted--card app-inverted-text govuk-!-margin-bottom-5">
+<% if FeatureFlags.dwp_undetermined.enabled? %>
+  <div class="govuk-grid-row app-inverted--card app-inverted-text">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0" id="dwp-confirm-result-desc">
-      <%= legend_t(:heading) %>
-    </h1>
-  </div>
-</div>
+      <h1 class="govuk-heading-l app-inverted-text" id="dwp-confirm-result-desc">
+        <%= legend_t(:heading) %>
+      </h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_collection_radio_buttons :confirm_dwp_result, @form_object.choices, :value,
-                                           inline: false,
-                                           legend: { 'aria-describedby': 'dwp-confirm-result-desc' } %>
+        <div class="govuk-button-group">
+          <%= f.button t('.yes_continue'), class: 'govuk-button app-button--m app-button--inverted' %>
 
-      <%= f.continue_button %>
+          <%= link_to t('.no_link'), edit_steps_dwp_has_benefit_evidence_path,
+                      class: 'app-link--inverted app-inverted-text' %>
+        </div>
     <% end %>
   </div>
 </div>
+<% else %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_error_summary(@form_object) %>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row app-inverted--card app-inverted-text govuk-!-margin-bottom-5">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l app-inverted-text govuk-!-margin-bottom-0" id="dwp-confirm-result-desc">
+        <%= legend_t(:old_heading) %>
+      </h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= step_form @form_object do |f| %>
+        <%= f.govuk_collection_radio_buttons :confirm_dwp_result, @form_object.choices, :value,
+                                             inline: false,
+                                             legend: { 'aria-describedby': 'dwp-confirm-result-desc' } %>
+
+        <%= f.continue_button %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
