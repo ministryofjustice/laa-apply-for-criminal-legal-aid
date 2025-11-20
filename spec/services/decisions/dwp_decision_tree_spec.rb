@@ -53,6 +53,12 @@ RSpec.describe Decisions::DWPDecisionTree do
   end
 
   context 'when dwp undetermined feature is disabled' do
+    before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
+    end
+
     let(:applicant) { double(Applicant, benefit_check_result: benefit_check_result, type: 'Applicant') }
     let(:benefit_check_result) { false }
 
