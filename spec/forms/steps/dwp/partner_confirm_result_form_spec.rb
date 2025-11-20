@@ -34,6 +34,12 @@ RSpec.describe Steps::DWP::PartnerConfirmResultForm do
   end
 
   context 'when dwp undetermined feature is disabled' do
+    before do
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
+    end
+
     let(:arguments) do
       {
         crime_application:,
