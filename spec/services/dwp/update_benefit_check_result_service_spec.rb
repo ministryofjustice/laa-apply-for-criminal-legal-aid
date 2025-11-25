@@ -47,6 +47,10 @@ RSpec.describe DWP::UpdateBenefitCheckResultService do
     before do
       allow(DWP::BenefitCheckService).to receive(:passporting_benefit?).with(applicant).and_return(benefit_check_result)
       allow(applicant).to receive(:update).and_return(true)
+
+      allow(FeatureFlags).to receive(:dwp_undetermined) {
+        instance_double(FeatureFlags::EnabledFeature, enabled?: false)
+      }
     end
 
     describe '.call' do
