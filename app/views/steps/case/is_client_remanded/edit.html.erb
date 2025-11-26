@@ -9,12 +9,7 @@
         <% @form_object.choices.each_with_index do |choice, index| %>
           <% if choice == YesNoAnswer::YES %>
             <%= f.govuk_radio_button :is_client_remanded, choice.value do %>
-              <%= f.govuk_date_field :date_client_remanded, maxlength_enabled: true,
-                                     segment_names: f.segment_names,
-                                     legend: {
-                                       text: t('.date_client_remanded',),
-                                       size: 's'
-                                     } %>
+              <%= f.date_input :date_client_remanded, legend: { text: t('.date_client_remanded',), size: 's' } %>
             <% end %>
           <% else %>
             <%= f.govuk_radio_button :is_client_remanded, choice.value, link_errors: index.zero? %>

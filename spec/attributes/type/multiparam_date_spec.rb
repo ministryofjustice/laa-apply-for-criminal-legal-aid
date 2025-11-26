@@ -33,9 +33,23 @@ RSpec.describe Type::MultiparamDate do
     let(:date) { Date.new(2008, 11, 22) }
 
     context 'and contains all needed parts' do
-      let(:value) { { 3 => date.day, 2 => date.month, 1 => date.year } }
+      context 'and the month is a digit' do
+        let(:value) { { 3 => date.day, 2 => date.month, 1 => date.year } }
 
-      it { expect(coerced_value).to eq(date) }
+        it { expect(coerced_value).to eq(date) }
+      end
+
+      context 'and the month is a full month name' do
+        let(:value) { { 3 => date.day, 2 => date.strftime('%B'), 1 => date.year } }
+
+        it { expect(coerced_value).to eq(date) }
+      end
+
+      context 'and the month is an abbreviated month name' do
+        let(:value) { { 3 => date.day, 2 => date.strftime('%b'), 1 => date.year } }
+
+        it { expect(coerced_value).to eq(date) }
+      end
     end
 
     context 'the parts do not represent a valid date (invalid month)' do

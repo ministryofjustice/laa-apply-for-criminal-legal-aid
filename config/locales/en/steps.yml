@@ -263,7 +263,7 @@ en:
           charge_label: What is the charge? (optional)
           hearing_court_name_label: Which court is hearing the case? (optional)
           hearing_date_legend: When is the next hearing? (optional)
-          hearing_date_hint: For example, 27 3 2007.
+          hearing_date_hint: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
       hearing_details:
         edit:
           page_title: Next hearing court details

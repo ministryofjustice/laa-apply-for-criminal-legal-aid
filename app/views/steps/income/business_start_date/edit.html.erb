@@ -7,11 +7,7 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <%= f.govuk_date_field :trading_start_date, maxlength_enabled: true,
-                             segment_names: f.segment_names,
-                              legend: {
-                                size: 'xl'
-                              } %>
+      <%= f.date_input :trading_start_date, legend: { size: 'xl' } %>
 
       <%= f.continue_button %>
     <% end %>
