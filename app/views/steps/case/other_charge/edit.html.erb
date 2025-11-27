@@ -9,11 +9,7 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_text_area :charge, label: { text: t('.charge_label'), size: 'm' }  %>
       <%= f.govuk_text_field :hearing_court_name, label: { text: t('.hearing_court_name_label'), size: 'm' }, autocomplete: 'off' %>
-      <%= f.govuk_date_field :next_hearing_date,
-                             segment_names: f.segment_names,
-                             maxlength_enabled: true,
-                             legend: { text: t('.hearing_date_legend') },
-                             hint: { text: t('.hearing_date_hint') } %>
+      <%= f.date_input :next_hearing_date, legend: { text: t('.hearing_date_legend') }, hint: { text: t('.hearing_date_hint') } %>
       <%= f.continue_button %>
     <% end %>
   </div>

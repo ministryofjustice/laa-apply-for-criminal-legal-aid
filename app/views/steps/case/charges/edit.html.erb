@@ -28,19 +28,9 @@
         <%= f.fields_for :offence_dates do |od| %>
           <% index = od.index + 1 %>
 
-          <%= od.govuk_date_field :date_from, maxlength_enabled: true,
-                                  segment_names: f.segment_names,
-                                  legend: {
-                                    text: t("helpers.legend.#{f.object_name}.date_from", index:),
-                                    size: 's'
-                                  } %>
+          <%= od.date_input :date_from, legend: { text: t("helpers.legend.#{f.object_name}.date_from", index:), size: 's' } %>
 
-          <%= od.govuk_date_field :date_to, maxlength_enabled: true,
-                                  segment_names: f.segment_names,
-                                  legend: {
-                                    text: t("helpers.legend.#{f.object_name}.date_to", index:),
-                                    size: 's'
-                                  } %>
+          <%= od.date_input :date_to, legend: { text: t("helpers.legend.#{f.object_name}.date_to", index:), size: 's' } %>
 
           <%= od.button t('.remove_button', index:), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
                         class: %w[govuk-button govuk-button--warning],

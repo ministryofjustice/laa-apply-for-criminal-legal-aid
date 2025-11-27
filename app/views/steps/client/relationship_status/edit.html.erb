@@ -12,12 +12,7 @@
 
           <% if choice == ClientRelationshipStatusType::SEPARATED %>
             <%= f.govuk_radio_button :relationship_status, choice.value do %>
-              <%= f.govuk_date_field :separation_date, maxlength_enabled: true,
-                                     segment_names: f.segment_names,
-                                      legend: {
-                                        text: t('.separation_date'),
-                                        size: 's', class: 'govuk-!-font-weight-regular'
-                                      } %>
+              <%= f.date_input :separation_date, legend: { text: t('.separation_date'), size: 's', class: 'govuk-!-font-weight-regular' } %>
             <% end %>
           <% else %>
             <%= f.govuk_radio_button :relationship_status, choice.value, link_errors: index.zero? %>
