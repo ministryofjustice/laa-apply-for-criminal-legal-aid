@@ -32,18 +32,23 @@ module Type
     private
 
     # Attempt to parse the month, which could be a digit or a month name
-    # Date::parse is quite tolerant of abbreviations of variable length and slight misspellings
     # Assumes value[2] to be the month value
     def normalize_month_of_date(value)
       normalized = value.dup
       month_value = value[2]
 
       begin
-        normalized[2] = month_value.to_i.nonzero? || Date.parse(month_value).month
+        normalized[2] = month_value.to_i.nonzero? || parse_month(month_value)
         normalized
       rescue StandardError
         value
       end
+    end
+
+    # Parse a full or abbreviated month name
+    # Relies on the correct locale being set when the value is non-English
+    def parse_month(month)
+      I18n.t('date.month_names').index(month.capitalize) || I18n.t('date.abbr_month_names').index(month.capitalize) || 0
     end
   end
 end

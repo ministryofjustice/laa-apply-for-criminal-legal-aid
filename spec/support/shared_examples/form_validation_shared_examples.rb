@@ -104,7 +104,7 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     end
   end
 
-  context 'when month is a full month name' do
+  context 'when month is a full month name in English' do
     let(:date) { { 3 => 25, 2 => 'december', 1 => 2020 } }
 
     it 'allows the month value' do
@@ -113,12 +113,34 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
     end
   end
 
-  context 'when month is an abbreviated month name' do
+  context 'when month is a full month name in Welsh' do
+    let(:date) { { 3 => 25, 2 => 'rhagfyr', 1 => 2020 } }
+
+    it 'allows the month value' do
+      I18n.with_locale(:cy) do
+        subject.validate
+        expect(subject.errors.added?(attribute_name, :invalid_month)).to be(false)
+      end
+    end
+  end
+
+  context 'when month is an abbreviated month name in English' do
     let(:date) { { 3 => 25, 2 => 'dec', 1 => 2020 } }
 
     it 'allows the month value' do
       subject.validate
       expect(subject.errors.added?(attribute_name, :invalid_month)).to be(false)
+    end
+  end
+
+  context 'when month is an abbreviated month name in Welsh' do
+    let(:date) { { 3 => 25, 2 => 'rha', 1 => 2020 } }
+
+    it 'allows the month value' do
+      I18n.with_locale(:cy) do
+        subject.validate
+        expect(subject.errors.added?(attribute_name, :invalid_month)).to be(false)
+      end
     end
   end
 
