@@ -11,7 +11,6 @@
             <%= f.govuk_radio_button :is_preorder_work_claimed, choice.value do %>
               <%= f.date_input :preorder_work_date, legend: { text: t('.preorder_work_date',), size: 's' } %>
               <%= f.govuk_text_area :preorder_work_details,
-                                    segment_names: f.segment_names,
                                     label: { hidden: true },
                                     'aria-live': 'polite',
                                     'aria-label': t('.preorder_work_details',) %>

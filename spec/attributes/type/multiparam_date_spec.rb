@@ -39,16 +39,36 @@ RSpec.describe Type::MultiparamDate do
         it { expect(coerced_value).to eq(date) }
       end
 
-      context 'and the month is a full month name' do
+      context 'and the month is a full month name in English' do
         let(:value) { { 3 => date.day, 2 => date.strftime('%B'), 1 => date.year } }
 
         it { expect(coerced_value).to eq(date) }
       end
 
-      context 'and the month is an abbreviated month name' do
+      context 'and the month is a full month name in Welsh' do
+        let(:value) { { 3 => date.day, 2 => I18n.t('date.month_names', locale: :cy)[date.month], 1 => date.year } }
+
+        it do
+          I18n.with_locale(:cy) do
+            expect(coerced_value).to eq(date)
+          end
+        end
+      end
+
+      context 'and the month is an abbreviated month name in English' do
         let(:value) { { 3 => date.day, 2 => date.strftime('%b'), 1 => date.year } }
 
         it { expect(coerced_value).to eq(date) }
+      end
+
+      context 'and the month is an abbreviated month name in Welsh' do
+        let(:value) { { 3 => date.day, 2 => I18n.t('date.abbr_month_names', locale: :cy)[date.month], 1 => date.year } }
+
+        it do
+          I18n.with_locale(:cy) do
+            expect(coerced_value).to eq(date)
+          end
+        end
       end
     end
 

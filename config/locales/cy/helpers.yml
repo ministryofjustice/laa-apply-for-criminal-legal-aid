@@ -420,12 +420,12 @@ cy:
         separation_date:
       steps_client_details_form:
         other_names: Mae hyn yn cynnwys enwau eraill neu lysenwau y gellir galw eich cleient.
-        date_of_birth: Er enghraifft, 27 3 2007.
+        date_of_birth: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_partner_details_form:
         other_names: Mae hyn yn cynnwys enwau eraill neu lysenwau y gellir eu galw.
-        date_of_birth: Er enghraifft, 27 3 2007.
+        date_of_birth: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_client_appeal_details_form:
-        appeal_lodged_date: Er enghraifft, 27 3 2007.
+        appeal_lodged_date: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
         appeal_original_app_submitted: Mae hyn yn wir am y canlyniad y mae eich cleient eisiau apelio yn ei erbyn.
       steps_client_appeal_reference_number_form:
         appeal_reference_number: Mae angen naill ai ID MAAT neu rif cyflwyno unigryw (USN) eich cleient.
@@ -464,20 +464,20 @@ cy:
       steps_case_urn_form:
         urn: Er enghraifft, ‘12 AB 3456789’.
       steps_case_has_case_concluded_form:
-        date_case_concluded: Er enghraifft, 27 3 2007.
+        date_case_concluded: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_case_is_preorder_work_claimed_form:
-        preorder_work_date: Er enghraifft, 27 3 2007.
+        preorder_work_date: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
         preorder_work_details: Rhowch fanylion am frys y gwaith
       steps_case_is_client_remanded_form:
-        date_client_remanded: Er enghraifft, 27 3 2007.
+        date_client_remanded: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_case_charges_form:
         offence_name: Dechreuwch deipio i ddewis trosedd, er enghraifft lladrad. Gallwch ychwanegu mwy yn nes ymlaen.
         offence_dates_attributes:
-          date_from: Er enghraifft, 27 3 2007.
+          date_from: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
           date_to: Gadewch yn wag os digwyddodd y trosedd ar un dyddiad
       steps_case_hearing_details_form:
         hearing_court_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys y Goron Caerdydd.
-        hearing_date: Er enghraifft, 27 3 2024
+        hearing_date: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_case_first_court_hearing_form:
         first_court_hearing_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys Ynadon Bryste
       steps_case_ioj_form:
@@ -518,7 +518,7 @@ cy:
         partner_self_assessment_tax_bill: Bydd hyn gan Gyllid a Thollau EF (CThEF).
         partner_self_assessment_tax_bill_amount: Rhowch '0' os nad oes dim.
       steps_income_lost_job_in_custody_form:
-        date_job_lost: Er enghraifft, 27 3 2007.
+        date_job_lost: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_income_income_payments_form:
         income_payments: Dewiswch bob un sy'n berthnasol.
         types_options:
@@ -548,7 +548,7 @@ cy:
       steps_income_business_type_form:
         business_type: Gallwch ychwanegu mwy yn nes ymlaen.
       steps_income_business_start_date_form:
-        trading_start_date: Er enghraifft, 27 3 2007.
+        trading_start_date: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_income_business_employees_form:
         has_employees: Nodwch a oes ganddyn nhw gyflogeion, heb gynnwys nhw eu hunain.
       steps_income_business_financials_form:

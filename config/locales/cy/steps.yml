@@ -263,7 +263,7 @@ cy:
           charge_label: Beth yw’r cyhuddiad? (dewisol)
           hearing_court_name_label: Pa lys sy'n gwrando'r achos? (dewisol)
           hearing_date_legend: Pryd mae'r gwrandawiad nesaf? (dewisol)
-          hearing_date_hint: Er enghraifft, 27 3 2007.
+          hearing_date_hint: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       hearing_details:
         edit:
           page_title: Manylion llys y gwrandawiad nesaf
