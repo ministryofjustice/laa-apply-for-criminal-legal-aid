@@ -17,9 +17,9 @@ RSpec.describe Steps::Case::ChargesForm do
   let(:offence_name) { 'Robbery' }
   let(:offence_dates_attributes) do
     {
-      '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
-      '1' => { 'date_from(3i)' => '11', 'date_from(2i)' => '07', 'date_from(1i)' => '2010' },
-      '2' => { 'date_from(3i)' => '10', 'date_from(2i)' => '02', 'date_from(1i)' => '2009' }
+      '0' => { 'date_from(3i)' => '03', 'date_from(2)' => '11', 'date_from(1i)' => '2000' },
+      '1' => { 'date_from(3i)' => '11', 'date_from(2)' => 'jul', 'date_from(1i)' => '2010' },
+      '2' => { 'date_from(3i)' => '10', 'date_from(2)' => '02', 'date_from(1i)' => '2009' }
     }
   end
 
@@ -30,11 +30,11 @@ RSpec.describe Steps::Case::ChargesForm do
       let(:offence_dates_attributes) do
         {
           '0' => {
-            'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '3000',
-            'date_to(3i)' => '03', 'date_to(2i)' => '11', 'date_to(1i)' => '2022'
+            'date_from(3i)' => '03', 'date_from(2)' => '11', 'date_from(1i)' => '3000',
+            'date_to(3i)' => '03', 'date_to(2)' => '11', 'date_to(1i)' => '2022'
           },
-          '1' => { 'date_from(3i)' => '', 'date_from(2i)' => '', 'date_from(1i)' => '' },
-          '2' => { 'date_from(3i)' => '03', 'date_from(2i)' => '13', 'date_from(1i)' => '2020' },
+          '1' => { 'date_from(3i)' => '', 'date_from(2)' => '', 'date_from(1i)' => '' },
+          '2' => { 'date_from(3i)' => '03', 'date_from(2)' => '13', 'date_from(1i)' => '2020' },
         }
       end
 
@@ -92,14 +92,14 @@ RSpec.describe Steps::Case::ChargesForm do
             '0' => {
               'id' => offence_dates[0].id.to_s,
               'date_from(3i)' => '03',
-              'date_from(2i)' => '11',
+              'date_from(2)' => '11',
               'date_from(1i)' => '2000',
               '_destroy' => '1'
             },
             '1' => {
               'id' => offence_dates[1].id.to_s,
               'date_from(3i)' => '01',
-              'date_from(2i)' => '05',
+              'date_from(2)' => '05',
               'date_from(1i)' => '2009'
             }
           }
@@ -124,11 +124,33 @@ RSpec.describe Steps::Case::ChargesForm do
         expect(charge_record).to receive(:update).with(
           {
             'offence_name' => 'Robbery',
-            :offence_dates_attributes => offence_dates_attributes,
+            :offence_dates_attributes => subject.offence_dates.map(&:attributes),
           }
         ).and_return(true)
 
         expect(subject.save).to be(true)
+      end
+
+      context 'when offence dates are provided in Welsh' do
+        let(:offence_dates_attributes) do
+          {
+            '0' => { 'date_from(3i)' => '03', 'date_from(2)' => 'tach', 'date_from(1i)' => '2000' },
+            '1' => { 'date_from(3i)' => '11', 'date_from(2)' => 'Rhagfyr', 'date_from(1i)' => '2010' },
+          }
+        end
+
+        it 'updates the record' do
+          I18n.with_locale(:cy) do
+            expect(charge_record).to receive(:update).with(
+              {
+                'offence_name' => 'Robbery',
+                :offence_dates_attributes => subject.offence_dates.map(&:attributes),
+              }
+            ).and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
       end
     end
   end
@@ -144,7 +166,7 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'if there are fewer than two offence dates' do
       let(:offence_dates_attributes) do
         {
-          '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
+          '0' => { 'date_from(3i)' => '03', 'date_from(2)' => '11', 'date_from(1i)' => '2000' },
         }
       end
 
@@ -156,8 +178,8 @@ RSpec.describe Steps::Case::ChargesForm do
     context 'if there two or more offence dates' do
       let(:offence_dates_attributes) do
         {
-          '0' => { 'date_from(3i)' => '03', 'date_from(2i)' => '11', 'date_from(1i)' => '2000' },
-          '1' => { 'date_from(3i)' => '11', 'date_from(2i)' => '07', 'date_from(1i)' => '2010' }
+          '0' => { 'date_from(3i)' => '03', 'date_from(2)' => '11', 'date_from(1i)' => '2000' },
+          '1' => { 'date_from(3i)' => '11', 'date_from(2)' => 'november', 'date_from(1i)' => '2010' }
         }
       end
 

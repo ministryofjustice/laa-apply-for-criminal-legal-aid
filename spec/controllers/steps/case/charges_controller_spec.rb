@@ -40,7 +40,7 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
           offence_dates_attributes: {
             '0' => {
               'date(3i)' => '10',
-              'date(2i)' => '10',
+              'date(2)' => '10',
               'date(1i)' => '2000',
               '_destroy' => '1',
               'id' => '123'
