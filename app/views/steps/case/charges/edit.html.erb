@@ -10,6 +10,8 @@
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
     <p class="govuk-caption-m govuk-!-margin-bottom-6"><%=t '.subheading' %></p>
 
+    <%= govuk_inset_text(text: t('.inset')) if I18n.locale == :cy %>
+
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <% suggestions_id = f.field_id(:offence_name, :field, :suggestions).tr('_', '-') %>
 

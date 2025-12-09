@@ -227,6 +227,7 @@ cy:
           add_button: Ychwanegu dyddiad arall
           remove_button: Tynnu dyddiad %{index}
           deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
+          inset: Rhestrir troseddau yn Saesneg gan fod Cymru a Lloegr yn rhannu'r un system gyfreithiol, gyda Saesneg fel y prif iaith.
         confirm_destroy:
           page_title: Cadarnhau dileu'r trosedd
           heading: Ydych chi’n siŵr eich bod chi eisiau dileu’r trosedd hwn?
@@ -268,9 +269,11 @@ cy:
         edit:
           page_title: Manylion llys y gwrandawiad nesaf
           heading: Y gwrandawiad llys nesaf
+          inset: Rhestrir llysoedd yn Saeseneg gan fod Cymru a Lloegr yn rhannu'r yn system gyfreithiol gyda Saesneg fel y prif iaith.
       first_court_hearing:
         edit:
           page_title: Gwrandawiad llys cyntaf
+          inset: Rhestrir llysoedd yn Saeseneg gan fod Cymru a Lloegr yn rhannu'r yn system gyfreithiol gyda Saesneg fel y prif iaith.
       ioj_passport:
         edit:
           page_title: Wedi pasbortio ar sail buddiannau cyfiawnder
