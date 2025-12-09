@@ -21,7 +21,7 @@ feature_flags:
     local: true
     staging: true
     preprod: true
-    production: false
+    production: true
   dwp_undetermined:
     local: true
     test: true

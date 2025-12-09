@@ -40,7 +40,7 @@ module Steps
       def persist!
         record.update(
           attributes.merge(
-            offence_dates_attributes:
+            offence_dates_attributes: offence_dates.map(&:attributes)
           )
         )
       end
