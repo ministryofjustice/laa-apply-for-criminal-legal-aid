@@ -8,7 +8,11 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_collection_select :first_court_hearing_name, Court.all, :name, :name,
                                     data: { module: 'accessible-autocomplete' },
-                                    options: { include_blank: true }, label: { tag: 'h1', size: 'xl' } %>
+                                    options: { include_blank: true }, label: { tag: 'h1', size: 'xl' } do |x| %>
+
+        <%= govuk_inset_text(text: t('.inset')) if I18n.locale == :cy %>
+
+      <% end %>
 
       <%= f.continue_button %>
     <% end %>
