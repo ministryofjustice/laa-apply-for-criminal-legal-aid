@@ -468,15 +468,15 @@ en:
       steps_case_is_client_remanded_form:
         date_client_remanded: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
       steps_case_charges_form:
-        offence_name: Start typing to select an offence, for example, robbery. You can add more later.
+        offence_name: Start typing to select an offence from the dropdown list or continue typing to enter manually.
         offence_dates_attributes:
           date_from: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
           date_to: Leave blank if the offence happened on a single date
       steps_case_hearing_details_form:
-        hearing_court_name: Start typing to add a court. For example, Cardiff Crown Court.
+        hearing_court_name: Start typing to select a court from the dropdown list or continue typing to enter manually.
         hearing_date: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
       steps_case_first_court_hearing_form:
-        first_court_hearing_name: Start typing to add a court. For example, Bristol Magistrates Court
+        first_court_hearing_name: Start typing to select a court from the dropdown list or continue typing to enter manually.
       steps_client_contact_details_form:
         requested_welsh_correspondence: It will also be sent in English. Under the Welsh Language Act, some correspondence will be automatically sent in Welsh if the hearing is at certain Welsh courts.
       steps_case_ioj_form:

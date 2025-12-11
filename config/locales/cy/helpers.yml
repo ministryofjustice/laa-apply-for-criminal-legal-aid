@@ -471,15 +471,15 @@ cy:
       steps_case_is_client_remanded_form:
         date_client_remanded: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_case_charges_form:
-        offence_name: Dechreuwch deipio i ddewis trosedd, er enghraifft lladrad. Gallwch ychwanegu mwy yn nes ymlaen.
+        offence_name: Dechreuwch deipio i ddewis trosedd o'r rhestr yn y gwymplen neu parhewch i deipio i nodi â llaw.
         offence_dates_attributes:
           date_from: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
           date_to: Gadewch yn wag os digwyddodd y trosedd ar un dyddiad
       steps_case_hearing_details_form:
-        hearing_court_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys y Goron Caerdydd.
+        hearing_court_name: Dechreuwch deipio i ddewis llys o'r rhestr yn y gwymplen neu parhewch i deipio i nodi â llaw.
         hearing_date: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
       steps_case_first_court_hearing_form:
-        first_court_hearing_name: Dechreuwch deipio i ychwanegu llys. Er enghraifft, Llys Ynadon Bryste
+        first_court_hearing_name: Dechreuwch deipio i ddewis llys o'r rhestr yn y gwymplen neu parhewch i deipio i nodi â llaw.
       steps_case_ioj_form:
         loss_of_liberty_justification: *ioj_justification_hint
         suspended_sentence_justification: *ioj_justification_hint
