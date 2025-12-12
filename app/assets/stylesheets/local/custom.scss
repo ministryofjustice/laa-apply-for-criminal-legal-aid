@@ -160,5 +160,5 @@ form.search {
 
 // Make the month input wider to accommodate month names
 .govuk-date-input__item input[id$="2"] {
-  @extend .govuk-input--width-5;
+  max-width: 7.3em;
 }
