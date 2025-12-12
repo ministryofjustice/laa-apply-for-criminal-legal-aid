@@ -153,7 +153,7 @@ en:
         is_preorder_work_claimed: Do you intend to claim pre-order work?
       steps_case_is_client_remanded_form:
         is_client_remanded: Has a court remanded your client in custody?
-      steps_case_charges_form:
+      steps_case_charges_dates_form:
         date_from: Start date %{index}
         date_to: End date %{index} (optional)
       steps_case_charges_summary_form:
@@ -469,6 +469,7 @@ en:
         date_client_remanded: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
       steps_case_charges_form:
         offence_name: Start typing to select an offence, for example, robbery. You can add more later.
+      steps_case_charges_dates_form:
         offence_dates_attributes:
           date_from: For example, 12 11 2007, 12 Nov 2007 or 12 November 2007.
           date_to: Leave blank if the offence happened on a single date

@@ -1,0 +1,37 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/flash_banner' %>
+
+    <%= govuk_error_summary(@form_object) %>
+
+    <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
+
+    <%= govuk_inset_text(text: t('.inset')) if I18n.locale == :cy %>
+
+    <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
+
+      <%= f.govuk_fieldset legend: { text: t('.offence_dates_fieldset_legend', offence_name: @form_object.record.offence_name).html_safe, class: 'govuk-!-font-weight-regular' } do %>
+        <%= f.fields_for :offence_dates do |od| %>
+          <% index = od.index + 1 %>
+
+          <%= od.date_input :date_from, legend: { text: t("helpers.legend.#{f.object_name}.date_from", index:), size: 's' } %>
+
+          <%= od.date_input :date_to, legend: { text: t("helpers.legend.#{f.object_name}.date_to", index:), size: 's' } %>
+
+          <%= od.button t('.remove_button', index:), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
+                        class: %w[govuk-button govuk-button--warning],
+                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+        <% end %>
+      <% end %>
+
+      <%= f.button t('.add_button'), type: :submit, name: :add_offence_date,
+                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
+                   data: { module: 'govuk-button' } %>
+
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

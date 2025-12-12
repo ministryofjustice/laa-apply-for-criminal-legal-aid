@@ -176,6 +176,7 @@ Rails.application.routes.draw do
         edit_step :has_court_remanded_client_in_custody, alias: :is_client_remanded
         edit_step :urn
         crud_step :charges, param: :charge_id
+        crud_step :charges_dates, param: :charge_id
         edit_step :charges_summary
         edit_step :has_codefendants
         edit_step :codefendants
