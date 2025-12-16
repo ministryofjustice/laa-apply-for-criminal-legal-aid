@@ -10,10 +10,14 @@ module Steps
       end
 
       def update
-        update_and_advance(ChargesDatesForm, record: charge_record, as: step_name)
+        update_and_advance(ChargesDatesForm, record: charge_record, as: step_name, flash: flash_msg)
       end
 
       private
+
+      def flash_msg
+        { success: t('.edit.deleted_flash') } if step_name.eql?(:delete_offence_date)
+      end
 
       def charge_record
         @charge_record ||= case_charges.find(params[:charge_id])

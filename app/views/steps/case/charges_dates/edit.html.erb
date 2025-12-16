@@ -9,8 +9,6 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
-    <%= govuk_inset_text(text: t('.inset')) if I18n.locale == :cy %>
-
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
 
       <%= f.govuk_fieldset legend: { text: t('.offence_dates_fieldset_legend', offence_name: @form_object.record.offence_name).html_safe, class: 'govuk-!-font-weight-regular' } do %>
