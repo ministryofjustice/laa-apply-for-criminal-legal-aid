@@ -134,7 +134,7 @@ RSpec.shared_examples 'a multiparam date validation' do |options|
   end
 
   context 'when month is an abbreviated month name in Welsh' do
-    let(:date) { { 3 => 25, 2 => 'rha', 1 => 2020 } }
+    let(:date) { { 3 => 25, 2 => 'rhag', 1 => 2020 } }
 
     it 'allows the month value' do
       I18n.with_locale(:cy) do
