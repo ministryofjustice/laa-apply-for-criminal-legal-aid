@@ -58,7 +58,14 @@ module ClientDetails
       return false if applicant.has_nino.blank? && applicant.has_arc.blank?
       return true if applicant.has_nino == 'no'
 
-      applicant.nino.present? || applicant.arc.present?
+      nino_complete? || applicant.arc.present?
+    end
+
+    def nino_complete?
+      # Supplying a NINO is not mandatory for Non means applications
+      return true if non_means_tested? && applicant.has_nino == 'yes'
+
+      applicant.nino.present?
     end
 
     def has_partner_complete?
