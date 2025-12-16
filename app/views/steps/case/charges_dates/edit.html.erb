@@ -11,8 +11,14 @@
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
 
-      <%= f.govuk_fieldset(legend: -> {tag.legend(safe_join([tag.strong(t('.offence_label')), ' ', @form_object.record.offence_name]),
-                           class: 'govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-regular')}) do %>
+      <%= f.govuk_fieldset(
+            legend: lambda do
+              tag.legend(
+                safe_join([tag.strong(t('.offence_label')), ' ', @form_object.record.offence_name]),
+                class: 'govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-regular'
+              )
+            end
+          ) do %>
         <%= f.fields_for :offence_dates do |od| %>
           <% index = od.index + 1 %>
 
