@@ -1,7 +1,6 @@
 module Steps
   module Case
     class ChargesDatesForm < Steps::BaseFormObject
-
       # transient attribute
       attr_accessor :offence_dates_attributes
 
@@ -42,7 +41,6 @@ module Steps
           )
         )
       end
-
     end
   end
 end
