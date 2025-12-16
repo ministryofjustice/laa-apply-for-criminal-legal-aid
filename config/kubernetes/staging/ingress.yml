@@ -172,6 +172,11 @@ metadata:
       SecRule REQUEST_URI "@beginsWith /providers/auth/entra/callback" \
         "id:1001,phase:1,pass,nolog,\
         ctl:ruleRemoveTargetByTag=attack-injection-php;ARGS:code"
+      SecRule REQUEST_URI "@endsWith /documents" \
+        "id:1002,phase:2,pass,nolog,\
+        ctl:ruleRemoveById=921110,\
+        ctl:ruleRemoveById=920120,\
+        ctl:ruleRemoveById=933150"
       SecRuleUpdateTargetByTag attack-lfi !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-rce !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-sqli !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
