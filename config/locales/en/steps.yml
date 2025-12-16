@@ -236,7 +236,7 @@ en:
         edit:
           page_title: When did the offence happen?
           heading: When did the offence happen?
-          offence_dates_fieldset_legend: "<strong>Offence:</strong> %{offence_name}"
+          offence_label: "Offence:"
           add_button: Add another date for this offence
           remove_button: Remove
           deleted_flash: The offence date has been deleted
