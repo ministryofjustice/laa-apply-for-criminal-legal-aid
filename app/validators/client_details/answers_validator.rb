@@ -62,7 +62,7 @@ module ClientDetails
     end
 
     def nino_complete?
-      # Supplying a NINO is not mandatory for Non means applications
+      # Supplying a NINO is not mandatory for non means applications
       return true if non_means_tested? && applicant.has_nino == 'yes'
 
       applicant.nino.present?
