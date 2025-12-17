@@ -41,9 +41,10 @@ RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
       save_and_continue
 
       # steps/client/nino
-      choose_answer('Does your client have a National Insurance number?', 'No')
+      # Note: supplying a NINO is not mandatory for non means applications
+      choose_answer('Does your client have a National Insurance number?', 'Yes')
       save_and_continue
-      #
+
       # steps/client/urn
       save_and_continue
 
