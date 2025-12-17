@@ -55,16 +55,11 @@ module Steps
       end
 
       def nino_changed?
-        return false if record.has_nino.nil? && has_nino.nil?
-        return true unless record.has_nino.eql?(has_nino.to_s)
-
-        record.nino != nino
+        record.has_nino.to_s != has_nino.to_s || record.nino != nino
       end
 
       def arc_changed?
-        return false if record.has_arc == has_arc.to_s
-
-        record.arc != arc
+        record.has_arc.to_s != has_arc.to_s || record.arc != arc
       end
 
       def persist!
