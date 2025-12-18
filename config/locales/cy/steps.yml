@@ -237,7 +237,7 @@ cy:
         edit:
           page_title: Pryd ddigwyddodd y trosedd?
           heading: Pryd ddigwyddodd y trosedd?
-          offence_label: "Offence:"
+          offence_label: "Trosedd:"
           add_button: Ychwanegu dyddiad arall
           remove_button: Tynnu
           deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
