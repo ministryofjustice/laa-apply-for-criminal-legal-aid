@@ -171,16 +171,12 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def publish_update_event
-    return unless FeatureFlags.deletion_events.enabled?
-
     Datastore::Events::DraftUpdated.new(entity_id: id,
                                         entity_type: application_type,
                                         business_reference: reference).call
   end
 
   def publish_creation_event
-    return unless FeatureFlags.deletion_events.enabled?
-
     Datastore::Events::DraftCreated.new(entity_id: id,
                                         entity_type: application_type,
                                         business_reference: reference).call
