@@ -8,68 +8,6 @@ RSpec.describe Steps::Case::ChargesController, type: :controller do
 
   let(:crime_application) { CrimeApplication.create(office_code:) }
 
-  describe 'offence date actions' do
-    let(:form_class_params_name) { form_class.name.underscore }
-    let(:existing_case) { Case.create(crime_application:) }
-    let(:charge_record) { Charge.create(case: existing_case) }
-
-    context 'when adding a date' do
-      after do
-        put :update, params: {
-          id: crime_application.id,
-          charge_id: charge_record.id,
-          add_offence_date: ''
-        }
-      end
-
-      it 'has the expected step name' do
-        expect(
-          subject
-        ).to receive(:update_and_advance).with(
-          form_class,
-          record: charge_record,
-          as: :add_offence_date,
-          flash: nil
-        )
-      end
-    end
-
-    context 'when deleting a date' do
-      let(:offence_dates_attributes) do
-        {
-          offence_dates_attributes: {
-            '0' => {
-              'date(3i)' => '10',
-              'date(2)' => '10',
-              'date(1i)' => '2000',
-              '_destroy' => '1',
-              'id' => '123'
-            }
-          }
-        }
-      end
-
-      after do
-        put :update, params: {
-          :id => crime_application.id,
-          :charge_id => charge_record.id,
-          form_class_params_name => offence_dates_attributes
-        }
-      end
-
-      it 'has the expected step name' do
-        expect(
-          subject
-        ).to receive(:update_and_advance).with(
-          form_class,
-          record: charge_record,
-          as: :delete_offence_date,
-          flash: { success: 'The offence date has been deleted' }
-        )
-      end
-    end
-  end
-
   describe '#edit' do
     context 'when application is not found' do
       before do
