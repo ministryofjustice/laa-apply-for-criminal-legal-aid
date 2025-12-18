@@ -17,7 +17,7 @@ class ApplicationPurger
       delete_orphan_stored_documents
       log_deletion
       crime_application.destroy!
-      publish_deletion_event if FeatureFlags.deletion_events.enabled?
+      publish_deletion_event
     end
   end
 

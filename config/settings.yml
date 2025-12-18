@@ -12,16 +12,6 @@ feature_flags:
     staging: false
     preprod: false
     production: false
-  deletion_events:
-    local: true
-    staging: true
-    preprod: true
-    production: true
-  correspondence_preference:
-    local: true
-    staging: true
-    preprod: true
-    production: true
   dwp_undetermined:
     local: true
     test: true

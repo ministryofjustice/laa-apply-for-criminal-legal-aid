@@ -225,21 +225,6 @@ describe Summary::Sections::ContactDetails do
         expect(answers[4].question).to eq(:requested_welsh_correspondence)
         expect(answers[4].value).to eq('Yes')
       end
-
-      context 'when feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:correspondence_preference) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it 'does not show the welsh correspondence row' do
-          expect(answers.count).to eq(4)
-
-          expect(answers[3].question).not_to eq(:requested_welsh_correspondence)
-          expect(answers[3].value).not_to eq('Yes')
-        end
-      end
     end
 
     context 'when welsh correspondence is not requested' do
@@ -248,21 +233,6 @@ describe Summary::Sections::ContactDetails do
 
         expect(answers[4].question).to eq(:requested_welsh_correspondence)
         expect(answers[4].value).to eq('No')
-      end
-
-      context 'when feature flag is not enabled' do
-        before do
-          allow(FeatureFlags).to receive(:correspondence_preference) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-          }
-        end
-
-        it 'does not show the welsh correspondence row' do
-          expect(answers.count).to eq(4)
-
-          expect(answers[3].question).not_to eq(:requested_welsh_correspondence)
-          expect(answers[3].value).not_to eq('No')
-        end
       end
     end
   end
