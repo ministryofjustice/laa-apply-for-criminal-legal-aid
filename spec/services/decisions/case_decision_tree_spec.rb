@@ -246,6 +246,15 @@ subject: 'client')
     let(:step_name) { :charges }
 
     context 'has correct next step' do
+      it { is_expected.to have_destination(:charges_dates, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `charges_dates`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :charges_dates }
+
+    context 'has correct next step' do
       it { is_expected.to have_destination(:charges_summary, :edit, id: crime_application) }
     end
   end
@@ -281,7 +290,7 @@ subject: 'client')
       let(:charge) { Charge.new(id: '20', offence_dates: offence_dates) }
       let(:form_object) { double('FormObject', case: kase, record: charge) }
 
-      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
+      it { is_expected.to have_destination(:charges_dates, :edit, id: crime_application, charge_id: charge) }
     end
   end
 
@@ -291,7 +300,7 @@ subject: 'client')
       let(:charge) { Charge.new(id: '20') }
       let(:form_object) { double('FormObject', case: kase, record: charge) }
 
-      it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: charge) }
+      it { is_expected.to have_destination(:charges_dates, :edit, id: crime_application, charge_id: charge) }
     end
   end
 
