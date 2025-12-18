@@ -17,7 +17,6 @@ feature_flags:
 # should belong in the k8s `config_map`, which is
 # usually the case if it varies per environment.
 settings:
-  portal_url: https://portal.legalservices.gov.uk
   portal_terms_url: https://www.gov.uk/government/publications/laa-online-portal-help-and-information#attachment_6742318
   laa_privacy_notice_url: https://www.gov.uk/guidance/legal-aid-agency-privacy-notice
   feedback_survey_url: https://www.smartsurvey.co.uk/s/crimeapply/
