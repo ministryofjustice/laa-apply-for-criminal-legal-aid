@@ -5,10 +5,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when the benefit checker is run' do
 
   describe 'Submitting an application where the client benefit check result is `No`' do
     before do
-      allow(FeatureFlags).to receive(:dwp_undetermined) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-
       # ClamAV is available
       allow(Open3).to receive(:capture3).and_return ['ClamAV', nil]
 
