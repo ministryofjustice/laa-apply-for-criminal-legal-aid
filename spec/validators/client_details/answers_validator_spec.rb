@@ -226,6 +226,52 @@ RSpec.describe ClientDetails::AnswersValidator, type: :model do
         expect(subject.has_nino_complete?).to be(true)
       end
     end
+
+    context 'when application is non means tested' do
+      before do
+        allow(record).to receive_messages(non_means_tested?: true)
+      end
+
+      context 'when neither NINO nor ARC is present' do
+        it 'returns false' do
+          expect(subject.has_nino_complete?).to be(false)
+        end
+      end
+
+      context 'when has_nino is yes and NINO is not provided' do
+        let(:has_nino) { 'yes' }
+
+        it 'returns true' do
+          expect(subject.has_nino_complete?).to be(true)
+        end
+      end
+
+      context 'when has_nino is yes and NINO is provided' do
+        let(:has_nino) { 'yes' }
+        let(:nino) { 'ABC12312' }
+
+        it 'returns true' do
+          expect(subject.has_nino_complete?).to be(true)
+        end
+      end
+
+      context 'when has_arc is yes and ARC is not provided' do
+        let(:has_arc) { 'yes' }
+
+        it 'returns false' do
+          expect(subject.has_nino_complete?).to be(false)
+        end
+      end
+
+      context 'when has_arc is yes and ARC is provided' do
+        let(:has_arc) { 'yes' }
+        let(:arc) { 'ABC12/345678/A' }
+
+        it 'returns true' do
+          expect(subject.has_nino_complete?).to be(true)
+        end
+      end
+    end
   end
 
   describe '#relationship_status_complete?' do

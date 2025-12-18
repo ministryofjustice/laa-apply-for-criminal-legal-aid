@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
-  describe 'Submitting a completed application' do
+  describe 'Submitting an application with an updated ARC number' do
     include_context 'when logged in'
 
     before do
@@ -41,8 +41,9 @@ RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
       save_and_continue
 
       # steps/client/nino
-      # Note: supplying a NINO is not mandatory for non means applications
-      choose_answer('Does your client have a National Insurance number?', 'Yes')
+      choose_answer('Does your client have a National Insurance number?',
+                    'No, but the client has an application registration card (ARC)')
+      fill_in('What is their ARC number?', with: 'ABC12/345678/A')
       save_and_continue
 
       # steps/client/urn
@@ -54,9 +55,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
 
       # steps/case/charges/#{charge_id}
       fill_in('Offence', with: 'Theft from a shop (Over £100,000)')
-      save_and_continue
-
-      # steps/case/charges-dates/#{charge_id}
       fill_date('Start date 1', with: 1.month.ago.to_date)
       save_and_continue
 
@@ -93,6 +91,49 @@ RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
       save_and_continue
 
       # steps/submission/review
+      expect(page).to have_content(/National Insurance number\s*Not provided/)
+      expect(page).to have_content(%r{Application registration card \(ARC\) number\s*ABC12/345678/A})
+
+      # Update ARC number
+      within('.govuk-summary-list__row', text: 'National Insurance number') do
+        click_link('Change')
+      end
+
+      # steps/client/nino
+      fill_in('What is their ARC number?', with: 'BCB09/137768/M')
+      save_and_continue
+
+      # steps/client/urn
+      save_and_continue
+
+      # steps/case/has_the_case_concluded
+      save_and_continue
+
+      # steps/case/charges/#{charge_id}
+      save_and_continue
+
+      # steps/case/charges_summary
+      choose_answer('Do you want to add another offence?', 'No')
+      save_and_continue
+
+      # steps/case/has_codefendants
+      save_and_continue
+
+      # steps/case/hearing_details
+      save_and_continue
+
+      # steps/case/ioj_passport
+      save_and_continue
+
+      # steps/evidence/upload
+      save_and_continue
+
+      # steps/submission/more_information
+      save_and_continue
+
+      # steps/submission/review
+      expect(page).to have_content(/National Insurance number\s*Not provided/)
+      expect(page).to have_content(%r{Application registration card \(ARC\) number\s*BCB09/137768/M})
       save_and_continue
 
       # steps/submission/declaration
@@ -108,7 +149,12 @@ RSpec.describe 'Apply for Criminal Legal Aid when Non-Means Tested' do
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
-          body['is_means_tested'] == 'no' && body['means_passport'] == ['on_not_means_tested']
+          body['is_means_tested'] == 'no' &&
+          body['means_passport'] == ['on_not_means_tested'] &&
+          body['client_details']['applicant']['has_arc'] == 'yes' &&
+          body['client_details']['applicant']['arc'] == 'BCB09/137768/M' &&
+          body['client_details']['applicant']['has_nino'].nil? &&
+          body['client_details']['applicant']['nino'].nil?
         }
       ).to have_been_made.once
     end
