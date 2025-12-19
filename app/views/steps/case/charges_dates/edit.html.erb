@@ -32,6 +32,8 @@
         <% end %>
       <% end %>
 
+      <%= govuk_inset_text(text: t('.inset')) %>
+
       <%= f.button t('.add_button'), type: :submit, name: :add_offence_date,
                    class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                    data: { module: 'govuk-button' } %>

@@ -240,6 +240,7 @@ en:
           add_button: Add another date for this offence
           remove_button: Remove
           deleted_flash: The offence date has been deleted
+          inset: If there is more than one of the same offence, add a new date for each.
       charges_summary:
         edit:
           page_title: Offences summary list

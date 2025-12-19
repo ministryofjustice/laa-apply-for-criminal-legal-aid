@@ -241,7 +241,7 @@ cy:
           add_button: Ychwanegu dyddiad arall
           remove_button: Tynnu
           deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
-          inset: Rhestrir troseddau yn Saesneg gan fod Cymru a Lloegr yn rhannu'r un system gyfreithiol, gyda Saesneg fel y prif iaith.
+          inset: Os oes mwy nag un o'r un drosedd, ychwanegwch ddyddiad newydd ar gyfer pob un.
       charges_summary:
         edit:
           page_title: Rhestr gryno o droseddau
