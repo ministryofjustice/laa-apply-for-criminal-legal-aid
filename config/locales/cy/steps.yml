@@ -223,10 +223,6 @@ cy:
           page_title: Beth yw’r cyhuddiad a wnaed yn erbyn eich cleient?
           heading: Beth yw’r cyhuddiad a wnaed yn erbyn eich cleient?
           subheading: Os oes mwy nag un cyhuddiad, ychwanegwch un ar y tro.
-          offence_dates_fieldset_legend: Pryd ddigwyddodd y trosedd?
-          add_button: Ychwanegu dyddiad arall
-          remove_button: Tynnu dyddiad %{index}
-          deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
           inset: Rhestrir troseddau yn Saesneg gan fod Cymru a Lloegr yn rhannu'r un system gyfreithiol, gyda Saesneg fel y prif iaith.
         confirm_destroy:
           page_title: Cadarnhau dileu'r trosedd
@@ -237,6 +233,15 @@ cy:
           cancel_delete_button_a11y: Na, peidiwch â dileu'r trosedd hwn
         destroy:
           success_flash: Mae'r ased wedi'i ddileu
+      charges_dates:
+        edit:
+          page_title: Pryd ddigwyddodd y trosedd?
+          heading: Pryd ddigwyddodd y trosedd?
+          offence_label: "Trosedd:"
+          add_button: Ychwanegu dyddiad arall
+          remove_button: Tynnu
+          deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
+          inset: Os oes mwy nag un o'r un drosedd, ychwanegwch ddyddiad newydd ar gyfer pob un.
       charges_summary:
         edit:
           page_title: Rhestr gryno o droseddau

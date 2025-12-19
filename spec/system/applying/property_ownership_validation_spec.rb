@@ -79,6 +79,9 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
 
       # steps/case/charges/#{charge_id}
       fill_in('Offence', with: 'Theft from a shop (Over £100,000)')
+      save_and_continue
+
+      # steps/case/charges-dates/#{charge_id}
       fill_date('Start date 1', with: 1.month.ago.to_date)
       save_and_continue
 
@@ -378,6 +381,9 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
 
       # steps/case/charges/#{charge_id}
       fill_in('Offence', with: 'Theft from a shop (Over £100,000)')
+      save_and_continue
+
+      # steps/case/charges-dates/#{charge_id}
       fill_date('Start date 1', with: 1.month.ago.to_date)
       save_and_continue
 

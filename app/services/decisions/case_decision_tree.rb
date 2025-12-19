@@ -14,6 +14,8 @@ module Decisions
       when :is_client_remanded
         charges_summary_or_edit_new_charge
       when :charges
+        edit(:charges_dates)
+      when :charges_dates
         edit(:charges_summary)
       when :add_offence_date
         after_add_offence_date
@@ -67,11 +69,11 @@ module Decisions
 
     def after_add_offence_date
       current_charge.offence_dates << OffenceDate.new if blank_date_required?
-      edit(:charges, charge_id: current_charge)
+      edit(:charges_dates, charge_id: current_charge)
     end
 
     def after_delete_offence_date
-      edit(:charges, charge_id: current_charge)
+      edit(:charges_dates, charge_id: current_charge)
     end
 
     def after_charges_summary
