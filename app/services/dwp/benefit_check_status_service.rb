@@ -32,20 +32,12 @@ module DWP
     end
 
     def undetermined
-      unless FeatureFlags.dwp_undetermined.enabled?
-        return benefit_check_subject.confirm_dwp_result == 'no' && benefit_evidence_forthcoming?
-      end
-
       benefit_check_subject.dwp_response == 'Undetermined' ||
         (benefit_check_subject.dwp_response.nil? && benefit_check_subject.confirm_dwp_result == 'no' &&
           benefit_evidence_forthcoming?)
     end
 
     def not_in_receipt
-      unless FeatureFlags.dwp_undetermined.enabled?
-        return benefit_check_subject.confirm_dwp_result == 'no' && means_assessment_as_benefit_evidence?
-      end
-
       benefit_check_subject.dwp_response == 'No' ||
         (benefit_check_subject.dwp_response.nil? && benefit_check_subject.confirm_dwp_result == 'no' &&
           means_assessment_as_benefit_evidence?)

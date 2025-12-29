@@ -141,12 +141,6 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
 
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#generate' do
-    before do
-      allow(FeatureFlags).to receive(:dwp_undetermined) {
-        instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-      }
-    end
-
     context 'without partner' do
       let(:has_partner) { 'no' }
       let(:relationship_to_partner) { nil }

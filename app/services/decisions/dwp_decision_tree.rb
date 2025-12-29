@@ -35,21 +35,13 @@ module Decisions
     private
 
     def after_confirm_result
-      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
-        return edit(:partner_benefit_type) if include_partner_in_means_assessment?
+      return edit(:partner_benefit_type) if include_partner_in_means_assessment?
 
-        edit('steps/case/urn')
-      else
-        edit(:confirm_details)
-      end
+      edit('steps/case/urn')
     end
 
     def after_partner_confirm_result
-      if FeatureFlags.dwp_undetermined.enabled? || form_object.confirm_dwp_result.yes?
-        edit('steps/case/urn')
-      else
-        edit(:confirm_details)
-      end
+      edit('steps/case/urn')
     end
 
     def after_confirm_details
@@ -159,9 +151,7 @@ module Decisions
     end
 
     def undetermined_result?(person)
-      return person.dwp_response == 'Undetermined' if FeatureFlags.dwp_undetermined.enabled?
-
-      false
+      person.dwp_response == 'Undetermined'
     end
   end
   # rubocop:enable Metrics/ClassLength
