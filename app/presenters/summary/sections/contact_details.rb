@@ -47,7 +47,7 @@ module Summary
 
           Components::FreeTextAnswer.new(
             :requested_welsh_correspondence, requested_welsh_correspondence,
-            show: FeatureFlags.correspondence_preference.enabled?,
+            show: true,
             change_path: edit_steps_client_contact_details_path
           ),
         ]
