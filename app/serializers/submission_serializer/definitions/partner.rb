@@ -32,7 +32,7 @@ module SubmissionSerializer
             json.benefit_check_status DWP::BenefitCheckStatusService.call(self, partner)
             json.has_same_address_as_client partner_detail.has_same_address_as_client
             json.home_address Definitions::Address.generate(partner.home_address)
-            json.dwp_response partner.dwp_response if FeatureFlags.dwp_undetermined.enabled?
+            json.dwp_response partner.dwp_response
           end
 
           json.is_included_in_means_assessment MeansStatus.include_partner?(self)

@@ -62,27 +62,9 @@ RSpec.describe DWP::BenefitCheckStatusService do
         it 'returns a benefit check status of undetermined' do
           expect(subject.call).to eq('undetermined')
         end
-
-        context 'when feature flag is not enabled' do
-          before do
-            allow(FeatureFlags).to receive(:dwp_undetermined) {
-              instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-            }
-          end
-
-          it 'returns a benefit check status of undetermined' do
-            expect(subject.call).to eq('undetermined')
-          end
-        end
       end
 
       context 'when dwp_response is undetermined' do
-        before do
-          allow(FeatureFlags).to receive(:dwp_undetermined) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-          }
-        end
-
         let(:confirm_dwp_result) { nil }
         let(:dwp_response) { 'Undetermined' }
 
@@ -107,27 +89,9 @@ RSpec.describe DWP::BenefitCheckStatusService do
         it 'returns a benefit check status of no_record_found' do
           expect(subject.call).to eq('no_record_found')
         end
-
-        context 'when feature flag is not enabled' do
-          before do
-            allow(FeatureFlags).to receive(:dwp_undetermined) {
-              instance_double(FeatureFlags::EnabledFeature, enabled?: false)
-            }
-          end
-
-          it 'returns a benefit check status of no_record_found' do
-            expect(subject.call).to eq('no_record_found')
-          end
-        end
       end
 
       context 'when dwp_response is no' do
-        before do
-          allow(FeatureFlags).to receive(:dwp_undetermined) {
-            instance_double(FeatureFlags::EnabledFeature, enabled?: true)
-          }
-        end
-
         let(:confirm_dwp_result) { nil }
         let(:dwp_response) { 'No' }
 

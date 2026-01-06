@@ -5,7 +5,7 @@
     <%= render partial: 'shared/flash_banner' %>
 
     <h1 class="govuk-heading-xl"><%= service_name %></h1>
-    <p class="govuk-body">Mae’r gwasanaeth hwn ar gael rhwng 7am a 9:30pm.</p>
+    <p class="govuk-body">Mae'r gwasanaeth hwn ar gael bob dydd rhwng 7:00am a 9:30pm. Nid yw ar gael ar wyliau banc.</p>
     <%= button_to provider_entra_omniauth_authorize_path(locale: :cy),
                   method: :post,
                   class: 'govuk-button govuk-button--start govuk-!-margin-top-4', form_class: 'app-button--start',
