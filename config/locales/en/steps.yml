@@ -223,10 +223,6 @@ en:
           page_title: What has your client been charged with?
           heading: What has your client been charged with?
           subheading: If there is more than one charge, add one at a time.
-          offence_dates_fieldset_legend: When did the offence happen?
-          add_button: Add another date
-          remove_button: Remove date %{index}
-          deleted_flash: The offence date has been deleted
         confirm_destroy:
           page_title: Delete offence confirmation
           heading: Are you sure you want to delete this offence?
@@ -236,6 +232,15 @@ en:
           cancel_delete_button_a11y: No, do not delete this offence
         destroy:
           success_flash: The offence has been deleted
+      charges_dates:
+        edit:
+          page_title: When did the offence happen?
+          heading: When did the offence happen?
+          offence_label: "Offence:"
+          add_button: Add another date for this offence
+          remove_button: Remove
+          deleted_flash: The offence date has been deleted
+          inset: If there is more than one of the same offence, add a new date for each.
       charges_summary:
         edit:
           page_title: Offences summary list
