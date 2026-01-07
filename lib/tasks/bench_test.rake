@@ -41,7 +41,6 @@ namespace :bench_test do
   end
 
   def get_result(office_code)
-    sleep(1)
     office = Providers::GetActiveOffice.call(office_code)
 
     [office_code, office.active?, office.contingent_liability?]
