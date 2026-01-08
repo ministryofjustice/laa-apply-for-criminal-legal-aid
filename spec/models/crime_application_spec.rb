@@ -140,7 +140,7 @@ RSpec.describe CrimeApplication, type: :model do
     let(:retention_period) { Rails.configuration.x.retention_period.ago }
 
     context 'when application has reached the retention period' do
-      let(:attributes) { { updated_at: retention_period } }
+      let(:attributes) { { created_at: retention_period } }
 
       before do
         application.save!
@@ -152,7 +152,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is older than the retention period' do
-      let(:attributes) { { updated_at: retention_period - 1.day } }
+      let(:attributes) { { created_at: retention_period - 1.day } }
 
       before do
         application.save!
@@ -164,7 +164,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is younger than the retention period' do
-      let(:attributes) { { updated_at: retention_period + 1.day } }
+      let(:attributes) { { created_at: retention_period + 1.day } }
 
       before do
         application.save!
@@ -300,17 +300,9 @@ RSpec.describe CrimeApplication, type: :model do
   end
 
   describe 'Events' do
-    it 'makes requests to publish a draft created/updated event' do
+    it 'makes requests to publish a draft created event' do
       crime_application = described_class.create
       expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
-        .with(body: hash_including(
-          'entity_id' => crime_application.id,
-          'entity_type' => crime_application.application_type.to_s,
-          'business_reference' => crime_application.reference
-        ))
-
-      crime_application.touch # rubocop:disable Rails/SkipsModelValidations
-      expect(WebMock).to have_requested(:post, 'http://datastore-webmock/api/v1/applications/draft_updated')
         .with(body: hash_including(
           'entity_id' => crime_application.id,
           'entity_type' => crime_application.application_type.to_s,

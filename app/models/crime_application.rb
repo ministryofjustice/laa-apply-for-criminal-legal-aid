@@ -5,7 +5,6 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   after_create :publish_creation_event
   before_destroy :check_deletion_exemption
-  after_touch :publish_update_event
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
@@ -94,7 +93,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :to_be_soft_deleted, lambda {
     active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
-          .where(exempt_from_deletion: false, parent_id: nil, updated_at: ..Rails.configuration.x.retention_period.ago)
+          .where(exempt_from_deletion: false, parent_id: nil, created_at: ..Rails.configuration.x.retention_period.ago)
   }
 
   scope :to_be_hard_deleted, lambda {
@@ -168,12 +167,6 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless exempt_from_deletion?
 
     raise ActiveRecord::RecordNotDestroyed, 'Application exempt from deletion'
-  end
-
-  def publish_update_event
-    Datastore::Events::DraftUpdated.new(entity_id: id,
-                                        entity_type: application_type,
-                                        business_reference: reference).call
   end
 
   def publish_creation_event

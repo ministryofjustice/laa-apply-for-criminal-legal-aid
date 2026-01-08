@@ -4,19 +4,19 @@ RSpec.describe AutomatedDeletion do
   before do
     # app to be hard deleted
     CrimeApplication.create(reference: 700_000_1, documents: [], soft_deleted_at: 2.weeks.ago,
-                            updated_at: 2.years.ago - 2.weeks)
+                            created_at: 2.years.ago - 2.weeks)
     # app to be soft deleted
-    CrimeApplication.create(reference: 700_000_2, documents: [], updated_at: 2.years.ago)
+    CrimeApplication.create(reference: 700_000_2, documents: [], created_at: 2.years.ago)
     # app to remain unaffected
     CrimeApplication.create(reference: 700_000_3, documents: [])
     # app to remain unaffected due to being PSE
     CrimeApplication.create(reference: 700_000_4, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s,
-                            documents: [], updated_at: 2.years.ago)
+                            documents: [], created_at: 2.years.ago)
     # app to remain unaffected due to having a parent application
     CrimeApplication.create(reference: 700_000_5, parent_id: SecureRandom.uuid,
-                            documents: [], updated_at: 2.years.ago)
+                            documents: [], created_at: 2.years.ago)
     # app to be remain unaffected due to exemption
-    CrimeApplication.create(reference: 700_000_6, documents: [], updated_at: 2.years.ago, exempt_from_deletion: true)
+    CrimeApplication.create(reference: 700_000_6, documents: [], created_at: 2.years.ago, exempt_from_deletion: true)
   end
 
   it 'deletes applications as required' do
