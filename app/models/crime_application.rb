@@ -5,7 +5,6 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   after_create :publish_creation_event
   before_destroy :check_deletion_exemption
-  after_touch :publish_update_event
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
@@ -168,12 +167,6 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless exempt_from_deletion?
 
     raise ActiveRecord::RecordNotDestroyed, 'Application exempt from deletion'
-  end
-
-  def publish_update_event
-    Datastore::Events::DraftUpdated.new(entity_id: id,
-                                        entity_type: application_type,
-                                        business_reference: reference).call
   end
 
   def publish_creation_event
