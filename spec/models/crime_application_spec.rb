@@ -140,7 +140,7 @@ RSpec.describe CrimeApplication, type: :model do
     let(:retention_period) { Rails.configuration.x.retention_period.ago }
 
     context 'when application has reached the retention period' do
-      let(:attributes) { { updated_at: retention_period } }
+      let(:attributes) { { created_at: retention_period } }
 
       before do
         application.save!
@@ -152,7 +152,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is older than the retention period' do
-      let(:attributes) { { updated_at: retention_period - 1.day } }
+      let(:attributes) { { created_at: retention_period - 1.day } }
 
       before do
         application.save!
@@ -164,7 +164,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is younger than the retention period' do
-      let(:attributes) { { updated_at: retention_period + 1.day } }
+      let(:attributes) { { created_at: retention_period + 1.day } }
 
       before do
         application.save!

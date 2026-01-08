@@ -94,7 +94,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :to_be_soft_deleted, lambda {
     active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
-          .where(exempt_from_deletion: false, parent_id: nil, updated_at: ..Rails.configuration.x.retention_period.ago)
+          .where(exempt_from_deletion: false, parent_id: nil, created_at: ..Rails.configuration.x.retention_period.ago)
   }
 
   scope :to_be_hard_deleted, lambda {
