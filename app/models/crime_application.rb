@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   after_create :publish_creation_event
   before_destroy :check_deletion_exemption
+  after_commit :update_digest_and_timestamp
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
@@ -145,10 +146,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def draft_submission
-    draft = SubmissionSerializer::Application.new(self).to_builder
-    draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
-
-    Adapters::Structs::CrimeApplication.new(draft.attributes!.as_json)
+    Adapters::Structs::CrimeApplication.new(draft_submission_as_json)
   end
 
   def review_status
@@ -174,4 +172,25 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
                                         entity_type: application_type,
                                         business_reference: reference).call
   end
+
+  def calculate_submission_hexdigest
+    Digest::MD5.hexdigest(draft_submission_as_json.to_json)
+  end
+
+  def draft_submission_as_json
+    draft = SubmissionSerializer::Application.new(self).to_builder
+    draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
+    draft.attributes!.as_json
+  end
+
+  # rubocop:disable Rails/SkipsModelValidations
+  def update_digest_and_timestamp
+    return if submission_hexdigest == calculate_submission_hexdigest
+
+    update_columns(
+      submission_hexdigest: calculate_submission_hexdigest,
+      submission_updated_at: Time.current
+    )
+  end
+  # rubocop:enable Rails/SkipsModelValidations
 end

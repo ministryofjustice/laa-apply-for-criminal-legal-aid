@@ -324,4 +324,100 @@ RSpec.describe CrimeApplication, type: :model do
       end
     end
   end
+
+  describe '#submission_hexdigest' do
+    before do
+      application.save!
+    end
+
+    context 'when the record is saved without changes' do
+      it 'does not change' do
+        expect {
+          application.save!
+        }.not_to(change { application.reload.submission_hexdigest })
+      end
+    end
+
+    context 'when the record is saved and the submission changes' do
+      it 'changes' do
+        expect {
+          application.update!(additional_information: 'New information')
+        }.to(change { application.reload.submission_hexdigest })
+      end
+    end
+
+    context 'with a child record' do
+      let(:applicant) { Applicant.new(last_name: 'Fred', crime_application: application) }
+
+      it 'changes when a child record is created' do
+        expect {
+          applicant.save!
+        }.to(change { application.reload.submission_hexdigest })
+      end
+
+      context 'when updating the child record' do
+        before { applicant.save! }
+
+        it 'does not change if attributes are unchanged' do
+          expect {
+            applicant.update!(last_name: 'Fred')
+          }.not_to(change { application.reload.submission_hexdigest })
+        end
+
+        it 'changes if attributes are changed' do
+          expect {
+            applicant.update!(last_name: 'Freddy')
+          }.to(change { application.reload.submission_hexdigest })
+        end
+      end
+    end
+  end
+
+  describe '#submission_updated_at' do
+    before do
+      application.save!
+    end
+
+    context 'when the record is saved without changes' do
+      it 'does not change' do
+        expect {
+          application.save!
+        }.not_to(change { application.reload.submission_updated_at })
+      end
+    end
+
+    context 'when the record is saved and the submission changes' do
+      it 'changes' do
+        expect {
+          application.update!(additional_information: 'New information')
+        }.to(change { application.reload.submission_updated_at })
+      end
+    end
+
+    context 'with a child record' do
+      let(:applicant) { Applicant.new(last_name: 'Fred', crime_application: application) }
+
+      it 'changes when a child record is created' do
+        expect {
+          applicant.save!
+        }.to(change { application.reload.submission_updated_at })
+      end
+
+      context 'when updating the child record' do
+        before { applicant.save! }
+
+        it 'does not change if attributes are unchanged' do
+          expect {
+            applicant.update!(last_name: 'Fred')
+          }.not_to(change { application.reload.submission_updated_at })
+        end
+
+        it 'changes if attributes are changed' do
+          expect {
+            applicant.update!(last_name: 'Freddy')
+          }.to(change { application.reload.submission_updated_at })
+        end
+      end
+    end
+  end
 end
