@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_15_102332) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -156,6 +156,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_15_102332) do
     t.jsonb "date_stamp_context"
     t.datetime "soft_deleted_at"
     t.boolean "exempt_from_deletion", default: false
+    t.string "submission_hexdigest"
+    t.datetime "submission_updated_at"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["parent_id"], name: "index_crime_applications_on_parent_id", unique: true
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
