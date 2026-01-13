@@ -160,6 +160,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
     t.datetime "submission_updated_at"
     t.index ["office_code"], name: "index_crime_applications_on_office_code"
     t.index ["parent_id"], name: "index_crime_applications_on_parent_id", unique: true
+    t.index ["submission_updated_at"], name: "index_crime_applications_on_submission_updated_at"
     t.index ["usn"], name: "index_crime_applications_on_usn", unique: true
   end
 
@@ -388,8 +389,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
     t.string "confirm_dwp_result"
     t.string "arc"
     t.string "has_arc"
-    t.string "dwp_response"
     t.string "preferred_correspondence_language"
+    t.string "dwp_response"
     t.index ["type", "crime_application_id"], name: "index_people_on_type_and_crime_application_id", unique: true
   end
 
