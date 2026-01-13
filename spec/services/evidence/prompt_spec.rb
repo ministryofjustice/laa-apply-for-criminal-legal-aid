@@ -69,6 +69,15 @@ RSpec.describe Evidence::Prompt do
   end
 
   describe '#run!' do
+    let(:custom_ruleset) { WalesRuleset.new(crime_application, []) }
+    let(:changed_at) { Time.zone.local(2024, 10, 1, 13, 23, 55) }
+
+    before do
+      travel_to changed_at
+      described_class.new(crime_application, custom_ruleset).run!
+      travel_back
+    end
+
     it 'persists generated prompts' do # rubocop:disable RSpec/ExampleLength
       expected_prompts = [
         {
@@ -95,15 +104,16 @@ RSpec.describe Evidence::Prompt do
         },
       ].map(&:deep_stringify_keys)
 
-      custom_ruleset = WalesRuleset.new(crime_application, [])
-      now = Time.zone.local(2024, 10, 1, 13, 23, 55)
-
-      travel_to now
-      described_class.new(crime_application, custom_ruleset).run!
-      travel_back
-
       expect(crime_application.evidence_prompts).to eq expected_prompts
-      expect(crime_application.evidence_last_run_at).to eq now
+      expect(crime_application.evidence_last_run_at).to eq changed_at
+    end
+
+    it 'only sets evidence_last_run_at if prompts have changed' do
+      expect {
+        described_class.new(crime_application, custom_ruleset).run!
+      }.not_to(
+        change(crime_application, :evidence_last_run_at)
+      )
     end
   end
 

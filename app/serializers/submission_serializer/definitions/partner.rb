@@ -18,8 +18,8 @@ module SubmissionSerializer
           json.nino partner.nino
           json.arc partner.arc
 
-          json.involvement_in_case partner_detail.involvement_in_case
-          json.conflict_of_interest partner_detail.conflict_of_interest
+          json.involvement_in_case partner_detail&.involvement_in_case
+          json.conflict_of_interest partner_detail&.conflict_of_interest
 
           if MeansStatus.include_partner?(self)
             json.benefit_type partner.benefit_type
@@ -30,7 +30,7 @@ module SubmissionSerializer
             json.confirm_details partner.confirm_details
             json.confirm_dwp_result partner.confirm_dwp_result
             json.benefit_check_status DWP::BenefitCheckStatusService.call(self, partner)
-            json.has_same_address_as_client partner_detail.has_same_address_as_client
+            json.has_same_address_as_client partner_detail&.has_same_address_as_client
             json.home_address Definitions::Address.generate(partner.home_address)
             json.dwp_response partner.dwp_response
           end

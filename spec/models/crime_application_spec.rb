@@ -137,26 +137,33 @@ RSpec.describe CrimeApplication, type: :model do
   end
 
   describe '#to_be_soft_deleted' do
-    let(:retention_period) { Rails.configuration.x.retention_period.ago }
+    let(:retention_period) { Rails.configuration.x.retention_period }
+    let(:submission_updated_at) { retention_period.ago }
 
-    context 'when application has reached the retention period' do
-      let(:attributes) { { created_at: retention_period } }
-
-      before do
+    before do
+      travel_to submission_updated_at do
         application.save!
       end
+    end
 
+    context 'when application has reached the retention period' do
       it 'returns application' do
         expect(described_class.to_be_soft_deleted.count).to eq(1)
+      end
+
+      context 'when application is PSE' do
+        let(:attributes) {
+          { application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s, updated_at: retention_period - 1.day }
+        }
+
+        it 'does not return application' do
+          expect(described_class.to_be_soft_deleted.count).to eq(0)
+        end
       end
     end
 
     context 'when application is older than the retention period' do
-      let(:attributes) { { created_at: retention_period - 1.day } }
-
-      before do
-        application.save!
-      end
+      let(:submission_updated_at) { retention_period.ago - 1.day }
 
       it 'returns application' do
         expect(described_class.to_be_soft_deleted.count).to eq(1)
@@ -164,25 +171,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is younger than the retention period' do
-      let(:attributes) { { created_at: retention_period + 1.day } }
-
-      before do
-        application.save!
-      end
-
-      it 'does not return application' do
-        expect(described_class.to_be_soft_deleted.count).to eq(0)
-      end
-    end
-
-    context 'when application is PSE' do
-      let(:attributes) {
-        { application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s, updated_at: retention_period - 1.day }
-      }
-
-      before do
-        application.save!
-      end
+      let(:submission_updated_at) { retention_period.ago + 1.day }
 
       it 'does not return application' do
         expect(described_class.to_be_soft_deleted.count).to eq(0)
