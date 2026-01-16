@@ -5,6 +5,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   after_create :publish_creation_event
   before_destroy :check_deletion_exemption
+  after_commit :update_digest_and_timestamp, on: [:create, :update]
 
   attr_readonly :application_type
   attribute :date_stamp, :datetime
@@ -92,8 +93,13 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :with_applicant, -> { joins(:people).includes(:applicant).merge(Applicant.with_name) }
 
   scope :to_be_soft_deleted, lambda {
-    active.where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
-          .where(exempt_from_deletion: false, parent_id: nil, created_at: ..Rails.configuration.x.retention_period.ago)
+    active
+      .where.not(application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
+      .where(
+        exempt_from_deletion: false,
+        parent_id: nil,
+        submission_updated_at: ..Rails.configuration.x.retention_period.ago
+      )
   }
 
   scope :to_be_hard_deleted, lambda {
@@ -145,10 +151,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def draft_submission
-    draft = SubmissionSerializer::Application.new(self).to_builder
-    draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
-
-    Adapters::Structs::CrimeApplication.new(draft.attributes!.as_json)
+    Adapters::Structs::CrimeApplication.new(draft_submission_as_json)
   end
 
   def review_status
@@ -170,8 +173,28 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def publish_creation_event
-    Datastore::Events::DraftCreated.new(entity_id: id,
-                                        entity_type: application_type,
-                                        business_reference: reference).call
+    Datastore::Events::DraftCreated.new(
+      entity_id: id,
+      entity_type: application_type,
+      business_reference: reference
+    ).call
   end
+
+  def draft_submission_as_json
+    draft = SubmissionSerializer::Application.new(self).to_builder
+    draft.set!('status', ApplicationStatus::IN_PROGRESS.to_s)
+    draft.attributes!.as_json
+  end
+
+  # rubocop:disable Rails/SkipsModelValidations
+  def update_digest_and_timestamp
+    updated_digest = Digest::MD5.hexdigest(draft_submission_as_json.to_json)
+    return if submission_hexdigest == updated_digest
+
+    update_columns(
+      submission_hexdigest: updated_digest,
+      submission_updated_at: Time.current
+    )
+  end
+  # rubocop:enable Rails/SkipsModelValidations
 end

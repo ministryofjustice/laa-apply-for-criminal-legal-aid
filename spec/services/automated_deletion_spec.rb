@@ -2,21 +2,26 @@ require 'rails_helper'
 
 RSpec.describe AutomatedDeletion do
   before do
-    # app to be hard deleted
-    CrimeApplication.create(reference: 700_000_1, documents: [], soft_deleted_at: 2.weeks.ago,
-                            created_at: 2.years.ago - 2.weeks)
-    # app to be soft deleted
-    CrimeApplication.create(reference: 700_000_2, documents: [], created_at: 2.years.ago)
+    soft_deletion_from = Rails.configuration.x.soft_deletion_period.ago
+
+    travel_to 2.years.ago - 2.weeks do
+      # app to be hard deleted
+      CrimeApplication.create(reference: 700_000_1, soft_deleted_at: soft_deletion_from)
+    end
+
+    travel_to 2.years.ago do
+      # app to be soft deleted
+      CrimeApplication.create(reference: 700_000_2)
+      # app to remain unaffected due to being PSE
+      CrimeApplication.create(reference: 700_000_4, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s)
+      # app to remain unaffected due to having a parent application
+      CrimeApplication.create(reference: 700_000_5, parent_id: SecureRandom.uuid)
+      # app to be remain unaffected due to exemption
+      CrimeApplication.create(reference: 700_000_6, exempt_from_deletion: true)
+    end
+
     # app to remain unaffected
-    CrimeApplication.create(reference: 700_000_3, documents: [])
-    # app to remain unaffected due to being PSE
-    CrimeApplication.create(reference: 700_000_4, application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s,
-                            documents: [], created_at: 2.years.ago)
-    # app to remain unaffected due to having a parent application
-    CrimeApplication.create(reference: 700_000_5, parent_id: SecureRandom.uuid,
-                            documents: [], created_at: 2.years.ago)
-    # app to be remain unaffected due to exemption
-    CrimeApplication.create(reference: 700_000_6, documents: [], created_at: 2.years.ago, exempt_from_deletion: true)
+    CrimeApplication.create(reference: 700_000_3)
   end
 
   it 'deletes applications as required' do

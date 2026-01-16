@@ -1,5 +1,5 @@
 class Charge < ApplicationRecord
-  belongs_to :case
+  belongs_to :case, touch: true
 
   has_many :offence_dates, dependent: :destroy
   accepts_nested_attributes_for :offence_dates, allow_destroy: true

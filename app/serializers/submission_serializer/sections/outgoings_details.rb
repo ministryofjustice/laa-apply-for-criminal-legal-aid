@@ -17,6 +17,8 @@ module SubmissionSerializer
           json.how_manage outgoings.how_manage
           json.pays_council_tax outgoings.pays_council_tax
           json.has_no_other_outgoings outgoings.has_no_other_outgoings
+        rescue Errors::CannotYetDetermineFullMeans
+          next
         end
       end
     end

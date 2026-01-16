@@ -96,7 +96,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   end
 
   def residence_owned?
-    return false if applicant.residence_type.nil?
+    return false if applicant&.residence_type.nil?
 
     residence_type = ResidenceType.new(applicant.residence_type)
     return false unless residence_type.owned?
@@ -123,7 +123,7 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   def partner_involvement_in_case
     return partner_detail.involvement_in_case if partner_detail
 
-    partner&.involvement_in_case
+    partner.try(:involvement_in_case)
   end
 
   # conflict_of_interest is stored on partner_detail when a database applications and
@@ -131,11 +131,11 @@ module TypeOfMeansAssessment # rubocop:disable Metrics/ModuleLength
   def partner_conflict_of_interest
     return partner_detail.conflict_of_interest if partner_detail
 
-    partner&.conflict_of_interest
+    partner.try(:conflict_of_interest)
   end
 
   def has_passporting_benefit?
-    BenefitType.passporting.include?(BenefitType.new(benefit_check_subject.benefit_type.to_s))
+    BenefitType.passporting.include?(BenefitType.new(benefit_check_subject&.benefit_type.to_s))
   end
 
   def summary_only?
