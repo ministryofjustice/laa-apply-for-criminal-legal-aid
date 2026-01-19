@@ -6,7 +6,7 @@ RSpec.describe Steps::Case::CodefendantsForm do
   let(:arguments) do
     {
       crime_application:,
-    codefendants_attributes:,
+      codefendants_attributes:,
     }
   end
 
@@ -49,9 +49,9 @@ RSpec.describe Steps::Case::CodefendantsForm do
   describe '#any_marked_for_destruction?' do
     # NOTE: this scenario requires real DB records to exercise nested attributes
     context 'there are records marked for destruction' do
-      let(:application) { CrimeApplication.create }
-      let(:case_record) { Case.create(crime_application: application) }
-      let(:codefendant) { Codefendant.create(case: case_record, first_name: 'John', last_name: 'Doe') }
+      let(:crime_application) { CrimeApplication.create!(case: case_record) }
+      let(:case_record) { Case.new(codefendants: [codefendant]) }
+      let(:codefendant) { Codefendant.new(first_name: 'John', last_name: 'Doe') }
 
       let(:codefendants_attributes) do
         {

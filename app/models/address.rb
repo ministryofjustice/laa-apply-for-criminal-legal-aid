@@ -7,5 +7,5 @@ class Address < ApplicationRecord
     country
   ].freeze
 
-  belongs_to :person
+  belongs_to :person, touch: true
 end

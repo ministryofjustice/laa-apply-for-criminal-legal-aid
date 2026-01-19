@@ -1,5 +1,5 @@
 class PropertyOwner < ApplicationRecord
-  belongs_to :property
+  belongs_to :property, touch: true
 
   OTHER_RELATIONSHIP = 'other'.freeze
 
