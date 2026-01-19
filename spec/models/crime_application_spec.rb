@@ -160,6 +160,13 @@ RSpec.describe CrimeApplication, type: :model do
           expect(described_class.to_be_soft_deleted.count).to eq(0)
         end
       end
+
+      context 'when submission_updated_at has not been set' do
+        it 'does not return application' do
+          application.update_column(:submission_updated_at, nil) # rubocop:disable Rails/SkipsModelValidations
+          expect(described_class.to_be_soft_deleted.count).to eq(0)
+        end
+      end
     end
 
     context 'when application is older than the retention period' do
