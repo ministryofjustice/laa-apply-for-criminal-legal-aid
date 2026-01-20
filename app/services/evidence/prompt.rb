@@ -21,12 +21,14 @@ module Evidence
 
     def run!(ignore_exempt: true)
       exempt! unless ignore_exempt
-      results
 
-      ::CrimeApplication.transaction do
-        crime_application.evidence_prompts = @results
+      crime_application.evidence_prompts = results
+
+      # Update evidence_last_run_at only when the evidence results have actually changed.
+      # This prevents simply viewing an application from overwriting the timestamp
+      # that records when the evidence was last modified.
+      if crime_application.evidence_prompts_changed?
         crime_application.evidence_last_run_at = DateTime.now
-
         crime_application.save!
       end
 

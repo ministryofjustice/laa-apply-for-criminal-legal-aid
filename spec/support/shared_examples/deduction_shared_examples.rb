@@ -11,7 +11,7 @@ RSpec.shared_examples 'a deduction fieldset form' do |fieldset_class, partnered|
 
   let(:crime_application) {
     income = Income.new(
-      partner_employment_status: partnered ? ['employed'] : nil,
+      partner_employment_status: partnered ? ['employed'] : [],
       employment_status: ['employed'],
     )
     CrimeApplication.new(income:)
