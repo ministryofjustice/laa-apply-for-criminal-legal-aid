@@ -367,7 +367,9 @@ cy:
         question: Dosbarth
         absence_answer: Heb ei bennu
       offence_date:
-        question: Dyddiad
+        question:
+          one: Dyddiad
+          other: Dyddiadau
       # END offences section
 
       # BEGIN codefendants section

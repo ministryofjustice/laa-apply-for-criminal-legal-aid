@@ -72,6 +72,19 @@ RSpec.describe Summary::Components::Offence, type: :component do
       )
     end
 
+    context 'when there is only one offence date' do
+      let(:offence_dates) do
+        [[date1, date2]]
+      end
+
+      it 'uses the singular label' do
+        expect(page).to have_summary_row(
+          'Date',
+          '28 March 2023 – 18 December 2023'
+        )
+      end
+    end
+
     context 'when answers are missing' do
       let(:attributes) do
         { offence_name: nil, offence_dates: [], offence_class: nil }
