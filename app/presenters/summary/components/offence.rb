@@ -12,7 +12,8 @@ module Summary
             :offence_class, offence
           ),
           OffenceDateAnswer.new(
-            :offence_date, offence
+            :offence_date, offence,
+            i18n_opts: { count: offence.offence_dates.size }
           )
         ]
       end

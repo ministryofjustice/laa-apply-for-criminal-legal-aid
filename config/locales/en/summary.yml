@@ -367,7 +367,9 @@ en:
         question: Class
         absence_answer: Not determined
       offence_date:
-        question: Date
+        question:
+          one: Date
+          other: Dates
       # END offences section
 
       # BEGIN codefendants section
