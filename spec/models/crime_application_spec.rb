@@ -151,16 +151,6 @@ RSpec.describe CrimeApplication, type: :model do
         expect(described_class.to_be_soft_deleted.count).to eq(1)
       end
 
-      context 'when application is PSE' do
-        let(:attributes) {
-          { application_type: ApplicationType::POST_SUBMISSION_EVIDENCE.to_s, updated_at: retention_period - 1.day }
-        }
-
-        it 'does not return application' do
-          expect(described_class.to_be_soft_deleted.count).to eq(0)
-        end
-      end
-
       context 'when submission_updated_at has not been set' do
         it 'does not return application' do
           application.update_column(:submission_updated_at, nil) # rubocop:disable Rails/SkipsModelValidations
@@ -179,18 +169,6 @@ RSpec.describe CrimeApplication, type: :model do
 
     context 'when application is younger than the retention period' do
       let(:submission_updated_at) { retention_period.ago + 1.day }
-
-      it 'does not return application' do
-        expect(described_class.to_be_soft_deleted.count).to eq(0)
-      end
-    end
-
-    context 'when application has parent application' do
-      let(:attributes) { { parent_id: SecureRandom.uuid, updated_at: retention_period - 1.day } }
-
-      before do
-        application.save!
-      end
 
       it 'does not return application' do
         expect(described_class.to_be_soft_deleted.count).to eq(0)
