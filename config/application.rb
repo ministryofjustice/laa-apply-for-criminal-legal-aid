@@ -1,12 +1,12 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_view/railtie"
-require "action_mailer/railtie"
-require "active_job/railtie"
-require "rails/test_unit/railtie"
+require 'rails'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_mailer/railtie'
+require 'active_job/railtie'
+require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -42,7 +42,7 @@ module LaaApplyForCriminalLegalAid
 
     # Prohibit all HTML tags
     config.action_view.sanitized_allowed_tags = []
-    config.x.analytics.ga_tracking_id = ENV['GA_TRACKING_ID']
+    config.x.analytics.ga_tracking_id = ENV.fetch('GA_TRACKING_ID', nil)
     config.x.analytics.cookies_consent_name = 'crime_apply_cookies_consent'.freeze
     config.x.analytics.cookies_consent_expiration = 6.months
 
@@ -65,6 +65,6 @@ module LaaApplyForCriminalLegalAid
     config.x.provider_data_api.use_mock = ENV.fetch('PROVIDER_DATA_API_USE_MOCK', 'false')
 
     config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 2).to_i.years # 2 years
-    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 2).to_i.weeks # 2 weeks
+    config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 30).to_i.days # 30 days
   end
 end
