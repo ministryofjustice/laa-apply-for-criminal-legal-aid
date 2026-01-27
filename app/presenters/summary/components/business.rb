@@ -78,10 +78,12 @@ module Summary
       end
 
       def subject
-        SubjectType.new(business.ownership_type).to_param
+        subject_type.to_param
       end
 
-      alias subject_type subject
+      def subject_type
+        SubjectType.new(business.ownership_type)
+      end
     end
   end
 end
