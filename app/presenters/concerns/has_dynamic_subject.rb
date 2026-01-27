@@ -1,14 +1,16 @@
 module HasDynamicSubject
   extend ActiveSupport::Concern
 
+  include ActionView::Helpers::OutputSafetyHelper
+
   def title
-    [super, title_subject].compact.join
+    safe_join([super, title_subject].compact)
   end
 
   def title_subject
     return unless show_subject?
 
-    ": #{subject_type.to_param}"
+    ": #{I18n.t("summary.dictionary.subjects.#{subject_type}")}"
   end
 
   def show_subject?

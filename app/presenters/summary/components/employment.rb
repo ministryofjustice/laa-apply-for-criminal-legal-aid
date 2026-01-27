@@ -56,7 +56,11 @@ module Summary
       end
 
       def subject_type
-        OWNERSHIP_TYPE_MAPPING[employment.ownership_type]
+        SubjectType.new(employment.ownership_type)
+      end
+
+      def subject
+        subject_type.to_param
       end
 
       def full_address(address)
@@ -66,15 +70,15 @@ module Summary
       end
 
       def change_path
-        send :"edit_steps_income_#{subject_type}_employer_details_path", employment_id: employment.id
+        send :"edit_steps_income_#{subject}_employer_details_path", employment_id: employment.id
       end
 
       def summary_path
-        send :"edit_steps_income_#{subject_type}_employments_summary_path", employment_id: employment.id
+        send :"edit_steps_income_#{subject}_employments_summary_path", employment_id: employment.id
       end
 
       def remove_path
-        send :"confirm_destroy_steps_income_#{subject_type}_employments_path", employment_id: employment.id
+        send :"confirm_destroy_steps_income_#{subject}_employments_path", employment_id: employment.id
       end
     end
   end
