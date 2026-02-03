@@ -44,6 +44,7 @@ en:
       change: Change
       edit: Edit
       remove: Remove
+      incomplete: Incomplete
 
     change_link_html: Change <span class="govuk-visually-hidden">%{a11y_question}</span>
 
