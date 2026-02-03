@@ -111,7 +111,7 @@ module Summary
         return if record.complete?
 
         GovukComponent::TagComponent.new(
-          text: :incomplete,
+          text: I18n.t('summary.dictionary.incomplete'),
           colour: 'red'
         ).call
       end

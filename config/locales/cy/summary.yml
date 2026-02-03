@@ -44,6 +44,7 @@ cy:
       change: Newid
       edit: Dileu
       remove: Golygu
+      incomplete: Anghyflawn
 
     change_link_html: Newid <span class="govuk-visually-hidden">%{a11y_question}</span>
 
