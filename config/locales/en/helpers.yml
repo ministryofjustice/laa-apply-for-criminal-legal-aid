@@ -316,7 +316,7 @@ en:
       steps_income_business_employees_form:
         has_employees: Does %{subject} employ anyone through the business?
       steps_income_business_financials_form:
-        financials: Financials of %{subject}’s  business
+        financials: Financials of %{subject}’s business
         turnover_frequency: How often was this?
         drawings_frequency: How often was this?
         profit_frequency: Over what period was this?
