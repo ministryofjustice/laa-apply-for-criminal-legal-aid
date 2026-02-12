@@ -33,12 +33,11 @@ $colours: (
   }
 }
 
+// Ensure the logo and organisation name remain inline on
+// all screen sizes and all components follow the design pattern of
+// MoJ Design header https://design-patterns.service.justice.gov.uk/components/moj-header/
 .govuk-header__container {
   border-bottom: none;
-}
-
-.moj-header__logotype-crest {
-  top: 0;
 }
 
 .govuk-header__product-name {
@@ -46,19 +45,60 @@ $colours: (
   font-weight: 700;
 }
 
-.govuk-header__link--homepage:hover {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-
 .govuk-header__logo {
   margin-bottom: 20px;
+  width: auto;
 }
 
 .govuk-header__content {
   width: auto;
   float: right;
   margin-top: 10px;
+}
+
+.moj-header__logotype-crest {
+  height: 40px;
+  width: 40px;
+}
+
+.govuk-header__link:hover {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.govuk-header__menu-button:hover {
+  text-decoration: none;
+}
+
+.govuk-service-navigation {
+  background-color: #f4f8fb;
+  border-bottom-color: #8eb8dc;
+}
+
+@media (max-width: 52.25em) { // 836px
+  .govuk-header__navigation-list {
+    float: none;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 48em) { // 769px
+  .govuk-header__content {
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .govuk-header__menu-button {
+    position: inherit;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 40em) { // 641px
+  .moj-header__logotype-crest {
+    height: 35px;
+    width: 30px;
+  }
 }
 
 // Avoid flickering header menu on small screens, where on page load
