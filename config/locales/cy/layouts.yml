@@ -22,6 +22,7 @@ cy:
 
     header:
       service_name: Gwneud cais am gymorth cyfreithiol troseddol
+      organisation_name: Legal Aid Agency
       menu_button: Dewislen
       nav_aria_label: Dewislen
       button_aria_label: Dangos neu guddio'r ddewislen
