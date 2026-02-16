@@ -85,11 +85,15 @@ RSpec.describe 'Primary navigation' do
     end
   end
 
+  def active_nav_item
+    page.find('li.govuk-service-navigation__item--active')
+  end
+
   def search_tab_current?
-    page.find('a.moj-primary-navigation__link', text: 'Search')['aria-current'] == 'page'
+    active_nav_item.has_link?('Search')
   end
 
   def your_applications_tab_current?
-    page.find('a.moj-primary-navigation__link', text: 'Your applications')['aria-current'] == 'page'
+    active_nav_item.has_link?('Your applications')
   end
 end

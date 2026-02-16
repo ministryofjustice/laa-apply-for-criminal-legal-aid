@@ -1,24 +1,18 @@
-<div class="moj-primary-navigation">
-  <div class="moj-primary-navigation__container">
-    <div class="moj-primary-navigation__nav">
-      <nav class="moj-primary-navigation" aria-label="Primary navigation">
+<%= govuk_service_navigation(navigation_id: 'navigation') do |sn| %>
+  <%= sn.with_service_name(
+        service_name: service_name,
+        service_url: root_path
+      ) %>
 
-        <ul class="moj-primary-navigation__list">
-          <li class="moj-primary-navigation__item">
-            <%= link_to t('.your_applications'),
-                        crime_applications_path,
-                        class: 'moj-primary-navigation__link',
-                        aria: { current: ('page' if current_page?('/applications') || controller.is_a?(CompletedApplicationsController)) } %>
-          </li>
+  <%= sn.with_navigation_item(
+        text: t('.your_applications'),
+        href: crime_applications_path,
+        active: current_page?('/applications') || controller.is_a?(CompletedApplicationsController)
+      ) %>
 
-          <li class="moj-primary-navigation__item">
-            <%= link_to t('.search'),
-                        new_application_searches_path,
-                        class: 'moj-primary-navigation__link',
-                        aria: { current: ('page' if controller.controller_name == 'application_searches') } %>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</div>
+  <%= sn.with_navigation_item(
+        text: t('.search'),
+        href: new_application_searches_path,
+        active: controller.controller_name == 'application_searches'
+      ) %>
+<% end %>

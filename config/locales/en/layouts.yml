@@ -22,6 +22,7 @@ en:
 
     header:
       service_name: Apply for criminal legal aid
+      organisation_name: Legal Aid Agency
       menu_button: Menu
       nav_aria_label: Menu
       button_aria_label: Show or hide menu

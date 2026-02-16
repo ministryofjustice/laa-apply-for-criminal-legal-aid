@@ -1,15 +1,20 @@
-<%= govuk_header(service_name: service_name, homepage_url: root_path, classes: "govuk-header-#{HostEnv.env_name}") do |header|
-      header.with_navigation_item(
+<%= govuk_header(homepage_url: root_path, classes: "govuk-header-#{HostEnv.env_name}") do |header|
+  header.with_custom_logo do %>
+    <%= render partial: 'layouts/moj_crest' %>
+  <% end %>
+  <%= header.with_product_name(name: t('layouts.header.organisation_name')) %>
+
+  <%= header.with_navigation_item(
         text: current_provider.display_name,
         href: nil,
         active: false,
         classes: 'app-header__auth-user'
-      )
+      ) %>
 
-      header.with_navigation_item(
+  <%= header.with_navigation_item(
         text: t('layouts.header.sign_out'),
         href: provider_omniauth_logout_path,
         active: false,
         html_attributes: { aria: { role: 'button' } }
-      )
-    end %>
+      ) %>
+<% end %>
