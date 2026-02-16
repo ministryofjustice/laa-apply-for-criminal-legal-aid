@@ -70,6 +70,10 @@ $colours: (
   text-decoration: none;
 }
 
+.govuk-service-navigation__toggle {
+  display: none;
+}
+
 @media (max-width: 52.25em) { // 836px
   .govuk-header__navigation-list {
     float: none;
