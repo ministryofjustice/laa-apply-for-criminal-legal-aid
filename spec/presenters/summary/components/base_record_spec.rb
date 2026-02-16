@@ -63,7 +63,7 @@ RSpec.describe Summary::Components::BaseRecord do
 
       it 'includes the incomplete status in the title' do
         expect(title).to match(
-          '<strong class=\"govuk-tag govuk-tag--red\">incomplete</strong> Record human name'
+          '<strong class=\"govuk-tag govuk-tag--red\">Incomplete</strong> Record human name'
         )
       end
     end
