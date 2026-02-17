@@ -17,7 +17,7 @@
       <% if @crime_application.review_status.present? %>
         <%= govuk_tag(text: t(@crime_application.review_status, scope: 'review_status'), colour: 'blue') %>
       <% end %>
-      <% if @crime_application.decided? %>
+      <% if @crime_application.decided? && !@crime_application.post_submission_evidence? %>
           <%= govuk_link_to(t('.view_funding_decision'), '#funding_decisions', no_visited_state: true, class: 'govuk-!-margin-left-2 govuk-body-m') %>
       <% end %>
     </div>
