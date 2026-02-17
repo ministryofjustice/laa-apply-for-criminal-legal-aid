@@ -52,14 +52,14 @@ Also, some functionality in the dashboard will make use of this datastore.
 For active development, and to debug or diagnose issues, running the datastore locally along the Apply application is
 the recommended way. Follow the instructions in the above repository to setup and run the datastore locally.
 
-### Overcommit
+### Pre-commit hooks
 
-Overcommit is a gem which adds git pre-commit hooks to your project. Pre-commit hooks run various
-lint checks before making a commit. Checks are configured on a project-wide basis in .overcommit.yml.
+We use the Ministry of Justice [DevSecOps Hooks](https://github.com/ministryofjustice/devsecops-hooks) to scan our repository and stop us from committing hardcoded secrets and credentials. Refer to their repository for documentation on how to set up the pre-commit hooks locally.
 
-To install the git hooks locally, run `overcommit --install`. If you don't want the git hooks installed, just don't run this command.
-
-Once the hooks are installed, if you need to you can skip them with the `-n` flag: `git commit -n`
+With pre-commit hooks enabled, the following tools are run on each commit:
+- GitLeaks (via [devsecops-hooks](https://github.com/ministryofjustice/devsecops-hooks))
+- Rubocop
+- ERB Lint
 
 ## Running the tests
 

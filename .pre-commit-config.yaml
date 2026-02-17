@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/ministryofjustice/devsecops-hooks
+    rev: v1.4.1
+    hooks:
+      - id: baseline
+  - repo: local
+    hooks:
+      - id: rubocop
+        name: rubocop
+        entry: bundle exec rubocop --force-exclusion
+        language: system
+      - id: erblint
+        name: erblint
+        entry: bundle exec erb_lint --lint-all
+        language: system
