@@ -74,6 +74,10 @@ $colours: (
   display: none;
 }
 
+.govuk-service-navigation {
+  background-color: #f4f8fb;
+}
+
 @media (max-width: 52.25em) { // 836px
   .govuk-header__navigation-list {
     float: none;
