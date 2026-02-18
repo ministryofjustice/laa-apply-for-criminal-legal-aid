@@ -19,13 +19,11 @@ RUN bundle config set frozen 'true' && \
   apk del build-base yaml-dev
 
 # Install npm temporarily only to set up corepack, then remove it
-# Also remove corepack's node_modules to eliminate vulnerabilities
 RUN apk add --no-cache --virtual .npm-deps npm && \
   npm install -g corepack && \
   apk del .npm-deps && \
   corepack prepare yarn@4.11.0 --activate && \
-  yarn install --immutable && \
-  rm -rf /usr/local/lib/node_modules/corepack/node_modules
+  yarn install --immutable
 
 COPY . .
 RUN rails assets:precompile --trace
