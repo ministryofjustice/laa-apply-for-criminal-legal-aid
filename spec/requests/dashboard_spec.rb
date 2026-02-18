@@ -91,6 +91,23 @@ RSpec.describe 'Dashboard', :authorized do
 
         assert_select 'h1', 'Upload supporting evidence'
       end
+
+      context 'when the application type is post submission evidence' do
+        let(:application_fixture) do
+          LaaCrimeSchemas.fixture(1.0) do |data|
+            data.merge(
+              reviewed_at: '2025-02-01',
+              review_status: 'assessment_completed',
+              application_type: 'post_submission_evidence'
+            ).to_json
+          end
+        end
+
+        it 'does not show the "View funding decision" link' do
+          assert_select 'a', text: 'View funding decision', count: 0
+          assert_select 'a[href="#funding_decisions"]', count: 0
+        end
+      end
     end
 
     # rubocop:disable RSpec/ExampleLength
