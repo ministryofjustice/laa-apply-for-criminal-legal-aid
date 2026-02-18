@@ -61,6 +61,11 @@ With pre-commit hooks enabled, the following tools are run on each commit:
 - Rubocop
 - ERB Lint
 
+To bypass the hooks, use the `-n` or `--no-verify` option, e.g.
+```shell
+git commit -nam 'My commit'
+```
+
 ## Running the tests
 
 You can run all the code linters and tests with:
