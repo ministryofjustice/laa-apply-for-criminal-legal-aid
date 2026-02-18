@@ -19,9 +19,11 @@ RUN bundle config set frozen 'true' && \
   apk del build-base yaml-dev
 
 # Install npm temporarily only to set up corepack, then remove it
+# Also remove npm's system-level node_modules to eliminate vulnerabilities  
 RUN apk add --no-cache --virtual .npm-deps npm && \
   npm install -g corepack && \
   apk del .npm-deps && \
+  rm -rf /usr/lib/node_modules && \
   corepack prepare yarn@4.11.0 --activate && \
   yarn install --immutable
 
