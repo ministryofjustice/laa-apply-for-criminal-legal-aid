@@ -1,5 +1,7 @@
 # laa-apply-for-criminal-legal-aid
 
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-apply-for-criminal-legal-aid/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-apply-for-criminal-legal-aid)
+
 [![CI and CD](https://github.com/ministryofjustice/laa-apply-for-criminal-legal-aid/actions/workflows/test-build-deploy.yml/badge.svg)](https://github.com/ministryofjustice/laa-apply-for-criminal-legal-aid/actions/workflows/test-build-deploy.yml)
 
 A service to apply for criminal legal aid
