@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>ministryofjustice/devsecops-actions"],
+  "schedule": ["0 12 * * *"],
+  "lockFileMaintenance": {
+    "schedule": ["0 12 * * *"]
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["bundler"],
+      "groupName": "renovate: bundler"
+    }
+  ]
+}
