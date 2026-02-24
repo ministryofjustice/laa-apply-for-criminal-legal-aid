@@ -1,4 +1,5 @@
 name: ZAP Full DAST Scan
+permissions: {}
 on:
   schedule:
     - cron: "0 8 * * 5" # 8 AM every Friday
@@ -7,6 +8,7 @@ on:
 jobs:
   zap_scan_staging:
     runs-on: ubuntu-latest
+
     steps:
       - name: ZAP Full Scan - Staging
         uses: zaproxy/action-full-scan@v0.13.0
