@@ -11,7 +11,3 @@ repos:
         name: rubocop
         entry: bundle exec rubocop --force-exclusion
         language: system
-      - id: erblint
-        name: erblint
-        entry: bundle exec erb_lint --lint-all
-        language: system
