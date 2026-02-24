@@ -61,7 +61,6 @@ We use the Ministry of Justice [DevSecOps Hooks](https://github.com/ministryofju
 With pre-commit hooks enabled, the following tools are run on each commit:
 - GitLeaks (via [devsecops-hooks](https://github.com/ministryofjustice/devsecops-hooks))
 - Rubocop
-- ERB Lint
 
 To bypass the hooks, use the `-n` or `--no-verify` option, e.g.
 ```shell
