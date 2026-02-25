@@ -20,3 +20,6 @@
 
 // App-specific custom styles and overrides
 @use "local/custom";
+
+// Sortable table sort direction arrows (extracted from moj-frontend 5.x)
+@use "local/sortable-table";
