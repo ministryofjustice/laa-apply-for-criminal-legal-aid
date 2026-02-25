@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>ministryofjustice/devsecops-actions"],
+  "extends": ["github>ministryofjustice/devsecops-actions:renovate"],
   "schedule": ["* 12-13 * * *"],
   "lockFileMaintenance": {
     "schedule": ["* 12-13 * * *"]
