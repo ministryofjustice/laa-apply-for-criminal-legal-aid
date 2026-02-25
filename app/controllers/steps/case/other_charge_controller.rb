@@ -17,7 +17,7 @@ module Steps
       private
 
       def other_charge
-        @other_charge ||= current_crime_application.case.send(:"#{params[:subject]}_other_charge")
+        @other_charge ||= current_crime_application.case.send(:"#{@subject.to_param}_other_charge")
       end
     end
   end
