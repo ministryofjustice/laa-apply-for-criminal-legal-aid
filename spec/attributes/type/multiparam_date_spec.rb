@@ -70,6 +70,12 @@ RSpec.describe Type::MultiparamDate do
           end
         end
       end
+
+      context 'and the month is a string containing whitespace' do
+        let(:value) { { 3 => date.day, 2 => "#{date.strftime('%B')} ", 1 => date.year } }
+
+        it { expect(coerced_value).to eq(date) }
+      end
     end
 
     context 'the parts do not represent a valid date (invalid month)' do

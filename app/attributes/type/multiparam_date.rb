@@ -38,7 +38,7 @@ module Type
       month_value = value[2]
 
       begin
-        normalized[2] = month_value.to_i.nonzero? || parse_month(month_value)
+        normalized[2] = month_value.to_i.nonzero? || parse_month(month_value.strip)
         normalized
       rescue StandardError
         value
