@@ -2,7 +2,7 @@ name: ZAP Full DAST Scan
 permissions: {}
 on:
   schedule:
-    - cron: "0 8 * * 5" # 8 AM every Friday
+    - cron: "0 8 * * *" # 8 AM every day
   workflow_dispatch:
 
 jobs:
@@ -14,8 +14,8 @@ jobs:
         uses: zaproxy/action-full-scan@v0.13.0
         with:
           target: "https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/"
-          fail_action: true
-          allow_issue_writing: false
+          fail_action: false
+          allow_issue_writing: true
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v6.0.0
         with:
