@@ -1,5 +1,7 @@
 name: ZAP Full DAST Scan
-permissions: {}
+permissions:
+  issues: write
+
 on:
   schedule:
     - cron: "0 8 * * *" # 8 AM every day
