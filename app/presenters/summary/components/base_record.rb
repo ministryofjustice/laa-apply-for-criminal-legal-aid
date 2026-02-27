@@ -1,6 +1,10 @@
 module Summary
   module Components
     class BaseRecord < ViewComponent::Base
+      include GovukComponentsHelper
+      include GovukLinkHelper
+      include GovukVisuallyHiddenHelper
+
       with_collection_parameter :record
 
       attr_reader :record, :record_iteration, :show_actions, :show_record_actions, :crime_application
@@ -13,7 +17,7 @@ module Summary
         @show_record_actions = show_record_actions
         @crime_application = crime_application
 
-        super
+        super()
       end
 
       def call

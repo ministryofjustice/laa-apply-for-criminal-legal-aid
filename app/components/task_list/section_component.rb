@@ -1,11 +1,13 @@
 module TaskList
   class SectionComponent < ViewComponent::Base
+    include GovukComponentsHelper
+
     attr_reader :section, :iteration
 
     def initialize(section:, section_iteration: nil)
       @section = section
       @iteration = section_iteration
-      super
+      super()
     end
 
     delegate :name, :tasks, :crime_application, to: :section

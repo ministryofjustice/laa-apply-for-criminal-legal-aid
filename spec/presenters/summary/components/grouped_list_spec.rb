@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 class MockComponent < ViewComponent::Base
-  def initialize(mock:, mock_counter:, show_actions:, show_record_actions:, crime_application:)
+  def initialize(mock:, mock_counter:, show_actions:, show_record_actions:, crime_application:) # rubocop:disable Lint/UnusedMethodArgument
     @type = mock.type
     @count = mock_counter
-    super
+    super()
   end
 
   def call
