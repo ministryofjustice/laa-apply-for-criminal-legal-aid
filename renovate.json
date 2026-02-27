@@ -5,6 +5,7 @@
   "lockFileMaintenance": {
     "schedule": ["* 12-13 * * *"]
   },
+  "prCreation": "immediate",
   "packageRules": [
     {
       "matchManagers": ["bundler"],
