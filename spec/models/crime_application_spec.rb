@@ -176,7 +176,7 @@ RSpec.describe CrimeApplication, type: :model do
     end
 
     context 'when application is exempt from deletion' do
-      let(:attributes) { { exempt_from_deletion: true, updated_at: retention_period - 1.day } }
+      let(:attributes) { { exempt_from_deletion: true, updated_at: (retention_period + 1.day).ago } }
 
       before do
         application.save!
