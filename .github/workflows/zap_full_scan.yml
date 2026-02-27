@@ -1,5 +1,7 @@
 name: ZAP Full DAST Scan
-permissions: {}
+permissions:
+  issues: write
+
 on:
   schedule:
     - cron: "0 8 * * *" # 8 AM every day
@@ -17,7 +19,7 @@ jobs:
           fail_action: false
           allow_issue_writing: true
       - name: Upload ZAP Report
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7
         with:
-          name: zap-full-report-staging
           path: report_html.html
+          archive: false
