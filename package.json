@@ -21,6 +21,7 @@
   },
   "resolutions": {
     "tar": "7.5.9",
+    "minimatch": "^10.2.4",
     "glob": "^13.0.3"
   }
 }
