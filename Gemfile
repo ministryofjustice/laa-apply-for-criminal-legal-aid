@@ -7,7 +7,7 @@ gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder', '~> 5.11'
-gem 'jbuilder', '~> 2.13.0'
+gem 'jbuilder', '~> 2.14.0'
 gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
@@ -30,7 +30,7 @@ gem 'prometheus_exporter'
 gem 'marcel'
 
 # Virus scan with ClamAV
-gem 'clamby', '1.6.10', require: false
+gem 'clamby', '1.6.11', require: false
 
 # Exceptions notifications
 gem 'sentry-rails'
