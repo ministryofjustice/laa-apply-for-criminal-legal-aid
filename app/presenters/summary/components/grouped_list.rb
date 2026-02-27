@@ -10,7 +10,7 @@ module Summary
         @show_record_actions = show_record_actions
         @crime_application = crime_application
 
-        super
+        super()
       end
 
       attr_reader :items, :item_component, :show_actions, :show_record_actions, :crime_application
