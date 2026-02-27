@@ -10,14 +10,14 @@
     "accessible-autocomplete": "^3.0.1",
     "dropzone": "^6.0.0-beta.2",
     "govuk-frontend": "^5.14.0",
-    "sass": "^1.86.0"
+    "sass": "^1.97.3"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css  --no-source-map  --load-path=.  --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "esbuild": "^0.25.9"
+    "esbuild": "^0.27.3"
   },
   "resolutions": {
     "tar": "7.5.9",
