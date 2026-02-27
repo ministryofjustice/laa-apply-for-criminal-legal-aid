@@ -1,6 +1,7 @@
 module Decisions
   class CapitalDecisionTree < BaseDecisionTree # rubocop:disable Metrics/ClassLength
     include TypeOfMeansAssessment
+
     # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
     def destination
       case step_name

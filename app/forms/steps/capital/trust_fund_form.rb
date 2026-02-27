@@ -2,6 +2,7 @@ module Steps
   module Capital
     class TrustFundForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :capital
 
       attribute :will_benefit_from_trust_fund, :value_object, source: YesNoAnswer

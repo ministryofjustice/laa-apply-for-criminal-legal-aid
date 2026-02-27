@@ -2,6 +2,7 @@ module Steps
   module Client
     class ContactDetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       # Very basic validation to allow numeric and common telephone number symbols

@@ -61,7 +61,6 @@ module Steps
         def has_no_deductions
           'yes' if types.include?('none')
         end
-        # rubocop:enable Naming/PredicateName
 
         private
 

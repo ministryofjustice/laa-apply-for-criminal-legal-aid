@@ -2,6 +2,7 @@ module Steps
   module Client
     class AppealFinancialCircumstancesForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :appeal_financial_circumstances_changed, :value_object, source: YesNoAnswer

@@ -40,6 +40,6 @@ module Summary
         YesNoAnswer.new(capital.has_premium_bonds).yes?
       end
     end
-    # rubocop:enable Naming/PredicateName, Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

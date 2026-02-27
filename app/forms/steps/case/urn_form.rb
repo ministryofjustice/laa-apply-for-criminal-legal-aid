@@ -2,6 +2,7 @@ module Steps
   module Case
     class UrnForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       URN_REGEXP = /\A[A-Z0-9]{6,20}\z/

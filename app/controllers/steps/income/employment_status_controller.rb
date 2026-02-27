@@ -14,7 +14,7 @@ module Steps
       private
 
       def additional_permitted_params
-        [employment_status: []]
+        [{ employment_status: [] }]
       end
     end
   end

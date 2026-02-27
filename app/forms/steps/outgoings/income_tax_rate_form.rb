@@ -2,6 +2,7 @@ module Steps
   module Outgoings
     class IncomeTaxRateForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :outgoings
 
       attribute :income_tax_rate_above_threshold, :value_object, source: YesNoAnswer

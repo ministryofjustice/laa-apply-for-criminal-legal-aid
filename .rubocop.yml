@@ -57,11 +57,17 @@ Rails/FilePath:
 Rails/EnumSyntax:
   Enabled: false
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
+  Enabled: false
+
+Naming/PredicateMethod:
   Enabled: false
 
 # Rspec cops
 ############
+
+RSpec/LeakyLocalVariable:
+  Enabled: false
 
 RSpec/SubjectStub:
   Enabled: false

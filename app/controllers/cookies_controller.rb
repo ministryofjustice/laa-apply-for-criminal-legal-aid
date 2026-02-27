@@ -13,7 +13,7 @@ class CookiesController < UnauthenticatedController
       cookies: cookies
     ).save
 
-    redirect_back fallback_location: root_path, flash: { cookies_consent_updated: result }
+    redirect_back_or_to(root_path, flash: { cookies_consent_updated: result })
   end
 
   private

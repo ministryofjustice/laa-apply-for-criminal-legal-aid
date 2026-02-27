@@ -2,6 +2,7 @@ module Steps
   module Case
     class OtherChargeInProgressForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attr_accessor :subject

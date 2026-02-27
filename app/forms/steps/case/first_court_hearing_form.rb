@@ -2,6 +2,7 @@ module Steps
   module Case
     class FirstCourtHearingForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :first_court_hearing_name, :string

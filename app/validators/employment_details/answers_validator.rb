@@ -20,7 +20,7 @@ module EmploymentDetails
       validate_client_employment
       validate_client_self_employment
 
-      errors.add :base, :incomplete_records if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     def applicable?

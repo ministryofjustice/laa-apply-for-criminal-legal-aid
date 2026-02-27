@@ -5,6 +5,7 @@ module Test
                                        :percentage_partner_owned, :include_partner_in_means_assessment?,
                                        keyword_init: true) do
     include ActiveModel::Validations
+
     validates_with CapitalAssessment::PropertyOwnershipValidator
 
     def to_param

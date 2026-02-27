@@ -28,7 +28,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [offence_dates_attributes: Steps::Case::OffenceDateFieldsetForm.attribute_names]
+        [{ offence_dates_attributes: Steps::Case::OffenceDateFieldsetForm.attribute_names }]
       end
 
       def step_name

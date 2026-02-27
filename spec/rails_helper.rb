@@ -11,8 +11,7 @@ require 'laa_crime_schemas'
 # If you are not using ActiveRecord, you can remove these lines.
 begin
   ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => e
-  puts e.to_s.strip
+rescue ActiveRecord::PendingMigrationError
   exit 1
 end
 
@@ -60,15 +59,15 @@ RSpec.configure do |config|
   # rubocop:disable Layout/LineLength
   config.before do
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
-      .with(body: /\{"entity_id":"[0-9a-f\-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"created_at":"(null|(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) UTC)"}/)
+      .with(body: /\{"entity_id":"[0-9a-f-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"created_at":"(null|(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) UTC)"}/)
       .to_return(body: '{}')
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_updated')
-      .with(body: /\{"entity_id":"[0-9a-f\-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+}/)
+      .with(body: /\{"entity_id":"[0-9a-f-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+}/)
       .to_return(body: '{}')
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_deleted')
-      .with(body: /\{"entity_id":"[0-9a-f\-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"reason":"(provider_action|retention_rule)","deleted_by":".*?"}/)
+      .with(body: /\{"entity_id":"[0-9a-f-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"reason":"(provider_action|retention_rule)","deleted_by":".*?"}/)
       .to_return(body: '{}')
   end
   # rubocop:enable Layout/LineLength

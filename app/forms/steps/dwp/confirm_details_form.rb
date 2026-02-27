@@ -4,6 +4,7 @@ module Steps
       include Steps::SubjectIsBenefitCheckRecipient
 
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :confirm_details, :value_object, source: YesNoAnswer

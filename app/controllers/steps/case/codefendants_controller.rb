@@ -32,7 +32,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [codefendants_attributes: Steps::Case::CodefendantFieldsetForm.attribute_names]
+        [{ codefendants_attributes: Steps::Case::CodefendantFieldsetForm.attribute_names }]
       end
     end
   end

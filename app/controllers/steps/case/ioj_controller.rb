@@ -16,7 +16,7 @@ module Steps
       private
 
       def additional_permitted_params
-        [types: []]
+        [{ types: [] }]
       end
     end
   end

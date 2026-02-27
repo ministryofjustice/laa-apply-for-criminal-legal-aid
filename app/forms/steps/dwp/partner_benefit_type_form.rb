@@ -2,6 +2,7 @@ module Steps
   module DWP
     class PartnerBenefitTypeForm < Steps::DWP::BenefitTypeForm
       include Steps::HasOneAssociation
+
       has_one_association :partner
 
       private

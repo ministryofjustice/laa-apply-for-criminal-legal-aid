@@ -7,7 +7,8 @@ module CsvQueryable
     case field
     when /\Atrue\z/i  then true
     when /\Afalse\z/i then false
-    else; field; end
+    else; field
+    end
   end
 
   attr_reader :row

@@ -29,7 +29,7 @@ module IncomeAssessment
       errors.add(:dependants, :incomplete) unless dependants_complete?
       errors.add(:manage_without_income, :incomplete) unless manage_without_income_complete?
 
-      errors.add(:base, :incomplete_records) if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     def income_before_tax_complete?

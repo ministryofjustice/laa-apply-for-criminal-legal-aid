@@ -2,6 +2,7 @@ module Steps
   module Client
     class RelationshipStatusForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :partner_detail
 
       attribute :relationship_status, :value_object, source: ClientRelationshipStatusType

@@ -13,8 +13,6 @@ module Datastore
 
       attr_reader :document
 
-      delegate :success?, :flagged?, :inconclusive?, to: :class
-
       def initialize(document:)
         @document = document
       end

@@ -5,6 +5,7 @@ module Steps
     module Partner
       class IncomePaymentsForm < Steps::BaseFormObject
         include Steps::HasOneAssociation
+
         has_one_association :income
 
         PAYMENT_TYPES_ORDER = Types::OtherIncomePaymentType.values
