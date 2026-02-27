@@ -14,7 +14,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [address: [:address_line_one, :address_line_two, :city, :country, :postcode]]
+        [{ address: [:address_line_one, :address_line_two, :city, :country, :postcode] }]
       end
     end
   end

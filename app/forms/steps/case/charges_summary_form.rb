@@ -2,6 +2,7 @@ module Steps
   module Case
     class ChargesSummaryForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :add_offence, :value_object, source: YesNoAnswer

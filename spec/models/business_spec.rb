@@ -179,7 +179,6 @@ RSpec.describe Business, type: :model do
           it { expect(subject).to be false }
         end
 
-        # rubocop:disable Layout/LineLength
         context 'and the salary and total_income_share_sales figures have been provided' do
           let(:attributes) do
             required_attributes.merge(business_type: BusinessType::DIRECTOR_OR_SHAREHOLDER.to_s,
@@ -192,7 +191,6 @@ RSpec.describe Business, type: :model do
 
           it { expect(subject).to be true }
         end
-        # rubocop:enable Layout/LineLength
       end
     end
 

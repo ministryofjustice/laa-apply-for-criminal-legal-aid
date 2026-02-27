@@ -22,7 +22,7 @@ class DocumentsController < ApplicationController
         format.html { redirect_to evidence_upload_step }
         format.json do
           render json: document.as_json.merge(error_message: error_for(document)),
-                 status: :unprocessable_entity
+                 status: :unprocessable_content
         end
       end
     end

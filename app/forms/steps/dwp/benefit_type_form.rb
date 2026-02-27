@@ -2,6 +2,7 @@ module Steps
   module DWP
     class BenefitTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :benefit_type, :value_object, source: BenefitType

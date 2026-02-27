@@ -84,7 +84,7 @@ module Evidence
       # in zeitwerk.rb. Trying to prevent repeated loading (and possible SimpleCov
       # inaccurate results)
       def self.load_rules!
-        return if Evidence.constants.include?(:Rules)
+        return if Evidence.const_defined?(:Rules)
 
         Dir.glob(RULES_DIR).each { |file| load file }
       end

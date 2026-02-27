@@ -26,7 +26,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [dependants_attributes: Steps::Income::DependantFieldsetForm.attribute_names]
+        [{ dependants_attributes: Steps::Income::DependantFieldsetForm.attribute_names }]
       end
     end
   end

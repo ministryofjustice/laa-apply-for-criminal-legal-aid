@@ -4,6 +4,7 @@ module Steps
       include Steps::HasOneAssociation
       include TypeOfMeansAssessment
       include Steps::ApplicantOrPartner
+
       has_one_association :capital
 
       attr_writer :saving_type

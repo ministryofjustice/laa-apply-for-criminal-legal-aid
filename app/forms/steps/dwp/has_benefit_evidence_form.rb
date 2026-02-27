@@ -5,6 +5,7 @@ module Steps
       include Steps::SubjectIsBenefitCheckRecipient
 
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :has_benefit_evidence, :value_object, source: YesNoAnswer

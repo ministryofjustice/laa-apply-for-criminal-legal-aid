@@ -2,6 +2,7 @@ module Steps
   module Capital
     class PartnerPremiumBondsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :capital
 
       attribute :partner_has_premium_bonds, :value_object, source: YesNoAnswer

@@ -2,6 +2,7 @@ module Steps
   module Case
     class HasCodefendantsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :has_codefendants, :value_object, source: YesNoAnswer

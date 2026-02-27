@@ -2,6 +2,7 @@ module Steps
   module Income
     class LostJobInCustodyForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :income
 
       attribute :lost_job_in_custody, :value_object, source: YesNoAnswer

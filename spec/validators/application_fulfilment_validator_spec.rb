@@ -4,6 +4,7 @@ module Test
   CrimeApplicationValidatable = Struct.new(:is_means_tested, :kase, :ioj, :income, :documents, :applicant, :cifc?,
                                            :application_type, keyword_init: true) do
     include ActiveModel::Validations
+
     validates_with ApplicationFulfilmentValidator
 
     def appeal_no_changes?

@@ -2,6 +2,7 @@ module Steps
   module Client
     class CaseTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :case_type, :value_object, source: CaseType

@@ -8,7 +8,7 @@ module PassportingBenefitCheck
 
     attr_reader :record
 
-    delegate :errors, :applicant, :crime_application, to: :record
+    delegate :errors, :applicant, to: :record
 
     def validate
       return if !applicable? || complete?

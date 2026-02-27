@@ -5,6 +5,7 @@ module Steps
       include ApplicantAndPartner
 
       include Steps::HasOneAssociation
+
       has_one_association :capital
 
       attribute :has_no_other_assets

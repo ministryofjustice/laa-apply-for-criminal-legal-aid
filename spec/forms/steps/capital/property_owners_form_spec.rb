@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Capital::PropertyOwnersForm do
-  # rubocop:disable Layout/LineLength
   subject { described_class.new(arguments) }
 
   let(:arguments) do
@@ -239,5 +238,4 @@ RSpec.describe Steps::Capital::PropertyOwnersForm do
       end
     end
   end
-  # rubocop:enable Layout/LineLength
 end

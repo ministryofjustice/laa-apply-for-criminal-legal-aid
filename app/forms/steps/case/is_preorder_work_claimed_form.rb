@@ -2,6 +2,7 @@ module Steps
   module Case
     class IsPreorderWorkClaimedForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :is_preorder_work_claimed, :value_object, source: YesNoAnswer

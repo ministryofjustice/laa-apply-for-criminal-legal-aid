@@ -30,7 +30,7 @@ module PartnerDetails
         errors.add(:home_address, :incomplete) unless address?
       end
 
-      errors.add(:base, :incomplete_records) if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     private

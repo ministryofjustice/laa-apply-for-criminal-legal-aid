@@ -2,6 +2,7 @@ module Steps
   module Client
     class AppealDetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :appeal_lodged_date, :multiparam_date

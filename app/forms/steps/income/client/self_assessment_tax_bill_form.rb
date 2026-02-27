@@ -3,6 +3,7 @@ module Steps
     module Client
       class SelfAssessmentTaxBillForm < Steps::BaseFormObject
         include Steps::HasOneAssociation
+
         has_one_association :income
 
         attribute :applicant_self_assessment_tax_bill, :value_object, source: YesNoAnswer

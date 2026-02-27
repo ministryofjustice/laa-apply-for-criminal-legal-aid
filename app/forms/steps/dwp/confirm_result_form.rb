@@ -3,6 +3,7 @@ module Steps
     class ConfirmResultForm < Steps::BaseFormObject
       include Steps::SubjectIsBenefitCheckRecipient
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       private

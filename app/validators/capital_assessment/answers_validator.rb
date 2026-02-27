@@ -30,7 +30,7 @@ module CapitalAssessment
       errors.add :partner_trust_fund, :blank unless partner_trust_fund_complete?
       errors.add :frozen_income_savings_assets_capital, :blank unless frozen_income_savings_assets_complete?
 
-      errors.add(:base, :incomplete_records) if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     def property_type_complete?

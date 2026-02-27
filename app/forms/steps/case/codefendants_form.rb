@@ -2,6 +2,7 @@ module Steps
   module Case
     class CodefendantsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       delegate :codefendants_attributes=, to: :kase

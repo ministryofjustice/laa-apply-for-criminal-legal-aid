@@ -179,7 +179,7 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   end
 
   def submit_drafted_application(application_id = nil)
-    @submitted_application_id = application_id || current_path[%r{/applications/([a-f0-9\-]{36})/}, 1]
+    @submitted_application_id = application_id || current_path[%r{/applications/([a-f0-9-]{36})/}, 1]
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications').to_return_json(
       body: lambda { |req|

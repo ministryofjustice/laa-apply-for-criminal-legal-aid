@@ -23,7 +23,7 @@ module OutgoingsAssessment
       errors.add(:income_tax_rate, :incomplete) unless income_tax_rate_complete?
       errors.add(:partner_income_tax_rate, :incomplete) unless partner_income_tax_rate_complete?
       errors.add(:outgoings_more_than, :incomplete) unless outgoings_more_than_income_complete?
-      errors.add(:base, :incomplete_records) if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     def housing_payment_type_complete?

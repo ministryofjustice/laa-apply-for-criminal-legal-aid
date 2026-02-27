@@ -2,6 +2,7 @@ module Steps
   module Client
     class DetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :first_name, :string

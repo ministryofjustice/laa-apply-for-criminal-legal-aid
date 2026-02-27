@@ -3,6 +3,7 @@ require 'rails_helper'
 module Test
   PseApplicationValidatable = Struct.new(:documents, keyword_init: true) do
     include ActiveModel::Validations
+
     validates_with PseFulfilmentValidator
 
     def to_param
