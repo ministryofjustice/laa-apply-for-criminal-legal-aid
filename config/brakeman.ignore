@@ -3,50 +3,50 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "272f9bb5c533d4a346f02c646fb01495eb49dd32cf328f6e6ee6f99d8afd0d01",
+      "fingerprint": "57e7c6e7994f981366ff98e643bec16c531f752e24bd46d5f73a16140b5368bc",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/lib/usn_seq_helper.rb",
-      "line": 44,
+      "line": 45,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "ActiveRecord::Base.connection.execute(\"CREATE SEQUENCE IF NOT EXISTS #{\"crime_applications_usn_seq\"} AS integer START WITH #{seq_start}\")",
+      "code": "ActiveRecord::Base.connection.execute(\"CREATE SEQUENCE IF NOT EXISTS #{ActiveRecord::Base.connection.quote_table_name(\"crime_applications_usn_seq\")} AS integer START WITH #{seq_start}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "UsnSeqHelper",
-        "method": "s(:self).create_sequence"
+        "method": "self.create_sequence"
       },
       "user_input": "seq_start",
       "confidence": "Medium",
       "cwe_id": [
         89
       ],
-      "note": ""
+      "note": "seq_start is always Integer() coerced, safe from injection"
     },
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "a25366ac13ce8e1667b4948b7c00414ddeba8ee8fdfd22171acfe0c2c963598f",
+      "fingerprint": "06883f02a3c8823e068cc356c9504d35a45ec9773737588c8165efe456e7f729",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/lib/usn_seq_helper.rb",
-      "line": 60,
+      "line": 63,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "ActiveRecord::Base.connection.execute(\"ALTER SEQUENCE IF EXISTS public.#{\"crime_applications_usn_seq\"} RESTART WITH #{seq_start}\")",
+      "code": "ActiveRecord::Base.connection.execute(\"ALTER SEQUENCE IF EXISTS public.#{ActiveRecord::Base.connection.quote_table_name(\"crime_applications_usn_seq\")} RESTART WITH #{seq_start}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "UsnSeqHelper",
-        "method": "s(:self).restart_sequence"
+        "method": "self.restart_sequence"
       },
       "user_input": "seq_start",
       "confidence": "Medium",
       "cwe_id": [
         89
       ],
-      "note": ""
+      "note": "seq_start is always Integer() coerced, safe from injection"
     }
   ],
-  "updated": "2024-06-12 19:24:45 +0100",
-  "brakeman_version": "6.1.2"
+  "updated": "2026-03-02 14:55:00 +0000",
+  "brakeman_version": "8.0.4"
 }

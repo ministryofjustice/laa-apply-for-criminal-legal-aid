@@ -40,31 +40,34 @@ class UsnSeqHelper
     # whatever that is by then (i.e. 10_789_567).
     #
     def create_sequence
+      seq_name = ActiveRecord::Base.connection.quote_table_name(USN_SEQUENCE_NAME)
       ActiveRecord::Base.connection.execute(
-        "CREATE SEQUENCE IF NOT EXISTS #{USN_SEQUENCE_NAME} AS integer START WITH #{seq_start}"
+        "CREATE SEQUENCE IF NOT EXISTS #{seq_name} AS integer START WITH #{seq_start}"
       )
     end
 
     def drop_sequence
       raise 'The Rails environment is running in production mode!' if Rails.env.production?
 
+      seq_name = ActiveRecord::Base.connection.quote_table_name(USN_SEQUENCE_NAME)
       ActiveRecord::Base.connection.execute(
-        "DROP SEQUENCE IF EXISTS #{USN_SEQUENCE_NAME}"
+        "DROP SEQUENCE IF EXISTS #{seq_name}"
       )
     end
 
     def restart_sequence
       Rails.logger.info "Restarting USN sequence with #{seq_start}..."
 
+      seq_name = ActiveRecord::Base.connection.quote_table_name(USN_SEQUENCE_NAME)
       ActiveRecord::Base.connection.execute(
-        "ALTER SEQUENCE IF EXISTS public.#{USN_SEQUENCE_NAME} RESTART WITH #{seq_start}"
+        "ALTER SEQUENCE IF EXISTS public.#{seq_name} RESTART WITH #{seq_start}"
       )
     end
 
     private
 
     def seq_start
-      ENV.fetch('USN_SEQ_START', USN_SEQUENCE_START).to_i
+      Integer(ENV.fetch('USN_SEQ_START', USN_SEQUENCE_START))
     end
   end
 end
