@@ -2,6 +2,7 @@ module Steps
   module Case
     class IsClientRemandedForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :is_client_remanded, :value_object, source: YesNoAnswer

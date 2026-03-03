@@ -4,6 +4,7 @@ module Steps
       include Steps::SubjectIsBenefitCheckRecipient
 
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :will_enter_nino, :value_object, source: YesNoAnswer

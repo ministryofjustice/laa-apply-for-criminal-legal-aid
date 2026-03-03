@@ -2,6 +2,7 @@ module Steps
   module DWP
     class PartnerConfirmResultForm < Steps::DWP::ConfirmResultForm
       include Steps::HasOneAssociation
+
       has_one_association :partner
 
       private

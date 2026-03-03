@@ -2,6 +2,7 @@ module Steps
   module Client
     class ResidenceTypeForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :applicant
 
       attribute :residence_type, :value_object, source: ResidenceType

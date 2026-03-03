@@ -24,7 +24,7 @@ module Steps
       end
 
       def additional_permitted_params
-        [property_owners_attributes: Steps::Capital::PropertyOwnerFieldsetForm.attribute_names]
+        [{ property_owners_attributes: Steps::Capital::PropertyOwnerFieldsetForm.attribute_names }]
       end
     end
   end

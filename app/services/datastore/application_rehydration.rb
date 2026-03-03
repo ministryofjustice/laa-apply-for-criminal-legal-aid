@@ -141,7 +141,7 @@ module Datastore
     end
 
     def evidence_last_run_at
-      return [] unless parent&.evidence_details&.last_run_at
+      return nil unless parent&.evidence_details&.last_run_at
 
       parent.evidence_details.last_run_at
     end

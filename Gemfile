@@ -7,13 +7,13 @@ gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder', '~> 5.11'
-gem 'jbuilder', '~> 2.13.0'
+gem 'jbuilder', '~> 2.14.0'
 gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '7.2.2.2'
+gem 'rails', '~> 8.0.0'
 gem 'uk_postcode'
 
 # Authentication
@@ -30,7 +30,7 @@ gem 'prometheus_exporter'
 gem 'marcel'
 
 # Virus scan with ClamAV
-gem 'clamby', '1.6.10', require: false
+gem 'clamby', '1.6.11', require: false
 
 # Exceptions notifications
 gem 'sentry-rails'
@@ -41,7 +41,7 @@ gem 'stackprof'
 gem 'bootsnap', require: false
 
 gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.1',
+    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.4',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',

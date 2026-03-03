@@ -2,6 +2,7 @@ module Steps
   module Client
     class AppealReferenceNumberForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       MAAT_ID_REGEXP = /\A[0-9]{6,9}\z/

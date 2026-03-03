@@ -2,6 +2,7 @@ module Steps
   module Income
     class EmploymentStatusForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :income
 
       attribute :employment_status, array: true, default: []

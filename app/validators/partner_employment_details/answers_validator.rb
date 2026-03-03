@@ -19,7 +19,7 @@ module PartnerEmploymentDetails
       validate_partner_employment
       validate_partner_self_employment
 
-      errors.add :base, :incomplete_records if errors.present?
+      errors.presence&.add(:base, :incomplete_records)
     end
 
     def applicable?

@@ -2,6 +2,7 @@ module Steps
   module Case
     class IojForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :ioj, through: :case
 
       attribute :types, array: true, default: []

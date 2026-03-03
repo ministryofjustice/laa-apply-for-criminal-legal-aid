@@ -2,6 +2,7 @@ module Steps
   module Case
     class HasCaseConcludedForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :case
 
       attribute :has_case_concluded, :value_object, source: YesNoAnswer

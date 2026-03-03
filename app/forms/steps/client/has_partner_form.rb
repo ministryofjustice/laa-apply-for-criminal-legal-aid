@@ -2,6 +2,7 @@ module Steps
   module Client
     class HasPartnerForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :partner_detail
 
       attribute :has_partner, :value_object, source: YesNoAnswer

@@ -2,6 +2,7 @@ module Steps
   module Income
     class BusinessesSummaryController < Steps::BaseStepController
       include SubjectResource
+
       before_action :require_businesses
 
       def edit

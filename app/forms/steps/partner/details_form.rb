@@ -2,6 +2,7 @@ module Steps
   module Partner
     class DetailsForm < Steps::BaseFormObject
       include Steps::HasOneAssociation
+
       has_one_association :partner
 
       attribute :first_name, :string
