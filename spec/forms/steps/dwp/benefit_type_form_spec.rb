@@ -56,6 +56,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
                                                    'has_benefit_evidence' => nil,
                                                    'will_enter_nino' => nil,
                                                    'benefit_check_result' => nil,
+                                                   'dwp_response' => nil,
                                                    'confirm_details' => nil,
                                                    'confirm_dwp_result' => nil,
                                                  }).and_return(true)
@@ -64,6 +65,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
                                                            'has_benefit_evidence' => nil,
                                                            'will_enter_nino' => nil,
                                                            'benefit_check_result' => nil,
+                                                           'dwp_response' => nil,
                                                            'confirm_details' => nil,
                                                            'confirm_dwp_result' => nil,
                                                            'benefit_type' => nil,
@@ -144,6 +146,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
                                                    'has_benefit_evidence' => nil,
                                                    'will_enter_nino' => nil,
                                                    'benefit_check_result' => nil,
+                                                   'dwp_response' => nil,
                                                    'confirm_details' => nil,
                                                    'confirm_dwp_result' => nil,
                                                  }).and_return(true)
@@ -152,6 +155,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
                                                            'has_benefit_evidence' => nil,
                                                            'will_enter_nino' => nil,
                                                            'benefit_check_result' => nil,
+                                                           'dwp_response' => nil,
                                                            'confirm_details' => nil,
                                                            'confirm_dwp_result' => nil,
                                                            'benefit_type' => nil,
@@ -174,6 +178,7 @@ RSpec.describe Steps::DWP::BenefitTypeForm do
                                                            'has_benefit_evidence' => nil,
                                                            'will_enter_nino' => nil,
                                                            'benefit_check_result' => nil,
+                                                           'dwp_response' => nil,
                                                            'confirm_details' => nil,
                                                            'confirm_dwp_result' => nil,
                                                          }).and_return(true)

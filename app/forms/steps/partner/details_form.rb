@@ -22,7 +22,7 @@ module Steps
         partner.update(attributes.merge(attributes_to_reset))
       end
 
-      def attributes_to_reset
+      def attributes_to_reset # rubocop:disable Metrics/MethodLength
         return {} unless changed?(:last_name, :date_of_birth)
 
         {
@@ -35,6 +35,7 @@ module Steps
           benefit_type: nil,
           last_jsa_appointment_date: nil,
           benefit_check_result: nil,
+          dwp_response: nil
         }
       end
     end

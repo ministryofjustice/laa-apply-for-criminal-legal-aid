@@ -51,6 +51,7 @@ module Steps
           'has_benefit_evidence' => nil,
           'will_enter_nino' => nil,
           'benefit_check_result' => nil,
+          'dwp_response' => nil,
           'confirm_details' => nil,
           'confirm_dwp_result' => nil,
         }
