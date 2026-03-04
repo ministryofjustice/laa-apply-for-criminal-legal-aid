@@ -24,7 +24,9 @@ data:
   PROVIDER_DATA_API_URL: https://laa-provider-details-api-prod.apps.live.cloud-platform.service.justice.gov.uk
   RETENTION_PERIOD: "2" # 2 years
   SOFT_DELETION_PERIOD: "30" # 30 days
-
+  BANK_HOLIDAYS_API_URL: https://www.gov.uk/bank-holidays.json
+  BUSINESS_HOURS_START: "7:00"
+  BUSINESS_HOURS_END: "21:30"
 
   # If this is uncommented, authentication will be mocked
   # OMNIAUTH_TEST_MODE: "true"

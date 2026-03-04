@@ -25,7 +25,21 @@ module ApplicationHelper
     end
   end
 
+  def business_hours_start
+    format_business_hour(Rails.configuration.x.business_hours.start)
+  end
+
+  def business_hours_end
+    format_business_hour(Rails.configuration.x.business_hours.end)
+  end
+
   def present(model, presenter_class = nil)
     (presenter_class || [model.class, :Presenter].join.demodulize.constantize).new(model)
+  end
+
+  private
+
+  def format_business_hour(time_str)
+    Time.find_zone('London').parse(time_str).strftime('%-l:%M%P').sub(':00', '')
   end
 end

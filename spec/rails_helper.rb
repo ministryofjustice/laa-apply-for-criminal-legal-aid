@@ -47,9 +47,14 @@ RSpec.configure do |config|
   # For specific scenarios, the user can be "signed off".
   config.before(:each, type: :controller) { sign_in }
 
+  # Stub requests to the bank holiday API sent by BusinessHoursMiddleware
+  config.before do
+    stub_request(:get, 'https://bank-holidays/').to_return(status: 200, body: '{}')
+  end
+
   # Only request specs tagged with `authorized: true` will perform
   # an automatic sign in. Otherwise assume user is signed out.
-  config.before(:all, :authorized, type: :request) { post provider_entra_omniauth_callback_path }
+  config.before(:each, :authorized, type: :request) { post provider_entra_omniauth_callback_path }
 
   # Use the faster rack test by default for system specs
   config.before(:each, type: :system) { driven_by :rack_test }

@@ -129,21 +129,13 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
-    nginx.ingress.kubernetes.io/custom-http-errors: "503,403"
+    nginx.ingress.kubernetes.io/custom-http-errors: "403"
     nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/modsecurity-transaction-id: "$request_id"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecRequestBodyLimit 15728640
       SecRequestBodyNoFilesLimit 1048576
-      SecRule TIME_MON "@eq 0" "id:995,phase:1,deny,status:503,chain"
-        SecRule TIME_DAY "@eq 1" "tag:github_team=laa-crime-apply"
-      SecRule TIME_MON "@eq 11" "id:996,phase:1,deny,status:503,chain"
-        SecRule TIME_DAY "@pm 25 26" "tag:github_team=laa-crime-apply"
-      SecRule TIME_HOUR "@eq 21" "id:997,phase:1,deny,status:503,chain"
-        SecRule TIME_MIN "@gt 29" "tag:github_team=laa-crime-apply"
-      SecRule TIME_HOUR "!@pm 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21" \
-        "id:998,phase:1,deny,status:503,tag:github_team=laa-crime-apply"
       SecRule &REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session "@eq 0" \
         "id:999,phase:1,deny,status:403,tag:github_team=laa-crime-apply"
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply,status:423"
