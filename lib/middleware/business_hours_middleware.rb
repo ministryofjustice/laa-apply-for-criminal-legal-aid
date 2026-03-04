@@ -1,5 +1,6 @@
 class BusinessHoursMiddleware
-  BYPASS_PATHS = %w[/health /ping /readyz /startupz].freeze
+  BYPASS_EXACT_PATHS = %w[/].freeze
+  BYPASS_PREFIX_PATHS = %w[/health /ping /readyz /startupz /cookies /about /errors /assets].freeze
 
   def initialize(app)
     @app = app
@@ -15,7 +16,8 @@ class BusinessHoursMiddleware
   private
 
   def bypass_path?(path)
-    BYPASS_PATHS.any? { |bypass| path.start_with?(bypass) }
+    BYPASS_EXACT_PATHS.include?(path) ||
+      BYPASS_PREFIX_PATHS.any? { |bypass| path.start_with?(bypass) }
   end
 
   def london
