@@ -27,3 +27,4 @@ jobs:
       - uses: ministryofjustice/devsecops-actions/sca@f965eb1771ec66cfc41d7d57dc607fa6dfbc10ed # v1.4.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          renovate-version: "43.55.5"
