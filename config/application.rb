@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../lib/middleware/business_hours_middleware'
 
 require 'rails'
 require 'active_record/railtie'
@@ -66,5 +67,12 @@ module LaaApplyForCriminalLegalAid
 
     config.x.retention_period = ENV.fetch('RETENTION_PERIOD', 2).to_i.years # 2 years
     config.x.soft_deletion_period = ENV.fetch('SOFT_DELETION_PERIOD', 30).to_i.days # 30 days
+
+    config.x.bank_holidays_api.url = ENV.fetch('BANK_HOLIDAYS_API_URL', nil)
+
+    config.x.business_hours.start = ENV.fetch('BUSINESS_HOURS_START', "7:00")
+    config.x.business_hours.end = ENV.fetch('BUSINESS_HOURS_END', "21:30")
+
+    config.middleware.use BusinessHoursMiddleware
   end
 end
