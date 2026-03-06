@@ -1,5 +1,5 @@
 class BusinessHoursMiddleware
-  BYPASS_EXACT_PATHS = %w[/].freeze
+  BYPASS_EXACT_PATHS = %w[/ /datastore/ping].freeze
   BYPASS_PREFIX_PATHS = %w[/health /ping /readyz /startupz /cookies /about /errors /assets].freeze
 
   def initialize(app)
