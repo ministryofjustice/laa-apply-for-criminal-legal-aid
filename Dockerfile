@@ -5,6 +5,7 @@ RUN apk add --no-cache \
   postgresql17-dev tzdata gcompat nodejs build-base yaml-dev git && \
   apk add --update clamav-clamdscan && \
   apk del clamav-daemon freshclam && \
+  apk upgrade --no-cache zlib && \
   rm -rf /var/cache/apk/*
 
 FROM base AS dependencies
