@@ -19,8 +19,8 @@ data:
   VIRUS_SCAN_TIMEOUT: "20"
   OMNIAUTH_ENTRA_CLIENT_ID: abd5ebbe-44b2-4c14-b815-a741ebfd21b2
   OMNIAUTH_ENTRA_TENANT_ID: ff260a8b-cb92-4cfe-8ae9-d48bb0fd9851
-  OMNIAUTH_ENTRA_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/auth/entra/callback
-  OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/providers/logout
+  OMNIAUTH_ENTRA_REDIRECT_URI: https://laa-apply-for-criminal-legal-aid-staging.beta.cloud-platform.service.justice.gov.uk/providers/auth/entra/callback
+  OMNIAUTH_ENTRA_POST_LOGOUT_REDIRECT_URI: https://laa-apply-for-criminal-legal-aid-staging.beta.cloud-platform.service.justice.gov.uk/providers/logout
   PROVIDER_DATA_API_URL: https://laa-provider-details-api-prod.apps.live.cloud-platform.service.justice.gov.uk
   RETENTION_PERIOD: "2" # 2 years
   SOFT_DELETION_PERIOD: "30" # 30 days
