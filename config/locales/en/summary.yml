@@ -87,8 +87,8 @@ en:
       offence: Offence
       next_court_hearing: Next court hearing
       first_court_hearing: First court hearing
-      justification_for_legal_aid: Justification for legal aid
-      passport_justification_for_legal_aid: Justification for legal aid
+      justification_for_legal_aid: Interests of Justice (IOJ)
+      passport_justification_for_legal_aid: Interests of Justice (IOJ)
       declarations: Declarations
       legal_representative_details: Legal representative
       employment_details: Employment
@@ -729,16 +729,16 @@ en:
           magistrates_court: Magistrates Court
           non_means: Non-means
       funding_decision_ioj_result:
-        question: Interests of justice (IoJ) test result
+        question: Interests of Justice (IOJ) test result
         answers:
           passed: Passed
           failed: Failed
       funding_decision_ioj_reason:
-        question: IoJ comments
+        question: IOJ comments
       funding_decision_ioj_caseworker:
-        question: IoJ caseworker
+        question: IOJ caseworker
       funding_decision_ioj_date:
-        question: IoJ test date
+        question: IOJ test date
       funding_decision_means_result:
         question: Means test result
         answers:
@@ -756,8 +756,8 @@ en:
           granted_with_contribution: Granted - with contribution
           granted_failed_means: Granted - failed means
           refused: Refused
-          refused_failed_ioj: Refused - failed IoJ
-          refused_failed_ioj_and_means: Refused - failed IoJ and means
+          refused_failed_ioj: Refused - failed IOJ
+          refused_failed_ioj_and_means: Refused - failed IOJ and means
           refused_failed_means: Refused - failed means
           refused_ineligible: Refused - ineligible
 

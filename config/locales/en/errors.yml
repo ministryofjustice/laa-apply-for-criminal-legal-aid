@@ -29,7 +29,7 @@ en:
             means_passport:
               blank: Applicant is not passported on means
             ioj_passport:
-              blank: Justification for legal aid needs to be completed
+              blank: Interests of Justice (IOJ) needs to be completed
             documents:
               blank: Upload supporting evidence
         # evidence upload data model

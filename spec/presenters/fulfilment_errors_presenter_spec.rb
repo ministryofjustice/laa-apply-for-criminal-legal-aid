@@ -40,7 +40,7 @@ RSpec.describe FulfilmentErrorsPresenter do
 
           it 'contains all the information needed' do
             expect(error.attribute).to eq(:ioj_passport)
-            expect(error.message).to eq('Justification for legal aid needs to be completed')
+            expect(error.message).to eq('Interests of Justice (IOJ) needs to be completed')
             expect(error.error).to eq(:blank)
             expect(error.change_path).to eq('steps/xyz')
           end

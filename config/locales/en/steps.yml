@@ -278,8 +278,8 @@ en:
           page_title: First court hearing
       ioj_passport:
         edit:
-          page_title: Passported on IoJ
-          heading: Based on the details you provided, you do not need to enter further justification for legal aid
+          page_title: Passported on IOJ
+          heading: Based on the details you provided, you do not need to enter further Interests of Justice (IOJ)
           info: You might still need to provide details of your client’s finances to apply for legal aid.
       ioj:
         edit:
