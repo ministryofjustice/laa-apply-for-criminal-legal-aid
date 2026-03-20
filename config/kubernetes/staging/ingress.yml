@@ -16,7 +16,7 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
 spec:
-  ingressClassName: modsec
+  ingressClassName: modsec-non-prod
   rules:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
@@ -80,7 +80,7 @@ metadata:
         return 405;
       }
 spec:
-  ingressClassName: modsec
+  ingressClassName: modsec-non-prod
   rules:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
@@ -179,7 +179,7 @@ metadata:
       SecRuleUpdateTargetByTag attack-xss !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
       SecRuleUpdateTargetByTag attack-injection-php !REQUEST_COOKIES:_laa_apply_for_criminal_legal_aid_session
 spec:
-  ingressClassName: modsec
+  ingressClassName: modsec-non-prod
   tls:
     - hosts:
         - laa-apply-for-criminal-legal-aid-staging.apps.live.cloud-platform.service.justice.gov.uk
