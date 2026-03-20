@@ -162,8 +162,7 @@ metadata:
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942140,\
         ctl:ruleRemoveById=942230,\
-        ctl:ruleRemoveById=942360,\
-        ctl:ruleRemoveById=949110,chain"
+        ctl:ruleRemoveById=942360,chain"
         SecRule REQUEST_METHOD "^POST$" "phase:2,t:none"
       SecRule REQUEST_URI "@beginsWith /providers/auth/entra/callback" \
         "id:1001,phase:1,pass,nolog,\
