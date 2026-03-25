@@ -14,7 +14,7 @@ RSpec.describe 'Search', :authorized do
       assert_select 'div.govuk-grid-column-full p',
                     'You are searching submitted and returned applications under office code 1A123B.'
       assert_select '.search .govuk-fieldset .input-group',
-                    'Enter any combination of client first name, last name, LAA reference'
+                    'Enter any combination of client first name, last name, LAA reference or MAAT ID'
     end
   end
 
