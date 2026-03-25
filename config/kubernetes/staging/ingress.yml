@@ -151,6 +151,7 @@ metadata:
         ctl:ruleRemoveById=932110,\
         ctl:ruleRemoveById=932115,\
         ctl:ruleRemoveById=932125,\
+        ctl:ruleRemoveById=932230,\
         ctl:ruleRemoveById=932235,\
         ctl:ruleRemoveById=932250,\
         ctl:ruleRemoveById=932260,\
