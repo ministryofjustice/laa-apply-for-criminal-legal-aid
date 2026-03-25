@@ -211,8 +211,43 @@ spec:
     - host: staging.apply-for-criminal-legal-aid.service.justice.gov.uk
       http:
         paths:
-          - path: /
-            pathType: ImplementationSpecific
+          - path: /steps
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /applications
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /completed
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /application-searches
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /login
+            pathType: Prefix
+            backend:
+              service:
+                name: service-staging
+                port:
+                  number: 80
+          - path: /providers
+            pathType: Prefix
             backend:
               service:
                 name: service-staging
