@@ -162,6 +162,7 @@ metadata:
         ctl:ruleRemoveById=933210,\
         ctl:ruleRemoveById=942100,\
         ctl:ruleRemoveById=942140,\
+        ctl:ruleRemoveById=942190,\
         ctl:ruleRemoveById=942230,\
         ctl:ruleRemoveById=942360,chain"
         SecRule REQUEST_METHOD "^POST$" "phase:2,t:none"
