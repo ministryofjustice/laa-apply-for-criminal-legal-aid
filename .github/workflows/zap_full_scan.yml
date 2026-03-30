@@ -13,13 +13,13 @@ jobs:
 
     steps:
       - name: ZAP Full Scan - Staging
-        uses: zaproxy/action-full-scan@v0.13.0
+        uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c # v0.13.0
         with:
           target: "https://staging.apply-for-criminal-legal-aid.service.justice.gov.uk/"
           fail_action: false
           allow_issue_writing: true
       - name: Upload ZAP Report
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           path: report_html.html
           archive: false
