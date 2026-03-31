@@ -12,6 +12,11 @@ feature_flags:
     staging: false
     preprod: false
     production: false
+  offline_on_bank_holidays:
+    local: false
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
