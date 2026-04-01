@@ -29,6 +29,8 @@ class BusinessHoursMiddleware
   end
 
   def bank_holiday?(now = london.now)
+    return false unless FeatureFlags.offline_on_bank_holidays.enabled?
+
     bank_holidays = Govuk::BankHolidays.call
     return false if bank_holidays.blank?
 
