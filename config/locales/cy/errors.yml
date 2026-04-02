@@ -29,7 +29,7 @@ cy:
             means_passport:
               blank: Dydy’r ymgeisydd ddim wedi'i basbortio ar sail modd
             ioj_passport:
-              blank: Mae angen cwblhau'r cyfiawnhad dros gymorth cyfreithiol
+              blank: Mae angen cwblhau’r Er Budd Cyfiawnder (IOJ)
             documents:
               blank: Lanlwytho tystiolaeth ategol
         # evidence upload data model

@@ -282,7 +282,7 @@ cy:
       ioj_passport:
         edit:
           page_title: Wedi pasbortio ar sail buddiannau cyfiawnder
-          heading: Ar sail y manylion a ddarparwyd gennych, does dim angen i chi roi cyfiawnhad pellach dros gymorth cyfreithiol
+          heading: Ar sail y manylion a ddarparwyd gennych, does dim angen i chi nodi Er Budd Cyfiawnder (IOJ) pellach
           info: Efallai y bydd angen i chi ddarparu manylion cyllid eich cleient o hyd i wneud cais am gymorth cyfreithiol.
       ioj:
         edit:

@@ -776,7 +776,7 @@ cy:
         expert_examination_justification: Cyfiawnhad dros groesholi arbenigol
         interest_of_another_justification: Cyfiawnhad dros fuddiannau person arall
         other_justification: Cyfiawnhad arall
-        ioj_justification_hint_a11y: Rhowch gyfiawnhad dros gymorth cyfreithiol yn ôl eich dewis chi
+        ioj_justification_hint_a11y: Nodwch Er Budd Cyfiawnder (IOJ) yn ôl eich dewis chi
         types_options:
           loss_of_liberty: Mae’n debygol y byddan nhw’n colli eu rhyddid os bydd unrhyw fater yn yr achos yn mynd yn eu herbyn
           suspended_sentence: Maen nhw wedi cael dedfryd ohiriedig neu ddi-garchar. Os byddan nhw’n torri hon, efallai y gall y llys ddelio â nhw am y trosedd gwreiddiol
