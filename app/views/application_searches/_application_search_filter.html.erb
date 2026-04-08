@@ -4,7 +4,7 @@
     <div class="input-group">
       <%= f.govuk_text_field(
             :search_text,
-            label: { text: t('helpers.hint.search'), size: 's', class: 'govuk-!-margin-bottom-4' },
+            label: { text: FeatureFlags.use_stored_searchable_text.enabled? ? t('helpers.hint.stored_search') : t('helpers.hint.search'), size: 's', class: 'govuk-!-margin-bottom-4' },
             autocomplete: 'off'
           ) %>
     </div>

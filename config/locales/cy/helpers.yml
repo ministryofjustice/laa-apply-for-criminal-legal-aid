@@ -410,6 +410,7 @@ cy:
 
     hint:
       search: Rhowch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, cyfeirnod LAA
+      stored_search: Rhowch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, cyfeirnod LAA neu ID MAAT
       steps_provider_select_office_form:
         office_code: "Os nad yw rhif cyfrif eich swyddfa wedi'i restru, anfonwch e-bost at: %{support_email}"
       steps_circumstances_pre_cifc_reference_number_form:
