@@ -117,7 +117,7 @@ Income.create!(
   ended_employment_within_three_months: 'no',
   has_no_income_payments: 'yes',
   has_no_income_benefits: 'yes',
-  manage_without_income: ['family'],
+  manage_without_income: 'family',
   # required so requires_full_means_assessment? can determine outcome without raising
   # CannotYetDetermineFullMeans (nil values leave it indeterminate)
   client_owns_property: 'no',
