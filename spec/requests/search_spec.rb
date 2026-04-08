@@ -6,6 +6,7 @@ RSpec.describe 'Search', :authorized do
 
   describe 'Search form' do
     before do
+      allow(FeatureFlags).to receive(:use_stored_searchable_text).and_return(double(enabled?: true))
       get new_application_searches_path
     end
 

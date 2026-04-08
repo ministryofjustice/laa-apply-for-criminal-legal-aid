@@ -408,7 +408,8 @@ en:
         legal_rep_has_partner_declaration: Do you have a signed declaration from your client’s partner?
 
     hint:
-      search: Enter any combination of client first name, last name, LAA reference or MAAT ID
+      search: Enter any combination of client first name, last name, LAA reference
+      stored_search: Enter any combination of client first name, last name, LAA reference or MAAT ID
       steps_provider_select_office_form:
         office_code: "If your office account number is not listed, email: %{support_email}"
       steps_circumstances_pre_cifc_reference_number_form:
