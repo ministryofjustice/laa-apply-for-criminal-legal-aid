@@ -263,28 +263,6 @@ jobs:
           kube-cluster: ${{ secrets.KUBE_STAGING_CLUSTER }}
           kube-namespace: ${{ secrets.KUBE_STAGING_NAMESPACE }}
 
-  deploy-preprod:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: preprod
-
-    permissions:
-      contents: read # This is required for actions/checkout
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Deploy preprod
-        uses: ./.github/actions/deploy
-        with:
-          environment-name: preprod
-          ecr-url: ${{ needs.build.outputs.ecr_url }}
-          kube-cert: ${{ secrets.KUBE_PREPROD_CERT }}
-          kube-token: ${{ secrets.KUBE_PREPROD_TOKEN }}
-          kube-cluster: ${{ secrets.KUBE_PREPROD_CLUSTER }}
-          kube-namespace: ${{ secrets.KUBE_PREPROD_NAMESPACE }}
-
   deploy-production:
     runs-on: ubuntu-latest
     needs: [build, deploy-staging]
