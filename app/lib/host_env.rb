@@ -4,7 +4,6 @@ module HostEnv
     LOCAL = 'local'.freeze,
     TEST = 'test'.freeze,
     STAGING = 'staging'.freeze,
-    PREPROD = 'preprod'.freeze,
     PRODUCTION = 'production'.freeze,
   ].freeze
 

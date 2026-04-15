@@ -13,12 +13,6 @@ describe HostEnv do
         end
       end
 
-      describe '.preprod?' do
-        it 'returns false' do
-          expect(described_class.preprod?).to be false
-        end
-      end
-
       describe '.production?' do
         it 'returns false' do
           expect(described_class.production?).to be false
@@ -42,12 +36,6 @@ describe HostEnv do
       describe '.staging?' do
         it 'returns false' do
           expect(described_class.staging?).to be false
-        end
-      end
-
-      describe '.preprod?' do
-        it 'returns false' do
-          expect(described_class.preprod?).to be false
         end
       end
 
@@ -82,16 +70,6 @@ describe HostEnv do
 
       it { expect(described_class.local?).to be(false) }
       it { expect(described_class.staging?).to be(true) }
-      it { expect(described_class.preprod?).to be(false) }
-      it { expect(described_class.production?).to be(false) }
-    end
-
-    context 'preprod host' do
-      let(:env_name) { HostEnv::PREPROD }
-
-      it { expect(described_class.local?).to be(false) }
-      it { expect(described_class.staging?).to be(false) }
-      it { expect(described_class.preprod?).to be(true) }
       it { expect(described_class.production?).to be(false) }
     end
 
@@ -100,7 +78,6 @@ describe HostEnv do
 
       it { expect(described_class.local?).to be(false) }
       it { expect(described_class.staging?).to be(false) }
-      it { expect(described_class.preprod?).to be(false) }
       it { expect(described_class.production?).to be(true) }
     end
 
@@ -109,7 +86,6 @@ describe HostEnv do
 
       it { expect(described_class.local?).to be(false) }
       it { expect(described_class.staging?).to be(false) }
-      it { expect(described_class.preprod?).to be(false) }
       it { expect(described_class.production?).to be(false) }
     end
   end

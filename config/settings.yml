@@ -10,12 +10,10 @@ feature_flags:
   entra_logout:
     local: false
     staging: false
-    preprod: false
     production: false
   offline_on_bank_holidays:
     local: false
     staging: false
-    preprod: false
     production: false
   use_stored_searchable_text:
     local: true
