@@ -69,13 +69,16 @@ Rails.application.routes.draw do
   end
 
   namespace :about do
-    get :privacy
-    get :contact
-    get :accessibility
+    get :privacy, format: false
+    get :contact, format: false
+    get :accessibility, format: false
   end
 
-  # Handle the cookies consent
-  resource :cookies, only: [:show, :update]
+  if FeatureFlags.google_analytics.enabled?
+    resource :cookies, only: [:show, :update], format: false
+  else
+    resource :cookies, only: [:show], format: false
+  end
 
   scope 'applications' do
     resources :submitted_applications, path: 'submitted', only: [:index]
