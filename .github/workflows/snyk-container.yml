@@ -15,8 +15,8 @@ name: Snyk Container
 
 on:
   schedule:
-    - cron: '30 22 * * 1,4'
-      timezone: "Europe/London" # At 22:30 on Monday and Thursday.
+    - cron: '30 22 * * 1,4' # At 22:30 on Monday and Thursday
+      timezone: "Europe/London"
   workflow_dispatch:
 
 permissions:
