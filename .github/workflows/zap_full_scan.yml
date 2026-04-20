@@ -5,6 +5,7 @@ permissions:
 on:
   schedule:
     - cron: "0 8 * * *" # 8 AM every day
+      timezone: "Europe/London"
   workflow_dispatch:
 
 jobs:
