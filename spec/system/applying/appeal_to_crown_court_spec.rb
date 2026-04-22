@@ -95,8 +95,10 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/submission/review
-      save_and_continue
+    end
 
+    it 'submits a valid application to the datastore' do
+      save_and_continue
       # steps/submission/declaration
       fill_in('First name', with: 'Zoe')
       fill_in('Last name', with: 'Bar')
@@ -104,9 +106,6 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
 
       stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       click_button 'Save and submit application'
-    end
-
-    it 'submits a valid application to the datastore' do
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
@@ -117,6 +116,86 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
           body['case_details']['appeal_maat_id'] == '1234567'
         }
       ).to have_been_made.once
+    end
+
+    # INC4196794 - Means details missing from Review
+    context 'when the original case answer changed to no' do
+      it 'requires client and means details and hides original application details' do # rubocop:disable RSpec/ExampleLength
+        expect(summary_card('Case details')).to have_rows(
+          'Case type', 'Appeal to Crown Court',
+          'Legal aid application for original case?', 'Yes',
+          'Original application MAAT ID', '1234567'
+        )
+
+        within(summary_card('Case details')) do
+          click_link('Change Legal aid application for original case?', match: :first)
+        end
+        choose_answer('Was a legal aid application submitted for the original case?', 'No')
+        click_button 'Save and come back later'
+
+        # confirm that the task list show client details as in progres
+        expect(task_list_item_status('Client details')).to have_text('In progress')
+
+        # return to the original case details having checked the task item status
+        visit(crime_application_path(CrimeApplication.last))
+        within(summary_card('Case details')) do
+          click_link('Change Legal aid application for original case?', match: :first)
+        end
+        save_and_continue
+
+        # because the original application no longer exists, client address and means
+        # details are required
+        expect(page).to have_content('Where does your client usually live?')
+        save_and_continue
+        save_and_continue
+        save_and_continue
+        # steps/client/residence_type
+        choose_answer(
+          'Where does your client usually live?',
+          'They do not have a fixed home address'
+        )
+        save_and_continue
+
+        # steps/client/contact_details
+        choose_answer('Where shall we send correspondence?', 'Provider’s office')
+        save_and_continue
+
+        # steps/client/nino
+        choose_answer('Does your client have a National Insurance number?', 'Yes')
+        fill_in('What is their National Insurance number?', with: 'JA293483A')
+        save_and_continue
+
+        # steps/client/does-client-have-partner
+        choose_answer('Does your client have a partner?', 'No')
+        save_and_continue
+
+        # steps/client/relationship-status
+        choose_answer("What is your client's relationship status?", 'Single')
+        save_and_continue
+
+        # steps/dwp/benefit-type
+        mock_benefit_check('Yes')
+        choose_answer('Does your client get one of these passporting benefits?', 'Universal Credit')
+        save_and_continue
+
+        # steps/dwp/benefit-check-result
+        save_and_continue
+
+        # steps/client/urn
+        save_and_continue
+        click_button 'Save and come back later'
+        expect(task_list_item_status('Client details')).to have_text('Completed')
+
+        within(task_list_item('Review the application')) do
+          click_link
+        end
+
+        expect(summary_card('Case details')).to have_rows(
+          'Case type', 'Appeal to Crown Court',
+          'Legal aid application for original case?', 'No'
+        )
+        expect(page).not_to have_content('Original application')
+      end
     end
   end
 end

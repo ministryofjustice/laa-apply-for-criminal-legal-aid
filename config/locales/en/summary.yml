@@ -335,8 +335,10 @@ en:
           <<: *YESNO
       appeal_with_changes_details:
         question: Changes details
-      appeal_maat_id_or_usn:
-        question: "Original application %{ref_type}"
+      appeal_maat_id:
+        question: "Original application MAAT ID"
+      appeal_usn:
+        question: "Original application USN"
       has_case_concluded:
         question: Case concluded?
         answers:
