@@ -46,15 +46,29 @@ class Case < ApplicationRecord
   end
 
   def appeal_financial_circumstances_changed
-    super if appeal_case_type?
+    super if appeal_original_app_submitted?
   end
 
   def appeal_maat_id
-    super if appeal_original_app_submitted?
+    super if original_application_reference_required?
   end
 
   def appeal_usn
-    super if appeal_original_app_submitted?
+    super if original_application_reference_required?
+  end
+
+  def appeal_case_type?
+    return false unless case_type
+
+    CaseType.new(case_type).appeal?
+  end
+
+  def appeal_original_app_submitted?
+    appeal_original_app_submitted == 'yes'
+  end
+
+  def appeal_financial_circumstances_changed?
+    appeal_financial_circumstances_changed == 'yes'
   end
 
   def hearing_date_within_range?
@@ -67,13 +81,7 @@ class Case < ApplicationRecord
     charge.offence_dates.first_or_initialize
   end
 
-  def appeal_original_app_submitted?
-    appeal_original_app_submitted == 'yes'
-  end
-
-  def appeal_case_type?
-    return false unless case_type
-
-    CaseType.new(case_type).appeal?
+  def original_application_reference_required?
+    appeal_financial_circumstances_changed == 'no'
   end
 end

@@ -25,7 +25,7 @@ module Steps
       end
 
       def persist!
-        return unless changed?
+        return true unless changed?
 
         kase.update(attributes.merge)
       end

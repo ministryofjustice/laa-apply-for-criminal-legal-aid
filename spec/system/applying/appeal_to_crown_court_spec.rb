@@ -119,7 +119,7 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
     end
 
     # INC4196794 - Means details missing from Review
-    context 'when the original case answer changed to no' do
+    context 'when the original case answer changed to no from yes' do
       it 'requires client and means details and hides original application details' do # rubocop:disable RSpec/ExampleLength
         expect(summary_card('Case details')).to have_rows(
           'Case type', 'Appeal to Crown Court',
