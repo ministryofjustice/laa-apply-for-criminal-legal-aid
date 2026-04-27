@@ -129,7 +129,6 @@ en:
           heading: Sorry, we cannot check %{subject} information with DWP
       confirm_result: &CONFIRM_RESULT_HEADING
         edit:
-          heading: DWP records show that %{subject} does not receive a passporting benefit
           page_title: Benefit check result
           yes_continue: Yes, continue
           no_link: No, they do receive a passporting benefit
