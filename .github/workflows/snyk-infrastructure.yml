@@ -15,6 +15,7 @@ name: Snyk Infrastructure as Code
 on:
   schedule:
     - cron: '30 21 * * 1' # at 21:30 on Monday evening
+      timezone: "Europe/London"
   workflow_dispatch:
 
 permissions:
@@ -44,7 +45,7 @@ jobs:
           # or `main.tf` for a Terraform configuration file
           file: config/kubernetes/production/**
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
+        uses: github/codeql-action/upload-sarif@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4.35.2
         with:
           sarif_file: snyk.sarif
           category: snyk-infrastructure-check

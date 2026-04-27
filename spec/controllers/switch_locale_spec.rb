@@ -32,5 +32,12 @@ RSpec.describe 'Locale switching', type: :controller do
         expect(response.body).to eq(I18n.default_locale.to_s)
       end
     end
+
+    context 'when locale param is not available' do
+      it 'defaults to I18n.default_locale' do
+        get :show_locale, params: { locale: 'cyg' }
+        expect(response.body).to eq(I18n.default_locale.to_s)
+      end
+    end
   end
 end

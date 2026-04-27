@@ -10,18 +10,16 @@ feature_flags:
   entra_logout:
     local: false
     staging: false
-    preprod: false
     production: false
   offline_on_bank_holidays:
     local: false
     staging: false
-    preprod: false
     production: false
   use_stored_searchable_text:
     local: true
     staging: true
     preprod: true
-    production: false
+    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
