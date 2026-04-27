@@ -721,11 +721,6 @@ cy:
           "yes": Byddaf yn rhoi'r rhif Yswiriant Gwladol nawr
           "no": Byddaf yn rhoi'r rhif Yswiriant Gwladol yn nes ymlaen
       steps_dwp_cannot_check_benefit_status_partner_form: *WILL_ENTER_NINO_OPTIONS
-      steps_dwp_confirm_result_form: &CONFIRM_DWP_RESULT_OPTIONS
-        confirm_dwp_result_options:
-          "yes": Ie
-          "no": Na, maen nhw’n cael budd-dal pasbortio
-      steps_dwp_partner_confirm_result_form: *CONFIRM_DWP_RESULT_OPTIONS
       steps_dwp_confirm_details_form: &CONFIRM_DETAILS_OPTIONS
         confirm_details_options:
           "yes": Ie
