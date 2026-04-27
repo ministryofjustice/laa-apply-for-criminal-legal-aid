@@ -76,6 +76,7 @@ module Steps
           'benefit_type' => nil,
           'last_jsa_appointment_date' => nil,
           'benefit_check_result' => nil,
+          'dwp_response' => nil,
           'will_enter_nino' => nil,
           'has_benefit_evidence' => nil,
           'confirm_details' => nil,

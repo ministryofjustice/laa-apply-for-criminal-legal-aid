@@ -284,11 +284,6 @@ cy:
             confirm_details:
               inclusion: Dewiswch ie os yw'r manylion hyn yn gywir
         steps/dwp/confirm_partner_details_form: *CONFIRM_DETAILS_VALIDATION
-        steps/dwp/confirm_result_form: &CONFIRM_RESULT_VALIDATION
-          attributes:
-            confirm_dwp_result:
-              inclusion: Dewiswch ie os nad ydynt yn cael budd-dal pasbortio
-        steps/dwp/partner_confirm_result_form: *CONFIRM_RESULT_VALIDATION
         steps/address/lookup_form:
           attributes:
             postcode:

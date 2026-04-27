@@ -129,7 +129,6 @@ cy:
           heading: Yn anffodus, does dim modd i ni wirio gwybodaeth %{subject} gyda’r Adran Gwaith a Phensiynau
       confirm_result: &CONFIRM_RESULT_HEADING
         edit:
-          heading: Mae cofnodion yr Adran Gwaith a Phensiynau yn dangos nad yw %{subject} yn cael budd-dal pasbortio
           page_title: Canlyniad gwirio budd-daliadau
           yes_continue: Ie, parhewch
           no_link: Na, maen nhw’n cael budd-dal wedi’i awdurdodi

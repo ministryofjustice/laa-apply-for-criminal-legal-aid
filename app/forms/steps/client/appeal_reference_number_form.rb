@@ -47,7 +47,8 @@ module Steps
         {
           'residence_type' => nil, 'correspondence_address_type' => nil, 'telephone_number' => nil, 'has_nino' => nil,
           'nino' => nil, 'has_arc' => nil, 'arc' => nil, 'will_enter_nino' => nil, 'benefit_type' => nil,
-          'last_jsa_appointment_date' => nil, 'benefit_check_result' => nil, 'has_benefit_evidence' => nil
+          'last_jsa_appointment_date' => nil, 'benefit_check_result' => nil, 'has_benefit_evidence' => nil,
+          'dwp_response' => nil
         }
       end
 
