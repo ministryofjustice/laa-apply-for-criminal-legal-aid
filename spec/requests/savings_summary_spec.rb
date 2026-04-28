@@ -53,8 +53,8 @@ RSpec.describe 'Savings summary page', :authorized do
       assert_select 'li.govuk-summary-card__action', count: 0
 
       expect(response.body).to include('Are you sure you want to remove this savings account?')
-      expect(response.body).to include('Yes, remove it')
-      expect(response.body).to include('No, do not remove it')
+      expect(response.body).to include('Remove savings account')
+      expect(response.body).to include('Back to savings accounts')
     end
 
     context 'when there are other savings' do

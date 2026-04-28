@@ -145,8 +145,8 @@ RSpec.describe 'Businesses summary page', :authorized do
       assert_select 'li.govuk-summary-card__action', count: 0
 
       expect(response.body).to include('Are you sure you want to remove this business?')
-      expect(response.body).to include('Yes, remove it')
-      expect(response.body).to include('No, do not remove it')
+      expect(response.body).to include('Remove this business')
+      expect(response.body).to include('Back to businesses')
     end
 
     context 'when there are other businesses' do
