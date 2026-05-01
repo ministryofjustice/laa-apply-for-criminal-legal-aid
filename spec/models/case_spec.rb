@@ -130,4 +130,121 @@ RSpec.describe Case, type: :model do
       it { expect(kase).to be_hearing_date_within_range }
     end
   end
+
+  # Appeal-specific logic tests - State combination scenarios
+  describe 'appeal conditional logic' do
+    describe 'Appeal with changes scenario' do
+      let(:attributes) do
+        {
+          case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s,
+          appeal_original_app_submitted: 'yes',
+          appeal_financial_circumstances_changed: 'yes',
+          appeal_lodged_date: Date.parse('2024-01-15'),
+          appeal_with_changes_details: 'Income increased by 10%'
+        }
+      end
+
+      it 'includes appeal_lodged_date' do
+        expect(kase.appeal_lodged_date).to eq(Date.parse('2024-01-15'))
+      end
+
+      it 'includes appeal_original_app_submitted' do
+        expect(kase.appeal_original_app_submitted).to eq('yes')
+      end
+
+      it 'includes appeal_financial_circumstances_changed' do
+        expect(kase.appeal_financial_circumstances_changed).to eq('yes')
+      end
+
+      it 'includes appeal_with_changes_details' do
+        expect(kase.appeal_with_changes_details).to eq('Income increased by 10%')
+      end
+
+      it 'excludes reference numbers (not required when changes exist)' do
+        expect(kase.appeal_maat_id).to be_nil
+        expect(kase.appeal_usn).to be_nil
+      end
+    end
+
+    describe 'Appeal without changes scenario (reference numbers required)' do
+      let(:attributes) do
+        {
+          case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s,
+          appeal_original_app_submitted: 'yes',
+          appeal_financial_circumstances_changed: 'no',
+          appeal_lodged_date: Date.parse('2024-01-15'),
+          appeal_maat_id: '1234567',
+          appeal_usn: '87654321'
+        }
+      end
+
+      it 'includes appeal_lodged_date' do
+        expect(kase.appeal_lodged_date).to eq(Date.parse('2024-01-15'))
+      end
+
+      it 'includes appeal_original_app_submitted' do
+        expect(kase.appeal_original_app_submitted).to eq('yes')
+      end
+
+      it 'includes appeal_financial_circumstances_changed as no' do
+        expect(kase.appeal_financial_circumstances_changed).to eq('no')
+      end
+
+      it 'includes reference numbers when changes did not happen' do
+        expect(kase.appeal_maat_id).to eq('1234567')
+        expect(kase.appeal_usn).to eq('87654321')
+      end
+    end
+
+    describe 'Appeal with original app not submitted' do
+      let(:attributes) do
+        {
+          case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s,
+          appeal_original_app_submitted: 'no',
+          appeal_lodged_date: Date.parse('2024-01-15'),
+          appeal_maat_id: '1234567'
+        }
+      end
+
+      it 'includes appeal_lodged_date' do
+        expect(kase.appeal_lodged_date).to eq(Date.parse('2024-01-15'))
+      end
+
+      it 'includes appeal_original_app_submitted as no' do
+        expect(kase.appeal_original_app_submitted).to eq('no')
+      end
+
+      it 'excludes financial circumstances details when original app not submitted' do
+        expect(kase.appeal_financial_circumstances_changed).to be_nil
+      end
+
+      it 'excludes reference numbers' do
+        expect(kase.appeal_maat_id).to be_nil
+        expect(kase.appeal_usn).to be_nil
+      end
+    end
+
+    describe 'Non-appeal case' do
+      let(:attributes) do
+        {
+          case_type: CaseType::INDICTABLE.to_s,
+          appeal_original_app_submitted: 'yes',
+          appeal_financial_circumstances_changed: 'yes',
+          appeal_lodged_date: Date.parse('2024-01-15'),
+          appeal_with_changes_details: 'Some details',
+          appeal_maat_id: '1234567'
+        }
+      end
+
+      it 'excludes all appeal fields' do
+        expect(kase.appeal_lodged_date).to be_nil
+        expect(kase.appeal_original_app_submitted).to be_nil
+        expect(kase.appeal_financial_circumstances_changed).to be_nil
+        expect(kase.appeal_with_changes_details).to be_nil
+        expect(kase.appeal_maat_id).to be_nil
+        expect(kase.appeal_usn).to be_nil
+        expect(kase.appeal_reference_number).to be_nil
+      end
+    end
+  end
 end

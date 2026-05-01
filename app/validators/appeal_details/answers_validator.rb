@@ -19,18 +19,18 @@ module AppealDetails
 
     def complete?
       return false unless general_details_complete?
-      return true if kase.appeal_original_app_submitted == 'no'
+      return true unless kase.appeal_original_app_submitted?
       return true if record.cifc?
 
       return true if kase.appeal_financial_circumstances_changed == 'yes' && kase.appeal_with_changes_details.present?
 
-      record.appeal_no_changes?
+      kase.appeal_maat_id.present? || kase.appeal_usn.present?
     end
 
     def applicable?
       return false if record.non_means_tested?
 
-      kase&.case_type.present? && CaseType.new(kase.case_type).appeal?
+      kase&.appeal_case_type?
     end
 
     private
