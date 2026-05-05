@@ -60,6 +60,10 @@ describe Summary::Sections::CaseDetails do
     it { expect(subject.name).to eq(:case_details) }
   end
 
+  describe '#heading' do
+    it { expect(subject.heading).to eq(:case_details_and_offences) }
+  end
+
   describe '#show?' do
     context 'when there is a case' do
       it 'shows this section' do
