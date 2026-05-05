@@ -1,18 +1,25 @@
 module Summary
   module Components
-    class OffenceClassAnswer < BaseAnswer
+    class OffenceTypeAndClassAnswer < BaseAnswer
       def answer_text
-        return offence_class if value.offence_class
-
-        not_determined_tag
+        safe_join([offence_type, offence_class])
       end
 
       private
 
+      def offence_type
+        tag.p(
+          value.offence_name.presence,
+          class: 'govuk-body'
+        )
+      end
+
       def offence_class
+        return not_determined_tag unless value.offence_class
+
         tag.p(
           value.offence_class,
-          class: 'govuk-body'
+          class: 'govuk-caption-m'
         )
       end
 

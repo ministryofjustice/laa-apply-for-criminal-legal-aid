@@ -226,8 +226,8 @@ cy:
         confirm_destroy:
           page_title: Cadarnhau dileu'r trosedd
           heading: Ydych chi’n siŵr eich bod chi eisiau dileu’r trosedd hwn?
-          confirm_delete_button: Ie, ewch ati i'w ddileu
-          cancel_delete_button: Na, peidiwch â’i ddileu
+          confirm_delete_button: Dileu trosedd
+          cancel_delete_button: Yn ôl i droseddau
         destroy:
           success_flash: Mae'r ased wedi'i ddileu
       charges_dates:
@@ -374,8 +374,8 @@ cy:
           confirm_destroy:
             page_title: Cadarnhau dileu swydd
             heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r swydd hon?
-            confirm_delete_button: Ie, ewch ati i’w dynnu
-            cancel_delete_button: Na, peidiwch â'i dynnu
+            confirm_delete_button: Dileu swydd
+            cancel_delete_button: Yn ôl i swyddi
           destroy:
             success_flash: Rydych chi wedi tynnu'r swydd
         other_work_benefits:
@@ -399,8 +399,8 @@ cy:
         confirm_destroy:
           page_title: Dileu busnes %{subject}
           heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r busnes hwn?
-          confirm_delete_button: Ie, ewch ati i’w busnes
-          cancel_delete_button: Na, peidiwch â'i busnes
+          confirm_delete_button: Dileu'r busnes hwn
+          cancel_delete_button: Yn ôl i fusnesau
         destroy:
           success_flash: Rydych chi wedi tynnu'r busnes
 
@@ -506,8 +506,8 @@ cy:
         confirm_destroy:
           page_title: Cadarnhau dileu'r cyfrif cynilo
           heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r cyfrif cynilo hwn?
-          confirm_delete_button: Ie, ewch ati i’w dynnu
-          cancel_delete_button: Na, peidiwch â'i dynnu
+          confirm_delete_button: Dileu cyfrif cynilo
+          cancel_delete_button: Yn ôl i gyfrifon cynilo
         destroy:
           success_flash: Rydych chi wedi tynnu'r cyfrif cynilo
       savings_summary:
@@ -539,8 +539,8 @@ cy:
         confirm_destroy:
           page_title: Cadarnhau dileu buddsoddiad
           heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r buddsoddiad hwn?
-          confirm_delete_button: Ie, ewch ati i’w dynnu
-          cancel_delete_button: Na, peidiwch â'i dynnu
+          confirm_delete_button: Dileu buddsoddiad
+          cancel_delete_button: Yn ôl i fuddsoddiadau
         destroy:
           success_flash: Rydych chi wedi tynnu'r buddsoddiad
       investments_summary:
@@ -572,8 +572,8 @@ cy:
         confirm_destroy:
           page_title: Cadarnhau dileu Tystysgrif Cynilion Cenedlaethol
           heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r Dystysgrif Cynilion Cenedlaethol hon?
-          confirm_delete_button: Ie, ewch ati i’w dynnu
-          cancel_delete_button: Na, peidiwch â'i dynnu
+          confirm_delete_button: Tynnu Tystysgrif Cynilo Genedlaethol
+          cancel_delete_button: Yn ôl i Dystysgrifau Cynilo Cenedlaethol
         destroy:
           success_flash: Rydych chi wedi tynnu’r Dystysgrif Cynilion Cenedlaethol
       national_savings_certificates_summary:
@@ -601,8 +601,8 @@ cy:
         confirm_destroy:
           page_title: Cadarnhau dileu ased
           heading: Ydych chi’n siŵr eich bod chi eisiau tynnu’r ased hwn?
-          confirm_delete_button: Ie, ewch ati i’w dynnu
-          cancel_delete_button: Na, peidiwch â'i dynnu
+          confirm_delete_button: Dileu ased
+          cancel_delete_button: Yn ôl i asedau
         destroy:
           success_flash: Mae'r ased wedi'i ddileu
       residential_property:
