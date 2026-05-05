@@ -111,6 +111,20 @@ RSpec.describe Case, type: :model do
     end
   end
 
+  describe '#appeal_financial_circumstances_changed?' do
+    context 'when appeal_financial_circumstances_changed is yes' do
+      let(:attributes) { { case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s, appeal_original_app_submitted: 'yes', appeal_financial_circumstances_changed: 'yes' } }
+
+      it { expect(kase.appeal_financial_circumstances_changed?).to be true }
+    end
+
+    context 'when appeal_financial_circumstances_changed is no' do
+      let(:attributes) { { case_type: CaseType::APPEAL_TO_CROWN_COURT.to_s, appeal_original_app_submitted: 'yes', appeal_financial_circumstances_changed: 'no' } }
+
+      it { expect(kase.appeal_financial_circumstances_changed?).to be false }
+    end
+  end
+
   describe '#hearing_date_within_range?' do
     context 'when latest hearing date is out of range' do
       let(:attributes) { { hearing_date: Date.parse('01-01-2036') } }
