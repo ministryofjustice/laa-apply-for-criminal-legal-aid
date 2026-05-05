@@ -313,7 +313,7 @@ describe Summary::Sections::CaseDetails do
 
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-            expect(answer.question).to eq(:appeal_maat_id_or_usn)
+            expect(answer.question).to eq(:appeal_maat_id)
             expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_maat_id)
           end
@@ -328,7 +328,7 @@ describe Summary::Sections::CaseDetails do
 
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-            expect(answer.question).to eq(:appeal_maat_id_or_usn)
+            expect(answer.question).to eq(:appeal_usn)
             expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_usn)
           end

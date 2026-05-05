@@ -29,10 +29,15 @@ class Applicant < Person
   end
 
   def relationship_status
+    return if has_partner == 'no'
+
     partner_detail&.relationship_status
   end
 
   def separation_date
+    return if has_partner == 'no'
+    return unless relationship_status == ClientRelationshipStatusType::SEPARATED.to_s
+
     partner_detail&.separation_date
   end
 

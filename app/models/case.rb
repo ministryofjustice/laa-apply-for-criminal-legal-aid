@@ -29,6 +29,48 @@ class Case < ApplicationRecord
     valid?(:submission)
   end
 
+  def appeal_lodged_date
+    super if appeal_case_type?
+  end
+
+  def appeal_with_changes_details
+    super if appeal_case_type?
+  end
+
+  def appeal_original_app_submitted
+    super if appeal_case_type?
+  end
+
+  def appeal_reference_number
+    super if appeal_case_type?
+  end
+
+  def appeal_financial_circumstances_changed
+    super if appeal_original_app_submitted?
+  end
+
+  def appeal_maat_id
+    super if original_application_reference_required?
+  end
+
+  def appeal_usn
+    super if original_application_reference_required?
+  end
+
+  def appeal_case_type?
+    return false unless case_type
+
+    CaseType.new(case_type).appeal?
+  end
+
+  def appeal_original_app_submitted?
+    appeal_original_app_submitted == 'yes'
+  end
+
+  def appeal_financial_circumstances_changed?
+    appeal_financial_circumstances_changed == 'yes'
+  end
+
   def hearing_date_within_range?
     hearing_date.between?(EARLIEST_HEARING_DATE, LATEST_HEARING_DATE)
   end
@@ -37,5 +79,9 @@ class Case < ApplicationRecord
 
   def initialise_dates(charge)
     charge.offence_dates.first_or_initialize
+  end
+
+  def original_application_reference_required?
+    appeal_financial_circumstances_changed == 'no'
   end
 end

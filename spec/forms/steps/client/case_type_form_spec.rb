@@ -60,14 +60,7 @@ RSpec.describe Steps::Client::CaseTypeForm do
       it_behaves_like 'a has-one-association form',
                       association_name: :case,
                       expected_attributes: {
-                        'case_type' => CaseType::INDICTABLE,
-                        :appeal_lodged_date => nil,
-                        :appeal_original_app_submitted => nil,
-                        :appeal_financial_circumstances_changed => nil,
-                        :appeal_with_changes_details => nil,
-                        :appeal_reference_number => nil,
-                        :appeal_maat_id => nil,
-                        :appeal_usn => nil,
+                        'case_type' => CaseType::INDICTABLE
                       }
     end
 
