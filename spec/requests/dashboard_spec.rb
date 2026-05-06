@@ -147,7 +147,7 @@ RSpec.describe 'Dashboard', :authorized do
 
     it 'has a read only version of the check your answers' do
       # client details section, no change links
-      assert_select 'h2', 'Client details'
+      assert_select 'h3', 'Client details'
 
       assert_select 'dl.govuk-summary-list' do
         assert_select 'div.govuk-summary-list__row.govuk-summary-list__row--no-actions:nth-of-type(1)' do
