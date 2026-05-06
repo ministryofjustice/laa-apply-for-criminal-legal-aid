@@ -364,10 +364,8 @@ en:
       # BEGIN offences section
       offence_details:
         question: "Offence %{index}"
-      offence_type:
-        question: Type
-      offence_class:
-        question: Class
+      offence_type_and_class:
+        question: Type and class
         absence_answer: Not determined
       offence_date:
         question:
