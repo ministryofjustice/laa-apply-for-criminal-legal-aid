@@ -15,7 +15,16 @@ Rails.application.config.to_prepare do
       Rails.application.config.filter_parameters
     )
     config.before_send = lambda do |event, _hint|
-      params_filter.filter(event.to_hash)
+      if event.request
+        event.request.data = params_filter.filter(event.request.data) if event.request.data
+        event.request.cookies = params_filter.filter(event.request.cookies) if event.request.cookies
+      end
+
+      if event.user
+        event.user = params_filter.filter(event.user)
+      end
+
+      event
     end
   end
 end
