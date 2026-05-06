@@ -101,7 +101,7 @@ RSpec.describe Summary::Components::Offence, type: :component do
 
   describe 'card heading' do
     subject(:heading) do
-      page.first('h2.govuk-summary-card__title').text
+      page.first('h3.govuk-summary-card__title').text
     end
 
     it { is_expected.to eq 'Offence' }

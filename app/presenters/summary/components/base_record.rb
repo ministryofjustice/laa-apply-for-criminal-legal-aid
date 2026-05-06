@@ -21,7 +21,7 @@ module Summary
       end
 
       def call
-        govuk_summary_card(title:, actions:) do
+        govuk_summary_card(title: title, actions: actions, heading_level: 3) do
           govuk_summary_list do |list|
             answers.each do |answer|
               list.with_row do |row|
