@@ -9,7 +9,7 @@
     "@ministryofjustice/frontend": "^8.0.0",
     "accessible-autocomplete": "^3.0.1",
     "dropzone": "^6.0.0-beta.2",
-    "govuk-frontend": "^5.14.0",
+    "govuk-frontend": "^6.1.0",
     "sass": "^1.97.3"
   },
   "scripts": {
