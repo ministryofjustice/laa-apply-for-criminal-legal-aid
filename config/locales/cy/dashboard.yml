@@ -5,7 +5,7 @@ cy:
       one: 1 canlyniad chwilio
       other: "%{count} canlyniad chwilio"
     heading: Chwilio ceisiadau sydd wedi'u cyflwyno
-    subheading: Rydych chi'n chwilio drwy geisiadau sydd wedi'u cyflwyno a'u dychwelyd o dan y cod swyddfa %{current_office_code}.
+    subheading: Rydych chi'n chwilio drwy geisiadau sydd wedi'u cyflwyno a'u dychwelyd o dan y rhif cyfrif swyddfa %{current_office_code}.
   table_headings:
     action: Cam gweithredu
     applicant_name: Enw

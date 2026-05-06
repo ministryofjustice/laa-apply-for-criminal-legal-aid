@@ -362,10 +362,8 @@ cy:
       # BEGIN offences section
       offence_details:
         question: "Trosedd %{index}"
-      offence_type:
-        question: Math
-      offence_class:
-        question: Dosbarth
+      offence_type_and_class:
+        question: Math a Dosbarth
         absence_answer: Heb ei bennu
       offence_date:
         question:

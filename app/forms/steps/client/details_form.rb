@@ -38,7 +38,7 @@ module Steps
 
       # If the last name or date of birth have changed, the DWP check
       # needs to run again as its result is linked to these attributes
-      def attributes_to_reset
+      def attributes_to_reset # rubocop:disable Metrics/MethodLength
         return {} unless changed?(:last_name, :date_of_birth)
 
         {
@@ -51,6 +51,7 @@ module Steps
           benefit_type: nil,
           last_jsa_appointment_date: nil,
           benefit_check_result: nil,
+          dwp_response: nil
         }
       end
     end

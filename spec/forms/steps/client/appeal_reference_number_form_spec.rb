@@ -42,7 +42,8 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
       'benefit_type' => nil,
       'last_jsa_appointment_date' => nil,
       'benefit_check_result' => nil,
-      'has_benefit_evidence' => nil
+      'has_benefit_evidence' => nil,
+      'dwp_response' => nil
     }
   }
 

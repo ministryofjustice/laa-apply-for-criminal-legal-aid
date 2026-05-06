@@ -57,6 +57,7 @@ module DeveloperTools
         benefit_type: nil,
         last_jsa_appointment_date: nil,
         benefit_check_result: nil,
+        dwp_response: nil,
       ).update(
         correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
         telephone_number: '123456789',
@@ -85,7 +86,7 @@ module DeveloperTools
 
     def find_or_create_applicant(overrides = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       Applicant.find_or_initialize_by(crime_application_id: crime_application.id).tap do |record|
-        surname, details = DWP::MockBenefitCheckService::KNOWN.to_a.sample
+        surname, details = DWP::MockBenefitCheckService::CONFIRMED.to_a.sample
 
         record.update(
           first_name: record.first_name || 'Test',
@@ -99,6 +100,7 @@ module DeveloperTools
           benefit_type: overrides.fetch(:benefit_type, 'universal_credit'),
           last_jsa_appointment_date: overrides.fetch(:last_jsa_appointment_date, nil),
           benefit_check_result: overrides.fetch(:benefit_check_result, true),
+          dwp_response: overrides.fetch(:dwp_response, 'Yes'),
           residence_type: overrides.fetch(:residence_type, 'none'),
           correspondence_address_type: CorrespondenceType::PROVIDERS_OFFICE_ADDRESS,
           telephone_number: '123456789',

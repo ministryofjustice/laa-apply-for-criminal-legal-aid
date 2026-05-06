@@ -54,6 +54,17 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
     title.ancestor('div.govuk-summary-card')
   end
 
+  def task_list_item(task_name)
+    find('li.govuk-task-list__item', text: task_name)
+  end
+
+  def task_list_item_status(task_name)
+    task_list_item(task_name)
+      .find('.govuk-task-list__status')
+      .text
+      .strip
+  end
+
   def within_card(card_title, &block)
     within(summary_card(card_title), &block)
   end

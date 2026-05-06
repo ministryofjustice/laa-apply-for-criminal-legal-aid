@@ -1,6 +1,7 @@
 feature_flags:
   developer_tools:
-    local: true
+    development: true
+    test: false
     staging: false
     production: false
   google_analytics:
@@ -19,7 +20,7 @@ feature_flags:
     local: true
     staging: true
     preprod: true
-    production: false
+    production: true
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is

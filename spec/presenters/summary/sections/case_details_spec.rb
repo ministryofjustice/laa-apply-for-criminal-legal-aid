@@ -60,6 +60,10 @@ describe Summary::Sections::CaseDetails do
     it { expect(subject.name).to eq(:case_details) }
   end
 
+  describe '#heading' do
+    it { expect(subject.heading).to eq(:case_details_and_offences) }
+  end
+
   describe '#show?' do
     context 'when there is a case' do
       it 'shows this section' do
@@ -313,7 +317,7 @@ describe Summary::Sections::CaseDetails do
 
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-            expect(answer.question).to eq(:appeal_maat_id_or_usn)
+            expect(answer.question).to eq(:appeal_maat_id)
             expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_maat_id)
           end
@@ -328,7 +332,7 @@ describe Summary::Sections::CaseDetails do
 
             answer = answers[5]
             expect(answer).to be_an_instance_of(Summary::Components::FreeTextAnswer)
-            expect(answer.question).to eq(:appeal_maat_id_or_usn)
+            expect(answer.question).to eq(:appeal_usn)
             expect(answer.change_path).to match('applications/12345/steps/client/appeal-reference-number')
             expect(answer.value).to eq(appeal_usn)
           end

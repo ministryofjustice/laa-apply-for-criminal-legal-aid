@@ -27,18 +27,7 @@ module Steps
       def persist!
         return true unless changed?
 
-        kase.update(
-          attributes.merge(
-            # The following are dependent attributes that need to be reset
-            appeal_lodged_date: nil,
-            appeal_with_changes_details: nil,
-            appeal_original_app_submitted: nil,
-            appeal_financial_circumstances_changed: nil,
-            appeal_reference_number: nil,
-            appeal_maat_id: nil,
-            appeal_usn: nil
-          )
-        )
+        kase.update(attributes.merge)
       end
     end
   end

@@ -84,14 +84,7 @@ RSpec.describe TypeOfApplication do
     let(:appeal_original_app_submitted) { 'yes' }
     let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
     let(:appeal_financial_circumstances_changed) { 'no' }
-
-    before do
-      allow(crime_application).to receive(:kase).and_return(
-        instance_double(
-          Case, appeal_original_app_submitted:, case_type:, appeal_financial_circumstances_changed:
-        )
-      )
-    end
+    let(:kase) { Case.new(appeal_original_app_submitted:, case_type:, appeal_financial_circumstances_changed:) }
 
     context 'with no financial changes since the original application' do
       it { is_expected.to be true }

@@ -46,8 +46,8 @@ RSpec.describe 'Charges/offences summary page', :authorized do
       assert_select 'li.govuk-summary-card__action', count: 0
 
       expect(response.body).to include('Are you sure you want to delete this offence?')
-      expect(response.body).to include('Yes, delete it')
-      expect(response.body).to include('No, do not delete it')
+      expect(response.body).to include('Delete offence')
+      expect(response.body).to include('Back to offences')
     end
 
     context 'when there are other offences' do
