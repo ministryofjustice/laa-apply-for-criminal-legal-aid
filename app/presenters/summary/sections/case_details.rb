@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    class CaseDetails < Sections::BaseSection # rubocop:disable Metrics/ClassLength
+    class CaseDetails < Sections::BaseSection
       def show?
         kase.present? && super
       end
@@ -100,20 +100,6 @@ module Summary
       end
 
       private
-
-      def appeal_case_type?
-        return false unless kase&.case_type
-
-        CaseType.new(kase.case_type).appeal?
-      end
-
-      def financial_circumstances_changed?
-        kase.appeal_financial_circumstances_changed == 'yes'
-      end
-
-      def original_app_submitted?
-        kase.appeal_original_app_submitted == 'yes'
-      end
 
       def case_concluded?
         kase.has_case_concluded == 'yes' && kase.date_case_concluded.present?
