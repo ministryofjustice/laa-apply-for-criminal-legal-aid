@@ -34,7 +34,7 @@ $app-button-inverted-hover-background-colour: govuk-tint($app-button-inverted-fo
 .app-button--m {
   // Below styles from govuk-button--start
   @include govuk-typography-weight-bold;
-  @include govuk-typography-responsive($size: 19, $override-line-height: 1);
+  @include govuk-font-size($size: 19, $line-height: 1);
 
   min-height: auto;
   justify-content: center;
