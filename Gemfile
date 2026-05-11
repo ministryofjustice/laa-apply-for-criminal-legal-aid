@@ -6,7 +6,7 @@ ruby File.read('.ruby-version').chomp
 gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
 gem 'govuk-components'
-gem 'govuk_design_system_formbuilder', '~> 5.11'
+gem 'govuk_design_system_formbuilder', '~> 6.1'
 gem 'jbuilder', '~> 2.14.0'
 gem 'kaminari'
 gem 'lograge'
