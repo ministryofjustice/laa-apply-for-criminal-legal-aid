@@ -20,7 +20,7 @@ module Type
     def serialize_cast_value(value)
       return if value.nil?
 
-      ensure_in_range(value.to_i)
+      value.to_i
     end
 
     def cast(value)
