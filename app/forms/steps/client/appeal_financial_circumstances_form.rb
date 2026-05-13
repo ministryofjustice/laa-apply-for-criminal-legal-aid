@@ -24,23 +24,7 @@ module Steps
       def persist!
         return true unless changed?
 
-        self.case.update(
-          attributes.merge(attributes_to_reset)
-        )
-      end
-
-      def attributes_to_reset
-        if financial_circumstances_changed?
-          return {
-            'appeal_maat_id' => nil,
-            'appeal_usn' => nil,
-            'appeal_reference_number' => nil
-          }
-        end
-
-        {
-          'appeal_with_changes_details' => nil
-        }
+        self.case.update(attributes)
       end
     end
   end
