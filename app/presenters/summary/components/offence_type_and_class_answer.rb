@@ -10,7 +10,8 @@ module Summary
       def offence_type
         tag.p(
           value.offence_name.presence,
-          class: 'govuk-body'
+          class: 'govuk-body',
+          lang: 'en'
         )
       end
 
