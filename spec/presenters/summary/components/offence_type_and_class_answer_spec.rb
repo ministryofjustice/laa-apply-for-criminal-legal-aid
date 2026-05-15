@@ -19,7 +19,6 @@ RSpec.describe Summary::Components::OffenceTypeAndClassAnswer do
       it 'lang for offence type set to english' do
         result = component.answer_text
         expect(result).to include('lang="en"')
-
       end
     end
 
