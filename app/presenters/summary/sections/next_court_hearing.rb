@@ -8,7 +8,7 @@ module Summary
       # rubocop:disable Metrics/MethodLength
       def answers
         [
-          Components::CourtNameTypeAnswer.new(
+          Components::EnTextAnswer.new(
             :hearing_court_name, kase.hearing_court_name,
             change_path: edit_steps_case_hearing_details_path
           ),

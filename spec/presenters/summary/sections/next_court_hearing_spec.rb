@@ -49,7 +49,7 @@ describe Summary::Sections::NextCourtHearing do
     it 'has the correct rows' do
       expect(answers.count).to eq(3)
 
-      expect(answers[0]).to be_an_instance_of(Summary::Components::CourtNameTypeAnswer)
+      expect(answers[0]).to be_an_instance_of(Summary::Components::EnTextAnswer)
       expect(answers[0].question).to eq(:hearing_court_name)
       expect(answers[0].change_path).to match('applications/12345/steps/case/hearing-details')
       expect(answers[0].value).to eq('Court name')

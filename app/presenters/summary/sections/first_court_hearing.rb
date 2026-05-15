@@ -7,7 +7,7 @@ module Summary
 
       def answers
         [
-          Components::CourtNameTypeAnswer.new(
+          Components::EnTextAnswer.new(
             :first_court_hearing_name, kase.first_court_hearing_name,
             change_path: edit_steps_case_first_court_hearing_path
           ),

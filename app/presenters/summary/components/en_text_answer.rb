@@ -1,6 +1,6 @@
 module Summary
   module Components
-    class CourtNameTypeAnswer < BaseAnswer
+    class EnTextAnswer < BaseAnswer
       def answer_text
         tag.p(
           value.presence,
