@@ -6,7 +6,7 @@ en:
       one: 1 search result
       other: "%{count} search results"
     heading: Search submitted applications
-    subheading: You are searching submitted and returned applications under office code %{current_office_code}.
+    subheading: You are searching submitted and returned applications under office account number %{current_office_code}.
   table_headings:
     action: Action
     applicant_name: Name

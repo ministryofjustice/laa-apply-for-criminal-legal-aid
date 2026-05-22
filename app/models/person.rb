@@ -21,15 +21,24 @@ class Person < ApplicationRecord
 
   def nino
     return unless has_nino == YesNoAnswer::YES.to_s
+    return if ignore_nino_and_arc?
 
     super
   end
 
   def arc
     return unless has_arc == YesNoAnswer::YES.to_s
+    return if ignore_nino_and_arc?
 
     super
   end
 
   delegate :capital, :income, to: :crime_application
+
+  private
+
+  def ignore_nino_and_arc?
+    crime_application.pse? || crime_application.appeal_no_changes? ||
+      crime_application.age_passported?
+  end
 end

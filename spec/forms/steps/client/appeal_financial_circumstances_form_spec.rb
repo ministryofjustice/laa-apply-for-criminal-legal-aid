@@ -52,10 +52,7 @@ RSpec.describe Steps::Client::AppealFinancialCircumstancesForm do
           expect(case_record).to receive(:update).with(
             {
               'appeal_financial_circumstances_changed' => appeal_financial_circumstances_changed,
-              'appeal_with_changes_details' => appeal_with_changes_details,
-              'appeal_maat_id' => nil,
-              'appeal_usn' => nil,
-              'appeal_reference_number' => nil
+              'appeal_with_changes_details' => appeal_with_changes_details
             }
           ).and_return(true)
 

@@ -1,8 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid' do
+  # rubocop:disable RSpec/ExampleLength
   describe 'Submitting an appeal to Crown Court (with changes) application' do
     include_context 'when logged in'
+
+    # details only required if changes or no original application submitted
+    let(:with_changes_cards) do
+      [
+        'Client contact details',
+        'Employment',
+        'Income'
+      ]
+    end
 
     before do
       # applications
@@ -187,6 +197,20 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
       save_and_continue
 
       # steps/submission/review
+    end
+
+    it 'shows correct details and submits a valid application to the datastore' do
+      expect(summary_card('Case details')).to have_rows(
+        'Case type', 'Appeal to Crown Court',
+        'Legal aid application for original case?', 'Yes',
+        'Changes to financial circumstances since original application?', 'Yes',
+        'Changes details', 'Redundancy'
+      )
+
+      with_changes_cards.each do |name|
+        expect(summary_card(name)).not_to be_nil
+      end
+
       save_and_continue
 
       # steps/submission/declaration
@@ -196,9 +220,6 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
 
       stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       click_button 'Save and submit application'
-    end
-
-    it 'submits a valid application to the datastore' do
       expect(
         a_request(:post, 'http://datastore-webmock/api/v1/applications').with { |req|
           body = JSON.parse(req.body)['application']
@@ -209,5 +230,95 @@ RSpec.describe 'Apply for Criminal Legal Aid' do
         }
       ).to have_been_made.once
     end
+
+    context "when the client's financial circumstances answer changed from yes to no" do
+      it 'hides means and contact details' do
+        within(summary_card('Case details')) do
+          click_link('Change Legal aid application for original case?', match: :first)
+        end
+
+        save_and_continue
+        choose_answer("Have your client's financial circumstances changed since the initial application?", 'No')
+        save_and_continue
+
+        click_button 'Save and come back later'
+
+        # confirm that the task list show client details as in progres--because original
+        # application reference is now required
+        expect(task_list_item_status('Client details')).to have_text('In progress')
+
+        # return to the original case details having checked the task item status
+        visit(crime_application_path(CrimeApplication.last))
+        within(summary_card('Case details')) do
+          click_link('Change Legal aid application for original case?', match: :first)
+        end
+        save_and_continue
+        save_and_continue
+
+        # steps/client/appeal_reference_number
+        choose_answer('What is the reference number of the original application?', 'USN')
+        fill_in('USN', with: 12_341_234)
+        click_button 'Save and come back later'
+
+        expect(task_list_item_status('Client details')).to have_text('Completed')
+
+        click_link('Review the application')
+
+        expect(summary_card('Case details')).to have_rows(
+          'Case type', 'Appeal to Crown Court',
+          'Legal aid application for original case?', 'Yes',
+          'Changes to financial circumstances since original application?', 'No',
+          'Original application USN', '12341234',
+          'Legal aid application for original case?', 'Yes'
+        )
+
+        expect(page).not_to have_content 'Changes details'
+
+        # confirm cards are no longer shown now there are no changes
+        with_changes_cards.each do |name|
+          expect(page).not_to have_content(name)
+        end
+      end
+    end
+
+    context 'when application changed to one where legal aid was not origionally submitted' do
+      it 'hides original application and CIFC details' do
+        %w[
+          appeal_financial_circumstances_changed
+          appeal_with_changes_details
+        ].each { |question| expect(page).to have_content I18n.t("summary.questions.#{question}.question") }
+
+        within(summary_card('Case details')) do
+          click_link('Legal aid application for original case?', match: :first)
+        end
+        choose_answer('Was a legal aid application submitted for the original case?', 'No')
+        save_and_continue
+        click_button 'Save and come back later'
+
+        # confirm that the task list show client details as in progres--because original
+        # application reference is now required
+        expect(task_list_item_status('Client details')).to have_text('Completed')
+
+        click_link('Review the application')
+
+        expect(summary_card('Case details')).to have_rows(
+          'Case type', 'Appeal to Crown Court',
+          'Legal aid application for original case?', 'No',
+        )
+
+        %w[
+          appeal_financial_circumstances_changed
+          appeal_usn
+          appeal_with_changes_details
+        ].each { |question| expect(page).not_to have_content I18n.t("summary.questions.#{question}.question") }
+
+        # confirm with change cards are there
+        with_changes_cards.each do |name|
+          expect(page).to have_content(name)
+        end
+      end
+    end
   end
+
+  # rubocop:enable RSpec/ExampleLength
 end

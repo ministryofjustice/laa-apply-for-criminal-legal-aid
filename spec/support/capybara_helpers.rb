@@ -48,10 +48,21 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   def summary_card(card_title)
     title = page.find(
       :xpath,
-      "//h2[@class='govuk-summary-card__title' and text()='#{card_title}']"
+      "//h3[@class='govuk-summary-card__title' and text()='#{card_title}']"
     )
 
     title.ancestor('div.govuk-summary-card')
+  end
+
+  def task_list_item(task_name)
+    find('li.govuk-task-list__item', text: task_name)
+  end
+
+  def task_list_item_status(task_name)
+    task_list_item(task_name)
+      .find('.govuk-task-list__status')
+      .text
+      .strip
   end
 
   def within_card(card_title, &block)

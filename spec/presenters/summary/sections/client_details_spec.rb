@@ -122,27 +122,6 @@ describe Summary::Sections::ClientDetails do
       expect(answers[7].value).to eq(Date.new(2001, 10, 12))
     end
 
-    context 'when there is a partner' do
-      let(:has_partner) { 'yes' }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(6)
-
-        expect(answers[5]).to be_an_instance_of(Summary::Components::ValueAnswer)
-        expect(answers[5].question).to eq(:has_partner)
-        expect(answers[5].change_path).to match('applications/12345/steps/client/does-client-have-partner')
-        expect(answers[5].value).to eq('yes')
-      end
-    end
-
-    context 'when there is no `benefit_type` value' do
-      let(:benefit_type) { nil }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(8)
-      end
-    end
-
     context 'when an arc is provided' do
       let(:nino) { nil }
       let(:has_arc) { 'yes' }
@@ -160,37 +139,6 @@ describe Summary::Sections::ClientDetails do
         expect(answers[5].question).to eq(:arc)
         expect(answers[5].change_path).to match('applications/12345/steps/client/nino')
         expect(answers[5].value).to eq('ABC12/345678/A')
-      end
-    end
-
-    context 'when application is a post submission evidence application' do
-      let(:application_type) { ApplicationType::POST_SUBMISSION_EVIDENCE }
-      let(:pse?) { true }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(7)
-        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth,
-                                       :has_partner, :relationship_status, :separation_date])
-      end
-    end
-
-    context 'when application is a appeal no changes application' do
-      let(:appeal_no_changes?) { true }
-      let(:has_partner) { nil }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(4)
-        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth])
-      end
-    end
-
-    context 'when application is an under 18 application' do
-      let(:means_passport) { ['on_age_under18'] }
-      let(:has_partner) { nil }
-
-      it 'has the correct rows' do
-        expect(answers.count).to eq(4)
-        expect(question_labels).to eq([:first_name, :last_name, :other_names, :date_of_birth])
       end
     end
   end

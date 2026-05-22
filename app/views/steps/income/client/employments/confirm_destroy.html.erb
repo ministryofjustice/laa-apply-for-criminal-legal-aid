@@ -15,12 +15,10 @@
       <div class="govuk-button-group">
         <%= f.button t('.confirm_delete_button'),
                      class: 'govuk-button govuk-button--warning',
-                     'aria-label': t('.confirm_delete_button_a11y'),
                      data: { module: 'govuk-button' } %>
 
-        <%= link_button t('.cancel_delete_button'), edit_steps_income_client_employments_summary_path,
-                        class: 'govuk-button--primary',
-                        'aria-label': t('.cancel_delete_button_a11y') %>
+        <%= link_to t('.cancel_delete_button'), edit_steps_income_client_employments_summary_path,
+                    class: 'govuk-link' %>
       </div>
     <% end %>
   </div>

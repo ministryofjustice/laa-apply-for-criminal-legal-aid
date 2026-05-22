@@ -22,17 +22,7 @@ module Steps
       private
 
       def persist!
-        partner_detail.update(
-          attributes.merge(attributes_to_reset)
-        )
-      end
-
-      def attributes_to_reset
-        return {} if separated?
-
-        {
-          'separation_date' => nil,
-        }
+        partner_detail.update(attributes)
       end
     end
   end

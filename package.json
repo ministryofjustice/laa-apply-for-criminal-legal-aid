@@ -17,7 +17,7 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css  ./app/assets/stylesheets/print.scss:./app/assets/builds/print.css  --no-source-map  --load-path=.  --load-path=node_modules  --quiet-deps"
   },
   "devDependencies": {
-    "esbuild": "^0.27.3"
+    "esbuild": "^0.28.0"
   },
   "resolutions": {
     "tar": "7.5.11",

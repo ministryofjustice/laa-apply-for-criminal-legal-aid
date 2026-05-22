@@ -13,7 +13,7 @@ gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '~> 8.0.4.1'
+gem 'rails', '~> 8.1.3'
 gem 'uk_postcode'
 
 # Authentication
@@ -41,7 +41,7 @@ gem 'stackprof'
 gem 'bootsnap', require: false
 
 gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.4',
+    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.6',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
@@ -78,6 +78,6 @@ gem 'cssbundling-rails', '~> 1.4'
 
 gem 'jsbundling-rails', '~> 1.3'
 
-gem 'propshaft', '~> 1.1'
+gem 'propshaft', '~> 1.3'
 
 gem 'csv', '~> 3.3'

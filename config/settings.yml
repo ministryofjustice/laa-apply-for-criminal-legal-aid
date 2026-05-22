@@ -1,6 +1,7 @@
 feature_flags:
   developer_tools:
-    local: true
+    development: true
+    test: false
     staging: false
     production: false
   google_analytics:

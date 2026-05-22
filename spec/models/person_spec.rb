@@ -7,10 +7,13 @@ RSpec.describe Person, type: :model do
     {
       first_name: 'Joe',
       last_name: 'Bloggs',
+      crime_application: crime_application
     }
   end
 
   let(:address_line_one) { '1 North Pole' }
+
+  let(:crime_application) { CrimeApplication.new }
 
   describe '#home_address?' do
     let(:mock_address) do
@@ -97,6 +100,36 @@ RSpec.describe Person, type: :model do
       it 'returns nino' do
         expect(subject.nino).to eq('AB123456A')
       end
+
+      context 'when pse' do
+        before do
+          allow(crime_application).to receive(:pse?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.nino).to be_nil
+        end
+      end
+
+      context 'when appeal no changes' do
+        before do
+          allow(crime_application).to receive(:appeal_no_changes?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.nino).to be_nil
+        end
+      end
+
+      context 'when passported on age' do
+        before do
+          allow(crime_application).to receive(:age_passported?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.nino).to be_nil
+        end
+      end
     end
 
     context 'when has_nino is `no`' do
@@ -126,6 +159,36 @@ RSpec.describe Person, type: :model do
 
       it 'returns arc' do
         expect(subject.arc).to eq('ARC123')
+      end
+
+      context 'when pse' do
+        before do
+          allow(crime_application).to receive(:pse?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.arc).to be_nil
+        end
+      end
+
+      context 'when appeal no changes' do
+        before do
+          allow(crime_application).to receive(:appeal_no_changes?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.arc).to be_nil
+        end
+      end
+
+      context 'when passported on age' do
+        before do
+          allow(crime_application).to receive(:age_passported?).and_return(true)
+        end
+
+        it 'returns nil' do
+          expect(subject.arc).to be_nil
+        end
       end
     end
 
