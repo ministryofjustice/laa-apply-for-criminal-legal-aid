@@ -15,6 +15,11 @@ RSpec.describe Summary::Components::OffenceTypeAndClassAnswer do
         expect(result).to include('Common assault')
         expect(result).to include('C')
       end
+
+      it 'lang for offence type set to english' do
+        result = component.answer_text
+        expect(result).to include('lang="en"')
+      end
     end
 
     context 'when offence class is nil' do
