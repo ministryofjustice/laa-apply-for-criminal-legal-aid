@@ -37,7 +37,7 @@ module Steps
       private
 
       def charge_record
-        @charge_record ||= case_charges.find(params[:charge_id])
+        @charge_record ||= case_charges.find(params.expect(:charge_id))
       end
 
       def case_charges
