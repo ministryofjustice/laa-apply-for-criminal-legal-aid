@@ -36,7 +36,7 @@ module Steps
 
       def national_savings_certificate_record
         @national_savings_certificate_record ||= national_savings_certificates.find(
-          params[:national_savings_certificate_id]
+          params.expect(:national_savings_certificate_id)
         )
       rescue ActiveRecord::RecordNotFound
         raise Errors::NationalSavingsCertificateNotFound
