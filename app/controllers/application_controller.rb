@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   private
 
   def locale_from_param
-    I18n.available_locales.find { |l| l == params[:locale]&.to_sym }
+    I18n.available_locales.find { |l| l == params.expect(:locale)&.to_sym }
   end
 
   def initialize_crime_application(attributes = {}, &block)

@@ -18,7 +18,7 @@ module Steps
       private
 
       def employment_record
-        @employment_record ||= employments.find(params[:employment_id])
+        @employment_record ||= employments.find(params.expect(:employment_id))
       rescue ActiveRecord::RecordNotFound
         raise Errors::EmploymentNotFound
       end
