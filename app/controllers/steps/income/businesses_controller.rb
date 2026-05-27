@@ -33,7 +33,7 @@ module Steps
       private
 
       def business_record
-        @business_record ||= businesses.find(params[:business_id])
+        @business_record ||= businesses.find(params.expect(:business_id))
       rescue ActiveRecord::RecordNotFound
         raise Errors::BusinessNotFound
       end

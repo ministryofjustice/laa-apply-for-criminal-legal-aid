@@ -31,7 +31,7 @@ module Steps
       private
 
       def saving_record
-        @saving_record ||= savings.find(params[:saving_id])
+        @saving_record ||= savings.find(params.expect(:saving_id))
       rescue ActiveRecord::RecordNotFound
         raise Errors::SavingNotFound
       end
