@@ -33,7 +33,7 @@ module Steps
       private
 
       def property_record
-        @property_record ||= properties.find(params[:property_id])
+        @property_record ||= properties.find(params.expect(:property_id))
       rescue ActiveRecord::RecordNotFound
         raise Errors::PropertyNotFound
       end

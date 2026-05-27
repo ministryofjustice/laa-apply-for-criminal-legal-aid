@@ -31,7 +31,7 @@ module Steps
       private
 
       def investment_record
-        @investment_record ||= investments.find(params[:investment_id])
+        @investment_record ||= investments.find(params.expect(:investment_id))
       rescue ActiveRecord::RecordNotFound
         raise Errors::InvestmentNotFound
       end
