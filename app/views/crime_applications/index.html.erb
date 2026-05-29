@@ -11,7 +11,7 @@
       </h2>
     <% else %>
       <table class="govuk-table app-dashboard-table">
-
+        <%= render partial: 'shared/sortable_table_caption' %>
         <%= render DataTable::HeadComponent.new(sorting: @sorting) do |head|
               head.with_row do |row|
                 row.with_cell(colname: 'applicant_name')

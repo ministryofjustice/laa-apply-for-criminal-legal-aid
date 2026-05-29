@@ -25,7 +25,7 @@ module DataTable
     def cell_content
       return name unless sortable?
 
-      button_to(name, "##{colname}", params: sorted_params, method: http_method)
+      button_to(name, "##{colname}", params: sorted_params, method: http_method, aria: { label: "sort by #{name}" })
     end
 
     def http_method
