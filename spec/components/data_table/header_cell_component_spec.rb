@@ -4,7 +4,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
   let(:sorting) do
     instance_double(
       'Sorting',
-      sortable_columns: ['applicant_name', 'created_at'],
+      sortable_columns: %w[applicant_name created_at],
       sort_by: 'applicant_name',
       sort_direction: 'ascending',
       reverse_direction: 'descending'
@@ -43,7 +43,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
         let(:sorting) do
           instance_double(
             'Sorting',
-            sortable_columns: ['applicant_name', 'created_at'],
+            sortable_columns: %w[applicant_name created_at],
             sort_by: 'created_at',
             sort_direction: 'descending',
             reverse_direction: 'ascending'
