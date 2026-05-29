@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DataTable::HeaderCellComponent, type: :component do
   let(:sorting) do
-    instance_double(
-      'Sorting',
+    double(
       sortable_columns: %w[applicant_name created_at],
       sort_by: 'applicant_name',
       sort_direction: 'ascending',
@@ -41,8 +40,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
 
       context 'when the column is not currently sorted' do
         let(:sorting) do
-          instance_double(
-            'Sorting',
+          double(
             sortable_columns: %w[applicant_name created_at],
             sort_by: 'created_at',
             sort_direction: 'descending',
@@ -58,8 +56,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
 
     context 'when column is not sortable' do
       let(:sorting) do
-        instance_double(
-          'Sorting',
+        double(
           sortable_columns: [],
           sort_by: nil,
           sort_direction: nil,
