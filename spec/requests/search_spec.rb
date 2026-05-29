@@ -89,7 +89,6 @@ RSpec.describe 'Search', :authorized do
       it 'does not include a visually hidden caption indicating columns are sortable' do
         assert_select 'table.govuk-table caption span.govuk-visually-hidden', false
       end
-
     end
   end
 end
