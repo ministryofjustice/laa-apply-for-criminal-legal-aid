@@ -32,7 +32,6 @@ module DataTable
       )
     end
 
-
     def default_classes
       class_names(
         "#{brand}-table__header",
