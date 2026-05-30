@@ -25,20 +25,13 @@ module DataTable
     def cell_content
       return name unless sortable?
 
-      button_to(
+      link_to(
         name,
-        "##{colname}",
-        params: sorted_params,
-        method: http_method,
+        "#{request.path}?#{sorted_params.to_query}",
         aria: { label: I18n.t('table_headings.sort_by', column: name) }
       )
     end
 
-    def http_method
-      return :post if request.method == 'POST'
-
-      :get
-    end
 
     def default_classes
       class_names(

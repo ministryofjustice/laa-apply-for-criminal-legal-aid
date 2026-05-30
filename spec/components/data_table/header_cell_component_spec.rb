@@ -26,12 +26,12 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
                       ))
       end
 
-      it 'renders a button for the column header' do
-        expect(page).to have_button(text: 'Name')
+      it 'renders a link for the column header' do
+        expect(page).to have_link(text: 'Name')
       end
 
-      it 'sets an aria-label on the sort button' do
-        expect(page).to have_css('button[aria-label="sort by Name"]')
+      it 'sets an aria-label on the sort link' do
+        expect(page).to have_css('a[aria-label="sort by Name"]')
       end
 
       it 'sets aria-sort to ascending for the active column' do
@@ -76,8 +76,8 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
                       ))
       end
 
-      it 'renders text instead of a button' do
-        expect(page).to have_no_button
+      it 'renders text instead of a link' do
+        expect(page).to have_no_link
         expect(page).to have_text('Action')
       end
 
@@ -86,7 +86,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
       end
 
       it 'does not set a sort aria-label' do
-        expect(page).to have_no_css('button[aria-label^="sort by "]')
+        expect(page).to have_no_css('a[aria-label^="sort by "]')
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe DataTable::HeaderCellComponent, type: :component do
       end
 
       it 'uses the custom text instead of i18n lookup' do
-        expect(page).to have_button(text: 'Client Name')
+        expect(page).to have_link(text: 'Client Name')
       end
     end
 

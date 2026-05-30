@@ -1,5 +1,8 @@
 @use "govuk-frontend/dist/govuk" as *;
 
+[aria-sort] a,
+[aria-sort] a:hover,
+[aria-sort] a:visited,
 [aria-sort] button,
 [aria-sort] button:hover {
 
@@ -21,6 +24,7 @@
 
 }
 
+[aria-sort] a:focus,
 [aria-sort] button:focus {
   outline: none;
   color: $govuk-focus-text-colour;
@@ -30,10 +34,12 @@
     0 4px $govuk-focus-text-colour;
 }
 
+[aria-sort]:first-child a,
 [aria-sort]:first-child button {
   right: auto;
 }
 
+[aria-sort] a::before,
 [aria-sort] button::before {
   content: " \25bc";
   position: absolute;
@@ -42,6 +48,7 @@
   font-size: 0.5em;
 }
 
+[aria-sort] a::after,
 [aria-sort] button::after {
   content: " \25b2";
   position: absolute;
@@ -50,11 +57,14 @@
   font-size: 0.5em;
 }
 
+[aria-sort="ascending"] a::before,
 [aria-sort="ascending"] button::before,
+[aria-sort="descending"] a::before,
 [aria-sort="descending"] button::before {
   content: none;
 }
 
+[aria-sort="ascending"] a::after,
 [aria-sort="ascending"] button::after {
   content: " \25b2";
   position: absolute;
@@ -63,6 +73,7 @@
   font-size: 0.8em;
 }
 
+[aria-sort="descending"] a::after,
 [aria-sort="descending"] button::after {
   content: " \25bc";
   position: absolute;
