@@ -29,14 +29,14 @@ RSpec.describe 'Viewing In Progress Criminal Legal Aid applications' do
 
     ['Name', 'Start date', 'LAA reference', 'Application type'].each do |header_text|
       it "sorts by #{header_text} all in progress applications" do
-        click_button header_text
+        click_link header_text
         expect(find(:element, 'aria-sort': 'ascending')).to have_text header_text
       end
     end
 
     it 'preserves the locale when sorting' do
       click_link 'Cymraeg'
-      click_button 'Enw'
+      click_link 'Enw'
       expect(find(:element, 'aria-sort': 'ascending')).to have_text 'Enw'
     end
 
@@ -49,7 +49,7 @@ RSpec.describe 'Viewing In Progress Criminal Legal Aid applications' do
       let(:number_of_records) { Kaminari.config.default_per_page + 1 }
 
       it 'can navigate to the next page and maintain sorting' do
-        click_button 'Name'
+        click_link 'Name'
         click_button 'Next'
 
         expect(find(:element, 'aria-label': 'Page 2', 'aria-current': 'page')).to have_text(2)
