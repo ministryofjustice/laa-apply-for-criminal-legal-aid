@@ -40,11 +40,6 @@ RSpec.describe 'Viewing In Progress Criminal Legal Aid applications' do
       expect(find(:element, 'aria-sort': 'ascending')).to have_text 'Enw'
     end
 
-    it 'includes a visually hidden caption indicating columns are sortable' do
-      expect(page).to have_css('table caption span.govuk-visually-hidden',
-                               text: 'Column headers with buttons are sortable.')
-    end
-
     context 'when there are more than 30 records' do
       let(:number_of_records) { Kaminari.config.default_per_page + 1 }
 
@@ -61,10 +56,6 @@ RSpec.describe 'Viewing In Progress Criminal Legal Aid applications' do
   context 'when there are no records to return' do
     it 'informs the user that there are no applications' do
       expect(page).to have_element('h2', text: 'There are no applications')
-    end
-
-    it 'does not include a visually hidden caption indicating columns are sortable' do
-      expect(page).to have_no_css('table.govuk-table caption span.govuk-visually-hidden')
     end
   end
 

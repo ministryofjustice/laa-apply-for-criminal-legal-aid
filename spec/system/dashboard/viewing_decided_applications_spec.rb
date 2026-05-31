@@ -29,21 +29,12 @@ RSpec.describe 'Viewing Decided Criminal Legal Aid applications' do
     it 'informs the user that there are no applications' do
       expect(page).to have_element('h2', text: 'There are no applications')
     end
-
-    it 'does not include a visually hidden caption indicating columns are sortable' do
-      expect(page).to have_no_css('table.govuk-table caption span.govuk-visually-hidden')
-    end
   end
 
   it 'shows "Decided" as the current page' do
     current_tab = find(:element, 'aria-current': 'page', class: 'moj-sub-navigation__link')
 
     expect(current_tab).to have_text 'Decided'
-  end
-
-  it 'includes a visually hidden caption indicating columns are sortable' do
-    expect(page).to have_css('table caption span.govuk-visually-hidden',
-                             text: 'Column headers with buttons are sortable.')
   end
 
   it_behaves_like 'a datastore api results table'

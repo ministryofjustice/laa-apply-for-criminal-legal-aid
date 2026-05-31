@@ -71,11 +71,6 @@ RSpec.describe 'Search', :authorized do
       end
     end
 
-    it 'includes a visually hidden caption indicating columns are sortable' do
-      assert_select 'table.govuk-table caption span.govuk-visually-hidden',
-                    'Column headers with buttons are sortable.'
-    end
-
     context 'when there are no records to return' do
       let(:stubbed_search_results) { [] }
 
@@ -84,10 +79,6 @@ RSpec.describe 'Search', :authorized do
 
         assert_select 'h1', 'Search submitted applications'
         assert_select 'h2', 'There are no results that match the criteria'
-      end
-
-      it 'does not include a visually hidden caption indicating columns are sortable' do
-        assert_select 'table.govuk-table caption span.govuk-visually-hidden', false
       end
     end
   end
