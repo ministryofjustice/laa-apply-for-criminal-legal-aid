@@ -7,6 +7,8 @@ cy:
     heading: Chwilio ceisiadau sydd wedi'u cyflwyno
     subheading: Rydych chi'n chwilio drwy geisiadau sydd wedi'u cyflwyno a'u dychwelyd o dan y rhif cyfrif swyddfa %{current_office_code}.
   table_headings:
+    sortable_caption: Mae modd trefnu penawdau colofnau sydd â botymau.
+    sort_by: trefnu yn ôl %{column}
     action: Cam gweithredu
     applicant_name: Enw
     application_type: Math o gais

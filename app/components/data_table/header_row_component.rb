@@ -16,7 +16,10 @@ module DataTable
     end
 
     def call
-      tag.tr(**html_attributes) { safe_join(cells) }
+      safe_join([
+                  render(partial: 'shared/sortable_table_caption'),
+                  tag.tr(**html_attributes) { safe_join(cells) }
+                ])
     end
 
     private
