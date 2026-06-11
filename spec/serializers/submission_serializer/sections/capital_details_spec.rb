@@ -38,6 +38,7 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
       national_savings_certificates: [],
       properties: [],
       has_frozen_income_or_assets: nil,
+      frozen_income_or_assets_subject: nil,
       has_no_investments: nil,
       has_no_savings: nil,
       has_national_savings_certificates: nil,
@@ -102,6 +103,7 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
           :partner_trust_fund_amount_held => 2000,
           :partner_trust_fund_yearly_dividend => 200,
           :has_frozen_income_or_assets => 'yes',
+          :frozen_income_or_assets_subject => nil,
           'has_no_other_assets' => 'yes'
         }.as_json
       end
@@ -126,6 +128,24 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
         end
 
         it { expect(subject.generate).to eq(json_output) }
+      end
+    end
+
+    context 'when frozen assets subject is present' do
+      before do
+        allow(serializer).to receive(:requires_full_capital?).and_return(false)
+
+        allow(capital).to receive_messages(
+          has_frozen_income_or_assets: 'yes',
+          frozen_income_or_assets_subject: 'client'
+        )
+      end
+
+      it 'includes the frozen assets subject' do
+        expect(subject.generate).to include(
+          'has_frozen_income_or_assets' => 'yes',
+          'frozen_income_or_assets_subject' => 'client'
+        )
       end
     end
   end

@@ -64,6 +64,31 @@ RSpec.describe Steps::Capital::FrozenIncomeSavingsAssetsForm do
                       expected_attributes: {
                         'has_frozen_income_or_assets' => YesNoAnswer::YES,
                       }
+
+      context 'when `has_frozen_income_or_assets` answer is no' do
+        let(:has_frozen_income_or_assets) { YesNoAnswer::NO.to_s }
+
+        context 'when a frozen income or assets subject was previously recorded' do
+          let(:capital) do
+            instance_double(
+              Capital,
+              frozen_income_or_assets_subject: FrozenIncomeOrAssetsSubjectType::CLIENT
+            )
+          end
+
+          it 'clears the frozen income or assets subject' do
+            expect(capital).to receive(:update)
+              .with(
+                hash_including(
+                  'frozen_income_or_assets_subject' => nil
+                )
+              )
+              .and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
+      end
     end
   end
 end

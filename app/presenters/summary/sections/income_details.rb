@@ -19,6 +19,10 @@ module Summary
             change_path: edit_steps_income_frozen_income_savings_assets_path
           ),
           Components::ValueAnswer.new(
+            :frozen_income_or_assets_subject, income.frozen_income_or_assets_subject,
+            change_path: edit_steps_income_frozen_income_or_assets_subject_path
+          ),
+          Components::ValueAnswer.new(
             :client_owns_property, income.client_owns_property,
             change_path: edit_steps_income_client_owns_property_path,
             subject_type: property_ownership_type

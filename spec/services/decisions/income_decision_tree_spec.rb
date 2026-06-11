@@ -758,42 +758,84 @@ RSpec.describe Decisions::IncomeDecisionTree do
     context 'when they have frozen income or assets' do
       let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
 
-      context 'when the client is employed' do
-        let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+      context 'when a partner is included in means assessment' do
+        let(:partner_detail) { double(PartnerDetail, involvement_in_case: 'none') }
 
-        context 'with client employments present' do
-          let(:client_employments_empty?) { true }
-
-          it 'redirects to the `client/employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-          end
-        end
-
-        context 'with incomplete client employments' do
-          let(:client_employments_empty?) { true }
-          let(:incomplete_employments) { [employment_double] }
-
-          it 'redirects to the `employer_details` page' do
-            expect(subject).to have_destination('/steps/income/client/employer_details', :edit, id: crime_application)
-            expect(employments_double).not_to have_received(:create!)
-          end
-        end
-
-        context 'with client employments not present' do
-          let(:client_employments_empty?) { false }
-
-          it 'redirects to the `client/employments_summary` page' do
-            expect(subject).to have_destination('/steps/income/client/employments_summary', :edit,
-                                                id: crime_application)
-          end
+        it do
+          expect(subject).to have_destination(
+            :frozen_income_or_assets_subject,
+            :edit,
+            id: crime_application
+          )
         end
       end
 
-      context 'when the client is not employed' do
-        let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
-
+      context 'when a partner is not included in means assessment' do
         it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
       end
+    end
+  end
+
+  context 'when the step is `frozen_income_or_assets_subject`' do
+    let(:has_frozen_income_or_assets) { YesNoAnswer::YES.to_s }
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :frozen_income_or_assets_subject }
+
+    before do
+      allow(income).to receive_messages(
+        income_above_threshold: 'no',
+        has_frozen_income_or_assets: has_frozen_income_or_assets,
+        client_owns_property: nil,
+        has_savings: nil
+      )
+    end
+
+    context 'when the client is employed' do
+      let(:employment_status) { EmploymentStatus::EMPLOYED.to_s }
+
+      context 'when there are no employments' do
+        let(:client_employments_empty?) { true }
+
+        it 'redirects to employer details' do
+          expect(subject).to have_destination(
+            '/steps/income/client/employer_details',
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+
+      context 'when there are incomplete employments' do
+        let(:client_employments_empty?) { false }
+        let(:incomplete_employments) { [employment_double] }
+
+        it 'redirects to employer details' do
+          expect(subject).to have_destination(
+            '/steps/income/client/employer_details',
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+
+      context 'when all employments are complete' do
+        let(:client_employments_empty?) { false }
+        let(:incomplete_employments) { [] }
+
+        it 'redirects to employments summary' do
+          expect(subject).to have_destination(
+            '/steps/income/client/employments_summary',
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+    end
+
+    context 'when the client is not employed' do
+      let(:employment_status) { EmploymentStatus::NOT_WORKING.to_s }
+
+      it { is_expected.to have_destination(:income_payments, :edit, id: crime_application) }
     end
   end
 

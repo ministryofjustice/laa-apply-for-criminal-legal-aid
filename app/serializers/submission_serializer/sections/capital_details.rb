@@ -41,6 +41,7 @@ module SubmissionSerializer
 
           unless income.has_frozen_income_or_assets.present? || capital.has_frozen_income_or_assets.blank?
             json.has_frozen_income_or_assets capital.has_frozen_income_or_assets
+            json.frozen_income_or_assets_subject capital.frozen_income_or_assets_subject
           end
         end
       end

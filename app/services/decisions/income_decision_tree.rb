@@ -32,6 +32,8 @@ module Decisions
         after_income_before_tax
       when :frozen_income_savings_assets
         after_frozen_income_savings_assets
+      when :frozen_income_or_assets_subject
+        after_frozen_income_or_assets_subject
       when :client_owns_property
         after_client_owns_property
       when :has_savings
@@ -220,7 +222,12 @@ module Decisions
       edit(:frozen_income_savings_assets)
     end
 
+    def after_frozen_income_or_assets_subject
+      after_extent_of_means_determined
+    end
+
     def after_frozen_income_savings_assets
+      return edit(:frozen_income_or_assets_subject) if has_frozen_assets? && include_partner_in_means_assessment?
       return after_extent_of_means_determined if extent_of_means_assessment_determined?
 
       edit(:client_owns_property)

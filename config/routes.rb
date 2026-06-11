@@ -240,6 +240,7 @@ except: [:destroy]
         edit_step :did_client_lose_job_being_in_custody, alias: :lost_job_in_custody
         edit_step :current_income_before_tax, alias: :income_before_tax
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets
+        edit_step :frozen_income_or_assets_subject
         edit_step :own_home_land_property, alias: :client_owns_property
         edit_step :any_savings_investments, alias: :has_savings
         edit_step :does_client_have_dependants, alias: :client_has_dependants
@@ -297,6 +298,7 @@ except: [:destroy]
         edit_step :partner_any_premium_bonds, alias: :partner_premium_bonds
         edit_step :partner_benefit_from_trust_fund, alias: :partner_trust_fund
         edit_step :income_savings_assets_under_restraint_freezing_order, alias: :frozen_income_savings_assets_capital
+        edit_step :frozen_income_or_assets_subject
 
         edit_step :check_your_answers_capital, alias: :answers
       end

@@ -9,8 +9,14 @@ module Steps
 
       def persist!
         capital.update(
-          attributes
+          attributes.merge(attributes_to_reset)
         )
+      end
+
+      def attributes_to_reset
+        return {} unless has_frozen_income_or_assets.no?
+
+        { 'frozen_income_or_assets_subject' => nil }
       end
     end
   end

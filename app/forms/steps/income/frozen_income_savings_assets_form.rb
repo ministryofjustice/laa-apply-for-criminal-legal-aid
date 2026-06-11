@@ -24,12 +24,16 @@ module Steps
       end
 
       def attributes_to_reset
-        return {} unless frozen_income_or_assets?
-
-        {
-          'client_owns_property' => nil,
-          'has_savings' => nil,
-        }
+        if frozen_income_or_assets?
+          {
+            'client_owns_property' => nil,
+            'has_savings' => nil,
+          }
+        else
+          {
+            'frozen_income_or_assets_subject' => nil,
+          }
+        end
       end
 
       def frozen_income_or_assets?

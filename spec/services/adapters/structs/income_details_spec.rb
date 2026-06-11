@@ -54,6 +54,7 @@ RSpec.describe Adapters::Structs::IncomeDetails do
           partner_in_armed_forces
           income_above_threshold
           has_frozen_income_or_assets
+          frozen_income_or_assets_subject
           client_owns_property
           has_savings
           manage_without_income
