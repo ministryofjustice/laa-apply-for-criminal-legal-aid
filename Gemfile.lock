@@ -208,7 +208,7 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-net_http (3.4.3)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
@@ -317,7 +317,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nkf (0.2.0)
+    nkf (0.3.0)
     nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -486,7 +486,7 @@ GEM
       rubocop (~> 1.81)
     ruby-progressbar (1.13.0)
     rubyzip (3.3.0)
-    savon (2.17.0)
+    savon (2.17.1)
       akami (~> 1.2)
       builder (>= 2.1.2)
       gyoku (~> 1.2)
