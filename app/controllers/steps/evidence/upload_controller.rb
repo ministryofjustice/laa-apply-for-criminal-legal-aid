@@ -16,7 +16,7 @@ module Steps
       def step_name
         return :upload_finished unless params.key?('document_id')
 
-        document = current_crime_application.documents.find(params['document_id'])
+        document = current_crime_application.documents.find(params.expect('document_id'))
 
         if deleted?(document)
           @flash = { success: t('steps.evidence.upload.edit.delete.success', file_name: document.filename) }

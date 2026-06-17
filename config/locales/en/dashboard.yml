@@ -8,6 +8,8 @@ en:
     heading: Search submitted applications
     subheading: You are searching submitted and returned applications under office account number %{current_office_code}.
   table_headings:
+    sortable_caption: Column headers with buttons are sortable.
+    sort_by: sort by %{column}
     action: Action
     applicant_name: Name
     application_type: Application type

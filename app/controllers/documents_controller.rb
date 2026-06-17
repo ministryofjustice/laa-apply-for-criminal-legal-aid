@@ -45,7 +45,7 @@ class DocumentsController < ApplicationController
   private
 
   def set_document
-    @document = current_crime_application.documents.find(params[:document_id])
+    @document = current_crime_application.documents.find(params.expect(:document_id))
   rescue ActiveRecord::RecordNotFound
     raise Errors::DocumentUnavailable, 'CrimeApplication/Document mismatch'
   end
