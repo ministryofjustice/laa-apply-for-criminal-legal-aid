@@ -2,22 +2,22 @@
   header.with_custom_logo do %>
     <%= render partial: 'layouts/moj_crest' %>
   <% end %>
-  <%= header.with_product_name(name: t('layouts.header.organisation_name')) %>
+  <% header.with_product_name(name: t('layouts.header.organisation_name')) %>
 
   <% if signed_in? %>
-    <%= header.with_navigation_item(
-          text: current_provider.display_name,
-          href: nil,
-          active: false,
-          html_attributes: { aria: { role: 'paragraph' } },
-          classes: 'app-header__auth-user'
-        ) %>
-
-    <%= header.with_navigation_item(
-          text: t('layouts.header.sign_out'),
-          href: provider_omniauth_logout_path,
-          active: false,
-          html_attributes: { aria: { role: 'button' } }
-        ) %>
+    <div class="govuk-header__content">
+      <nav class="govuk-header__navigation" aria-label="Menu">
+        <ul class="govuk-header__navigation-list">
+          <li class="govuk-header__navigation-item app-header__auth-user" aria-role="paragraph">
+            <%= current_provider.display_name %>
+          </li>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t('layouts.header.sign_out'), provider_omniauth_logout_path,
+                  class: 'govuk-header__link',
+                  aria: { role: 'button' } %>
+          </li>
+        </ul>
+      </nav>
+    </div>
   <% end %>
 <% end %>
