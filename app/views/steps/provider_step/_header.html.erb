@@ -10,9 +10,7 @@
           <%= current_provider.display_name %>
         </li>
         <li class="govuk-header__navigation-item">
-          <%= link_to t('layouts.header.sign_out'), provider_omniauth_logout_path,
-                class: 'govuk-header__link',
-                aria: { role: 'button' } %>
+          <%= link_to t('layouts.header.sign_out'), provider_omniauth_logout_path, class: 'govuk-header__link', aria: { role: 'button' } %>
         </li>
       </ul>
     </nav>
