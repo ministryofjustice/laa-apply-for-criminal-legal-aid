@@ -65,6 +65,36 @@ $colours: (
   border-bottom: none;
 }
 
+.govuk-header__homepage-link {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 30px;
+}
+
+@media (min-width: 48.0625em) {
+  .govuk-header__homepage-link {
+    display: inline;
+  }
+}
+
+.govuk-header__homepage-link:link,
+.govuk-header__homepage-link:visited {
+  text-decoration: none;
+}
+
+.govuk-header__homepage-link:hover,
+.govuk-header__homepage-link:active {
+  margin-bottom: -3px;
+  border-bottom: 3px solid;
+}
+
+.govuk-header__homepage-link:focus {
+  margin-bottom: 0;
+  border-bottom: 0;
+  color: #ffffff;
+  box-shadow: none;
+}
+
 .govuk-header__menu-button:hover {
   text-decoration: none;
 }
