@@ -13,6 +13,8 @@ metadata:
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-crime-apply"
+    nginx.ingress.kubernetes.io/custom-http-errors: "404"
+    nginx.ingress.kubernetes.io/default-backend: "nginx-errors"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
 spec:
