@@ -56,7 +56,7 @@ RSpec.describe StepsHelper, type: :helper do
     context 'there is a previous path in the stack' do
       it 'renders the back link to the previous path' do
         helper.step_header
-        expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/step2">Back</a>})
+        expect(view.content_for(:back_link)).to include('<a class="govuk-back-link" href="/step2">Back</a>')
       end
     end
 
@@ -65,14 +65,14 @@ RSpec.describe StepsHelper, type: :helper do
 
       it 'renders the back link to the root path as fallback' do
         helper.step_header
-        expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/">Back</a>})
+        expect(view.content_for(:back_link)).to include('<a class="govuk-back-link" href="/">Back</a>')
       end
     end
 
     context 'a specific path is provided' do
       it 'renders the back link with the provided path' do
         helper.step_header(path: '/another/step')
-        expect(view.content_for(:back_link)).to match(%r{<a class="govuk-back-link" href="/another/step">Back</a>})
+        expect(view.content_for(:back_link)).to include('<a class="govuk-back-link" href="/another/step">Back</a>')
       end
     end
   end
