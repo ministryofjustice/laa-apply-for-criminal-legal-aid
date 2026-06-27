@@ -95,7 +95,7 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
           let(:income) do
             instance_double(
               Income,
-              frozen_income_or_assets_subject: FrozenIncomeOrAssetsSubjectType::CLIENT
+              frozen_income_or_assets_subject: FrozenIncomeOrAssetsSubjectType::APPLICANT
             )
           end
 

@@ -1,7 +1,7 @@
 class FrozenIncomeOrAssetsSubjectType < ValueObject
   VALUES = [
-    CLIENT = new(:client),
+    APPLICANT = new(:applicant),
     PARTNER = new(:partner),
-    CLIENT_AND_PARTNER = new(:client_and_partner),
+    APPLICANT_AND_PARTNER = new(:applicant_and_partner),
   ].freeze
 end

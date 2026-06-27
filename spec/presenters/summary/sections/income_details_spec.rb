@@ -120,7 +120,7 @@ describe Summary::Sections::IncomeDetails do
           Income,
           income_above_threshold: 'no',
           has_frozen_income_or_assets: 'yes',
-          frozen_income_or_assets_subject: 'client_and_partner',
+          frozen_income_or_assets_subject: 'applicant_and_partner',
           client_owns_property: 'no',
           has_savings: 'no'
         )

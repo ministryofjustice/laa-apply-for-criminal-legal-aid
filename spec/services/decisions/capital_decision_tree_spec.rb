@@ -609,35 +609,6 @@ property_id: residential_property)
     end
   end
 
-  # context 'when the step is `frozen_income_savings_assets_capital`' do
-  #   let(:form_object) { double('FormObject') }
-  #   let(:step_name) { :frozen_income_savings_assets_capital }
-
-  #   context 'when they have frozen income or assets' do
-  #     let(:has_frozen_income_or_assets) { 'yes' }
-
-  #     it do
-  #       expect(subject).to have_destination(
-  #         :frozen_income_or_assets_subject,
-  #         :edit,
-  #         id: crime_application
-  #       )
-  #     end
-  #   end
-
-  #   context 'when they do not have frozen income or assets' do
-  #     let(:has_frozen_income_or_assets) { 'no' }
-
-  #     it do
-  #       expect(subject).to have_destination(
-  #         :answers,
-  #         :edit,
-  #         id: crime_application
-  #       )
-  #     end
-  #   end
-  # end
-
   context 'when the step is `frozen_income_savings_assets_capital`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :frozen_income_savings_assets_capital }

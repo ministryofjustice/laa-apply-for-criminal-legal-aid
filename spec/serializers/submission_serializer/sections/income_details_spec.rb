@@ -454,18 +454,18 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
 
     it { expect(subject.generate).to eq(json_output) }
 
-    context 'when frozen assets belong to the client and partner' do
+    context 'when frozen assets belong to the applicant and partner' do
       before do
         allow(income).to receive_messages(
           has_frozen_income_or_assets: 'yes',
-          frozen_income_or_assets_subject: 'client_and_partner'
+          frozen_income_or_assets_subject: 'applicant_and_partner'
         )
       end
 
       it 'serializes the frozen assets subject' do
         expect(subject.generate).to include(
           'has_frozen_income_or_assets' => 'yes',
-          'frozen_income_or_assets_subject' => 'client_and_partner'
+          'frozen_income_or_assets_subject' => 'applicant_and_partner'
         )
       end
     end

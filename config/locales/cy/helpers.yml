@@ -38,9 +38,9 @@ cy:
       commercial: eiddo masnachol
       land: tir
     FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS: &FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS
-      client: Y cleient
+      applicant: Y cleient
       partner: Eu partner
-      client_and_partner: Y cleient a'u partner
+      applicant_and_partner: Y cleient a'u partner
   helpers:
     back_link: Yn ôl
     back_to_applications: Yn ôl i'ch ceisiadau

@@ -48,7 +48,7 @@ RSpec.describe Steps::Capital::FrozenIncomeOrAssetsSubjectForm do
 
     context 'when `frozen_income_or_assets_subject` is valid' do
       let(:frozen_income_or_assets_subject) do
-        FrozenIncomeOrAssetsSubjectType::CLIENT.to_s
+        FrozenIncomeOrAssetsSubjectType::APPLICANT.to_s
       end
 
       it { is_expected.to be_valid }
@@ -58,7 +58,7 @@ RSpec.describe Steps::Capital::FrozenIncomeOrAssetsSubjectForm do
           .with(
             {
               'frozen_income_or_assets_subject' =>
-                FrozenIncomeOrAssetsSubjectType::CLIENT
+                FrozenIncomeOrAssetsSubjectType::APPLICANT
             }
           )
           .and_return(true)
@@ -70,7 +70,7 @@ RSpec.describe Steps::Capital::FrozenIncomeOrAssetsSubjectForm do
                       association_name: :capital,
                       expected_attributes: {
                         'frozen_income_or_assets_subject' =>
-                          FrozenIncomeOrAssetsSubjectType::CLIENT
+                          FrozenIncomeOrAssetsSubjectType::APPLICANT
                       }
     end
   end

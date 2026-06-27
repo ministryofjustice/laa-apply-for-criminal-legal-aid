@@ -15,7 +15,7 @@ describe Summary::Sections::OtherCapitalDetails do
     instance_double(
       Capital,
       has_frozen_income_or_assets: 'yes',
-      frozen_income_or_assets_subject: 'client'
+      frozen_income_or_assets_subject: 'applicant'
     )
   end
 
@@ -41,7 +41,7 @@ describe Summary::Sections::OtherCapitalDetails do
       expect(answers[0].value).to eq('yes')
 
       expect(answers[1].question).to eq(:frozen_income_or_assets_subject)
-      expect(answers[1].value).to eq('client')
+      expect(answers[1].value).to eq('applicant')
     end
 
     context 'when frozen_income_or_assets_subject is nil' do

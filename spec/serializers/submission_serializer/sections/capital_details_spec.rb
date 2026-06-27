@@ -137,14 +137,14 @@ RSpec.describe SubmissionSerializer::Sections::CapitalDetails do
 
         allow(capital).to receive_messages(
           has_frozen_income_or_assets: 'yes',
-          frozen_income_or_assets_subject: 'client'
+          frozen_income_or_assets_subject: 'applicant'
         )
       end
 
       it 'includes the frozen assets subject' do
         expect(subject.generate).to include(
           'has_frozen_income_or_assets' => 'yes',
-          'frozen_income_or_assets_subject' => 'client'
+          'frozen_income_or_assets_subject' => 'applicant'
         )
       end
     end

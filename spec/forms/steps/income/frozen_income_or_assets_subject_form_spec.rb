@@ -20,9 +20,9 @@ RSpec.describe Steps::Income::FrozenIncomeOrAssetsSubjectForm do
       expect(
         form.choices
       ).to eq([
-                FrozenIncomeOrAssetsSubjectType::CLIENT,
+                FrozenIncomeOrAssetsSubjectType::APPLICANT,
                 FrozenIncomeOrAssetsSubjectType::PARTNER,
-                FrozenIncomeOrAssetsSubjectType::CLIENT_AND_PARTNER
+                FrozenIncomeOrAssetsSubjectType::APPLICANT_AND_PARTNER
               ])
     end
   end
@@ -53,9 +53,9 @@ RSpec.describe Steps::Income::FrozenIncomeOrAssetsSubjectForm do
       end
     end
 
-    context 'when `frozen_income_or_assets_subject` is client' do
+    context 'when `frozen_income_or_assets_subject` is applicant' do
       let(:frozen_income_or_assets_subject) do
-        FrozenIncomeOrAssetsSubjectType::CLIENT.to_s
+        FrozenIncomeOrAssetsSubjectType::APPLICANT.to_s
       end
 
       it { is_expected.to be_valid }
@@ -63,7 +63,7 @@ RSpec.describe Steps::Income::FrozenIncomeOrAssetsSubjectForm do
       it_behaves_like 'a has-one-association form',
                       association_name: :income,
                       expected_attributes: {
-                        'frozen_income_or_assets_subject' => FrozenIncomeOrAssetsSubjectType::CLIENT
+                        'frozen_income_or_assets_subject' => FrozenIncomeOrAssetsSubjectType::APPLICANT
                       }
     end
 
@@ -83,7 +83,7 @@ RSpec.describe Steps::Income::FrozenIncomeOrAssetsSubjectForm do
 
     context 'when `frozen_income_or_assets_subject` is client_and_partner' do
       let(:frozen_income_or_assets_subject) do
-        FrozenIncomeOrAssetsSubjectType::CLIENT_AND_PARTNER.to_s
+        FrozenIncomeOrAssetsSubjectType::APPLICANT_AND_PARTNER.to_s
       end
 
       it { is_expected.to be_valid }
@@ -91,7 +91,7 @@ RSpec.describe Steps::Income::FrozenIncomeOrAssetsSubjectForm do
       it_behaves_like 'a has-one-association form',
                       association_name: :income,
                       expected_attributes: {
-                        'frozen_income_or_assets_subject' => FrozenIncomeOrAssetsSubjectType::CLIENT_AND_PARTNER
+                        'frozen_income_or_assets_subject' => FrozenIncomeOrAssetsSubjectType::APPLICANT_AND_PARTNER
                       }
     end
   end

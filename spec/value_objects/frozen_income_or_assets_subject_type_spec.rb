@@ -5,9 +5,9 @@ RSpec.describe FrozenIncomeOrAssetsSubjectType do
     it 'returns all possible values' do
       expect(described_class.values.map(&:to_s)).to eq(
         %w[
-          client
+          applicant
           partner
-          client_and_partner
+          applicant_and_partner
         ]
       )
     end

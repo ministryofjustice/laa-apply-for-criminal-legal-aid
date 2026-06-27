@@ -491,9 +491,9 @@ en:
       frozen_income_or_assets_subject:
         question: Who does the restraint or freezing order refer to?
         answers:
-          client: The client
+          applicant: The client
           partner: Their partner
-          client_and_partner: The client and their partner
+          applicant_and_partner: The client and their partner
       client_owns_property:
         question: "%{Subject} owns home, land or property?"
         answers:

@@ -38,9 +38,9 @@ en:
       commercial: commercial property
       land: land
     FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS: &FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS
-      client: The client
+      applicant: The client
       partner: Their partner
-      client_and_partner: Both the client and their partner
+      applicant_and_partner: Both the client and their partner
   helpers:
     back_link: Back
     back_to_applications: Back to your applications
