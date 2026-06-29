@@ -196,13 +196,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ministryofjustice/frontend@npm:^8.0.0":
-  version: 8.0.1
-  resolution: "@ministryofjustice/frontend@npm:8.0.1"
+"@ministryofjustice/frontend@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@ministryofjustice/frontend@npm:9.0.0"
   peerDependencies:
-    govuk-frontend: ^5.11.2
+    govuk-frontend: ^6.0.0
     moment: 2.30.1
-  checksum: 10c0/9754d558e3271aa3ef1ff1493d4d165eb6eeadc361f420f15c4b8591ab96c5e50b68ebb16adb66c378c721333aed45b1ade07018d2c71b808f581e92230a4137
+  checksum: 10c0/6b08112f34a564c516692ae14de2422decefdc6b26963b3922c47442a3a3ee18b8e034c3f3bedc15b881e017b0a3e8465ace50aa7526a5a90d4d56adf1e623f5
   languageName: node
   linkType: hard
 
@@ -645,10 +645,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"govuk-frontend@npm:^5.14.0":
-  version: 5.14.0
-  resolution: "govuk-frontend@npm:5.14.0"
-  checksum: 10c0/dcb1116003bb4a8ff167434bb30a779d6deafecb10687d044d5c560c0a7ff2053b8666000831c18ad3bcf4aa310678bf3c0cc40d734570b2b81c44853ddd388a
+"govuk-frontend@npm:^6.0.0":
+  version: 6.3.0
+  resolution: "govuk-frontend@npm:6.3.0"
+  checksum: 10c0/9e194a762c408c6d0c3f4a4c378d760b75ee7b0e2f2f638671f61e26aa1fd6d580ae259d20e3f739e32a89af996c4aecb0dc6e28d0065b549bd52bff9c716361
   languageName: node
   linkType: hard
 
@@ -767,11 +767,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "laa-apply-for-criminal-legal-aid@workspace:."
   dependencies:
-    "@ministryofjustice/frontend": "npm:^8.0.0"
+    "@ministryofjustice/frontend": "npm:^9.0.0"
     accessible-autocomplete: "npm:^3.0.1"
     dropzone: "npm:^6.0.0-beta.2"
     esbuild: "npm:^0.28.1"
-    govuk-frontend: "npm:^5.14.0"
+    govuk-frontend: "npm:^6.0.0"
+    moment: "npm:2.30.1"
     sass: "npm:^1.101.0"
   languageName: unknown
   linkType: soft
@@ -911,6 +912,13 @@ __metadata:
   dependencies:
     minipass: "npm:^7.1.2"
   checksum: 10c0/5aad75ab0090b8266069c9aabe582c021ae53eb33c6c691054a13a45db3b4f91a7fb1bd79151e6b4e9e9a86727b522527c0a06ec7d45206b745d54cd3097bcec
+  languageName: node
+  linkType: hard
+
+"moment@npm:2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 10c0/865e4279418c6de666fca7786607705fd0189d8a7b7624e2e56be99290ac846f90878a6f602e34b4e0455c549b85385b1baf9966845962b313699e7cb847543a
   languageName: node
   linkType: hard
 
