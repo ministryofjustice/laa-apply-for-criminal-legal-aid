@@ -248,6 +248,70 @@ RSpec.describe IncomeAssessment::AnswersValidator, type: :model do
     end
   end
 
+  describe '#frozen_income_or_assets_subject_complete?' do
+    context 'when partner is not included in means assessment' do
+      before do
+        allow(subject).to receive(:include_partner_in_means_assessment?).and_return(false)
+        allow(record).to receive(:frozen_income_or_assets_subject).and_return(nil)
+      end
+
+      it 'returns true' do
+        expect(subject.frozen_income_or_assets_subject_complete?).to be(true)
+      end
+    end
+
+    context 'when frozen income or assets is no' do
+      before do
+        allow(subject).to receive(:include_partner_in_means_assessment?).and_return(true)
+        allow(record).to receive_messages(has_frozen_income_or_assets: 'no', frozen_income_or_assets_subject: nil)
+      end
+
+      it 'returns true' do
+        expect(subject.frozen_income_or_assets_subject_complete?).to be(true)
+      end
+    end
+
+    context 'when frozen income or assets is yes and subject is present' do
+      before do
+        allow(subject).to receive(:include_partner_in_means_assessment?).and_return(true)
+        allow(record).to receive(:frozen_income_or_assets_subject).and_return('applicant')
+      end
+
+      it 'returns true' do
+        expect(subject.frozen_income_or_assets_subject_complete?).to be(true)
+      end
+    end
+
+    context 'when frozen income or assets is yes and subject is missing' do
+      before do
+        allow(subject).to receive(:include_partner_in_means_assessment?).and_return(true)
+        allow(record).to receive_messages(has_frozen_income_or_assets: 'yes', frozen_income_or_assets_subject: nil)
+      end
+
+      it 'returns false' do
+        expect(subject.frozen_income_or_assets_subject_complete?).to be(false)
+      end
+    end
+
+    context 'when frozen assets subject is required but missing' do
+      before do
+        allow(validator).to receive_messages(include_partner_in_means_assessment?: true, income_below_threshold?: true)
+
+        record.has_frozen_income_or_assets = 'yes'
+        record.frozen_income_or_assets_subject = nil
+      end
+
+      it 'adds an incomplete error' do
+        subject.validate
+
+        expect(subject.errors.of_kind?(
+                 'frozen_income_or_assets_subject',
+                 :incomplete
+               )).to be(true)
+      end
+    end
+  end
+
   describe '#income_payments_complete?' do
     context 'when has_no_income_payments is yes' do
       before { record.has_no_income_payments = 'yes' }

@@ -16,6 +16,7 @@ module IncomeAssessment
 
       errors.add(:income_before_tax, :incomplete) unless income_before_tax_complete?
       errors.add(:frozen_income_savings_assets, :incomplete) unless frozen_income_savings_assets_complete?
+      errors.add(:frozen_income_or_assets_subject, :incomplete) unless frozen_income_or_assets_subject_complete?
 
       return errors.add(:base, :incomplete_records) unless extent_of_means_assessment_determined?
 
@@ -43,6 +44,13 @@ module IncomeAssessment
       return true if client_or_means_assessed_partner_self_employed?
 
       record.has_frozen_income_or_assets.present?
+    end
+
+    def frozen_income_or_assets_subject_complete?
+      return true unless include_partner_in_means_assessment?
+      return true unless record.has_frozen_income_or_assets == YesNoAnswer::YES.to_s
+
+      record.frozen_income_or_assets_subject.present?
     end
 
     def income_payments_complete?

@@ -550,6 +550,56 @@ RSpec.describe CapitalAssessment::AnswersValidator, type: :model do
     end
   end
 
+  describe '#frozen_income_or_assets_subject_complete?' do
+    context 'when partner is not included in means assessment' do
+      before do
+        allow(record).to receive_messages(
+          has_frozen_income_or_assets: 'yes',
+          frozen_income_or_assets_subject: nil
+        )
+      end
+
+      it { expect(subject.frozen_income_or_assets_subject_complete?).to be(true) }
+    end
+
+    context 'when partner is included in means assessment' do
+      let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+      context 'when frozen income or assets is no' do
+        before do
+          allow(record).to receive_messages(
+            has_frozen_income_or_assets: 'no',
+            frozen_income_or_assets_subject: nil
+          )
+        end
+
+        it { expect(subject.frozen_income_or_assets_subject_complete?).to be(true) }
+      end
+
+      context 'when frozen income or assets is yes and subject is present' do
+        before do
+          allow(record).to receive_messages(
+            has_frozen_income_or_assets: 'yes',
+            frozen_income_or_assets_subject: FrozenIncomeOrAssetsSubjectType::APPLICANT
+          )
+        end
+
+        it { expect(subject.frozen_income_or_assets_subject_complete?).to be(true) }
+      end
+
+      context 'when frozen income or assets is yes and subject is missing' do
+        before do
+          allow(record).to receive_messages(
+            has_frozen_income_or_assets: 'yes',
+            frozen_income_or_assets_subject: nil
+          )
+        end
+
+        it { expect(subject.frozen_income_or_assets_subject_complete?).to be(false) }
+      end
+    end
+  end
+
   describe '#usual_property_details_complete?' do
     context 'when the usual property details are required' do
       before do

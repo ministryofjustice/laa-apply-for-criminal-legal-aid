@@ -29,7 +29,7 @@ module CapitalAssessment
       errors.add :trust_fund, :blank unless trust_fund_complete?
       errors.add :partner_trust_fund, :blank unless partner_trust_fund_complete?
       errors.add :frozen_income_savings_assets_capital, :blank unless frozen_income_savings_assets_complete?
-
+      errors.add :frozen_income_or_assets_subject, :blank unless frozen_income_or_assets_subject_complete?
       errors.presence&.add(:base, :incomplete_records)
     end
 
@@ -111,6 +111,13 @@ module CapitalAssessment
 
     def frozen_income_savings_assets_complete?
       record.has_frozen_income_or_assets.present? || income&.has_frozen_income_or_assets.present?
+    end
+
+    def frozen_income_or_assets_subject_complete?
+      return true unless include_partner_in_means_assessment?
+      return true unless record.has_frozen_income_or_assets == YesNoAnswer::YES.to_s
+
+      record.frozen_income_or_assets_subject.present?
     end
 
     def usual_property_details_complete?
