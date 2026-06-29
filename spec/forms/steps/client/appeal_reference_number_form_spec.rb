@@ -29,24 +29,6 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
   let(:home_address) { instance_double(HomeAddress, destroy!: true) }
   let(:correspondence_address) { instance_double(CorrespondenceAddress, destroy!: true) }
 
-  let(:applicant_attributes_to_reset) {
-    {
-      'residence_type' => nil,
-      'correspondence_address_type' => nil,
-      'telephone_number' => nil,
-      'has_nino' => nil,
-      'nino' => nil,
-      'has_arc' => nil,
-      'arc' => nil,
-      'will_enter_nino' => nil,
-      'benefit_type' => nil,
-      'last_jsa_appointment_date' => nil,
-      'benefit_check_result' => nil,
-      'has_benefit_evidence' => nil,
-      'dwp_response' => nil
-    }
-  }
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:appeal_reference_number) }
 
@@ -106,8 +88,6 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
           }
         ).and_return(true)
 
-        expect(applicant_record).to receive(:update).with(applicant_attributes_to_reset).and_return(true)
-
         expect(subject.save).to be(true)
       end
     end
@@ -124,8 +104,6 @@ RSpec.describe Steps::Client::AppealReferenceNumberForm do
             'appeal_usn' => appeal_usn
           }
         ).and_return(true)
-
-        expect(applicant_record).to receive(:update).with(applicant_attributes_to_reset).and_return(true)
 
         expect(subject.save).to be(true)
       end

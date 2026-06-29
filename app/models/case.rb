@@ -34,7 +34,7 @@ class Case < ApplicationRecord
   end
 
   def appeal_with_changes_details
-    super if appeal_case_type?
+    super if appeal_financial_circumstances_changed?
   end
 
   def appeal_original_app_submitted

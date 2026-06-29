@@ -62,11 +62,11 @@ RSpec.describe 'Search', :authorized do
     it 'includes the correct results table headings' do
       assert_select 'thead' do
         assert_select 'tr th.govuk-table__header', 5 do
-          assert_select 'button', count: 1, text: 'Name'
-          assert_select 'button', count: 1, text: 'Date submitted'
-          assert_select 'button', count: 1, text: 'LAA reference'
-          assert_select 'button', count: 1, text: 'Application type'
-          assert_select 'button', count: 1, text: 'Application status'
+          assert_select 'a', count: 1, text: 'Name'
+          assert_select 'a', count: 1, text: 'Date submitted'
+          assert_select 'a', count: 1, text: 'LAA reference'
+          assert_select 'a', count: 1, text: 'Application type'
+          assert_select 'a', count: 1, text: 'Application status'
         end
       end
     end

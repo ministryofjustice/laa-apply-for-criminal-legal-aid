@@ -53,7 +53,7 @@ RSpec.shared_examples 'a datastore api results table' do
       end
 
       it 'preserves sorting' do
-        click_button 'Name'
+        click_link 'Name'
         within('nav.govuk-pagination') { click_button('Previous') }
 
         expect(WebMock).to have_requested(
@@ -78,7 +78,7 @@ RSpec.shared_examples 'a datastore api results table' do
     end
 
     it 'preserves sorting' do
-      click_button 'LAA reference'
+      click_link 'LAA reference'
       within('nav.govuk-pagination') { click_button('3') }
 
       expect(WebMock).to have_requested(
@@ -102,7 +102,7 @@ RSpec.shared_examples 'a datastore api results table' do
     end
 
     it 'preserves sorting' do
-      click_button 'Application type'
+      click_link 'Application type'
       within('nav.govuk-pagination') { click_button('Next') }
 
       expect(WebMock).to have_requested(
@@ -123,7 +123,7 @@ RSpec.shared_examples 'a datastore api results table' do
   end
 
   it 'sort direction can be reversed' do
-    click_button 'Date submitted'
+    click_link 'Date submitted'
 
     expect(WebMock).to have_requested(:post, datastore_api_endpoint).with(
       body: hash_including({ sorting: { sort_by: 'submitted_at', sort_direction: 'ascending' } })

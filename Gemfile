@@ -6,14 +6,14 @@ ruby File.read('.ruby-version').chomp
 gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
 gem 'govuk-components'
-gem 'govuk_design_system_formbuilder', '~> 5.11'
-gem 'jbuilder', '~> 2.14.0'
+gem 'govuk_design_system_formbuilder', '~> 6.2'
+gem 'jbuilder', '~> 2.15.1'
 gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '~> 8.0.4.1'
+gem 'rails', '~> 8.1.3'
 gem 'uk_postcode'
 
 # Authentication
@@ -78,6 +78,6 @@ gem 'cssbundling-rails', '~> 1.4'
 
 gem 'jsbundling-rails', '~> 1.3'
 
-gem 'propshaft', '~> 1.1'
+gem 'propshaft', '~> 1.3'
 
 gem 'csv', '~> 3.3'
