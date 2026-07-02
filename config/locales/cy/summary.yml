@@ -486,6 +486,12 @@ cy:
       has_frozen_income_or_assets:
         question: Incwm, cynilion neu asedau dan orchymyn rhewi neu gyfyngiad
         answers: *YESNO
+      frozen_income_or_assets_subject:
+        question: Gyda phwy mae'r gorchymyn atal neu'r gorchymyn rhewi yn ymwneud â nhw?
+        answers:
+          applicant: Y cleient
+          partner: Eu partner
+          applicant_and_partner: Y cleient a'u partner
       client_owns_property:
         question: "Ydy %{Subject} yn berchen ar gartref, tir neu eiddo?"
         answers:

@@ -36,6 +36,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       partner_in_armed_forces: 'no',
       income_above_threshold: 'no',
       has_frozen_income_or_assets: 'no',
+      frozen_income_or_assets_subject: nil,
       client_owns_property: 'no',
       client_has_dependants: 'no',
       has_savings: 'yes',
@@ -268,6 +269,7 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
         partner_in_armed_forces: 'no',
         income_above_threshold: 'no',
         has_frozen_income_or_assets: 'no',
+        frozen_income_or_assets_subject: nil,
         client_owns_property: 'no',
         client_has_dependants: 'no',
         has_savings: 'yes',
@@ -451,6 +453,22 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     end
 
     it { expect(subject.generate).to eq(json_output) }
+
+    context 'when frozen assets belong to the applicant and partner' do
+      before do
+        allow(income).to receive_messages(
+          has_frozen_income_or_assets: 'yes',
+          frozen_income_or_assets_subject: 'applicant_and_partner'
+        )
+      end
+
+      it 'serializes the frozen assets subject' do
+        expect(subject.generate).to include(
+          'has_frozen_income_or_assets' => 'yes',
+          'frozen_income_or_assets_subject' => 'applicant_and_partner'
+        )
+      end
+    end
   end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

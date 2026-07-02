@@ -546,6 +546,12 @@ en:
           attributes:
             has_frozen_income_or_assets:
               blank: Select yes if %{subject} has any income, savings or assets under a restraint or freezing order
+        steps/income/frozen_income_or_assets_subject_form:
+          &FROZEN_INCOME_OR_ASSETS_SUBJECT_VALIDATION
+          attributes:
+            frozen_income_or_assets_subject:
+              blank: Select whether the income, savings or assets under a restraint or freezing order belong to your client, their partner, or both
+              inclusion: Select whether the income, savings or assets under a restraint or freezing order belong to your client, their partner, or both
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:
@@ -1125,7 +1131,8 @@ en:
           attributes:
             add_investment:
               inclusion: Select yes if you want to add another investment
-
+        steps/capital/frozen_income_or_assets_subject_form:
+          <<: *FROZEN_INCOME_OR_ASSETS_SUBJECT_VALIDATION
         steps/capital/has_national_savings_certificates_form:
           attributes:
             has_national_savings_certificates:

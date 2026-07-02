@@ -52,6 +52,8 @@ module Decisions
       when :partner_trust_fund
         after_trust_fund
       when :frozen_income_savings_assets_capital
+        after_frozen_income_savings_assets_capital
+      when :frozen_income_or_assets_subject
         edit(:answers)
       when :answers
         edit('/steps/evidence/upload')
@@ -162,6 +164,15 @@ module Decisions
         return edit(:property_owners, property_id: property)
       end
       edit(:properties_summary)
+    end
+
+    def after_frozen_income_savings_assets_capital
+      if crime_application.capital.has_frozen_income_or_assets == YesNoAnswer::YES.to_s &&
+         include_partner_in_means_assessment?
+        edit(:frozen_income_or_assets_subject)
+      else
+        edit(:answers)
+      end
     end
 
     def create_property_owner?

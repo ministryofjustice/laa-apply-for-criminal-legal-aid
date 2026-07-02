@@ -299,6 +299,9 @@ en:
         edit:
           has_frozen_income_or_assets: Does %{subject} have any income, savings or assets under a restraint or freezing order?
           hint: When %{subject} has a court order preventing them from accessing, using or moving certain assets without permission.
+      frozen_income_or_assets_subject: &FROZEN_INCOME_OR_ASSETS_SUBJECT_PAGE_TEXT
+        edit:
+          page_title: Who does the restraint or freezing order relate to?
       income_payments:
         edit:
           page_title: Which of these payments does your client get?
@@ -656,6 +659,7 @@ en:
             one: You have added %{count} asset
             other: You have added %{count} assets
       frozen_income_savings_assets_capital: *FROZEN_INCOME_ASSETS_PAGE_TEXT
+      frozen_income_or_assets_subject: *FROZEN_INCOME_OR_ASSETS_SUBJECT_PAGE_TEXT
       answers:
         edit:
           page_title: Check your answers - Your client's capital

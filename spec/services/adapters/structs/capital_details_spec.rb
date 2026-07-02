@@ -96,6 +96,7 @@ RSpec.describe Adapters::Structs::CapitalDetails do
       ).to match_array(
         %w[
           has_frozen_income_or_assets
+          frozen_income_or_assets_subject
           has_no_other_assets
           has_premium_bonds
           premium_bonds_total_value

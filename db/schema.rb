@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_11_110047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
     t.string "partner_has_premium_bonds"
     t.bigint "partner_premium_bonds_total_value"
     t.string "partner_premium_bonds_holder_number"
+    t.string "frozen_income_or_assets_subject"
     t.index ["crime_application_id"], name: "index_capitals_on_crime_application_id", unique: true
   end
 
@@ -259,6 +260,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_12_142641) do
     t.string "partner_other_work_benefit_received"
     t.string "client_in_armed_forces"
     t.string "partner_in_armed_forces"
+    t.string "frozen_income_or_assets_subject"
     t.index ["crime_application_id"], name: "index_incomes_on_crime_application_id"
   end
 

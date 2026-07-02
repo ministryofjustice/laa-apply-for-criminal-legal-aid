@@ -74,15 +74,43 @@ RSpec.describe Steps::Income::FrozenIncomeSavingsAssetsForm do
 
         it 'updates the record' do
           expect(income).to receive(:update)
-            .with({ 'has_frozen_income_or_assets' => YesNoAnswer::NO })
-            .and_return(true)
+            .with(
+              hash_including(
+                'has_frozen_income_or_assets' => YesNoAnswer::NO,
+                'frozen_income_or_assets_subject' => nil
+              )
+            ).and_return(true)
 
           expect(subject.save).to be(true)
         end
 
         it_behaves_like 'a has-one-association form',
                         association_name: :income,
-                        expected_attributes: { 'has_frozen_income_or_assets' => YesNoAnswer::NO }
+                        expected_attributes: {
+                          'has_frozen_income_or_assets' => YesNoAnswer::NO,
+                          'frozen_income_or_assets_subject' => nil
+                        }
+
+        context 'when a frozen income or assets subject was previously recorded' do
+          let(:income) do
+            instance_double(
+              Income,
+              frozen_income_or_assets_subject: FrozenIncomeOrAssetsSubjectType::APPLICANT
+            )
+          end
+
+          it 'clears the frozen income or assets subject' do
+            expect(income).to receive(:update)
+              .with(
+                hash_including(
+                  'frozen_income_or_assets_subject' => nil
+                )
+              )
+              .and_return(true)
+
+            expect(subject.save).to be(true)
+          end
+        end
       end
     end
   end

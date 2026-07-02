@@ -302,6 +302,9 @@ cy:
         edit:
           has_frozen_income_or_assets: Oes gan %{subject} unrhyw incwm, cynilion neu asedau dan orchymyn rhewi neu gyfyngiad?
           hint: Pan fydd gan %{subject} orchymyn llys sy'n eu hatal rhag cael mynediad at rai asedau, eu defnyddio neu eu symud heb ganiatâd.
+      frozen_income_or_assets_subject: &FROZEN_INCOME_OR_ASSETS_SUBJECT_PAGE_TEXT
+        edit:
+          page_title: Gyda phwy mae'r gorchymyn atal neu'r gorchymyn rhewi yn ymwneud â nhw?
       income_payments:
         edit:
           page_title: Pa rai o’r taliadau hyn y mae eich cleient yn eu cael?
@@ -659,6 +662,7 @@ cy:
             one: Rydych chi wedi ychwanegu %{count} ased
             other: Rydych chi wedi ychwanegu %{count} ased
       frozen_income_savings_assets_capital: *FROZEN_INCOME_ASSETS_PAGE_TEXT
+      frozen_income_or_assets_subject: *FROZEN_INCOME_OR_ASSETS_SUBJECT_PAGE_TEXT
       answers:
         edit:
           page_title: Gwirio eich atebion - Cyfalaf eich cleient

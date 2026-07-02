@@ -37,6 +37,10 @@ cy:
       residential: eiddo preswyl
       commercial: eiddo masnachol
       land: tir
+    FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS: &FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS
+      applicant: Y cleient
+      partner: Eu partner
+      applicant_and_partner: Y cleient a'u partner
   helpers:
     back_link: Yn ôl
     back_to_applications: Yn ôl i'ch ceisiadau
@@ -872,6 +876,9 @@ cy:
         in_armed_forces_options: *YESNO
       steps_income_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
+      steps_income_frozen_income_or_assets_subject_form:
+        frozen_income_or_assets_subject_options:
+          <<: *FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS
       steps_income_client_owns_property_form:
         client_owns_property_options: *YESNO
       steps_income_has_savings_form:
@@ -1285,6 +1292,9 @@ cy:
           other_relationship: Beth yw eu perthynas?
       steps_capital_frozen_income_savings_assets_form:
         has_frozen_income_or_assets_options: *YESNO
+      steps_capital_frozen_income_or_assets_subject_form:
+        frozen_income_or_assets_subject_options:
+          <<: *FROZEN_INCOME_OR_ASSETS_SUBJECT_OPTIONS
       steps_capital_answers_form:
         "yes":
           one: Ticiwch i gadarnhau nad oes gan %{subject} unrhyw asedau na chyfalaf arall

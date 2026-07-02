@@ -546,6 +546,12 @@ cy:
           attributes:
             has_frozen_income_or_assets:
               blank: Dewiswch ie os oes gan %{subject} unrhyw incwm, cynilion neu asedau dan orchymyn rhewi neu gyfyngiad
+        steps/income/frozen_income_or_assets_subject_form:
+          &FROZEN_INCOME_OR_ASSETS_SUBJECT_VALIDATION
+          attributes:
+            frozen_income_or_assets_subject:
+              blank: Dewiswch a yw'r incwm, y cynilion neu'r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i'ch cleient neu i'w partner
+              inclusion: Dewiswch a yw'r incwm, y cynilion neu'r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i'ch cleient neu i'w partner
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:
@@ -1149,6 +1155,7 @@ cy:
             add_national_savings_certificate:
               inclusion: Dewiswch ie os ydych chi am ychwanegu Tystysgrif Cynilion Cenedlaethol
         steps/capital/frozen_income_savings_assets_form: *FROZEN_INCOME_ASSETS_VALIDATION
+        steps/capital/frozen_income_or_assets_subject_form: *FROZEN_INCOME_OR_ASSETS_SUBJECT_VALIDATION
         steps/capital/answers_form:
           attributes:
             base:

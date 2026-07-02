@@ -16,7 +16,7 @@ RSpec.describe Decisions::CapitalDecisionTree do
     )
   end
 
-  let(:capital) { instance_double(Capital) }
+  let(:capital) { instance_double(Capital, has_frozen_income_or_assets:) }
   let(:income) { instance_double(Income, has_frozen_income_or_assets:) }
   let(:has_frozen_income_or_assets) { nil }
   let(:partner_detail) { instance_double(PartnerDetail, involvement_in_case:, conflict_of_interest:) }
@@ -612,6 +612,64 @@ property_id: residential_property)
   context 'when the step is `frozen_income_savings_assets_capital`' do
     let(:form_object) { double('FormObject') }
     let(:step_name) { :frozen_income_savings_assets_capital }
+
+    context 'when they have frozen income or assets' do
+      let(:has_frozen_income_or_assets) { 'yes' }
+
+      context 'when partner is included in means assessment' do
+        let(:involvement_in_case) { PartnerInvolvementType::NONE.to_s }
+
+        it do
+          expect(subject).to have_destination(
+            :frozen_income_or_assets_subject,
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+
+      context 'when partner is not included in means assessment' do
+        let(:involvement_in_case) { PartnerInvolvementType::VICTIM.to_s }
+
+        it do
+          expect(subject).to have_destination(
+            :answers,
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+
+      context 'when there is no partner' do
+        let(:partner_detail) { nil }
+
+        it do
+          expect(subject).to have_destination(
+            :answers,
+            :edit,
+            id: crime_application
+          )
+        end
+      end
+    end
+
+    context 'when they do not have frozen income or assets' do
+      let(:has_frozen_income_or_assets) { 'no' }
+
+      it do
+        expect(subject).to have_destination(
+          :answers,
+          :edit,
+          id: crime_application
+        )
+      end
+    end
+  end
+
+  context 'when the step is `frozen_income_or_assets_subject`' do
+    let(:form_object) { double('FormObject') }
+    let(:has_frozen_income_or_assets) { 'yes' }
+    let(:step_name) { :frozen_income_or_assets_subject }
 
     context 'redirects to the answers page' do
       it { is_expected.to have_destination(:answers, :edit, id: crime_application) }

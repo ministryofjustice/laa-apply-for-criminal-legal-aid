@@ -16,6 +16,7 @@ describe Summary::Sections::IncomeDetails do
       Income,
       income_above_threshold: 'no',
       has_frozen_income_or_assets: 'no',
+      frozen_income_or_assets_subject: nil,
       client_owns_property: 'no',
       has_savings: 'no'
     )
@@ -111,6 +112,24 @@ describe Summary::Sections::IncomeDetails do
       end
 
       it { is_expected.to match_array expected_labels }
+    end
+
+    context 'when frozen income or assets subject is present' do
+      let(:income) do
+        instance_double(
+          Income,
+          income_above_threshold: 'no',
+          has_frozen_income_or_assets: 'yes',
+          frozen_income_or_assets_subject: 'applicant_and_partner',
+          client_owns_property: 'no',
+          has_savings: 'no'
+        )
+      end
+
+      it 'includes the frozen income or assets subject row' do
+        expect(section.answers.map(&:question))
+          .to include(:frozen_income_or_assets_subject)
+      end
     end
   end
 
