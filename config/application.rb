@@ -1,5 +1,6 @@
 require_relative 'boot'
 require_relative '../lib/middleware/business_hours_middleware'
+require_relative '../lib/middleware/session_cookie_overflow_logger'
 
 require 'rails'
 require 'active_record/railtie'
@@ -74,5 +75,8 @@ module LaaApplyForCriminalLegalAid
     config.x.business_hours.end = ENV.fetch('BUSINESS_HOURS_END', "21:30")
 
     config.middleware.use BusinessHoursMiddleware
+
+    # TODO: Remove once CookieOverflow investigation is complete.
+    config.middleware.insert_before(ActionDispatch::Cookies, SessionCookieOverflowLogger)
   end
 end
