@@ -286,7 +286,7 @@ GEM
     loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    mail (2.9.0)
+    mail (2.9.1)
       logger
       mini_mime (>= 0.1.1)
       net-imap
@@ -321,8 +321,9 @@ GEM
     nokogiri (1.19.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nori (2.7.1)
+    nori (2.9.1)
       bigdecimal
+      stringio
     omniauth (2.1.4)
       hashie (>= 3.4.6)
       logger
@@ -487,7 +488,7 @@ GEM
       rubocop (~> 1.86, >= 1.86.2)
     ruby-progressbar (1.13.0)
     rubyzip (3.4.1)
-    savon (2.17.2)
+    savon (2.17.3)
       akami (~> 1.2)
       builder (>= 2.1.2)
       gyoku (~> 1.2)
