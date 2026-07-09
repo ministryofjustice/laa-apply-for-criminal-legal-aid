@@ -5,11 +5,11 @@ ruby File.read('.ruby-version').chomp
 
 gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
-gem 'govuk-components'
+gem 'govuk-components', '>= 6.4.0'
 gem 'govuk_design_system_formbuilder', '~> 6.2'
 gem 'jbuilder', '~> 2.15.1'
 gem 'kaminari'
-gem 'lograge'
+gem 'lograge', '>= 0.15.0'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
