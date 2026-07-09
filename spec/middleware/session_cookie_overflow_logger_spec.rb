@@ -13,6 +13,7 @@ RSpec.describe SessionCookieOverflowLogger do
       'large_key' => 'x' * 100,
       'small_key' => 'abc',
       'omniauth.params' => {
+        'locale' => 'cy',
         'origin' => '/providers',
         'scope' => 'openid email'
       }
@@ -82,6 +83,7 @@ RSpec.describe SessionCookieOverflowLogger do
           ).to eq('String')
 
           expect(payload['omniauth_params']).to include(
+            'locale',
             'origin',
             'scope'
           )
@@ -93,6 +95,18 @@ RSpec.describe SessionCookieOverflowLogger do
           expect(
             payload['omniauth_params']['origin']['estimated_bytes']
           ).to be > 0
+
+          expect(
+            payload['omniauth_params']['locale']['class']
+          ).to eq('String')
+
+          expect(
+            payload['omniauth_params']['locale']['estimated_bytes']
+          ).to be > 0
+
+          expect(
+            payload['omniauth_params']['locale']['locale_parameter_value']
+          ).to eq('cy')
         end
       end
     end
