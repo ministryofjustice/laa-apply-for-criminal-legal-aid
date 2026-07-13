@@ -70,6 +70,12 @@ class SessionCookieOverflowLogger
       }
     end
 
+    # The locale parameter has been identified as the source of the oversized
+    # session payload. Log its value to determine why it is unexpectedly large.
+    if omniauth_params['locale'].is_a?(String)
+      param_sizes['locale'][:locale_parameter_value] = omniauth_params['locale'].truncate(250)
+    end
+
     param_sizes.sort_by { |_key, metadata| -metadata[:estimated_bytes] }.to_h
   end
 end
