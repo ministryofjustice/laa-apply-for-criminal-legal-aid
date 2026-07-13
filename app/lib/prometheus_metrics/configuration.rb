@@ -8,6 +8,7 @@ module PrometheusMetrics
       PrometheusMetrics::Collectors::ApplicationsCountCollector,
       PrometheusMetrics::Collectors::ProvidersCountCollector,
       PrometheusMetrics::Collectors::OfficesCountCollector,
+      PrometheusMetrics::Collectors::ProviderDataApiRequestsCollector,
     ].freeze
 
     # :nocov:
