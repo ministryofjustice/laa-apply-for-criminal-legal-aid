@@ -97,4 +97,54 @@ RSpec.describe Silas::OidcStrategy do
       expect(strategy.client_options).to include(expected_options)
     end
   end
+
+  describe 'OmniAuth before_request_phase' do
+    subject(:before_request_phase) { OmniAuth.config.before_request_phase }
+
+    let(:session) { { 'omniauth.params' => omniauth_params } }
+    let(:env) { { 'rack.session' => session } }
+
+    before { before_request_phase.call(env) }
+
+    context 'when locale is valid' do
+      let(:omniauth_params) { { 'locale' => 'cy', 'extra' => 'ignored' } }
+
+      it 'preserves the valid locale' do
+        expect(session['omniauth.params']).to include('locale' => 'cy')
+      end
+    end
+
+    context 'when locale is invalid' do
+      let(:omniauth_params) { { 'locale' => 'cyg', 'extra' => 'ignored' } }
+
+      it 'removes the locale parameter' do
+        expect(session['omniauth.params']).not_to have_key('locale')
+        expect(session['omniauth.params']).to include('extra' => 'ignored')
+      end
+    end
+
+    context 'when locale is oversized' do
+      let(:omniauth_params) { { 'locale' => ('a' * 2_112) } }
+
+      it 'removes the locale parameter' do
+        expect(session['omniauth.params']).not_to have_key('locale')
+      end
+    end
+
+    context 'when omniauth.params is missing' do
+      let(:session) { {} }
+
+      it 'does nothing' do
+        expect { before_request_phase.call(env) }.not_to raise_error
+      end
+    end
+
+    context 'when omniauth.params is not a hash' do
+      let(:session) { { 'omniauth.params' => 'invalid' } }
+
+      it 'does nothing' do
+        expect { before_request_phase.call(env) }.not_to raise_error
+      end
+    end
+  end
 end
