@@ -136,3 +136,5 @@ cy:
         partner: cyfriflen, paslyfr neu dystysgrif buddsoddiadau cyfandaliad eraill, sy'n cynnwys trafodion ar gyfer y 6 mis diwethaf
       LostJob:
         client: eu P45 neu lythyr gan eu cyn gyflogwr
+      LostJobNotInCustody:
+        client: eu P45 neu lythyr gan eu cyn gyflogwr

@@ -136,3 +136,5 @@ en:
         partner: statement, passbook or certificate of other lump sum investments, covering transactions for the last 6 months
       LostJob:
         client: their P45 or a letter from their former employer
+      LostJobNotInCustody:
+        client: their P45 or a letter from their former employer
