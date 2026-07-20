@@ -1,10 +1,8 @@
 module Devise
   class CustomFailureApp < Devise::FailureApp
-    MAX_STORED_LOCATION_BYTES = 2048
-
     # rubocop:disable Metrics/MethodLength
     def redirect
-      store_location_if_safe!
+      store_location!
 
       message = warden_message || :unauthenticated
 
@@ -26,19 +24,5 @@ module Devise
       end
     end
     # rubocop:enable Metrics/MethodLength
-
-    private
-
-    def store_location_if_safe!
-      path = attempted_path.to_s
-      if path.bytesize > MAX_STORED_LOCATION_BYTES
-        Rails.logger.warn(
-          "Skipping store_location! for oversized attempted path (#{path.bytesize} bytes)"
-        )
-        return
-      end
-
-      store_location!
-    end
   end
 end
