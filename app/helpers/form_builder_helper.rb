@@ -11,10 +11,34 @@ module FormBuilderHelper
   end
 
   def date_input(attribute_name, opts = {}, &block)
-    govuk_date_field(attribute_name, segments:, segment_names:, **opts, &block)
+    combined_error_message = DateFieldErrors.joined_inline_message(object, attribute_name)
+
+    return govuk_date_field(attribute_name, segments:, segment_names:, **opts, &block) unless combined_error_message
+
+    with_inline_error_message(attribute_name, combined_error_message) do
+      govuk_date_field(attribute_name, segments:, segment_names:, **opts, &block)
+    end
   end
 
   private
+
+  def with_inline_error_message(attribute_name, message)
+    errors = object.errors
+    return yield if errors.where(attribute_name).blank?
+
+    with_restored_errors(errors) do
+      errors.delete(attribute_name)
+      errors.add(attribute_name, message)
+      yield
+    end
+  end
+
+  def with_restored_errors(errors)
+    original_errors = errors.dup
+    yield
+  ensure
+    errors.copy!(original_errors)
+  end
 
   def submit_button(i18n_key, opts = {}, &block)
     govuk_submit I18n.t("helpers.submit.#{i18n_key}"), **opts, &block
