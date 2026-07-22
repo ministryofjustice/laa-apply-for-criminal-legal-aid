@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe StepsHelper, type: :helper do
   describe '#step_form' do
+    def error_snapshot(record)
+      record.errors.map { |error| [error.attribute, error.type, error.options] }
+    end
+
     let(:foo_bar_record) do
       Class.new(ApplicationRecord) do
         def self.load_schema! = @columns_hash = {}
@@ -42,6 +46,66 @@ RSpec.describe StepsHelper, type: :helper do
       expect(helper).to receive(:form_for).with(record,
                                                 expected_defaults.merge(html: { class: %w[test edit_foo_bar_record] }))
       helper.step_form(record, html: { class: 'test' })
+    end
+
+    context 'when rendering a date field with multiple invalid segments' do
+      let(:record) do
+        Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 32, 2 => 13, 1 => 20 }
+        )
+      end
+
+      before do
+        record.valid?
+      end
+
+      it 'renders all segment errors in the inline message' do
+        expect(
+          helper.step_form(record, url: '/test-path') do |f|
+            f.date_input(:date_client_remanded, legend: { text: 'Enter when they were remanded', size: 's' })
+          end
+        ).to include(
+          '<p class="govuk-error-message" id="steps-case-is-client-remanded-form-date-client-remanded-error">' \
+          '<span class="govuk-visually-hidden">Error: </span>' \
+          'Enter a valid day. Enter a valid month. Enter a valid year</p>'
+        )
+      end
+
+      it 'restores the original errors after rendering' do
+        original_errors = error_snapshot(record)
+
+        helper.step_form(record, url: '/test-path') do |f|
+          f.date_input(:date_client_remanded, legend: { text: 'Enter when they were remanded', size: 's' })
+        end
+
+        expect(error_snapshot(record)).to eq(original_errors)
+      end
+    end
+
+    context 'when only one date segment is invalid' do
+      let(:record) do
+        Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 32, 2 => 12, 1 => 2020 }
+        )
+      end
+
+      before do
+        record.valid?
+      end
+
+      it 'renders the normal inline error' do
+        html = helper.step_form(record, url: '/test-path') do |f|
+          f.date_input(:date_client_remanded)
+        end
+
+        expect(html).to include('Enter a valid day')
+        expect(html).not_to include('Enter a valid month')
+        expect(html).not_to include('Enter a valid year')
+      end
     end
   end
 
@@ -142,6 +206,80 @@ RSpec.describe StepsHelper, type: :helper do
       it 'prepends the page title with an error hint' do
         helper.govuk_error_summary(form_object)
         expect(title).to start_with('Error: A page')
+      end
+    end
+
+    context 'when a date field has multiple invalid segments' do
+      let(:form_object) do
+        Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 32, 2 => 13, 1 => 20 }
+        )
+      end
+
+      before do
+        helper.title('A page')
+        form_object.valid?
+      end
+
+      it 'lists each invalid date segment in the summary' do
+        expect(helper.govuk_error_summary(form_object)).to include(
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_3i">Enter a valid day</a>',
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_2">Enter a valid month</a>',
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_1i">Enter a valid year</a>'
+        )
+      end
+    end
+
+    context 'when a date field has one invalid segment' do
+      before do
+        helper.title('A page')
+      end
+
+      it 'links invalid day errors to the day input' do
+        form_object = Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 32, 2 => 12, 1 => 2020 }
+        )
+        form_object.valid?
+
+        expect(helper.govuk_error_summary(form_object)).to include(
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_3i">Enter a valid day</a>'
+        )
+      end
+
+      it 'links invalid month errors to the month input' do
+        form_object = Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 12, 2 => 13, 1 => 2020 }
+        )
+        form_object.valid?
+
+        expect(helper.govuk_error_summary(form_object)).to include(
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_2">Enter a valid month</a>'
+        )
+      end
+
+      it 'links invalid year errors to the year input' do
+        form_object = Steps::Case::IsClientRemandedForm.new(
+          crime_application: CrimeApplication.new,
+          is_client_remanded: YesNoAnswer::YES.to_s,
+          date_client_remanded: { 3 => 12, 2 => 12, 1 => 20 }
+        )
+        form_object.valid?
+
+        expect(helper.govuk_error_summary(form_object)).to include(
+          '<a data-turbo="false" ' \
+          'href="#steps_case_is_client_remanded_form_date_client_remanded_1i">Enter a valid year</a>'
+        )
       end
     end
   end

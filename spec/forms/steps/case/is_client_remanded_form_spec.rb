@@ -116,6 +116,20 @@ RSpec.describe Steps::Case::IsClientRemandedForm do
             ).to be(false)
           end
         end
+
+        context 'when multiple date parts are invalid' do
+          let(:is_client_remanded) { YesNoAnswer::YES.to_s }
+          let(:date_client_remanded) { { 3 => 32, 2 => 13, 1 => 20 } }
+
+          it 'includes an error for each invalid date part' do
+            expect(form).not_to be_valid
+            expect(form.errors.details[:date_client_remanded]).to include(
+              { error: :invalid_day },
+              { error: :invalid_month },
+              { error: :invalid_year }
+            )
+          end
+        end
       end
     end
   end
