@@ -50,6 +50,7 @@ module Evidence
         # Other
         national_insurance_32
         lost_job_33
+        lost_job_34
         restraint_freezing_order_31
       ].freeze
 

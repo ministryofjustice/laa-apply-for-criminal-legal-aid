@@ -7,7 +7,18 @@ RSpec.describe SessionCookieOverflowLogger do
   subject(:middleware) { described_class.new(app, logger:) }
 
   let(:logger) { instance_spy(Logger) }
-  let(:session) { { 'large_key' => 'x' * 100, 'small_key' => 'abc' } }
+
+  let(:session) do
+    {
+      'large_key' => 'x' * 100,
+      'small_key' => 'abc',
+      'omniauth.params' => {
+        'locale' => 'cy',
+        'origin' => '/providers',
+        'scope' => 'openid email'
+      }
+    }
+  end
 
   let(:env) do
     {
@@ -55,7 +66,7 @@ RSpec.describe SessionCookieOverflowLogger do
           expect(payload['request_path']).to eq('/providers/auth/entra')
           expect(payload['request_method']).to eq('POST')
           expect(payload['request_id']).to eq('request-id')
-          expect(payload['session_key_count']).to eq(2)
+          expect(payload['session_key_count']).to eq(3)
 
           expect(payload['largest_session_keys']).to include(
             'large_key',
@@ -70,6 +81,32 @@ RSpec.describe SessionCookieOverflowLogger do
           expect(
             payload['largest_session_keys']['large_key']['class']
           ).to eq('String')
+
+          expect(payload['omniauth_params']).to include(
+            'locale',
+            'origin',
+            'scope'
+          )
+
+          expect(
+            payload['omniauth_params']['origin']['class']
+          ).to eq('String')
+
+          expect(
+            payload['omniauth_params']['origin']['estimated_bytes']
+          ).to be > 0
+
+          expect(
+            payload['omniauth_params']['locale']['class']
+          ).to eq('String')
+
+          expect(
+            payload['omniauth_params']['locale']['estimated_bytes']
+          ).to be > 0
+
+          expect(
+            payload['omniauth_params']['locale']['locale_parameter_value']
+          ).to eq('cy')
         end
       end
     end

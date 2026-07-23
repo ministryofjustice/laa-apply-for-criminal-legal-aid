@@ -550,8 +550,8 @@ cy:
           &FROZEN_INCOME_OR_ASSETS_SUBJECT_VALIDATION
           attributes:
             frozen_income_or_assets_subject:
-              blank: Dewiswch a yw'r incwm, y cynilion neu'r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i'ch cleient neu i'w partner
-              inclusion: Dewiswch a yw'r incwm, y cynilion neu'r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i'ch cleient neu i'w partner
+              blank: Dewiswch a yw’r incwm, y cynilion neu’r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i’ch cleient, i’w bartner neu’r ddau
+              inclusion: Dewiswch a yw’r incwm, y cynilion neu’r asedau o dan orchymyn atal neu orchymyn rhewi yn perthyn i’ch cleient, i’w bartner neu’r ddau
         steps/income/client_owns_property_form:
           attributes:
             client_owns_property:

@@ -6,7 +6,7 @@ ruby File.read('.ruby-version').chomp
 gem 'faraday', '~> 2.14'
 gem 'faraday-retry'
 gem 'govuk-components'
-gem 'govuk_design_system_formbuilder', '~> 6.2'
+gem 'govuk_design_system_formbuilder', '~> 6.3'
 gem 'jbuilder', '~> 2.15.1'
 gem 'kaminari'
 gem 'lograge'
@@ -41,7 +41,7 @@ gem 'stackprof'
 gem 'bootsnap', require: false
 
 gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.2.6',
+    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.3.0',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',

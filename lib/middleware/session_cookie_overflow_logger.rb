@@ -9,7 +9,7 @@ class SessionCookieOverflowLogger
     @logger = logger
   end
 
-  def call(env) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def call(env) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @app.call(env)
   rescue ActionDispatch::Cookies::CookieOverflow => e
     session = env['rack.session']
@@ -42,7 +42,9 @@ class SessionCookieOverflowLogger
         # encryption and signing overhead.
         estimated_session_payload_bytes: session_values.sum { |_key, metadata| metadata[:estimated_bytes] },
 
-        largest_session_keys: largest_session_keys
+        largest_session_keys: largest_session_keys,
+
+        omniauth_params: omniauth_param_sizes(session_hash)
       }.to_json
     )
 
@@ -55,5 +57,25 @@ class SessionCookieOverflowLogger
     Marshal.dump(value).bytesize
   rescue StandardError
     value.to_s.bytesize
+  end
+
+  def omniauth_param_sizes(session_hash)
+    omniauth_params = session_hash['omniauth.params']
+    return unless omniauth_params.is_a?(Hash)
+
+    param_sizes = omniauth_params.transform_values do |value|
+      {
+        class: value.class.name,
+        estimated_bytes: estimated_bytes(value)
+      }
+    end
+
+    # The locale parameter has been identified as the source of the oversized
+    # session payload. Log its value to determine why it is unexpectedly large.
+    if omniauth_params['locale'].is_a?(String)
+      param_sizes['locale'][:locale_parameter_value] = omniauth_params['locale'].truncate(250)
+    end
+
+    param_sizes.sort_by { |_key, metadata| -metadata[:estimated_bytes] }.to_h
   end
 end
