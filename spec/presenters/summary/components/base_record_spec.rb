@@ -100,6 +100,21 @@ RSpec.describe Summary::Components::BaseRecord do
         'Change<span class="govuk-visually-hidden"> Record human name</span></a>'
       )
     end
+
+    context 'when rendered as an incomplete record in a list' do
+      let(:args) { { record_iteration: double(size: 3, index: 1) } }
+
+      before do
+        allow(record).to receive(:complete?).and_return(false)
+      end
+
+      it 'includes status and item number in the visually hidden text' do
+        expect(component.change_link).to eq(
+          '<a class="govuk-link govuk-link--no-visited-state" href="/change/this">' \
+          'Change<span class="govuk-visually-hidden"> Incomplete Record human name 2</span></a>'
+        )
+      end
+    end
   end
 
   describe '#remove_link' do
