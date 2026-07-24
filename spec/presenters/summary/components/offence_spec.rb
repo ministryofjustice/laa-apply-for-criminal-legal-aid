@@ -52,6 +52,31 @@ RSpec.describe Summary::Components::Offence, type: :component do
             exact_text: 'Remove Offence'
           )
         end
+
+        context 'when rendered as one of multiple offences' do
+          subject(:component) do
+            render_summary_component(
+              described_class.new(
+                record: record,
+                show_record_actions: true,
+                record_iteration: double(size: 2, index: 1)
+              )
+            )
+          end
+
+          it 'includes the offence number in the accessible link names' do
+            expect(page).to have_link(
+              'Change',
+              href: '/applications/APP123/steps/case/charges/OFF123',
+              exact_text: 'Change Offence 2'
+            )
+            expect(page).to have_link(
+              'Remove',
+              href: '/applications/APP123/steps/case/charges/OFF123/confirm-destroy',
+              exact_text: 'Remove Offence 2'
+            )
+          end
+        end
       end
     end
   end

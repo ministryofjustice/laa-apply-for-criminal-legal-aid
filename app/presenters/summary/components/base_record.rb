@@ -41,7 +41,7 @@ module Summary
         govuk_link_to(
           I18n.t('summary.dictionary.change'),
           change_path,
-          visually_hidden_suffix: name,
+          visually_hidden_suffix: link_accessibility_suffix,
           no_visited_state: true
         )
       end
@@ -50,7 +50,7 @@ module Summary
         govuk_link_to(
           I18n.t('summary.dictionary.edit'),
           summary_path,
-          visually_hidden_suffix: name,
+          visually_hidden_suffix: link_accessibility_suffix,
           no_visited_state: true
         )
       end
@@ -59,7 +59,7 @@ module Summary
         govuk_link_to(
           I18n.t('summary.dictionary.remove'),
           remove_path,
-          visually_hidden_suffix: name,
+          visually_hidden_suffix: link_accessibility_suffix,
           no_visited_state: true
         )
       end
@@ -109,6 +109,16 @@ module Summary
         return unless record_iteration.size > 1
 
         index + 1
+      end
+
+      def link_accessibility_suffix
+        [incomplete_text, name, count].compact.join(' ')
+      end
+
+      def incomplete_text
+        return if record.complete?
+
+        I18n.t('summary.dictionary.incomplete')
       end
 
       def status_tag
