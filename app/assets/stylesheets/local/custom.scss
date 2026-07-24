@@ -187,6 +187,61 @@ body.js-enabled {
   top: 1%;
 }
 
+.app-tasklist-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "intro"
+    "aside"
+    "body";
+
+  .govuk-grid-column-two-thirds,
+  .govuk-grid-column-one-third {
+    float: none;
+    width: 100%;
+  }
+}
+
+.app-tasklist-layout__intro {
+  grid-area: intro;
+}
+
+.app-tasklist-layout__body {
+  grid-area: body;
+}
+
+.app-tasklist-layout__aside {
+  grid-area: aside;
+  align-self: start;
+  position: static;
+  top: auto;
+}
+
+@include govuk-media-query($from: tablet) {
+  .app-tasklist-layout {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "intro aside"
+      "body aside";
+
+    .govuk-grid-column-two-thirds {
+      width: 100%;
+    }
+
+    .govuk-grid-column-one-third {
+      width: 100%;
+    }
+  }
+}
+
+@include govuk-media-query($from: desktop) {
+  .app-tasklist-layout__aside {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1%;
+  }
+}
+
 .app-summary-list__key {
   width: 45%
 }
