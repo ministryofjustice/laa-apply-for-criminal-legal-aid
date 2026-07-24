@@ -49,9 +49,9 @@ DropzoneCfg.prototype.init = function () {
   })
 
   // Display of files table (uploaded files only) is conditional on whether JS is enabled
-  let uploadTableJS = document.getElementById('upload-table-dropzone')
+  let uploadTableJS = document.getElementById('uploaded-files-dropzone')
   uploadTableJS.classList.remove("app-evidence-upload-hidden")
-  let uploadTableNonJS = document.getElementById('upload-table-fallback')
+  let uploadTableNonJS = document.getElementById('uploaded-files-fallback')
   uploadTableNonJS.classList.add("app-evidence-upload-hidden")
 
   const self = this
@@ -70,31 +70,31 @@ DropzoneCfg.prototype.init = function () {
     notificationBanner?.remove()
     removeErrorMessages()
 
-    let row = createTableRow(file);
-    self.$feedbackContainer.querySelector('.govuk-table__body').append(row);
+    let row = createUploadedFileRow(file);
+    document.querySelector('#uploaded-files-dropzone .app-uploaded-files').append(row);
   });
 
   this.$dropzone.on('success', (file, response) => {
     // Upload table is default hidden from view if there are no uploaded docs,
     // it needs to be made visible if a doc is successfully uploaded
-    let uploadTable = document.getElementById('upload-table')
+    let uploadTable = document.getElementById('uploaded-files')
     uploadTable.classList.remove("app-evidence-upload-hidden")
 
     createDownloadLink(file, response)
 
-    this.$statusTag = document.getElementById(file.upload.uuid).querySelector(".govuk-tag")
+    this.$statusTag = document.getElementById(file.upload.uuid).querySelector(".app-uploaded-file__status")
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.innerHTML = "Uploaded"
 
-    amendErrorLink(file, response)
+    setDeleteDocumentValue(file, response)
   });
 
   this.$dropzone.on('error', (file, response) => {
     let errorMsg = generateErrorMessage(file, response)
 
-    this.$tableCell = document.getElementById(file.upload.uuid)
-    this.$tableCell.remove();
+    this.$row = document.getElementById(file.upload.uuid)
+    this.$row.remove();
 
     let errorSummary = createErrorSummary(errorMsg)
     displayErrorMessage(errorSummary, errorMsg)
@@ -105,41 +105,42 @@ DropzoneCfg.prototype.init = function () {
   })
 }
 
-function createTableRow(file) {
-  let row = document.createElement("tr")
-  let cell = document.createElement("td")
+function createUploadedFileRow(file) {
+  let row = document.createElement("div")
+  let value = document.createElement("dt")
   let span = document.createElement("span")
   let statusTag = createStatusTag("Uploading")
-  let errorLink = createDeleteLink()
+  let actions = createDeleteAction()
 
   row.setAttribute("id", file.upload.uuid)
 
-  row.classList.add("govuk-table__row")
-  cell.classList.add("govuk-table__cell")
-  span.classList.add("_uploaded_file__filename")
+  row.classList.add("govuk-summary-list__row", "app-uploaded-file")
+  value.classList.add("govuk-summary-list__value")
+  span.classList.add("app-uploaded-file__filename")
 
   span.append(file.name)
-  cell.append(span)
-  cell.append(statusTag)
-  row.append(cell)
-  row.append(errorLink)
+  value.append(span)
+  value.append(statusTag)
+  row.append(value)
+  row.append(actions)
   return row
 }
 
 function createStatusTag(text) {
   let tag = document.createElement("strong")
-  tag.classList.add("govuk-tag", "govuk-tag--yellow")
+  tag.classList.add("govuk-tag", "govuk-tag--yellow", "app-uploaded-file__status")
   tag.textContent = text
   return tag
 }
 
 function createDownloadLink(file, response) {
-  const fileEntry = document.getElementById(file.upload.uuid).querySelector("._uploaded_file__filename");
+  const fileEntry = document.getElementById(file.upload.uuid).querySelector(".app-uploaded-file__filename");
 
   if (!fileEntry) { return; }
 
   fileEntry.innerText = "";
   const anchor = document.createElement("a");
+  anchor.classList.add("govuk-link");
   anchor.href = response.url;
   anchor.textContent = file.name;
   fileEntry.append(anchor);
@@ -167,28 +168,22 @@ function createErrorSummary (msg) {
   return errorSummary
 }
 
-function createDeleteLink () {
-  const deleteEl = document.createElement("td")
-  deleteEl.classList.add("govuk-table__cell", "govuk-!-text-align-right")
-
-  const input = document.createElement("input")
-  input.setAttribute("type", "hidden")
-  input.setAttribute("value", "put")
-  input.setAttribute("autocomplete", "off")
+function createDeleteAction () {
+  const actions = document.createElement("dd")
+  actions.classList.add("govuk-summary-list__actions")
 
   const deleteButton = document.createElement("button")
-  deleteButton.classList.add("app-button--link")
+  deleteButton.classList.add("app-button--link", "app-uploaded-file__delete")
   deleteButton.setAttribute("type", "submit")
   deleteButton.setAttribute("name", "document_id")
   deleteButton.innerText = "Delete"
 
-  deleteEl.append(input)
-  deleteEl.append(deleteButton)
-  return deleteEl
+  actions.append(deleteButton)
+  return actions
 }
 
-function amendErrorLink (file, response) {
-  let deleteButton = document.getElementById(file.upload.uuid).querySelector(".app-button--link")
+function setDeleteDocumentValue (file, response) {
+  let deleteButton = document.getElementById(file.upload.uuid).querySelector(".app-uploaded-file__delete")
   deleteButton.setAttribute("value", response.id)
 }
 
@@ -200,7 +195,7 @@ function removeErrorMessages () {
   })
   errorSummary.classList.add('app-evidence-upload-hidden')
 
-  document.getElementById('upload-form').classList.remove('govuk-form-group--error')
+  document.getElementById('upload-form-group').classList.remove('govuk-form-group--error')
   document.getElementById('dropzone-error-message').classList.add('app-evidence-upload-hidden')
   document.getElementById('dropzone-error-message').innerHTML = ""
 }
@@ -211,7 +206,7 @@ function displayErrorMessage(errorSummary, errorMsg) {
   pageDiv.prepend(errorSummary)
 
   // Display error above dropzone component
-  const uploadFilesElem = document.getElementById('upload-form')
+  const uploadFilesElem = document.getElementById('upload-form-group')
   uploadFilesElem.classList.add('govuk-form-group--error')
   const errorMessage = document.getElementById('dropzone-error-message')
 
