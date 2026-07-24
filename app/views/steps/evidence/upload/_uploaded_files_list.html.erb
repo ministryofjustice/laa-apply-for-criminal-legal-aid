@@ -1,10 +1,10 @@
 <div class="app-multi-file__uploaded-files">
   <%= step_form form_object do |f| %>
-    <div id="upload-table-dropzone" class="app-evidence-upload-hidden">
+    <div id="uploaded-files-dropzone" class="app-evidence-upload-hidden">
       <%= render partial: 'steps/evidence/upload/uploaded_files', locals: { documents: form_object.documents.stored } %>
     </div>
 
-    <div id="upload-table-fallback">
+    <div id="uploaded-files-fallback">
       <% if form_object.documents.present? %>
         <%= render partial: 'steps/evidence/upload/uploaded_files', locals: { documents: form_object.documents } %>
       <% end %>
