@@ -48,11 +48,11 @@ DropzoneCfg.prototype.init = function () {
     e.preventDefault() // prevent submitting form by default
   })
 
-  // Display of files table (uploaded files only) is conditional on whether JS is enabled
-  let uploadTableJS = document.getElementById('uploaded-files-dropzone')
-  uploadTableJS.classList.remove("app-evidence-upload-hidden")
-  let uploadTableNonJS = document.getElementById('uploaded-files-fallback')
-  uploadTableNonJS.classList.add("app-evidence-upload-hidden")
+  // Display of the uploaded files list is conditional on whether JS is enabled
+  let uploadedFilesDropzone = document.getElementById('uploaded-files-dropzone')
+  uploadedFilesDropzone.classList.remove("app-evidence-upload-hidden")
+  let uploadedFilesFallback = document.getElementById('uploaded-files-fallback')
+  uploadedFilesFallback.classList.add("app-evidence-upload-hidden")
 
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
@@ -75,10 +75,10 @@ DropzoneCfg.prototype.init = function () {
   });
 
   this.$dropzone.on('success', (file, response) => {
-    // Upload table is default hidden from view if there are no uploaded docs,
+    // The uploaded files list is default hidden from view if there are no uploaded docs,
     // it needs to be made visible if a doc is successfully uploaded
-    let uploadTable = document.getElementById('uploaded-files')
-    uploadTable.classList.remove("app-evidence-upload-hidden")
+    let uploadedFilesList = document.getElementById('uploaded-files')
+    uploadedFilesList.classList.remove("app-evidence-upload-hidden")
 
     createDownloadLink(file, response)
 
