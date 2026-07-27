@@ -40,6 +40,9 @@ gem 'stackprof'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem 'moj_components', git: 'https://github.com/ministryofjustice/moj-components.git',
+tag: 'v0.2.1'
+
 gem 'laa-criminal-applications-datastore-api-client',
     github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.3.0',
     require: 'datastore_api'

@@ -17,6 +17,15 @@ GIT
       dry-struct (~> 1.6.0)
       json-schema (~> 4.0.0)
 
+GIT
+  remote: https://github.com/ministryofjustice/moj-components.git
+  revision: acca6219ae56250fd269e4f0b8925206783f13a4
+  tag: v0.2.1
+  specs:
+    moj_components (0.2.1)
+      govuk-components
+      view_component (>= 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -599,6 +608,7 @@ DEPENDENCIES
   lograge
   logstash-event
   marcel
+  moj_components!
   omniauth-rails_csrf_protection
   omniauth_openid_connect (= 0.8.0)
   ostruct
