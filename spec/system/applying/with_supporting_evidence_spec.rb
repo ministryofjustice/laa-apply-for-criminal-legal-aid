@@ -116,6 +116,10 @@ RSpec.describe 'Supporting evidence' do
 
       # A valid file
       upload_evidence_file('test.csv')
+
+      # Successful upload status is announced to screen readers (CRIMAPP-2131)
+      expect(page).to have_css('[aria-live="polite"]', text: 'Uploaded')
+
       save_and_continue
 
       expect(page).not_to have_step_error 'You must provide the required evidence'
