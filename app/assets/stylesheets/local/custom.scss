@@ -35,11 +35,6 @@ $colours: (
 .moj-header__link--organisation-name:active {
   color: #ffffff;
 }
-// Keep the organisation name hover state aligned with the other header links.
-.moj-header__link--organisation-name:hover,
-.moj-header__link--organisation-name:active {
-  border-color: govuk-colour("white");
-}
 
 @media (max-width: 40em) { // 641px
   .moj-header__logotype-crest {
