@@ -35,8 +35,8 @@ end
 
 RSpec::Matchers.define :have_file_error do |filename, error|
   match do |page|
-    document_row = page.find('span._uploaded_file__filename', text: filename)
-                       .ancestor('.govuk-table__cell', match: :first)
+    document_row = page.find('span.app-uploaded-file__filename', text: filename)
+                       .ancestor('.govuk-summary-list__value', match: :first)
 
     @actual_text = document_row.find('.govuk-error-message').text(:all)
 
