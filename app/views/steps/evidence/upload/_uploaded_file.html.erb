@@ -1,6 +1,6 @@
-<tr class="govuk-table__row" class="_uploaded_file">
-  <td id="<%=document.id%>" class="govuk-table__cell">
-    <span class="_uploaded_file__filename">
+<div class="govuk-summary-list__row app-uploaded-file" id="<%= document.id %>">
+  <dt class="govuk-summary-list__value">
+    <span class="app-uploaded-file__filename">
       <%= govuk_link_to(
             document.filename,
             download_crime_application_document_path(document.crime_application, document),
@@ -8,7 +8,7 @@
     </span>
 
     <% if document.s3_object_key %>
-      <strong class="govuk-tag govuk-tag--green"><%= t('steps.evidence.upload.edit.uploaded') %></strong>
+      <%= govuk_tag(text: t('steps.evidence.upload.edit.uploaded'), colour: 'green', classes: 'app-uploaded-file__status') %>
     <% else %>
       <% document.valid?(:storage) %>
 
@@ -16,11 +16,11 @@
         <span class="govuk-visually-hidden">Error:</span> <%= document.errors.first.full_message %>
       </p>
     <% end %>
-  </td>
-  <td class="govuk-table__cell govuk-!-text-align-right">
+  </dt>
+  <dd class="govuk-summary-list__actions">
     <%= button_to t('.remove_button'), steps_evidence_upload_path, method: :put,
                                        value: document.id.to_s,
                                        name: :document_id,
-                                       class: 'app-button--link' %>
-  </td>
-</tr>
+                                       class: 'app-button--link app-uploaded-file__delete' %>
+  </dd>
+</div>
