@@ -60,9 +60,9 @@ RSpec.describe 'Evidence upload page', :authorized do
 
       assert_select 'h1', 'Upload supporting evidence'
 
-      assert_select 'tbody.govuk-table__body' do
-        assert_select 'tr.govuk-table__row:nth-of-type(1)' do
-          assert_select 'span._uploaded_file__filename', 'test.pdf'
+      assert_select 'dl.govuk-summary-list' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(1)' do
+          assert_select 'span.app-uploaded-file__filename', 'test.pdf'
           assert_select 'strong.govuk-tag:nth-of-type(1)', 'Uploaded'
         end
       end
@@ -70,14 +70,14 @@ RSpec.describe 'Evidence upload page', :authorized do
 
     context 'when there are errors with upload' do
       it 'lists file size error messages' do
-        assert_select 'tbody.govuk-table__body' do
-          assert_select 'tr.govuk-table__row:nth-of-type(2)' do
+        assert_select 'dl.govuk-summary-list' do
+          assert_select 'div.govuk-summary-list__row:nth-of-type(2)' do
             assert_select 'span:nth-of-type(1)', 'too_big.pdf'
             assert_select 'p:nth-of-type(1)',
                           "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_big',
                                            max_size: FileUploadValidator::MAX_FILE_SIZE)}"
           end
-          assert_select 'tr.govuk-table__row:nth-of-type(3)' do
+          assert_select 'div.govuk-summary-list__row:nth-of-type(3)' do
             assert_select 'span:nth-of-type(1)', 'too_small.pdf'
             assert_select 'p:nth-of-type(1)',
                           "Error: #{I18n.t('activerecord.errors.models.document.attributes.file_size.too_small',
@@ -87,7 +87,7 @@ RSpec.describe 'Evidence upload page', :authorized do
       end
 
       it 'lists content type error message' do
-        assert_select 'tr.govuk-table__row:nth-of-type(4)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(4)' do
           assert_select 'span:nth-of-type(1)', 'invalid_content_type.pdf'
           assert_select 'p:nth-of-type(1)',
                         "Error: #{I18n.t('activerecord.errors.models.document.attributes.content_type.invalid')}"
@@ -95,7 +95,7 @@ RSpec.describe 'Evidence upload page', :authorized do
       end
 
       it 'lists generic error message' do
-        assert_select 'tr.govuk-table__row:nth-of-type(5)' do
+        assert_select 'div.govuk-summary-list__row:nth-of-type(5)' do
           assert_select 'span:nth-of-type(1)', 'error.pdf'
           assert_select 'p:nth-of-type(1)',
                         "Error: #{I18n.t('activerecord.errors.models.document.attributes.s3_object_key.blank')}"

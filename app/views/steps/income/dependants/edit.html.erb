@@ -23,6 +23,11 @@
         <% index = c.index + 1 %>
 
         <%= c.govuk_fieldset legend: { hidden: true }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
+          <%# The form builder renders suffix_text with aria-hidden="true", so sighted users see
+              "years old" but screen readers do not. We link a visually-hidden duplicate to the
+              input via aria-describedby so assistive technologies announce the unit. The
+              aria: { describedby: } hash is deep-merged by the form builder, preserving any
+              automatically generated hint/error IDs. %>
           <%= c.govuk_number_field :age,
                                    autocomplete: 'off',
                                    class: 'govuk-input--width-2',
@@ -31,7 +36,9 @@
                                    width: 2,
                                    inputmode: 'numeric',
                                    maxlength: 3,
-                                   extra_letter_spacing: true %>
+                                   extra_letter_spacing: true,
+                                   aria: { describedby: "dependant-age-unit-#{index}" },
+                                   after_input: content_tag(:span, t('.age_hint'), class: 'govuk-visually-hidden', id: "dependant-age-unit-#{index}") %>
 
           <%= c.button t('.remove_button', ordinal: index.ordinalize_fully), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
                        class: %w[govuk-button govuk-button--warning],

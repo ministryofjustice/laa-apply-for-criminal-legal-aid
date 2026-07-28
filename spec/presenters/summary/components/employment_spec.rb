@@ -81,6 +81,31 @@ RSpec.describe Summary::Components::Employment, type: :component do
             exact_text: 'Remove Job'
           )
         end
+
+        context 'when rendered as one of multiple jobs' do
+          subject(:component) do
+            render_summary_component(
+              described_class.new(
+                record: record,
+                show_record_actions: true,
+                record_iteration: double(size: 2, index: 1)
+              )
+            )
+          end
+
+          it 'includes the job number in the accessible link names' do
+            expect(page).to have_link(
+              'Change',
+              href: '/applications/APP123/steps/income/client/employer-details/EMPLOYMENT123',
+              exact_text: 'Change Job 2'
+            )
+            expect(page).to have_link(
+              'Remove',
+              href: '/applications/APP123/steps/income/client/employments/EMPLOYMENT123/confirm-destroy',
+              exact_text: 'Remove Job 2'
+            )
+          end
+        end
       end
     end
   end
