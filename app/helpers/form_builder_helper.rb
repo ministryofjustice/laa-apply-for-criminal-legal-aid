@@ -20,6 +20,16 @@ module FormBuilderHelper
     end
   end
 
+  # Overrides the GOV.UK form builder's govuk_number_field to inject a
+  # visually hidden "Amount in pounds" span into the label when prefix_text
+  # is '£'. This ensures screen reader users receive the same currency context
+  # that sighted users get from the visible pound symbol prefix.
+  def govuk_number_field(attribute_name, prefix_text: nil, label: {}, **, &block)
+    label = label_with_currency_hint(attribute_name, label) if prefix_text == '£' && label.is_a?(Hash)
+
+    super
+  end
+
   private
 
   def with_inline_error_message(attribute_name, message)
@@ -42,6 +52,16 @@ module FormBuilderHelper
 
   def submit_button(i18n_key, opts = {}, &block)
     govuk_submit I18n.t("helpers.submit.#{i18n_key}"), **opts, &block
+  end
+
+  def label_with_currency_hint(attribute_name, label_opts)
+    label_text = label_opts[:text] ||
+                 I18n.t("helpers.label.#{object_name}.#{attribute_name}", default: nil) ||
+                 attribute_name.to_s.humanize
+
+    hidden_span = content_tag(:span, I18n.t('helpers.currency_input_hint'),
+                              class: 'govuk-visually-hidden')
+    label_opts.merge(text: safe_join([label_text, hidden_span], ' '))
   end
 
   def segment_names

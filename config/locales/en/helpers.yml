@@ -45,6 +45,7 @@ en:
     back_link: Back
     back_to_applications: Back to your applications
     important: Important
+    currency_input_hint: Amount in pounds
     submit:
       clear: Clear
       search: Search

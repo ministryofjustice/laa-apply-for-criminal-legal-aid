@@ -78,4 +78,74 @@ RSpec.describe FormBuilderHelper, type: :helper do
       end
     end
   end
+
+  describe '#govuk_number_field' do
+    before do
+      allow(form_object).to receive_messages(amount: nil, errors: ActiveModel::Errors.new(form_object))
+    end
+
+    context 'when prefix_text is £' do
+      it 'includes a visually hidden "Amount in pounds" span in the label' do
+        html = builder.govuk_number_field(:amount, prefix_text: '£', label: { text: 'Enter amount' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label).to be_present
+        expect(label.text).to include('Enter amount')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('Amount in pounds')
+      end
+
+      it 'preserves the real translated label text alongside the currency hint' do
+        # Uses a genuine application form object and its real translation key to
+        # confirm that label text resolution and currency hint injection both work
+        # correctly end-to-end, without relying on mocked I18n lookups.
+        savings_form = Steps::Capital::SavingsForm.new(nil)
+        real_builder = GOVUKDesignSystemFormBuilder::FormBuilder.new(
+          :steps_capital_savings_form, savings_form, self, {}
+        )
+
+        html = real_builder.govuk_number_field(:account_balance, prefix_text: '£', label: { tag: 'h2', size: 'm' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('What is the account balance?')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('Amount in pounds')
+      end
+
+      it 'renders the £ prefix symbol with aria-hidden on the input wrapper' do
+        html = builder.govuk_number_field(:amount, prefix_text: '£', label: { text: 'Enter amount' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        prefix = doc.at_css('span.govuk-input__prefix')
+        expect(prefix).to be_present
+        expect(prefix['aria-hidden']).to eq('true')
+      end
+    end
+
+    context 'when prefix_text is not £' do
+      it 'does not inject a visually hidden span into the label' do
+        html = builder.govuk_number_field(:amount, prefix_text: 'kg', label: { text: 'Enter weight' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.at_css('span.govuk-visually-hidden')).to be_nil
+      end
+    end
+
+    context 'when prefix_text is not set' do
+      it 'does not inject a visually hidden span into the label' do
+        html = builder.govuk_number_field(:amount, label: { text: 'Enter amount' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.at_css('span.govuk-visually-hidden')).to be_nil
+      end
+    end
+  end
 end
