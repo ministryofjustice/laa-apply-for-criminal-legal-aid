@@ -1,6 +1,6 @@
-<%= moj_header(organisation_name: t('layouts.header.organisation_name'), url: '#') do |header| %>
+<%= moj_header(organisation_name: t('layouts.header.organisation_name'), url: root_path) do |header| %>
   <% if signed_in? %>
-    <%= header.with_navigation_item(text: current_provider.display_name, href: '#', current: true) %>
+    <%= header.with_navigation_item(text: current_provider.display_name) %>
     <%= header.with_navigation_item(text: t('layouts.header.sign_out'), href: provider_omniauth_logout_path) %>
   <% end %>
 <% end %>
