@@ -13,7 +13,7 @@ gem 'lograge'
 gem 'logstash-event'
 gem 'pg', '~> 1.4'
 gem 'puma'
-gem 'rails', '~> 8.1.3'
+gem 'rails', '~> 8.1.3', '>= 8.1.3.1'
 gem 'uk_postcode'
 
 # Authentication
