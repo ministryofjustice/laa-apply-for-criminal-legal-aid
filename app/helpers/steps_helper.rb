@@ -36,7 +36,8 @@ module StepsHelper
     end
 
     fields_for(form_object, form_object) do |f|
-      f.govuk_error_summary t('errors.error_summary.heading')
+      f.govuk_error_summary t('errors.error_summary.heading'),
+                            presenter: DateFieldErrorSummaryPresenter.new(form_object)
     end
   end
 
