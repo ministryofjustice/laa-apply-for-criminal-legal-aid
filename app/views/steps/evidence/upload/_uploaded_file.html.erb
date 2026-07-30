@@ -8,7 +8,7 @@
     </span>
 
     <% if document.s3_object_key %>
-      <%= govuk_tag(text: t('steps.evidence.upload.edit.uploaded'), colour: 'green', classes: 'app-uploaded-file__status') %>
+      <%= govuk_tag(text: t('steps.evidence.upload.edit.uploaded'), colour: 'green', classes: 'app-uploaded-file__status', html_attributes: { 'aria-live': 'polite' }) %>
     <% else %>
       <% document.valid?(:storage) %>
 

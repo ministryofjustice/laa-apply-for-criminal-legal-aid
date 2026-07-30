@@ -129,6 +129,7 @@ function createUploadedFileRow(file) {
 function createStatusTag(text) {
   let tag = document.createElement("strong")
   tag.classList.add("govuk-tag", "govuk-tag--yellow", "app-uploaded-file__status")
+  tag.setAttribute("aria-live", "polite")
   tag.textContent = text
   return tag
 }
