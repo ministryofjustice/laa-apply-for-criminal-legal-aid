@@ -34,11 +34,18 @@ module DateFieldErrors
   end
 
   def date_segment_id(form_object, attribute, segment)
+    # Use the existing anchor id for the day field
+    return field_error_id(form_object, attribute) if segment == :day
+
     [
       form_object.model_name.param_key,
       attribute,
       DATE_INPUT_SEGMENTS.fetch(segment),
     ].join('_')
+  end
+
+  def field_error_id(form_object, attribute)
+    [form_object.model_name.param_key, attribute, 'field-error'].join('-').tr('_', '-')
   end
 
   def segment_error_messages(form_object, attribute, messages = form_object.errors.messages[attribute])

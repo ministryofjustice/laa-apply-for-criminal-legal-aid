@@ -226,7 +226,7 @@ RSpec.describe StepsHelper, type: :helper do
       it 'lists each invalid date segment in the summary' do
         expect(helper.govuk_error_summary(form_object)).to include(
           '<a data-turbo="false" ' \
-          'href="#steps_case_is_client_remanded_form_date_client_remanded_3i">Enter a valid day</a>',
+          'href="#steps-case-is-client-remanded-form-date-client-remanded-field-error">Enter a valid day</a>',
           '<a data-turbo="false" ' \
           'href="#steps_case_is_client_remanded_form_date_client_remanded_2">Enter a valid month</a>',
           '<a data-turbo="false" ' \
@@ -250,7 +250,7 @@ RSpec.describe StepsHelper, type: :helper do
 
         expect(helper.govuk_error_summary(form_object)).to include(
           '<a data-turbo="false" ' \
-          'href="#steps_case_is_client_remanded_form_date_client_remanded_3i">Enter a valid day</a>'
+          'href="#steps-case-is-client-remanded-form-date-client-remanded-field-error">Enter a valid day</a>'
         )
       end
 
