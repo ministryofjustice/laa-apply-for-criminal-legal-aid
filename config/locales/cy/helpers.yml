@@ -45,6 +45,7 @@ cy:
     back_link: Yn ôl
     back_to_applications: Yn ôl i'ch ceisiadau
     important: Pwysig
+    currency_input_hint: Swm mewn punnoedd
     submit:
       clear: Clirio
       search: Chwilio
