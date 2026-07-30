@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+HEADER_NAV_SELECTOR = 'nav.moj-header__navigation'.freeze
+
 RSpec.describe 'Sign in user journey' do
   # Do not leave left overs, as this test will persist
   # a mock provider to the database
@@ -107,8 +109,8 @@ RSpec.describe 'Sign in user journey' do
     end
 
     it 'renders the user menu in the header' do
-      expect(page).to have_css('nav.govuk-header__navigation')
-      expect(page).to have_css('.app-header__auth-user', text: 'provider@example.com')
+      expect(page).to have_css(HEADER_NAV_SELECTOR)
+      expect(page).to have_css('nav.moj-header__navigation a', text: 'provider@example.com')
       expect(page).to have_link('Sign out')
     end
 
@@ -119,7 +121,7 @@ RSpec.describe 'Sign in user journey' do
 
       expect(current_url).to match(root_path)
       expect(page).to have_content('You have signed out')
-      expect(page).not_to have_css('nav.govuk-header__navigation')
+      expect(page).not_to have_css(HEADER_NAV_SELECTOR)
     end
 
     context 'when entra logout disabled' do
@@ -129,7 +131,7 @@ RSpec.describe 'Sign in user journey' do
         click_link('Sign out')
         expect(current_url).to match(root_path)
         expect(page).to have_content('You have signed out')
-        expect(page).not_to have_css('nav.govuk-header__navigation')
+        expect(page).not_to have_css(HEADER_NAV_SELECTOR)
       end
     end
   end
