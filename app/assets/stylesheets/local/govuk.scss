@@ -1,9 +1,4 @@
 // GOV.UK Frontend
 //
 
-@forward "govuk-frontend/dist/govuk/index" with(
-  $govuk-global-styles: true,
-  $govuk-assets-path: '/',
-);
-
 @use "govuk-frontend/dist/govuk/index";
