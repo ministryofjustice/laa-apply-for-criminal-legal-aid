@@ -27,6 +27,20 @@ RSpec.describe Document, type: :model do
 
       described_class.create_from_file(file:, crime_application:)
     end
+
+    context 'when the original filename contains unsupported characters' do
+      before do
+        allow(file).to receive(:original_filename).and_return('invoice 03:04.pdf')
+      end
+
+      it 'stores a sanitised filename' do
+        expect(described_class).to receive(:create).with(
+          hash_including(filename: 'invoice 03-04.pdf')
+        )
+
+        described_class.create_from_file(file:, crime_application:)
+      end
+    end
   end
 
   describe 'validations' do

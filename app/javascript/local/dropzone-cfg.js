@@ -1,6 +1,7 @@
 'use strict';
 
 import Dropzone from "dropzone"
+import sanitizeFilename from "./sanitize-filename"
 
 const MIN_FILE_SIZE = 3000 // Bytes = 3KB
 const MAX_FILE_SIZE = 1000000 // Bytes = 10MB
@@ -58,7 +59,10 @@ DropzoneCfg.prototype.init = function () {
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "document",
     dictDefaultMessage: 'Drag and drop files here or', // TODO: i18n
-    clickable: '#choose_files_button'
+    clickable: '#choose_files_button',
+    // Sanitise the filename sent to the server so the WAF doesn't reject
+    // unsupported characters (e.g. a colon macOS stores in place of a slash).
+    renameFile: (file) => sanitizeFilename(file.name)
   })
 
   this.$dropzoneContainerText = document.querySelector('div.dz-message')

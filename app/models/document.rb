@@ -28,7 +28,7 @@ class Document < ApplicationRecord
   def self.create_from_file(file:, crime_application:)
     create(
       crime_application: crime_application,
-      filename: file.original_filename,
+      filename: FilenameSanitizer.call(file.original_filename),
       content_type: Marcel::MimeType.for(file.tempfile),
       file_size: file.tempfile.size,
       tempfile: file.tempfile,
