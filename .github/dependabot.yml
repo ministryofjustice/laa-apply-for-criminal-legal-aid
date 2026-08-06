@@ -7,9 +7,17 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      github-actions:
+      github-actions-minor:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      github-actions-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
@@ -18,9 +26,17 @@ updates:
       default-days: 7
     open-pull-requests-limit: 10
     groups:
-      bundler:
+      bundler-minor:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      bundler-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -29,9 +45,17 @@ updates:
       default-days: 7
     open-pull-requests-limit: 10
     groups:
-      npm:
+      npm-minor:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -40,6 +64,14 @@ updates:
       default-days: 7
     open-pull-requests-limit: 10
     groups:
-      docker:
+      docker-minor:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      docker-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
