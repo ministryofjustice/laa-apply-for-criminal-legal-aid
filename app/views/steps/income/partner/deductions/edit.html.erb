@@ -9,8 +9,8 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_check_boxes_fieldset :deductions, legend: { tag: 'h1', size: 'xl' } do |x| %>
 
-        <% @form_object.ordered_deductions.each do |type| %>
-          <%= f.govuk_check_box :types, type, link_errors: true do %>
+        <% @form_object.ordered_deductions.each_with_index do |type, index| %>
+          <%= f.govuk_check_box :types, type, link_errors: index.zero? do %>
             <%= f.fields_for type.to_sym, f.object.public_send(type.to_s) do |g| %>
               <%= g.govuk_fieldset legend: nil, id: "deduction_#{type}" do %>
                 <%= g.govuk_number_field :amount,
