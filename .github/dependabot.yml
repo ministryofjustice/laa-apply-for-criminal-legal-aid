@@ -13,11 +13,6 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      github-actions-major:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
@@ -32,11 +27,6 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      bundler-major:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -51,11 +41,6 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      npm-major:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -70,8 +55,3 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      docker-major:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
