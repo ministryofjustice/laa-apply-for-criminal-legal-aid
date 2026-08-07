@@ -1242,11 +1242,11 @@ en:
               inclusion: Select how often they get this payment
         steps/income/client/deductions_form:
           attributes:
-            base:
+            types:
               none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
         steps/income/partner/deductions_form:
           attributes:
-            base:
+            types:
               none_selected: Select and enter a deduction or select that your client does not have deductions taken from their pay
         steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
           summary:
