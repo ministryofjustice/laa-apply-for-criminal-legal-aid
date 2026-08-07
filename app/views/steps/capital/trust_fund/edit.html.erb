@@ -10,8 +10,8 @@
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset(:will_benefit_from_trust_fund, legend: { text: t('.heading'), tag: 'h1', size: 'xl' }, hint: { text: t('.hint') }) do %>
         <%= f.govuk_radio_button :will_benefit_from_trust_fund, YesNoAnswer::YES do %>
-          <%= f.govuk_number_field :trust_fund_amount_held, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
-          <%= f.govuk_number_field :trust_fund_yearly_dividend, inputmode: 'numeric', prefix_text: '£', width: 'one-third' %>
+          <%= f.govuk_number_field :trust_fund_amount_held, prefix_text: '£', width: 'one-third' %>
+          <%= f.govuk_number_field :trust_fund_yearly_dividend, prefix_text: '£', width: 'one-third' %>
         <% end %>
 
         <%= f.govuk_radio_button :will_benefit_from_trust_fund, YesNoAnswer::NO %>
