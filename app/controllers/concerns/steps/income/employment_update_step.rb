@@ -23,7 +23,7 @@ module Steps
         raise Errors::EmploymentNotFound
       end
 
-      # :nocov:
+      # simplecov:disable
       def employments
         raise NotImplementedError
       end
@@ -39,7 +39,7 @@ module Steps
       def flash_msg
         nil
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 end

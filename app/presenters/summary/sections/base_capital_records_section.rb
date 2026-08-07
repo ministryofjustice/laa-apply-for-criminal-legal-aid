@@ -28,7 +28,7 @@ module Summary
         )
       end
 
-      # :nocov: #
+      # simplecov:disable
       def item_component_class
         raise 'must be implemented in subclasses'
       end
@@ -44,7 +44,7 @@ module Summary
       def has_records_answer
         raise 'must be implemented in subclasses'
       end
-      # :nocov: #
+      # simplecov:enable
     end
   end
 end

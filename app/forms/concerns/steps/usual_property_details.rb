@@ -21,10 +21,10 @@ module Steps
 
     private
 
-    # :nocov:
+    # simplecov:disable
     def persist!
       true
     end
-    # :nocov:
+    # simplecov:enable
   end
 end

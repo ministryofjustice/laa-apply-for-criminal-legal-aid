@@ -85,7 +85,7 @@ module Datastore
       fields_from_applicant = %w[has_partner relationship_to_partner relationship_status separation_date]
       from_applicant = parent.applicant.serializable_hash.slice(*fields_from_applicant)
 
-      # :nocov:
+      # simplecov:disable
       if parent.partner
         fields_from_partner = %w[involvement_in_case conflict_of_interest has_same_address_as_client]
         from_partner = parent.partner.serializable_hash.slice(*fields_from_partner)
@@ -93,7 +93,7 @@ module Datastore
       else
         PartnerDetail.new({}.merge(from_applicant))
       end
-      # :nocov:
+      # simplecov:enable
     end
 
     def ioj

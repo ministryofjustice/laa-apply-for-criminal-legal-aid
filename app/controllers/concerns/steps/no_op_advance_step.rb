@@ -16,10 +16,10 @@ module Steps
 
     private
 
-    # :nocov:
+    # simplecov:disable
     def advance_as
       raise 'implement in controllers using this concern'
     end
-    # :nocov:
+    # simplecov:enable
   end
 end

@@ -10,11 +10,11 @@ class DashboardController < ApplicationController
   private
 
   # Implement in sub-controllers to narrow down allowed columns
-  # :nocov:
+  # simplecov:disable
   def sortable_columns
     []
   end
-  # :nocov:
+  # simplecov:enable
 
   def in_progress_count
     in_progress_scope.count

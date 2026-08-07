@@ -29,7 +29,7 @@ class ValueObject
     # i.e. `#coffee?` returns true for value `:coffee`, false for `:tea`
     def inherited(subclass)
       TracePoint.trace(:end) do |trace|
-        # :nocov:
+        # simplecov:disable
         if subclass == trace.self
           subclass.const_set(
             :INQUIRY_METHODS, subclass.values.map { |value| :"#{value}?" }
@@ -39,7 +39,7 @@ class ValueObject
             subclass.define_method(:"#{value}?") { value.eql?(self) }
           end
         end
-        # :nocov:
+        # simplecov:enable
       end
 
       super

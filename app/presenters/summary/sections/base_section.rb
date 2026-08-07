@@ -80,11 +80,11 @@ module Summary
         SubjectType.new(:applicant)
       end
 
-      # :nocov:
+      # simplecov:disable
       def answers
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 end

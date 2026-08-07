@@ -44,11 +44,11 @@ module Summary
         )
       end
 
-      # :nocov:
+      # simplecov:disable
       def answer_text
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
 
       def absence_answer
         I18n.t("summary.questions.#{question}.absence_answer")
