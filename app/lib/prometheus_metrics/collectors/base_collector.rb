@@ -11,11 +11,11 @@ module PrometheusMetrics
         5.minutes
       end
 
-      # :nocov:
+      # simplecov:disable
       def description
         raise 'implement in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
 
       private
 

@@ -11,7 +11,7 @@ module PrometheusMetrics
       PrometheusMetrics::Collectors::ProviderDataApiRequestsCollector,
     ].freeze
 
-    # :nocov:
+    # simplecov:disable
     def self.should_configure?
       return false if ENV.key?('SKIP_PROMETHEUS_EXPORTER')
 
@@ -70,6 +70,6 @@ module PrometheusMetrics
       # instrumentation will need to be changed
       PrometheusExporter::Instrumentation::ActiveRecord.start
     end
-    # :nocov:
+    # simplecov:enable
   end
 end

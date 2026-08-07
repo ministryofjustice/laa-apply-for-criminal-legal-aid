@@ -1,4 +1,4 @@
-# :nocov:
+# simplecov:disable
 class UsnSeqHelper
   # More details about USN, the sequence start, etc:
   # https://dsdmoj.atlassian.net/wiki/spaces/CRIMAP/pages/4210524301/USN
@@ -71,4 +71,4 @@ class UsnSeqHelper
     end
   end
 end
-# :nocov:
+# simplecov:enable

@@ -55,7 +55,7 @@ module Tasks
       validator.complete?
     end
 
-    # :nocov:
+    # simplecov:disable
     def can_start?
       raise 'implement in task subclasses'
     end
@@ -69,6 +69,6 @@ module Tasks
     def validator
       raise 'implement in task subclasses'
     end
-    # :nocov:
+    # simplecov:enable
   end
 end

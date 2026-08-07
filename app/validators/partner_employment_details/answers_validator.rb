@@ -26,7 +26,7 @@ module PartnerEmploymentDetails
       requires_means_assessment? && include_partner_in_means_assessment?
     end
 
-    # :nocov:
+    # simplecov:disable
     def validate_partner_employment
       return unless income.partner_employed?
 
@@ -34,7 +34,7 @@ module PartnerEmploymentDetails
       validate_employment_details
       validate_employment_income
     end
-    # :nocov:
+    # simplecov:enable
 
     def validate_employment_details
       return unless requires_full_means_assessment?

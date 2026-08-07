@@ -9,7 +9,7 @@ module Passporting
       @crime_application = crime_application
     end
 
-    # :nocov:
+    # simplecov:disable
     def call
       raise 'implement in subclasses'
     end
@@ -21,7 +21,7 @@ module Passporting
     def passport_types_collection
       raise 'implement in subclasses'
     end
-    # :nocov:
+    # simplecov:enable
 
     private
 

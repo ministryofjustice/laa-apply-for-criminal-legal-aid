@@ -15,11 +15,11 @@ module SubmissionSerializer
         end
       end
 
-      # :nocov:
+      # simplecov:disable
       def to_builder
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 end

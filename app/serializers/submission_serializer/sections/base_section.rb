@@ -26,17 +26,17 @@ module SubmissionSerializer
       end
 
       # TODO: this in theory will come from a DB attribute
-      # :nocov:
+      # simplecov:disable
       def current_version
         1.0
       end
-      # :nocov:
+      # simplecov:enable
 
-      # :nocov:
+      # simplecov:disable
       def to_builder
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 end

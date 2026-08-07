@@ -1,4 +1,4 @@
-# :nocov:
+# simplecov:disable
 module DeveloperTools
   class CrimeApplicationsController < ApplicationController # rubocop:disable Metrics/ClassLength
     def destroy
@@ -126,4 +126,4 @@ module DeveloperTools
     end
   end
 end
-# :nocov:
+# simplecov:enable
