@@ -8,7 +8,6 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_number_field(:percentage_profit_share,
-                               inputmode: 'numeric',
                                suffix_text: '%',
                                width: 'one-half',
                                label: { text: legend_t(:percentage_profit_share), size: 'xl' }) %>
