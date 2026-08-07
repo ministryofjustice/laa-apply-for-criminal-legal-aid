@@ -43,9 +43,9 @@ RSpec.describe 'Search', :authorized do
     it 'shows a list of submitted applications' do
       expect(response).to have_http_status(:success)
 
+      assert_select 'title', '2 search results - Search applications - Apply for criminal legal aid - GOV.UK'
       assert_select 'h1', 'Search submitted applications'
       assert_select 'h2', '2 search results'
-
       assert_select 'tbody.govuk-table__body' do
         assert_select 'tr.govuk-table__row', 2 do
           assert_select 'a', count: 1, text: 'Kit Pound'
@@ -77,6 +77,7 @@ RSpec.describe 'Search', :authorized do
       it 'informs the user that there are no applications' do
         expect(response).to have_http_status(:success)
 
+        assert_select 'title', 'No search results - Search applications - Apply for criminal legal aid - GOV.UK'
         assert_select 'h1', 'Search submitted applications'
         assert_select 'h2', 'There are no results that match the criteria'
       end
