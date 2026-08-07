@@ -6,7 +6,7 @@ module Steps
     before_action :update_navigation_stack, only: [:show, :edit]
     before_action :set_security_headers
 
-    # :nocov:
+    # simplecov:disable
     def show
       raise 'implement this action, if needed, in subclasses'
     end
@@ -18,7 +18,7 @@ module Steps
     def update
       raise 'implement this action, if needed, in subclasses'
     end
-    # :nocov:
+    # simplecov:enable
 
     private
 

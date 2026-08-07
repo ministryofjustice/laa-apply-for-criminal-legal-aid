@@ -19,11 +19,11 @@ class BaseFulfilmentValidator < ActiveModel::Validator
 
   # More validations can be added here
   # Errors, when more than one, will maintain the order
-  # :nocov:
+  # simplecov:disable
   def perform_validations
     raise 'implement in subclasses'
   end
-  # :nocov:
+  # simplecov:enable
 
   def evidence_present?
     record.documents.stored.any?

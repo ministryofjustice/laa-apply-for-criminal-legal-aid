@@ -37,11 +37,11 @@ module Summary
 
       private
 
-      # :nocov:
+      # simplecov:disable
       def no_payments?
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
 
       def ordered_payments
         payment_types.index_with { |val| payment_of_type(val) }

@@ -19,7 +19,7 @@ module Decisions
       @partner ||= current_crime_application.partner
     end
 
-    # :nocov:
+    # simplecov:disable
     def show(step_controller, params = {})
       url_options(step_controller, :show, params)
     end
@@ -32,6 +32,6 @@ module Decisions
       { controller: controller, action: action, id: current_crime_application }.merge(params)
     end
 
-    # :nocov:
+    # simplecov:enable
   end
 end

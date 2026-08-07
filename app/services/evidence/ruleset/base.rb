@@ -42,9 +42,9 @@ module Evidence
         if block
           Array.wrap(rules).each(&block)
         else
-          # :nocov:
+          # simplecov:disable
           to_enum(:each)
-          # :nocov:
+          # simplecov:enable
         end
       end
 

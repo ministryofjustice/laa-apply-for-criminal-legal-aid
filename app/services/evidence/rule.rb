@@ -80,9 +80,9 @@ module Evidence
               persona: persona
             )
           else
-            # :nocov:
+            # simplecov:disable
             false
-            # :nocov:
+            # simplecov:enable
           end
         end
       end

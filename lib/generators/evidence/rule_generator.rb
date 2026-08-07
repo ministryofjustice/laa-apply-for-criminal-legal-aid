@@ -1,4 +1,4 @@
-# :nocov:
+# simplecov:disable
 module Evidence
   class RuleGenerator < Rails::Generators::Base
     class_option :key, type: :string, default: :rule_key_from_confluence
@@ -126,4 +126,4 @@ module Evidence
     end
   end
 end
-# :nocov:
+# simplecov:enable

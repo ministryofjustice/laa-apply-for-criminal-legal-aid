@@ -16,11 +16,11 @@ class BasePaymentsValidator < ActiveModel::Validator
     record.errors.add(:base, :none_selected) if has_no_payments?
   end
 
-  # :nocov:
+  # simplecov:disable
   def has_no_payments?
     raise 'must be implemented in subclasses'
   end
-  # :nocov:
+  # simplecov:enable
 
   private
 

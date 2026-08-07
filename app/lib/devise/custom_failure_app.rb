@@ -18,9 +18,9 @@ module Devise
       when :locked
         redirect_to account_locked_errors_path
       else
-        # :nocov:
+        # simplecov:disable
         super
-        # :nocov:
+        # simplecov:enable
       end
     end
     # rubocop:enable Metrics/MethodLength

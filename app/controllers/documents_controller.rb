@@ -1,4 +1,4 @@
-# :nocov:
+# simplecov:disable
 class DocumentsController < ApplicationController
   before_action :check_crime_application_presence
   before_action :set_document, only: :download
@@ -78,4 +78,4 @@ class DocumentsController < ApplicationController
     end
   end
 end
-# :nocov:
+# simplecov:enable
