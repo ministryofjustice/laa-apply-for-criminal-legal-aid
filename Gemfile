@@ -33,7 +33,7 @@ gem 'marcel'
 gem 'clamby', '1.6.11', require: false
 
 # Exceptions notifications
-gem 'sentry-rails'
+gem 'sentry-rails', '>= 6.7.0'
 gem 'sentry-ruby'
 gem 'stackprof'
 
@@ -68,7 +68,7 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'erb_lint', require: false
-  gem 'rubocop', require: false
+  gem 'rubocop', '>= 1.89.0', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
