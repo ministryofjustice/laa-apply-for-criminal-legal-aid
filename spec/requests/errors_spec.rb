@@ -71,6 +71,20 @@ RSpec.describe 'Error pages' do
     end
   end
 
+  describe 'welsh translations' do
+    {
+      '/errors/account-locked' => 'Ni allwch gael mynediad i’r gwasanaeth hwn',
+      '/errors/application-not-found' => 'Ni ellir dod o hyd i’r dudalen',
+      '/errors/invalid-token' => 'mae problem gyda’ch cais',
+      '/errors/unhandled' => 'mae problem gyda’r gwasanaeth',
+    }.each do |path, heading|
+      it "renders the Welsh #{path} page" do
+        get "#{path}?locale=cy"
+        assert_select 'h1', text: /#{Regexp.escape(heading)}/
+      end
+    end
+  end
+
   describe 'double sign outs' do
     before do
       # We are already signed out, we trigger another one
