@@ -23,6 +23,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Check Dockerfile Ruby version matches .ruby-version
+        run: |
+          expected="$(tr -d '[:space:]' < .ruby-version)"
+          actual="$(grep -oE '^FROM ruby:[0-9]+\.[0-9]+\.[0-9]+' Dockerfile | head -n1 | sed -E 's/^FROM ruby://')"
+          if [ -z "$actual" ]; then
+            echo "::error file=Dockerfile::Could not find a 'FROM ruby:<version>' line in Dockerfile"
+            exit 1
+          fi
+          if [ "$expected" != "$actual" ]; then
+            echo "::error file=Dockerfile::Ruby version mismatch: .ruby-version is '$expected' but Dockerfile uses '$actual'"
+            exit 1
+          fi
+          echo "Ruby version '$expected' matches between .ruby-version and Dockerfile"
+
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
