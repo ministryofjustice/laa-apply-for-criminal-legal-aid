@@ -46,6 +46,7 @@ en:
     back_to_applications: Back to your applications
     important: Important
     currency_input_hint: Amount in pounds
+    conditional_reveal_hint: If selected, provide additional details
     submit:
       clear: Clear
       search: Search

@@ -148,4 +148,97 @@ RSpec.describe FormBuilderHelper, type: :helper do
       end
     end
   end
+
+  describe '#govuk_radio_button' do
+    before do
+      allow(form_object).to receive_messages(some_option: nil, errors: ActiveModel::Errors.new(form_object))
+    end
+
+    context 'when the radio button reveals conditional content (block given)' do
+      it 'injects a visually hidden conditional reveal hint into the label' do
+        html = builder.govuk_radio_button(:some_option, 'yes', label: { text: 'Yes' }) { 'revealed content' }
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('Yes')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('If selected, provide additional details')
+      end
+
+      it 'resolves the real translated option label alongside the hint' do
+        form = Steps::Capital::PremiumBondsForm.new(nil)
+        real_builder = GOVUKDesignSystemFormBuilder::FormBuilder.new(
+          :steps_capital_premium_bonds_form, form, self, {}
+        )
+
+        html = real_builder.govuk_radio_button(:has_premium_bonds, YesNoAnswer::YES) { 'revealed content' }
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('Yes')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('If selected, provide additional details')
+      end
+    end
+
+    context 'when the radio button has no conditional content (no block)' do
+      it 'does not inject a visually hidden span into the label' do
+        html = builder.govuk_radio_button(:some_option, 'yes', label: { text: 'Yes' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.at_css('span.govuk-visually-hidden')).to be_nil
+      end
+    end
+  end
+
+  describe '#govuk_check_box' do
+    before do
+      allow(form_object).to receive_messages(types: [], errors: ActiveModel::Errors.new(form_object))
+    end
+
+    context 'when the check box reveals conditional content (block given)' do
+      it 'injects a visually hidden conditional reveal hint into the label' do
+        html = builder.govuk_check_box(:types, 'income_tax', label: { text: 'Income Tax' }) { 'revealed content' }
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('Income Tax')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('If selected, provide additional details')
+      end
+
+      it 'resolves the real translated option label alongside the hint' do
+        real_builder = GOVUKDesignSystemFormBuilder::FormBuilder.new(
+          :steps_income_client_deductions_form, form_object, self, {}
+        )
+
+        html = real_builder.govuk_check_box(:types, 'income_tax') { 'revealed content' }
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('Income Tax')
+
+        hidden_span = label.at_css('span.govuk-visually-hidden')
+        expect(hidden_span).to be_present
+        expect(hidden_span.text.strip).to eq('If selected, provide additional details')
+      end
+    end
+
+    context 'when the check box has no conditional content (no block)' do
+      it 'does not inject a visually hidden span into the label' do
+        html = builder.govuk_check_box(:types, 'income_tax', label: { text: 'Income Tax' })
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.at_css('span.govuk-visually-hidden')).to be_nil
+      end
+    end
+  end
 end
