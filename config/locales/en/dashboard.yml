@@ -42,7 +42,6 @@ en:
         post_submission_evidence: Post submission evidence
       page_title: Your applications
       delete_button: Delete
-      delete_button_a11y: Delete %{applicant_name}’s application
       status:
         in_progress: In progress
         submitted: Submitted

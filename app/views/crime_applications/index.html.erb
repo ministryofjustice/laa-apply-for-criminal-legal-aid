@@ -25,7 +25,7 @@
           <% @applications.present_each(CrimeApplicationPresenter) do |app| %>
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header govuk-!-font-weight-regular">
-                <%= govuk_link_to app.applicant_name, edit_crime_application_path(app), no_visited_state: true %>
+                <%= govuk_link_to app.applicant_name, edit_crime_application_path(app), id: "application-name-#{app.reference}", no_visited_state: true %>
               </th>
               <td class="govuk-table__cell">
                 <%= l(app.created_at) %>
@@ -37,7 +37,7 @@
                 <%= t("crime_applications.index.application_type.#{app.application_type}") %>
               </td>
               <td class="govuk-table__cell">
-                <%= govuk_link_to t('.delete_button'), confirm_destroy_crime_application_path(app) %>
+                <%= govuk_link_to t('.delete_button'), confirm_destroy_crime_application_path(app), aria: { describedby: "application-name-#{app.reference}" } %>
               </td>
             </tr>
           <% end %>

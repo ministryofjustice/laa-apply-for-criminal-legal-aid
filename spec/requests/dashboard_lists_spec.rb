@@ -50,6 +50,18 @@ RSpec.describe 'Dashboard', :authorized do
 
         expect(response.body).not_to include('Jane Doe')
       end
+
+      it 'programmatically associates each Delete link with its application name' do
+        assert_select 'tbody.govuk-table__body tr.govuk-table__row' do |rows|
+          rows.each do |row|
+            name_link = row.at_css('th a')
+            delete_link = row.at_css('td.govuk-table__cell:nth-of-type(4) a')
+
+            expect(name_link['id']).to be_present
+            expect(delete_link['aria-describedby']).to eq(name_link['id'])
+          end
+        end
+      end
     end
   end
 end
