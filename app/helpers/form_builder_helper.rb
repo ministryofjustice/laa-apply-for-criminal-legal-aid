@@ -30,6 +30,24 @@ module FormBuilderHelper
     super
   end
 
+  # Overrides the GOV.UK form builder's radio button and check box helpers to
+  # inject visually hidden context into the label when the control reveals
+  # conditional content (i.e. is called with a block). Screen readers do not
+  # reliably announce `aria-expanded` on radios and checkboxes, so this text
+  # tells users that selecting the option reveals additional fields. The
+  # `aria-expanded` attribute is intentionally left in place. See CRIMAPP-2138.
+  def govuk_radio_button(attribute_name, value, label: {}, **, &block)
+    label = label_with_conditional_reveal_hint(attribute_name, value, label) if block && label.is_a?(Hash)
+
+    super
+  end
+
+  def govuk_check_box(attribute_name, value, unchecked_value = false, label: {}, **, &block) # rubocop:disable Style/OptionalBooleanParameter
+    label = label_with_conditional_reveal_hint(attribute_name, value, label) if block && label.is_a?(Hash)
+
+    super
+  end
+
   private
 
   def with_inline_error_message(attribute_name, message)
@@ -62,6 +80,29 @@ module FormBuilderHelper
     hidden_span = content_tag(:span, I18n.t('helpers.currency_input_hint'),
                               class: 'govuk-visually-hidden')
     label_opts.merge(text: safe_join([label_text, hidden_span], ' '))
+  end
+
+  # Appends a visually hidden hint to an option's label so screen reader users
+  # are told that selecting it reveals additional fields. Only injects when the
+  # option's label text can be resolved, to avoid overriding the form builder's
+  # own automatic label localisation with incorrect text.
+  def label_with_conditional_reveal_hint(attribute_name, value, label_opts)
+    label_text = label_opts[:text] || localised_option_label(attribute_name, value)
+    return label_opts if label_text.blank?
+
+    hidden_span = content_tag(:span, I18n.t('helpers.conditional_reveal_hint'),
+                              class: 'govuk-visually-hidden')
+    label_opts.merge(text: safe_join([label_text, hidden_span], ' '))
+  end
+
+  # Resolves an option's label the same way the GOV.UK form builder does, i.e.
+  # `helpers.label.<object_name>.<attribute>_options.<value>`, honouring the
+  # builder's nested localisation object-name scanning.
+  def localised_option_label(attribute_name, value)
+    base_object_name = object_name.to_s.scan(/[[:alpha:]][\w\s]*/).join('.')
+    key = "helpers.label.#{base_object_name}.#{attribute_name}_options.#{value}"
+
+    I18n.t(key, default: nil) || I18n.t("#{key}_html", default: nil)&.html_safe
   end
 
   def segment_names
