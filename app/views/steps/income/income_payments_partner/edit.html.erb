@@ -15,7 +15,6 @@
               <%= g.govuk_fieldset legend: nil, id: "income_payment_#{type}" do %>
                 <%= g.govuk_number_field :amount,
                                          autocomplete: 'off',
-                                         inputmode: 'numeric',
                                          width: 'one-third',
                                          prefix_text: '£' %>
                 <%= g.govuk_collection_radio_buttons :frequency,

@@ -214,6 +214,17 @@ RSpec.describe 'Apply for Criminal Legal Aid with cross-question property owners
       choose_answer('What do you want to do next?', 'Provide the details of this property')
       save_and_continue
 
+      [
+        'How much is the property worth?',
+        'How much is left to pay on the mortgage?',
+        'What percentage of the property does your client own?'
+      ].each do |label|
+        input = find_field(label)
+
+        expect(input[:type]).to eq('number')
+        expect(input[:inputmode]).to be_nil
+      end
+
       # steps/capital/residential-property/{property_id}
       choose_answer('Which type of property is it?', 'Terraced')
       fill_in('How many bedrooms are there?', with: '2')

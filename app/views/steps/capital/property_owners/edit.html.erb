@@ -28,7 +28,7 @@
               <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
             <%end%>
           <% end %>
-          <%= po_field.govuk_number_field :percentage_owned, inputmode: 'numeric', suffix_text: '%', width: 'one-quarter',
+          <%= po_field.govuk_number_field :percentage_owned, suffix_text: '%', width: 'one-quarter',
                                           label: { text: label_t("percentage_owned_#{@form_object.record.property_type}"), tag: 'h3', size: 'm' } %>
 
           <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),

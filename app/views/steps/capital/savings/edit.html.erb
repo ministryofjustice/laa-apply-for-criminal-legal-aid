@@ -16,7 +16,7 @@
       <%= f.govuk_text_field :provider_name, autocomplete: 'off', label: { tag: 'h2', size: 'm' } %>
       <%= f.govuk_text_field :sort_code, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half', label: { tag: 'h2', size: 'm' } %>
       <%= f.govuk_text_field :account_number, autocomplete: 'off', inputmode: 'numeric', extra_letter_spacing: true, width: 'one-half', label: { tag: 'h2', size: 'm' } %>
-      <%= f.govuk_number_field :account_balance, inputmode: 'numeric', prefix_text: '£', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
+      <%= f.govuk_number_field :account_balance, prefix_text: '£', width: 'one-third', label: { tag: 'h2', size: 'm' } %>
       <%= f.govuk_collection_radio_buttons :is_overdrawn, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
       <%= f.govuk_collection_radio_buttons :are_wages_paid_into_account, YesNoAnswer.values, :value, inline: true, legend: { tag: 'h2', size: 'm' } %>
 

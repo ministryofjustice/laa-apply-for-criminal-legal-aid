@@ -1,6 +1,76 @@
 require 'rails_helper'
 
 RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
+  describe 'Decimal values on client deductions page' do
+    include_context 'means tested with partner'
+
+    before do
+      # steps/income/what_is_clients_employment_status
+      choose_answers("What is your client's employment status?", ['Employed'])
+      save_and_continue
+
+      # steps/income/client/armed_forces
+      choose_answer('Is your client in the armed forces?', 'No')
+      save_and_continue
+
+      # steps/income/current_income_before_tax
+      choose_answer(
+        "Is your client and their partner's joint annual income more than £12,475 a year before tax?",
+        'Yes'
+      )
+      save_and_continue
+
+      # steps/income/client/employer_details/:job_id
+      fill_in("Employer's name", with: 'Ministry of Justice')
+      fill_in('Address line 1', with: 'Test address line 1')
+      fill_in('Address line 2', with: 'Test address line 2')
+      fill_in('Town or city', with: 'Test town')
+      fill_in('Country', with: 'Test Country')
+      fill_in('Postcode', with: 'Test postcode')
+      save_and_continue
+
+      # steps/income/client/employment_details/:job_id
+      fill_in('What is your client’s job title?', with: 'Software Developer')
+      fill_in('What is their salary or wage?', with: 35_000)
+      choose_answer('Is this before or after tax?', 'Before tax')
+      choose_answer('How often do they get this payment?', 'Monthly')
+      save_and_continue
+    end
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'persists a decimal National Insurance deduction without a numeric inputmode' do
+      choose_answers('Deductions', ['National Insurance'])
+
+      deductions_page_path = current_path
+      crime_application_id = deductions_page_path[%r{/applications/([^/]+)/}, 1]
+      employment_id = deductions_page_path.split('/').last
+
+      within('#deduction_national_insurance') do
+        national_insurance_input = find("input[name='steps_income_client_deductions_form[national_insurance][amount]']")
+        expect(national_insurance_input[:type]).to eq('number')
+        expect(national_insurance_input[:inputmode]).to be_nil
+
+        fill_in(national_insurance_input[:id], with: '123.83')
+        choose('Monthly')
+      end
+      save_and_continue
+
+      expect(page).to have_content('Do you want to add another job?')
+
+      crime_application = CrimeApplication.find(crime_application_id)
+      employment = crime_application.employments.find(employment_id)
+      deduction = employment.deductions.find_by!(deduction_type: 'national_insurance')
+      expect(deduction.amount).to eq(12_383)
+
+      visit deductions_page_path
+      within('#deduction_national_insurance') do
+        input = find("input[name='steps_income_client_deductions_form[national_insurance][amount]']")
+        expect(input.value).to eq('123.83')
+      end
+    end
+    # rubocop:enable RSpec/ExampleLength
+  end
+
   describe 'Submitting a means tested application with an employed client and partner' do
     include_context 'means tested with partner'
 
