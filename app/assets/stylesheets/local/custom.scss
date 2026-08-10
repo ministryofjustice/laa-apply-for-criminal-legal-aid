@@ -1,8 +1,11 @@
 @use "govuk-frontend/dist/govuk" as *;
+@use "govuk-frontend/dist/govuk/core/global-styles.mixin" as global-styles;
 
 // App-specific custom styles and overrides
 // Please use BEM convention: http://getbem.com/naming/
 //
+
+@include global-styles.govuk-global-styles;
 
 @mixin app-button-reset {
   padding: 0;
@@ -215,7 +218,7 @@ $app-blue-button-colour: govuk-colour("blue");
 form.search {
   padding-top: 2em;
   padding-left: 2em;
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   .input-group {
     display: flex;
     .govuk-form-group {

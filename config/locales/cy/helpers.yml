@@ -46,6 +46,7 @@ cy:
     back_to_applications: Yn ôl i'ch ceisiadau
     important: Pwysig
     currency_input_hint: Swm mewn punnoedd
+    conditional_reveal_hint: Os caiff ei ddewis, rhowch fanylion ychwanegol
     submit:
       clear: Clirio
       search: Chwilio
