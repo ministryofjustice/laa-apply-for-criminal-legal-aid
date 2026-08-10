@@ -4,6 +4,8 @@ cy:
     total:
       one: 1 canlyniad chwilio
       other: "%{count} canlyniad chwilio"
+    page_title: Chwilio ceisiadau
+    no_results_title: Dim canlyniadau chwilio
     heading: Chwilio ceisiadau sydd wedi'u cyflwyno
     subheading: Rydych chi'n chwilio drwy geisiadau sydd wedi'u cyflwyno a'u dychwelyd o dan y rhif cyfrif swyddfa %{current_office_code}.
   table_headings:
