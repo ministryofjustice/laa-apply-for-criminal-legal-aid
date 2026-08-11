@@ -4,10 +4,19 @@ RSpec.describe 'steps/income/partner/deductions/edit', type: :view do
   subject(:render_view) { render template: 'steps/income/partner/deductions/edit' }
 
   let(:crime_application) { CrimeApplication.new }
-  let(:employment) { Employment.create!(crime_application: crime_application, ownership_type: OwnershipType::PARTNER.to_s) }
+
+  let(:employment) do
+    Employment.create!(
+      crime_application: crime_application,
+      ownership_type: OwnershipType::PARTNER.to_s
+    )
+  end
 
   let(:form_object) do
-    Steps::Income::Partner::DeductionsForm.new(crime_application:).tap do |form|
+    Steps::Income::Partner::DeductionsForm.new(
+      crime_application: crime_application,
+      types: []
+    ).tap do |form|
       form.employment = employment
     end
   end
@@ -36,8 +45,17 @@ RSpec.describe 'steps/income/partner/deductions/edit', type: :view do
     form_object.valid?
   end
 
+  it 'renders the validation error inline on the deductions fieldset' do
+    render_view
+
+    expect(rendered).to have_css(
+      '.govuk-form-group--error .govuk-error-message',
+      text: 'Select and enter a deduction or select that the partner does not have deductions taken from their pay'
+    )
+  end
+
   describe 'error summary accessibility when nothing is selected' do
-    it 'links the error summary to an input that exists on the page' do
+    it 'links the error summary to an element that exists on the page' do
       render_view
 
       document = Capybara.string(rendered)
@@ -47,18 +65,6 @@ RSpec.describe 'steps/income/partner/deductions/edit', type: :view do
       hrefs.each do |href|
         expect(document).to have_css("##{href.delete_prefix('#')}")
       end
-    end
-
-    it 'targets the first deduction checkbox' do
-      render_view
-
-      document = Capybara.string(rendered)
-      href = document.first('.govuk-error-summary__list a')[:href]
-      target = document.find(href)
-
-      expect(target.tag_name).to eq('input')
-      expect(target[:type]).to eq('checkbox')
-      expect(target[:value]).to eq('income_tax')
     end
   end
 end

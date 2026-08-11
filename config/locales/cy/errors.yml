@@ -1242,11 +1242,11 @@ cy:
               inclusion: Dewiswch pa mor aml maen nhw'n cael y taliad hwn
         steps/income/client/deductions_form:
           attributes:
-            types:
+            deductions:
               none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog eich cleient
         steps/income/partner/deductions_form:
           attributes:
-            types:
+            deductions:
               none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog eich cleient
         steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
           summary:

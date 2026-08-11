@@ -118,7 +118,7 @@ RSpec.describe Steps::Income::Client::DeductionsForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:types, :none_selected)).to be(true)
+        expect(form.errors.of_kind?(:deductions, :none_selected)).to be(true)
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe Steps::Income::Client::DeductionsForm do
 
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
-        expect(form.errors.of_kind?(:types, :none_selected)).to be(true)
+        expect(form.errors.of_kind?(:deductions, :none_selected)).to be(true)
       end
     end
 
