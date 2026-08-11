@@ -148,7 +148,7 @@ en:
       questions: If you have any questions, contact your contract manager.
     dashboard_header:
       heading: Your applications
-      dwp_unavailable: The DWP service is currently unavailable. You can still start a new application, but you will not be able to submit it until the service is available again.
+      dwp_unavailable: The DWP service is currently unavailable. Whilst we work to resolve this, please submit passported applications with the benefit name, amount and frequency of payment.
       start_button: Start an application
       create_button: Make a new application
     subnavigation:
