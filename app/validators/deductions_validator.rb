@@ -28,12 +28,12 @@ class DeductionsValidator < ActiveModel::Validator
         message: error_message(deduction, error)
       )
 
-      # :nocov:
+      # simplecov:disable
       # We define the attribute getter as it doesn't really exist
       record.define_singleton_method(attr_name) do
         deduction.public_send(error.attribute)
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 

@@ -36,7 +36,7 @@ module EmploymentDetails
       income.date_job_lost.present?
     end
 
-    # :nocov:
+    # simplecov:disable
     def validate_client_employment
       return unless employed?
 
@@ -44,7 +44,7 @@ module EmploymentDetails
       validate_employment_details
       validate_employment_income
     end
-    # :nocov:
+    # simplecov:enable
 
     def validate_employment_details
       return unless requires_full_means_assessment?

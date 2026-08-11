@@ -86,7 +86,7 @@ module Summary
         [summary_link]
       end
 
-      # :nocov:
+      # simplecov:disable
       def answers
         raise 'must be implemented in subclasses'
       end
@@ -102,7 +102,7 @@ module Summary
       def remove_path
         raise 'must be implemented in subclasses'
       end
-      # :nocov:
+      # simplecov:enable
 
       def count
         return unless record_iteration

@@ -80,11 +80,11 @@ module Steps
 
     private
 
-    # :nocov:
+    # simplecov:disable
     def persist!
       raise 'Subclasses of BaseFormObject need to implement #persist!'
     end
-    # :nocov:
+    # simplecov:enable
 
     # Override in subclass where needed. For example, to reset attributes.
     def before_save; end

@@ -42,7 +42,7 @@ module Steps
         @properties ||= current_crime_application.properties
       end
 
-      # :nocov:
+      # simplecov:disable
       def advance_as
         raise NotImplementedError
       end
@@ -54,7 +54,7 @@ module Steps
       def flash_msg
         nil
       end
-      # :nocov:
+      # simplecov:enable
     end
   end
 end

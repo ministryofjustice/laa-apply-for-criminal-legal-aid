@@ -1,13 +1,13 @@
 module Adapters
   module Structs
     class CaseDetails < BaseStructAdapter
-      # :nocov:
+      # simplecov:disable
       def case_type
         return super unless super == CaseType::APPEAL_TO_CROWN_COURT_WITH_CHANGES.to_s
 
         CaseType::APPEAL_TO_CROWN_COURT
       end
-      # :nocov:
+      # simplecov:enable
 
       def charges
         offences.map do |struct|

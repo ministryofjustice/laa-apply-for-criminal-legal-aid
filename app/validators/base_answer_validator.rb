@@ -8,7 +8,7 @@ class BaseAnswerValidator
 
   delegate :errors, to: :record
 
-  # :nocov:
+  # simplecov:disable
   def applicable?
     raise 'implement in task subclasses'
   end
@@ -20,5 +20,5 @@ class BaseAnswerValidator
   def validate
     raise 'implement in task subclasses'
   end
-  # :nocov:
+  # simplecov:enable
 end

@@ -1,6 +1,6 @@
 module Refinements
   module PresentCollection
-    # :nocov:
+    # simplecov:disable
     def present_each(presenter)
       each do |obj|
         yield presenter.new(obj)
@@ -12,6 +12,6 @@ module Refinements
         presenter.new(obj)
       end
     end
-    # :nocov:
+    # simplecov:enable
   end
 end
