@@ -41,6 +41,8 @@ module StepsHelper
     end
   end
 
+  delegate :field_error_id, to: DateFieldErrors
+
   # rubocop:disable Metrics/MethodLength
   def link_button(name, href, options = {}, &block)
     html_options = {

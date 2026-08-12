@@ -49,16 +49,14 @@ RSpec.describe 'steps/income/client/deductions/edit', type: :view do
   end
 
   describe 'error summary accessibility when nothing is selected' do
-    it 'links the error summary to an element that exists on the page' do
+    it 'links the error summary to the deductions anchor' do
       render_view
 
-      document = Capybara.string(rendered)
-      hrefs = document.all('.govuk-error-summary__list a').pluck(:href)
+      page = Capybara.string(rendered)
+      href = page.find('.govuk-error-summary a')[:href]
 
-      expect(hrefs).not_to be_empty
-      hrefs.each do |href|
-        expect(document).to have_css("##{href.delete_prefix('#')}")
-      end
+      expect(href).to eq('#steps-income-client-deductions-form-deductions-field-error')
+      expect(page).to have_css(href)
     end
   end
 end
