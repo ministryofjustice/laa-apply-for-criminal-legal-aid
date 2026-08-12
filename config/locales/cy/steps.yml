@@ -278,7 +278,8 @@ cy:
           inset: Rhestrir llysoedd yn Saeseneg gan fod Cymru a Lloegr yn rhannu'r yn system gyfreithiol gyda Saesneg fel y prif iaith.
       ioj_passport:
         edit:
-          page_title: Wedi pasbortio ar sail buddiannau cyfiawnder
+          # TODO: draft translation pending official Welsh copy - confirm or replace
+          page_title: Nid oes angen i chi nodi cyfiawnhad pellach ar gyfer cymorth cyfreithiol
           heading: Ar sail y manylion a ddarparwyd gennych, does dim angen i chi nodi Er Budd Cyfiawnder (IOJ) pellach
           info: Efallai y bydd angen i chi ddarparu manylion cyllid eich cleient o hyd i wneud cais am gymorth cyfreithiol.
       ioj:
