@@ -12,10 +12,14 @@
 
       <%= step_form @form_object do %>
         <p class="govuk-body">
-          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.continue_to_submit') %>
+          <%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_label_html') %>
         </p>
-    <% end %>
+      <% end %>
 
+        <ul class="govuk-list govuk-list--bullet">
+          <li><%= t('helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_evidence') %></li>
+          <li><%= t("helpers.hint.steps_dwp_cannot_check_dwp_status_form.next_steps_#{subject}_check") %></li>
+        </ul>
     </div>
 
     <div class="govuk-button-group">

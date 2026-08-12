@@ -149,7 +149,6 @@ cy:
       questions: Os oes gennych unrhyw gwestiynau, cysylltwch â’ch rheolwr contract.
     dashboard_header:
       heading: Eich ceisiadau
-      dwp_unavailable: Mae gwasanaeth DWP ar hyn o bryd ar gau. Tra bod ni’n gweithio i ddatrys hyn, cyflwynwch geisiadau sydd wedi’u pasio gyda’r enw budd-dal, y swm a’r amlder talu.
       start_button: Cychwyn cais
       create_button: Gwneud cais newydd
     subnavigation:

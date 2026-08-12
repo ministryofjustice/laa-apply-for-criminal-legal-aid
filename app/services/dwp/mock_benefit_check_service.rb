@@ -26,8 +26,6 @@ module DWP
     end
 
     def call
-      return nil if unavailable?
-
       {
         confirmation_ref: "mocked:#{self.class}",
         benefit_checker_status: result,
@@ -43,10 +41,6 @@ module DWP
     end
 
     private
-
-    def unavailable?
-      ENV.fetch('DWP_MOCK_UNAVAILABLE', 'false').casecmp('true').zero?
-    end
 
     def known_confirmed?
       CONFIRMED.fetch(last_name.to_s.upcase, nil) == applicant_data
