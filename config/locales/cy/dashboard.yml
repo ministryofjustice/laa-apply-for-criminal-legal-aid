@@ -149,6 +149,7 @@ cy:
       questions: Os oes gennych unrhyw gwestiynau, cysylltwch â’ch rheolwr contract.
     dashboard_header:
       heading: Eich ceisiadau
+      dwp_unavailable_sorry: Mae'r Gwirio Budd-dal DWP ar gael nawr - ymddiheuriadau am unrhyw anghyfleustra
       start_button: Cychwyn cais
       create_button: Gwneud cais newydd
     subnavigation:
