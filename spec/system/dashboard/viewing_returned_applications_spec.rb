@@ -37,5 +37,15 @@ RSpec.describe 'Viewing Returned Criminal Legal Aid applications' do
     expect(current_tab).to have_text 'Returned'
   end
 
+  it 'programmatically associates each Delete link with its application name' do
+    stubbed_search_results.each do |result|
+      name_link = find('a', id: "application-name-#{result.reference}")
+      delete_link = find("a[aria-describedby='application-name-#{result.reference}']")
+
+      expect(name_link).to have_text(result.applicant_name)
+      expect(delete_link).to have_text('Delete')
+    end
+  end
+
   it_behaves_like 'a datastore api results table'
 end
