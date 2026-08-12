@@ -7,7 +7,6 @@
     <%= govuk_error_summary(@form_object) %>
 
     <%= step_form @form_object do |f| %>
-      <span id="<%= field_error_id(@form_object, :deductions) %>"></span>
       <%= f.govuk_check_boxes_fieldset :deductions, legend: { tag: 'h1', size: 'xl' } do |x| %>
 
         <% @form_object.ordered_deductions.each_with_index do |type, index| %>
