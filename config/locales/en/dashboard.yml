@@ -147,6 +147,7 @@ en:
       questions: If you have any questions, contact your contract manager.
     dashboard_header:
       heading: Your applications
+      dwp_unavailable_sorry: DWP Benefit checker is now available - apologies for any inconvenience
       start_button: Start an application
       create_button: Make a new application
     subnavigation:
