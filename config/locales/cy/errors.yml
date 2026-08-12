@@ -1247,7 +1247,7 @@ cy:
         steps/income/partner/deductions_form:
           attributes:
             types:
-              none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog eich cleient
+              none_selected: Dewiswch a rhowch ddidyniad neu dewiswch nad oes didyniadau'n cael eu tynnu o gyflog y partner
         steps/income/client/deduction_fieldset_form: &deduction_fieldset_form
           summary:
             amount:
