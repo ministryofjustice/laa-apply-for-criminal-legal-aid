@@ -41,7 +41,6 @@ cy:
         change_in_financial_circumstances: Newid mewn sefyllfa ariannol
       page_title: Eich ceisiadau
       delete_button: Dileu
-      delete_button_a11y: Dileu cais %{applicant_name}
       status:
         in_progress: Yn mynd rhagddo
         submitted: Wedi cyflwyno
