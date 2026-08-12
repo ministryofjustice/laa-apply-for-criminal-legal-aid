@@ -13,7 +13,7 @@ class DeductionsValidator < ActiveModel::Validator
 
     return unless record.types.empty?
 
-    record.errors.add(:base, :none_selected) if record.employment.has_no_deductions.blank?
+    record.errors.add(:types, :none_selected) if record.employment.has_no_deductions.blank?
   end
 
   private

@@ -19,8 +19,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= step_form @form_object do |f| %>
     <div class="govuk-!-margin-bottom-7">
-      <% @form_object.choices.each do |option| %>
-        <%= f.govuk_radio_button :will_enter_nino, option %>
+      <% @form_object.choices.each_with_index do |option, index| %>
+        <%= f.govuk_radio_button :will_enter_nino, option, link_errors: index.zero? %>
       <% end %>
     </div>
 
