@@ -7,10 +7,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
 
-    <%= govuk_notification_banner(title_text: t('helpers.important')) do %>
-      <%= t '.dwp_unavailable_sorry' %>
-    <% end %>
-
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
     <%= link_to t('.start_button'), new_crime_application_path, class: 'govuk-button',
