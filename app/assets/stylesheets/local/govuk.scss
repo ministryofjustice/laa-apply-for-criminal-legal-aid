@@ -1,4 +1,6 @@
 // GOV.UK Frontend
 //
-
+@use "govuk-frontend/dist/govuk/helpers/font-faces--internal" as govuk-font-faces;
 @use "govuk-frontend/dist/govuk/index";
+
+@include govuk-font-faces.gds-transport;
