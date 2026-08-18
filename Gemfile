@@ -69,8 +69,8 @@ group :test do
   gem 'capybara'
   gem 'erb_lint', require: false
   gem 'rubocop', '>= 1.89.0', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
+  gem 'rubocop-performance', '>= 1.27.0', require: false
+  gem 'rubocop-rails', '>= 2.37.0', require: false
   gem 'rubocop-rspec', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
