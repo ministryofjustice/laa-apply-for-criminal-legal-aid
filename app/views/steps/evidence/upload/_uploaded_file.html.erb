@@ -18,9 +18,9 @@
     <% end %>
   </dt>
   <dd class="govuk-summary-list__actions">
-    <%= button_to t('.remove_button'), steps_evidence_upload_path, method: :put,
-                                       value: document.id.to_s,
-                                       name: :document_id,
-                                       class: 'app-button--link app-uploaded-file__delete' %>
+    <%= button_tag t('.remove_button'), type: :submit,
+                                        name: :document_id,
+                                        value: document.id.to_s,
+                                        class: 'app-button--link app-uploaded-file__delete' %>
   </dd>
 </div>
