@@ -2,6 +2,12 @@
 import { initAll } from 'govuk-frontend'
 initAll()
 
+// Hide GOV.UK conditional reveals from assistive technology until their
+// controlling radio/checkbox is selected. Runs after initAll so
+// `data-aria-controls` has been promoted to `aria-controls`.
+import ConditionalReveal from "./local/conditional-reveal"
+new ConditionalReveal(document).init()
+
 // Cookie banner -- Script name is obfuscated to avoid browsers blocking it
 // https://design-system.service.gov.uk/components/cookie-banner/
 import Cbc from "./local/cbc"
