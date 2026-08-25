@@ -153,7 +153,7 @@ metadata:
       SecRule REQUEST_URI "@rx /steps/.+$" \
         "id:1000,phase:2,pass,nolog,\
         ctl:ruleRemoveById=921110,\
-        ctl:ruleRemoveById=921120,\
+        ctl:ruleRemoveTargetById=921120;ARGS,\
         ctl:ruleRemoveById=920120,\
         ctl:ruleRemoveById=932100,\
         ctl:ruleRemoveById=932110,\
