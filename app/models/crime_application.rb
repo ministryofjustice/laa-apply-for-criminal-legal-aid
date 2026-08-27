@@ -14,6 +14,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :case, dependent: :destroy
   alias kase case
 
+  has_one :slipstream_audit_selection_outcome, dependent: :destroy
   has_one :applicant, dependent: :destroy
   has_one :partner, dependent: :destroy
   has_one :income, dependent: :destroy

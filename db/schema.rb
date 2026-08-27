@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_11_110047) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_26_153254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -463,6 +463,19 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_11_110047) do
     t.index ["crime_application_id"], name: "index_savings_on_crime_application_id"
   end
 
+  create_table "slipstream_audit_selection_outcomes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "crime_application_id", null: false
+    t.integer "sample_rate", null: false
+    t.datetime "sampled_at", null: false
+    t.string "status", null: false
+    t.datetime "status_determined_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crime_application_id"], name: "idx_slipstream_outcomes_app", unique: true
+    t.check_constraint "status IN ('not_selected', 'selected', 'confirmed', 'withdrawn')", name: "slipstream_audit_selection_outcomes_status_check"
+    t.check_constraint "sample_rate > 0", name: "slipstream_audit_selection_outcomes_sample_rate_check"
+  end
+
   add_foreign_key "addresses", "people"
   add_foreign_key "businesses", "crime_applications"
   add_foreign_key "capitals", "crime_applications"
@@ -486,4 +499,5 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_11_110047) do
   add_foreign_key "properties", "crime_applications"
   add_foreign_key "property_owners", "properties"
   add_foreign_key "savings", "crime_applications"
+  add_foreign_key "slipstream_audit_selection_outcomes", "crime_applications"
 end
