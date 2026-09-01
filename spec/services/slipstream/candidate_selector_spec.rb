@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Slipstream::AuditSelection do
+RSpec.describe Slipstream::CandidateSelector do
   subject(:selection) { described_class.new(crime_application) }
 
   let(:crime_application) do

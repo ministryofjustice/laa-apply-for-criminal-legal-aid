@@ -12,7 +12,7 @@ module Slipstream
   #
   # NOTE: persisting the outcome of the selection is handled separately;
   # this service only decides whether an application should be selected.
-  class AuditSelection
+  class CandidateSelector
     attr_reader :crime_application
 
     def initialize(crime_application)
