@@ -28,8 +28,14 @@ RSpec.describe SlipstreamAuditSelectionOutcome, type: :model do
   end
 
   describe 'validations' do
-    it 'requires a positive sample rate' do
+    it 'requires a sample rate greater than zero' do
       outcome.sample_rate = 0
+
+      expect(outcome).not_to be_valid
+    end
+
+    it 'requires a sample rate no greater than 100' do
+      outcome.sample_rate = 101
 
       expect(outcome).not_to be_valid
     end

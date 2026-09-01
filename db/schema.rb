@@ -473,7 +473,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_26_153254) do
     t.datetime "updated_at", null: false
     t.index ["crime_application_id"], name: "idx_slipstream_outcomes_app", unique: true
     t.check_constraint "status IN ('not_selected', 'selected', 'confirmed', 'withdrawn')", name: "slipstream_audit_selection_outcomes_status_check"
-    t.check_constraint "sample_rate > 0", name: "slipstream_audit_selection_outcomes_sample_rate_check"
+    t.check_constraint "sample_rate BETWEEN 1 AND 100", name: "slipstream_outcomes_sample_rate_check"
   end
 
   add_foreign_key "addresses", "people"

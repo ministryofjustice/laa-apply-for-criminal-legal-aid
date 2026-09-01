@@ -10,8 +10,8 @@ class SlipstreamAuditSelectionOutcome < ApplicationRecord
     withdrawn: 'withdrawn'
   }
 
-  # The sampling denominator: a sample rate of 20 means one in every 20
-  # eligible applications is selected.
-  validates :sample_rate, numericality: { only_integer: true, greater_than: 0 }
+  # The percentage chance of selection: a sample rate of 20 means 20%.
+  validates :sample_rate,
+            numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 100 }
   validates :sampled_at, :status, :status_determined_at, presence: true
 end
