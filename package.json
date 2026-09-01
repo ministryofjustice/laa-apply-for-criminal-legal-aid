@@ -11,7 +11,7 @@
     "dropzone": "^6.0.0-beta.2",
     "govuk-frontend": "^6.4.0",
     "moment": "2.30.1",
-    "sass": "^1.102.0"
+    "sass": "^1.103.1"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
